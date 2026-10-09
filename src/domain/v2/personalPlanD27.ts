@@ -1,6 +1,7 @@
 import type { CanonicalWorkspaceRepository } from './repository'
 import type { HistoryRecord, JsonValue, Task, TimePoint, WorkspaceV8 } from './types'
 import { addDateOnlyDays, instantToWallClock, isDateOnly, parseBusinessDateTime, wallClockToInstant } from '../../lib/timeSemantics'
+import {sourceReadinessValue} from './sourceReadiness'
 
 export const PLAN_VERSION = 'personal-plan-d27-1' as const
 export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.1.0' as const
@@ -94,7 +95,7 @@ function taskGaps(w: WorkspaceV8, t: Task): string[] {
   const row = Array.isArray(semantic?.tasks) ? semantic.tasks.map(record).find(row => row?.id === temp) : undefined
   const condition = record(row?.condition), semantics = record(row?.semantics)
   const codes: string[] = []
-  if (condition?.value === 'unknown') codes.push('QUALIFICATION_UNKNOWN')
+  if (condition?.value === 'unknown' && (!draft || sourceReadinessValue(w,draft.id,String(temp))===undefined)) codes.push('QUALIFICATION_UNKNOWN')
   if (condition?.value === 'false') codes.push('NOT_APPLICABLE')
   if (semantics && (semantics.status !== 'pending' || semantics.validity !== 'active' || semantics.polarity !== 'affirmative')) codes.push('NOT_CURRENT_ACTION')
   if (Array.isArray(sidecar?.representationGaps) && sidecar.representationGaps.map(record).some(g => Array.isArray(g?.entityIds) && g.entityIds.includes(temp) && ['revision', 'lifecycle', 'unresolved_scope'].includes(String(g.kind)))) codes.push('RELATION_NEEDS_REVIEW')

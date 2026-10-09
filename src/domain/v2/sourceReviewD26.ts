@@ -5,6 +5,7 @@ import { workspaceSnapshotHash } from './migration'
 import type { CanonicalWorkspaceRepository } from './repository'
 import type { WorkspaceV8 } from './types'
 import {eventDisposition} from './eventDisposition'
+import {unresolvedSourceReadiness} from './sourceReadiness'
 
 export const SOURCE_REVIEW_VERSION = 'source-review-d26-1'
 export const PENDING_SOURCE_READBACK = 'source-review:pending-readback'
@@ -60,6 +61,7 @@ export function buildSourceReviewPlan(workspace: WorkspaceV8, view: DraftView, i
   const rejectedEvents=draft.result.events.filter(e=>eventDisposition(workspace,draft.id,e.tempId)==='reject'&&!draft.acceptedEntityTempIds.includes(e.tempId)).map(e=>e.tempId)
   selection.rejectedTempIds = [...view.items.filter(i => i.status === '已拒绝').map(i => i.suggestion.id),...rejectedEvents]
   for (const id of selection.taskTempIds) {
+    if(unresolvedSourceReadiness(workspace,draft.id,id))throw Error('适用状态尚未明确，请在本通知适用性中核对；不会假定资格或前置已完成。')
     const problem = sourceReviewProblem(draft.result, id)
     if (problem) throw Error(problem)
   }

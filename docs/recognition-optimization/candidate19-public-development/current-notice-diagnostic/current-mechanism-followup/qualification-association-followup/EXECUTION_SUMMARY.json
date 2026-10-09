@@ -1,0 +1,61 @@
+{
+  "role": "SEALED_BATCH_OBSERVED_READ_ONLY",
+  "batch": "V7-CURRENT-QUALIFICATION-PUBLIC-DEVELOPMENT-20261008-R1",
+  "denominator": 4,
+  "verifiedSettled": 0,
+  "units": [
+    {
+      "ordinal": 1,
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 2,
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 3,
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 4,
+      "status": "NOT_SENT"
+    }
+  ],
+  "lockExists": true,
+  "haltExists": true,
+  "winner": "EVIDENCE_INCOMPLETE",
+  "modelRequests": 0,
+  "dispatch": "DISABLED_NO_MUTATION_API",
+  "ledger": {
+    "rows": 1048,
+    "sha256": "c234a07e74bd1ed324e99e7915928daf11e982235c40d1dd52e3d7c772ebc9a9",
+    "tail": "45301c9045664c0251868fecd7dba7f3fb217ff28a48f7194d5287256d2cd4cb",
+    "batchRows": 1
+  },
+  "status": "HALTED_LOCAL_PREFLIGHT_4_NOT_SENT",
+  "cause": "Git ls-remote TLS failure during preflight before reserve; generic HALT label retained unchanged",
+  "actualModelSends": 0,
+  "grant": 1,
+  "reserve": 0,
+  "settle": 0,
+  "billingUncertainUnits": 0,
+  "rawFacts": {
+    "provisionalCorrect": 0,
+    "incorrect": 0,
+    "unknown": 4,
+    "denominator": 4
+  },
+  "firstDisplay": {
+    "provisionalCorrect": 0,
+    "incorrect": 0,
+    "unknown": 4,
+    "denominator": 4
+  },
+  "actualUsage": "NOT_OBSERVABLE_NO_MODEL_RESPONSE",
+  "newObservedCostMicroUsd": 0,
+  "batchCapAllocationMicroUsd": 1300000,
+  "sharedPackageCapMicroUsd": 6000000,
+  "oldBatchRecovery": "NOT_AUTHORIZED_NOT_RUN",
+  "readOnlyDiagnosticLedgerWrites": 0,
+  "packageLedgerWrites": 1
+}

@@ -1,7 +1,7 @@
 import type { SemanticInput } from '../experiments/mainline04/semanticContract'
 import type { WireContext } from '../experiments/realInput01/modelWire'
 
-export const ELIGIBILITY_GROUNDING_VERSION = 'source-proven-eligibility-1.0.0' as const
+export const ELIGIBILITY_GROUNDING_VERSION = 'source-proven-eligibility-1.1.0' as const
 export interface EligibilityDecision {
   taskId: string
   declaredValue: SemanticInput['tasks'][number]['condition']['value']
@@ -45,7 +45,9 @@ export function groundEligibility(input: SemanticInput, context: WireContext) {
     return { taskId: task.id, declaredValue: task.condition.value, status: proved ? 'SOURCE_PROVEN_TRUE' : 'RETAIN_REVIEW',
       ruleScopeIds: [...task.condition.conditionScopeIds], factScopeIds: [...task.condition.factScopeIds], contradictoryScopeIds: contradictory,
       reason: proved ? '原答声明资格成立，同对象许可规则与本人的明确获准事实一致；保留依据，不要求重复核对。'
-        : task.condition.value === 'unknown' ? '资格尚未确认，不能当成已符合；请保留待核对。'
+        : task.condition.value === 'unknown' ? task.condition.conditionScopeIds.length===0&&task.condition.factScopeIds.length===0
+          ? '原答标记适用条件未知，但没有给出条件依据；不能据此认定资格不足，也不能自动认定没有条件。'
+          : '资格尚未确认，不能当成已符合；请保留待核对。'
           : task.condition.value === 'false' ? '原文明确当前不适用，不创建执行任务。'
             : '资格成立声明缺少同对象、同许可或无矛盾的明确事实；请核对资格依据。' }
   })

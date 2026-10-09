@@ -1,0 +1,366 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "humanMetrics": "NOT_OBSERVABLE",
+  "canonicalDraftStates": [
+    {
+      "id": "source:3980a9a6:draft:1",
+      "status": "confirmed",
+      "accepted": 3
+    },
+    {
+      "id": "source:110174de:draft:1",
+      "status": "partially_confirmed",
+      "accepted": 2
+    },
+    {
+      "id": "source:0cd90031:draft:1",
+      "status": "needs_review",
+      "accepted": 0
+    },
+    {
+      "id": "source:a307c1cb:draft:1",
+      "status": "needs_review",
+      "accepted": 0
+    },
+    {
+      "id": "source:9ee58fa7:draft:1",
+      "status": "partially_confirmed",
+      "accepted": 3
+    },
+    {
+      "id": "source:da6553c1:draft:1",
+      "status": "confirmed",
+      "accepted": 5
+    },
+    {
+      "id": "source:27548b39:draft:1",
+      "status": "confirmed",
+      "accepted": 4
+    }
+  ],
+  "historicalPartialFlag": "Legacy ordinary partial=false is not canonical truth; partial source states above are authoritative. Calculator/history unchanged.",
+  "reports": [
+    {
+      "draftId": "source:3980a9a6:draft:1",
+      "inputEpisodeCount": 0,
+      "committedCorrectionFields": [],
+      "links": [],
+      "missing": [],
+      "activeEditMs": 0,
+      "wallMs": 86382,
+      "readMs": 85984,
+      "waitMs": 398,
+      "hiddenMs": 0,
+      "idleMs": 0,
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:110174de:draft:1",
+      "inputEpisodeCount": 0,
+      "committedCorrectionFields": [],
+      "links": [],
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "activeEditMs": null,
+      "wallMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "hiddenMs": null,
+      "idleMs": null,
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:0cd90031:draft:1",
+      "inputEpisodeCount": 0,
+      "committedCorrectionFields": [],
+      "links": [],
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "activeEditMs": null,
+      "wallMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "hiddenMs": null,
+      "idleMs": null,
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:a307c1cb:draft:1",
+      "inputEpisodeCount": 0,
+      "committedCorrectionFields": [],
+      "links": [],
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "activeEditMs": null,
+      "wallMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "hiddenMs": null,
+      "idleMs": null,
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:9ee58fa7:draft:1",
+      "inputEpisodeCount": 0,
+      "committedCorrectionFields": [],
+      "links": [],
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "activeEditMs": null,
+      "wallMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "hiddenMs": null,
+      "idleMs": null,
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:da6553c1:draft:1",
+      "inputEpisodeCount": 1,
+      "committedCorrectionFields": [
+        "task:task-install-meeting-software:qualification-user-input",
+        "task:task-test-headphones:qualification-user-input"
+      ],
+      "links": [
+        {
+          "editId": "ee87ae0f-1cb1-495e-a664-ebaa100baad5",
+          "field": "task:readiness-fnv1a32:bed7d224:facts",
+          "checkpointOperationId": "667ba22f-463d-49e8-84b1-b7ce577e5084",
+          "checkpointRevision": "6cb5a00d-561d-44bc-a129-7a73a3e6a141",
+          "commits": [
+            {
+              "commitId": "source-review:source:da6553c1:draft:1:fnv1a32:b0529827",
+              "operationIds": [
+                "source-review:source:da6553c1:draft:1:fnv1a32:b0529827"
+              ],
+              "readbackIds": [
+                "2c78a3d7-ea13-492f-b6d7-68a492162c7b"
+              ]
+            }
+          ]
+        }
+      ],
+      "missing": [
+        "refresh time discontinuity"
+      ],
+      "activeEditMs": null,
+      "wallMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "hiddenMs": null,
+      "idleMs": null,
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:27548b39:draft:1",
+      "inputEpisodeCount": 1,
+      "committedCorrectionFields": [
+        "task:task-activate-account:qualification-user-input",
+        "task:task-fill-borrow-registration:qualification-user-input"
+      ],
+      "links": [
+        {
+          "editId": "f6c6871f-f665-4a11-bece-62c596b312b2",
+          "field": "task:readiness-fnv1a32:4c5b0d1e:facts",
+          "checkpointOperationId": "180102a0-199a-4272-95bd-9ad1d2409c7d",
+          "checkpointRevision": "bf5db5cf-66f2-434a-970e-d0b1ce52e3b2",
+          "commits": [
+            {
+              "commitId": "source-review:source:27548b39:draft:1:fnv1a32:c6b378ba",
+              "operationIds": [
+                "source-review:source:27548b39:draft:1:fnv1a32:c6b378ba"
+              ],
+              "readbackIds": [
+                "7328ee7a-8c72-4f6d-adbb-13dde77bbc03"
+              ]
+            },
+            {
+              "commitId": "source-review:source:27548b39:draft:1:fnv1a32:2759a079",
+              "operationIds": [
+                "source-review:source:27548b39:draft:1:fnv1a32:2759a079"
+              ],
+              "readbackIds": [
+                "36ce2165-7da7-4107-b402-95e27fa4e12f"
+              ]
+            }
+          ]
+        }
+      ],
+      "missing": [
+        "refresh time discontinuity"
+      ],
+      "activeEditMs": null,
+      "wallMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "hiddenMs": null,
+      "idleMs": null,
+      "humanMetrics": "NOT_OBSERVABLE"
+    }
+  ],
+  "commits": [
+    {
+      "id": "4432f73f-5356-4293-a1c6-e77c3dc06f80",
+      "draftId": "source:27548b39:draft:1",
+      "atMs": 1791469875487,
+      "kind": "commit",
+      "commitId": "source-review:source:27548b39:draft:1:fnv1a32:c6b378ba",
+      "disposition": "partial",
+      "includedEditIds": [
+        "f6c6871f-f665-4a11-bece-62c596b312b2"
+      ],
+      "includedOperationIds": [
+        "source-review:source:27548b39:draft:1:fnv1a32:c6b378ba"
+      ],
+      "fields": [
+        "task:readiness-fnv1a32:4c5b0d1e:facts"
+      ],
+      "semanticFields": [
+        "task:task-activate-account:qualification-user-input",
+        "task:task-fill-borrow-registration:qualification-user-input"
+      ],
+      "structural": false
+    },
+    {
+      "id": "c02a9d1b-f24b-48f6-b08e-efe395a2b4aa",
+      "draftId": "source:27548b39:draft:1",
+      "atMs": 1791470011556,
+      "kind": "commit",
+      "commitId": "source-review:source:27548b39:draft:1:fnv1a32:2759a079",
+      "disposition": "confirmed",
+      "includedEditIds": [
+        "f6c6871f-f665-4a11-bece-62c596b312b2"
+      ],
+      "includedOperationIds": [
+        "source-review:source:27548b39:draft:1:fnv1a32:2759a079"
+      ],
+      "fields": [
+        "task:readiness-fnv1a32:4c5b0d1e:facts"
+      ],
+      "semanticFields": [
+        "task:task-activate-account:qualification-user-input",
+        "task:task-fill-borrow-registration:qualification-user-input"
+      ],
+      "structural": false
+    },
+    {
+      "id": "8a18b83c-c884-488c-baf7-3b718a735ace",
+      "draftId": "source:da6553c1:draft:1",
+      "atMs": 1791470245406,
+      "kind": "commit",
+      "commitId": "source-review:source:da6553c1:draft:1:fnv1a32:b0529827",
+      "disposition": "confirmed",
+      "includedEditIds": [
+        "ee87ae0f-1cb1-495e-a664-ebaa100baad5"
+      ],
+      "includedOperationIds": [
+        "source-review:source:da6553c1:draft:1:fnv1a32:b0529827"
+      ],
+      "fields": [
+        "task:readiness-fnv1a32:bed7d224:facts"
+      ],
+      "semanticFields": [
+        "task:task-test-headphones:qualification-user-input",
+        "task:task-install-meeting-software:qualification-user-input"
+      ],
+      "structural": false
+    },
+    {
+      "id": "7989da94-4ef3-4c74-bdfb-a54946088152",
+      "draftId": "source:9ee58fa7:draft:1",
+      "atMs": 1791471034478,
+      "kind": "commit",
+      "commitId": "source-review:source:9ee58fa7:draft:1:fnv1a32:17b9d950",
+      "disposition": "partial",
+      "includedEditIds": [],
+      "includedOperationIds": [
+        "source-review:source:9ee58fa7:draft:1:fnv1a32:17b9d950"
+      ],
+      "fields": [],
+      "semanticFields": [],
+      "structural": false
+    },
+    {
+      "id": "8fff28d2-cd1d-4c34-8296-8f86c0e607af",
+      "draftId": "source:110174de:draft:1",
+      "atMs": 1791471820372,
+      "kind": "commit",
+      "commitId": "source-review:source:110174de:draft:1:fnv1a32:da7cdabc",
+      "disposition": "partial",
+      "includedEditIds": [],
+      "includedOperationIds": [
+        "source-review:source:110174de:draft:1:fnv1a32:da7cdabc"
+      ],
+      "fields": [],
+      "semanticFields": [],
+      "structural": false
+    },
+    {
+      "id": "c7f7bacc-522c-41fb-87b6-d2b6f83b23ce",
+      "draftId": "source:3980a9a6:draft:1",
+      "atMs": 1791472153909,
+      "kind": "commit",
+      "commitId": "source-review:source:3980a9a6:draft:1:fnv1a32:5c6c1ea4",
+      "disposition": "no_task",
+      "includedEditIds": [],
+      "includedOperationIds": [
+        "source-review:source:3980a9a6:draft:1:fnv1a32:5c6c1ea4"
+      ],
+      "fields": [],
+      "semanticFields": [],
+      "structural": false
+    }
+  ],
+  "readbacks": [
+    {
+      "id": "7328ee7a-8c72-4f6d-adbb-13dde77bbc03",
+      "draftId": "source:27548b39:draft:1",
+      "atMs": 1791469875492,
+      "kind": "readback",
+      "commitId": "source-review:source:27548b39:draft:1:fnv1a32:c6b378ba"
+    },
+    {
+      "id": "36ce2165-7da7-4107-b402-95e27fa4e12f",
+      "draftId": "source:27548b39:draft:1",
+      "atMs": 1791470011561,
+      "kind": "readback",
+      "commitId": "source-review:source:27548b39:draft:1:fnv1a32:2759a079"
+    },
+    {
+      "id": "2c78a3d7-ea13-492f-b6d7-68a492162c7b",
+      "draftId": "source:da6553c1:draft:1",
+      "atMs": 1791470509488,
+      "kind": "readback",
+      "commitId": "source-review:source:da6553c1:draft:1:fnv1a32:b0529827"
+    },
+    {
+      "id": "457b1018-92d9-4af6-9f2f-6d720af9445e",
+      "draftId": "source:9ee58fa7:draft:1",
+      "atMs": 1791471034491,
+      "kind": "readback",
+      "commitId": "source-review:source:9ee58fa7:draft:1:fnv1a32:17b9d950"
+    },
+    {
+      "id": "928476c0-eb0e-49b5-a511-95d8915f975a",
+      "draftId": "source:110174de:draft:1",
+      "atMs": 1791471820404,
+      "kind": "readback",
+      "commitId": "source-review:source:110174de:draft:1:fnv1a32:da7cdabc"
+    },
+    {
+      "id": "da861b7c-c2b1-4447-a3f3-9b017bdfc2bf",
+      "draftId": "source:3980a9a6:draft:1",
+      "atMs": 1791472153922,
+      "kind": "readback",
+      "commitId": "source-review:source:3980a9a6:draft:1:fnv1a32:5c6c1ea4"
+    }
+  ]
+}

@@ -6,6 +6,7 @@ import type {ReviewSession} from '../../experiments/candidate16/d20ReviewSession
 import type {SourceReviewReceipt} from './sourceReviewD26'
 import {workspaceSnapshotHash} from './migration'
 import {eventDisposition} from './eventDisposition'
+import {SOURCE_READINESS_VERSION} from './sourceReadiness'
 
 export const ORDINARY_MEASUREMENT_VERSION='ordinary-source-measurement-d26-1'
 const key='ordinary-source-measurement-d26-1'
@@ -37,6 +38,12 @@ export function createOrdinaryMeasurement(store:WorkspaceRecordStore,now=Date.no
       const record=draft.legacyData?.v7Record
       const items=record&&typeof record==='object'&&!Array.isArray(record)?record.items:undefined
       const corrections=new Set<string>(),structural=new Set<string>()
+      // A shared user judgement has one edit episode but each affected semantic
+      // field remains auditable. It must never be counted as zero user input.
+      for(const h of workspace.historyRecords.filter(h=>h.entityId===draft.id&&h.actor==='user'&&h.action==='user_condition_judgement')){
+        const after=h.after
+        if(after&&typeof after==='object'&&!Array.isArray(after)&&Array.isArray(after.taskIds)&&fields.includes(`task:readiness-${h.fieldName?.slice('source-readiness:'.length)}:facts`))for(const id of after.taskIds)if(typeof id==='string')corrections.add(`task:${id}:qualification-user-input`)
+      }
       if(Array.isArray(items))for(const item of items){
         if(!item||typeof item!=='object'||Array.isArray(item)||!Array.isArray(item.history))continue
         const history=item.history.filter((h):h is {[key:string]:import('./types').JsonValue}=>Boolean(h&&typeof h==='object'&&!Array.isArray(h)&&h.actor==='user'))
@@ -67,7 +74,7 @@ export function createOrdinaryMeasurement(store:WorkspaceRecordStore,now=Date.no
     },
     readback:async(receipt:SourceReviewReceipt)=>{const rows=await events(receipt.draftId);if(!rows.some(e=>e.kind==='readback'&&e.commitId===receipt.commitId))await append(receipt.draftId,'readback',{commitId:receipt.commitId})},
     finish:async(draftId:string,noTask:boolean)=>{const rows=await events(draftId);if(rows.some(e=>e.kind==='end'))return;await append(draftId,'end',{disposition:noTask?'no_task':'confirmed',commitId:[...rows].reverse().find(e=>e.kind==='commit')?.commitId});active=undefined},
-    report:async(draftId:string,session:ReviewSession|undefined,condition:'manual'|'assisted'='assisted')=>({...calculateD22Engineering(await events(draftId),session,condition),version:ORDINARY_MEASUREMENT_VERSION,sourceRole:'ENGINEERING_REPLAY',correctionGrouping:'date leaf fields share one date episode; event addition is structural; no semantic correctness inferred from saving',humanMetrics:'NOT_OBSERVABLE'}),
+    report:async(draftId:string,session:ReviewSession|undefined,condition:'manual'|'assisted'='assisted')=>({...calculateD22Engineering(await events(draftId),session,condition),version:ORDINARY_MEASUREMENT_VERSION,readinessInputVersion:SOURCE_READINESS_VERSION,sourceRole:'ENGINEERING_REPLAY',correctionGrouping:'date leaf fields share one date episode; shared qualification input has one edit episode and distinct affected fields; event addition is structural; no semantic correctness inferred from saving',humanMetrics:'NOT_OBSERVABLE'}),
   }
 }
 export type OrdinaryMeasurement=ReturnType<typeof createOrdinaryMeasurement>

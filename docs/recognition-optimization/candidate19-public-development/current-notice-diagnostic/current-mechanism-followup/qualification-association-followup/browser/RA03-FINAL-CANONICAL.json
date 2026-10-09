@@ -1,0 +1,281 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "derivedFromVisibleRepositoryReadback": true,
+  "originalSnapshot": {
+    "path": ".data\\autonomous-three-hour-20261008\\browser-originals\\RA03-FINAL-CANONICAL.json",
+    "sha256": "1afd69d8fb247f63d3088560b3adaf5e8ff7767b54e2a4c1ca4ad123ab4562cd"
+  },
+  "counts": {
+    "Task": 2,
+    "Project": 0,
+    "Event": 0,
+    "TimePoint": 2,
+    "Material": 0
+  },
+  "tasks": [
+    {
+      "id": "task:source:27548b39:draft:1:task-fill-borrow-registration",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "填写借用登记",
+      "description": "请在指定时间内激活借用账号并填写借用登记。\n两项操作均在该办理窗口内完成，\n不设具体截止时刻，\n也未要求两项操作按先后顺序。",
+      "nextAction": "填写借用登记",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-08T14:31:15.461Z",
+      "updatedAt": "2026-10-08T14:31:15.461Z",
+      "version": 2
+    },
+    {
+      "id": "task:source:27548b39:draft:1:task-activate-account",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "激活借用账号",
+      "description": "请在指定时间内激活借用账号并填写借用登记。\n两项操作均在该办理窗口内完成，\n不设具体截止时刻，\n也未要求两项操作按先后顺序。",
+      "nextAction": "激活借用账号",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-08T14:33:31.510Z",
+      "updatedAt": "2026-10-08T14:33:31.510Z",
+      "version": 1
+    }
+  ],
+  "events": [],
+  "timePoints": [
+    {
+      "id": "time:source:27548b39:draft:1:time-window-20261220-23",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": "task:source:27548b39:draft:1:task-fill-borrow-registration",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:27548b39:draft:1:task-fill-borrow-registration",
+        "task:source:27548b39:draft:1:task-activate-account"
+      ],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年12月20—23日",
+      "normalizedValue": "2026-12-20",
+      "timezone": null,
+      "isAllDay": true,
+      "precision": "date_only",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T14:31:15.461Z",
+      "updatedAt": "2026-10-08T14:33:31.510Z"
+    },
+    {
+      "id": "time:source:27548b39:draft:1:time-window-end-20261223",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": "task:source:27548b39:draft:1:task-fill-borrow-registration",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:27548b39:draft:1:task-fill-borrow-registration",
+        "task:source:27548b39:draft:1:task-activate-account"
+      ],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "2026年12月20—23日",
+      "normalizedValue": "2026-12-23",
+      "timezone": null,
+      "isAllDay": true,
+      "precision": "date_only",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T14:31:15.461Z",
+      "updatedAt": "2026-10-08T14:33:31.510Z"
+    }
+  ],
+  "materials": [],
+  "drafts": [
+    {
+      "id": "source:27548b39:draft:1",
+      "status": "confirmed",
+      "acceptedEntityTempIds": [
+        "task-fill-borrow-registration",
+        "time-window-20261220-23",
+        "time-window-end-20261223",
+        "task-activate-account"
+      ],
+      "rejectedEntityTempIds": [],
+      "remainingConflicts": [],
+      "sourceReadiness": [
+        {
+          "version": "source-readiness-review-1.0.0",
+          "groupId": "fnv1a32:4c5b0d1e",
+          "taskIds": [
+            "task-activate-account"
+          ],
+          "choice": "no_extra_condition",
+          "actor": "user",
+          "sourceVersionId": "source:27548b39:version:1",
+          "conditionSnapshot": "{\"value\":\"unknown\",\"conditionScopeIds\":[],\"factScopeIds\":[]}",
+          "operationId": "53b5e1f5-9ae3-481c-a678-054668e5a2c5",
+          "createdAt": "2026-10-08T14:23:46.240Z"
+        },
+        {
+          "version": "source-readiness-review-1.0.0",
+          "groupId": "fnv1a32:4c5b0d1e",
+          "taskIds": [
+            "task-fill-borrow-registration"
+          ],
+          "choice": "no_extra_condition",
+          "actor": "user",
+          "sourceVersionId": "source:27548b39:version:1",
+          "conditionSnapshot": "{\"value\":\"unknown\",\"conditionScopeIds\":[],\"factScopeIds\":[]}",
+          "operationId": "53b5e1f5-9ae3-481c-a678-054668e5a2c5",
+          "createdAt": "2026-10-08T14:23:46.240Z"
+        }
+      ],
+      "originalResponseSha256": null,
+      "firstSuggestionSha256": "5e4b74ed8c85879bef205145f162ad7fe2b0a8264d1d4c079aa15f1dc804121d"
+    }
+  ],
+  "sourceVersions": [
+    {
+      "id": "source:27548b39:version:1",
+      "sourceId": "source:27548b39",
+      "contentHash": "fnv1a32:f11a199b"
+    }
+  ],
+  "history": [
+    {
+      "id": "53b5e1f5-9ae3-481c-a678-054668e5a2c5",
+      "entityType": "extraction_draft",
+      "entityId": "source:27548b39:draft:1",
+      "action": "user_condition_judgement",
+      "fieldName": "source-readiness:fnv1a32:4c5b0d1e",
+      "before": "unknown",
+      "after": {
+        "choice": "no_extra_condition",
+        "taskIds": [
+          "task-activate-account",
+          "task-fill-borrow-registration"
+        ]
+      },
+      "actor": "user",
+      "reason": "用户后续适用判断；不修改原模型回答或首次展示，不声明前置已完成。",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:23:46.240Z"
+    },
+    {
+      "id": "history:task:source:27548b39:draft:1:task-fill-borrow-registration:created",
+      "entityType": "task",
+      "entityId": "task:source:27548b39:draft:1:task-fill-borrow-registration",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:27548b39:draft:1:task-fill-borrow-registration"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:31:15.461Z"
+    },
+    {
+      "id": "history:time:source:27548b39:draft:1:time-window-20261220-23:created",
+      "entityType": "time_point",
+      "entityId": "time:source:27548b39:draft:1:time-window-20261220-23",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:27548b39:draft:1:time-window-20261220-23"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:31:15.461Z"
+    },
+    {
+      "id": "history:time:source:27548b39:draft:1:time-window-end-20261223:created",
+      "entityType": "time_point",
+      "entityId": "time:source:27548b39:draft:1:time-window-end-20261223",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:27548b39:draft:1:time-window-end-20261223"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:31:15.461Z"
+    },
+    {
+      "id": "history:task:source:27548b39:draft:1:task-activate-account:created",
+      "entityType": "task",
+      "entityId": "task:source:27548b39:draft:1:task-activate-account",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:27548b39:draft:1:task-activate-account"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:33:31.510Z"
+    },
+    {
+      "id": "history:time:source:27548b39:draft:1:time-window-20261220-23:link-added:fnv1a32:d2bd7e52",
+      "entityType": "time_point",
+      "entityId": "time:source:27548b39:draft:1:time-window-20261220-23",
+      "action": "link_added",
+      "fieldName": "relations",
+      "before": {
+        "relatedTaskIds": [
+          "task:source:27548b39:draft:1:task-fill-borrow-registration"
+        ],
+        "relatedMaterialIds": []
+      },
+      "after": {
+        "relatedTaskIds": [
+          "task:source:27548b39:draft:1:task-fill-borrow-registration",
+          "task:source:27548b39:draft:1:task-activate-account"
+        ],
+        "relatedMaterialIds": []
+      },
+      "actor": "user",
+      "reason": "顺序确认补充实体关联",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:33:31.510Z"
+    },
+    {
+      "id": "history:time:source:27548b39:draft:1:time-window-end-20261223:link-added:fnv1a32:cae208b5",
+      "entityType": "time_point",
+      "entityId": "time:source:27548b39:draft:1:time-window-end-20261223",
+      "action": "link_added",
+      "fieldName": "relations",
+      "before": {
+        "relatedTaskIds": [
+          "task:source:27548b39:draft:1:task-fill-borrow-registration"
+        ],
+        "relatedMaterialIds": []
+      },
+      "after": {
+        "relatedTaskIds": [
+          "task:source:27548b39:draft:1:task-fill-borrow-registration",
+          "task:source:27548b39:draft:1:task-activate-account"
+        ],
+        "relatedMaterialIds": []
+      },
+      "actor": "user",
+      "reason": "顺序确认补充实体关联",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:33:31.510Z"
+    }
+  ]
+}

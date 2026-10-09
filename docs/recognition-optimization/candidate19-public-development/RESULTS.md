@@ -1,3 +1,13 @@
+# 当前结果：共享适用判断和恢复已交付，新四份模型输出未完成
+
+2026-10-09交接，实测记录为10月8日UTC。[本轮完整报告](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/REPORT.md) · [浏览器](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/BROWSER_EVIDENCE.md) · [验证](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/VALIDATION.md)。
+
+用户少重复核对：同一资格一次明确判断应用到两个事项，前置仍实际等待；无条件依据的unknown准确提示缺依据，不宣称资格不足。原答/转换/首屏/人改分开，用户判断不计首次正确。旧每臂4：V6 0完整2错2未知、V7 1暂定0错3未知未变。新4全部NOT_SENT/4UNKNOWN，1grant0reserve0settle0实际模型请求；Git TLS发送前失败，HALT/锁保留，不恢复。未证明模型提高。
+
+唯一[当前实测入口](http://127.0.0.1:6913/)：固定录制，实时关闭。5旧raw首屏、部分/局部风险/三故障/只重读/刷新/安排通过；独立4Task4Event11Time0Material0Project。lint/build/security通过，全量仅6旧失败（整体exit1）。当前audit开发2严重6高1中，production0。84/119/7、74资产封存不变；账本1048仅合法grant追加，旧1047前缀保持。下一重点发送前TLS检查与真实V7输出证据，禁止复用旧封存和猜补事实。
+
+---
+
 # 当前结果：下午角色分离与首次展示修复已交付，模型比较不完整
 2026-10-08下午。唯一活动结果入口；下面上午及更早记录是保留的历史。[完整报告](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/REPORT.md) · [逐来源裁决](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/FACT_ADJUDICATION.json) · [实际执行](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/EXECUTION_SUMMARY.json) · [机制](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/IMPLEMENTATION.md) · [浏览器](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/BROWSER_EVIDENCE.md) · [验证](current-notice-diagnostic/current-mechanism-followup/afternoon-role-comparison/VALIDATION.md)。
 

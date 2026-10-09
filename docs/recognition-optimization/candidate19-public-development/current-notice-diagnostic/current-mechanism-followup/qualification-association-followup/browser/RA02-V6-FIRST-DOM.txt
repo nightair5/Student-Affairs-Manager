@@ -1,0 +1,209 @@
+- link "跳到主要内容":
+  - /url: "#main-content"
+- banner:
+  - button "返回今日首页":
+    - strong: 事务管家
+  - button "新事务":
+    - text: 新事务
+- navigation "手机端主要导航":
+  - button "今日":
+    - generic: 今日
+  - button "4 收件箱":
+    - emphasis: "4"
+    - generic: 收件箱
+  - button "项目":
+    - generic: 项目
+  - button "日历":
+    - generic: 日历
+  - button "更多":
+    - generic: 更多
+- generic "匿名工程输入 · 普通产品路径 · 不发送模型请求"
+- main:
+  - text: 来源先保存，确认后入库
+  - heading "待确认" [level=1]
+  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。
+  - strong: "2"
+  - text: 份需关注
+  - group "收件箱视图":
+    - button "全部来源"
+    - button "待确认 2" [pressed]
+  - button "新建手动来源":
+    - text: 新建手动来源
+  - checkbox "选择全部待核对"
+  - text: 选择全部待核对
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: ObligationAuthority 固定录制（非实时调用） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 取得音像研习班录取资格的学员需先测试耳机。测试完成后安装音像研习班会议软件。音像研习班于2026年12月18日13:25开始，14:55结束。原文未说明任何人的录取或测试完成情况。
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 2 任务 · 0 材料 · 2 时间 · 1 活动
+    - button "核对 2 项任务、1 个事件":
+      - text: 核对 2 项任务、1 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: RoleAuthority 固定录制（非实时调用） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 图像解读交流会面向在读本科生。有意参加者可通过预约二维码报名图像解读交流会，报名截止为2026年12月14日16:20。图像解读交流会于2026年12月16日10:10开始，结束时间尚未公布。
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 1 任务 · 0 材料 · 3 时间 · 1 活动
+    - button "核对 1 项任务、0 个事件":
+      - text: 核对 1 项任务、0 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+- status:
+  - generic: 匿名工程建议已生成；没有模型请求，核对后走普通正式保存。
+  - button "关闭提示": ×
+- dialog "识别出 2 项任务、1 个事件":
+  - banner:
+    - generic: 第 2 步 · ObligationAuthority 固定录制（非实时调用） · 比较后程序转换 · 无新模型请求
+    - heading "识别出 2 项任务、1 个事件" [level=2]
+    - paragraph: 先看标题和时间；不准确时再点“编辑”。
+    - button "稍后处理并关闭" [active]:
+  - status "未确认编辑检查点":
+    - strong: 本来源核对会话
+    - paragraph: 编辑在确认前不会创建任务。
+  - strong: 2 项任务、1 个事件待确认
+  - generic: 确认后才会进入今日和任务中心
+  - region "项目匹配与识别质量":
+    - strong: 项目归属建议
+    - text: 未主动建立或匹配项目。
+    - generic: 选择项目归属
+    - combobox "选择项目归属":
+      - option "新建项目"
+      - option "作为独立事项" [selected]
+      - option "稍后决定"
+    - strong: 需要重点核对
+    - generic: 包含事件安排；存在识别冲突；存在质量标记
+    - button "只保留原文明确"
+    - region "聚焦复核原因":
+      - strong: 这份通知包含多个时间、材料或阶段
+      - generic: 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。
+      - list:
+        - strong: 包含事件安排
+        - generic: 识别到 1 个事件，请核对开始时间、地点和是否需要创建。
+        - strong: 存在识别冲突
+        - generic: 3 项结果互相冲突，不会自动替你决定。
+        - strong: 存在质量标记
+        - generic: 2 项质量标记需要人工复核。
+      - generic "来源提取元数据":
+        - generic: 90 字
+      - strong: 质量标记
+      - list:
+        - listitem: 资格尚未确认，不能当成已符合；请保留待核对。
+        - listitem: 该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。
+    - strong: 发现 3 项冲突
+    - article:
+      - paragraph: 该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。
+      - button "在原文中定位"
+    - article:
+      - paragraph: 资格尚未确认，不能当成已符合；请保留待核对。
+      - generic: 暂无可定位依据
+    - article:
+      - paragraph: 资格尚未确认，不能当成已符合；请保留待核对。
+      - generic: 暂无可定位依据
+  - generic "原始通知与定位依据":
+    - text: 原始通知与定位依据
+  - paragraph: 取得音像研习班录取资格的学员需先测试耳机。测试完成后安装音像研习班会议软件。音像研习班于2026年12月18日13:25开始，14:55结束。原文未说明任何人的录取或测试完成情况。
+  - region "项目树待确认事项":
+    - region "本通知适用性":
+      - heading "本通知适用性" [level=3]
+      - paragraph: 同一条件只判断一次，应用到下列事项。只记录你的明确判断；原始识别结果保留。
+      - article:
+        - strong: 测试耳机
+        - paragraph: 原文适用条件；尚未判断你是否符合：
+        - blockquote: 取得音像研习班录取资格的学员需先测试耳机。
+        - button "我符合上述适用条件"
+      - article:
+        - strong: 安装音像研习班会议软件
+        - paragraph: 原文适用条件；尚未判断你是否符合：
+        - blockquote: 测试完成后安装音像研习班会议软件。
+        - button "我符合上述适用条件"
+    - region "同一通知的独立事件与信息":
+      - region "通知补充说明":
+        - heading "通知补充说明" [level=3]
+        - paragraph: 原回答保留的信息；未关联到具体事项，不会据此新增任务或日程。
+        - blockquote: 原文未说明任何人的录取或测试完成情况。
+        - generic "查看补充说明原文依据"
+      - heading "同一通知的事件" [level=3]
+      - article:
+        - strong: 音像研习班
+        - paragraph: 地点未说明；2026年12月18日 13:25（原文：2026年12月18日13:25开始） → 2026年12月18日 14:55（原文：14:55结束）
+        - paragraph: 音像研习班于2026年12月18日13:25开始， 14:55结束。
+        - paragraph: 保留，待正式确认
+        - text: 处置“音像研习班”
+        - combobox "处置“音像研习班”":
+          - option "保留" [selected]
+          - option "暂缓"
+          - option "拒绝多余事件"
+        - button "编辑事件"
+      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。
+      - button "依据原文补充遗漏事件"
+      - button "依据原文补充遗漏任务"
+    - article:
+      - checkbox "选择该任务"
+      - generic: 选择该任务
+      - generic: "1"
+      - strong: 测试耳机
+      - time:
+        - text: 原答未提供截止
+      - button "编辑":
+        - text: 编辑
+      - generic: 其他
+      - generic: 耗时尚未估计
+      - generic: 原文明确
+      - paragraph: 核对后动作测试耳机
+      - status: 资格尚未确认，不能当成已符合；请保留待核对。
+      - generic "为什么这样拆？"
+      - button "不需要":
+        - text: 不需要
+      - button "加入任务" [disabled]:
+        - text: 加入任务
+    - article:
+      - checkbox "选择该任务"
+      - generic: 选择该任务
+      - generic: "2"
+      - strong: 安装音像研习班会议软件
+      - time:
+        - text: 原答未提供截止
+      - button "编辑":
+        - text: 编辑
+      - generic: 其他
+      - generic: 耗时尚未估计
+      - generic: 原文明确
+      - paragraph: 核对后动作安装音像研习班会议软件
+      - paragraph: 等待前一步：测试耳机。这项待办可以保留，前置完成状态未被改成已完成。
+      - status: 该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。
+      - generic "为什么这样拆？"
+      - button "不需要":
+        - text: 不需要
+      - button "加入任务" [disabled]:
+        - text: 加入任务
+    - heading "时间节点" [level=3]
+    - checkbox "event_start 2026年12月18日13:25开始" [checked]
+    - strong: event_start
+    - generic: 2026年12月18日13:25开始
+    - button "在原文中定位"
+    - checkbox "event_end 14:55结束" [checked]
+    - strong: event_end
+    - generic: 14:55结束
+    - button "在原文中定位"
+  - contentinfo:
+    - button "仅保存独立事件；任务仍待核对"
+    - button "稍后再处理"

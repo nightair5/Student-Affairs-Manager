@@ -42,6 +42,8 @@ import { CanonicalWorkspaceRepository, IndexedDbWorkspaceRecordStore, type Works
 import { D20ReviewSessionRepository } from './experiments/candidate16/d20ReviewSession'
 import { buildSourceReviewPlan, commitSourceReview, verifySourceReviewReadback, acknowledgeSourceReadback, sourceReviewProblem, PENDING_SOURCE_READBACK, type SourceReviewReceipt } from './domain/v2/sourceReviewD26'
 import { OrdinarySourceFacts } from './components/OrdinarySourceFacts'
+import { SourceReadinessReview } from './components/SourceReadinessReview'
+import { applySourceReadiness, currentReadinessFlags, type ReadinessInput } from './domain/v2/sourceReadiness'
 import {eventDispositionField,type EventDisposition} from './domain/v2/eventDisposition'
 import { PersonalPlanPanel } from './components/PersonalPlanPanel'
 import { assembleCurrentFirstSuggestion } from './recognition/materialChannelGrounding'
@@ -150,6 +152,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const [ordinaryCanonical, setOrdinaryCanonical] = useState<WorkspaceV8 | null>(null)
   const [ordinaryBusy,setOrdinaryBusy] = useState(false)
   const [ordinaryFactsDirty,setOrdinaryFactsDirty] = useState(false)
+  const [ordinaryReadinessDirty,setOrdinaryReadinessDirty] = useState(false)
   const [ordinaryReceipt,setOrdinaryReceipt] = useState<SourceReviewReceipt | null>(null)
   const [viewConflict,setViewConflict] = useState<WorkspaceViewConflictError | null>(null)
   const ordinaryCommitLock = useRef(false)
@@ -247,7 +250,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     && selectedDraftCurrentSource?.currentVersionId
     && selectedDraft.sourceVersionId !== selectedDraftCurrentSource.currentVersionId,
   )
-  const selectedDraftSource = selectedDraftNeedsHistoricalSource
+  const selectedDraftSourceBeforeReadiness = selectedDraftNeedsHistoricalSource
     ? selectedDraft && selectedDraftCurrentSource && draftSourceSnapshot?.draftId === selectedDraft.id
       && draftSourceSnapshot.sourceVersionId === selectedDraft.sourceVersionId
       ? {
@@ -259,6 +262,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         }
       : null
     : selectedDraftCurrentSource
+  const selectedDraftSource = !runtime && ordinaryCanonical && selectedDraft && selectedDraftSourceBeforeReadiness
+    ? {...selectedDraftSourceBeforeReadiness,reviewMetadata:{...selectedDraftSourceBeforeReadiness.reviewMetadata,qualityFlags:currentReadinessFlags(ordinaryCanonical,selectedDraft.id,selectedDraftSourceBeforeReadiness.reviewMetadata?.qualityFlags??[])}}
+    : selectedDraftSourceBeforeReadiness
   const workspace = useMemo(() => ({
     ...createWorkspaceData(tasks, sources, drafts, projects, courseBlocks, integrations, knowledgeSettings, workPackages, events, migrationLog, recognitionFeedback, legacyData),
     materialItems,
@@ -1203,7 +1209,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   }
 
   const confirmOrdinary = async (draftId:string,itemId?:string) => {
-    if(ordinaryCommitLock.current||ordinaryReceipt||ordinaryFactsDirty)return
+    if(ordinaryCommitLock.current||ordinaryReceipt||ordinaryFactsDirty||ordinaryReadinessDirty)return
     const draft=drafts.find(d=>d.id===draftId)
     if(!draft?.recognitionResult)return
     ordinaryCommitLock.current=true;setOrdinaryBusy(true)
@@ -1251,6 +1257,11 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     await workspaceRepository.save({...workspace,drafts:nextDrafts,historyRecords:history})
     await refreshOrdinary()
     setNotice({text:'草稿纠正已保存；原始首次回答不变，尚未正式确认。'})
+  }
+  const handleOrdinaryReadiness = async (draftId:string,input:ReadinessInput) => {
+    await canonicalWorkspaceRepository.transaction(w=>applySourceReadiness(w,draftId,input))
+    await refreshOrdinary()
+    setNotice({text:'本组适用判断已保存，原答和首次建议保留。尚未创建正式任务，前置事项仍须实际完成。'})
   }
 
   const handleArchiveDrafts = (draftIds: string[]) => {
@@ -1656,7 +1667,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           key={runtime ? selectedDraft.id : undefined}
           isolatedCapabilities={Boolean(runtime)}
           recognitionDescription={runtime?.realInput ? runtime.recognitionDescription : undefined}
-          ordinarySourceReview={!runtime ? {pendingEvents:selectedDraftSource ? mapSourceWorkflowItem(selectedDraftSource,[selectedDraft],ordinaryCanonical ?? undefined).counts.pendingEvents : 0,busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),unsaved:ordinaryFactsDirty,description:ordinaryEnvironment ? selectedDraft.modelName?.includes('固定录制') ? `${selectedDraft.modelName} · 比较后程序转换 · 无新模型请求` : selectedDraft.modelName?.includes('夹具') ? `${selectedDraft.modelName} · 无新模型请求` : undefined : undefined,onConfirm:()=>void handleConfirmAll(selectedDraft.id),facts:<OrdinarySourceFacts draft={selectedDraft} source={selectedDraftSource} workspace={ordinaryCanonical} session={ordinaryReviewSession} onDirty={setOrdinaryFactsDirty} onSave={(result,decision)=>handleOrdinaryFacts(selectedDraft.id,result,decision)} />} : undefined}
+          ordinarySourceReview={!runtime ? {pendingEvents:selectedDraftSource ? mapSourceWorkflowItem(selectedDraftSource,[selectedDraft],ordinaryCanonical ?? undefined).counts.pendingEvents : 0,busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),unsaved:ordinaryFactsDirty||ordinaryReadinessDirty,description:ordinaryEnvironment ? selectedDraft.modelName?.includes('固定录制') ? `${selectedDraft.modelName} · 比较后程序转换 · 无新模型请求` : selectedDraft.modelName?.includes('夹具') ? `${selectedDraft.modelName} · 无新模型请求` : undefined : undefined,onConfirm:()=>void handleConfirmAll(selectedDraft.id),facts:<>{ordinaryCanonical&&<SourceReadinessReview workspace={ordinaryCanonical} draftId={selectedDraft.id} session={ordinaryReviewSession} disabled={ordinaryFactsDirty||ordinaryBusy||Boolean(ordinaryReceipt)||Boolean(viewConflict)} onDirty={setOrdinaryReadinessDirty} onApply={input=>handleOrdinaryReadiness(selectedDraft.id,input)} />}<OrdinarySourceFacts draft={selectedDraft} source={selectedDraftSource} workspace={ordinaryCanonical} session={ordinaryReviewSession} onDirty={setOrdinaryFactsDirty} onSave={(result,decision)=>handleOrdinaryFacts(selectedDraft.id,result,decision)} /></>} : undefined}
           confirmationV2={runtime && experimentalReview ? { busy: isolatedBusy || storageError, items: experimentalReview.states } : !runtime && selectedDraft.recognitionResult ? {busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),items:Object.fromEntries(selectedDraft.items.map(item=>{const r=selectedDraft.recognitionResult!,p=r.timePoints.filter(t=>t.relatedTaskTempIds.includes(item.suggestion.id)),coveragePending=r.conflicts.some(c=>c.requiresDecision&&c.id===`coverage:${item.suggestion.id}:time`);return [item.id,{dateLabel:p.length?p.map(t=>t.rawText+(t.needsConfirmation?'（时刻待定）':'')).join('；'):coveragePending?'时间覆盖待核对，不能当成未说明':'原答未提供截止',blockedReason:sourceReviewProblem(r,item.suggestion.id),materialTempIds:r.materials.filter(m=>m.relatedTaskTempIds.includes(item.suggestion.id)).map(m=>m.tempId),timePointTempIds:p.map(t=>t.tempId)}]}))} : undefined}
           semanticReview={runtime?.semantic && isolatedSnapshot && experimentalReview && isolatedSnapshot.extractionDrafts.find(d=>d.id===selectedDraft.id)?.legacyData?.mainline05 ? {
             itemFacts: (taskId, onFocus) => runtime.semantic!.facts(isolatedSnapshot, selectedDraft.id, taskId, onFocus),

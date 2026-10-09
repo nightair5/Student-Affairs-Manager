@@ -1,0 +1,46 @@
+{
+  "testOutcome": "FAIL",
+  "independentGroups": 42,
+  "failed": [
+    "d19-diagnostic",
+    "d9-historical",
+    "rco-5-007",
+    "c11-history",
+    "c11-gateway",
+    "vitest-d17-history"
+  ],
+  "modelCalls": 0,
+  "ledgerWrites": 0,
+  "security": "PASS_4781_FILES",
+  "lint": "PASS_0_ERRORS_8_EXISTING_WARNINGS",
+  "build": "PASS_CHUNK_WARNING",
+  "directed": "6 files / 51 tests PASS",
+  "history": {
+    "protectedBefore": 74,
+    "changed": [],
+    "chainRows": 1048,
+    "ledgerSha": "c234a07e74bd1ed324e99e7915928daf11e982235c40d1dd52e3d7c772ebc9a9",
+    "prefix1047": "8bd95719a88fb94c7557f0202fe394cfc18e90b924fa73e337a25b0612c0aa01",
+    "latestKind": "scopedGrant",
+    "packet": {
+      "manifestSha256": "3b8bb6c0c4c943cf628652b313f296f0af3a189cedb9afec92bb10efdda1ed8a",
+      "identitiesSha256": "55f608417e5ae0545147521cb5e550b76eb70d4f55a430afc29f7b03746231a8"
+    }
+  },
+  "npmAudit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 1,
+    "high": 6,
+    "critical": 2,
+    "total": 9
+  },
+  "productionAudit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  }
+}
