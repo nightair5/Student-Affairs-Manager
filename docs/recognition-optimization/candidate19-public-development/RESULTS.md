@@ -1,3 +1,27 @@
+# 当前结果：4份官方通知真实诊断，修复两类首次事实损失
+
+2026-10-09。本包当前FactRoleAuthority单臂4请求全部SETTLED，0UNCERTAIN；1新grant/4reserve/4settle，零retry/repair/verifier。新来源及最小事实参照先冻结，旧封存和所有历史成绩保持。未改模型输入或默认候选，没有第二批。
+
+[本包完整报告](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/real-notice-fact-role/observed/REPORT.md) · [逐份裁决](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/real-notice-fact-role/observed/FACT_ADJUDICATION.json) · [前后首次数据](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/real-notice-fact-role/observed/PRODUCT_DIAGNOSTIC.json) · [确认和独立读回](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/real-notice-fact-role/observed/PERSISTENCE_REPLAY.json) · [证据索引](current-notice-diagnostic/current-mechanism-followup/qualification-association-followup/real-notice-fact-role/observed/EVIDENCE_INDEX.json)。
+
+| 本包固定分母4，provisional最小事实 | 正确 | 错误/首次数据未闭合 | 未知 |
+|---|---:|---:|---:|
+| 实际模型原答 | 1 | 1 | 2 |
+| 输出前冻结程序首次数据 | 0 | 4 | 0 |
+| 修公共程序后同raw首次数据 | 1 | 3 | 0 |
+
+用户少重填：论文/贷款原答中的长操作句可生成普通草稿；维护事件已有名称及00:00—03:00完整保留。first1.6.0/compound-name1.1.0只恢复有同对象依据的事实，错owner/时间/无据动作和否定仍阻断。RN-04工程正式确认Task0/Project0/Event1/Time2，无字段编辑；原答、程序审计和人工选择分开。旧8首份数据逐份不变。RN-01时间角色/窗口、RN-02渠道/依赖、RN-03参与依据/每日例外仍未闭合或未决；不能将可解码算整份正确。
+
+这是旧raw的新公共程序收益，**尚未证明新生成机制或总体准确率提高**。四来源为已见Development/单作者模型辅助参照，独立真值、泄漏及未核标题/自由描述仍NOT_ADJUDICATED。浏览器点击、刷新、IndexedDB为NOT_RUN_POLICY_STOP：官方工具无法可靠识别Windows URL，没有绕过；内存Repository与HTTP不冒充页面证据。唯一[当前固定4录制入口6917](http://127.0.0.1:6917/)，实时机械关闭，构建ac45bb4693b7/source fdbf658f9d68，首页200/模型POST403。
+
+实际usage25879input/15785output（cached20480），内部保守结算US$0.026707，供应商实扣NOT_OBSERVABLE；本批最坏界US$1.297616，分配1.30，未用满共享16/$6。77定向检查、lint/build/security通过；全量42组36PASS/6旧FAIL，整体exit1。开发audit2critical6high1moderate/production0，未改依赖/旧断言。84/119/7、235本机资产和原1082账本前缀不变，1091完整链仅9合法追加。四真人NOT_OBSERVABLE。
+
+下一先用已有RN-03参与依据和RN-01/RN-02渠道raw修最多两个确定公共问题；无需默认新增付费。实际普通页面验收只缺恢复可用官方浏览器通道，产品交付仍保留该未测项。
+
+---
+
+以下为原样保留的历史工作包：
+
 # 当前结果：办理时刻与真实引用恢复，8次全部确定，冻结比较收益伴退步
 
 2026-10-09。本包实际执行8个新请求，8SETTLED/0UNCERTAIN，1新grant/8reserve/8settle，零retry/repair/verifier；未恢复旧封存或用余款扩样。修复原文领取时刻被当deadline及材料/前置/关联重复索引误拒绝，接普通App保存与D27。

@@ -1,0 +1,1554 @@
+{
+  "batch": "FACT-ROLE-CURRENT-REAL-NOTICE-DEVELOPMENT-20261009-R1",
+  "role": "ACTUAL_RESPONSES_NOT_FIXTURES",
+  "rows": [
+    {
+      "ordinal": 1,
+      "sourceId": "RN-01",
+      "responseSha256": "5fd97a235266bfa882ca4a30210d191ad216461301c550c474f9e8bc8e15d371",
+      "rawFile": "raw-01.json",
+      "facts": {
+        "schemaVersion": "fact-role-authority-source-contract-1.0.0",
+        "tasks": [
+          {
+            "id": "task-upload-thesis",
+            "propositionScopeIds": [
+              "scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+              "scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9",
+              "scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+              "scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+              "scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+              "scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": {
+              "scopeId": "scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+              "surface": "请上传word版和pdf版"
+            },
+            "object": {
+              "scopeId": "scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+              "surface": "最终版学位论文"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "上传最终版学位论文",
+              "description": "在2026年6月学位申请系统中上传最终版学位论文，需上传word版和pdf版；pdf版需上传完成所有签字、包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。",
+              "completionCriteria": [
+                "上传word版最终版学位论文",
+                "上传pdf版最终版学位论文，pdf版完成所有签字，包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "eventLinks": [],
+            "participation": {
+              "mode": "required",
+              "scopeIds": [
+                "scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+                "scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84"
+              ]
+            },
+            "executionChannel": {
+              "surface": "2026年6月学位申请系统",
+              "scopeIds": [
+                "scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+                "scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9"
+              ]
+            },
+            "absences": []
+          },
+          {
+            "id": "task-submit-paper-materials",
+            "propositionScopeIds": [
+              "scope-0011-0baaabf7c79e765f0c95ade1d05860f7f5a0bff8b53c6301b64764885b97036d",
+              "scope-0012-398077c8a1102aa408b24034a5f53ffc29d1e9f4dc471301fcf6d91c9fadae73",
+              "scope-0013-27405054dab97fc2b1ad36c17e7231e9536f91f99c60f66fbcd074f187f056cd"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeId": "scope-0013-27405054dab97fc2b1ad36c17e7231e9536f91f99c60f66fbcd074f187f056cd",
+              "surface": "请按时将相关材料提交至学院A208办公室研究生秘书处"
+            },
+            "object": {
+              "scopeId": "scope-0013-27405054dab97fc2b1ad36c17e7231e9536f91f99c60f66fbcd074f187f056cd",
+              "surface": "相关材料"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交纸质版材料",
+              "description": "在6月15-16日（上午9:00-11:30，下午2:30-5:30）按时将相关材料提交至学院A208办公室研究生秘书处。",
+              "completionCriteria": [
+                "在6月15-16日规定时间内将相关材料提交至学院A208办公室研究生秘书处"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "eventLinks": [],
+            "participation": {
+              "mode": "required",
+              "scopeIds": [
+                "scope-0013-27405054dab97fc2b1ad36c17e7231e9536f91f99c60f66fbcd074f187f056cd"
+              ]
+            },
+            "executionChannel": null,
+            "absences": []
+          }
+        ],
+        "prerequisiteStates": [],
+        "events": [],
+        "timePoints": [
+          {
+            "tempId": "time-registration-deadline",
+            "type": "registration_deadline",
+            "rawText": "2026年6月学位申请系统提交截止时间为6月10日",
+            "scopeIds": [
+              "scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3"
+            ],
+            "confidence": 0.95,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-upload-thesis"
+              }
+            ]
+          },
+          {
+            "tempId": "time-paper-window-start",
+            "type": "window_start",
+            "rawText": "6月15-16日（上午9:00-11:30",
+            "scopeIds": [
+              "scope-0011-0baaabf7c79e765f0c95ade1d05860f7f5a0bff8b53c6301b64764885b97036d"
+            ],
+            "confidence": 0.9,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-submit-paper-materials"
+              }
+            ]
+          },
+          {
+            "tempId": "time-paper-window-end",
+            "type": "window_end",
+            "rawText": "下午2:30-5:30）",
+            "scopeIds": [
+              "scope-0012-398077c8a1102aa408b24034a5f53ffc29d1e9f4dc471301fcf6d91c9fadae73"
+            ],
+            "confidence": 0.9,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-submit-paper-materials"
+              }
+            ]
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-word-thesis",
+            "name": "word版最终版学位论文",
+            "required": true,
+            "formatRequirements": [
+              "word版"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": "2026年6月学位申请系统",
+            "relatedTaskTempIds": [
+              "task-upload-thesis"
+            ],
+            "scopeIds": [
+              "scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+              "scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84"
+            ],
+            "confidence": 0.95
+          },
+          {
+            "tempId": "material-pdf-thesis",
+            "name": "pdf版最终版学位论文",
+            "required": true,
+            "formatRequirements": [
+              "pdf版",
+              "完成所有签字",
+              "包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": "2026年6月学位申请系统",
+            "relatedTaskTempIds": [
+              "task-upload-thesis"
+            ],
+            "scopeIds": [
+              "scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+              "scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+              "scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+              "scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce"
+            ],
+            "confidence": 0.95
+          }
+        ],
+        "revisions": [],
+        "conflicts": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-ac15980c5f0c48822593e327183bcd8238155c4cfae966d1bb619acc933c8535",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-upload-thesis",
+              "time-registration-deadline"
+            ]
+          },
+          {
+            "scopeId": "scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-upload-thesis"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-upload-thesis",
+              "material-word-thesis",
+              "material-pdf-thesis"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-upload-thesis",
+              "material-word-thesis",
+              "material-pdf-thesis"
+            ]
+          },
+          {
+            "scopeId": "scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-upload-thesis",
+              "material-pdf-thesis"
+            ]
+          },
+          {
+            "scopeId": "scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-upload-thesis",
+              "material-pdf-thesis"
+            ]
+          },
+          {
+            "scopeId": "scope-0008-4020b6547a338b2c7220f2e0af6b915d154202c851954ed24d369e6f4fea7a35",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0009-c890a28668cf795d86b0216444362f26b8eedf4af7137cc3f943a1649d67928a",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0010-e426cbcc4b6d89e0039f699520addf67dd1f9e970c378030ca2a0ea43f999482",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0011-0baaabf7c79e765f0c95ade1d05860f7f5a0bff8b53c6301b64764885b97036d",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-submit-paper-materials",
+              "time-paper-window-start"
+            ]
+          },
+          {
+            "scopeId": "scope-0012-398077c8a1102aa408b24034a5f53ffc29d1e9f4dc471301fcf6d91c9fadae73",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-submit-paper-materials",
+              "time-paper-window-end"
+            ]
+          },
+          {
+            "scopeId": "scope-0013-27405054dab97fc2b1ad36c17e7231e9536f91f99c60f66fbcd074f187f056cd",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-submit-paper-materials"
+            ]
+          }
+        ],
+        "requirements": [
+          {
+            "ownerTaskId": "task-upload-thesis",
+            "text": "需上传最终版学位论文，请上传word版和pdf版，pdf版请上传完成所有签字，包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。",
+            "scopeIds": [
+              "scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+              "scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+              "scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+              "scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce"
+            ],
+            "conditionScopeIds": []
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 6261,
+        "input_tokens_details": {
+          "cached_tokens": 5120
+        },
+        "output_tokens": 4012,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 10273
+      }
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "RN-02",
+      "responseSha256": "b7736b8e1190f0638c11866bcb15a7092a2cc0a466fc781092e29ba776183e10",
+      "rawFile": "raw-02.json",
+      "facts": {
+        "schemaVersion": "fact-role-authority-source-contract-1.0.0",
+        "tasks": [
+          {
+            "id": "task-login-xmuxg",
+            "propositionScopeIds": [
+              "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+              "scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "scopeId": "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+              "surface": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515"
+            },
+            "object": {
+              "scopeId": "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+              "surface": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515"
+            },
+            "effect": "external_interaction",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "登录厦门大学学工系统",
+              "description": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "completionCriteria": [
+                "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0002-bdb369e0cc7e8c0667efc799ce7779be7a5deb95e894d0a744ae52689e711902"
+              ],
+              "factScopeIds": []
+            },
+            "eventLinks": [],
+            "participation": {
+              "mode": "required",
+              "scopeIds": [
+                "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d"
+              ]
+            },
+            "executionChannel": {
+              "surface": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "scopeIds": [
+                "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ]
+            },
+            "absences": []
+          },
+          {
+            "id": "task-select-business-period",
+            "propositionScopeIds": [
+              "scope-0005-8ae3b8fd6822a7da28f42f6d5ee7186be65814422f2cc3d24edac578b9fdbe57",
+              "scope-0006-6de8bbcab851098b2e11a3bcac3f6671982a28f38f54a039dafb47a7ce6f6e55"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "scopeId": "scope-0006-6de8bbcab851098b2e11a3bcac3f6671982a28f38f54a039dafb47a7ce6f6e55",
+              "surface": "选择“2026-2027学年生源地贷款”业务期"
+            },
+            "object": {
+              "scopeId": "scope-0006-6de8bbcab851098b2e11a3bcac3f6671982a28f38f54a039dafb47a7ce6f6e55",
+              "surface": "“2026-2027学年生源地贷款”业务期"
+            },
+            "effect": "external_interaction",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "选择“2026-2027学年生源地贷款”业务期",
+              "description": "点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，选择“2026-2027学年生源地贷款”业务期",
+              "completionCriteria": [
+                "选择“2026-2027学年生源地贷款”业务期"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [
+                "task-login-xmuxg"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0002-bdb369e0cc7e8c0667efc799ce7779be7a5deb95e894d0a744ae52689e711902"
+              ],
+              "factScopeIds": []
+            },
+            "eventLinks": [],
+            "participation": {
+              "mode": "required",
+              "scopeIds": [
+                "scope-0005-8ae3b8fd6822a7da28f42f6d5ee7186be65814422f2cc3d24edac578b9fdbe57",
+                "scope-0006-6de8bbcab851098b2e11a3bcac3f6671982a28f38f54a039dafb47a7ce6f6e55"
+              ]
+            },
+            "executionChannel": {
+              "surface": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "scopeIds": [
+                "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ]
+            },
+            "absences": []
+          },
+          {
+            "id": "task-fill-info",
+            "propositionScopeIds": [
+              "scope-0007-f47f74d7f41fc686ea1764013a531543153089060c853b54b79c5cbcb8d76934"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "fill",
+            "action": {
+              "scopeId": "scope-0007-f47f74d7f41fc686ea1764013a531543153089060c853b54b79c5cbcb8d76934",
+              "surface": "准确填写相关信息"
+            },
+            "object": {
+              "scopeId": "scope-0007-f47f74d7f41fc686ea1764013a531543153089060c853b54b79c5cbcb8d76934",
+              "surface": "相关信息"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "准确填写相关信息",
+              "description": "准确填写相关信息",
+              "completionCriteria": [
+                "准确填写相关信息"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [
+                "task-select-business-period"
+              ],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0002-bdb369e0cc7e8c0667efc799ce7779be7a5deb95e894d0a744ae52689e711902"
+              ],
+              "factScopeIds": []
+            },
+            "eventLinks": [],
+            "participation": {
+              "mode": "required",
+              "scopeIds": [
+                "scope-0007-f47f74d7f41fc686ea1764013a531543153089060c853b54b79c5cbcb8d76934"
+              ]
+            },
+            "executionChannel": {
+              "surface": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "scopeIds": [
+                "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ]
+            },
+            "absences": []
+          },
+          {
+            "id": "task-upload-receipt",
+            "propositionScopeIds": [
+              "scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": {
+              "scopeId": "scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a",
+              "surface": "上传贷款机构提供的回执材料照片或截图"
+            },
+            "object": {
+              "scopeId": "scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a",
+              "surface": "贷款机构提供的回执材料照片或截图"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "上传贷款机构提供的回执材料照片或截图",
+              "description": "上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请）",
+              "completionCriteria": [
+                "上传贷款机构提供的回执材料照片或截图",
+                "务必完整清晰且确保是本学年申请"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [
+                "task-fill-info"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0002-bdb369e0cc7e8c0667efc799ce7779be7a5deb95e894d0a744ae52689e711902"
+              ],
+              "factScopeIds": []
+            },
+            "eventLinks": [],
+            "participation": {
+              "mode": "required",
+              "scopeIds": [
+                "scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a"
+              ]
+            },
+            "executionChannel": {
+              "surface": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "scopeIds": [
+                "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ]
+            },
+            "absences": []
+          },
+          {
+            "id": "task-submit-verification-code",
+            "propositionScopeIds": [
+              "scope-0009-a3b000c5bcc6990cb87b3eb0fcdae144c9644bd0cca94f31e51ba1813ec933d2",
+              "scope-0010-24b54ed4a8038b95a975ec6f33ed854a9664572eb54fb0884d70c0fc0099147b",
+              "scope-0011-4c25fbfbe3bcf042c7ec8a4c1b189f9c3050dd288160654f9a413195ea7915ca"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeId": "scope-0010-24b54ed4a8038b95a975ec6f33ed854a9664572eb54fb0884d70c0fc0099147b",
+              "surface": "在系统上提交当前学年准确的回执校验码"
+            },
+            "object": {
+              "scopeId": "scope-0010-24b54ed4a8038b95a975ec6f33ed854a9664572eb54fb0884d70c0fc0099147b",
+              "surface": "当前学年准确的回执校验码"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "在系统上提交当前学年准确的回执校验码",
+              "description": "在国家开发银行、河北农村信用社办理贷款的学生，请务必在系统上提交当前学年准确的回执校验码，否则将无法进行入学确认",
+              "completionCriteria": [
+                "在系统上提交当前学年准确的回执校验码"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "urgent",
+              "dependencyTempIds": [
+                "task-upload-receipt"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0009-a3b000c5bcc6990cb87b3eb0fcdae144c9644bd0cca94f31e51ba1813ec933d2"
+              ],
+              "factScopeIds": []
+            },
+            "eventLinks": [],
+            "participation": {
+              "mode": "required",
+              "scopeIds": [
+                "scope-0009-a3b000c5bcc6990cb87b3eb0fcdae144c9644bd0cca94f31e51ba1813ec933d2",
+                "scope-0010-24b54ed4a8038b95a975ec6f33ed854a9664572eb54fb0884d70c0fc0099147b"
+              ]
+            },
+            "executionChannel": {
+              "surface": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "scopeIds": [
+                "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ]
+            },
+            "absences": []
+          }
+        ],
+        "prerequisiteStates": [
+          {
+            "taskId": "task-select-business-period",
+            "predecessorId": "task-login-xmuxg",
+            "completion": "unknown",
+            "factScopeIds": []
+          },
+          {
+            "taskId": "task-fill-info",
+            "predecessorId": "task-select-business-period",
+            "completion": "unknown",
+            "factScopeIds": []
+          },
+          {
+            "taskId": "task-upload-receipt",
+            "predecessorId": "task-fill-info",
+            "completion": "unknown",
+            "factScopeIds": []
+          },
+          {
+            "taskId": "task-submit-verification-code",
+            "predecessorId": "task-upload-receipt",
+            "completion": "unknown",
+            "factScopeIds": []
+          }
+        ],
+        "events": [],
+        "timePoints": [
+          {
+            "tempId": "time-start-0813",
+            "type": "window_start",
+            "rawText": "8月13日起",
+            "scopeIds": [
+              "scope-0001-8fd1a7daeda7c1bb3a011a1427612402faf8a8b585d68272f54d68050876528c"
+            ],
+            "confidence": 0.95,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-login-xmuxg"
+              },
+              {
+                "kind": "task",
+                "entityId": "task-select-business-period"
+              },
+              {
+                "kind": "task",
+                "entityId": "task-fill-info"
+              },
+              {
+                "kind": "task",
+                "entityId": "task-upload-receipt"
+              },
+              {
+                "kind": "task",
+                "entityId": "task-submit-verification-code"
+              }
+            ]
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-receipt",
+            "name": "贷款机构提供的回执材料照片或截图",
+            "required": true,
+            "formatRequirements": [
+              "照片或截图",
+              "务必完整清晰且确保是本学年申请"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+            "relatedTaskTempIds": [
+              "task-upload-receipt"
+            ],
+            "scopeIds": [
+              "scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a"
+            ],
+            "confidence": 0.95
+          }
+        ],
+        "revisions": [],
+        "conflicts": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-8fd1a7daeda7c1bb3a011a1427612402faf8a8b585d68272f54d68050876528c",
+            "kind": "information",
+            "primaryEntityIds": [
+              "time-start-0813"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-bdb369e0cc7e8c0667efc799ce7779be7a5deb95e894d0a744ae52689e711902",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-login-xmuxg"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-login-xmuxg"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-8ae3b8fd6822a7da28f42f6d5ee7186be65814422f2cc3d24edac578b9fdbe57",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-select-business-period"
+            ]
+          },
+          {
+            "scopeId": "scope-0006-6de8bbcab851098b2e11a3bcac3f6671982a28f38f54a039dafb47a7ce6f6e55",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-select-business-period"
+            ]
+          },
+          {
+            "scopeId": "scope-0007-f47f74d7f41fc686ea1764013a531543153089060c853b54b79c5cbcb8d76934",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-fill-info"
+            ]
+          },
+          {
+            "scopeId": "scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-upload-receipt",
+              "material-receipt"
+            ]
+          },
+          {
+            "scopeId": "scope-0009-a3b000c5bcc6990cb87b3eb0fcdae144c9644bd0cca94f31e51ba1813ec933d2",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-submit-verification-code"
+            ]
+          },
+          {
+            "scopeId": "scope-0010-24b54ed4a8038b95a975ec6f33ed854a9664572eb54fb0884d70c0fc0099147b",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-submit-verification-code"
+            ]
+          },
+          {
+            "scopeId": "scope-0011-4c25fbfbe3bcf042c7ec8a4c1b189f9c3050dd288160654f9a413195ea7915ca",
+            "kind": "information",
+            "primaryEntityIds": [
+              "task-submit-verification-code"
+            ]
+          }
+        ],
+        "requirements": [
+          {
+            "ownerTaskId": "task-fill-info",
+            "text": "准确填写相关信息",
+            "scopeIds": [
+              "scope-0007-f47f74d7f41fc686ea1764013a531543153089060c853b54b79c5cbcb8d76934"
+            ],
+            "conditionScopeIds": []
+          },
+          {
+            "ownerTaskId": "task-upload-receipt",
+            "text": "务必完整清晰且确保是本学年申请",
+            "scopeIds": [
+              "scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a"
+            ],
+            "conditionScopeIds": []
+          },
+          {
+            "ownerTaskId": "task-submit-verification-code",
+            "text": "在国家开发银行、河北农村信用社办理贷款的学生，请务必在系统上提交当前学年准确的回执校验码，否则将无法进行入学确认",
+            "scopeIds": [
+              "scope-0009-a3b000c5bcc6990cb87b3eb0fcdae144c9644bd0cca94f31e51ba1813ec933d2",
+              "scope-0010-24b54ed4a8038b95a975ec6f33ed854a9664572eb54fb0884d70c0fc0099147b",
+              "scope-0011-4c25fbfbe3bcf042c7ec8a4c1b189f9c3050dd288160654f9a413195ea7915ca"
+            ],
+            "conditionScopeIds": [
+              "scope-0009-a3b000c5bcc6990cb87b3eb0fcdae144c9644bd0cca94f31e51ba1813ec933d2"
+            ]
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 6187,
+        "input_tokens_details": {
+          "cached_tokens": 5120
+        },
+        "output_tokens": 4807,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 10994
+      }
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "RN-03",
+      "responseSha256": "31b93b86730aea7ffdb0e63b8fd66a8bce8fddeab52cebb40b1f47383879bd8e",
+      "rawFile": "raw-03.json",
+      "facts": {
+        "schemaVersion": "fact-role-authority-source-contract-1.0.0",
+        "tasks": [
+          {
+            "id": "task-online-redeem",
+            "propositionScopeIds": [
+              "scope-0006-d4536bf4e517d1a0778883eff676161221ff3e4e466bd8ef70f33186bd7dfcf8",
+              "scope-0007-fabb5851b0c85cde4f3da36e841cc6bc024b52a39c375fbae5631fd8334f47ba",
+              "scope-0014-6da0bde20e65209cae46a3c2862b986e4bb4d0699bb42489d0296700adcf6ee8",
+              "scope-0015-dfac6a0db777cc0b1aa3f8d9d19c2edb374a011797144e46bd53787b06e34c5e",
+              "scope-0016-642b6ccfed0934a65bb1b83298cf00e4c522ee76b916b3540d69ccd5438e53ad",
+              "scope-0017-8470b30624288556d3c892ec749ebfb803e6b66d211329f4e882bbdf93432c3f",
+              "scope-0018-bcc60382d209d09898820c885674bf321e91a968e0ae46b4b2eea67df58aaf92",
+              "scope-0019-03f6ccdec204824d66a2fbeadd0f9c13ec31a9f51871557f095af19b94b4b408"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "register",
+            "action": {
+              "scopeId": "scope-0019-03f6ccdec204824d66a2fbeadd0f9c13ec31a9f51871557f095af19b94b4b408",
+              "surface": "确认并提交申请"
+            },
+            "object": {
+              "scopeId": "scope-0005-3d586d1681dc49e3514e89f60a2cf9b0b4a9b989b8657f61916229706eb1d5af",
+              "surface": "兑换"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "线上兑换礼品",
+              "description": "登录“我的图书馆”--“积分商城”，根据积分情况挑选喜欢的礼品，选择礼品领取地点，确认并提交申请。",
+              "completionCriteria": [
+                "登录“我的图书馆”--“积分商城”",
+                "根据积分情况挑选喜欢的礼品",
+                "选择礼品领取地点",
+                "确认并提交申请"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0004-25e06fa04991bf68fc9b2da536a0f14348c6b0d6b75808a27ab5a11cb9d0cbd6"
+              ],
+              "factScopeIds": []
+            },
+            "eventLinks": [],
+            "participation": {
+              "mode": "optional",
+              "scopeIds": [
+                "scope-0004-25e06fa04991bf68fc9b2da536a0f14348c6b0d6b75808a27ab5a11cb9d0cbd6"
+              ]
+            },
+            "executionChannel": {
+              "surface": "登录“我的图书馆”--“积分商城”",
+              "scopeIds": [
+                "scope-0015-dfac6a0db777cc0b1aa3f8d9d19c2edb374a011797144e46bd53787b06e34c5e"
+              ]
+            },
+            "absences": []
+          },
+          {
+            "id": "task-offline-collect",
+            "propositionScopeIds": [
+              "scope-0008-b92ba8cfebfc71c17de4b6c4bc3258d97060a2eee314d1ad68d3878abe314413",
+              "scope-0009-850573460ef6964e457ca7bb401ebc91564baf75e72c183e0cc5945f366aa200",
+              "scope-0010-9bed530b72bc246bcb96251e5389b88b91928b5b1af5f8eede7011602647afd5",
+              "scope-0011-c7ebd8d3770ae48a106e4cd341b10ea1dfbf8b358f6fbf60a18e5afbe914bfa0",
+              "scope-0012-9d0aaf3ebde350a6c9385234c130bbb5e41bd0b7ff6f38be1d52889f6e44dcb3",
+              "scope-0020-4547128c83909a61689d749050ff73defc7b9c651ac4a61da0699142d02f20bf",
+              "scope-0021-a7d9ae45c08367fa81b3b2fd24495e6fa9df0a8b3714b1319246d2ca52eb6c85",
+              "scope-0022-4253689760c3be69812e7e1e07765296ea3e02a3ab3547bd728ce6e2e5c53cd3",
+              "scope-0023-8e16c2ee95a1263089c1766f399e9cce093ff7eaaa4d85b13b56869c4a14ab02"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "collect",
+            "action": {
+              "scopeId": "scope-0023-8e16c2ee95a1263089c1766f399e9cce093ff7eaaa4d85b13b56869c4a14ab02",
+              "surface": "带走心仪好礼"
+            },
+            "object": {
+              "scopeId": "scope-0010-9bed530b72bc246bcb96251e5389b88b91928b5b1af5f8eede7011602647afd5",
+              "surface": "礼品"
+            },
+            "effect": "physical_action",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "线下领取礼品",
+              "description": "带上你的校园卡，到礼品领取地点，带走心仪好礼。",
+              "completionCriteria": [
+                "带上你的校园卡",
+                "到礼品领取地点",
+                "带走心仪好礼"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "task-online-redeem"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0004-25e06fa04991bf68fc9b2da536a0f14348c6b0d6b75808a27ab5a11cb9d0cbd6"
+              ],
+              "factScopeIds": []
+            },
+            "eventLinks": [],
+            "participation": {
+              "mode": "optional",
+              "scopeIds": [
+                "scope-0004-25e06fa04991bf68fc9b2da536a0f14348c6b0d6b75808a27ab5a11cb9d0cbd6"
+              ]
+            },
+            "executionChannel": null,
+            "absences": []
+          }
+        ],
+        "prerequisiteStates": [
+          {
+            "taskId": "task-offline-collect",
+            "predecessorId": "task-online-redeem",
+            "completion": "unknown",
+            "factScopeIds": []
+          }
+        ],
+        "events": [],
+        "timePoints": [
+          {
+            "tempId": "tp-online-window-start",
+            "type": "window_start",
+            "rawText": "2026 年 5 月 9 日 10:00 起",
+            "scopeIds": [
+              "scope-0007-fabb5851b0c85cde4f3da36e841cc6bc024b52a39c375fbae5631fd8334f47ba"
+            ],
+            "confidence": 0.95,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-online-redeem"
+              }
+            ]
+          },
+          {
+            "tempId": "tp-online-window-end",
+            "type": "window_end",
+            "rawText": "至 6 月 30 日 21:00止",
+            "scopeIds": [
+              "scope-0007-fabb5851b0c85cde4f3da36e841cc6bc024b52a39c375fbae5631fd8334f47ba"
+            ],
+            "confidence": 0.95,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-online-redeem"
+              }
+            ]
+          },
+          {
+            "tempId": "tp-offline-window-start",
+            "type": "window_start",
+            "rawText": "5 月 9 日",
+            "scopeIds": [
+              "scope-0009-850573460ef6964e457ca7bb401ebc91564baf75e72c183e0cc5945f366aa200"
+            ],
+            "confidence": 0.95,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-offline-collect"
+              }
+            ]
+          },
+          {
+            "tempId": "tp-offline-window-end",
+            "type": "window_end",
+            "rawText": "6 月 30 日",
+            "scopeIds": [
+              "scope-0009-850573460ef6964e457ca7bb401ebc91564baf75e72c183e0cc5945f366aa200"
+            ],
+            "confidence": 0.95,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-offline-collect"
+              }
+            ]
+          },
+          {
+            "tempId": "tp-redeem-deadline",
+            "type": "registration_deadline",
+            "rawText": "6月30日21:00兑换截止",
+            "scopeIds": [
+              "scope-0032-beae981774e716c74d19d1b081d217e7dc709665afa5c980e571194e73796f68"
+            ],
+            "confidence": 0.95,
+            "owners": [
+              {
+                "kind": "task",
+                "entityId": "task-online-redeem"
+              },
+              {
+                "kind": "task",
+                "entityId": "task-offline-collect"
+              }
+            ]
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "mat-campus-card",
+            "name": "校园卡",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": 1,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-offline-collect"
+            ],
+            "scopeIds": [
+              "scope-0021-a7d9ae45c08367fa81b3b2fd24495e6fa9df0a8b3714b1319246d2ca52eb6c85",
+              "scope-0027-04ba898a12c237652603581408e2307e70e96ce238402234c361fc25f4538cd8"
+            ],
+            "confidence": 0.95
+          }
+        ],
+        "revisions": [],
+        "conflicts": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-ae3f4aa0ed1775321b7dca49e7ae0636bba506ec2959205874cf296569062d1e",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0002-73fdbbdaf4e997ae3d8f59d06184571942c5b9e8d81dd299b0636a7031772218",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-66b26261e6f4f040fc424456deeb0cd7391dd6b35d7fbfc83b584c359084ea3c",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0004-25e06fa04991bf68fc9b2da536a0f14348c6b0d6b75808a27ab5a11cb9d0cbd6",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0005-3d586d1681dc49e3514e89f60a2cf9b0b4a9b989b8657f61916229706eb1d5af",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0006-d4536bf4e517d1a0778883eff676161221ff3e4e466bd8ef70f33186bd7dfcf8",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-online-redeem"
+            ]
+          },
+          {
+            "scopeId": "scope-0007-fabb5851b0c85cde4f3da36e841cc6bc024b52a39c375fbae5631fd8334f47ba",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-online-redeem"
+            ]
+          },
+          {
+            "scopeId": "scope-0008-b92ba8cfebfc71c17de4b6c4bc3258d97060a2eee314d1ad68d3878abe314413",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-offline-collect"
+            ]
+          },
+          {
+            "scopeId": "scope-0009-850573460ef6964e457ca7bb401ebc91564baf75e72c183e0cc5945f366aa200",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-offline-collect"
+            ]
+          },
+          {
+            "scopeId": "scope-0010-9bed530b72bc246bcb96251e5389b88b91928b5b1af5f8eede7011602647afd5",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-offline-collect"
+            ]
+          },
+          {
+            "scopeId": "scope-0011-c7ebd8d3770ae48a106e4cd341b10ea1dfbf8b358f6fbf60a18e5afbe914bfa0",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-offline-collect"
+            ]
+          },
+          {
+            "scopeId": "scope-0012-9d0aaf3ebde350a6c9385234c130bbb5e41bd0b7ff6f38be1d52889f6e44dcb3",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-offline-collect"
+            ]
+          },
+          {
+            "scopeId": "scope-0013-9720dba96f25ef413e0a4c2a45b192fd5d904e0034aef4578d695614840133c1",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0014-6da0bde20e65209cae46a3c2862b986e4bb4d0699bb42489d0296700adcf6ee8",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-online-redeem"
+            ]
+          },
+          {
+            "scopeId": "scope-0015-dfac6a0db777cc0b1aa3f8d9d19c2edb374a011797144e46bd53787b06e34c5e",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-online-redeem"
+            ]
+          },
+          {
+            "scopeId": "scope-0016-642b6ccfed0934a65bb1b83298cf00e4c522ee76b916b3540d69ccd5438e53ad",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-online-redeem"
+            ]
+          },
+          {
+            "scopeId": "scope-0017-8470b30624288556d3c892ec749ebfb803e6b66d211329f4e882bbdf93432c3f",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-online-redeem"
+            ]
+          },
+          {
+            "scopeId": "scope-0018-bcc60382d209d09898820c885674bf321e91a968e0ae46b4b2eea67df58aaf92",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-online-redeem"
+            ]
+          },
+          {
+            "scopeId": "scope-0019-03f6ccdec204824d66a2fbeadd0f9c13ec31a9f51871557f095af19b94b4b408",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-online-redeem"
+            ]
+          },
+          {
+            "scopeId": "scope-0020-4547128c83909a61689d749050ff73defc7b9c651ac4a61da0699142d02f20bf",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-offline-collect"
+            ]
+          },
+          {
+            "scopeId": "scope-0021-a7d9ae45c08367fa81b3b2fd24495e6fa9df0a8b3714b1319246d2ca52eb6c85",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-offline-collect"
+            ]
+          },
+          {
+            "scopeId": "scope-0022-4253689760c3be69812e7e1e07765296ea3e02a3ab3547bd728ce6e2e5c53cd3",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-offline-collect"
+            ]
+          },
+          {
+            "scopeId": "scope-0023-8e16c2ee95a1263089c1766f399e9cce093ff7eaaa4d85b13b56869c4a14ab02",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-offline-collect"
+            ]
+          },
+          {
+            "scopeId": "scope-0024-2d21cb610c5cfbd523ce1df94819cd7718eebcafbd89fdb0a9ad977069e3a8a2",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0025-b29b1d95c04a3f49869509417af5573f79d9bf09903932b069a47e7a73ff152f",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0026-defd19711fc36a0c0a4cb879a1a33256ca9e56b98a450913c8dd6fea960080da",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0027-04ba898a12c237652603581408e2307e70e96ce238402234c361fc25f4538cd8",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0028-f73de6fabf629d8c04f7a117ebaac253a5cc1a35decb21de4bacbbae5cf5bd3b",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0029-b9f9a747d01cd873de338e18abcd8692e874e884c498fc7e59780e7d1b5c21ed",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0030-dfd2dd091956a8ab14da2309163de295f7ef2a3e2902534ed121407c52bcaf66",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0031-a144714c6e21b34537841821536707a2e6c5bda5f24f943b690f8978e269018b",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0032-beae981774e716c74d19d1b081d217e7dc709665afa5c980e571194e73796f68",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0033-5b3d15dedf80dc9c8c269c388eb1efec24e0d142ffe641eedf1de3fcc65de669",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0034-12a8f35aef35d4ecfe68e38200c488a980321ea9b072d02898dbf289bebbe7c1",
+            "kind": "information",
+            "primaryEntityIds": []
+          }
+        ],
+        "requirements": [
+          {
+            "ownerTaskId": "task-online-redeem",
+            "text": "登录“我的图书馆”--“积分商城”。",
+            "scopeIds": [
+              "scope-0015-dfac6a0db777cc0b1aa3f8d9d19c2edb374a011797144e46bd53787b06e34c5e"
+            ],
+            "conditionScopeIds": []
+          },
+          {
+            "ownerTaskId": "task-online-redeem",
+            "text": "根据积分情况挑选喜欢的礼品，",
+            "scopeIds": [
+              "scope-0017-8470b30624288556d3c892ec749ebfb803e6b66d211329f4e882bbdf93432c3f"
+            ],
+            "conditionScopeIds": []
+          },
+          {
+            "ownerTaskId": "task-online-redeem",
+            "text": "选择礼品领取地点，",
+            "scopeIds": [
+              "scope-0018-bcc60382d209d09898820c885674bf321e91a968e0ae46b4b2eea67df58aaf92"
+            ],
+            "conditionScopeIds": []
+          },
+          {
+            "ownerTaskId": "task-online-redeem",
+            "text": "确认并提交申请。",
+            "scopeIds": [
+              "scope-0019-03f6ccdec204824d66a2fbeadd0f9c13ec31a9f51871557f095af19b94b4b408"
+            ],
+            "conditionScopeIds": []
+          },
+          {
+            "ownerTaskId": "task-offline-collect",
+            "text": "带上你的校园卡，",
+            "scopeIds": [
+              "scope-0021-a7d9ae45c08367fa81b3b2fd24495e6fa9df0a8b3714b1319246d2ca52eb6c85"
+            ],
+            "conditionScopeIds": []
+          },
+          {
+            "ownerTaskId": "task-offline-collect",
+            "text": "到礼品领取地点，",
+            "scopeIds": [
+              "scope-0022-4253689760c3be69812e7e1e07765296ea3e02a3ab3547bd728ce6e2e5c53cd3"
+            ],
+            "conditionScopeIds": []
+          },
+          {
+            "ownerTaskId": "task-offline-collect",
+            "text": "带走心仪好礼！",
+            "scopeIds": [
+              "scope-0023-8e16c2ee95a1263089c1766f399e9cce093ff7eaaa4d85b13b56869c4a14ab02"
+            ],
+            "conditionScopeIds": []
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 7616,
+        "input_tokens_details": {
+          "cached_tokens": 5120
+        },
+        "output_tokens": 6031,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 13647
+      }
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "RN-04",
+      "responseSha256": "ff064f4fe5369622d4da88d1f7c02e79d58e31d9e233d4e2be25a2d6fe5a080e",
+      "rawFile": "raw-04.json",
+      "facts": {
+        "schemaVersion": "fact-role-authority-source-contract-1.0.0",
+        "tasks": [],
+        "prerequisiteStates": [],
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "厦门大学信息门户升级维护",
+            "description": "信息与网络中心对厦门大学信息门户（https://i.xmu.edu.cn）进行升级维护。",
+            "location": null,
+            "scopeIds": [
+              "scope-0002-8526741e89e48d93720e2d9ad73bd9bfe0153fb33771e13da2121fca66381d26",
+              "scope-0003-2bc13572d8e6b3b4207d3cdef11935699a49f7800b43ca1922ebecee79a12dcb"
+            ],
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "attributes": [
+              {
+                "kind": "outcome",
+                "text": "维护期间，信息门户将暂时无法访问",
+                "scopeIds": [
+                  "scope-0004-58221b019f8159b7520c4679cf95d10ce575ed3c72d4f0d18a673c8921d2b524",
+                  "scope-0005-bea899dda1b5e6416e83776d5ef5ee3a6049c7499fc3a14803bd367f300341cb"
+                ]
+              }
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "event_start",
+            "rawText": "2026年4月14日00:00",
+            "scopeIds": [
+              "scope-0002-8526741e89e48d93720e2d9ad73bd9bfe0153fb33771e13da2121fca66381d26"
+            ],
+            "confidence": 0.95,
+            "owners": [
+              {
+                "kind": "event_start",
+                "entityId": "event-0001"
+              }
+            ]
+          },
+          {
+            "tempId": "time-0002",
+            "type": "event_end",
+            "rawText": "2026年4月14日03:00",
+            "scopeIds": [
+              "scope-0002-8526741e89e48d93720e2d9ad73bd9bfe0153fb33771e13da2121fca66381d26"
+            ],
+            "confidence": 0.95,
+            "owners": [
+              {
+                "kind": "event_end",
+                "entityId": "event-0001"
+              }
+            ]
+          }
+        ],
+        "materials": [],
+        "revisions": [],
+        "conflicts": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-6896b2ee8bf81fbe0cacf81870ed19967317b5e9bf0c835f833277335c796fbe",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0002-8526741e89e48d93720e2d9ad73bd9bfe0153fb33771e13da2121fca66381d26",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0003-2bc13572d8e6b3b4207d3cdef11935699a49f7800b43ca1922ebecee79a12dcb",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-58221b019f8159b7520c4679cf95d10ce575ed3c72d4f0d18a673c8921d2b524",
+            "kind": "information",
+            "primaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-bea899dda1b5e6416e83776d5ef5ee3a6049c7499fc3a14803bd367f300341cb",
+            "kind": "information",
+            "primaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0006-299ebcae84d5a39b4c8b6489702cd2d0aa54c914aa59836770b903bc5b3b909a",
+            "kind": "information",
+            "primaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0007-315c7ff2b944ad85f63dc6ad19634c09c9658eb6468d62dd2bcb66f6e1f96e3d",
+            "kind": "information",
+            "primaryEntityIds": []
+          }
+        ],
+        "requirements": []
+      },
+      "usage": {
+        "input_tokens": 5815,
+        "input_tokens_details": {
+          "cached_tokens": 5120
+        },
+        "output_tokens": 935,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6750
+      }
+    }
+  ]
+}

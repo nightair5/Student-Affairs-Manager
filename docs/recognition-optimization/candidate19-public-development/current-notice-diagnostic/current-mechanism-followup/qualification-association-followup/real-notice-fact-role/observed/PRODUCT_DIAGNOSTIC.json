@@ -1,0 +1,3439 @@
+{
+  "role": "PROGRAM_DATA_NOT_BROWSER",
+  "frozenProgramSnapshot": "aca3ba2777412420ce371aa2cee46298d415ca9e",
+  "postProductCommit": "ac45bb4693b79802418c2aac70eb9bf5151e13e6",
+  "rows": [
+    {
+      "ordinal": 1,
+      "sourceId": "RN-01",
+      "rawResponseSha256": "5fd97a235266bfa882ca4a30210d191ad216461301c550c474f9e8bc8e15d371",
+      "frozen": {
+        "decodeError": null,
+        "captureError": "INVALID_RECOGNITION_RESULT",
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-fact-role-authority-1.0.0",
+          "modelName": "FactRoleAuthority 固定录制（非实时调用）",
+          "createdAt": "2026-05-27T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "请上传word版和pdf版最终版学位论文",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "2项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "请上传word版和pdf版最终版学位论文",
+              "description": "2026年6月学位申请系统提交截止时间为6月10日，\n系统申请学位时，\n需上传最终版学位论文，\n请上传word版和pdf版，\npdf版请上传完成所有签字，\n包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。",
+              "completionCriteria": [
+                "上传word版最终版学位论文",
+                "上传pdf版最终版学位论文，pdf版完成所有签字，包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本",
+                "需上传最终版学位论文，请上传word版和pdf版，pdf版请上传完成所有签字，包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "material-word-thesis",
+                "material-pdf-thesis"
+              ],
+              "timePointTempIds": [
+                "time-registration-deadline"
+              ],
+              "tempId": "task-upload-thesis",
+              "actionVerb": "请上传word版和pdf版",
+              "actionObject": "最终版学位论文",
+              "evidenceIds": [
+                "d26-scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+                "d26-scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9",
+                "d26-scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+                "d26-scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+                "d26-scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+                "d26-scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "请按时将相关材料提交至学院A208办公室研究生秘书处",
+              "description": "纸质版材料提交时间为6月15-16日（上午9:00-11:30,\n下午2:30-5:30），\n请按时将相关材料提交至学院A208办公室研究生秘书处。",
+              "completionCriteria": [
+                "在6月15-16日规定时间内将相关材料提交至学院A208办公室研究生秘书处"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-paper-window-start",
+                "time-paper-window-end"
+              ],
+              "tempId": "task-submit-paper-materials",
+              "actionVerb": "请按时将相关材料提交至学院A208办公室研究生秘书处",
+              "actionObject": "相关材料",
+              "evidenceIds": [
+                "d26-scope-0011-0baaabf7c79e765f0c95ade1d05860f7f5a0bff8b53c6301b64764885b97036d",
+                "d26-scope-0012-398077c8a1102aa408b24034a5f53ffc29d1e9f4dc471301fcf6d91c9fadae73",
+                "d26-scope-0013-27405054dab97fc2b1ad36c17e7231e9536f91f99c60f66fbcd074f187f056cd"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-word-thesis",
+              "name": "word版最终版学位论文",
+              "required": true,
+              "formatRequirements": [
+                "word版"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-upload-thesis"
+              ],
+              "confidence": 0.95,
+              "evidenceIds": [
+                "d26-scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+                "d26-scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84"
+              ]
+            },
+            {
+              "tempId": "material-pdf-thesis",
+              "name": "pdf版最终版学位论文",
+              "required": true,
+              "formatRequirements": [
+                "pdf版",
+                "完成所有签字",
+                "包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-upload-thesis"
+              ],
+              "confidence": 0.95,
+              "evidenceIds": [
+                "d26-scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+                "d26-scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+                "d26-scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+                "d26-scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-registration-deadline",
+              "type": "registration_deadline",
+              "rawText": "2026年6月学位申请系统提交截止时间为6月10日",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-upload-thesis"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-06-10",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3"
+              ]
+            },
+            {
+              "tempId": "time-paper-window-start",
+              "type": "event_start",
+              "rawText": "6月15-16日（上午9:00-11:30",
+              "confidence": 0.9,
+              "relatedTaskTempIds": [
+                "task-submit-paper-materials"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0011-0baaabf7c79e765f0c95ade1d05860f7f5a0bff8b53c6301b64764885b97036d"
+              ]
+            },
+            {
+              "tempId": "time-paper-window-end",
+              "type": "event_end",
+              "rawText": "下午2:30-5:30）",
+              "confidence": 0.9,
+              "relatedTaskTempIds": [
+                "task-submit-paper-materials"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0012-398077c8a1102aa408b24034a5f53ffc29d1e9f4dc471301fcf6d91c9fadae73"
+              ]
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-ac15980c5f0c48822593e327183bcd8238155c4cfae966d1bb619acc933c8535",
+              "sourceId": "RN-01",
+              "quote": "根据学校部署和学院实际工作安排，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+              "sourceId": "RN-01",
+              "quote": "2026年6月学位申请系统提交截止时间为6月10日，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9",
+              "sourceId": "RN-01",
+              "quote": "系统申请学位时，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+              "sourceId": "RN-01",
+              "quote": "需上传最终版学位论文，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+              "sourceId": "RN-01",
+              "quote": "请上传word版和pdf版，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+              "sourceId": "RN-01",
+              "quote": "pdf版请上传完成所有签字，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce",
+              "sourceId": "RN-01",
+              "quote": "包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0008-4020b6547a338b2c7220f2e0af6b915d154202c851954ed24d369e6f4fea7a35",
+              "sourceId": "RN-01",
+              "quote": "学院将按程序进行审核，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0009-c890a28668cf795d86b0216444362f26b8eedf4af7137cc3f943a1649d67928a",
+              "sourceId": "RN-01",
+              "quote": "提交学院学位评定分委员会审议后，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0010-e426cbcc4b6d89e0039f699520addf67dd1f9e970c378030ca2a0ea43f999482",
+              "sourceId": "RN-01",
+              "quote": "上报学校。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0011-0baaabf7c79e765f0c95ade1d05860f7f5a0bff8b53c6301b64764885b97036d",
+              "sourceId": "RN-01",
+              "quote": "纸质版材料提交时间为6月15-16日（上午9:00-11:30,",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0012-398077c8a1102aa408b24034a5f53ffc29d1e9f4dc471301fcf6d91c9fadae73",
+              "sourceId": "RN-01",
+              "quote": "下午2:30-5:30），",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0013-27405054dab97fc2b1ad36c17e7231e9536f91f99c60f66fbcd074f187f056cd",
+              "sourceId": "RN-01",
+              "quote": "请按时将相关材料提交至学院A208办公室研究生秘书处。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [
+            {
+              "id": "channel-evidence-risk-0",
+              "type": "other",
+              "message": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "entityTempIds": [
+                "task-upload-thesis"
+              ],
+              "requiresDecision": true,
+              "evidenceIds": [
+                "d26-scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+                "d26-scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9"
+              ]
+            },
+            {
+              "id": "material-channel:material-word-thesis",
+              "type": "other",
+              "message": "word版最终版学位论文的提交渠道“2026年6月学位申请系统”缺少同对象的明确依据；请核对关联事项。",
+              "entityTempIds": [
+                "material-word-thesis",
+                "task-upload-thesis"
+              ],
+              "evidenceIds": [
+                "d26-scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+                "d26-scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9",
+                "d26-scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+                "d26-scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+                "d26-scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+                "d26-scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce"
+              ],
+              "requiresDecision": true
+            },
+            {
+              "id": "material-channel:material-pdf-thesis",
+              "type": "other",
+              "message": "pdf版最终版学位论文的提交渠道“2026年6月学位申请系统”缺少同对象的明确依据；请核对关联事项。",
+              "entityTempIds": [
+                "material-pdf-thesis",
+                "task-upload-thesis"
+              ],
+              "evidenceIds": [
+                "d26-scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+                "d26-scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9",
+                "d26-scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+                "d26-scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+                "d26-scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+                "d26-scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce"
+              ],
+              "requiresDecision": true
+            },
+            {
+              "id": "source-window:time-paper-window-start",
+              "type": "other",
+              "message": "办理窗口的日期或对象依据不一致，请核对；未推测日期或截止。",
+              "entityTempIds": [
+                "time-paper-window-start",
+                "task-submit-paper-materials"
+              ],
+              "evidenceIds": [
+                "d26-scope-0011-0baaabf7c79e765f0c95ade1d05860f7f5a0bff8b53c6301b64764885b97036d"
+              ],
+              "requiresDecision": true
+            }
+          ],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "根据学校部署和学院实际工作安排，",
+              "reason": "other"
+            },
+            {
+              "text": "学院将按程序进行审核，",
+              "reason": "other"
+            },
+            {
+              "text": "提交学院学位评定分委员会审议后，",
+              "reason": "other"
+            },
+            {
+              "text": "上报学校。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "word版最终版学位论文的提交渠道“2026年6月学位申请系统”缺少同对象的明确依据；请核对关联事项。",
+              "pdf版最终版学位论文的提交渠道“2026年6月学位申请系统”缺少同对象的明确依据；请核对关联事项。"
+            ]
+          }
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.5.1",
+          "originalProse": [
+            {
+              "entityId": "task-upload-thesis",
+              "kind": "task",
+              "title": "上传最终版学位论文",
+              "description": "在2026年6月学位申请系统中上传最终版学位论文，需上传word版和pdf版；pdf版需上传完成所有签字、包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。\n需上传最终版学位论文，请上传word版和pdf版，pdf版请上传完成所有签字，包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。"
+            },
+            {
+              "entityId": "task-submit-paper-materials",
+              "kind": "task",
+              "title": "提交纸质版材料",
+              "description": "在6月15-16日（上午9:00-11:30，下午2:30-5:30）按时将相关材料提交至学院A208办公室研究生秘书处。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-upload-thesis",
+              "kind": "task",
+              "title": "请上传word版和pdf版最终版学位论文",
+              "description": "2026年6月学位申请系统提交截止时间为6月10日，\n系统申请学位时，\n需上传最终版学位论文，\n请上传word版和pdf版，\npdf版请上传完成所有签字，\n包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。"
+            },
+            {
+              "entityId": "task-submit-paper-materials",
+              "kind": "task",
+              "title": "请按时将相关材料提交至学院A208办公室研究生秘书处",
+              "description": "纸质版材料提交时间为6月15-16日（上午9:00-11:30,\n下午2:30-5:30），\n请按时将相关材料提交至学院A208办公室研究生秘书处。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-registration-deadline",
+              "before": {
+                "normalizedValue": "2026-06-10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": true,
+                "precision": "date_only",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-06-10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": true,
+                "precision": "date_only",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年6月学位申请系统提交截止时间为6月10日",
+                  "type": "registration_deadline",
+                  "normalizedValue": "2026-06-10",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": true,
+                  "precision": "date_only",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 25
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-06-10",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "2026年6月学位申请系统提交截止时间为6月10日",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-paper-window-start",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "6月15-16日（上午9:00-11:30",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 21
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "invalid_range_end_date",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "上午",
+                "certainty": "partial",
+                "sourceContext": "纸质版材料提交时间为6月15-16日（上午9:00-11:30",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-paper-window-end",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "下午2:30-5:30）",
+                  "type": "event_end",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 12
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "invalid_calendar_date",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "下午",
+                "certainty": "partial",
+                "sourceContext": "下午2:30-5:30）",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        }
+      },
+      "post": {
+        "decodeError": null,
+        "captureError": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-fact-role-authority-1.0.0",
+          "modelName": "FactRoleAuthority 固定录制（非实时调用）",
+          "createdAt": "2026-05-27T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "请上传word版和pdf版最终版学位论文",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "2项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "请上传word版和pdf版最终版学位论文",
+              "description": "2026年6月学位申请系统提交截止时间为6月10日，\n系统申请学位时，\n需上传最终版学位论文，\n请上传word版和pdf版，\npdf版请上传完成所有签字，\n包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。",
+              "completionCriteria": [
+                "上传word版最终版学位论文",
+                "上传pdf版最终版学位论文，pdf版完成所有签字，包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本",
+                "需上传最终版学位论文，请上传word版和pdf版，pdf版请上传完成所有签字，包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "material-word-thesis",
+                "material-pdf-thesis"
+              ],
+              "timePointTempIds": [
+                "time-registration-deadline"
+              ],
+              "tempId": "task-upload-thesis",
+              "actionVerb": "请上传word版和pdf版",
+              "actionObject": "最终版学位论文",
+              "evidenceIds": [
+                "d26-scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+                "d26-scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9",
+                "d26-scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+                "d26-scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+                "d26-scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+                "d26-scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交相关材料",
+              "description": "纸质版材料提交时间为6月15-16日（上午9:00-11:30,\n下午2:30-5:30），\n请按时将相关材料提交至学院A208办公室研究生秘书处。",
+              "completionCriteria": [
+                "在6月15-16日规定时间内将相关材料提交至学院A208办公室研究生秘书处"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-paper-window-start",
+                "time-paper-window-end"
+              ],
+              "tempId": "task-submit-paper-materials",
+              "actionVerb": "提交",
+              "actionObject": "相关材料",
+              "evidenceIds": [
+                "d26-scope-0011-0baaabf7c79e765f0c95ade1d05860f7f5a0bff8b53c6301b64764885b97036d",
+                "d26-scope-0012-398077c8a1102aa408b24034a5f53ffc29d1e9f4dc471301fcf6d91c9fadae73",
+                "d26-scope-0013-27405054dab97fc2b1ad36c17e7231e9536f91f99c60f66fbcd074f187f056cd"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-word-thesis",
+              "name": "word版最终版学位论文",
+              "required": true,
+              "formatRequirements": [
+                "word版"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-upload-thesis"
+              ],
+              "confidence": 0.95,
+              "evidenceIds": [
+                "d26-scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+                "d26-scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84"
+              ]
+            },
+            {
+              "tempId": "material-pdf-thesis",
+              "name": "pdf版最终版学位论文",
+              "required": true,
+              "formatRequirements": [
+                "pdf版",
+                "完成所有签字",
+                "包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-upload-thesis"
+              ],
+              "confidence": 0.95,
+              "evidenceIds": [
+                "d26-scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+                "d26-scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+                "d26-scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+                "d26-scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-registration-deadline",
+              "type": "registration_deadline",
+              "rawText": "2026年6月学位申请系统提交截止时间为6月10日",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-upload-thesis"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-06-10",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3"
+              ]
+            },
+            {
+              "tempId": "time-paper-window-start",
+              "type": "event_start",
+              "rawText": "6月15-16日（上午9:00-11:30",
+              "confidence": 0.9,
+              "relatedTaskTempIds": [
+                "task-submit-paper-materials"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0011-0baaabf7c79e765f0c95ade1d05860f7f5a0bff8b53c6301b64764885b97036d"
+              ]
+            },
+            {
+              "tempId": "time-paper-window-end",
+              "type": "event_end",
+              "rawText": "下午2:30-5:30）",
+              "confidence": 0.9,
+              "relatedTaskTempIds": [
+                "task-submit-paper-materials"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0012-398077c8a1102aa408b24034a5f53ffc29d1e9f4dc471301fcf6d91c9fadae73"
+              ]
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-ac15980c5f0c48822593e327183bcd8238155c4cfae966d1bb619acc933c8535",
+              "sourceId": "RN-01",
+              "quote": "根据学校部署和学院实际工作安排，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+              "sourceId": "RN-01",
+              "quote": "2026年6月学位申请系统提交截止时间为6月10日，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9",
+              "sourceId": "RN-01",
+              "quote": "系统申请学位时，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+              "sourceId": "RN-01",
+              "quote": "需上传最终版学位论文，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+              "sourceId": "RN-01",
+              "quote": "请上传word版和pdf版，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+              "sourceId": "RN-01",
+              "quote": "pdf版请上传完成所有签字，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce",
+              "sourceId": "RN-01",
+              "quote": "包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0008-4020b6547a338b2c7220f2e0af6b915d154202c851954ed24d369e6f4fea7a35",
+              "sourceId": "RN-01",
+              "quote": "学院将按程序进行审核，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0009-c890a28668cf795d86b0216444362f26b8eedf4af7137cc3f943a1649d67928a",
+              "sourceId": "RN-01",
+              "quote": "提交学院学位评定分委员会审议后，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0010-e426cbcc4b6d89e0039f699520addf67dd1f9e970c378030ca2a0ea43f999482",
+              "sourceId": "RN-01",
+              "quote": "上报学校。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0011-0baaabf7c79e765f0c95ade1d05860f7f5a0bff8b53c6301b64764885b97036d",
+              "sourceId": "RN-01",
+              "quote": "纸质版材料提交时间为6月15-16日（上午9:00-11:30,",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0012-398077c8a1102aa408b24034a5f53ffc29d1e9f4dc471301fcf6d91c9fadae73",
+              "sourceId": "RN-01",
+              "quote": "下午2:30-5:30），",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0013-27405054dab97fc2b1ad36c17e7231e9536f91f99c60f66fbcd074f187f056cd",
+              "sourceId": "RN-01",
+              "quote": "请按时将相关材料提交至学院A208办公室研究生秘书处。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [
+            {
+              "id": "channel-evidence-risk-0",
+              "type": "other",
+              "message": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "entityTempIds": [
+                "task-upload-thesis"
+              ],
+              "requiresDecision": true,
+              "evidenceIds": [
+                "d26-scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+                "d26-scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9"
+              ]
+            },
+            {
+              "id": "material-channel:material-word-thesis",
+              "type": "other",
+              "message": "word版最终版学位论文的提交渠道“2026年6月学位申请系统”缺少同对象的明确依据；请核对关联事项。",
+              "entityTempIds": [
+                "material-word-thesis",
+                "task-upload-thesis"
+              ],
+              "evidenceIds": [
+                "d26-scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+                "d26-scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9",
+                "d26-scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+                "d26-scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+                "d26-scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+                "d26-scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce"
+              ],
+              "requiresDecision": true
+            },
+            {
+              "id": "material-channel:material-pdf-thesis",
+              "type": "other",
+              "message": "pdf版最终版学位论文的提交渠道“2026年6月学位申请系统”缺少同对象的明确依据；请核对关联事项。",
+              "entityTempIds": [
+                "material-pdf-thesis",
+                "task-upload-thesis"
+              ],
+              "evidenceIds": [
+                "d26-scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+                "d26-scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9",
+                "d26-scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+                "d26-scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+                "d26-scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+                "d26-scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce"
+              ],
+              "requiresDecision": true
+            },
+            {
+              "id": "source-window:time-paper-window-start",
+              "type": "other",
+              "message": "办理窗口的日期或对象依据不一致，请核对；未推测日期或截止。",
+              "entityTempIds": [
+                "time-paper-window-start",
+                "task-submit-paper-materials"
+              ],
+              "evidenceIds": [
+                "d26-scope-0011-0baaabf7c79e765f0c95ade1d05860f7f5a0bff8b53c6301b64764885b97036d"
+              ],
+              "requiresDecision": true
+            }
+          ],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "根据学校部署和学院实际工作安排，",
+              "reason": "other"
+            },
+            {
+              "text": "学院将按程序进行审核，",
+              "reason": "other"
+            },
+            {
+              "text": "提交学院学位评定分委员会审议后，",
+              "reason": "other"
+            },
+            {
+              "text": "上报学校。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "word版最终版学位论文的提交渠道“2026年6月学位申请系统”缺少同对象的明确依据；请核对关联事项。",
+              "pdf版最终版学位论文的提交渠道“2026年6月学位申请系统”缺少同对象的明确依据；请核对关联事项。"
+            ]
+          }
+        },
+        "bridgeAudit": {
+          "version": "grounded-first-suggestion-1.6.0",
+          "originalProse": [
+            {
+              "entityId": "task-upload-thesis",
+              "kind": "task",
+              "title": "上传最终版学位论文",
+              "description": "在2026年6月学位申请系统中上传最终版学位论文，需上传word版和pdf版；pdf版需上传完成所有签字、包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。\n需上传最终版学位论文，请上传word版和pdf版，pdf版请上传完成所有签字，包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。"
+            },
+            {
+              "entityId": "task-submit-paper-materials",
+              "kind": "task",
+              "title": "提交纸质版材料",
+              "description": "在6月15-16日（上午9:00-11:30，下午2:30-5:30）按时将相关材料提交至学院A208办公室研究生秘书处。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-upload-thesis",
+              "kind": "task",
+              "title": "请上传word版和pdf版最终版学位论文",
+              "description": "2026年6月学位申请系统提交截止时间为6月10日，\n系统申请学位时，\n需上传最终版学位论文，\n请上传word版和pdf版，\npdf版请上传完成所有签字，\n包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。"
+            },
+            {
+              "entityId": "task-submit-paper-materials",
+              "kind": "task",
+              "title": "请按时将相关材料提交至学院A208办公室研究生秘书处",
+              "description": "纸质版材料提交时间为6月15-16日（上午9:00-11:30,\n下午2:30-5:30），\n请按时将相关材料提交至学院A208办公室研究生秘书处。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-registration-deadline",
+              "before": {
+                "normalizedValue": "2026-06-10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": true,
+                "precision": "date_only",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-06-10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": true,
+                "precision": "date_only",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年6月学位申请系统提交截止时间为6月10日",
+                  "type": "registration_deadline",
+                  "normalizedValue": "2026-06-10",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": true,
+                  "precision": "date_only",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 25
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-06-10",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "2026年6月学位申请系统提交截止时间为6月10日",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-paper-window-start",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "6月15-16日（上午9:00-11:30",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 21
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "invalid_range_end_date",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "上午",
+                "certainty": "partial",
+                "sourceContext": "纸质版材料提交时间为6月15-16日（上午9:00-11:30",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-paper-window-end",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "下午2:30-5:30）",
+                  "type": "event_end",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 12
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "invalid_calendar_date",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "下午",
+                "certainty": "partial",
+                "sourceContext": "下午2:30-5:30）",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "actionFields": [
+            {
+              "entityId": "task-submit-paper-materials",
+              "before": "请按时将相关材料提交至学院A208办公室研究生秘书处",
+              "after": "提交",
+              "status": "CITED_VERB_PROJECTION",
+              "quotes": [
+                "纸质版材料提交时间为6月15-16日（上午9:00-11:30,",
+                "下午2:30-5:30），",
+                "请按时将相关材料提交至学院A208办公室研究生秘书处。"
+              ]
+            }
+          ],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.6.0",
+          "originalProse": [
+            {
+              "entityId": "task-upload-thesis",
+              "kind": "task",
+              "title": "请上传word版和pdf版最终版学位论文",
+              "description": "2026年6月学位申请系统提交截止时间为6月10日，\n系统申请学位时，\n需上传最终版学位论文，\n请上传word版和pdf版，\npdf版请上传完成所有签字，\n包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。"
+            },
+            {
+              "entityId": "task-submit-paper-materials",
+              "kind": "task",
+              "title": "提交相关材料",
+              "description": "纸质版材料提交时间为6月15-16日（上午9:00-11:30,\n下午2:30-5:30），\n请按时将相关材料提交至学院A208办公室研究生秘书处。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "请上传word版和pdf版最终版学位论文",
+              "description": "2项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-upload-thesis",
+              "kind": "task",
+              "title": "请上传word版和pdf版最终版学位论文",
+              "description": "2026年6月学位申请系统提交截止时间为6月10日，\n系统申请学位时，\n需上传最终版学位论文，\n请上传word版和pdf版，\npdf版请上传完成所有签字，\n包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。"
+            },
+            {
+              "entityId": "task-submit-paper-materials",
+              "kind": "task",
+              "title": "提交相关材料",
+              "description": "纸质版材料提交时间为6月15-16日（上午9:00-11:30,\n下午2:30-5:30），\n请按时将相关材料提交至学院A208办公室研究生秘书处。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "请上传word版和pdf版最终版学位论文",
+              "description": "2项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-registration-deadline",
+              "before": {
+                "normalizedValue": "2026-06-10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": true,
+                "precision": "date_only",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-06-10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": true,
+                "precision": "date_only",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年6月学位申请系统提交截止时间为6月10日",
+                  "type": "registration_deadline",
+                  "normalizedValue": "2026-06-10",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": true,
+                  "precision": "date_only",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 25
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-06-10",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "2026年6月学位申请系统提交截止时间为6月10日",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-paper-window-start",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "6月15-16日（上午9:00-11:30",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 21
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "invalid_range_end_date",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "上午",
+                "certainty": "partial",
+                "sourceContext": "纸质版材料提交时间为6月15-16日（上午9:00-11:30",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-paper-window-end",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "下午2:30-5:30）",
+                  "type": "event_end",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 12
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "invalid_calendar_date",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "下午",
+                "certainty": "partial",
+                "sourceContext": "下午2:30-5:30）",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "actionFields": [],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT",
+          "sourceActionTimes": {
+            "version": "source-action-time-role-1.0.1",
+            "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+            "inferredFacts": 0,
+            "decisions": []
+          }
+        },
+        "blockers": [
+          {
+            "id": "task-upload-thesis",
+            "problem": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。"
+          },
+          {
+            "id": "task-submit-paper-materials",
+            "problem": "办理窗口的日期或对象依据不一致，请核对；未推测日期或截止。"
+          }
+        ]
+      },
+      "userFactEdits": 0
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "RN-02",
+      "rawResponseSha256": "b7736b8e1190f0638c11866bcb15a7092a2cc0a466fc781092e29ba776183e10",
+      "frozen": {
+        "decodeError": null,
+        "captureError": "INVALID_RECOGNITION_RESULT",
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-fact-role-authority-1.0.0",
+          "modelName": "FactRoleAuthority 固定录制（非实时调用）",
+          "createdAt": "2026-08-12T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "待核对事项",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "5项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "待核对事项",
+              "description": "动作或对象缺少对应来源依据，请核对。",
+              "completionCriteria": [
+                "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-start-0813"
+              ],
+              "tempId": "task-login-xmuxg",
+              "actionVerb": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "actionObject": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "evidenceIds": [
+                "d26-scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "d26-scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "选择“2026-2027学年生源地贷款”业务期",
+              "description": "点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，\n选择“2026-2027学年生源地贷款”业务期，",
+              "completionCriteria": [
+                "选择“2026-2027学年生源地贷款”业务期"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [
+                "task-login-xmuxg"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-start-0813"
+              ],
+              "tempId": "task-select-business-period",
+              "actionVerb": "选择“2026-2027学年生源地贷款”业务期",
+              "actionObject": "“2026-2027学年生源地贷款”业务期",
+              "evidenceIds": [
+                "d26-scope-0005-8ae3b8fd6822a7da28f42f6d5ee7186be65814422f2cc3d24edac578b9fdbe57",
+                "d26-scope-0006-6de8bbcab851098b2e11a3bcac3f6671982a28f38f54a039dafb47a7ce6f6e55"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "准确填写相关信息",
+              "description": "准确填写相关信息，",
+              "completionCriteria": [
+                "准确填写相关信息"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [
+                "task-select-business-period"
+              ],
+              "confidence": 0.9,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-start-0813"
+              ],
+              "tempId": "task-fill-info",
+              "actionVerb": "准确填写相关信息",
+              "actionObject": "相关信息",
+              "evidenceIds": [
+                "d26-scope-0007-f47f74d7f41fc686ea1764013a531543153089060c853b54b79c5cbcb8d76934"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "上传贷款机构提供的回执材料照片或截图",
+              "description": "并上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请，",
+              "completionCriteria": [
+                "上传贷款机构提供的回执材料照片或截图",
+                "务必完整清晰且确保是本学年申请"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [
+                "task-fill-info"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "material-receipt"
+              ],
+              "timePointTempIds": [
+                "time-start-0813"
+              ],
+              "tempId": "task-upload-receipt",
+              "actionVerb": "上传贷款机构提供的回执材料照片或截图",
+              "actionObject": "贷款机构提供的回执材料照片或截图",
+              "evidenceIds": [
+                "d26-scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "在系统上提交当前学年准确的回执校验码",
+              "description": "在国家开发银行、河北农村信用社办理贷款的学生，\n请务必在系统上提交当前学年准确的回执校验码，\n否则将无法进行入学确认）。",
+              "completionCriteria": [
+                "在系统上提交当前学年准确的回执校验码",
+                "在国家开发银行、河北农村信用社办理贷款的学生，请务必在系统上提交当前学年准确的回执校验码，否则将无法进行入学确认"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "urgent",
+              "dependencyTempIds": [
+                "task-upload-receipt"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-start-0813"
+              ],
+              "tempId": "task-submit-verification-code",
+              "actionVerb": "在系统上提交当前学年准确的回执校验码",
+              "actionObject": "当前学年准确的回执校验码",
+              "evidenceIds": [
+                "d26-scope-0009-a3b000c5bcc6990cb87b3eb0fcdae144c9644bd0cca94f31e51ba1813ec933d2",
+                "d26-scope-0010-24b54ed4a8038b95a975ec6f33ed854a9664572eb54fb0884d70c0fc0099147b",
+                "d26-scope-0011-4c25fbfbe3bcf042c7ec8a4c1b189f9c3050dd288160654f9a413195ea7915ca"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-receipt",
+              "name": "贷款机构提供的回执材料照片或截图",
+              "required": true,
+              "formatRequirements": [
+                "照片或截图",
+                "务必完整清晰且确保是本学年申请"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-upload-receipt"
+              ],
+              "confidence": 0.95,
+              "evidenceIds": [
+                "d26-scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-start-0813",
+              "type": "event_start",
+              "rawText": "8月13日起",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-login-xmuxg",
+                "task-select-business-period",
+                "task-fill-info",
+                "task-upload-receipt",
+                "task-submit-verification-code"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-08-13",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-8fd1a7daeda7c1bb3a011a1427612402faf8a8b585d68272f54d68050876528c"
+              ]
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-8fd1a7daeda7c1bb3a011a1427612402faf8a8b585d68272f54d68050876528c",
+              "sourceId": "RN-02",
+              "quote": "1.8月13日起，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-bdb369e0cc7e8c0667efc799ce7779be7a5deb95e894d0a744ae52689e711902",
+              "sourceId": "RN-02",
+              "quote": "所有已申请办理2026-2027学年生源地信用助学贷款的学生(含申请续贷的我校在籍老生），",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+              "sourceId": "RN-02",
+              "quote": "均需登录厦门大学学工系统https:",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29",
+              "sourceId": "RN-02",
+              "quote": "//xmuxg.xmu.edu.cn/app/515，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-8ae3b8fd6822a7da28f42f6d5ee7186be65814422f2cc3d24edac578b9fdbe57",
+              "sourceId": "RN-02",
+              "quote": "点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-6de8bbcab851098b2e11a3bcac3f6671982a28f38f54a039dafb47a7ce6f6e55",
+              "sourceId": "RN-02",
+              "quote": "选择“2026-2027学年生源地贷款”业务期，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0007-f47f74d7f41fc686ea1764013a531543153089060c853b54b79c5cbcb8d76934",
+              "sourceId": "RN-02",
+              "quote": "准确填写相关信息，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a",
+              "sourceId": "RN-02",
+              "quote": "并上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0009-a3b000c5bcc6990cb87b3eb0fcdae144c9644bd0cca94f31e51ba1813ec933d2",
+              "sourceId": "RN-02",
+              "quote": "在国家开发银行、河北农村信用社办理贷款的学生，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0010-24b54ed4a8038b95a975ec6f33ed854a9664572eb54fb0884d70c0fc0099147b",
+              "sourceId": "RN-02",
+              "quote": "请务必在系统上提交当前学年准确的回执校验码，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0011-4c25fbfbe3bcf042c7ec8a4c1b189f9c3050dd288160654f9a413195ea7915ca",
+              "sourceId": "RN-02",
+              "quote": "否则将无法进行入学确认）。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [
+            {
+              "id": "channel-evidence-risk-0",
+              "type": "other",
+              "message": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "entityTempIds": [
+                "task-select-business-period"
+              ],
+              "requiresDecision": true,
+              "evidenceIds": [
+                "d26-scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "d26-scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ]
+            },
+            {
+              "id": "channel-evidence-risk-1",
+              "type": "other",
+              "message": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "entityTempIds": [
+                "task-fill-info"
+              ],
+              "requiresDecision": true,
+              "evidenceIds": [
+                "d26-scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "d26-scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ]
+            },
+            {
+              "id": "channel-evidence-risk-2",
+              "type": "other",
+              "message": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "entityTempIds": [
+                "task-upload-receipt"
+              ],
+              "requiresDecision": true,
+              "evidenceIds": [
+                "d26-scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "d26-scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ]
+            },
+            {
+              "id": "channel-evidence-risk-3",
+              "type": "other",
+              "message": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "entityTempIds": [
+                "task-submit-verification-code"
+              ],
+              "requiresDecision": true,
+              "evidenceIds": [
+                "d26-scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "d26-scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ]
+            },
+            {
+              "id": "d26-representation-0",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-login-xmuxg"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-1",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-select-business-period"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-2",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-fill-info"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-3",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-upload-receipt"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-4",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-submit-verification-code"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "material-channel:material-receipt",
+              "type": "other",
+              "message": "贷款机构提供的回执材料照片或截图的提交渠道“厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515”缺少同对象的明确依据；请核对关联事项。",
+              "entityTempIds": [
+                "material-receipt",
+                "task-upload-receipt"
+              ],
+              "evidenceIds": [
+                "d26-scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a"
+              ],
+              "requiresDecision": true
+            }
+          ],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "1.8月13日起，",
+              "reason": "other"
+            },
+            {
+              "text": "所有已申请办理2026-2027学年生源地信用助学贷款的学生(含申请续贷的我校在籍老生），",
+              "reason": "other"
+            },
+            {
+              "text": "否则将无法进行入学确认）。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "资格尚未确认，不能当成已符合；请保留待核对。",
+              "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "部分首次摘要缺少完整来源依据，请核对标记事项。",
+              "贷款机构提供的回执材料照片或截图的提交渠道“厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515”缺少同对象的明确依据；请核对关联事项。"
+            ]
+          }
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.5.1",
+          "originalProse": [
+            {
+              "entityId": "task-login-xmuxg",
+              "kind": "task",
+              "title": "登录厦门大学学工系统",
+              "description": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515"
+            },
+            {
+              "entityId": "task-select-business-period",
+              "kind": "task",
+              "title": "选择“2026-2027学年生源地贷款”业务期",
+              "description": "点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，选择“2026-2027学年生源地贷款”业务期"
+            },
+            {
+              "entityId": "task-fill-info",
+              "kind": "task",
+              "title": "准确填写相关信息",
+              "description": "准确填写相关信息"
+            },
+            {
+              "entityId": "task-upload-receipt",
+              "kind": "task",
+              "title": "上传贷款机构提供的回执材料照片或截图",
+              "description": "上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请）\n务必完整清晰且确保是本学年申请"
+            },
+            {
+              "entityId": "task-submit-verification-code",
+              "kind": "task",
+              "title": "在系统上提交当前学年准确的回执校验码",
+              "description": "在国家开发银行、河北农村信用社办理贷款的学生，请务必在系统上提交当前学年准确的回执校验码，否则将无法进行入学确认"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-login-xmuxg",
+              "kind": "task",
+              "title": "待核对事项",
+              "description": "动作或对象缺少对应来源依据，请核对。"
+            },
+            {
+              "entityId": "task-select-business-period",
+              "kind": "task",
+              "title": "选择“2026-2027学年生源地贷款”业务期",
+              "description": "点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，\n选择“2026-2027学年生源地贷款”业务期，"
+            },
+            {
+              "entityId": "task-fill-info",
+              "kind": "task",
+              "title": "准确填写相关信息",
+              "description": "准确填写相关信息，"
+            },
+            {
+              "entityId": "task-upload-receipt",
+              "kind": "task",
+              "title": "上传贷款机构提供的回执材料照片或截图",
+              "description": "并上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请，"
+            },
+            {
+              "entityId": "task-submit-verification-code",
+              "kind": "task",
+              "title": "在系统上提交当前学年准确的回执校验码",
+              "description": "在国家开发银行、河北农村信用社办理贷款的学生，\n请务必在系统上提交当前学年准确的回执校验码，\n否则将无法进行入学确认）。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-start-0813",
+              "before": {
+                "normalizedValue": "2026-08-13",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": true,
+                "precision": "date_only",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-08-13",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": true,
+                "precision": "date_only",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "8月13日起",
+                  "type": "event_start",
+                  "normalizedValue": "2026-08-13",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": true,
+                  "precision": "date_only",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 6
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-08-13",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "1.8月13日起",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [
+            {
+              "entityId": "task-login-xmuxg",
+              "reason": "ACTION_OBJECT_SOURCE_SUPPORT_MISSING"
+            }
+          ],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        }
+      },
+      "post": {
+        "decodeError": null,
+        "captureError": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-fact-role-authority-1.0.0",
+          "modelName": "FactRoleAuthority 固定录制（非实时调用）",
+          "createdAt": "2026-08-12T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "5项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "description": "均需登录厦门大学学工系统https:\n//xmuxg.xmu.edu.cn/app/515，",
+              "completionCriteria": [
+                "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-start-0813"
+              ],
+              "tempId": "task-login-xmuxg",
+              "actionVerb": "登录",
+              "actionObject": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "evidenceIds": [
+                "d26-scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "d26-scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "选择“2026-2027学年生源地贷款”业务期",
+              "description": "点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，\n选择“2026-2027学年生源地贷款”业务期，",
+              "completionCriteria": [
+                "选择“2026-2027学年生源地贷款”业务期"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [
+                "task-login-xmuxg"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-start-0813"
+              ],
+              "tempId": "task-select-business-period",
+              "actionVerb": "选择",
+              "actionObject": "“2026-2027学年生源地贷款”业务期",
+              "evidenceIds": [
+                "d26-scope-0005-8ae3b8fd6822a7da28f42f6d5ee7186be65814422f2cc3d24edac578b9fdbe57",
+                "d26-scope-0006-6de8bbcab851098b2e11a3bcac3f6671982a28f38f54a039dafb47a7ce6f6e55"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "准确填写相关信息",
+              "description": "准确填写相关信息，",
+              "completionCriteria": [
+                "准确填写相关信息"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [
+                "task-select-business-period"
+              ],
+              "confidence": 0.9,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-start-0813"
+              ],
+              "tempId": "task-fill-info",
+              "actionVerb": "准确填写相关信息",
+              "actionObject": "相关信息",
+              "evidenceIds": [
+                "d26-scope-0007-f47f74d7f41fc686ea1764013a531543153089060c853b54b79c5cbcb8d76934"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "上传贷款机构提供的回执材料照片或截图",
+              "description": "并上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请，",
+              "completionCriteria": [
+                "上传贷款机构提供的回执材料照片或截图",
+                "务必完整清晰且确保是本学年申请"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [
+                "task-fill-info"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "material-receipt"
+              ],
+              "timePointTempIds": [
+                "time-start-0813"
+              ],
+              "tempId": "task-upload-receipt",
+              "actionVerb": "上传贷款机构提供的回执材料照片或截图",
+              "actionObject": "贷款机构提供的回执材料照片或截图",
+              "evidenceIds": [
+                "d26-scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "在系统上提交当前学年准确的回执校验码",
+              "description": "在国家开发银行、河北农村信用社办理贷款的学生，\n请务必在系统上提交当前学年准确的回执校验码，\n否则将无法进行入学确认）。",
+              "completionCriteria": [
+                "在系统上提交当前学年准确的回执校验码",
+                "在国家开发银行、河北农村信用社办理贷款的学生，请务必在系统上提交当前学年准确的回执校验码，否则将无法进行入学确认"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "urgent",
+              "dependencyTempIds": [
+                "task-upload-receipt"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-start-0813"
+              ],
+              "tempId": "task-submit-verification-code",
+              "actionVerb": "在系统上提交当前学年准确的回执校验码",
+              "actionObject": "当前学年准确的回执校验码",
+              "evidenceIds": [
+                "d26-scope-0009-a3b000c5bcc6990cb87b3eb0fcdae144c9644bd0cca94f31e51ba1813ec933d2",
+                "d26-scope-0010-24b54ed4a8038b95a975ec6f33ed854a9664572eb54fb0884d70c0fc0099147b",
+                "d26-scope-0011-4c25fbfbe3bcf042c7ec8a4c1b189f9c3050dd288160654f9a413195ea7915ca"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-receipt",
+              "name": "贷款机构提供的回执材料照片或截图",
+              "required": true,
+              "formatRequirements": [
+                "照片或截图",
+                "务必完整清晰且确保是本学年申请"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-upload-receipt"
+              ],
+              "confidence": 0.95,
+              "evidenceIds": [
+                "d26-scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-start-0813",
+              "type": "event_start",
+              "rawText": "8月13日起",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-login-xmuxg",
+                "task-select-business-period",
+                "task-fill-info",
+                "task-upload-receipt",
+                "task-submit-verification-code"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-08-13",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": true,
+              "precision": "date_only",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-8fd1a7daeda7c1bb3a011a1427612402faf8a8b585d68272f54d68050876528c"
+              ]
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-8fd1a7daeda7c1bb3a011a1427612402faf8a8b585d68272f54d68050876528c",
+              "sourceId": "RN-02",
+              "quote": "1.8月13日起，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-bdb369e0cc7e8c0667efc799ce7779be7a5deb95e894d0a744ae52689e711902",
+              "sourceId": "RN-02",
+              "quote": "所有已申请办理2026-2027学年生源地信用助学贷款的学生(含申请续贷的我校在籍老生），",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+              "sourceId": "RN-02",
+              "quote": "均需登录厦门大学学工系统https:",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29",
+              "sourceId": "RN-02",
+              "quote": "//xmuxg.xmu.edu.cn/app/515，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-8ae3b8fd6822a7da28f42f6d5ee7186be65814422f2cc3d24edac578b9fdbe57",
+              "sourceId": "RN-02",
+              "quote": "点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-6de8bbcab851098b2e11a3bcac3f6671982a28f38f54a039dafb47a7ce6f6e55",
+              "sourceId": "RN-02",
+              "quote": "选择“2026-2027学年生源地贷款”业务期，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0007-f47f74d7f41fc686ea1764013a531543153089060c853b54b79c5cbcb8d76934",
+              "sourceId": "RN-02",
+              "quote": "准确填写相关信息，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a",
+              "sourceId": "RN-02",
+              "quote": "并上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0009-a3b000c5bcc6990cb87b3eb0fcdae144c9644bd0cca94f31e51ba1813ec933d2",
+              "sourceId": "RN-02",
+              "quote": "在国家开发银行、河北农村信用社办理贷款的学生，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0010-24b54ed4a8038b95a975ec6f33ed854a9664572eb54fb0884d70c0fc0099147b",
+              "sourceId": "RN-02",
+              "quote": "请务必在系统上提交当前学年准确的回执校验码，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0011-4c25fbfbe3bcf042c7ec8a4c1b189f9c3050dd288160654f9a413195ea7915ca",
+              "sourceId": "RN-02",
+              "quote": "否则将无法进行入学确认）。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [
+            {
+              "id": "channel-evidence-risk-0",
+              "type": "other",
+              "message": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "entityTempIds": [
+                "task-select-business-period"
+              ],
+              "requiresDecision": true,
+              "evidenceIds": [
+                "d26-scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "d26-scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ]
+            },
+            {
+              "id": "channel-evidence-risk-1",
+              "type": "other",
+              "message": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "entityTempIds": [
+                "task-fill-info"
+              ],
+              "requiresDecision": true,
+              "evidenceIds": [
+                "d26-scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "d26-scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ]
+            },
+            {
+              "id": "channel-evidence-risk-2",
+              "type": "other",
+              "message": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "entityTempIds": [
+                "task-upload-receipt"
+              ],
+              "requiresDecision": true,
+              "evidenceIds": [
+                "d26-scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "d26-scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ]
+            },
+            {
+              "id": "channel-evidence-risk-3",
+              "type": "other",
+              "message": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "entityTempIds": [
+                "task-submit-verification-code"
+              ],
+              "requiresDecision": true,
+              "evidenceIds": [
+                "d26-scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+                "d26-scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+              ]
+            },
+            {
+              "id": "d26-representation-0",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-login-xmuxg"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-1",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-select-business-period"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-2",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-fill-info"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-3",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-upload-receipt"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "d26-representation-4",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-submit-verification-code"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "material-channel:material-receipt",
+              "type": "other",
+              "message": "贷款机构提供的回执材料照片或截图的提交渠道“厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515”缺少同对象的明确依据；请核对关联事项。",
+              "entityTempIds": [
+                "material-receipt",
+                "task-upload-receipt"
+              ],
+              "evidenceIds": [
+                "d26-scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a"
+              ],
+              "requiresDecision": true
+            }
+          ],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "1.8月13日起，",
+              "reason": "other"
+            },
+            {
+              "text": "所有已申请办理2026-2027学年生源地信用助学贷款的学生(含申请续贷的我校在籍老生），",
+              "reason": "other"
+            },
+            {
+              "text": "否则将无法进行入学确认）。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "资格尚未确认，不能当成已符合；请保留待核对。",
+              "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。",
+              "贷款机构提供的回执材料照片或截图的提交渠道“厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515”缺少同对象的明确依据；请核对关联事项。"
+            ]
+          }
+        },
+        "bridgeAudit": {
+          "version": "grounded-first-suggestion-1.6.0",
+          "originalProse": [
+            {
+              "entityId": "task-login-xmuxg",
+              "kind": "task",
+              "title": "登录厦门大学学工系统",
+              "description": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515"
+            },
+            {
+              "entityId": "task-select-business-period",
+              "kind": "task",
+              "title": "选择“2026-2027学年生源地贷款”业务期",
+              "description": "点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，选择“2026-2027学年生源地贷款”业务期"
+            },
+            {
+              "entityId": "task-fill-info",
+              "kind": "task",
+              "title": "准确填写相关信息",
+              "description": "准确填写相关信息"
+            },
+            {
+              "entityId": "task-upload-receipt",
+              "kind": "task",
+              "title": "上传贷款机构提供的回执材料照片或截图",
+              "description": "上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请）\n务必完整清晰且确保是本学年申请"
+            },
+            {
+              "entityId": "task-submit-verification-code",
+              "kind": "task",
+              "title": "在系统上提交当前学年准确的回执校验码",
+              "description": "在国家开发银行、河北农村信用社办理贷款的学生，请务必在系统上提交当前学年准确的回执校验码，否则将无法进行入学确认"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-login-xmuxg",
+              "kind": "task",
+              "title": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "description": "均需登录厦门大学学工系统https:\n//xmuxg.xmu.edu.cn/app/515，"
+            },
+            {
+              "entityId": "task-select-business-period",
+              "kind": "task",
+              "title": "选择“2026-2027学年生源地贷款”业务期",
+              "description": "点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，\n选择“2026-2027学年生源地贷款”业务期，"
+            },
+            {
+              "entityId": "task-fill-info",
+              "kind": "task",
+              "title": "准确填写相关信息",
+              "description": "准确填写相关信息，"
+            },
+            {
+              "entityId": "task-upload-receipt",
+              "kind": "task",
+              "title": "上传贷款机构提供的回执材料照片或截图",
+              "description": "并上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请，"
+            },
+            {
+              "entityId": "task-submit-verification-code",
+              "kind": "task",
+              "title": "在系统上提交当前学年准确的回执校验码",
+              "description": "在国家开发银行、河北农村信用社办理贷款的学生，\n请务必在系统上提交当前学年准确的回执校验码，\n否则将无法进行入学确认）。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-start-0813",
+              "before": {
+                "normalizedValue": "2026-08-13",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": true,
+                "precision": "date_only",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-08-13",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": true,
+                "precision": "date_only",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "8月13日起",
+                  "type": "event_start",
+                  "normalizedValue": "2026-08-13",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": true,
+                  "precision": "date_only",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 6
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-08-13",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "1.8月13日起",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "actionFields": [
+            {
+              "entityId": "task-login-xmuxg",
+              "before": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "after": "登录",
+              "status": "CITED_VERB_PROJECTION",
+              "quotes": [
+                "均需登录厦门大学学工系统https:",
+                "//xmuxg.xmu.edu.cn/app/515，"
+              ]
+            },
+            {
+              "entityId": "task-select-business-period",
+              "before": "选择“2026-2027学年生源地贷款”业务期",
+              "after": "选择",
+              "status": "CITED_VERB_PROJECTION",
+              "quotes": [
+                "点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，",
+                "选择“2026-2027学年生源地贷款”业务期，"
+              ]
+            }
+          ],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.6.0",
+          "originalProse": [
+            {
+              "entityId": "task-login-xmuxg",
+              "kind": "task",
+              "title": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "description": "均需登录厦门大学学工系统https:\n//xmuxg.xmu.edu.cn/app/515，"
+            },
+            {
+              "entityId": "task-select-business-period",
+              "kind": "task",
+              "title": "选择“2026-2027学年生源地贷款”业务期",
+              "description": "点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，\n选择“2026-2027学年生源地贷款”业务期，"
+            },
+            {
+              "entityId": "task-fill-info",
+              "kind": "task",
+              "title": "准确填写相关信息",
+              "description": "准确填写相关信息，"
+            },
+            {
+              "entityId": "task-upload-receipt",
+              "kind": "task",
+              "title": "上传贷款机构提供的回执材料照片或截图",
+              "description": "并上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请，"
+            },
+            {
+              "entityId": "task-submit-verification-code",
+              "kind": "task",
+              "title": "在系统上提交当前学年准确的回执校验码",
+              "description": "在国家开发银行、河北农村信用社办理贷款的学生，\n请务必在系统上提交当前学年准确的回执校验码，\n否则将无法进行入学确认）。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "description": "5项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-login-xmuxg",
+              "kind": "task",
+              "title": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "description": "均需登录厦门大学学工系统https:\n//xmuxg.xmu.edu.cn/app/515，"
+            },
+            {
+              "entityId": "task-select-business-period",
+              "kind": "task",
+              "title": "选择“2026-2027学年生源地贷款”业务期",
+              "description": "点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，\n选择“2026-2027学年生源地贷款”业务期，"
+            },
+            {
+              "entityId": "task-fill-info",
+              "kind": "task",
+              "title": "准确填写相关信息",
+              "description": "准确填写相关信息，"
+            },
+            {
+              "entityId": "task-upload-receipt",
+              "kind": "task",
+              "title": "上传贷款机构提供的回执材料照片或截图",
+              "description": "并上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请，"
+            },
+            {
+              "entityId": "task-submit-verification-code",
+              "kind": "task",
+              "title": "在系统上提交当前学年准确的回执校验码",
+              "description": "在国家开发银行、河北农村信用社办理贷款的学生，\n请务必在系统上提交当前学年准确的回执校验码，\n否则将无法进行入学确认）。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+              "description": "5项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-start-0813",
+              "before": {
+                "normalizedValue": "2026-08-13",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": true,
+                "precision": "date_only",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-08-13",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": true,
+                "precision": "date_only",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "8月13日起",
+                  "type": "event_start",
+                  "normalizedValue": "2026-08-13",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": true,
+                  "precision": "date_only",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 6
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-08-13",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "1.8月13日起",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "actionFields": [],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT",
+          "sourceActionTimes": {
+            "version": "source-action-time-role-1.0.1",
+            "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+            "inferredFacts": 0,
+            "decisions": []
+          }
+        },
+        "blockers": [
+          {
+            "id": "task-login-xmuxg",
+            "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+          },
+          {
+            "id": "task-select-business-period",
+            "problem": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。"
+          },
+          {
+            "id": "task-fill-info",
+            "problem": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。"
+          },
+          {
+            "id": "task-upload-receipt",
+            "problem": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。"
+          },
+          {
+            "id": "task-submit-verification-code",
+            "problem": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。"
+          }
+        ]
+      },
+      "userFactEdits": 0
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "RN-03",
+      "rawResponseSha256": "31b93b86730aea7ffdb0e63b8fd66a8bce8fddeab52cebb40b1f47383879bd8e",
+      "frozen": {
+        "decodeError": "ROLE_AUTHORITY_PARTICIPATION_EVIDENCE",
+        "captureError": null,
+        "first": null,
+        "audit": null
+      },
+      "post": {
+        "decodeError": "ROLE_AUTHORITY_PARTICIPATION_EVIDENCE",
+        "captureError": null,
+        "first": null,
+        "bridgeAudit": null,
+        "audit": null,
+        "blockers": []
+      },
+      "userFactEdits": 0
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "RN-04",
+      "rawResponseSha256": "ff064f4fe5369622d4da88d1f7c02e79d58e31d9e233d4e2be25a2d6fe5a080e",
+      "frozen": {
+        "decodeError": null,
+        "captureError": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-fact-role-authority-1.0.0",
+          "modelName": "FactRoleAuthority 固定录制（非实时调用）",
+          "createdAt": "2026-04-13T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "待核对事件",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，1项事件。请核对后确认。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "time-0001",
+              "type": "event_start",
+              "rawText": "2026年4月14日00:00",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-04-14T00:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0002-8526741e89e48d93720e2d9ad73bd9bfe0153fb33771e13da2121fca66381d26"
+              ]
+            },
+            {
+              "tempId": "time-0002",
+              "type": "event_end",
+              "rawText": "2026年4月14日03:00",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0002-8526741e89e48d93720e2d9ad73bd9bfe0153fb33771e13da2121fca66381d26"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "event-0001",
+              "title": "待核对事件",
+              "description": "事件内容缺少对应来源依据，请核对。",
+              "startTimePointTempId": "time-0001",
+              "endTimePointTempId": "time-0002",
+              "location": null,
+              "confidence": 0.95,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0002-8526741e89e48d93720e2d9ad73bd9bfe0153fb33771e13da2121fca66381d26",
+                "d26-scope-0003-2bc13572d8e6b3b4207d3cdef11935699a49f7800b43ca1922ebecee79a12dcb",
+                "d26-scope-0004-58221b019f8159b7520c4679cf95d10ce575ed3c72d4f0d18a673c8921d2b524",
+                "d26-scope-0005-bea899dda1b5e6416e83776d5ef5ee3a6049c7499fc3a14803bd367f300341cb"
+              ],
+              "selected": false
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-6896b2ee8bf81fbe0cacf81870ed19967317b5e9bf0c835f833277335c796fbe",
+              "sourceId": "RN-04",
+              "quote": "根据工作安排，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-8526741e89e48d93720e2d9ad73bd9bfe0153fb33771e13da2121fca66381d26",
+              "sourceId": "RN-04",
+              "quote": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-2bc13572d8e6b3b4207d3cdef11935699a49f7800b43ca1922ebecee79a12dcb",
+              "sourceId": "RN-04",
+              "quote": "//i.xmu.edu.cn）进行升级维护。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-58221b019f8159b7520c4679cf95d10ce575ed3c72d4f0d18a673c8921d2b524",
+              "sourceId": "RN-04",
+              "quote": "维护期间，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-bea899dda1b5e6416e83776d5ef5ee3a6049c7499fc3a14803bd367f300341cb",
+              "sourceId": "RN-04",
+              "quote": "信息门户将暂时无法访问，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-299ebcae84d5a39b4c8b6489702cd2d0aa54c914aa59836770b903bc5b3b909a",
+              "sourceId": "RN-04",
+              "quote": "给您带来不便，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0007-315c7ff2b944ad85f63dc6ad19634c09c9658eb6468d62dd2bcb66f6e1f96e3d",
+              "sourceId": "RN-04",
+              "quote": "敬请谅解！",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "根据工作安排，",
+              "reason": "other"
+            },
+            {
+              "text": "维护期间，",
+              "reason": "other"
+            },
+            {
+              "text": "信息门户将暂时无法访问，",
+              "reason": "other"
+            },
+            {
+              "text": "给您带来不便，",
+              "reason": "other"
+            },
+            {
+              "text": "敬请谅解！",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "部分首次摘要缺少完整来源依据，请核对标记事项。"
+            ]
+          }
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.5.1",
+          "originalProse": [
+            {
+              "entityId": "event-0001",
+              "kind": "event",
+              "title": "厦门大学信息门户升级维护",
+              "description": "信息与网络中心对厦门大学信息门户（https://i.xmu.edu.cn）进行升级维护。；维护期间，信息门户将暂时无法访问"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "event-0001",
+              "kind": "event",
+              "title": "待核对事件",
+              "description": "事件内容缺少对应来源依据，请核对。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-0001",
+              "before": {
+                "normalizedValue": "2026-04-14T00:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-04-14T00:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年4月14日00:00",
+                  "type": "event_start",
+                  "normalizedValue": "2026-04-14T00:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 15
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-04-14",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [
+            {
+              "entityId": "time-0002",
+              "reason": "TIME_SOURCE_SUPPORT_MISSING"
+            },
+            {
+              "entityId": "event-0001",
+              "reason": "EVENT_SOURCE_SUPPORT_MISSING"
+            }
+          ],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        }
+      },
+      "post": {
+        "decodeError": null,
+        "captureError": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-fact-role-authority-1.0.0",
+          "modelName": "FactRoleAuthority 固定录制（非实时调用）",
+          "createdAt": "2026-04-13T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "厦门大学信息门户升级维护",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，1项事件。请核对后确认。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "time-0001",
+              "type": "event_start",
+              "rawText": "2026年4月14日00:00",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-04-14T00:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0002-8526741e89e48d93720e2d9ad73bd9bfe0153fb33771e13da2121fca66381d26"
+              ]
+            },
+            {
+              "tempId": "time-0002",
+              "type": "event_end",
+              "rawText": "2026年4月14日03:00",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-04-14T03:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0002-8526741e89e48d93720e2d9ad73bd9bfe0153fb33771e13da2121fca66381d26"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "event-0001",
+              "title": "厦门大学信息门户升级维护",
+              "description": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:\n//i.xmu.edu.cn）进行升级维护。\n维护期间，\n信息门户将暂时无法访问，",
+              "startTimePointTempId": "time-0001",
+              "endTimePointTempId": "time-0002",
+              "location": null,
+              "confidence": 0.95,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0002-8526741e89e48d93720e2d9ad73bd9bfe0153fb33771e13da2121fca66381d26",
+                "d26-scope-0003-2bc13572d8e6b3b4207d3cdef11935699a49f7800b43ca1922ebecee79a12dcb",
+                "d26-scope-0004-58221b019f8159b7520c4679cf95d10ce575ed3c72d4f0d18a673c8921d2b524",
+                "d26-scope-0005-bea899dda1b5e6416e83776d5ef5ee3a6049c7499fc3a14803bd367f300341cb"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-6896b2ee8bf81fbe0cacf81870ed19967317b5e9bf0c835f833277335c796fbe",
+              "sourceId": "RN-04",
+              "quote": "根据工作安排，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-8526741e89e48d93720e2d9ad73bd9bfe0153fb33771e13da2121fca66381d26",
+              "sourceId": "RN-04",
+              "quote": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-2bc13572d8e6b3b4207d3cdef11935699a49f7800b43ca1922ebecee79a12dcb",
+              "sourceId": "RN-04",
+              "quote": "//i.xmu.edu.cn）进行升级维护。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-58221b019f8159b7520c4679cf95d10ce575ed3c72d4f0d18a673c8921d2b524",
+              "sourceId": "RN-04",
+              "quote": "维护期间，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-bea899dda1b5e6416e83776d5ef5ee3a6049c7499fc3a14803bd367f300341cb",
+              "sourceId": "RN-04",
+              "quote": "信息门户将暂时无法访问，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-299ebcae84d5a39b4c8b6489702cd2d0aa54c914aa59836770b903bc5b3b909a",
+              "sourceId": "RN-04",
+              "quote": "给您带来不便，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0007-315c7ff2b944ad85f63dc6ad19634c09c9658eb6468d62dd2bcb66f6e1f96e3d",
+              "sourceId": "RN-04",
+              "quote": "敬请谅解！",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "根据工作安排，",
+              "reason": "other"
+            },
+            {
+              "text": "维护期间，",
+              "reason": "other"
+            },
+            {
+              "text": "信息门户将暂时无法访问，",
+              "reason": "other"
+            },
+            {
+              "text": "给您带来不便，",
+              "reason": "other"
+            },
+            {
+              "text": "敬请谅解！",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "bridgeAudit": {
+          "version": "grounded-first-suggestion-1.6.0",
+          "originalProse": [
+            {
+              "entityId": "event-0001",
+              "kind": "event",
+              "title": "厦门大学信息门户升级维护",
+              "description": "信息与网络中心对厦门大学信息门户（https://i.xmu.edu.cn）进行升级维护。；维护期间，信息门户将暂时无法访问"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "event-0001",
+              "kind": "event",
+              "title": "厦门大学信息门户升级维护",
+              "description": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:\n//i.xmu.edu.cn）进行升级维护。\n维护期间，\n信息门户将暂时无法访问，"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-0001",
+              "before": {
+                "normalizedValue": "2026-04-14T00:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-04-14T00:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年4月14日00:00",
+                  "type": "event_start",
+                  "normalizedValue": "2026-04-14T00:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 15
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-04-14",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-0002",
+              "before": {
+                "normalizedValue": "2026-04-14T03:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-04-14T03:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年4月14日03:00",
+                  "type": "event_end",
+                  "normalizedValue": "2026-04-14T03:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 15
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-04-14",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:\n信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "actionFields": [],
+          "rangeSupport": [
+            {
+              "entityId": "time-0002",
+              "quote": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:",
+              "literalRange": "2026年4月14日00:00-03:00",
+              "expanded": "2026年4月14日03:00",
+              "rule": "CITED_SAME_EVENT_CLOCK_RANGE"
+            }
+          ],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.6.0",
+          "originalProse": [
+            {
+              "entityId": "event-0001",
+              "kind": "event",
+              "title": "厦门大学信息门户升级维护",
+              "description": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:\n//i.xmu.edu.cn）进行升级维护。\n维护期间，\n信息门户将暂时无法访问，"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "厦门大学信息门户升级维护",
+              "description": "0项任务，1项事件。请核对后确认。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "event-0001",
+              "kind": "event",
+              "title": "厦门大学信息门户升级维护",
+              "description": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:\n//i.xmu.edu.cn）进行升级维护。\n维护期间，\n信息门户将暂时无法访问，"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "厦门大学信息门户升级维护",
+              "description": "0项任务，1项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-0001",
+              "before": {
+                "normalizedValue": "2026-04-14T00:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-04-14T00:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年4月14日00:00",
+                  "type": "event_start",
+                  "normalizedValue": "2026-04-14T00:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 15
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-04-14",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-0002",
+              "before": {
+                "normalizedValue": "2026-04-14T03:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-04-14T03:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年4月14日03:00",
+                  "type": "event_end",
+                  "normalizedValue": "2026-04-14T03:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 15
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-04-14",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:\n信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "actionFields": [],
+          "rangeSupport": [
+            {
+              "entityId": "time-0002",
+              "quote": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:",
+              "literalRange": "2026年4月14日00:00-03:00",
+              "expanded": "2026年4月14日03:00",
+              "rule": "CITED_SAME_EVENT_CLOCK_RANGE"
+            }
+          ],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT",
+          "sourceActionTimes": {
+            "version": "source-action-time-role-1.0.1",
+            "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+            "inferredFacts": 0,
+            "decisions": []
+          }
+        },
+        "blockers": []
+      },
+      "userFactEdits": 0
+    }
+  ]
+}

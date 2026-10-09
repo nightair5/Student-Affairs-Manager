@@ -1,13 +1,13 @@
-# 当前交接：事实角色及有据引用已收口，浏览器未验
+# 当前交接：4份官方首答已诊断，两处首次数据损失已修，浏览器未验
 
 ROOT candidate11/比赛，branch codex/e2-candidate11-blind-eval。[唯一结果](candidate19-public-development/RESULTS.md)。2026-10-09执行；用户handover/15审计资产保留。
 
-本包3h/16/$6共享预授权，实际独立新批4作者Development通知×TaskRequirements/FactRoleAuthority=8，8SETTLED/0UNCERTAIN，1grant8reserve8settle，零retry/repair/verifier。usage45644/16123，保守内部结算$0.033042，实扣NOT_OBSERVABLE。旧不确定/完成批不恢复，未用余量扩样。
+本包3h/16/$6共享预授权，当前FactRoleAuthority单臂4官方历史节选；来源/参照/请求先冻结，4SETTLED/0UNCERTAIN，1grant4reserve4settle，零retry/repair/verifier。usage25879/15785（cache20480），保守内部结算$0.026707，实扣NOT_OBSERVABLE；只分配最坏硬限1.30，无余量扩样。旧封存/完成批不恢复。
 
-原答暂定最小事实2/4→4/4；冻结首次数据1/4→0/4，MIXED_PROGRESS；后公共程序同raw两臂4/4只是事后兼容，不改旧成绩。typed support1.5.0/relation1.3.0/first1.5.1/action-time-role1.0.1保留真实材料属性、短前置、已声明报名引用和源办理时间；假owner/错对象/新动作/true前置仍拒。FR03两臂Task1/Event1/Time3/Material0/Project0部分保存，电脑资格unknown留草稿。D27源办理时刻固定、个人计划分开。
+新4原答暂定1完整/1错/2UNKNOWN；冻结首次数据0/4→新公共程序同raw1/4，不是新模型提升。RN01/02长动作字段不再使Capture全局拒绝；RN04门户维护名称及00:00/03:00恢复。first1.6.0/compound-name1.1.0；typed support1.5/relation1.3/action-time1.0.1、生成输入/v8/default及D27不改。RN01时间角色/分段窗口，RN02业务渠道/强前置争议，RN03参与引用编译拒绝仍保留；不把个人unknown当事实错。旧8首份RecognitionResult逐份相同；旧v11/12后验及8作者比较成绩不改。
 
-唯一新入口6916固定8录制、实时关闭，新隔离库；构建5bf2ca3e9d62/source2bb718e25f89。HTTP200/模型POST403。普通内存Repository保存/恢复/只重读/安排/独立实例已验；浏览器点击/刷新IndexedDB NOT_RUN_POLICY_STOP：官方Computer Use不能可靠识别Windows URL，未绕过。四真人NOT_OBSERVABLE。
+唯一新入口6917固定4录制、实时关闭、新隔离库；构建ac45bb4693b7/sourcefdbf658f9d68，HTTP200/POST403。RN04内存正式Task0/Event1/Time2/Project0，exact起止；选择检查点无edit、事务失败手动恢复/已提交只重读/独立实例通过。点击/刷新IndexedDB NOT_RUN_POLICY_STOP：官方Computer Use不能可靠识别Windows URL，未绕过；四真人NOT_OBSERVABLE。
 
-42独立组36PASS/6旧FAIL，lint/build/security与46定向通过；默认Vitest附加超时/缺载体日志保留，权威载体命令相关组通过；不改旧断言/timeout。audit开发2critical6high1moderate/production0。84保护119冻结7归档、132本机资产保持；1082链SHAb3e3952c...，1065f648795b...及996/1000/1009/1015/1048前缀不变。
+42独立组36PASS/6旧FAIL（exit1），77受影响检查及lint/build/security通过；末次否定守卫小改仅重验受影响层，旧断言/timeout不改。audit开发2critical6high1moderate/production0。84/119/7、235资产及raw保持；1091链SHA0870d6cc...，合法9行；1082前缀b3e3952c...及更旧前缀保留。
 
-下一完成6916同构建真实点击/部分/恢复/刷新/独立IndexedDB读回；不需新模型预算。当前两根因工程收口，无新缺口不造新候选。默认/Workspace v8/真人/Holdout/合并/部署/Secret/旧库/依赖/旧冻结均未改变。
+下一先用现4raw收口参与引用/复杂窗口或业务渠道作用范围，最多两个根因；不默认再付费。页面需恢复官方浏览器通道后验6917本构建；不拿内存/HTTP替点击。详见唯一结果中的real-notice-fact-role报告。没有新生成假设，不造新候选；未真人/Holdout/default替换/合并/部署/Secret读取/旧库/依赖或历史改写。

@@ -1,0 +1,34 @@
+{
+  "batch": "FACT-ROLE-CURRENT-REAL-NOTICE-DEVELOPMENT-20261009-R1",
+  "actualRequests": 4,
+  "settled": 4,
+  "uncertain": 0,
+  "notSent": 0,
+  "grants": 1,
+  "reserves": 4,
+  "settles": 4,
+  "retry": 0,
+  "repair": 0,
+  "verifier": 0,
+  "sharedPreauthorization": {
+    "maxRequests": 16,
+    "hardLimitUsd": 6,
+    "sourceSha256": "19125abbccb5f7bb9b4a01196b387c22e55a49c7ece36b258fae490bb95288f9",
+    "actualSourceQuotedNotFabricatedBatchReply": true
+  },
+  "allocatedWorstCaseUsd": 1.3,
+  "officialBoundUsd": 1.297616,
+  "unitBoundMicroUsd": 324404,
+  "actualUsage": {
+    "input": 25879,
+    "output": 15785,
+    "cached": 20480,
+    "costUpperMicroUsd": 26707
+  },
+  "internalConservativeSettlementUsd": 0.026707,
+  "providerActualDeduction": "NOT_OBSERVABLE",
+  "oldSealedBatchesRestored": 0,
+  "inputMechanismChanged": false,
+  "nextPaidComparisonNecessary": false,
+  "reason": "Two deterministic public product roots are provable using the four acquired raw; no generator patch or second batch needed."
+}

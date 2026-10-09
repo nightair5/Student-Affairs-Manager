@@ -1,0 +1,130 @@
+{
+  "version": "real-notice-fact-role-adjudication-1.0.0",
+  "referenceSha256": "a7917f3d44c33b17d5ece97c5a5bdd3e8de038b4548892998604dd0d2b6a59c0",
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "denominator": 4,
+  "metricsScope": "Complete source-first minimum facts and usable ordinary first DATA, NOT browser observations, independent whole prose, overall recognition accuracy or a paired model improvement",
+  "raw": {
+    "correct": 1,
+    "incorrect": 1,
+    "unknown": 2
+  },
+  "frozenFirstData": {
+    "correct": 0,
+    "incorrect": 4,
+    "unknown": 0
+  },
+  "postProgramSameRawFirstData": {
+    "correct": 1,
+    "incorrect": 3,
+    "unknown": 0
+  },
+  "knownUserFactCorrections": 0,
+  "conclusion": "DETERMINISTIC_FIRST_DATA_WHOLE_NET_GAIN_ONE_WITH_NO_NEW_OBSERVED_CRITICAL_RISK",
+  "limits": [
+    "Single-arm four official excerpts already used as Development",
+    "Program compatibility not new generator improvement",
+    "Unadjudicated titles/free prose/leakage remain unadjudicated",
+    "No deletion of failures/disputes or denominator",
+    "No new paired winner"
+  ],
+  "rows": [
+    {
+      "sourceId": "RN-01",
+      "rawFacts": "INCORRECT",
+      "frozenFirstData": "INCORRECT",
+      "postFirstData": "INCORRECT",
+      "sourceEvidence": "系统提交截止时间为6月10日；纸质材料6月15—16日每天两段受理。",
+      "rawEvidence": "time-registration-deadline.type=registration_deadline；paper-window-start是一段两日/上午范围，paper-window-end仅下午范围；description保留完整窗口，不据此声称原答漏掉全部窗口原文。",
+      "factCategories": {
+        "task": "PRESENT",
+        "event": "NOT_STATED",
+        "time": "WRONG_DEADLINE_ROLE_AND_DISPUTED_WINDOW_REPRESENTATION",
+        "material": "PRESENT_WORD_PDF_SIGNED_COMPLETE",
+        "condition": "NOT_APPLICABLE_VS_APPLICATION_CONTEXT_UNADJUDICATED",
+        "relationship": "WINDOW_ROLE_UNRESOLVED"
+      },
+      "failureLayer": [
+        "MODEL_TIME_ROLE",
+        "ORDINARY_ACTION_FIELD_PROJECTION",
+        "CHANNEL_AND_WINDOW_LOCAL_BLOCK"
+      ],
+      "repairEvidence": "26字提交原文拆出已有“提交”；Capture有效，原截止角色/分段窗口和渠道引用未修，不计整份正确。",
+      "remaining": "6月10日角色及两天各两段窗口；系统渠道的组合名称引用。",
+      "titlesAndFreeProse": "NOT_ADJUDICATED",
+      "leakage": "NOT_ADJUDICATED"
+    },
+    {
+      "sourceId": "RN-02",
+      "rawFacts": "UNKNOWN",
+      "frozenFirstData": "INCORRECT",
+      "postFirstData": "INCORRECT",
+      "sourceEvidence": "8月13日起；学工系统生源地贷款2026-2027业务期；回执照片/截图完整清晰、本学年；指定机构校验码。",
+      "rawEvidence": "五个步骤及两类义务均有；qualification/prerequisite unknown；校验码额外依赖上传回执的强前置未被原文明说，属于顺序/依赖争议，不先判已知错误。",
+      "factCategories": {
+        "task": "PRESENT_STEP_FRAGMENTATION_DISPUTED",
+        "event": "NOT_STATED",
+        "time": "WINDOW_START_PRESENT",
+        "material": "PRESENT",
+        "condition": "UNKNOWN_CORRECT_NOT_FALSE",
+        "relationship": "PROCEDURAL_ORDER_VS_REQUIRED_PRECONDITION_UNKNOWN"
+      },
+      "failureLayer": [
+        "ORDINARY_ACTION_FIELD_PROJECTION",
+        "CHANNEL_REFERENCE_LOCAL_BLOCK",
+        "UNADJUDICATED_DEPENDENCY"
+      ],
+      "repairEvidence": "42字登录和23字选择投影为已有动词；URL相邻scope重组，普通草稿可生成；全局明示业务渠道尚未进入材料确定渠道，首次整份未闭合。",
+      "remaining": "渠道/关系依据及普通任务粒度；资格未知本身不算事实错误。",
+      "titlesAndFreeProse": "NOT_ADJUDICATED",
+      "leakage": "NOT_ADJUDICATED"
+    },
+    {
+      "sourceId": "RN-03",
+      "rawFacts": "UNKNOWN",
+      "frozenFirstData": "INCORRECT",
+      "postFirstData": "INCORRECT",
+      "sourceEvidence": "300年度积分；线上起止；线下日期、每天10:00—21:00及周三/节假日例外；两馆目的地、本人持卡、提交后领取、不代领及核销。",
+      "rawEvidence": "两任务/校园卡/unknown前置和资格/日期有；营业时段与例外存在proposition scope引用，但没有正式窗口限制实体；这是合法上下文表示与结构缺口争议。participation引用资格scope未重复进proposition，编译器ROLE_AUTHORITY_PARTICIPATION_EVIDENCE拒绝。",
+      "factCategories": {
+        "task": "PRESENT",
+        "event": "SERVICE_WINDOW_NOT_SINGLE_EVENT",
+        "time": "DAILY_EXCLUSION_REPRESENTATION_UNKNOWN",
+        "material": "CAMPUS_CARD_PRESENT",
+        "condition": "UNKNOWN_CORRECT",
+        "relationship": "PARTICIPATION_SCOPE_CONTRACT_REFUSED"
+      },
+      "failureLayer": [
+        "SOURCE_ROLE_AUTHORITY_COMPILER",
+        "WINDOW_REPRESENTATION_UNADJUDICATED"
+      ],
+      "repairEvidence": "本包仅两根因；未改参与契约、未猜补每日开放、未把全部拒绝称语义错误。",
+      "remaining": "选参与依据公共兼容或窗口生成作为下包一个根因，先用本raw验证，不默认新模型。",
+      "titlesAndFreeProse": "NOT_ADJUDICATED",
+      "leakage": "NOT_ADJUDICATED"
+    },
+    {
+      "sourceId": "RN-04",
+      "rawFacts": "PROVISIONAL_CORRECT",
+      "frozenFirstData": "INCORRECT",
+      "postFirstData": "PROVISIONAL_CORRECT",
+      "sourceEvidence": "对厦门大学信息门户进行升级维护；2026年4月14日00:00—03:00；维护期间无法访问；无学生待办。",
+      "rawEvidence": "tasks=[]；已有event-0001与event_start/end，名称是同对象+操作；结束重复日期是同事件范围的无损表示，outcome有真实引用。",
+      "factCategories": {
+        "task": "CORRECT_NO_TASK",
+        "event": "PRESENT_SAME_ENTITY_OPERATION",
+        "time": "BOTH_EXACT_EXISTING_ENDPOINTS",
+        "material": "CORRECT_NONE",
+        "condition": "NOT_STATED",
+        "relationship": "UNIQUE_EVENT_START_END_OWNERS"
+      },
+      "failureLayer": [
+        "FIRST_NAME_AND_CLOCK_GROUNDING"
+      ],
+      "repairEvidence": "原待核对事件及null结束恢复名称/00:00/03:00；Memory普通确认读回Task0/Project0/Event1/Time2，无字段修改。",
+      "remaining": "真实浏览器点击/刷新/IndexedDB未运行；独立人工真值及泛化未证明。",
+      "titlesAndFreeProse": "SOURCE_REVIEWED_PROVISIONAL",
+      "leakage": "NOT_ADJUDICATED"
+    }
+  ]
+}
