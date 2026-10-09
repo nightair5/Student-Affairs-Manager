@@ -79,9 +79,30 @@ function supplement(){
  const effective=assertRenewal(s,auth,authBytes,readFileSync(join(PACKAGE_ROOT,'USER_AUTHORIZATION.txt')),
   readFileSync(join(RECOVERY_ROOT,'PRICE_EVIDENCE.json')),pack)
  check(Array.isArray(s.runnerComponents)&&s.runnerComponents.length>=6,'RUNNER_FREEZE')
- for(const f of s.runnerComponents)check(sha(readFileSync(f.path))===f.sha256
-  &&sha(execFileSync('git',['show',s.recoveryHead+':'+f.path],{maxBuffer:32*1024*1024}))===f.sha256,'RUNNER_DRIFT_'+f.path)
+ for(const f of s.runnerComponents)assertRunnerBytes(f,readFileSync(f.path),execFileSync('git',['show',s.recoveryHead+':'+f.path],{maxBuffer:32*1024*1024}))
  return {s,effective,pack}
+}
+export function assertRunnerBytes(f,runtime,blob){
+ // Preserve both exact byte identities; Git's configured CRLF checkout is not code drift.
+ const canonical=b=>Buffer.from(b.toString('utf8').replace(/\r\n/gu,'\n'))
+ check(sha(runtime)===f.sha256&&sha(blob)===f.gitSha256
+  &&canonical(runtime).equals(canonical(blob)),'RUNNER_DRIFT_'+f.path)
+}
+export async function archiveFailedPreparation(){
+ check(!existsSync(join(RECOVERY_ROOT,'RECOVERED.json'))&&!existsSync(join(RECOVERY_ROOT,'BEFORE.json'))
+  &&!existsSync(join(RECOVERY_ROOT,'lock-original'))&&!existsSync(join(RECOVERY_ROOT,'HALT-original.json')),'PREPARATION_ALREADY_MUTATED')
+ const s=read(join(RECOVERY_ROOT,'SUPPLEMENT.json')),scene=await createCurrentRoleRecoveryInspector().resumeReadOnly()
+ assertPreflightRecoverable(scene);emptyPhaseEvidence();noOwner()
+ check(scene.ledger.sha256===s.ledgerSha256&&sha(readFileSync(join(EXECUTION_ROOT,'STATE.json')))===s.stateSha256
+  &&sha(readFileSync(join(EXECUTION_ROOT,'HALT.json')))===s.haltSha256
+  &&isDeepStrictEqual(lockIdentity(join(EXECUTION_ROOT,'lock')),s.lockIdentity),'PREPARATION_SCENE_CHANGED')
+ const attempt=join(RECOVERY_ROOT,'preparation-attempt-1');mkdirSync(attempt)
+ writeOnce(join(attempt,'PROOF.json'),{reason:'Exact runtime/Git newline check failed before any original barrier mutation',scene,
+  supplementSha256:sha(readFileSync(join(RECOVERY_ROOT,'SUPPLEMENT.json'))),observedAt:new Date().toISOString(),ledgerWrites:0,modelRequests:0})
+ const guard=join(RECOVERY_ROOT,'recovery-guard'),identity=lockIdentity(guard)
+ quarantineLock({lockPath:guard,archivedPath:join(attempt,'recovery-guard'),expected:identity,assertQuiescent:noOwner})
+ renameSync(join(RECOVERY_ROOT,'SUPPLEMENT.json'),join(attempt,'SUPPLEMENT.json'))
+ return {status:'UNEXECUTED_PREPARATION_ARCHIVED',ledgerWrites:0,modelRequests:0}
 }
 function emptyPhaseEvidence(){
  for(const name of ['phase-observation-v1','transport-boundary-v1']){

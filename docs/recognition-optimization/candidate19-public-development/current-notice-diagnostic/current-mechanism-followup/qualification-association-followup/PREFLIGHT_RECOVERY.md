@@ -6,6 +6,8 @@
 
 新增 `current-role-preflight-recovery.mjs` 是既有 recovery host/core、原 grant、精确四请求的薄绑定。它核当前提交/远端、原 Git blobs/请求哈希、完整链/receipt、原状态/HALT/锁身份、续期授权/同路由同费率及三小时共同预算。仅在无并发执行器且证据一致时原子归档原 HALT 和空锁，不删除；未闭合恢复 guard 阻止派发。原 AUTH/PRICE/USER_AUTH 字节不改，续期记录绑定新真实指令。发送严格 ordinal/一次，任何 reserve/send/raw/settle 不确定继续封存。浏览器使用原只读录制接口。
 
-定向22安全反例通过：原 host 真实发送前失败 send=0 可恢复，reserve后失败不可恢复，四请求原 grant 逐身份仅一次，授权漂移/额外费用/路由/并发/孤立文件拒绝，phase与TLS/POST边界观察仍阻断不确定。发送/恢复完成与模型事实质量另记实际结果；本文件不把工具修复算首次正确率提高。
+定向24安全反例通过：原 host 真实发送前失败 send=0 可恢复，reserve后失败不可恢复，四请求原 grant 逐身份仅一次，授权漂移/额外费用/路由/并发/孤立文件拒绝，phase与TLS/POST边界观察仍阻断不确定。发送/恢复完成与模型事实质量另记实际结果；本文件不把工具修复算首次正确率提高。
+
+首次本地准备被运行时 CRLF 与 Git LF 字节差异阻断，原 HALT/锁/状态/账本均未变化。新核验分别冻结两份精确字节哈希并要求仅换行规范化后相等；内容改变仍拒绝。未执行准备的空 guard 和补充授权原件经原现场一致核验归档，不删除或更改原批屏障。
 
 原生成/评分冻结不改；当前产品程序和首次展示另固定在输出前，结果分别报告。复用普通 App/ReviewSession/DomainCommitPlan/Repository；没有新依赖、Schema升级或默认替换。

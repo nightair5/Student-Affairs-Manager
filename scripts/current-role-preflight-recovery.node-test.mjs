@@ -7,7 +7,7 @@ import {createScopedHost} from './scoped-execution-host.mjs'
 import {createRecoveryScopedHost} from './scoped-execution-recovery-host.mjs'
 import {createScopedEngine} from './scoped-execution-core.mjs'
 import {BATCH,COUNT,sha} from './current-role-diagnostic.mjs'
-import {assertPreflightRecoverable,assertRenewal,assertNoCurrentRoleOwner,readRemoteWithTlsRetry,PACKAGE_ROOT,EXECUTION_ROOT} from './current-role-preflight-recovery.mjs'
+import {assertPreflightRecoverable,assertRenewal,assertNoCurrentRoleOwner,readRemoteWithTlsRetry,assertRunnerBytes,PACKAGE_ROOT,EXECUTION_ROOT} from './current-role-preflight-recovery.mjs'
 const json=(p,v)=>writeFileSync(p,JSON.stringify(v,null,2)+'\n')
 async function fixture(){
  const root=mkdtempSync(join(tmpdir(),'role-preflight-')),ledgerPath=join(root,'ledger.jsonl'),scope={batch:BATCH,count:COUNT,snapshot:'b'.repeat(40)}
@@ -63,4 +63,12 @@ test('only non-billable remote TLS reads retry at most three; configuration erro
  assert.throws(()=>readRemoteWithTlsRetry(()=>{calls++;throw Object.assign(new Error('config'),{stderr:Buffer.from('access denied')})}));assert.equal(calls,1)
  calls=0;assert.throws(()=>readRemoteWithTlsRetry(()=>{calls++;throw Object.assign(new Error('read'),{stderr:Buffer.from('TLS failed')})}));assert.equal(calls,3)
  calls=0;assert.equal(readRemoteWithTlsRetry(()=>{calls++;return 'WRONG_SHA'}),'WRONG_SHA');assert.equal(calls,1)
+})
+test('exact checkout and Git bytes are independently frozen; only CRLF normalization is allowed',()=>{
+ const blob=Buffer.from('const x=1\n'),runtime=Buffer.from('const x=1\r\n')
+ const f={path:'anonymous.mjs',sha256:sha(runtime),gitSha256:sha(blob)}
+ assertRunnerBytes(f,runtime,blob)
+ assert.throws(()=>assertRunnerBytes(f,Buffer.from('const x=2\r\n'),blob))
+ assert.throws(()=>assertRunnerBytes({...f,gitSha256:sha('const x=2\n')},runtime,Buffer.from('const x=2\n')))
+ assert.throws(()=>assertRunnerBytes(f,blob,blob))
 })
