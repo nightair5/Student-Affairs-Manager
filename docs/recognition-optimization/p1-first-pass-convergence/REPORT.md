@@ -1,4 +1,38 @@
-# P1 首次建议收口：两处真实录制损失修复与实际浏览器验收
+# P1接续：普通代理边界、任务时间归属与真实窗口收口
+
+2026-10-13。工程00aefde、冻结d658137、修复7a2d8f2均立即普通推送。[全部证据和逐来源](TIME_RESULTS.json) · [匿名真实响应02原字节副本](TIME_CHANNEL_OBSERVED_02.json)。原授权/核价/付费现场只在本机.data/p1-time-provider-20261013，未进Git。以下原报告不改。
+
+普通Proxy保持RecognitionResult、默认模型/Prompt，通过typed材料支持审计接原App/ReviewSession/DomainCommitPlan/Repository。上游raw不可见，代理归一化原返回明确标SERVER_NORMALIZED_RECOGNITION_RESULT_NOT_UPSTREAM_RAW，不能与Responses原生成回答混称。来源/真实声明/唯一owner不足仍阻断；新输入的缓存身份含全部请求及来源，失败清除旧sidecar。
+
+唯一新生成假设：task内一份时间声明减少截止角色/owner错误与分段窗口丢失。task-time生成/Schema/Prompt1.0.0先实现冻结；deadline/actionTime/window引用真实task，程序派生owner及有界日期×时段。新作者匿名Development3来源两臂6身份，参照single-author/model-assisted/provisional，不是官方来源/Holdout，编译也是比较组件，不能只归因Prompt。
+
+| 固定各臂分母3：暂定完整/错误/未知 | FactRoleAuthority | TaskTimeAuthority |
+|---|---|---|
+| 原答最小事实 | 0/0/3 | 1/0/2 |
+| 输出前冻结首次数据 | 0/1/2 | 0/1/2 |
+| 新公共程序同raw首次最小事实 | 0/1/2 | 1/0/2 |
+
+只有TT01两份已取得回答。FactRole已有正确动作/提交截止/材料及完整窗口文字，information支持和窗口表示仍未裁，编译拒绝AUTHORITY_SUPPORT_CONTEXT_REFERENCE不等于所有原事实错误。TaskTime真实回答明确两任务、电子提交11/5 18:20及11/9—10各09:00—11:30、14:30—17:30；标题、描述、完成标准按原文暂定核验，独立真值/泄漏NOT_ADJUDICATED。TT02/TT03四未送保持UNKNOWN，整批EVIDENCE_INCOMPLETE_NO_WINNER，不以已知1份算100%。
+
+新回答暴露公共误阻断，修的是程序而非原答：time投影1.0.1允许同一逐字范围的每天/每日/日段前缀，否定/条件/别对象/其他时钟仍拒；material1.4.1允许有据“向/到渠道提交同对象”，全句极性/矛盾/owner检查保持。raw02原SHA/request/Schema/Prompt不变，同raw从3时间4冲突/两渠道null变为9时间0冲突/真实双渠道。D27窗口1.2.1只接已知兼容投影1.0.0/1.0.1，未来版本或坏引用/值/owner仍局部阻断。没有修复后新模型输出。
+
+实际浏览器[6931](http://127.0.0.1:6931/)：DB rco-mainline-01-02-i1-d27-plan-recorded-p1-time-20261013-final，固定录制、模型关闭。raw02零事实编辑、一次来源接受，正式2Task/2Material/9原Time，独立读回和刷新一致；个人纸质安排11/9 09:00—09:30在单一开放段，电子截止11/5 18:20未变。Proxy离线夹具经真实服务适配器另保存1Task/1Material；关闭弹层后注入读回失败，正式提交已发生、重复提交禁用，只重新读取恢复。最终3Task/3Material/10Time/0Event/0Project/2Source包含夹具与1个人planned_start，不当模型成绩；0字段edit、1真实失败事件，刷新缺失null，四真人NOT_OBSERVABLE。
+
+![正式保存与窗口内安排](TIME-SAVED-PLAN.png)
+
+未完成项明确保留：办理窗口原文在摘要/时间列表重复八次、技术时间类型暴露；Proxy夹具弹层仍写DeepSeek建议但诊断/持久provenance正确标工程；首次摘要泛化缺依据提示。事务故障按钮在弹层背后一次点击未触发，本轮不记事务失败PASS；部分、坏owner、检查点及其他故障未全重点击，复用上轮6924浏览器和当前定向失败测试。没有任意默认实时质量、独立裁决、release匿名兼容、合并或部署。
+
+调用2SETTLED/0UNCERTAIN/4NOT_SENT，唯一新grant分配US$2、2reserve2settle；真实usage12752input/4932output/cached5120，内部cache-miss峰时保守结算US$0.009745，实扣NOT_OBSERVABLE。第三身份GitHub443远端预检在reserve/engine/transport前失败，state无SENDING、账本无ordinal3；不以无raw单独推断没发送。锁保留、HALT不存在、未结算reserve0，不删锁续跑或换身份。官方[路由/核价](https://api-docs.deepseek.com/quick_start/pricing/)和[Responses契约](https://api-docs.deepseek.com/guides/responses_api/)在首grant前核，官方上下文/8192输出上界单元0.324404美元，不字节估token。本包预授权16/$6/3小时已到期，未用金额不续用。
+
+最终npm test34当前独立组PASS，87最终定向、lint0错误8旧warning/typecheck/build/security4907文件通过，chunk warning保留。历史9组3PASS6旧FAIL复用未变证据，不改断言/锁；新核audit开发2critical6high1moderate、production0，CI未观察。84保护119冻结7归档、478资产未变；1096完整链仅5合法追加、旧1091前缀保持。原四官方1/1/2、八录制及旧成绩保持。
+
+执行审查：没有严格守住3小时收口；开始07:07:49UTC、期限10:07:49UTC，11:36:53UTC发现超时后停止新增开发/调用，只完成已有验证交接。两轮实质工程，没有开第三方向，不以文件/测试数宣称质量。验收构建d6581377deb9/source237eaaab104b，完整源SHA237eaaab104b6e91cc99eff07a588e9e47630eabd4ecf484cdffb97e0f9f856f与工程commit一致。用户两个untracked文件及15审计资产保持，回退可单独revert本轮工程，无v8迁移/旧库写入。
+
+下一先用现raw压缩窗口摘要、对齐模式/依据警示，无需付费。未送四身份不能自动恢复，另需明确安全恢复决策和范围，不能放宽付费gate绑定。工程已交付但模型比较不足、显示有未完项，非集成或发布就绪。
+
+---
+
+# 历史P1 首次建议收口：两处真实录制损失修复与实际浏览器验收
 
 2026-10-13，工程提交 `026ea27196090f403507753a820fc64d6d047467`，基线 `4f6542319479af611a86dd16a8ec9110fd62de00`。本轮按用户直接指令推进首次建议质量，没有转去制作参赛包装。[机器可查证据](EVIDENCE.json)；[必要集成盘点](../../governance/P1_INTEGRATION_READINESS.md)。
 

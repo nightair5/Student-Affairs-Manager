@@ -1,15 +1,15 @@
-# 当前交接：P1首次展示损失已收口，实际浏览器闭环已验
+# 当前交接：普通代理支持与任务时间窗口已交付，比较不完整
 
-ROOT：C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；branch：codex/e2-candidate11-blind-eval。工程HEAD：026ea27196090f403507753a820fc64d6d047467；核验起点4f6542319479af611a86dd16a8ec9110fd62de00，最新文档提交以当前Git HEAD为准。[唯一结果](candidate19-public-development/RESULTS.md)。
+ROOT C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；branch codex/e2-candidate11-blind-eval。工程HEAD7a2d8f22aa68e099de8cd40072adba163d485235，另已推送00aefde/d658137；最终文档HEAD以Git为准。[唯一结果](candidate19-public-development/RESULTS.md) · [证据](p1-first-pass-convergence/TIME_RESULTS.json)。用户本包主线优先，旧CODEX_NEXT_PHASE_PLAN是参考，两个untracked计划/handover及15审计资产不改。
 
-目标：原答已有事实完整进入第一份建议，少补录。已修参与条件支持索引和同一句数字流程渠道；新程序只派生已有引用，原Schema/Prompt/default/v8不动。4旧真实录制有效首次3/4→4/4，原答1正确1错2UNKNOWN保持；本轮公共最小事实1/1/2，完整正确数未净增。旧8逐份不变，没有新模型成绩。
+目标：第一次完整准确、少补事实。普通Proxy真实RecognitionResult→typed材料/流程支持→原App保存链已接入，默认模型/Prompt不变；上游raw不可见与代理原返回分开。任务内时间生成1.0.0；公共time1.0.1/material1.4.1/D27窗口1.2.1恢复有据每日分段窗口和向/到渠道提交，不猜owner/事实，不升级v8。
 
-唯一入口6924固定录制，模型机械关闭，新库；构建source4bcdd9d92d99与工程提交代码一致。实际4录制+4工程控制经过普通App/ReviewSession/DomainCommitPlan/Repository；部分保存、逐事件拒绝共享时间、坏owner局部阻断、检查点/事务/读回三恢复、刷新、独立值及个人安排已验。最终7任务5事件11时间2材料0项目；工程个人选择不计模型正确，四真人NOT_OBSERVABLE。
+新3作者Development来源两臂6身份：2SETTLED/0UNCERTAIN/4NOT_SENT，各臂3固定分母。FactRole原事实0/0/3未决；TaskTime1暂定/0错/2未知。冻结首次均0/1/2；新公共首次分别0/1/2、1/0/2。EVIDENCE_INCOMPLETE_NO_WINNER，非新模型获胜/总体准确率；旧四官方1/1/2、八录制及历史成绩不改。
 
-验证：当前33独立组PASS，历史9组3PASS6旧FAIL(原哈希/账本快照)；定向127、lint0错误8既有warning、typecheck/build/security通过。audit新核开发2C6H1M/production0。42职责组全部确定退出，不改旧断言/锁/timeout，CI历史作业保留，远端CI未观察。
+6931唯一实测入口固定录制+工程控制、实时关闭，source237eaaab104b与工程commit一致、新DB。raw02零事实编辑一次接受，2任务2材料9原时间/双渠道/四窗口独立读回刷新；个人纸质安排11/9 09:00—09:30、原电子截止11/5 18:20不变。Proxy离线服务夹具另保存1任务1材料，提交后失败只重读无重复。合计3任务3材料10时间0事件0项目含夹具/个人计划；四真人NOT_OBSERVABLE。
 
-保护：84/119/7，478旧资产未变，1091完整链SHA0870d6ccd38b54315a600d347657606aad3d19ae499e47c36077a9db0276e62f保持；本轮模型/grant/reserve/settle0、费用0。旧完成/封存不恢复，handover/计划/15审计资产保持且不混入提交。工程提交后首次普通push因GitHub443超时失败；最终同步状态见交付回报，不能由本地commit推断。
+2调用、1grant2reserve2settle，保守内部US$0.009745、实扣不可观察。第三身份远端预检在reserve前失败，锁保留无HALT，后4未送现场不改。本包16/$6/3小时授权已到期，未花金额不续用。旧封存不恢复；原4未来续送需明确安全恢复决定，不能删锁/改Manifest绕过当前代码漂移。
 
-未完：RN01原答错时间角色/分段窗口；RN02任务粒度/强前置与RN03营业例外/可选义务争议；任意实时首答、独立裁决、release匿名v8 round-trip和合并构建未验。数据兼容VERIFY_BEFORE_MERGE。本轮状态P1_ENGINEERING_DELIVERED_INTEGRATION_CHECKS_PENDING，未达到完整P1集成退出条件。
+最终34当前组PASS、87定向、lint8旧warning/typecheck/build/security通过；历史9组3PASS6旧FAIL复用未变证据，audit新核2C6H1M/production0，CI未观察。84/119/7、478资产、旧1091前缀不变；1096链SHAb5bc4857959794e01156f28c04c2d66b7abdcf53725c9bb9252f514caf13ff08仅5合法追加。
 
-下一先裁明最小事实及合法关系表示，再决定生成假设；无需为这两处确定公共修复付费。不真人/Holdout/default替换/合并/部署/Secret明文/旧库/依赖升级。授权本轮已收口，不自动进入新预算或下一阶段。
+未完：窗口摘要重复8次/技术时间文案，Proxy夹具弹层模式未对齐、泛化缺依据提示。事务故障按钮在弹层后一次未触发不记PASS；部分/坏owner/检查点复用旧浏览器和新测试。3小时未严格收口，超时后停止新增开发调用，仅验证交接。下一先用现raw收口显示，无需付费；不自动开预算、真人/Holdout/default替换/合并/部署，旧库兼容仍VERIFY_BEFORE_MERGE。
