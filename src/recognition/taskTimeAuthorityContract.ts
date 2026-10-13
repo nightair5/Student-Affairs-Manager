@@ -10,7 +10,7 @@ import type { RecognitionResult } from './types'
 export const TASK_TIME_AUTHORITY_VERSION = 'task-time-authority-source-contract-1.0.0'
 export const TASK_TIME_AUTHORITY_CANDIDATE = 'task-time-authority-generation-1.0.0'
 export const TASK_TIME_AUTHORITY_PROMPT = 'recognition-task-time-authority-1.0.0'
-export const TASK_TIME_AUTHORITY_PROJECTION = 'task-time-authority-projection-1.0.0'
+export const TASK_TIME_AUTHORITY_PROJECTION = 'task-time-authority-projection-1.0.1'
 
 export interface TaskTimeLiteral { rawText: string; scopeIds: string[]; confidence: number }
 export interface TaskDeadlineDeclaration extends TaskTimeLiteral {
@@ -145,19 +145,26 @@ function sessionInterval(session: TaskWindowSession, date: string, context: Wire
   // The declared endpoint surfaces must form this one literal range. Clocks
   // elsewhere in the same notice or sentence cannot supply either endpoint.
   const span = session.rawText.trim(), a = span.indexOf(session.startText), b = span.lastIndexOf(session.endText)
-  if (a !== 0 || b <= a || b + session.endText.length !== span.length
-    || !/^\s*[-—–－~～至到]\s*$/u.test(span.slice(session.startText.length, b))) return null
-  const start = interpretTimeD26(explicitClockInput(session.startText), { type: 'event_start', inheritedDate: date,
+  if (a < 0 || b <= a || b + session.endText.length !== span.length
+    || !/^\s*[-—–－~～至到]\s*$/u.test(span.slice(a + session.startText.length, b))) return null
+  const prefix = span.slice(0, a), prefixMatch = prefix.match(/^(?:(?:每天|每日)\s*)?(凌晨|清晨|早晨|早上|上午|中午|下午|傍晚|晚上|夜间|夜里|晚)?\s*$/u)
+  if (!prefixMatch) return null
+  const declaredStartPeriod = session.startText.match(periodPattern)?.[0]
+  if (prefixMatch[1] && declaredStartPeriod) return null
+  // A frequency or period prefix belongs only to this same literal range.
+  // Other objects, conditions, negation or a second clock cannot lend context.
+  const startRaw = prefixMatch[1] && !declaredStartPeriod ? prefixMatch[1] + session.startText : session.startText
+  const start = interpretTimeD26(explicitClockInput(startRaw), { type: 'event_start', inheritedDate: date,
     referenceTime: context.referenceTime, timezone: context.timezone, sourceContext: session.rawText }).point
   // A shared day-period in the same literal range is ordinary range syntax.
   // The inherited period is public normalization, never a new raw quotation.
-  const period = session.startText.match(periodPattern)?.[0]
+  const period = startRaw.match(periodPattern)?.[0]
   const explicitEndPeriod = periodPattern.test(session.endText)
   const endRaw = period && !explicitEndPeriod ? period + session.endText : session.endText
   let end = interpretTimeD26(explicitClockInput(endRaw), { type: 'event_end', inheritedDate: date,
     referenceTime: context.referenceTime, timezone: context.timezone, sourceContext: session.rawText }).point
   if (start.precision !== 'exact' || end.precision !== 'exact' || start.needsConfirmation || end.needsConfirmation || !start.normalizedValue || !end.normalizedValue) return null
-  const explicitMidnight = /晚上|夜间|夜里|晚/u.test(session.startText) && /凌晨|清晨|早晨|早上|上午/u.test(session.endText)
+  const explicitMidnight = /晚上|夜间|夜里|晚/u.test(startRaw) && /凌晨|清晨|早晨|早上|上午/u.test(session.endText)
   if (end.normalizedValue <= start.normalizedValue && explicitMidnight) {
     end = interpretTimeD26(session.endText, { type: 'event_end', inheritedDate: addDateOnlyDays(date, 1), referenceTime: context.referenceTime, timezone: context.timezone }).point
   }

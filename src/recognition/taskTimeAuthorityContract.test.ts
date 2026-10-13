@@ -83,6 +83,36 @@ describe('task-owned time authority: existing schema, ordinary data and explicit
     expect(w.intervals[0]).toMatchObject({ start: '2027-02-20', end: '2027-02-21', precision: 'date_only' })
     expect(d.result.timePoints.filter(p => w.pointIds.includes(p.tempId)).every(p => p.precision === 'date_only' && p.isAllDay)).toBe(true)
   })
+  it.each([
+    ['每天上午9:00-11:30', '上午9:00', '11:30', '09:00', '11:30'],
+    ['每日上午9:00-11:30', '9:00', '11:30', '09:00', '11:30'],
+    ['每日下午2:30-5:30', '2:30', '5:30', '14:30', '17:30'],
+    ['下午14:30-17:30', '14:30', '17:30', '14:30', '17:30'],
+  ])('same literal range prefix supports a lossless endpoint quotation: %s', async (session, startText, endText, start, end) => {
+    const f = await fixture({ sessions: [session] })
+    Object.assign(f.facts.tasks[0].timeFacts.windows[0].sessions[0], { startText, endText })
+    const d = decodeTaskTimeAuthorityRecording(f.raw(), f.context), w = d.sidecar.taskTimeAuthorityAudit.windows[0]
+    expect(w.state).toBe('RESOLVED_DISCRETE')
+    expect(w.intervals.map(v => [v.start, v.end])).toEqual([
+      ['2027-02-20T' + start, '2027-02-20T' + end], ['2027-02-21T' + start, '2027-02-21T' + end],
+    ])
+    expect(w.declaration.sessions[0].rawText).toBe(session)
+    expect(w.declaration.sessions[0].startText).toBe(startText)
+  })
+  it.each([
+    ['若获准上午9:00-11:30', '9:00', '11:30'],
+    ['不要上午9:00-11:30', '9:00', '11:30'],
+    ['甲活动上午9:00-11:30', '9:00', '11:30'],
+    ['上午14:30-17:30', '14:30', '17:30'],
+    ['下午上午9:00-11:30', '上午9:00', '11:30'],
+    ['上午9:00和下午2:30-5:30', '2:30', '5:30'],
+  ])('conditions, opposing periods, objects and other clocks cannot lend an endpoint prefix: %s', async (session, startText, endText) => {
+    const f = await fixture({ sessions: [session] })
+    Object.assign(f.facts.tasks[0].timeFacts.windows[0].sessions[0], { startText, endText })
+    const d = decodeTaskTimeAuthorityRecording(f.raw(), f.context), w = d.sidecar.taskTimeAuthorityAudit.windows[0]
+    expect(w.state).toBe('UNRESOLVED'); expect(w.intervals).toEqual([])
+    expect(w.pointIds.every(id => d.result.timePoints.find(p => p.tempId === id)?.normalizedValue === null)).toBe(true)
+  })
   it.each(['omit-all', 'omit-afternoon', 'hide-clock-in-raw'] as const)('does not widen known daily hours into all-day availability: %s', async kind => {
     const f = await fixture(), w = f.facts.tasks[0].timeFacts.windows[0]
     if (kind === 'omit-all') w.sessions = []

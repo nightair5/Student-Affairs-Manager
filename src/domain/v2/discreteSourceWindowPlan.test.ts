@@ -43,6 +43,18 @@ const declarations=(w:WorkspaceV8)=>w.tasks[0].legacyData!.sourceWindowDeclarati
 const firstWindow=(w:WorkspaceV8)=>(declarations(w).windows as Array<Record<string,JsonValue>>)[0]
 
 describe('explicit paired source windows through ordinary confirmation and reused D27',()=>{
+  it.each(['task-time-authority-projection-1.0.0','task-time-authority-projection-1.0.1'])('accepts compatible %s only with independently valid canonical pairs',async version=>{
+    const x=await setup();declarations(x.w).auditVersion=version
+    expect(buildPersonalPlan(x.w,x.opts).segments).toHaveLength(1)
+    const pair=(firstWindow(x.w).intervals as Array<Record<string,JsonValue>>)[0]
+    pair.start='2027-03-09T09:00'
+    expect(buildPersonalPlan(x.w,x.opts).unscheduled[0].code).toBe('SOURCE_WINDOW_NEEDS_REVIEW')
+  })
+  it('a future or invented projection version cannot authorize source-window scheduling',async()=>{
+    const x=await setup();declarations(x.w).auditVersion='task-time-authority-projection-1.0.2'
+    expect(buildPersonalPlan(x.w,x.opts).segments).toHaveLength(0)
+    expect(buildPersonalPlan(x.w,x.opts).unscheduled[0].code).toBe('SOURCE_WINDOW_NEEDS_REVIEW')
+  })
   it('round-trips four real source intervals and schedules one continuous slot without replacing the deadline',async()=>{
     const x=await setup(),before=structuredClone(x.w.timePoints),meta=declarations(x.w)
     expect(x.w.tasks).toHaveLength(1);expect(x.w.events).toHaveLength(0);expect(x.w.projects).toHaveLength(0)

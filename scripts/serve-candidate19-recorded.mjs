@@ -35,7 +35,7 @@ const publicPaid=['--public-paid-recordings','--sealed-followup-fixtures','--cur
 const currentBatch=realNoticeMode||factRoleMode||['--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings','--v5-current-real-fixtures','--obligation-authority-fixtures','--obligation-authority-comparison','--autonomous-v6-recordings','--afternoon-role-fixtures','--afternoon-role-recordings','--current-role-recordings','--requirements-fixtures','--requirements-recordings'].includes(fixtureMode)
 let scene,recordings,batchLabel,plannedRequests,knownSettled,initialOrdinal,currentSources
 if(taskTimeMode){
-  const v=observedSettledBatch({root:TIME_ROOT,execution:TIME_EXECUTION,batch:TIME_BATCH,count:TIME_COUNT,verifyPacket:verifyTaskTimePacket,sourcesFile:'TIME_SOURCES.json'});scene=v.scene;recordings=v.recordings;currentSources=v.sources;plannedRequests=6;knownSettled=v.recordings.length;initialOrdinal=1;batchLabel='任务时间单一归属：3作者匿名Development通知两臂6份确定录制；不是实时AI、独立真值或Holdout'
+  const v=observedSettledBatch({root:TIME_ROOT,execution:TIME_EXECUTION,batch:TIME_BATCH,count:TIME_COUNT,verifyPacket:verifyTaskTimePacket,sourcesFile:'TIME_SOURCES.json'});scene=v.scene;recordings=v.recordings;currentSources=v.sources;plannedRequests=6;knownSettled=v.recordings.length;initialOrdinal=1;batchLabel=`任务时间单一归属：3作者匿名Development通知两臂；${knownSettled}份确定录制、${scene.units.filter(u=>u.status==='UNCERTAIN').length}份不确定、${scene.units.filter(u=>u.status==='NOT_SENT').length}份未发送，各臂3份固定分母；不是实时AI、独立真值或Holdout`
 }else if(realNoticeMode){
   const v=observedSettledBatch({root:REALNOTICE_ROOT,execution:REALNOTICE_EXECUTION,batch:REALNOTICE_BATCH,count:REALNOTICE_COUNT,verifyPacket:verifyRealNotice});scene=v.scene;recordings=v.recordings;currentSources=v.sources;plannedRequests=4;knownSettled=v.recordings.length;initialOrdinal=1;batchLabel='当前事实角色契约：4份官方节选单臂固定录制；不是实时AI、配对获胜或Holdout'
 }else if(factRoleMode){
@@ -99,7 +99,7 @@ if(currentSupportMode){
     const f=await x.createAuthorityFixture(kind)
     recordings.push({ordinal:101+i,sourceId:f.context.index.sourceId,sourceVersionId:f.context.index.sourceVersionId,candidate:'EngineeringFixture',generationContract:x.SINGLE_AUTHORITY_VERSION,sourceText:f.sourceText,referenceTime:f.context.referenceTime,timezone:f.context.timezone,rawHttpText:f.rawHttpText,responseSha256:sha(f.rawHttpText),requestSha256:null,frozenOutcome:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT'})
   }
-  fixtureCount=4;batchLabel+='；另4份既有部分确认/共享事件/坏owner/前置等待匿名控制，不进入模型4分母'
+  fixtureCount=4;batchLabel+='；另4份既有部分确认/共享事件/坏owner/前置等待匿名控制，不进入模型分母'
 }else if(['--requirements-fixtures','--requirements-recordings'].includes(fixtureMode)){
   const fixtureFile=resolve(dir,'fixture-builder.mjs')
   await build({stdin:{contents:`export {createTaskRequirementsFixture} from './src/experiments/candidate19Recorded/taskRequirementsFixtures';export {TASK_REQUIREMENTS_VERSION} from './src/recognition/taskRequirementsContract';export {createAuthorityFixture} from './src/experiments/candidate19Recorded/singleAuthorityFixtures';export {SINGLE_AUTHORITY_VERSION} from './src/recognition/sourceContractV5';export {createObligationFixture} from './src/experiments/candidate19Recorded/obligationFixtures';export {OBLIGATION_AUTHORITY_VERSION} from './src/recognition/sourceContractV6'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
@@ -196,7 +196,7 @@ if(taskTimeMode){
   await build({stdin:{contents:"export {ordinaryWorkflowFixture,ordinaryWorkflowText} from './src/recognition/ordinaryProviderSupport.fixture'",resolveDir:process.cwd()},outfile:file,bundle:true,platform:'node',format:'esm'})
   const f=await import(pathToFileURL(file));proxyFixture={sourceText:f.ordinaryWorkflowText,result:f.ordinaryWorkflowFixture()}
   const raw=JSON.stringify({result:proxyFixture.result})
-  recordings.push({ordinal:101,sourceId:'ORDINARY-PROXY-CONTROL',sourceVersionId:'ORDINARY-PROXY-CONTROL-v1',candidate:'EngineeringFixture',generationContract:'ordinary-proxy-boundary-engineering-1',sourceText:proxyFixture.sourceText,referenceTime:'2026-10-13T15:00:00+08:00',timezone:'Asia/Shanghai',rawHttpText:raw,responseSha256:sha(raw),requestSha256:null,frozenOutcome:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT'})
+  recordings.push({ordinal:201,sourceId:'ORDINARY-PROXY-CONTROL',sourceVersionId:'ORDINARY-PROXY-CONTROL-v1',candidate:'EngineeringFixture',generationContract:'ordinary-proxy-boundary-engineering-1',sourceText:proxyFixture.sourceText,referenceTime:'2026-10-13T15:00:00+08:00',timezone:'Asia/Shanghai',rawHttpText:raw,responseSha256:sha(raw),requestSha256:null,frozenOutcome:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT'})
   fixtureCount++
 }
 const hash=createHash('sha256');for(const f of execFileSync('git',['ls-files','--cached','--others','--exclude-standard','src','scripts/serve-candidate19-recorded.mjs','scripts/candidate19-recorded-data.mjs','scripts/public-notice-recorded-readonly.mjs'],{encoding:'utf8'}).trim().split('\n').sort())hash.update(f).update(readFileSync(f))

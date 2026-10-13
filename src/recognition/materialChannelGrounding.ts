@@ -4,7 +4,7 @@ import { groundSourceWindows } from './sourceWindowGrounding'
 import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sourceActionTime'
 import { verifyWorkflowChannelEvidence, type WorkflowMaterialSupport } from './workflowChannelSupport'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.4.0'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.4.1'
 export const WORKFLOW_MATERIAL_CHANNEL_VERSION = 'material-declared-workflow-channel-1.0.0'
 export interface MaterialChannelDecision {
   materialId: string
@@ -66,6 +66,7 @@ function destinationRole(clause: string, object: string, channel: string, siblin
     new RegExp(`${o}(?:请|须|需|应)?${action}(?:至|到|给)${c}${end}`, 'u'),
     new RegExp(`(?:把|将)${o}${action}(?:至|到|给)${c}${end}`, 'u'),
     new RegExp(`(?:通过|经由|在)${c}(?:直接|统一|线上)?${action}${o}${end}`, 'u'),
+    new RegExp(`(?:向|到)${c}(?:直接|统一|线上)?${action}${o}${end}`, 'u'),
     new RegExp(`${o}(?:的)?(?:提交渠道|提交地址|接收邮箱|提交入口)(?:为|是|：|:)${c}${end}`, 'u'),
     new RegExp(`(?:通过|经由|在)${c}(?:完成|进行)${o}(?:登记|填报|注册)${end}`, 'u'),
     new RegExp(`(?:通过|经由|在)${c}(?:登记|填报|注册)${o}${end}`, 'u'),
