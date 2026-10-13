@@ -1,0 +1,2280 @@
+{
+  "version": "p1-first-pass-convergence-evidence-1",
+  "date": "2026-10-13",
+  "role": "ENGINEERING_REPLAY_NOT_HUMAN_OR_NEW_MODEL_SCORE",
+  "baseline": "4f6542319479af611a86dd16a8ec9110fd62de00",
+  "build": "4f6542319479 / source 4bcdd9d92d99",
+  "origin": "http://127.0.0.1:6924/",
+  "database": "rco-mainline-01-02-i1-d27-plan-recorded-p1-20261013-accept",
+  "modelRequests": 0,
+  "grant": 0,
+  "reserve": 0,
+  "settle": 0,
+  "newCostUsd": 0,
+  "defaultProviderChanged": false,
+  "rawFacts": {
+    "correct": 1,
+    "incorrect": 1,
+    "unknown": 2
+  },
+  "frozenFirstData": {
+    "correct": 0,
+    "incorrect": 4,
+    "unknown": 0
+  },
+  "priorProgramFirstData": {
+    "correct": 1,
+    "incorrect": 3,
+    "unknown": 0
+  },
+  "currentProgramMinimumFacts": {
+    "correct": 1,
+    "incorrect": 1,
+    "unknown": 2
+  },
+  "validFirstData": {
+    "before": 3,
+    "after": 4,
+    "denominator": 4
+  },
+  "conclusion": "TARGET_ERRORS_REDUCED_NO_WHOLE_GAIN",
+  "rows": [
+    {
+      "ordinal": 1,
+      "sourceId": "RN-01",
+      "rawResponseSha256": "5fd97a235266bfa882ca4a30210d191ad216461301c550c474f9e8bc8e15d371",
+      "referenceTime": "2026-05-27T09:00:00+08:00",
+      "originalRawFacts": "INCORRECT",
+      "originalFrozenFirstData": "INCORRECT",
+      "priorProgramFirstData": "INCORRECT",
+      "currentMinimumFactAssessment": "INCORRECT",
+      "remaining": "6月10日角色及两天各两段窗口；系统渠道的组合名称引用。",
+      "titlesAndFreeProse": "NOT_ADJUDICATED",
+      "leakage": "NOT_ADJUDICATED",
+      "provisionalWhy": "系统提交截止仍被原答声明为registration_deadline；两天分段纸质受理窗口表示仍未裁决。本轮两类支持修复不订正这个时间角色。",
+      "before": {
+        "valid": true,
+        "error": null,
+        "taskCount": 2,
+        "channelValues": [
+          {
+            "id": "material-word-thesis",
+            "value": null
+          },
+          {
+            "id": "material-pdf-thesis",
+            "value": null
+          }
+        ]
+      },
+      "after": {
+        "valid": true,
+        "error": null,
+        "rawPreserved": true,
+        "taskCount": 2,
+        "channelValues": [
+          {
+            "id": "material-word-thesis",
+            "value": null
+          },
+          {
+            "id": "material-pdf-thesis",
+            "value": null
+          }
+        ],
+        "participation": [
+          {
+            "taskId": "task-upload-thesis",
+            "before": [
+              "scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+              "scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9",
+              "scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+              "scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+              "scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+              "scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce"
+            ],
+            "after": [
+              "scope-0002-99bfc8f6dfe8dd8cd49b0c1d9d043a17cba1e9730e6f640ec0c41644e9f34fc3",
+              "scope-0003-1354396da2131ff2a7a9567cdce5c2887a9ed3d1a55594996fe9f5b91a248ca9",
+              "scope-0004-37b1f3475c89a620df0c153b5e197665b5bcdd48ba0de49fc5518880a77b0535",
+              "scope-0005-a2cb60dc3e201b32e2cf8afe7bb737c1c42909bcf851a1142c3c17678bb39c84",
+              "scope-0006-1e917b46037c663fa0d665d94b47f557d5316702b66ac494f801642bb749f1f0",
+              "scope-0007-96aa96977077d344b86bc5f4116e7486a5944171199cfb090481ab6f049011ce"
+            ],
+            "addedScopeIds": [],
+            "reason": "NO_MISSING_REFERENCE"
+          },
+          {
+            "taskId": "task-submit-paper-materials",
+            "before": [
+              "scope-0011-0baaabf7c79e765f0c95ade1d05860f7f5a0bff8b53c6301b64764885b97036d",
+              "scope-0012-398077c8a1102aa408b24034a5f53ffc29d1e9f4dc471301fcf6d91c9fadae73",
+              "scope-0013-27405054dab97fc2b1ad36c17e7231e9536f91f99c60f66fbcd074f187f056cd"
+            ],
+            "after": [
+              "scope-0011-0baaabf7c79e765f0c95ade1d05860f7f5a0bff8b53c6301b64764885b97036d",
+              "scope-0012-398077c8a1102aa408b24034a5f53ffc29d1e9f4dc471301fcf6d91c9fadae73",
+              "scope-0013-27405054dab97fc2b1ad36c17e7231e9536f91f99c60f66fbcd074f187f056cd"
+            ],
+            "addedScopeIds": [],
+            "reason": "NO_MISSING_REFERENCE"
+          }
+        ],
+        "workflowSupport": [
+          {
+            "taskId": "task-upload-thesis",
+            "channel": "2026年6月学位申请系统",
+            "status": "NOT_PROVEN",
+            "addedScopeIds": [],
+            "proof": null
+          }
+        ]
+      }
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "RN-02",
+      "rawResponseSha256": "b7736b8e1190f0638c11866bcb15a7092a2cc0a466fc781092e29ba776183e10",
+      "referenceTime": "2026-08-12T09:00:00+08:00",
+      "originalRawFacts": "UNKNOWN",
+      "originalFrozenFirstData": "INCORRECT",
+      "priorProgramFirstData": "INCORRECT",
+      "currentMinimumFactAssessment": "UNKNOWN",
+      "remaining": "任务粒度及程序顺序/强前置仍未裁决；个人资格未知保留。",
+      "titlesAndFreeProse": "NOT_ADJUDICATED",
+      "leakage": "NOT_ADJUDICATED",
+      "provisionalWhy": "原答已有同一句登录流程渠道可恢复，但任务粒度、程序顺序与强前置仍未裁决；个人资格unknown不判为事实错误。",
+      "before": {
+        "valid": true,
+        "error": null,
+        "taskCount": 5,
+        "channelValues": [
+          {
+            "id": "material-receipt",
+            "value": null
+          }
+        ]
+      },
+      "after": {
+        "valid": true,
+        "error": null,
+        "rawPreserved": true,
+        "taskCount": 5,
+        "channelValues": [
+          {
+            "id": "material-receipt",
+            "value": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515"
+          }
+        ],
+        "participation": [
+          {
+            "taskId": "task-login-xmuxg",
+            "before": [
+              "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+              "scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+            ],
+            "after": [
+              "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+              "scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+            ],
+            "addedScopeIds": [],
+            "reason": "NO_MISSING_REFERENCE"
+          },
+          {
+            "taskId": "task-select-business-period",
+            "before": [
+              "scope-0005-8ae3b8fd6822a7da28f42f6d5ee7186be65814422f2cc3d24edac578b9fdbe57",
+              "scope-0006-6de8bbcab851098b2e11a3bcac3f6671982a28f38f54a039dafb47a7ce6f6e55"
+            ],
+            "after": [
+              "scope-0005-8ae3b8fd6822a7da28f42f6d5ee7186be65814422f2cc3d24edac578b9fdbe57",
+              "scope-0006-6de8bbcab851098b2e11a3bcac3f6671982a28f38f54a039dafb47a7ce6f6e55"
+            ],
+            "addedScopeIds": [],
+            "reason": "NO_MISSING_REFERENCE"
+          },
+          {
+            "taskId": "task-fill-info",
+            "before": [
+              "scope-0007-f47f74d7f41fc686ea1764013a531543153089060c853b54b79c5cbcb8d76934"
+            ],
+            "after": [
+              "scope-0007-f47f74d7f41fc686ea1764013a531543153089060c853b54b79c5cbcb8d76934"
+            ],
+            "addedScopeIds": [],
+            "reason": "NO_MISSING_REFERENCE"
+          },
+          {
+            "taskId": "task-upload-receipt",
+            "before": [
+              "scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a"
+            ],
+            "after": [
+              "scope-0008-0619ea09551333f5d8cce287ca9c7d671b6e47a23dee6775ef7aa335a316025a"
+            ],
+            "addedScopeIds": [],
+            "reason": "NO_MISSING_REFERENCE"
+          },
+          {
+            "taskId": "task-submit-verification-code",
+            "before": [
+              "scope-0009-a3b000c5bcc6990cb87b3eb0fcdae144c9644bd0cca94f31e51ba1813ec933d2",
+              "scope-0010-24b54ed4a8038b95a975ec6f33ed854a9664572eb54fb0884d70c0fc0099147b",
+              "scope-0011-4c25fbfbe3bcf042c7ec8a4c1b189f9c3050dd288160654f9a413195ea7915ca"
+            ],
+            "after": [
+              "scope-0009-a3b000c5bcc6990cb87b3eb0fcdae144c9644bd0cca94f31e51ba1813ec933d2",
+              "scope-0010-24b54ed4a8038b95a975ec6f33ed854a9664572eb54fb0884d70c0fc0099147b",
+              "scope-0011-4c25fbfbe3bcf042c7ec8a4c1b189f9c3050dd288160654f9a413195ea7915ca"
+            ],
+            "addedScopeIds": [],
+            "reason": "NO_MISSING_REFERENCE"
+          }
+        ],
+        "workflowSupport": [
+          {
+            "taskId": "task-login-xmuxg",
+            "channel": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+            "status": "ALREADY_LOCAL",
+            "addedScopeIds": [],
+            "proof": null
+          },
+          {
+            "taskId": "task-select-business-period",
+            "channel": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+            "status": "DERIVED_WORKFLOW_SUPPORT",
+            "addedScopeIds": [
+              "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+              "scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+            ],
+            "proof": {
+              "workflowText": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515，点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，选择“2026-2027学年生源地贷款”业务期，准确填写相关信息，并上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请，在国家开发银行、河北农村信用社办理贷款的学生，请务必在系统上提交当前学年准确的回执校验码，否则将无法进行入学确认）",
+              "start": 56,
+              "end": 256,
+              "rule": "SAME_SENTENCE_LOGIN_DIGITAL_STEPS"
+            }
+          },
+          {
+            "taskId": "task-fill-info",
+            "channel": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+            "status": "DERIVED_WORKFLOW_SUPPORT",
+            "addedScopeIds": [
+              "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+              "scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+            ],
+            "proof": {
+              "workflowText": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515，点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，选择“2026-2027学年生源地贷款”业务期，准确填写相关信息，并上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请，在国家开发银行、河北农村信用社办理贷款的学生，请务必在系统上提交当前学年准确的回执校验码，否则将无法进行入学确认）",
+              "start": 56,
+              "end": 256,
+              "rule": "SAME_SENTENCE_LOGIN_DIGITAL_STEPS"
+            }
+          },
+          {
+            "taskId": "task-upload-receipt",
+            "channel": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+            "status": "DERIVED_WORKFLOW_SUPPORT",
+            "addedScopeIds": [
+              "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+              "scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+            ],
+            "proof": {
+              "workflowText": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515，点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，选择“2026-2027学年生源地贷款”业务期，准确填写相关信息，并上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请，在国家开发银行、河北农村信用社办理贷款的学生，请务必在系统上提交当前学年准确的回执校验码，否则将无法进行入学确认）",
+              "start": 56,
+              "end": 256,
+              "rule": "SAME_SENTENCE_LOGIN_DIGITAL_STEPS"
+            }
+          },
+          {
+            "taskId": "task-submit-verification-code",
+            "channel": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+            "status": "DERIVED_WORKFLOW_SUPPORT",
+            "addedScopeIds": [
+              "scope-0003-76435477b1f2b672f13aa40d47037b71d8e86af7e7277d529d0495a3b00b2b1d",
+              "scope-0004-ca43bde97943eceb27372c97f85f240b625813b41adef6d75c623aa0d4a5bf29"
+            ],
+            "proof": {
+              "workflowText": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515，点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，选择“2026-2027学年生源地贷款”业务期，准确填写相关信息，并上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请，在国家开发银行、河北农村信用社办理贷款的学生，请务必在系统上提交当前学年准确的回执校验码，否则将无法进行入学确认）",
+              "start": 56,
+              "end": 256,
+              "rule": "SAME_SENTENCE_LOGIN_DIGITAL_STEPS"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "RN-03",
+      "rawResponseSha256": "31b93b86730aea7ffdb0e63b8fd66a8bce8fddeab52cebb40b1f47383879bd8e",
+      "referenceTime": "2026-05-09T09:00:00+08:00",
+      "originalRawFacts": "UNKNOWN",
+      "originalFrozenFirstData": "INCORRECT",
+      "priorProgramFirstData": "INCORRECT",
+      "currentMinimumFactAssessment": "UNKNOWN",
+      "remaining": "每日营业窗口、周三/节假日例外的结构化表达仍未裁决；个人资格和前置未知保留。",
+      "titlesAndFreeProse": "NOT_ADJUDICATED",
+      "leakage": "NOT_ADJUDICATED",
+      "provisionalWhy": "既有参与条件引用使两项真实动作可显示；每日营业窗口、周三和节假日例外的结构化表达仍未裁决，不把可解码判成完整正确。",
+      "before": {
+        "valid": false,
+        "error": "ROLE_AUTHORITY_PARTICIPATION_EVIDENCE",
+        "taskCount": null,
+        "channelValues": []
+      },
+      "after": {
+        "valid": true,
+        "error": null,
+        "rawPreserved": true,
+        "taskCount": 2,
+        "channelValues": [
+          {
+            "id": "mat-campus-card",
+            "value": null
+          }
+        ],
+        "participation": [
+          {
+            "taskId": "task-online-redeem",
+            "before": [
+              "scope-0006-d4536bf4e517d1a0778883eff676161221ff3e4e466bd8ef70f33186bd7dfcf8",
+              "scope-0007-fabb5851b0c85cde4f3da36e841cc6bc024b52a39c375fbae5631fd8334f47ba",
+              "scope-0014-6da0bde20e65209cae46a3c2862b986e4bb4d0699bb42489d0296700adcf6ee8",
+              "scope-0015-dfac6a0db777cc0b1aa3f8d9d19c2edb374a011797144e46bd53787b06e34c5e",
+              "scope-0016-642b6ccfed0934a65bb1b83298cf00e4c522ee76b916b3540d69ccd5438e53ad",
+              "scope-0017-8470b30624288556d3c892ec749ebfb803e6b66d211329f4e882bbdf93432c3f",
+              "scope-0018-bcc60382d209d09898820c885674bf321e91a968e0ae46b4b2eea67df58aaf92",
+              "scope-0019-03f6ccdec204824d66a2fbeadd0f9c13ec31a9f51871557f095af19b94b4b408"
+            ],
+            "after": [
+              "scope-0006-d4536bf4e517d1a0778883eff676161221ff3e4e466bd8ef70f33186bd7dfcf8",
+              "scope-0007-fabb5851b0c85cde4f3da36e841cc6bc024b52a39c375fbae5631fd8334f47ba",
+              "scope-0014-6da0bde20e65209cae46a3c2862b986e4bb4d0699bb42489d0296700adcf6ee8",
+              "scope-0015-dfac6a0db777cc0b1aa3f8d9d19c2edb374a011797144e46bd53787b06e34c5e",
+              "scope-0016-642b6ccfed0934a65bb1b83298cf00e4c522ee76b916b3540d69ccd5438e53ad",
+              "scope-0017-8470b30624288556d3c892ec749ebfb803e6b66d211329f4e882bbdf93432c3f",
+              "scope-0018-bcc60382d209d09898820c885674bf321e91a968e0ae46b4b2eea67df58aaf92",
+              "scope-0019-03f6ccdec204824d66a2fbeadd0f9c13ec31a9f51871557f095af19b94b4b408",
+              "scope-0004-25e06fa04991bf68fc9b2da536a0f14348c6b0d6b75808a27ab5a11cb9d0cbd6"
+            ],
+            "addedScopeIds": [
+              "scope-0004-25e06fa04991bf68fc9b2da536a0f14348c6b0d6b75808a27ab5a11cb9d0cbd6"
+            ],
+            "reason": "EXISTING_TASK_CONDITION_PARTICIPATION_SUPPORT"
+          },
+          {
+            "taskId": "task-offline-collect",
+            "before": [
+              "scope-0008-b92ba8cfebfc71c17de4b6c4bc3258d97060a2eee314d1ad68d3878abe314413",
+              "scope-0009-850573460ef6964e457ca7bb401ebc91564baf75e72c183e0cc5945f366aa200",
+              "scope-0010-9bed530b72bc246bcb96251e5389b88b91928b5b1af5f8eede7011602647afd5",
+              "scope-0011-c7ebd8d3770ae48a106e4cd341b10ea1dfbf8b358f6fbf60a18e5afbe914bfa0",
+              "scope-0012-9d0aaf3ebde350a6c9385234c130bbb5e41bd0b7ff6f38be1d52889f6e44dcb3",
+              "scope-0020-4547128c83909a61689d749050ff73defc7b9c651ac4a61da0699142d02f20bf",
+              "scope-0021-a7d9ae45c08367fa81b3b2fd24495e6fa9df0a8b3714b1319246d2ca52eb6c85",
+              "scope-0022-4253689760c3be69812e7e1e07765296ea3e02a3ab3547bd728ce6e2e5c53cd3",
+              "scope-0023-8e16c2ee95a1263089c1766f399e9cce093ff7eaaa4d85b13b56869c4a14ab02"
+            ],
+            "after": [
+              "scope-0008-b92ba8cfebfc71c17de4b6c4bc3258d97060a2eee314d1ad68d3878abe314413",
+              "scope-0009-850573460ef6964e457ca7bb401ebc91564baf75e72c183e0cc5945f366aa200",
+              "scope-0010-9bed530b72bc246bcb96251e5389b88b91928b5b1af5f8eede7011602647afd5",
+              "scope-0011-c7ebd8d3770ae48a106e4cd341b10ea1dfbf8b358f6fbf60a18e5afbe914bfa0",
+              "scope-0012-9d0aaf3ebde350a6c9385234c130bbb5e41bd0b7ff6f38be1d52889f6e44dcb3",
+              "scope-0020-4547128c83909a61689d749050ff73defc7b9c651ac4a61da0699142d02f20bf",
+              "scope-0021-a7d9ae45c08367fa81b3b2fd24495e6fa9df0a8b3714b1319246d2ca52eb6c85",
+              "scope-0022-4253689760c3be69812e7e1e07765296ea3e02a3ab3547bd728ce6e2e5c53cd3",
+              "scope-0023-8e16c2ee95a1263089c1766f399e9cce093ff7eaaa4d85b13b56869c4a14ab02",
+              "scope-0004-25e06fa04991bf68fc9b2da536a0f14348c6b0d6b75808a27ab5a11cb9d0cbd6"
+            ],
+            "addedScopeIds": [
+              "scope-0004-25e06fa04991bf68fc9b2da536a0f14348c6b0d6b75808a27ab5a11cb9d0cbd6"
+            ],
+            "reason": "EXISTING_TASK_CONDITION_PARTICIPATION_SUPPORT"
+          }
+        ],
+        "workflowSupport": [
+          {
+            "taskId": "task-online-redeem",
+            "channel": "登录“我的图书馆”--“积分商城”",
+            "status": "ALREADY_LOCAL",
+            "addedScopeIds": [],
+            "proof": null
+          }
+        ]
+      }
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "RN-04",
+      "rawResponseSha256": "ff064f4fe5369622d4da88d1f7c02e79d58e31d9e233d4e2be25a2d6fe5a080e",
+      "referenceTime": "2026-04-13T09:00:00+08:00",
+      "originalRawFacts": "PROVISIONAL_CORRECT",
+      "originalFrozenFirstData": "INCORRECT",
+      "priorProgramFirstData": "PROVISIONAL_CORRECT",
+      "currentMinimumFactAssessment": "PROVISIONAL_CORRECT",
+      "remaining": "真实浏览器点击/刷新/IndexedDB未运行；独立人工真值及泛化未证明。",
+      "titlesAndFreeProse": "SOURCE_REVIEWED_PROVISIONAL",
+      "leakage": "NOT_ADJUDICATED",
+      "provisionalWhy": "保留原暂定最小事实裁决：维护独立事件及00:00—03:00起止，无任务；标题自由描述、独立真值和泛化不在此正确声明内。",
+      "before": {
+        "valid": true,
+        "error": null,
+        "taskCount": 0,
+        "channelValues": []
+      },
+      "after": {
+        "valid": true,
+        "error": null,
+        "rawPreserved": true,
+        "taskCount": 0,
+        "channelValues": [],
+        "participation": [],
+        "workflowSupport": []
+      }
+    }
+  ],
+  "legacyRegression": {
+    "count": 8,
+    "unchanged": true,
+    "rows": [
+      {
+        "ordinal": 1,
+        "sourceId": "FR-01",
+        "candidate": "TaskRequirements",
+        "rawSha256": "956ee1f6abb2d6d61252a86cfbd07bb4ae17c4a20cea0dd95c175cb8b58a8cbb",
+        "firstFactsExactlyEqual": true,
+        "sameDecodeError": true
+      },
+      {
+        "ordinal": 2,
+        "sourceId": "FR-01",
+        "candidate": "FactRoleAuthority",
+        "rawSha256": "46d08263da5980e1c407425cf6b82026d9ab4dfea31d3f8bc7b90ae7545c8865",
+        "firstFactsExactlyEqual": true,
+        "sameDecodeError": true
+      },
+      {
+        "ordinal": 3,
+        "sourceId": "FR-02",
+        "candidate": "FactRoleAuthority",
+        "rawSha256": "914aeadc334d9adf6b279cf9035275341669a47a4391b9aea06f8270a3940804",
+        "firstFactsExactlyEqual": true,
+        "sameDecodeError": true
+      },
+      {
+        "ordinal": 4,
+        "sourceId": "FR-02",
+        "candidate": "TaskRequirements",
+        "rawSha256": "cf743d8320885ba6ceb62698c48dbff65c873f295bd1d89129ca49cfa12c377a",
+        "firstFactsExactlyEqual": true,
+        "sameDecodeError": true
+      },
+      {
+        "ordinal": 5,
+        "sourceId": "FR-03",
+        "candidate": "TaskRequirements",
+        "rawSha256": "6e8e0dd18249031e76738f385beef9a91f978a341dec8e42773ccb130817f999",
+        "firstFactsExactlyEqual": true,
+        "sameDecodeError": true
+      },
+      {
+        "ordinal": 6,
+        "sourceId": "FR-03",
+        "candidate": "FactRoleAuthority",
+        "rawSha256": "5ced0a13e45ca450ab504118eb0706b9a840366c1279e4550db7f85d1c1a1772",
+        "firstFactsExactlyEqual": true,
+        "sameDecodeError": true
+      },
+      {
+        "ordinal": 7,
+        "sourceId": "FR-04",
+        "candidate": "FactRoleAuthority",
+        "rawSha256": "0f48c684edec67519da2ea037546967c576a1374de008a3304f1fcb15716e6b1",
+        "firstFactsExactlyEqual": true,
+        "sameDecodeError": true
+      },
+      {
+        "ordinal": 8,
+        "sourceId": "FR-04",
+        "candidate": "TaskRequirements",
+        "rawSha256": "0e07401fbf288858ee4a058af01b699f0d93ee5e9c704b96c3e395f3ee9a7bda",
+        "firstFactsExactlyEqual": true,
+        "sameDecodeError": true
+      }
+    ]
+  },
+  "browser": {
+    "realRecordingFirstScreens": 4,
+    "anonymousControls": 4,
+    "modelDenominator": 4,
+    "consoleErrors": [],
+    "transactionFailure": {
+      "counts": {
+        "tasks": 0,
+        "events": 0,
+        "timePoints": 0,
+        "materials": 0,
+        "projects": 0
+      },
+      "retryCounts": {
+        "tasks": 4,
+        "events": 0,
+        "timePoints": 1,
+        "materials": 1,
+        "projects": 0
+      }
+    },
+    "rn02Refresh": {
+      "factsEqual": true,
+      "counts": {
+        "tasks": 4,
+        "events": 0,
+        "timePoints": 1,
+        "materials": 1,
+        "projects": 0
+      },
+      "materials": [
+        {
+          "id": "material:source:80f1efb8:draft:1:material-receipt",
+          "projectId": null,
+          "name": "贷款机构提供的回执材料照片或截图",
+          "required": true,
+          "status": "unverified",
+          "requirements": [],
+          "formatRequirements": [
+            "照片或截图",
+            "务必完整清晰且确保是本学年申请"
+          ],
+          "namingRequirements": [],
+          "quantity": null,
+          "submissionChannel": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+          "relatedTaskIds": [
+            "task:source:80f1efb8:draft:1:task-upload-receipt"
+          ],
+          "deadlineTimePointId": null,
+          "createdAt": "2026-10-13T02:22:22.580Z",
+          "updatedAt": "2026-10-13T02:22:22.580Z",
+          "version": 1,
+          "legacyData": {
+            "recognitionTempId": "material-receipt",
+            "evidenceIds": [
+              "d26-scope-0008-6912bf7d9eb0c119892290af02210b0432ff1622d994afbfec25f500fb57b7d4"
+            ],
+            "availabilityVersion": "ordinary-availability-unobserved-1",
+            "availabilityOrigin": "not_observed",
+            "sourceReviewDraftId": "source:80f1efb8:draft:1"
+          }
+        }
+      ]
+    },
+    "readbackOnlyRecovery": {
+      "before": {
+        "tasks": 4,
+        "events": 1,
+        "timePoints": 3,
+        "materials": 1,
+        "projects": 0
+      },
+      "after": {
+        "tasks": 4,
+        "events": 1,
+        "timePoints": 3,
+        "materials": 1,
+        "projects": 0
+      },
+      "commitIdsBefore": [
+        "source-review:source:056a55cb:draft:1:fnv1a32:1dfd2b65",
+        "source-review:source:80f1efb8:draft:1:fnv1a32:3d37290f"
+      ],
+      "commitIdsAfter": [
+        "source-review:source:056a55cb:draft:1:fnv1a32:1dfd2b65",
+        "source-review:source:80f1efb8:draft:1:fnv1a32:3d37290f"
+      ],
+      "sameCommitIds": true,
+      "sameFormalEntities": true
+    },
+    "sharedRejectOne": {
+      "events": [
+        {
+          "id": "event:source:fc14ab8c:draft:1:E2",
+          "projectId": null,
+          "title": "乙组讨论",
+          "description": "甲组讨论与乙组讨论同时于2026年11月12日14:00开始，",
+          "startTimePointId": "time:source:fc14ab8c:draft:1:P1",
+          "endTimePointId": null,
+          "location": null,
+          "createdAt": "2026-10-13T02:45:40.450Z",
+          "updatedAt": "2026-10-13T02:45:40.450Z",
+          "legacyData": {
+            "recognitionTempId": "E2",
+            "evidenceIds": [
+              "d26-scope-0001-3ef0f3727476f34242b53832d9f4d6f432d78aed061d8cb969c8464a6794588d"
+            ],
+            "inferenceLevel": "explicit",
+            "sourceReviewDraftId": "source:fc14ab8c:draft:1"
+          }
+        }
+      ],
+      "time": [
+        {
+          "id": "time:source:fc14ab8c:draft:1:P1",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:fc14ab8c:draft:1:E2",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_start",
+          "rawText": "2026年11月12日14:00",
+          "normalizedValue": "2026-11-12T14:00",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "createdAt": "2026-10-13T02:45:40.450Z",
+          "updatedAt": "2026-10-13T02:45:40.450Z",
+          "legacyData": {
+            "recognitionTempId": "P1",
+            "evidenceIds": [
+              "d26-scope-0001-3ef0f3727476f34242b53832d9f4d6f432d78aed061d8cb969c8464a6794588d"
+            ],
+            "confidence": 1,
+            "sharedEventIds": [
+              "event:source:fc14ab8c:draft:1:E2"
+            ]
+          }
+        }
+      ],
+      "projects": 0
+    },
+    "final": {
+      "drafts": [
+        {
+          "id": "source:53b66f75:draft:1",
+          "keys": [
+            "semanticSidecar",
+            "firstSuggestionDisplayed",
+            "firstSourceInformationDisplayed",
+            "firstSuggestionAssembly",
+            "materialChannelGrounding",
+            "sourceWindowGrounding",
+            "v7Record"
+          ],
+          "status": "needs_review"
+        },
+        {
+          "id": "source:841177fa:draft:1",
+          "keys": [
+            "semanticSidecar",
+            "firstSuggestionDisplayed",
+            "firstSourceInformationDisplayed",
+            "firstSuggestionAssembly",
+            "materialChannelGrounding",
+            "sourceWindowGrounding",
+            "v7Record",
+            "sourceReviewReadback"
+          ],
+          "status": "partially_confirmed"
+        },
+        {
+          "id": "source:78e81813:draft:1",
+          "keys": [
+            "semanticSidecar",
+            "firstSuggestionDisplayed",
+            "firstSourceInformationDisplayed",
+            "firstSuggestionAssembly",
+            "materialChannelGrounding",
+            "sourceWindowGrounding",
+            "v7Record",
+            "sourceReviewReadback"
+          ],
+          "status": "partially_confirmed"
+        },
+        {
+          "id": "source:fc14ab8c:draft:1",
+          "keys": [
+            "semanticSidecar",
+            "firstSuggestionDisplayed",
+            "firstSourceInformationDisplayed",
+            "firstSuggestionAssembly",
+            "materialChannelGrounding",
+            "sourceWindowGrounding",
+            "v7Record",
+            "sourceReviewReadback"
+          ],
+          "status": "confirmed"
+        },
+        {
+          "id": "source:70be9b8a:draft:1",
+          "keys": [
+            "semanticSidecar",
+            "firstSuggestionDisplayed",
+            "firstSourceInformationDisplayed",
+            "firstSuggestionAssembly",
+            "materialChannelGrounding",
+            "sourceWindowGrounding",
+            "v7Record",
+            "sourceReviewReadback"
+          ],
+          "status": "confirmed"
+        },
+        {
+          "id": "source:056a55cb:draft:1",
+          "keys": [
+            "semanticSidecar",
+            "firstSuggestionDisplayed",
+            "firstSourceInformationDisplayed",
+            "firstSuggestionAssembly",
+            "materialChannelGrounding",
+            "sourceWindowGrounding",
+            "v7Record",
+            "sourceReviewReadback"
+          ],
+          "status": "confirmed"
+        },
+        {
+          "id": "source:80f1efb8:draft:1",
+          "keys": [
+            "semanticSidecar",
+            "firstSuggestionDisplayed",
+            "firstSourceInformationDisplayed",
+            "firstSuggestionAssembly",
+            "materialChannelGrounding",
+            "sourceWindowGrounding",
+            "v7Record",
+            "sourceReadiness",
+            "sourceReviewReadback"
+          ],
+          "status": "partially_confirmed"
+        },
+        {
+          "id": "source:a050d7ad:draft:1",
+          "keys": [
+            "semanticSidecar",
+            "firstSuggestionDisplayed",
+            "firstSourceInformationDisplayed",
+            "firstSuggestionAssembly",
+            "materialChannelGrounding",
+            "sourceWindowGrounding",
+            "v7Record"
+          ],
+          "status": "needs_review"
+        }
+      ],
+      "events": [
+        {
+          "createdAt": "2026-10-13T02:25:12.879Z",
+          "description": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:\n//i.xmu.edu.cn）进行升级维护。\n维护期间，\n信息门户将暂时无法访问，",
+          "endTimePointId": "time:source:056a55cb:draft:1:time-0002",
+          "id": "event:source:056a55cb:draft:1:event-0001",
+          "legacyData": {
+            "evidenceIds": [
+              "d26-scope-0002-3224c57180b008ced2e0ad82a34f696931c74c1ea274b00aa2f13b70c33b5b15",
+              "d26-scope-0003-21b0e47bf022d4f2ba4b4fa58cce72bdaadb694746694df7deaedb3b08d168bf",
+              "d26-scope-0004-45abca63ab464771ed57c1aeb2a92243c9b1f231631cc4147bb87850abaf9778",
+              "d26-scope-0005-6f7077cae4a1dc393103020f1648b3f66f8a7627f0f2ed9198e6fcc6c63dc7b9"
+            ],
+            "inferenceLevel": "explicit",
+            "recognitionTempId": "event-0001",
+            "sourceReviewDraftId": "source:056a55cb:draft:1"
+          },
+          "location": null,
+          "projectId": null,
+          "startTimePointId": "time:source:056a55cb:draft:1:time-0001",
+          "title": "厦门大学信息门户升级维护",
+          "updatedAt": "2026-10-13T02:25:12.879Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:31:50.413Z",
+          "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。",
+          "endTimePointId": "time:source:70be9b8a:draft:1:P5",
+          "id": "event:source:70be9b8a:draft:1:E2",
+          "legacyData": {
+            "evidenceIds": [
+              "d26-scope-0003-2b37a49aac0cc446a75eadd67ee7fc95c82f493e8e79f08910e57e7bba68f7bd",
+              "d26-scope-0004-ff4090c22da754405d72c1ae2a63e7a681dd1ccf86016f3a2d35f1d891b47d0a"
+            ],
+            "inferenceLevel": "explicit",
+            "recognitionTempId": "E2",
+            "sourceReviewDraftId": "source:70be9b8a:draft:1"
+          },
+          "location": null,
+          "projectId": null,
+          "startTimePointId": "time:source:70be9b8a:draft:1:P4",
+          "title": "器材讲解会",
+          "updatedAt": "2026-10-13T02:31:50.413Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:42:40.546Z",
+          "description": "系统维护在周五晚上开始，\n结束时间尚未公布。",
+          "endTimePointId": "time:source:70be9b8a:draft:1:P3",
+          "id": "event:source:70be9b8a:draft:1:E1",
+          "legacyData": {
+            "evidenceIds": [
+              "d26-scope-0005-895e589a9b683d2811f8dda4c916954847f854d2cc9d5151b8808fd12676c882",
+              "d26-scope-0006-1fc199c3a48c8add6988ad22ab5e6bff8d850c477dd8b2e46840fc6019281dc1"
+            ],
+            "inferenceLevel": "explicit",
+            "recognitionTempId": "E1",
+            "sourceReviewDraftId": "source:70be9b8a:draft:1"
+          },
+          "location": null,
+          "projectId": null,
+          "startTimePointId": "time:source:70be9b8a:draft:1:P2",
+          "title": "系统维护",
+          "updatedAt": "2026-10-13T02:42:40.546Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:45:40.450Z",
+          "description": "甲组讨论与乙组讨论同时于2026年11月12日14:00开始，",
+          "endTimePointId": null,
+          "id": "event:source:fc14ab8c:draft:1:E2",
+          "legacyData": {
+            "evidenceIds": [
+              "d26-scope-0001-3ef0f3727476f34242b53832d9f4d6f432d78aed061d8cb969c8464a6794588d"
+            ],
+            "inferenceLevel": "explicit",
+            "recognitionTempId": "E2",
+            "sourceReviewDraftId": "source:fc14ab8c:draft:1"
+          },
+          "location": null,
+          "projectId": null,
+          "startTimePointId": "time:source:fc14ab8c:draft:1:P1",
+          "title": "乙组讨论",
+          "updatedAt": "2026-10-13T02:45:40.450Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:48:47.601Z",
+          "description": "丙组讨论于2026年11月14日16:00开始。",
+          "endTimePointId": null,
+          "id": "event:source:78e81813:draft:1:E3",
+          "legacyData": {
+            "evidenceIds": [
+              "d26-scope-0003-fe8295032c30998a1eb0f2f453724e99a6616caf8bb68b6e9a024a2f12c0c60d"
+            ],
+            "inferenceLevel": "explicit",
+            "recognitionTempId": "E3",
+            "sourceReviewDraftId": "source:78e81813:draft:1"
+          },
+          "location": null,
+          "projectId": null,
+          "startTimePointId": "time:source:78e81813:draft:1:P3",
+          "title": "丙组讨论",
+          "updatedAt": "2026-10-13T02:48:47.601Z"
+        }
+      ],
+      "history": [
+        {
+          "action": "user_condition_judgement",
+          "entityId": "source:80f1efb8:draft:1",
+          "field": "source-readiness:fnv1a32:fe0ce24e",
+          "id": "acfed76f-5ac9-42a8-bab8-179d70fbca64"
+        },
+        {
+          "action": "created",
+          "entityId": "task:source:80f1efb8:draft:1:task-login-xmuxg",
+          "field": null,
+          "id": "history:task:source:80f1efb8:draft:1:task-login-xmuxg:created"
+        },
+        {
+          "action": "created",
+          "entityId": "task:source:80f1efb8:draft:1:task-select-business-period",
+          "field": null,
+          "id": "history:task:source:80f1efb8:draft:1:task-select-business-period:created"
+        },
+        {
+          "action": "created",
+          "entityId": "task:source:80f1efb8:draft:1:task-fill-info",
+          "field": null,
+          "id": "history:task:source:80f1efb8:draft:1:task-fill-info:created"
+        },
+        {
+          "action": "created",
+          "entityId": "task:source:80f1efb8:draft:1:task-upload-receipt",
+          "field": null,
+          "id": "history:task:source:80f1efb8:draft:1:task-upload-receipt:created"
+        },
+        {
+          "action": "created",
+          "entityId": "material:source:80f1efb8:draft:1:material-receipt",
+          "field": null,
+          "id": "history:material:source:80f1efb8:draft:1:material-receipt:created"
+        },
+        {
+          "action": "created",
+          "entityId": "time:source:80f1efb8:draft:1:time-start-0813",
+          "field": null,
+          "id": "history:time:source:80f1efb8:draft:1:time-start-0813:created"
+        },
+        {
+          "action": "created",
+          "entityId": "time:source:056a55cb:draft:1:time-0001",
+          "field": null,
+          "id": "history:time:source:056a55cb:draft:1:time-0001:created"
+        },
+        {
+          "action": "created",
+          "entityId": "time:source:056a55cb:draft:1:time-0002",
+          "field": null,
+          "id": "history:time:source:056a55cb:draft:1:time-0002:created"
+        },
+        {
+          "action": "created",
+          "entityId": "event:source:056a55cb:draft:1:event-0001",
+          "field": null,
+          "id": "history:event:source:056a55cb:draft:1:event-0001:created"
+        },
+        {
+          "action": "updated",
+          "entityId": "source:70be9b8a:draft:1",
+          "field": "event-disposition:E1",
+          "id": "f1ff972a-837b-4182-aed3-24545ce0adfa"
+        },
+        {
+          "action": "created",
+          "entityId": "task:source:70be9b8a:draft:1:T1",
+          "field": null,
+          "id": "history:task:source:70be9b8a:draft:1:T1:created"
+        },
+        {
+          "action": "created",
+          "entityId": "material:source:70be9b8a:draft:1:M1",
+          "field": null,
+          "id": "history:material:source:70be9b8a:draft:1:M1:created"
+        },
+        {
+          "action": "created",
+          "entityId": "time:source:70be9b8a:draft:1:P1",
+          "field": null,
+          "id": "history:time:source:70be9b8a:draft:1:P1:created"
+        },
+        {
+          "action": "created",
+          "entityId": "time:source:70be9b8a:draft:1:P4",
+          "field": null,
+          "id": "history:time:source:70be9b8a:draft:1:P4:created"
+        },
+        {
+          "action": "created",
+          "entityId": "time:source:70be9b8a:draft:1:P5",
+          "field": null,
+          "id": "history:time:source:70be9b8a:draft:1:P5:created"
+        },
+        {
+          "action": "created",
+          "entityId": "event:source:70be9b8a:draft:1:E2",
+          "field": null,
+          "id": "history:event:source:70be9b8a:draft:1:E2:created"
+        },
+        {
+          "action": "updated",
+          "entityId": "source:70be9b8a:draft:1",
+          "field": "event-disposition:E1",
+          "id": "cee202b5-1139-45b0-8a11-58d6c2b2b6a8"
+        },
+        {
+          "action": "created",
+          "entityId": "time:source:70be9b8a:draft:1:P2",
+          "field": null,
+          "id": "history:time:source:70be9b8a:draft:1:P2:created"
+        },
+        {
+          "action": "created",
+          "entityId": "time:source:70be9b8a:draft:1:P3",
+          "field": null,
+          "id": "history:time:source:70be9b8a:draft:1:P3:created"
+        },
+        {
+          "action": "created",
+          "entityId": "event:source:70be9b8a:draft:1:E1",
+          "field": null,
+          "id": "history:event:source:70be9b8a:draft:1:E1:created"
+        },
+        {
+          "action": "personal_plan",
+          "entityId": "task:source:70be9b8a:draft:1:T1",
+          "field": "personal_plan",
+          "id": "75b31c13-dbf4-4efa-9a88-1a05dcafe508:history"
+        },
+        {
+          "action": "updated",
+          "entityId": "source:fc14ab8c:draft:1",
+          "field": "event-disposition:E1",
+          "id": "5ab2fba6-907f-4cd8-b553-9ed96bcfc14a"
+        },
+        {
+          "action": "created",
+          "entityId": "time:source:fc14ab8c:draft:1:P1",
+          "field": null,
+          "id": "history:time:source:fc14ab8c:draft:1:P1:created"
+        },
+        {
+          "action": "created",
+          "entityId": "event:source:fc14ab8c:draft:1:E2",
+          "field": null,
+          "id": "history:event:source:fc14ab8c:draft:1:E2:created"
+        },
+        {
+          "action": "created",
+          "entityId": "time:source:78e81813:draft:1:P3",
+          "field": null,
+          "id": "history:time:source:78e81813:draft:1:P3:created"
+        },
+        {
+          "action": "created",
+          "entityId": "event:source:78e81813:draft:1:E3",
+          "field": null,
+          "id": "history:event:source:78e81813:draft:1:E3:created"
+        },
+        {
+          "action": "created",
+          "entityId": "task:source:841177fa:draft:1:T1",
+          "field": null,
+          "id": "history:task:source:841177fa:draft:1:T1:created"
+        },
+        {
+          "action": "created",
+          "entityId": "task:source:841177fa:draft:1:T2",
+          "field": null,
+          "id": "history:task:source:841177fa:draft:1:T2:created"
+        }
+      ],
+      "materials": [
+        {
+          "createdAt": "2026-10-13T02:22:22.580Z",
+          "deadlineTimePointId": null,
+          "formatRequirements": [
+            "照片或截图",
+            "务必完整清晰且确保是本学年申请"
+          ],
+          "id": "material:source:80f1efb8:draft:1:material-receipt",
+          "legacyData": {
+            "availabilityOrigin": "not_observed",
+            "availabilityVersion": "ordinary-availability-unobserved-1",
+            "evidenceIds": [
+              "d26-scope-0008-6912bf7d9eb0c119892290af02210b0432ff1622d994afbfec25f500fb57b7d4"
+            ],
+            "recognitionTempId": "material-receipt",
+            "sourceReviewDraftId": "source:80f1efb8:draft:1"
+          },
+          "name": "贷款机构提供的回执材料照片或截图",
+          "namingRequirements": [],
+          "projectId": null,
+          "quantity": null,
+          "relatedTaskIds": [
+            "task:source:80f1efb8:draft:1:task-upload-receipt"
+          ],
+          "required": true,
+          "requirements": [],
+          "status": "unverified",
+          "submissionChannel": "厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515",
+          "updatedAt": "2026-10-13T02:22:22.580Z",
+          "version": 1
+        },
+        {
+          "createdAt": "2026-10-13T02:31:50.413Z",
+          "deadlineTimePointId": null,
+          "formatRequirements": [
+            "PDF"
+          ],
+          "id": "material:source:70be9b8a:draft:1:M1",
+          "legacyData": {
+            "availabilityOrigin": "not_observed",
+            "availabilityVersion": "ordinary-availability-unobserved-1",
+            "evidenceIds": [
+              "d26-scope-0002-6f8e09cfffca06bf26885497d0e031eb5e6cb228a277ce975e32016d0671b419"
+            ],
+            "recognitionTempId": "M1",
+            "sourceReviewDraftId": "source:70be9b8a:draft:1"
+          },
+          "name": "器材清单",
+          "namingRequirements": [],
+          "projectId": null,
+          "quantity": null,
+          "relatedTaskIds": [
+            "task:source:70be9b8a:draft:1:T1"
+          ],
+          "required": true,
+          "requirements": [],
+          "status": "unverified",
+          "submissionChannel": null,
+          "updatedAt": "2026-10-13T02:31:50.413Z",
+          "version": 1
+        }
+      ],
+      "planKeys": [
+        "courseBlocks",
+        "integrations",
+        "knowledgeSettings",
+        "recognitionFeedback",
+        "v7MigrationLog",
+        "v7LegacyData",
+        "personalPlanD27Undo"
+      ],
+      "projects": [],
+      "savedAt": "2026-10-13T02:51:48.627Z",
+      "schemaVersion": 8,
+      "sources": [
+        {
+          "id": "source:53b66f75",
+          "status": "needs_review"
+        },
+        {
+          "id": "source:841177fa",
+          "status": "partially_confirmed"
+        },
+        {
+          "id": "source:78e81813",
+          "status": "partially_confirmed"
+        },
+        {
+          "id": "source:fc14ab8c",
+          "status": "confirmed"
+        },
+        {
+          "id": "source:70be9b8a",
+          "status": "confirmed"
+        },
+        {
+          "id": "source:056a55cb",
+          "status": "confirmed"
+        },
+        {
+          "id": "source:80f1efb8",
+          "status": "partially_confirmed"
+        },
+        {
+          "id": "source:a050d7ad",
+          "status": "needs_review"
+        }
+      ],
+      "tasks": [
+        {
+          "dependencyIds": [],
+          "estimatedMinutes": null,
+          "id": "task:source:80f1efb8:draft:1:task-login-xmuxg",
+          "originalTempId": "task-login-xmuxg",
+          "status": "todo",
+          "title": "登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515"
+        },
+        {
+          "dependencyIds": [
+            "task:source:80f1efb8:draft:1:task-login-xmuxg"
+          ],
+          "estimatedMinutes": null,
+          "id": "task:source:80f1efb8:draft:1:task-select-business-period",
+          "originalTempId": "task-select-business-period",
+          "status": "todo",
+          "title": "选择“2026-2027学年生源地贷款”业务期"
+        },
+        {
+          "dependencyIds": [
+            "task:source:80f1efb8:draft:1:task-select-business-period"
+          ],
+          "estimatedMinutes": null,
+          "id": "task:source:80f1efb8:draft:1:task-fill-info",
+          "originalTempId": "task-fill-info",
+          "status": "todo",
+          "title": "准确填写相关信息"
+        },
+        {
+          "dependencyIds": [
+            "task:source:80f1efb8:draft:1:task-fill-info"
+          ],
+          "estimatedMinutes": null,
+          "id": "task:source:80f1efb8:draft:1:task-upload-receipt",
+          "originalTempId": "task-upload-receipt",
+          "status": "todo",
+          "title": "上传贷款机构提供的回执材料照片或截图"
+        },
+        {
+          "dependencyIds": [],
+          "estimatedMinutes": null,
+          "id": "task:source:70be9b8a:draft:1:T1",
+          "originalTempId": "T1",
+          "status": "todo",
+          "title": "递交器材清单"
+        },
+        {
+          "dependencyIds": [],
+          "estimatedMinutes": null,
+          "id": "task:source:841177fa:draft:1:T1",
+          "originalTempId": "T1",
+          "status": "todo",
+          "title": "填写借用记录"
+        },
+        {
+          "dependencyIds": [
+            "task:source:841177fa:draft:1:T1"
+          ],
+          "estimatedMinutes": null,
+          "id": "task:source:841177fa:draft:1:T2",
+          "originalTempId": "T2",
+          "status": "todo",
+          "title": "提交借用记录"
+        }
+      ],
+      "timePoints": [
+        {
+          "createdAt": "2026-10-13T02:22:22.580Z",
+          "eventId": null,
+          "id": "time:source:80f1efb8:draft:1:time-start-0813",
+          "isAllDay": true,
+          "legacyData": {
+            "confidence": 0.95,
+            "evidenceIds": [
+              "d26-scope-0001-4ea0c95d98900b224bcccabecc30ab872e5a8c7465882bad42ad3ee30837510d"
+            ],
+            "recognitionTempId": "time-start-0813",
+            "sourceTimeRole": "window_start",
+            "sourceWindowOwners": [
+              {
+                "entityId": "task-login-xmuxg",
+                "kind": "task"
+              },
+              {
+                "entityId": "task-select-business-period",
+                "kind": "task"
+              },
+              {
+                "entityId": "task-fill-info",
+                "kind": "task"
+              },
+              {
+                "entityId": "task-upload-receipt",
+                "kind": "task"
+              },
+              {
+                "entityId": "task-submit-verification-code",
+                "kind": "task"
+              }
+            ]
+          },
+          "materialId": null,
+          "milestoneId": null,
+          "needsConfirmation": false,
+          "normalizedValue": "2026-08-13",
+          "precision": "date_only",
+          "projectId": null,
+          "rawText": "8月13日起",
+          "relatedMaterialIds": [],
+          "relatedTaskIds": [
+            "task:source:80f1efb8:draft:1:task-login-xmuxg",
+            "task:source:80f1efb8:draft:1:task-select-business-period",
+            "task:source:80f1efb8:draft:1:task-fill-info",
+            "task:source:80f1efb8:draft:1:task-upload-receipt"
+          ],
+          "taskId": "task:source:80f1efb8:draft:1:task-login-xmuxg",
+          "timezone": null,
+          "type": "event_start",
+          "updatedAt": "2026-10-13T02:22:22.580Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:25:12.879Z",
+          "eventId": "event:source:056a55cb:draft:1:event-0001",
+          "id": "time:source:056a55cb:draft:1:time-0001",
+          "isAllDay": false,
+          "legacyData": {
+            "confidence": 0.95,
+            "evidenceIds": [
+              "d26-scope-0002-3224c57180b008ced2e0ad82a34f696931c74c1ea274b00aa2f13b70c33b5b15"
+            ],
+            "recognitionTempId": "time-0001",
+            "sharedEventIds": [
+              "event:source:056a55cb:draft:1:event-0001"
+            ]
+          },
+          "materialId": null,
+          "milestoneId": null,
+          "needsConfirmation": false,
+          "normalizedValue": "2026-04-14T00:00",
+          "precision": "exact",
+          "projectId": null,
+          "rawText": "2026年4月14日00:00",
+          "relatedMaterialIds": [],
+          "relatedTaskIds": [],
+          "taskId": null,
+          "timezone": "Asia/Shanghai",
+          "type": "event_start",
+          "updatedAt": "2026-10-13T02:25:12.879Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:25:12.879Z",
+          "eventId": "event:source:056a55cb:draft:1:event-0001",
+          "id": "time:source:056a55cb:draft:1:time-0002",
+          "isAllDay": false,
+          "legacyData": {
+            "confidence": 0.95,
+            "evidenceIds": [
+              "d26-scope-0002-3224c57180b008ced2e0ad82a34f696931c74c1ea274b00aa2f13b70c33b5b15"
+            ],
+            "recognitionTempId": "time-0002",
+            "sharedEventIds": [
+              "event:source:056a55cb:draft:1:event-0001"
+            ]
+          },
+          "materialId": null,
+          "milestoneId": null,
+          "needsConfirmation": false,
+          "normalizedValue": "2026-04-14T03:00",
+          "precision": "exact",
+          "projectId": null,
+          "rawText": "2026年4月14日03:00",
+          "relatedMaterialIds": [],
+          "relatedTaskIds": [],
+          "taskId": null,
+          "timezone": "Asia/Shanghai",
+          "type": "event_end",
+          "updatedAt": "2026-10-13T02:25:12.879Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:31:50.413Z",
+          "eventId": null,
+          "id": "time:source:70be9b8a:draft:1:P1",
+          "isAllDay": false,
+          "legacyData": {
+            "confidence": 1,
+            "evidenceIds": [
+              "d26-scope-0001-bc9f4df4bdd0f4537dec3d2b26c202da02ed77cdf57b0d42838e300feec8d1f3"
+            ],
+            "recognitionTempId": "P1"
+          },
+          "materialId": null,
+          "milestoneId": null,
+          "needsConfirmation": false,
+          "normalizedValue": "2026-11-06T15:20",
+          "precision": "exact",
+          "projectId": null,
+          "rawText": "2026年11月6日15:20前",
+          "relatedMaterialIds": [],
+          "relatedTaskIds": [
+            "task:source:70be9b8a:draft:1:T1"
+          ],
+          "taskId": "task:source:70be9b8a:draft:1:T1",
+          "timezone": "Asia/Shanghai",
+          "type": "submission_deadline",
+          "updatedAt": "2026-10-13T02:31:50.413Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:31:50.413Z",
+          "eventId": "event:source:70be9b8a:draft:1:E2",
+          "id": "time:source:70be9b8a:draft:1:P4",
+          "isAllDay": false,
+          "legacyData": {
+            "confidence": 1,
+            "evidenceIds": [
+              "d26-scope-0003-2b37a49aac0cc446a75eadd67ee7fc95c82f493e8e79f08910e57e7bba68f7bd"
+            ],
+            "recognitionTempId": "P4",
+            "sharedEventIds": [
+              "event:source:70be9b8a:draft:1:E2"
+            ]
+          },
+          "materialId": null,
+          "milestoneId": null,
+          "needsConfirmation": false,
+          "normalizedValue": "2026-11-07T14:00",
+          "precision": "exact",
+          "projectId": null,
+          "rawText": "2026年11月7日14:00",
+          "relatedMaterialIds": [],
+          "relatedTaskIds": [],
+          "taskId": null,
+          "timezone": "Asia/Shanghai",
+          "type": "event_start",
+          "updatedAt": "2026-10-13T02:31:50.413Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:31:50.413Z",
+          "eventId": "event:source:70be9b8a:draft:1:E2",
+          "id": "time:source:70be9b8a:draft:1:P5",
+          "isAllDay": false,
+          "legacyData": {
+            "confidence": 1,
+            "evidenceIds": [
+              "d26-scope-0004-ff4090c22da754405d72c1ae2a63e7a681dd1ccf86016f3a2d35f1d891b47d0a"
+            ],
+            "recognitionTempId": "P5",
+            "sharedEventIds": [
+              "event:source:70be9b8a:draft:1:E2"
+            ]
+          },
+          "materialId": null,
+          "milestoneId": null,
+          "needsConfirmation": false,
+          "normalizedValue": "2026-11-07T15:00",
+          "precision": "exact",
+          "projectId": null,
+          "rawText": "15:00",
+          "relatedMaterialIds": [],
+          "relatedTaskIds": [],
+          "taskId": null,
+          "timezone": "Asia/Shanghai",
+          "type": "event_end",
+          "updatedAt": "2026-10-13T02:31:50.413Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:42:40.546Z",
+          "eventId": "event:source:70be9b8a:draft:1:E1",
+          "id": "time:source:70be9b8a:draft:1:P2",
+          "isAllDay": false,
+          "legacyData": {
+            "confidence": 1,
+            "evidenceIds": [
+              "d26-scope-0005-895e589a9b683d2811f8dda4c916954847f854d2cc9d5151b8808fd12676c882"
+            ],
+            "recognitionTempId": "P2",
+            "sharedEventIds": [
+              "event:source:70be9b8a:draft:1:E1"
+            ]
+          },
+          "materialId": null,
+          "milestoneId": null,
+          "needsConfirmation": true,
+          "normalizedValue": null,
+          "precision": "vague",
+          "projectId": null,
+          "rawText": "周五晚上",
+          "relatedMaterialIds": [],
+          "relatedTaskIds": [],
+          "taskId": null,
+          "timezone": null,
+          "type": "event_start",
+          "updatedAt": "2026-10-13T02:42:40.546Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:42:40.546Z",
+          "eventId": "event:source:70be9b8a:draft:1:E1",
+          "id": "time:source:70be9b8a:draft:1:P3",
+          "isAllDay": false,
+          "legacyData": {
+            "confidence": 1,
+            "evidenceIds": [
+              "d26-scope-0006-1fc199c3a48c8add6988ad22ab5e6bff8d850c477dd8b2e46840fc6019281dc1"
+            ],
+            "recognitionTempId": "P3",
+            "sharedEventIds": [
+              "event:source:70be9b8a:draft:1:E1"
+            ]
+          },
+          "materialId": null,
+          "milestoneId": null,
+          "needsConfirmation": true,
+          "normalizedValue": null,
+          "precision": "vague",
+          "projectId": null,
+          "rawText": "结束时间尚未公布",
+          "relatedMaterialIds": [],
+          "relatedTaskIds": [],
+          "taskId": null,
+          "timezone": null,
+          "type": "event_end",
+          "updatedAt": "2026-10-13T02:42:40.546Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:42:53.937Z",
+          "eventId": null,
+          "id": "personal-plan:task:source:70be9b8a:draft:1:T1",
+          "isAllDay": false,
+          "legacyData": {
+            "personalPlanD27": {
+              "conditionalOn": [],
+              "durationOrigin": "product_estimate",
+              "locked": false,
+              "minutes": 30,
+              "operationId": "75b31c13-dbf4-4efa-9a88-1a05dcafe508",
+              "version": "personal-plan-d27-1"
+            }
+          },
+          "materialId": null,
+          "milestoneId": null,
+          "needsConfirmation": false,
+          "normalizedValue": "2026-10-13T02:45:00.000Z",
+          "precision": "exact",
+          "projectId": null,
+          "rawText": "个人计划起点（不替代原文截止）",
+          "relatedMaterialIds": [],
+          "relatedTaskIds": [
+            "task:source:70be9b8a:draft:1:T1"
+          ],
+          "taskId": "task:source:70be9b8a:draft:1:T1",
+          "timezone": "Asia/Shanghai",
+          "type": "planned_start",
+          "updatedAt": "2026-10-13T02:42:53.937Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:45:40.450Z",
+          "eventId": "event:source:fc14ab8c:draft:1:E2",
+          "id": "time:source:fc14ab8c:draft:1:P1",
+          "isAllDay": false,
+          "legacyData": {
+            "confidence": 1,
+            "evidenceIds": [
+              "d26-scope-0001-3ef0f3727476f34242b53832d9f4d6f432d78aed061d8cb969c8464a6794588d"
+            ],
+            "recognitionTempId": "P1",
+            "sharedEventIds": [
+              "event:source:fc14ab8c:draft:1:E2"
+            ]
+          },
+          "materialId": null,
+          "milestoneId": null,
+          "needsConfirmation": false,
+          "normalizedValue": "2026-11-12T14:00",
+          "precision": "exact",
+          "projectId": null,
+          "rawText": "2026年11月12日14:00",
+          "relatedMaterialIds": [],
+          "relatedTaskIds": [],
+          "taskId": null,
+          "timezone": "Asia/Shanghai",
+          "type": "event_start",
+          "updatedAt": "2026-10-13T02:45:40.450Z"
+        },
+        {
+          "createdAt": "2026-10-13T02:48:47.601Z",
+          "eventId": "event:source:78e81813:draft:1:E3",
+          "id": "time:source:78e81813:draft:1:P3",
+          "isAllDay": false,
+          "legacyData": {
+            "confidence": 1,
+            "evidenceIds": [
+              "d26-scope-0003-fe8295032c30998a1eb0f2f453724e99a6616caf8bb68b6e9a024a2f12c0c60d"
+            ],
+            "recognitionTempId": "P3",
+            "sharedEventIds": [
+              "event:source:78e81813:draft:1:E3"
+            ]
+          },
+          "materialId": null,
+          "milestoneId": null,
+          "needsConfirmation": false,
+          "normalizedValue": "2026-11-14T16:00",
+          "precision": "exact",
+          "projectId": null,
+          "rawText": "2026年11月14日16:00",
+          "relatedMaterialIds": [],
+          "relatedTaskIds": [],
+          "taskId": null,
+          "timezone": "Asia/Shanghai",
+          "type": "event_start",
+          "updatedAt": "2026-10-13T02:48:47.601Z"
+        }
+      ]
+    },
+    "measurement": [
+      {
+        "draftId": "source:53b66f75:draft:1",
+        "role": "ENGINEERING_REPLAY",
+        "humanMetrics": "NOT_OBSERVABLE",
+        "legacyOutcomes": {
+          "complete": false,
+          "partial": false,
+          "failureEvents": 0
+        },
+        "canonicalStatus": "needs_review",
+        "pageEditIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "verifiedCommitIds": [],
+        "unverifiedCommitIds": [],
+        "missing": [
+          "unclosed interval",
+          "terminal commit/readback"
+        ],
+        "activeEditMs": null,
+        "wallMs": null,
+        "note": "选择/个人适用输入与模型事实分开；旧outcomes.partial不是canonical真值，缺失时间不补0。"
+      },
+      {
+        "draftId": "source:841177fa:draft:1",
+        "role": "ENGINEERING_REPLAY",
+        "humanMetrics": "NOT_OBSERVABLE",
+        "legacyOutcomes": {
+          "complete": false,
+          "partial": false,
+          "failureEvents": 0
+        },
+        "canonicalStatus": "partially_confirmed",
+        "pageEditIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "verifiedCommitIds": [
+          "source-review:source:841177fa:draft:1:fnv1a32:156afbb1"
+        ],
+        "unverifiedCommitIds": [],
+        "missing": [
+          "unclosed interval",
+          "terminal commit/readback"
+        ],
+        "activeEditMs": null,
+        "wallMs": null,
+        "note": "选择/个人适用输入与模型事实分开；旧outcomes.partial不是canonical真值，缺失时间不补0。"
+      },
+      {
+        "draftId": "source:78e81813:draft:1",
+        "role": "ENGINEERING_REPLAY",
+        "humanMetrics": "NOT_OBSERVABLE",
+        "legacyOutcomes": {
+          "complete": false,
+          "partial": false,
+          "failureEvents": 1
+        },
+        "canonicalStatus": "partially_confirmed",
+        "pageEditIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "verifiedCommitIds": [
+          "source-review:source:78e81813:draft:1:fnv1a32:b876cca4"
+        ],
+        "unverifiedCommitIds": [],
+        "missing": [
+          "unclosed interval",
+          "terminal commit/readback"
+        ],
+        "activeEditMs": null,
+        "wallMs": null,
+        "note": "选择/个人适用输入与模型事实分开；旧outcomes.partial不是canonical真值，缺失时间不补0。"
+      },
+      {
+        "draftId": "source:fc14ab8c:draft:1",
+        "role": "ENGINEERING_REPLAY",
+        "humanMetrics": "NOT_OBSERVABLE",
+        "legacyOutcomes": {
+          "complete": true,
+          "partial": false,
+          "failureEvents": 0
+        },
+        "canonicalStatus": "confirmed",
+        "pageEditIds": [
+          "c82bf170-6037-4397-bcd4-e13e3f8b2595"
+        ],
+        "checkpointToEditId": [
+          {
+            "field": "event:E1:disposition",
+            "editId": "c82bf170-6037-4397-bcd4-e13e3f8b2595",
+            "checkpointHistoryId": "4cfe9772-b15d-4bb8-a9ff-34262ec5d9eb",
+            "commitId": "source-review:source:fc14ab8c:draft:1:fnv1a32:e41af0da",
+            "readbackVerified": true
+          }
+        ],
+        "verifiedCommitIds": [
+          "source-review:source:fc14ab8c:draft:1:fnv1a32:e41af0da"
+        ],
+        "unverifiedCommitIds": [],
+        "missing": [],
+        "activeEditMs": 5000,
+        "wallMs": 56517,
+        "note": "选择/个人适用输入与模型事实分开；旧outcomes.partial不是canonical真值，缺失时间不补0。"
+      },
+      {
+        "draftId": "source:70be9b8a:draft:1",
+        "role": "ENGINEERING_REPLAY",
+        "humanMetrics": "NOT_OBSERVABLE",
+        "legacyOutcomes": {
+          "complete": true,
+          "partial": false,
+          "failureEvents": 0
+        },
+        "canonicalStatus": "confirmed",
+        "pageEditIds": [
+          "ad8701cf-1902-41a4-95c3-427a8cb1ee4e",
+          "3b1bca3b-fc4a-4dc5-b616-5ad2280d7746"
+        ],
+        "checkpointToEditId": [
+          {
+            "field": "event:E1:disposition",
+            "editId": "ad8701cf-1902-41a4-95c3-427a8cb1ee4e",
+            "checkpointHistoryId": "f1563b9e-ad5e-4f4d-9e44-ca7a02f8ea9d",
+            "commitId": "source-review:source:70be9b8a:draft:1:fnv1a32:5ee95f73",
+            "readbackVerified": true
+          },
+          {
+            "field": "event:E1:disposition",
+            "editId": "3b1bca3b-fc4a-4dc5-b616-5ad2280d7746",
+            "checkpointHistoryId": "1e4d76cf-e5fb-4c12-80ef-e93f952a6017",
+            "commitId": "source-review:source:70be9b8a:draft:1:fnv1a32:8368d60d",
+            "readbackVerified": true
+          }
+        ],
+        "verifiedCommitIds": [
+          "source-review:source:70be9b8a:draft:1:fnv1a32:5ee95f73",
+          "source-review:source:70be9b8a:draft:1:fnv1a32:8368d60d"
+        ],
+        "unverifiedCommitIds": [],
+        "missing": [
+          "refresh time discontinuity"
+        ],
+        "activeEditMs": null,
+        "wallMs": null,
+        "note": "选择/个人适用输入与模型事实分开；旧outcomes.partial不是canonical真值，缺失时间不补0。"
+      },
+      {
+        "draftId": "source:056a55cb:draft:1",
+        "role": "ENGINEERING_REPLAY",
+        "humanMetrics": "NOT_OBSERVABLE",
+        "legacyOutcomes": {
+          "complete": true,
+          "partial": false,
+          "failureEvents": 1
+        },
+        "canonicalStatus": "confirmed",
+        "pageEditIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "verifiedCommitIds": [
+          "source-review:source:056a55cb:draft:1:fnv1a32:1dfd2b65"
+        ],
+        "unverifiedCommitIds": [],
+        "missing": [
+          "refresh time discontinuity"
+        ],
+        "activeEditMs": null,
+        "wallMs": null,
+        "note": "选择/个人适用输入与模型事实分开；旧outcomes.partial不是canonical真值，缺失时间不补0。"
+      },
+      {
+        "draftId": "source:80f1efb8:draft:1",
+        "role": "ENGINEERING_REPLAY",
+        "humanMetrics": "NOT_OBSERVABLE",
+        "legacyOutcomes": {
+          "complete": false,
+          "partial": false,
+          "failureEvents": 1
+        },
+        "canonicalStatus": "partially_confirmed",
+        "pageEditIds": [
+          "c2dca4b3-921e-4bd1-b650-a27927b16ecc"
+        ],
+        "checkpointToEditId": [
+          {
+            "field": "task:readiness-fnv1a32:fe0ce24e:facts",
+            "editId": "c2dca4b3-921e-4bd1-b650-a27927b16ecc",
+            "checkpointHistoryId": "94080228-411e-453f-b040-bb4a40adbae5",
+            "commitId": "source-review:source:80f1efb8:draft:1:fnv1a32:3d37290f",
+            "readbackVerified": true
+          }
+        ],
+        "verifiedCommitIds": [
+          "source-review:source:80f1efb8:draft:1:fnv1a32:3d37290f"
+        ],
+        "unverifiedCommitIds": [],
+        "missing": [
+          "refresh time discontinuity",
+          "unclosed interval",
+          "terminal commit/readback"
+        ],
+        "activeEditMs": null,
+        "wallMs": null,
+        "note": "选择/个人适用输入与模型事实分开；旧outcomes.partial不是canonical真值，缺失时间不补0。"
+      },
+      {
+        "draftId": "source:a050d7ad:draft:1",
+        "role": "ENGINEERING_REPLAY",
+        "humanMetrics": "NOT_OBSERVABLE",
+        "legacyOutcomes": {
+          "complete": false,
+          "partial": false,
+          "failureEvents": 0
+        },
+        "canonicalStatus": "needs_review",
+        "pageEditIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "verifiedCommitIds": [],
+        "unverifiedCommitIds": [],
+        "missing": [
+          "unclosed interval",
+          "terminal commit/readback"
+        ],
+        "activeEditMs": null,
+        "wallMs": null,
+        "note": "选择/个人适用输入与模型事实分开；旧outcomes.partial不是canonical真值，缺失时间不补0。"
+      }
+    ]
+  },
+  "validation": {
+    "summaries": [
+      {
+        "phase": "test",
+        "outcome": "PASS",
+        "modelCalls": 0,
+        "ledgerWrites": 0,
+        "groups": [
+          {
+            "layer": "current-product",
+            "label": "timezone",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "contract",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "time-contract",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "vitest-product",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "server",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "worker",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "worker-d26",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "functions",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "time-parity",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "vitest-safety",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "vitest-runtime-current",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "vitest-carriers",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "current-checks",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "check-schedule",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "governance-unit",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "multimodal-lib",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "c11-scoring",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "c11-preview",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "d25-executor",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "d25-mechanism",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "d26-mechanism",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "d26-executor",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "d26-freeze",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "d26-score-recording",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "d26-execution-host",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "d26-execution-report",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "d26-recorded-projection",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "scoped-execution",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "scoped-diagnostics",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "candidate19-contract",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "public-notice-diagnostic",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "current-completed-readonly",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-safety",
+            "label": "d25-live-safety",
+            "status": 0,
+            "outcome": "PASS"
+          }
+        ]
+      },
+      {
+        "phase": "current-product",
+        "outcome": "PASS",
+        "modelCalls": 0,
+        "ledgerWrites": 0,
+        "groups": [
+          {
+            "layer": "current-product",
+            "label": "timezone",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "contract",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "time-contract",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "vitest-product",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "server",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "worker",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "worker-d26",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "functions",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "current-product",
+            "label": "time-parity",
+            "status": 0,
+            "outcome": "PASS"
+          }
+        ]
+      },
+      {
+        "phase": "historical",
+        "outcome": "FAIL",
+        "modelCalls": 0,
+        "ledgerWrites": 0,
+        "groups": [
+          {
+            "layer": "historical",
+            "label": "historical-originals",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "historical",
+            "label": "d19-diagnostic",
+            "status": 1,
+            "outcome": "FAIL"
+          },
+          {
+            "layer": "historical",
+            "label": "d9-historical",
+            "status": 1,
+            "outcome": "FAIL"
+          },
+          {
+            "layer": "historical",
+            "label": "rco-5-007",
+            "status": 1,
+            "outcome": "FAIL"
+          },
+          {
+            "layer": "historical",
+            "label": "c11-history",
+            "status": 1,
+            "outcome": "FAIL"
+          },
+          {
+            "layer": "historical",
+            "label": "c11-gateway",
+            "status": 1,
+            "outcome": "FAIL"
+          },
+          {
+            "layer": "historical",
+            "label": "vitest-d17-history",
+            "status": 1,
+            "outcome": "FAIL"
+          },
+          {
+            "layer": "historical",
+            "label": "vitest-runtime-history",
+            "status": 0,
+            "outcome": "PASS"
+          },
+          {
+            "layer": "historical",
+            "label": "vitest-carriers-history",
+            "status": 0,
+            "outcome": "PASS"
+          }
+        ]
+      }
+    ],
+    "historicalErrors": {
+      "d19-diagnostic": [
+        "D17_SCORE_LEDGER_DRIFT"
+      ],
+      "d9-historical": [
+        "D9_GUARD_FILE_DRIFT_scripts/serve-candidate15-d8.mjs"
+      ],
+      "rco-5-007": [
+        "FREEZE_HASH_MISMATCH:package-lock.json"
+      ],
+      "c11-history": [
+        "C11_HISTORY_PROTECTED_CHANGED:AGENTS.md"
+      ],
+      "c11-gateway": [
+        "C11_HISTORY_PROTECTED_CHANGED:AGENTS.md"
+      ],
+      "vitest-d17-history": [
+        "D17_SCORE_LEDGER_DRIFT"
+      ]
+    },
+    "targeted": {
+      "files": 5,
+      "tests": 127,
+      "outcome": "PASS"
+    },
+    "lint": {
+      "errors": 0,
+      "existingWarnings": 8
+    },
+    "typecheck": "PASS",
+    "build": {
+      "outcome": "PASS",
+      "existingLargeChunkWarning": true
+    },
+    "securityScan": {
+      "outcome": "PASS",
+      "files": 4891
+    },
+    "dependencyAudit": {
+      "info": 0,
+      "low": 0,
+      "moderate": 1,
+      "high": 6,
+      "critical": 2,
+      "total": 9
+    },
+    "productionAudit": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "remoteCI": "NOT_RUN"
+  },
+  "protection": {
+    "assets": 478,
+    "changed": [],
+    "ledgerUnchanged": true,
+    "history": {
+      "status": "HISTORY_PRESERVED_LEDGER_APPEND_REVIEW_REQUIRED",
+      "protectedFiles": 84,
+      "archives": 7,
+      "frozenFiles": 119,
+      "activeDocuments": "GIT_VERSIONED_NOT_A_RUNTIME_FREEZE",
+      "historicalDecisions": "UNCHANGED",
+      "ledger": {
+        "rows": 1091,
+        "sha256": "0870d6ccd38b54315a600d347657606aad3d19ae499e47c36077a9db0276e62f",
+        "appendRows": 251,
+        "mode": "READ_ONLY"
+      },
+      "dispatchAuthorized": false,
+      "qualityPromotion": false
+    },
+    "modelRequests": 0,
+    "grant": 0,
+    "reserve": 0,
+    "settle": 0
+  },
+  "files": {
+    "RN03-FIRST.txt": {
+      "localPath": ".data/p1-first-pass-20261013/browser/RN03-FIRST.txt",
+      "sha256": "7a4a185253b8230fee8c78c1c942b00c82b87ae017bc1d5af3b85719a6070afd"
+    },
+    "RN02-FIRST.txt": {
+      "localPath": ".data/p1-first-pass-20261013/browser/RN02-FIRST.txt",
+      "sha256": "229ee2c43590c3a1c9366fceb49fdf4dcfcac6efd72ba4e628bd596e2400d295"
+    },
+    "RN01-FIRST.txt": {
+      "localPath": ".data/p1-first-pass-20261013/browser/RN01-FIRST.txt",
+      "sha256": "3d2ff6dfbc50bea15ab05c2ccfbee08cc503795d018f4c8a2cb22a0854d5f4ab"
+    },
+    "RN04-FIRST.txt": {
+      "localPath": ".data/p1-first-pass-20261013/browser/RN04-FIRST.txt",
+      "sha256": "8c2cefb9bc6528bb1d0be83b37f10b2680bafd1596a1306f6f223704deab491e"
+    },
+    "RN02-TRANSACTION-FAILURE.txt": {
+      "localPath": ".data/p1-first-pass-20261013/browser/RN02-TRANSACTION-FAILURE.txt",
+      "sha256": "c70363a79927605e4b1d6c4b9cc3adc0dc69aaa981a9a87d7a1435a5da56707a"
+    },
+    "RN04-READBACK-FAILURE.txt": {
+      "localPath": ".data/p1-first-pass-20261013/browser/RN04-READBACK-FAILURE.txt",
+      "sha256": "44e978f73e784f7779324604eb78e3295481d0f4fce0181830bb7d588e2d3879"
+    },
+    "CHECKPOINT-FAILURE.txt": {
+      "localPath": ".data/p1-first-pass-20261013/browser/CHECKPOINT-FAILURE.txt",
+      "sha256": "46a3bf7705b31612151e29e63c1db05658b705fbc49cdf37dc3ff9c4d6e53d7d"
+    },
+    "MIXED-PARTIAL-CANONICAL.json": {
+      "localPath": ".data/p1-first-pass-20261013/browser/MIXED-PARTIAL-CANONICAL.json",
+      "sha256": "67e362e952c6e0588354a90f90e2185adee30a3c13f575856b2fedeebb081edd"
+    },
+    "UNKNOWN-EVENT-PLAN-CANONICAL.json": {
+      "localPath": ".data/p1-first-pass-20261013/browser/UNKNOWN-EVENT-PLAN-CANONICAL.json",
+      "sha256": "66c762ea66902fb84d7f84f74ae5db937eeaa233fb1eb7c7b0daaaf0ced4a823"
+    },
+    "SHARED-REJECT-ONE.txt": {
+      "localPath": ".data/p1-first-pass-20261013/browser/SHARED-REJECT-ONE.txt",
+      "sha256": "e7f733dd26a8c5a2703dff1e44f85e30b5236fc572852bb66fff3e8026e02a65"
+    },
+    "BAD-OWNER-PARTIAL.txt": {
+      "localPath": ".data/p1-first-pass-20261013/browser/BAD-OWNER-PARTIAL.txt",
+      "sha256": "939b6ebae794e2624c68c78a4dc4431b395af5817460eddb1f25ff2b5c7c55d7"
+    },
+    "BAD-OWNER-REPEAT.txt": {
+      "localPath": ".data/p1-first-pass-20261013/browser/BAD-OWNER-REPEAT.txt",
+      "sha256": "7783e7c160f6d8655a5f478c096c9a845b0a37a3296a8ae0e6a02912338e94f1"
+    },
+    "DEPENDENCY-FIRST.txt": {
+      "localPath": ".data/p1-first-pass-20261013/browser/DEPENDENCY-FIRST.txt",
+      "sha256": "b2ae5de084864fd3035924c7b8d4a8447734028735bcf8689b6b69b1ad3eca97"
+    },
+    "FINAL-CANONICAL-COMPACT.json": {
+      "localPath": ".data/p1-first-pass-20261013/browser/FINAL-CANONICAL-COMPACT.json",
+      "sha256": "8ee67e2b84ebd1f1c7cbd358942655386f19f831ad023ae693ab05a2479ff769"
+    },
+    "ENGINEERING-MEASUREMENT.json": {
+      "localPath": ".data/p1-first-pass-20261013/browser/ENGINEERING-MEASUREMENT.json",
+      "sha256": "85e572f68284bedce74b5d9c715897973f11b31768fe9ad4f6248dd70bb76cf5"
+    }
+  },
+  "browserToolLimitations": [
+    "fullPage screenshot: Unable to capture screenshot; viewport PNG succeeded",
+    "Large 1.6MB+ canonical pre: Runtime.evaluate / Accessibility.getFullAXTree timeout; official DOM-derived compact readback succeeded. No IndexedDB bypass."
+  ],
+  "notRun": [
+    "new model output",
+    "real human trials and independent adjudication",
+    "independent Holdout",
+    "release v8 anonymous roundtrip",
+    "integration candidate browser",
+    "merge/default replacement/deployment"
+  ]
+}

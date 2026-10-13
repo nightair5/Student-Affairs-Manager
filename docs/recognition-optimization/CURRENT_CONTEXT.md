@@ -1,13 +1,15 @@
-# 当前交接：4份官方首答已诊断，两处首次数据损失已修，浏览器未验
+# 当前交接：P1首次展示损失已收口，实际浏览器闭环已验
 
-ROOT candidate11/比赛，branch codex/e2-candidate11-blind-eval。[唯一结果](candidate19-public-development/RESULTS.md)。2026-10-09执行；用户handover/15审计资产保留。
+ROOT：C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；branch：codex/e2-candidate11-blind-eval。工程HEAD：026ea27196090f403507753a820fc64d6d047467；核验起点4f6542319479af611a86dd16a8ec9110fd62de00，最新文档提交以当前Git HEAD为准。[唯一结果](candidate19-public-development/RESULTS.md)。
 
-本包3h/16/$6共享预授权，当前FactRoleAuthority单臂4官方历史节选；来源/参照/请求先冻结，4SETTLED/0UNCERTAIN，1grant4reserve4settle，零retry/repair/verifier。usage25879/15785（cache20480），保守内部结算$0.026707，实扣NOT_OBSERVABLE；只分配最坏硬限1.30，无余量扩样。旧封存/完成批不恢复。
+目标：原答已有事实完整进入第一份建议，少补录。已修参与条件支持索引和同一句数字流程渠道；新程序只派生已有引用，原Schema/Prompt/default/v8不动。4旧真实录制有效首次3/4→4/4，原答1正确1错2UNKNOWN保持；本轮公共最小事实1/1/2，完整正确数未净增。旧8逐份不变，没有新模型成绩。
 
-新4原答暂定1完整/1错/2UNKNOWN；冻结首次数据0/4→新公共程序同raw1/4，不是新模型提升。RN01/02长动作字段不再使Capture全局拒绝；RN04门户维护名称及00:00/03:00恢复。first1.6.0/compound-name1.1.0；typed support1.5/relation1.3/action-time1.0.1、生成输入/v8/default及D27不改。RN01时间角色/分段窗口，RN02业务渠道/强前置争议，RN03参与引用编译拒绝仍保留；不把个人unknown当事实错。旧8首份RecognitionResult逐份相同；旧v11/12后验及8作者比较成绩不改。
+唯一入口6924固定录制，模型机械关闭，新库；构建source4bcdd9d92d99与工程提交代码一致。实际4录制+4工程控制经过普通App/ReviewSession/DomainCommitPlan/Repository；部分保存、逐事件拒绝共享时间、坏owner局部阻断、检查点/事务/读回三恢复、刷新、独立值及个人安排已验。最终7任务5事件11时间2材料0项目；工程个人选择不计模型正确，四真人NOT_OBSERVABLE。
 
-唯一新入口6917固定4录制、实时关闭、新隔离库；构建ac45bb4693b7/sourcefdbf658f9d68，HTTP200/POST403。RN04内存正式Task0/Event1/Time2/Project0，exact起止；选择检查点无edit、事务失败手动恢复/已提交只重读/独立实例通过。点击/刷新IndexedDB NOT_RUN_POLICY_STOP：官方Computer Use不能可靠识别Windows URL，未绕过；四真人NOT_OBSERVABLE。
+验证：当前33独立组PASS，历史9组3PASS6旧FAIL(原哈希/账本快照)；定向127、lint0错误8既有warning、typecheck/build/security通过。audit新核开发2C6H1M/production0。42职责组全部确定退出，不改旧断言/锁/timeout，CI历史作业保留，远端CI未观察。
 
-42独立组36PASS/6旧FAIL（exit1），77受影响检查及lint/build/security通过；末次否定守卫小改仅重验受影响层，旧断言/timeout不改。audit开发2critical6high1moderate/production0。84/119/7、235资产及raw保持；1091链SHA0870d6cc...，合法9行；1082前缀b3e3952c...及更旧前缀保留。
+保护：84/119/7，478旧资产未变，1091完整链SHA0870d6ccd38b54315a600d347657606aad3d19ae499e47c36077a9db0276e62f保持；本轮模型/grant/reserve/settle0、费用0。旧完成/封存不恢复，handover/计划/15审计资产保持且不混入提交。工程提交后首次普通push因GitHub443超时失败；最终同步状态见交付回报，不能由本地commit推断。
 
-下一先用现4raw收口参与引用/复杂窗口或业务渠道作用范围，最多两个根因；不默认再付费。页面需恢复官方浏览器通道后验6917本构建；不拿内存/HTTP替点击。详见唯一结果中的real-notice-fact-role报告。没有新生成假设，不造新候选；未真人/Holdout/default替换/合并/部署/Secret读取/旧库/依赖或历史改写。
+未完：RN01原答错时间角色/分段窗口；RN02任务粒度/强前置与RN03营业例外/可选义务争议；任意实时首答、独立裁决、release匿名v8 round-trip和合并构建未验。数据兼容VERIFY_BEFORE_MERGE。本轮状态P1_ENGINEERING_DELIVERED_INTEGRATION_CHECKS_PENDING，未达到完整P1集成退出条件。
+
+下一先裁明最小事实及合法关系表示，再决定生成假设；无需为这两处确定公共修复付费。不真人/Holdout/default替换/合并/部署/Secret明文/旧库/依赖升级。授权本轮已收口，不自动进入新预算或下一阶段。
