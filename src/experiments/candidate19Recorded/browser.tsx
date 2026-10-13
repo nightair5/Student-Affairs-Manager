@@ -36,6 +36,8 @@ import { SOURCE_INFORMATION_PREVIEW_VERSION } from '../../recognition/sourceInfo
 import { SOURCE_WINDOW_GROUNDING_VERSION } from '../../recognition/sourceWindowGrounding'
 import {FACT_ROLE_VERSION,FACT_ROLE_PROMPT,FACT_ROLE_CANDIDATE,decodeFactRoleRecording} from '../../recognition/factRoleContract'
 import { CURRENT_FACT_ROLE_PRODUCT_VERSION, decodeCurrentFactRoleRecording } from '../../recognition/currentFactRoleProduct'
+import { TASK_TIME_AUTHORITY_VERSION, TASK_TIME_AUTHORITY_PROMPT, TASK_TIME_AUTHORITY_CANDIDATE, decodeTaskTimeAuthorityRecording } from '../../recognition/taskTimeAuthorityContract'
+import { ProxyDeepSeekExtractionService } from '../../lib/deepseekExtraction'
 import { SOURCE_ACTION_TIME_VERSION } from '../../recognition/sourceActionTime'
 import { COMPOUND_NAME_SUPPORT_VERSION } from '../../recognition/compoundNameSupport'
 import { OPTIONAL_PARTICIPATION_VERSION } from '../../recognition/optionalParticipationProduct'
@@ -52,7 +54,7 @@ import '../d26/diagnostics.css'
 declare const __C19_RECORDED_CONFIG__: { database: string; build: string; origin: string; explicitContract?: boolean; currentSupportProjection?: boolean; fixtureCount?: number; batchLabel?: string; initialOrdinal?: number }
 const config = __C19_RECORDED_CONFIG__
 if (location.origin !== config.origin || !/^rco-mainline-01-02-i1-d27-plan-recorded-[a-z0-9-]+$/.test(config.database)) throw Error('RECORDED_ISOLATION_REQUIRED')
-interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18' | 'Candidate19' | 'SingleAuthority' | 'ObligationAuthority' | 'RoleAuthority' | 'TaskRequirements' | 'FactRoleAuthority' | 'EngineeringFixture'; generationContract?:string;sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string | null; frozenOutcome: string }
+interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18' | 'Candidate19' | 'SingleAuthority' | 'ObligationAuthority' | 'RoleAuthority' | 'TaskRequirements' | 'FactRoleAuthority' | 'TaskTimeAuthority' | 'EngineeringFixture'; generationContract?:string;sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string | null; frozenOutcome: string }
 const recordings: Recording[] = await fetch('/recordings.json').then(r => { if (!r.ok) throw Error('RECORDINGS_UNAVAILABLE'); return r.json() })
 let selected = recordings.findIndex(r => r.ordinal === (config.initialOrdinal ?? 2)), failCommit = false, failRead = false, failCheckpoint = false
 if (selected < 0) throw Error('RECORDED_INITIAL_SOURCE_REQUIRED')
@@ -72,8 +74,8 @@ const contractVersion = baseContractVersion + ' / ' + FACT_ROLE_VERSION + ' / ' 
 const recordingMetadata = () => {
   const r = recordings[selected], engineering = r.candidate === 'EngineeringFixture'
   return { modelName: engineering ? '匿名契约工程夹具（非模型输出）' : `${r.candidate} 固定录制`,
-    promptVersion: r.generationContract===FACT_ROLE_VERSION?FACT_ROLE_PROMPT:r.generationContract===TASK_REQUIREMENTS_VERSION?TASK_REQUIREMENTS_PROMPT:r.generationContract===ROLE_AUTHORITY_VERSION?ROLE_PROMPT_VERSION:r.generationContract===OBLIGATION_AUTHORITY_VERSION?OBLIGATION_PROMPT_VERSION:r.generationContract===SINGLE_AUTHORITY_VERSION?SINGLE_AUTHORITY_PROMPT_VERSION:engineering ? 'ENGINEERING_FIXTURE_NOT_GENERATED' : r.candidate === 'Candidate17' ? CANDIDATE17_PROMPT_VERSION : r.candidate === 'Candidate18' ? CANDIDATE18_PROMPT_VERSION : CANDIDATE19_PROMPT_VERSION,
-    candidateVersion:r.generationContract===FACT_ROLE_VERSION?FACT_ROLE_CANDIDATE:r.generationContract===TASK_REQUIREMENTS_VERSION?TASK_REQUIREMENTS_CANDIDATE:r.generationContract===ROLE_AUTHORITY_VERSION?ROLE_CANDIDATE_VERSION:r.generationContract===OBLIGATION_AUTHORITY_VERSION?OBLIGATION_CANDIDATE_VERSION:r.generationContract===SINGLE_AUTHORITY_VERSION?SINGLE_AUTHORITY_CANDIDATE_VERSION: engineering ? 'ENGINEERING_FIXTURE_NOT_CANDIDATE' : r.candidate === 'Candidate17' ? CANDIDATE17_VERSION : r.candidate === 'Candidate18' ? CANDIDATE18_VERSION : CANDIDATE19_VERSION,
+    promptVersion: r.generationContract===TASK_TIME_AUTHORITY_VERSION?TASK_TIME_AUTHORITY_PROMPT:r.generationContract===FACT_ROLE_VERSION?FACT_ROLE_PROMPT:r.generationContract===TASK_REQUIREMENTS_VERSION?TASK_REQUIREMENTS_PROMPT:r.generationContract===ROLE_AUTHORITY_VERSION?ROLE_PROMPT_VERSION:r.generationContract===OBLIGATION_AUTHORITY_VERSION?OBLIGATION_PROMPT_VERSION:r.generationContract===SINGLE_AUTHORITY_VERSION?SINGLE_AUTHORITY_PROMPT_VERSION:engineering ? 'ENGINEERING_FIXTURE_NOT_GENERATED' : r.candidate === 'Candidate17' ? CANDIDATE17_PROMPT_VERSION : r.candidate === 'Candidate18' ? CANDIDATE18_PROMPT_VERSION : CANDIDATE19_PROMPT_VERSION,
+    candidateVersion:r.generationContract===TASK_TIME_AUTHORITY_VERSION?TASK_TIME_AUTHORITY_CANDIDATE:r.generationContract===FACT_ROLE_VERSION?FACT_ROLE_CANDIDATE:r.generationContract===TASK_REQUIREMENTS_VERSION?TASK_REQUIREMENTS_CANDIDATE:r.generationContract===ROLE_AUTHORITY_VERSION?ROLE_CANDIDATE_VERSION:r.generationContract===OBLIGATION_AUTHORITY_VERSION?OBLIGATION_CANDIDATE_VERSION:r.generationContract===SINGLE_AUTHORITY_VERSION?SINGLE_AUTHORITY_CANDIDATE_VERSION: engineering ? 'ENGINEERING_FIXTURE_NOT_CANDIDATE' : r.candidate === 'Candidate17' ? CANDIDATE17_VERSION : r.candidate === 'Candidate18' ? CANDIDATE18_VERSION : CANDIDATE19_VERSION,
     build: config.build, responseRole: engineering ? 'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT' : 'RECORDED_MODEL_ENGINEERING_REPLAY' }
 }
 const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new IndexedDbWorkspaceRepository(canonical), reader: new CanonicalWorkspaceRepository(readerStore), capture: new CapturePersistenceService(canonical), measurement, reviewSession: new D20ReviewSessionRepository(store, measurement.changed, measurement.activity, true), initial: workspaceV8ToLegacyView((await canonical.load())!), store, label: `${config.build}；${batchLabel}；${contractVersion}；实时派发关闭`, pipelineVersion: contractVersion, semanticSidecar: id => sidecars.get(id), recognitionContext: () => ({ referenceTime: recordings[selected].referenceTime, timezone: recordings[selected].timezone }),
@@ -86,11 +88,21 @@ const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new Ind
     const provenance = { role: record.candidate === 'EngineeringFixture' ? 'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT' : 'RECORDED_MODEL_ENGINEERING_REPLAY', ...record, projectionVersion: contractVersion }
     await canonical.transaction(w => ({ ...w, recognitionRuns: w.recognitionRuns.map(r => r.sourceVersionId === input.sourceVersionId ? { ...r, modelName: recordingMetadata().modelName, legacyData: { ...r.legacyData, recordedResponse: JSON.parse(JSON.stringify(provenance)) as JsonValue } } : r) }))
     try {
+      if(record.generationContract==='ordinary-proxy-boundary-engineering-1'){
+        const proxy=new ProxyDeepSeekExtractionService('/engineering-proxy')
+        const result=await proxy.recognize({...input,now:new Date(record.referenceTime)},{projects:[],tasks:[]})
+        sidecars.set(input.sourceId,proxy.semanticSidecar(input.sourceId,input.sourceVersionId))
+        return result
+      }
       const context = { index: await indexImmutableScopesV11(input.sourceId, input.sourceVersionId, input.content), referenceTime: record.referenceTime, timezone: record.timezone }
       const originalIndex = await indexImmutableScopesV11(record.sourceId, record.sourceVersionId, record.sourceText)
       const rebound = rebindRecordedScopes(record.rawHttpText, originalIndex, context.index)
       if (!config.explicitContract && record.candidate === 'EngineeringFixture') throw Error('FIXTURE_CONTRACT_MODE_REQUIRED')
       const decoded = (() => {
+        if(record.generationContract===TASK_TIME_AUTHORITY_VERSION){
+          if(record.candidate!=='TaskTimeAuthority'&&record.candidate!=='EngineeringFixture')throw Error('TASK_TIME_RECORDING_ROLE_MISMATCH')
+          return decodeTaskTimeAuthorityRecording(rebound.reboundHttpText,context,record.candidate==='EngineeringFixture'?'EngineeringFixture':'SingleAuthority')
+        }
         if(record.generationContract===FACT_ROLE_VERSION){
           if(record.candidate!=='FactRoleAuthority'&&record.candidate!=='EngineeringFixture')throw Error('FACT_ROLE_RECORDING_ROLE_MISMATCH')
           return (config.currentSupportProjection ? decodeCurrentFactRoleRecording : decodeFactRoleRecording)(rebound.reboundHttpText,context,record.candidate==='EngineeringFixture'?'EngineeringFixture':'SingleAuthority')
@@ -111,7 +123,7 @@ const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new Ind
           if (record.candidate !== 'SingleAuthority' && record.candidate !== 'EngineeringFixture') throw Error('SINGLE_AUTHORITY_RECORDING_ROLE_MISMATCH')
           return decodeAuthorityProductRecording(rebound.reboundHttpText, context, record.candidate === 'SingleAuthority' ? 'SingleAuthority' : 'EngineeringFixture', true)
         }
-        if (record.candidate === 'SingleAuthority' || record.candidate === 'ObligationAuthority' || record.candidate === 'RoleAuthority' || record.candidate === 'TaskRequirements' || record.candidate === 'FactRoleAuthority') throw Error('RECORDING_GENERATION_CONTRACT_REQUIRED')
+        if (record.candidate === 'SingleAuthority' || record.candidate === 'ObligationAuthority' || record.candidate === 'RoleAuthority' || record.candidate === 'TaskRequirements' || record.candidate === 'FactRoleAuthority' || record.candidate === 'TaskTimeAuthority') throw Error('RECORDING_GENERATION_CONTRACT_REQUIRED')
         return decodeCurrentSourceRecording(rebound.reboundHttpText, record.candidate, context)
       })()
       sidecars.set(input.sourceId, { ...decoded.sidecar, recordedProvenance: provenance, scopeRebinding: { operation: rebound.operation, mapping: rebound.mapping }, postComparisonConversion: decoded.conversion, productDisposition: decoded.productDisposition, ...('coverageAudit' in decoded ? { postComparisonCoverage: decoded.coverageAudit } : {}), sourceRenderedEvents: decoded.sourceRenderedEvents })

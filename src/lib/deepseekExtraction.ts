@@ -7,6 +7,7 @@ import { recognitionToLegacySuggestions } from '../recognition/pipeline'
 import type { RecognitionResult } from '../recognition/types'
 import { RECOGNITION_PROMPT_VERSION } from '../recognition/prompt'
 import { MULTIMODAL_MODEL_NAME, MULTIMODAL_PROMPT_VERSION } from './multimodal'
+import { bindOrdinaryProviderSupport, type OrdinaryProviderSidecar } from '../recognition/ordinaryProviderSupport'
 
 export type SmartExtractionMethod = 'deepseek-v4-flash' | 'deepseek-v4-flash-vision-exp' | 'local-rules'
 
@@ -30,7 +31,19 @@ export interface RecognitionWorkspaceContext {
 export interface DeepSeekExtractionService {
   status(): Promise<{ configured: boolean; model?: string; multimodalModel?: string }>
   extract(input: IntakeInput): Promise<ParsedSuggestion[]>
-  recognize?(input: IntakeInput, context?: RecognitionWorkspaceContext): Promise<RecognitionResult>
+  recognize?(input: RecognitionServiceInput, context?: RecognitionWorkspaceContext): Promise<RecognitionResult>
+  /** Capture-bound local audit. This accessor never calls the provider. */
+  semanticSidecar?(sourceId: string, sourceVersionId: string): unknown
+}
+
+export interface RecognitionServiceInput extends IntakeInput {
+  sourceId?: string
+  sourceVersionId?: string
+}
+
+interface ProxyRecognitionObservation {
+  result: RecognitionResult
+  originalProxyResponse: string
 }
 
 function serverMessage(value: unknown, fallback: string): string {
@@ -40,8 +53,9 @@ function serverMessage(value: unknown, fallback: string): string {
 }
 
 export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService {
-  private readonly cache = new Map<string, RecognitionResult>()
-  private readonly inFlight = new Map<string, Promise<RecognitionResult>>()
+  private readonly cache = new Map<string, ProxyRecognitionObservation>()
+  private readonly inFlight = new Map<string, Promise<ProxyRecognitionObservation>>()
+  private readonly sidecars = new Map<string, OrdinaryProviderSidecar>()
   private configuredState: boolean | null = null
 
   constructor(private readonly endpoint = '/api/deepseek') {}
@@ -72,8 +86,16 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
     return suggestions
   }
 
-  async recognize(input: IntakeInput, context: RecognitionWorkspaceContext = { projects: [], tasks: [] }): Promise<RecognitionResult> {
+  semanticSidecar(sourceId: string, sourceVersionId: string): OrdinaryProviderSidecar | undefined {
+    const value = this.sidecars.get(sourceId)
+    return value?.ordinaryProviderSupport.sourceVersionId === sourceVersionId ? structuredClone(value) : undefined
+  }
+
+  async recognize(input: RecognitionServiceInput, context: RecognitionWorkspaceContext = { projects: [], tasks: [] }): Promise<RecognitionResult> {
     if (this.configuredState === false) throw new Error('DeepSeek 尚未配置，来源内容未发送。')
+    if (Boolean(input.sourceId) !== Boolean(input.sourceVersionId)) throw new Error('ORDINARY_PROVIDER_CAPTURE_REQUIRED')
+    // A failed response must not expose an earlier source version's audit.
+    if (input.sourceId) this.sidecars.delete(input.sourceId)
     const selectedProjects = context.cloudSelection
       ? context.projects.filter((project) => context.cloudSelection!.projectIds.includes(project.id)).slice(0, 20)
       : []
@@ -110,21 +132,33 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
     const serialized = JSON.stringify(body)
     const modelName = input.multimodal ? MULTIMODAL_MODEL_NAME : 'deepseek-v4-flash'
     const promptVersion = input.multimodal ? MULTIMODAL_PROMPT_VERSION : RECOGNITION_PROMPT_VERSION
-    const key = `${promptVersion}:${modelName}:${requestHash(serialized)}`
+    // Bind cache identity to the complete request. A short noncryptographic
+    // hash alone must never substitute another notice's response.
+    const key = `${promptVersion}:${modelName}:${serialized}`
+    const capture = (observation: ProxyRecognitionObservation) => {
+      if (!input.sourceId || !input.sourceVersionId) return structuredClone(observation.result)
+      const bound = bindOrdinaryProviderSupport(observation.result, {
+        sourceId: input.sourceId, sourceVersionId: input.sourceVersionId, sourceText: input.content,
+        processedSourceText: body.content, referenceTime: body.referenceTime, timezone: body.timezone,
+      }, observation.originalProxyResponse)
+      this.sidecars.set(input.sourceId, bound.sidecar)
+      if (this.sidecars.size > 20) this.sidecars.delete(this.sidecars.keys().next().value ?? input.sourceId)
+      return bound.result
+    }
     const cached = this.cache.get(key)
-    if (cached) return structuredClone(cached)
+    if (cached) return capture(cached)
     const running = this.inFlight.get(key)
-    if (running) return running.then((result) => structuredClone(result))
+    if (running) return running.then(capture)
     const request = this.requestRecognition(serialized, Boolean(input.multimodal)).then((result) => {
       this.cache.set(key, result)
       if (this.cache.size > 20) this.cache.delete(this.cache.keys().next().value ?? key)
       return result
     }).finally(() => this.inFlight.delete(key))
     this.inFlight.set(key, request)
-    return request.then((result) => structuredClone(result))
+    return request.then(capture)
   }
 
-  private async requestRecognition(body: string, multimodal: boolean): Promise<RecognitionResult> {
+  private async requestRecognition(body: string, multimodal: boolean): Promise<ProxyRecognitionObservation> {
     const controller = new AbortController()
     const timeout = globalThis.setTimeout(() => controller.abort(), 50_000)
     try {
@@ -134,10 +168,14 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
         body,
         signal: controller.signal,
       })
-      const data: unknown = await response.json().catch(() => null)
+      // This is the proxy boundary, not the supplier's raw model response.
+      // Keep the original body independently of source binding and first UI.
+      const originalProxyResponse = await response.text()
+      let data: unknown = null
+      try { data = JSON.parse(originalProxyResponse) } catch { /* Preserve existing invalid-response behavior. */ }
       if (!response.ok) throw new Error(serverMessage(data, 'DeepSeek 智能整理暂时不可用'))
       if (typeof data !== 'object' || data === null) throw new Error('DeepSeek 返回了无法识别的结果')
-      return parseRecognitionResult((data as { result?: unknown }).result)
+      return { result: parseRecognitionResult((data as { result?: unknown }).result), originalProxyResponse }
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') {
         throw new Error('DeepSeek 识别超时，原始来源已保存，可稍后重试', { cause: error })
@@ -147,15 +185,6 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
       globalThis.clearTimeout(timeout)
     }
   }
-}
-
-function requestHash(value: string): string {
-  let hash = 2166136261
-  for (let index = 0; index < value.length; index += 1) {
-    hash ^= value.charCodeAt(index)
-    hash = Math.imul(hash, 16777619)
-  }
-  return (hash >>> 0).toString(16)
 }
 
 export async function createSmartIntakeResult(

@@ -4,7 +4,7 @@ import { addDateOnlyDays, instantToWallClock, isDateOnly, parseBusinessDateTime,
 import {sourceReadinessValue} from './sourceReadiness'
 
 export const PLAN_VERSION = 'personal-plan-d27-1' as const
-export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.1.0' as const
+export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.2.0' as const
 export const PLAN_RECEIPT = 'personalPlanD27Receipt'
 export const PLAN_UNDO = 'personalPlanD27Undo'
 export type DurationOrigin = 'user' | 'recorded_estimate' | 'product_estimate'
@@ -108,8 +108,9 @@ export function planBaseline(w: WorkspaceV8): string {
   const sourceIds = new Set(w.tasks.map(t => t.legacyData?.sourceId).filter(v => typeof v === 'string'))
   for (const id of relevantVersions) { const v = w.sourceVersions.find(v => v.id === id); if (v) sourceIds.add(v.sourceId) }
   return JSON.stringify({ workspaceId: w.workspace.id, timezone: w.settings.defaultTimezone, sourceWindowProgram: SOURCE_WINDOW_PLAN_VERSION,
-    tasks: sorted(w.tasks).map(t => ({ id: t.id, title: t.title, status: t.status, estimatedMinutes: t.estimatedMinutes, manualPriority: t.manualPriority, snoozedUntil: t.snoozedUntil, dependencyIds: [...t.dependencyIds].sort(), sourceId: t.legacyData?.sourceId ?? null, gaps: taskGaps(w, t) })),
-    times: sorted(w.timePoints).map(p => ({ id: p.id, type: p.type, taskId: p.taskId, eventId: p.eventId, relatedTaskIds: [...p.relatedTaskIds].sort(), normalizedValue: p.normalizedValue, timezone: p.timezone, precision: p.precision, needsConfirmation: p.needsConfirmation, sourceTimeRole:p.legacyData?.sourceTimeRole??null, metadata: p.legacyData?.personalPlanD27 ?? null })),
+    tasks: sorted(w.tasks).map(t => ({ id: t.id, title: t.title, status: t.status, estimatedMinutes: t.estimatedMinutes, manualPriority: t.manualPriority, snoozedUntil: t.snoozedUntil, dependencyIds: [...t.dependencyIds].sort(), sourceId: t.legacyData?.sourceId ?? null, sourceWindowDeclarations:t.legacyData?.sourceWindowDeclarations??null, gaps: taskGaps(w, t) })),
+    times: sorted(w.timePoints).map(p => ({ id: p.id, type: p.type, taskId: p.taskId, eventId: p.eventId, relatedTaskIds: [...p.relatedTaskIds].sort(), relatedMaterialIds:[...p.relatedMaterialIds].sort(), materialId:p.materialId, rawText:p.rawText, normalizedValue: p.normalizedValue, timezone: p.timezone, precision: p.precision, needsConfirmation: p.needsConfirmation, sourceTimeRole:p.legacyData?.sourceTimeRole??null, evidenceIds:p.legacyData?.evidenceIds??null, metadata: p.legacyData?.personalPlanD27 ?? null })),
+    sourceWindowEvidence:sorted(w.evidenceRefs.filter(ref=>w.timePoints.some(p=>Array.isArray(p.legacyData?.evidenceIds)&&p.legacyData.evidenceIds.includes(ref.legacyData?.recognitionEvidenceId??null)))).map(ref=>({id:ref.id,sourceVersionId:ref.sourceVersionId,quotedText:ref.quotedText,textStart:ref.textStart,textEnd:ref.textEnd,recognitionEvidenceId:ref.legacyData?.recognitionEvidenceId??null})),
     events: sorted(w.events).map(e => ({ id: e.id, startTimePointId: e.startTimePointId, endTimePointId: e.endTimePointId })),
     sourceVersions: sorted(w.sources.filter(s => sourceIds.has(s.id))).map(s => ({ id: s.id, current: s.currentVersionId, version: w.sourceVersions.find(v => v.id === s.currentVersionId) })),
     courses: w.preferences.legacyData?.courseBlocks ?? [],
@@ -141,6 +142,84 @@ const sourceWindowMs = (p: TimePoint, timezone: string, end: boolean) => {
     return parseBusinessDateTime(date + 'T00:00', p.timezone ?? timezone)?.getTime()
   }
   return pointMs(p, timezone)
+}
+interface SourceBounds { start:number;end:number;intervals:Interval[];invalid:boolean;present:boolean }
+function sourceWindowEvidence(w:WorkspaceV8,point:TimePoint,sourceVersionId:string,rawText:string,sourceText:string):boolean {
+  const ids=point.legacyData?.evidenceIds
+  if(!Array.isArray(ids)||!ids.length||ids.some(id=>typeof id!=='string'))return false
+  const refs=ids.map(id=>w.evidenceRefs.find(ref=>ref.sourceVersionId===sourceVersionId&&ref.legacyData?.recognitionEvidenceId===id))
+  if(refs.some(ref=>!ref||!ref.quotedText||!sourceText.includes(ref.quotedText)))return false
+  if(refs.some(ref=>ref!.quotedText!.includes(rawText)))return true
+  // A window can span comma-separated immutable scopes. Verify their literal
+  // source ranges cover this declaration, rather than requiring one scope to
+  // duplicate the whole window or accepting clocks from a different sentence.
+  const ranges=refs.flatMap(ref=>{
+    const quote=ref!.quotedText!,start=ref!.textStart??sourceText.indexOf(quote)
+    const end=ref!.textEnd??start+quote.length
+    // Canonical scoped quotes currently omit offsets. An unambiguous literal
+    // occurrence can be located mechanically; repeated quotation stays local
+    // unknown rather than borrowing a different object's matching sentence.
+    return start>=0&&sourceText.slice(start,end)===quote&&(ref!.textStart!==null||sourceText.indexOf(quote,start+1)<0)?[{start,end}]:[]
+  }).sort((a,b)=>a.start-b.start||a.end-b.end)
+  for(let start=sourceText.indexOf(rawText);start>=0;start=sourceText.indexOf(rawText,start+1)){
+    let cursor=start
+    for(const range of ranges){if(range.start>cursor)break;if(range.end>cursor)cursor=range.end}
+    if(cursor>=start+rawText.length)return true
+  }
+  return false
+}
+function sourceWindowBounds(w:WorkspaceV8,t:Task,zone:string):SourceBounds {
+  const points=w.timePoints.filter(p=>p.relatedTaskIds.includes(t.id)&&['window_start','window_end'].includes(String(p.legacyData?.sourceTimeRole)))
+  const metadata=record(t.legacyData?.sourceWindowDeclarations)
+  const invalid:SourceBounds={start:-Infinity,end:Infinity,intervals:[],invalid:true,present:true}
+  if(t.legacyData?.sourceWindowDeclarations!==undefined){
+    const version=typeof metadata?.sourceVersionId==='string'?w.sourceVersions.find(v=>v.id===metadata.sourceVersionId):undefined
+    const draft=typeof metadata?.draftId==='string'?w.extractionDrafts.find(d=>d.id===metadata.draftId):undefined
+    if(!metadata||metadata.version!=='source-window-declarations-1.0.0'||metadata.auditVersion!=='task-time-authority-projection-1.0.0'
+      ||metadata.ownerTaskId!==t.id||metadata.ownerTempId!==t.legacyData?.recognitionTempId||metadata.sourceId!==t.legacyData?.sourceId
+      ||!draft||!draft.acceptedEntityTempIds.includes(String(metadata.ownerTempId))||w.recognitionRuns.find(run=>run.id===draft.recognitionRunId)?.sourceVersionId!==metadata.sourceVersionId
+      ||!version||typeof version.rawText!=='string'||version.sourceId!==metadata.sourceId||!Array.isArray(metadata.windows)||!metadata.windows.length||metadata.windows.length>4)return invalid
+    const pointIds=new Set<string>(),windowIds=new Set<string>(),intervalIds=new Set<string>(),intervals:Interval[]=[]
+    for(const raw of metadata.windows){
+      const window=record(raw)
+      if(!window||!['RESOLVED_DISCRETE','RESOLVED_DATE_RANGE'].includes(String(window.state))||typeof window.windowId!=='string'||windowIds.has(window.windowId)
+        ||typeof window.rawText!=='string'||!window.rawText.length||!version.rawText.includes(window.rawText)
+        ||!Array.isArray(window.scopeIds)||!window.scopeIds.length||window.scopeIds.some(id=>typeof id!=='string')
+        ||!Array.isArray(window.pointIds)||!window.pointIds.length||window.pointIds.some(id=>typeof id!=='string')
+        ||!Array.isArray(window.intervals)||!window.intervals.length||window.intervals.length>100)return invalid
+      windowIds.add(window.windowId)
+      const declared=new Set(window.pointIds)
+      if(declared.size!==window.pointIds.length)return invalid
+      const covered=new Set<string>()
+      for(const rawPair of window.intervals){
+        const pair=record(rawPair),start=typeof pair?.startPointId==='string'?w.timePoints.find(p=>p.id===pair.startPointId):undefined,end=typeof pair?.endPointId==='string'?w.timePoints.find(p=>p.id===pair.endPointId):undefined
+        if(!pair||typeof pair.intervalId!=='string'||intervalIds.has(pair.intervalId)||!start||!end||start.id===end.id||pointIds.has(start.id)||pointIds.has(end.id)
+          ||!declared.has(start.id)||!declared.has(end.id)||!['exact','date_only'].includes(String(pair.precision))
+          ||typeof pair.date!=='string'||!isDateOnly(pair.date)||typeof pair.start!=='string'||!pair.start.startsWith(pair.date)
+          ||window.state==='RESOLVED_DISCRETE'&&(pair.precision!=='exact'||!Number.isInteger(pair.sessionIndex)||Number(pair.sessionIndex)<0||Number(pair.sessionIndex)>3)
+          ||window.state==='RESOLVED_DATE_RANGE'&&(pair.precision!=='date_only'||pair.sessionIndex!==null||window.intervals.length!==1)
+          ||pair.start!==start.normalizedValue||pair.end!==end.normalizedValue||start.precision!==pair.precision||end.precision!==pair.precision
+          ||start.timezone!==end.timezone||start.type!=='event_start'||end.type!=='event_end'
+          ||start.legacyData?.sourceTimeRole!=='window_start'||end.legacyData?.sourceTimeRole!=='window_end')return invalid
+        for(const point of [start,end]){
+          if(point.taskId!==t.id||point.eventId!==null||point.materialId!==null||point.relatedTaskIds.length!==1||point.relatedTaskIds[0]!==t.id||point.relatedMaterialIds.length
+            ||point.rawText!==window.rawText||!sourceWindowEvidence(w,point,version.id,window.rawText,version.rawText))return invalid
+        }
+        const a=sourceWindowMs(start,zone,false),b=sourceWindowMs(end,zone,true)
+        if(a===undefined||b===undefined||b<=a)return invalid
+        intervals.push({start:a,end:b});intervalIds.add(pair.intervalId);pointIds.add(start.id);pointIds.add(end.id);covered.add(start.id);covered.add(end.id)
+      }
+      if(covered.size!==declared.size)return invalid
+    }
+    if(pointIds.size!==points.length||points.some(point=>!pointIds.has(point.id)))return invalid
+    return {start:Math.min(...intervals.map(i=>i.start)),end:Math.max(...intervals.map(i=>i.end)),intervals:intervals.sort((a,b)=>a.start-b.start||a.end-b.end),invalid:false,present:true}
+  }
+  if(!points.length)return {start:-Infinity,end:Infinity,intervals:[{start:-Infinity,end:Infinity}],invalid:false,present:false}
+  // Legacy single bounds stay supported. Multiple unpaired points remain a
+  // local unknown rather than acquiring a guessed pairing from array order.
+  const starts=points.filter(p=>p.legacyData?.sourceTimeRole==='window_start').map(p=>sourceWindowMs(p,zone,false)),ends=points.filter(p=>p.legacyData?.sourceTimeRole==='window_end').map(p=>sourceWindowMs(p,zone,true))
+  if(starts.length!==1||ends.length!==1||starts[0]===undefined||ends[0]===undefined||ends[0]<=starts[0])return invalid
+  return {start:starts[0],end:ends[0],intervals:[{start:starts[0],end:ends[0]}],invalid:false,present:true}
 }
 export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: string = crypto.randomUUID()): PlanProposal {
   validatePersonalPlanMetadata(w); validatePlanOptions(options)
@@ -178,14 +257,9 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     const values = [...exact, ...dates].map(p => p.precision === 'date_only' ? parseBusinessDateTime(addDateOnlyDays(p.normalizedValue!, 1) + 'T00:00', p.timezone ?? zone)!.getTime() : parseBusinessDateTime(p.normalizedValue!, p.timezone ?? zone)!.getTime())
     return { value: values.length ? Math.min(...values) : Infinity, text: points.map(p => p.rawText).join('；') || null, conflict: ['task_deadline', 'submission_deadline', 'registration_deadline'].some(type => new Set(points.filter(p => p.type === type && p.normalizedValue).map(p => p.normalizedValue)).size > 1) || exact.some(p => p.needsConfirmation) }
   }
-  const sourceWindow=(t:Task)=>{
-    const points=w.timePoints.filter(p=>p.relatedTaskIds.includes(t.id)&&['window_start','window_end'].includes(String(p.legacyData?.sourceTimeRole)))
-    if(!points.length)return {start:-Infinity,end:Infinity,invalid:false,present:false}
-    const starts=points.filter(p=>p.legacyData?.sourceTimeRole==='window_start').map(p=>sourceWindowMs(p,zone,false)),ends=points.filter(p=>p.legacyData?.sourceTimeRole==='window_end').map(p=>sourceWindowMs(p,zone,true))
-    const valid=starts.length===1&&ends.length===1&&starts[0]!==undefined&&ends[0]!==undefined&&ends[0]>starts[0]
-    return {start:valid?starts[0]!:-Infinity,end:valid?ends[0]!:Infinity,invalid:!valid,present:true}
-  }
-  const canUse = (slot: Interval, earliest: number, latest: number) => Number.isFinite(slot.start) && slot.start >= earliest && slot.end <= latest && windows.some(win => slot.start >= win.start && slot.end <= win.end) && ![...fixed, ...occupied].some(b => overlap(slot, b))
+  const sourceWindow=(t:Task)=>sourceWindowBounds(w,t,zone)
+  const contained=(slot:Interval,bounds:SourceBounds)=>bounds.intervals.some(interval=>slot.start>=interval.start&&slot.end<=interval.end)
+  const canUse = (slot: Interval, earliest: number, latest: number, bounds:SourceBounds) => Number.isFinite(slot.start) && slot.start >= earliest && slot.end <= latest && contained(slot,bounds) && windows.some(win => slot.start >= win.start && slot.end <= win.end) && ![...fixed, ...occupied].some(b => overlap(slot, b))
   const appointment=(t:Task)=>w.timePoints.filter(p=>p.relatedTaskIds.includes(t.id)&&p.legacyData?.sourceTimeRole==='task_action_time')
   const tasks = sorted(w.tasks).sort((a, b) => Number(Boolean(appointment(b).length))-Number(Boolean(appointment(a).length)) || (deadline(a).value - deadline(b).value) || (b.manualPriority ?? 0) - (a.manualPriority ?? 0) || a.id.localeCompare(b.id))
   const handled = new Set<string>(), visiting = new Set<string>()
@@ -217,7 +291,7 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     const sourceBounds=sourceWindow(t)
     const sourceAppointments=appointment(t)
     const sourceAppointmentConflict=sourceAppointments.length>0&&(sourceAppointments.length!==1||sourceAppointments[0].needsConfirmation||sourceAppointments[0].precision!=='exact'||pointMs(sourceAppointments[0],zone)!==start)
-    if ([...fixed, ...occupied.slice(0, -1)].some(b => overlap(b, { start, end })) || !windows.some(win => start >= win.start && end <= win.end) || end > deadline(t).value || sourceBounds.invalid || sourceAppointmentConflict || start<sourceBounds.start || end>sourceBounds.end || deadline(t).conflict || staleSource(t) || t.snoozedUntil && start < parseBusinessDateTime(t.snoozedUntil, zone)!.getTime() || taskGaps(w, t).length || cycleIds.has(t.id)) reject(t, 'LOCK_CONFLICT')
+    if ([...fixed, ...occupied.slice(0, -1)].some(b => overlap(b, { start, end })) || !windows.some(win => start >= win.start && end <= win.end) || end > deadline(t).value || sourceBounds.invalid || sourceAppointmentConflict || !contained({start,end},sourceBounds) || deadline(t).conflict || staleSource(t) || t.snoozedUntil && start < parseBusinessDateTime(t.snoozedUntil, zone)!.getTime() || taskGaps(w, t).length || cycleIds.has(t.id)) reject(t, 'LOCK_CONFLICT')
   }
   const schedule = (t: Task): void => {
     if (handled.has(t.id)) return
@@ -234,7 +308,7 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     const sourceAppointments=appointment(t)
     if(sourceAppointments.length&&(sourceAppointments.length!==1||pointMs(sourceAppointments[0],zone)===undefined)){reject(t,'SOURCE_ACTION_TIME_NEEDS_REVIEW');return}
     if(sourceBounds.invalid){reject(t,'SOURCE_WINDOW_NEEDS_REVIEW');return}
-    if(sourceBounds.present&&!windows.some(win=>win.end>sourceBounds.start&&win.start<sourceBounds.end)){reject(t,'SOURCE_WINDOW_OUTSIDE_PLAN');return}
+    if(sourceBounds.present&&!windows.some(win=>sourceBounds.intervals.some(interval=>win.end>interval.start&&win.start<interval.end))){reject(t,'SOURCE_WINDOW_OUTSIDE_PLAN');return}
     due.value=Math.min(due.value,sourceBounds.end)
     if (due.conflict) { reject(t, 'DEADLINE_CONFLICT'); return }
     if (due.value <= now) { reject(t, 'OVERDUE'); return }
@@ -260,15 +334,16 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     let slot: Interval | undefined
     if(sourceAppointments.length){
       const start=pointMs(sourceAppointments[0],zone)!,candidate={start,end:start+duration}
-      if(override?.start&&parseBusinessDateTime(override.start,zone)?.getTime()!==start||!canUse(candidate,earliest,due.value)){reject(t,'SOURCE_ACTION_TIME_OUTSIDE_PLAN');return}
+      if(override?.start&&parseBusinessDateTime(override.start,zone)?.getTime()!==start||!canUse(candidate,earliest,due.value,sourceBounds)){reject(t,'SOURCE_ACTION_TIME_OUTSIDE_PLAN');return}
       slot=candidate
     } else if (override?.start) {
       const start = parseBusinessDateTime(override.start, zone)?.getTime() ?? NaN
       const candidate = { start, end: start + duration }
-      if (canUse(candidate, earliest, due.value)) slot = candidate
+      if (canUse(candidate, earliest, due.value,sourceBounds)) slot = candidate
       else { reject(t, 'INVALID_MANUAL_SLOT'); return }
     } else {
-      for (const window of windows) {
+      const available=windows.flatMap(window=>sourceBounds.intervals.map(interval=>({start:Math.max(window.start,interval.start),end:Math.min(window.end,interval.end)}))).filter(window=>window.end>window.start).sort((a,b)=>a.start-b.start||a.end-b.end)
+      for (const window of available) {
         let cursor = Math.ceil(Math.max(window.start, earliest) / 300_000) * 300_000
         while (cursor + duration <= Math.min(window.end, due.value)) {
           const candidate = { start: cursor, end: cursor + duration }, clashes = [...fixed, ...occupied].filter(b => overlap(b, candidate))

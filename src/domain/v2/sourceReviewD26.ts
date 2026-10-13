@@ -6,6 +6,7 @@ import type { CanonicalWorkspaceRepository } from './repository'
 import type { WorkspaceV8 } from './types'
 import {eventDisposition} from './eventDisposition'
 import {unresolvedSourceReadiness} from './sourceReadiness'
+import { taskTimeAuthorityFromSidecar } from '../../recognition/taskTimeAuthorityContract'
 
 export const SOURCE_REVIEW_VERSION = 'source-review-d26-1'
 export const PENDING_SOURCE_READBACK = 'source-review:pending-readback'
@@ -95,6 +96,27 @@ export function buildSourceReviewPlan(workspace: WorkspaceV8, view: DraftView, i
   const sidecar=draft.legacyData?.semanticSidecar,audit=sidecar&&typeof sidecar==='object'&&!Array.isArray(sidecar)?sidecar.singleAuthorityAudit:null
   const windows=audit&&typeof audit==='object'&&!Array.isArray(audit)&&Array.isArray(audit.sourceWindows)?audit.sourceWindows:[]
   for(const p of plan.create.timePoints){const row=windows.find(v=>v&&typeof v==='object'&&!Array.isArray(v)&&v.id===p.legacyData?.recognitionTempId);if(row&&typeof row==='object'&&!Array.isArray(row))p.legacyData={...p.legacyData,sourceTimeRole:row.role,sourceWindowOwners:row.owners}}
+  // Only the declared interval pairing crosses the canonical boundary. Point
+  // order is not a relationship: two daily sessions must never become one
+  // interval spanning lunch, a closed day or the following night.
+  const taskTimes=taskTimeAuthorityFromSidecar(sidecar)
+  for(const task of plan.create.tasks){
+    const ownerTempId=task.legacyData?.recognitionTempId
+    const declarations=taskTimes?.windows.filter(window=>window.ownerTaskId===ownerTempId)??[]
+    const newTaskPoints=draft.result.timePoints.filter(point=>point.relatedTaskTempIds.includes(String(ownerTempId))&&['event_start','event_end'].includes(point.type))
+    if(!declarations.length&&!(draft.result.promptVersion==='recognition-task-time-authority-1.0.0'&&newTaskPoints.length&&!taskTimes))continue
+    const mapped=declarations.map(window=>{
+      const pointId=(temp:string)=>plan.create.timePoints.find(point=>point.legacyData?.recognitionTempId===temp)?.id??null
+      for(const point of plan.create.timePoints.filter(point=>window.pointIds.includes(String(point.legacyData?.recognitionTempId)))){
+        const pair=window.intervals.find(interval=>[interval.startPointId,interval.endPointId].includes(String(point.legacyData?.recognitionTempId)))
+        point.legacyData={...point.legacyData,sourceTimeRole:pair?pair.startPointId===point.legacyData?.recognitionTempId?'window_start':'window_end':point.type==='event_start'?'window_start':'window_end'}
+      }
+      return {windowId:window.windowId,state:window.state,rawText:window.declaration.rawText,scopeIds:window.declaration.scopeIds,
+        pointIds:window.pointIds.map(pointId),intervals:window.intervals.map(interval=>({...interval,startPointId:pointId(interval.startPointId),endPointId:pointId(interval.endPointId)}))}
+    })
+    task.legacyData={...task.legacyData,sourceWindowDeclarations:{version:'source-window-declarations-1.0.0',auditVersion:taskTimes?.version??null,
+      ownerTaskId:task.id,ownerTempId:String(ownerTempId),sourceId:source.id,sourceVersionId:version.id,draftId:draft.id,windows:mapped}}
+  }
   const assembly=draft.legacyData?.firstSuggestionAssembly
   const appointments=assembly&&typeof assembly==='object'&&!Array.isArray(assembly)&&assembly.sourceActionTimes&&typeof assembly.sourceActionTimes==='object'&&!Array.isArray(assembly.sourceActionTimes)&&Array.isArray(assembly.sourceActionTimes.decisions)?assembly.sourceActionTimes.decisions:[]
   for(const p of plan.create.timePoints){const row=appointments.find(v=>v&&typeof v==='object'&&!Array.isArray(v)&&v.id===p.legacyData?.recognitionTempId);if(row&&typeof row==='object'&&!Array.isArray(row)&&row.role==='task_action_time'&&p.type==='event_start')p.legacyData={...p.legacyData,sourceTimeRole:'task_action_time',sourceActionTimeAudit:row}}

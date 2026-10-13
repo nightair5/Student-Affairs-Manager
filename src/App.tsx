@@ -49,7 +49,10 @@ import { PersonalPlanPanel } from './components/PersonalPlanPanel'
 import { assembleCurrentFirstSuggestion } from './recognition/materialChannelGrounding'
 import { sourceWindowsFromSidecar } from './recognition/sourceWindowGrounding'
 import { workflowMaterialSupportFromSidecar } from './recognition/currentFactRoleProduct'
+import { ordinaryWorkflowMaterialSupportFromSidecar, ordinaryProviderContextFromSidecar } from './recognition/ordinaryProviderSupport'
 import { sourceActionTimesFromSidecar } from './recognition/sourceActionTime'
+import { groundTaskTimeWindows, taskTimeAuthorityFromSidecar } from './recognition/taskTimeAuthorityContract'
+import { indexImmutableScopesV11 } from './recognition/scopeIndexV11'
 import { projectSourceInformation } from './recognition/sourceInformationPreview'
 import {createOrdinaryMeasurement,type OrdinaryMeasurement} from './domain/v2/ordinaryMeasurementD26'
 import {
@@ -90,7 +93,7 @@ export interface OrdinaryAppEnvironment {
   /** Recorded responses use their original inference clock, not the replay date. */
   recognitionContext?: (sourceText: string) => { referenceTime: string; timezone: string }
   pipelineVersion?: string
-  recognitionMetadata?: () => { modelName: string; promptVersion: string; candidateVersion: string; build: string; responseRole: string }
+  recognitionMetadata?: () => { modelName: string; promptVersion: string; candidateVersion: string; build: string; responseRole: string; provider?: 'deepseek' | 'manual' | 'local-rules' }
 }
 
 function captureActionMessage(error: unknown, fallback: string): string {
@@ -676,7 +679,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       sourceType: input.sourceType,
       title: input.sourceTitle ?? input.fileName ?? localResult.source.title,
       rawText: input.content,
-      provider: ordinaryEnvironment ? 'manual' as const : input.manualSuggestion
+      provider: ordinaryEnvironment ? metadata?.provider ?? 'manual' as const : input.manualSuggestion
         ? 'manual' as const
         : useCloudRecognition
           ? 'deepseek' as const
@@ -714,6 +717,17 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     }
     try {
       const handle = await capturePersistenceService.beginCapture(captureRequest)
+      if (handle.duplicate) {
+        const stored = await canonicalWorkspaceRepository.load()
+        const existing = stored?.extractionDrafts.find(d => d.id === handle.draftId)
+        if (existing?.result) {
+          const saved = await workspaceRepository.load()
+          if (saved) applyWorkspaceView(saved)
+          setOrdinaryCanonical(stored)
+          openDraftReview(handle.draftId, '已打开这次录入的原草稿；首次建议、修改和确认结果保留，未重复识别。')
+          return
+        }
+      }
       const providerInput={...input,sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId}
       const recognitionResult = await capturePersistenceService.recognize(
         handle,
@@ -723,9 +737,15 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             ? async () => deepSeekExtractionService.recognize!(providerInput, { projects, tasks })
             : async () => draftRecognition,
       )
-      const semanticSidecar=ordinaryEnvironment?.semanticSidecar?.(handle.sourceId)
-      const inferenceContext=ordinaryEnvironment?.recognitionContext?.(input.content) ?? {referenceTime:input.now?.toISOString() ?? recognitionResult.createdAt,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai'}
-      const assembled=assembleCurrentFirstSuggestion(recognitionResult,{sourceText:input.content,...inferenceContext,sourceWindows:sourceWindowsFromSidecar(semanticSidecar),sourceActionTimes:sourceActionTimesFromSidecar(semanticSidecar),workflowMaterialSupport:workflowMaterialSupportFromSidecar(semanticSidecar)})
+      const semanticSidecar=!input.manualSuggestion && useCloudRecognition
+        ? ordinaryEnvironment?.semanticSidecar?.(handle.sourceId) ?? deepSeekExtractionService.semanticSidecar?.(handle.sourceId,handle.sourceVersionId)
+        : undefined
+      const inferenceContext=ordinaryEnvironment?.recognitionContext?.(input.content) ?? ordinaryProviderContextFromSidecar(semanticSidecar) ?? {referenceTime:input.now?.toISOString() ?? recognitionResult.createdAt,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai'}
+      const assembled=assembleCurrentFirstSuggestion(recognitionResult,{sourceText:input.content,...inferenceContext,sourceWindows:sourceWindowsFromSidecar(semanticSidecar),sourceActionTimes:sourceActionTimesFromSidecar(semanticSidecar),workflowMaterialSupport:[...workflowMaterialSupportFromSidecar(semanticSidecar),...ordinaryWorkflowMaterialSupportFromSidecar(semanticSidecar)]})
+      if(taskTimeAuthorityFromSidecar(semanticSidecar)){
+        const grounded=groundTaskTimeWindows(assembled.result,semanticSidecar,{index:await indexImmutableScopesV11(handle.sourceId,handle.sourceVersionId,input.content),...inferenceContext})
+        assembled.result=grounded.result
+      }
       const sourceInformation=projectSourceInformation(assembled.result,{sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId,text:input.content})
       await canonicalWorkspaceRepository.transaction(w=>({...w,recognitionRuns:w.recognitionRuns.map(r=>r.id===handle.recognitionRunId?{...r,legacyData:{...r.legacyData,originalRecognitionResult:JSON.parse(JSON.stringify(recognitionResult))}}:r),extractionDrafts:w.extractionDrafts.map(d=>d.id===handle.draftId?{...d,result:assembled.result,legacyData:{...d.legacyData,...(semanticSidecar?{semanticSidecar:JSON.parse(JSON.stringify(semanticSidecar))}:{}),firstSuggestionDisplayed:JSON.parse(JSON.stringify(assembled.result)),firstSourceInformationDisplayed:JSON.parse(JSON.stringify(sourceInformation)),firstSuggestionAssembly:JSON.parse(JSON.stringify(assembled.audit)),materialChannelGrounding:JSON.parse(JSON.stringify(assembled.materialChannelAudit)),sourceWindowGrounding:JSON.parse(JSON.stringify(assembled.sourceWindowGrounding))}}:d)}))
       const saved = await workspaceRepository.load()
@@ -736,7 +756,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         handle.draftId,
         input.manualSuggestion
           ? '手动录入已先保存来源，再生成待确认草稿；核对后才会创建正式任务。'
-          : ordinaryEnvironment ? '匿名工程建议已生成；没有模型请求，核对后走普通正式保存。' : useCloudRecognition
+          : ordinaryEnvironment && metadata?.provider !== 'deepseek' ? '匿名工程建议已生成；没有模型请求，核对后走普通正式保存。' : useCloudRecognition
             ? `${recognitionResult.modelName} 已生成可编辑建议；来源已在请求前安全保存。`
             : 'DeepSeek 当前未连接；来源已先保存，并由本地规则生成可编辑建议。',
       )

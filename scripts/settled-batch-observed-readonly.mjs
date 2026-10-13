@@ -37,8 +37,9 @@ function inspectObservedSite(execution,pack,ledgerPath,BATCH,COUNT){
  check(!state.units.some(r=>r.status==='UNCERTAIN')||(existsSync(join(execution,'lock'))&&existsSync(join(execution,'HALT.json'))),'SEALED_SITE_REQUIRED')
  return {known,scene:{role:'SEALED_BATCH_KNOWN_SETTLED_READ_ONLY',batch:BATCH,denominator:COUNT,verifiedSettled:known.length,units:state.units.map(r=>({ordinal:r.ordinal,status:r.status})),lockExists:existsSync(join(execution,'lock')),haltExists:existsSync(join(execution,'HALT.json')),winner:'EVIDENCE_INCOMPLETE',modelRequests:0,ledgerWrites:0,dispatch:'DISABLED_NO_MUTATION_API',ledger:{rows:chain.rows.length,sha256:sha(bytes),tail:chain.tail,batchRows:rows.length}}}
 }
-export function observedSettledBatch({root,execution,batch,count,verifyPacket}){
- const pack=verifyPacket({observedReadOnly:true}),site=inspectObservedSite(execution,pack,AUTHORITATIVE_LEDGER,batch,count),sources=read(join(root,'SOURCES.json')).sources
+export function observedSettledBatch({root,execution,batch,count,verifyPacket,sourcesFile='SOURCES.json'}){
+ check(['SOURCES.json','TIME_SOURCES.json'].includes(sourcesFile),'SOURCES_FILE')
+ const pack=verifyPacket({observedReadOnly:true}),site=inspectObservedSite(execution,pack,AUTHORITATIVE_LEDGER,batch,count),sources=read(join(root,sourcesFile)).sources
  const recordings=site.known.map(({u,raw})=>{const s=sources.find(v=>v.sourceId===u.sourceId);check(s&&sha(s.sourceText)===u.sourceSha256,'SOURCE');return {ordinal:u.ordinal,sourceId:s.sourceId,sourceVersionId:s.sourceVersionId,candidate:u.candidate,generationContract:u.generationContract,sourceText:s.sourceText,referenceTime:s.referenceTime,timezone:s.timezone,rawHttpText:raw.rawHttpText,responseSha256:raw.responseSha256,requestSha256:raw.requestSha256,frozenOutcome:'KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE'}})
  return {pack,scene:site.scene,sources,recordings}
 }
