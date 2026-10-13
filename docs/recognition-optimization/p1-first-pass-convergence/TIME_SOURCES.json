@@ -1,0 +1,365 @@
+{
+  "sources": [
+    {
+      "sourceId": "TT-01",
+      "sourceVersionId": "TT-01-v1",
+      "sourceText": "请向学业系统提交课程报告PDF，电子提交截止时间为2026年11月5日18:20。纸质课程报告的办理时间为2026年11月9-10日，每天上午9:00-11:30、下午14:30-17:30；请在上述时间内到学习中心B305窗口提交纸质课程报告。电子和纸质报告均需提交，不另设报名。",
+      "minimumFacts": {
+        "tasks": [
+          "向学业系统提交课程报告PDF",
+          "提交纸质课程报告"
+        ],
+        "deadline": {
+          "object": "课程报告PDF",
+          "role": "submission_deadline",
+          "raw": "2026年11月5日18:20",
+          "value": "2026-11-05T18:20",
+          "precision": "exact"
+        },
+        "window": {
+          "object": "纸质课程报告",
+          "dates": [
+            "2026-11-09",
+            "2026-11-10"
+          ],
+          "sessions": [
+            [
+              "09:00",
+              "11:30"
+            ],
+            [
+              "14:30",
+              "17:30"
+            ]
+          ],
+          "intervalCount": 4
+        },
+        "materials": [
+          "课程报告PDF",
+          "纸质课程报告"
+        ],
+        "events": [],
+        "eligibility": "not_applicable",
+        "forbidden": [
+          "报名待办",
+          "跨夜连续办理",
+          "纸质办理截止替代电子提交截止"
+        ]
+      },
+      "sourceSha256": "fa5c9bf7b08f4ee5d86a918497c9024c7063360f1e6db7966fb369f3c81d4cee",
+      "referenceTime": "2026-10-13T15:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "AUTHOR_ANONYMOUS_DEVELOPMENT_NOT_HOLDOUT",
+      "seen": "New authored wording before first model output; mechanism examples checked separately",
+      "scopes": [
+        {
+          "id": "scope-0001-ff8ebc4e30756b50428050783fd56364b5b7c4195a01c9dd5366daf9aa1515c0",
+          "sourceId": "TT-01",
+          "sourceVersionId": "TT-01-v1",
+          "sourceFingerprint": "sha256:38e05914828269c815d82ce88516ebb022816724410aff8065b5f8d5e80f32c6",
+          "order": 0,
+          "start": 0,
+          "end": 16,
+          "text": "请向学业系统提交课程报告PDF，",
+          "contentHash": "sha256:ff8ebc4e30756b50428050783fd56364b5b7c4195a01c9dd5366daf9aa1515c0"
+        },
+        {
+          "id": "scope-0002-47954daa6ea952dede94005281765fef6d6c3aaa8929be4fe3263cf5e336d9a1",
+          "sourceId": "TT-01",
+          "sourceVersionId": "TT-01-v1",
+          "sourceFingerprint": "sha256:38e05914828269c815d82ce88516ebb022816724410aff8065b5f8d5e80f32c6",
+          "order": 1,
+          "start": 16,
+          "end": 41,
+          "text": "电子提交截止时间为2026年11月5日18:20。",
+          "contentHash": "sha256:47954daa6ea952dede94005281765fef6d6c3aaa8929be4fe3263cf5e336d9a1"
+        },
+        {
+          "id": "scope-0003-f7cf2f23a9375f796105b9ca3f4dcc0cef6a799e7fbb5d14f19dd350420f3132",
+          "sourceId": "TT-01",
+          "sourceVersionId": "TT-01-v1",
+          "sourceFingerprint": "sha256:38e05914828269c815d82ce88516ebb022816724410aff8065b5f8d5e80f32c6",
+          "order": 2,
+          "start": 41,
+          "end": 67,
+          "text": "纸质课程报告的办理时间为2026年11月9-10日，",
+          "contentHash": "sha256:f7cf2f23a9375f796105b9ca3f4dcc0cef6a799e7fbb5d14f19dd350420f3132"
+        },
+        {
+          "id": "scope-0004-2bef31feca026ff7e30d3d2a801f98537357c3d906c90667a3b1935610d4be06",
+          "sourceId": "TT-01",
+          "sourceVersionId": "TT-01-v1",
+          "sourceFingerprint": "sha256:38e05914828269c815d82ce88516ebb022816724410aff8065b5f8d5e80f32c6",
+          "order": 3,
+          "start": 67,
+          "end": 96,
+          "text": "每天上午9:00-11:30、下午14:30-17:30；",
+          "contentHash": "sha256:2bef31feca026ff7e30d3d2a801f98537357c3d906c90667a3b1935610d4be06"
+        },
+        {
+          "id": "scope-0005-82ac594e63e4cbeae427ac180717b6b657c3b706dfb1bffc2cb14514f40052ee",
+          "sourceId": "TT-01",
+          "sourceVersionId": "TT-01-v1",
+          "sourceFingerprint": "sha256:38e05914828269c815d82ce88516ebb022816724410aff8065b5f8d5e80f32c6",
+          "order": 4,
+          "start": 96,
+          "end": 123,
+          "text": "请在上述时间内到学习中心B305窗口提交纸质课程报告。",
+          "contentHash": "sha256:82ac594e63e4cbeae427ac180717b6b657c3b706dfb1bffc2cb14514f40052ee"
+        },
+        {
+          "id": "scope-0006-86dc01f8cd940844ead38513f35c80e746f6567c9f18062a613496bac747ee2f",
+          "sourceId": "TT-01",
+          "sourceVersionId": "TT-01-v1",
+          "sourceFingerprint": "sha256:38e05914828269c815d82ce88516ebb022816724410aff8065b5f8d5e80f32c6",
+          "order": 5,
+          "start": 123,
+          "end": 135,
+          "text": "电子和纸质报告均需提交，",
+          "contentHash": "sha256:86dc01f8cd940844ead38513f35c80e746f6567c9f18062a613496bac747ee2f"
+        },
+        {
+          "id": "scope-0007-7744fe74a7e8ba164f836d95f2b391bf88669b46e268e789e95206587cafb077",
+          "sourceId": "TT-01",
+          "sourceVersionId": "TT-01-v1",
+          "sourceFingerprint": "sha256:38e05914828269c815d82ce88516ebb022816724410aff8065b5f8d5e80f32c6",
+          "order": 6,
+          "start": 135,
+          "end": 141,
+          "text": "不另设报名。",
+          "contentHash": "sha256:7744fe74a7e8ba164f836d95f2b391bf88669b46e268e789e95206587cafb077"
+        }
+      ]
+    },
+    {
+      "sourceId": "TT-02",
+      "sourceVersionId": "TT-02-v1",
+      "sourceText": "校园插画展报名截止为2026年11月6日，有意参展的同学可提交报名表。已报名者须通过作品系统上传插画PDF，提交截止时间为2026年11月12日17:40。报名表与插画是两种对象；报名者个人状态未提供。现场办理插画纸质版的窗口为2026年11月13日9:15-10:45和15:10-16:40，请在这些时段提交插画纸质版。",
+      "minimumFacts": {
+        "tasks": [
+          "提交报名表",
+          "上传插画PDF",
+          "提交插画纸质版"
+        ],
+        "deadlines": [
+          {
+            "object": "报名表",
+            "role": "registration_deadline",
+            "date": "2026-11-06"
+          },
+          {
+            "object": "插画PDF",
+            "role": "submission_deadline",
+            "value": "2026-11-12T17:40"
+          }
+        ],
+        "window": {
+          "object": "插画纸质版",
+          "dates": [
+            "2026-11-13"
+          ],
+          "sessions": [
+            [
+              "09:15",
+              "10:45"
+            ],
+            [
+              "15:10",
+              "16:40"
+            ]
+          ],
+          "intervalCount": 2
+        },
+        "materials": [
+          "报名表",
+          "插画PDF",
+          "插画纸质版"
+        ],
+        "events": [],
+        "condition": "已报名者资格unknown，不声明已完成报名",
+        "forbidden": [
+          "两对象deadline混挂",
+          "资格unknown改true",
+          "将两时段并成连续窗口"
+        ]
+      },
+      "sourceSha256": "01d4602a2b985764aa7f914dc9b703bf9f6185a04ecf3837d90c3de2558af308",
+      "referenceTime": "2026-10-13T15:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "AUTHOR_ANONYMOUS_DEVELOPMENT_NOT_HOLDOUT",
+      "seen": "New authored wording before first model output; mechanism examples checked separately",
+      "scopes": [
+        {
+          "id": "scope-0001-18d0ebd70f526e3c6aeeb558e3f03d67e9d419d9b2d29f0a4d25a97d93a7a4a8",
+          "sourceId": "TT-02",
+          "sourceVersionId": "TT-02-v1",
+          "sourceFingerprint": "sha256:d7832f4f8196f9e35d64190ec537729d031937ae3b8c9e0fa7d9e7abc1d4dbb9",
+          "order": 0,
+          "start": 0,
+          "end": 21,
+          "text": "校园插画展报名截止为2026年11月6日，",
+          "contentHash": "sha256:18d0ebd70f526e3c6aeeb558e3f03d67e9d419d9b2d29f0a4d25a97d93a7a4a8"
+        },
+        {
+          "id": "scope-0002-2dec10558261b2d99e4688cc11d4827103f124f83655547209e8428e66f03005",
+          "sourceId": "TT-02",
+          "sourceVersionId": "TT-02-v1",
+          "sourceFingerprint": "sha256:d7832f4f8196f9e35d64190ec537729d031937ae3b8c9e0fa7d9e7abc1d4dbb9",
+          "order": 1,
+          "start": 21,
+          "end": 35,
+          "text": "有意参展的同学可提交报名表。",
+          "contentHash": "sha256:2dec10558261b2d99e4688cc11d4827103f124f83655547209e8428e66f03005"
+        },
+        {
+          "id": "scope-0003-3eba75f868882407bc11ffad4a77689238adb59392a4a2cbd20a2ac7eda5e0f5",
+          "sourceId": "TT-02",
+          "sourceVersionId": "TT-02-v1",
+          "sourceFingerprint": "sha256:d7832f4f8196f9e35d64190ec537729d031937ae3b8c9e0fa7d9e7abc1d4dbb9",
+          "order": 2,
+          "start": 35,
+          "end": 54,
+          "text": "已报名者须通过作品系统上传插画PDF，",
+          "contentHash": "sha256:3eba75f868882407bc11ffad4a77689238adb59392a4a2cbd20a2ac7eda5e0f5"
+        },
+        {
+          "id": "scope-0004-3fd05270e577ddd884bcfadac46f95607a9f32f268fc1ad504442e1dddb78fd1",
+          "sourceId": "TT-02",
+          "sourceVersionId": "TT-02-v1",
+          "sourceFingerprint": "sha256:d7832f4f8196f9e35d64190ec537729d031937ae3b8c9e0fa7d9e7abc1d4dbb9",
+          "order": 3,
+          "start": 54,
+          "end": 78,
+          "text": "提交截止时间为2026年11月12日17:40。",
+          "contentHash": "sha256:3fd05270e577ddd884bcfadac46f95607a9f32f268fc1ad504442e1dddb78fd1"
+        },
+        {
+          "id": "scope-0005-1a225333084ee934bb181129fe674c5fc6ec2c0b37f558415cd19b3a160d2958",
+          "sourceId": "TT-02",
+          "sourceVersionId": "TT-02-v1",
+          "sourceFingerprint": "sha256:d7832f4f8196f9e35d64190ec537729d031937ae3b8c9e0fa7d9e7abc1d4dbb9",
+          "order": 4,
+          "start": 78,
+          "end": 90,
+          "text": "报名表与插画是两种对象；",
+          "contentHash": "sha256:1a225333084ee934bb181129fe674c5fc6ec2c0b37f558415cd19b3a160d2958"
+        },
+        {
+          "id": "scope-0006-745b3dfa3b3df1db3424fa8c60f2f9be8d7eefffcb1f182789d1bf1a52942a3b",
+          "sourceId": "TT-02",
+          "sourceVersionId": "TT-02-v1",
+          "sourceFingerprint": "sha256:d7832f4f8196f9e35d64190ec537729d031937ae3b8c9e0fa7d9e7abc1d4dbb9",
+          "order": 5,
+          "start": 90,
+          "end": 101,
+          "text": "报名者个人状态未提供。",
+          "contentHash": "sha256:745b3dfa3b3df1db3424fa8c60f2f9be8d7eefffcb1f182789d1bf1a52942a3b"
+        },
+        {
+          "id": "scope-0007-662117f092f6bea0729ce6c31a71a0105e61b12d598a4022c5027f0ab0ae9e5e",
+          "sourceId": "TT-02",
+          "sourceVersionId": "TT-02-v1",
+          "sourceFingerprint": "sha256:d7832f4f8196f9e35d64190ec537729d031937ae3b8c9e0fa7d9e7abc1d4dbb9",
+          "order": 6,
+          "start": 101,
+          "end": 148,
+          "text": "现场办理插画纸质版的窗口为2026年11月13日9:15-10:45和15:10-16:40，",
+          "contentHash": "sha256:662117f092f6bea0729ce6c31a71a0105e61b12d598a4022c5027f0ab0ae9e5e"
+        },
+        {
+          "id": "scope-0008-292bb20ebe8c7a7318fd304b81a15fdf93fa7f83b0bf5afbf3d48449e7b2db5a",
+          "sourceId": "TT-02",
+          "sourceVersionId": "TT-02-v1",
+          "sourceFingerprint": "sha256:d7832f4f8196f9e35d64190ec537729d031937ae3b8c9e0fa7d9e7abc1d4dbb9",
+          "order": 7,
+          "start": 148,
+          "end": 162,
+          "text": "请在这些时段提交插画纸质版。",
+          "contentHash": "sha256:292bb20ebe8c7a7318fd304b81a15fdf93fa7f83b0bf5afbf3d48449e7b2db5a"
+        }
+      ]
+    },
+    {
+      "sourceId": "TT-03",
+      "sourceVersionId": "TT-03-v1",
+      "sourceText": "图书查询系统将在2026年11月8日14:00至15:00维护。已借图书记录不受影响，无需重新登记，也不要提交材料。本通知仅供了解。",
+      "minimumFacts": {
+        "tasks": [],
+        "event": "图书查询系统维护",
+        "start": "2026-11-08T14:00",
+        "end": "2026-11-08T15:00",
+        "materials": [],
+        "information": [
+          "已借图书记录不受影响"
+        ],
+        "forbidden": [
+          "重新登记待办",
+          "提交材料待办",
+          "维护变任务截止"
+        ]
+      },
+      "sourceSha256": "fc84993746b65e82c98e80ee62ea5af8d0fefdb2e99de0bdcce1d01b1d65ef2d",
+      "referenceTime": "2026-10-13T15:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "AUTHOR_ANONYMOUS_DEVELOPMENT_NOT_HOLDOUT",
+      "seen": "New authored wording before first model output; mechanism examples checked separately",
+      "scopes": [
+        {
+          "id": "scope-0001-893553fcd5b6c05069db4b9598bce4dabee35512ae76b8dd61f25c0627c2bc31",
+          "sourceId": "TT-03",
+          "sourceVersionId": "TT-03-v1",
+          "sourceFingerprint": "sha256:f680f75665f04fcec8733b49c9ee110bf9fb98449c7ba6f273df768896642e78",
+          "order": 0,
+          "start": 0,
+          "end": 32,
+          "text": "图书查询系统将在2026年11月8日14:00至15:00维护。",
+          "contentHash": "sha256:893553fcd5b6c05069db4b9598bce4dabee35512ae76b8dd61f25c0627c2bc31"
+        },
+        {
+          "id": "scope-0002-0018c44ab4346c094b4d76a983f9f5f928f5fe504d5740ea66c6cfd05190786a",
+          "sourceId": "TT-03",
+          "sourceVersionId": "TT-03-v1",
+          "sourceFingerprint": "sha256:f680f75665f04fcec8733b49c9ee110bf9fb98449c7ba6f273df768896642e78",
+          "order": 1,
+          "start": 32,
+          "end": 43,
+          "text": "已借图书记录不受影响，",
+          "contentHash": "sha256:0018c44ab4346c094b4d76a983f9f5f928f5fe504d5740ea66c6cfd05190786a"
+        },
+        {
+          "id": "scope-0003-0b516f3db81e4bd352f4228f9bf5eebe244140d7ef791f1545db8961d85b3f62",
+          "sourceId": "TT-03",
+          "sourceVersionId": "TT-03-v1",
+          "sourceFingerprint": "sha256:f680f75665f04fcec8733b49c9ee110bf9fb98449c7ba6f273df768896642e78",
+          "order": 2,
+          "start": 43,
+          "end": 50,
+          "text": "无需重新登记，",
+          "contentHash": "sha256:0b516f3db81e4bd352f4228f9bf5eebe244140d7ef791f1545db8961d85b3f62"
+        },
+        {
+          "id": "scope-0004-b7daf703b375d896d6f79cf118cf0704b6f89428962f348dcfb16c69c6f61525",
+          "sourceId": "TT-03",
+          "sourceVersionId": "TT-03-v1",
+          "sourceFingerprint": "sha256:f680f75665f04fcec8733b49c9ee110bf9fb98449c7ba6f273df768896642e78",
+          "order": 3,
+          "start": 50,
+          "end": 58,
+          "text": "也不要提交材料。",
+          "contentHash": "sha256:b7daf703b375d896d6f79cf118cf0704b6f89428962f348dcfb16c69c6f61525"
+        },
+        {
+          "id": "scope-0005-2adabae66aa39a1e47ed11207739dc33ecfeacaf8708b4e2afbf386f6a0f51a4",
+          "sourceId": "TT-03",
+          "sourceVersionId": "TT-03-v1",
+          "sourceFingerprint": "sha256:f680f75665f04fcec8733b49c9ee110bf9fb98449c7ba6f273df768896642e78",
+          "order": 4,
+          "start": 58,
+          "end": 66,
+          "text": "本通知仅供了解。",
+          "contentHash": "sha256:2adabae66aa39a1e47ed11207739dc33ecfeacaf8708b4e2afbf386f6a0f51a4"
+        }
+      ]
+    }
+  ]
+}
