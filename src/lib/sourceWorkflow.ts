@@ -1,5 +1,6 @@
 import type { ExtractionDraft, Source, SourceType } from '../types'
 import type {WorkspaceV8} from '../domain/v2/types'
+import { recognitionModeDescription } from '../recognition/recognitionModePresentation'
 
 export type SourceWorkflowStatus = 'unprocessed' | 'processing' | 'failed' | 'needs_review' | 'confirmed' | 'archived' | 'info_only'
 
@@ -124,6 +125,10 @@ function projectLabel(draft: ExtractionDraft | null): string | null {
 }
 
 function modelLabel(source: Source, draft: ExtractionDraft | null, canonicalWorkspace?:WorkspaceV8): string | null {
+  const canonicalDraft = canonicalWorkspace?.extractionDrafts.find(d => d.id === draft?.id)
+  if (canonicalDraft && canonicalWorkspace?.recognitionRuns.some(r => r.id === canonicalDraft.recognitionRunId)) {
+    return recognitionModeDescription(canonicalWorkspace, canonicalDraft.id)
+  }
   if(source.title.startsWith('空白手动 · 匿名工程夹具：')) return '手动空白工程基线（无模型建议）'
   if(source.title.startsWith('匿名工程夹具：')) return '匿名工程夹具（无新模型调用）'
   const operationId=canonicalWorkspace?.sources.find(item=>item.id===source.id)?.legacyData?.captureOperationId

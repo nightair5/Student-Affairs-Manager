@@ -8,6 +8,7 @@ export const FOCUSED_REVIEW_THRESHOLDS = Object.freeze({
   longDocumentPages: 8,
   lowOcrConfidence: 0.8,
 })
+export const FOCUSED_REVIEW_VERSION = 'first-review-exceptions-1.1.0'
 
 export type FocusedReviewSection = 'source' | 'tasks' | 'materials' | 'timePoints' | 'events'
 
@@ -31,8 +32,12 @@ export interface FocusedReviewReason {
 }
 
 export interface FocusedReviewAssessment {
+  version: typeof FOCUSED_REVIEW_VERSION
   needsFocusedReview: boolean
   reasons: FocusedReviewReason[]
+  attentionReasons: FocusedReviewReason[]
+  informationReasons: FocusedReviewReason[]
+  attentionSections: FocusedReviewSection[]
   expandedSections: FocusedReviewSection[]
   qualityFlags: string[]
   counts: {
@@ -154,17 +159,17 @@ export function assessFocusedReview(
 
   if (deadlines.length >= 2) add({
     code: 'multiple_deadlines', title: '多个明确截止时间',
-    detail: `识别到 ${deadlines.length} 个截止节点，请逐一核对日期、时刻和对应事项。`,
+    detail: `已整理 ${deadlines.length} 个截止节点，可按事项查看。`,
     sections: ['source', 'timePoints'],
   })
   if (result.materials.length >= 2) add({
     code: 'multiple_materials', title: '多项材料要求',
-    detail: `识别到 ${result.materials.length} 项材料，请核对格式、数量和提交渠道。`,
+    detail: `已整理 ${result.materials.length} 项材料及其要求。`,
     sections: ['source', 'materials'],
   })
   if (result.events.length >= 1) add({
     code: 'event_schedule', title: '包含事件安排',
-    detail: `识别到 ${result.events.length} 个事件，请核对开始时间、地点和是否需要创建。`,
+    detail: `已整理 ${result.events.length} 个事件，可分别保留、暂缓或拒绝。`,
     sections: ['source', 'events', 'timePoints'],
   })
   if (result.ambiguities.length >= 1) add({
@@ -204,9 +209,15 @@ export function assessFocusedReview(
     sections: ['source', 'tasks'],
   })
 
+  const attentionCodes: FocusedReviewReasonCode[] = ['ambiguities', 'conflicts', 'low_ocr_confidence', 'quality_flags']
+  const attentionReasons = reasons.filter(reason => attentionCodes.includes(reason.code))
   return {
-    needsFocusedReview: reasons.length > 0,
+    version: FOCUSED_REVIEW_VERSION,
+    needsFocusedReview: attentionReasons.length > 0,
     reasons,
+    attentionReasons,
+    informationReasons: reasons.filter(reason => !attentionCodes.includes(reason.code)),
+    attentionSections: dedupeSections(attentionReasons),
     expandedSections: dedupeSections(reasons),
     qualityFlags: flags,
     counts: {

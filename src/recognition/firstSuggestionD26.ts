@@ -7,7 +7,7 @@ import { rangeEndpointSupport } from './rangeEndpointSupport'
 import { taskActionText } from '../lib/taskActionText'
 import { supportedCoordinatedObject, supportedEventDescriptor, supportedEventOperation } from './compoundNameSupport'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.6.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.6.1'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -191,7 +191,14 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     const evidence = result.evidence.find(row => row.id === id)
     return evidence?.quote && context.sourceText.includes(evidence.quote) ? [evidence.quote] : []
   })
-  const pointQuotes = (id: string) => quote(result.timePoints.find(p => p.tempId === id)?.evidenceIds ?? [])
+  const pointQuotes = (id: string) => {
+    const point = result.timePoints.find(p => p.tempId === id)
+    const quotes = quote(point?.evidenceIds ?? [])
+    // An exact source value can cross adjacent punctuation scopes. Require
+    // actual source-span coverage before offering the same literal to time().
+    return point && supportedAdjacent(point.rawText, quotes, context.sourceText)
+      ? unique([...quotes, point.rawText]) : quotes
+  }
   const eventQuotes = (id: string) => quote(result.events.find(e => e.tempId === id)?.evidenceIds ?? [])
   for (const point of result.timePoints) {
     const heading = citedEventDate(point, result.events, pointQuotes, eventQuotes, context.sourceText, context.referenceTime, context.timezone)
@@ -199,7 +206,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     if (heading?.blocked) audit.unresolved.push({ entityId: point.tempId, reason: 'EVENT_DATE_HEADING_NOT_UNAMBIGUOUS' })
     const owners = result.events.filter(e => e.startTimePointTempId === point.tempId || e.endTimePointTempId === point.tempId)
     const rangeQuotes = owners.length === 1 ? pointQuotes(point.tempId).filter(q => eventQuotes(owners[0].tempId).includes(q)) : []
-    time(point, quote(point.evidenceIds), context.referenceTime, context.timezone, audit, anchor?.date, anchor?.context, rangeQuotes)
+    time(point, pointQuotes(point.tempId), context.referenceTime, context.timezone, audit, anchor?.date, anchor?.context, rangeQuotes)
   }
   const tasks: TaskSuggestionV2[] = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
   for (const task of tasks) {

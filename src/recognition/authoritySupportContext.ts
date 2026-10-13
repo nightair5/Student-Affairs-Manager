@@ -2,9 +2,10 @@ import { plainJson } from '../experiments/mainline04/semanticContract'
 import type { WireContext } from '../experiments/realInput01/modelWire'
 import type { SingleAuthorityFacts } from './sourceContractV5'
 import { hasLiteralScopeSpan } from './authorityLiteralSupport'
+import { supportsSharedRequirement } from './sharedRequirementSupport'
 
 export const AUTHORITY_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.0.0'
-export const AUTHORITY_TYPED_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.5.0'
+export const AUTHORITY_TYPED_SUPPORT_CONTEXT_VERSION = 'authority-support-context-1.6.0'
 const text = (s: string) => s.replace(/[\s，。；,:：;！!]/gu, '')
 const check = (ok: unknown) => { if (!ok) throw Error('AUTHORITY_SUPPORT_CONTEXT_REFERENCE') }
 
@@ -14,7 +15,7 @@ const check = (ok: unknown) => { if (!ok) throw Error('AUTHORITY_SUPPORT_CONTEXT
 export function projectAuthoritySupportContext(input: unknown, context: WireContext, allowTypedSupport = false) {
   const original = plainJson(input) as SingleAuthorityFacts, projected = structuredClone(original)
   check(Array.isArray(projected.scopeAccounting) && Array.isArray(projected.tasks))
-  const changes: Array<{ scopeId: string; taskId: string; reason: 'LITERAL_SUPPORT' | 'URL_CONTINUATION' | 'TYPED_ATTRIBUTE_SUPPORT' | 'EXPLICIT_STATE_OR_RECEIPT_SUPPORT' | 'DECLARED_PREREQUISITE_CONTEXT' }> = []
+  const changes: Array<{ scopeId: string; taskId: string; reason: 'LITERAL_SUPPORT' | 'URL_CONTINUATION' | 'TYPED_ATTRIBUTE_SUPPORT' | 'EXPLICIT_STATE_OR_RECEIPT_SUPPORT' | 'DECLARED_PREREQUISITE_CONTEXT' | 'DECLARED_SHARED_REQUIREMENT' }> = []
   const omittedScopes: Array<{ scopeId: string; kind: 'information' | 'unresolved'; reason: 'PAIRED_STRUCTURAL_LABEL' | 'UNACCOUNTED_SCOPE' }> = []
   const prerequisiteSupport=(id:string,scopeId:string)=>{
     const scope=context.index.scopes.find(s=>s.id===scopeId),verb=scope?.text.match(/^(登记|报名|领取|提交|办理|申请|预约)(?:提交|完成|成功)?后[，。；]?$/u)?.[1]
@@ -28,6 +29,11 @@ export function projectAuthoritySupportContext(input: unknown, context: WireCont
     if (row.kind !== 'information' || !row.primaryEntityIds.length) continue
     const scope = context.index.scopes.find(s => s.id === row.scopeId)
     check(scope && new Set(row.primaryEntityIds).size === row.primaryEntityIds.length)
+    if (allowTypedSupport && supportsSharedRequirement(original, row.scopeId, row.primaryEntityIds, context)) {
+      for (const id of row.primaryEntityIds) changes.push({ scopeId: row.scopeId, taskId: id, reason: 'DECLARED_SHARED_REQUIREMENT' })
+      row.primaryEntityIds = []
+      continue
+    }
     for (const id of row.primaryEntityIds) {
       const task = original.tasks.find(t => t.id === id)
       if (!task && allowTypedSupport) {
