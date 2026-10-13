@@ -35,6 +35,7 @@ import { AUTHORITY_CITED_ENDPOINT_COMPOSITION_VERSION as AUTHORITY_ENDPOINT_COMP
 import { SOURCE_INFORMATION_PREVIEW_VERSION } from '../../recognition/sourceInformationPreview'
 import { SOURCE_WINDOW_GROUNDING_VERSION } from '../../recognition/sourceWindowGrounding'
 import {FACT_ROLE_VERSION,FACT_ROLE_PROMPT,FACT_ROLE_CANDIDATE,decodeFactRoleRecording} from '../../recognition/factRoleContract'
+import { CURRENT_FACT_ROLE_PRODUCT_VERSION, decodeCurrentFactRoleRecording } from '../../recognition/currentFactRoleProduct'
 import { SOURCE_ACTION_TIME_VERSION } from '../../recognition/sourceActionTime'
 import { COMPOUND_NAME_SUPPORT_VERSION } from '../../recognition/compoundNameSupport'
 import { OPTIONAL_PARTICIPATION_VERSION } from '../../recognition/optionalParticipationProduct'
@@ -48,7 +49,7 @@ import '../../styles.css'
 import '../../mobile.css'
 import '../../visual.css'
 import '../d26/diagnostics.css'
-declare const __C19_RECORDED_CONFIG__: { database: string; build: string; origin: string; explicitContract?: boolean; fixtureCount?: number; batchLabel?: string; initialOrdinal?: number }
+declare const __C19_RECORDED_CONFIG__: { database: string; build: string; origin: string; explicitContract?: boolean; currentSupportProjection?: boolean; fixtureCount?: number; batchLabel?: string; initialOrdinal?: number }
 const config = __C19_RECORDED_CONFIG__
 if (location.origin !== config.origin || !/^rco-mainline-01-02-i1-d27-plan-recorded-[a-z0-9-]+$/.test(config.database)) throw Error('RECORDED_ISOLATION_REQUIRED')
 interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18' | 'Candidate19' | 'SingleAuthority' | 'ObligationAuthority' | 'RoleAuthority' | 'TaskRequirements' | 'FactRoleAuthority' | 'EngineeringFixture'; generationContract?:string;sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string | null; frozenOutcome: string }
@@ -67,7 +68,7 @@ await canonical.initialize(initial)
 const readerStore: WorkspaceRecordStore = { ...store, read: k => { if (k === 'current' && failRead) { failRead = false; return Promise.reject(Error('RECORDED_INJECTED_READBACK_FAILURE')) } return new IsolatedTestStore(config.database).read(k) } }
 const measurement = createOrdinaryMeasurement(store), sidecars = new Map<string, unknown>()
 const baseContractVersion = TASK_REQUIREMENTS_PROJECTION_VERSION + ' / ' + ROLE_LOCAL_CHANNEL_VERSION + ' / ' + EVENT_TASK_RELATION_VERSION + ' / ' + SOURCE_SUPPORT_PRODUCT_VERSION + ' / ' + EVENT_TIME_LABEL_SUPPORT_VERSION + ' / ' + DIRECTIVE_DISPOSITION_VERSION + ' / ' + CONDITIONAL_NON_ACTION_VERSION + ' / ' + SOURCE_CONTRACT_VERSION + ' / ' + MATERIAL_CHANNEL_GROUNDING_VERSION + ' / ' + ELIGIBILITY_GROUNDING_VERSION + ' / ' + D26_TIME_VERSION + ' / ' + D26_FIRST_SUGGESTION_VERSION + ' / ' + AUTHORITY_SHARED_ATTRIBUTE_VERSION + ' / ' + AUTHORITY_LOCAL_COVERAGE_VERSION + ' / ' + OBLIGATION_LOCAL_RELATION_VERSION + ' / ' + AUTHORITY_ENDPOINT_COMPOSITION_VERSION + ' / ' + AUTHORITY_TYPED_SUPPORT_CONTEXT_VERSION + ' / ' + SOURCE_INFORMATION_PREVIEW_VERSION + ' / ' + SOURCE_WINDOW_GROUNDING_VERSION + ' / ' + SOURCE_WINDOW_PLAN_VERSION + ' / ' + OPTIONAL_PARTICIPATION_VERSION + ' / ' + AUTHORITY_PRIMARY_SUPPORT_VERSION + ' / ' + SOURCE_READINESS_VERSION
-const contractVersion = baseContractVersion + ' / ' + FACT_ROLE_VERSION + ' / ' + SOURCE_ACTION_TIME_VERSION + ' / ' + COMPOUND_NAME_SUPPORT_VERSION
+const contractVersion = baseContractVersion + ' / ' + FACT_ROLE_VERSION + ' / ' + SOURCE_ACTION_TIME_VERSION + ' / ' + COMPOUND_NAME_SUPPORT_VERSION + (config.currentSupportProjection ? ' / ' + CURRENT_FACT_ROLE_PRODUCT_VERSION : '')
 const recordingMetadata = () => {
   const r = recordings[selected], engineering = r.candidate === 'EngineeringFixture'
   return { modelName: engineering ? '匿名契约工程夹具（非模型输出）' : `${r.candidate} 固定录制`,
@@ -92,7 +93,7 @@ const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new Ind
       const decoded = (() => {
         if(record.generationContract===FACT_ROLE_VERSION){
           if(record.candidate!=='FactRoleAuthority'&&record.candidate!=='EngineeringFixture')throw Error('FACT_ROLE_RECORDING_ROLE_MISMATCH')
-          return decodeFactRoleRecording(rebound.reboundHttpText,context,record.candidate==='EngineeringFixture'?'EngineeringFixture':'SingleAuthority')
+          return (config.currentSupportProjection ? decodeCurrentFactRoleRecording : decodeFactRoleRecording)(rebound.reboundHttpText,context,record.candidate==='EngineeringFixture'?'EngineeringFixture':'SingleAuthority')
         }
         if (record.generationContract === TASK_REQUIREMENTS_VERSION) {
           if (record.candidate !== 'TaskRequirements' && record.candidate !== 'EngineeringFixture') throw Error('REQUIREMENTS_RECORDING_ROLE_MISMATCH')

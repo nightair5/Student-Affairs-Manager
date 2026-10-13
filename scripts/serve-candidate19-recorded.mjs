@@ -24,7 +24,8 @@ import {verifyV6Notices,ROOT as MORNINGROOT,BATCH as MORNINGBATCH,COUNT as MORNI
 import {verifyV5NoticeDiagnostic,ROOT as V5ROOT,BATCH as V5BATCH,COUNT as V5COUNT} from './prepare-v5-current-notice.mjs'
 import {verifyFactRole as verifyRealNotice,ROOT as REALNOTICE_ROOT,BATCH as REALNOTICE_BATCH,COUNT as REALNOTICE_COUNT,EXECUTION_ROOT as REALNOTICE_EXECUTION} from './real-notice-fact-role-diagnostic.mjs'
 const [port,instance,fixtureMode]=process.argv.slice(2)
-const realNoticeMode=fixtureMode==='--real-notice-fact-role-recordings'
+const currentSupportMode=fixtureMode==='--p1-current-recordings'
+const realNoticeMode=currentSupportMode||fixtureMode==='--real-notice-fact-role-recordings'
 const factRoleMode=fixtureMode==='--fact-role-recordings'
 if(process.argv.length>5||fixtureMode&&!factRoleMode&&!realNoticeMode&&!['--channel-role-fixtures','--channel-polarity-fixtures','--eligibility-fixtures','--public-notice-fixtures','--public-paid-recordings','--sealed-followup-fixtures','--current-notice-fixtures','--current-notice-batch','--current-notice-completed','--single-authority-fixtures','--single-authority-comparison','--single-authority-observed','--current-mechanism-fixtures','--v5-current-real-recordings','--v5-current-real-fixtures','--obligation-authority-fixtures','--obligation-authority-comparison','--autonomous-v6-recordings','--afternoon-role-fixtures','--afternoon-role-recordings','--current-role-recordings','--requirements-fixtures','--requirements-recordings'].includes(fixtureMode))throw Error('C19_UNKNOWN_REPLAY_MODE')
 if(!/^\d{4,5}$/.test(port??'')||+port<6814||+port>65535||!/^[a-z0-9-]{2,32}$/.test(instance??''))throw Error('C19_NEW_LOOPBACK_INSTANCE_REQUIRED')
@@ -86,7 +87,16 @@ if(!recordings.length&&!currentBatch)throw Error('C19_NO_SETTLED_RECORDINGS')
 const sha=v=>createHash('sha256').update(v).digest('hex'),dir=resolve('.data/candidate19/recorded-'+instance)
 mkdirSync(dir,{recursive:true});if(readdirSync(dir).length)throw Error('C19_REPLAY_INSTANCE_ALREADY_BUILT')
 let fixtureCount=0
-if(['--requirements-fixtures','--requirements-recordings'].includes(fixtureMode)){
+if(currentSupportMode){
+  const fixtureFile=resolve(dir,'fixture-builder.mjs')
+  await build({stdin:{contents:`export {createAuthorityFixture} from './src/experiments/candidate19Recorded/singleAuthorityFixtures';export {SINGLE_AUTHORITY_VERSION} from './src/recognition/sourceContractV5'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
+  const x=await import(pathToFileURL(fixtureFile))
+  for(const [i,kind]of ['mixed','shared','bad-owner','dependency'].entries()){
+    const f=await x.createAuthorityFixture(kind)
+    recordings.push({ordinal:101+i,sourceId:f.context.index.sourceId,sourceVersionId:f.context.index.sourceVersionId,candidate:'EngineeringFixture',generationContract:x.SINGLE_AUTHORITY_VERSION,sourceText:f.sourceText,referenceTime:f.context.referenceTime,timezone:f.context.timezone,rawHttpText:f.rawHttpText,responseSha256:sha(f.rawHttpText),requestSha256:null,frozenOutcome:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT'})
+  }
+  fixtureCount=4;batchLabel+='；另4份既有部分确认/共享事件/坏owner/前置等待匿名控制，不进入模型4分母'
+}else if(['--requirements-fixtures','--requirements-recordings'].includes(fixtureMode)){
   const fixtureFile=resolve(dir,'fixture-builder.mjs')
   await build({stdin:{contents:`export {createTaskRequirementsFixture} from './src/experiments/candidate19Recorded/taskRequirementsFixtures';export {TASK_REQUIREMENTS_VERSION} from './src/recognition/taskRequirementsContract';export {createAuthorityFixture} from './src/experiments/candidate19Recorded/singleAuthorityFixtures';export {SINGLE_AUTHORITY_VERSION} from './src/recognition/sourceContractV5';export {createObligationFixture} from './src/experiments/candidate19Recorded/obligationFixtures';export {OBLIGATION_AUTHORITY_VERSION} from './src/recognition/sourceContractV6'`,resolveDir:process.cwd()},outfile:fixtureFile,bundle:true,platform:'node',format:'esm'})
   const x=await import(pathToFileURL(fixtureFile)),fixtures=[await x.createTaskRequirementsFixture(),await x.createAuthorityFixture('bad-owner'),await x.createAuthorityFixture('dependency'),await x.createObligationFixture('equipment'),await x.createObligationFixture('no-task')]
@@ -179,7 +189,7 @@ if(['--requirements-fixtures','--requirements-recordings'].includes(fixtureMode)
 const hash=createHash('sha256');for(const f of execFileSync('git',['ls-files','--cached','--others','--exclude-standard','src','scripts/serve-candidate19-recorded.mjs','scripts/candidate19-recorded-data.mjs','scripts/public-notice-recorded-readonly.mjs'],{encoding:'utf8'}).trim().split('\n').sort())hash.update(f).update(readFileSync(f))
 const buildIdentity=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim().slice(0,12)+' / source '+hash.digest('hex').slice(0,12),origin='http://127.0.0.1:'+port,database='rco-mainline-01-02-i1-d27-plan-recorded-'+instance
 const pending=currentBatch&&!recordings.length
-const result=pending?{outputFiles:[]}:await build({entryPoints:['src/experiments/candidate19Recorded/browser.tsx'],bundle:true,write:false,format:'esm',platform:'browser',jsx:'automatic',target:'es2022',outdir:'memory',define:{'process.env.NODE_ENV':'"production"','import.meta.env':'{}',__C19_RECORDED_CONFIG__:JSON.stringify({origin,database,build:buildIdentity,explicitContract:true,fixtureCount,batchLabel,initialOrdinal})}})
+const result=pending?{outputFiles:[]}:await build({entryPoints:['src/experiments/candidate19Recorded/browser.tsx'],bundle:true,write:false,format:'esm',platform:'browser',jsx:'automatic',target:'es2022',outdir:'memory',define:{'process.env.NODE_ENV':'"production"','import.meta.env':'{}',__C19_RECORDED_CONFIG__:JSON.stringify({origin,database,build:buildIdentity,explicitContract:true,currentSupportProjection:currentSupportMode,fixtureCount,batchLabel,initialOrdinal})}})
 const files=result.outputFiles.map(f=>{const name=basename(f.path),content=f.text.replace(/@import\s+url\("https:\/\/fonts\.googleapis\.com[^;]+;\s*/g,'');writeFileSync(resolve(dir,name),content);return {name,sha256:sha(content)}})
 writeFileSync(resolve(dir,'recordings.json'),JSON.stringify(recordings))
 const escape=v=>String(v).replace(/[&<>"']/gu,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))

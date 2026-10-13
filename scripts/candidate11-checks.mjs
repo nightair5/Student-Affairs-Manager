@@ -4,10 +4,10 @@ import {resolve} from 'node:path'
 import {tmpdir} from 'node:os'
 import {randomUUID} from 'node:crypto'
 import {checkEnvironment,assertNoEnvironmentFiles,testFileGroups,prepareCarriers,inspectHistoricalFiles,historicalArtifactEntries,historicalTestPattern} from './current-checks-support.mjs'
+import {CHECK_PHASES,testLayersForPhase} from './check-schedule.mjs'
 
-const phases=['lint','test','build','security','current-product','current-safety','historical']
 const phase=process.argv[2]
-if(!phases.includes(phase)||process.argv.length!==3)throw Error('C11_CHECK_PHASE')
+if(!CHECK_PHASES.includes(phase)||process.argv.length!==3)throw Error('C11_CHECK_PHASE')
 assertNoEnvironmentFiles(process.cwd())
 const env=checkEnvironment(process.env)
 for(const key of Object.keys(process.env))if(!Object.hasOwn(env,key))delete process.env[key]
@@ -48,7 +48,7 @@ async function safety() {
   vitest('vitest-safety',groups.safety)
   vitest('vitest-runtime-current',groups.mixed,{},historicalTestPattern('mixed',false))
   await carrierTests('vitest-carriers',groups.carriers,historicalTestPattern('carriers',false))
-  nodeTests([['current-checks','scripts/current-checks.node-test.mjs'],['governance-unit','scripts/governance-protection.node-test.mjs'],
+  nodeTests([['current-checks','scripts/current-checks.node-test.mjs'],['check-schedule','scripts/check-schedule.node-test.mjs'],['governance-unit','scripts/governance-protection.node-test.mjs'],
     ['multimodal-lib','scripts/multimodal-evaluation-lib.node-test.mjs'],['c11-scoring','scripts/candidate11-scoring.node-test.mjs'],['c11-preview','scripts/candidate11-preview.node-test.mjs'],
     ['d25-executor','scripts/d25-executor.node-test.mjs'],['d25-mechanism','scripts/d25-mechanism.node-test.mjs'],['d26-mechanism','scripts/d26-mechanism.node-test.mjs'],
     ['d26-executor','scripts/d26-executor.node-test.mjs'],['d26-freeze','scripts/d26-freeze.node-test.mjs'],['d26-score-recording','scripts/d26-score-recording.node-test.mjs'],
@@ -92,9 +92,11 @@ async function historical() {
   }catch(error){record({label:'vitest-real-input-history',status:1,outcome:'FAIL',error:String(error.message??error)})}
 }
 try {
-  if(phase==='test'||phase==='current-product')await product()
-  if(phase==='test'||phase==='current-safety')await safety()
-  if(phase==='test'||phase==='historical')await historical()
+  for(const testLayer of testLayersForPhase(phase)) {
+    if(testLayer==='current-product')await product()
+    else if(testLayer==='current-safety')await safety()
+    else if(testLayer==='historical')await historical()
+  }
   if(phase==='lint')run('lint',['node_modules/eslint/bin/eslint.js','.'])
   if(phase==='security')run('security',['scripts/scan-secrets.mjs'])
   if(phase==='build') {

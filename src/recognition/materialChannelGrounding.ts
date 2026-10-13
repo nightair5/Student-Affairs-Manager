@@ -2,20 +2,23 @@ import type { RecognitionResult } from './types'
 import { assembleRecognitionFirstSuggestionD26 } from './firstSuggestionD26'
 import { groundSourceWindows } from './sourceWindowGrounding'
 import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sourceActionTime'
+import { verifyWorkflowChannelEvidence, type WorkflowMaterialSupport } from './workflowChannelSupport'
 
 export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.4.0'
+export const WORKFLOW_MATERIAL_CHANNEL_VERSION = 'material-declared-workflow-channel-1.0.0'
 export interface MaterialChannelDecision {
   materialId: string
   materialName: string
   ownerIds: string[]
   originalValue: string
   displayedValue: string | null
-  status: 'EXPLICIT_CHANNEL' | 'RECEIPT_CONTEXT_UNRESOLVED' | 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
+  status: 'EXPLICIT_CHANNEL' | 'EXPLICIT_WORKFLOW_CHANNEL' | 'RECEIPT_CONTEXT_UNRESOLVED' | 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
   evidence: Array<{ id: string; quote: string }>
   roleChecks: Array<{ quote: string; object: string; polarity: 'AFFIRMATIVE' | 'NEGATED_OR_UNCERTAIN'; roleText: string; polarityText: string; unrelatedQualifier: string | null }>
+  workflowProof?: WorkflowMaterialSupport
 }
 export interface MaterialChannelAudit {
-  version: typeof MATERIAL_CHANNEL_GROUNDING_VERSION
+  version: typeof MATERIAL_CHANNEL_GROUNDING_VERSION | typeof WORKFLOW_MATERIAL_CHANNEL_VERSION
   role: 'PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT'
   inferredFacts: 0
   decisions: MaterialChannelDecision[]
@@ -82,9 +85,9 @@ function destinationRole(clause: string, object: string, channel: string, siblin
 }
 
 /** Preserve the answer. Only source-supported destination roles become definite fields. */
-export function groundMaterialChannels(input: RecognitionResult, sourceText: string) {
+export function groundMaterialChannels(input: RecognitionResult, sourceText: string, workflowSupport: WorkflowMaterialSupport[] = []) {
   const result = structuredClone(input)
-  const audit: MaterialChannelAudit = { version: MATERIAL_CHANNEL_GROUNDING_VERSION, role: 'PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT', inferredFacts: 0, decisions: [] }
+  const audit: MaterialChannelAudit = { version: workflowSupport.length ? WORKFLOW_MATERIAL_CHANNEL_VERSION : MATERIAL_CHANNEL_GROUNDING_VERSION, role: 'PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT', inferredFacts: 0, decisions: [] }
   const tasks = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
   for (const material of result.materials) {
     if (!material.submissionChannel) continue
@@ -102,11 +105,25 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     }))
     const contradictory = roleChecks.some(c => c.polarity === 'NEGATED_OR_UNCERTAIN')
     const direct = owners.length > 0 && !contradictory && roleChecks.some(c => c.polarity === 'AFFIRMATIVE')
+    const workflowProof = !contradictory && workflowSupport.find(p => {
+      if (p.materialId !== material.tempId || p.channel !== originalValue || p.ownerTaskIds.length !== 1
+        || !p.objectSurface.includes(material.name)) return false
+      const owner = owners.find(t => t.tempId === p.ownerTaskIds[0])
+      if (!owner || owner.actionObject !== p.objectSurface) return false
+      const citedAction = compact(p.actionSurface), displayedAction = compact(owner.actionVerb)
+      const leadingVerb = /^(?:(?:请|须|需|应|务必|准确|并|再|然后))*(?:在系统(?:上|中|内))?(上传|提交)/u.exec(citedAction)?.[1]
+      if (citedAction !== displayedAction && leadingVerb !== displayedAction) return false
+      const currentEvidence = result.evidence.filter(e => ids.has(e.id) && e.sourceId === p.sourceId)
+      if (![...p.channelQuotes, ...p.taskQuotes].every(q => currentEvidence.some(e => e.quote === q))) return false
+      const verified = verifyWorkflowChannelEvidence({ sourceText, channel: p.channel, channelQuotes: p.channelQuotes,
+        taskQuotes: p.taskQuotes, actionSurface: p.actionSurface, objectSurface: p.objectSurface })
+      return !!verified && verified.workflowText === p.workflowText && verified.start === p.start && verified.end === p.end
+    }) || undefined
     const receipt = !contradictory && clauses.some(c => c.includes(originalValue) && /显示|提示|回执|接收成功|收到成功/u.test(c))
       && owners.some(t => t.completionCriteria.some(c => c.includes(originalValue) && /显示|提示|回执|接收成功|收到成功/u.test(c) && evidence.some(e=>e.quote.includes(c))))
-    const status = direct ? 'EXPLICIT_CHANNEL' : receipt ? 'RECEIPT_CONTEXT_UNRESOLVED' : 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
-    audit.decisions.push({ materialId: material.tempId, materialName: material.name, ownerIds: material.relatedTaskTempIds, originalValue, displayedValue: direct ? originalValue : null, status, evidence, roleChecks })
-    if (direct) continue
+    const status = direct ? 'EXPLICIT_CHANNEL' : workflowProof ? 'EXPLICIT_WORKFLOW_CHANNEL' : receipt ? 'RECEIPT_CONTEXT_UNRESOLVED' : 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
+    audit.decisions.push({ materialId: material.tempId, materialName: material.name, ownerIds: material.relatedTaskTempIds, originalValue, displayedValue: direct || workflowProof ? originalValue : null, status, evidence, roleChecks, ...(workflowProof ? { workflowProof } : {}) })
+    if (direct || workflowProof) continue
     // null here means unconfirmed destination, not "the source states no channel".
     material.submissionChannel = null
     const message = receipt ? `${material.name}的提交渠道原文未明确；“${originalValue}”仅出现在办结回执中，保留推测，不作为确定渠道。`
@@ -124,9 +141,9 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
 }
 
 /** Shared ordinary first screen; no change to candidate prompts, schema, or historical scorer. */
-export function assembleCurrentFirstSuggestion(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string; sourceWindows?: import('./sourceWindowGrounding').SourceWindowDeclaration[]; sourceActionTimes?: SourceActionTimeDeclaration[] }) {
+export function assembleCurrentFirstSuggestion(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string; sourceWindows?: import('./sourceWindowGrounding').SourceWindowDeclaration[]; sourceActionTimes?: SourceActionTimeDeclaration[]; workflowMaterialSupport?: WorkflowMaterialSupport[] }) {
   const first = assembleRecognitionFirstSuggestionD26(input, context)
-  const channels = groundMaterialChannels(first.result, context.sourceText)
+  const channels = groundMaterialChannels(first.result, context.sourceText, context.workflowMaterialSupport)
   const windows = groundSourceWindows(channels.result, context.sourceWindows ?? [], context)
   const appointments=groundSourceActionTimes(windows.result,context.sourceText,context.sourceActionTimes)
   return { ...first, audit:{...first.audit,sourceActionTimes:appointments.audit},result: appointments.result, materialChannelAudit: channels.audit, sourceWindowGrounding: windows.audit }

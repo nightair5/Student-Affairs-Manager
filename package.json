@@ -24,6 +24,7 @@
     "lint": "eslint .",
     "typecheck": "tsc -b --pretty false",
     "test": "node scripts/candidate11-checks.mjs test",
+    "test:all": "node scripts/candidate11-checks.mjs all",
     "test:product": "node scripts/candidate11-checks.mjs current-product",
     "test:safety": "node scripts/candidate11-checks.mjs current-safety",
     "test:historical": "node scripts/candidate11-checks.mjs historical",
