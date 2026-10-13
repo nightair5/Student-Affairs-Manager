@@ -1,3 +1,76 @@
+# 首次展示接续：共同义务、窗口摘要及真实例外
+
+2026-10-13。工程提交 **9ce7bf91c7d446af57165c0553157f9da440f07c** 已立即普通推送。[本轮版本化证据](DISPLAY_RESULTS_20261013.json)，旧TIME_RESULTS及以下历史内容保持。本包实际开始13:04:48 UTC（北京时间21:04:48），180分钟截止16:04:48 UTC（次日00:04:48）；结束和最终文档SHA见交付回报。
+
+## 用户实际少改了什么
+
+TT01 FactRole原答“电子和纸质报告均需提交”不再因共同支持引用而整份消失，首次恢复2任务2材料3时间及双渠道。电子任务可零事实编辑单独接受；纸质办理窗口只有整段文字，两归一化值仍null，继续局部阻断，不能补成四个可信区间。
+
+TaskTime同raw的8个TIME_SOURCE_SUPPORT_MISSING误提示消失；四窗口压成“2026年11月9日、2026年11月10日，每天09:00—11:30、14:30—17:30”。原八起止点/依据仍可展开；多材料、多时间和有事件本身中性，真实缺依据、冲突、资格和坏关系仍提示并局部阻断。首屏先行动与时间，后渠道/材料/办结。收件箱和弹层用持久Source/RecognitionRun元数据统一标固定录制/工程夹具；未知模式保持未知，不从modelName猜。
+
+## 发生层与安全边界
+
+| 根因 | 层 | 机制与反例 |
+|---|---|---|
+| 共有要求引用被全局拒绝 | SEMANTIC_COMPOSER支持索引 | authority-support-context-1.6.0 / declared-shared-requirement-support-1.0.0；仅同原文、已有动作/对象/必需状态且每个命名分支唯一绑定。不同对象表达通过；缺任务、假/异来源scope、新或错动作、optional和否定仍拒 |
+| 连续来源范围误警告、数量与真实风险混合 | FIRST_ASSEMBLY / UI | first1.6.1检查真实相邻逐字覆盖；source-window-summary-1.0.0只汇总已验证canonical对。错日期/owner/引用/冲突/精度/全天回原文待核对；offset时间不截成错误本地时钟；first-review-exceptions-1.1.0只突出实际例外 |
+
+原回答/转换审计/首次展示/用户选择沿App→ReviewSession→DomainCommitPlan→Repository保存。没有猜事实、实体、owner或日程；没有平行保存链、v8升级、默认替换、样本编号特判、Prompt/生成输入修改或旧评分放宽。原quality记录保留，“建议已整理”不等于语义正确。raw01匿名副本以真实SHA回归，原付费raw不动。
+
+## 首答和首次页质量
+
+single-author/model-assisted/provisional；标题、自由描述、独立真值及泄漏NOT_ADJUDICATED。
+
+| 原六身份，各臂分母3：暂定完整/错或未闭合/未知 | FactRole | TaskTime |
+|---|---|---|
+| 原答（历史保持） | 0/0/3 | 1/0/2 |
+| 原冻结首次（保持） | 0/1/2 | 0/1/2 |
+| 本轮前公共首次 | 0/1/2 | 1/0/2 |
+| 本轮后公共首次 | 0/1/2 | 1/0/2 |
+
+TT01正确行动可显示，不代表FactRole纸质窗口已完整。TT02/TT03四NOT_SENT仍未知；**EVIDENCE_INCOMPLETE_NO_WINNER**。本轮减少确定程序损失与误警告，整份完整数尚未净增，没有新模型收益。旧4官方当前有效首次4/4、最小事实仍1暂定完整/1错/2未知；旧8首次事实逐份相同，原v11及所有历史成绩保持。
+
+## 实际页面、故障和正式值
+
+唯一当前入口 [6944内部回放](http://127.0.0.1:6944/)，新DB rco-mainline-01-02-i1-d27-plan-recorded-p1-display-1013-done；2确定模型录制和5既有工程控制，实时/外部路由机械关闭。source61bb12ffd97b与工程提交全部运行文件一致；构建基点41a8859，不用基点冒充工程HEAD。没有操作6931或旧库。
+
+最终构建TaskTime零事实编辑一次接受，独立读回和刷新2任务2材料9原时间0事件0项目；两真实渠道/四窗口/截止及owner保留。Proxy控制收件箱和弹层均标匿名工程夹具，无模型请求；它是服务端归一化RecognitionResult，不是上游raw。1024×768桌面核心路径实测，临时viewport已恢复。
+
+![最终首次页面](DISPLAY-TASKTIME-FIRST.png)
+
+![窗口摘要和渠道；依据可展开](DISPLAY-WINDOW-SUMMARY.png)
+
+本包6943/sourceaa6db9faebd4完成以下实际操作；之后只改收件箱标签、offset/date-range显示守卫，支持/正式事务/恢复代码未变。6944另核首屏/保存/刷新/独立值，不能说每条都在最后构建重复点过。
+
+| 实际操作 | 结果 |
+|---|---|
+| 关闭弹层，先明确“已注入”正式事务失败，再接受 | 真正触发RECORDED_INJECTED_FORMAL_SAVE_FAILURE；独立Task/Material/Time均0、draft无commitId；手动重试才得2/2/9 |
+| FactRole电子任务单独加入 | 原截止11/5 18:20、渠道/材料入库；canonical部分确认，纸质仍阻断 |
+| 已提交读回失败，仅重新读回 | 一个任务/一个commitOperationId，重复提交禁用，无重复写入 |
+| 事件选择检查点失败，手动恢复 | 原选择保留，恢复后讲解会拒绝/系统维护保留；只保留事件正式保存，拒绝不算首答改善 |
+| 模糊/未公布时间 | 周五晚上/结束尚未公布两值仍null，精度和真实event owner保留，不造日历 |
+| 三事件一坏owner | 甲乙关联部分受阻，仅无关联丙组16:00保存，canonical部分终态保留 |
+| 资格与前置控制 | 钥匙unknown未勾选/不允许加入，提交仍等待填写完成；本包只验首屏，保存复用未变既有证据 |
+| 个人安排在读回前刷新，仅重读恢复 | 11/9 09:00—09:30在一个窗口内；原电子截止11/5 18:20不变，原9点另加1个planned_start及30分钟估计 |
+
+原DOM/故障/读回/测量在本机.data/p1-first-display-20261013/browser，SHA见证据。一次零读回摘要误取workspace元数据，null计数不记PASS；改用顶层canonical数组后TRANSACTION-ZERO-VERIFIED确证为0。普通浏览器console未观察error/warn，没有另装浏览器依赖或绕过。
+
+measurement3.2/low-edit-v2不改；无事实字段编辑的来源editId为空，一次事件拒绝按既有结构选择另记，恢复不重复计纠正；刷新缺时刻null。canonical partially_confirmed与旧ordinary partial=false分列，未回填。ENGINEERING_REPLAY不进真人，四真人NOT_OBSERVABLE。
+
+## 调用、验证、保护与剩余
+
+本轮新模型/grant/reserve/settle0，费用US$0；没有输入机制变化需要新输出，16/$6预授权未使用，未开新批。结束不自动续用预算。旧六身份锁/无HALT及所有其他封存保持，不prepare/dispatch/解锁/重发/补settle。
+
+最终34当前独立组PASS；产品Vitest133文件/1386检查通过、1 OCR live跳过；20新定向及相邻回归通过。lint0错误8旧warning/typecheck/build/security通过，chunk warning保留。历史9组3PASS6旧FAIL复用未变证据，不重跑/改断言或锁。依赖未变，仅引用2026-10-13开发audit2C6H1M/production0；CI未观察。
+
+84/119/7、478旧资产、15时间现场文件及用户handover/旧计划/15审计保持；完整账本1096行SHA b5bc4857959794e01156f28c04c2d66b7abdcf53725c9bb9252f514caf13ff08，无追加、旧前缀未变。只读回归采用起点41a8859的相同current decoder；曾误比较严格decoder不同边界后已更正，未把该中间数当本轮收益或改旧成绩。
+
+剩余最多两项：FactRole纸质窗口结构表示；正式首页仍把已知窗口/无deadline标成截止待核对。任意实时新首答、独立裁决、真人、release旧库兼容/集成/部署未验。工程可单独revert9ce7bf9，无v8迁移或历史raw变化；发布未授权。
+
+---
+
+以下为原样保留的历史工作包：
+
 # P1接续：普通代理边界、任务时间归属与真实窗口收口
 
 2026-10-13。工程00aefde、冻结d658137、修复7a2d8f2均立即普通推送。[全部证据和逐来源](TIME_RESULTS.json) · [匿名真实响应02原字节副本](TIME_CHANNEL_OBSERVED_02.json)。原授权/核价/付费现场只在本机.data/p1-time-provider-20261013，未进Git。以下原报告不改。

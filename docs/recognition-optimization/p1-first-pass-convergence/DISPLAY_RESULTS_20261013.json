@@ -1,0 +1,526 @@
+{
+  "version": "first-display-followup-20261013-1",
+  "evidenceRole": "POST_PROGRAM_SAME_RAW_AND_ENGINEERING_BROWSER_NOT_NEW_MODEL_ACCURACY",
+  "generatedAt": "2026-10-13T14:40:20.298Z",
+  "baselineHead": "41a8859e000d2391f947fd2e290bd770e27fad11",
+  "engineeringCommit": "9ce7bf91c7d446af57165c0553157f9da440f07c",
+  "clock": {
+    "startedAt": "2026-10-13T13:04:48Z",
+    "deadline": "2026-10-13T16:04:48Z",
+    "requestStopAt": "2026-10-13T14:59:48Z",
+    "newDirectionStopAt": "2026-10-13T15:34:48Z"
+  },
+  "versions": {
+    "support": "authority-support-context-1.6.0",
+    "sharedRequirement": "declared-shared-requirement-support-1.0.0",
+    "firstAssembly": "grounded-first-suggestion-1.6.1",
+    "windowSummary": "source-window-summary-1.0.0",
+    "review": "first-review-exceptions-1.1.0",
+    "unchangedTaskTimeProjection": "task-time-authority-projection-1.0.1",
+    "unchangedWindowPlan": "source-window-plan-1.2.1"
+  },
+  "activity": {
+    "newModelRequests": 0,
+    "newGrant": 0,
+    "newReserve": 0,
+    "newSettle": 0,
+    "newCostUsd": 0,
+    "newUsage": "NOT_APPLICABLE_NO_NEW_REQUEST",
+    "authorization": "CURRENT_USER_MESSAGE_PREAUTHORIZATION_16_REQUESTS_6_USD_MAX_180_MINUTES_NOT_USED",
+    "reason": "Only deterministic support/coverage and presentation changed; no generation hypothesis needs new output.",
+    "upstreamRawForOrdinaryProxy": "SERVER_NORMALIZED_RECOGNITION_RESULT_NOT_UPSTREAM_RAW"
+  },
+  "quality": {
+    "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+    "titlesFreeProseIndependentTruthLeakage": "NOT_ADJUDICATED",
+    "batch": "TASK-TIME-AUTHORITY-DEVELOPMENT-20261013-R1",
+    "state": {
+      "settled": 2,
+      "uncertain": 0,
+      "notSent": 4
+    },
+    "fixedDenominatorPerArm": 3,
+    "originalRaw": {
+      "FactRole": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 3
+      },
+      "TaskTime": {
+        "correct": 1,
+        "incorrect": 0,
+        "unknown": 2
+      }
+    },
+    "frozenFirstUnchanged": {
+      "FactRole": {
+        "correct": 0,
+        "incorrect": 1,
+        "unknown": 2
+      },
+      "TaskTime": {
+        "correct": 0,
+        "incorrect": 1,
+        "unknown": 2
+      }
+    },
+    "currentFirst": {
+      "FactRole": {
+        "correct": 0,
+        "incorrect": 1,
+        "unknown": 2
+      },
+      "TaskTime": {
+        "correct": 1,
+        "incorrect": 0,
+        "unknown": 2
+      }
+    },
+    "comparison": "EVIDENCE_INCOMPLETE_NO_WINNER",
+    "thisPackageConclusion": "TARGET_PROGRAM_ERRORS_REDUCED_NO_NEW_WHOLE_NET_GAIN",
+    "rows": [
+      {
+        "source": "TT01",
+        "arm": "FactRole",
+        "before": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE; entire suggestion unavailable",
+        "after": {
+          "tasks": 2,
+          "materials": 2,
+          "timePoints": 3,
+          "channels": [
+            "学业系统",
+            "学习中心B305窗口"
+          ],
+          "electronicDeadline": "2026-11-05T18:20",
+          "paperWindow": "Raw retained; two normalized values null; paper task remains locally blocked"
+        },
+        "layer": "SEMANTIC_COMPOSER_SUPPORT_INDEX",
+        "rawAssessment": "UNKNOWN_WINDOW_REPRESENTATION_UNRESOLVED",
+        "wholeFirstAssessment": "INCORRECT_OR_INCOMPLETE_PAPER_WINDOW",
+        "humanFinal": "Electronic task accepted without factual edits; paper stays pending. Not first-whole correctness."
+      },
+      {
+        "source": "TT01",
+        "arm": "TaskTime",
+        "before": "2 tasks/2 materials/9 times retained, but 8 false TIME_SOURCE_SUPPORT_MISSING warnings and repeated endpoint text",
+        "after": {
+          "tasks": 2,
+          "materials": 2,
+          "timePoints": 9,
+          "windows": 4,
+          "conflicts": 0,
+          "falseMissingSupportWarnings": 0,
+          "windowSummary": "2026年11月9日、2026年11月10日，每天09:00—11:30、14:30—17:30"
+        },
+        "layer": "FIRST_ASSEMBLY_SOURCE_COVERAGE_AND_UI",
+        "wholeFirstAssessment": "PROVISIONAL_CORRECT_MINIMUM_FACTS_UNCHANGED",
+        "humanFinal": "One source acceptance, no factual edits; original deadline unchanged; personal plan separately accepted."
+      }
+    ]
+  },
+  "regressions": {
+    "oldEight": {
+      "count": 8,
+      "firstFactsExactlyEqual": true,
+      "rows": [
+        {
+          "ordinal": 1,
+          "sourceId": "FR-01",
+          "candidate": "TaskRequirements",
+          "rawSha256": "956ee1f6abb2d6d61252a86cfbd07bb4ae17c4a20cea0dd95c175cb8b58a8cbb",
+          "firstFactsExactlyEqual": true,
+          "sameDecodeError": true
+        },
+        {
+          "ordinal": 2,
+          "sourceId": "FR-01",
+          "candidate": "FactRoleAuthority",
+          "rawSha256": "46d08263da5980e1c407425cf6b82026d9ab4dfea31d3f8bc7b90ae7545c8865",
+          "firstFactsExactlyEqual": true,
+          "sameDecodeError": true
+        },
+        {
+          "ordinal": 3,
+          "sourceId": "FR-02",
+          "candidate": "FactRoleAuthority",
+          "rawSha256": "914aeadc334d9adf6b279cf9035275341669a47a4391b9aea06f8270a3940804",
+          "firstFactsExactlyEqual": true,
+          "sameDecodeError": true
+        },
+        {
+          "ordinal": 4,
+          "sourceId": "FR-02",
+          "candidate": "TaskRequirements",
+          "rawSha256": "cf743d8320885ba6ceb62698c48dbff65c873f295bd1d89129ca49cfa12c377a",
+          "firstFactsExactlyEqual": true,
+          "sameDecodeError": true
+        },
+        {
+          "ordinal": 5,
+          "sourceId": "FR-03",
+          "candidate": "TaskRequirements",
+          "rawSha256": "6e8e0dd18249031e76738f385beef9a91f978a341dec8e42773ccb130817f999",
+          "firstFactsExactlyEqual": true,
+          "sameDecodeError": true
+        },
+        {
+          "ordinal": 6,
+          "sourceId": "FR-03",
+          "candidate": "FactRoleAuthority",
+          "rawSha256": "5ced0a13e45ca450ab504118eb0706b9a840366c1279e4550db7f85d1c1a1772",
+          "firstFactsExactlyEqual": true,
+          "sameDecodeError": true
+        },
+        {
+          "ordinal": 7,
+          "sourceId": "FR-04",
+          "candidate": "FactRoleAuthority",
+          "rawSha256": "0f48c684edec67519da2ea037546967c576a1374de008a3304f1fcb15716e6b1",
+          "firstFactsExactlyEqual": true,
+          "sameDecodeError": true
+        },
+        {
+          "ordinal": 8,
+          "sourceId": "FR-04",
+          "candidate": "TaskRequirements",
+          "rawSha256": "0e07401fbf288858ee4a058af01b699f0d93ee5e9c704b96c3e395f3ee9a7bda",
+          "firstFactsExactlyEqual": true,
+          "sameDecodeError": true
+        }
+      ]
+    },
+    "officialFour": {
+      "denominator": 4,
+      "beforeValid": 4,
+      "afterValid": 4,
+      "currentMinimumFacts": {
+        "correct": 1,
+        "incorrect": 1,
+        "unknown": 2
+      },
+      "rows": [
+        {
+          "source": "RN-01",
+          "rawSha256": "5fd97a235266bfa882ca4a30210d191ad216461301c550c474f9e8bc8e15d371",
+          "assessment": "INCORRECT",
+          "firstFactsExactlyEqual": true,
+          "rawPreserved": true
+        },
+        {
+          "source": "RN-02",
+          "rawSha256": "b7736b8e1190f0638c11866bcb15a7092a2cc0a466fc781092e29ba776183e10",
+          "assessment": "UNKNOWN",
+          "firstFactsExactlyEqual": true,
+          "rawPreserved": true
+        },
+        {
+          "source": "RN-03",
+          "rawSha256": "31b93b86730aea7ffdb0e63b8fd66a8bce8fddeab52cebb40b1f47383879bd8e",
+          "assessment": "UNKNOWN",
+          "firstFactsExactlyEqual": true,
+          "rawPreserved": true
+        },
+        {
+          "source": "RN-04",
+          "rawSha256": "ff064f4fe5369622d4da88d1f7c02e79d58e31d9e233d4e2be25a2d6fe5a080e",
+          "assessment": "PROVISIONAL_CORRECT",
+          "firstFactsExactlyEqual": true,
+          "rawPreserved": true
+        }
+      ]
+    },
+    "oldScores": "v11 C17 2/6; C19 1/6 MIXED_PROGRESS and historical post-hoc diagnostics unchanged"
+  },
+  "browser": {
+    "tool": "OFFICIAL_CUA_IAB_ACTUAL_ACTIONS",
+    "finalOrigin": "http://127.0.0.1:6944/",
+    "finalDatabase": "rco-mainline-01-02-i1-d27-plan-recorded-p1-display-1013-done",
+    "buildBaseHead": "41a8859e000d",
+    "sourceSha256": "61bb12ffd97bd5d912a6609687a55038ae8f6826a89d290c731f2b18480109c6",
+    "committedRuntimeFilesMatch": true,
+    "mode": "ORDINARY_APP_FIXED_RECORDING_WITH_ENGINEERING_CONTROLS_REALTIME_DISABLED",
+    "finalTaskTimeCounts": {
+      "events": 0,
+      "materials": 2,
+      "projects": 0,
+      "tasks": 2,
+      "timePoints": 9
+    },
+    "finalFirst": "FINAL-TASKTIME-FIRST.txt",
+    "finalMode": "FINAL-PROXY-MODE.txt",
+    "finalViewport": "1024x768 checked, temporary override reset",
+    "faultBuild": {
+      "origin": "http://127.0.0.1:6943/",
+      "sourcePrefix": "aa6db9faebd4",
+      "reuse": "Only subsequent inbox label and offset/date-range view guards changed; formal commit/restore code and tested shared-support code unchanged. Final build separately rechecked first display/save/refresh/readback."
+    },
+    "faults": [
+      {
+        "kind": "FORMAL_TRANSACTION",
+        "armed": "TRANSACTION-ARMED.txt",
+        "failed": "TRANSACTION-FAILED.txt",
+        "zero": "TRANSACTION-ZERO-VERIFIED.json",
+        "recovered": "TRANSACTION-RETRY-READBACK.json"
+      },
+      {
+        "kind": "POST_COMMIT_READBACK",
+        "armed": "READBACK-ARMED.txt",
+        "failed": "POSTCOMMIT-READBACK-FAILED.txt",
+        "recovered": "POSTCOMMIT-READBACK-VERIFIED.json"
+      },
+      {
+        "kind": "CHECKPOINT",
+        "armed": "CHECKPOINT-ARMED.txt",
+        "failed": "CHECKPOINT-FAILED.txt",
+        "recovered": "CHECKPOINT-RECOVERED.txt"
+      }
+    ],
+    "partial": "FACTROLE-PARTIAL-READBACK.json",
+    "badRelation": "BAD-OWNER-PARTIAL-READBACK.json",
+    "unknownTimes": "EVENT-REJECTION-UNKNOWN-READBACK.json",
+    "qualificationPredecessor": "QUALIFICATION-PREDECESSOR-FIRST.txt",
+    "plan": "PLAN-REFRESH-READBACK.json",
+    "measurement": "ENGINEERING-MEASUREMENT.json",
+    "consoleErrorsObserved": 0,
+    "artifacts": [
+      {
+        "path": ".data/p1-first-display-20261013/browser/BAD-OWNER-FIRST.txt",
+        "sha256": "435eca4b401ddef95c021f594178366a9982ba08a548a14a084d90e2057ca3e7"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/BAD-OWNER-PARTIAL-READBACK.json",
+        "sha256": "d1a3e93d519ec0b39fd180a112c53151fef41ea4b82080c0c664b9ae7d9811d7"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/CHECKPOINT-ARMED.txt",
+        "sha256": "6b0f141c2bc23d9d00bf8239657c15a647c24db941422d7f29d2d97386c79f1b"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/CHECKPOINT-FAILED.txt",
+        "sha256": "c06b5c2f109e351248590813116c338f035a3f52b95b529fa5ba73026ff9fbc6"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/CHECKPOINT-RECOVERED.txt",
+        "sha256": "6ee2ac55ac9c5af5d3a4a95fa458ba1cea854526b77cc824a40f3ec7d15e33d9"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/ENGINEERING-MEASUREMENT.json",
+        "sha256": "8a7f9d1bf9d13a690d26ce63139b15e21065ddfe7fbebf2d768586d2622b066e"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/EVENT-REJECTION-UNKNOWN-READBACK.json",
+        "sha256": "53b1bd09502a4355a389e3e688e4daff035d47c63a8e9a3f6c1a368833153226"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/FACTROLE-FINAL-FIRST.png",
+        "sha256": "146381a14ed5c01d6be3be33d26d660feec91f99566d6f4fd3f117f32dec6973"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/FACTROLE-FINAL-FIRST.txt",
+        "sha256": "339a1d6bf7c4e59d82521adef8202ab08f3d8557e4dd09210bce030201d4b1bd"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/FACTROLE-FIRST.png",
+        "sha256": "5c99d443fe8c92857e303d3ff5811b3bb3b8c0404f1779b455e0a1c7ae9b6b03"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/FACTROLE-FIRST.txt",
+        "sha256": "0b13030edf225d4cb86d40b0149a1019672dd35e621543ae37018285ebcd2a99"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/FACTROLE-PARTIAL-READBACK.json",
+        "sha256": "5140fa72bf8bd1b7188d04340860434e2a0511e2aacf83822d8ba075eec096c2"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/FACTROLE-PARTIAL.txt",
+        "sha256": "73e4a5f47e3fe1fdbf95d74b0302ec1b9bab100b0ac2c762c6028d089c81020f"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/FINAL-1024-WINDOW.png",
+        "sha256": "0bfe24c7604830a0fdd58ced372d9abc1cca0d790a61ea7fb4e26e6e7ac72924"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/FINAL-1024-WINDOW.txt",
+        "sha256": "658732a8b8be5beb10a3a22e8e1148ee6253448f98ee6f81459591c571d11fb1"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/FINAL-PROXY-MODE.png",
+        "sha256": "8f7d8d6a1a642cd265694274a4da8ac710f432e6282c5e1b5e9f457ab6fd5f36"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/FINAL-PROXY-MODE.txt",
+        "sha256": "6a8a90759f8bc5162e2ae7bd28f3641f6561b20570f76d0ee90579ea6bc93511"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/FINAL-TASKTIME-FIRST.png",
+        "sha256": "fc56c800808ad1aebb75de762ac8a9f9f3f619c724bac84e181735df53ce10ae"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/FINAL-TASKTIME-FIRST.txt",
+        "sha256": "993e298df9e3e66a734cc95cda5fbdd1df79dee3c01fb16ad6797a3bc6f6f0fd"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/FINAL-TASKTIME-REFRESH-READBACK.json",
+        "sha256": "e3d3310907bf81e3ef10dea015b7c46144468b8c10906e9a7a4d46f2abbff0ec"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/PLAN-ACCEPTED.png",
+        "sha256": "738d8e542215e2b95951305f89530eeaca374cea4a7023b7e764599527b43856"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/PLAN-ACCEPTED.txt",
+        "sha256": "6f1d6ae5d7e2a5753ec723d4ecc070e61e10496c706f656bf87d3a588bc9da7e"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/PLAN-RECOVERED.txt",
+        "sha256": "b4823c872d13bc1e0b6bfbc8d806b612b29aecb0f01ea9424324b57ad8e8ed9e"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/PLAN-REFRESH-PENDING.txt",
+        "sha256": "42d4526440d4ed6729092c736a68dc3d5103daf6b0cd1de91ed4bd29e378d9ef"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/PLAN-REFRESH-READBACK.json",
+        "sha256": "f21c513c0a592de1c52e6728ec6e237d53f8934664420986787322357b0d2784"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/POSTCOMMIT-READBACK-FAILED.png",
+        "sha256": "10ea524742f49a93adba9b26b7e9c12828dc0dec66c612c52fe9d741d82da549"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/POSTCOMMIT-READBACK-FAILED.txt",
+        "sha256": "009a2a9adae24dc99558d739e50edac38f9eccf9f85fa3ad89bf18c8c33a428b"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/POSTCOMMIT-READBACK-RECOVERED.txt",
+        "sha256": "a18413d00c18b662b8175fd4abafd33c1061c828bc77baedf982a91bfb8ae89a"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/POSTCOMMIT-READBACK-VERIFIED.json",
+        "sha256": "6edb70400f66112fda76a16ca46a70ffca1e6d10727e7ef282fad3a580a88fc8"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/PROXY-FIXTURE-FIRST.png",
+        "sha256": "5184b32ba4bb06d2159e47f12f847b068e7321c471e8f5881b2b37cad49245d0"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/PROXY-FIXTURE-FIRST.txt",
+        "sha256": "e61cbac50bfdfe0ed6a06869ed7294bac2291a5db22c4e92e66fc607308df8a7"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/QUALIFICATION-PREDECESSOR-FIRST.txt",
+        "sha256": "e039d5e2ff467419d9e3de421d03d799065e08738201dc440198eb779f6a5a9f"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/READBACK-ARMED.txt",
+        "sha256": "adb440a9f8712eeab7df5c7127b1d55d48342d645db10d97d8a9caae3a1817e8"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/TASKTIME-FIRST-READY.png",
+        "sha256": "fc56c800808ad1aebb75de762ac8a9f9f3f619c724bac84e181735df53ce10ae"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/TASKTIME-FIRST-READY.txt",
+        "sha256": "0284f856f2ce806bf793ae6020bd40bb6c94521ad9c070c74f2c8cdf9d3b8161"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/TASKTIME-FIRST.png",
+        "sha256": "1c4675e58bc7229b6c61722e79f87db03ad1758dd3cbca4be2ce9d41657c7023"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/TASKTIME-FIRST.txt",
+        "sha256": "efece8f7092a5bdfa338e63848ff80fdc26e4e199939ee300073ab81b7e21e11"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/TRANSACTION-ARMED.txt",
+        "sha256": "e8e25f6dc3b971d5418469a2dadbc3570422904d6de5ac1e1800cc945666b818"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/TRANSACTION-FAILED.png",
+        "sha256": "95899a242cbdb8fa3a48a7093b7aa63800dc860322fd82989c3d4ca272e7c3fd"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/TRANSACTION-FAILED.txt",
+        "sha256": "e3af4e59cfaf8c83177f35a1fbc82625fead9f6037a7f8bb2d859b8a3805ac27"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/TRANSACTION-RETRY-READBACK.json",
+        "sha256": "05cad05351adeb73d612f1e7cafb0a192a0c5c8c91c821349815fdeb4964aff5"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/TRANSACTION-ZERO-READBACK.json",
+        "sha256": "88f5d0e427506b2b8f613cd9a3eb9048d65410a1b5ae87c378307cd9d6939e34"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/TRANSACTION-ZERO-VERIFIED.json",
+        "sha256": "5f6ccd0fe3027d8ced14d60fc9237662de1eb33a8f3dd4be2c4ec12e7ac2eb23"
+      },
+      {
+        "path": ".data/p1-first-display-20261013/browser/VAGUE-UNPUBLISHED-FIRST.txt",
+        "sha256": "10f456c2b66100791497fd1266a37de8e1eaa5dc4d19148d077df48f81e8ffc4"
+      }
+    ]
+  },
+  "validation": {
+    "targetedFirstDisplay": 20,
+    "targetedWithWorkflow": 24,
+    "currentIndependentGroups": 34,
+    "currentGroupsAllPassed": true,
+    "productVitest": {
+      "filesPassed": 133,
+      "filesSkipped": 1,
+      "testsPassed": 1386,
+      "testsSkipped": 1,
+      "skipped": "ocrLiveComponent, not in this package"
+    },
+    "lint": {
+      "exit": 0,
+      "existingWarnings": 8
+    },
+    "typecheck": {
+      "exit": 0
+    },
+    "build": {
+      "exit": 0,
+      "existingWarning": "chunk exceeds 500kB"
+    },
+    "security": {
+      "exit": 0
+    },
+    "historical": "9 groups: 3 passed / 6 old failures from unchanged prior evidence; not rerun and no assertions/locks changed",
+    "audit": "Unchanged dependencies; reuse 2026-10-13 development 2critical/6high/1moderate, production0. Not a new scan or total-risk-free claim.",
+    "remoteCi": "NOT_OBSERVED"
+  },
+  "protection": {
+    "assetsChecked": 478,
+    "assetsUnchanged": true,
+    "sealedTimeBatchFilesChecked": 15,
+    "sealedTimeBatchUnchanged": true,
+    "history": {
+      "protected": 84,
+      "frozen": 119,
+      "archived": 7
+    },
+    "ledger": {
+      "rows": 1096,
+      "bytes": 883991,
+      "sha256": "b5bc4857959794e01156f28c04c2d66b7abdcf53725c9bb9252f514caf13ff08",
+      "completeChainValid": true,
+      "noAppend": true,
+      "old1091AndEarlierPrefixes": "Current full byte equality proves previous prefixes unchanged"
+    },
+    "userAssets": "Two untracked handover/plan plus 15 audit files preserved"
+  },
+  "remaining": [
+    "FactRole paper window has unstructured start/end text; cannot automatically fill owners or discrete intervals, and full source remains incomplete.",
+    "After formal confirmation, legacy home sorting still labels a known-window/no-deadline task as deadline needing review; first-review exceptions fixed, downstream risk projection not changed."
+  ],
+  "notTested": [
+    "Arbitrary default realtime new-model quality",
+    "Independent factual adjudication or Holdout",
+    "Human effort/four human indicators",
+    "Release old-user database compatibility",
+    "Deployment/integration/remote CI"
+  ],
+  "rollback": "Revert only the engineering commit; no v8 migration or historical raw mutation; preserve the isolated test databases."
+}

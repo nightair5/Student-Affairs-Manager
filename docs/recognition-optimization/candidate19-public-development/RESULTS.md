@@ -1,3 +1,21 @@
+# 当前结果：共同义务恢复，窗口摘要与误警告收口
+
+2026-10-13。工程9ce7bf9已立即普通推送。[当前报告](../p1-first-pass-convergence/REPORT.md) · [版本化证据](../p1-first-pass-convergence/DISPLAY_RESULTS_20261013.json)。旧TIME_RESULTS/raw/评分/锁不改，未改Prompt/默认模型/生成输入/v8。
+
+FactRole共有要求可支持两个已有任务，恢复2任务2材料3时间/双渠道；电子零事实编辑部分接受，纸质窗口仍局部待核对。TaskTime同raw8个缺依据误提示消失、四窗口压自然摘要，完整八起止和依据可展开。多材料/时间/事件中性，真实风险保留；收件箱与弹层按持久运行元数据标固定录制/工程夹具。
+
+原六身份2SETTLED/0UNCERTAIN/4NOT_SENT、每臂分母3；原答FactRole0/0/3、TaskTime1/0/2，冻结首次均0/1/2，当前公共首次仍0/1/2、1/0/2（暂定完整/错或未闭合/未知）。本轮程序损失减少、整份完整数未净增，仍EVIDENCE_INCOMPLETE_NO_WINNER。旧4官方1/1/2、8录制首次逐份不变；不称新模型准确率。
+
+唯一 [6944内部入口](http://127.0.0.1:6944/) 固定录制/工程控制、实时关闭、新库；source61bb12ffd97b与工程代码一致。最终构建一次接受/刷新独立2任务2材料9原时间；6943已实点部分/逐事件/局部关系/三种明确注入故障手动恢复/窗口内安排，复用边界见证据。四真人NOT_OBSERVABLE。
+
+本轮请求/grant/reserve/settle0、费用0，1096完整链/旧前缀无变化；84/119/7、478旧资产、15时间现场及用户资产保持。34当前组/20新定向及lint/typecheck/build/security通过；1 OCR live跳过、8旧warning/chunk/6历史FAIL另列。audit仅引用2026-10-13开发2C6H1M/production0，CI未观察。
+
+仍未完：FactRole纸质窗口结构；正式首页已知窗口/无截止仍列待核对。下一最多先收口首页风险，再根据明确生成假设判断新输出必要性。不自动开后续预算/恢复旧批/真人/Holdout/default替换/合并/部署；release旧库仍VERIFY_BEFORE_MERGE。
+
+---
+
+以下为原样保留的历史工作包：
+
 # 当前结果：普通代理支持接入、任务时间归属与真实回答窗口恢复
 
 2026-10-13。工程00aefde、冻结d658137、修复7a2d8f22aa68e099de8cd40072adba163d485235均提交后立即普通推送；未替换默认、合并或部署。[本轮报告](../p1-first-pass-convergence/REPORT.md) · [逐来源/调用/浏览器/验证](../p1-first-pass-convergence/TIME_RESULTS.json)。
