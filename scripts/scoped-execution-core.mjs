@@ -9,6 +9,8 @@ export function createScopedEngine(scope,{diagnostics}={}){
 check(scope&&/^[A-Z0-9-]+$/.test(scope.batch)&&Number.isInteger(scope.count)&&scope.count>0&&scope.count<=24,'SCOPED_BATCH')
 const parameters=scope.parameters??{temperature:0,maxOutputTokens:MAX_OUTPUT_TOKENS}
 const workerChat=parameters.transportRoute==='worker-chat-completions-1'
+const observedUsage=text=>{if(!workerChat)return rawUsage(text);try{const u=JSON.parse(text).usage;if(Number.isSafeInteger(u?.prompt_tokens)&&u.prompt_tokens>=0&&Number.isSafeInteger(u?.completion_tokens)&&u.completion_tokens>=0)return {...u,input_tokens:u.prompt_tokens,output_tokens:u.completion_tokens,usageBoundary:'NATIVE_CHAT_COMPLETIONS'}}catch{/* Original bytes remain authoritative; absent usage is unknown. */}return 'NOT_OBSERVABLE'}
+const auditMetadata=(raw,row,settle,pricing)=>{if(!workerChat)return auditUnitMetadata(raw,row,settle,pricing);const usage=observedUsage(raw.rawHttpText),cost=usage==='NOT_OBSERVABLE'?conservativeUpperMicroUsd(pricing.maxInputTokens,MAX_OUTPUT_TOKENS,pricing):conservativeUpperMicroUsd(usage.input_tokens,usage.output_tokens,pricing);check(raw.httpStatus===row.httpStatus&&row.httpStatus===settle.httpStatus&&JSON.stringify(usage)===JSON.stringify(row.usage)&&JSON.stringify(usage)===JSON.stringify(settle.usage)&&cost===row.costUpperMicroUsd&&cost===settle.costUpperMicroUsd,'RAW_STATE_SETTLEMENT_METADATA_DRIFT');return {usage,costUpperMicroUsd:cost}}
 check(Number.isFinite(parameters.temperature)&&parameters.temperature>=0&&parameters.temperature<=2&&Number.isSafeInteger(parameters.maxOutputTokens)&&parameters.maxOutputTokens>0&&parameters.maxOutputTokens<=MAX_OUTPUT_TOKENS,'SCOPED_PARAMETERS')
 function newState(units, binding) {
   return { version: 'scoped-execution-state-2', batch: scope.batch, model: 'deepseek-flash', ...binding, authorized: false,
@@ -67,9 +69,7 @@ async function runOne({ state, auth, units, binding, ledger, transport, persist,
         requestId: response.requestId ?? null, contentType: response.contentType ?? null, rawHttpText: response.text, responseSha256: digest(response.text), receivedAt: new Date().toISOString() }
       await mark('RAW_WRITE_ENTER');await rawStore.writeOnce(raw);await mark('RAW_WRITE_COMPLETED')
       row.status = 'RAW_SAVED'; row.responseSha256 = raw.responseSha256;await mark('RAW_STATE_WRITE_ENTER');await persist(state);await mark('RAW_STATE_WRITE_COMPLETED')
-      const chatUsage=workerChat?JSON.parse(response.text).usage:null
-      const usage = workerChat && Number.isSafeInteger(chatUsage?.prompt_tokens) && chatUsage.prompt_tokens>=0 && Number.isSafeInteger(chatUsage?.completion_tokens) && chatUsage.completion_tokens>=0
-        ? {...chatUsage,input_tokens:chatUsage.prompt_tokens,output_tokens:chatUsage.completion_tokens,usageBoundary:'NATIVE_CHAT_COMPLETIONS'} : rawUsage(response.text), costUpperMicroUsd = usage === 'NOT_OBSERVABLE' ? upper
+      const usage = observedUsage(response.text), costUpperMicroUsd = usage === 'NOT_OBSERVABLE' ? upper
         : conservativeUpperMicroUsd(usage.input_tokens, usage.output_tokens, auth.pricing)
       await mark('SETTLE_ENTER');await ledger.settle({ batch: scope.batch, grantId: auth.grantId, ordinal, responseSha256: raw.responseSha256, httpStatus: response.status,
         usage, costUpperMicroUsd, providerActualUsd: 'NOT_OBSERVABLE' })
@@ -84,5 +84,5 @@ async function runOne({ state, auth, units, binding, ledger, transport, persist,
     }
   })
 }
-return {newState,assertAuthorization,runOne,fileLock,atomicStateWriter,rawWriter,validatePriceScope,conservativeUpperMicroUsd,rawUsage,nextOrdinal,auditUnitMetadata}
+return {newState,assertAuthorization,runOne,fileLock,atomicStateWriter,rawWriter,validatePriceScope,conservativeUpperMicroUsd,rawUsage:observedUsage,nextOrdinal,auditUnitMetadata:auditMetadata}
 }

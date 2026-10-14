@@ -33,11 +33,12 @@ export function assertModelGatewayConfigured(readSecret=()=>process.env.DEEPSEEK
  * Dependency injection is for zero-network tests; the paid runner uses defaults.
  * No credential is written until a verified end-to-end TLS socket is established. */
 export function createPinnedProxyFetch({proxyRequest=httpRequest,secureConnect=tlsConnect,
-  upstreamRequest=httpsRequest,Agent=HttpsAgent}={}) {
+  upstreamRequest=httpsRequest,Agent=HttpsAgent,endpoint=BILLING_POLICY.endpoint}={}) {
+  check(endpoint===BILLING_POLICY.endpoint||endpoint==='https://api.deepseek.com/chat/completions','PINNED_ROUTE')
   let consumed=false
   return async(url,options)=>{
     check(!consumed,'PINNED_ROUTE_CONSUMED');consumed=true
-    check(url===BILLING_POLICY.endpoint&&options?.method==='POST'&&options.redirect==='manual'
+    check(url===endpoint&&options?.method==='POST'&&options.redirect==='manual'
       &&typeof options.body==='string'&&Buffer.byteLength(options.body)<=BILLING_POLICY.requestByteCeiling,'PINNED_ROUTE')
     exact(options.headers,['Authorization','Content-Type'])
     check(options.headers['Content-Type']==='application/json'
@@ -61,7 +62,7 @@ export function createPinnedProxyFetch({proxyRequest=httpRequest,secureConnect=t
           if(options.signal.aborted||!secure.authorized){error();return}
           agent=new Agent({keepAlive:false,maxSockets:1})
           agent.createConnection=()=>secure
-          upstream=upstreamRequest(BILLING_POLICY.endpoint,{method:'POST',headers:options.headers,
+          upstream=upstreamRequest(endpoint,{method:'POST',headers:options.headers,
             agent,maxHeaderSize:16384},response=>{
             if(finished){response.destroy();return}
             const headers=new Headers()
