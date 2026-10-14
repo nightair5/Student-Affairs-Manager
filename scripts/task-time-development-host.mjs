@@ -13,7 +13,7 @@ import {BATCH,COUNT,PACKAGE_ROOT,EXECUTION_ROOT,verifyTaskTimePacket,sha} from '
 const git=a=>execFileSync('git',a,{encoding:'utf8'}).trim()
 export function assertTaskTimeGit(head,preserved){
  const rows=git(['status','--porcelain','--untracked-files=all']).split(/\r?\n/u).filter(Boolean)
- if(!Array.isArray(preserved)||preserved.length!==2||!['CODEX_DESKTOP_HANDOVER.md','CODEX_NEXT_PHASE_PLAN.md'].every(p=>preserved.some(r=>r.path===p&&r.sha256===sha(readFileSync(p))))
+ if(!Array.isArray(preserved)||preserved.length!==2||!['CODEX_DESKTOP_HANDOVER.md','CODEX_NEXT_PHASE_PLAN.md'].every(p=>existsSync(p)&&preserved.some(r=>r.path===p&&r.sha256===sha(readFileSync(p))))
   ||rows.some(r=>!preserved.some(p=>r==='?? '+p.path))||git(['branch','--show-current'])!=='codex/e2-candidate11-blind-eval'
   ||git(['rev-parse','HEAD'])!==head||git(['rev-parse','@{u}'])!==head||git(['ls-remote','origin','refs/heads/codex/e2-candidate11-blind-eval']).split(/\s+/u)[0]!==head)throw Error('TASK_TIME_GIT_NOT_SYNCHRONIZED_OR_ASSET_DRIFT')
 }

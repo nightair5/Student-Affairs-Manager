@@ -421,7 +421,7 @@ function DraftItemReview({ waitingOn, ordinary, durationKnown, onFieldInput, sem
       <div><strong>{suggestion.title}</strong><time><Clock3 size={14} />{confirmationV2 ? confirmationV2.dateLabel ?? '日期状态未加载，暂不能确认' : deadlineLabel(suggestion.deadline)}</time></div>
       <button className={editing ? 'review-edit active' : 'review-edit'} type="button" onClick={onToggleEdit}><PencilLine size={14} />{editing ? '收起' : '编辑'}</button>
     </header>
-    <div className="review-meta"><span>{suggestion.category}</span><span>{durationKnown===false?'耗时尚未估计':`约 ${suggestion.estimatedMinutes} 分钟（建议）`}</span>{suggestion.materials.length > 0 && <span>{suggestion.materials.length} 项材料</span>}{inferenceLevel && <span className={`inference-badge ${inferenceLevel}`}>{inferenceLabels[inferenceLevel]}</span>}{suggestion.confidence === '低' && <em>请重点核对</em>}</div>
+    <div className="review-meta"><span>{suggestion.category}</span><span>{durationKnown===false||!Number.isFinite(suggestion.estimatedMinutes)?'耗时尚未估计':`约 ${suggestion.estimatedMinutes} 分钟（建议）`}</span>{suggestion.materials.length > 0 && <span>{suggestion.materials.length} 项材料</span>}{inferenceLevel && <span className={`inference-badge ${inferenceLevel}`}>{inferenceLabels[inferenceLevel]}</span>}{suggestion.confidence === '低' && <em>请重点核对</em>}</div>
     <p className="review-next"><span>{ordinary&&confirmationV2?.blockedReason?'核对后动作':waitingOn?.length?'前置完成后':'下一步'}</span>{suggestion.nextAction}</p>
     {waitingOn?.length ? <p>等待前一步：{waitingOn.join('、')}。这项待办可以保留，前置完成状态未被改成已完成。</p> : null}
     {confirmationV2 && !ordinary && <p>首次建议、原文和你的修改分开保留。编辑后先点“保存修改”，再正式核对确认；只有显示“检查点已保存”的工程入口可恢复未确认输入。{confirmationV2.blockedReason && <strong role="status">需核对（{confirmationV2.blockedReason}）</strong>}</p>}
