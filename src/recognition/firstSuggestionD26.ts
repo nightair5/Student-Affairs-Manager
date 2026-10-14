@@ -6,8 +6,9 @@ import { groundEligibility } from './eligibilityGrounding'
 import { rangeEndpointSupport } from './rangeEndpointSupport'
 import { taskActionText } from '../lib/taskActionText'
 import { supportedCoordinatedObject, supportedEventDescriptor, supportedEventOperation } from './compoundNameSupport'
+import {retainCurrentDeadlineFacts,type SourceCurrentFactAudit} from './sourceCurrentFacts'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.7.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.8.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -15,6 +16,7 @@ export interface D26FirstSuggestionAudit {
   generatedProse: ProseRecord[]
   times: Array<{ entityId: string; before: TimeFields; after: TimeFields; interpretation: D26TimeInterpretation }>
   unresolved: Array<{ entityId: string; reason: string }>
+  sourceCurrentness: SourceCurrentFactAudit[]
   actionFields: Array<{entityId:string; before:string; after:string; status:'CITED_VERB_PROJECTION'|'LOCAL_UNRESOLVED_ACTION'; quotes:string[]}>
   rangeSupport: Array<{entityId:string; quote:string; literalRange:string; expanded:string; rule:'CITED_SAME_EVENT_RANGE_ENDPOINT'|'CITED_SAME_EVENT_CLOCK_RANGE'|'CITED_ADJACENT_SAME_DAY_EVENT'}>
   role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT'
@@ -22,7 +24,7 @@ export interface D26FirstSuggestionAudit {
 type TimeFields = Pick<TimePointSuggestionV2, 'normalizedValue' | 'timezone' | 'isAllDay' | 'precision' | 'needsConfirmation'>
 const fields = (point: TimeFields): TimeFields => ({ normalizedValue: point.normalizedValue, timezone: point.timezone,
   isAllDay: point.isAllDay, precision: point.precision, needsConfirmation: point.needsConfirmation })
-const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], actionFields: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
+const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], sourceCurrentness:[], actionFields: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
 const supported = (value: string, quotes: string[]) => Boolean(value.trim()) && quotes.some(quote => quote.includes(value))
 function supportedAdjacent(value: string, quotes: string[], sourceText: string) {
   if (supported(value, quotes)) return true
@@ -77,7 +79,8 @@ function prose(audit: D26FirstSuggestionAudit, original: ProseRecord, title: str
 }
 function time<T extends TimeFields & { tempId: string; rawText: string; type: TimePointSuggestionV2['type'] }>(point: T, quotes: string[], referenceTime: string, timezone: string, audit: D26FirstSuggestionAudit, inheritedDate?: string, anchorContext = '', rangeQuotes: string[] = []) {
   const before = fields(point)
-  const range = supported(point.rawText, quotes) ? null : rangeEndpointSupport(point.rawText, point.type, rangeQuotes, referenceTime, timezone)
+  const fullRange=/\d{4}年\d{1,2}月\d{1,2}日\s*(?:[-—–至到]\s*(?:\d{4}年)?(?:\d{1,2}月)?\d{1,2}日|\d{1,2}:[0-5]\d\s*[-—–至到]\s*\d{1,2}:[0-5]\d)/u.test(point.rawText)
+  const range = supported(point.rawText, quotes)&&!fullRange?null:rangeEndpointSupport(point.rawText, point.type, rangeQuotes, referenceTime, timezone)
   if (!supported(point.rawText, quotes) && !range) {
     audit.unresolved.push({ entityId: point.tempId, reason: 'TIME_SOURCE_SUPPORT_MISSING' })
     Object.assign(point, { normalizedValue: null, isAllDay: false, precision: 'vague', needsConfirmation: true })
@@ -90,7 +93,7 @@ function time<T extends TimeFields & { tempId: string; rawText: string; type: Ti
   const clocks = /^(\d{1,2}):([0-5]\d)\s*[-—–]\s*(\d{1,2}):([0-5]\d)$/u.exec(point.rawText)
   const heading = /^\d{4}年\d{1,2}月\d{1,2}日(?:[（(](?:周|星期)[一二三四五六日天][）)])?\s*$/u.test(anchorContext)
   const validClocks = clocks && +clocks[1] <= 23 && +clocks[3] <= 23 && +clocks[3] * 60 + +clocks[4] > +clocks[1] * 60 + +clocks[2]
-  const literalRanges = ['event_start','event_end'].includes(point.type) ? unique(rangeQuotes).filter(q=>q.includes(point.rawText)).flatMap(q=>[...point.rawText.matchAll(/(?<!\d)(\d{4}年\d{1,2}月\d{1,2}日)(\d{1,2}):([0-5]\d)\s*[-—–至到]\s*(\d{1,2}):([0-5]\d)(?!\d)/gu)].map(m=>({q,m}))) : []
+  const literalRanges = ['event_start','event_end'].includes(point.type) ? unique(rangeQuotes).filter(q=>q.includes(point.rawText)).flatMap(q=>[...point.rawText.matchAll(/(?<!\d)(\d{4}年\d{1,2}月\d{1,2}日)\s*(\d{1,2}):([0-5]\d)\s*[-—–至到]\s*(\d{1,2}):([0-5]\d)(?!\d)/gu)].map(m=>({q,m}))) : []
   const closed = literalRanges.length===1 && +literalRanges[0].m[2]<24 && +literalRanges[0].m[4]<24
     && +literalRanges[0].m[4]*60+ +literalRanges[0].m[5]>+literalRanges[0].m[2]*60+ +literalRanges[0].m[3] ? literalRanges[0] : null
   if(literalRanges.length>0&&!closed){
@@ -104,7 +107,7 @@ function time<T extends TimeFields & { tempId: string; rawText: string; type: Ti
     ? anchorContext + ' ' + (point.type === 'event_start' ? clocks[1]+':'+clocks[2] : clocks[3]+':'+clocks[4]) : null
   )
   if (composed) audit.rangeSupport.push({entityId:point.tempId,quote:anchorContext+'\n'+point.rawText,literalRange:point.rawText,expanded:composed,rule:'CITED_SAME_EVENT_CLOCK_RANGE'})
-  const interpretation = interpretTimeD26(composed ?? point.rawText, { type: point.type, referenceTime, timezone, inheritedDate,
+  const interpretation = interpretTimeD26(composed ?? range?.expanded ?? point.rawText, { type: point.type, referenceTime, timezone, inheritedDate,
     sourceContext: [anchorContext, range?.quote, ...quotes.filter(quote => quote.includes(point.rawText)).map(quote => timeClause(point.rawText, quote))].filter(Boolean).join('\n') })
   Object.assign(point, fields(interpretation.point))
   audit.times.push({ entityId: point.tempId, before, after: fields(point), interpretation })
@@ -220,6 +223,7 @@ export function adaptModelWireD26(input: unknown, context: WireContext) {
 /** Same time/display policy for the ordinary RecognitionResult. No experimental runtime or storage dependency. */
 export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string }) {
   const result = structuredClone(input), audit = auditRecord()
+  audit.sourceCurrentness=retainCurrentDeadlineFacts(result,context.sourceText)
   const quote = (ids: string[]) => ids.flatMap(id => {
     const evidence = result.evidence.find(row => row.id === id)
     return evidence?.quote && context.sourceText.includes(evidence.quote) ? [evidence.quote] : []

@@ -29,8 +29,8 @@ export function PrivacyPage({ workspace, onOpenArchive, onExportMigrationBackup 
       </div>
 
       <section className="privacy-actions">
-        <div><h2>备份与删除由你决定</h2><p>在项目档案中导出 JSON。Schema 升级前的原始数据会先另存一份，可在此下载；清空前仍建议手动备份。</p></div>
-        <button className="secondary-button" type="button" onClick={onExportMigrationBackup}><Download size={17} />导出迁移前备份</button>
+        <div><h2>备份与删除由你决定</h2><p>在项目档案中导出 JSON。新产品存储版本首次写入旧工作区前，会先另存完整工作区快照；备份失败就停止写入。下载后可通过项目档案导入恢复，恢复前请保留当前备份。</p></div>
+        <button className="secondary-button" type="button" onClick={onExportMigrationBackup}><Download size={17} />下载升级前备份</button>
         <button className="primary-button" type="button" onClick={onOpenArchive}><Download size={17} />前往备份与清空</button>
       </section>
     </main>

@@ -8,7 +8,7 @@ import {
   normalizeRecognitionResult,
   recognitionSystemPrompt,
 } from './recognition.mjs'
-import {PRODUCT_CONTRACT_PROMPT_VERSION} from './recognition-output-contract.mjs'
+import {PRODUCT_CONTRACT_PROMPT_VERSION,PRODUCT_GENERATION_EXPERIMENT_VERSION} from './recognition-output-contract.mjs'
 import {
   RECOGNITION_REPAIR_CONTRACT,
   validateRecognitionResult,
@@ -797,7 +797,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   const selectedModel = extractionModel(env)
   const selectedPromptVersion = selectedModel === DEEPSEEK_MULTIMODAL_MODEL
     ? VISION_TEXT_EVALUATION_PROMPT_VERSION
-    : PRODUCT_CONTRACT_PROMPT_VERSION
+    : env.DEEPSEEK_PRODUCT_CONTRACT_VERSION===PRODUCT_GENERATION_EXPERIMENT_VERSION?PRODUCT_GENERATION_EXPERIMENT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
   const systemPrompt = recognitionSystemPrompt({
     modelName: selectedModel,
     productContract: selectedModel !== DEEPSEEK_MULTIMODAL_MODEL,

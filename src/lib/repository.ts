@@ -797,6 +797,8 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
   }
 
   async exportLatestMigrationBackup(): Promise<string | null> {
+    const productUpgrade = await this.canonical.exportProductUpgradeBackup()
+    if (productUpgrade) return productUpgrade
     if (this.latestCanonicalBackupId) {
       return this.exportMigrationBackup(this.latestCanonicalBackupId)
     }

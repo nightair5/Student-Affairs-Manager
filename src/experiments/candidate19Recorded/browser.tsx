@@ -67,7 +67,7 @@ const store: WorkspaceRecordStore & { name: string } = { name: actual.name, read
   if (k === 'current' && failCommit && after?.extractionDrafts.some(d => d.legacyData?.[PENDING_SOURCE_READBACK] && JSON.stringify(d.legacyData[PENDING_SOURCE_READBACK]) !== JSON.stringify(before?.extractionDrafts.find(a => a.id === d.id)?.legacyData?.[PENDING_SOURCE_READBACK]))) { failCommit = false; throw Error('RECORDED_INJECTED_FORMAL_SAVE_FAILURE') }
   return next
 }), transactionMany: (keys, f) => actual.transactionMany(keys, raw => { if (failCheckpoint && keys.some(k => k.startsWith('d20-review-session:'))) { failCheckpoint = false; throw Error('RECORDED_INJECTED_CHECKPOINT_FAILURE') } return f(raw) }) }
-const canonical = new CanonicalWorkspaceRepository(store), initial = emptyWorkspace(); initial.workspace.id = config.database; initial.workspace.title = 'C19 已验证录制产品回放（非真人）'
+const canonical = new CanonicalWorkspaceRepository(store, undefined, undefined, true), initial = emptyWorkspace(); initial.workspace.id = config.database; initial.workspace.title = '产品固定录制验收（非真人）'
 await canonical.initialize(initial)
 const readerStore: WorkspaceRecordStore = { ...store, read: k => { if (k === 'current' && failRead) { failRead = false; return Promise.reject(Error('RECORDED_INJECTED_READBACK_FAILURE')) } return new IsolatedTestStore(config.database).read(k) } }
 const measurement = createOrdinaryMeasurement(store), sidecars = new Map<string, unknown>()

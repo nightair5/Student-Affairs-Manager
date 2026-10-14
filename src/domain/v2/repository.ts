@@ -15,6 +15,9 @@ import {
 const DATABASE_NAME = 'student-affairs-steward'
 const STORE_NAME = 'workspace'
 export const CURRENT_WORKSPACE_RECORD_KEY = 'current'
+export const PRODUCT_STORAGE_VERSION = 'student-affairs-product-storage-1.0.0'
+export const PRODUCT_UPGRADE_BACKUP_KEY = `product-upgrade-backup:${PRODUCT_STORAGE_VERSION}`
+const PRODUCT_STORAGE_MARKER_KEY = `product-storage-marker:${PRODUCT_STORAGE_VERSION}`
 
 export type WorkspaceRecordMutation = (current: unknown) => unknown
 
@@ -281,10 +284,12 @@ export type WorkspaceV7MigrationPreparer = typeof prepareV7ToV8Migration
  * this path never invokes the v7 materializeWorkspaceEntities compatibility projection.
  */
 export class CanonicalWorkspaceRepository {
+  private productBackupReady: Promise<void> | null = null
   constructor(
     private readonly store: WorkspaceRecordStore = new IndexedDbWorkspaceRecordStore(),
     private readonly recordKey = CURRENT_WORKSPACE_RECORD_KEY,
     private readonly prepareMigration: WorkspaceV7MigrationPreparer = prepareV7ToV8Migration,
+    private readonly productUpgradeProtection = store instanceof IndexedDbWorkspaceRecordStore,
   ) {}
 
   async load(): Promise<WorkspaceV8 | null> {
@@ -297,11 +302,70 @@ export class CanonicalWorkspaceRepository {
   }
 
   async save(workspace: WorkspaceV8): Promise<void> {
+    await this.ensureProductUpgradeBackup()
     await this.store.write(this.recordKey, cloneValue(parseWorkspaceV8(workspace)))
+  }
+
+  /** Same object store, no Workspace schema upgrade. A full canonical snapshot is
+   * persisted and checked before the first write by this product storage version.
+   * A failed backup prevents all subsequent business writes; retry is explicit.
+   */
+  private async ensureProductUpgradeBackup(): Promise<void> {
+    // Ordinary IndexedDB enables protection by default. Isolated experiment
+    // stores have their own frozen key protocols and must opt in explicitly.
+    if (!this.productUpgradeProtection) return
+    if (!this.productBackupReady) {
+      this.productBackupReady = this.store.transactionMany(
+        [this.recordKey, PRODUCT_STORAGE_MARKER_KEY, PRODUCT_UPGRADE_BACKUP_KEY],
+        (records) => {
+          const marker = records.get(PRODUCT_STORAGE_MARKER_KEY)
+          if (isRecord(marker) && marker.version === PRODUCT_STORAGE_VERSION && marker.recordKey === this.recordKey) {
+            if (marker.hasBackup === true) this.parseProductUpgradeBackup(records.get(PRODUCT_UPGRADE_BACKUP_KEY))
+            return records
+          }
+          const existing = records.get(this.recordKey)
+          if (existing !== undefined) {
+            const workspace = cloneValue(parseWorkspaceV8(existing))
+            const snapshot = { version: 'product-upgrade-snapshot-1', productStorageVersion: PRODUCT_STORAGE_VERSION,
+              recordKey: this.recordKey, createdAt: new Date().toISOString(), integrityHash: workspaceSnapshotHash(workspace), workspace }
+            if (records.get(PRODUCT_UPGRADE_BACKUP_KEY) !== undefined) {
+              throw new Error('PRODUCT_UPGRADE_BACKUP_ALREADY_EXISTS_WITHOUT_MARKER')
+            }
+            records.set(PRODUCT_UPGRADE_BACKUP_KEY, snapshot)
+          }
+          records.set(PRODUCT_STORAGE_MARKER_KEY, { version: PRODUCT_STORAGE_VERSION, recordKey: this.recordKey, hasBackup: existing !== undefined })
+          return records
+        },
+      ).then((records) => {
+        const marker = records.get(PRODUCT_STORAGE_MARKER_KEY)
+        if (!isRecord(marker) || marker.version !== PRODUCT_STORAGE_VERSION) throw new Error('PRODUCT_UPGRADE_BACKUP_NOT_PERSISTED')
+        if (marker.hasBackup === true) this.parseProductUpgradeBackup(records.get(PRODUCT_UPGRADE_BACKUP_KEY))
+      }).catch((error: unknown) => {
+        this.productBackupReady = null
+        throw new Error('升级前备份未能保存，原数据仍保留；已停止本次写入，可手动重试。', { cause: error })
+      })
+    }
+    await this.productBackupReady
+  }
+
+  private parseProductUpgradeBackup(value: unknown): WorkspaceV8 {
+    if (!isRecord(value) || value.version !== 'product-upgrade-snapshot-1'
+      || value.productStorageVersion !== PRODUCT_STORAGE_VERSION || value.recordKey !== this.recordKey) {
+      throw new Error('PRODUCT_UPGRADE_BACKUP_INVALID')
+    }
+    const workspace = cloneValue(parseWorkspaceV8(value.workspace))
+    if (workspaceSnapshotHash(workspace) !== value.integrityHash) throw new Error('PRODUCT_UPGRADE_BACKUP_INTEGRITY')
+    return workspace
+  }
+
+  async exportProductUpgradeBackup(): Promise<string | null> {
+    const raw = await this.store.read(PRODUCT_UPGRADE_BACKUP_KEY)
+    return raw === undefined ? null : exportWorkspaceV8(this.parseProductUpgradeBackup(raw))
   }
 
   /** An empty workspace is initialized atomically; another tab's record wins. */
   async initialize(workspace: WorkspaceV8): Promise<WorkspaceV8> {
+    await this.ensureProductUpgradeBackup()
     const initial = cloneValue(parseWorkspaceV8(workspace))
     const result = await this.store.transaction(this.recordKey, (raw) => raw === undefined
       ? initial
@@ -310,6 +374,7 @@ export class CanonicalWorkspaceRepository {
   }
 
   async transaction(mutate: CanonicalWorkspaceMutation): Promise<WorkspaceV8> {
+    await this.ensureProductUpgradeBackup()
     const result = await this.store.transaction(this.recordKey, (raw) => {
       if (raw === undefined) throw new Error('WORKSPACE_V8_NOT_INITIALIZED')
       const current = cloneValue(parseWorkspaceV8(raw))

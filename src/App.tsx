@@ -1350,16 +1350,18 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     if (runtime) { rejectExperimentAction(); return }
     const serialized = await workspaceRepository.exportLatestMigrationBackup()
     if (!serialized) {
-      setNotice({ text: '当前没有可导出的 Schema 迁移前备份。' })
+      setNotice({ text: '当前没有升级前备份；全新工作区无需升级备份。你仍可在项目档案导出当前数据。' })
       return
     }
     const url = URL.createObjectURL(new Blob([serialized], { type: 'application/json;charset=utf-8' }))
     const anchor = document.createElement('a')
     anchor.href = url
-    anchor.download = `student-affairs-migration-backup-${new Date().toISOString().slice(0, 10)}.json`
+    anchor.download = `student-affairs-upgrade-backup-${new Date().toISOString().slice(0, 10)}.json`
+    document.body.append(anchor)
     anchor.click()
-    URL.revokeObjectURL(url)
-    setNotice({ text: '已导出迁移前备份；回滚前请先保留当前备份。' })
+    anchor.remove()
+    setTimeout(() => URL.revokeObjectURL(url), 1_000)
+    setNotice({ text: '已下载升级前备份；恢复前请先保留当前数据备份。' })
   }
 
   const handleExportRecoveryBackup = async () => {
