@@ -200,7 +200,7 @@ export function normalizeRecognitionResult(
     if (!item || typeof item !== 'object' || Array.isArray(item) || !text(item.title, 100)) return []
     const linkedEvidence = strings(item.evidenceIds).filter((id) => evidenceIds.has(id))
     const inferenceLevel = INFERENCE_LEVELS.has(item.inferenceLevel) ? item.inferenceLevel : linkedEvidence.length ? 'explicit' : 'optional_suggestion'
-    return [{ tempId: text(item.tempId, 100, `event-${index + 1}`), title: text(item.title, 100), description: text(item.description, 500), startTimePointTempId: text(item.startTimePointTempId, 100) || null, endTimePointTempId: text(item.endTimePointTempId, 100) || null, location: text(item.location, 160) || null, evidenceIds: linkedEvidence, confidence: number01(item.confidence), inferenceLevel, selected: inferenceLevel === 'explicit' && linkedEvidence.length > 0 }]
+    return [{ tempId: text(item.tempId, 100, `event-${index + 1}`), title: text(item.title, 100), description: text(item.description, 500), startTimePointTempId: text(item.startTimePointTempId, 100) || null, endTimePointTempId: text(item.endTimePointTempId, 100) || null, location: text(item.location, 160) || null, ...(Array.isArray(item.relatedTaskTempIds)?{relatedTaskTempIds:strings(item.relatedTaskTempIds)}:{}), evidenceIds: linkedEvidence, confidence: number01(item.confidence), inferenceLevel, selected: item.selected!==false && inferenceLevel === 'explicit' && linkedEvidence.length > 0 }]
   })
   const rawMatch = raw.projectMatch && typeof raw.projectMatch === 'object' ? raw.projectMatch : {}
   const decision = ['new_project', 'existing_project', 'standalone_task', 'uncertain'].includes(rawMatch.decision) ? rawMatch.decision : 'uncertain'

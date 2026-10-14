@@ -4,6 +4,7 @@ import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { DraftItem, ExtractionDraft, Project, Source, TaskCategory } from '../types'
 import type { InferenceLevel } from '../types'
 import { assessFocusedReview } from '../recognition/focusedReview'
+import {sourceCoverageHints} from '../recognition/sourceCoverageHints'
 import { timePointDisplayLabel } from '../recognition/recognitionModePresentation'
 import type { ComponentType, ReactNode } from 'react'
 import type { WorkspaceV8 } from '../domain/v2/types'
@@ -186,6 +187,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
   const sourceText = source?.content ?? source?.rawText ?? source?.contentPreview ?? '原文暂不可用'
   const evidenceIndex = activeEvidence ? sourceText.indexOf(activeEvidence) : -1
   const recognition = draft.recognitionResult
+  const coverageHints=recognition?sourceCoverageHints(sourceText,recognition):[]
   const focusedReview = recognition ? assessFocusedReview(recognition, {
     ...(source?.reviewMetadata ?? {}),
     sourceType: source?.type,
@@ -317,6 +319,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
             <span><strong>{needsReviewAttention ? '这些例外需要核对' : '建议已整理'}</strong><small>{needsReviewAttention ? focusedReview?.attentionReasons.map((reason) => reason.title).join('；') || recognition.quality.reviewReasons.join('；') : `已整理${focusedReview?.counts.tasks ?? 0}项任务、${recognition.materials.length}项材料、${recognition.events.length}个事件；详细依据可展开查看`}</small></span>
             <button type="button" className="text-button" disabled={isolatedCapabilities} onClick={() => { if (!isolatedCapabilities) onKeepExplicit() }}>只保留原文明确</button>
           </div>
+          {coverageHints.length>0&&<section className="focused-review-callout" aria-label="方案尚未覆盖的原文"><h3>原文还有这些内容</h3><p>已整理的正确事项仍可一次接受；以下内容保留原文，不会自动补成事实。</p><ul>{coverageHints.map(h=><li key={h.kind+h.quote}><strong>{h.title}</strong><span>{h.detail}</span><blockquote>{h.quote}</blockquote><button type="button" className="text-button" onClick={()=>setActiveEvidence(h.quote)}>在原文中定位</button></li>)}</ul></section>}
           {focusedReview?.needsFocusedReview && <details className="focused-review-callout" aria-label="聚焦复核原因"><summary>查看核对原因与来源提取状态</summary>
             <header><AlertTriangle size={18} /><div><strong>仅需处理以下待定项</strong><small>其余有依据的事项仍可单独接受。</small></div></header>
             <ul>{focusedReview.attentionReasons.map((reason) => <li key={reason.code}><strong>{reason.title}</strong><span>{reason.detail}</span></li>)}</ul>

@@ -1,6 +1,6 @@
 import type {RecognitionResult,TimePointSuggestionV2} from './types'
 export const SOURCE_CURRENT_FACTS_VERSION='source-current-facts-1.0.0'
-export interface SourceCurrentFactAudit {entityId:string;quote:string;before:TimePointSuggestionV2;ownerTaskIds:string[];rule:'EXPLICITLY_REPLACED_DEADLINE'}
+export interface SourceCurrentFactAudit {entityId:string;quote:string;before:TimePointSuggestionV2;replacementId:string;ownerTaskIds:string[];resolvedConflicts:RecognitionResult['conflicts'];rule:'EXPLICITLY_REPLACED_DEADLINE'}
 /** Remove a proven old endpoint from the current suggestion graph, keeping its
  * original bytes in RecognitionRun and a full before/quote in the program audit.
  * Never invent the replacement or choose between contradictory object owners.
@@ -17,9 +17,15 @@ export function retainCurrentDeadlineFacts(result:RecognitionResult,source:strin
   const declaration=source.slice(Math.max(0,oldAt-80),oldAt+tail.indexOf(next.rawText)+next.rawText.length+70);
   if(!owner.actionObject||!declaration.includes(owner.actionObject)||!proof.includes(owner.actionObject)&&!source.slice(Math.max(0,oldAt-80),oldAt).includes(owner.actionObject))continue
   const otherOwners=tasks.filter(t=>t.tempId!==owner.tempId&&t.actionObject!==owner.actionObject&&declaration.includes(t.actionObject));if(otherOwners.length)continue
-  decisions.push({entityId:old.tempId,quote:proof,before:structuredClone(old),ownerTaskIds:oldOwners.map(t=>t.tempId),rule:'EXPLICITLY_REPLACED_DEADLINE'});
+  decisions.push({entityId:old.tempId,quote:proof,before:structuredClone(old),replacementId:next.tempId,ownerTaskIds:nextOwners.map(t=>t.tempId),resolvedConflicts:[],rule:'EXPLICITLY_REPLACED_DEADLINE'});
  }
  const ids=new Set(decisions.map(d=>d.entityId));result.timePoints=result.timePoints.filter(p=>!ids.has(p.tempId));for(const t of tasks)t.timePointTempIds=t.timePointTempIds.filter(id=>!ids.has(id));
+ result.conflicts=result.conflicts.flatMap(c=>{
+  const d=decisions.find(d=>c.entityTempIds.includes(d.entityId));if(!d)return [c]
+  const resolved=new Set([d.entityId,d.replacementId,...d.ownerTaskIds,...d.before.relatedMaterialTempIds]);
+  if(c.type==='deadline'&&c.entityTempIds.every(id=>resolved.has(id))){d.resolvedConflicts.push(structuredClone(c));return []}
+  return [{...c,entityTempIds:c.entityTempIds.filter(id=>!ids.has(id))}]
+ });
  for(const d of decisions)if(!result.ignoredContent.some(x=>x.text===d.quote))result.ignoredContent.push({text:d.quote,reason:'policy'});
  return decisions
 }

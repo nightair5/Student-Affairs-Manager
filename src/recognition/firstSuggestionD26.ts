@@ -7,8 +7,9 @@ import { rangeEndpointSupport } from './rangeEndpointSupport'
 import { taskActionText } from '../lib/taskActionText'
 import { supportedCoordinatedObject, supportedEventDescriptor, supportedEventOperation } from './compoundNameSupport'
 import {retainCurrentDeadlineFacts,type SourceCurrentFactAudit} from './sourceCurrentFacts'
+import {completeDeclaredEventNameSupport,type DeclaredEventNameAudit} from './declaredEventNameSupport'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.8.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.9.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -17,6 +18,8 @@ export interface D26FirstSuggestionAudit {
   times: Array<{ entityId: string; before: TimeFields; after: TimeFields; interpretation: D26TimeInterpretation }>
   unresolved: Array<{ entityId: string; reason: string }>
   sourceCurrentness: SourceCurrentFactAudit[]
+  declaredEventNameSupport: DeclaredEventNameAudit[]
+  projectDisplayDefault: {before:string;after:string;reason:string}|null
   actionFields: Array<{entityId:string; before:string; after:string; status:'CITED_VERB_PROJECTION'|'LOCAL_UNRESOLVED_ACTION'; quotes:string[]}>
   rangeSupport: Array<{entityId:string; quote:string; literalRange:string; expanded:string; rule:'CITED_SAME_EVENT_RANGE_ENDPOINT'|'CITED_SAME_EVENT_CLOCK_RANGE'|'CITED_ADJACENT_SAME_DAY_EVENT'}>
   role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT'
@@ -24,7 +27,7 @@ export interface D26FirstSuggestionAudit {
 type TimeFields = Pick<TimePointSuggestionV2, 'normalizedValue' | 'timezone' | 'isAllDay' | 'precision' | 'needsConfirmation'>
 const fields = (point: TimeFields): TimeFields => ({ normalizedValue: point.normalizedValue, timezone: point.timezone,
   isAllDay: point.isAllDay, precision: point.precision, needsConfirmation: point.needsConfirmation })
-const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], sourceCurrentness:[], actionFields: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
+const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], sourceCurrentness:[], declaredEventNameSupport:[], projectDisplayDefault:null, actionFields: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
 const supported = (value: string, quotes: string[]) => Boolean(value.trim()) && quotes.some(quote => quote.includes(value))
 function supportedAdjacent(value: string, quotes: string[], sourceText: string) {
   if (supported(value, quotes)) return true
@@ -224,6 +227,13 @@ export function adaptModelWireD26(input: unknown, context: WireContext) {
 export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string }) {
   const result = structuredClone(input), audit = auditRecord()
   audit.sourceCurrentness=retainCurrentDeadlineFacts(result,context.sourceText)
+  audit.declaredEventNameSupport=completeDeclaredEventNameSupport(result,context.sourceText)
+  if(result.projectMatch.decision==='uncertain'&&!result.projectMatch.matchedProjectId&&!result.projectSuggestion&&result.milestones.length===0&&result.standaloneTasks.length>0&&!/项目|课题|立项/u.test(context.sourceText)){
+    const reason='通知未声明项目结构，先作为独立事项；项目关联可稍后调整。'
+    audit.projectDisplayDefault={before:'uncertain',after:'standalone_task',reason}
+    result.projectMatch.decision='standalone_task';result.projectMatch.reasons=[...result.projectMatch.reasons,reason]
+    result.quality.reviewReasons=result.quality.reviewReasons.filter(r=>r!=='项目归属不确定')
+  }
   const quote = (ids: string[]) => ids.flatMap(id => {
     const evidence = result.evidence.find(row => row.id === id)
     return evidence?.quote && context.sourceText.includes(evidence.quote) ? [evidence.quote] : []
