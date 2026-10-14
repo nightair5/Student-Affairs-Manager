@@ -1,11 +1,11 @@
 import type {RecognitionResult} from './types'
-export const SOURCE_COVERAGE_HINT_VERSION='source-coverage-hints-1.0.0'
+export const SOURCE_COVERAGE_HINT_VERSION='source-coverage-hints-1.1.0'
 export interface SourceCoverageHint {kind:'unread_reference'|'unrepresented_time_range'|'unrepresented_action';title:string;detail:string;quote:string}
 /** UI disclosure only. Source snippets are not inferred entities or Expected.
  * It neither repairs a model answer nor blocks unrelated valid confirmations.
  */
 export function sourceCoverageHints(source:string,result:RecognitionResult):SourceCoverageHint[]{
- const hints:SourceCoverageHint[]=[],points=result.timePoints.map(p=>[p.rawText,p.normalizedValue??''].join(' ')),tasks=[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
+ const hints:SourceCoverageHint[]=[],points=result.timePoints.filter(p=>!p.type.endsWith('_deadline')).map(p=>[p.rawText,p.normalizedValue??''].join(' ')),tasks=[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
  for(const clause of source.split(/[。；\n]/u).map(x=>x.trim()).filter(Boolean)){
   if(/附件|群文件|同上|上条/u.test(clause)&&/未提供|没贴|没一起贴|未贴|未读取|没有提供/u.test(clause))hints.push({kind:'unread_reference',title:'还有未放入的补充内容',detail:'当前只整理已放入的文字；这部分补充没有被读取，不会猜补其中的要求。',quote:clause})
   if(/取消|作废|配图|历史|举例|示例/u.test(clause))continue

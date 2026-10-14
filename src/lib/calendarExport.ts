@@ -58,6 +58,20 @@ export function buildCalendarIcs(tasks: Task[], generatedAt = new Date(), option
   const lines = calendarHeader('学生事务管家')
   const timeZone = options.defaultTimezone ?? DEFAULT_WORKSPACE_TIMEZONE
   tasks.filter((task) => task.status !== '已完成').forEach((task) => {
+    if (task.plannedStart) {
+      const planned = parseBusinessDateTime(task.plannedStart, timeZone)
+      if (!planned) throw new Error('INVALID_CALENDAR_DATE')
+      const minutes = task.plannedMinutes ?? (task.estimatedMinutesKnown === false ? undefined : task.estimatedMinutes)
+      if (minutes !== undefined && (!Number.isFinite(minutes) || minutes <= 0 || minutes > 480)) throw new Error('INVALID_PERSONAL_PLAN_DURATION')
+      const reminder = explicitReminder(task, timeZone)
+      lines.push('BEGIN:VEVENT', `UID:${escapeIcs(task.id)}@student-affairs.site`, `DTSTAMP:${utcStamp(generatedAt)}`,
+        `DTSTART:${utcStamp(planned)}`,
+        ...(minutes === undefined ? [] : [`DTEND:${utcStamp(new Date(planned.getTime() + minutes * 60_000))}`]),
+        `SUMMARY:${escapeIcs(task.title)}`,
+        `DESCRIPTION:${escapeIcs(`${task.nextAction}\n个人安排：${minutes === undefined ? '时长尚未确定，未生成结束时刻' : `${minutes}分钟`}\n原文截止：${task.sourceDeadlineLabel || task.deadline || '未说明'}\n分类：${task.category}`)}`,
+        ...(reminder ? alarmLines(reminder, task) : []), 'END:VEVENT')
+      return
+    }
     if (isDateOnly(task.deadline)) {
       const reminder = explicitReminder(task, timeZone)
       lines.push(

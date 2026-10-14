@@ -285,6 +285,9 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     const legacy = v7Record<LegacyTask>(item.legacyData)
     const sourceIds = sourceIdsForTask(item)
     const deadline = taskDeadline(workspace, item.id)
+    const personalPlan = workspace.timePoints.find((point) => point.type === 'planned_start' && point.relatedTaskIds.includes(item.id))
+    const personalPlanData = personalPlan?.legacyData?.personalPlanD27
+    const plannedMinutes = personalPlanData && typeof personalPlanData === 'object' && !Array.isArray(personalPlanData) && typeof personalPlanData.minutes === 'number' ? personalPlanData.minutes : undefined
     return {
       id: item.id,
       projectId: item.projectId ?? undefined,
@@ -315,7 +318,8 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       sourceIds,
       priorityReason: legacy.priorityReason ?? '由当前权威实体计算并允许手动调整',
       priorityReasons: legacy.priorityReasons,
-      plannedStart: workspace.timePoints.find((point) => point.type === 'planned_start' && point.relatedTaskIds.includes(item.id))?.normalizedValue ?? undefined,
+      plannedStart: personalPlan?.normalizedValue ?? undefined,
+      plannedMinutes,
       completedAt: legacy.completedAt,
       manualPriority: item.manualPriority ?? undefined,
       computedPriorityScore: legacy.computedPriorityScore,

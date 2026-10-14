@@ -355,7 +355,7 @@ export function TaskDetailPanel({
               <span>
                 <small>截止时间</small>
                 <strong>{dateView?.label ?? task.sourceDeadlineLabel ?? formatDeadline(task.deadline)}</strong>
-                {task.plannedStart && <small>我的计划：{task.plannedStart}（不改变原文截止）</small>}
+                {task.plannedStart && <small>我的计划：{formatDeadline(task.plannedStart)}（不改变原文截止）</small>}
               </span>
             </div>
             <div>
@@ -563,11 +563,11 @@ export function TaskDetailPanel({
                     <li key={entry.id}>
                       <i />
                       <span>
-                        <strong>{entry.field}</strong>
+                        <strong>{entry.field === 'personal_plan' ? '个人安排' : entry.field === 'created' ? '创建事项' : entry.field}</strong>
                         <small>
-                          {entry.before ? `${entry.before} → ` : ''}
-                          {entry.after}
+                          {entry.field === 'personal_plan' ? '已更新个人开工时段；原文截止不变。' : entry.field === 'created' ? '确认后加入任务中心。' : <>{entry.before ? `${entry.before} → ` : ''}{entry.after}</>}
                         </small>
+                        {entry.field === 'personal_plan' && <details><summary>查看安排前后记录</summary><pre>{entry.before || '尚无安排'}{'\n→\n'}{entry.after}</pre></details>}
                         <time>
                           {new Intl.DateTimeFormat('zh-CN', {
                             month: 'numeric',

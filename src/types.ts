@@ -119,6 +119,7 @@ export interface Task {
   sourceIds: string[]
   priorityReason: string
   plannedStart?: string
+  plannedMinutes?: number
   completedAt?: string
   manualPriority?: number
   computedPriorityScore?: number
