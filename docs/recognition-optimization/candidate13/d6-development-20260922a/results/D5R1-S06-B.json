@@ -1,0 +1,195 @@
+{
+  "version": "candidate13-d6-result-1",
+  "unitId": "D5R1-S06-B",
+  "sourceId": "C13-D5R1-S06",
+  "arm": "B",
+  "ordinal": 11,
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "requestSha256": "9b563f8432eef1bcec55fea5d8250c123532c8a3f0cee2d8971d303142c1d821",
+  "responseSha256": "ed1aa6cc6c87fb9858738b4604c3ac904eb0143a0b3af0cadb4797c473e379be",
+  "transportStatus": "COMPLETED_HTTP_200",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "waitingMs": 4889,
+  "parseError": null,
+  "parseStage": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-fill-roster",
+        "propositionScopeIds": [
+          "scope-0002-cc67de68944fb6e99826b881071d0fb9d482709899687f6ca11c14bc90597e39",
+          "scope-0003-aeb3dd061f05b9bf3013f5a045a88f07eab7e795c88292fc555e61364fc4d914"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "fill",
+        "action": {
+          "scopeId": "scope-0002-cc67de68944fb6e99826b881071d0fb9d482709899687f6ca11c14bc90597e39",
+          "surface": "补全"
+        },
+        "object": {
+          "scopeId": "scope-0002-cc67de68944fb6e99826b881071d0fb9d482709899687f6ca11c14bc90597e39",
+          "surface": "田野调查名册"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "补全田野调查名册",
+          "description": "补全田野调查名册，名册必填栏均已填写。",
+          "completionCriteria": [
+            "名册必填栏均已填写"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-field-roster"
+          ],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-submit-roster",
+        "propositionScopeIds": [
+          "scope-0003-aeb3dd061f05b9bf3013f5a045a88f07eab7e795c88292fc555e61364fc4d914",
+          "scope-0004-eae550b1d67688e611d87cab400184b3dc4d060e79b8d30d1135dc2d65097650",
+          "scope-0005-5bb358a939a19a02d851f5909af37006199a55c3bbcef6caa8813c12b5a85e72",
+          "scope-0006-f08301335761a37e5832aa81071887afe1465c8807e97090e26390ac94d46109"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0004-eae550b1d67688e611d87cab400184b3dc4d060e79b8d30d1135dc2d65097650",
+          "surface": "报送"
+        },
+        "object": {
+          "scopeId": "scope-0004-eae550b1d67688e611d87cab400184b3dc4d060e79b8d30d1135dc2d65097650",
+          "surface": "田野调查名册"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "报送田野调查名册",
+          "description": "在名册必填栏均已填写后，报送田野调查名册；格式为XLSX；以办公室确认收到名册为完成。",
+          "completionCriteria": [
+            "办公室确认收到名册"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [
+            "task-fill-roster"
+          ],
+          "materialTempIds": [
+            "material-field-roster"
+          ],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "unknown",
+          "conditionScopeIds": [
+            "scope-0003-aeb3dd061f05b9bf3013f5a045a88f07eab7e795c88292fc555e61364fc4d914"
+          ],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-field-roster",
+        "name": "田野调查名册",
+        "required": true,
+        "formatRequirements": [
+          "XLSX"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-fill-roster",
+          "task-submit-roster"
+        ],
+        "scopeIds": [
+          "scope-0002-cc67de68944fb6e99826b881071d0fb9d482709899687f6ca11c14bc90597e39",
+          "scope-0004-eae550b1d67688e611d87cab400184b3dc4d060e79b8d30d1135dc2d65097650",
+          "scope-0005-5bb358a939a19a02d851f5909af37006199a55c3bbcef6caa8813c12b5a85e72"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-2ab3cb3e6433356c812b15f805fb15e08d15a777088b9cab776ebfbaa01d8dc1",
+      "scope-0006-f08301335761a37e5832aa81071887afe1465c8807e97090e26390ac94d46109"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C13-D5R1-S06",
+    "sourceVersionId": "C13-D5R1-S06-v1",
+    "sourceFingerprint": "sha256:3a6c8643954d19ef7d3f8243427040821e259cdfd140ed2aeebfa93909a91b06"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 5282,
+    "input_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "output_tokens": 1307,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 6589
+  },
+  "costUpperMicroUsd": 3153,
+  "providerBilledUsd": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0,
+  "verifierCalls": 0
+}

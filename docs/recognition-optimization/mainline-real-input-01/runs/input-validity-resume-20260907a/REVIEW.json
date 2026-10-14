@@ -1,0 +1,76 @@
+{
+  "status": "BLOCKED_SCOPE_EXCEPTION_REQUIRED",
+  "coreStatus": "PASS_SCOPE_ONLY",
+  "stage": "MAINLINE-REAL-INPUT-01",
+  "runId": "input-validity-resume-20260907a",
+  "coreReviewer": "real_input_validity_review",
+  "scopeReviewer": "real_input_home_scope_review",
+  "checks": [
+    {
+      "status": "PASS_SCOPE_ONLY",
+      "passed": 75,
+      "scope": "runtime20 + selected five old MAINLINE05 files55; before length repair, not cumulative sample"
+    },
+    {
+      "status": "PASS_SCOPE_ONLY",
+      "passed": 1,
+      "skipped": 20,
+      "scope": "final length boundary only; all other tests intentionally not repeated"
+    }
+  ],
+  "coreShaBindings": [
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "sha256": "674ceed04f9f7826445ffc8f4834547fdd54d3193d9f17efcaf04943e64462fa"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.ts",
+      "sha256": "0867190caceed2f98ccaf8a1a7807597127e023360a1147399dec8a289fb444e"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.ts",
+      "sha256": "1240b21eb8860209b52a95b8b0b807b46fc6266e300872de24a240d4f199fb99"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "sha256": "e0cc3ad8c220ff39a3aa2f66f90087adce3961324b14649fcfe801e3da6aa4fa"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "sha256": "a603f42b0071ddc03410d17690f9acc73b9782819e2faf663b40dcf94b595487"
+    },
+    {
+      "path": "src/experiments/realInput01/FactCorrectionEditor.tsx",
+      "sha256": "af44576b26579845e5faa77a57dca6036d9fa1dcd86092747226ea3a0377cf91"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.test.ts",
+      "sha256": "e5fe626233b882015cc775b68a41fb5c4819fc6605ed56d87fe8d4f5cd51c142"
+    }
+  ],
+  "findings": [
+    {
+      "id": "REGISTERED_SOURCE_VALIDITY_P1",
+      "status": "CLOSED_SCOPE_ONLY"
+    },
+    {
+      "id": "REGISTERED_OBJECT_TITLE_P2",
+      "status": "CLOSED_SCOPE_ONLY"
+    },
+    {
+      "id": "DERIVED_TITLE_LENGTH_P2",
+      "status": "CLOSED_SCOPE_ONLY",
+      "normalControl": "Explicit short title succeeds; original long object and response retained"
+    },
+    {
+      "id": "DASHBOARD_REAL_INPUT_PRESENTATION_SCOPE",
+      "status": "NEEDS_USER_AUTHORIZATION",
+      "severity": "scope gap, not observed model exfiltration",
+      "path": "src/pages/DashboardPage.tsx",
+      "sha256": "086e26060f74e988a612b62b75796970b30d4b4aa4196cfb96489bb72d7455f9"
+    }
+  ],
+  "noNewMajorSafetyFinding": true,
+  "modelCalls": 0,
+  "modelAccuracy": "本轮未测量"
+}

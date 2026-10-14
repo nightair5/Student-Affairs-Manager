@@ -1,0 +1,54 @@
+# 登记用量歧义修复独立复核
+
+范围：仅本轮预算结算与Node测试；不是整包发送或产品验收。
+审查者：无历史上下文独立代理real_input_usage_fix_review；结论PASS，无阻断。
+
+原始JSON在使用解析值结算前逐对象扫描解码后的属性名。重复/冲突属性（含Unicode转义同名）拒绝；数组/字符串中的伪JSON不混作属性，独立对象可用相同键。拒绝时保留完整3.30元未知预留，重开仍停发，不结算、不重试。正常响应仍以390微元结算并允许下一合法单元。深度上限64。
+
+主代理首次反例53 PASS / 1 FAIL；修复后54/54。独立运行54/54，另做10个内存探针，不与54合并成更多独立样本。独立首次命令因缺REAL_INPUT_TEST_TEMP在设置前拒绝，换新临时目录后运行；不隐去该环境失败。
+
+- budget SHA-256：34a921f06b4889e49935f26b9353e47b57e380f69783713c187caad2516b4ff8
+- budget Node test SHA-256：9091c31ac0d37fb9398ccaadad57f7d0b17c1a6c70f2fab5df8e1b2f672ca922
+- gateway只读复用SHA-256：c6386e89fd91fb6ed0bd05eec4b15357c06a5c2c2a4e754044e9416618bd4de1
+
+这些文件尚未业务提交，审查绑定工作区逐字SHA，不以HEAD代替。旧52断言未删除或弱化。0真实模型调用；模型识别准确率本轮未测量。新浏览器/runner/输入评分绑定仍须独立核验，不能以此复核代替。
+
+## 本机入口独立复核（后续追加）
+
+首审real_input_local_entry_review：REJECT_CANDIDATE；三个范围内问题为请求sourceContent字段、工程工具未复用故障store、重复准备时新consent与旧operation冲突。保留首次失败日志，不将未验收草稿说成通过。首次评审不是重大安全停止。
+
+修正后另请无上下文real_input_browser_recheck：PASS_SCOPE_ONLY。独立runtime23/23、Node入口6/6（含父套件，5子测试）；无新增阻断。初始化只能对空记录写入且禁止覆盖，工程工具与App同store，prepare重复复用原pending身份。未读凭据、未调用模型；该审查不代表真实浏览器或付费发送通过。
+
+- browser.tsx SHA：36f31fa8aad526eb26f74d730739e10e216b746b8c7000aef2ebbc91d143029c
+- runtime.ts SHA：b1772951acefc6ef423fa3a3d9c1c7486c0862647e3c5f34358887839930250f
+- serve-mainline-real-input-01.mjs SHA：f5a2e6f04dfbee6fe23933c2276b68d028cb7654550cae41d8457b57c63d8af8
+- runtime.test.ts SHA：fd30847c08d7e0533a60588d4d79729a768c323020b7622f9c567c2815027cbf
+- check-mainline-real-input-01.node-test.mjs SHA：e6e000c03bef1ef7179729c8b2eac1a7eaa8613ba48443b47ec0b886b57415d6
+
+所有数字分层，不与预算54合并为更多样本。评分与绑定器另行独立审查中。
+
+## 评分和绑定首审（后续追加，保留失败）
+
+real_input_binding_review：REJECT_CANDIDATE，无HARD_STOP。原样8对照正常；标题/完成条件错误未计入，以及同名动作对象的实体关系互换被拆分集合匹配掩盖。绑定器中只改声明库名但保留实际库ID，以及B02复制B01均可过。审查只内存变形和截获输出，未写STATE/模型请求/Expected。
+
+审查时runner SHA 2cdbd8b5f28fb597b8279e7368909c7a202d15281838035d035365294d2f4093；evaluation SHA 8e6ec1b3a5dba0822daed7e82a1a815e94cadd6637a7c7962c3605423893adc7。后续范围内修复已保留新回归。主代理首completionCriteria测试误用string产生形状错误，不当业务反例；修为真实string[]后3个有效失败，再加同名关系反例共4失败/22通过。修后26/26，不改参考。
+
+## 新无上下文首调复核
+
+real_input_first_send_review最终PASS_SCOPE_ONLY，无重大安全/预算阻断。88项定向检查通过；独立新临时持久账本+内存假provider组合16/16正常（只有8独立语义来源），越序与重复均拒绝。这些都是0真实模型调用，不混成真实质量样本。B07正常对照按唯一相同scope文字重绑实际新输入ID，仅构造模拟响应，不改输入或参考。
+
+评分关键标题、描述、完成条件纳入；同名匹配歧义明确待核对、不授满分。真实workspace.id、单元来源/receipt/case/工程载体绑定；16实际输入正常通过。首调执行器仅原顺序单元、0retry/Repair/verifier、3.30元滚动预留、≤24请求/≤10元。文件和依赖变化、无审批或预算异常不得发送。公开官方文档直接HTTP200核验，不以文档支持冒充本账号认证。
+
+- 42源码清单SHA：f9b386d19f6e703576238c04e8d16085bbbb8786bd20243c51523d515b7302c1
+- STATE文件SHA：d478c58f7f44e68a852bc7712c5d3e7994f2390750f5915d65204963dff9e73b
+- billing对象JSON.stringify SHA：8c227e48e58a525400a713b3127ecb83211c7d317497c94f0ed43b66719e896c
+- runner最终SHA：eb01723598db14cbaeb9d9418a7611955e5fdf48cac3a3d209ddc4fc9d31b4c6
+- evaluation最终SHA：09ef0efff89c25761c721696da88de5fd73b74af0a417470e8f6af11979a6745
+- modelWire.test最终SHA：dc417bf97d7cd0dedbffcdb70396cf0a915808cf423e7578b6a9c6cc1747f0ce
+- Node检查最终SHA：9a6ad7110ab868fe7930b70d3fe564ed64f0cd805f400f8b556926fd3651ef32
+
+全部42逐字SHA在REVIEW.json绑定；主代理写审批前复核三个摘要一致，才启动A01。真实调用结果另见RESULT/账本，不提前宣称通过。
+
+## A01失败证据独立复核
+
+real_input_first_send_review后续只读复核：证据通过，业务未通过。manifest与账本链一致，1 reserve/0 settle，随后TRANSPORT_OR_CRASH_UNKNOWN。完整3.30元未知预留保留；实际扣费NOT_OBSERVABLE，其他15单元未运行。RAW_RESULTS为0字节，无模型评分结果。local502不能写成观测上游HTTP502，不能断言未到达服务商或没有扣费。复核0新网络/模型请求，未改账本/文件。

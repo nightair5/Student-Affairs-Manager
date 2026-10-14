@@ -1,0 +1,26 @@
+✔ selector uses matched obligations, not expected IDs for empty matches (0.9304ms)
+✖ posthoc diagnosis retains all historical denominators and separates risks from disputed representation (41.237ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 169.759
+
+✖ failing tests:
+
+test at scripts\d19-offline-diagnostic.node-test.mjs:13:1
+✖ posthoc diagnosis retains all historical denominators and separates risks from disputed representation (41.237ms)
+  Error: D17_SCORE_LEDGER_DRIFT
+      at check (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/score-candidate17-d17.mjs:15:44)
+      at scoreD17 (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/score-candidate17-d17.mjs:26:3)
+      at diagnoseD19 (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/d19-offline-diagnostic.mjs:13:24)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/d19-offline-diagnostic.node-test.mjs:14:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)

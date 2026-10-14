@@ -1,0 +1,343 @@
+{
+  "unitId": "S03-08",
+  "arm": "08",
+  "cohort": "seen",
+  "bindingSha": "edb0f3cafde17cf0e7080ac11aeaadebc8e338cd626b807edc5149a2b81a0b76",
+  "requestSha": "4fd4ed718f725dd845cb5ca815e19d9d2dd76289e05474b9f57cbf676f972e3e",
+  "responseSha": "818ff8c85b9264468d4806654d4ec8a3315d8e24461854f511b6e1ee8465c6c0",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "a53998f9cf80293ff170e1a7e4d0c134dad6a6717647c91556ccec54931d6da8",
+  "scoreInput": "semantic projection into frozen scorer; provider raw unchanged",
+  "rawEvidence": {
+    "schemaVersion": "real-input-evidence-role-wire-1",
+    "tasks": [
+      {
+        "id": "task-1",
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "save",
+        "action": {
+          "scopeId": "scope-0002-afc280206a5fbb7732d5170f8f5e55b7810d782dfd372a269d99ad219e1bab75",
+          "surface": "保存"
+        },
+        "object": {
+          "scopeId": "scope-0002-afc280206a5fbb7732d5170f8f5e55b7810d782dfd372a269d99ad219e1bab75",
+          "surface": "服务现场原始照片"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "保存服务现场原始照片",
+          "description": "参与者保存服务现场原始照片，以供本人以后查询。",
+          "completionCriteria": [
+            "服务现场原始照片已保存"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionRoleIds": [],
+          "factRoleIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "evidenceRoleIds": [
+          "role-1"
+        ]
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-1",
+        "name": "服务现场原始照片",
+        "required": true,
+        "formatRequirements": [
+          "原始照片"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "confidence": 0.95,
+        "evidenceRoleIds": [
+          "role-2"
+        ]
+      }
+    ],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "evidenceRoles": [
+      {
+        "id": "role-1",
+        "role": "directive_action",
+        "scopeIds": [
+          "scope-0002-afc280206a5fbb7732d5170f8f5e55b7810d782dfd372a269d99ad219e1bab75"
+        ]
+      },
+      {
+        "id": "role-2",
+        "role": "material_requirement",
+        "scopeIds": [
+          "scope-0002-afc280206a5fbb7732d5170f8f5e55b7810d782dfd372a269d99ad219e1bab75"
+        ]
+      },
+      {
+        "id": "role-3",
+        "role": "information_only",
+        "scopeIds": [
+          "scope-0001-e5abd7ddff4cc2910631b1eb25ea31c6d3baccdbf1e518cae5136724c826ddc4",
+          "scope-0003-04508bc05732193c893ba2446c6de598642113b55d29132532cedfa10b3034ec",
+          "scope-0004-e0ad565a2ebc070c07db5025c50a59792d76d4d25c078aee125b13c41382c921",
+          "scope-0005-0a14f6e412acf4ad683939e76d9789e4b8bb7349d5906654cf78573d4ae5e900",
+          "scope-0006-6f3324a9c9486e0c198dab6892963b472c42f43eabd6c1b402e3448695949628",
+          "scope-0007-cf9b98c668f429a4664dfb1ba02f77e18d37ae32e8325275fb9724d4c7ab914d",
+          "scope-0008-131b825b7883cf84457ac77c1a721c4afd56d1c356398a683a1dbc1d473defbb"
+        ]
+      }
+    ],
+    "informationRoleIds": [
+      "role-3"
+    ],
+    "unresolvedRoleIds": []
+  },
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-1",
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "save",
+        "action": {
+          "scopeId": "scope-0002-afc280206a5fbb7732d5170f8f5e55b7810d782dfd372a269d99ad219e1bab75",
+          "surface": "保存"
+        },
+        "object": {
+          "scopeId": "scope-0002-afc280206a5fbb7732d5170f8f5e55b7810d782dfd372a269d99ad219e1bab75",
+          "surface": "服务现场原始照片"
+        },
+        "effect": "local_change",
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "propositionScopeIds": [
+          "scope-0002-afc280206a5fbb7732d5170f8f5e55b7810d782dfd372a269d99ad219e1bab75"
+        ],
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "保存服务现场原始照片",
+          "description": "参与者保存服务现场原始照片，以供本人以后查询。",
+          "completionCriteria": [
+            "服务现场原始照片已保存"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true,
+          "materialTempIds": [
+            "material-1"
+          ],
+          "timePointTempIds": []
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-1",
+        "name": "服务现场原始照片",
+        "required": true,
+        "formatRequirements": [
+          "原始照片"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "confidence": 0.95,
+        "scopeIds": [
+          "scope-0002-afc280206a5fbb7732d5170f8f5e55b7810d782dfd372a269d99ad219e1bab75"
+        ]
+      }
+    ],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-e5abd7ddff4cc2910631b1eb25ea31c6d3baccdbf1e518cae5136724c826ddc4",
+      "scope-0003-04508bc05732193c893ba2446c6de598642113b55d29132532cedfa10b3034ec",
+      "scope-0004-e0ad565a2ebc070c07db5025c50a59792d76d4d25c078aee125b13c41382c921",
+      "scope-0005-0a14f6e412acf4ad683939e76d9789e4b8bb7349d5906654cf78573d4ae5e900",
+      "scope-0006-6f3324a9c9486e0c198dab6892963b472c42f43eabd6c1b402e3448695949628",
+      "scope-0007-cf9b98c668f429a4664dfb1ba02f77e18d37ae32e8325275fb9724d4c7ab914d",
+      "scope-0008-131b825b7883cf84457ac77c1a721c4afd56d1c356398a683a1dbc1d473defbb"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:8e80baf1",
+    "sourceVersionId": "source:8e80baf1:version:1",
+    "sourceFingerprint": "sha256:acd932a6ef5deb7a627444cbb3a6c9897ee53185ef819642d117b9d05d91ef4d"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 4858,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "material": {
+        "predicted": 1,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 0,
+        "precision": 0,
+        "recall": null
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 2,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 1,
+    "referenceTaskCount": 1
+  },
+  "scoreError": null,
+  "totalAttempts": 134,
+  "costUpperMicroCny": 21174,
+  "totalCostUpperMicroCny": 6285004,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份已见材料开发回归+8份新材料首次开发验证；20通知40请求；非商业盲测"
+}

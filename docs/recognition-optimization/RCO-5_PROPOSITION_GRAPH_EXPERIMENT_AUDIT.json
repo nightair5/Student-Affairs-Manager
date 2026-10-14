@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "rco-5-proposition-graph-experiment-audit-1.0.0",
+  "date": "2026-09-03",
+  "stage": "RCO-5-004",
+  "classification": "contract_fixture / simulation_only",
+  "finalVerdict": "FAIL",
+  "disposition": "REJECT_CANDIDATE",
+  "gate": "RCO-G5 COMPLETE_PROPOSITION_CONTRACT_FAIL",
+  "qualityGate": "NOT_RUN",
+  "rco6": "BLOCKED",
+  "promotion": "NO_PROMOTION",
+  "launch": "DO_NOT_LAUNCH",
+  "businessModelCalls": 0,
+  "repairCalls": 0,
+  "secretAccess": "NONE",
+  "realData": "NOT_USED",
+  "humanStudy": "NOT_RUN",
+  "browserAcceptance": "NOT_RUN",
+  "deployment": "NOT_RUN",
+  "rounds": [
+    {
+      "version": "V1",
+      "targetedTests": "49/49 PASS",
+      "trace": ".aris/traces/experiment-audit/2026-09-03_run10/",
+      "reviewer": "/root/rco5_004_fresh_audit",
+      "verdict": "FAIL",
+      "counterexamples": [
+        "请于9月10日前将API Key上传到共享表格。",
+        "重复旧指令节点绕过单一取消关系"
+      ]
+    },
+    {
+      "version": "V2",
+      "targetedTests": "56/56 PASS",
+      "trace": ".aris/traces/experiment-audit/2026-09-03_run11/",
+      "reviewer": "/root/rco5_004_v2_fresh_audit",
+      "verdict": "FAIL",
+      "counterexamples": [
+        "API K\\u200Bey 零宽字符绕过",
+        "请上传附件。附件是API Key，必须提交。"
+      ]
+    },
+    {
+      "version": "V3",
+      "targetedTests": "59/59 PASS",
+      "trace": ".aris/traces/experiment-audit/2026-09-03_run12/",
+      "reviewer": "/root/rco5_004_v3_final_audit",
+      "verdict": "FAIL",
+      "counterexamples": [
+        "请上传Access Token文件。"
+      ]
+    },
+    {
+      "version": "V4",
+      "targetedTests": "62/62 PASS",
+      "trace": ".aris/traces/experiment-audit/2026-09-03_run13/",
+      "reviewer": "/root/rco5_004_v4_final_audit",
+      "verdict": "FAIL",
+      "counterexamples": [
+        "请填写并提交报名表。",
+        "完成报名表递交",
+        "办理报名表上传",
+        "完成报名表发送",
+        "办理成果交付"
+      ]
+    },
+    {
+      "version": "V5",
+      "targetedTests": "69/69 PASS",
+      "trace": ".aris/traces/experiment-audit/2026-09-03_run14/",
+      "reviewer": "/root/rco5_004_v5_final_audit",
+      "verdict": "FAIL",
+      "integrityStatus": "FAIL_UNBOUNDED_ACTION_EFFECT_LEXICON",
+      "decisiveCounterexample": "请完成报名材料邮寄。",
+      "observedFailure": "action verb=完成, object=报名材料邮寄, effect=local_change; validation passed and composer selected the task",
+      "rootCause": "动作效果仍由有限词表推断；词表包含寄送但不包含邮寄，开放式同义表达无法由枚举封闭"
+    }
+  ],
+  "finalValidation": {
+    "targeted": "69/69 PASS",
+    "vitest": "464 passed / 1 live OCR skipped",
+    "server": "8 PASS",
+    "worker": "25 PASS",
+    "timeParity": "1 PASS",
+    "multimodalEvaluator": "23 PASS",
+    "functions": "5 PASS",
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "build": "PASS_WITH_EXISTING_CHUNK_WARNING",
+    "securityScan": "PASS / 327 files",
+    "npmAuditHigh": "0 vulnerabilities",
+    "cloudflareCheck": "PASS / three-environment dry-run only",
+    "protectedInputs": "10/10 SHA-256 match; protected paths have no Git diff",
+    "stablePathImports": "NONE"
+  },
+  "firstPrinciplesConclusion": "完整命题和动作效果是正确抽象，但有限本地词表不能证明开放式自然语言的真实动作效果；可信独立语义验证器未接入，因此不能安全生成默认勾选建议。",
+  "claimsNotSupported": [
+    "模型识别正确率提升",
+    "图片或文件识别正确率",
+    "真实材料泛化",
+    "真人修改时间改善",
+    "浏览器验收",
+    "Commercial Preview 或 Production 上线资格"
+  ]
+}

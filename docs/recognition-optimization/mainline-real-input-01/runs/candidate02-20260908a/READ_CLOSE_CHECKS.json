@@ -1,0 +1,110 @@
+{
+  "status": "LOCAL_ENGINEERING_PASS_BROWSER_INCOMPLETE",
+  "nonBlockingNotes": ["Affected lint has zero errors and one pre-existing ref cleanup warning.", "Default git diff --check reports terminal blank lines in three raw logs and the new report; raw logs retained verbatim. One-command blank-at-eof allowance finds no other whitespace issues; no repository configuration changed."],
+  "baselineHead": "f3b1ed68604e3f95c25894ee4717b1eed2072ec9",
+  "sourceCount": 44,
+  "changedThisTurn": [
+    "src/experiments/realInput01/runtime.ts",
+    "src/experiments/realInput01/InputReview.tsx",
+    "src/experiments/realInput01/acceptance.test.tsx",
+    "scripts/check-mainline-real-input-01.mjs",
+    "scripts/check-mainline-real-input-01.node-test.mjs"
+  ],
+  "protection": {
+    "files": 945,
+    "sha256": "df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394",
+    "history": 382,
+    "ledgerRows": 51,
+    "ledgerSha": "ffdfa0a7d521050fc75dc1a0bb33aea5492d333814237e930669a5873544b9ef",
+    "oldLogPrefix": "PASS"
+  },
+  "layers": {
+    "affectedVitest": {
+      "passed": 43,
+      "files": 3,
+      "failed": 0,
+      "log": "READ_CLOSE_TARGET_2.log"
+    },
+    "checker": {
+      "passedGroups": 1,
+      "log": "READ_CLOSE_CHECKER_ATTEMPT_2.log",
+      "previousAttempt": {
+        "log": "READ_CLOSE_CHECKER_FINAL.log",
+        "status": "FAILED_MISSING_CARRIERS_PARAMETER",
+        "testAssertionsModified": false
+      }
+    },
+    "types": "PASS",
+    "affectedLint": "PASS",
+    "build": "PASS_NEW_TEMP_ENV_CACHE_OUTPUT",
+    "secretScan": "PASS",
+    "previousFullVitest": {
+      "passed": 1250,
+      "skipped": 1,
+      "kind": "PREVIOUS_SHA_BOUND_EVIDENCE_ONLY",
+      "rerunThisTurn": false
+    },
+    "C03": "PUBLIC_API_REJECTS_MISSING_TIME_ENTITY",
+    "C05": "PUBLIC_API_CONFIRMATION_PASS",
+    "C08": "PUBLIC_API_CONFIRMATION_PASS"
+  },
+  "browser": {
+    "tab": "763114892",
+    "origin": "http://127.0.0.1:6631",
+    "database": "rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862",
+    "selection": "SUCCESS",
+    "refresh": "SUCCESS",
+    "click": "Runtime.evaluate timeout",
+    "screenshot": "Cannot take screenshot with 0 width",
+    "manualRecoveryRequested": true,
+    "pdfCorrectionRestore": "NOT_RUN",
+    "C08ConfirmRefreshIndependentRead": "NOT_RUN",
+    "newDownload": "NOT_RUN",
+    "newBrowserWrites": "NOT_PERFORMED",
+    "databaseClearedOrFallback": false
+  },
+  "newModelCalls": 0,
+  "modelQuality": "本轮未测量",
+  "logs": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a/READ_CLOSE_BUILD.log",
+      "sha256": "60ff32b01fba1ec33c8ee3a937b60b5055c5be7b5e27af9690e0a43f1354adfc"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a/READ_CLOSE_CHECKER.log",
+      "sha256": "bc02b5e2ce721e6380b50c7371204b81238e07e5740606fbdd2e348b5c5688ee"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a/READ_CLOSE_CHECKER_ATTEMPT_2.log",
+      "sha256": "220402a52da29ab75e45ffbb3d66f9f82977d9184fadb1ef2d1217befbe54706"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a/READ_CLOSE_CHECKER_FINAL.log",
+      "sha256": "1c242658d32766ee774c3642b40c3c482bb04eb4581416dfefa2a7f044ac466b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a/READ_CLOSE_LINT.log",
+      "sha256": "b726ac82190f435f067b4e382daa5c1441dfc70aefaed4483556af12918ac7ca"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a/READ_CLOSE_SECURITY.log",
+      "sha256": "fb1b5f3c5490055fef2ec6f111272fd42d8a0c1c2a324e2cef1d14a197233bf0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a/READ_CLOSE_TARGET_1.log",
+      "sha256": "29e31a34ee9b8acc3be6b051f4ca92a04109eb707f078003846223680a7413e3"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a/READ_CLOSE_TARGET_2.log",
+      "sha256": "f8f9c452dd254807ec773eee49c2f887925ce110e0543d99b7fd19fb2f469d22"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a/READ_CLOSE_TYPE.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate02-20260908a/READ_CLOSE_TYPE_FINAL.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

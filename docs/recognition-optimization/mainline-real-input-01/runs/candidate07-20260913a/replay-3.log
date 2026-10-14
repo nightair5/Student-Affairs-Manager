@@ -1,0 +1,13 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ ✓ src/experiments/realInput01/acceptance.test.tsx (61 tests | 51 skipped) 3127ms
+   ✓ paired07 actual recorded response boundary; memory only, not browser acceptance > R11-07 retains raw, failures and prior records, never dispatches or auto-confirms  590ms
+   ✓ paired06 existing wire recorded boundary > Q01-06 actual settled answer confirms reviewed tasks and independently reloads in memory  917ms
+   ✓ paired06 existing wire recorded boundary > Q07-06 actual settled answer confirms reviewed tasks and independently reloads in memory  554ms
+
+ Test Files  1 passed (1)
+      Tests  10 passed | 51 skipped (61)
+   Start at  16:02:40
+   Duration  5.06s (transform 842ms, setup 0ms, collect 1.34s, tests 3.13s, environment 0ms, prepare 227ms)
+

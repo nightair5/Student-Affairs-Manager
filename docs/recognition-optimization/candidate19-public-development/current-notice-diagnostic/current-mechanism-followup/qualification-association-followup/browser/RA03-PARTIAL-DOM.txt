@@ -1,0 +1,170 @@
+- link "跳到主要内容":
+  - /url: "#main-content"
+- banner:
+  - button "返回今日首页":
+    - strong: 事务管家
+  - button "新事务":
+    - text: 新事务
+- navigation "手机端主要导航":
+  - button "今日":
+    - generic: 今日
+  - button "1 收件箱":
+    - emphasis: "1"
+    - generic: 收件箱
+  - button "项目":
+    - generic: 项目
+  - button "日历":
+    - generic: 日历
+  - button "更多":
+    - generic: 更多
+- generic "匿名工程输入 · 普通产品路径 · 不发送模型请求"
+- main:
+  - text: 来源先保存，确认后入库
+  - heading "待确认" [level=1]
+  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。
+  - strong: "1"
+  - text: 份需关注
+  - group "收件箱视图":
+    - button "全部来源"
+    - button "待确认 1" [pressed]
+  - button "新建手动来源":
+    - text: 新建手动来源
+  - checkbox "选择全部待核对"
+  - text: 选择全部待核对
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: ObligationAuthority 固定录制（非实时调用） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 校园借用系统办理窗口如下：2026年12月20—23日。请在指定时间内激活借用账号并填写借用登记。两项操作均在该办理窗口内完成，不设具体截止时刻，也未要求两项操作按先后顺序。
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 2 任务 · 0 材料 · 2 时间 · 0 活动
+    - button "核对 1 项任务、0 个事件":
+      - text: 核对 1 项任务、0 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+- status:
+  - generic: 已保存并独立读回：1 项任务、0 个事件；不确定时间保持原状。
+  - button "关闭提示": ×
+- dialog "识别出 2 件事":
+  - banner:
+    - generic: 第 2 步 · ObligationAuthority 固定录制（非实时调用） · 比较后程序转换 · 无新模型请求
+    - heading "识别出 2 件事" [level=2]
+    - paragraph: 先看标题和时间；不准确时再点“编辑”。
+    - button "稍后处理并关闭":
+  - status "未确认编辑检查点":
+    - strong: 本来源核对会话
+    - paragraph: 编辑在确认前不会创建任务。
+  - strong: 1 项任务、0 个事件待确认
+  - generic: 已处理 1 项任务
+  - region "项目匹配与识别质量":
+    - strong: 项目归属建议
+    - text: 未主动建立或匹配项目。
+    - generic: 选择项目归属
+    - combobox "选择项目归属":
+      - option "新建项目"
+      - option "作为独立事项" [selected]
+      - option "稍后决定"
+    - strong: 结构校验通过
+    - generic: 证据覆盖 100%
+    - button "只保留原文明确"
+  - generic "原始通知与定位依据":
+    - text: 原始通知与定位依据
+  - paragraph: 校园借用系统办理窗口如下：2026年12月20—23日。请在指定时间内激活借用账号并填写借用登记。两项操作均在该办理窗口内完成，不设具体截止时刻，也未要求两项操作按先后顺序。
+  - region "项目树待确认事项":
+    - region "本通知适用性":
+      - heading "本通知适用性" [level=3]
+      - paragraph: 同一条件只判断一次，应用到下列事项。只记录你的明确判断；原始识别结果保留。
+      - article:
+        - strong: 激活借用账号
+        - paragraph: 原答没有给出适用条件依据，不能据此认定你资格不足，也不能自动认定没有条件。
+        - paragraph: 本组已按你的明确判断处理，不重复核对。
+      - status: 本组适用判断已保存；原始首次建议不变。前置事项仍须实际完成。
+    - region "同一通知的独立事件与信息":
+      - region "通知补充说明":
+        - heading "通知补充说明" [level=3]
+        - paragraph: 原回答保留的信息；未关联到具体事项，不会据此新增任务或日程。
+        - blockquote: 校园借用系统办理窗口如下：
+        - generic "查看补充说明原文依据"
+      - region "原文办理窗口":
+        - heading "原文办理窗口（不是截止或个人计划）" [level=3]
+        - paragraph: 开放开始：2026年12月20日（原文：2026年12月20—23日）
+        - paragraph: 开放结束：2026年12月23日（原文：2026年12月20—23日）
+      - heading "信息与独立事件" [level=3]
+      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。
+      - button "依据原文补充遗漏事件"
+      - button "依据原文补充遗漏任务"
+    - article:
+      - checkbox "选择该任务" [checked]
+      - generic: 选择该任务
+      - generic: "1"
+      - strong: 激活借用账号
+      - time:
+        - text: 2026年12月20—23日；2026年12月20—23日
+      - button "编辑":
+        - text: 编辑
+      - generic: 其他
+      - generic: 耗时尚未估计
+      - generic: 原文明确
+      - paragraph: 下一步激活借用账号
+      - generic "为什么这样拆？"
+      - button "不需要":
+        - text: 不需要
+      - button "加入任务":
+        - text: 加入任务
+    - article:
+      - generic: "2"
+      - strong: 填写借用登记
+      - paragraph: 已加入任务中心
+    - heading "时间节点" [level=3]
+    - checkbox "event_start 2026年12月20—23日" [checked]
+    - strong: event_start
+    - generic: 2026年12月20—23日
+    - button "在原文中定位"
+    - checkbox "event_end 2026年12月20—23日" [checked]
+    - strong: event_end
+    - generic: 2026年12月20—23日
+    - button "在原文中定位"
+  - contentinfo:
+    - generic "确认后创建预览":
+      - strong: 本次选择内容；已保存项不重复创建
+      - generic: 0 个项目
+      - generic: 1 个任务
+      - generic: 2 个时间节点
+      - generic: 0 项材料
+      - generic: 0 个事件
+    - button "稍后再处理"
+    - button "一次接受本通知（1）":
+      - text: 一次接受本通知（1）
+- generic "本批真实录制 · 选择来源与独立读回"
+- paragraph: 52f46a91df3c / source 0f3bd6fc8462；rco-mainline-01-02-i1-d27-plan-recorded-readiness-oct08-delivery；source-event-task-relations-1 / source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.1.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-shared-attribute-index-1.2.0 / authority-local-coverage-1.1.0 / obligation-local-relation-1.0.0 / authority-endpoint-composition-1.1.0 / authority-support-context-1.2.0 / source-information-preview-1.0.0 / source-window-endpoints-1.2.0 / source-window-plan-1.1.0 / literal-optional-participation-1.0.0 / authority-primary-support-index-1.0.0 / source-readiness-review-1.0.0；ENGINEERING_REPLAY；此入口模型请求0。当前V7单臂4官方节选：0份确定录制；另5份原V6/V7实际录制只读回归，单独分母；原答/程序首屏/人改分列，不判赢家或Holdout；另6份工程夹具独立标记，不计模型样本。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。
+- paragraph: 当前生成契约：obligation-authority-source-contract-6.0.0；obligation-authority-generation-1.0.0；RECORDED_MODEL_ENGINEERING_REPLAY
+- text: 录制来源
+- combobox "录制来源":
+  - option "role-development-RA-01 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "role-development-RA-01 / RoleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "role-development-RA-02 / RoleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "role-development-RA-02 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "role-development-RA-03 / ObligationAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE" [selected]
+  - option "role-fixture-optional-channel / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "contract-fixture-dependency / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "obligation-fixture-shared-window / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "obligation-fixture-equipment / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "obligation-fixture-no-task / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+- textbox "本批匿名通知原文": 校园借用系统办理窗口如下：2026年12月20—23日。请在指定时间内激活借用账号并填写借用登记。两项操作均在该办理窗口内完成，不设具体截止时刻，也未要求两项操作按先后顺序。
+- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-10-08T16:30:00+08:00。
+- paragraph: 另有6份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：RECORDED_MODEL_ENGINEERING_REPLAY。
+- button "注入正式保存失败"
+- button "注入提交后读回失败"
+- button "注入检查点失败"
+- status: 未注入故障
+- button "本批独立canonical读回"
+- button "页面测量读回"
+- generic "本批独立读回结果"

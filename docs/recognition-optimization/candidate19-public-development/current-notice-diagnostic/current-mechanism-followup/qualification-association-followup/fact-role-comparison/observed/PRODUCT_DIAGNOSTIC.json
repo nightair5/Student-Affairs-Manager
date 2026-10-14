@@ -1,0 +1,3978 @@
+{
+  "role": "PROGRAM_DATA_NOT_BROWSER",
+  "frozenProgramSnapshot": "e56e273b83bfdb5dcaffbed70452dddf1b593b89",
+  "postComponents": {
+    "first": "grounded-first-suggestion-1.5.1",
+    "sourceActionTime": "source-action-time-role-1.0.1",
+    "supportContext": "authority-support-context-1.5.0",
+    "relations": "obligation-local-relation-1.3.0"
+  },
+  "rows": [
+    {
+      "ordinal": 1,
+      "sourceId": "FR-01",
+      "candidate": "TaskRequirements",
+      "rawResponseSha256": "956ee1f6abb2d6d61252a86cfbd07bb4ae17c4a20cea0dd95c175cb8b58a8cbb",
+      "frozen": {
+        "error": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+        "first": null
+      },
+      "post": {
+        "error": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-task-requirements-1.0.0",
+          "modelName": "TaskRequirements 固定录制（非实时调用）",
+          "createdAt": "2026-12-01T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "完成实验仪器借用登记",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "2项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "完成实验仪器借用登记",
+              "description": "请在2026年12月3日15:00前完成实验仪器借用登记。\n登记时须填写学号和联系电话；\n校外使用者还须填写接收实验室。",
+              "completionCriteria": [
+                "在2026年12月3日15:00前完成实验仪器借用登记",
+                "登记时须填写学号和联系电话；",
+                "校外使用者还须填写接收实验室。"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-0001"
+              ],
+              "tempId": "task-0001",
+              "actionVerb": "完成实验仪器借用登记",
+              "actionObject": "实验仪器借用登记",
+              "evidenceIds": [
+                "d26-scope-0001-291a033552e9ff678e9699134a0919c6b7e9e81c2945dec098c720805f45474c",
+                "d26-scope-0002-4d958b0b32da9b8c613d2d1a2b69d6d307a01112aea893e1217890bedcf113b3",
+                "d26-scope-0003-8347a563cb24bc224b5c626fb373963503026a72585665594983d7fc5ad570b5"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "到器材室领取借用卡",
+              "description": "请于2026年12月4日10:00到器材室领取借用卡。\n登记提交后，",
+              "completionCriteria": [
+                "于2026年12月4日10:00到器材室领取借用卡"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [
+                "task-0001"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-0002"
+              ],
+              "tempId": "task-0002",
+              "actionVerb": "到器材室领取借用卡",
+              "actionObject": "借用卡",
+              "evidenceIds": [
+                "d26-scope-0005-2576cba2cde27e37cb054ab32903899f60fc54a453be8df167de0d0d99655bf7",
+                "d26-scope-0004-3538997d4e1a88d12d68abe7ddcb4ee29821137b26fe678900aeb13d739c85a4"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "time-0001",
+              "type": "task_deadline",
+              "rawText": "2026年12月3日15:00前",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-0001"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-03T15:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-291a033552e9ff678e9699134a0919c6b7e9e81c2945dec098c720805f45474c"
+              ]
+            },
+            {
+              "tempId": "time-0002",
+              "type": "event_start",
+              "rawText": "2026年12月4日10:00",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-0002"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-04T10:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0005-2576cba2cde27e37cb054ab32903899f60fc54a453be8df167de0d0d99655bf7"
+              ]
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-291a033552e9ff678e9699134a0919c6b7e9e81c2945dec098c720805f45474c",
+              "sourceId": "FR-01",
+              "quote": "请在2026年12月3日15:00前完成实验仪器借用登记。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-4d958b0b32da9b8c613d2d1a2b69d6d307a01112aea893e1217890bedcf113b3",
+              "sourceId": "FR-01",
+              "quote": "登记时须填写学号和联系电话；",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-8347a563cb24bc224b5c626fb373963503026a72585665594983d7fc5ad570b5",
+              "sourceId": "FR-01",
+              "quote": "校外使用者还须填写接收实验室。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-3538997d4e1a88d12d68abe7ddcb4ee29821137b26fe678900aeb13d739c85a4",
+              "sourceId": "FR-01",
+              "quote": "登记提交后，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-2576cba2cde27e37cb054ab32903899f60fc54a453be8df167de0d0d99655bf7",
+              "sourceId": "FR-01",
+              "quote": "请于2026年12月4日10:00到器材室领取借用卡。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "登记时须填写学号和联系电话；",
+              "reason": "other"
+            },
+            {
+              "text": "校外使用者还须填写接收实验室。",
+              "reason": "other"
+            },
+            {
+              "text": "登记提交后，",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.5.1",
+          "originalProse": [
+            {
+              "entityId": "task-0001",
+              "kind": "task",
+              "title": "完成实验仪器借用登记",
+              "description": "请在2026年12月3日15:00前完成实验仪器借用登记。\n登记时须填写学号和联系电话；\n校外使用者还须填写接收实验室。"
+            },
+            {
+              "entityId": "task-0002",
+              "kind": "task",
+              "title": "到器材室领取借用卡",
+              "description": "请于2026年12月4日10:00到器材室领取借用卡。\n登记提交后，"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "完成实验仪器借用登记",
+              "description": "2项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-0001",
+              "kind": "task",
+              "title": "完成实验仪器借用登记",
+              "description": "请在2026年12月3日15:00前完成实验仪器借用登记。\n登记时须填写学号和联系电话；\n校外使用者还须填写接收实验室。"
+            },
+            {
+              "entityId": "task-0002",
+              "kind": "task",
+              "title": "到器材室领取借用卡",
+              "description": "请于2026年12月4日10:00到器材室领取借用卡。\n登记提交后，"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "完成实验仪器借用登记",
+              "description": "2项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-0001",
+              "before": {
+                "normalizedValue": "2026-12-03T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-12-03T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年12月3日15:00前",
+                  "type": "task_deadline",
+                  "normalizedValue": "2026-12-03T15:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 16
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-12-03",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请在2026年12月3日15:00前完成实验仪器借用登记",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-0002",
+              "before": {
+                "normalizedValue": "2026-12-04T10:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-12-04T10:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年12月4日10:00",
+                  "type": "event_start",
+                  "normalizedValue": "2026-12-04T10:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 15
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-12-04",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请于2026年12月4日10:00到器材室领取借用卡",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT",
+          "sourceActionTimes": {
+            "version": "source-action-time-role-1.0.1",
+            "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+            "inferredFacts": 0,
+            "decisions": [
+              {
+                "id": "time-0002",
+                "ownerIds": [
+                  "task-0002"
+                ],
+                "beforeType": "event_start",
+                "role": "task_action_time",
+                "reason": "CITED_ACTION_AT_TIME",
+                "quotes": [
+                  "请于2026年12月4日10:00到器材室领取借用卡。"
+                ]
+              }
+            ]
+          }
+        },
+        "blockers": [
+          {
+            "id": "task-0001",
+            "problem": null
+          },
+          {
+            "id": "task-0002",
+            "problem": null
+          }
+        ]
+      },
+      "userFactEdits": 0
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "FR-01",
+      "candidate": "FactRoleAuthority",
+      "rawResponseSha256": "46d08263da5980e1c407425cf6b82026d9ab4dfea31d3f8bc7b90ae7545c8865",
+      "frozen": {
+        "error": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+        "first": null
+      },
+      "post": {
+        "error": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-fact-role-authority-1.0.0",
+          "modelName": "FactRoleAuthority 固定录制（非实时调用）",
+          "createdAt": "2026-12-01T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "完成实验仪器借用登记",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "2项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "完成实验仪器借用登记",
+              "description": "请在2026年12月3日15:00前完成实验仪器借用登记。\n登记时须填写学号和联系电话；\n校外使用者还须填写接收实验室。",
+              "completionCriteria": [
+                "在2026年12月3日15:00前完成实验仪器借用登记",
+                "登记时须填写学号和联系电话；",
+                "校外使用者还须填写接收实验室。"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-0001"
+              ],
+              "tempId": "task-0001",
+              "actionVerb": "完成实验仪器借用登记",
+              "actionObject": "实验仪器借用登记",
+              "evidenceIds": [
+                "d26-scope-0001-291a033552e9ff678e9699134a0919c6b7e9e81c2945dec098c720805f45474c",
+                "d26-scope-0002-4d958b0b32da9b8c613d2d1a2b69d6d307a01112aea893e1217890bedcf113b3",
+                "d26-scope-0003-8347a563cb24bc224b5c626fb373963503026a72585665594983d7fc5ad570b5"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "到器材室领取借用卡",
+              "description": "请于2026年12月4日10:00到器材室领取借用卡。\n登记提交后，",
+              "completionCriteria": [
+                "于2026年12月4日10:00到器材室领取借用卡"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [
+                "task-0001"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-0002"
+              ],
+              "tempId": "task-0002",
+              "actionVerb": "到器材室领取借用卡",
+              "actionObject": "借用卡",
+              "evidenceIds": [
+                "d26-scope-0005-2576cba2cde27e37cb054ab32903899f60fc54a453be8df167de0d0d99655bf7",
+                "d26-scope-0004-3538997d4e1a88d12d68abe7ddcb4ee29821137b26fe678900aeb13d739c85a4"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "time-0001",
+              "type": "registration_deadline",
+              "rawText": "2026年12月3日15:00前",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-0001"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-03T15:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-291a033552e9ff678e9699134a0919c6b7e9e81c2945dec098c720805f45474c"
+              ]
+            },
+            {
+              "tempId": "time-0002",
+              "type": "event_start",
+              "rawText": "2026年12月4日10:00",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-0002"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-04T10:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0005-2576cba2cde27e37cb054ab32903899f60fc54a453be8df167de0d0d99655bf7"
+              ]
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-291a033552e9ff678e9699134a0919c6b7e9e81c2945dec098c720805f45474c",
+              "sourceId": "FR-01",
+              "quote": "请在2026年12月3日15:00前完成实验仪器借用登记。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-4d958b0b32da9b8c613d2d1a2b69d6d307a01112aea893e1217890bedcf113b3",
+              "sourceId": "FR-01",
+              "quote": "登记时须填写学号和联系电话；",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-8347a563cb24bc224b5c626fb373963503026a72585665594983d7fc5ad570b5",
+              "sourceId": "FR-01",
+              "quote": "校外使用者还须填写接收实验室。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-3538997d4e1a88d12d68abe7ddcb4ee29821137b26fe678900aeb13d739c85a4",
+              "sourceId": "FR-01",
+              "quote": "登记提交后，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-2576cba2cde27e37cb054ab32903899f60fc54a453be8df167de0d0d99655bf7",
+              "sourceId": "FR-01",
+              "quote": "请于2026年12月4日10:00到器材室领取借用卡。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "登记时须填写学号和联系电话；",
+              "reason": "other"
+            },
+            {
+              "text": "校外使用者还须填写接收实验室。",
+              "reason": "other"
+            },
+            {
+              "text": "登记提交后，",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.5.1",
+          "originalProse": [
+            {
+              "entityId": "task-0001",
+              "kind": "task",
+              "title": "完成实验仪器借用登记",
+              "description": "请在2026年12月3日15:00前完成实验仪器借用登记。\n登记时须填写学号和联系电话；\n校外使用者还须填写接收实验室。"
+            },
+            {
+              "entityId": "task-0002",
+              "kind": "task",
+              "title": "到器材室领取借用卡",
+              "description": "请于2026年12月4日10:00到器材室领取借用卡。\n登记提交后，"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "完成实验仪器借用登记",
+              "description": "2项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-0001",
+              "kind": "task",
+              "title": "完成实验仪器借用登记",
+              "description": "请在2026年12月3日15:00前完成实验仪器借用登记。\n登记时须填写学号和联系电话；\n校外使用者还须填写接收实验室。"
+            },
+            {
+              "entityId": "task-0002",
+              "kind": "task",
+              "title": "到器材室领取借用卡",
+              "description": "请于2026年12月4日10:00到器材室领取借用卡。\n登记提交后，"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "完成实验仪器借用登记",
+              "description": "2项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-0001",
+              "before": {
+                "normalizedValue": "2026-12-03T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-12-03T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年12月3日15:00前",
+                  "type": "registration_deadline",
+                  "normalizedValue": "2026-12-03T15:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 16
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-12-03",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请在2026年12月3日15:00前完成实验仪器借用登记",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-0002",
+              "before": {
+                "normalizedValue": "2026-12-04T10:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-12-04T10:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年12月4日10:00",
+                  "type": "event_start",
+                  "normalizedValue": "2026-12-04T10:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 15
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-12-04",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请于2026年12月4日10:00到器材室领取借用卡",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT",
+          "sourceActionTimes": {
+            "version": "source-action-time-role-1.0.1",
+            "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+            "inferredFacts": 0,
+            "decisions": [
+              {
+                "id": "time-0002",
+                "ownerIds": [
+                  "task-0002"
+                ],
+                "beforeType": "event_start",
+                "role": "task_action_time",
+                "reason": "EXPLICIT_GENERATION_ROLE",
+                "quotes": [
+                  "请于2026年12月4日10:00到器材室领取借用卡。"
+                ]
+              }
+            ]
+          }
+        },
+        "blockers": [
+          {
+            "id": "task-0001",
+            "problem": null
+          },
+          {
+            "id": "task-0002",
+            "problem": null
+          }
+        ]
+      },
+      "userFactEdits": 0
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "FR-02",
+      "candidate": "FactRoleAuthority",
+      "rawResponseSha256": "914aeadc334d9adf6b279cf9035275341669a47a4391b9aea06f8270a3940804",
+      "frozen": {
+        "error": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+        "first": null
+      },
+      "post": {
+        "error": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-fact-role-authority-1.0.0",
+          "modelName": "FactRoleAuthority 固定录制（非实时调用）",
+          "createdAt": "2026-12-01T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "领取预约单",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "2项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "领取预约单",
+              "description": "请于2026年12月8日14:30到行政楼B105领取预约单。",
+              "completionCriteria": [
+                "于2026年12月8日14:30到行政楼B105领取预约单"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-collect-appointment-slip"
+              ],
+              "tempId": "task-collect-appointment-slip",
+              "actionVerb": "领取预约单",
+              "actionObject": "预约单",
+              "evidenceIds": [
+                "d26-scope-0001-649edb30792bec6ae34a987c6b811510d14133c2482e9e8d620fd7120d005bd4"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交实习证明",
+              "description": "领取后，\n请在2026年12月9日17:00前提交实习证明。\n实习证明须为PDF，\n文件名为学号-姓名。",
+              "completionCriteria": [
+                "在2026年12月9日17:00前提交实习证明",
+                "实习证明须为PDF，文件名为学号-姓名。"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [
+                "task-collect-appointment-slip"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "material-internship-certificate"
+              ],
+              "timePointTempIds": [
+                "time-submit-internship-certificate-deadline"
+              ],
+              "tempId": "task-submit-internship-certificate",
+              "actionVerb": "提交实习证明",
+              "actionObject": "实习证明",
+              "evidenceIds": [
+                "d26-scope-0002-4597a5c744e5d5554fd1df4caac99efdf2fc9b3bccde555aa0826b5cd6da5a11",
+                "d26-scope-0003-200c25991556bcdcec86f95f3a6a0bb2891b7816cc37889c12198bf0112b3cff",
+                "d26-scope-0004-6e3f30fb5af03da4ce15b9bde2835ea24b576c5fcbcfae56bc1fb12c561ab8ea",
+                "d26-scope-0005-f3955801680966703fe06314aa28ed83e93fc8648f9e3507562d882182469ca2"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-internship-certificate",
+              "name": "实习证明",
+              "required": true,
+              "formatRequirements": [
+                "PDF"
+              ],
+              "namingRequirements": [
+                "学号-姓名"
+              ],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-submit-internship-certificate"
+              ],
+              "confidence": 0.95,
+              "evidenceIds": [
+                "d26-scope-0003-200c25991556bcdcec86f95f3a6a0bb2891b7816cc37889c12198bf0112b3cff",
+                "d26-scope-0004-6e3f30fb5af03da4ce15b9bde2835ea24b576c5fcbcfae56bc1fb12c561ab8ea",
+                "d26-scope-0005-f3955801680966703fe06314aa28ed83e93fc8648f9e3507562d882182469ca2"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-collect-appointment-slip",
+              "type": "event_start",
+              "rawText": "2026年12月8日14:30",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-collect-appointment-slip"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-08T14:30",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-649edb30792bec6ae34a987c6b811510d14133c2482e9e8d620fd7120d005bd4"
+              ]
+            },
+            {
+              "tempId": "time-submit-internship-certificate-deadline",
+              "type": "submission_deadline",
+              "rawText": "2026年12月9日17:00前",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-submit-internship-certificate"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-09T17:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0003-200c25991556bcdcec86f95f3a6a0bb2891b7816cc37889c12198bf0112b3cff"
+              ]
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-649edb30792bec6ae34a987c6b811510d14133c2482e9e8d620fd7120d005bd4",
+              "sourceId": "FR-02",
+              "quote": "请于2026年12月8日14:30到行政楼B105领取预约单。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-4597a5c744e5d5554fd1df4caac99efdf2fc9b3bccde555aa0826b5cd6da5a11",
+              "sourceId": "FR-02",
+              "quote": "领取后，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-200c25991556bcdcec86f95f3a6a0bb2891b7816cc37889c12198bf0112b3cff",
+              "sourceId": "FR-02",
+              "quote": "请在2026年12月9日17:00前提交实习证明。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-6e3f30fb5af03da4ce15b9bde2835ea24b576c5fcbcfae56bc1fb12c561ab8ea",
+              "sourceId": "FR-02",
+              "quote": "实习证明须为PDF，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-f3955801680966703fe06314aa28ed83e93fc8648f9e3507562d882182469ca2",
+              "sourceId": "FR-02",
+              "quote": "文件名为学号-姓名。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "领取后，",
+              "reason": "other"
+            },
+            {
+              "text": "实习证明须为PDF，",
+              "reason": "other"
+            },
+            {
+              "text": "文件名为学号-姓名。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.5.1",
+          "originalProse": [
+            {
+              "entityId": "task-collect-appointment-slip",
+              "kind": "task",
+              "title": "领取预约单",
+              "description": "请于2026年12月8日14:30到行政楼B105领取预约单。"
+            },
+            {
+              "entityId": "task-submit-internship-certificate",
+              "kind": "task",
+              "title": "提交实习证明",
+              "description": "领取后，\n请在2026年12月9日17:00前提交实习证明。\n实习证明须为PDF，\n文件名为学号-姓名。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "领取预约单",
+              "description": "2项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-collect-appointment-slip",
+              "kind": "task",
+              "title": "领取预约单",
+              "description": "请于2026年12月8日14:30到行政楼B105领取预约单。"
+            },
+            {
+              "entityId": "task-submit-internship-certificate",
+              "kind": "task",
+              "title": "提交实习证明",
+              "description": "领取后，\n请在2026年12月9日17:00前提交实习证明。\n实习证明须为PDF，\n文件名为学号-姓名。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "领取预约单",
+              "description": "2项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-collect-appointment-slip",
+              "before": {
+                "normalizedValue": "2026-12-08T14:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-12-08T14:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年12月8日14:30",
+                  "type": "event_start",
+                  "normalizedValue": "2026-12-08T14:30",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 15
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-12-08",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请于2026年12月8日14:30到行政楼B105领取预约单",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-submit-internship-certificate-deadline",
+              "before": {
+                "normalizedValue": "2026-12-09T17:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-12-09T17:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年12月9日17:00前",
+                  "type": "submission_deadline",
+                  "normalizedValue": "2026-12-09T17:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 16
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-12-09",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请在2026年12月9日17:00前提交实习证明",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT",
+          "sourceActionTimes": {
+            "version": "source-action-time-role-1.0.1",
+            "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+            "inferredFacts": 0,
+            "decisions": [
+              {
+                "id": "time-collect-appointment-slip",
+                "ownerIds": [
+                  "task-collect-appointment-slip"
+                ],
+                "beforeType": "event_start",
+                "role": "task_action_time",
+                "reason": "EXPLICIT_GENERATION_ROLE",
+                "quotes": [
+                  "请于2026年12月8日14:30到行政楼B105领取预约单。"
+                ]
+              }
+            ]
+          }
+        },
+        "blockers": [
+          {
+            "id": "task-collect-appointment-slip",
+            "problem": null
+          },
+          {
+            "id": "task-submit-internship-certificate",
+            "problem": null
+          }
+        ]
+      },
+      "userFactEdits": 0
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "FR-02",
+      "candidate": "TaskRequirements",
+      "rawResponseSha256": "cf743d8320885ba6ceb62698c48dbff65c873f295bd1d89129ca49cfa12c377a",
+      "frozen": {
+        "error": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+        "first": null
+      },
+      "post": {
+        "error": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-task-requirements-1.0.0",
+          "modelName": "TaskRequirements 固定录制（非实时调用）",
+          "createdAt": "2026-12-01T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "领取预约单",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "2项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "领取预约单",
+              "description": "请于2026年12月8日14:30到行政楼B105领取预约单。",
+              "completionCriteria": [
+                "于2026年12月8日14:30到行政楼B105领取预约单"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-0001"
+              ],
+              "tempId": "task-0001",
+              "actionVerb": "领取",
+              "actionObject": "预约单",
+              "evidenceIds": [
+                "d26-scope-0001-649edb30792bec6ae34a987c6b811510d14133c2482e9e8d620fd7120d005bd4"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交实习证明",
+              "description": "领取后，\n请在2026年12月9日17:00前提交实习证明。\n实习证明须为PDF，\n文件名为学号-姓名。",
+              "completionCriteria": [
+                "在2026年12月9日17:00前提交实习证明",
+                "实习证明须为PDF",
+                "文件名为学号-姓名"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [
+                "task-0001"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "material-0001"
+              ],
+              "timePointTempIds": [
+                "time-0002"
+              ],
+              "tempId": "task-0002",
+              "actionVerb": "提交",
+              "actionObject": "实习证明",
+              "evidenceIds": [
+                "d26-scope-0002-4597a5c744e5d5554fd1df4caac99efdf2fc9b3bccde555aa0826b5cd6da5a11",
+                "d26-scope-0003-200c25991556bcdcec86f95f3a6a0bb2891b7816cc37889c12198bf0112b3cff",
+                "d26-scope-0004-6e3f30fb5af03da4ce15b9bde2835ea24b576c5fcbcfae56bc1fb12c561ab8ea",
+                "d26-scope-0005-f3955801680966703fe06314aa28ed83e93fc8648f9e3507562d882182469ca2"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-0001",
+              "name": "实习证明",
+              "required": true,
+              "formatRequirements": [
+                "PDF"
+              ],
+              "namingRequirements": [
+                "学号-姓名"
+              ],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-0002"
+              ],
+              "confidence": 0.95,
+              "evidenceIds": [
+                "d26-scope-0003-200c25991556bcdcec86f95f3a6a0bb2891b7816cc37889c12198bf0112b3cff",
+                "d26-scope-0004-6e3f30fb5af03da4ce15b9bde2835ea24b576c5fcbcfae56bc1fb12c561ab8ea",
+                "d26-scope-0005-f3955801680966703fe06314aa28ed83e93fc8648f9e3507562d882182469ca2"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-0001",
+              "type": "event_start",
+              "rawText": "2026年12月8日14:30",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-0001"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-08T14:30",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-649edb30792bec6ae34a987c6b811510d14133c2482e9e8d620fd7120d005bd4"
+              ]
+            },
+            {
+              "tempId": "time-0002",
+              "type": "submission_deadline",
+              "rawText": "2026年12月9日17:00前",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-0002"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-09T17:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0003-200c25991556bcdcec86f95f3a6a0bb2891b7816cc37889c12198bf0112b3cff"
+              ]
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-649edb30792bec6ae34a987c6b811510d14133c2482e9e8d620fd7120d005bd4",
+              "sourceId": "FR-02",
+              "quote": "请于2026年12月8日14:30到行政楼B105领取预约单。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-4597a5c744e5d5554fd1df4caac99efdf2fc9b3bccde555aa0826b5cd6da5a11",
+              "sourceId": "FR-02",
+              "quote": "领取后，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-200c25991556bcdcec86f95f3a6a0bb2891b7816cc37889c12198bf0112b3cff",
+              "sourceId": "FR-02",
+              "quote": "请在2026年12月9日17:00前提交实习证明。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-6e3f30fb5af03da4ce15b9bde2835ea24b576c5fcbcfae56bc1fb12c561ab8ea",
+              "sourceId": "FR-02",
+              "quote": "实习证明须为PDF，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-f3955801680966703fe06314aa28ed83e93fc8648f9e3507562d882182469ca2",
+              "sourceId": "FR-02",
+              "quote": "文件名为学号-姓名。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "领取后，",
+              "reason": "other"
+            },
+            {
+              "text": "实习证明须为PDF，",
+              "reason": "other"
+            },
+            {
+              "text": "文件名为学号-姓名。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.5.1",
+          "originalProse": [
+            {
+              "entityId": "task-0001",
+              "kind": "task",
+              "title": "领取预约单",
+              "description": "请于2026年12月8日14:30到行政楼B105领取预约单。"
+            },
+            {
+              "entityId": "task-0002",
+              "kind": "task",
+              "title": "提交实习证明",
+              "description": "领取后，\n请在2026年12月9日17:00前提交实习证明。\n实习证明须为PDF，\n文件名为学号-姓名。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "领取预约单",
+              "description": "2项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-0001",
+              "kind": "task",
+              "title": "领取预约单",
+              "description": "请于2026年12月8日14:30到行政楼B105领取预约单。"
+            },
+            {
+              "entityId": "task-0002",
+              "kind": "task",
+              "title": "提交实习证明",
+              "description": "领取后，\n请在2026年12月9日17:00前提交实习证明。\n实习证明须为PDF，\n文件名为学号-姓名。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "领取预约单",
+              "description": "2项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-0001",
+              "before": {
+                "normalizedValue": "2026-12-08T14:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-12-08T14:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年12月8日14:30",
+                  "type": "event_start",
+                  "normalizedValue": "2026-12-08T14:30",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 15
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-12-08",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请于2026年12月8日14:30到行政楼B105领取预约单",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-0002",
+              "before": {
+                "normalizedValue": "2026-12-09T17:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-12-09T17:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年12月9日17:00前",
+                  "type": "submission_deadline",
+                  "normalizedValue": "2026-12-09T17:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 16
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-12-09",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请在2026年12月9日17:00前提交实习证明",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT",
+          "sourceActionTimes": {
+            "version": "source-action-time-role-1.0.1",
+            "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+            "inferredFacts": 0,
+            "decisions": [
+              {
+                "id": "time-0001",
+                "ownerIds": [
+                  "task-0001"
+                ],
+                "beforeType": "event_start",
+                "role": "task_action_time",
+                "reason": "CITED_ACTION_AT_TIME",
+                "quotes": [
+                  "请于2026年12月8日14:30到行政楼B105领取预约单。"
+                ]
+              }
+            ]
+          }
+        },
+        "blockers": [
+          {
+            "id": "task-0001",
+            "problem": null
+          },
+          {
+            "id": "task-0002",
+            "problem": null
+          }
+        ]
+      },
+      "userFactEdits": 0
+    },
+    {
+      "ordinal": 5,
+      "sourceId": "FR-03",
+      "candidate": "TaskRequirements",
+      "rawResponseSha256": "6e8e0dd18249031e76738f385beef9a91f978a341dec8e42773ccb130817f999",
+      "frozen": {
+        "error": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-task-requirements-1.0.0",
+          "modelName": "TaskRequirements 固定录制（非实时调用）",
+          "createdAt": "2026-12-01T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "报名写作工作坊",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "2项任务，1项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "报名写作工作坊",
+              "description": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。\n报名时须填写年级；\n需要借用设备者还须填写设备型号。",
+              "completionCriteria": [
+                "在2026年12月10日18:00前通过报名二维码完成写作工作坊报名",
+                "报名时须填写年级；",
+                "需要借用设备者还须填写设备型号。"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-registration-deadline"
+              ],
+              "tempId": "task-register-workshop",
+              "actionVerb": "报名",
+              "actionObject": "写作工作坊",
+              "evidenceIds": [
+                "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10",
+                "d26-scope-0005-1d178be46832a4f0fa371a2b8fdfcc4ec5b5343c095417cce6b8399820183ffc",
+                "d26-scope-0006-2c10a8428d8ad8cbd3aeaf43e5fde04cf799ae74f8426e29004aa9da4a5a2353"
+              ],
+              "inferenceLevel": "optional_suggestion",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "准备笔记本电脑",
+              "description": "获得录取后需准备笔记本电脑，\n是否录取尚未通知。",
+              "completionCriteria": [
+                "获得录取后准备好笔记本电脑"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "material-laptop"
+              ],
+              "timePointTempIds": [],
+              "tempId": "task-prepare-laptop",
+              "actionVerb": "准备",
+              "actionObject": "笔记本电脑",
+              "evidenceIds": [
+                "d26-scope-0007-70e5af723857a301471a75b88527132411de97ad685cd7f1f4ac183e0c5eef06",
+                "d26-scope-0008-45dd409173fcdc653404e8dc83564eb117c94a706a433dc422993dd1c82182a6"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-laptop",
+              "name": "笔记本电脑",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-prepare-laptop"
+              ],
+              "confidence": 0.9,
+              "evidenceIds": [
+                "d26-scope-0007-70e5af723857a301471a75b88527132411de97ad685cd7f1f4ac183e0c5eef06"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-registration-deadline",
+              "type": "registration_deadline",
+              "rawText": "2026年12月10日18:00前",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-register-workshop"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-10T18:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10"
+              ]
+            },
+            {
+              "tempId": "time-event-start",
+              "type": "event_start",
+              "rawText": "周六上午",
+              "confidence": 0.9,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0001-a80aaf8603bb39efd000a969ee3a92812d00821867101260fd0c0405796e0a51"
+              ]
+            },
+            {
+              "tempId": "time-event-end",
+              "type": "event_end",
+              "rawText": "结束时刻尚未公布",
+              "confidence": 0.9,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0002-60c4386a1d726e802c7b5815479a5d71d790bffa044ca7b3dc6835d1ee0cd97f"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "event-workshop",
+              "title": "写作工作坊",
+              "description": "本次写作工作坊将在周六上午举行，\n结束时刻尚未公布，\n地点为人文楼A201。\n有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。",
+              "startTimePointTempId": "time-event-start",
+              "relatedTaskTempIds": [
+                "task-register-workshop"
+              ],
+              "endTimePointTempId": "time-event-end",
+              "location": "人文楼A201",
+              "confidence": 0.95,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-a80aaf8603bb39efd000a969ee3a92812d00821867101260fd0c0405796e0a51",
+                "d26-scope-0002-60c4386a1d726e802c7b5815479a5d71d790bffa044ca7b3dc6835d1ee0cd97f",
+                "d26-scope-0003-f354b7768156598768c621d66f380114eb03b617f6331984c7a01e15d5e11680",
+                "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-a80aaf8603bb39efd000a969ee3a92812d00821867101260fd0c0405796e0a51",
+              "sourceId": "FR-03",
+              "quote": "本次写作工作坊将在周六上午举行，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-60c4386a1d726e802c7b5815479a5d71d790bffa044ca7b3dc6835d1ee0cd97f",
+              "sourceId": "FR-03",
+              "quote": "结束时刻尚未公布，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-f354b7768156598768c621d66f380114eb03b617f6331984c7a01e15d5e11680",
+              "sourceId": "FR-03",
+              "quote": "地点为人文楼A201。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10",
+              "sourceId": "FR-03",
+              "quote": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-1d178be46832a4f0fa371a2b8fdfcc4ec5b5343c095417cce6b8399820183ffc",
+              "sourceId": "FR-03",
+              "quote": "报名时须填写年级；",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-2c10a8428d8ad8cbd3aeaf43e5fde04cf799ae74f8426e29004aa9da4a5a2353",
+              "sourceId": "FR-03",
+              "quote": "需要借用设备者还须填写设备型号。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0007-70e5af723857a301471a75b88527132411de97ad685cd7f1f4ac183e0c5eef06",
+              "sourceId": "FR-03",
+              "quote": "获得录取后需准备笔记本电脑，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0008-45dd409173fcdc653404e8dc83564eb117c94a706a433dc422993dd1c82182a6",
+              "sourceId": "FR-03",
+              "quote": "是否录取尚未通知。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [
+            {
+              "id": "d26-representation-1",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-prepare-laptop"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            }
+          ],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "报名时须填写年级；",
+              "reason": "other"
+            },
+            {
+              "text": "需要借用设备者还须填写设备型号。",
+              "reason": "other"
+            },
+            {
+              "text": "是否录取尚未通知。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "资格尚未确认，不能当成已符合；请保留待核对。"
+            ]
+          }
+        }
+      },
+      "post": {
+        "error": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-task-requirements-1.0.0",
+          "modelName": "TaskRequirements 固定录制（非实时调用）",
+          "createdAt": "2026-12-01T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "报名写作工作坊",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "2项任务，1项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "报名写作工作坊",
+              "description": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。\n报名时须填写年级；\n需要借用设备者还须填写设备型号。",
+              "completionCriteria": [
+                "在2026年12月10日18:00前通过报名二维码完成写作工作坊报名",
+                "报名时须填写年级；",
+                "需要借用设备者还须填写设备型号。"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-registration-deadline"
+              ],
+              "tempId": "task-register-workshop",
+              "actionVerb": "报名",
+              "actionObject": "写作工作坊",
+              "evidenceIds": [
+                "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10",
+                "d26-scope-0005-1d178be46832a4f0fa371a2b8fdfcc4ec5b5343c095417cce6b8399820183ffc",
+                "d26-scope-0006-2c10a8428d8ad8cbd3aeaf43e5fde04cf799ae74f8426e29004aa9da4a5a2353"
+              ],
+              "inferenceLevel": "optional_suggestion",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "准备笔记本电脑",
+              "description": "获得录取后需准备笔记本电脑，\n是否录取尚未通知。",
+              "completionCriteria": [
+                "获得录取后准备好笔记本电脑"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "material-laptop"
+              ],
+              "timePointTempIds": [],
+              "tempId": "task-prepare-laptop",
+              "actionVerb": "准备",
+              "actionObject": "笔记本电脑",
+              "evidenceIds": [
+                "d26-scope-0007-70e5af723857a301471a75b88527132411de97ad685cd7f1f4ac183e0c5eef06",
+                "d26-scope-0008-45dd409173fcdc653404e8dc83564eb117c94a706a433dc422993dd1c82182a6"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-laptop",
+              "name": "笔记本电脑",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-prepare-laptop"
+              ],
+              "confidence": 0.9,
+              "evidenceIds": [
+                "d26-scope-0007-70e5af723857a301471a75b88527132411de97ad685cd7f1f4ac183e0c5eef06"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-registration-deadline",
+              "type": "registration_deadline",
+              "rawText": "2026年12月10日18:00前",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-register-workshop"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-10T18:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10"
+              ]
+            },
+            {
+              "tempId": "time-event-start",
+              "type": "event_start",
+              "rawText": "周六上午",
+              "confidence": 0.9,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0001-a80aaf8603bb39efd000a969ee3a92812d00821867101260fd0c0405796e0a51"
+              ]
+            },
+            {
+              "tempId": "time-event-end",
+              "type": "event_end",
+              "rawText": "结束时刻尚未公布",
+              "confidence": 0.9,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0002-60c4386a1d726e802c7b5815479a5d71d790bffa044ca7b3dc6835d1ee0cd97f"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "event-workshop",
+              "title": "写作工作坊",
+              "description": "本次写作工作坊将在周六上午举行，\n结束时刻尚未公布，\n地点为人文楼A201。\n有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。",
+              "startTimePointTempId": "time-event-start",
+              "relatedTaskTempIds": [
+                "task-register-workshop"
+              ],
+              "endTimePointTempId": "time-event-end",
+              "location": "人文楼A201",
+              "confidence": 0.95,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-a80aaf8603bb39efd000a969ee3a92812d00821867101260fd0c0405796e0a51",
+                "d26-scope-0002-60c4386a1d726e802c7b5815479a5d71d790bffa044ca7b3dc6835d1ee0cd97f",
+                "d26-scope-0003-f354b7768156598768c621d66f380114eb03b617f6331984c7a01e15d5e11680",
+                "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-a80aaf8603bb39efd000a969ee3a92812d00821867101260fd0c0405796e0a51",
+              "sourceId": "FR-03",
+              "quote": "本次写作工作坊将在周六上午举行，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-60c4386a1d726e802c7b5815479a5d71d790bffa044ca7b3dc6835d1ee0cd97f",
+              "sourceId": "FR-03",
+              "quote": "结束时刻尚未公布，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-f354b7768156598768c621d66f380114eb03b617f6331984c7a01e15d5e11680",
+              "sourceId": "FR-03",
+              "quote": "地点为人文楼A201。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10",
+              "sourceId": "FR-03",
+              "quote": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-1d178be46832a4f0fa371a2b8fdfcc4ec5b5343c095417cce6b8399820183ffc",
+              "sourceId": "FR-03",
+              "quote": "报名时须填写年级；",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-2c10a8428d8ad8cbd3aeaf43e5fde04cf799ae74f8426e29004aa9da4a5a2353",
+              "sourceId": "FR-03",
+              "quote": "需要借用设备者还须填写设备型号。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0007-70e5af723857a301471a75b88527132411de97ad685cd7f1f4ac183e0c5eef06",
+              "sourceId": "FR-03",
+              "quote": "获得录取后需准备笔记本电脑，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0008-45dd409173fcdc653404e8dc83564eb117c94a706a433dc422993dd1c82182a6",
+              "sourceId": "FR-03",
+              "quote": "是否录取尚未通知。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [
+            {
+              "id": "d26-representation-1",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-prepare-laptop"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            }
+          ],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "报名时须填写年级；",
+              "reason": "other"
+            },
+            {
+              "text": "需要借用设备者还须填写设备型号。",
+              "reason": "other"
+            },
+            {
+              "text": "是否录取尚未通知。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "资格尚未确认，不能当成已符合；请保留待核对。"
+            ]
+          }
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.5.1",
+          "originalProse": [
+            {
+              "entityId": "task-register-workshop",
+              "kind": "task",
+              "title": "报名写作工作坊",
+              "description": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。\n报名时须填写年级；\n需要借用设备者还须填写设备型号。"
+            },
+            {
+              "entityId": "task-prepare-laptop",
+              "kind": "task",
+              "title": "准备笔记本电脑",
+              "description": "获得录取后需准备笔记本电脑，\n是否录取尚未通知。"
+            },
+            {
+              "entityId": "event-workshop",
+              "kind": "event",
+              "title": "写作工作坊",
+              "description": "本次写作工作坊将在周六上午举行，\n结束时刻尚未公布，\n地点为人文楼A201。\n有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "报名写作工作坊",
+              "description": "2项任务，1项事件。请核对后确认。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-register-workshop",
+              "kind": "task",
+              "title": "报名写作工作坊",
+              "description": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。\n报名时须填写年级；\n需要借用设备者还须填写设备型号。"
+            },
+            {
+              "entityId": "task-prepare-laptop",
+              "kind": "task",
+              "title": "准备笔记本电脑",
+              "description": "获得录取后需准备笔记本电脑，\n是否录取尚未通知。"
+            },
+            {
+              "entityId": "event-workshop",
+              "kind": "event",
+              "title": "写作工作坊",
+              "description": "本次写作工作坊将在周六上午举行，\n结束时刻尚未公布，\n地点为人文楼A201。\n有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "报名写作工作坊",
+              "description": "2项任务，1项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-registration-deadline",
+              "before": {
+                "normalizedValue": "2026-12-10T18:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-12-10T18:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年12月10日18:00前",
+                  "type": "registration_deadline",
+                  "normalizedValue": "2026-12-10T18:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 17
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-12-10",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-event-start",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "周六上午",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 4
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "上午",
+                "certainty": "partial",
+                "sourceContext": "本次写作工作坊将在周六上午举行",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-event-end",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "结束时刻尚未公布",
+                  "type": "event_end",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 8
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "time_unannounced"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": null,
+                "certainty": "unannounced",
+                "sourceContext": "结束时刻尚未公布",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT",
+          "sourceActionTimes": {
+            "version": "source-action-time-role-1.0.1",
+            "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+            "inferredFacts": 0,
+            "decisions": []
+          }
+        },
+        "blockers": [
+          {
+            "id": "task-register-workshop",
+            "problem": null
+          },
+          {
+            "id": "task-prepare-laptop",
+            "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+          }
+        ]
+      },
+      "userFactEdits": 0
+    },
+    {
+      "ordinal": 6,
+      "sourceId": "FR-03",
+      "candidate": "FactRoleAuthority",
+      "rawResponseSha256": "5ced0a13e45ca450ab504118eb0706b9a840366c1279e4550db7f85d1c1a1772",
+      "frozen": {
+        "error": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-fact-role-authority-1.0.0",
+          "modelName": "FactRoleAuthority 固定录制（非实时调用）",
+          "createdAt": "2026-12-01T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "报名写作工作坊",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "2项任务，1项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "报名写作工作坊",
+              "description": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。\n报名时须填写年级；\n需要借用设备者还须填写设备型号。",
+              "completionCriteria": [
+                "在2026年12月10日18:00前通过报名二维码完成报名",
+                "报名时须填写年级；",
+                "需要借用设备者还须填写设备型号。"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-registration-deadline"
+              ],
+              "tempId": "task-register-workshop",
+              "actionVerb": "报名写作工作坊",
+              "actionObject": "写作工作坊",
+              "evidenceIds": [
+                "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10",
+                "d26-scope-0005-1d178be46832a4f0fa371a2b8fdfcc4ec5b5343c095417cce6b8399820183ffc",
+                "d26-scope-0006-2c10a8428d8ad8cbd3aeaf43e5fde04cf799ae74f8426e29004aa9da4a5a2353"
+              ],
+              "inferenceLevel": "optional_suggestion",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "准备笔记本电脑",
+              "description": "获得录取后需准备笔记本电脑，\n是否录取尚未通知。",
+              "completionCriteria": [
+                "准备好笔记本电脑"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "material-laptop"
+              ],
+              "timePointTempIds": [],
+              "tempId": "task-prepare-laptop",
+              "actionVerb": "准备笔记本电脑",
+              "actionObject": "笔记本电脑",
+              "evidenceIds": [
+                "d26-scope-0007-70e5af723857a301471a75b88527132411de97ad685cd7f1f4ac183e0c5eef06",
+                "d26-scope-0008-45dd409173fcdc653404e8dc83564eb117c94a706a433dc422993dd1c82182a6"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-laptop",
+              "name": "笔记本电脑",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-prepare-laptop"
+              ],
+              "confidence": 0.9,
+              "evidenceIds": [
+                "d26-scope-0007-70e5af723857a301471a75b88527132411de97ad685cd7f1f4ac183e0c5eef06"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-registration-deadline",
+              "type": "registration_deadline",
+              "rawText": "2026年12月10日18:00前",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-register-workshop"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-10T18:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10"
+              ]
+            },
+            {
+              "tempId": "time-event-start",
+              "type": "event_start",
+              "rawText": "周六上午",
+              "confidence": 0.9,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0001-a80aaf8603bb39efd000a969ee3a92812d00821867101260fd0c0405796e0a51"
+              ]
+            },
+            {
+              "tempId": "time-event-end",
+              "type": "event_end",
+              "rawText": "结束时刻尚未公布",
+              "confidence": 0.9,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0002-60c4386a1d726e802c7b5815479a5d71d790bffa044ca7b3dc6835d1ee0cd97f"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "event-workshop",
+              "title": "写作工作坊",
+              "description": "本次写作工作坊将在周六上午举行，\n结束时刻尚未公布，\n地点为人文楼A201。",
+              "startTimePointTempId": "time-event-start",
+              "endTimePointTempId": "time-event-end",
+              "location": "人文楼A201",
+              "confidence": 0.95,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-a80aaf8603bb39efd000a969ee3a92812d00821867101260fd0c0405796e0a51",
+                "d26-scope-0002-60c4386a1d726e802c7b5815479a5d71d790bffa044ca7b3dc6835d1ee0cd97f",
+                "d26-scope-0003-f354b7768156598768c621d66f380114eb03b617f6331984c7a01e15d5e11680"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-a80aaf8603bb39efd000a969ee3a92812d00821867101260fd0c0405796e0a51",
+              "sourceId": "FR-03",
+              "quote": "本次写作工作坊将在周六上午举行，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-60c4386a1d726e802c7b5815479a5d71d790bffa044ca7b3dc6835d1ee0cd97f",
+              "sourceId": "FR-03",
+              "quote": "结束时刻尚未公布，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-f354b7768156598768c621d66f380114eb03b617f6331984c7a01e15d5e11680",
+              "sourceId": "FR-03",
+              "quote": "地点为人文楼A201。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10",
+              "sourceId": "FR-03",
+              "quote": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-1d178be46832a4f0fa371a2b8fdfcc4ec5b5343c095417cce6b8399820183ffc",
+              "sourceId": "FR-03",
+              "quote": "报名时须填写年级；",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-2c10a8428d8ad8cbd3aeaf43e5fde04cf799ae74f8426e29004aa9da4a5a2353",
+              "sourceId": "FR-03",
+              "quote": "需要借用设备者还须填写设备型号。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0007-70e5af723857a301471a75b88527132411de97ad685cd7f1f4ac183e0c5eef06",
+              "sourceId": "FR-03",
+              "quote": "获得录取后需准备笔记本电脑，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0008-45dd409173fcdc653404e8dc83564eb117c94a706a433dc422993dd1c82182a6",
+              "sourceId": "FR-03",
+              "quote": "是否录取尚未通知。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [
+            {
+              "id": "event-link-risk-0",
+              "type": "other",
+              "message": "该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。",
+              "entityTempIds": [
+                "task-register-workshop"
+              ],
+              "requiresDecision": true,
+              "evidenceIds": [
+                "d26-scope-0001-a80aaf8603bb39efd000a969ee3a92812d00821867101260fd0c0405796e0a51",
+                "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10"
+              ]
+            },
+            {
+              "id": "d26-representation-1",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-prepare-laptop"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            },
+            {
+              "id": "coverage:task-register-workshop:event",
+              "type": "other",
+              "message": "这项任务的关联事件覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。",
+              "entityTempIds": [
+                "task-register-workshop"
+              ],
+              "evidenceIds": [
+                "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10",
+                "d26-scope-0005-1d178be46832a4f0fa371a2b8fdfcc4ec5b5343c095417cce6b8399820183ffc",
+                "d26-scope-0006-2c10a8428d8ad8cbd3aeaf43e5fde04cf799ae74f8426e29004aa9da4a5a2353"
+              ],
+              "requiresDecision": true
+            }
+          ],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "报名时须填写年级；",
+              "reason": "other"
+            },
+            {
+              "text": "需要借用设备者还须填写设备型号。",
+              "reason": "other"
+            },
+            {
+              "text": "是否录取尚未通知。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "资格尚未确认，不能当成已符合；请保留待核对。",
+              "该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。",
+              "这项任务的关联事件覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。"
+            ]
+          }
+        }
+      },
+      "post": {
+        "error": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-fact-role-authority-1.0.0",
+          "modelName": "FactRoleAuthority 固定录制（非实时调用）",
+          "createdAt": "2026-12-01T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "报名写作工作坊",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "2项任务，1项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "报名写作工作坊",
+              "description": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。\n报名时须填写年级；\n需要借用设备者还须填写设备型号。",
+              "completionCriteria": [
+                "在2026年12月10日18:00前通过报名二维码完成报名",
+                "报名时须填写年级；",
+                "需要借用设备者还须填写设备型号。"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "time-registration-deadline"
+              ],
+              "tempId": "task-register-workshop",
+              "actionVerb": "报名写作工作坊",
+              "actionObject": "写作工作坊",
+              "evidenceIds": [
+                "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10",
+                "d26-scope-0005-1d178be46832a4f0fa371a2b8fdfcc4ec5b5343c095417cce6b8399820183ffc",
+                "d26-scope-0006-2c10a8428d8ad8cbd3aeaf43e5fde04cf799ae74f8426e29004aa9da4a5a2353"
+              ],
+              "inferenceLevel": "optional_suggestion",
+              "selected": false
+            },
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "准备笔记本电脑",
+              "description": "获得录取后需准备笔记本电脑，\n是否录取尚未通知。",
+              "completionCriteria": [
+                "准备好笔记本电脑"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "material-laptop"
+              ],
+              "timePointTempIds": [],
+              "tempId": "task-prepare-laptop",
+              "actionVerb": "准备笔记本电脑",
+              "actionObject": "笔记本电脑",
+              "evidenceIds": [
+                "d26-scope-0007-70e5af723857a301471a75b88527132411de97ad685cd7f1f4ac183e0c5eef06",
+                "d26-scope-0008-45dd409173fcdc653404e8dc83564eb117c94a706a433dc422993dd1c82182a6"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": false
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-laptop",
+              "name": "笔记本电脑",
+              "required": true,
+              "formatRequirements": [],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-prepare-laptop"
+              ],
+              "confidence": 0.9,
+              "evidenceIds": [
+                "d26-scope-0007-70e5af723857a301471a75b88527132411de97ad685cd7f1f4ac183e0c5eef06"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-registration-deadline",
+              "type": "registration_deadline",
+              "rawText": "2026年12月10日18:00前",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-register-workshop"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-10T18:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10"
+              ]
+            },
+            {
+              "tempId": "time-event-start",
+              "type": "event_start",
+              "rawText": "周六上午",
+              "confidence": 0.9,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0001-a80aaf8603bb39efd000a969ee3a92812d00821867101260fd0c0405796e0a51"
+              ]
+            },
+            {
+              "tempId": "time-event-end",
+              "type": "event_end",
+              "rawText": "结束时刻尚未公布",
+              "confidence": 0.9,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0002-60c4386a1d726e802c7b5815479a5d71d790bffa044ca7b3dc6835d1ee0cd97f"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "event-workshop",
+              "title": "写作工作坊",
+              "description": "本次写作工作坊将在周六上午举行，\n结束时刻尚未公布，\n地点为人文楼A201。\n有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。",
+              "startTimePointTempId": "time-event-start",
+              "relatedTaskTempIds": [
+                "task-register-workshop"
+              ],
+              "endTimePointTempId": "time-event-end",
+              "location": "人文楼A201",
+              "confidence": 0.95,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-a80aaf8603bb39efd000a969ee3a92812d00821867101260fd0c0405796e0a51",
+                "d26-scope-0002-60c4386a1d726e802c7b5815479a5d71d790bffa044ca7b3dc6835d1ee0cd97f",
+                "d26-scope-0003-f354b7768156598768c621d66f380114eb03b617f6331984c7a01e15d5e11680",
+                "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-a80aaf8603bb39efd000a969ee3a92812d00821867101260fd0c0405796e0a51",
+              "sourceId": "FR-03",
+              "quote": "本次写作工作坊将在周六上午举行，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-60c4386a1d726e802c7b5815479a5d71d790bffa044ca7b3dc6835d1ee0cd97f",
+              "sourceId": "FR-03",
+              "quote": "结束时刻尚未公布，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-f354b7768156598768c621d66f380114eb03b617f6331984c7a01e15d5e11680",
+              "sourceId": "FR-03",
+              "quote": "地点为人文楼A201。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-767c078aeebc6d73d196ea0cc452d6feaef01419c5ed5b5b80e012e79b4c8a10",
+              "sourceId": "FR-03",
+              "quote": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-1d178be46832a4f0fa371a2b8fdfcc4ec5b5343c095417cce6b8399820183ffc",
+              "sourceId": "FR-03",
+              "quote": "报名时须填写年级；",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-2c10a8428d8ad8cbd3aeaf43e5fde04cf799ae74f8426e29004aa9da4a5a2353",
+              "sourceId": "FR-03",
+              "quote": "需要借用设备者还须填写设备型号。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0007-70e5af723857a301471a75b88527132411de97ad685cd7f1f4ac183e0c5eef06",
+              "sourceId": "FR-03",
+              "quote": "获得录取后需准备笔记本电脑，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0008-45dd409173fcdc653404e8dc83564eb117c94a706a433dc422993dd1c82182a6",
+              "sourceId": "FR-03",
+              "quote": "是否录取尚未通知。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [
+            {
+              "id": "d26-representation-1",
+              "type": "other",
+              "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+              "entityTempIds": [
+                "task-prepare-laptop"
+              ],
+              "evidenceIds": [],
+              "requiresDecision": true
+            }
+          ],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "报名时须填写年级；",
+              "reason": "other"
+            },
+            {
+              "text": "需要借用设备者还须填写设备型号。",
+              "reason": "other"
+            },
+            {
+              "text": "是否录取尚未通知。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "资格尚未确认，不能当成已符合；请保留待核对。"
+            ]
+          }
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.5.1",
+          "originalProse": [
+            {
+              "entityId": "task-register-workshop",
+              "kind": "task",
+              "title": "报名写作工作坊",
+              "description": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。\n报名时须填写年级；\n需要借用设备者还须填写设备型号。"
+            },
+            {
+              "entityId": "task-prepare-laptop",
+              "kind": "task",
+              "title": "准备笔记本电脑",
+              "description": "获得录取后需准备笔记本电脑，\n是否录取尚未通知。"
+            },
+            {
+              "entityId": "event-workshop",
+              "kind": "event",
+              "title": "写作工作坊",
+              "description": "本次写作工作坊将在周六上午举行，\n结束时刻尚未公布，\n地点为人文楼A201。\n有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "报名写作工作坊",
+              "description": "2项任务，1项事件。请核对后确认。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-register-workshop",
+              "kind": "task",
+              "title": "报名写作工作坊",
+              "description": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。\n报名时须填写年级；\n需要借用设备者还须填写设备型号。"
+            },
+            {
+              "entityId": "task-prepare-laptop",
+              "kind": "task",
+              "title": "准备笔记本电脑",
+              "description": "获得录取后需准备笔记本电脑，\n是否录取尚未通知。"
+            },
+            {
+              "entityId": "event-workshop",
+              "kind": "event",
+              "title": "写作工作坊",
+              "description": "本次写作工作坊将在周六上午举行，\n结束时刻尚未公布，\n地点为人文楼A201。\n有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "报名写作工作坊",
+              "description": "2项任务，1项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-registration-deadline",
+              "before": {
+                "normalizedValue": "2026-12-10T18:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-12-10T18:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年12月10日18:00前",
+                  "type": "registration_deadline",
+                  "normalizedValue": "2026-12-10T18:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 17
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-12-10",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-event-start",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "周六上午",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 4
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "上午",
+                "certainty": "partial",
+                "sourceContext": "本次写作工作坊将在周六上午举行",
+                "conversions": []
+              }
+            },
+            {
+              "entityId": "time-event-end",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "结束时刻尚未公布",
+                  "type": "event_end",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 8
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "time_unannounced"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": null,
+                "certainty": "unannounced",
+                "sourceContext": "结束时刻尚未公布",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT",
+          "sourceActionTimes": {
+            "version": "source-action-time-role-1.0.1",
+            "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+            "inferredFacts": 0,
+            "decisions": []
+          }
+        },
+        "blockers": [
+          {
+            "id": "task-register-workshop",
+            "problem": null
+          },
+          {
+            "id": "task-prepare-laptop",
+            "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+          }
+        ]
+      },
+      "userFactEdits": 0
+    },
+    {
+      "ordinal": 7,
+      "sourceId": "FR-04",
+      "candidate": "FactRoleAuthority",
+      "rawResponseSha256": "0f48c684edec67519da2ea037546967c576a1374de008a3304f1fcb15716e6b1",
+      "frozen": {
+        "error": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+        "first": null
+      },
+      "post": {
+        "error": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-fact-role-authority-1.0.0",
+          "modelName": "FactRoleAuthority 固定录制（非实时调用）",
+          "createdAt": "2026-12-01T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "提交课程报告",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "1项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交课程报告",
+              "description": "请在2026年12月15日16:00前将课程报告提交至教学邮箱。\n课程报告须为PDF，\n文件名为班级-学号；\n收到确认邮件才算提交完成。",
+              "completionCriteria": [
+                "课程报告须为PDF",
+                "文件名为班级-学号",
+                "收到确认邮件才算提交完成"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "material-course-report"
+              ],
+              "timePointTempIds": [
+                "time-submission-deadline"
+              ],
+              "tempId": "task-submit-course-report",
+              "actionVerb": "提交",
+              "actionObject": "课程报告",
+              "evidenceIds": [
+                "d26-scope-0001-daacc6acca1bd15f92e7e532a2aea31b77096f22ba706dc57deeeb771ed1ac15",
+                "d26-scope-0002-bd37055d49b43dd1f71a8f0187dfaf2e2144b95a31e2288db717d83dfe12828f",
+                "d26-scope-0003-22ebd23c19a1176060294ba413947d2ac246aa08feaee3943480c9d69a28bc32",
+                "d26-scope-0004-304ddd6debfd793ff1eaead171fbe52ca5832260665297a95e75073dd2f10760"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-course-report",
+              "name": "课程报告",
+              "required": true,
+              "formatRequirements": [
+                "PDF"
+              ],
+              "namingRequirements": [
+                "班级-学号"
+              ],
+              "quantity": null,
+              "submissionChannel": "教学邮箱",
+              "relatedTaskTempIds": [
+                "task-submit-course-report"
+              ],
+              "confidence": 0.95,
+              "evidenceIds": [
+                "d26-scope-0001-daacc6acca1bd15f92e7e532a2aea31b77096f22ba706dc57deeeb771ed1ac15",
+                "d26-scope-0002-bd37055d49b43dd1f71a8f0187dfaf2e2144b95a31e2288db717d83dfe12828f",
+                "d26-scope-0003-22ebd23c19a1176060294ba413947d2ac246aa08feaee3943480c9d69a28bc32"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-submission-deadline",
+              "type": "submission_deadline",
+              "rawText": "2026年12月15日16:00前",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-submit-course-report"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-15T16:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-daacc6acca1bd15f92e7e532a2aea31b77096f22ba706dc57deeeb771ed1ac15"
+              ]
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-daacc6acca1bd15f92e7e532a2aea31b77096f22ba706dc57deeeb771ed1ac15",
+              "sourceId": "FR-04",
+              "quote": "请在2026年12月15日16:00前将课程报告提交至教学邮箱。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-bd37055d49b43dd1f71a8f0187dfaf2e2144b95a31e2288db717d83dfe12828f",
+              "sourceId": "FR-04",
+              "quote": "课程报告须为PDF，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-22ebd23c19a1176060294ba413947d2ac246aa08feaee3943480c9d69a28bc32",
+              "sourceId": "FR-04",
+              "quote": "文件名为班级-学号；",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-304ddd6debfd793ff1eaead171fbe52ca5832260665297a95e75073dd2f10760",
+              "sourceId": "FR-04",
+              "quote": "收到确认邮件才算提交完成。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "课程报告须为PDF，",
+              "reason": "other"
+            },
+            {
+              "text": "文件名为班级-学号；",
+              "reason": "other"
+            },
+            {
+              "text": "收到确认邮件才算提交完成。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.5.1",
+          "originalProse": [
+            {
+              "entityId": "task-submit-course-report",
+              "kind": "task",
+              "title": "提交课程报告",
+              "description": "请在2026年12月15日16:00前将课程报告提交至教学邮箱。\n课程报告须为PDF，\n文件名为班级-学号；\n收到确认邮件才算提交完成。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "提交课程报告",
+              "description": "1项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-submit-course-report",
+              "kind": "task",
+              "title": "提交课程报告",
+              "description": "请在2026年12月15日16:00前将课程报告提交至教学邮箱。\n课程报告须为PDF，\n文件名为班级-学号；\n收到确认邮件才算提交完成。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "提交课程报告",
+              "description": "1项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-submission-deadline",
+              "before": {
+                "normalizedValue": "2026-12-15T16:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-12-15T16:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年12月15日16:00前",
+                  "type": "submission_deadline",
+                  "normalizedValue": "2026-12-15T16:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 17
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-12-15",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请在2026年12月15日16:00前将课程报告提交至教学邮箱",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT",
+          "sourceActionTimes": {
+            "version": "source-action-time-role-1.0.1",
+            "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+            "inferredFacts": 0,
+            "decisions": []
+          }
+        },
+        "blockers": [
+          {
+            "id": "task-submit-course-report",
+            "problem": null
+          }
+        ]
+      },
+      "userFactEdits": 0
+    },
+    {
+      "ordinal": 8,
+      "sourceId": "FR-04",
+      "candidate": "TaskRequirements",
+      "rawResponseSha256": "0e07401fbf288858ee4a058af01b699f0d93ee5e9c704b96c3e395f3ee9a7bda",
+      "frozen": {
+        "error": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+        "first": null
+      },
+      "post": {
+        "error": null,
+        "first": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-task-requirements-1.0.0",
+          "modelName": "TaskRequirements 固定录制（非实时调用）",
+          "createdAt": "2026-12-01T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "提交课程报告",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "1项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交课程报告",
+              "description": "请在2026年12月15日16:00前将课程报告提交至教学邮箱。\n课程报告须为PDF，\n文件名为班级-学号；\n收到确认邮件才算提交完成。",
+              "completionCriteria": [
+                "收到确认邮件才算提交完成。",
+                "课程报告须为PDF",
+                "文件名为班级-学号",
+                "收到确认邮件才算提交完成"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "high",
+              "dependencyTempIds": [],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "material-course-report"
+              ],
+              "timePointTempIds": [
+                "time-submission-deadline"
+              ],
+              "tempId": "task-submit-course-report",
+              "actionVerb": "提交",
+              "actionObject": "课程报告",
+              "evidenceIds": [
+                "d26-scope-0001-daacc6acca1bd15f92e7e532a2aea31b77096f22ba706dc57deeeb771ed1ac15",
+                "d26-scope-0002-bd37055d49b43dd1f71a8f0187dfaf2e2144b95a31e2288db717d83dfe12828f",
+                "d26-scope-0003-22ebd23c19a1176060294ba413947d2ac246aa08feaee3943480c9d69a28bc32",
+                "d26-scope-0004-304ddd6debfd793ff1eaead171fbe52ca5832260665297a95e75073dd2f10760"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-course-report",
+              "name": "课程报告",
+              "required": true,
+              "formatRequirements": [
+                "PDF"
+              ],
+              "namingRequirements": [
+                "班级-学号"
+              ],
+              "quantity": null,
+              "submissionChannel": "教学邮箱",
+              "relatedTaskTempIds": [
+                "task-submit-course-report"
+              ],
+              "confidence": 0.95,
+              "evidenceIds": [
+                "d26-scope-0001-daacc6acca1bd15f92e7e532a2aea31b77096f22ba706dc57deeeb771ed1ac15",
+                "d26-scope-0002-bd37055d49b43dd1f71a8f0187dfaf2e2144b95a31e2288db717d83dfe12828f",
+                "d26-scope-0003-22ebd23c19a1176060294ba413947d2ac246aa08feaee3943480c9d69a28bc32"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-submission-deadline",
+              "type": "submission_deadline",
+              "rawText": "2026年12月15日16:00前",
+              "confidence": 0.95,
+              "relatedTaskTempIds": [
+                "task-submit-course-report"
+              ],
+              "relatedMaterialTempIds": [],
+              "normalizedValue": "2026-12-15T16:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-daacc6acca1bd15f92e7e532a2aea31b77096f22ba706dc57deeeb771ed1ac15"
+              ]
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-daacc6acca1bd15f92e7e532a2aea31b77096f22ba706dc57deeeb771ed1ac15",
+              "sourceId": "FR-04",
+              "quote": "请在2026年12月15日16:00前将课程报告提交至教学邮箱。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-bd37055d49b43dd1f71a8f0187dfaf2e2144b95a31e2288db717d83dfe12828f",
+              "sourceId": "FR-04",
+              "quote": "课程报告须为PDF，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-22ebd23c19a1176060294ba413947d2ac246aa08feaee3943480c9d69a28bc32",
+              "sourceId": "FR-04",
+              "quote": "文件名为班级-学号；",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-304ddd6debfd793ff1eaead171fbe52ca5832260665297a95e75073dd2f10760",
+              "sourceId": "FR-04",
+              "quote": "收到确认邮件才算提交完成。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "课程报告须为PDF，",
+              "reason": "other"
+            },
+            {
+              "text": "文件名为班级-学号；",
+              "reason": "other"
+            },
+            {
+              "text": "收到确认邮件才算提交完成。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.5.1",
+          "originalProse": [
+            {
+              "entityId": "task-submit-course-report",
+              "kind": "task",
+              "title": "提交课程报告",
+              "description": "请在2026年12月15日16:00前将课程报告提交至教学邮箱。\n课程报告须为PDF，\n文件名为班级-学号；\n收到确认邮件才算提交完成。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "提交课程报告",
+              "description": "1项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-submit-course-report",
+              "kind": "task",
+              "title": "提交课程报告",
+              "description": "请在2026年12月15日16:00前将课程报告提交至教学邮箱。\n课程报告须为PDF，\n文件名为班级-学号；\n收到确认邮件才算提交完成。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "提交课程报告",
+              "description": "1项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-submission-deadline",
+              "before": {
+                "normalizedValue": "2026-12-15T16:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-12-15T16:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.1.0",
+                "point": {
+                  "rawText": "2026年12月15日16:00前",
+                  "type": "submission_deadline",
+                  "normalizedValue": "2026-12-15T16:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 17
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-12-15",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请在2026年12月15日16:00前将课程报告提交至教学邮箱",
+                "conversions": []
+              }
+            }
+          ],
+          "unresolved": [],
+          "rangeSupport": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT",
+          "sourceActionTimes": {
+            "version": "source-action-time-role-1.0.1",
+            "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+            "inferredFacts": 0,
+            "decisions": []
+          }
+        },
+        "blockers": [
+          {
+            "id": "task-submit-course-report",
+            "problem": null
+          }
+        ]
+      },
+      "userFactEdits": 0
+    }
+  ],
+  "oldRecordingRegression": [
+    {
+      "group": "previous-official",
+      "ordinal": 1,
+      "candidate": "RoleAuthority",
+      "responseSha256": "f272672bce9162260e6a7c99996c43a1cb17fcee983ac525e55adb4b48d8f63c",
+      "decodeError": null,
+      "taskTitles": [
+        "登录迎新系统完成网上预注册流程",
+        "在指定时间内激活账号和登录系统"
+      ],
+      "blockers": [
+        {
+          "id": "task-0001",
+          "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+        },
+        {
+          "id": "task-0002",
+          "problem": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。"
+        }
+      ],
+      "sourceActionTimeAudit": {
+        "version": "source-action-time-role-1.0.1",
+        "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "originalGrades": "UNCHANGED_NOT_REEVALUATED_AS_NEW_OUTPUT"
+    },
+    {
+      "group": "previous-official",
+      "ordinal": 2,
+      "candidate": "RoleAuthority",
+      "responseSha256": "db4e838a96921bcc281ec5534b1f26c42e944f09ee04d6cc04001cf15e35ff17",
+      "decodeError": null,
+      "taskTitles": [
+        "完成相关信息登记暑假离留校登记",
+        "如实登记去向、联系方式及返校安排",
+        "及时做好相关登记"
+      ],
+      "blockers": [
+        {
+          "id": "task-0001",
+          "problem": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。"
+        },
+        {
+          "id": "task-0002",
+          "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+        },
+        {
+          "id": "task-0003",
+          "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+        }
+      ],
+      "sourceActionTimeAudit": {
+        "version": "source-action-time-role-1.0.1",
+        "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "originalGrades": "UNCHANGED_NOT_REEVALUATED_AS_NEW_OUTPUT"
+    },
+    {
+      "group": "previous-official",
+      "ordinal": 3,
+      "candidate": "RoleAuthority",
+      "responseSha256": "a1c1ae0d301d4e10d6de1ba491d2fe008ab5636f95250f352b44583287c09bc7",
+      "decodeError": null,
+      "taskTitles": [
+        "报名活动",
+        "自行准备相关终端设备"
+      ],
+      "blockers": [
+        {
+          "id": "task-register-summer-school",
+          "problem": "该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。"
+        },
+        {
+          "id": "task-prepare-terminal-device",
+          "problem": "该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。"
+        }
+      ],
+      "sourceActionTimeAudit": {
+        "version": "source-action-time-role-1.0.1",
+        "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "originalGrades": "UNCHANGED_NOT_REEVALUATED_AS_NEW_OUTPUT"
+    },
+    {
+      "group": "previous-official",
+      "ordinal": 4,
+      "candidate": "RoleAuthority",
+      "responseSha256": "30f84ae2675e2a6bdc5bdf0a25671eb79ccbe8790f1f52e50a1cbdc7224ec50d",
+      "decodeError": null,
+      "taskTitles": [
+        "待核对事项"
+      ],
+      "blockers": [
+        {
+          "id": "task-register-lecture",
+          "problem": "该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。"
+        }
+      ],
+      "sourceActionTimeAudit": {
+        "version": "source-action-time-role-1.0.1",
+        "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "originalGrades": "UNCHANGED_NOT_REEVALUATED_AS_NEW_OUTPUT"
+    },
+    {
+      "group": "previous-paired",
+      "ordinal": 1,
+      "candidate": "RoleAuthority",
+      "responseSha256": "750c6f6f02317890bbd95b5a65d388e829085a094cdd025dd92a93c42edb65dc",
+      "decodeError": null,
+      "taskTitles": [
+        "完成仪器借用登记",
+        "填写设备编号和联系电话",
+        "到器材室领取借用卡"
+      ],
+      "blockers": [
+        {
+          "id": "task-0001",
+          "problem": "这项任务的材料覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。"
+        },
+        {
+          "id": "task-0002",
+          "problem": null
+        },
+        {
+          "id": "task-0003",
+          "problem": null
+        }
+      ],
+      "sourceActionTimeAudit": {
+        "version": "source-action-time-role-1.0.1",
+        "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+        "inferredFacts": 0,
+        "decisions": [
+          {
+            "id": "time-0002",
+            "ownerIds": [
+              "task-0003"
+            ],
+            "beforeType": "event_start",
+            "role": "task_action_time",
+            "reason": "CITED_ACTION_AT_TIME",
+            "quotes": [
+              "请于2026年11月21日09:00到器材室领取借用卡。"
+            ]
+          }
+        ]
+      },
+      "originalGrades": "UNCHANGED_NOT_REEVALUATED_AS_NEW_OUTPUT"
+    },
+    {
+      "group": "previous-paired",
+      "ordinal": 2,
+      "candidate": "TaskRequirements",
+      "responseSha256": "ed7e89a18c3b9fded70d6d4254f1f94e2fa1c8689c4a836994d33db0907fd5b9",
+      "decodeError": null,
+      "taskTitles": [
+        "完成仪器借用登记",
+        "到器材室领取借用卡"
+      ],
+      "blockers": [
+        {
+          "id": "task-register-instrument-borrow",
+          "problem": "这项任务的材料覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。"
+        },
+        {
+          "id": "task-collect-borrow-card",
+          "problem": "这项任务的材料覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。"
+        }
+      ],
+      "sourceActionTimeAudit": {
+        "version": "source-action-time-role-1.0.1",
+        "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+        "inferredFacts": 0,
+        "decisions": [
+          {
+            "id": "time-collect-borrow-card",
+            "ownerIds": [
+              "task-collect-borrow-card"
+            ],
+            "beforeType": "event_start",
+            "role": "task_action_time",
+            "reason": "CITED_ACTION_AT_TIME",
+            "quotes": [
+              "请于2026年11月21日09:00到器材室领取借用卡。"
+            ]
+          }
+        ]
+      },
+      "originalGrades": "UNCHANGED_NOT_REEVALUATED_AS_NEW_OUTPUT"
+    },
+    {
+      "group": "previous-paired",
+      "ordinal": 3,
+      "candidate": "TaskRequirements",
+      "responseSha256": "33a377de2e9cc73923dd29c17c3ed0b2e66947a22318b994f6a2f71dd5ffcb20",
+      "decodeError": null,
+      "taskTitles": [
+        "报名摄影工作坊",
+        "自行准备相机"
+      ],
+      "blockers": [
+        {
+          "id": "task-register-photo-workshop",
+          "problem": null
+        },
+        {
+          "id": "task-prepare-camera",
+          "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+        }
+      ],
+      "sourceActionTimeAudit": {
+        "version": "source-action-time-role-1.0.1",
+        "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "originalGrades": "UNCHANGED_NOT_REEVALUATED_AS_NEW_OUTPUT"
+    },
+    {
+      "group": "previous-paired",
+      "ordinal": 4,
+      "candidate": "RoleAuthority",
+      "responseSha256": "375e844ac0a7a0ff152fd8f2a660935b275880c855b58b1803070d6a7797a161",
+      "decodeError": null,
+      "taskTitles": [
+        "报名摄影工作坊",
+        "填写年级",
+        "注明器材型号",
+        "准备相机"
+      ],
+      "blockers": [
+        {
+          "id": "task-register-workshop",
+          "problem": "这项任务的材料覆盖未说明清楚，保留已有事实，请核对；不能当成原文没有。"
+        },
+        {
+          "id": "task-fill-grade",
+          "problem": null
+        },
+        {
+          "id": "task-note-equipment-model",
+          "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+        },
+        {
+          "id": "task-prepare-camera",
+          "problem": "资格尚未确认，不能当成已符合；请保留待核对。"
+        }
+      ],
+      "sourceActionTimeAudit": {
+        "version": "source-action-time-role-1.0.1",
+        "operation": "SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "originalGrades": "UNCHANGED_NOT_REEVALUATED_AS_NEW_OUTPUT"
+    }
+  ]
+}

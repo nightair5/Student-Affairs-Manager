@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "rco-5-repair-component-freeze-1.0.0",
+  "createdAt": "2026-09-02",
+  "stage": "RCO-5-002",
+  "candidateSchema": "facts-1.4",
+  "promptVersion": "recognition-facts-first-1.4.0",
+  "candidateStatus": "REJECT_CANDIDATE",
+  "rejectionReason": "fresh audit reproduced controlled-relation grounding bypasses; lexical validation cannot prove semantic ownership",
+  "scope": "isolated zero-call controlled-relation facts-first repair",
+  "qualityGate": "NOT_RUN",
+  "promotion": "NO_PROMOTION",
+  "modelCalls": 0,
+  "targetedFactsTests": 54,
+  "files": [
+    {
+      "path": "src/recognition/facts.ts",
+      "sha256": "c5dc721a4a8eadabe6a0471932d60f071c52489cf8fa9ec193b2a5dbb1a29999"
+    },
+    {
+      "path": "src/recognition/facts.test.ts",
+      "sha256": "73a84facb5541a7729582aa785764586449e931280a10ba6a260befba36475d7"
+    },
+    {
+      "path": "src/recognition/schema.ts",
+      "sha256": "81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40"
+    },
+    {
+      "path": "src/lib/timeSemantics.ts",
+      "sha256": "d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d"
+    }
+  ],
+  "protectedInputsModified": false,
+  "claimsNotSupported": [
+    "model recall or precision improvement",
+    "image or file recognition accuracy",
+    "human editing-time improvement",
+    "RCO-G5 quality pass",
+    "RCO-6 readiness",
+    "release readiness"
+  ]
+}

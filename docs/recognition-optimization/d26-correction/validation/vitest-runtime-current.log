@@ -1,0 +1,22 @@
+
+ RUN  v3.2.7 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛
+
+ ✓ src/experiments/realInput01/runtime.test.ts (30 tests | 2 skipped) 11299ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > material edits invalidate their observation; shared confirmed entity cannot be rewritten  1069ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: ready  735ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: missing  968ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: not_required  924ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > material review save failure is atomic, stale choices refuse, independent sibling can confirm  694ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > saved correction preserves a previously confirmed task and independent source confirmation  1337ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=false  614ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=true  793ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > derived long title requires an explicit short user title without truncating the corrected object  344ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit saved date/title invalidate old review and are the confirmed values; rollback is atomic  349ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > manual material repair persists exact values, keeps originals and independent brother confirmation  1078ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > whole-source versions remain immutable, old pending draft is stale, confirmed task survives  721ms
+
+ Test Files  1 passed (1)
+      Tests  28 passed | 2 skipped (30)
+   Start at  18:23:28
+   Duration  12.85s (transform 704ms, setup 0ms, collect 1.19s, tests 11.30s, environment 0ms, prepare 113ms)
+

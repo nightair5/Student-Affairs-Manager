@@ -1,0 +1,38 @@
+{
+  "packageVersion": "candidate13-d5r1-development-1.1",
+  "status": "CANDIDATE13_V4_DEVELOPMENT_READY_FOR_NEW_AUTHORIZATION",
+  "humanGate": "WAITING_FOR_INDEPENDENT_HUMAN_LABELS_AND_TRIAL",
+  "evidenceRole": "SYNTHETIC_DEVELOPMENT_MODEL_ASSISTED_LABELS",
+  "dataRevision": "D5-R1",
+  "preDataFreezeCommit": "ee6ee45caa4e1bd258237ccb4c6bc9792d0c9e34",
+  "manifestSha256": "2acd34fce52396a3be17b70fee28e4fe1f3d11bec796e97c672249406c453f53",
+  "counts": {
+    "sources": 12,
+    "completeReferences": 12,
+    "independentHumanReferences": 0,
+    "preparedRequestIdentities": 24,
+    "modelCalls": 0
+  },
+  "mainMetrics": {
+    "firstWholeSuggestionAccuracy": "NOT_RUN",
+    "correctDispositionRate": "NOT_OBSERVABLE",
+    "lowModificationCorrectDispositionRate": "NOT_OBSERVABLE",
+    "activeModificationTime": "NOT_OBSERVABLE"
+  },
+  "tests": {
+    "d5Node": { "passed": 13, "failed": 0 },
+    "candidate13Vitest": { "passed": 7, "failed": 0 },
+    "rawRepositoryTest": { "passed": 1446, "failed": 3, "skipped": 1 },
+    "isolatedRepositoryVitest": { "passed": 1449, "failed": 0, "skipped": 1 },
+    "historicalRco5007": { "passed": 3, "failed": 1, "error": "FREEZE_HASH_MISMATCH:package-lock.json" },
+    "browserAcceptance": { "status": "NOT_RUN", "blocker": "nodeRepl.fetch request failed" }
+  },
+  "protectedFiles": 84,
+  "authoritativeLedger": {
+    "rows": 742,
+    "sha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+    "mode": "READ_ONLY"
+  },
+  "dispatchAuthorized": false,
+  "experimentAudit": "PASS_WITH_WARN"
+}

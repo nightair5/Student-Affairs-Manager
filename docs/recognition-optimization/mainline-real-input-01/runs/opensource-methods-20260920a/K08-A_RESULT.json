@@ -1,0 +1,229 @@
+{
+  "version": "real-input-contrastive-result-1",
+  "unitId": "K08-A",
+  "sourceId": "OS08",
+  "arm": "A",
+  "armName": "candidate03-baseline",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "requestSha": "c3c31ebf51b9908a170fd11899d6ec612b0cf1866f785155451e7e8ce7b918f3",
+  "responseSha": "10bdca278cbcb984c8cb1f61b692081de899fb28fd5b7fc05a065b85ca89a6bf",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "exampleVersion": null,
+  "scorerSha": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+  "referenceSha": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-save-receipt",
+        "propositionScopeIds": [
+          "scope-0001-e4273f0fdd25282ab17bcb075240c84bbf6d9acd4b47db82ac06252aefc7caff",
+          "scope-0002-604a0e8dd3594b6198d673cad5d351d60ea15c80e4232bff46683cbb68540470"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "save",
+        "action": {
+          "scopeId": "scope-0001-e4273f0fdd25282ab17bcb075240c84bbf6d9acd4b47db82ac06252aefc7caff",
+          "surface": "保存"
+        },
+        "object": {
+          "scopeId": "scope-0001-e4273f0fdd25282ab17bcb075240c84bbf6d9acd4b47db82ac06252aefc7caff",
+          "surface": "已签收的借用凭证"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "保存已签收的借用凭证",
+          "description": "保存已签收的借用凭证，保存时保持编号不变。",
+          "completionCriteria": [
+            "已签收的借用凭证被保存",
+            "保存时编号保持不变"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-borrow-receipt"
+          ],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-return-receipt",
+        "propositionScopeIds": [
+          "scope-0003-84f949ded562d920f6a3b5ae562e9d55157b97335ded96ce6675edbbcf57bcd2",
+          "scope-0004-52efca00b2d9f9e8942b676c2abbf684130e88d9083b3922213e6ed6989ff9d3"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "negative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "other",
+        "action": {
+          "scopeId": "scope-0003-84f949ded562d920f6a3b5ae562e9d55157b97335ded96ce6675edbbcf57bcd2",
+          "surface": "交回"
+        },
+        "object": {
+          "scopeId": "scope-0003-84f949ded562d920f6a3b5ae562e9d55157b97335ded96ce6675edbbcf57bcd2",
+          "surface": "凭证"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "交回凭证",
+          "description": "无需今天交回凭证，交回日期待通知。",
+          "completionCriteria": [
+            "按待通知的交回日期交回凭证"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "low",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-borrow-receipt"
+          ],
+          "timePointTempIds": [
+            "time-today",
+            "time-return-tbd"
+          ],
+          "confidence": 0.85,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-borrow-receipt",
+        "name": "已签收的借用凭证",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [
+          "保持编号不变"
+        ],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-save-receipt",
+          "task-return-receipt"
+        ],
+        "scopeIds": [
+          "scope-0001-e4273f0fdd25282ab17bcb075240c84bbf6d9acd4b47db82ac06252aefc7caff",
+          "scope-0002-604a0e8dd3594b6198d673cad5d351d60ea15c80e4232bff46683cbb68540470"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-today",
+        "type": "task_deadline",
+        "rawText": "今天",
+        "relatedTaskTempIds": [
+          "task-return-receipt"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0003-84f949ded562d920f6a3b5ae562e9d55157b97335ded96ce6675edbbcf57bcd2"
+        ],
+        "confidence": 0.8,
+        "normalizedValue": "2026-09-20",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": true,
+        "precision": "date_only",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "time-return-tbd",
+        "type": "task_deadline",
+        "rawText": "交回日期待通知",
+        "relatedTaskTempIds": [
+          "task-return-receipt"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0004-52efca00b2d9f9e8942b676c2abbf684130e88d9083b3922213e6ed6989ff9d3"
+        ],
+        "confidence": 0.8,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [],
+    "unresolvedScopeIds": [],
+    "sourceId": "opensource-dev-OS08",
+    "sourceVersionId": "opensource-dev-OS08:1",
+    "sourceFingerprint": "sha256:3663186c5abc0acbfc6da7b56d2901c9b461ce8991e96c95493e7a0c5cfc898a"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 6279,
+  "parseError": null,
+  "totalAttempts": 306,
+  "usage": {
+    "input_tokens": 4290,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 1277,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5567
+  },
+  "costUpperMicroCny": 18796,
+  "totalCostUpperMicroCny": 13911735,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化"
+}

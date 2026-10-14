@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "origin": "http://127.0.0.1:6631",
+  "browser": "Edge",
+  "tabId": 763114931,
+  "database": "rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862",
+  "comparisonSource": "Real UI engineering tool: new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load(); obtained before download, retained in CUA p04before/p04after",
+  "before": {
+    "tasks": 10,
+    "workspaceSha256": "c45f55d098e8f31e02ca2ca7cf7ef4d5f629eda38e1763c9fce72195cccfcc91"
+  },
+  "after": {
+    "tasks": 13,
+    "workspaceSha256": "3525c9aeef2fb39b5936a4b143682142f8e612926b3aec9635215ecb463f1dc6",
+    "oldChanged": [],
+    "addedTimes": 3,
+    "addedMaterials": 3,
+    "realJobs": 0,
+    "foreignDatabase": 0,
+    "legacyStorage": 0,
+    "forbiddenNetwork": 0
+  },
+  "journeys": [
+    {
+      "unit": "N01-04",
+      "source": "source:04040cc8",
+      "operation": "material review + fact review + active select + batch confirm 2 + reload + Tasks/Calendar/Detail + independent read",
+      "status": "PASS"
+    },
+    {
+      "unit": "N06-04",
+      "source": "source:85f80d7b",
+      "operation": "old requirement rejected + new material/fact review + active confirm 1 + reload + Tasks/Calendar/Detail + independent read",
+      "status": "PASS"
+    }
+  ],
+  "download": {
+    "path": "C:/Users/Winner/Downloads/real-input-local-evidence (9).json",
+    "bytes": 1101702,
+    "sha256": "c0736a300306caf86d0dbaa23afe00ea179d0d91fa134bf702161d3092d24d5e",
+    "workspaceSha256": "3525c9aeef2fb39b5936a4b143682142f8e612926b3aec9635215ecb463f1dc6",
+    "jointValidator": "PASS",
+    "agreementWithPriorIndependentRead": "PASS"
+  },
+  "rawAndFirst": "preserved",
+  "materialPreparation": "agent synthetic user observation missing, not human measurement/model first prediction",
+  "defaultSelection": "NOT_ENABLED",
+  "humanEditingTime": "NOT_RUN",
+  "modelCallsDuringReplay": 0
+}

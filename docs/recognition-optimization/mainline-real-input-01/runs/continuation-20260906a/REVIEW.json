@@ -1,0 +1,56 @@
+{
+  "stage": "MAINLINE-REAL-INPUT-01",
+  "status": "BLOCKED_GATEWAY_SECRET_REFLECTION",
+  "modelCalls": 0,
+  "credentialAccess": 0,
+  "realLeak": 0,
+  "reviews": [
+    {
+      "reviewer": "real_input_budget_v2_review",
+      "scope": "budget module and Node tests",
+      "initial": "REQUEST_CHANGES_P2",
+      "cause": "snapshot exposed manifest.units by reference",
+      "reproduction": "two Missing expected rejection failures retained",
+      "fix": "copy(manifest.units) in replay",
+      "final": "PASS_SCOPE_ONLY",
+      "tests": 28
+    },
+    {
+      "reviewer": "real_input_gateway_review",
+      "scope": "gateway and budget, four files",
+      "status": "BLOCKED_P1",
+      "code": "ESCAPED_CREDENTIAL_REFLECTION",
+      "observed": {
+        "httpStatus": 200,
+        "returnedDecodedFakeCredential": true,
+        "recordedDecodedFakeCredential": true,
+        "recordingScope": "in-memory recordRaw callback only; createRawRecorder disk persistence NOT_RUN; budget ledger persisted to temporary test store",
+        "reservationStatus": "settled",
+        "settledMicroCny": 390
+      },
+      "evidenceSource": "Independent agent real_input_gateway_review, execution chunk_id 36b05f; real gateway/budget interfaces, fake upstream Response, fake credential, predeclared temporary test store only",
+      "existingTests": 45
+    }
+  ],
+  "finalReviewedFiles": [
+    {
+      "path": "scripts/real-input-model-gateway.mjs",
+      "sha256": "0b9901deaf13127f22c3db282175eac674e77eadd4ea0cc30addf58481fafd12"
+    },
+    {
+      "path": "scripts/real-input-budget.mjs",
+      "sha256": "f4b625b15762604c55718c4889b6c546ca7c928c98134334e04cc3bda0f595a1"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.node-test.mjs",
+      "sha256": "d9d49cb9413354d588ccf1f4db6e4250538b28e3bdc3812ee74731cdfc7bfd2a"
+    },
+    {
+      "path": "scripts/real-input-budget.node-test.mjs",
+      "sha256": "03d0310b02a79e7f1409a55f37a569bd6207c4e783b2d4fbbbb93486855d47d4"
+    }
+  ],
+  "stop": "No implementation/test changes after P1 reproduction. No live dispatch, full engineering or browser acceptance.",
+  "limitations": "Simulated credential reflection is a potential leak path, not an observed real credential disclosure. Gateway remains unconnected. Raw file persistence was not tested by the independent reflection probe.",
+  "auditDocumentReview": "PASS_WITH_SCOPE_CLARIFICATION: independent reviewer verified counts and final four SHA; recordRaw is an in-memory callback, not a raw-file disk test. AUDIT clarified."
+}

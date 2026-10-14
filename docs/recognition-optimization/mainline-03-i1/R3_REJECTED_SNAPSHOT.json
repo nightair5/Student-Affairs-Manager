@@ -1,0 +1,64 @@
+{
+  "stage": "RCO-5-MAINLINE-03-I1-R3",
+  "status": "NOT_ACCEPTED_DOWNLOAD_UNVERIFIED",
+  "baselineHead": "beae935cba642027c8222644a6e541f2c636bfb2",
+  "implementation": [
+    {
+      "path": "src/App.tsx",
+      "sha256": "2a0b4ad5e7d350437e4466492bf0d42197cd1a98db27315e7a6ae0aec386cbb5"
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "sha256": "e70a9a3a1580d254115d53e68c4883ec1573353365b2d74f06621dca400dfab0"
+    },
+    {
+      "path": "src/experiments/mainline03/recognitionHandoff.ts",
+      "sha256": "d96cb50639849cf3437ca7f374b72a213a46c7d4029b757f163da9fba691ddeb"
+    },
+    {
+      "path": "src/experiments/mainline03/recognitionHandoff.test.ts",
+      "sha256": "72f7e5402683f5f77258862ae014f740bc2784a1d0632d63191fda37f56f52ad"
+    },
+    {
+      "path": "src/experiments/mainline03/seenReplay.ts",
+      "sha256": "e595d756468959eab01c6628d386d639625464ba50a6b37168690862a12d1950"
+    },
+    {
+      "path": "src/experiments/mainline03/seenReplay.test.ts",
+      "sha256": "bb1266d778ee83d5025252dcfa42baa2fa8931e5ce893496a571279734714f25"
+    },
+    {
+      "path": "src/experiments/mainline03/browser.tsx",
+      "sha256": "93b9d81b975183dd155dfc30848258f2f258b1d793af55ad57f7755a5d297cc1"
+    },
+    {
+      "path": "src/experiments/mainline03/mainlineAcceptance.test.tsx",
+      "sha256": "d085ae7b3ee2552c0bb7b8bc351c4c0ebf5956d99a5b908360a9a54bd88824cd"
+    },
+    {
+      "path": "scripts/serve-mainline-03-i1.mjs",
+      "sha256": "29b62003673952c4006409b8094692a0b54331a4409fbd8757ae3791c025a071"
+    },
+    {
+      "path": "scripts/check-mainline-03-i1.mjs",
+      "sha256": "956707b42ccde3887615d3eb570ed7b736604031f4f550db341758fae54737c4"
+    },
+    {
+      "path": "package.json",
+      "sha256": "04f508cc1c3609fdccdb2145f13a20c72a60f396e1dff03dd34ba8235c30c14e"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "330350e448c1cd29c6c7869c7a978142d95ba84aa12658a9c9bcacdcf763bbe3"
+    }
+  ],
+  "newUncommittedChecker": {
+    "path": "scripts/check-mainline-03-i1-r3.mjs",
+    "sha256": "1ca5298be2c9fb2ebbcf06d7df8b9e357d1d2ba0d5364fae53659d6d143d7fc4"
+  },
+  "protectionBaseline": {
+    "path": "docs/recognition-optimization/mainline-03-i1/R3_BASELINE.json",
+    "sha256": "10ff4cb081a722b66fceb4b2436d76657ab0690080b4e14891a18fee6f8b70ca"
+  },
+  "reason": "Engineering passed; actual download file not obtained; docs-only delivery and source retained."
+}

@@ -1,0 +1,586 @@
+{
+  "unitId": "V06-09",
+  "arm": "09",
+  "cohort": "later8",
+  "bindingSha": "d62abdfdedaf4b538364fe55bacd1e52fc3623f7a5acef9732de75af128125df",
+  "requestSha": "f7004efca48c0f4cc3080103e84f89eb021e7abaf7ffdc437589d4db30bc46a3",
+  "responseSha": "b04014a0e876ca12e3941a19e6473c23bc5bc6fb943d285fd1688b1b491bccfd",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "961683067b73fc179a3b914513c7fba2e462086a0e8f57923c4b42b75ffd1e52",
+  "scoreInput": "semantic projection into frozen scorer; provider raw unchanged",
+  "rawEvidence": {
+    "schemaVersion": "real-input-typed-fact-wire-2",
+    "tasks": [
+      {
+        "id": "task-old-upload-raw-data",
+        "propositionScopeIds": [
+          "scope-0002-914369ccb7a802c91872c7c72e628cb68be44dfd9e5cbd64b0102bdb3fdb657b",
+          "scope-0003-3341c32c1060792ff7e21d432399e72bc7212dfa314a5649a6520c5a0d2db2e3",
+          "scope-0004-cf62c503f49f67dcbc0a3f3b945d9a89be7cffc401a5f693a87425530962ff5c"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "upload",
+        "action": {
+          "scopeId": "scope-0002-914369ccb7a802c91872c7c72e628cb68be44dfd9e5cbd64b0102bdb3fdb657b",
+          "surface": "上传"
+        },
+        "object": {
+          "scopeId": "scope-0002-914369ccb7a802c91872c7c72e628cb68be44dfd9e5cbd64b0102bdb3fdb657b",
+          "surface": "原始数据包"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "上传原始数据包",
+          "description": "先前要求研究助理于2026年10月11日18:00前上传原始数据包；该要求现已作废，原始数据包不再上传。",
+          "completionCriteria": [
+            "于2026年10月11日18:00前上传原始数据包"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "factType": "task"
+      },
+      {
+        "id": "task-submit-checksum-list",
+        "propositionScopeIds": [
+          "scope-0005-9b9be222ed82a6f0e3c59ce074b0aa1e62066043eb0d35d55a1089d566a8387b",
+          "scope-0006-5e336d56a8a6bb9dcf6c9ed0cac3d563d7c6840dc3802468976faf6169c7217f",
+          "scope-0007-1543ce121e59ff1849baae10d56c3fddf16fc52dd13f29b03f6afee58bd16552",
+          "scope-0008-0a9aa307c4688940f1c5397ee74b984569ab8e8189ca48a3e723b41fda30f578",
+          "scope-0009-4dae35c05f722abf646d6dbc1e574f4025e3a30eadccfe0ea3b883c68481dc70"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0006-5e336d56a8a6bb9dcf6c9ed0cac3d563d7c6840dc3802468976faf6169c7217f",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0006-5e336d56a8a6bb9dcf6c9ed0cac3d563d7c6840dc3802468976faf6169c7217f",
+          "surface": "校验值清单"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交校验值清单",
+          "description": "新的替代要求已经生效：请研究助理于2026年10月13日15:00前提交校验值清单，清单使用CSV并包含文件名与SHA-256。新要求替代旧要求，不是额外增加一份原始数据材料。",
+          "completionCriteria": [
+            "于2026年10月13日15:00前提交校验值清单",
+            "清单使用CSV格式",
+            "清单包含文件名与SHA-256"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "factType": "task"
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-raw-data-package",
+        "name": "原始数据包",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-old-upload-raw-data"
+        ],
+        "scopeIds": [
+          "scope-0002-914369ccb7a802c91872c7c72e628cb68be44dfd9e5cbd64b0102bdb3fdb657b",
+          "scope-0004-cf62c503f49f67dcbc0a3f3b945d9a89be7cffc401a5f693a87425530962ff5c"
+        ],
+        "confidence": 0.95,
+        "factType": "material"
+      },
+      {
+        "tempId": "material-checksum-list",
+        "name": "校验值清单",
+        "required": true,
+        "formatRequirements": [
+          "CSV",
+          "包含文件名与SHA-256"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-submit-checksum-list"
+        ],
+        "scopeIds": [
+          "scope-0006-5e336d56a8a6bb9dcf6c9ed0cac3d563d7c6840dc3802468976faf6169c7217f",
+          "scope-0007-1543ce121e59ff1849baae10d56c3fddf16fc52dd13f29b03f6afee58bd16552"
+        ],
+        "confidence": 0.95,
+        "factType": "material"
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-old-upload-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年10月11日18:00前",
+        "relatedTaskTempIds": [
+          "task-old-upload-raw-data"
+        ],
+        "relatedMaterialTempIds": [
+          "material-raw-data-package"
+        ],
+        "scopeIds": [
+          "scope-0002-914369ccb7a802c91872c7c72e628cb68be44dfd9e5cbd64b0102bdb3fdb657b"
+        ],
+        "confidence": 0.95,
+        "factType": "time"
+      },
+      {
+        "tempId": "time-new-submit-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年10月13日15:00前",
+        "relatedTaskTempIds": [
+          "task-submit-checksum-list"
+        ],
+        "relatedMaterialTempIds": [
+          "material-checksum-list"
+        ],
+        "scopeIds": [
+          "scope-0006-5e336d56a8a6bb9dcf6c9ed0cac3d563d7c6840dc3802468976faf6169c7217f"
+        ],
+        "confidence": 0.95,
+        "factType": "time"
+      }
+    ],
+    "events": [],
+    "revisions": [
+      {
+        "type": "supersedes",
+        "targetDirectiveId": "task-old-upload-raw-data",
+        "scopeIds": [
+          "scope-0001-b70c5f73463ade601174e140526129515074287d5fbe2a32b71b6e84d97c8c53",
+          "scope-0003-3341c32c1060792ff7e21d432399e72bc7212dfa314a5649a6520c5a0d2db2e3",
+          "scope-0004-cf62c503f49f67dcbc0a3f3b945d9a89be7cffc401a5f693a87425530962ff5c",
+          "scope-0005-9b9be222ed82a6f0e3c59ce074b0aa1e62066043eb0d35d55a1089d566a8387b",
+          "scope-0008-0a9aa307c4688940f1c5397ee74b984569ab8e8189ca48a3e723b41fda30f578",
+          "scope-0009-4dae35c05f722abf646d6dbc1e574f4025e3a30eadccfe0ea3b883c68481dc70"
+        ],
+        "fromDirectiveId": "task-submit-checksum-list",
+        "effective": "true",
+        "factType": "revision"
+      }
+    ],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-b70c5f73463ade601174e140526129515074287d5fbe2a32b71b6e84d97c8c53",
+      "scope-0008-0a9aa307c4688940f1c5397ee74b984569ab8e8189ca48a3e723b41fda30f578",
+      "scope-0009-4dae35c05f722abf646d6dbc1e574f4025e3a30eadccfe0ea3b883c68481dc70"
+    ],
+    "unresolvedScopeIds": []
+  },
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-old-upload-raw-data",
+        "propositionScopeIds": [
+          "scope-0002-914369ccb7a802c91872c7c72e628cb68be44dfd9e5cbd64b0102bdb3fdb657b",
+          "scope-0003-3341c32c1060792ff7e21d432399e72bc7212dfa314a5649a6520c5a0d2db2e3",
+          "scope-0004-cf62c503f49f67dcbc0a3f3b945d9a89be7cffc401a5f693a87425530962ff5c"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "upload",
+        "action": {
+          "scopeId": "scope-0002-914369ccb7a802c91872c7c72e628cb68be44dfd9e5cbd64b0102bdb3fdb657b",
+          "surface": "上传"
+        },
+        "object": {
+          "scopeId": "scope-0002-914369ccb7a802c91872c7c72e628cb68be44dfd9e5cbd64b0102bdb3fdb657b",
+          "surface": "原始数据包"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "上传原始数据包",
+          "description": "先前要求研究助理于2026年10月11日18:00前上传原始数据包；该要求现已作废，原始数据包不再上传。",
+          "completionCriteria": [
+            "于2026年10月11日18:00前上传原始数据包"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true,
+          "materialTempIds": [
+            "material-raw-data-package"
+          ],
+          "timePointTempIds": [
+            "time-old-upload-deadline"
+          ]
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-submit-checksum-list",
+        "propositionScopeIds": [
+          "scope-0005-9b9be222ed82a6f0e3c59ce074b0aa1e62066043eb0d35d55a1089d566a8387b",
+          "scope-0006-5e336d56a8a6bb9dcf6c9ed0cac3d563d7c6840dc3802468976faf6169c7217f",
+          "scope-0007-1543ce121e59ff1849baae10d56c3fddf16fc52dd13f29b03f6afee58bd16552",
+          "scope-0008-0a9aa307c4688940f1c5397ee74b984569ab8e8189ca48a3e723b41fda30f578",
+          "scope-0009-4dae35c05f722abf646d6dbc1e574f4025e3a30eadccfe0ea3b883c68481dc70"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0006-5e336d56a8a6bb9dcf6c9ed0cac3d563d7c6840dc3802468976faf6169c7217f",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0006-5e336d56a8a6bb9dcf6c9ed0cac3d563d7c6840dc3802468976faf6169c7217f",
+          "surface": "校验值清单"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交校验值清单",
+          "description": "新的替代要求已经生效：请研究助理于2026年10月13日15:00前提交校验值清单，清单使用CSV并包含文件名与SHA-256。新要求替代旧要求，不是额外增加一份原始数据材料。",
+          "completionCriteria": [
+            "于2026年10月13日15:00前提交校验值清单",
+            "清单使用CSV格式",
+            "清单包含文件名与SHA-256"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true,
+          "materialTempIds": [
+            "material-checksum-list"
+          ],
+          "timePointTempIds": [
+            "time-new-submit-deadline"
+          ]
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-raw-data-package",
+        "name": "原始数据包",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-old-upload-raw-data"
+        ],
+        "scopeIds": [
+          "scope-0002-914369ccb7a802c91872c7c72e628cb68be44dfd9e5cbd64b0102bdb3fdb657b",
+          "scope-0004-cf62c503f49f67dcbc0a3f3b945d9a89be7cffc401a5f693a87425530962ff5c"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "material-checksum-list",
+        "name": "校验值清单",
+        "required": true,
+        "formatRequirements": [
+          "CSV",
+          "包含文件名与SHA-256"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-submit-checksum-list"
+        ],
+        "scopeIds": [
+          "scope-0006-5e336d56a8a6bb9dcf6c9ed0cac3d563d7c6840dc3802468976faf6169c7217f",
+          "scope-0007-1543ce121e59ff1849baae10d56c3fddf16fc52dd13f29b03f6afee58bd16552"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-old-upload-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年10月11日18:00前",
+        "relatedTaskTempIds": [
+          "task-old-upload-raw-data"
+        ],
+        "relatedMaterialTempIds": [
+          "material-raw-data-package"
+        ],
+        "scopeIds": [
+          "scope-0002-914369ccb7a802c91872c7c72e628cb68be44dfd9e5cbd64b0102bdb3fdb657b"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-11T18:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "time-new-submit-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年10月13日15:00前",
+        "relatedTaskTempIds": [
+          "task-submit-checksum-list"
+        ],
+        "relatedMaterialTempIds": [
+          "material-checksum-list"
+        ],
+        "scopeIds": [
+          "scope-0006-5e336d56a8a6bb9dcf6c9ed0cac3d563d7c6840dc3802468976faf6169c7217f"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-13T15:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [
+      {
+        "type": "supersedes",
+        "targetDirectiveId": "task-old-upload-raw-data",
+        "scopeIds": [
+          "scope-0001-b70c5f73463ade601174e140526129515074287d5fbe2a32b71b6e84d97c8c53",
+          "scope-0003-3341c32c1060792ff7e21d432399e72bc7212dfa314a5649a6520c5a0d2db2e3",
+          "scope-0004-cf62c503f49f67dcbc0a3f3b945d9a89be7cffc401a5f693a87425530962ff5c",
+          "scope-0005-9b9be222ed82a6f0e3c59ce074b0aa1e62066043eb0d35d55a1089d566a8387b",
+          "scope-0008-0a9aa307c4688940f1c5397ee74b984569ab8e8189ca48a3e723b41fda30f578",
+          "scope-0009-4dae35c05f722abf646d6dbc1e574f4025e3a30eadccfe0ea3b883c68481dc70"
+        ],
+        "fromDirectiveId": "task-submit-checksum-list",
+        "effective": "true"
+      }
+    ],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-b70c5f73463ade601174e140526129515074287d5fbe2a32b71b6e84d97c8c53",
+      "scope-0008-0a9aa307c4688940f1c5397ee74b984569ab8e8189ca48a3e723b41fda30f578",
+      "scope-0009-4dae35c05f722abf646d6dbc1e574f4025e3a30eadccfe0ea3b883c68481dc70"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:abe83570",
+    "sourceVersionId": "source:abe83570:version:1",
+    "sourceFingerprint": "sha256:97488808f0dd74c70ab545a7f8a33cdd515d06180fb59774db30bce68dd850d7"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 10008,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "evidence": {
+        "predicted": 6,
+        "reference": 6,
+        "correct": 1,
+        "falsePositive": 5,
+        "falseNegative": 5,
+        "precision": 0.16666666666666666,
+        "recall": 0.16666666666666666
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 1,
+        "falsePositive": 3,
+        "falseNegative": 3,
+        "precision": 0.25,
+        "recall": 0.25
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 2,
+    "referenceTaskCount": 2
+  },
+  "scoreError": null,
+  "totalAttempts": 203,
+  "costUpperMicroCny": 37503,
+  "totalCostUpperMicroCny": 8172280,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；原12+后8分别报告；40请求不是40独立材料"
+}

@@ -1,0 +1,1096 @@
+{
+  "newCandidate": {
+    "requests": 8,
+    "complete": 1,
+    "majorCorrectionRequired": 7,
+    "metrics": {
+      "task": {
+        "predicted": 9,
+        "reference": 9,
+        "correct": 8,
+        "precision": 0.8888888888888888,
+        "recall": 0.8888888888888888
+      },
+      "requiresAction": {
+        "predicted": 10,
+        "reference": 10,
+        "correct": 9,
+        "precision": 0.9,
+        "recall": 0.9
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 3,
+        "correct": 1,
+        "precision": 0.5,
+        "recall": 0.3333333333333333
+      },
+      "material": {
+        "predicted": 6,
+        "reference": 2,
+        "correct": 0,
+        "precision": 0,
+        "recall": 0
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 9,
+        "reference": 9,
+        "correct": 8,
+        "precision": 0.8888888888888888,
+        "recall": 0.8888888888888888
+      },
+      "revision": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "precision": 1,
+        "recall": 1
+      },
+      "evidence": {
+        "predicted": 17,
+        "reference": 14,
+        "correct": 0,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 11,
+        "reference": 10,
+        "correct": 0,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 25,
+        "reference": 25,
+        "correct": 13,
+        "precision": 0.52,
+        "recall": 0.52
+      }
+    },
+    "waitingMs": 58770,
+    "newCostUpperMicroCny": 162228,
+    "rows": [
+      {
+        "unitId": "C01",
+        "issues": [],
+        "complete": false,
+        "metrics": {
+          "task": {
+            "predicted": 2,
+            "reference": 2,
+            "correct": 2,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "requiresAction": {
+            "predicted": 2,
+            "reference": 2,
+            "correct": 2,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "time": {
+            "predicted": 2,
+            "reference": 2,
+            "correct": 1,
+            "falsePositive": 1,
+            "falseNegative": 1,
+            "precision": 0.5,
+            "recall": 0.5
+          },
+          "material": {
+            "predicted": 2,
+            "reference": 2,
+            "correct": 0,
+            "falsePositive": 2,
+            "falseNegative": 2,
+            "precision": 0,
+            "recall": 0
+          },
+          "event": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "condition": {
+            "predicted": 2,
+            "reference": 2,
+            "correct": 2,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "revision": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "evidence": {
+            "predicted": 6,
+            "reference": 6,
+            "correct": 0,
+            "falsePositive": 6,
+            "falseNegative": 6,
+            "precision": 0,
+            "recall": 0
+          },
+          "semantic": {
+            "predicted": 2,
+            "reference": 2,
+            "correct": 0,
+            "falsePositive": 2,
+            "falseNegative": 2,
+            "precision": 0,
+            "recall": 0
+          },
+          "coverage": {
+            "predicted": 4,
+            "reference": 4,
+            "correct": 3,
+            "falsePositive": 1,
+            "falseNegative": 1,
+            "precision": 0.75,
+            "recall": 0.75
+          }
+        }
+      },
+      {
+        "unitId": "C02",
+        "issues": [],
+        "complete": false,
+        "metrics": {
+          "task": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "requiresAction": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "time": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "material": {
+            "predicted": 1,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 0,
+            "precision": 0,
+            "recall": null
+          },
+          "event": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "condition": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "revision": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "evidence": {
+            "predicted": 2,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 2,
+            "falseNegative": 1,
+            "precision": 0,
+            "recall": 0
+          },
+          "semantic": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 1,
+            "precision": 0,
+            "recall": 0
+          },
+          "coverage": {
+            "predicted": 3,
+            "reference": 3,
+            "correct": 1,
+            "falsePositive": 2,
+            "falseNegative": 2,
+            "precision": 0.3333333333333333,
+            "recall": 0.3333333333333333
+          }
+        }
+      },
+      {
+        "unitId": "C03",
+        "issues": [
+          {
+            "code": "COVERAGE_TIME",
+            "entityIds": [
+              "task-submit-activity-summary"
+            ]
+          }
+        ],
+        "complete": false,
+        "metrics": {
+          "task": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "requiresAction": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "time": {
+            "predicted": 0,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 1,
+            "precision": null,
+            "recall": 0
+          },
+          "material": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "event": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "condition": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "revision": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "evidence": {
+            "predicted": 1,
+            "reference": 2,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 2,
+            "precision": 0,
+            "recall": 0
+          },
+          "semantic": {
+            "predicted": 2,
+            "reference": 2,
+            "correct": 0,
+            "falsePositive": 2,
+            "falseNegative": 2,
+            "precision": 0,
+            "recall": 0
+          },
+          "coverage": {
+            "predicted": 3,
+            "reference": 3,
+            "correct": 1,
+            "falsePositive": 2,
+            "falseNegative": 2,
+            "precision": 0.3333333333333333,
+            "recall": 0.3333333333333333
+          }
+        }
+      },
+      {
+        "unitId": "C04",
+        "issues": [],
+        "complete": true,
+        "metrics": {
+          "task": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "requiresAction": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "time": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "material": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "event": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "condition": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "revision": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "evidence": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "semantic": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "coverage": {
+            "predicted": 2,
+            "reference": 2,
+            "correct": 2,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          }
+        }
+      },
+      {
+        "unitId": "C05",
+        "issues": [],
+        "complete": false,
+        "metrics": {
+          "task": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "requiresAction": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "time": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "material": {
+            "predicted": 1,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 0,
+            "precision": 0,
+            "recall": null
+          },
+          "event": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "condition": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "revision": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "evidence": {
+            "predicted": 2,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 2,
+            "falseNegative": 1,
+            "precision": 0,
+            "recall": 0
+          },
+          "semantic": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 1,
+            "precision": 0,
+            "recall": 0
+          },
+          "coverage": {
+            "predicted": 3,
+            "reference": 3,
+            "correct": 1,
+            "falsePositive": 2,
+            "falseNegative": 2,
+            "precision": 0.3333333333333333,
+            "recall": 0.3333333333333333
+          }
+        }
+      },
+      {
+        "unitId": "C06",
+        "issues": [],
+        "complete": false,
+        "metrics": {
+          "task": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "requiresAction": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "time": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "material": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "event": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "condition": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "revision": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "evidence": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 1,
+            "precision": 0,
+            "recall": 0
+          },
+          "semantic": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 1,
+            "precision": 0,
+            "recall": 0
+          },
+          "coverage": {
+            "predicted": 3,
+            "reference": 3,
+            "correct": 2,
+            "falsePositive": 1,
+            "falseNegative": 1,
+            "precision": 0.6666666666666666,
+            "recall": 0.6666666666666666
+          }
+        }
+      },
+      {
+        "unitId": "C07",
+        "issues": [],
+        "complete": false,
+        "metrics": {
+          "task": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 1,
+            "precision": 0,
+            "recall": 0
+          },
+          "requiresAction": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 1,
+            "precision": 0,
+            "recall": 0
+          },
+          "time": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "material": {
+            "predicted": 1,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 0,
+            "precision": 0,
+            "recall": null
+          },
+          "event": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "condition": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 1,
+            "precision": 0,
+            "recall": 0
+          },
+          "revision": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "evidence": {
+            "predicted": 2,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 2,
+            "falseNegative": 1,
+            "precision": 0,
+            "recall": 0
+          },
+          "semantic": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 1,
+            "precision": 0,
+            "recall": 0
+          },
+          "coverage": {
+            "predicted": 3,
+            "reference": 3,
+            "correct": 1,
+            "falsePositive": 2,
+            "falseNegative": 2,
+            "precision": 0.3333333333333333,
+            "recall": 0.3333333333333333
+          }
+        }
+      },
+      {
+        "unitId": "C08",
+        "issues": [
+          {
+            "code": "COVERAGE_MATERIAL",
+            "entityIds": [
+              "task-print-paper-form"
+            ]
+          }
+        ],
+        "complete": false,
+        "metrics": {
+          "task": {
+            "predicted": 2,
+            "reference": 2,
+            "correct": 2,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "requiresAction": {
+            "predicted": 2,
+            "reference": 2,
+            "correct": 2,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "time": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "material": {
+            "predicted": 1,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 1,
+            "falseNegative": 0,
+            "precision": 0,
+            "recall": null
+          },
+          "event": {
+            "predicted": 0,
+            "reference": 0,
+            "correct": 0,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": null,
+            "recall": null
+          },
+          "condition": {
+            "predicted": 2,
+            "reference": 2,
+            "correct": 2,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "revision": {
+            "predicted": 1,
+            "reference": 1,
+            "correct": 1,
+            "falsePositive": 0,
+            "falseNegative": 0,
+            "precision": 1,
+            "recall": 1
+          },
+          "evidence": {
+            "predicted": 3,
+            "reference": 2,
+            "correct": 0,
+            "falsePositive": 3,
+            "falseNegative": 2,
+            "precision": 0,
+            "recall": 0
+          },
+          "semantic": {
+            "predicted": 3,
+            "reference": 2,
+            "correct": 0,
+            "falsePositive": 3,
+            "falseNegative": 2,
+            "precision": 0,
+            "recall": 0
+          },
+          "coverage": {
+            "predicted": 4,
+            "reference": 4,
+            "correct": 2,
+            "falsePositive": 2,
+            "falseNegative": 2,
+            "precision": 0.5,
+            "recall": 0.5
+          }
+        }
+      }
+    ]
+  },
+  "oldA03A08": {
+    "count": 6,
+    "metrics": {
+      "task": {
+        "predicted": 5,
+        "reference": 6,
+        "correct": 4,
+        "precision": 0.8,
+        "recall": 0.6666666666666666
+      },
+      "requiresAction": {
+        "predicted": 6,
+        "reference": 7,
+        "correct": 3,
+        "precision": 0.5,
+        "recall": 0.42857142857142855
+      },
+      "time": {
+        "predicted": 0,
+        "reference": 1,
+        "correct": 0,
+        "precision": null,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 5,
+        "reference": 0,
+        "correct": 0,
+        "precision": 0,
+        "recall": null
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 5,
+        "reference": 6,
+        "correct": 3,
+        "precision": 0.6,
+        "recall": 0.5
+      },
+      "revision": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "precision": 0,
+        "recall": 0
+      },
+      "evidence": {
+        "predicted": 10,
+        "reference": 7,
+        "correct": 0,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 12,
+        "reference": 7,
+        "correct": 0,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 17,
+        "reference": 18,
+        "correct": 4,
+        "precision": 0.23529411764705882,
+        "recall": 0.2222222222222222
+      }
+    }
+  },
+  "oldB": {
+    "count": 8,
+    "complete": 1,
+    "metrics": {
+      "task": {
+        "predicted": 7,
+        "reference": 9,
+        "correct": 6,
+        "precision": 0.8571428571428571,
+        "recall": 0.6666666666666666
+      },
+      "requiresAction": {
+        "predicted": 9,
+        "reference": 10,
+        "correct": 6,
+        "precision": 0.6666666666666666,
+        "recall": 0.6
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 3,
+        "correct": 1,
+        "precision": 0.5,
+        "recall": 0.3333333333333333
+      },
+      "material": {
+        "predicted": 7,
+        "reference": 2,
+        "correct": 0,
+        "precision": 0,
+        "recall": 0
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 7,
+        "reference": 9,
+        "correct": 5,
+        "precision": 0.7142857142857143,
+        "recall": 0.5555555555555556
+      },
+      "revision": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "precision": 0,
+        "recall": 0
+      },
+      "evidence": {
+        "predicted": 16,
+        "reference": 14,
+        "correct": 0,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 20,
+        "reference": 10,
+        "correct": 0,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 23,
+        "reference": 25,
+        "correct": 7,
+        "precision": 0.30434782608695654,
+        "recall": 0.28
+      }
+    }
+  },
+  "pairedC03C08": {
+    "task": {
+      "predicted": 6,
+      "reference": 6,
+      "correct": 5,
+      "precision": 0.8333333333333334,
+      "recall": 0.8333333333333334
+    },
+    "requiresAction": {
+      "predicted": 7,
+      "reference": 7,
+      "correct": 6,
+      "precision": 0.8571428571428571,
+      "recall": 0.8571428571428571
+    },
+    "time": {
+      "predicted": 0,
+      "reference": 1,
+      "correct": 0,
+      "precision": null,
+      "recall": 0
+    },
+    "material": {
+      "predicted": 3,
+      "reference": 0,
+      "correct": 0,
+      "precision": 0,
+      "recall": null
+    },
+    "event": {
+      "predicted": 0,
+      "reference": 0,
+      "correct": 0,
+      "precision": null,
+      "recall": null
+    },
+    "condition": {
+      "predicted": 6,
+      "reference": 6,
+      "correct": 5,
+      "precision": 0.8333333333333334,
+      "recall": 0.8333333333333334
+    },
+    "revision": {
+      "predicted": 1,
+      "reference": 1,
+      "correct": 1,
+      "precision": 1,
+      "recall": 1
+    },
+    "evidence": {
+      "predicted": 9,
+      "reference": 7,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+    },
+    "semantic": {
+      "predicted": 8,
+      "reference": 7,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+    },
+    "coverage": {
+      "predicted": 18,
+      "reference": 18,
+      "correct": 9,
+      "precision": 0.5,
+      "recall": 0.5
+    }
+  }
+}

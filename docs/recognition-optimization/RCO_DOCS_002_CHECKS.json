@@ -1,0 +1,274 @@
+{
+  "schemaVersion": "rco-docs-checks-1.0.0",
+  "phase": "RCO-DOCS-002",
+  "date": "2026-09-05",
+  "scope": "DOCUMENTATION_ONLY",
+  "status": "DOCS_CHECKS_PASS_NO_PRODUCT_PROMOTION",
+  "baselineHead": "60332e16ebb062c4af0fa85531212286ab020a23",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "authorization": {
+    "documentation": true,
+    "implementation": false,
+    "modelCalls": 0,
+    "modelNetworkRequests": 0,
+    "verifier": 0,
+    "repair": 0,
+    "retry": 0,
+    "secretAccess": "NONE",
+    "experimentCostCny": 0,
+    "realMaterials": false,
+    "humanStudy": false,
+    "rco6": false,
+    "deployment": false
+  },
+  "checks": {
+    "passed": 36,
+    "failed": 0,
+    "items": [
+      {
+        "name": "utf8:AGENTS.md",
+        "pass": true
+      },
+      {
+        "name": "fences:AGENTS.md",
+        "pass": true
+      },
+      {
+        "name": "utf8:PRD.md",
+        "pass": true
+      },
+      {
+        "name": "fences:PRD.md",
+        "pass": true
+      },
+      {
+        "name": "link:PRD.md->docs/recognition-optimization/RECOGNITION_OPTIMIZATION_PLAN.md",
+        "pass": true
+      },
+      {
+        "name": "link:PRD.md->docs/recognition-optimization/RCO-5-010_CLOSE_REPORT.md",
+        "pass": true
+      },
+      {
+        "name": "link:PRD.md->docs/recognition-optimization/rco-5-008-b8-runs/rco-5-008-b8-m1-20260904a/score.json",
+        "pass": true
+      },
+      {
+        "name": "utf8:docs/recognition-optimization/RECOGNITION_OPTIMIZATION_PLAN.md",
+        "pass": true
+      },
+      {
+        "name": "fences:docs/recognition-optimization/RECOGNITION_OPTIMIZATION_PLAN.md",
+        "pass": true
+      },
+      {
+        "name": "utf8:docs/recognition-optimization/CODEX_PROMPTS.md",
+        "pass": true
+      },
+      {
+        "name": "fences:docs/recognition-optimization/CODEX_PROMPTS.md",
+        "pass": true
+      },
+      {
+        "name": "utf8:docs/recognition-optimization/CURRENT_CONTEXT.md",
+        "pass": true
+      },
+      {
+        "name": "fences:docs/recognition-optimization/CURRENT_CONTEXT.md",
+        "pass": true
+      },
+      {
+        "name": "utf8:docs/recognition-optimization/OPTIMIZATION_LOG.md",
+        "pass": true
+      },
+      {
+        "name": "fences:docs/recognition-optimization/OPTIMIZATION_LOG.md",
+        "pass": true
+      },
+      {
+        "name": "utf8:docs/recognition-optimization/RCO_DOCS_002_REVIEW.md",
+        "pass": true
+      },
+      {
+        "name": "fences:docs/recognition-optimization/RCO_DOCS_002_REVIEW.md",
+        "pass": true
+      },
+      {
+        "name": "short_context_lines",
+        "pass": true,
+        "detail": 53
+      },
+      {
+        "name": "short_context_bytes",
+        "pass": true,
+        "detail": 3832
+      },
+      {
+        "name": "feature:F01",
+        "pass": true
+      },
+      {
+        "name": "feature:F02",
+        "pass": true
+      },
+      {
+        "name": "feature:F03",
+        "pass": true
+      },
+      {
+        "name": "feature:F04",
+        "pass": true
+      },
+      {
+        "name": "feature:F05",
+        "pass": true
+      },
+      {
+        "name": "feature:F06",
+        "pass": true
+      },
+      {
+        "name": "feature:F07",
+        "pass": true
+      },
+      {
+        "name": "feature:F08",
+        "pass": true
+      },
+      {
+        "name": "feature:F09",
+        "pass": true
+      },
+      {
+        "name": "feature:F10",
+        "pass": true
+      },
+      {
+        "name": "feature:F11",
+        "pass": true
+      },
+      {
+        "name": "feature:F12",
+        "pass": true
+      },
+      {
+        "name": "work_package:RCO-5-MAINLINE-01",
+        "pass": true
+      },
+      {
+        "name": "work_package:RCO-5-MAINLINE-02",
+        "pass": true
+      },
+      {
+        "name": "work_package:RCO-5-MAINLINE-03",
+        "pass": true
+      },
+      {
+        "name": "old_log_content_prefix_preserved",
+        "pass": true
+      },
+      {
+        "name": "commercial_threshold_table_unchanged",
+        "pass": true
+      }
+    ]
+  },
+  "readerReview": {
+    "workflow": "doc-coauthoring",
+    "context": "fresh-no-conversation",
+    "reviewer": "rco_docs_002_reader",
+    "independence": "same-family-assistive-not-human-ground-truth",
+    "questionsPassed": 8,
+    "questionsTotal": 8,
+    "initialBlockingContradictions": 1,
+    "resolvedBlockingContradictions": 1,
+    "remainingBlockers": 0,
+    "status": "PASS",
+    "correction": "PRD14.6 controlled references; exact evidence reconstructed locally; frozen contracts unchanged"
+  },
+  "protection": {
+    "trackedAtStart": 644,
+    "trackedCompared": 638,
+    "changed": [],
+    "excludedMutableDocuments": [
+      "AGENTS.md",
+      "PRD.md",
+      "docs/recognition-optimization/RECOGNITION_OPTIMIZATION_PLAN.md",
+      "docs/recognition-optimization/CODEX_PROMPTS.md",
+      "docs/recognition-optimization/CURRENT_CONTEXT.md",
+      "docs/recognition-optimization/OPTIMIZATION_LOG.md"
+    ],
+    "method": "Per-file SHA-256 compared with clean starting-worktree snapshot retained during this execution",
+    "commercialContractSha256Before": "643df93152cefdea7a397821b6e9bede4f924cdab64bbd4dc4b0bcd68d5c7e16",
+    "commercialContractSha256After": "643df93152cefdea7a397821b6e9bede4f924cdab64bbd4dc4b0bcd68d5c7e16",
+    "oldLogContentPrefix": "PRESERVED_AFTER_LINE_ENDING_NORMALIZATION",
+    "ignoredCacheFullHashAudit": "NOT_RUN",
+    "ignoredCacheWriteActions": "NONE",
+    "oldB9Runner": "NOT_RUN",
+    "oldB9Result": "UNCHANGED_FAIL",
+    "b10": "NOT_CREATED"
+  },
+  "verification": {
+    "diffCheck": "PASS",
+    "secretScan": "PASS",
+    "lint": "NOT_RUN_DOCS_ONLY",
+    "test": "NOT_RUN_DOCS_ONLY",
+    "build": "NOT_RUN_DOCS_ONLY",
+    "dependencyAudit": "NOT_RUN_DOCS_ONLY",
+    "cloudflareCheck": "NOT_RUN_DOCS_ONLY",
+    "prior899Tests": "HISTORICAL_NOT_THIS_RUN",
+    "remoteCi": "NOT_OBSERVED"
+  },
+  "documentation": [
+    {
+      "path": "AGENTS.md",
+      "lines": 315,
+      "bytes": 35050
+    },
+    {
+      "path": "PRD.md",
+      "lines": 760,
+      "bytes": 62358
+    },
+    {
+      "path": "docs/recognition-optimization/RECOGNITION_OPTIMIZATION_PLAN.md",
+      "lines": 211,
+      "bytes": 17591
+    },
+    {
+      "path": "docs/recognition-optimization/CODEX_PROMPTS.md",
+      "lines": 132,
+      "bytes": 7851
+    },
+    {
+      "path": "docs/recognition-optimization/CURRENT_CONTEXT.md",
+      "lines": 53,
+      "bytes": 3832
+    },
+    {
+      "path": "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+      "lines": 1242,
+      "bytes": 165859
+    },
+    {
+      "path": "docs/recognition-optimization/RCO_DOCS_002_REVIEW.md",
+      "lines": 47,
+      "bytes": 4039
+    }
+  ],
+  "delivery": {
+    "commitMessage": "docs(product): refocus recognition roadmap on complete task outcomes",
+    "commitAndPush": "VERIFY_GIT_NOT_SELF_REFERENTIAL"
+  },
+  "next": {
+    "workPackage": "RCO-5-MAINLINE-01",
+    "authorization": "WAIT_AUTHORIZATION"
+  },
+  "limits": [
+    "No model accuracy measurement",
+    "No live OCR or browser commercial acceptance",
+    "No human timing measurement",
+    "No live production verification",
+    "Codex development usage is not counted as recognition API experiment cost"
+  ]
+}

@@ -1,0 +1,371 @@
+{
+  "unitId": "T01-03",
+  "arm": "03",
+  "cohort": "fresh",
+  "bindingSha": "edb0f3cafde17cf0e7080ac11aeaadebc8e338cd626b807edc5149a2b81a0b76",
+  "requestSha": "63f174e727890774a680c265e0d674495c3d66d37a6e77176a2815ca97b47b71",
+  "responseSha": "51ca391841bacea1d8dcc3401f555b24cb2fd28729e0e038280b995f3740dc10",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "a53998f9cf80293ff170e1a7e4d0c134dad6a6717647c91556ccec54931d6da8",
+  "scoreInput": "semantic projection into frozen scorer; provider raw unchanged",
+  "rawEvidence": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-equipment-list-submit",
+        "propositionScopeIds": [
+          "scope-0002-26a0525445f20f80b12f1869ad5fccd1ca46626e0b9c821344d40d0a624dcba2",
+          "scope-0003-9855ad66a9cd671341b82fe5b7cb9d1c42490e5a9c0f2346aa843c6f582899bc",
+          "scope-0004-6257a14f3721dce899f9951f3912e21ee5dc39324a5a3793d210c1745cf42b2c",
+          "scope-0006-d3a3b0010ba87425d51e43bfa42a80c3d97adc8404644452852da81706fdde5f",
+          "scope-0007-36cdd55283d148ec24e8de5b400352da49d0f270c91ff1a05ce26c0e6c4b7dbc"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0002-26a0525445f20f80b12f1869ad5fccd1ca46626e0b9c821344d40d0a624dcba2",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0002-26a0525445f20f80b12f1869ad5fccd1ca46626e0b9c821344d40d0a624dcba2",
+          "surface": "投影设备清单"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交投影设备清单",
+          "description": "设备组于2026年10月8日16:00前提交投影设备清单，清单使用XLSX，包含设备编号和额定功率；提交清单时上传值班证扫描件。",
+          "completionCriteria": [
+            "提交投影设备清单",
+            "清单使用XLSX格式",
+            "清单包含设备编号和额定功率",
+            "提交清单时上传值班证扫描件"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-equipment-list",
+            "material-duty-cert-scan"
+          ],
+          "timePointTempIds": [
+            "time-equipment-list-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-headset-collect",
+        "propositionScopeIds": [
+          "scope-0005-831a83ee0d4e963eb10ba98bb9c394801290c1c139ddf58014b8779e34e257b4",
+          "scope-0006-d3a3b0010ba87425d51e43bfa42a80c3d97adc8404644452852da81706fdde5f",
+          "scope-0008-127df3e9654a0cc6b80409bdb985b8ae66ede3dd6d9aa1e40fc9254055027a0f"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "collect",
+        "action": {
+          "scopeId": "scope-0005-831a83ee0d4e963eb10ba98bb9c394801290c1c139ddf58014b8779e34e257b4",
+          "surface": "领取"
+        },
+        "object": {
+          "scopeId": "scope-0005-831a83ee0d4e963eb10ba98bb9c394801290c1c139ddf58014b8779e34e257b4",
+          "surface": "讲解耳麦"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "领取讲解耳麦",
+          "description": "讲解组于2026年10月9日09:00领取讲解耳麦；领取耳麦时出示值班证原件。",
+          "completionCriteria": [
+            "领取讲解耳麦",
+            "领取耳麦时出示值班证原件"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-duty-cert-original"
+          ],
+          "timePointTempIds": [
+            "time-headset-collect"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-equipment-list",
+        "name": "投影设备清单",
+        "required": true,
+        "formatRequirements": [
+          "XLSX"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-equipment-list-submit"
+        ],
+        "scopeIds": [
+          "scope-0002-26a0525445f20f80b12f1869ad5fccd1ca46626e0b9c821344d40d0a624dcba2",
+          "scope-0003-9855ad66a9cd671341b82fe5b7cb9d1c42490e5a9c0f2346aa843c6f582899bc",
+          "scope-0004-6257a14f3721dce899f9951f3912e21ee5dc39324a5a3793d210c1745cf42b2c"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "material-duty-cert-scan",
+        "name": "值班证扫描件",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-equipment-list-submit"
+        ],
+        "scopeIds": [
+          "scope-0006-d3a3b0010ba87425d51e43bfa42a80c3d97adc8404644452852da81706fdde5f",
+          "scope-0007-36cdd55283d148ec24e8de5b400352da49d0f270c91ff1a05ce26c0e6c4b7dbc"
+        ],
+        "confidence": 0.9
+      },
+      {
+        "tempId": "material-duty-cert-original",
+        "name": "值班证原件",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-headset-collect"
+        ],
+        "scopeIds": [
+          "scope-0006-d3a3b0010ba87425d51e43bfa42a80c3d97adc8404644452852da81706fdde5f",
+          "scope-0008-127df3e9654a0cc6b80409bdb985b8ae66ede3dd6d9aa1e40fc9254055027a0f"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-equipment-list-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年10月8日16:00前",
+        "relatedTaskTempIds": [
+          "task-equipment-list-submit"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-26a0525445f20f80b12f1869ad5fccd1ca46626e0b9c821344d40d0a624dcba2"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-08T16:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "time-headset-collect",
+        "type": "planned_start",
+        "rawText": "2026年10月9日09:00",
+        "relatedTaskTempIds": [
+          "task-headset-collect"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0005-831a83ee0d4e963eb10ba98bb9c394801290c1c139ddf58014b8779e34e257b4"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-09T09:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-45acc09e74cdedcaf25b214f149f77de2ab0691e101746ac184b26500dd0ef0c",
+      "scope-0009-2e3371f6c3451cb41e8d17a01663ed89eb2a8056b0f41ccc45e71216649bec9b",
+      "scope-0010-0a992e492f0947087d8f058cbd28c9515072866a51db47182f584154698e8ffa"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:2ddc3623",
+    "sourceVersionId": "source:2ddc3623:version:1",
+    "sourceFingerprint": "sha256:75a8fc59ef8772b9b097b4a492e0c060902c3e6b85e624b129aa095f3b377462"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 8074,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 3,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 3,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 7,
+        "reference": 6,
+        "correct": 0,
+        "falsePositive": 7,
+        "falseNegative": 6,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 1,
+        "falsePositive": 3,
+        "falseNegative": 3,
+        "precision": 0.25,
+        "recall": 0.25
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 2,
+    "referenceTaskCount": 2
+  },
+  "scoreError": null,
+  "totalAttempts": 153,
+  "costUpperMicroCny": 32247,
+  "totalCostUpperMicroCny": 6820444,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份已见材料开发回归+8份新材料首次开发验证；20通知40请求；非商业盲测"
+}

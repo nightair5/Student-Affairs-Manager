@@ -1,0 +1,121 @@
+{
+  "version": "task-time-minimum-facts-provisional-1",
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "sources": [
+    {
+      "sourceId": "TT-01",
+      "minimumFacts": {
+        "tasks": [
+          "向学业系统提交课程报告PDF",
+          "提交纸质课程报告"
+        ],
+        "deadline": {
+          "object": "课程报告PDF",
+          "role": "submission_deadline",
+          "raw": "2026年11月5日18:20",
+          "value": "2026-11-05T18:20",
+          "precision": "exact"
+        },
+        "window": {
+          "object": "纸质课程报告",
+          "dates": [
+            "2026-11-09",
+            "2026-11-10"
+          ],
+          "sessions": [
+            [
+              "09:00",
+              "11:30"
+            ],
+            [
+              "14:30",
+              "17:30"
+            ]
+          ],
+          "intervalCount": 4
+        },
+        "materials": [
+          "课程报告PDF",
+          "纸质课程报告"
+        ],
+        "events": [],
+        "eligibility": "not_applicable",
+        "forbidden": [
+          "报名待办",
+          "跨夜连续办理",
+          "纸质办理截止替代电子提交截止"
+        ]
+      }
+    },
+    {
+      "sourceId": "TT-02",
+      "minimumFacts": {
+        "tasks": [
+          "提交报名表",
+          "上传插画PDF",
+          "提交插画纸质版"
+        ],
+        "deadlines": [
+          {
+            "object": "报名表",
+            "role": "registration_deadline",
+            "date": "2026-11-06"
+          },
+          {
+            "object": "插画PDF",
+            "role": "submission_deadline",
+            "value": "2026-11-12T17:40"
+          }
+        ],
+        "window": {
+          "object": "插画纸质版",
+          "dates": [
+            "2026-11-13"
+          ],
+          "sessions": [
+            [
+              "09:15",
+              "10:45"
+            ],
+            [
+              "15:10",
+              "16:40"
+            ]
+          ],
+          "intervalCount": 2
+        },
+        "materials": [
+          "报名表",
+          "插画PDF",
+          "插画纸质版"
+        ],
+        "events": [],
+        "condition": "已报名者资格unknown，不声明已完成报名",
+        "forbidden": [
+          "两对象deadline混挂",
+          "资格unknown改true",
+          "将两时段并成连续窗口"
+        ]
+      }
+    },
+    {
+      "sourceId": "TT-03",
+      "minimumFacts": {
+        "tasks": [],
+        "event": "图书查询系统维护",
+        "start": "2026-11-08T14:00",
+        "end": "2026-11-08T15:00",
+        "materials": [],
+        "information": [
+          "已借图书记录不受影响"
+        ],
+        "forbidden": [
+          "重新登记待办",
+          "提交材料待办",
+          "维护变任务截止"
+        ]
+      }
+    }
+  ],
+  "rules": "Source-first minimal obligations and user-visible facts. Equivalent closed wording/order and supported split/merge allowed. Wrong values/type/object/owner, omissions and unsupported additions fail. Explicit unknown may be correct; before-day boundary and any unresolved obligation remain unknown. Review raw facts, common first display and free prose separately. All three sources per arm remain denominator; no repair/retry/verifier."
+}

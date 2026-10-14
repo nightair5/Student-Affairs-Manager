@@ -1,0 +1,368 @@
+{
+  "version": "candidate12-d2-result-1",
+  "unitId": "C12-D1-PD09-B",
+  "sourceId": "C12-PD09",
+  "arm": "B",
+  "ordinal": 18,
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "requestSha": "8814dac2f30761a19c01e088d9ee8206892106fedf6e77b5545e5af3371af7bb",
+  "responseSha": "0dd7df29c914d80b21a362ebfd368bde7b8e0abe2116d92d77a3f84d40ee3cda",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "diagnostic": null,
+  "waitingMs": 7921,
+  "parseError": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-annual-review-submit-old",
+        "propositionScopeIds": [
+          "scope-0001-a8e58142b77d269d2aec732893f6fa58df7f9fe64cf2fb79a2affbf062955c1f"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0001-a8e58142b77d269d2aec732893f6fa58df7f9fe64cf2fb79a2affbf062955c1f",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0001-a8e58142b77d269d2aec732893f6fa58df7f9fe64cf2fb79a2affbf062955c1f",
+          "surface": "社团年审表"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交社团年审表",
+          "description": "原定2026年10月15日前提交社团年审表，该截止已被调整为10月18日。",
+          "completionCriteria": [
+            "提交社团年审表"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [
+            "tp-annual-review-old-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-financial-summary-submit-old",
+        "propositionScopeIds": [
+          "scope-0001-a8e58142b77d269d2aec732893f6fa58df7f9fe64cf2fb79a2affbf062955c1f"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0001-a8e58142b77d269d2aec732893f6fa58df7f9fe64cf2fb79a2affbf062955c1f",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0001-a8e58142b77d269d2aec732893f6fa58df7f9fe64cf2fb79a2affbf062955c1f",
+          "surface": "财务汇总表"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交财务汇总表",
+          "description": "原定2026年10月16日前提交财务汇总表，该截止已被调整为10月20日。",
+          "completionCriteria": [
+            "提交财务汇总表"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [
+            "tp-financial-summary-old-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-annual-review-submit-new",
+        "propositionScopeIds": [
+          "scope-0002-a4e9fef473ce8f3ba4253f8080cc5f4e3f6783e88a34ffca89696485dd8f7118",
+          "scope-0004-a945cfe4459905e4d633e80b447c71718050c4da4ce72bac0762a5540f815b79"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0002-a4e9fef473ce8f3ba4253f8080cc5f4e3f6783e88a34ffca89696485dd8f7118",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0002-a4e9fef473ce8f3ba4253f8080cc5f4e3f6783e88a34ffca89696485dd8f7118",
+          "surface": "年审表"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交年审表",
+          "description": "年审表截止调整为10月18日，其他要求不变。",
+          "completionCriteria": [
+            "提交年审表"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [
+            "tp-annual-review-new-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-financial-summary-submit-new",
+        "propositionScopeIds": [
+          "scope-0003-249b07c71d278c42dc37a5d00589737c45762e2f5484422677145bf179b737d3",
+          "scope-0004-a945cfe4459905e4d633e80b447c71718050c4da4ce72bac0762a5540f815b79"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0003-249b07c71d278c42dc37a5d00589737c45762e2f5484422677145bf179b737d3",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0003-249b07c71d278c42dc37a5d00589737c45762e2f5484422677145bf179b737d3",
+          "surface": "财务汇总表"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交财务汇总表",
+          "description": "财务汇总表截止调整为10月20日，其他要求不变。",
+          "completionCriteria": [
+            "提交财务汇总表"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [
+            "tp-financial-summary-new-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "tp-annual-review-old-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年10月15日前",
+        "relatedTaskTempIds": [
+          "task-annual-review-submit-old"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0001-a8e58142b77d269d2aec732893f6fa58df7f9fe64cf2fb79a2affbf062955c1f"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-15",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": true,
+        "precision": "date_only",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-financial-summary-old-deadline",
+        "type": "submission_deadline",
+        "rawText": "10月16日前",
+        "relatedTaskTempIds": [
+          "task-financial-summary-submit-old"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0001-a8e58142b77d269d2aec732893f6fa58df7f9fe64cf2fb79a2affbf062955c1f"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-16",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": true,
+        "precision": "date_only",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-annual-review-new-deadline",
+        "type": "submission_deadline",
+        "rawText": "10月18日",
+        "relatedTaskTempIds": [
+          "task-annual-review-submit-new"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-a4e9fef473ce8f3ba4253f8080cc5f4e3f6783e88a34ffca89696485dd8f7118"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-18",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": true,
+        "precision": "date_only",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-financial-summary-new-deadline",
+        "type": "submission_deadline",
+        "rawText": "10月20日",
+        "relatedTaskTempIds": [
+          "task-financial-summary-submit-new"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0003-249b07c71d278c42dc37a5d00589737c45762e2f5484422677145bf179b737d3"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-20",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": true,
+        "precision": "date_only",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [
+      {
+        "type": "supersedes",
+        "targetDirectiveId": "task-annual-review-submit-old",
+        "scopeIds": [
+          "scope-0002-a4e9fef473ce8f3ba4253f8080cc5f4e3f6783e88a34ffca89696485dd8f7118"
+        ],
+        "fromDirectiveId": "task-annual-review-submit-new",
+        "effective": "true"
+      },
+      {
+        "type": "supersedes",
+        "targetDirectiveId": "task-financial-summary-submit-old",
+        "scopeIds": [
+          "scope-0003-249b07c71d278c42dc37a5d00589737c45762e2f5484422677145bf179b737d3"
+        ],
+        "fromDirectiveId": "task-financial-summary-submit-new",
+        "effective": "true"
+      }
+    ],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0004-a945cfe4459905e4d633e80b447c71718050c4da4ce72bac0762a5540f815b79"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C12-PD09",
+    "sourceVersionId": "C12-PD09-v1",
+    "sourceFingerprint": "sha256:e04ebe1a6d92be7f1ce1aaeb7cdeb36974d3c06e4d1731fa66fa60aa01e72481"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4753,
+    "input_tokens_details": {
+      "cached_tokens": 4224
+    },
+    "output_tokens": 2337,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 7090
+  },
+  "costUpperMicroCny": 28202,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0
+}

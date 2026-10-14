@@ -1,0 +1,51 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ ✓ src/experiments/mainline05/semanticCapture.test.ts (2 tests) 120ms
+ ✓ src/experiments/mainline05/semanticRepository.test.ts (3 tests) 226ms
+stdout | src/experiments/mainline05/semanticView.test.ts > MAINLINE05 fidelity and view ledger > all 8 human notices retain full supplied facts and explicit positive/negative user outcomes
+MAINLINE05_LEDGER=[{"kind":"multi","tasks":2,"materials":2,"timePoints":2,"wrongDefaults":0},{"kind":"no-date","tasks":1,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"vague","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"information","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"condition-true","tasks":1,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"condition-false","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"condition-unknown","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"revision","tasks":1,"materials":0,"timePoints":0,"wrongDefaults":0}]
+
+ ✓ src/experiments/mainline05/semanticView.test.ts (3 tests) 360ms
+   ✓ MAINLINE05 fidelity and view ledger > all 8 human notices retain full supplied facts and explicit positive/negative user outcomes  311ms
+ ✓ src/experiments/mainline05/semanticState.test.ts (11 tests) 523ms
+ ✓ src/experiments/mainline05/mainlineAcceptance.test.tsx (4 tests) 182ms
+ ❯ src/experiments/realInput01/runtime.test.ts (12 tests | 1 failed) 1625ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > saves real source and pending run before response; unchanged content does not create a second version 80ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > no selected flag can skip explicit review; reviewed no-date saves with zero time/reminders and reopens 155ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit saved date/title invalidate old review and are the confirmed values; rollback is atomic 241ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-true and nonzero normal confirmations 91ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-false and nonzero normal confirmations 44ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-unknown and nonzero normal confirmations 39ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > truth/status revision and nonzero normal confirmations 117ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > manual material repair persists exact values, keeps originals and independent brother confirmation  513ms
+   × real-input isolated canonical connection, seen responses not model accuracy > whole-source versions remain immutable, old pending draft is stale, confirmed task survives 231ms
+     → MAINLINE05_SOURCE_METADATA_CHANGED
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > changed source-only reading and duplicate operation cannot silently replace original; failed save rolls back 10ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > tampered first/effective review/raw or canonical is rejected, not repaired 73ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > pure information is explicitly disposed with no fake task; defer does not change unknown truth 29ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts (36 tests) 1747ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > whole-source versions remain immutable, old pending draft is stale, confirmed task survives
+Error: MAINLINE05_SOURCE_METADATA_CHANGED
+ ❯ assert src/experiments/mainline05/semanticState.ts:51:25
+     49| export const json = (value: unknown): JsonValue => plainJson(value) as…
+     50| export function assert(condition: unknown, code: string): asserts cond…
+     51|   if (!condition) throw Error('MAINLINE05_' + code)
+       |                         ^
+     52| }
+     53| export function exactKeys(value: object, keys: string[]) {
+ ❯ SemanticRepository.commitCandidate src/experiments/mainline05/semanticRepository.ts:84:9
+ ❯ SemanticRepository.stagedCapture src/experiments/mainline05/semanticRepository.ts:108:16
+ ❯ src/experiments/realInput01/runtime.test.ts:105:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 6 passed (7)
+      Tests  1 failed | 70 passed (71)
+   Start at  00:45:28
+   Duration  2.90s (transform 1.27s, setup 0ms, collect 4.36s, tests 4.78s, environment 1ms, prepare 1.85s)
+

@@ -1,0 +1,268 @@
+{
+  "status": "PASS_WORKING_SHA_AND_EXPLICIT_GIT_STORAGE_MAPPING",
+  "head": "1ae10d8afef8c27fbf2f27ca44072a5ffa98612f",
+  "remote": "1ae10d8afef8c27fbf2f27ca44072a5ffa98612f",
+  "remoteExactMatch": true,
+  "workingTree": "CLEAN",
+  "committedFiles": 36,
+  "implementationWorkingShaMatched": 26,
+  "protectedMatched": 863,
+  "planningMatched": 4,
+  "staticEvidenceMatched": 20,
+  "appendLogHashMatched": true,
+  "reviewedEvidenceShaMatched": 3,
+  "gitAutocrlf": "true",
+  "storage": [
+    {
+      "path": "src/App.tsx",
+      "workingSha256": "f0c14f5d95ac8d3113d4d3a30cafae38ac3e4dc4310833fef6225e51e1f1b25a",
+      "commitBlobSha256": "f0c14f5d95ac8d3113d4d3a30cafae38ac3e4dc4310833fef6225e51e1f1b25a",
+      "workingBytes": 77485,
+      "commitBytes": 77485,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "workingSha256": "fd733c187352e6800125a0af02ad2c0153cccd9c78859552f662be65168b1658",
+      "commitBlobSha256": "fd733c187352e6800125a0af02ad2c0153cccd9c78859552f662be65168b1658",
+      "workingBytes": 28053,
+      "commitBytes": 28053,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/components/TaskDetailPanel.tsx",
+      "workingSha256": "3e395eb570182b08252f65e2cf17c32be5157641aadbf02552c292a631b9747c",
+      "commitBlobSha256": "3e395eb570182b08252f65e2cf17c32be5157641aadbf02552c292a631b9747c",
+      "workingBytes": 21826,
+      "commitBytes": 21826,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/components/EventDetailPanel.tsx",
+      "workingSha256": "03f7edc8fcb810813ac6414dc0884e76b8fcc40d8e0b127f6147251daa618f01",
+      "commitBlobSha256": "3242c58d31f1f29f7b36235fa06025559b8f6c88d3bf4a7da52f1a57bcec2803",
+      "workingBytes": 3250,
+      "commitBytes": 3201,
+      "identity": "CRLF_TO_LF_STORAGE_ONLY",
+      "removedCR": 49
+    },
+    {
+      "path": "src/pages/CalendarPage.tsx",
+      "workingSha256": "c17b29098975bea9a112e2d4f698079ee766074f42d9eb957e09de35599f649f",
+      "commitBlobSha256": "c17b29098975bea9a112e2d4f698079ee766074f42d9eb957e09de35599f649f",
+      "workingBytes": 18197,
+      "commitBytes": 18197,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "workingSha256": "2938abd12eaf3ceb6bb5794a883e634d16570e6c71c5f0f28ab5ea810cb9935b",
+      "commitBlobSha256": "2938abd12eaf3ceb6bb5794a883e634d16570e6c71c5f0f28ab5ea810cb9935b",
+      "workingBytes": 9205,
+      "commitBytes": 9205,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/domain/v2/domainCommit.ts",
+      "workingSha256": "50e28c64001c5fc278435eede477a90feb7e5a4084eee0200f7732497f26f827",
+      "commitBlobSha256": "b77cf4891ccac1c5995e61908088e0ba94897805cad2bd9373a20e47ff5a09f7",
+      "workingBytes": 48566,
+      "commitBytes": 47843,
+      "identity": "CRLF_TO_LF_STORAGE_ONLY",
+      "removedCR": 723
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "workingSha256": "4a10271c00def94754653e8e6a62993888934a2c9bdbbb72871f1ebb15048245",
+      "commitBlobSha256": "4a10271c00def94754653e8e6a62993888934a2c9bdbbb72871f1ebb15048245",
+      "workingBytes": 21889,
+      "commitBytes": 21889,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.ts",
+      "workingSha256": "dc307f3276b1874eab3533ebed325c7aac40b082d74127acc941ca8e7478e94f",
+      "commitBlobSha256": "dc307f3276b1874eab3533ebed325c7aac40b082d74127acc941ca8e7478e94f",
+      "workingBytes": 5030,
+      "commitBytes": 5030,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.ts",
+      "workingSha256": "3e1d713029e11b16edab0ca9a0f681c839d20c8aba671b997c7848d68ee3212e",
+      "commitBlobSha256": "3e1d713029e11b16edab0ca9a0f681c839d20c8aba671b997c7848d68ee3212e",
+      "workingBytes": 4818,
+      "commitBytes": 4818,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "workingSha256": "d0e6e38ca9130f749a4b03eae02e063d5798e621f504c645d1e04dee1b7b5522",
+      "commitBlobSha256": "d0e6e38ca9130f749a4b03eae02e063d5798e621f504c645d1e04dee1b7b5522",
+      "workingBytes": 5773,
+      "commitBytes": 5773,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "workingSha256": "359c4cb9439dc1240298ef56a4f8fcb3c40e5e62cf7197a103cbcc2b1154d165",
+      "commitBlobSha256": "359c4cb9439dc1240298ef56a4f8fcb3c40e5e62cf7197a103cbcc2b1154d165",
+      "workingBytes": 7534,
+      "commitBytes": 7534,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/runtime.ts",
+      "workingSha256": "37708e880ea3809b506f1e3d4a06460f56a082f522e0594071fe9c5f0f78161f",
+      "commitBlobSha256": "37708e880ea3809b506f1e3d4a06460f56a082f522e0594071fe9c5f0f78161f",
+      "workingBytes": 2857,
+      "commitBytes": 2857,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/SemanticFacts.tsx",
+      "workingSha256": "120ba8a7b8e0150aea8d75ae325cffa127712f47c8720bb676c28137748352d3",
+      "commitBlobSha256": "120ba8a7b8e0150aea8d75ae325cffa127712f47c8720bb676c28137748352d3",
+      "workingBytes": 4826,
+      "commitBytes": 4826,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/engineeringReplay.ts",
+      "workingSha256": "e933f09cfd11808b20aa65060aa5c07d45eb30421a1eb3cb0ff0a0ae0f4fe243",
+      "commitBlobSha256": "e933f09cfd11808b20aa65060aa5c07d45eb30421a1eb3cb0ff0a0ae0f4fe243",
+      "workingBytes": 5858,
+      "commitBytes": 5858,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/browser.tsx",
+      "workingSha256": "77a862b67001d2c36442eb0b3ce5e8e0c833ba7f2f35774e57a93b5e8e10df4c",
+      "commitBlobSha256": "77a862b67001d2c36442eb0b3ce5e8e0c833ba7f2f35774e57a93b5e8e10df4c",
+      "workingBytes": 10741,
+      "commitBytes": 10741,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.test.ts",
+      "workingSha256": "4a8a25408aeb0dc5118840cb9307b7a34e4660abf3d9a2243236b89fcbfa43dd",
+      "commitBlobSha256": "4a8a25408aeb0dc5118840cb9307b7a34e4660abf3d9a2243236b89fcbfa43dd",
+      "workingBytes": 4178,
+      "commitBytes": 4178,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.test.ts",
+      "workingSha256": "d9fd11919e62553ccec30449592cae750e719fe655d47aa1b745f29ab8ec045d",
+      "commitBlobSha256": "d9fd11919e62553ccec30449592cae750e719fe655d47aa1b745f29ab8ec045d",
+      "workingBytes": 3864,
+      "commitBytes": 3864,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.test.ts",
+      "workingSha256": "b41a3dcddbfb827f82eeaf8abf439c2fbbab5cedbc79356efdaa85ca365f7e9d",
+      "commitBlobSha256": "b41a3dcddbfb827f82eeaf8abf439c2fbbab5cedbc79356efdaa85ca365f7e9d",
+      "workingBytes": 2671,
+      "commitBytes": 2671,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.test.ts",
+      "workingSha256": "da2979c1178ee85cf04f46479c603411996d517720c04d4c2913261d1b743bc4",
+      "commitBlobSha256": "da2979c1178ee85cf04f46479c603411996d517720c04d4c2913261d1b743bc4",
+      "workingBytes": 21644,
+      "commitBytes": 21644,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.test.ts",
+      "workingSha256": "5c716bebeadbdb21eacef55c7a26258c338769d945096eb91f19db0da9f69f62",
+      "commitBlobSha256": "5c716bebeadbdb21eacef55c7a26258c338769d945096eb91f19db0da9f69f62",
+      "workingBytes": 4560,
+      "commitBytes": 4560,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline05/mainlineAcceptance.test.tsx",
+      "workingSha256": "b79064b78acd7c4dc5662fa51f421da4f875784e7979d489943d1343ee402875",
+      "commitBlobSha256": "b79064b78acd7c4dc5662fa51f421da4f875784e7979d489943d1343ee402875",
+      "workingBytes": 5502,
+      "commitBytes": 5502,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "scripts/serve-mainline-05.mjs",
+      "workingSha256": "d7e0fd8528d56d8cdffcac8d768f5ebe1ca0447f6ccbad94434aab36aa607894",
+      "commitBlobSha256": "d7e0fd8528d56d8cdffcac8d768f5ebe1ca0447f6ccbad94434aab36aa607894",
+      "workingBytes": 3914,
+      "commitBytes": 3914,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "scripts/check-mainline-05.mjs",
+      "workingSha256": "c88e264761491122ace1ae93632ceb0fa1fa340f11740da8d89331d20c0d068f",
+      "commitBlobSha256": "c88e264761491122ace1ae93632ceb0fa1fa340f11740da8d89331d20c0d068f",
+      "workingBytes": 20337,
+      "commitBytes": 20337,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "scripts/check-mainline-05.node-test.mjs",
+      "workingSha256": "016be928d0ca46562f6526762b3507003dccb1d557d7868cf206abbb87198dfb",
+      "commitBlobSha256": "016be928d0ca46562f6526762b3507003dccb1d557d7868cf206abbb87198dfb",
+      "workingBytes": 4791,
+      "commitBytes": 4791,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "workingSha256": "82db1d2ad42b340789c42ea0dc0ea3aaf1f8f5a6e7373b565eba3f687370d692",
+      "commitBlobSha256": "82db1d2ad42b340789c42ea0dc0ea3aaf1f8f5a6e7373b565eba3f687370d692",
+      "workingBytes": 13107,
+      "commitBytes": 13107,
+      "identity": "BYTE_IDENTICAL",
+      "removedCR": 0
+    }
+  ],
+  "byteIdentical": 24,
+  "storageCrLfOnly": 2,
+  "stage": "RCO-5-MAINLINE-05_FINAL_GIT_DELIVERY_RECEIPT",
+  "scope": "Read-only receipt of already pushed business commit; no implementation edit or history rewrite.",
+  "storageExplanation": "core.autocrlf=true normalizes CRLF to LF in Git storage. Working implementation SHA checks remain exact and unchanged. Git blob identities are recorded separately; no historical freeze or source guard is relaxed. A fresh checkout is not claimed byte-identical to the tested working tree.",
+  "previousProbe": {
+    "result": "Byte-identical-to-Git assertion failed at EventDetailPanel.tsx",
+    "classification": "Git storage newline normalization, not a working-source change",
+    "followup": "All26 compared:24 byte-identical;2 differ solely by removed CR bytes from CRLF; no other byte differences."
+  },
+  "modelCalls": 0,
+  "independentStorageReview": {
+    "reviewer": "/root/mainline05_j03_close_review",
+    "status": "PASS_NO_BLOCKER",
+    "result": "Independently verified business commit, all26 working SHA and3 bound evidence unchanged;24 Git blobs byte-identical;2 only CRLF-to-LF with49/723 removed CR; no guard relaxation, file edits or engineering rerun."
+  },
+  "modelAccuracy": "本轮未测量"
+}

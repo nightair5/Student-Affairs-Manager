@@ -1,0 +1,58 @@
+{
+  "status": "FAIL_PAID_SAFETY_GATE",
+  "runId": "a-first-resume-20260907a",
+  "modelCalls": 0,
+  "modelNetworkRequests": 0,
+  "feesCny": 0,
+  "modelAccuracy": "本轮未测量",
+  "credentialsAccess": 0,
+  "clipboardAccess": 0,
+  "homepage": {
+    "reproduction": {
+      "passed": 7,
+      "failed": 1
+    },
+    "repair": {
+      "passed": 8,
+      "failed": 0
+    },
+    "actualBrowser": "NOT_RUN",
+    "rawPassthrough": "implemented; source inspection only, actual keystroke test NOT_RUN"
+  },
+  "budget": {
+    "existingTests": {
+      "passed": 52,
+      "failed": 0
+    },
+    "finding": "P1_DUPLICATE_USAGE_RELEASE",
+    "normalControl": "one input_tokens:100, output_tokens:10 => 390 microCNY settled",
+    "counterexample": "raw usage has input_tokens:1048576 then input_tokens:100, total_tokens:110 => also 390 microCNY settled",
+    "expected": "Reject ambiguous raw identity/usage before settlement; keep full 3300000 microCNY reserve; halt further dispatch",
+    "mainAgentCorroboration": "validateUsageEnvelope accepts both; independent read of reviewer persistent ledger confirms init -> reserve3300000 -> settle390",
+    "scope": "synthetic budget-only HTTP200 bodies; no actual A01 request, no semantic dataset, no observed real overspend",
+    "ledgers": [
+      {
+        "label": "conflicting_duplicate_usage",
+        "path": "C:/Users/Winner/AppData/Local/Temp/real-input-send-safety-review-746427c3e31f452c81d1a1d98760065a/duplicate-usage-RTXyS3/run/CALL_LEDGER.jsonl",
+        "sha256": "0c6dedbac14acea15978bd81020efacff16f2d81be9422c2d436dcef2bf01d60",
+        "rawLedger": "{\"sequence\":0,\"previous\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"event\":{\"kind\":\"init\",\"manifestSha\":\"448d88e1ab78a9da6d38183c70bce421c3d8c8f27766eabce710a1befaf737cd\"},\"hash\":\"6dab7b75f2fbdd996aa36a515f9ba335133af838e4d3986aa3a4bd6208e374e1\"}\n{\"sequence\":1,\"previous\":\"6dab7b75f2fbdd996aa36a515f9ba335133af838e4d3986aa3a4bd6208e374e1\",\"event\":{\"kind\":\"reserve\",\"unitId\":\"A01\",\"requestSha\":\"fa5ebaa9f711f1fc496b5c03a3cb45a28ddab9a0da4e09c9eb12a623b1110452\",\"candidateSha\":\"dda18a0e21ae47c53b4309434cbc02ae8bf764fa83a6defbb719431242722aa7\",\"nonce\":\"c72cdaf0-b192-45d7-8291-1d35c2abebbb\",\"reservedMicroCny\":3300000},\"hash\":\"a4f713e5f8f11eeb0329f66ab6e2d35d7777ea9629474e3439fefac65c36d7d3\"}\n{\"sequence\":2,\"previous\":\"a4f713e5f8f11eeb0329f66ab6e2d35d7777ea9629474e3439fefac65c36d7d3\",\"event\":{\"kind\":\"settle\",\"unitId\":\"A01\",\"nonce\":\"c72cdaf0-b192-45d7-8291-1d35c2abebbb\",\"requestSha\":\"fa5ebaa9f711f1fc496b5c03a3cb45a28ddab9a0da4e09c9eb12a623b1110452\",\"responseId\":\"resp_duplicate_usage_probe\",\"usage\":{\"input_tokens\":100,\"input_tokens_details\":{\"cached_tokens\":0},\"output_tokens\":10,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":110},\"costUpperMicroCny\":390,\"responseSha\":\"acbc1829399aa9d3039348d6a426357f14f978cb0a4d32145415f765c471c37d\"},\"hash\":\"3d78f3caf792ee6c470721730056e519d3e558ef9357e2d098fbb53622a43a27\"}\n"
+      },
+      {
+        "label": "normal_control",
+        "path": "C:/Users/Winner/AppData/Local/Temp/real-input-send-safety-review-746427c3e31f452c81d1a1d98760065a/normal-control-9QZEVl/run/CALL_LEDGER.jsonl",
+        "sha256": "af253adc8986b021dc98533fab86cb54d3be0f75a7b752faf43ce2c8c31a9af0",
+        "rawLedger": "{\"sequence\":0,\"previous\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"event\":{\"kind\":\"init\",\"manifestSha\":\"1c04e97064081e68b91d04fa6749269fa887c16dcae767bbd5d3de555e56b849\"},\"hash\":\"e6b067102e778b81bb76a1a155fc2783fe2bb62fbd21a0499cb6a7c5315d2af8\"}\n{\"sequence\":1,\"previous\":\"e6b067102e778b81bb76a1a155fc2783fe2bb62fbd21a0499cb6a7c5315d2af8\",\"event\":{\"kind\":\"reserve\",\"unitId\":\"A01\",\"requestSha\":\"405f2aa931d6cc7faa0b6c88f0b55cbb0c329d842f58febe4eeef776084df0c8\",\"candidateSha\":\"dda18a0e21ae47c53b4309434cbc02ae8bf764fa83a6defbb719431242722aa7\",\"nonce\":\"2638cd6d-8d08-4307-be2a-8802b4f8af6c\",\"reservedMicroCny\":3300000},\"hash\":\"d89641910a97966204a3ad9490357983e84e1ece71af6b1e55004845be9abffd\"}\n{\"sequence\":2,\"previous\":\"d89641910a97966204a3ad9490357983e84e1ece71af6b1e55004845be9abffd\",\"event\":{\"kind\":\"settle\",\"unitId\":\"A01\",\"nonce\":\"2638cd6d-8d08-4307-be2a-8802b4f8af6c\",\"requestSha\":\"405f2aa931d6cc7faa0b6c88f0b55cbb0c329d842f58febe4eeef776084df0c8\",\"responseId\":\"resp_normal_usage_control\",\"usage\":{\"input_tokens\":100,\"input_tokens_details\":{\"cached_tokens\":0},\"output_tokens\":10,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":110},\"costUpperMicroCny\":390,\"responseSha\":\"9f5c2d696d1df496938be6364114230d45fab7e573f5f5eee2668a84158af7eb\"},\"hash\":\"6cbd5b3a2ab50c39ac2a2168f7b9ba6e2fe03a7c5bf5b14333551f822f7a655b\"}\n"
+      }
+    ]
+  },
+  "remaining": {
+    "implementationPresent": 35,
+    "implementationMissing": 7,
+    "paidManifest": "NOT_CREATED",
+    "serviceCredentials": "NOT_CHECKED",
+    "actualOcr": "NOT_RUN",
+    "fullEngineering": "NOT_RUN",
+    "actualEdge": "NOT_RUN",
+    "downloadAgreement": "NOT_RUN"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "rco-5-007-p2-e1-b4-replay-1.0.0",
+  "classification": "SEEN_B4_TYPE_FIX_REGRESSION",
+  "datasetId": "rco-5-007-b4-challenge-20260904",
+  "datasetSha256": "ba88df11c66fcae93632766b394598a8cd309b4ffa628f81d8243f85ac19771c",
+  "originalResultSha256": "bfefe60d94d7ca744614bdefd99017263dcb41cc974ea89a2c383553658b184a",
+  "correctionPath": "docs/recognition-optimization/RCO-5-007-P2-E1_TYPE_CORRECTION.json",
+  "correctionRuntimeEquivalent": true,
+  "replayCasesEqual": true,
+  "metricsEqual": true,
+  "metrics": {
+    "caseCount": 16,
+    "scoreableCases": 16,
+    "taskPrecision": 1,
+    "taskRecall": 1,
+    "taskF1": 1,
+    "requiresActionAccuracy": 1,
+    "semanticFieldAccuracy": 0.9751552795031055,
+    "exactTaskBoundaryAccuracy": 1,
+    "completeTaskCaseAccuracy": 0.9375,
+    "majorCorrectionRate": 0.0625,
+    "safeDefaultRecall": 1,
+    "forbiddenDefaultSelections": 0
+  },
+  "accounting": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE"
+  },
+  "decision": "TYPE_FIX_RUNTIME_EQUIVALENT_B4_REGRESSION_PASS_ELIGIBLE_TO_RUN_ENGINEERING_GATES",
+  "stablePath": "UNCHANGED",
+  "rco6": "NOT_STARTED",
+  "deployment": "NOT_RUN"
+}

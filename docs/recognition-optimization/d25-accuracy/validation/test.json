@@ -1,0 +1,97 @@
+{
+  "phase": "test",
+  "envDir": false,
+  "rootEnvRead": false,
+  "results": [
+    {
+      "label": "contract",
+      "status": 0,
+      "error": null,
+      "log": ".data/candidate11/checks/contract.log"
+    },
+    {
+      "label": "time-contract",
+      "status": 0,
+      "error": null,
+      "log": ".data/candidate11/checks/time-contract.log"
+    },
+    {
+      "label": "vitest",
+      "status": 0,
+      "error": null,
+      "log": ".data/candidate11/checks/vitest.log"
+    },
+    {
+      "label": "server",
+      "status": 0,
+      "error": null,
+      "log": ".data/candidate11/checks/server.log"
+    },
+    {
+      "label": "worker",
+      "status": 0,
+      "error": null,
+      "log": ".data/candidate11/checks/worker.log"
+    },
+    {
+      "label": "d19-diagnostic",
+      "status": 0,
+      "error": null,
+      "log": ".data/candidate11/checks/d19-diagnostic.log"
+    },
+    {
+      "label": "d9-historical",
+      "status": 1,
+      "error": null,
+      "log": ".data/candidate11/checks/d9-historical.log"
+    },
+    {
+      "label": "time-parity",
+      "status": 0,
+      "error": null,
+      "log": ".data/candidate11/checks/time-parity.log"
+    },
+    {
+      "label": "multimodal-lib",
+      "status": 0,
+      "error": null,
+      "log": ".data/candidate11/checks/multimodal-lib.log"
+    },
+    {
+      "label": "rco-5-007",
+      "status": 1,
+      "error": null,
+      "log": ".data/candidate11/checks/rco-5-007.log"
+    },
+    {
+      "label": "functions",
+      "status": 0,
+      "error": null,
+      "log": ".data/candidate11/checks/functions.log"
+    },
+    {
+      "label": "c11-scoring",
+      "status": 0,
+      "error": null,
+      "log": ".data/candidate11/checks/c11-scoring.log"
+    },
+    {
+      "label": "c11-history",
+      "status": 1,
+      "error": null,
+      "log": ".data/candidate11/checks/c11-history.log"
+    },
+    {
+      "label": "c11-gateway",
+      "status": 1,
+      "error": null,
+      "log": ".data/candidate11/checks/c11-gateway.log"
+    },
+    {
+      "label": "c11-preview",
+      "status": 0,
+      "error": null,
+      "log": ".data/candidate11/checks/c11-preview.log"
+    }
+  ]
+}

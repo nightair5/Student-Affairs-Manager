@@ -1,0 +1,166 @@
+{
+  "view": "FOCUSED_READBACK_EVIDENCE_NOT_FULL_BACKUP",
+  "original": {
+    "path": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\afternoon-mainline-20261008\\browser-originals\\FINAL-POSTCOMMIT-READONLY-RECOVERY.json",
+    "sha256": "a29ff234a682bb7d6c2fc1448b5f1dc458458b21a4f38af51b83cf1fc1c8393d"
+  },
+  "canonicalCounts": {
+    "tasks": 1,
+    "events": 2,
+    "timePoints": 5,
+    "materials": 0
+  },
+  "tasks": [
+    {
+      "id": "task:source:6d7b9e81:draft:1:T1",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "报名制图讲座",
+      "description": "有意参加者可于2026年11月6日17:00前通过报名二维码报名制图讲座。",
+      "nextAction": "报名制图讲座",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-08T10:30:04.799Z",
+      "updatedAt": "2026-10-08T10:30:04.799Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "T1",
+        "actionVerb": "报名",
+        "actionObject": "制图讲座",
+        "completionCriteria": [],
+        "inferenceLevel": "optional_suggestion",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "d26-scope-0001-583b418afadcc3fffc198b440ff1465b8243be0c725e2c721e7a62092c02a9c8"
+        ],
+        "sourceId": "source:6d7b9e81",
+        "category": "其他"
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "event:source:6d7b9e81:draft:1:E1",
+      "projectId": null,
+      "title": "制图讲座",
+      "description": "有意参加者可于2026年11月6日17:00前通过报名二维码报名制图讲座。\n制图讲座于2026年11月9日14:00开始，\n15:00结束。",
+      "startTimePointId": "time:source:6d7b9e81:draft:1:P1",
+      "endTimePointId": "time:source:6d7b9e81:draft:1:P2",
+      "location": null,
+      "createdAt": "2026-10-08T10:30:04.799Z",
+      "updatedAt": "2026-10-08T10:30:04.799Z",
+      "legacyData": {
+        "recognitionTempId": "E1",
+        "evidenceIds": [
+          "d26-scope-0001-583b418afadcc3fffc198b440ff1465b8243be0c725e2c721e7a62092c02a9c8",
+          "d26-scope-0002-1cdd0191b0e7aec90b041e9824f356d4719f6c1ef7056585c3aff4dcc61c4732",
+          "d26-scope-0003-7ebf0387c0a247a569f9c0b6b67840c338a224fe895be36ea01c59e7cde44731"
+        ],
+        "inferenceLevel": "explicit",
+        "sourceTaskRelations": {
+          "version": "source-event-task-relations-1",
+          "draftId": "source:6d7b9e81:draft:1",
+          "taskTempIds": [
+            "T1"
+          ]
+        },
+        "sourceReviewDraftId": "source:6d7b9e81:draft:1"
+      }
+    }
+  ],
+  "timePoints": [
+    {
+      "id": "time:source:6d7b9e81:draft:1:P0",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": "task:source:6d7b9e81:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:6d7b9e81:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "type": "submission_deadline",
+      "rawText": "2026年11月6日17:00前",
+      "normalizedValue": "2026-11-06T17:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T10:30:04.799Z",
+      "updatedAt": "2026-10-08T10:30:04.799Z",
+      "legacyData": {
+        "recognitionTempId": "P0",
+        "evidenceIds": [
+          "d26-scope-0001-583b418afadcc3fffc198b440ff1465b8243be0c725e2c721e7a62092c02a9c8"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:6d7b9e81:draft:1:P1",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:6d7b9e81:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年11月9日14:00",
+      "normalizedValue": "2026-11-09T14:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T10:30:04.799Z",
+      "updatedAt": "2026-10-08T10:30:04.799Z",
+      "legacyData": {
+        "recognitionTempId": "P1",
+        "evidenceIds": [
+          "d26-scope-0002-1cdd0191b0e7aec90b041e9824f356d4719f6c1ef7056585c3aff4dcc61c4732"
+        ],
+        "confidence": 1,
+        "sharedEventIds": [
+          "event:source:6d7b9e81:draft:1:E1"
+        ]
+      }
+    },
+    {
+      "id": "time:source:6d7b9e81:draft:1:P2",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:6d7b9e81:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "15:00",
+      "normalizedValue": "2026-11-09T15:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T10:30:04.799Z",
+      "updatedAt": "2026-10-08T10:30:04.799Z",
+      "legacyData": {
+        "recognitionTempId": "P2",
+        "evidenceIds": [
+          "d26-scope-0003-7ebf0387c0a247a569f9c0b6b67840c338a224fe895be36ea01c59e7cde44731"
+        ],
+        "confidence": 1,
+        "sharedEventIds": [
+          "event:source:6d7b9e81:draft:1:E1"
+        ]
+      }
+    }
+  ],
+  "sourceFactsNotInvented": true
+}

@@ -1,0 +1,20 @@
+{
+  "stage": "MAINLINE-REAL-INPUT-01",
+  "status": "HARD_STOP_REGISTERED_P1_GATEWAY_REFLECTION",
+  "runId": "continuation-20260906a",
+  "baselineHead": "4ed0486d3137ac60b1b07c7ef276739cbc98350f",
+  "modelCalls": 0,
+  "modelNetwork": 0,
+  "feesMicroCny": 0,
+  "keysRead": 0,
+  "clipboardRead": 0,
+  "realCredentialLeak": 0,
+  "automaticSelection": "NOT_ENABLED",
+  "scopePaths": 41,
+  "uncommittedImplementationFiles": 9,
+  "uncreatedPaths": 19,
+  "budget": "28/28 AND PASS_SCOPE_ONLY",
+  "gateway": "17/17 EXISTING TESTS BUT P1 INDEPENDENT FAILURE",
+  "modelAccuracy": "本轮未测量",
+  "next": "Explicit authority to fix registered P1 within same package, then remaining 41-path user loop. No current dispatch."
+}

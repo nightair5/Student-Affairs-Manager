@@ -1,0 +1,1790 @@
+{
+  "version": "candidate11-b2-analysis-1",
+  "status": "B2_DEVELOPMENT_RESULTS_READY_FOR_REVIEW",
+  "evaluationType": "seen-development-ablation",
+  "validRun": true,
+  "bindingSha": "66ddb8814eb8d19307004f4ac2efcc65174b5debdb6c712325602ebecc07e95c",
+  "requests": 24,
+  "sources": 6,
+  "variants": [
+    "V00",
+    "V10",
+    "V01",
+    "V11"
+  ],
+  "arms": {
+    "V00": {
+      "sources": 6,
+      "schemaAndReferenceValid": 0,
+      "completeSources": 0,
+      "major": 14,
+      "severe": 7,
+      "forbidden": 6,
+      "teachingLeak": 0,
+      "task": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 13,
+        "precision": null,
+        "recall": 0,
+        "f1": 0
+      },
+      "promptBytes": 87510,
+      "fieldCategories": {
+        "time": 0,
+        "material": 0,
+        "condition": 0,
+        "completion": 0,
+        "dependency": 0,
+        "revision": 0,
+        "semantics": 0,
+        "other": 0
+      }
+    },
+    "V10": {
+      "sources": 6,
+      "schemaAndReferenceValid": 0,
+      "completeSources": 0,
+      "major": 14,
+      "severe": 7,
+      "forbidden": 6,
+      "teachingLeak": 0,
+      "task": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 13,
+        "precision": null,
+        "recall": 0,
+        "f1": 0
+      },
+      "promptBytes": 89388,
+      "fieldCategories": {
+        "time": 0,
+        "material": 0,
+        "condition": 0,
+        "completion": 0,
+        "dependency": 0,
+        "revision": 0,
+        "semantics": 0,
+        "other": 0
+      }
+    },
+    "V01": {
+      "sources": 6,
+      "schemaAndReferenceValid": 0,
+      "completeSources": 0,
+      "major": 14,
+      "severe": 7,
+      "forbidden": 6,
+      "teachingLeak": 0,
+      "task": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 13,
+        "precision": null,
+        "recall": 0,
+        "f1": 0
+      },
+      "promptBytes": 115056,
+      "fieldCategories": {
+        "time": 0,
+        "material": 0,
+        "condition": 0,
+        "completion": 0,
+        "dependency": 0,
+        "revision": 0,
+        "semantics": 0,
+        "other": 0
+      }
+    },
+    "V11": {
+      "sources": 6,
+      "schemaAndReferenceValid": 0,
+      "completeSources": 0,
+      "major": 14,
+      "severe": 7,
+      "forbidden": 6,
+      "teachingLeak": 0,
+      "task": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 13,
+        "precision": null,
+        "recall": 0,
+        "f1": 0
+      },
+      "promptBytes": 116934,
+      "fieldCategories": {
+        "time": 0,
+        "material": 0,
+        "condition": 0,
+        "completion": 0,
+        "dependency": 0,
+        "revision": 0,
+        "semantics": 0,
+        "other": 0
+      }
+    }
+  },
+  "pairs": [
+    {
+      "sourceId": "C11-B1-D01",
+      "V00": false,
+      "V10": false,
+      "V01": false,
+      "V11": false
+    },
+    {
+      "sourceId": "C11-B1-D02",
+      "V00": false,
+      "V10": false,
+      "V01": false,
+      "V11": false
+    },
+    {
+      "sourceId": "C11-B1-D03",
+      "V00": false,
+      "V10": false,
+      "V01": false,
+      "V11": false
+    },
+    {
+      "sourceId": "C11-B1-D04",
+      "V00": false,
+      "V10": false,
+      "V01": false,
+      "V11": false
+    },
+    {
+      "sourceId": "C11-B1-D05",
+      "V00": false,
+      "V10": false,
+      "V01": false,
+      "V11": false
+    },
+    {
+      "sourceId": "C11-B1-D06",
+      "V00": false,
+      "V10": false,
+      "V01": false,
+      "V11": false
+    }
+  ],
+  "factorial": {
+    "M": {
+      "withoutExamples": 0,
+      "withExamples": 0
+    },
+    "E": {
+      "withoutMethod": 0,
+      "withMethod": 0
+    },
+    "interaction": 0,
+    "metric": "complete source count; descriptive only"
+  },
+  "decision": "REJECT_CANDIDATE11",
+  "selected": null,
+  "cases": [
+    {
+      "unitId": "C11-B1-D01-V00",
+      "ordinal": 1,
+      "sourceId": "C11-B1-D01",
+      "variant": "V00",
+      "requestBytes": 14361,
+      "responseSha": "32337bffe803ee9c47734cdaf0eb5aa5159408c7a6718dbee27bb21dcabeb5cd",
+      "usage": {
+        "input_tokens": 4432,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 987,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5419
+      },
+      "costUpperMicroCny": 16760,
+      "waitingMs": 4362,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D01-V10",
+      "ordinal": 2,
+      "sourceId": "C11-B1-D01",
+      "variant": "V10",
+      "requestBytes": 14674,
+      "responseSha": "4165a77484ee4eb06649693d1063129d581e452b428249aa0075a7d90f07f972",
+      "usage": {
+        "input_tokens": 4495,
+        "input_tokens_details": {
+          "cached_tokens": 640
+        },
+        "output_tokens": 1028,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5523
+      },
+      "costUpperMicroCny": 17214,
+      "waitingMs": 4600,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D01-V01",
+      "ordinal": 3,
+      "sourceId": "C11-B1-D01",
+      "variant": "V01",
+      "requestBytes": 18952,
+      "responseSha": "0544d48e6f3d8df510345f18b93fc3970c4bb534f9616b721751b7d7ac399554",
+      "usage": {
+        "input_tokens": 5398,
+        "input_tokens_details": {
+          "cached_tokens": 640
+        },
+        "output_tokens": 1070,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6468
+      },
+      "costUpperMicroCny": 19356,
+      "waitingMs": 4553,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D01-V11",
+      "ordinal": 4,
+      "sourceId": "C11-B1-D01",
+      "variant": "V11",
+      "requestBytes": 19265,
+      "responseSha": "4b5cb480ef2704422c0c678b0e8e87b13120f845aa3741d5a68e2f8d6ae432ce",
+      "usage": {
+        "input_tokens": 5461,
+        "input_tokens_details": {
+          "cached_tokens": 640
+        },
+        "output_tokens": 1071,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6532
+      },
+      "costUpperMicroCny": 19490,
+      "waitingMs": 4477,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D02-V00",
+      "ordinal": 5,
+      "sourceId": "C11-B1-D02",
+      "variant": "V00",
+      "requestBytes": 14240,
+      "responseSha": "42039155f88b6d30ea471c881ecf13828c551e40c3a1af96803fb4462dc87000",
+      "usage": {
+        "input_tokens": 4376,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 807,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5183
+      },
+      "costUpperMicroCny": 15208,
+      "waitingMs": 3805,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D02-V10",
+      "ordinal": 6,
+      "sourceId": "C11-B1-D02",
+      "variant": "V10",
+      "requestBytes": 14553,
+      "responseSha": "175a0679077195234d456ae971c3ed54097cf6e427c7478fcddd602598024a1b",
+      "usage": {
+        "input_tokens": 4439,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 767,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5206
+      },
+      "costUpperMicroCny": 15014,
+      "waitingMs": 3678,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D02-V11",
+      "ordinal": 7,
+      "sourceId": "C11-B1-D02",
+      "variant": "V11",
+      "requestBytes": 19144,
+      "responseSha": "88425e1f39f4d2b6db799887fe39fc47a18571dbb154ea891d43a478abaf91ed",
+      "usage": {
+        "input_tokens": 5405,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 798,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6203
+      },
+      "costUpperMicroCny": 17194,
+      "waitingMs": 3908,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D02-V01",
+      "ordinal": 8,
+      "sourceId": "C11-B1-D02",
+      "variant": "V01",
+      "requestBytes": 18831,
+      "responseSha": "2e458b49d69a947db681e6ddb0e1e5ce30d9e2f43d9b3377b3e56b491e903aae",
+      "usage": {
+        "input_tokens": 5342,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 798,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6140
+      },
+      "costUpperMicroCny": 17068,
+      "waitingMs": 4575,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D03-V10",
+      "ordinal": 9,
+      "sourceId": "C11-B1-D03",
+      "variant": "V10",
+      "requestBytes": 14704,
+      "responseSha": "dcf568c180ac19e071331a5ec1da9b14f600780be1f9e29ea26c9e570a4eb4d9",
+      "usage": {
+        "input_tokens": 4511,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 1474,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5985
+      },
+      "costUpperMicroCny": 20814,
+      "waitingMs": 5433,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D03-V01",
+      "ordinal": 10,
+      "sourceId": "C11-B1-D03",
+      "variant": "V01",
+      "requestBytes": 18982,
+      "responseSha": "fb60fffcfcbd009afafba48e826f3476a7019e7b886b89d08d3cbf3975c7d104",
+      "usage": {
+        "input_tokens": 5414,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1481,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6895
+      },
+      "costUpperMicroCny": 22676,
+      "waitingMs": 5419,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D03-V00",
+      "ordinal": 11,
+      "sourceId": "C11-B1-D03",
+      "variant": "V00",
+      "requestBytes": 14391,
+      "responseSha": "98ce2a59469909d95634f4677ada8d60c0f0157dbe0245702f80ae53e68ecf71",
+      "usage": {
+        "input_tokens": 4448,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 1485,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5933
+      },
+      "costUpperMicroCny": 20776,
+      "waitingMs": 5691,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D03-V11",
+      "ordinal": 12,
+      "sourceId": "C11-B1-D03",
+      "variant": "V11",
+      "requestBytes": 19295,
+      "responseSha": "9cc038da501bd9b4adea5e57722a31aa7197d51cab43e858547978301042079f",
+      "usage": {
+        "input_tokens": 5477,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1480,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6957
+      },
+      "costUpperMicroCny": 22794,
+      "waitingMs": 5212,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D04-V01",
+      "ordinal": 13,
+      "sourceId": "C11-B1-D04",
+      "variant": "V01",
+      "requestBytes": 19145,
+      "responseSha": "6c9776780f8adba776078f5ce3957a3e4576fe6ccb18248c9780a73296fb3fcf",
+      "usage": {
+        "input_tokens": 5458,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1515,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6973
+      },
+      "costUpperMicroCny": 23036,
+      "waitingMs": 6137,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D04-V11",
+      "ordinal": 14,
+      "sourceId": "C11-B1-D04",
+      "variant": "V11",
+      "requestBytes": 19458,
+      "responseSha": "eb7595ca279f08a6d684d04e232a04d3b7d7c59c6ff8087cf419d27c37d5b7aa",
+      "usage": {
+        "input_tokens": 5521,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1342,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6863
+      },
+      "costUpperMicroCny": 21778,
+      "waitingMs": 5274,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D04-V10",
+      "ordinal": 15,
+      "sourceId": "C11-B1-D04",
+      "variant": "V10",
+      "requestBytes": 14867,
+      "responseSha": "1636a5fc69f9acb80748aa2200b91cd6bcd815ba28a18c5a0f74faaf643c0a94",
+      "usage": {
+        "input_tokens": 4555,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 1320,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5875
+      },
+      "costUpperMicroCny": 19670,
+      "waitingMs": 5048,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D04-V00",
+      "ordinal": 16,
+      "sourceId": "C11-B1-D04",
+      "variant": "V00",
+      "requestBytes": 14554,
+      "responseSha": "e254d15fb5308ceea8f7cd4f5ccddee32f50bc6f53334823864b41bbdda3e914",
+      "usage": {
+        "input_tokens": 4492,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 1320,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5812
+      },
+      "costUpperMicroCny": 19544,
+      "waitingMs": 5030,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D05-V11",
+      "ordinal": 17,
+      "sourceId": "C11-B1-D05",
+      "variant": "V11",
+      "requestBytes": 19864,
+      "responseSha": "18dfebece6c25493e05a8be867b34eec3a17a76e9366683c51822428222c7168",
+      "usage": {
+        "input_tokens": 5689,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1758,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7447
+      },
+      "costUpperMicroCny": 25442,
+      "waitingMs": 6434,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 3,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 3,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 3,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D05-V00",
+      "ordinal": 18,
+      "sourceId": "C11-B1-D05",
+      "variant": "V00",
+      "requestBytes": 14960,
+      "responseSha": "e9e44c121c22ab0eb5d2a0c333825a1444b9e5852eda0529bb75726c8285c7b3",
+      "usage": {
+        "input_tokens": 4660,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2302,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6962
+      },
+      "costUpperMicroCny": 27736,
+      "waitingMs": 8222,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 3,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 3,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 3,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D05-V01",
+      "ordinal": 19,
+      "sourceId": "C11-B1-D05",
+      "variant": "V01",
+      "requestBytes": 19551,
+      "responseSha": "b17f6accd60c4f8182aa2d3f687c711b30b1514b87121bce9a2ff0309a4e8551",
+      "usage": {
+        "input_tokens": 5626,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1769,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7395
+      },
+      "costUpperMicroCny": 25404,
+      "waitingMs": 6523,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 3,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 3,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 3,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D05-V10",
+      "ordinal": 20,
+      "sourceId": "C11-B1-D05",
+      "variant": "V10",
+      "requestBytes": 15273,
+      "responseSha": "499915a73d8e7497f56b24ba53e45084b9ed84bb79f07aebff28a1bf875cddba",
+      "usage": {
+        "input_tokens": 4723,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2331,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7054
+      },
+      "costUpperMicroCny": 28094,
+      "waitingMs": 7888,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 3,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 3,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 3,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D06-V11",
+      "ordinal": 21,
+      "sourceId": "C11-B1-D06",
+      "variant": "V11",
+      "requestBytes": 19908,
+      "responseSha": "7a02a6178593caf41abc4fc9c1be903ee8e69f632258f906c0992cd25de769d9",
+      "usage": {
+        "input_tokens": 5704,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 2152,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7856
+      },
+      "costUpperMicroCny": 28624,
+      "waitingMs": 7177,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 4,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 4,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 5,
+        "severe": 2,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "FAIL",
+          "reason": "schema_or_score_failure"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D06-V01",
+      "ordinal": 22,
+      "sourceId": "C11-B1-D06",
+      "variant": "V01",
+      "requestBytes": 19595,
+      "responseSha": "632340fc76a011d10d158e33a529d76bc30807880672e8e6ad7f57acce022377",
+      "usage": {
+        "input_tokens": 5641,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 2156,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7797
+      },
+      "costUpperMicroCny": 28530,
+      "waitingMs": 7252,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 4,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 4,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 5,
+        "severe": 2,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "FAIL",
+          "reason": "schema_or_score_failure"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D06-V10",
+      "ordinal": 23,
+      "sourceId": "C11-B1-D06",
+      "variant": "V10",
+      "requestBytes": 15317,
+      "responseSha": "f87302a378c2bb4467a3d92e3e088b28a7cf4f841a843ff41732a1ca37184488",
+      "usage": {
+        "input_tokens": 4738,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2063,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6801
+      },
+      "costUpperMicroCny": 25980,
+      "waitingMs": 6962,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 4,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 4,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 5,
+        "severe": 2,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "FAIL",
+          "reason": "schema_or_score_failure"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D06-V00",
+      "ordinal": 24,
+      "sourceId": "C11-B1-D06",
+      "variant": "V00",
+      "requestBytes": 15004,
+      "responseSha": "f0684d78880d85f21ca61cf359fa4bfb4126a766115f5c846f65496accae9bbd",
+      "usage": {
+        "input_tokens": 4675,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2047,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6722
+      },
+      "costUpperMicroCny": 25726,
+      "waitingMs": 6953,
+      "evaluation": {
+        "schemaValid": false,
+        "referenceValid": false,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "PARSE_OR_SCHEMA_FAILURE",
+          "plannedSources": 1,
+          "expectedTasks": 4,
+          "complete": false,
+          "taskMetrics": null,
+          "alignment": [],
+          "issues": [
+            "PREDICTED_ENTITY_COUNT_NOT_COMPUTABLE"
+          ]
+        },
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 4,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 5,
+        "severe": 2,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "FAIL",
+          "reason": "schema_or_score_failure"
+        },
+        "ambiguity": []
+      }
+    }
+  ],
+  "operational": {
+    "actualCalls": 24,
+    "providerBilledCny": "NOT_OBSERVABLE",
+    "localAuditableCostUpperMicroCny": 523928,
+    "authorizedWorstMicroCny": 51904512,
+    "usage": {
+      "inputTokens": 120680,
+      "outputTokens": 35321
+    }
+  },
+  "ledger": {
+    "before": {
+      "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+      "rows": 644,
+      "reserves": 314,
+      "bytes": 519152,
+      "sha256": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597",
+      "tail": "37ffce66d2e92d036481308f84b08a24c70d42c313cdaf7aaa8ad505f3f2822e",
+      "nextSequence": 644
+    },
+    "after": {
+      "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+      "rows": 693,
+      "bytes": 572913,
+      "sha256": "2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e",
+      "tail": "13b520d270d26335072f99920e47a4443e8bc586365eb20cda61c4122d7ab3bd",
+      "nextSequence": 693
+    }
+  },
+  "boundaries": [
+    "Development only",
+    "single engineering author/model-assisted reference",
+    "no significance or generalization claim",
+    "not a real accept-and-save conversion rate",
+    "no Holdout, human trial, deployment or production authorization"
+  ],
+  "generatedAt": "2026-09-21T10:06:04.937Z"
+}

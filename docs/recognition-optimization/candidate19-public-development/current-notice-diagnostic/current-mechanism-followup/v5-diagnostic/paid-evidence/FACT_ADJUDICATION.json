@@ -1,0 +1,613 @@
+{
+  "version": "v5-current-real-source-facts-1.0.0",
+  "referenceSha256": "66743031c4c831239040e6a35c194225a31064e99f31eb6e71f9827fb97dfcec",
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "limitations": [
+    "SOURCE_EXCERPT_DEVELOPMENT",
+    "NO_INDEPENDENT_ADJUDICATION",
+    "PROSE_AND_EXTRAS_NOT_ADJUDICATED",
+    "NO_RELATIVE_CANDIDATE_WINNER"
+  ],
+  "adjudications": [
+    {
+      "sourceId": "V5-CURRENT-REAL-01",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "modelFirstFacts": [
+        {
+          "factId": "C19-CURRENT-REAL-01-F1",
+          "verdict": "CORRECT",
+          "reason": "激活登录与预注册动作均存在，没有新增改密码动作。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F1",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-01/wire/tasks[0..1].action"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F2",
+          "verdict": "INCORRECT",
+          "reason": "8/13—27窗口只owner task-0001；task-0002声明time present却无owner，激活登录的必要窗口归属缺失。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F2",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-01/wire/timePoints[0..1].owners;tasks[1].coverage.time"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F3",
+          "verdict": "UNKNOWN",
+          "reason": "个人状态保持unknown，但身份条件没有引用；完整资格表达尚未裁决。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F3",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-01/wire/tasks[0..1].condition"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F4",
+          "verdict": "CORRECT",
+          "reason": "本通知优先说明作为原信息保留；revisions为空，没有伪造旧日期或旧端点。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F4",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-01/wire/scopeAccounting[2..4];revisions"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F5",
+          "verdict": "CORRECT",
+          "reason": "账号密码错误保留为信息，没有重置密码/联系管理员任务。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F5",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-01/wire/scopeAccounting[6..7];tasks"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F6",
+          "verdict": "INCORRECT",
+          "reason": "task-0002的time present与零时间owner矛盾；event format还把任务主动作scope用作附属属性依据。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F6",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-01/wire/tasks[1].coverage.time;timePoints[*].owners;events[0].attributes"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F7",
+          "verdict": "UNKNOWN",
+          "reason": "预注册是否应独立活动及全部自由描述/标题未独立裁决。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F7",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-01/wire/events[0];tasks[*].detail"
+        }
+      ],
+      "displayBeforeHuman": [
+        {
+          "factId": "C19-CURRENT-REAL-01-F1",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F1",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL1_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F2",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F2",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL1_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F3",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F3",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL1_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F4",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F4",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL1_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F5",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F5",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL1_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F6",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F6",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL1_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F7",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-01/C19-CURRENT-REAL-01-F7",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL1_FINAL_FIRST"
+        }
+      ],
+      "humanFinal": [
+        {
+          "factId": "C19-CURRENT-REAL-01-F1",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F2",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F3",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F4",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F5",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F6",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-01-F7",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        }
+      ]
+    },
+    {
+      "sourceId": "V5-CURRENT-REAL-02",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "modelFirstFacts": [
+        {
+          "factId": "C19-CURRENT-REAL-02-F1",
+          "verdict": "UNKNOWN",
+          "reason": "核心登记义务完整；两个条件下的字段/登记被拆成子任务，合法拆分与完成标准边界仍未独立裁决。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F1",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-02/wire/tasks[0..2]"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F2",
+          "verdict": "UNKNOWN",
+          "reason": "原文7月16日前保留date_only；日前是否包含当天的边界未裁决，未补时刻。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F2",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-02/wire/timePoints[0]"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F3",
+          "verdict": "CORRECT",
+          "reason": "原URL及学工系统应用字面都保留；URL被不可变scope拆开不是另造目的地。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F3",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-02/wire/tasks[0].propositionScopeIds;scopeAccounting[1];source scope0001..0002"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F4",
+          "verdict": "CORRECT",
+          "reason": "完整准确、去向/联系方式/返校安排均保留，未标已完成。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F4",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-02/wire/tasks[0..1].detail.completionCriteria;tasks[*].semantics.status"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F5",
+          "verdict": "CORRECT",
+          "reason": "两个个人条件unknown，短期离厦说明保留，主登记仍not_applicable而可执行；没有默认所有人离校。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F5",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-02/wire/tasks[0..2].condition;tasks[2].detail.description"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F6",
+          "verdict": "UNKNOWN",
+          "reason": "辅助信息主引用是合法支持还是冻结契约错误已经单列；不凭转换成功宣布全图语义正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F6",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-02/wire/scopeAccounting[1..2,4..5];tasks[*].propositionScopeIds"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F7",
+          "verdict": "UNKNOWN",
+          "reason": "标题/自由描述、子任务总截止和全部额外事实未独立裁决。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F7",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-02/wire/tasks[*].detail;timePoints"
+        }
+      ],
+      "displayBeforeHuman": [
+        {
+          "factId": "C19-CURRENT-REAL-02-F1",
+          "verdict": "UNKNOWN",
+          "reason": "核心登记义务完整；两个条件下的字段/登记被拆成子任务，合法拆分与完成标准边界仍未独立裁决。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F1",
+          "outputPointer": "PRODUCT_DIAGNOSTIC.json#V5-CURRENT-REAL-02/firstDisplay"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F2",
+          "verdict": "UNKNOWN",
+          "reason": "原文7月16日前保留date_only；日前是否包含当天的边界未裁决，未补时刻。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F2",
+          "outputPointer": "PRODUCT_DIAGNOSTIC.json#V5-CURRENT-REAL-02/firstDisplay"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F3",
+          "verdict": "CORRECT",
+          "reason": "原URL及学工系统应用字面都保留；URL被不可变scope拆开不是另造目的地。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F3",
+          "outputPointer": "PRODUCT_DIAGNOSTIC.json#V5-CURRENT-REAL-02/firstDisplay"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F4",
+          "verdict": "CORRECT",
+          "reason": "完整准确、去向/联系方式/返校安排均保留，未标已完成。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F4",
+          "outputPointer": "PRODUCT_DIAGNOSTIC.json#V5-CURRENT-REAL-02/firstDisplay"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F5",
+          "verdict": "CORRECT",
+          "reason": "两个个人条件unknown，短期离厦说明保留，主登记仍not_applicable而可执行；没有默认所有人离校。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F5",
+          "outputPointer": "PRODUCT_DIAGNOSTIC.json#V5-CURRENT-REAL-02/firstDisplay"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F6",
+          "verdict": "UNKNOWN",
+          "reason": "辅助信息主引用是合法支持还是冻结契约错误已经单列；不凭转换成功宣布全图语义正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F6",
+          "outputPointer": "PRODUCT_DIAGNOSTIC.json#V5-CURRENT-REAL-02/firstDisplay"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F7",
+          "verdict": "UNKNOWN",
+          "reason": "标题/自由描述、子任务总截止和全部额外事实未独立裁决。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-02/C19-CURRENT-REAL-02-F7",
+          "outputPointer": "PRODUCT_DIAGNOSTIC.json#V5-CURRENT-REAL-02/firstDisplay"
+        }
+      ],
+      "humanFinal": [
+        {
+          "factId": "C19-CURRENT-REAL-02-F1",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F2",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F3",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F4",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F5",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F6",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-02-F7",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        }
+      ]
+    },
+    {
+      "sourceId": "V5-CURRENT-REAL-03",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "modelFirstFacts": [
+        {
+          "factId": "C19-CURRENT-REAL-03-F1",
+          "verdict": "UNKNOWN",
+          "reason": "报名动作有interest unknown，但条件引用为空；不能自动当全体强制报名。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F1",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-03/wire/tasks[0].condition;tasks[0].semantics"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F2",
+          "verdict": "CORRECT",
+          "reason": "一个线上活动，原答起止7/6—10均为该事件owner；没有拆成多个活动。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F2",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-03/wire/events[0];timePoints[0..1]"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F3",
+          "verdict": "CORRECT",
+          "reason": "6/30 17:00给报名task，7/6—10分别给事件start/end，值和type存在。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F3",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-03/wire/timePoints[0..2]"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F4",
+          "verdict": "INCORRECT",
+          "reason": "各学员需自行准备相关终端设备只被放入location_note，没有对应准备动作/对象、录取前置或等待义务。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F4",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-03/wire/events[0].attributes[2..3];tasks;prerequisiteStates"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F5",
+          "verdict": "CORRECT",
+          "reason": "免费/招生对象/结业证书保留为信息或outcome，没有提交证书任务或二维码虚构URL。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F5",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-03/wire/scopeAccounting[0..3];events[0].attributes[4];tasks"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F6",
+          "verdict": "INCORRECT",
+          "reason": "报名task声明event present，但event.relatedTaskTempIds为空；日期依据未进入事件scope。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F6",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-03/wire/tasks[0].coverage.event;events[0].relatedTaskTempIds;events[0].scopeIds;timePoints[0..1].scopeIds"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F7",
+          "verdict": "UNKNOWN",
+          "reason": "自由标题/描述及终端准备语义未做独立真值裁决；已知关键遗漏足以使整份失败。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F7",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-03/wire/events[0];tasks[0].detail"
+        }
+      ],
+      "displayBeforeHuman": [
+        {
+          "factId": "C19-CURRENT-REAL-03-F1",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F1",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL3_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F2",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F2",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL3_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F3",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F3",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL3_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F4",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F4",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL3_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F5",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F5",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL3_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F6",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F6",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL3_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F7",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-03/C19-CURRENT-REAL-03-F7",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL3_FINAL_FIRST"
+        }
+      ],
+      "humanFinal": [
+        {
+          "factId": "C19-CURRENT-REAL-03-F1",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F2",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F3",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F4",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F5",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F6",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-03-F7",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        }
+      ]
+    },
+    {
+      "sourceId": "V5-CURRENT-REAL-04",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "modelFirstFacts": [
+        {
+          "factId": "C19-CURRENT-REAL-04-F1",
+          "verdict": "CORRECT",
+          "reason": "日期与clock range是同事件互补原事实，start重复是表示契约问题；12:30—14:00和A302均在，不把它计成错日期。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F1",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-04/wire/events[0];timePoints[0..2]"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F2",
+          "verdict": "CORRECT",
+          "reason": "扫码报名与interest unknown在，二维码未读，没有猜URL或标已报名。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F2",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-04/wire/tasks[0].action;tasks[0].condition"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F3",
+          "verdict": "CORRECT",
+          "reason": "10/11中午12:00为报名task deadline，未换作活动start。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F3",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-04/wire/timePoints[3]"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F4",
+          "verdict": "CORRECT",
+          "reason": "午餐50份/先到先得单独信息，不是听众上限。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F4",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-04/wire/scopeAccounting[9..10]"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F5",
+          "verdict": "UNKNOWN",
+          "reason": "人数不限与感兴趣原文信息存在；condition unknown却无conditionScope，完整条件引用未裁决。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F5",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-04/wire/scopeAccounting[11];tasks[0].condition"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F6",
+          "verdict": "INCORRECT",
+          "reason": "报名task声明event present，唯一event.relatedTaskTempIds却为空，必要关联缺失；日期表示修复不能补此端点。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F6",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-04/wire/tasks[0].coverage.event;events[0].relatedTaskTempIds"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F7",
+          "verdict": "UNKNOWN",
+          "reason": "标题、自由描述及全部额外图未独立裁决。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F7",
+          "outputPointer": "MODEL_FACTS.json#V5-CURRENT-REAL-04/wire/events[0].description;tasks[0].detail"
+        }
+      ],
+      "displayBeforeHuman": [
+        {
+          "factId": "C19-CURRENT-REAL-04-F1",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F1",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL4_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F2",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F2",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL4_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F3",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F3",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL4_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F4",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F4",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL4_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F5",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F5",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL4_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F6",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F6",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL4_FINAL_FIRST"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F7",
+          "verdict": "INCORRECT",
+          "reason": "普通首屏拒绝整个来源，未交付此必要事实；原答语义与拒绝原因分栏，不将拒绝称安全正确。",
+          "sourcePointer": "REFERENCES.json#V5-CURRENT-REAL-04/C19-CURRENT-REAL-04-F7",
+          "outputPointer": "browser/ACCEPTED_DOM.json#REAL4_FINAL_FIRST"
+        }
+      ],
+      "humanFinal": [
+        {
+          "factId": "C19-CURRENT-REAL-04-F1",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F2",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F3",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F4",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F5",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F6",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        },
+        {
+          "factId": "C19-CURRENT-REAL-04-F7",
+          "verdict": "UNKNOWN",
+          "reason": "仅Codex工程部分确认，不存在真实参与者或负责人裁决。",
+          "outputPointer": "browser/CANONICAL.json#drafts"
+        }
+      ]
+    }
+  ]
+}

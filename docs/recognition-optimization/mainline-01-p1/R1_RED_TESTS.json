@@ -1,0 +1,40 @@
+{
+  "directory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline-01-p1-r1-Q4WznP",
+  "mode": "targeted",
+  "okay": false,
+  "results": [
+    {
+      "name": "targeted",
+      "exitCode": 1,
+      "log": "targeted.log",
+      "summary": [
+        "⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯",
+        " FAIL  src/domain/v2/confirmationV2.test.ts > P1-R1 registered review counterexamples > material-only deadline is preserved, not relabelled undated",
+        "AssertionError: expected '' to be '2026-09-10T18:00' // Object.is equality",
+        " FAIL  src/domain/v2/confirmationV2.test.ts > P1-R1 registered review counterexamples > a conflict on associated d0 blocks only the affected task",
+        " FAIL  src/domain/v2/confirmationV2.test.ts > P1-R1 registered review counterexamples > a conflict on associated m0 blocks only the affected task",
+        " FAIL  src/domain/v2/confirmationV2.test.ts > P1-R1 registered review counterexamples > a conflict on associated linked-event blocks only the affected task",
+        "AssertionError: promise resolved \"{ schemaVersion: 8, …(20) }\" instead of rejecting",
+        " FAIL  src/domain/v2/confirmationV2.test.ts > P1-R1 registered review counterexamples > shared event time must be explicitly blocked if event confirmation is unsupported",
+        "AssertionError: promise resolved \"{ schemaVersion: 8, …(20) }\" instead of rejecting",
+        " FAIL  src/domain/v2/confirmationV2.test.ts > P1-R1 registered review counterexamples > date-only edit to a clock uses the same source timezone in preview and storage",
+        "AssertionError: expected 'Asia/Shanghai' to be 'Asia/Tokyo' // Object.is equality",
+        " FAIL  src/experiments/mainline01p1/confirmationHarness.test.ts > P1-R1: strong_inference is not a safe default; explicit sibling stays selected",
+        " FAIL  src/experiments/mainline01p1/confirmationHarness.test.ts > P1-R1: optional_suggestion is not a safe default; explicit sibling stays selected",
+        "AssertionError: expected true to be false // Object.is equality",
+        " FAIL  src/experiments/mainline01p1/confirmationHarness.test.ts > P1-R1: V2 advertises an explicit save boundary; V1 rendering is unchanged",
+        "AssertionError: expected '<div class=\"modal-backdrop detail-bac…' to contain '保存修改'",
+        " Test Files  2 failed | 2 passed (4)",
+        "      Tests  9 failed | 45 passed (54)"
+      ]
+    },
+    {
+      "name": "protection-after",
+      "okay": true,
+      "checked": 673,
+      "changed": [],
+      "appendOnly": true,
+      "outOfScope": []
+    }
+  ]
+}

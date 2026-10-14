@@ -1,0 +1,31 @@
+{
+  "version": "real-input-reasoning-delivery-1",
+  "businessCommit": "1511a0056dccf3a3617a73a96446dddca80c4a5c",
+  "remoteBusinessCommit": "1511a0056dccf3a3617a73a96446dddca80c4a5c",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "remote": "https://github.com/nightair5/Student-Affairs-Manager.git",
+  "push": "PASS; exact remote SHA verified",
+  "comparison": {
+    "plannedSources": 20,
+    "plannedRequests": 40,
+    "actualProviderRequests": 2,
+    "completedSettled": 1,
+    "incomplete": 1,
+    "notRun": 38,
+    "pairedComparableSources": 0,
+    "decision": "DO_NOT_ADOPT_LOW_KEEP_NONE"
+  },
+  "cost": {
+    "batchAuthoritativeUpperCny": 3.327754,
+    "cumulativeAuthoritativeUpperCny": 13.887567,
+    "projectCapCny": 20,
+    "providerBilledCny": "NOT_OBSERVABLE"
+  },
+  "engineering": "PASS_WITH_RETAINED_HISTORICAL_FREEZE_FAILURE",
+  "browser": "NOT_RUN after one official control failure; local preview HTTP 200 and model POST 405 verified",
+  "candidate03Changed": false,
+  "wireChanged": false,
+  "productionDeployment": false,
+  "staging": "23 exact business/evidence paths; no workspace-wide staging, force push or automatic rebase",
+  "finalDocumentationSecretScanFiles": 2212
+}

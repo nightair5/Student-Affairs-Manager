@@ -1,0 +1,51 @@
+{
+  "audit_skill": "experiment-audit",
+  "date": "2026-09-02",
+  "generated_at": "2026-09-02T01:41:58+08:00",
+  "auditor": "gpt-5.6-sol-ultra",
+  "agent_id": "/root/rco0_fresh_integrity_review",
+  "verdict_id": "/root/rco0_fresh_integrity_review",
+  "executor_model": "codex-gpt-5.6-sol",
+  "executor_family": "openai",
+  "reviewer_model": "gpt-5.6-sol",
+  "reviewer_family": "openai",
+  "reviewer_reasoning": "ultra",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "overall_verdict": "pass",
+  "integrity_status": "pass",
+  "reason_code": "rco0_evaluation_integrity_verified",
+  "summary": "Client-invalid historical results are excluded from quality scoring; protected evidence is reproducible and unchanged.",
+  "rco_g0_recommendation": "pass_evaluation_integrity_only",
+  "trace_path": ".aris/traces/experiment-audit/2026-09-02_run01/",
+  "audited_input_hashes": {
+    "scripts/multimodal-evaluation-lib.mjs": "sha256:c789959b6b3127b3aa2745fdd24e7ac50658d8bf599dcf78dbe02df4bf567097",
+    "scripts/run-multimodal-evaluation.mjs": "sha256:5cd961ee05c9db99a421ec87b15b748abc05263438c52927525ff7d8bba97e39",
+    "scripts/reclassify-multimodal-checkpoints.mjs": "sha256:b26541c743098ec915c92448f82c73bcc3c11e09d222c6ec30dfa72e9c5ce8e0",
+    "docs/recognition-optimization/RCO-0_RECLASSIFICATION.json": "sha256:02f7a81de7cd0141e31b688c818b55154797713af3690b30e530f46899cfa331"
+  },
+  "checks": {
+    "gt_provenance": { "status": "pass", "evaluation_type": "synthetic_proxy" },
+    "score_normalization": { "status": "pass", "empty_denominator": "null" },
+    "result_existence": { "status": "pass", "historical_counts_match": true },
+    "dead_code_contract_alignment": { "status": "pass", "exact_client_validator_used": true },
+    "scope": { "status": "pass", "independent_semantic_families_per_round": 12 },
+    "eval_type": "synthetic_proxy",
+    "protected_inputs": { "status": "pass", "path_count": 10, "unchanged": true },
+    "model_calls": { "status": "pass", "count": 0 }
+  },
+  "historical_reclassification": {
+    "v2_t": { "client_valid": 0, "planned": 36, "status": "INVALID_RUN" },
+    "v2_i": { "client_valid": 1, "planned": 36, "status": "INVALID_RUN" },
+    "v2_it": { "client_valid": 2, "model_returns": 35, "planned": 36, "transport_failures": 1, "status": "INVALID_RUN" },
+    "v3_i": { "client_valid": 0, "planned": 36, "status": "INVALID_RUN" },
+    "v3_t": { "status": "NOT_RUN" },
+    "v3_it": { "status": "NOT_RUN" }
+  },
+  "claims": [
+    { "id": "RCO0_CLIENT_ALIGNMENT", "impact": "supported" },
+    { "id": "HISTORICAL_71_PERCENT_CORRECTNESS", "impact": "unsupported" },
+    { "id": "VISION_SUPERIORITY", "impact": "unsupported" },
+    { "id": "COMMERCIAL_OR_RELEASE_READINESS", "impact": "not_run" }
+  ]
+}

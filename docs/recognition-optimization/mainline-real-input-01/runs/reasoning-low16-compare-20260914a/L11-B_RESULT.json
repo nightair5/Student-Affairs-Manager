@@ -1,0 +1,236 @@
+{
+  "version": "real-input-reasoning-low16-result-1",
+  "unitId": "L11-B",
+  "arm": "B",
+  "effort": "low",
+  "dispatchScope": "within-cumulative-cap",
+  "previousId": "W09",
+  "bindingSha": "1ace528d15cc06bdc279f82bb13cb98e6526e5c3eb203f2bc0fe242aec3a82a1",
+  "requestSha": "44ff347077440bcd20f7f0b6a3df99e5d057f2afa1a48a742d50abd0b3b368dc",
+  "responseSha": "b58d6ab98609bb4c6a64360fd4358a9b6dc9eaef83526101547609e4e5e55911",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "wireVersion": "real-input-model-wire-1",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "c1ac44081f93187295dc14c4f9109217ec019696c1a0eca35c7efc01cceebba7",
+  "scoreInput": "candidate03 final message adapted only after gateway identity and usage verification; provider reasoning and immutable raw retained separately",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "tp-start-stargazing-20260928-1900",
+        "type": "event_start",
+        "rawText": "2026年9月28日19:00开始",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-f926cf20e7fd03ea21736fce579e25887c8dc18e96a1a27b1c7920a2cc8ed7fa"
+        ],
+        "confidence": 1,
+        "normalizedValue": "2026-09-28T19:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-end-stargazing-20260928-2100",
+        "type": "event_end",
+        "rawText": "21:00结束",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0003-0c98be1270d94817fc76797ae25116733695335e9787b23da2f08d232775b1f9"
+        ],
+        "confidence": 1,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [
+      {
+        "tempId": "evt-stargazing-night",
+        "title": "校园观星夜",
+        "description": "观星夜将在2026年9月28日19:00开始，于21:00结束，地点为教学楼北侧平台。这是一则活动资讯，并非参加要求；不需要报名、回复或提交任何材料。天气变化可能影响开放，但本通知不安排读者执行任何操作。",
+        "startTimePointTempId": "tp-start-stargazing-20260928-1900",
+        "endTimePointTempId": "tp-end-stargazing-20260928-2100",
+        "location": "教学楼北侧平台",
+        "scopeIds": [
+          "scope-0001-09c7ccab5817997b03ca9978f943864451b89f8d1a81e58b0d8c54cf9d77ce83",
+          "scope-0002-f926cf20e7fd03ea21736fce579e25887c8dc18e96a1a27b1c7920a2cc8ed7fa",
+          "scope-0003-0c98be1270d94817fc76797ae25116733695335e9787b23da2f08d232775b1f9",
+          "scope-0004-ea9ea265e09511f46495525ee77e3f04dfa63f05b6b4876faaace37798a664dd"
+        ],
+        "confidence": 1,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": []
+      }
+    ],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0005-8f69e1ae7061f32cd47acdd2e08caaf0470f16edd3b59d645a7896a51e36312e",
+      "scope-0006-13bbae9371ab55296f149d233cfd0a187eefdf04560730f7ea501cdd5daceb67",
+      "scope-0007-6de85c02afa4f297c060a3d66e4beb3ab89ee4e18712de073435ad30f0d46cd5",
+      "scope-0008-9deccb7b137ba88ec3e600eb3dd949f0fced9d846b3c16e741cdf1bcfb499f4a",
+      "scope-0009-9fd633f92461f3eca9b3d419e019c696184bb8089add9a8401bccb231252493e"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:2e8f2e5b",
+    "sourceVersionId": "source:2e8f2e5b:version:1",
+    "sourceFingerprint": "sha256:80c9db3e0f2b77c9cda709adbcdffd0f69f43623669cef902e20b962708df606"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 14955,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "event": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "condition": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 0,
+        "falsePositive": 3,
+        "falseNegative": 3,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "tp-end-stargazing-20260928-2100"
+        ]
+      },
+      {
+        "code": "EVENT_NOT_TASK_ASSOCIATED",
+        "entityIds": [
+          "evt-stargazing-night"
+        ]
+      }
+    ],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 0,
+    "referenceTaskCount": 0
+  },
+  "scoreError": null,
+  "totalAttempts": 288,
+  "usage": {
+    "input_tokens": 4642,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 3216,
+    "output_tokens_details": {
+      "reasoning_tokens": 2431
+    },
+    "total_tokens": 7858
+  },
+  "reasoningTokens": 2431,
+  "costUpperMicroCny": 35012,
+  "totalCostUpperMicroCny": 13549189,
+  "semanticStatus": "completed",
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "temperatureEffect": "IGNORED_BY_PROVIDER_THINKING_MODE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；同模型、candidate03、正文与16384输出上限，仅reasoning effort不同；累计290次最多派发前12份"
+}

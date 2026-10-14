@@ -1,0 +1,167 @@
+{
+  "role": "ZERO_CALL_CONTRACT_TEST_NOT_MODEL_QUALITY",
+  "roundtrip": [
+    {
+      "sourceId": "D25-S01",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "INDEPENDENT_INFORMATION_EVENT_OR_TIME_MISSING",
+          "checks": [
+            {
+              "id": "E1",
+              "pass": false
+            },
+            {
+              "id": "P1",
+              "pass": false
+            }
+          ],
+          "extraEntities": 0
+        }
+      ],
+      "orderInvariant": "PASS"
+    },
+    {
+      "sourceId": "D25-S02",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "INDEPENDENT_INFORMATION_EVENT_OR_TIME_MISSING",
+          "checks": [
+            {
+              "id": "E1",
+              "pass": false
+            },
+            {
+              "id": "P1",
+              "pass": false
+            }
+          ],
+          "extraEntities": 0
+        }
+      ],
+      "orderInvariant": "PASS"
+    },
+    {
+      "sourceId": "D25-S03",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TASK_FIELD_WRONG",
+          "taskId": "T2",
+          "field": "condition"
+        },
+        {
+          "kind": "UNSUPPORTED_CONDITION_TRUTH",
+          "taskId": "T2"
+        }
+      ],
+      "orderInvariant": "PASS"
+    },
+    {
+      "sourceId": "D25-S04",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TASK_FIELD_WRONG",
+          "taskId": "T2",
+          "field": "condition"
+        },
+        {
+          "kind": "UNSUPPORTED_CONDITION_TRUTH",
+          "taskId": "T2"
+        }
+      ],
+      "orderInvariant": "PASS"
+    },
+    {
+      "sourceId": "D25-S05",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TIME_VALUE_OR_COVERAGE_WRONG",
+          "taskId": "T1"
+        },
+        {
+          "kind": "TIME_GRAPH_CONFLICT",
+          "taskId": "T1",
+          "pointId": "PT1_0"
+        },
+        {
+          "kind": "INDEPENDENT_INFORMATION_EVENT_OR_TIME_MISSING",
+          "checks": [],
+          "extraEntities": 1
+        }
+      ],
+      "orderInvariant": "PASS"
+    },
+    {
+      "sourceId": "D25-S06",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TIME_VALUE_OR_COVERAGE_WRONG",
+          "taskId": "T1"
+        },
+        {
+          "kind": "TIME_GRAPH_CONFLICT",
+          "taskId": "T1",
+          "pointId": "PT1_0"
+        },
+        {
+          "kind": "INDEPENDENT_INFORMATION_EVENT_OR_TIME_MISSING",
+          "checks": [],
+          "extraEntities": 1
+        }
+      ],
+      "orderInvariant": "PASS"
+    },
+    {
+      "sourceId": "D25-S07",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TASK_FIELD_WRONG",
+          "taskId": "T1",
+          "field": "materials"
+        },
+        {
+          "kind": "MATERIAL_FACT_WRONG",
+          "taskId": "T1"
+        }
+      ],
+      "orderInvariant": "PASS"
+    },
+    {
+      "sourceId": "D25-S08",
+      "positive": "PASS",
+      "negative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TASK_PRESENCE",
+          "fn": 1,
+          "fp": 0
+        },
+        {
+          "kind": "TIME_GRAPH_CONFLICT",
+          "taskId": "T2",
+          "pointId": "PT2_0"
+        },
+        {
+          "kind": "INDEPENDENT_INFORMATION_EVENT_OR_TIME_MISSING",
+          "checks": [],
+          "extraEntities": 2
+        }
+      ],
+      "orderInvariant": "PASS"
+    }
+  ]
+}

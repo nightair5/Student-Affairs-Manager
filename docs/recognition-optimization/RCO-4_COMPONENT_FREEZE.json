@@ -1,0 +1,14 @@
+{
+  "freezeVersion": "rco-4-component-freeze-v1",
+  "frozenAt": "2026-09-02",
+  "status": "SEEN_DIAGNOSTIC",
+  "commercialHoldoutEligible": false,
+  "cloudModelCallsAuthorized": 0,
+  "files": {
+    "src/lib/fixtures/ocr-component-seen-v1.json": "870fa2abe1c8058b71e0c4aa2677ef20bb4657bd8369929e64b73eff7e218136",
+    "src/lib/ocrLiveComponent.test.ts": "9c5d08b381c7e7a31c6f690a7edcbb82dfa10b2e25f03569fedaf06182c787e6",
+    "src/lib/ocrPreprocessing.ts": "92a1c3a7c3846d2ae6cc08d2e6c5d056bdf7ab745a948061a3451a67bca179fb",
+    "src/lib/ocrEvaluation.ts": "c54080878c187a7a95e725bf8f8e1cf89c167935e1cf15eca76f91529b2819f4"
+  },
+  "rule": "Any change to a listed byte hash creates a new component candidate; this set remains seen diagnostic and can never be renamed RCO-G7 holdout."
+}

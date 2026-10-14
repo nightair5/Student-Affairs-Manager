@@ -1,0 +1,26 @@
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs'
+import {resolve} from 'node:path'
+import {execFileSync} from 'node:child_process'
+import {build} from 'esbuild'
+import {completedCurrentNoticeScene} from './current-notice-completed-readonly.mjs'
+import {authorityObservedScene} from './single-authority-observed-readonly.mjs'
+const base='246357e4fc9c698179508eeef6a6aab3d756da47'
+const changed=new Set(['src/recognition/firstSuggestionD26.ts','src/recognition/materialChannelGrounding.ts','src/recognition/singleAuthorityProduct.ts'].map(p=>resolve(p)))
+const entry=`export {decodeCurrentSourceRecording} from './src/recognition/conditionalNonActionProduct';export {decodeAuthorityProductRecording} from './src/recognition/singleAuthorityProduct';export {assembleCurrentFirstSuggestion} from './src/recognition/materialChannelGrounding';export {sourceWindowsFromSidecar} from './src/recognition/sourceWindowGrounding';export {indexImmutableScopesV11} from './src/recognition/scopeIndexV11';export {CURRENT_MECHANISM_CASES,createCurrentMechanismFixture} from './src/experiments/candidate19Recorded/currentMechanismFixtures'`
+async function components(before){
+ const plugins=before?[{name:'original-product-git-blobs-read-only',setup(b){b.onLoad({filter:/\.ts$/},args=>changed.has(args.path)?{contents:execFileSync('git',['show',base+':'+args.path.slice(process.cwd().length+1).replaceAll('\\','/')],{encoding:'utf8'}),loader:'ts'}:null)}}]:[]
+ const r=await build({stdin:{contents:entry,resolveDir:process.cwd()},bundle:true,write:false,platform:'node',format:'esm',plugins})
+ return import('data:text/javascript;base64,'+Buffer.from(r.outputFiles[0].text).toString('base64'))
+}
+const before=await components(true),after=await components(false),current=await completedCurrentNoticeScene(),observed=authorityObservedScene()
+const summary=r=>({tasks:r.standaloneTasks.map(t=>({id:t.tempId,title:t.title,action:t.actionVerb,object:t.actionObject,dependencies:t.dependencyTempIds})),events:r.events.map(e=>({id:e.tempId,title:e.title,start:e.startTimePointTempId,end:e.endTimePointTempId,description:e.description})),times:r.timePoints.map(p=>({id:p.tempId,type:p.type,rawText:p.rawText,value:p.normalizedValue,precision:p.precision,needsConfirmation:p.needsConfirmation,owners:{tasks:p.relatedTaskTempIds,materials:p.relatedMaterialTempIds}})),materials:r.materials,information:r.ignoredContent,conflicts:r.conflicts})
+async function decode(c,r){try{const context={index:await c.indexImmutableScopesV11(r.sourceId,r.sourceVersionId,r.sourceText),referenceTime:r.referenceTime,timezone:r.timezone};const d=r.candidate==='SingleAuthority'?c.decodeAuthorityProductRecording(r.rawHttpText,context,'SingleAuthority'):c.decodeCurrentSourceRecording(r.rawHttpText,r.candidate,context);const x=c.assembleCurrentFirstSuggestion(d.result,{sourceText:r.sourceText,referenceTime:r.referenceTime,timezone:r.timezone,sourceWindows:c.sourceWindowsFromSidecar(d.sidecar)});return {status:'DECODED',...summary(x.result)}}catch(e){return {status:'REJECTED',reason:e.message}}}
+const real=[]
+for(const r of current.recordings)real.push({sourceId:r.sourceId,candidate:r.candidate,responseSha256:r.responseSha256,referenceTime:r.referenceTime,timezone:r.timezone,before:await decode(before,r),after:await decode(after,r),wholeCurrentProvisional:r.ordinal===2?'UNKNOWN':'INCORRECT',newModelEvidence:false})
+const engineering=[]
+for(const kind of after.CURRENT_MECHANISM_CASES){const f=await after.createCurrentMechanismFixture(kind),r={...f,sourceId:f.context.index.sourceId,sourceVersionId:f.context.index.sourceVersionId,referenceTime:f.context.referenceTime,timezone:f.context.timezone,candidate:'SingleAuthority'};engineering.push({kind,role:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT',before:await decode(before,r),after:await decode(after,r)})}
+const sealedKnown=[]
+for(const r of observed.recordings)sealedKnown.push({sourceId:r.sourceId,candidate:r.candidate,before:await decode(before,r),after:await decode(after,r)})
+const report={version:'current-mechanism-fact-followup-1',baselineProductCommit:base,role:'POST_PROGRAM_DIAGNOSTIC_NOT_NEW_MODEL_SCORE',modelRequests:0,grant:0,reserve:0,settle:0,ledgerWrites:0,ledger:current.scene.ledger,roots:['LITERAL_TASK_TITLE_OBJECT_REPEATED','EXPLICIT_WINDOW_END_USES_START_DATE'],realDenominator:4,wholeCurrent:{correct:0,incorrect:3,unknown:1,reference:'existing provisional judgment retained, no rescore of historical reports'},real,engineering,sealed:{denominator:8,settled:2,uncertain:1,notSent:5,winner:'EVIDENCE_INCOMPLETE_NO_WINNER',known:sealedKnown},newGenerationHypothesis:'NONE; V5 already distinguishes owners/window roles/activity attributes; actual output evidence on these sources remains missing'}
+const dir=resolve('docs/recognition-optimization/candidate19-public-development/current-notice-diagnostic/current-mechanism-followup');mkdirSync(dir,{recursive:true});writeFileSync(resolve(dir,'DIAGNOSTIC.json'),JSON.stringify(report,null,2)+'\n')
+console.log(JSON.stringify({path:dir+'/DIAGNOSTIC.json',real:real.map(r=>({source:r.sourceId,before:r.before.status,after:r.after.status,whole:r.wholeCurrentProvisional})),engineering:engineering.map(r=>({kind:r.kind,before:r.before.times?.map(p=>p.value),after:r.after.times?.map(p=>p.value)})),ledger:report.ledger,modelRequests:0}))

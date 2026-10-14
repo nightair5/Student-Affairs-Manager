@@ -1,0 +1,1542 @@
+import { describe, expect, it, vi } from 'vitest'
+import { renderToStaticMarkup } from 'react-dom/server'
+import App from '../../App'
+import { DashboardPage } from '../../pages/DashboardPage'
+import { MemoryWorkspaceRecordStore } from '../../domain/v2/repository'
+import { createRealInputRuntime, emptyRealInputWorkspace, sendRealInput, inputRunContext, dispatchRealInput } from './runtime'
+import { createModelClient } from './modelClient'
+import { buildModelRequest, parseModelEnvelope } from './modelWire'
+import { composeSemantics } from '../mainline04/semanticComposer'
+import { acquireText } from './inputAcquisition'
+import { makeSendSnapshot, sha256Text } from './inputReceipt'
+import { SemanticRepository } from '../mainline05/semanticRepository'
+import { reviewSemanticFact } from '../mainline05/semanticConfirmation'
+import { REAL_STATE_VERSION, semanticRevision, stateOfRuntime } from '../mainline05/semanticState'
+import { cases, notices, seenWire, NOW } from './seenInputs'
+import { FactCorrectionEditor, submitRelationCorrection } from './FactCorrectionEditor'
+import { readFileSync } from 'node:fs'
+import { createHash } from 'node:crypto'
+import { spawnSync } from 'node:child_process'
+import { CanonicalWorkspaceRepository } from '../../domain/v2/repository'
+import { replayRecordedA02, replayRecordedBatch, recordedA02Identity, type RecordedBatch, type RecordedA02 } from './runtime'
+import { editSemantic, reviewSemanticMaterial } from '../mainline05/semanticConfirmation'
+import { effectiveStateFacts, readingOf } from '../mainline05/semanticState'
+import { SemanticFacts } from '../mainline05/SemanticFacts'
+import { buildBrowserReminderJobs } from '../../lib/notifications'
+import { DraftReviewPanel } from '../../components/DraftReviewPanel'
+import type { ComponentProps } from 'react'
+import { correctSemanticFact, confirmSemantic, disposeSemantic } from '../mainline05/semanticConfirmation'
+import { openFailedForCorrection } from '../mainline05/semanticCapture'
+import { canAct, life, validateSemanticWorkspace } from '../mainline05/semanticState'
+import type { FactChange } from './factCorrections'
+import type { SemanticTask } from '../mainline04/semanticContract'
+import { replayRecordedCandidate02, type RecordedCandidate02 } from './runtime'
+import { CANDIDATE02_VERSION } from './candidate02'
+import { InputReview } from './InputReview'
+import { correctReadPage } from './inputReceipt'
+import type { ReactElement } from 'react'
+import { replayRecordedCandidate03, type RecordedCandidate03 } from './runtime'
+import { CANDIDATE03_VERSION } from './candidate03'
+import { acceptSemanticPendingDate } from '../mainline05/semanticConfirmation'
+import { pendingDateEligible, hasPendingDateConsent, pendingDateIdentity, liveReviewIdentity } from '../mainline05/semanticState'
+import { semanticDates, semanticView, semanticReview, pendingDateTaskIds } from '../mainline05/semanticView'
+import { CalendarPage } from '../../pages/CalendarPage'
+import { indexImmutableScopesV11 } from '../../recognition/scopeIndexV11'
+import type { RealInputState } from '../mainline05/semanticState'
+import type { SemanticInput } from '../mainline04/semanticContract'
+import { replayRecordedPaired04, type RecordedPaired04 } from './runtime'
+import { buildFlash41Candidate06ComparisonRequest, CANDIDATE06_VERSION } from './candidate06'
+import { HTTPS_PREVIEW_DATABASE, openHttpsPreviewExample } from './runtime'
+import { CANDIDATE07_VERSION } from './candidate07'
+import { validateWorkspaceShape } from '../../domain/v2/validators/shapeValidator'
+import { materialEdit, validateMaterialDecision } from './factCorrections'
+import { TaskDetailPanel } from '../../components/TaskDetailPanel'
+import { CANDIDATE09_VERSION } from './candidate09'
+
+describe('paired09 settled raw replay; engineering simulation, not browser evidence',()=>{
+  function record(unitId:string):RecordedPaired04 {
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate09-20260913a/'
+    const binding=JSON.parse(readFileSync(p+'BINDING_FINAL.json','utf8'))
+    const item=binding.items.find((i:{id:string})=>i.id===unitId.slice(0,3))
+    const raw=JSON.parse(readFileSync(p+unitId+'_RAW.jsonl','utf8'))
+    return {version:'recorded-paired09-1',unitId,name:recordedA02Identity.name,operationId:item.operationId,
+      title:item.title,context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  }
+  async function fixture(){
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:recordedA02Identity.name})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    return {store,repo}
+  }
+  it.each(['U01-09','U07-09','V04-03'])('%s explicitly reviews, partially confirms and independently restores raw, facts and unverified materials',async unitId=>{
+    const {repo,store}=await fixture(),r=record(unitId),identity={unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const fetch=vi.spyOn(globalThis,'fetch').mockRejectedValue(Error('MODEL_MUST_NOT_DISPATCH'))
+    try{
+      const loaded=await replayRecordedPaired04(repo,r,identity),d=loaded.extractionDrafts[0],initial=stateOfRuntime(loaded,d.id)
+      expect(initial.version).toBe(REAL_STATE_VERSION)
+      if(initial.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+      expect(initial.rawHttpText).toBe(r.rawHttpText)
+      expect(loaded.recognitionRuns[0].promptVersion).toBe(unitId.endsWith('-09')?CANDIDATE09_VERSION:CANDIDATE03_VERSION)
+      expect(loaded.tasks).toHaveLength(0)
+      const facts=effectiveStateFacts(initial).facts,ids=facts.tasks.filter(t=>t.semantics.status==='pending').map(t=>t.id)
+      expect(ids).toHaveLength(unitId==='U01-09'?2:1)
+      await expect(confirmSemantic(repo,{draftId:d.id,taskTempIds:ids,revision:semanticRevision(loaded)})).rejects.toThrow()
+      for(const m of facts.materials)await reviewSemanticMaterial(repo,{draftId:d.id,materialId:m.tempId,
+        revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:m.required,status:'unverified'}})
+      for(const taskId of ids)await reviewSemanticFact(repo,{draftId:d.id,taskId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+      let prior=await repo.load()
+      for(const taskId of ids){
+        const next=await confirmSemantic(repo,{draftId:d.id,taskTempIds:[taskId],revision:semanticRevision(prior)})
+        for(const old of prior.tasks)expect(next.tasks.find(t=>t.id===old.id)).toEqual(old)
+        prior=next
+      }
+      const saved=prior
+      expect(saved.tasks).toHaveLength(ids.length)
+      expect(saved.materials.every(m=>m.status==='unverified')).toBe(true)
+      expect(stateOfRuntime(saved,d.id).rawResponse).toEqual(initial.rawResponse)
+      expect(stateOfRuntime(saved,d.id).first).toEqual(initial.first)
+      expect(effectiveStateFacts(stateOfRuntime(saved,d.id)).facts.revisions).toEqual(facts.revisions)
+      if(unitId==='U07-09')expect(saved.tasks.some(t=>t.title.includes('寄送'))).toBe(false)
+      if(unitId==='V04-03')expect(saved.timePoints).toHaveLength(0)
+      const reopened=await SemanticRepository.open(store.name,store,undefined,'real-input-01')
+      expect(await reopened.load()).toEqual(saved)
+      expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+      expect(await replayRecordedPaired04(reopened,r,identity)).toEqual(saved)
+      expect(await confirmSemantic(reopened,{draftId:d.id,taskTempIds:ids,revision:semanticRevision(saved)})).toEqual(saved)
+      await expect(inputRunContext(repo,{sourceId:initial.sourceId,sourceVersionId:initial.sourceVersionId,
+        recognitionRunId:initial.runId,draftId:initial.draftId,duplicate:false})).rejects.toThrow('RECORDED_NEVER_DISPATCHABLE')
+      const other=record(unitId.slice(0,4)+(unitId.endsWith('-09')?'03':'09'))
+      await expect(replayRecordedPaired04(repo,other,{unitId:other.unitId,requestSha:other.requestSha,responseSha:other.responseSha})).rejects.toThrow('PAIRED_SOURCE_ARM_ALREADY_CHOSEN')
+      expect(await repo.load()).toEqual(saved)
+      expect(fetch).not.toHaveBeenCalled()
+    }finally{fetch.mockRestore()}
+  })
+  it('explains an unknown condition and a cancelled old requirement without weakening either blocker',async()=>{
+    for(const [unitId,taskId,reason] of [
+      ['U06-03','task-pickup-projector','执行条件是否成立尚未确认'],
+      ['U07-03','task-old-mail-proof','旧要求已作废或被替代'],
+    ]){
+      const {repo}=await fixture(),r=record(unitId),identity={unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+      const loaded=await replayRecordedPaired04(repo,r,identity),draft=loaded.extractionDrafts[0]
+      for(const material of effectiveStateFacts(stateOfRuntime(loaded,draft.id)).facts.materials)await reviewSemanticMaterial(repo,{
+        draftId:draft.id,materialId:material.tempId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),
+        value:{required:material.required,status:'unverified'}})
+      const current=await repo.load(),view=semanticReview(current,draft.id)
+      const item=view.draft.items.find(row=>row.suggestion.id===taskId)!
+      expect(view.states[item.id].blockedReason).toContain(reason)
+      expect(item.selected).toBe(false)
+      await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[taskId],revision:semanticRevision(current)})).rejects.toThrow()
+      expect(await repo.load()).toEqual(current)
+    }
+  })
+  it.each([
+    ['U11-09',['task-fill-registration','task-submit-samples']],
+    ['V02-09',['task-1','task-2']],
+    ['U01-09',['task-submit-authorization','task-upload-trailer']],
+    ['U10-09',['task-light-inventory','task-audio-inventory']],
+    ['V04-09',['task-1']],
+  ] as Array<[string,string[]]>)('%s zero-call replay keeps each task private time while retaining shared materials',async(unitId,taskIds)=>{
+    const {repo}=await fixture(),r=record(unitId),identity={unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const fetch=vi.spyOn(globalThis,'fetch').mockRejectedValue(Error('MODEL_MUST_NOT_DISPATCH'))
+    try{
+      const saved=await replayRecordedPaired04(repo,r,identity),draft=saved.extractionDrafts[0],state=stateOfRuntime(saved,draft.id)
+      expect(state.first.items.every(item=>!item.issues.includes('MULTIPLE_DEADLINES'))).toBe(true)
+      const facts=effectiveStateFacts(state).facts
+      expect(facts.tasks.map(task=>task.id)).toEqual(taskIds)
+      for(const task of facts.tasks){
+        const direct=new Set([...task.detail.timePointTempIds,...facts.timePoints.filter(time=>time.relatedTaskTempIds.includes(task.id)).map(time=>time.tempId)])
+        expect(facts.timePoints.filter(time=>direct.has(time.tempId)).map(time=>time.tempId).sort()).toEqual([...direct].sort())
+      }
+      if(['U11-09','V02-09'].includes(unitId)){
+        expect(facts.materials.some(material=>material.relatedTaskTempIds.length===2)).toBe(true)
+        expect(facts.timePoints).toHaveLength(2)
+        expect(facts.timePoints.every(time=>time.relatedTaskTempIds.length===1)).toBe(true)
+      }
+      expect(fetch).not.toHaveBeenCalled()
+    }finally{fetch.mockRestore()}
+  })
+  it('rejects wrong version, source, request and response before writes; rejected raw does not leave half records',async()=>{
+    const {repo}=await fixture(),before=await repo.load()
+    for(const change of [(r:RecordedPaired04)=>{r.version='recorded-paired07-1'},(r:RecordedPaired04)=>{r.operationId+='x'},
+      (r:RecordedPaired04)=>{r.context.timezone='UTC'},(r:RecordedPaired04)=>{r.requestSha='0'.repeat(64)},
+      (r:RecordedPaired04)=>{r.rawHttpText+=' '}]){
+      const r=record('U01-09'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+      change(r);await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow();expect(await repo.load()).toEqual(before)
+    }
+    for(const unitId of ['U06-09','U12-09']){
+      const r=record(unitId)
+      await expect(replayRecordedPaired04(repo,r,{unitId,requestSha:r.requestSha,responseSha:r.responseSha})).rejects.toThrow()
+      expect(await repo.load()).toEqual(before)
+    }
+  })
+  it('transaction failure preserves older sources and successful append cannot overwrite them',async()=>{
+    const {repo,store}=await fixture()
+    const first=record('V04-03'),old=await replayRecordedPaired04(repo,first,{unitId:first.unitId,requestSha:first.requestSha,responseSha:first.responseSha})
+    const r=record('U01-09'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    vi.spyOn(store,'transaction').mockRejectedValueOnce(Error('PAIRED09_ATOMIC_FAILURE'))
+    await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow('PAIRED09_ATOMIC_FAILURE')
+    expect(await repo.load()).toEqual(old)
+    const saved=await replayRecordedPaired04(repo,r,identity)
+    for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','tasks','materials','historyRecords'] as const)
+      for(const entity of old[key])expect(saved[key].find(e=>e.id===entity.id)).toEqual(entity)
+  })
+})
+
+describe('paired07 actual recorded response boundary; memory only, not browser acceptance',()=>{
+  function record(unitId:string):RecordedPaired04{
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate07-20260913a/'
+    const b=JSON.parse(readFileSync(p+'BINDING_FINAL.json','utf8'))
+    const item=b.items.find((i:{id:string})=>i.id===unitId.slice(0,3)),raw=JSON.parse(readFileSync(p+unitId+'_RAW.jsonl','utf8'))
+    return {version:'recorded-paired07-1',unitId,name:recordedA02Identity.name,operationId:item.operationId,
+      title:item.title,context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  }
+  it('explicit unverified review persists independently; dependency and broken sibling remain blocked (simulation)',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record('R11-07'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const id=await openHttpsPreviewExample(repo,identity,async()=>r,async()=>{})
+    const initial=await repo.load(),first=stateOfRuntime(initial,id),facts=effectiveStateFacts(first).facts
+    const taskId='task-fill-registration-form'
+    expect(validateMaterialDecision({required:true,status:'unverified'})).toEqual({required:true,status:'unverified'})
+    expect(()=>validateMaterialDecision({required:null,status:'unverified'})).toThrow()
+    await expect(confirmSemantic(repo,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(initial)})).rejects.toThrow()
+    for(const m of facts.materials)await reviewSemanticMaterial(repo,{draftId:id,materialId:m.tempId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:m.required,status:'unverified'}})
+    const reviewed=await repo.load()
+    expect(reviewed.tasks).toHaveLength(0)
+    for(const bad of ['version','identity','required'] as const){
+      await expect(repo.transaction(w=>{
+        const row=stateOfRuntime(w,id).operations.find(o=>o.kind==='review_material')!.materialReview!
+        if(bad==='version')delete row.version
+        else if(bad==='identity')row.identity='not-this-material'
+        else row.value.required=!row.value.required
+        return w
+      })).rejects.toThrow()
+      expect(await repo.load()).toEqual(reviewed)
+    }
+    const blocked=facts.tasks.find(t=>t.detail.dependencyTempIds.includes(taskId))!
+    expect(blocked).toBeDefined()
+    // Reviewing a fact is allowed; confirming the dependent task is not.
+    await reviewSemanticFact(repo,{draftId:id,taskId:blocked.id,revision:semanticRevision(reviewed),operationId:crypto.randomUUID()})
+    await expect(confirmSemantic(repo,{draftId:id,taskTempIds:[blocked.id],revision:semanticRevision(await repo.load())})).rejects.toThrow()
+    await reviewSemanticFact(repo,{draftId:id,taskId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const beforeCommit=await repo.load()
+    vi.spyOn(store,'transaction').mockRejectedValueOnce(Error('UNVERIFIED_ATOMIC_FAILURE'))
+    await expect(confirmSemantic(repo,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(beforeCommit)})).rejects.toThrow('UNVERIFIED_ATOMIC_FAILURE')
+    expect(await repo.load()).toEqual(beforeCommit)
+    const saved=await confirmSemantic(repo,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(1)
+    expect(saved.materials.length).toBeGreaterThan(0)
+    expect(saved.materials.every(m=>m.status==='unverified'&&m.legacyData?.materialReviewVersion==='material-review-2')).toBe(true)
+    expect(stateOfRuntime(saved,id).rawResponse).toEqual(first.rawResponse)
+    expect(stateOfRuntime(saved,id).first).toEqual(first.first)
+    expect(stateOfRuntime(saved,id).rawOutputText).toEqual(first.rawOutputText)
+    const reopened=await SemanticRepository.open(store.name,store,undefined,'real-input-01')
+    const readback=await reopened.load()
+    expect(readback).toEqual(saved)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    expect(buildBrowserReminderJobs(semanticView(saved).tasks)).toEqual([])
+    expect(await confirmSemantic(reopened,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(readback)})).toEqual(saved)
+    expect(await openHttpsPreviewExample(reopened,identity,async()=>r,async()=>{})).toBe(id)
+    const ui=semanticView(saved),detail=renderToStaticMarkup(<TaskDetailPanel task={ui.tasks[0]} sources={ui.sources}
+      readOnly onClose={()=>{}} onUpdate={()=>{}} onComplete={()=>{}} notificationPermission="unsupported"
+      onRequestNotificationPermission={async()=> 'unsupported'} />)
+    expect(detail).toContain('准备情况尚未核实')
+    const broken=record('R12-07')
+    const brokenId=await openHttpsPreviewExample(reopened,{unitId:broken.unitId,requestSha:broken.requestSha,responseSha:broken.responseSha},async()=>broken,async()=>{})
+    await expect(confirmSemantic(reopened,{draftId:brokenId,taskTempIds:['directive-make-label'],revision:semanticRevision(await reopened.load())})).rejects.toThrow()
+    expect((await reopened.load()).tasks).toEqual(saved.tasks)
+    expect((await reopened.load()).materials).toEqual(saved.materials)
+    // Neither a bare status nor a copied marker opens the ordinary workspace path.
+    const ordinary=structuredClone(saved);ordinary.workspace.id='ordinary-workspace'
+    expect(validateWorkspaceShape(ordinary).some(i=>i.path==='materials[0].status')).toBe(true)
+    const tampered=structuredClone(saved)
+    delete tampered.materials[0].legacyData!.materialReviewVersion
+    expect(validateWorkspaceShape(tampered).some(i=>i.path==='materials[0].status')).toBe(true)
+    const noConsent=structuredClone(saved)
+    const s=stateOfRuntime(noConsent,id)
+    s.operations=s.operations.filter(o=>o.kind!=='review_material')
+    expect(validateWorkspaceShape(noConsent).some(i=>i.path==='materials[0].status')).toBe(true)
+    await expect(new CanonicalWorkspaceRepository(store).save(noConsent)).rejects.toThrow()
+    expect((await reopened.load()).tasks).toEqual(saved.tasks)
+  })
+  it.each(['R11-07','R12-07'])('%s retains raw, failures and prior records, never dispatches or auto-confirms',async unitId=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record(unitId),identity={unitId,requestSha:r.requestSha,responseSha:r.responseSha},ready=vi.fn(async()=>{})
+    const before=await repo.load()
+    await expect(openHttpsPreviewExample(repo,identity,async()=>({...r,rawHttpText:r.rawHttpText+' '}),ready)).rejects.toThrow()
+    expect(await repo.load()).toEqual(before);expect(ready).not.toHaveBeenCalled()
+    const id=await openHttpsPreviewExample(repo,identity,async()=>r,ready)
+    if(unitId==='R12-07'){
+      const failed=await repo.load()
+      expect(failed.recognitionRuns[0].status).toBe('failed');expect(failed.extractionDrafts[0].status).toBe('failed')
+      expect(await openHttpsPreviewExample(repo,identity,async()=>r,ready)).toBe(id)
+      expect(await repo.load()).toEqual(failed)
+      await expect(confirmSemantic(repo,{draftId:id,taskTempIds:['task-save-final-labels'],revision:semanticRevision(failed)})).rejects.toThrow()
+      await openFailedForCorrection(repo,id,semanticRevision(failed)) // Explicit simulated user click, not automatic replay.
+      expect((await repo.load()).recognitionRuns[0].status).toBe('failed')
+    }
+    const loaded=await repo.load(),first=stateOfRuntime(loaded,id)
+    if(first.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+    expect(first.rawHttpText).toBe(r.rawHttpText);expect(loaded.tasks).toHaveLength(0)
+    expect(loaded.recognitionRuns[0].promptVersion).toBe(CANDIDATE07_VERSION)
+    expect(await openHttpsPreviewExample(repo,identity,async()=>r,ready)).toBe(id)
+    expect(await repo.load()).toEqual(loaded)
+    const wrong=record(unitId.slice(0,3)+'-03')
+    await expect(openHttpsPreviewExample(repo,{unitId:wrong.unitId,requestSha:wrong.requestSha,responseSha:wrong.responseSha},async()=>wrong,ready)).rejects.toThrow()
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(loaded)))
+    const taskId=unitId==='R11-07'?'task-fill-registration-form':'task-save-final-labels'
+    await expect(confirmSemantic(repo,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(loaded)})).rejects.toThrow()
+    expect((await repo.load()).tasks).toHaveLength(0)
+    if(unitId==='R12-07'){
+      expect(effectiveStateFacts(first).facts.tasks.some(t=>t.id==='directive-send-source-files')).toBe(false)
+      expect(first.rawHttpText).toBe(r.rawHttpText) // Broken revision remains evidence, not repaired at replay.
+    }else{
+      // Explicit simulated user observation, not inferred preparation or real-browser evidence.
+      await reviewSemanticMaterial(repo,{draftId:id,materialId:'material-registration-form',revision:semanticRevision(await repo.load()),
+        operationId:crypto.randomUUID(),value:{required:true,status:'preparing'}})
+      await reviewSemanticFact(repo,{draftId:id,taskId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+      const saved=await confirmSemantic(repo,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(await repo.load())})
+      expect(saved.tasks).toHaveLength(1)
+      expect(stateOfRuntime(saved,id).first).toEqual(first.first);expect(stateOfRuntime(saved,id).rawResponse).toEqual(first.rawResponse)
+      expect(saved.timePoints.some(t=>t.normalizedValue==='2026-09-17T14:00')).toBe(true)
+      expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+      expect(await confirmSemantic(repo,{draftId:id,taskTempIds:[taskId],revision:semanticRevision(saved)})).toEqual(saved)
+      expect(await replayRecordedPaired04(repo,r,identity,true)).toEqual(saved)
+    }
+  })
+  it('only the selected R and paired09 responses are public; write/model endpoints remain closed',()=>{
+    const r=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';import worker from './cloudflare/real-input-preview.mjs';
+      const env={ASSETS:{fetch:async()=>new Response('asset')}};
+      for(const path of ['/recorded/R11-07.json','/recorded/R12-07.json','/recorded/U11-09.json','/recorded/V02-09.json','/recorded/L01-A.json','/recorded/L02-A.json','/recorded/L04-A.json'])assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,200);
+      for(const path of ['/recorded/R11-03.json','/recorded/R01-07.json','/recorded/U10-09.json','/api/recognize'])assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,404);
+      assert.equal((await worker.fetch(new Request('https://preview.invalid/api/recognize',{method:'POST'}),env)).status,405);
+    `],{encoding:'utf8'})
+    expect(r.status,r.stderr).toBe(0)
+  })
+  it('paired07 failed-response append is atomic and preserves every older record; invalid source identity cannot use the failure path',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const prior=record('R11-07'),priorIdentity={unitId:prior.unitId,requestSha:prior.requestSha,responseSha:prior.responseSha}
+    await replayRecordedPaired04(repo,prior,priorIdentity,true)
+    const before=await repo.load(),r=record('R12-07'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    vi.spyOn(store,'transaction').mockRejectedValueOnce(Error('R07_ATOMIC_FAILURE'))
+    await expect(replayRecordedPaired04(repo,r,identity,true)).rejects.toThrow('R07_ATOMIC_FAILURE')
+    expect(await repo.load()).toEqual(before)
+    for(const bad of [{...r,operationId:'paired07-source-R11'},{...r,context:{...r.context,timezone:'UTC'}},{...r,requestSha:'0'.repeat(64)}]){
+      await expect(replayRecordedPaired04(repo,bad,identity,true)).rejects.toThrow()
+      expect(await repo.load()).toEqual(before)
+    }
+    const saved=await replayRecordedPaired04(repo,r,identity,true)
+    for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','evidenceRefs','historyRecords','tasks'] as const)
+      for(const old of before[key])expect(saved[key].find(x=>x.id===old.id)).toEqual(old)
+    expect(saved.recognitionRuns.some(r=>['queued','running'].includes(r.status))).toBe(false)
+    expect(saved.tasks).toEqual(before.tasks)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+  })
+})
+
+describe('HTTPS preview',()=>{
+  it('local preview keeps exact origin and explicit creation, restores existing stores and permits only bound examples',()=>{
+    const probe=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import ts from 'typescript';import {runInNewContext} from 'node:vm';
+      const text=readFileSync('src/experiments/realInput01/browser.tsx','utf8'),tree=ts.createSourceFile('browser.tsx',text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+      const fn=n=>tree.statements.find(s=>ts.isFunctionDeclaration(s)&&s.name?.text===n).getText(tree);
+      const compile=code=>ts.transpileModule(code,{compilerOptions:{target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.React}}).outputText;
+      const allowed=runInNewContext(compile(fn('previewOriginAllowed')+';previewOriginAllowed'));
+      const local={origin:'http://127.0.0.1:6632',localOnly:true};
+      assert(allowed(local,local.origin,'http:'));
+      for(const origin of ['http://127.0.0.1:6631','http://localhost:6632','http://192.168.1.2:6632','https://127.0.0.1:6632'])assert(!allowed(local,origin,new URL(origin).protocol));
+      assert(!allowed({origin:local.origin},local.origin,'http:'));
+      const remote={origin:'https://student-affairs-real-input-preview.nightsdell.workers.dev'};
+      assert(allowed(remote,remote.origin,'https:'));assert(!allowed({...remote,localOnly:true},remote.origin,'https:'));
+      for(const exists of [false,true]){
+        const mounts=[],renders=[],name='isolated-preview';
+        const start=runInNewContext(compile(fn('start')+';start'),{preview:local,name,indexedDB:{databases:async()=>exists?[{name}]:[]},mount:async value=>mounts.push(value),showFailure:e=>{throw e},root:{render:v=>renders.push(v)},React:{createElement:(tag,props,...children)=>({tag,props,children})}});
+        await start();
+        if(exists){assert.deepEqual(mounts,[undefined]);assert.equal(renders.length,0)}else{
+          assert.equal(mounts.length,0,'no automatic creation');const button=renders[0].children.find(n=>n?.tag==='button');assert(button);
+          const target={disabled:false};button.props.onClick({currentTarget:target});await Promise.resolve();assert(target.disabled);assert.deepEqual(mounts,[true]);
+        }
+      }
+      const assignment=tree.statements.find(s=>ts.isExpressionStatement(s)&&ts.isBinaryExpression(s.expression)&&s.expression.left.getText(tree)==='window.fetch');
+      const window={},calls=[];
+      runInNewContext(compile(assignment.getText(tree)),{window,URL,Request,location:{origin:local.origin,href:local.origin+'/'},preview:local,nativeFetch:(...args)=>{calls.push(args);return Promise.resolve()},effects:{forbiddenNetwork:0}});
+      for(const unit of ['Q01-06','Q07-06','R11-07','R12-07','U11-09','V02-09','L01-A','L02-A','L04-A'])await window.fetch('/recorded/'+unit+'.json');
+      assert.equal(calls.length,9);
+      for(const path of ['/api/recognize','/recorded/R11-03.json','/recorded/R11-07.json?x=1','https://example.com/recorded/R11-07.json'])assert.throws(()=>window.fetch(path),/NETWORK_FORBIDDEN/);
+      assert.throws(()=>window.fetch('/recorded/R11-07.json',{method:'POST'}),/NETWORK_FORBIDDEN/);assert.equal(calls.length,9);
+    `],{encoding:'utf8'})
+    expect(probe.status,probe.stderr).toBe(0)
+  })
+  it('local preview server serves only public assets on loopback with model and foreign origins blocked',()=>{
+    const probe=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';import {request} from 'node:http';import {buildPreview,startLocalPreview} from './scripts/build-real-input-preview.mjs';
+      await assert.rejects(buildPreview('http://127.0.0.1:6632'),/ORIGIN/);
+      await assert.rejects(buildPreview('http://127.0.0.1:6631',{localOnly:true}),/ORIGIN/);
+      const {server,manifest}=await startLocalPreview({testOnlyEphemeralPort:true});
+      const testOrigin='http://127.0.0.1:'+server.address().port;
+      const get=(path,headers={},method='GET')=>new Promise((resolve,reject)=>{const req=request(testOrigin+path,{headers:{Host:'127.0.0.1:6632',...headers},method},r=>{const parts=[];r.on('data',b=>parts.push(b));r.on('end',()=>resolve({status:r.statusCode,text:Buffer.concat(parts).toString()}))});req.on('error',reject);req.end()});
+      try{
+        assert.equal(server.address().address,'127.0.0.1');assert.equal(manifest.configuration,null);assert.equal(manifest.modelCallsEnabled,false);
+      for(const path of ['/','/browser.js','/browser.css','/recorded/Q01-06.json','/recorded/Q07-06.json','/recorded/R11-07.json','/recorded/R12-07.json','/recorded/U11-09.json','/recorded/V02-09.json','/recorded/L01-A.json','/recorded/L02-A.json','/recorded/L04-A.json'])assert.equal((await get(path)).status,200,path);
+        assert.equal(JSON.parse((await get('/api/status')).text).modelCallsEnabled,false);
+        assert.equal((await get('/api/recognize',{},'POST')).status,405);
+        assert.equal((await get('/',{Host:'localhost:6632'})).status,403);
+        assert.equal((await get('/',{Origin:'https://example.com'})).status,403);
+        assert.equal((await get('/',{'Sec-Fetch-Site':'cross-site'})).status,403);
+        for(const path of ['/.env','/package.json','/?new=1','/recorded/R11-03.json','/recorded/U10-09.json','/%2e%2e/.env'])assert.equal((await get(path)).status,404,path);
+      }finally{await new Promise(resolve=>server.close(resolve))}
+    `],{encoding:'utf8',timeout:30000})
+    expect(probe.status,probe.stderr).toBe(0)
+  },35000)
+  function record(unitId:string):RecordedPaired04{
+    const latestNone=unitId.startsWith('L'),paired07=unitId.startsWith('R'),paired09=unitId.startsWith('U')||unitId.startsWith('V')
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/'+(latestNone?'reasoning-low16-compare-20260914a/':paired09?'candidate09-20260913a/':paired07?'candidate07-20260913a/':'candidate06-20260912a/')
+    const binding=JSON.parse(readFileSync(p+(latestNone||paired09||paired07?'BINDING_FINAL.json':'BINDING.json'),'utf8'))
+    const item=binding.items.find((i:{id:string})=>i.id===unitId.slice(0,3))
+    const raw=JSON.parse(readFileSync(p+unitId+'_RAW.jsonl','utf8'))
+    return {version:latestNone?'recorded-reasoning-none-1':paired09?'recorded-paired09-1':paired07?'recorded-paired07-1':'recorded-paired06-1',unitId,name:recordedA02Identity.name,operationId:item.operationId,
+      title:item.title,context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  }
+  it('real runtime picker opens all bound examples via the existing App callback without refreshing or dispatching',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE}),execute=vi.fn(async()=>{throw Error('NO_MODEL')})
+    const unitIds=['Q01-06','Q07-06','R11-07','R12-07','U11-09','V02-09','L01-A','L02-A','L04-A']
+    const directIds=['L01-A','L02-A','L04-A']
+    const records=unitIds.map(record),identities=records.map(({unitId,requestSha,responseSha})=>({unitId,requestSha,responseSha}))
+    const read=vi.fn(async(id:string)=>structuredClone(records.find(r=>r.unitId===id)!))
+    const runtime=await createRealInputRuntime({name:store.name,store,initial:emptyRealInputWorkspace(store.name),execution:'live',
+      recordedBatch:true,httpsPreview:true,resources:{workerPath:'',corePath:'',langPath:'',pdfWorkerPath:''},execute,previewExamples:{identities,read}})
+    const opened:string[]=[],onReady=vi.fn(async(id:string)=>{
+      const reloaded=await runtime.load()
+      expect(reloaded.extractionDrafts.some(d=>d.id===id)).toBe(true)
+      expect(reloaded.tasks).toHaveLength(0);opened.push(id)
+    })
+    const picker=runtime.realInput!.inputPanel({workspace:await runtime.load(),initialText:'',onSaved:async()=>{},onDraftReady:onReady}) as ReactElement<{open:(id:string)=>Promise<unknown>}>
+    const html=renderToStaticMarkup(picker)
+    expect(html).toContain('体验多任务通知');expect(html).toContain('核对送样与共享材料');expect(html).toContain('核对展签与前置关系');expect(html).toContain('deepseek-flash');expect(html).toContain('历史真实模型回答')
+    for(const id of directIds)await picker.props.open(id)
+    const saved=await runtime.load();expect(saved.extractionDrafts).toHaveLength(3);expect(new Set(opened).size).toBe(3)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    await picker.props.open('L01-A');expect(opened[3]).toBe(opened[0]);expect(await runtime.load()).toEqual(saved)
+    await Promise.all([picker.props.open('L01-A'),picker.props.open('L01-A')])
+    expect(opened).toHaveLength(5);expect(await runtime.load()).toEqual(saved)
+    await expect(picker.props.open('Q03-06')).rejects.toThrow('REAL_INPUT_HTTPS_EXAMPLE_IDENTITY')
+    expect(read).toHaveBeenCalledTimes(5);expect(execute).not.toHaveBeenCalled()
+  },15000)
+  it.each(['L01-A','L02-A','L04-A'])('%s binds the latest settled None answer, preserves raw identity, and never duplicates the same entry',async unitId=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record(unitId),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity,true),draft=loaded.extractionDrafts[0],run=loaded.recognitionRuns[0]
+    expect(run).toMatchObject({modelName:'deepseek-flash',promptVersion:CANDIDATE03_VERSION,status:'succeeded'})
+    const state=stateOfRuntime(loaded,draft.id);if(state.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+    expect(state.rawHttpText).toBe(r.rawHttpText)
+    expect(loaded.tasks).toHaveLength(0)
+    expect(await replayRecordedPaired04(repo,r,identity,true)).toEqual(loaded)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(loaded)))
+  })
+  it('L01-A saves both reviewed tasks with their own deadlines and unverified preparation',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record('L01-A'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity,true),draftId=loaded.extractionDrafts[0].id,initial=stateOfRuntime(loaded,draftId)
+    const facts=effectiveStateFacts(initial).facts,taskIds=facts.tasks.map(task=>task.id)
+    for(const material of facts.materials)await reviewSemanticMaterial(repo,{draftId,materialId:material.tempId,
+      revision:semanticRevision(await repo.load()),operationId:'latest-L01-material-'+material.tempId,
+      value:{required:material.required,status:'unverified'}})
+    for(const taskId of taskIds)await reviewSemanticFact(repo,{draftId,taskId,revision:semanticRevision(await repo.load()),operationId:'latest-L01-task-'+taskId})
+    const saved=await confirmSemantic(repo,{draftId,taskTempIds:taskIds,revision:semanticRevision(await repo.load())})
+    expect(saved.tasks.map(task=>task.title).sort()).toEqual(['上传预告片','提交放映授权书'].sort())
+    expect(saved.timePoints).toHaveLength(2);expect(saved.timePoints.every(time=>time.relatedTaskIds.length===1)).toBe(true)
+    expect(saved.materials.every(material=>material.status==='unverified')).toBe(true)
+    expect(stateOfRuntime(saved,draftId).rawResponse).toEqual(initial.rawResponse)
+    expect(await (await SemanticRepository.open(store.name,store,undefined,'real-input-01')).load()).toEqual(saved)
+  })
+  it('L02-A uses explicit W11 corrections, rejects the extra suggestion, and saves only the valid independent task',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record('L02-A'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity,true),draftId=loaded.extractionDrafts[0].id,initial=stateOfRuntime(loaded,draftId)
+    let facts=effectiveStateFacts(initial).facts
+    const submit=facts.tasks.find(task=>task.id==='task-submit-samples')!,extra=facts.tasks.find(task=>task.id==='task-prepare-sample-bags')!
+    const bags=facts.materials.find(material=>material.tempId==='material-sample-bags')!
+    expect(submit.condition.value).toBe('true');expect(bags.relatedTaskTempIds).toEqual(expect.arrayContaining([submit.id,extra.id]))
+    await submitRelationCorrection(repo,draftId,semanticRevision(loaded),{
+      kind:'condition',taskId:submit.id,value:{...submit.condition,value:'unknown',factScopeIds:[]},
+      scopeIds:[...new Set([...submit.condition.conditionScopeIds,...submit.propositionScopeIds])],
+      note:'完整原文只说明填写登记单后再送样，没有说明登记单已经填写完成，因此条件保持尚不确定。'
+    },'latest-W11-condition')
+    let current=await repo.load();facts=effectiveStateFacts(stateOfRuntime(current,draftId)).facts
+    const currentBags=facts.materials.find(material=>material.tempId===bags.tempId)!
+    await correctSemanticFact(repo,{draftId,revision:semanticRevision(current),operationId:'latest-W11-material-owner',change:{
+      kind:'material',materialId:bags.tempId,value:{...materialEdit(currentBags),relatedTaskTempIds:[submit.id]}}})
+    await disposeSemantic(repo,{draftId,taskTempIds:[extra.id],kind:'reject',revision:semanticRevision(await repo.load()),operationId:'latest-W11-reject-extra'})
+    current=await repo.load();facts=effectiveStateFacts(stateOfRuntime(current,draftId)).facts
+    const independent='task-fill-registration-form'
+    for(const material of facts.materials.filter(row=>row.relatedTaskTempIds.includes(independent)))await reviewSemanticMaterial(repo,{
+      draftId,materialId:material.tempId,revision:semanticRevision(await repo.load()),operationId:'latest-W11-review-'+material.tempId,
+      value:{required:material.required,status:'unverified'}})
+    await reviewSemanticFact(repo,{draftId,taskId:independent,revision:semanticRevision(await repo.load()),operationId:'latest-W11-review-task'})
+    const saved=await confirmSemantic(repo,{draftId,taskTempIds:[independent],revision:semanticRevision(await repo.load())})
+    const finalState=stateOfRuntime(saved,draftId),finalFacts=effectiveStateFacts(finalState).facts
+    expect(saved.tasks.map(task=>task.title)).toEqual(['填写送样登记单'])
+    expect(life(finalState).dispositions[extra.id]).toBe('rejected')
+    expect(finalFacts.tasks.find(task=>task.id===submit.id)?.condition.value).toBe('unknown')
+    expect(finalFacts.materials.find(material=>material.tempId===bags.tempId)?.relatedTaskTempIds).toEqual([submit.id])
+    expect(finalState.rawResponse).toEqual(initial.rawResponse);expect(finalState.first).toEqual(initial.first)
+    expect(await (await SemanticRepository.open(store.name,store,undefined,'real-input-01')).load()).toEqual(saved)
+  })
+  it('L04-A relation-editor save removes only the ungrounded dependency and persists the valid new task',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record('L04-A'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity,true),draftId=loaded.extractionDrafts[0].id,initial=stateOfRuntime(loaded,draftId)
+    const taskId='task-save-final-labels',task=effectiveStateFacts(initial).facts.tasks.find(row=>row.id===taskId)!
+    expect(task.detail.dependencyTempIds).toEqual(['task-make-labels'])
+    await submitRelationCorrection(repo,draftId,semanticRevision(loaded),{
+      kind:'dependency',taskId,value:[],scopeIds:[...task.propositionScopeIds],
+      note:'完整原文将制作展签与保存最终版展签并列要求，没有说明保存动作必须等待制作任务完成。'
+    },'latest-W12-remove-dependency')
+    const current=await repo.load(),facts=effectiveStateFacts(stateOfRuntime(current,draftId)).facts
+    expect(facts.tasks.find(row=>row.id===taskId)?.detail.dependencyTempIds).toEqual([])
+    const taskIds=['task-make-labels',taskId]
+    for(const material of facts.materials.filter(row=>row.relatedTaskTempIds.some(id=>taskIds.includes(id))))await reviewSemanticMaterial(repo,{
+      draftId,materialId:material.tempId,revision:semanticRevision(await repo.load()),operationId:'latest-W12-review-'+material.tempId,
+      value:{required:material.required,status:'unverified'}})
+    for(const id of taskIds)await reviewSemanticFact(repo,{draftId,taskId:id,revision:semanticRevision(await repo.load()),operationId:'latest-W12-review-'+id})
+    const saved=await confirmSemantic(repo,{draftId,taskTempIds:taskIds,revision:semanticRevision(await repo.load())}),finalState=stateOfRuntime(saved,draftId)
+    expect(saved.tasks.map(row=>row.title).sort()).toEqual(['制作展签','保存最终版展签'].sort())
+    expect(saved.tasks.every(row=>row.dependencyIds.length===0)).toBe(true)
+    expect(saved.tasks.some(row=>row.title.includes('源文件'))).toBe(false)
+    expect(finalState.rawResponse).toEqual(initial.rawResponse);expect(finalState.first).toEqual(initial.first)
+    expect(await (await SemanticRepository.open(store.name,store,undefined,'real-input-01')).load()).toEqual(saved)
+  })
+  it('explicit unverified preparation preserves a valid replacement and cancels no independent task (simulation)',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record('Q07-06'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const draftId=await openHttpsPreviewExample(repo,identity,async()=>r,async()=>{})
+    const first=stateOfRuntime(await repo.load(),draftId)
+    for(const m of effectiveStateFacts(first).facts.materials)await reviewSemanticMaterial(repo,{draftId,materialId:m.tempId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:m.required,status:'unverified'}})
+    const taskId='task-upload-proof-pdf'
+    await reviewSemanticFact(repo,{draftId,taskId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const saved=await confirmSemantic(repo,{draftId,taskTempIds:[taskId],revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(1)
+    expect(saved.tasks[0].title).toContain('PDF')
+    expect(saved.materials.every(m=>m.status==='unverified')).toBe(true)
+    expect(stateOfRuntime(saved,draftId).rawResponse).toEqual(first.rawResponse)
+    expect(stateOfRuntime(saved,draftId).first).toEqual(first.first)
+    expect(effectiveStateFacts(stateOfRuntime(saved,draftId)).facts.revisions).toEqual(effectiveStateFacts(first).facts.revisions)
+    expect(await (await SemanticRepository.open(store.name,store,undefined,'real-input-01')).load()).toEqual(saved)
+    const original=JSON.parse(JSON.stringify(saved))
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(original)
+    expect(await confirmSemantic(repo,{draftId,taskTempIds:[taskId],revision:semanticRevision(saved)})).toEqual(saved)
+  })
+  it.each([
+    ['U11-09','task-fill-registration','2026-09-17T14:00'],
+    ['V02-09','task-1','2026-10-10T12:00'],
+  ] as const)('%s preview can save its valid independent task without importing the sibling deadline',async(unitId,taskId,deadline)=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record(unitId),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity,true),draft=loaded.extractionDrafts[0],initial=stateOfRuntime(loaded,draft.id)
+    expect(initial.first.items.every(item=>!item.issues.includes('MULTIPLE_DEADLINES'))).toBe(true)
+    for(const material of effectiveStateFacts(initial).facts.materials)await reviewSemanticMaterial(repo,{draftId:draft.id,materialId:material.tempId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:material.required,status:'unverified'}})
+    await reviewSemanticFact(repo,{draftId:draft.id,taskId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const saved=await confirmSemantic(repo,{draftId:draft.id,taskTempIds:[taskId],revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(1);expect(saved.timePoints).toHaveLength(1)
+    expect(saved.timePoints[0].normalizedValue).toBe(deadline)
+    expect(saved.timePoints[0].relatedTaskIds).toEqual([saved.tasks[0].id])
+    expect(saved.materials.every(material=>material.status==='unverified')).toBe(true)
+    expect(stateOfRuntime(saved,draft.id).rawResponse).toEqual(initial.rawResponse)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    expect(await replayRecordedPaired04(repo,r,identity,true)).toEqual(saved)
+    expect(await confirmSemantic(repo,{draftId:draft.id,taskTempIds:[taskId],revision:semanticRevision(saved)})).toEqual(saved)
+  })
+  it('download controls prepare explicit user-clickable links instead of losing user activation after async reads',()=>{
+    const app=readFileSync('src/App.tsx','utf8'),browser=readFileSync('src/experiments/realInput01/browser.tsx','utf8')
+    expect(app).toContain('准备完整测试库 JSON');expect(app).toContain('download={experimentExport.filename}')
+    expect(app).toContain('下载已准备的完整测试库 JSON')
+    expect(browser).toContain('href={downloadUrl} download="real-input-local-evidence.json"')
+    expect(browser).not.toContain('link.click()')
+  })
+  it('read/identity failures never open a panel or write; UI-open failure retains a recoverable single draft',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record('Q01-06'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha},before=await repo.load(),ready=vi.fn(async()=>{})
+    await expect(openHttpsPreviewExample(repo,identity,async()=>{throw Error('NETWORK')},ready)).rejects.toThrow('NETWORK')
+    await expect(openHttpsPreviewExample(repo,identity,async()=>({...r,rawHttpText:r.rawHttpText+' '}),ready)).rejects.toThrow()
+    expect(ready).not.toHaveBeenCalled();expect(await repo.load()).toEqual(before)
+    await expect(openHttpsPreviewExample(repo,identity,async()=>r,async()=>{throw Error('PANEL_OPEN_FAILED')})).rejects.toThrow('PANEL_OPEN_FAILED')
+    const saved=await repo.load();expect(saved.tasks).toHaveLength(0);expect(saved.extractionDrafts).toHaveLength(1)
+    const id=await openHttpsPreviewExample(repo,identity,async()=>r,ready)
+    expect(id).toBe(saved.extractionDrafts[0].id);expect(await repo.load()).toEqual(saved)
+  })
+  it('existing App onDraftReady refreshes canonical view and selects the returned draft without page reload',()=>{
+    const probe=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import ts from 'typescript';import {runInNewContext} from 'node:vm';
+      const text=readFileSync('src/App.tsx','utf8'),tree=ts.createSourceFile('App.tsx',text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+      let attr;const visit=n=>{if(ts.isJsxSelfClosingElement(n)&&n.tagName.getText(tree)==='RealInputPanel')attr=n.attributes.properties.find(p=>ts.isJsxAttribute(p)&&p.name.getText(tree)==='onDraftReady');ts.forEachChild(n,visit)};visit(tree);
+      assert(attr?.initializer?.expression);const code=ts.transpileModule('('+attr.initializer.expression.getText(tree)+')',{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+      const calls=[];const callback=runInNewContext(code,{refreshExperiment:async()=>calls.push('read'),setIntakeOpen:v=>calls.push(['intake',v]),setSelectedDraftId:v=>calls.push(['draft',v]),setRealInputInitialText:v=>calls.push(['text',v])});
+      await callback('canonical-draft');assert.deepEqual(calls,['read',['intake',false],['draft','canonical-draft'],['text','']]);
+    `],{encoding:'utf8'})
+    expect(probe.status,probe.stderr).toBe(0)
+  })
+  it.each(['Q01-06','Q07-06'])('%s preserves original identities and explicitly confirms in the new store',async unitId=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    const r=record(unitId),identity={unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow()
+    expect((await repo.load()).sources).toHaveLength(0)
+    const loaded=await replayRecordedPaired04(repo,r,identity,true),draft=loaded.extractionDrafts[0],first=stateOfRuntime(loaded,draft.id)
+    if(first.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+    const ids=unitId==='Q01-06'?['task-submit-authorization','task-upload-trailer']:['task-upload-proof-pdf']
+    expect(first.rawHttpText).toBe(r.rawHttpText);expect(loaded.tasks).toHaveLength(0)
+    await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:ids,revision:semanticRevision(loaded)})).rejects.toThrow()
+    for(const m of effectiveStateFacts(first).facts.materials)await reviewSemanticMaterial(repo,{draftId:draft.id,materialId:m.tempId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:m.required,status:'missing'}})
+    for(const taskId of ids){
+      await reviewSemanticFact(repo,{draftId:draft.id,taskId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+      await confirmSemantic(repo,{draftId:draft.id,taskTempIds:[taskId],revision:semanticRevision(await repo.load())})
+    }
+    const saved=await repo.load()
+    expect(saved.tasks).toHaveLength(ids.length)
+    expect(stateOfRuntime(saved,draft.id).rawResponse).toEqual(first.rawResponse)
+    expect(stateOfRuntime(saved,draft.id).first).toEqual(first.first)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    expect(await replayRecordedPaired04(repo,r,identity,true)).toEqual(saved)
+    expect(await confirmSemantic(repo,{draftId:draft.id,taskTempIds:ids,revision:semanticRevision(saved)})).toEqual(saved)
+    const forbidden=record('Q03-06')
+    await expect(replayRecordedPaired04(repo,forbidden,{unitId:forbidden.unitId,requestSha:forbidden.requestSha,responseSha:forbidden.responseSha},true)).rejects.toThrow()
+    await expect(replayRecordedPaired04(repo,{...r,rawHttpText:r.rawHttpText+' '},identity,true)).rejects.toThrow()
+    expect(await repo.load()).toEqual(saved)
+  })
+  it('requires explicit preview profile and retains old recorded initial/name restrictions',async()=>{
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:HTTPS_PREVIEW_DATABASE}),execute=vi.fn(async()=>{throw Error('NO_DISPATCH')})
+    const options={name:store.name,store,initial:emptyRealInputWorkspace(store.name),execution:'live' as const,
+      recordedBatch:true as const,resources:{workerPath:'',corePath:'',langPath:'',pdfWorkerPath:''},execute}
+    await expect(createRealInputRuntime(options)).rejects.toThrow('REAL_INPUT_BATCH_RECORDED_RUNTIME')
+    await expect(createRealInputRuntime({...options,httpsPreview:true,recordedPaired06:true})).rejects.toThrow('REAL_INPUT_HTTPS_PREVIEW_PROFILE')
+    const runtime=await createRealInputRuntime({...options,httpsPreview:true})
+    expect(runtime).toBeDefined();expect(execute).not.toHaveBeenCalled()
+    await expect(createRealInputRuntime({...options,httpsPreview:true,name:recordedA02Identity.name})).rejects.toThrow()
+  })
+  it('Worker exposes only approved static responses and rejects all model/writing requests',()=>{
+    const result=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';import worker from './cloudflare/real-input-preview.mjs';
+      let calls=0;const env={ASSETS:{fetch:async r=>{calls++;return new Response(r.url)}}};
+      for(const path of ['/','/browser.js','/browser.css','/recorded/Q01-06.json','/recorded/Q07-06.json','/recorded/U11-09.json','/recorded/V02-09.json','/recorded/L01-A.json','/recorded/L02-A.json','/recorded/L04-A.json']){
+        const r=await worker.fetch(new Request('https://preview.invalid'+path),env);assert.equal(r.status,200);
+        assert.match(r.headers.get('content-security-policy'),/connect-src 'self'/);
+      }
+      assert.equal(calls,10);
+      for(const path of ['/api/deepseek','/api/real-input/recognize','/.env','/recorded/Q03-06.json','/browser.js?x=1']){
+        assert.equal((await worker.fetch(new Request('https://preview.invalid'+path),env)).status,404);
+        assert.equal((await worker.fetch(new Request('https://preview.invalid'+path,{method:'POST'}),env)).status,405);
+      }
+      assert.equal(calls,10);const status=await (await worker.fetch(new Request('https://preview.invalid/api/status'),env)).json();assert.equal(status.modelCallsEnabled,false);assert.deepEqual(status.records,['Q01-06','Q07-06','R11-07','R12-07','U11-09','V02-09','L01-A','L02-A','L04-A']);
+    `],{encoding:'utf8'})
+    expect(result.status,result.stderr).toBe(0)
+  })
+})
+
+describe('paired06 existing wire recorded boundary',()=>{
+  it.each([
+    ['Q01-06', ['task-submit-authorization', 'task-upload-trailer'], 2],
+    ['Q07-06', ['task-upload-proof-pdf'], 1],
+    ['Q03-06', ['task-save-photos'], 1],
+  ] as const)('%s actual settled answer confirms reviewed tasks and independently reloads in memory',async(unitId,taskIds,count)=>{
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/'
+    const binding=JSON.parse(readFileSync(p+'BINDING.json','utf8'))
+    const item=binding.items.find((i:{id:string})=>i.id===unitId.slice(0,3))
+    const raw=JSON.parse(readFileSync(p+unitId+'_RAW.jsonl','utf8'))
+    const r:RecordedPaired04={version:'recorded-paired06-1',unitId,name:recordedA02Identity.name,
+      operationId:item.operationId,title:item.title,context:item.context,requestSha:raw.requestSha,
+      responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+    const identity={unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const {repo,store}=await fixture()
+    const loaded=await replayRecordedPaired04(repo,r,identity),d=loaded.extractionDrafts[0],initial=stateOfRuntime(loaded,d.id)
+    if(initial.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+    expect(initial.rawHttpText).toBe(raw.rawHttpText)
+    expect(initial.execution).toBe('live')
+    expect(loaded.recognitionRuns[0].promptVersion).toBe(CANDIDATE06_VERSION)
+    expect(loaded.tasks).toHaveLength(0)
+    await expect(confirmSemantic(repo,{draftId:d.id,taskTempIds:[...taskIds],revision:semanticRevision(loaded)})).rejects.toThrow()
+    const facts=effectiveStateFacts(initial).facts
+    for(const m of facts.materials)await reviewSemanticMaterial(repo,{draftId:d.id,materialId:m.tempId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:m.required,status:'missing'}})
+    for(const taskId of taskIds)await reviewSemanticFact(repo,{draftId:d.id,taskId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    // Explicit test-user material preparation choices are edits, not model truth.
+    const saved=await confirmSemantic(repo,{draftId:d.id,taskTempIds:[...taskIds],revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(count)
+    expect(stateOfRuntime(saved,d.id).rawResponse).toEqual(initial.rawResponse)
+    expect(stateOfRuntime(saved,d.id).first).toEqual(initial.first)
+    expect(effectiveStateFacts(stateOfRuntime(saved,d.id)).facts.revisions).toEqual(facts.revisions)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    expect(await replayRecordedPaired04(repo,r,identity)).toEqual(saved)
+    expect(await confirmSemantic(repo,{draftId:d.id,taskTempIds:[...taskIds],revision:semanticRevision(saved)})).toEqual(saved)
+    if(unitId==='Q07-06'){
+      expect(saved.tasks.some(t=>t.title.includes('寄送'))).toBe(false)
+      expect(facts.revisions).toHaveLength(1)
+    }
+    if(unitId==='Q03-06'){
+      expect(saved.timePoints).toHaveLength(0)
+      expect(saved.reminderRecords).toHaveLength(0)
+      expect(buildBrowserReminderJobs(semanticView(saved).tasks,new Date(NOW))).toHaveLength(0)
+    }
+  })
+  async function fixture(){
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:recordedA02Identity.name})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    return {store,repo}
+  }
+  // Memory-only engineering transformation of an already-seen response. It is
+  // neither a candidate06 prediction nor a new provider receipt or score.
+  async function engineeringRecord(arm:'03'|'06'='06'):Promise<RecordedPaired04>{
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/'
+    const b=JSON.parse(readFileSync(p+'BINDING.json','utf8')),old=b.items.find((i:{id:string})=>i.id==='P03')
+    const prior=JSON.parse(readFileSync(p+'P03-03_RAW.jsonl','utf8'))
+    const {repo}=await fixture(),receipt=await acquireText('paired06-Q03',old.context.index.sourceContent)
+    const source=await repo.saveReading(receipt,old.title,'paired06-source-Q03',old.context.referenceTime)
+    const context={index:await indexImmutableScopesV11(source.sourceId,source.sourceVersionId,old.context.index.sourceContent),
+      referenceTime:old.context.referenceTime,timezone:'Asia/Shanghai' as const}
+    const ids=new Map(old.context.index.scopes.map((scope:{id:string},i:number)=>[scope.id,context.index.scopes[i].id]))
+    const envelope=JSON.parse(prior.rawHttpText),wire=JSON.parse(envelope.output[0].content[0].text)
+    envelope.output[0].content[0].text=JSON.stringify(wire,(_key,value:unknown)=>typeof value==='string'&&ids.has(value)?ids.get(value):value)
+    const rawHttpText=JSON.stringify(envelope),request=await buildFlash41Candidate06ComparisonRequest(context,arm)
+    return {version:'recorded-paired06-1',unitId:'Q03-'+arm,name:recordedA02Identity.name,operationId:'paired06-source-Q03',title:old.title,
+      context,requestSha:await sha256Text(request.serialized),responseSha:await sha256Text(rawHttpText),rawHttpText}
+  }
+  it.each(['03','06'] as const)('%s same existing wire stays unselected until actual review, confirms and reloads without dispatch',async arm=>{
+    const {repo,store}=await fixture(),r=await engineeringRecord(arm),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity),d=loaded.extractionDrafts[0],s=stateOfRuntime(loaded,d.id)
+    expect(loaded.tasks).toHaveLength(0);expect(loaded.recognitionRuns[0].modelName).toBe('deepseek-flash')
+    expect(loaded.recognitionRuns[0].promptVersion).toBe(arm==='06'?CANDIDATE06_VERSION:CANDIDATE03_VERSION)
+    if(s.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+    expect(s.rawHttpText).toBe(r.rawHttpText);expect(s.execution).toBe('live')
+    const tasks=effectiveStateFacts(s).facts.tasks
+    expect(tasks).toHaveLength(1)
+    await expect(confirmSemantic(repo,{draftId:d.id,taskTempIds:tasks.map(t=>t.id),revision:semanticRevision(loaded)})).rejects.toThrow()
+    await reviewSemanticFact(repo,{draftId:d.id,taskId:tasks[0].id,revision:semanticRevision(loaded),operationId:crypto.randomUUID()})
+    const saved=await confirmSemantic(repo,{draftId:d.id,taskTempIds:tasks.map(t=>t.id),revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(1);expect(saved.timePoints).toHaveLength(0);expect(saved.reminderRecords).toHaveLength(0)
+    expect(stateOfRuntime(saved,d.id).rawResponse).toEqual(s.rawResponse);expect(stateOfRuntime(saved,d.id).first).toEqual(s.first)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    expect(await replayRecordedPaired04(repo,r,identity)).toEqual(saved)
+    expect(await confirmSemantic(repo,{draftId:d.id,taskTempIds:tasks.map(t=>t.id),revision:semanticRevision(saved)})).toEqual(saved)
+    await expect(inputRunContext(repo,{sourceId:s.sourceId,sourceVersionId:s.sourceVersionId,recognitionRunId:s.runId,draftId:s.draftId,duplicate:false})).rejects.toThrow('RECORDED_NEVER_DISPATCHABLE')
+    const other=await engineeringRecord(arm==='03'?'06':'03')
+    await expect(replayRecordedPaired04(repo,other,{unitId:other.unitId,requestSha:other.requestSha,responseSha:other.responseSha})).rejects.toThrow('PAIRED_SOURCE_ARM_ALREADY_CHOSEN')
+    expect(await repo.load()).toEqual(saved)
+  })
+  it('rejects mismatched version, unit, source and response before any persisted write',async()=>{
+    for(const mutate of [(r:RecordedPaired04)=>{r.version='recorded-paired05-1'},(r:RecordedPaired04)=>{r.unitId='Q03-05'},
+      (r:RecordedPaired04)=>{r.operationId='paired06-source-Q02'},(r:RecordedPaired04)=>{r.rawHttpText+=' '},
+      (r:RecordedPaired04)=>{r.context.index.sourceContent+=' 未授权差异'}]){
+      const {repo}=await fixture(),before=await repo.load(),r=await engineeringRecord(),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+      mutate(r);await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow();expect(await repo.load()).toEqual(before)
+    }
+  })
+  it('rolls back failed append; valid retry of local replay preserves all pre-existing entities',async()=>{
+    const {repo,store}=await fixture(),source=await acquireText('paired06-prior-source','已有工程来源，请保留。')
+    await repo.saveReading(source,'此前来源','paired06-prior-source','2026-09-12T01:00:00.000Z')
+    const before=await repo.load(),r=await engineeringRecord(),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    vi.spyOn(store,'transaction').mockRejectedValueOnce(Error('P06_ATOMIC_FAILURE'))
+    await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow('P06_ATOMIC_FAILURE');expect(await repo.load()).toEqual(before)
+    const saved=await replayRecordedPaired04(repo,r,identity)
+    expect(saved.sources).toHaveLength(before.sources.length+1)
+    for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','evidenceRefs','historyRecords','tasks'] as const)
+      for(const old of before[key])expect(saved[key].find(x=>x.id===old.id)).toEqual(old)
+  })
+})
+
+describe('paired05 new model recorded boundary',()=>{
+  function recorded(id:string):RecordedPaired04 {
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/',b=JSON.parse(readFileSync(p+'BINDING.json','utf8'))
+    const item=b.items.find((i:{id:string})=>i.id===id.slice(0,3)),raw=JSON.parse(readFileSync(p+id+'_RAW.jsonl','utf8'))
+    return {version:'recorded-paired05-1',unitId:id,name:recordedA02Identity.name,operationId:item.operationId,title:item.title,
+      context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  }
+  async function fixture(){
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:recordedA02Identity.name})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    return {store,repo}
+  }
+  it.each(['P01-03','P05-05','P03-03'])('%s true response, manual review, confirm and independent memory reload without a model',async id=>{
+    const {store,repo}=await fixture(),r=recorded(id),identity={unitId:id,requestSha:r.requestSha,responseSha:r.responseSha}
+    const loaded=await replayRecordedPaired04(repo,r,identity),d=loaded.extractionDrafts[0],state=stateOfRuntime(loaded,d.id)
+    expect(loaded.recognitionRuns[0].modelName).toBe('deepseek-flash');expect(loaded.tasks).toHaveLength(0)
+    expect(state.version).toBe(REAL_STATE_VERSION)
+    if(state.version!==REAL_STATE_VERSION)throw Error('REAL_EXPECTED')
+    expect(state.rawHttpText).toBe(r.rawHttpText);expect(state.execution).toBe('live')
+    const facts=effectiveStateFacts(state).facts
+    expect(facts.tasks.length).toBeGreaterThan(0)
+    await expect(confirmSemantic(repo,{draftId:d.id,taskTempIds:facts.tasks.map(t=>t.id),revision:semanticRevision(loaded)})).rejects.toThrow()
+    for(const m of facts.materials)await reviewSemanticMaterial(repo,{draftId:d.id,materialId:m.tempId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:m.required,status:'missing'}})
+    for(const t of facts.tasks)await reviewSemanticFact(repo,{draftId:d.id,taskId:t.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const saved=await confirmSemantic(repo,{draftId:d.id,taskTempIds:facts.tasks.map(t=>t.id),revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(facts.tasks.length)
+    expect(stateOfRuntime(saved,d.id).rawResponse).toEqual(state.rawResponse);expect(stateOfRuntime(saved,d.id).first).toEqual(state.first)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    expect(await confirmSemantic(repo,{draftId:d.id,taskTempIds:facts.tasks.map(t=>t.id),revision:semanticRevision(saved)})).toEqual(saved)
+    expect(await replayRecordedPaired04(repo,r,identity)).toEqual(saved)
+    await expect(inputRunContext(repo,{sourceId:state.sourceId,sourceVersionId:state.sourceVersionId,recognitionRunId:state.runId,draftId:d.id,duplicate:false})).rejects.toThrow('RECORDED_NEVER_DISPATCHABLE')
+    if(id==='P03-03'){expect(saved.timePoints).toHaveLength(0);expect(saved.reminderRecords).toHaveLength(0)}
+  })
+  it('invalid assembly, response identity and duplicate other arm refuse without changing prior records',async()=>{
+    const {repo}=await fixture(),initial=await repo.load(),bad=recorded('P01-05')
+    await expect(replayRecordedPaired04(repo,bad,{unitId:bad.unitId,requestSha:bad.requestSha,responseSha:bad.responseSha})).rejects.toThrow()
+    expect(await repo.load()).toEqual(initial)
+    const r=recorded('P01-03'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    await expect(replayRecordedPaired04(repo,{...r,responseSha:'0'.repeat(64)},identity)).rejects.toThrow()
+    const before=await replayRecordedPaired04(repo,r,identity)
+    await expect(replayRecordedPaired04(repo,bad,{unitId:bad.unitId,requestSha:bad.requestSha,responseSha:bad.responseSha})).rejects.toThrow('PAIRED_SOURCE_ARM_ALREADY_CHOSEN')
+    const next=recorded('P05-05'),after=await replayRecordedPaired04(repo,next,{unitId:next.unitId,requestSha:next.requestSha,responseSha:next.responseSha})
+    for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','evidenceRefs','historyRecords','tasks'] as const)
+      for(const old of before[key])expect(after[key].find(x=>x.id===old.id)).toEqual(old)
+  })
+  it('new wire transaction failure is atomic, then a valid positive response succeeds',async()=>{
+    const {store,repo}=await fixture(),before=await repo.load(),r=recorded('P05-05'),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    vi.spyOn(store,'transaction').mockRejectedValueOnce(Error('P05_ATOMIC_FAILURE'))
+    await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow('P05_ATOMIC_FAILURE');expect(await repo.load()).toEqual(before)
+    expect((await replayRecordedPaired04(repo,r,identity)).sources).toHaveLength(1)
+  })
+})
+
+describe('paired04 recorded source append',()=>{
+  function record(id='N01-04'):RecordedPaired04 {
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/'
+    const binding=JSON.parse(readFileSync(p+'BINDING.json','utf8'))
+    const item=binding.items.find((i:{id:string})=>i.id===id.slice(0,3)),raw=JSON.parse(readFileSync(p+id+'_RAW.jsonl','utf8'))
+    return {version:'recorded-paired04-1',unitId:id,name:recordedA02Identity.name,operationId:item.operationId,title:item.title,
+      context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  }
+  async function fixture(){
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:recordedA02Identity.name})
+    const repo=await SemanticRepository.open(store.name,store,emptyRealInputWorkspace(store.name),'real-input-01')
+    return {store,repo}
+  }
+  it('retains original source and response; no queued or dispatchable state, duplicate arm rejected',async()=>{
+    const {repo}=await fixture(),r=record(),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const saved=await replayRecordedPaired04(repo,r,identity),d=saved.extractionDrafts[0],s=stateOfRuntime(saved,d.id)
+    expect(saved.tasks).toHaveLength(0);expect(saved.sources).toHaveLength(1)
+    expect(saved.sourceVersions[0].rawText).toBe(r.context.index.sourceContent)
+    if(s.version!==REAL_STATE_VERSION)throw Error('Expected real input state')
+    expect(s.rawHttpText).toBe(r.rawHttpText);expect(s.execution).toBe('live')
+    expect(saved.recognitionRuns[0].status).toBe('succeeded');expect(effectiveStateFacts(s).facts.tasks).toHaveLength(2)
+    expect(await replayRecordedPaired04(repo,r,identity)).toEqual(saved)
+    const other=record('N01-03')
+    await expect(replayRecordedPaired04(repo,other,{unitId:other.unitId,requestSha:other.requestSha,responseSha:other.responseSha})).rejects.toThrow('PAIRED_SOURCE_ARM_ALREADY_CHOSEN')
+    await expect(inputRunContext(repo,{sourceId:s.sourceId,sourceVersionId:s.sourceVersionId,recognitionRunId:s.runId,draftId:s.draftId,duplicate:false})).rejects.toThrow('RECORDED_NEVER_DISPATCHABLE')
+    expect(await repo.load()).toEqual(saved)
+  })
+  it('identity, request, response and recomputed source mismatch reject without writing',async()=>{
+    for(const mutate of [(r:RecordedPaired04)=>{r.responseSha='0'.repeat(64)},(r:RecordedPaired04)=>{r.context.index.sourceContent+='x'},
+      (r:RecordedPaired04)=>{r.operationId='paired04-source-N02'},(r:RecordedPaired04)=>{r.name+='-other'}]){
+      const {repo}=await fixture(),before=await repo.load(),r=record(),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+      mutate(r);await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow();expect(await repo.load()).toEqual(before)
+    }
+  })
+  it('atomic failure leaves no source, run, draft or task; valid response then succeeds',async()=>{
+    const {repo,store}=await fixture(),before=await repo.load(),r=record(),identity={unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha}
+    const actual=store.transaction!.bind(store)
+    const fault=vi.spyOn(store,'transaction').mockImplementationOnce(async()=>{throw Error('PAIRED_ATOMIC_FAILURE')})
+    await expect(replayRecordedPaired04(repo,r,identity)).rejects.toThrow('PAIRED_ATOMIC_FAILURE')
+    expect(await repo.load()).toEqual(before);fault.mockImplementation(actual)
+    expect((await replayRecordedPaired04(repo,r,identity)).extractionDrafts).toHaveLength(1)
+  })
+  it('adds distinct complex sources without changing any old record, and never confirms by loading',async()=>{
+    const {repo}=await fixture()
+    for(const id of ['N01-04','N06-04','N03-03']){
+      const before=await repo.load(),r=record(id),saved=await replayRecordedPaired04(repo,r,{unitId:r.unitId,requestSha:r.requestSha,responseSha:r.responseSha})
+      for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','evidenceRefs','historyRecords'] as const)
+        for(const old of before[key])expect(saved[key].find(x=>x.id===old.id)).toEqual(old)
+      expect(saved.tasks).toHaveLength(0)
+      const d=saved.extractionDrafts.find(d=>(d.legacyData?.realInputRecorded as {unitId?:string})?.unitId===id)!,state=stateOfRuntime(saved,d.id)
+      await expect(confirmSemantic(repo,{draftId:d.id,taskTempIds:effectiveStateFacts(state).facts.tasks.map(t=>t.id),revision:semanticRevision(saved)})).rejects.toThrow()
+      expect((await repo.load()).tasks).toHaveLength(0)
+    }
+  })
+})
+
+describe('explicit pending date confirmation',()=>{
+  async function pendingFixture(){
+    const p='docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/'
+    const before=JSON.parse(readFileSync(p+'D01_BROWSER_AFTER.json','utf8')).workspace
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:before.workspace.id})
+    await new CanonicalWorkspaceRepository(store).save(before)
+    const repo=await SemanticRepository.open(store.name,store,undefined,'real-input-01')
+    const item=JSON.parse(readFileSync(p+'BINDING.json','utf8')).items.find((i:{unitId:string})=>i.unitId==='D03')
+    const raw=JSON.parse(readFileSync(p+'D03_DISPATCH_RAW.jsonl','utf8'))
+    const record:RecordedCandidate03={version:'recorded-candidate03-1',unitId:'D03',name:store.name,handle:item.handle,context:item.context,
+      requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+    const loaded=await replayRecordedCandidate03(repo,record,{unitId:'D03',requestSha:raw.requestSha,responseSha:raw.responseSha})
+    const draft=loaded.extractionDrafts.find(d=>(d.legacyData?.realInputPending as {operationId?:string})?.operationId==='recorded-candidate03-D03')!
+    const state=stateOfRuntime(loaded,draft.id),facts=effectiveStateFacts(state).facts,task=facts.tasks[0]
+    const scope=state.context.index.scopes.find(s=>s.text.includes('近期'))!
+    const change={kind:'time',taskId:task.id,scopeIds:[scope.id],note:'人工核对补充遗漏的时间原文，日期仍待定。',value:{
+      ...facts.timePoints[0],tempId:'user-pending-time',rawText:'近期',scopeIds:[scope.id],relatedTaskTempIds:[task.id],relatedMaterialTempIds:[]}}
+    return {before,store,repo,draft,state,task,change:change as FactChange,loaded}
+  }
+  it('saves source-bound missing vague time without overwriting the real answer or existing nine tasks',async()=>{
+    const {before,store,repo,draft,state,task,change,loaded}=await pendingFixture()
+    expect(canAct(state,task.id)).toBe(false)
+    await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[task.id],revision:semanticRevision(loaded)})).rejects.toThrow()
+    await correctSemanticFact(repo,{draftId:draft.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),change})
+    const saved=await repo.load(),next=stateOfRuntime(saved,draft.id)
+    expect(effectiveStateFacts(next).facts.timePoints.map(t=>t.rawText)).toEqual(['具体截止时间另行通知','近期'])
+    expect(next.rawResponse).toEqual(state.rawResponse);expect(next.first).toEqual(state.first)
+    expect(saved.tasks).toEqual(before.tasks)
+    expect(canAct(next,task.id)).toBe(false)
+    expect(pendingDateEligible(next,task.id)).toBe(true)
+    await acceptSemanticPendingDate(repo,{draftId:draft.id,taskId:task.id,revision:semanticRevision(saved),operationId:crypto.randomUUID()})
+    expect((await repo.load()).tasks).toEqual(before.tasks)
+    await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[task.id],revision:semanticRevision(await repo.load())})).rejects.toThrow()
+    await reviewSemanticFact(repo,{draftId:draft.id,taskId:task.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const reviewed=await repo.load()
+    vi.spyOn(store,'transaction').mockImplementationOnce(async()=>{throw Error('PENDING_DATE_SAVE_FAILURE')})
+    await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[task.id],revision:semanticRevision(reviewed)})).rejects.toThrow('PENDING_DATE_SAVE_FAILURE')
+    expect(await repo.load()).toEqual(reviewed)
+    const confirmed=await confirmSemantic(repo,{draftId:draft.id,taskTempIds:[task.id],revision:semanticRevision(reviewed)})
+    expect(confirmed.tasks).toHaveLength(10)
+    expect(confirmed.tasks.slice(0,9)).toEqual(before.tasks)
+    const added=confirmed.tasks[9],times=confirmed.timePoints.filter(t=>t.relatedTaskIds.includes(added.id))
+    expect(times.map(t=>t.rawText)).toEqual(['具体截止时间另行通知','近期'])
+    expect(times.every(t=>t.normalizedValue===null&&t.needsConfirmation&&t.precision==='vague')).toBe(true)
+    expect(confirmed.historyRecords.filter(h=>h.action==='mainline05_accept_pending_date')).toHaveLength(1)
+    expect(confirmed.reminderRecords).toEqual(before.reminderRecords)
+    expect(hasPendingDateConsent(stateOfRuntime(confirmed,draft.id),task.id)).toBe(true)
+    expect(semanticDates(confirmed)[added.id]).toMatchObject({kind:'review',noDeadlineProven:false})
+    expect(semanticView(confirmed).tasks.find(t=>t.id===added.id)?.deadline).toBe('')
+    const calendarProps={tasks:semanticView(confirmed).tasks,courseBlocks:[],dateViews:semanticDates(confirmed),isolatedTimezone:'Asia/Shanghai',onOpenTask:()=>{},onAddCourseBlock:()=>{},onRemoveCourseBlock:()=>{}}
+    const calendar=renderToStaticMarkup(<CalendarPage {...calendarProps} pendingDateTaskIds={pendingDateTaskIds(confirmed)}/>)
+    expect(calendar.match(/aria-label="日期待定任务"[\s\S]*?<\/section>/)?.[0]).toContain(added.title)
+    expect(calendar.match(/aria-label="无截止日期任务"[\s\S]*?<\/section>/)?.[0]).not.toContain(added.title)
+    expect(renderToStaticMarkup(<CalendarPage {...calendarProps}/>)).not.toContain('aria-label="日期待定任务"')
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(confirmed)))
+    expect(await confirmSemantic(repo,{draftId:draft.id,taskTempIds:[task.id],revision:semanticRevision(confirmed)})).toEqual(confirmed)
+  },60000)
+  it('source, ownership, stale edits and atomic consent boundaries reject without changing the workspace',async()=>{
+    const {repo,store,draft,state,task,change,loaded}=await pendingFixture()
+    if(change.kind!=='time'||state.version!==REAL_STATE_VERSION)throw Error('TEST_SHAPE')
+    for(const bad of [{...change,value:{...change.value,rawText:'原文没有这段'}},
+      {...change,value:{...change.value,relatedTaskTempIds:['other-task']}},
+      {...change,scopeIds:['bad-scope'],value:{...change.value,scopeIds:['bad-scope']}}]){
+      await expect(correctSemanticFact(repo,{draftId:draft.id,revision:semanticRevision(loaded),operationId:crypto.randomUUID(),change:bad})).rejects.toThrow()
+      expect(await repo.load()).toEqual(loaded)
+    }
+    await expect(acceptSemanticPendingDate(repo,{draftId:draft.id,taskId:task.id,revision:'stale',operationId:crypto.randomUUID()})).rejects.toThrow('STALE')
+    vi.spyOn(store,'transaction').mockImplementationOnce(async()=>{throw Error('CONSENT_SAVE_FAILURE')})
+    await expect(acceptSemanticPendingDate(repo,{draftId:draft.id,taskId:task.id,revision:semanticRevision(loaded),operationId:crypto.randomUUID()})).rejects.toThrow('CONSENT_SAVE_FAILURE')
+    expect(await repo.load()).toEqual(loaded)
+    await acceptSemanticPendingDate(repo,{draftId:draft.id,taskId:task.id,revision:semanticRevision(loaded),operationId:crypto.randomUUID()})
+    const accepted=await repo.load()
+    await correctSemanticFact(repo,{draftId:draft.id,revision:semanticRevision(accepted),operationId:crypto.randomUUID(),change})
+    const amended=await repo.load(),amendedState=stateOfRuntime(amended,draft.id)
+    expect(hasPendingDateConsent(amendedState,task.id)).toBe(false)
+    expect(canAct(amendedState,task.id)).toBe(false)
+    await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[task.id],revision:semanticRevision(amended)})).rejects.toThrow()
+    const tampered=structuredClone(amended),s=stateOfRuntime(tampered,draft.id)
+    s.operations.find(o=>o.kind==='accept_pending_date')!.pendingDateIdentity='forged'
+    await expect(validateSemanticWorkspace(tampered,'real-input-01')).rejects.toThrow()
+    expect(await repo.load()).toEqual(amended)
+  },60000)
+  it('targeted safety review: only date uncertainty qualifies, never references, conflicts, conditions, revisions or dependencies',async()=>{
+    const {state,task}=await pendingFixture()
+    if(state.version!==REAL_STATE_VERSION)throw Error('TEST_REAL_STATE')
+    const withFacts=async(mutate:(input:SemanticInput)=>void)=>{
+      const next=structuredClone(state);next.operations=[];mutate(next.adaptedResponse)
+      next.first=await composeSemantics(next.adaptedResponse,next.context);return next
+    }
+    expect(pendingDateEligible(state,task.id)).toBe(true)
+    for(const mutate of [
+      (i:SemanticInput)=>{i.timePoints[0].scopeIds=['missing']},
+      (i:SemanticInput)=>{i.timePoints[0].relatedTaskTempIds=['missing']},
+      (i:SemanticInput)=>{i.timePoints[0].timezone='America/Los_Angeles'},
+      (i:SemanticInput)=>{i.timePoints[0].normalizedValue='2026-09-10'},
+      (i:SemanticInput)=>{i.tasks[0].condition.value='false'},
+      (i:SemanticInput)=>{i.tasks[0].condition.value='unknown'},
+      (i:SemanticInput)=>{i.tasks[0].semantics.validity='superseded'},
+      (i:SemanticInput)=>{i.tasks[0].detail.dependencyTempIds=['missing']},
+      (i:SemanticInput)=>{i.tasks[0].detail.dependencyTempIds=[i.tasks[0].id]},
+      (i:SemanticInput)=>{i.conflicts.push({id:'conflict',type:'deadline',message:'时间冲突',entityTempIds:[i.timePoints[0].tempId],scopeIds:i.timePoints[0].scopeIds,requiresDecision:true})},
+    ])expect(pendingDateEligible(await withFacts(mutate),task.id)).toBe(false)
+    // Source-bearing AST probes: not a fixed sentence rule, and no artificial date is saved.
+    for(const [text,expected] of [['另行安排',true],['下午3点',true],['25:88',false],['2026年2月30日',false],['9月10日、9月11日',false]] as const){
+      const next:RealInputState=structuredClone(state);next.operations=[]
+      const index=await indexImmutableScopesV11(state.sourceId,state.sourceVersionId,'请提交活动总结，'+text+'。')
+      const input=next.adaptedResponse,t=input.tasks[0],scope=index.scopes[1]
+      input.sourceFingerprint=index.sourceFingerprint;t.propositionScopeIds=[index.scopes[0].id]
+      t.action.scopeId=index.scopes[0].id;t.object.scopeId=index.scopes[0].id
+      input.timePoints[0].rawText=text;input.timePoints[0].scopeIds=[scope.id]
+      next.context.index=index;next.first=await composeSemantics(input,next.context)
+      expect(pendingDateEligible(next,t.id),text).toBe(expected)
+    }
+    const brother=await withFacts(i=>{
+      const sibling=structuredClone(i.tasks[0]);sibling.id='brother';sibling.detail.timePointTempIds=[];sibling.coverage.time='not_stated';i.tasks.push(sibling)
+    })
+    expect(canAct(brother,'brother')).toBe(true)
+    const conflicting=structuredClone(state);conflicting.operations=[]
+    const ci=await indexImmutableScopesV11(state.sourceId,state.sourceVersionId,'请提交活动总结，下午3点，下午5点。')
+    const cf=conflicting.adaptedResponse,ct=cf.tasks[0]
+    conflicting.context.index=ci;cf.sourceFingerprint=ci.sourceFingerprint;ct.propositionScopeIds=[ci.scopes[0].id]
+    ct.action.scopeId=ci.scopes[0].id;ct.object.scopeId=ci.scopes[0].id
+    cf.timePoints=[1,2].map((n)=>({...cf.timePoints[0],tempId:'clock-'+n,rawText:n===1?'下午3点':'下午5点',scopeIds:[ci.scopes[n].id]}))
+    ct.detail.timePointTempIds=cf.timePoints.map(t=>t.tempId)
+    conflicting.first=await composeSemantics(cf,conflicting.context)
+    expect(pendingDateEligible(conflicting,ct.id)).toBe(false)
+    const dependent=await withFacts(i=>{
+      const sibling=structuredClone(i.tasks[0]);sibling.id='brother';sibling.detail.timePointTempIds=[];sibling.coverage.time='not_stated';i.tasks.push(sibling);i.tasks[0].detail.dependencyTempIds=['brother']
+    })
+    dependent.operations=[{kind:'accept_pending_date',id:'consent',at:new Date().toISOString(),taskIds:[task.id],field:null,value:null,before:null,pendingDateIdentity:pendingDateIdentity(dependent,task.id)}]
+    dependent.operations.push({kind:'review_task',id:'review',at:new Date().toISOString(),taskIds:[task.id],field:null,value:null,before:null,
+      reviewIdentity:liveReviewIdentity(dependent,task.id,life(dependent).values)})
+    const attempted=structuredClone(dependent)
+    attempted.operations.push({kind:'confirm',id:'confirm',at:new Date().toISOString(),taskIds:[task.id],field:null,value:null,before:null})
+    expect(()=>life(attempted)).toThrow('ITEM_NOT_CONFIRMABLE')
+  },60000)
+})
+
+describe('candidate03 recorded response integration, no model requests',()=>{
+  async function recordedFixture(){
+    const root='docs/recognition-optimization/mainline-real-input-01/runs/',D=root+'candidate03-20260908a/'
+    const before=JSON.parse(readFileSync(root+'candidate02-20260908a/DELIVERY_BROWSER_DOWNLOAD.json','utf8'))
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:before.workspace.id})
+    await new CanonicalWorkspaceRepository(store).save(before)
+    const repo=await SemanticRepository.open(store.name,store,undefined,'real-input-01')
+    const item=JSON.parse(readFileSync(D+'BINDING.json','utf8')).items[0]
+    const raw=JSON.parse(readFileSync(D+'D01_DISPATCH_RAW.jsonl','utf8'))
+    const record:RecordedCandidate03={version:'recorded-candidate03-1',unitId:'D01',name:store.name,handle:item.handle,context:item.context,
+      requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+    return {before,store,repo,record,identity:{unitId:'D01',requestSha:raw.requestSha,responseSha:raw.responseSha}}
+  }
+  it('rejects source/run/version/request/response substitution before any write',async()=>{
+    const {before,store,repo,record,identity}=await recordedFixture(),write=vi.spyOn(store,'transaction')
+    const variants=[{...record,handle:{...record.handle,sourceId:'other'}},{...record,handle:{...record.handle,sourceVersionId:'other'}},
+      {...record,handle:{...record.handle,recognitionRunId:'other'}},{...record,handle:{...record.handle,draftId:'other'}},
+      {...record,requestSha:'0'.repeat(64)},{...record,rawHttpText:record.rawHttpText+' '},
+      {...record,context:{...record.context,referenceTime:'2020-01-01T00:00:00Z'}}]
+    for(const variant of variants){await expect(replayRecordedCandidate03(repo,variant,identity)).rejects.toThrow();expect(await repo.load()).toEqual(before)}
+    expect(write).not.toHaveBeenCalled()
+  },60000)
+  it('failed transaction rolls back the entire import; successful retry of local save is terminal and duplicate-safe',async()=>{
+    const {before,store,repo,record,identity}=await recordedFixture()
+    vi.spyOn(store,'transaction').mockImplementationOnce(async()=>{throw Error('INJECTED_LOCAL_TRANSACTION_FAILURE')})
+    await expect(replayRecordedCandidate03(repo,record,identity)).rejects.toThrow('INJECTED_LOCAL_TRANSACTION_FAILURE')
+    expect(await repo.load()).toEqual(before)
+    const write=vi.spyOn(store,'transaction'),saved=await replayRecordedCandidate03(repo,record,identity)
+    const added=saved.recognitionRuns.filter(r=>!before.recognitionRuns.some((old:{id:string})=>old.id===r.id))
+    expect(added).toHaveLength(1);expect(added[0].status).toBe('succeeded')
+    expect(saved.recognitionRuns.filter(r=>before.recognitionRuns.some((old:{id:string})=>old.id===r.id))).toEqual(before.recognitionRuns)
+    expect(saved.extractionDrafts.filter(d=>before.extractionDrafts.some((old:{id:string})=>old.id===d.id))).toEqual(before.extractionDrafts)
+    expect(saved.tasks).toEqual(before.tasks);expect(saved.materials).toEqual(before.materials)
+    const draft=saved.extractionDrafts.find(d=>d.recognitionRunId===added[0].id)!
+    const handle={sourceId:record.handle.sourceId,sourceVersionId:record.handle.sourceVersionId,recognitionRunId:added[0].id,draftId:draft.id,duplicate:false}
+    const execute=vi.fn(async()=>record.rawHttpText)
+    await expect(dispatchRealInput(repo,handle,execute)).rejects.toThrow('RECORDED_NEVER_DISPATCHABLE')
+    expect(execute).not.toHaveBeenCalled();expect(await repo.load()).toEqual(saved)
+    const writes=write.mock.calls.length
+    expect(await replayRecordedCandidate03(repo,record,identity)).toEqual(saved)
+    expect(write.mock.calls).toHaveLength(writes)
+  },60000)
+  it.each(['D01','D02','D03','D05'])('%s preserves originals and confirms only reviewed expressible facts',async unitId=>{
+    const root='docs/recognition-optimization/mainline-real-input-01/runs/',D=root+'candidate03-20260908a/'
+    const before=JSON.parse(readFileSync(root+'candidate02-20260908a/DELIVERY_BROWSER_DOWNLOAD.json','utf8'))
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:before.workspace.id})
+    await new CanonicalWorkspaceRepository(store).save(before)
+    const repo=await SemanticRepository.open(store.name,store,undefined,'real-input-01')
+    const binding=JSON.parse(readFileSync(D+'BINDING.json','utf8')),item=binding.items.find((i:{unitId:string})=>i.unitId===unitId)
+    const raw=JSON.parse(readFileSync(D+unitId+'_DISPATCH_RAW.jsonl','utf8'))
+    const record:RecordedCandidate03={version:'recorded-candidate03-1',unitId,name:store.name,handle:item.handle,context:item.context,
+      requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+    const identity={unitId,requestSha:raw.requestSha,responseSha:raw.responseSha}
+    await expect(replayRecordedCandidate03(repo,{...record,responseSha:'0'.repeat(64)},identity)).rejects.toThrow('C03_IDENTITY')
+    expect(await repo.load()).toEqual(before)
+    const loaded=await replayRecordedCandidate03(repo,record,identity)
+    const draft=loaded.extractionDrafts.find(d=>(d.legacyData?.realInputPending as {operationId?:string})?.operationId==='recorded-candidate03-'+unitId)!
+    expect(loaded.recognitionRuns.find(r=>r.id===draft.recognitionRunId)?.promptVersion).toBe(CANDIDATE03_VERSION)
+    expect(loaded.recognitionRuns.filter(r=>before.recognitionRuns.some((old:{id:string})=>old.id===r.id))).toEqual(before.recognitionRuns)
+    const first=stateOfRuntime(loaded,draft.id),facts=effectiveStateFacts(first).facts
+    expect(first.first.items.every(i=>!i.defaultSelected)).toBe(true)
+    if(unitId==='D03'){
+      expect(facts.timePoints).toHaveLength(1)
+      expect(facts.timePoints[0]).toMatchObject({normalizedValue:null,precision:'vague',needsConfirmation:true})
+      await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[facts.tasks[0].id],revision:semanticRevision(loaded)})).rejects.toThrow()
+      expect((await repo.load()).tasks).toEqual(before.tasks)
+      return
+    }
+    expect(facts.tasks).toHaveLength(unitId==='D01'?2:1)
+    for(const material of facts.materials)await reviewSemanticMaterial(repo,{draftId:draft.id,materialId:material.tempId,
+      revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),value:{required:material.required,status:'missing'}})
+    for(const task of facts.tasks)await reviewSemanticFact(repo,{draftId:draft.id,taskId:task.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const saved=await confirmSemantic(repo,{draftId:draft.id,taskTempIds:facts.tasks.map(t=>t.id),revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(before.tasks.length+facts.tasks.length)
+    expect(saved.tasks.filter(t=>before.tasks.some((old:{id:string})=>old.id===t.id))).toEqual(before.tasks)
+    expect(saved.timePoints.filter(t=>!before.timePoints.some((old:{id:string})=>old.id===t.id)).map(t=>t.rawText).sort()).toEqual(facts.timePoints.map(t=>t.rawText).sort())
+    expect(saved.reminderRecords).toEqual(before.reminderRecords)
+    expect(stateOfRuntime(saved,draft.id).first).toEqual(first.first)
+    expect(stateOfRuntime(saved,draft.id).rawResponse).toEqual(first.rawResponse)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    await replayRecordedCandidate03(repo,record,identity)
+    expect((await repo.load()).tasks).toEqual(saved.tasks)
+    await confirmSemantic(repo,{draftId:draft.id,taskTempIds:facts.tasks.map(t=>t.id),revision:semanticRevision(await repo.load())})
+    expect((await repo.load()).tasks).toEqual(saved.tasks)
+  },60000)
+})
+
+describe('read-close local review without model authorization',()=>{
+  it('real runtime opens InputReview and saves independent corrections, while its send handler rejects before any run',async()=>{
+    const initial=JSON.parse(readFileSync('docs/recognition-optimization/mainline-real-input-01/runs/correction-loop-20260908a/BROWSER_DOWNLOAD.json','utf8'))
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:initial.workspace.id})
+    await new CanonicalWorkspaceRepository(store).save(initial)
+    const execute=vi.fn(async()=>{throw Error('NO_MODEL_ALLOWED')})
+    const runtime=await createRealInputRuntime({name:store.name,store,execution:'live',resources,execute,recordedBatch:true,recordedCandidate02:true})
+    const repo=await SemanticRepository.open(store.name,store,undefined,'real-input-01'),before=await repo.load()
+    const Panel=runtime.realInput!.inputPanel
+    const element=Panel({workspace:before,initialText:'',onSaved:async()=>{},onDraftReady:async()=>{}}) as ReactElement<ComponentProps<typeof InputReview>>
+    expect(element.type).toBe(InputReview);expect(element.props.localOnly).toBe(true)
+    const html=renderToStaticMarkup(element)
+    expect(html).toContain('本机读取图片或文件');expect(html).toContain('模型发送已关闭')
+    expect(html).not.toContain('生成待核对建议');expect(html).not.toContain('A08工程文字 ·')
+    await expect(element.props.send('any',[1],[1],'blocked')).rejects.toThrow('REAL_INPUT_NEW_SEND_DISABLED')
+    expect(await repo.load()).toEqual(before);expect(execute).not.toHaveBeenCalled()
+    const original=await acquireText('local-review-test',notices.revision)
+    const source=await repo.saveReading(original,'独立读取校对','local-review-test')
+    const buffered=await correctReadPage(original,1,notices.revision+'\n已核对。','local-correction',NOW)
+    expect(readingOf((await repo.load()).sources.find(s=>s.id===source.sourceId)!.legacyData?.realInput01).inputReceipt.corrections).toEqual([])
+    await repo.saveReadingCorrection(source.sourceId,buffered,semanticRevision(await repo.load()))
+    const restored=await new CanonicalWorkspaceRepository(store).load()
+    expect(restored!.tasks).toEqual(before.tasks);expect(restored!.recognitionRuns).toEqual(before.recognitionRuns)
+    expect(restored!.sources.filter(s=>s.id!==source.sourceId)).toEqual(before.sources)
+    expect(readingOf(restored!.sources.find(s=>s.id===source.sourceId)!.legacyData?.realInput01).inputReceipt).toEqual(buffered)
+    expect(execute).not.toHaveBeenCalled()
+  })
+})
+
+describe('candidate02 paid records replay without a model request',()=>{
+  it('the candidate02 launcher exposes local carriers but keeps all upstream sending disabled',()=>{
+    const result=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';
+      import {createLocalApp} from './scripts/serve-mainline-real-input-01.mjs';
+      const app=await createLocalApp({port:6631,carrierManifest:process.env.REAL_INPUT_CARRIERS_MANIFEST,checking:true,recordedBatch:true,recordedCandidate02:true});
+      assert.equal(app.evidence.carriers,8);assert.equal(app.evidence.upstreamEnabled,false);
+      assert.equal(app.evidence.realApp,true);assert.deepEqual(app.evidence.forbiddenBrowserInputs,[]);
+      // The existing handoff import is parsed but tree-shaken; its emitted code,
+      // not mere parser visitation, must remain absent from the live bundle.
+      assert.deepEqual(app.evidence.parsedReferenceModules,['src/experiments/mainline01/fixtures.ts']);
+      await assert.rejects(createLocalApp({port:6632,carrierManifest:process.env.REAL_INPUT_CARRIERS_MANIFEST,checking:true,recordedBatch:true,recordedCandidate02:true}));
+      console.log('candidate02 launcher: eight local carriers, zero upstream, same required origin');
+    `],{encoding:'utf8',timeout:60000,maxBuffer:1024*1024})
+    expect(result.error?.message??'').toBe('');expect(result.status,result.stdout+'\n'+result.stderr).toBe(0)
+  },65000)
+  it.each(['C03','C05','C08'])('%s creates a separately identified run and confirms valid tasks without overwriting old work',async unitId=>{
+    const root='docs/recognition-optimization/mainline-real-input-01/runs/',D=root+'candidate02-20260908a/'
+    const initial=JSON.parse(readFileSync(root+'correction-loop-20260908a/BROWSER_DOWNLOAD.json','utf8'))
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:initial.workspace.id})
+    await new CanonicalWorkspaceRepository(store).save(initial)
+    const repo=await SemanticRepository.open(store.name,store,undefined,'real-input-01'),before=await repo.load()
+    const binding=JSON.parse(readFileSync(D+'BINDING.json','utf8')),item=binding.items.find((i:{unitId:string})=>i.unitId===unitId)
+    const raw=JSON.parse(readFileSync(D+unitId+'_RAW.jsonl','utf8'))
+    const record:RecordedCandidate02={version:'recorded-candidate02-1',unitId,name:store.name,handle:item.handle,context:item.context,
+      requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+    const identity={unitId,requestSha:raw.requestSha,responseSha:raw.responseSha}
+    await expect(replayRecordedCandidate02(repo,{...record,responseSha:'0'.repeat(64)},identity)).rejects.toThrow('C02_IDENTITY')
+    expect(await repo.load()).toEqual(before)
+    const loaded=await replayRecordedCandidate02(repo,record,identity)
+    const draft=loaded.extractionDrafts.find(d=>(d.legacyData?.realInputPending as {operationId?:string})?.operationId==='recorded-candidate02-'+unitId)!
+    expect(loaded.recognitionRuns.find(r=>r.id===draft.recognitionRunId)?.promptVersion).toBe(CANDIDATE02_VERSION)
+    const first=stateOfRuntime(loaded,draft.id),facts=effectiveStateFacts(first).facts
+    if(unitId==='C03'){
+      expect(first.first.items.some(i=>i.issues.includes('COVERAGE_TIME'))).toBe(true)
+      expect(facts.tasks).toHaveLength(1);expect(canAct(first,facts.tasks[0].id)).toBe(false)
+      await expect(confirmSemantic(repo,{draftId:draft.id,taskTempIds:[facts.tasks[0].id],revision:semanticRevision(loaded)})).rejects.toThrow()
+      const rejected=await repo.load();expect(rejected.tasks).toEqual(before.tasks);expect(rejected.timePoints).toEqual(before.timePoints)
+      expect(stateOfRuntime(rejected,draft.id).rawResponse).toEqual(first.rawResponse)
+      return
+    }
+    const eligible=facts.tasks.filter(t=>t.semantics.validity==='active'&&t.condition.value!=='false')
+    expect(eligible).toHaveLength(1)
+    for(const m of facts.materials.filter(m=>m.relatedTaskTempIds.includes(eligible[0].id)))await reviewSemanticMaterial(repo,
+      {draftId:draft.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),materialId:m.tempId,value:{required:m.required,status:'missing'}})
+    await reviewSemanticFact(repo,{draftId:draft.id,taskId:eligible[0].id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    await confirmSemantic(repo,{draftId:draft.id,taskTempIds:[eligible[0].id],revision:semanticRevision(await repo.load())})
+    const saved=await repo.load();expect(saved.tasks.length).toBe(before.tasks.length+1)
+    expect(saved.tasks.filter(t=>before.tasks.some(x=>x.id===t.id))).toEqual(before.tasks)
+    expect(stateOfRuntime(saved,draft.id).first).toEqual(first.first)
+    expect(stateOfRuntime(saved,draft.id).rawResponse).toEqual(first.rawResponse)
+    expect(saved.timePoints).toEqual(before.timePoints);expect(saved.reminderRecords).toEqual(before.reminderRecords)
+    await replayRecordedCandidate02(repo,record,identity)
+    expect((await repo.load()).tasks).toEqual(saved.tasks)
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+  },60000)
+})
+
+async function correctionReplay(unitId:string){
+  const root='docs/recognition-optimization/mainline-real-input-01/runs/',D=root+'replay-a02-implementation-20260907a/'
+  const binding=JSON.parse(readFileSync(root+'usage-resume-20260907a/STATE.json','utf8'))
+  const prep=JSON.parse(readFileSync(binding.preparation.path,'utf8')),original=JSON.parse(readFileSync(binding.independentRepositoryRead.path,'utf8'))
+  const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:prep.name})
+  await new CanonicalWorkspaceRepository(store).save(original.workspace)
+  const repo=await SemanticRepository.open(prep.name,store,undefined,'real-input-01')
+  const p=prep.preparations.find((x:{unitId:string})=>x.unitId===unitId),unit=binding.units.find((x:{unitId:string})=>x.unitId===unitId)
+  const raw=JSON.parse(readFileSync(D+'BATCH_'+unitId+'_RAW.jsonl','utf8'))
+  const record:RecordedBatch={version:'recorded-batch-1',unitId,name:prep.name,handle:p.handle,context:p.context,requestSha:unit.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+  try{await replayRecordedBatch(repo,record,{unitId,requestSha:unit.requestSha,responseSha:raw.responseSha})}catch(e){if(!String(e).includes('REJECTED_PRESERVED'))throw e}
+  return {repo,store,draftId:p.handle.draftId as string}
+}
+describe('complex notice correction public API, original model answers remain immutable',()=>{
+  it.each(['separate','batch'])('B01 event mismatch corrected explicitly; %s confirmation preserves two different deadlines',async mode=>{
+    const {repo,store,draftId}=await correctionReplay('B01'),first=stateOfRuntime(await repo.load(),draftId),input=effectiveStateFacts(first).facts
+    expect(input.tasks).toHaveLength(2);expect(first.first.items.every(t=>t.issues.includes('COVERAGE_EVENT'))).toBe(true)
+    for(const task of input.tasks){
+      const change:FactChange={kind:'event',taskId:task.id,value:{coverage:'not_stated',event:null},scopeIds:task.propositionScopeIds,note:'人工对照原文：说明提交和打印要求，没有独立活动事实。'}
+      await correctSemanticFact(repo,{draftId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),change})
+      for(const m of input.materials.filter(m=>m.relatedTaskTempIds.includes(task.id)))await reviewSemanticMaterial(repo,{draftId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),materialId:m.tempId,value:{required:true,status:'ready'}})
+      await reviewSemanticFact(repo,{draftId,taskId:task.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+      if(mode==='separate')await confirmSemantic(repo,{draftId,taskTempIds:[task.id],revision:semanticRevision(await repo.load())})
+    }
+    if(mode==='batch')await confirmSemantic(repo,{draftId,taskTempIds:input.tasks.map(t=>t.id),revision:semanticRevision(await repo.load())})
+    const saved=await repo.load(),state=stateOfRuntime(saved,draftId)
+    expect(saved.tasks).toHaveLength(2);expect(saved.timePoints.map(t=>t.rawText).sort()).toEqual(input.timePoints.map(t=>t.rawText).sort())
+    expect(state.first).toEqual(first.first);expect(state.rawResponse).toEqual(first.rawResponse);expect(saved.reminderRecords).toEqual([])
+    expect(await new CanonicalWorkspaceRepository(store).load()).toEqual(JSON.parse(JSON.stringify(saved)))
+    const frozen=structuredClone(saved)
+    await expect(correctSemanticFact(repo,{draftId,revision:semanticRevision(saved),operationId:crypto.randomUUID(),change:{kind:'condition',taskId:input.tasks[0].id,value:{value:'unknown',conditionScopeIds:input.tasks[0].propositionScopeIds,factScopeIds:[]},scopeIds:input.tasks[0].propositionScopeIds,note:'不能改动已确认内容'}})).rejects.toThrow('CONFIRMED')
+    expect(await repo.load()).toEqual(frozen)
+  },20000)
+  it.each(['A08','B08'])('%s failed raw is retained, missing old task and revision can be explicitly corrected and new task saved',async unit=>{
+    const {repo,store,draftId}=await correctionReplay(unit),failed=await repo.load(),draft=failed.extractionDrafts.find(d=>d.id===draftId)!,run=failed.recognitionRuns.find(r=>r.id===draft.recognitionRunId)!
+    expect(draft.status).toBe('failed')
+    await openFailedForCorrection(repo,draftId,semanticRevision(failed))
+    const first=stateOfRuntime(await repo.load(),draftId),input=effectiveStateFacts(first).facts,newTask=input.tasks[0],scopes=first.context.index.scopes
+    const scope=scopes.find(s=>s.text.includes('纸质报名表'))!
+    const oldTask:SemanticTask={...structuredClone(newTask),id:'user-old-requirement',action:{scopeId:scope.id,surface:'打印'},object:{scopeId:scope.id,surface:'纸质报名表'},propositionScopeIds:[scope.id],effect:'physical_action',
+      semantics:{...newTask.semantics,tense:'past',status:'cancelled',validity:'superseded'},detail:{...newTask.detail,title:'打印纸质报名表',description:'用户依据原文补充已作废要求',completionCriteria:[],materialTempIds:[],timePointTempIds:[]},coverage:{time:'not_stated',material:'not_stated',event:'not_stated'}}
+    expect(canAct(first,newTask.id)).toBe(false)
+    await correctSemanticFact(repo,{draftId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),change:{kind:'revision',index:0,value:{addedTask:oldTask,relation:{type:'supersedes',targetDirectiveId:oldTask.id,fromDirectiveId:newTask.id,effective:'true',scopeIds:scopes.map(s=>s.id)}},scopeIds:scopes.map(s=>s.id),note:'旧打印要求已取消，现要求提交电子报名表；用户补充并核对对应关系。'}})
+    const corrected=stateOfRuntime(await repo.load(),draftId)
+    expect(canAct(corrected,oldTask.id)).toBe(false)
+    for(const m of input.materials)await reviewSemanticMaterial(repo,{draftId,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID(),materialId:m.tempId,value:{required:true,status:'ready'}})
+    await reviewSemanticFact(repo,{draftId,taskId:newTask.id,revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    await confirmSemantic(repo,{draftId,taskTempIds:[newTask.id],revision:semanticRevision(await repo.load())})
+    await disposeSemantic(repo,{draftId,taskTempIds:[oldTask.id],kind:'reject',revision:semanticRevision(await repo.load()),operationId:crypto.randomUUID()})
+    const saved=await repo.load(),final=stateOfRuntime(saved,draftId)
+    expect(saved.tasks.map(t=>t.title)).toEqual(['提交电子报名表']);expect(saved.timePoints).toEqual([])
+    expect(saved.recognitionRuns.find(r=>r.id===run.id)).toEqual(run)
+    expect(saved.extractionDrafts.find(d=>d.id===draftId)!.legacyData!.mainline05Failure).toEqual(draft.legacyData!.mainline05Failure)
+    expect(final.rawResponse).toEqual(first.rawResponse);expect(final.first).toEqual(first.first);expect(life(final).accepted).toEqual([newTask.id])
+    expect(effectiveStateFacts(final).facts.revisions[0].targetDirectiveId).toBe(oldTask.id)
+    await validateSemanticWorkspace(JSON.parse(JSON.stringify(await new CanonicalWorkspaceRepository(store).load())),'real-input-01')
+  },20000)
+})
+const resources={workerPath:'http://127.0.0.1:16627/real-input-assets/worker.min.js',corePath:'http://127.0.0.1:16627/real-input-assets/core/',
+  langPath:'http://127.0.0.1:16627/real-input-assets/lang/',pdfWorkerPath:'http://127.0.0.1:16627/real-input-assets/pdf.worker.mjs'}
+async function setup() {
+  const name='rco-mainline-01-02-i1-real-input-acceptance-'+crypto.randomUUID(), store=Object.assign(new MemoryWorkspaceRecordStore(),{name})
+  const seen=vi.fn(async(context:Parameters<ReturnType<typeof createModelClient>>[0])=>{
+    const selected=cases.find(c=>notices[c]===context.index.sourceContent)
+    if(!selected)throw Error('NO_SEEN_RESPONSE')
+    const before=await repo.load()
+    expect(before.recognitionRuns.at(-1)?.status).toBe('queued')
+    expect(before.extractionDrafts.at(-1)?.result).toBeNull()
+    return (await seenWire(selected,context.index)).rawHttpText
+  })
+  const runtime=await createRealInputRuntime({name,store,initial:emptyRealInputWorkspace(name,NOW),execution:'seen_engineering_replay',resources,execute:seen})
+  const repo=await SemanticRepository.open(name,store,undefined,'real-input-01')
+  return {name,store,runtime,repo,seen}
+}
+describe('real App runtime and public send connection; memory/SSR not browser acceptance',()=>{
+  it('batch actual recorded responses retain raw and first suggestions, never default select, preserve A02 and reject identity substitution',async()=>{
+    const root='docs/recognition-optimization/mainline-real-input-01/runs/',D=root+'replay-a02-implementation-20260907a/'
+    const binding=JSON.parse(readFileSync(root+'usage-resume-20260907a/STATE.json','utf8'))
+    const prep=JSON.parse(readFileSync(binding.preparation.path,'utf8')),original=JSON.parse(readFileSync(binding.independentRepositoryRead.path,'utf8'))
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:prep.name})
+    await new CanonicalWorkspaceRepository(store).save(original.workspace)
+    const repo=await SemanticRepository.open(prep.name,store,undefined,'real-input-01')
+    const execute=vi.fn(async()=>{throw Error('NO_NEW_REQUEST')})
+    const runtime=await createRealInputRuntime({name:prep.name,store,execution:'live',recordedBatch:true,resources,execute})
+    expect(renderToStaticMarkup(<App runtime={runtime}/>)).toContain('已记录真实模型批次')
+    const a02=structuredClone(original.workspace.extractionDrafts.find((d:{id:string})=>d.id===recordedA02Identity.handle.draftId))
+    let retainedValid=0,retainedRejected=0
+    for(const unit of binding.units.slice(2)){
+      const raw=JSON.parse(readFileSync(D+'BATCH_'+unit.unitId+'_RAW.jsonl','utf8'))
+      const p=prep.preparations.find((p:{unitId:string})=>p.unitId===unit.unitId)
+      const record:RecordedBatch={version:'recorded-batch-1',unitId:unit.unitId,name:prep.name,handle:p.handle,context:p.context,
+        requestSha:unit.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+      const identity={unitId:unit.unitId,requestSha:unit.requestSha,responseSha:raw.responseSha},before=await repo.load()
+      await expect(replayRecordedBatch(repo,{...record,rawHttpText:record.rawHttpText+' '},identity)).rejects.toThrow('IDENTITY')
+      expect(await repo.load()).toEqual(before)
+      const context={...p.context,authority:'live_model_candidate' as const,profile:'real-input-01' as const,ownershipMode:'mainline05-own-assets-1' as const}
+      const actual=await composeSemantics(parseModelEnvelope(raw.rawHttpText,context).adaptedResponse,context)
+      // The frozen contract rejects dangling references. Such actual model outputs
+      // are negative controls, not valid drafts or repaired reference answers.
+      if(actual.issues.some(i=>['BAD_ENTITY_REFERENCE','BAD_REVISION_REFERENCE'].includes(i.code))){
+        await expect(replayRecordedBatch(repo,record,identity)).rejects.toThrow('REJECTED_PRESERVED')
+        const failed=await repo.load(),draft=failed.extractionDrafts.find(d=>d.id===p.handle.draftId)!
+        expect(draft.status).toBe('failed');expect(draft.result).toBeNull()
+        expect(draft.legacyData?.mainline05Failure).toMatchObject({response:record.rawHttpText})
+        expect(failed.tasks).toHaveLength(0);expect(failed.extractionDrafts.find(d=>d.id===a02.id)).toEqual(a02)
+        await expect(replayRecordedBatch(repo,record,identity)).rejects.toThrow('REJECTED_PRESERVED')
+        expect(await repo.load()).toEqual(failed);retainedRejected++;continue
+      }
+      const saved=await replayRecordedBatch(repo,record,identity),state=stateOfRuntime(saved,p.handle.draftId)
+      if(state.version!==REAL_STATE_VERSION)throw Error('EXPECTED_REAL_STATE')
+      expect(state.rawHttpText).toBe(raw.rawHttpText);expect(state.context.authority).toBe('live_model_candidate')
+      expect(state.first.items.every(i=>!i.defaultSelected)).toBe(true);expect(saved.tasks).toHaveLength(0)
+      expect(saved.extractionDrafts.find(d=>d.id===a02.id)).toEqual(a02)
+      expect(await replayRecordedBatch(repo,record,identity)).toEqual(saved)
+      retainedValid++
+    }
+    expect(retainedValid).toBe(12);expect(retainedRejected).toBe(2)
+    const p=prep.preparations.find((p:{unitId:string})=>p.unitId==='B02'),draftId=p.handle.draftId
+    const first=stateOfRuntime(await repo.load(),draftId),facts=effectiveStateFacts(first).facts,task=facts.tasks[0]
+    for(const material of facts.materials)await reviewSemanticMaterial(repo,{draftId,materialId:material.tempId,
+      revision:semanticRevision(await repo.load()),operationId:'batch-material-'+material.tempId,value:{required:true,status:'ready'}})
+    await reviewSemanticFact(repo,{draftId,taskId:task.id,revision:semanticRevision(await repo.load()),operationId:'batch-fact'})
+    const saved=await runtime.confirm({draftId,taskTempIds:[task.id],revision:semanticRevision(await repo.load())})
+    expect(saved.tasks).toHaveLength(1);expect(saved.timePoints).toEqual([]);expect(saved.reminderRecords).toEqual([])
+    expect(stateOfRuntime(saved,draftId).first).toEqual(first.first);expect(execute).not.toHaveBeenCalled()
+    expect(JSON.parse(await runtime.exportJson())).toEqual(JSON.parse(JSON.stringify(await new CanonicalWorkspaceRepository(store).load())))
+  },30000) // Fourteen full-graph recorded replays; no historical timeout or assertion changes.
+  it('real-input source description changes only the review banner; engineering and ordinary defaults remain',async()=>{
+    const {repo,runtime,seen}=await setup(), receipt=await acquireText('label-control',notices['no-date'])
+    const source=await repo.saveReading(receipt,'已见工程通知','label-control',NOW)
+    const draftId=await sendRealInput(repo,{sourceId:source.sourceId,pages:[1],reviewed:[1],operationId:'label-control',revision:semanticRevision(await repo.load())},'seen_engineering_replay',seen,NOW)
+    const workspace=await repo.load(), draft=runtime.review(workspace,draftId).draft
+    const noop=()=>{}
+    const props:ComponentProps<typeof DraftReviewPanel>={draft,source:null,isolatedCapabilities:true,projectWillCreate:false,projects:[],
+      onClose:noop,onUpdate:noop,onConfirm:noop,onReject:noop,onConfirmAll:noop,onProjectChoice:noop,onKeepExplicit:noop,onMoveTask:noop,
+      onToggleRecognitionEntity:noop,onToggleTaskSelected:noop,onSplitTask:noop,onMergeTask:noop}
+    const normal=renderToStaticMarkup(<DraftReviewPanel {...props}/>), withoutBanner=(html:string)=>html.replace(/第 2 步 · [^<]*<\/span>/,'SOURCE_LABEL</span>')
+    expect(normal).toContain('人工工程响应（非模型预测）')
+    for(const description of ['A02历史真实模型响应回放 · 本轮零调用','真实模型建议 · 尚未逐项核对','已见匿名工程回放 · 非模型预测']){
+      const html=renderToStaticMarkup(<DraftReviewPanel {...props} {...{recognitionDescription:description}}/>)
+      expect(html).toContain(description);expect(withoutBanner(html)).toBe(withoutBanner(normal))
+    }
+    expect(renderToStaticMarkup(<DraftReviewPanel {...props} isolatedCapabilities={false} draft={{...draft,modelName:'deepseek-v4-flash'}}/>)).toContain('第 2 步 · DeepSeek 建议')
+    expect(renderToStaticMarkup(<DraftReviewPanel {...props} isolatedCapabilities={false} draft={{...draft,modelName:'local'}}/>)).toContain('第 2 步 · 本地规则建议')
+    expect(await repo.load()).toEqual(workspace)
+  })
+  it('actual App forwards an existing description only for the real-input runtime',()=>{
+    const probe=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import ts from 'typescript';import {runInNewContext} from 'node:vm';
+      const source=readFileSync('src/App.tsx','utf8'),tree=ts.createSourceFile('App.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+      let attribute;const visit=n=>{if((ts.isJsxOpeningElement(n)||ts.isJsxSelfClosingElement(n))&&n.tagName.getText(tree)==='DraftReviewPanel')attribute=n.attributes.properties.find(p=>ts.isJsxAttribute(p)&&p.name.getText(tree)==='recognitionDescription');ts.forEachChild(n,visit)};visit(tree);
+      assert(attribute?.initializer&&ts.isJsxExpression(attribute.initializer),'real App must pass the existing source description');
+      const code=ts.transpileModule('('+attribute.initializer.expression.getText(tree)+')',{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+      for(const description of ['A02历史真实模型响应回放 · 本轮零调用','已见匿名工程回放 · 非模型预测'])assert.equal(runInNewContext(code,{runtime:{realInput:{profile:'real-input-01'},recognitionDescription:description}}),description);
+      assert.equal(runInNewContext(code,{runtime:{recognitionDescription:'legacy-isolated'}}),undefined);
+      assert.equal(runInNewContext(code,{runtime:undefined}),undefined);
+    `],{encoding:'utf8',timeout:15000,maxBuffer:1024*1024})
+    expect(probe.status,probe.stdout+'\\n'+probe.stderr).toBe(0)
+  })
+  it('actual browser open wrapper rejects creation/upgrade events before legacy handlers, retains existing and old-default opens',()=>{
+    const probe=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import ts from 'typescript';import {runInNewContext} from 'node:vm';
+      const source=readFileSync('src/experiments/realInput01/browser.tsx','utf8'), tree=ts.createSourceFile('browser.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+      const assignment=tree.statements.find(s=>ts.isExpressionStatement(s)&&ts.isBinaryExpression(s.expression)&&s.expression.left.getText(tree)==='indexedDB.open');
+      assert(assignment,'real wrapper must exist; no replacement test algorithm');
+      const helper=tree.statements.find(s=>ts.isFunctionDeclaration(s)&&s.name?.text==='preventRecordedDatabaseUpgrade');
+      const code=ts.transpileModule((helper?helper.getText(tree).replace(/^export\\s+/,''):'')+'\\n'+assignment.getText(tree),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}).outputText;
+      const name='original-test-db';
+      const harness=(mode,preview=false,previewCreating=false)=>{
+        let aborts=0,creates=0,opens=0;const req=new EventTarget();
+        req.transaction={abort(){aborts++}};
+        const indexedDB={},effects={databaseOpens:[],foreignDatabase:0,blockedDatabaseUpgrades:0};
+        runInNewContext(code,{indexedDB,name,effects,preview,previewCreating,config:{mode},nativeOpen(){opens++;return req}});
+        return {indexedDB,req,effects,get counts(){return {aborts,creates,opens}},legacy(){req.addEventListener('upgradeneeded',()=>{creates++})}};
+      };
+      for(const oldVersion of [0,1]){
+        const h=harness('recorded_a02');assert.equal(h.indexedDB.open(name,1),h.req);h.legacy();
+        const event=new Event('upgradeneeded');Object.assign(event,{oldVersion,newVersion:oldVersion+1});h.req.dispatchEvent(event);
+        assert.equal(h.counts.aborts,1,'upgrade transaction must abort');assert.equal(h.counts.creates,0,'legacy createObjectStore callback must not run');
+      }
+      const existing=harness('recorded_a02');assert.equal(existing.indexedDB.open(name,1),existing.req);existing.req.dispatchEvent(new Event('success'));
+      assert.deepEqual(existing.counts,{aborts:0,creates:0,opens:1});
+      assert.throws(()=>existing.indexedDB.open(name,2),/VERSION/);assert.throws(()=>existing.indexedDB.open('foreign',1),/FOREIGN/);
+      assert.equal(existing.counts.opens,1);
+      const old=harness('seen_engineering_replay');old.indexedDB.open(name,1);old.legacy();old.req.dispatchEvent(new Event('upgradeneeded'));
+      assert.deepEqual(old.counts,{aborts:0,creates:1,opens:1});
+      for(const [creating,oldVersion,expectedAbort] of [[true,0,0],[true,1,1],[false,0,1]]){
+        const h=harness('recorded_batch',true,creating);h.indexedDB.open(name,1);h.legacy();
+        const event=new Event('upgradeneeded');Object.assign(event,{oldVersion});h.req.dispatchEvent(event);
+        assert.equal(h.counts.aborts,expectedAbort);assert.equal(h.counts.creates,expectedAbort?0:1);
+      }
+      console.log('real wrapper EventTarget contract: missing/upgrade abort, existing success, version/foreign reject, old default retained; not real IndexedDB engine acceptance');
+    `],{encoding:'utf8',timeout:15000,maxBuffer:1024*1024})
+    expect(probe.status,probe.stdout+'\n'+probe.stderr).toBe(0)
+  })
+  it('original A02 real App driver preserves provenance, material observation and explicit edits through independent reload',async()=>{
+    const root='docs/recognition-optimization/mainline-real-input-01/runs/'
+    const state=JSON.parse(readFileSync(root+'usage-resume-20260907a/STATE.json','utf8'))
+    const bound=(path:string,sha:string)=>{const bytes=readFileSync(path);expect(createHash('sha256').update(bytes).digest('hex')).toBe(sha);return JSON.parse(bytes.toString())}
+    const preparation=bound(state.preparation.path,state.preparation.sha256), original=bound(state.independentRepositoryRead.path,state.independentRepositoryRead.sha256)
+    const a02=preparation.preparations.find((p:{unitId:string})=>p.unitId==='A02')
+    const raw=JSON.parse(readFileSync(root+'recovery-a02-20260907a/RAW_RESULTS.jsonl','utf8'))
+    const record:RecordedA02={version:'recorded-a02-1',name:preparation.name,handle:a02.handle,context:a02.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
+    const store=Object.assign(new MemoryWorkspaceRecordStore(),{name:record.name})
+    await new CanonicalWorkspaceRepository(store).save(original.workspace)
+    const execute=vi.fn(async()=>{throw Error('NEW_MODEL_REQUEST_FORBIDDEN')})
+    const runtime=await createRealInputRuntime({name:record.name,store,execution:'live',recordedA02:true,resources,execute})
+    const repo=await SemanticRepository.open(record.name,store,undefined,'real-input-01')
+    const app=renderToStaticMarkup(<App runtime={runtime}/>);expect(app).toContain('禁止新发送')
+    const pending=await replayRecordedA02(repo,record),first=stateOfRuntime(pending,record.handle.draftId)
+    expect(first.context.authority).toBe('live_model_candidate');expect(first.first.items.every(i=>!i.defaultSelected)).toBe(true)
+    const facts=effectiveStateFacts(first).facts,task=facts.tasks[0],material=facts.materials[0],draftId=record.handle.draftId
+    const summary=renderToStaticMarkup(<SemanticFacts state={first} taskId={task.id}/>)
+    expect(summary).toContain('没有截止日期要求');expect(summary).toContain('用户尚未核对');expect(summary).not.toContain('必须提供')
+    const Panel=runtime.realInput!.inputPanel
+    expect(renderToStaticMarkup(<Panel workspace={pending} initialText="" onSaved={async()=>{}} onDraftReady={async()=>{}}/>)).toContain('已关闭新录入和发送')
+    await expect(runtime.capture({sourceType:'text',content:'禁止新来源'})).rejects.toThrow()
+    await expect(runtime.confirm({draftId,taskTempIds:[task.id],revision:semanticRevision(pending)})).rejects.toThrow()
+    expect(await repo.load()).toEqual(pending)
+    await reviewSemanticMaterial(repo,{draftId,materialId:material.tempId,revision:semanticRevision(pending),operationId:'a02-material-observed',value:{required:true,status:'ready'}})
+    const checked=await repo.load(),onDirty=vi.fn(),onSaved=vi.fn(async()=>{})
+    renderToStaticMarkup(<FactCorrectionEditor repo={repo} workspace={checked} draftId={draftId} taskId={task.id} busy={false} onDirty={onDirty} onSaved={onSaved}/>)
+    expect(onDirty).not.toHaveBeenCalled();expect(onSaved).not.toHaveBeenCalled();expect(await repo.load()).toEqual(checked)
+    await editSemantic(repo,{draftId,taskTempId:task.id,revision:semanticRevision(checked),operationId:'a02-user-title',field:'title',value:'保存活动手册（已核对）'})
+    await reviewSemanticFact(repo,{draftId,taskId:task.id,revision:semanticRevision(await repo.load()),operationId:'a02-task-reviewed'})
+    const result=await runtime.confirm({draftId,taskTempIds:[task.id],revision:semanticRevision(await repo.load())})
+    expect(result.tasks).toHaveLength(1);expect(result.tasks[0].title).toBe('保存活动手册（已核对）')
+    expect(result.materials[0]).toMatchObject({required:true,status:'ready'})
+    expect(result.timePoints).toEqual([]);expect(result.reminderRecords).toEqual([])
+    expect(buildBrowserReminderJobs(runtime.view(result).tasks,new Date(NOW))).toEqual([])
+    expect(result.sourceVersions).toEqual(pending.sourceVersions)
+    // Confirmation legitimately advances only the matched Source lifecycle.
+    const confirmedSource=result.sources.find(s=>s.id===record.handle.sourceId)!
+    expect(confirmedSource.status).toBe('confirmed')
+    expect(result.sources).toEqual(pending.sources.map(s=>s.id===confirmedSource.id
+      ?{...s,status:'confirmed',updatedAt:confirmedSource.updatedAt}:s))
+    const final=stateOfRuntime(result,draftId);expect(final.rawResponse).toEqual(first.rawResponse);expect(final.first).toEqual(first.first)
+    expect(final.version===REAL_STATE_VERSION&&final.rawHttpText).toBe(record.rawHttpText)
+    const independent=await SemanticRepository.open(record.name,store,undefined,'real-input-01')
+    expect(JSON.parse(await runtime.exportJson())).toEqual(JSON.parse(JSON.stringify(await independent.load())))
+    expect(await replayRecordedA02(repo,record)).toEqual(result)
+    expect((await runtime.confirm({draftId,taskTempIds:[task.id],revision:semanticRevision(result)})).tasks).toEqual(result.tasks)
+    expect(execute).not.toHaveBeenCalled()
+  })
+  it('recorded runtime rejects replacement database initialization and missing original storage',async()=>{
+    const name=recordedA02Identity.name,store=Object.assign(new MemoryWorkspaceRecordStore(),{name}),execute=vi.fn(async()=>{throw Error('FORBIDDEN')})
+    await expect(createRealInputRuntime({name,store,initial:emptyRealInputWorkspace(name),execution:'live',recordedA02:true,resources,execute})).rejects.toThrow('RECORDED_RUNTIME')
+    await expect(createRealInputRuntime({name,store,execution:'live',recordedA02:true,resources,execute})).rejects.toThrow('WORKSPACE_MISSING')
+    expect(execute).not.toHaveBeenCalled()
+  })
+  it('recorded launcher builds real App, serves only bound A02 and rejects unauthorized endpoints without model code',()=>{
+    // A Node subprocess builds the actual launcher and exercises its real request
+    // listener without opening a port, loading credentials or accessing a browser DB.
+    const probe=spawnSync(process.execPath,['--input-type=module','-e',`
+      import assert from 'node:assert/strict'; import {Readable} from 'node:stream';
+      import {readFileSync} from 'node:fs'; import {createLocalApp,loadRecordedA02} from './scripts/serve-mainline-real-input-01.mjs';
+      const carrierManifest='C:/Users/Winner/AppData/Local/Temp/real-input-carriers-e1da8dbf1e8a4f5a9732c02f6469c24f/carriers.json';
+      const app=await createLocalApp({port:6631,carrierManifest,checking:true,recordedA02:true});
+      assert.equal(app.evidence.mode,'recorded_a02');assert.equal(app.evidence.upstreamEnabled,false);assert.deepEqual(app.evidence.forbiddenBrowserInputs,[]);
+      assert(!app.evidence.bundleInputs.some(p=>/real-input-budget|real-input-model-gateway|run-mainline-real-input/.test(p)));
+      const call=(method,url,data='',extra={})=>new Promise(resolve=>{
+        const req=Object.assign(Readable.from([Buffer.from(data)]),{method,url,headers:{host:'127.0.0.1:6631',...extra}});
+        const headers={};let status=200;app.server.emit('request',req,{setHeader:(k,v)=>headers[k]=v,writeHead:v=>status=v,end:body=>resolve({status,body:String(body),headers})});
+      });
+      const js=await call('GET','/browser.js');assert.equal(js.status,200);
+      const capability=js.body.match(/"?capability"?:\\s*"([a-f0-9]{64})"/)[1];
+      const headers={origin:'http://127.0.0.1:6631','sec-fetch-site':'same-origin','content-type':'application/json','x-real-input-capability':capability};
+      const record=loadRecordedA02(),payload=JSON.stringify({unitId:'A02',requestSha:record.requestSha});
+      const valid=await call('POST','/api/real-input/recorded-a02',payload,headers);assert.equal(valid.status,200);assert.deepEqual(JSON.parse(valid.body),record);
+      for(const [path,body,h]of [
+        ['/api/real-input/replay',payload,headers],['/api/real-input/model',payload,headers],
+        ['/api/real-input/recorded-a02',payload,{...headers,origin:'http://other.invalid'}],
+        ['/api/real-input/recorded-a02',payload,{...headers,'x-real-input-capability':'wrong'}],
+        ['/api/real-input/recorded-a02',JSON.stringify({unitId:'A01',requestSha:record.requestSha}),headers],
+        ['/api/real-input/recorded-a02',JSON.stringify({unitId:'A02',requestSha:'0'.repeat(64)}),headers],
+        ['/api/real-input/recorded-a02',JSON.stringify({unitId:'A02',requestSha:record.requestSha,rawHttpText:'replacement'}),headers]
+      ])assert.equal((await call('POST',path,body,h)).status,400);
+      assert.equal((await call('GET','/.env')).status,400);
+      assert.equal((await call('POST','/api/real-input/recorded-a02',payload,headers)).body,valid.body);
+      await assert.rejects(createLocalApp({port:6632,carrierManifest,checking:true,recordedA02:true}),/RECORDED_ORIGIN/);
+      const source=readFileSync('scripts/serve-mainline-real-input-01.mjs','utf8');
+      assert(!/readFileSync\\([^)]*\\.env|import[^\\n]*real-input-(?:budget|model-gateway)/.test(source));
+      console.log('recorded launcher: build + bound response + 9 rejection/identity checks; zero external requests');
+    `],{encoding:'utf8',timeout:60000,maxBuffer:1024*1024})
+    expect(probe.error?.message??'').toBe('')
+    expect(probe.status,probe.stdout+'\n'+probe.stderr).toBe(0)
+  },65000)
+  it('the input renderer is a React component retaining original text without invoking save callbacks during render',async()=>{
+    const {runtime,repo,seen}=await setup(),Panel=runtime.realInput!.inputPanel
+    const before=await repo.load(),onSaved=vi.fn(async()=>{}),onDraftReady=vi.fn(async()=>{})
+    const initialText='  '+notices['no-date']+'  '
+    const html=renderToStaticMarkup(<Panel workspace={before} initialText={initialText} onSaved={onSaved} onDraftReady={onDraftReady}/>)
+    expect(html).toContain(initialText);expect(html).toContain('保存文字来源并核对')
+    expect(onSaved).not.toHaveBeenCalled();expect(onDraftReady).not.toHaveBeenCalled();expect(seen).not.toHaveBeenCalled()
+    expect(await repo.load()).toEqual(before)
+  })
+  it('the fact editor render preserves saved facts and does not publish dirty or saved notifications during render',async()=>{
+    const {repo,seen}=await setup(),receipt=await acquireText('editor-render',notices['no-date'])
+    const source=await repo.saveReading(receipt,'已见工程通知','editor-render-source',NOW)
+    const draftId=await sendRealInput(repo,{sourceId:source.sourceId,pages:[1],reviewed:[1],operationId:'editor-render-send',revision:semanticRevision(await repo.load())},'seen_engineering_replay',seen,NOW)
+    const before=await repo.load(),onDirty=vi.fn(),onSaved=vi.fn(async()=>{})
+    const html=renderToStaticMarkup(<FactCorrectionEditor repo={repo} workspace={before} draftId={draftId} taskId="save" busy={false} onDirty={onDirty} onSaved={onSaved}/>)
+    expect(html).toContain('本项事实已核对');expect(html).toContain('修改对象');expect(html).toContain('核对前置依赖')
+    expect(onDirty).not.toHaveBeenCalled();expect(onSaved).not.toHaveBeenCalled()
+    expect(await repo.load()).toEqual(before)
+  })
+  it('real homepage retains dates and explains review before any send; old presentation remains',()=>{
+    const props={dateViews:{},tasks:[],projects:[],pendingReviewCount:0,onQuickCapture:async()=>{},onOpenIntake:()=>{},onOpenTask:()=>{},
+      onCompleteTask:()=>{},onStartTask:()=>{},onSnoozeTask:()=>{},onTogglePinTask:()=>{},onShowTasks:()=>{},onShowInbox:()=>{},smartExtractionStatus:'unavailable' as const}
+    const real=renderToStaticMarkup(<DashboardPage {...props} realInput={{networkDescription:'只有核对并同意本次发送后才调用模型'}}/>)
+    expect(real).toContain('先核对输入文字');expect(real).toContain('只有核对并同意本次发送后才调用模型')
+    expect(real).not.toContain('不发送文字、不调用模型');expect(real).not.toContain('生成工程建议')
+    const old=renderToStaticMarkup(<DashboardPage {...props}/>);expect(old).toContain('生成工程建议');expect(old).toContain('不发送文字、不调用模型')
+  })
+  it('mounts the actual App with isolated capabilities and does not read old storage',async()=>{
+    const {runtime}=await setup(), legacy=vi.fn(()=>{throw Error('LEGACY_FORBIDDEN')})
+    vi.stubGlobal('localStorage',{getItem:legacy,setItem:legacy})
+    try{const html=renderToStaticMarkup(<App runtime={runtime}/>);expect(html).toContain('事务管家');expect(html).toContain('本机读取与已见工程回放');expect(legacy).not.toHaveBeenCalled()}
+    finally{vi.unstubAllGlobals()}
+    expect(runtime.realInput?.profile).toBe('real-input-01')
+    await expect(runtime.capture({sourceType:'text',content:notices['no-date']})).rejects.toThrow('先在真实输入面板保存')
+  })
+  it.each(['no-date','multi','condition-true','revision'] as const)('source-first to correct confirmation and independent reload: %s',async kind=>{
+    const {repo,runtime,store,name,seen}=await setup(), receipt=await acquireText(kind,notices[kind])
+    const source=await repo.saveReading(receipt,'已见工程通知','source-'+kind,NOW)
+    const draftId=await sendRealInput(repo,{sourceId:source.sourceId,pages:[1],reviewed:[1],operationId:'send-'+kind,revision:semanticRevision(await repo.load())},'seen_engineering_replay',seen,NOW)
+    const first=stateOfRuntime(await repo.load(),draftId)
+    const ids=kind==='no-date'?['save']:kind==='multi'?['submit','print']:kind==='revision'?['new']:['conditional']
+    // IDs come from the existing engineering response; no Expected enters the driver.
+    const actual=first.first.items.filter(i=>i.requiresAction==='true'&&!i.issues.length).map(i=>i.tempId)
+    expect(actual.length).toBe(ids.length)
+    for(const id of actual)await reviewSemanticFact(repo,{draftId,taskId:id,revision:semanticRevision(await repo.load()),operationId:'review-'+id})
+    const final=await runtime.confirm({draftId,taskTempIds:actual,revision:semanticRevision(await repo.load())})
+    expect(final.tasks).toHaveLength(actual.length);expect(seen).toHaveBeenCalledTimes(1)
+    const independent=await SemanticRepository.open(name,store,undefined,'real-input-01')
+    expect(JSON.parse(await runtime.exportJson())).toEqual(JSON.parse(JSON.stringify(await independent.load())))
+    expect(stateOfRuntime(final,draftId).first).toEqual(first.first)
+    if(kind==='no-date'){expect(final.timePoints).toEqual([]);expect(final.reminderRecords).toEqual([])}
+  })
+  it('a failed executor is terminal, no retry; missing or malformed database never falls back',async()=>{
+    const {repo,name,store}=await setup(), receipt=await acquireText('failed',notices['no-date'])
+    const source=await repo.saveReading(receipt,'失败对照','failure-source')
+    const execute=vi.fn(async()=>{throw Error('simulated transport failure')})
+    await expect(sendRealInput(repo,{sourceId:source.sourceId,pages:[1],reviewed:[1],operationId:'failure-run',revision:semanticRevision(await repo.load())},'seen_engineering_replay',execute,NOW)).rejects.toThrow('没有自动重试')
+    expect(execute).toHaveBeenCalledTimes(1); expect((await repo.load()).recognitionRuns[0].status).toBe('failed')
+    await expect(createRealInputRuntime({name,store:Object.assign(new MemoryWorkspaceRecordStore(),{name}),execution:'seen_engineering_replay',resources,execute})).rejects.toThrow('WORKSPACE_MISSING')
+    await store.write('current',{});await expect(repo.load()).rejects.toThrow()
+  })
+  it('client sends exactly the bound text request once, then refuses duplicate or changed input',async()=>{
+    const {repo}=await setup(),receipt=await acquireText('client',notices['no-date']), source=await repo.saveReading(receipt,'client','client-source')
+    const handle=await repo.beginInputRun(source.sourceId,{version:REAL_STATE_VERSION,inputReceipt:receipt,sendSnapshot:await makeSendSnapshot(receipt,[1],[1],NOW)},
+      'seen_engineering_replay','client-unit',semanticRevision(await repo.load()))
+    const context=await inputRunContext(repo,handle),request=await buildModelRequest(context),requestSha=await sha256Text(request.serialized)
+    const raw=(await seenWire('no-date',handle)).rawHttpText
+    const transport=vi.fn(async()=>new Response(JSON.stringify({unitId:'A01',requestSha,rawHttpText:raw}),{status:200,headers:{'content-type':'application/json'}}))
+    const client=createModelClient({origin:'http://127.0.0.1:16627',capability:'a'.repeat(64),units:[{unitId:'A01',requestSha}]},transport)
+    await dispatchRealInput(repo,handle,client)
+    expect(transport).toHaveBeenCalledTimes(1)
+    await expect(client(context)).rejects.toThrow('未绑定')
+    await expect(dispatchRealInput(repo,handle,client)).rejects.toThrow('NOT_DISPATCHABLE')
+    expect(transport).toHaveBeenCalledTimes(1)
+  })
+})

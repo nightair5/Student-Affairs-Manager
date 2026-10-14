@@ -1,0 +1,90 @@
+{
+  "version": "shared-material-time-checks-1",
+  "rootEnvRead": false,
+  "modelCalls": 0,
+  "temporaryRoot": "C:\\Users\\Winner\\AppData\\Local\\Temp\\shared-material-time-E6VRGZ",
+  "checks": [
+    {
+      "name": "type-app",
+      "status": 0,
+      "reusedFromSameSourceAttempt": true
+    },
+    {
+      "name": "type-node",
+      "status": 0,
+      "reusedFromSameSourceAttempt": true
+    },
+    {
+      "name": "lint",
+      "status": 0,
+      "reusedFromSameSourceAttempt": true
+    },
+    {
+      "name": "recognition-contract",
+      "status": 0,
+      "reusedFromSameSourceAttempt": true
+    },
+    {
+      "name": "time-ast-contract",
+      "status": 0,
+      "reusedFromSameSourceAttempt": true
+    },
+    {
+      "name": "vitest",
+      "status": 0,
+      "passed": 1381,
+      "total": 1382,
+      "skipped": 1,
+      "reusedFromSameSourceAttempt": true
+    },
+    {
+      "name": "node-server-server-tests-mjs",
+      "status": 0,
+      "reusedFromSameSourceAttempt": true
+    },
+    {
+      "name": "node-cloudflare-worker-tests-mjs",
+      "status": 0,
+      "reusedFromSameSourceAttempt": true
+    },
+    {
+      "name": "node-scripts-time-ast-parity-node-test-mjs",
+      "status": 0,
+      "reusedFromSameSourceAttempt": true
+    },
+    {
+      "name": "node-scripts-multimodal-evaluation-lib-node-test-mjs",
+      "status": 0,
+      "reusedFromSameSourceAttempt": true
+    },
+    {
+      "name": "node-scripts-rco-5-007-replay-node-test-mjs",
+      "status": 1,
+      "expectedHistoricalFailure": "FREEZE_HASH_MISMATCH:package-lock.json",
+      "applicableToCurrentChange": false
+    },
+    {
+      "name": "functions-test",
+      "status": 0,
+      "elapsedMs": 865
+    },
+    {
+      "name": "build",
+      "status": 0,
+      "elapsedMs": 6441
+    },
+    {
+      "name": "local-preview-build",
+      "status": 0,
+      "elapsedMs": 1747,
+      "recorded": [
+        "recorded/Q01-06.json",
+        "recorded/Q07-06.json",
+        "recorded/R11-07.json",
+        "recorded/R12-07.json",
+        "recorded/U11-09.json",
+        "recorded/V02-09.json"
+      ]
+    }
+  ]
+}

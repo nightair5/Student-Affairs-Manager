@@ -1,0 +1,74 @@
+{
+  "audit_skill": "experiment-audit",
+  "date": "2026-09-28",
+  "auditor": "gpt-5.6-sol-ultra fresh reviewer",
+  "agent_id": "/root/d12_integrity_review",
+  "reviewer_model": "gpt-5.6-sol",
+  "reviewer_reasoning": "ultra",
+  "reviewer_family": "openai",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "overall_verdict": "WARN",
+  "integrity_status": "warn",
+  "historicalDecision": "REJECT_CANDIDATE15_DEVELOPMENT",
+  "decisionChanged": false,
+  "checks": {
+    "gt_provenance": {
+      "status": "WARN",
+      "details": "Fully seen synthetic single-author/model-assisted references"
+    },
+    "score_normalization": {
+      "status": "PASS",
+      "details": "Both 12-source denominators retained"
+    },
+    "result_existence": {
+      "status": "PASS",
+      "details": "Stored claims match 24 raw and audit artifacts"
+    },
+    "dead_code": {
+      "status": "WARN",
+      "details": "Frozen scorer executes but throws on 3 zero-match outputs"
+    },
+    "scope": {
+      "status": "PASS",
+      "details": "Development and human/independent limits disclosed"
+    },
+    "eval_type": "synthetic_proxy"
+  },
+  "trace_path": ".aris/traces/experiment-audit/2026-09-28_d12/",
+  "traceDisclosure": "Review texts preserved with Markdown emphasis normalized; complete original messages are in the Codex conversation.",
+  "audited_input_hashes": {
+    "docs/recognition-optimization/candidate15/d11-development-20260928a/SCORING_RESULTS.json": "183bef11553f38dc2f9722d83d128eca156409b135244757542f1b9a6a2c46f0",
+    "scripts/score-candidate15-contract.mjs": "8175abb23d29e395be779389be1f18a24ef461c615d50d340fee596d74440afe",
+    "scripts/verify-recognition-history.mjs": "d2126a4c2d975973287fd8c9ffad15e9d0641be0158ae3b9686243c4a8c56a62",
+    "scripts/score-candidate15-diagnostic.mjs": "8155c87c4c6734fb471388f63efef164ac4449a19b9f2044da5e82cddf52361d",
+    "scripts/diagnose-recognition-d12.mjs": "793999fdcc18965304a71656e0ba4bafd575f06f920433d4dfd450b395b94b5a",
+    "scripts/recognition-progress-policy.mjs": "51bd42463210f7bca56fa123a0aa1edf583b41f756665f23220bfb656fc5008a",
+    "docs/recognition-optimization/d12-progress/POSTHOC_DIAGNOSTIC.json": "48668439d8fbde4480c014e699e554704e4fe1f02c6cc2346907845ba5e8b1ec"
+  },
+  "followup": {
+    "verdict": "WARN",
+    "checks": {
+      "A": "WARN",
+      "B": "PASS",
+      "C": "WARN",
+      "D": "PASS",
+      "E": "PASS",
+      "F": "PASS"
+    },
+    "trace": "review2.txt"
+  },
+  "executorResolutions": [
+    {
+      "finding": "unanchored history manifest",
+      "status": "FIXED_AND_TESTED",
+      "evidence": "Git parent a4bb253 pinned; complete frozen file set and bytes verified from Git; coordinated evidence+manifest edit regression passes"
+    },
+    {
+      "finding": "stale PRD current state",
+      "status": "FIXED_BY_EXECUTOR",
+      "evidence": "PRD section 2 explicitly dated D12 with D10/D11/D12 facts"
+    }
+  ],
+  "resolutionReview": "No third reviewer round; executor verified fixes with 10/10 targeted tests. Original reviewer WARN retained."
+}

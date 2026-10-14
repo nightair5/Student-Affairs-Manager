@@ -1,0 +1,165 @@
+{
+  "view": "FOCUSED_READBACK_EVIDENCE_NOT_FULL_BACKUP",
+  "original": {
+    "path": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\afternoon-mainline-20261008\\browser-originals\\FINAL-SHARED-WINDOW-READBACK.json",
+    "sha256": "fc7f17eae3488f5ba7e301f0189b7d81a1808354f3f0795cfde95d2ad86304cf"
+  },
+  "canonicalCounts": {
+    "tasks": 3,
+    "events": 4,
+    "timePoints": 11,
+    "materials": 0
+  },
+  "tasks": [
+    {
+      "id": "task:source:059c9db7:draft:1:T1",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "填写借用记录",
+      "description": "请填写借用记录并激活借用账号。\n填写借用记录和激活借用账号均可在2026年11月10日09:00至2026年11月12日17:00办理。",
+      "nextAction": "填写借用记录",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-08T10:38:14.958Z",
+      "updatedAt": "2026-10-08T10:38:14.958Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "T1",
+        "actionVerb": "填写",
+        "actionObject": "借用记录",
+        "completionCriteria": [],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "d26-scope-0001-0437b8b820c9112705a52d00284c993395f5293b7509a09b02f69e872d04ff43",
+          "d26-scope-0002-91c7b565fb2645315360ece71ac689834a6c8961fe46b21774030eca60f117db"
+        ],
+        "sourceId": "source:059c9db7",
+        "category": "其他"
+      }
+    },
+    {
+      "id": "task:source:059c9db7:draft:1:T2",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "激活借用账号",
+      "description": "请填写借用记录并激活借用账号。\n填写借用记录和激活借用账号均可在2026年11月10日09:00至2026年11月12日17:00办理。",
+      "nextAction": "激活借用账号",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-08T10:38:14.958Z",
+      "updatedAt": "2026-10-08T10:38:14.958Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "T2",
+        "actionVerb": "激活",
+        "actionObject": "借用账号",
+        "completionCriteria": [],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "d26-scope-0001-0437b8b820c9112705a52d00284c993395f5293b7509a09b02f69e872d04ff43",
+          "d26-scope-0002-91c7b565fb2645315360ece71ac689834a6c8961fe46b21774030eca60f117db"
+        ],
+        "sourceId": "source:059c9db7",
+        "category": "其他"
+      }
+    }
+  ],
+  "events": [],
+  "timePoints": [
+    {
+      "id": "time:source:059c9db7:draft:1:P1",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": "task:source:059c9db7:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:059c9db7:draft:1:T1",
+        "task:source:059c9db7:draft:1:T2"
+      ],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年11月10日09:00",
+      "normalizedValue": "2026-11-10T09:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T10:38:14.958Z",
+      "updatedAt": "2026-10-08T10:38:14.958Z",
+      "legacyData": {
+        "recognitionTempId": "P1",
+        "evidenceIds": [
+          "d26-scope-0002-91c7b565fb2645315360ece71ac689834a6c8961fe46b21774030eca60f117db"
+        ],
+        "confidence": 1,
+        "sourceTimeRole": "window_start",
+        "sourceWindowOwners": [
+          {
+            "kind": "task",
+            "entityId": "T1"
+          },
+          {
+            "kind": "task",
+            "entityId": "T2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "time:source:059c9db7:draft:1:P2",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": "task:source:059c9db7:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:059c9db7:draft:1:T1",
+        "task:source:059c9db7:draft:1:T2"
+      ],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "2026年11月12日17:00",
+      "normalizedValue": "2026-11-12T17:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T10:38:14.958Z",
+      "updatedAt": "2026-10-08T10:38:14.958Z",
+      "legacyData": {
+        "recognitionTempId": "P2",
+        "evidenceIds": [
+          "d26-scope-0002-91c7b565fb2645315360ece71ac689834a6c8961fe46b21774030eca60f117db"
+        ],
+        "confidence": 1,
+        "sourceTimeRole": "window_end",
+        "sourceWindowOwners": [
+          {
+            "kind": "task",
+            "entityId": "T1"
+          },
+          {
+            "kind": "task",
+            "entityId": "T2"
+          }
+        ]
+      }
+    }
+  ],
+  "sourceFactsNotInvented": true
+}

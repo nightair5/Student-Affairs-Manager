@@ -1,0 +1,292 @@
+{
+  "schemaVersion": "rco-5-010-seen-b9-replay-result-1.0.0",
+  "stage": "RCO-5-010-CLOSE",
+  "classification": "SEEN_B9_DIAGNOSTIC_REPLAY",
+  "datasetId": "rco-5-009-b9-development-20260904",
+  "accounting": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "verifierCalls": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE",
+    "pipelineRuns": 1,
+    "casePipelineExecutions": 12,
+    "costCny": 0
+  },
+  "protectedInputFreezeChecks": [
+    {
+      "path": "docs/recognition-optimization/RCO-5-009-B9_DATA_FREEZE.json",
+      "sha256": "f1f303746007487318ce00375159be21e19bb730860e6d585a9fe9334c3fed16",
+      "checked": 7,
+      "issues": []
+    },
+    {
+      "path": "docs/recognition-optimization/RCO-5-009-B9_ZERO_CALL_RESULT_FREEZE.json",
+      "sha256": "cfb4df11038d15c796472202affb35c57d36dd61bedd52220ad22e26ffd8ae42",
+      "checked": 5,
+      "issues": []
+    }
+  ],
+  "historicalB9": {
+    "gate": "FAIL",
+    "gateFailures": [
+      "requiresActionExact:0.9166666666666666<1",
+      "EXPECTED_COUNTS_DO_NOT_MATCH_DATA_FREEZE"
+    ],
+    "changed": false,
+    "rerun": false
+  },
+  "countComparison": {
+    "exact": true,
+    "expected": {
+      "accepted_local": 11,
+      "accepted_model": 2,
+      "ignored_local": 1,
+      "ignored_model": 2,
+      "quarantined": 3
+    },
+    "actual": {
+      "accepted_local": 11,
+      "accepted_model": 2,
+      "ignored_local": 1,
+      "ignored_model": 2,
+      "quarantined": 3
+    },
+    "issues": []
+  },
+  "implementationExpectation": {
+    "caseCount": 12,
+    "requiresActionCorrect": 11,
+    "requiresActionMismatches": [
+      {
+        "caseId": "rco-task-b9-07",
+        "expected": false,
+        "actual": null
+      }
+    ]
+  },
+  "semanticTruth": {
+    "status": "NOT_AVAILABLE",
+    "scoredCases": 0,
+    "accuracy": null,
+    "reason": "B9_EXPECTED_IS_NOT_AN_INDEPENDENT_NO_CONTEXT_SEMANTIC_TRUTH_SET"
+  },
+  "safety": {
+    "validationIssueCount": 0,
+    "extraDefaultSelectionCount": 0,
+    "unsafeDefaultSelectionCount": 0
+  },
+  "knownLimitations": {
+    "b907": "AMBIGUOUS_PROPOSITION_REMAINS_NULL_AND_IS_NOT_FORCED_TO_MATCH_FROZEN_FALSE",
+    "b912": "NOT_SEMANTICALLY_SCOREABLE"
+  },
+  "diagnosticGate": "PASS",
+  "decision": "RCO_5_010_SEEN_DIAGNOSTIC_PASS_B9_HISTORICAL_FAIL_REMAINS",
+  "claimsBlocked": [
+    "MODEL_ACCURACY",
+    "UNSEEN_GENERALIZATION",
+    "OCR_OR_VISION_QUALITY",
+    "PRODUCTION_READINESS"
+  ],
+  "stablePath": "NOT_CONNECTED",
+  "rco6": "NOT_STARTED",
+  "deployment": "NOT_RUN",
+  "cases": [
+    {
+      "caseId": "rco-task-b9-01",
+      "implementationExpectedRequiresAction": null,
+      "actualRequiresAction": null,
+      "validationIssues": [],
+      "actualSelectedIds": [],
+      "expectedSelectedIds": [],
+      "extraDefaultSelectionIds": [],
+      "unsafeDefaultSelectionIds": [],
+      "confirmedNonTaskCandidateIds": [],
+      "unresolvedCandidateIds": [
+        "action:local-action-candidate-policy-1.2.0:36008c655efa:0:2"
+      ],
+      "resolvedNonActionScopeIds": []
+    },
+    {
+      "caseId": "rco-task-b9-02",
+      "implementationExpectedRequiresAction": false,
+      "actualRequiresAction": false,
+      "validationIssues": [],
+      "actualSelectedIds": [],
+      "expectedSelectedIds": [],
+      "extraDefaultSelectionIds": [],
+      "unsafeDefaultSelectionIds": [],
+      "confirmedNonTaskCandidateIds": [],
+      "unresolvedCandidateIds": [],
+      "resolvedNonActionScopeIds": []
+    },
+    {
+      "caseId": "rco-task-b9-03",
+      "implementationExpectedRequiresAction": true,
+      "actualRequiresAction": true,
+      "validationIssues": [],
+      "actualSelectedIds": [
+        "action:local-action-candidate-policy-1.2.0:815c266ca9e6:1:3"
+      ],
+      "expectedSelectedIds": [
+        "action:local-action-candidate-policy-1.2.0:815c266ca9e6:1:3"
+      ],
+      "extraDefaultSelectionIds": [],
+      "unsafeDefaultSelectionIds": [],
+      "confirmedNonTaskCandidateIds": [],
+      "unresolvedCandidateIds": [
+        "action:local-action-candidate-policy-1.2.0:815c266ca9e6:3:5"
+      ],
+      "resolvedNonActionScopeIds": []
+    },
+    {
+      "caseId": "rco-task-b9-04",
+      "implementationExpectedRequiresAction": null,
+      "actualRequiresAction": null,
+      "validationIssues": [],
+      "actualSelectedIds": [],
+      "expectedSelectedIds": [],
+      "extraDefaultSelectionIds": [],
+      "unsafeDefaultSelectionIds": [],
+      "confirmedNonTaskCandidateIds": [],
+      "unresolvedCandidateIds": [
+        "action:local-action-candidate-policy-1.2.0:8643a6b4e767:1:3"
+      ],
+      "resolvedNonActionScopeIds": []
+    },
+    {
+      "caseId": "rco-task-b9-05",
+      "implementationExpectedRequiresAction": true,
+      "actualRequiresAction": true,
+      "validationIssues": [],
+      "actualSelectedIds": [
+        "action:local-action-candidate-policy-1.2.0:8c1646689842:1:3",
+        "action:local-action-candidate-policy-1.2.0:8c1646689842:8:10"
+      ],
+      "expectedSelectedIds": [
+        "action:local-action-candidate-policy-1.2.0:8c1646689842:1:3",
+        "action:local-action-candidate-policy-1.2.0:8c1646689842:8:10"
+      ],
+      "extraDefaultSelectionIds": [],
+      "unsafeDefaultSelectionIds": [],
+      "confirmedNonTaskCandidateIds": [],
+      "unresolvedCandidateIds": [],
+      "resolvedNonActionScopeIds": []
+    },
+    {
+      "caseId": "rco-task-b9-06",
+      "implementationExpectedRequiresAction": true,
+      "actualRequiresAction": true,
+      "validationIssues": [],
+      "actualSelectedIds": [
+        "action:local-action-candidate-policy-1.2.0:90f895581010:1:3"
+      ],
+      "expectedSelectedIds": [
+        "action:local-action-candidate-policy-1.2.0:90f895581010:1:3"
+      ],
+      "extraDefaultSelectionIds": [],
+      "unsafeDefaultSelectionIds": [],
+      "confirmedNonTaskCandidateIds": [],
+      "unresolvedCandidateIds": [
+        "action:local-action-candidate-policy-1.2.0:90f895581010:10:12"
+      ],
+      "resolvedNonActionScopeIds": []
+    },
+    {
+      "caseId": "rco-task-b9-07",
+      "implementationExpectedRequiresAction": false,
+      "actualRequiresAction": null,
+      "validationIssues": [],
+      "actualSelectedIds": [],
+      "expectedSelectedIds": [],
+      "extraDefaultSelectionIds": [],
+      "unsafeDefaultSelectionIds": [],
+      "confirmedNonTaskCandidateIds": [],
+      "unresolvedCandidateIds": [
+        "action:local-action-candidate-policy-1.2.0:d36ba7a3997f:9:11",
+        "action:local-action-candidate-policy-1.2.0:d36ba7a3997f:16:18"
+      ],
+      "resolvedNonActionScopeIds": []
+    },
+    {
+      "caseId": "rco-task-b9-08",
+      "implementationExpectedRequiresAction": true,
+      "actualRequiresAction": true,
+      "validationIssues": [],
+      "actualSelectedIds": [
+        "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:28:30"
+      ],
+      "expectedSelectedIds": [
+        "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:28:30"
+      ],
+      "extraDefaultSelectionIds": [],
+      "unsafeDefaultSelectionIds": [],
+      "confirmedNonTaskCandidateIds": [],
+      "unresolvedCandidateIds": [],
+      "resolvedNonActionScopeIds": []
+    },
+    {
+      "caseId": "rco-task-b9-09",
+      "implementationExpectedRequiresAction": null,
+      "actualRequiresAction": null,
+      "validationIssues": [],
+      "actualSelectedIds": [],
+      "expectedSelectedIds": [],
+      "extraDefaultSelectionIds": [],
+      "unsafeDefaultSelectionIds": [],
+      "confirmedNonTaskCandidateIds": [],
+      "unresolvedCandidateIds": [],
+      "resolvedNonActionScopeIds": []
+    },
+    {
+      "caseId": "rco-task-b9-10",
+      "implementationExpectedRequiresAction": true,
+      "actualRequiresAction": true,
+      "validationIssues": [],
+      "actualSelectedIds": [
+        "action:local-action-candidate-policy-1.2.0:84e1a5baaa9e:14:16"
+      ],
+      "expectedSelectedIds": [
+        "action:local-action-candidate-policy-1.2.0:84e1a5baaa9e:14:16"
+      ],
+      "extraDefaultSelectionIds": [],
+      "unsafeDefaultSelectionIds": [],
+      "confirmedNonTaskCandidateIds": [],
+      "unresolvedCandidateIds": [],
+      "resolvedNonActionScopeIds": []
+    },
+    {
+      "caseId": "rco-task-b9-11",
+      "implementationExpectedRequiresAction": true,
+      "actualRequiresAction": true,
+      "validationIssues": [],
+      "actualSelectedIds": [
+        "action:local-action-candidate-policy-1.2.0:0be8b1e3e070:1:3"
+      ],
+      "expectedSelectedIds": [
+        "action:local-action-candidate-policy-1.2.0:0be8b1e3e070:1:3"
+      ],
+      "extraDefaultSelectionIds": [],
+      "unsafeDefaultSelectionIds": [],
+      "confirmedNonTaskCandidateIds": [],
+      "unresolvedCandidateIds": [],
+      "resolvedNonActionScopeIds": []
+    },
+    {
+      "caseId": "rco-task-b9-12",
+      "implementationExpectedRequiresAction": null,
+      "actualRequiresAction": null,
+      "validationIssues": [],
+      "actualSelectedIds": [],
+      "expectedSelectedIds": [],
+      "extraDefaultSelectionIds": [],
+      "unsafeDefaultSelectionIds": [],
+      "confirmedNonTaskCandidateIds": [],
+      "unresolvedCandidateIds": [
+        "action:local-action-candidate-policy-1.2.0:9df9155bcbdd:9:11"
+      ],
+      "resolvedNonActionScopeIds": []
+    }
+  ]
+}

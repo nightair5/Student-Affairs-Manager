@@ -1,0 +1,1214 @@
+{
+  "version": "primary-support-1.0.0_context-1.2.0_post-output-engineering",
+  "notNewModelOutputs": true,
+  "inferredFacts": 0,
+  "records": [
+    {
+      "ordinal": 1,
+      "sourceId": "role-development-RA-01",
+      "candidate": "ObligationAuthority",
+      "responseSha256": "6c0481eeb2fdf282531600bc2d917d268d67e4c2bac39eea9a0b9a8bf38d68bb",
+      "decodeError": null,
+      "displayAvailable": true,
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-obligation-authority-1.0.0",
+        "modelName": "ObligationAuthority 固定录制（非实时调用）",
+        "createdAt": "2026-10-08T16:30:00+08:00",
+        "sourceSummary": {
+          "title": "报名图像解读交流会",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，1项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "报名图像解读交流会",
+            "description": "有意参加者可通过预约二维码报名图像解读交流会，\n报名截止为2026年12月14日16:20。",
+            "completionCriteria": [
+              "通过预约二维码完成图像解读交流会报名"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [
+              "material-reservation-qr-code"
+            ],
+            "timePointTempIds": [
+              "time-registration-deadline"
+            ],
+            "tempId": "task-register-image-interpretation-exchange",
+            "actionVerb": "报名",
+            "actionObject": "图像解读交流会",
+            "evidenceIds": [
+              "d26-scope-0002-88f75d9c94af622fab7d867816532b76d5dd35cecc5269680526910cfdf270e2",
+              "d26-scope-0003-f720c382efbc57e09d6ac5720848bdfe6ccc9935339637d27a8013b854484ba9"
+            ],
+            "inferenceLevel": "optional_suggestion",
+            "selected": false
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-reservation-qr-code",
+            "name": "预约二维码",
+            "required": true,
+            "formatRequirements": [],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-register-image-interpretation-exchange"
+            ],
+            "confidence": 0.9,
+            "evidenceIds": [
+              "d26-scope-0002-88f75d9c94af622fab7d867816532b76d5dd35cecc5269680526910cfdf270e2"
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-registration-deadline",
+            "type": "registration_deadline",
+            "rawText": "报名截止为2026年12月14日16:20。",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [
+              "task-register-image-interpretation-exchange"
+            ],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-12-14T16:20",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-f720c382efbc57e09d6ac5720848bdfe6ccc9935339637d27a8013b854484ba9"
+            ]
+          },
+          {
+            "tempId": "time-event-start",
+            "type": "event_start",
+            "rawText": "图像解读交流会于2026年12月16日10:10开始，",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-12-16T10:10",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0004-641fb6b8aacba517ac1156d375dea0fe89d2ce56e3260a7b2f02cacdabb8c8e2"
+            ]
+          },
+          {
+            "tempId": "time-event-end-unpublished",
+            "type": "event_end",
+            "rawText": "结束时间尚未公布。",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0005-737a32521b18ff66141c3686ae76c432ef2241bb54e16a1e9c19c99335483626"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event-image-interpretation-exchange",
+            "title": "图像解读交流会",
+            "description": "图像解读交流会面向在读本科生。\n有意参加者可通过预约二维码报名图像解读交流会，\n图像解读交流会于2026年12月16日10:10开始，\n结束时间尚未公布。",
+            "startTimePointTempId": "time-event-start",
+            "relatedTaskTempIds": [
+              "task-register-image-interpretation-exchange"
+            ],
+            "endTimePointTempId": "time-event-end-unpublished",
+            "location": null,
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0001-a78832771eecb35482064e52d34e32e21cbd11313ec1a5891f639658e14fa88d",
+              "d26-scope-0002-88f75d9c94af622fab7d867816532b76d5dd35cecc5269680526910cfdf270e2",
+              "d26-scope-0004-641fb6b8aacba517ac1156d375dea0fe89d2ce56e3260a7b2f02cacdabb8c8e2",
+              "d26-scope-0005-737a32521b18ff66141c3686ae76c432ef2241bb54e16a1e9c19c99335483626"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-a78832771eecb35482064e52d34e32e21cbd11313ec1a5891f639658e14fa88d",
+            "sourceId": "role-development-RA-01",
+            "quote": "图像解读交流会面向在读本科生。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-88f75d9c94af622fab7d867816532b76d5dd35cecc5269680526910cfdf270e2",
+            "sourceId": "role-development-RA-01",
+            "quote": "有意参加者可通过预约二维码报名图像解读交流会，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-f720c382efbc57e09d6ac5720848bdfe6ccc9935339637d27a8013b854484ba9",
+            "sourceId": "role-development-RA-01",
+            "quote": "报名截止为2026年12月14日16:20。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-641fb6b8aacba517ac1156d375dea0fe89d2ce56e3260a7b2f02cacdabb8c8e2",
+            "sourceId": "role-development-RA-01",
+            "quote": "图像解读交流会于2026年12月16日10:10开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-737a32521b18ff66141c3686ae76c432ef2241bb54e16a1e9c19c99335483626",
+            "sourceId": "role-development-RA-01",
+            "quote": "结束时间尚未公布。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-register-image-interpretation-exchange"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "material-channel:material-reservation-qr-code",
+            "type": "other",
+            "message": "预约二维码的提交渠道“预约二维码”缺少同对象的明确依据；请核对关联事项。",
+            "entityTempIds": [
+              "material-reservation-qr-code",
+              "task-register-image-interpretation-exchange"
+            ],
+            "evidenceIds": [
+              "d26-scope-0002-88f75d9c94af622fab7d867816532b76d5dd35cecc5269680526910cfdf270e2",
+              "d26-scope-0003-f720c382efbc57e09d6ac5720848bdfe6ccc9935339637d27a8013b854484ba9"
+            ],
+            "requiresDecision": true
+          }
+        ],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "图像解读交流会面向在读本科生。",
+            "reason": "other"
+          },
+          {
+            "text": "报名截止为2026年12月14日16:20。",
+            "reason": "other"
+          },
+          {
+            "text": "结束时间尚未公布。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。",
+            "预约二维码的提交渠道“预约二维码”缺少同对象的明确依据；请核对关联事项。"
+          ]
+        }
+      },
+      "conversionVersions": {
+        "post": "authority-support-context-1.2.0/authority-endpoint-composition-1.1.0/authority-primary-support-index-1.0.0",
+        "primary": "authority-primary-support-index-1.0.0",
+        "window": "source-window-endpoints-1.2.0"
+      }
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "role-development-RA-01",
+      "candidate": "RoleAuthority",
+      "responseSha256": "5083bfad2d5cc5486cf02bc5883fac347fb9ac0283084434354160e9ff883f31",
+      "decodeError": null,
+      "displayAvailable": true,
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-role-authority-1.0.0",
+        "modelName": "RoleAuthority 固定录制（非实时调用）",
+        "createdAt": "2026-10-08T16:30:00+08:00",
+        "sourceSummary": {
+          "title": "报名图像解读交流会",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，1项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "报名图像解读交流会",
+            "description": "有意参加者可通过预约二维码报名图像解读交流会，\n报名截止为2026年12月14日16:20。",
+            "completionCriteria": [
+              "通过预约二维码完成图像解读交流会报名"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [
+              "time-0001"
+            ],
+            "tempId": "task-register-0001",
+            "actionVerb": "报名",
+            "actionObject": "图像解读交流会",
+            "evidenceIds": [
+              "d26-scope-0002-88f75d9c94af622fab7d867816532b76d5dd35cecc5269680526910cfdf270e2",
+              "d26-scope-0003-f720c382efbc57e09d6ac5720848bdfe6ccc9935339637d27a8013b854484ba9"
+            ],
+            "inferenceLevel": "optional_suggestion",
+            "selected": false
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "registration_deadline",
+            "rawText": "2026年12月14日16:20",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [
+              "task-register-0001"
+            ],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-12-14T16:20",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-f720c382efbc57e09d6ac5720848bdfe6ccc9935339637d27a8013b854484ba9"
+            ]
+          },
+          {
+            "tempId": "time-0002",
+            "type": "event_start",
+            "rawText": "2026年12月16日10:10",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-12-16T10:10",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0004-641fb6b8aacba517ac1156d375dea0fe89d2ce56e3260a7b2f02cacdabb8c8e2"
+            ]
+          },
+          {
+            "tempId": "time-0003",
+            "type": "event_end",
+            "rawText": "结束时间尚未公布",
+            "confidence": 0.9,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0005-737a32521b18ff66141c3686ae76c432ef2241bb54e16a1e9c19c99335483626"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "图像解读交流会",
+            "description": "图像解读交流会面向在读本科生。\n有意参加者可通过预约二维码报名图像解读交流会，\n图像解读交流会于2026年12月16日10:10开始，\n结束时间尚未公布。",
+            "startTimePointTempId": "time-0002",
+            "relatedTaskTempIds": [
+              "task-register-0001"
+            ],
+            "endTimePointTempId": "time-0003",
+            "location": null,
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0001-a78832771eecb35482064e52d34e32e21cbd11313ec1a5891f639658e14fa88d",
+              "d26-scope-0002-88f75d9c94af622fab7d867816532b76d5dd35cecc5269680526910cfdf270e2",
+              "d26-scope-0004-641fb6b8aacba517ac1156d375dea0fe89d2ce56e3260a7b2f02cacdabb8c8e2",
+              "d26-scope-0005-737a32521b18ff66141c3686ae76c432ef2241bb54e16a1e9c19c99335483626"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-a78832771eecb35482064e52d34e32e21cbd11313ec1a5891f639658e14fa88d",
+            "sourceId": "role-development-RA-01",
+            "quote": "图像解读交流会面向在读本科生。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-88f75d9c94af622fab7d867816532b76d5dd35cecc5269680526910cfdf270e2",
+            "sourceId": "role-development-RA-01",
+            "quote": "有意参加者可通过预约二维码报名图像解读交流会，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-f720c382efbc57e09d6ac5720848bdfe6ccc9935339637d27a8013b854484ba9",
+            "sourceId": "role-development-RA-01",
+            "quote": "报名截止为2026年12月14日16:20。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-641fb6b8aacba517ac1156d375dea0fe89d2ce56e3260a7b2f02cacdabb8c8e2",
+            "sourceId": "role-development-RA-01",
+            "quote": "图像解读交流会于2026年12月16日10:10开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-737a32521b18ff66141c3686ae76c432ef2241bb54e16a1e9c19c99335483626",
+            "sourceId": "role-development-RA-01",
+            "quote": "结束时间尚未公布。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-register-0001"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "图像解读交流会面向在读本科生。",
+            "reason": "other"
+          },
+          {
+            "text": "报名截止为2026年12月14日16:20。",
+            "reason": "other"
+          },
+          {
+            "text": "结束时间尚未公布。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。"
+          ]
+        }
+      },
+      "conversionVersions": {
+        "post": "authority-support-context-1.2.0/authority-endpoint-composition-1.1.0/authority-primary-support-index-1.0.0",
+        "primary": "authority-primary-support-index-1.0.0",
+        "window": "source-window-endpoints-1.2.0"
+      }
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "role-development-RA-02",
+      "candidate": "RoleAuthority",
+      "responseSha256": "52a48114409cc15527b3d9777f6a2a07bb3f2286a6e61d64df27ebc3bf96abdb",
+      "decodeError": null,
+      "displayAvailable": true,
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-role-authority-1.0.0",
+        "modelName": "RoleAuthority 固定录制（非实时调用）",
+        "createdAt": "2026-10-08T16:30:00+08:00",
+        "sourceSummary": {
+          "title": "测试耳机",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "2项任务，1项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "测试耳机",
+            "description": "取得音像研习班录取资格的学员需先测试耳机。",
+            "completionCriteria": [
+              "完成耳机测试"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-test-headphones",
+            "actionVerb": "测试耳机",
+            "actionObject": "耳机",
+            "evidenceIds": [
+              "d26-scope-0001-4a0fc1fb1b730b701adb77df8739d0661c9199fa82dd69729dbf83a6a461f746"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          },
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "安装音像研习班会议软件",
+            "description": "测试完成后安装音像研习班会议软件。",
+            "completionCriteria": [
+              "完成音像研习班会议软件的安装"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [
+              "task-test-headphones"
+            ],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-install-meeting-software",
+            "actionVerb": "安装音像研习班会议软件",
+            "actionObject": "音像研习班会议软件",
+            "evidenceIds": [
+              "d26-scope-0002-de703e1d69d6a22354532e07e0cea9152d204d75c1ebfef887c7a742b78771c6"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "time-event-start",
+            "type": "event_start",
+            "rawText": "2026年12月18日13:25开始",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-12-18T13:25",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-5dd642853cc9849b6a4046ec2700f68f7f1c22086aed991d5bbde0318e2f9364"
+            ]
+          },
+          {
+            "tempId": "time-event-end",
+            "type": "event_end",
+            "rawText": "14:55结束",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-12-18T14:55",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0004-5ddbecea1136927cf072ec57e84193a798ca5514f6ae6b41c5b7e1ab109c99e7"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event-audio-video-workshop",
+            "title": "音像研习班",
+            "description": "音像研习班于2026年12月18日13:25开始，\n14:55结束。",
+            "startTimePointTempId": "time-event-start",
+            "endTimePointTempId": "time-event-end",
+            "location": null,
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0003-5dd642853cc9849b6a4046ec2700f68f7f1c22086aed991d5bbde0318e2f9364",
+              "d26-scope-0004-5ddbecea1136927cf072ec57e84193a798ca5514f6ae6b41c5b7e1ab109c99e7"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-4a0fc1fb1b730b701adb77df8739d0661c9199fa82dd69729dbf83a6a461f746",
+            "sourceId": "role-development-RA-02",
+            "quote": "取得音像研习班录取资格的学员需先测试耳机。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-de703e1d69d6a22354532e07e0cea9152d204d75c1ebfef887c7a742b78771c6",
+            "sourceId": "role-development-RA-02",
+            "quote": "测试完成后安装音像研习班会议软件。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-5dd642853cc9849b6a4046ec2700f68f7f1c22086aed991d5bbde0318e2f9364",
+            "sourceId": "role-development-RA-02",
+            "quote": "音像研习班于2026年12月18日13:25开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-5ddbecea1136927cf072ec57e84193a798ca5514f6ae6b41c5b7e1ab109c99e7",
+            "sourceId": "role-development-RA-02",
+            "quote": "14:55结束。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-2514a9d0cdf6999a97347768c56f252df2930a052ff71443203b87e487519402",
+            "sourceId": "role-development-RA-02",
+            "quote": "原文未说明任何人的录取或测试完成情况。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-test-headphones"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-1",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-install-meeting-software"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "原文未说明任何人的录取或测试完成情况。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。"
+          ]
+        }
+      },
+      "conversionVersions": {
+        "post": "authority-support-context-1.2.0/authority-endpoint-composition-1.1.0/authority-primary-support-index-1.0.0",
+        "primary": "authority-primary-support-index-1.0.0",
+        "window": "source-window-endpoints-1.2.0"
+      }
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "role-development-RA-02",
+      "candidate": "ObligationAuthority",
+      "responseSha256": "97b78909a10455b2d17af827db166612234b173593b2cabf2e411f4835cc9970",
+      "decodeError": null,
+      "displayAvailable": true,
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-obligation-authority-1.0.0",
+        "modelName": "ObligationAuthority 固定录制（非实时调用）",
+        "createdAt": "2026-10-08T16:30:00+08:00",
+        "sourceSummary": {
+          "title": "测试耳机",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "2项任务，1项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "测试耳机",
+            "description": "取得音像研习班录取资格的学员需先测试耳机。",
+            "completionCriteria": [
+              "耳机测试完成"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-test-headphones",
+            "actionVerb": "测试",
+            "actionObject": "耳机",
+            "evidenceIds": [
+              "d26-scope-0001-4a0fc1fb1b730b701adb77df8739d0661c9199fa82dd69729dbf83a6a461f746"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          },
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "安装音像研习班会议软件",
+            "description": "测试完成后安装音像研习班会议软件。",
+            "completionCriteria": [
+              "音像研习班会议软件安装完成"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [
+              "task-test-headphones"
+            ],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-install-meeting-software",
+            "actionVerb": "安装",
+            "actionObject": "音像研习班会议软件",
+            "evidenceIds": [
+              "d26-scope-0002-de703e1d69d6a22354532e07e0cea9152d204d75c1ebfef887c7a742b78771c6"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "time-event-start",
+            "type": "event_start",
+            "rawText": "2026年12月18日13:25开始",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-12-18T13:25",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-5dd642853cc9849b6a4046ec2700f68f7f1c22086aed991d5bbde0318e2f9364"
+            ]
+          },
+          {
+            "tempId": "time-event-end",
+            "type": "event_end",
+            "rawText": "14:55结束",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-12-18T14:55",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0004-5ddbecea1136927cf072ec57e84193a798ca5514f6ae6b41c5b7e1ab109c99e7"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event-audio-visual-workshop",
+            "title": "音像研习班",
+            "description": "音像研习班于2026年12月18日13:25开始，\n14:55结束。",
+            "startTimePointTempId": "time-event-start",
+            "endTimePointTempId": "time-event-end",
+            "location": null,
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0003-5dd642853cc9849b6a4046ec2700f68f7f1c22086aed991d5bbde0318e2f9364",
+              "d26-scope-0004-5ddbecea1136927cf072ec57e84193a798ca5514f6ae6b41c5b7e1ab109c99e7"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-4a0fc1fb1b730b701adb77df8739d0661c9199fa82dd69729dbf83a6a461f746",
+            "sourceId": "role-development-RA-02",
+            "quote": "取得音像研习班录取资格的学员需先测试耳机。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-de703e1d69d6a22354532e07e0cea9152d204d75c1ebfef887c7a742b78771c6",
+            "sourceId": "role-development-RA-02",
+            "quote": "测试完成后安装音像研习班会议软件。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-5dd642853cc9849b6a4046ec2700f68f7f1c22086aed991d5bbde0318e2f9364",
+            "sourceId": "role-development-RA-02",
+            "quote": "音像研习班于2026年12月18日13:25开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-5ddbecea1136927cf072ec57e84193a798ca5514f6ae6b41c5b7e1ab109c99e7",
+            "sourceId": "role-development-RA-02",
+            "quote": "14:55结束。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-2514a9d0cdf6999a97347768c56f252df2930a052ff71443203b87e487519402",
+            "sourceId": "role-development-RA-02",
+            "quote": "原文未说明任何人的录取或测试完成情况。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "event-link-risk-0",
+            "type": "other",
+            "message": "该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。",
+            "entityTempIds": [
+              "task-install-meeting-software"
+            ],
+            "requiresDecision": true,
+            "evidenceIds": [
+              "d26-scope-0002-de703e1d69d6a22354532e07e0cea9152d204d75c1ebfef887c7a742b78771c6"
+            ]
+          },
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-test-headphones"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-1",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-install-meeting-software"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "原文未说明任何人的录取或测试完成情况。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。",
+            "该事项与活动的关联依据不完整，关联暂不采用；已有活动和无关联风险的内容仍可单独保存。"
+          ]
+        }
+      },
+      "conversionVersions": {
+        "post": "authority-support-context-1.2.0/authority-endpoint-composition-1.1.0/authority-primary-support-index-1.0.0",
+        "primary": "authority-primary-support-index-1.0.0",
+        "window": "source-window-endpoints-1.2.0"
+      }
+    },
+    {
+      "ordinal": 5,
+      "sourceId": "role-development-RA-03",
+      "candidate": "ObligationAuthority",
+      "responseSha256": "1afb7b0c1e15f2f61a1968c6eceaa32082bd11e75e9243f2e9eb51869cd04ce1",
+      "decodeError": null,
+      "displayAvailable": true,
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-obligation-authority-1.0.0",
+        "modelName": "ObligationAuthority 固定录制（非实时调用）",
+        "createdAt": "2026-10-08T16:30:00+08:00",
+        "sourceSummary": {
+          "title": "激活借用账号",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "2项任务，0项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "激活借用账号",
+            "description": "请在指定时间内激活借用账号并填写借用登记。\n两项操作均在该办理窗口内完成，\n不设具体截止时刻，\n也未要求两项操作按先后顺序。",
+            "completionCriteria": [
+              "借用账号激活完成"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [
+              "time-window-20261220-23",
+              "time-window-end-20261223"
+            ],
+            "tempId": "task-activate-account",
+            "actionVerb": "激活",
+            "actionObject": "借用账号",
+            "evidenceIds": [
+              "d26-scope-0003-25e8a903063dda195fa7d10225ca69d8faeee1bce618eace9585752a3699eb7e",
+              "d26-scope-0004-acadc1eb308ac132c2d50af22e69b7494d654e8651a431399caa911657e75045",
+              "d26-scope-0005-719bf8600bb59b7a688b7f0c0e0d56f3a29a00a0e505670dea7f98b94f1a24f9",
+              "d26-scope-0006-b888c2088f794fb3acac5975e3eda9edb04db5afe53abb403d75fa941d91ab29"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          },
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "填写借用登记",
+            "description": "请在指定时间内激活借用账号并填写借用登记。\n两项操作均在该办理窗口内完成，\n不设具体截止时刻，\n也未要求两项操作按先后顺序。",
+            "completionCriteria": [
+              "借用登记填写完成"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [
+              "time-window-20261220-23",
+              "time-window-end-20261223"
+            ],
+            "tempId": "task-fill-borrow-registration",
+            "actionVerb": "填写",
+            "actionObject": "借用登记",
+            "evidenceIds": [
+              "d26-scope-0003-25e8a903063dda195fa7d10225ca69d8faeee1bce618eace9585752a3699eb7e",
+              "d26-scope-0004-acadc1eb308ac132c2d50af22e69b7494d654e8651a431399caa911657e75045",
+              "d26-scope-0005-719bf8600bb59b7a688b7f0c0e0d56f3a29a00a0e505670dea7f98b94f1a24f9",
+              "d26-scope-0006-b888c2088f794fb3acac5975e3eda9edb04db5afe53abb403d75fa941d91ab29"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "time-window-20261220-23",
+            "type": "event_start",
+            "rawText": "2026年12月20—23日",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [
+              "task-activate-account",
+              "task-fill-borrow-registration"
+            ],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-12-20",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": true,
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0002-eb287a95043978267f129d4954131b4d1361270ff92e0ffba55a0a682036bf4c",
+              "d26-scope-0004-acadc1eb308ac132c2d50af22e69b7494d654e8651a431399caa911657e75045"
+            ]
+          },
+          {
+            "tempId": "time-window-end-20261223",
+            "type": "event_end",
+            "rawText": "2026年12月20—23日",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [
+              "task-activate-account",
+              "task-fill-borrow-registration"
+            ],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-12-23",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": true,
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0002-eb287a95043978267f129d4954131b4d1361270ff92e0ffba55a0a682036bf4c",
+              "d26-scope-0004-acadc1eb308ac132c2d50af22e69b7494d654e8651a431399caa911657e75045"
+            ]
+          }
+        ],
+        "events": [],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-2f1374357f6bbde67da01f84bdcf32a583538eb7eff12ee3761c7b2fad48be4f",
+            "sourceId": "role-development-RA-03",
+            "quote": "校园借用系统办理窗口如下：",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-eb287a95043978267f129d4954131b4d1361270ff92e0ffba55a0a682036bf4c",
+            "sourceId": "role-development-RA-03",
+            "quote": "2026年12月20—23日。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-25e8a903063dda195fa7d10225ca69d8faeee1bce618eace9585752a3699eb7e",
+            "sourceId": "role-development-RA-03",
+            "quote": "请在指定时间内激活借用账号并填写借用登记。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-acadc1eb308ac132c2d50af22e69b7494d654e8651a431399caa911657e75045",
+            "sourceId": "role-development-RA-03",
+            "quote": "两项操作均在该办理窗口内完成，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-719bf8600bb59b7a688b7f0c0e0d56f3a29a00a0e505670dea7f98b94f1a24f9",
+            "sourceId": "role-development-RA-03",
+            "quote": "不设具体截止时刻，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-b888c2088f794fb3acac5975e3eda9edb04db5afe53abb403d75fa941d91ab29",
+            "sourceId": "role-development-RA-03",
+            "quote": "也未要求两项操作按先后顺序。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-activate-account"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-1",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-fill-borrow-registration"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "校园借用系统办理窗口如下：",
+            "reason": "other"
+          },
+          {
+            "text": "2026年12月20—23日。",
+            "reason": "other"
+          },
+          {
+            "text": "两项操作均在该办理窗口内完成，",
+            "reason": "other"
+          },
+          {
+            "text": "不设具体截止时刻，",
+            "reason": "other"
+          },
+          {
+            "text": "也未要求两项操作按先后顺序。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。"
+          ]
+        }
+      },
+      "conversionVersions": {
+        "post": "authority-support-context-1.2.0/authority-endpoint-composition-1.1.0/authority-primary-support-index-1.0.0",
+        "primary": "authority-primary-support-index-1.0.0",
+        "window": "source-window-endpoints-1.2.0"
+      }
+    }
+  ]
+}

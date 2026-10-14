@@ -1,0 +1,5444 @@
+{
+  "cases": [
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_TASKS_INVALID",
+      "id": "no-task-information",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F01-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 0
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F01-contract-fixture-r1",
+        "sourceId": "D3-F01",
+        "tasks": null,
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "无任务纯通知",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F01-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 0
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F01-contract-fixture-r1",
+        "sourceId": "D3-F01",
+        "tasks": [],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_LEGACY_SINGLE_IDENTITY",
+      "id": "single-task",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F02-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F02-contract-fixture-r1",
+        "sourceId": "D3-F02",
+        "tasks": [
+          {
+            "action": "提交",
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "单任务",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F02-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F02-contract-fixture-r1",
+        "sourceId": "D3-F02",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_DUPLICATE_TASK_ID",
+      "id": "multi-task",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F03-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 2
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F03-contract-fixture-r1",
+        "sourceId": "D3-F03",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "登记",
+                "object": "匿名对象T2"
+              }
+            ],
+            "actions": [
+              "登记"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T2已登记"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T2完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T2"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：登记"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T2"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "多任务",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F03-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 2
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F03-contract-fixture-r1",
+        "sourceId": "D3-F03",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "登记",
+                "object": "匿名对象T2"
+              }
+            ],
+            "actions": [
+              "登记"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T2已登记"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T2完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T2"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：登记"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T2"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_INACTIVE_CONDITION_ACTIONABLE",
+      "id": "condition-true",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F04-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F04-contract-fixture-r1",
+        "sourceId": "D3-F04",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "确认",
+                "object": "条件为真的结果"
+              }
+            ],
+            "actions": [
+              "确认"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示条件为真的结果已确认"
+              ],
+              "evidence": [
+                "匿名夹具证据：条件为真的结果完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [
+                "匿名夹具证据：条件成立"
+              ],
+              "value": "false"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "条件为真的结果"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：确认"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：条件为真的结果"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "true条件",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F04-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F04-contract-fixture-r1",
+        "sourceId": "D3-F04",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "确认",
+                "object": "条件为真的结果"
+              }
+            ],
+            "actions": [
+              "确认"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示条件为真的结果已确认"
+              ],
+              "evidence": [
+                "匿名夹具证据：条件为真的结果完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [
+                "匿名夹具证据：条件成立"
+              ],
+              "value": "true"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "条件为真的结果"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：确认"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：条件为真的结果"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_INACTIVE_CONDITION_ACTIONABLE",
+      "id": "condition-false",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F05-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F05-contract-fixture-r1",
+        "sourceId": "D3-F05",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "缴纳",
+                "object": "条件为假的费用"
+              }
+            ],
+            "actions": [
+              "缴纳"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示条件为假的费用已缴纳"
+              ],
+              "evidence": [
+                "匿名夹具证据：条件为假的费用完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [
+                "匿名夹具证据：条件不成立"
+              ],
+              "value": "false"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "条件为假的费用"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：缴纳"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：条件为假的费用"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "false条件",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F05-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F05-contract-fixture-r1",
+        "sourceId": "D3-F05",
+        "tasks": [
+          {
+            "actionable": false,
+            "actionObjectAliases": [
+              {
+                "action": "缴纳",
+                "object": "条件为假的费用"
+              }
+            ],
+            "actions": [
+              "缴纳"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示条件为假的费用已缴纳"
+              ],
+              "evidence": [
+                "匿名夹具证据：条件为假的费用完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [
+                "匿名夹具证据：条件不成立"
+              ],
+              "value": "false"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "条件为假的费用"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：缴纳"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：条件为假的费用"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_INACTIVE_CONDITION_ACTIONABLE",
+      "id": "condition-unknown",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F06-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F06-contract-fixture-r1",
+        "sourceId": "D3-F06",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "上传",
+                "object": "条件未知的材料"
+              }
+            ],
+            "actions": [
+              "上传"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示条件未知的材料已上传"
+              ],
+              "evidence": [
+                "匿名夹具证据：条件未知的材料完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [
+                "匿名夹具证据：条件尚未确定"
+              ],
+              "value": "unknown"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "条件未知的材料"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：上传"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：条件未知的材料"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "unknown条件",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F06-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F06-contract-fixture-r1",
+        "sourceId": "D3-F06",
+        "tasks": [
+          {
+            "actionable": false,
+            "actionObjectAliases": [
+              {
+                "action": "上传",
+                "object": "条件未知的材料"
+              }
+            ],
+            "actions": [
+              "上传"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示条件未知的材料已上传"
+              ],
+              "evidence": [
+                "匿名夹具证据：条件未知的材料完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [
+                "匿名夹具证据：条件尚未确定"
+              ],
+              "value": "unknown"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "条件未知的材料"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：上传"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：条件未知的材料"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_DANGLING_TASK_ID",
+      "id": "shared-material",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F07-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 2
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F07-contract-fixture-r1",
+        "sourceId": "D3-F07",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [
+              {
+                "evidence": [
+                  "匿名夹具证据：共享匿名材料"
+                ],
+                "formatRequirements": [],
+                "materialId": "M1",
+                "names": [
+                  "共享匿名材料"
+                ],
+                "namingRequirements": [],
+                "relatedReferenceTaskIds": [
+                  "T1",
+                  "T2",
+                  "MISSING"
+                ],
+                "required": true
+              }
+            ],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "登记",
+                "object": "匿名对象T2"
+              }
+            ],
+            "actions": [
+              "登记"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T2已登记"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T2完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [
+              {
+                "evidence": [
+                  "匿名夹具证据：共享匿名材料"
+                ],
+                "formatRequirements": [],
+                "materialId": "M1",
+                "names": [
+                  "共享匿名材料"
+                ],
+                "namingRequirements": [],
+                "relatedReferenceTaskIds": [
+                  "T1",
+                  "T2"
+                ],
+                "required": true
+              }
+            ],
+            "objects": [
+              "匿名对象T2"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：登记"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T2"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "材料共享",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F07-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 2
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F07-contract-fixture-r1",
+        "sourceId": "D3-F07",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [
+              {
+                "evidence": [
+                  "匿名夹具证据：共享匿名材料"
+                ],
+                "formatRequirements": [],
+                "materialId": "M1",
+                "names": [
+                  "共享匿名材料"
+                ],
+                "namingRequirements": [],
+                "relatedReferenceTaskIds": [
+                  "T1",
+                  "T2"
+                ],
+                "required": true
+              }
+            ],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "登记",
+                "object": "匿名对象T2"
+              }
+            ],
+            "actions": [
+              "登记"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T2已登记"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T2完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [
+              {
+                "evidence": [
+                  "匿名夹具证据：共享匿名材料"
+                ],
+                "formatRequirements": [],
+                "materialId": "M1",
+                "names": [
+                  "共享匿名材料"
+                ],
+                "namingRequirements": [],
+                "relatedReferenceTaskIds": [
+                  "T1",
+                  "T2"
+                ],
+                "required": true
+              }
+            ],
+            "objects": [
+              "匿名对象T2"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：登记"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T2"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_TIME_RAW_INVALID",
+      "id": "exact-time",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F08-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F08-contract-fixture-r1",
+        "sourceId": "D3-F08",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": [
+              {
+                "actionable": true,
+                "evidence": [
+                  "匿名夹具证据：2026年11月1日12:00前"
+                ],
+                "normalizedValues": [
+                  "2026-11-01T12:00:00+08:00"
+                ],
+                "precision": "exact",
+                "rawTexts": [],
+                "relatedReferenceTaskIds": [
+                  "T1"
+                ],
+                "timePointId": "TP1",
+                "type": "deadline"
+              }
+            ]
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "精确时间",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F08-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F08-contract-fixture-r1",
+        "sourceId": "D3-F08",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": [
+              {
+                "actionable": true,
+                "evidence": [
+                  "匿名夹具证据：2026年11月1日12:00前"
+                ],
+                "normalizedValues": [
+                  "2026-11-01T12:00:00+08:00"
+                ],
+                "precision": "exact",
+                "rawTexts": [
+                  "2026年11月1日12:00前"
+                ],
+                "relatedReferenceTaskIds": [
+                  "T1"
+                ],
+                "timePointId": "TP1",
+                "type": "deadline"
+              }
+            ]
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_VAGUE_TIME_NORMALIZED",
+      "id": "vague-time",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F09-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F09-contract-fixture-r1",
+        "sourceId": "D3-F09",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": [
+              {
+                "actionable": true,
+                "evidence": [
+                  "匿名夹具证据：下周前后"
+                ],
+                "normalizedValues": [
+                  "2026-11-01"
+                ],
+                "precision": "vague",
+                "rawTexts": [
+                  "下周前后"
+                ],
+                "relatedReferenceTaskIds": [
+                  "T1"
+                ],
+                "timePointId": "TP1",
+                "type": "deadline"
+              }
+            ]
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "模糊时间",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F09-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F09-contract-fixture-r1",
+        "sourceId": "D3-F09",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": [
+              {
+                "actionable": true,
+                "evidence": [
+                  "匿名夹具证据：下周前后"
+                ],
+                "normalizedValues": [],
+                "precision": "vague",
+                "rawTexts": [
+                  "下周前后"
+                ],
+                "relatedReferenceTaskIds": [
+                  "T1"
+                ],
+                "timePointId": "TP1",
+                "type": "deadline"
+              }
+            ]
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_COMPLETION_STANDARD_EMPTY",
+      "id": "completion-standard",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F10-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F10-contract-fixture-r1",
+        "sourceId": "D3-F10",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "完成标准",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F10-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F10-contract-fixture-r1",
+        "sourceId": "D3-F10",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_DANGLING_TASK_ID",
+      "id": "dependency",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F11-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 2
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F11-contract-fixture-r1",
+        "sourceId": "D3-F11",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "登记",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "登记"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已登记"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：登记"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "上传",
+                "object": "依赖登记的材料"
+              }
+            ],
+            "actions": [
+              "上传"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示依赖登记的材料已上传"
+              ],
+              "evidence": [
+                "匿名夹具证据：依赖登记的材料完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [
+              "MISSING"
+            ],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "依赖登记的材料"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：上传"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：依赖登记的材料"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "任务依赖",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F11-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 2
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F11-contract-fixture-r1",
+        "sourceId": "D3-F11",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "登记",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "登记"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已登记"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：登记"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "上传",
+                "object": "依赖登记的材料"
+              }
+            ],
+            "actions": [
+              "上传"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示依赖登记的材料已上传"
+              ],
+              "evidence": [
+                "匿名夹具证据：依赖登记的材料完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [
+              "T1"
+            ],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "依赖登记的材料"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：上传"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：依赖登记的材料"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_FORBIDDEN_INFERENCE_INVALID",
+      "id": "forbidden-inference",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F12-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F12-contract-fixture-r1",
+        "sourceId": "D3-F12",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [
+              "自然语言检查"
+            ],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "禁止项",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F12-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F12-contract-fixture-r1",
+        "sourceId": "D3-F12",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [
+              {
+                "assertion": {
+                  "operator": "contains",
+                  "path": "objects",
+                  "value": "纸质提交任务"
+                },
+                "code": "NO_PAPER_TASK",
+                "evidence": [
+                  "匿名夹具证据：无需纸质版"
+                ],
+                "kind": "task",
+                "statement": "不得生成纸质提交任务"
+              }
+            ],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_DANGLING_TASK_ID",
+      "id": "single-cancellation",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F13-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F13-contract-fixture-r1",
+        "sourceId": "D3-F13",
+        "tasks": [
+          {
+            "actionable": false,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "被取消的材料"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [
+              {
+                "effective": true,
+                "evidence": [
+                  "匿名夹具证据：取消T1"
+                ],
+                "fromReferenceTaskId": null,
+                "relationId": "R1",
+                "targetReferenceTaskId": "MISSING",
+                "type": "cancels"
+              }
+            ],
+            "completionStandard": {
+              "accepted": [
+                "系统显示被取消的材料已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：被取消的材料完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "被取消的材料"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "cancelled",
+            "semanticValidity": "cancelled",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：被取消的材料"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "单端点取消",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F13-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F13-contract-fixture-r1",
+        "sourceId": "D3-F13",
+        "tasks": [
+          {
+            "actionable": false,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "被取消的材料"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [
+              {
+                "effective": true,
+                "evidence": [
+                  "匿名夹具证据：取消T1"
+                ],
+                "fromReferenceTaskId": null,
+                "relationId": "R1",
+                "targetReferenceTaskId": "T1",
+                "type": "cancels"
+              }
+            ],
+            "completionStandard": {
+              "accepted": [
+                "系统显示被取消的材料已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：被取消的材料完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "被取消的材料"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "cancelled",
+            "semanticValidity": "cancelled",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：被取消的材料"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_DUPLICATE_RELATION_ID",
+      "id": "multi-cancellation",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F14-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 2
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F14-contract-fixture-r1",
+        "sourceId": "D3-F14",
+        "tasks": [
+          {
+            "actionable": false,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "取消对象一"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [
+              {
+                "effective": true,
+                "evidence": [
+                  "匿名夹具证据：取消T1"
+                ],
+                "fromReferenceTaskId": null,
+                "relationId": "R1",
+                "targetReferenceTaskId": "T1",
+                "type": "cancels"
+              }
+            ],
+            "completionStandard": {
+              "accepted": [
+                "系统显示取消对象一已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：取消对象一完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "取消对象一"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "cancelled",
+            "semanticValidity": "cancelled",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：取消对象一"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": false,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "取消对象二"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [
+              {
+                "effective": true,
+                "evidence": [
+                  "匿名夹具证据：取消T2"
+                ],
+                "fromReferenceTaskId": null,
+                "relationId": "R1",
+                "targetReferenceTaskId": "T2",
+                "type": "cancels"
+              }
+            ],
+            "completionStandard": {
+              "accepted": [
+                "系统显示取消对象二已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：取消对象二完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "取消对象二"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "cancelled",
+            "semanticValidity": "cancelled",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：取消对象二"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "多端点取消",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F14-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 2
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F14-contract-fixture-r1",
+        "sourceId": "D3-F14",
+        "tasks": [
+          {
+            "actionable": false,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "取消对象一"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [
+              {
+                "effective": true,
+                "evidence": [
+                  "匿名夹具证据：取消T1"
+                ],
+                "fromReferenceTaskId": null,
+                "relationId": "R1",
+                "targetReferenceTaskId": "T1",
+                "type": "cancels"
+              }
+            ],
+            "completionStandard": {
+              "accepted": [
+                "系统显示取消对象一已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：取消对象一完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "取消对象一"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "cancelled",
+            "semanticValidity": "cancelled",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：取消对象一"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": false,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "取消对象二"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [
+              {
+                "effective": true,
+                "evidence": [
+                  "匿名夹具证据：取消T2"
+                ],
+                "fromReferenceTaskId": null,
+                "relationId": "R2",
+                "targetReferenceTaskId": "T2",
+                "type": "cancels"
+              }
+            ],
+            "completionStandard": {
+              "accepted": [
+                "系统显示取消对象二已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：取消对象二完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "取消对象二"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "cancelled",
+            "semanticValidity": "cancelled",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：取消对象二"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_CROSS_OBJECT_RELATION",
+      "id": "multi-replacement",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F15-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 4
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F15-contract-fixture-r1",
+        "sourceId": "D3-F15",
+        "tasks": [
+          {
+            "actionable": false,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "对象一"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示对象一已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：对象一完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "对象一"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "OLD1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "historical",
+            "semanticValidity": "superseded",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：对象一"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "对象一"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示对象一已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：对象一完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "对象一"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "NEW1",
+            "replacementRelations": [
+              {
+                "effective": true,
+                "evidence": [
+                  "匿名夹具证据：NEW1替代OLD1"
+                ],
+                "fromReferenceTaskId": "NEW1",
+                "relationId": "R1",
+                "targetReferenceTaskId": "OLD2",
+                "type": "replaces"
+              }
+            ],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：对象一"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": false,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "对象二"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示对象二已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：对象二完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "对象二"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "OLD2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "historical",
+            "semanticValidity": "superseded",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：对象二"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "对象二"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示对象二已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：对象二完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "对象二"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "NEW2",
+            "replacementRelations": [
+              {
+                "effective": true,
+                "evidence": [
+                  "匿名夹具证据：NEW2替代OLD2"
+                ],
+                "fromReferenceTaskId": "NEW2",
+                "relationId": "R2",
+                "targetReferenceTaskId": "OLD2",
+                "type": "replaces"
+              }
+            ],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：对象二"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "多端点替代",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F15-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 4
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F15-contract-fixture-r1",
+        "sourceId": "D3-F15",
+        "tasks": [
+          {
+            "actionable": false,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "对象一"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示对象一已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：对象一完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "对象一"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "OLD1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "historical",
+            "semanticValidity": "superseded",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：对象一"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "对象一"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示对象一已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：对象一完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "对象一"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "NEW1",
+            "replacementRelations": [
+              {
+                "effective": true,
+                "evidence": [
+                  "匿名夹具证据：NEW1替代OLD1"
+                ],
+                "fromReferenceTaskId": "NEW1",
+                "relationId": "R1",
+                "targetReferenceTaskId": "OLD1",
+                "type": "replaces"
+              }
+            ],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：对象一"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": false,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "对象二"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示对象二已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：对象二完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "对象二"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "OLD2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "historical",
+            "semanticValidity": "superseded",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：对象二"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "对象二"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示对象二已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：对象二完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "对象二"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "NEW2",
+            "replacementRelations": [
+              {
+                "effective": true,
+                "evidence": [
+                  "匿名夹具证据：NEW2替代OLD2"
+                ],
+                "fromReferenceTaskId": "NEW2",
+                "relationId": "R2",
+                "targetReferenceTaskId": "OLD2",
+                "type": "replaces"
+              }
+            ],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：对象二"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_OBJECTS_INVALID",
+      "id": "legal-split",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F16-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 2
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F16-contract-fixture-r1",
+        "sourceId": "D3-F16",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "填写",
+                "object": "匿名表格"
+              }
+            ],
+            "actions": [
+              "填写"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名表格已填写"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名表格完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [
+              {
+                "reason": "动作阶段不同",
+                "withReferenceTaskIds": [
+                  "T2"
+                ]
+              }
+            ],
+            "materials": [],
+            "objects": [
+              "匿名表格"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：填写"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名表格"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名表格"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名表格已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名表格完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [
+              {
+                "reason": "动作阶段不同",
+                "withReferenceTaskIds": [
+                  "T1"
+                ]
+              }
+            ],
+            "materials": [],
+            "objects": [],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名表格"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "合法拆分",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F16-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 2
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F16-contract-fixture-r1",
+        "sourceId": "D3-F16",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "填写",
+                "object": "匿名表格"
+              }
+            ],
+            "actions": [
+              "填写"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名表格已填写"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名表格完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [
+              {
+                "reason": "动作阶段不同",
+                "withReferenceTaskIds": [
+                  "T2"
+                ]
+              }
+            ],
+            "materials": [],
+            "objects": [
+              "匿名表格"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：填写"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名表格"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名表格"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名表格已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名表格完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [
+              {
+                "reason": "动作阶段不同",
+                "withReferenceTaskIds": [
+                  "T1"
+                ]
+              }
+            ],
+            "materials": [],
+            "objects": [
+              "匿名表格"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名表格"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_DANGLING_TASK_ID",
+      "id": "legal-merge",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F17-merged-count",
+            "operator": "oneOf",
+            "path": "tasks.length",
+            "value": [
+              1,
+              2
+            ]
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F17-contract-fixture-r1",
+        "sourceId": "D3-F17",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "同一匿名对象"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [
+              {
+                "reason": "同一动作对象的等价端点",
+                "withReferenceTaskIds": [
+                  "MISSING"
+                ]
+              }
+            ],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示同一匿名对象已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：同一匿名对象完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "同一匿名对象"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：同一匿名对象"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "同一匿名对象"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [
+              {
+                "reason": "同一动作对象的等价端点",
+                "withReferenceTaskIds": [
+                  "T1"
+                ]
+              }
+            ],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示同一匿名对象已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：同一匿名对象完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "同一匿名对象"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：同一匿名对象"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "合法合并",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F17-merged-count",
+            "operator": "oneOf",
+            "path": "tasks.length",
+            "value": [
+              1,
+              2
+            ]
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F17-contract-fixture-r1",
+        "sourceId": "D3-F17",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "同一匿名对象"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [
+              {
+                "reason": "同一动作对象的等价端点",
+                "withReferenceTaskIds": [
+                  "T2"
+                ]
+              }
+            ],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示同一匿名对象已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：同一匿名对象完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "同一匿名对象"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：同一匿名对象"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "同一匿名对象"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [
+              {
+                "reason": "同一动作对象的等价端点",
+                "withReferenceTaskIds": [
+                  "T1"
+                ]
+              }
+            ],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示同一匿名对象已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：同一匿名对象完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "同一匿名对象"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：同一匿名对象"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_CROSS_OBJECT_MERGE",
+      "id": "cross-object-merge",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F18-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 2
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F18-contract-fixture-r1",
+        "sourceId": "D3-F18",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "对象甲"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [
+              {
+                "reason": "对象不同",
+                "withReferenceTaskIds": [
+                  "T2"
+                ]
+              }
+            ],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示对象甲已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：对象甲完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "对象甲"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：对象甲"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "对象乙"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示对象乙已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：对象乙完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [
+              {
+                "reason": "对象不同",
+                "withReferenceTaskIds": [
+                  "T1"
+                ]
+              }
+            ],
+            "materials": [],
+            "objects": [
+              "对象乙"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：对象乙"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "禁止跨对象合并",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F18-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 2
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F18-contract-fixture-r1",
+        "sourceId": "D3-F18",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "对象甲"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示对象甲已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：对象甲完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [
+              {
+                "reason": "对象不同",
+                "withReferenceTaskIds": [
+                  "T2"
+                ]
+              }
+            ],
+            "materials": [],
+            "objects": [
+              "对象甲"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：对象甲"
+              ]
+            },
+            "timePoints": []
+          },
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "对象乙"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示对象乙已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：对象乙完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [
+              {
+                "reason": "对象不同",
+                "withReferenceTaskIds": [
+                  "T1"
+                ]
+              }
+            ],
+            "materials": [],
+            "objects": [
+              "对象乙"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T2",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：对象乙"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_ALIAS_OUTSIDE_IDENTITY",
+      "id": "action-alias",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F19-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F19-contract-fixture-r1",
+        "sourceId": "D3-F19",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              },
+              {
+                "action": "上传",
+                "object": "匿名对象T1"
+              },
+              {
+                "action": "递交",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交",
+              "上传"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "动作别名",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F19-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F19-contract-fixture-r1",
+        "sourceId": "D3-F19",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名对象T1"
+              },
+              {
+                "action": "上传",
+                "object": "匿名对象T1"
+              }
+            ],
+            "actions": [
+              "提交",
+              "上传"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名对象T1"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_ALIAS_OUTSIDE_IDENTITY",
+      "id": "object-alias",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F20-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F20-contract-fixture-r1",
+        "sourceId": "D3-F20",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名申请表"
+              },
+              {
+                "action": "提交",
+                "object": "申请材料"
+              },
+              {
+                "action": "提交",
+                "object": "未知材料"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名申请表",
+              "申请材料"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "对象别名",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F20-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 1
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F20-contract-fixture-r1",
+        "sourceId": "D3-F20",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "匿名申请表"
+              },
+              {
+                "action": "提交",
+                "object": "申请材料"
+              }
+            ],
+            "actions": [
+              "提交"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示匿名对象T1已提交"
+              ],
+              "evidence": [
+                "匿名夹具证据：匿名对象T1完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "匿名申请表",
+              "申请材料"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：提交"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：匿名对象T1"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_NON_TASK_ENTITY_AS_TASK",
+      "id": "material-not-task",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F21-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 0
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F21-contract-fixture-r1",
+        "sourceId": "D3-F21",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "记录",
+                "object": "材料不得冒充任务"
+              }
+            ],
+            "actions": [
+              "记录"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示材料不得冒充任务已记录"
+              ],
+              "evidence": [
+                "匿名夹具证据：材料不得冒充任务完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "材料不得冒充任务"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "material_only",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：记录"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：材料不得冒充任务"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "材料不得冒充任务",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F21-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 0
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F21-contract-fixture-r1",
+        "sourceId": "D3-F21",
+        "tasks": [],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_NON_TASK_ENTITY_AS_TASK",
+      "id": "location-not-task",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F22-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 0
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F22-contract-fixture-r1",
+        "sourceId": "D3-F22",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "记录",
+                "object": "地点不得冒充任务"
+              }
+            ],
+            "actions": [
+              "记录"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示地点不得冒充任务已记录"
+              ],
+              "evidence": [
+                "匿名夹具证据：地点不得冒充任务完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "地点不得冒充任务"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "location_only",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：记录"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：地点不得冒充任务"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "地点不得冒充任务",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F22-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 0
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F22-contract-fixture-r1",
+        "sourceId": "D3-F22",
+        "tasks": [],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_NON_TASK_ENTITY_AS_TASK",
+      "id": "format-not-task",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F23-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 0
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F23-contract-fixture-r1",
+        "sourceId": "D3-F23",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "记录",
+                "object": "格式要求不得冒充任务"
+              }
+            ],
+            "actions": [
+              "记录"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示格式要求不得冒充任务已记录"
+              ],
+              "evidence": [
+                "匿名夹具证据：格式要求不得冒充任务完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "格式要求不得冒充任务"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "format_only",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：记录"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：格式要求不得冒充任务"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "格式要求不得冒充任务",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F23-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 0
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F23-contract-fixture-r1",
+        "sourceId": "D3-F23",
+        "tasks": [],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    },
+    {
+      "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+      "expectedError": "D3_NON_TASK_ENTITY_AS_TASK",
+      "id": "contact-not-task",
+      "invalid": {
+        "checks": [
+          {
+            "checkId": "D3-F24-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 0
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F24-contract-fixture-r1",
+        "sourceId": "D3-F24",
+        "tasks": [
+          {
+            "actionable": true,
+            "actionObjectAliases": [
+              {
+                "action": "记录",
+                "object": "联系方式不得冒充任务"
+              }
+            ],
+            "actions": [
+              "记录"
+            ],
+            "allowedMerges": [],
+            "ambiguityRules": [],
+            "cancellationRelations": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示联系方式不得冒充任务已记录"
+              ],
+              "evidence": [
+                "匿名夹具证据：联系方式不得冒充任务完成标准"
+              ]
+            },
+            "condition": {
+              "evidence": [],
+              "value": "not_applicable"
+            },
+            "dependencies": [],
+            "forbiddenInferences": [],
+            "forbiddenMerges": [],
+            "materials": [],
+            "objects": [
+              "联系方式不得冒充任务"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "referenceTaskId": "T1",
+            "replacementRelations": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "revisionRelations": [],
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "taskBasis": "contact_only",
+            "taskEvidence": {
+              "actionEvidence": [
+                "匿名夹具证据：记录"
+              ],
+              "basis": "explicit_action_object",
+              "objectEvidence": [
+                "匿名夹具证据：联系方式不得冒充任务"
+              ]
+            },
+            "timePoints": []
+          }
+        ],
+        "truthStatus": "CONTRACT_FIXTURE"
+      },
+      "title": "联系方式不得冒充任务",
+      "valid": {
+        "checks": [
+          {
+            "checkId": "D3-F24-task-count",
+            "operator": "countEquals",
+            "path": "tasks",
+            "value": 0
+          }
+        ],
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "coverage": "complete",
+        "provenance": {
+          "labelerAStatus": "ANONYMOUS_CONTRACT_AUTHOR",
+          "modelAssistanceUsed": true,
+          "reviewerBStatus": "TEST_ORACLE_REVIEWED"
+        },
+        "referenceVersion": "D3-F24-contract-fixture-r1",
+        "sourceId": "D3-F24",
+        "tasks": [],
+        "truthStatus": "CONTRACT_FIXTURE"
+      }
+    }
+  ],
+  "categories": 24,
+  "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+  "notDevelopmentOrHoldout": true,
+  "version": "candidate12-d3-contract-fixtures-1"
+}

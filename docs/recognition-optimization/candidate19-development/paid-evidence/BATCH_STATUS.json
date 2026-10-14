@@ -1,0 +1,51 @@
+{
+  "version": "c19-observed-execution-accounting-1",
+  "batch": "C19-C17-C19-DEVELOPMENT-R1",
+  "status": "SEALED_OR_INCOMPLETE_NO_WINNER",
+  "plannedRequests": 12,
+  "plannedSources": 6,
+  "knownSent": 2,
+  "knownSettled": 2,
+  "knownNotSent": 10,
+  "uncertainSends": 0,
+  "observedPairs": 1,
+  "armCoverage": {
+    "Candidate17": {
+      "planned": 6,
+      "observed": 1,
+      "notRun": 5,
+      "completeRate": "NOT_OBSERVABLE"
+    },
+    "Candidate19": {
+      "planned": 6,
+      "observed": 1,
+      "notRun": 5,
+      "completeRate": "NOT_OBSERVABLE"
+    }
+  },
+  "grantCount": 1,
+  "reserveCount": 2,
+  "settleCount": 2,
+  "lockExists": true,
+  "halt": null,
+  "audit": "CONSISTENT",
+  "selection": "EVIDENCE_INCOMPLETE",
+  "maximumBudgetMicroUsd": 3892848,
+  "hardCapMicroUsd": 3900000,
+  "usage": {
+    "input_tokens": 8940,
+    "output_tokens": 1507,
+    "total_tokens": 10447,
+    "cached_input_tokens": 3840,
+    "reasoning_tokens": 0
+  },
+  "internalConservativeSettlementMicroUsd": 4491,
+  "providerActualCharge": "NOT_OBSERVABLE",
+  "ledger": {
+    "rows": 976,
+    "sha256": "bcb849817e2d956f7caa61c26c70200229e91136c15c18eea88c9bcfecfc4458",
+    "tail": "be9fb56779e7ce94bc2f5f41624d26534e50444c799cb5fcd85e01ed1413c0c3",
+    "batchRows": 5
+  },
+  "reportSummaryCaveat": "EXECUTION_REPORT summary score rows are gated placeholders, not dispatch counts. Actual statuses are units/scene and this accounting file. No complete score or winner."
+}

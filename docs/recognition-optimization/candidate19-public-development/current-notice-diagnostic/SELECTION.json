@@ -1,0 +1,29 @@
+{
+  "version": "current-real-notice-selection-1",
+  "selected": [
+    "FRESH-02",
+    "FRESH-04",
+    "FRESH-05",
+    "FRESH-06"
+  ],
+  "excluded": [
+    {
+      "id": "FRESH-01",
+      "reason": "2021 historical maintenance; retain only as reference-time/boundary regression"
+    },
+    {
+      "id": "FRESH-07",
+      "reason": "High-school population; retain only as midnight/condition boundary regression"
+    }
+  ],
+  "materialSha256": "256cdb9e9ef4dfc17dd254e5b80af7e1bfbae75afdabeff1613fa05291ca1c0a",
+  "provenanceSha256": "cbe1edaa335e522c67ce59eeee2816895cd9b5f81b5ef936fcb98bf9fceca56c",
+  "newOutputs": 0,
+  "missingCoverage": [
+    "New explicit unannounced-time source",
+    "Full current cancellation source",
+    "Representative tasks/assignment population"
+  ],
+  "selectionBeforeAnyNewOutput": true,
+  "diagnosticPurpose": "Current C19 single-arm college-notice first output; not relative improvement or Holdout"
+}

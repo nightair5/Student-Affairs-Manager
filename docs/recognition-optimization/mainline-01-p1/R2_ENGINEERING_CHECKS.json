@@ -1,0 +1,141 @@
+{
+  "directory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline-01-p1-r2-eSgUJS",
+  "mode": "full",
+  "okay": true,
+  "results": [
+    {
+      "name": "lint",
+      "exitCode": 0,
+      "log": "lint.log",
+      "summary": []
+    },
+    {
+      "name": "typecheck-app",
+      "exitCode": 0,
+      "log": "typecheck-app.log",
+      "summary": []
+    },
+    {
+      "name": "typecheck-node",
+      "exitCode": 0,
+      "log": "typecheck-node.log",
+      "summary": []
+    },
+    {
+      "name": "schema-contract",
+      "exitCode": 0,
+      "log": "schema-contract.log",
+      "summary": []
+    },
+    {
+      "name": "time-contract",
+      "exitCode": 0,
+      "log": "time-contract.log",
+      "summary": []
+    },
+    {
+      "name": "vitest-all",
+      "exitCode": 0,
+      "log": "vitest-all.log",
+      "summary": [
+        " Test Files  90 passed | 1 skipped (91)",
+        "      Tests  901 passed | 1 skipped (902)"
+      ]
+    },
+    {
+      "name": "server",
+      "exitCode": 0,
+      "log": "server.log",
+      "summary": []
+    },
+    {
+      "name": "worker",
+      "exitCode": 0,
+      "log": "worker.log",
+      "summary": [
+        "  errorType: 'UPSTREAM_AUTH_FAILED',"
+      ]
+    },
+    {
+      "name": "time-parity",
+      "exitCode": 0,
+      "log": "time-parity.log",
+      "summary": []
+    },
+    {
+      "name": "multimodal-library",
+      "exitCode": 0,
+      "log": "multimodal-library.log",
+      "summary": []
+    },
+    {
+      "name": "seen-replay-library",
+      "exitCode": 0,
+      "log": "seen-replay-library.log",
+      "summary": []
+    },
+    {
+      "name": "functions",
+      "exitCode": 0,
+      "log": "functions.log",
+      "summary": []
+    },
+    {
+      "name": "build",
+      "exitCode": 0,
+      "directory": "build"
+    },
+    {
+      "name": "new-build-security-and-isolation",
+      "exitCode": 0,
+      "files": 18,
+      "findings": []
+    },
+    {
+      "name": "security-scan",
+      "exitCode": 0,
+      "log": "security-scan.log",
+      "summary": [
+        "Secret scan passed across 716 source/build files."
+      ]
+    },
+    {
+      "name": "dependency-audit",
+      "exitCode": 0,
+      "log": "dependency-audit.log",
+      "summary": [
+        "found 0 vulnerabilities"
+      ]
+    },
+    {
+      "name": "protection-after",
+      "okay": true,
+      "checked": 683,
+      "changed": [],
+      "appendOnly": true,
+      "outOfScope": []
+    }
+  ],
+  "counts": {
+    "vitestPassed": 901,
+    "vitestSkipped": 1,
+    "serverPassed": 8,
+    "workerPassed": 25,
+    "timeParityPassed": 1,
+    "multimodalLibraryPassed": 23,
+    "seenReplayLibraryPassed": 4,
+    "functionsPassed": 5,
+    "totalPassed": 967,
+    "totalFailed": 0,
+    "totalSkipped": 1
+  },
+  "boundaries": {
+    "modelCalls": 0,
+    "modelNetworkRequests": 0,
+    "keyAccesses": 0,
+    "cny": 0,
+    "cloudflareCheck": "NOT_APPLICABLE_NOT_RUN_NO_RELEASE_OR_CREDENTIAL_ACCESS",
+    "skip": "live OCR component is explicitly disabled; no recognition call",
+    "build": "new temporary directory; envDir/envFile/configFile false; old caches not used"
+  }
+}

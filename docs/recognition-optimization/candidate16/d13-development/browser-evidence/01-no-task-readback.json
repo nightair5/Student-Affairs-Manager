@@ -1,0 +1,625 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "workspace": {
+    "schemaVersion": 8,
+    "workspace": {
+      "id": "rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2",
+      "title": "真实输入隔离实验（不是用户工作区）",
+      "createdAt": "2026-09-28T04:18:29.569Z",
+      "updatedAt": "2026-09-28T04:19:15.892Z"
+    },
+    "settings": {
+      "defaultTimezone": "Asia/Shanghai",
+      "locale": "zh-CN"
+    },
+    "sources": [
+      {
+        "id": "source:372c315a",
+        "workspaceId": "rco-mainline-01-02-i1-real-input-candidate16-d13-engineering-2",
+        "type": "text",
+        "title": "匿名工程夹具：纯信息无任务",
+        "status": "confirmed",
+        "currentVersionId": "source:372c315a:version:1",
+        "createdAt": "2026-09-22T09:00:00+08:00",
+        "updatedAt": "2026-09-28T04:19:15.892Z",
+        "legacyData": {
+          "realInput01": {
+            "version": "mainline-real-input-state-1",
+            "inputReceipt": {
+              "inputId": "d13-d13-fixture-no-task",
+              "sourceType": "text",
+              "file": null,
+              "extractorVersion": "real-input-paste-1",
+              "pageCount": 1,
+              "pages": [
+                {
+                  "number": 1,
+                  "route": "parser",
+                  "chunks": [
+                    "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                  ],
+                  "issues": [],
+                  "parserChunks": [
+                    "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                  ],
+                  "ocrChunks": null
+                }
+              ],
+              "version": "real-input-receipt-1",
+              "originalSha256": "0138dbeb5a7d82aa05090cc83a175559e6aed733e9acf558f360395cbb8a1568",
+              "corrections": []
+            },
+            "sendSnapshot": null
+          },
+          "reviewMetadata": {
+            "realInput01": {
+              "version": "mainline-real-input-state-1",
+              "inputReceipt": {
+                "inputId": "d13-d13-fixture-no-task",
+                "sourceType": "text",
+                "file": null,
+                "extractorVersion": "real-input-paste-1",
+                "pageCount": 1,
+                "pages": [
+                  {
+                    "number": 1,
+                    "route": "parser",
+                    "chunks": [
+                      "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                    ],
+                    "issues": [],
+                    "parserChunks": [
+                      "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                    ],
+                    "ocrChunks": null
+                  }
+                ],
+                "version": "real-input-receipt-1",
+                "originalSha256": "0138dbeb5a7d82aa05090cc83a175559e6aed733e9acf558f360395cbb8a1568",
+                "corrections": []
+              },
+              "sendSnapshot": null
+            }
+          },
+          "captureOperationId": "d13-d13-fixture-no-task"
+        }
+      }
+    ],
+    "sourceVersions": [
+      {
+        "id": "source:372c315a:version:1",
+        "sourceId": "source:372c315a",
+        "versionNo": 1,
+        "contentHash": "fnv1a32:fd3075ff",
+        "rawText": "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。",
+        "rawTextRef": null,
+        "createdAt": "2026-09-22T09:00:00+08:00",
+        "legacyData": {
+          "reviewMetadata": {
+            "realInput01": {
+              "version": "mainline-real-input-state-1",
+              "inputReceipt": {
+                "inputId": "d13-d13-fixture-no-task",
+                "sourceType": "text",
+                "file": null,
+                "extractorVersion": "real-input-paste-1",
+                "pageCount": 1,
+                "pages": [
+                  {
+                    "number": 1,
+                    "route": "parser",
+                    "chunks": [
+                      "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                    ],
+                    "issues": [],
+                    "parserChunks": [
+                      "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                    ],
+                    "ocrChunks": null
+                  }
+                ],
+                "version": "real-input-receipt-1",
+                "originalSha256": "0138dbeb5a7d82aa05090cc83a175559e6aed733e9acf558f360395cbb8a1568",
+                "corrections": []
+              },
+              "sendSnapshot": null
+            }
+          }
+        }
+      }
+    ],
+    "recognitionRuns": [
+      {
+        "id": "source:372c315a:run:1:1",
+        "sourceVersionId": "source:372c315a:version:1",
+        "provider": "deepseek",
+        "modelName": "deepseek-flash",
+        "promptVersion": "real-input-source-semantics-3",
+        "schemaVersion": "mainline-real-input-state-1",
+        "pipelineVersion": "mainline-real-input-state-1",
+        "status": "succeeded",
+        "startedAt": "2026-09-22T09:00:00+08:00",
+        "completedAt": "2026-09-28T04:18:39.900Z",
+        "durationMs": null,
+        "tokenUsage": null,
+        "qualityFlags": [],
+        "errorCode": null
+      }
+    ],
+    "extractionDrafts": [
+      {
+        "id": "source:372c315a:draft:1:1",
+        "recognitionRunId": "source:372c315a:run:1:1",
+        "status": "confirmed",
+        "result": null,
+        "commitOperationIds": [],
+        "acceptedEntityTempIds": [],
+        "rejectedEntityTempIds": [],
+        "createdAt": "2026-09-22T09:00:00+08:00",
+        "updatedAt": "2026-09-28T04:19:15.892Z",
+        "legacyData": {
+          "realInputPending": {
+            "reading": {
+              "version": "mainline-real-input-state-1",
+              "inputReceipt": {
+                "inputId": "d13-d13-fixture-no-task",
+                "sourceType": "text",
+                "file": null,
+                "extractorVersion": "real-input-paste-1",
+                "pageCount": 1,
+                "pages": [
+                  {
+                    "number": 1,
+                    "route": "parser",
+                    "chunks": [
+                      "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                    ],
+                    "issues": [],
+                    "parserChunks": [
+                      "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                    ],
+                    "ocrChunks": null
+                  }
+                ],
+                "version": "real-input-receipt-1",
+                "originalSha256": "0138dbeb5a7d82aa05090cc83a175559e6aed733e9acf558f360395cbb8a1568",
+                "corrections": []
+              },
+              "sendSnapshot": {
+                "version": "real-input-send-1",
+                "inputId": "d13-d13-fixture-no-task",
+                "receiptSha256": "02f5ecdf86c4edcbbc914ec9c6d66ede508d023231199ec7d4107f60cbd52a2f",
+                "text": "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。",
+                "textSha256": "79c44b2ab80fc9d862add2f30240ec5fdadbcc5c786a7187fe7ce0ecd279dae3",
+                "pages": [
+                  1
+                ],
+                "ranges": [
+                  {
+                    "page": 1,
+                    "start": 0,
+                    "end": 73,
+                    "pageTextSha256": "79c44b2ab80fc9d862add2f30240ec5fdadbcc5c786a7187fe7ce0ecd279dae3"
+                  }
+                ],
+                "coverage": "complete_declared_range",
+                "reviewedPages": [
+                  1
+                ],
+                "consentAt": "2026-09-22T09:00:00+08:00"
+              }
+            },
+            "execution": "live",
+            "operationId": "d13-d13-fixture-no-task-run"
+          },
+          "mainline05": {
+            "version": "mainline-real-input-state-1",
+            "sourceId": "source:372c315a",
+            "sourceVersionId": "source:372c315a:version:1",
+            "runId": "source:372c315a:run:1:1",
+            "draftId": "source:372c315a:draft:1:1",
+            "rawHttpText": "{\"id\":\"fixture-not-a-model-request\",\"model\":\"deepseek-flash\",\"status\":\"completed\",\"error\":null,\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"real-input-model-wire-1\\\",\\\"tasks\\\":[],\\\"materials\\\":[],\\\"timePoints\\\":[],\\\"events\\\":[],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"informationScopeIds\\\":[\\\"scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e\\\",\\\"scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd\\\",\\\"scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427\\\",\\\"scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19\\\",\\\"scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880\\\"],\\\"unresolvedScopeIds\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+            "rawOutputText": "{\"schemaVersion\":\"real-input-model-wire-1\",\"tasks\":[],\"materials\":[],\"timePoints\":[],\"events\":[],\"revisions\":[],\"conflicts\":[],\"informationScopeIds\":[\"scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e\",\"scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd\",\"scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427\",\"scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19\",\"scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880\"],\"unresolvedScopeIds\":[]}",
+            "rawResponse": {
+              "schemaVersion": "real-input-model-wire-1",
+              "tasks": [],
+              "materials": [],
+              "timePoints": [],
+              "events": [],
+              "revisions": [],
+              "conflicts": [],
+              "informationScopeIds": [
+                "scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e",
+                "scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd",
+                "scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427",
+                "scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19",
+                "scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880"
+              ],
+              "unresolvedScopeIds": []
+            },
+            "adaptedResponse": {
+              "schemaVersion": "mainline04-task-semantics-1",
+              "tasks": [],
+              "materials": [],
+              "timePoints": [],
+              "events": [],
+              "revisions": [],
+              "conflicts": [],
+              "informationScopeIds": [
+                "scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e",
+                "scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd",
+                "scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427",
+                "scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19",
+                "scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880"
+              ],
+              "unresolvedScopeIds": [],
+              "sourceId": "source:372c315a",
+              "sourceVersionId": "source:372c315a:version:1",
+              "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4"
+            },
+            "legacyResponse": null,
+            "context": {
+              "index": {
+                "sourceId": "source:372c315a",
+                "sourceVersionId": "source:372c315a:version:1",
+                "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                "sourceContent": "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。",
+                "scopes": [
+                  {
+                    "id": "scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 0,
+                    "start": 0,
+                    "end": 19,
+                    "text": "[D5匿名合成Development]",
+                    "contentHash": "sha256:aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e"
+                  },
+                  {
+                    "id": "scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 1,
+                    "start": 20,
+                    "end": 39,
+                    "text": "进入复评名单的同学须参加作品复评陈述，",
+                    "contentHash": "sha256:aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd"
+                  },
+                  {
+                    "id": "scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 2,
+                    "start": 39,
+                    "end": 51,
+                    "text": "以完成作品复评陈述为准。",
+                    "contentHash": "sha256:2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427"
+                  },
+                  {
+                    "id": "scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 3,
+                    "start": 51,
+                    "end": 63,
+                    "text": "你的作品未进入复评名单，",
+                    "contentHash": "sha256:ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19"
+                  },
+                  {
+                    "id": "scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 4,
+                    "start": 63,
+                    "end": 73,
+                    "text": "本通知不要求你参加。",
+                    "contentHash": "sha256:35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880"
+                  }
+                ]
+              },
+              "authority": "live_model_candidate",
+              "profile": "real-input-01",
+              "referenceTime": "2026-09-22T09:00:00+08:00",
+              "timezone": "Asia/Shanghai",
+              "ownershipMode": "mainline05-own-assets-1"
+            },
+            "first": {
+              "schemaVersion": "mainline04-review-package-1",
+              "original": {
+                "schemaVersion": "mainline04-task-semantics-1",
+                "tasks": [],
+                "materials": [],
+                "timePoints": [],
+                "events": [],
+                "revisions": [],
+                "conflicts": [],
+                "informationScopeIds": [
+                  "scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e",
+                  "scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd",
+                  "scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427",
+                  "scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19",
+                  "scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880"
+                ],
+                "unresolvedScopeIds": [],
+                "sourceId": "source:372c315a",
+                "sourceVersionId": "source:372c315a:version:1",
+                "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4"
+              },
+              "origin": "live_model_candidate",
+              "items": [],
+              "issues": [],
+              "sourceIndex": {
+                "sourceId": "source:372c315a",
+                "sourceVersionId": "source:372c315a:version:1",
+                "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                "sourceContent": "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。",
+                "scopes": [
+                  {
+                    "id": "scope-0001-aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 0,
+                    "start": 0,
+                    "end": 19,
+                    "text": "[D5匿名合成Development]",
+                    "contentHash": "sha256:aeb58fddf2196c73b4e8c936425d65620faed7a4e959894e002761c60fb9185e"
+                  },
+                  {
+                    "id": "scope-0002-aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 1,
+                    "start": 20,
+                    "end": 39,
+                    "text": "进入复评名单的同学须参加作品复评陈述，",
+                    "contentHash": "sha256:aff30b420be6c53cdc151939146ec324bc632591ae1e4c6cd40abe83067615cd"
+                  },
+                  {
+                    "id": "scope-0003-2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 2,
+                    "start": 39,
+                    "end": 51,
+                    "text": "以完成作品复评陈述为准。",
+                    "contentHash": "sha256:2ca24c9c19a890f10a34ab5aff115971bc00bbc5975b43eec0f08ef9f5e38427"
+                  },
+                  {
+                    "id": "scope-0004-ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 3,
+                    "start": 51,
+                    "end": 63,
+                    "text": "你的作品未进入复评名单，",
+                    "contentHash": "sha256:ec2d5ff40df28c9eca50e93717e6a5689b97f4b5e3534b939579ea629e0c6e19"
+                  },
+                  {
+                    "id": "scope-0005-35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880",
+                    "sourceId": "source:372c315a",
+                    "sourceVersionId": "source:372c315a:version:1",
+                    "sourceFingerprint": "sha256:bbcb9e395eb854a0d24899c7d2cf7937d723640d689d7d350ad2a71ae90dd6f4",
+                    "order": 4,
+                    "start": 63,
+                    "end": 73,
+                    "text": "本通知不要求你参加。",
+                    "contentHash": "sha256:35316e5a086e701d885310543efd5449919a915018192269157c4ca68b502880"
+                  }
+                ]
+              },
+              "normalizedTimes": [],
+              "app": "NOT_RUN",
+              "canonicalPersistence": "NOT_RUN"
+            },
+            "inputReceipt": {
+              "inputId": "d13-d13-fixture-no-task",
+              "sourceType": "text",
+              "file": null,
+              "extractorVersion": "real-input-paste-1",
+              "pageCount": 1,
+              "pages": [
+                {
+                  "number": 1,
+                  "route": "parser",
+                  "chunks": [
+                    "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                  ],
+                  "issues": [],
+                  "parserChunks": [
+                    "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。"
+                  ],
+                  "ocrChunks": null
+                }
+              ],
+              "version": "real-input-receipt-1",
+              "originalSha256": "0138dbeb5a7d82aa05090cc83a175559e6aed733e9acf558f360395cbb8a1568",
+              "corrections": []
+            },
+            "sendSnapshot": {
+              "version": "real-input-send-1",
+              "inputId": "d13-d13-fixture-no-task",
+              "receiptSha256": "02f5ecdf86c4edcbbc914ec9c6d66ede508d023231199ec7d4107f60cbd52a2f",
+              "text": "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。",
+              "textSha256": "79c44b2ab80fc9d862add2f30240ec5fdadbcc5c786a7187fe7ce0ecd279dae3",
+              "pages": [
+                1
+              ],
+              "ranges": [
+                {
+                  "page": 1,
+                  "start": 0,
+                  "end": 73,
+                  "pageTextSha256": "79c44b2ab80fc9d862add2f30240ec5fdadbcc5c786a7187fe7ce0ecd279dae3"
+                }
+              ],
+              "coverage": "complete_declared_range",
+              "reviewedPages": [
+                1
+              ],
+              "consentAt": "2026-09-22T09:00:00+08:00"
+            },
+            "execution": "live",
+            "operations": [
+              {
+                "id": "material-review-mode-1",
+                "kind": "enable_material_review",
+                "at": "2026-09-28T04:18:39.912Z",
+                "taskIds": [],
+                "field": null,
+                "value": null,
+                "before": null
+              },
+              {
+                "id": "1c930521-cb73-4ee4-9578-c2cbecdddc9d",
+                "kind": "review_info",
+                "taskIds": [],
+                "field": null,
+                "value": null,
+                "informationEventVersion": "d10-event-commit-1",
+                "before": null,
+                "at": "2026-09-28T04:19:15.892Z"
+              }
+            ],
+            "bindings": {}
+          }
+        }
+      }
+    ],
+    "projects": [],
+    "milestones": [],
+    "workPackages": [],
+    "tasks": [],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "evidenceRefs": [],
+    "changeProposals": [],
+    "historyRecords": [
+      {
+        "id": "mainline05:history:source:372c315a:draft:1:1:material-review-mode-1",
+        "entityType": "extraction_draft",
+        "entityId": "source:372c315a:draft:1:1",
+        "action": "mainline05_enable_material_review",
+        "fieldName": null,
+        "before": null,
+        "after": {
+          "taskIds": [],
+          "kind": "enable_material_review"
+        },
+        "actor": "system",
+        "reason": "mainline-real-input-state-1",
+        "sourceVersionId": "source:372c315a:version:1",
+        "changedAt": "2026-09-28T04:18:39.912Z"
+      },
+      {
+        "id": "mainline05:history:source:372c315a:draft:1:1:1c930521-cb73-4ee4-9578-c2cbecdddc9d",
+        "entityType": "extraction_draft",
+        "entityId": "source:372c315a:draft:1:1",
+        "action": "mainline05_review_info",
+        "fieldName": null,
+        "before": null,
+        "after": {
+          "taskIds": [],
+          "kind": "review_info"
+        },
+        "actor": "user",
+        "reason": "mainline-real-input-state-1",
+        "sourceVersionId": "source:372c315a:version:1",
+        "changedAt": "2026-09-28T04:19:15.892Z"
+      }
+    ],
+    "reminderRecords": [],
+    "preferences": {
+      "onboardingCompletedAt": null
+    },
+    "migrationMetadata": [],
+    "savedAt": "2026-09-28T04:19:15.892Z"
+  },
+  "events": [
+    {
+      "id": "0d146abb-2a28-4e6a-a08d-a7bfb26361bb",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569119928,
+      "kind": "begin",
+      "snapshot": {
+        "recordId": "d13-fixture-no-task",
+        "sourceSha256": "79c44b2ab80fc9d862add2f30240ec5fdadbcc5c786a7187fe7ce0ecd279dae3",
+        "firstOutputSha256": "3c3a60e59ded6220f10a58abcdc9b10cf5631188f5aee8497e79d5f645a969be"
+      }
+    },
+    {
+      "id": "cca278fb-33e8-4782-bf8b-cf5dd77e5125",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569119929,
+      "kind": "read"
+    },
+    {
+      "id": "281add9f-d4bb-4ffd-82b3-f97f09b2527a",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569155909,
+      "kind": "wait"
+    },
+    {
+      "id": "5cf00309-021d-4e96-942f-090e747fc5a0",
+      "draftId": "source:372c315a:draft:1:1",
+      "kind": "commit",
+      "atMs": 1790569155918,
+      "commitId": "1c930521-cb73-4ee4-9578-c2cbecdddc9d",
+      "includedEditIds": [],
+      "fields": [],
+      "structural": false,
+      "disposition": "no_task"
+    },
+    {
+      "id": "225a7c9e-a5e6-4dad-9d3f-d8fabfb4dd57",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569155925,
+      "kind": "wait_end"
+    },
+    {
+      "id": "3ff08958-9e56-4f49-83ad-dd1ec0e828b8",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569155926,
+      "kind": "readback",
+      "commitId": "1c930521-cb73-4ee4-9578-c2cbecdddc9d"
+    },
+    {
+      "id": "b6bde9ba-2276-4b94-871b-9653bdc8ee88",
+      "draftId": "source:372c315a:draft:1:1",
+      "atMs": 1790569155934,
+      "kind": "end",
+      "disposition": "no_task",
+      "commitId": "1c930521-cb73-4ee4-9578-c2cbecdddc9d"
+    }
+  ],
+  "metrics": [
+    {
+      "draftId": "source:372c315a:draft:1:1",
+      "version": "low-edit-v2-exploratory-1",
+      "role": "ENGINEERING_REPLAY",
+      "correctDisposition": null,
+      "zeroSubstantiveModification": null,
+      "lowModificationCorrectDisposition": null,
+      "committedFields": [],
+      "fieldCount": 0,
+      "structural": false,
+      "activeEditMs": 0,
+      "readMs": 35990,
+      "waitMs": 16,
+      "hiddenMs": 0,
+      "idleMs": 0,
+      "missing": [],
+      "humanMetrics": "NOT_OBSERVABLE"
+    }
+  ],
+  "humanMetrics": "NOT_OBSERVABLE"
+}

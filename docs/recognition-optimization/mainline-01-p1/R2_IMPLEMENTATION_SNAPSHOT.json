@@ -1,0 +1,56 @@
+{
+  "stage": "RCO-5-MAINLINE-01-P1-R2",
+  "status": "VERIFIED_ISOLATED_ONLY",
+  "notAChangeToHistoricalFreeze": true,
+  "startHead": "d45467d3cae849342dac9e6b3cc222127e650fa9",
+  "sourceHashes": [
+    {
+      "path": "src/domain/v2/domainCommit.ts",
+      "sha256": "a698bb32c1c72d764337ad429a82c7e0c6b9a8c2c6ddbf9eb70c4cf3f6cbd4fa"
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "sha256": "51a8f14780471fc7d3206a54a2010310cfecd13e147cf259d72a9f386710b8cc"
+    },
+    {
+      "path": "src/domain/v2/confirmationV2.ts",
+      "sha256": "09dae9295698efb7ca04c9df4222c0ca0fd685eb9ae05148e1a000be4b2e441d"
+    },
+    {
+      "path": "src/domain/v2/confirmationV2.test.ts",
+      "sha256": "997c5d4cf6407b87640adf517dd701c66f3c3b11e7b39bc25573aa81c31ce079"
+    },
+    {
+      "path": "src/experiments/mainline01p1/confirmationHarness.ts",
+      "sha256": "e1917f33a58c178a89c8144d5d1eb06a286cec5eb6ab0924a7b366b9dee145a8"
+    },
+    {
+      "path": "src/experiments/mainline01p1/confirmationHarness.test.ts",
+      "sha256": "068b52535a9de04072c3cc668da7d4626686d8a601cdb59c0f92721a4285fc84"
+    },
+    {
+      "path": "src/experiments/mainline01p1/browser.tsx",
+      "sha256": "9aba8fbab9aef155ee34e699648cdfbe8dbb723118910ef231490207b238abf8"
+    },
+    {
+      "path": "scripts/serve-mainline-01-p1.mjs",
+      "sha256": "ab3b341d38cebc885d6b6c28f7a24b352a7350a317ef94e74e8c439c26cf067b"
+    },
+    {
+      "path": "scripts/check-mainline-01-p1.mjs",
+      "sha256": "94d7cd0a21d3bc79c3dd3eca8baf1819321bc820b56aa67c0f602575bd851031"
+    }
+  ],
+  "checks": {
+    "targetedPassed": 68,
+    "fullPassed": 967,
+    "fullSkipped": 1,
+    "fullFailed": 0,
+    "independentReview": "NO_BLOCKERS_IN_SCOPE",
+    "browserProtocolPassed": 8,
+    "browserProtocolTotal": 8,
+    "additionalTwoTaskBatch": "PASS",
+    "protectedFilesUnchanged": 683
+  },
+  "boundary": "Old interfaces and default paths unchanged. Isolated V2 only; no App integration, model request, dataset, RCO-6 or deployment."
+}

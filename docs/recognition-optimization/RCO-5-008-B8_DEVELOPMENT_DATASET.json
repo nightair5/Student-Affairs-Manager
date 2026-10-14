@@ -1,0 +1,1189 @@
+{
+  "schemaVersion": "rco-5-008-b8-development-1.0.0",
+  "datasetId": "rco-5-008-b8-development-20260904",
+  "split": "Development",
+  "classification": "anonymous_synthetic_codex_authored_model_anchor_selection_development",
+  "seenStatus": "UNSEEN_BY_DEEPSEEK_AT_FREEZE_P4_ORACLE_PREFLIGHT_ALLOWED",
+  "createdAt": "2026-09-04T21:05:00+08:00",
+  "labelProvenance": "Codex-authored reference labels; not independent human ground truth",
+  "scopeIndexVersion": "scope-index-1.1",
+  "modelSelectionSchemaVersion": "model-anchor-selection-1.0.0",
+  "localComposerVersion": "model-anchor-local-composer-2.0.0",
+  "p4PolicyVersion": "task-formation-policy-2.4.0-p4",
+  "evaluatorVersion": "task-formation-evaluator-2.0.0",
+  "sampleCount": 12,
+  "cases": [
+    {
+      "id": "rco-task-b8-01",
+      "semanticFamilyId": "inventory-sort-and-archive-save",
+      "coverageTags": [
+        "compound_action",
+        "same_scope"
+      ],
+      "sourceTitle": "器材清点归档",
+      "sourceText": "请整理器材清点表并保存归档副本。",
+      "referenceTime": "2026-09-04T21:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "selections": [
+          {
+            "expectedId": "d-sort-inventory",
+            "propositionScopeTexts": [
+              "请整理器材清点表并保存归档副本。"
+            ],
+            "action": {
+              "scopeText": "请整理器材清点表并保存归档副本。",
+              "surface": "整理"
+            },
+            "object": {
+              "scopeText": "请整理器材清点表并保存归档副本。",
+              "surface": "器材清点表"
+            }
+          },
+          {
+            "expectedId": "d-save-archive-copy",
+            "propositionScopeTexts": [
+              "请整理器材清点表并保存归档副本。"
+            ],
+            "action": {
+              "scopeText": "请整理器材清点表并保存归档副本。",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeText": "请整理器材清点表并保存归档副本。",
+              "surface": "归档副本"
+            }
+          }
+        ],
+        "directives": [
+          {
+            "expectedId": "d-sort-inventory",
+            "propositionScopeTexts": [
+              "请整理器材清点表并保存归档副本。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "action": {
+              "scopeText": "请整理器材清点表并保存归档副本。",
+              "surface": "整理"
+            },
+            "object": {
+              "scopeText": "请整理器材清点表并保存归档副本。",
+              "surface": "器材清点表"
+            },
+            "effect": "local_change",
+            "expectedDefaultSelected": true
+          },
+          {
+            "expectedId": "d-save-archive-copy",
+            "propositionScopeTexts": [
+              "请整理器材清点表并保存归档副本。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeText": "请整理器材清点表并保存归档副本。",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeText": "请整理器材清点表并保存归档副本。",
+              "surface": "归档副本"
+            },
+            "effect": "local_change",
+            "expectedDefaultSelected": true
+          }
+        ],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b8-02",
+      "semanticFamilyId": "button-label-upload-decoy-and-equipment-review",
+      "coverageTags": [
+        "quoted_instruction",
+        "object_fidelity"
+      ],
+      "sourceTitle": "设备编号核验",
+      "sourceText": "页面按钮名为“上传附件”，仅用于说明界面。请核验设备借用编号。",
+      "referenceTime": "2026-09-04T21:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "selections": [
+          {
+            "expectedId": "d-review-device-number",
+            "propositionScopeTexts": [
+              "请核验设备借用编号。"
+            ],
+            "action": {
+              "scopeText": "请核验设备借用编号。",
+              "surface": "核验"
+            },
+            "object": {
+              "scopeText": "请核验设备借用编号。",
+              "surface": "设备借用编号"
+            }
+          }
+        ],
+        "directives": [
+          {
+            "expectedId": "d-review-device-number",
+            "propositionScopeTexts": [
+              "请核验设备借用编号。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": {
+              "scopeText": "请核验设备借用编号。",
+              "surface": "核验"
+            },
+            "object": {
+              "scopeText": "请核验设备借用编号。",
+              "surface": "设备借用编号"
+            },
+            "effect": "local_change",
+            "expectedDefaultSelected": true
+          }
+        ],
+        "ignoredScopeTexts": [
+          "页面按钮名为“上传附件”，",
+          "仅用于说明界面。"
+        ],
+        "forbiddenDefaultSurfaces": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b8-03",
+      "semanticFamilyId": "blank-receipt-condition-confirmed",
+      "coverageTags": [
+        "condition_true",
+        "cross_scope"
+      ],
+      "sourceTitle": "回执缺项补充",
+      "sourceText": "如果回执编号仍为空，请填写补充说明。经确认回执编号仍为空。",
+      "referenceTime": "2026-09-04T21:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "selections": [
+          {
+            "expectedId": "d-fill-explanation",
+            "propositionScopeTexts": [
+              "如果回执编号仍为空，",
+              "请填写补充说明。",
+              "经确认回执编号仍为空。"
+            ],
+            "action": {
+              "scopeText": "请填写补充说明。",
+              "surface": "填写"
+            },
+            "object": {
+              "scopeText": "请填写补充说明。",
+              "surface": "补充说明"
+            }
+          }
+        ],
+        "directives": [
+          {
+            "expectedId": "d-fill-explanation",
+            "propositionScopeTexts": [
+              "如果回执编号仍为空，",
+              "请填写补充说明。",
+              "经确认回执编号仍为空。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "fill",
+            "action": {
+              "scopeText": "请填写补充说明。",
+              "surface": "填写"
+            },
+            "object": {
+              "scopeText": "请填写补充说明。",
+              "surface": "补充说明"
+            },
+            "effect": "local_change",
+            "expectedDefaultSelected": true
+          }
+        ],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b8-04",
+      "semanticFamilyId": "cover-damage-condition-denied",
+      "coverageTags": [
+        "condition_false",
+        "requires_action_false"
+      ],
+      "sourceTitle": "封面重印条件",
+      "sourceText": "若封面仍有污损，请打印新封面。目前并未出现封面仍有污损。",
+      "referenceTime": "2026-09-04T21:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": false,
+        "selections": [
+          {
+            "expectedId": "d-print-new-cover",
+            "propositionScopeTexts": [
+              "若封面仍有污损，",
+              "请打印新封面。",
+              "目前并未出现封面仍有污损。"
+            ],
+            "action": {
+              "scopeText": "请打印新封面。",
+              "surface": "打印"
+            },
+            "object": {
+              "scopeText": "请打印新封面。",
+              "surface": "新封面"
+            }
+          }
+        ],
+        "directives": [
+          {
+            "expectedId": "d-print-new-cover",
+            "propositionScopeTexts": [
+              "若封面仍有污损，",
+              "请打印新封面。",
+              "目前并未出现封面仍有污损。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "hypothetical",
+              "polarity": "uncertain",
+              "tense": "future",
+              "status": "unknown",
+              "validity": "uncertain",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "action": {
+              "scopeText": "请打印新封面。",
+              "surface": "打印"
+            },
+            "object": {
+              "scopeText": "请打印新封面。",
+              "surface": "新封面"
+            },
+            "effect": "physical_action",
+            "expectedDefaultSelected": false
+          }
+        ],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "打印新封面"
+        ],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b8-05",
+      "semanticFamilyId": "forbidden-sensitive-screenshot-and-safe-summary",
+      "coverageTags": [
+        "negative",
+        "local_action",
+        "safe_default"
+      ],
+      "sourceTitle": "脱敏记录保存",
+      "sourceText": "禁止保存包含身份证号的截图。请保存脱敏摘要。",
+      "referenceTime": "2026-09-04T21:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "selections": [
+          {
+            "expectedId": "d-no-save-sensitive",
+            "propositionScopeTexts": [
+              "禁止保存包含身份证号的截图。"
+            ],
+            "action": {
+              "scopeText": "禁止保存包含身份证号的截图。",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeText": "禁止保存包含身份证号的截图。",
+              "surface": "包含身份证号的截图"
+            }
+          },
+          {
+            "expectedId": "d-save-redacted-summary",
+            "propositionScopeTexts": [
+              "请保存脱敏摘要。"
+            ],
+            "action": {
+              "scopeText": "请保存脱敏摘要。",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeText": "请保存脱敏摘要。",
+              "surface": "脱敏摘要"
+            }
+          }
+        ],
+        "directives": [
+          {
+            "expectedId": "d-no-save-sensitive",
+            "propositionScopeTexts": [
+              "禁止保存包含身份证号的截图。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "future",
+              "status": "cancelled",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeText": "禁止保存包含身份证号的截图。",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeText": "禁止保存包含身份证号的截图。",
+              "surface": "包含身份证号的截图"
+            },
+            "effect": "local_change",
+            "expectedDefaultSelected": false
+          },
+          {
+            "expectedId": "d-save-redacted-summary",
+            "propositionScopeTexts": [
+              "请保存脱敏摘要。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeText": "请保存脱敏摘要。",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeText": "请保存脱敏摘要。",
+              "surface": "脱敏摘要"
+            },
+            "effect": "local_change",
+            "expectedDefaultSelected": true
+          }
+        ],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "保存包含身份证号的截图"
+        ],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b8-06",
+      "semanticFamilyId": "optional-draft-print-and-required-final-submit",
+      "coverageTags": [
+        "mixed_modality",
+        "external_effect"
+      ],
+      "sourceTitle": "定稿提交",
+      "sourceText": "草稿可以自行打印；请提交电子定稿。",
+      "referenceTime": "2026-09-04T21:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "selections": [
+          {
+            "expectedId": "d-optional-print-draft",
+            "propositionScopeTexts": [
+              "草稿可以自行打印；"
+            ],
+            "action": {
+              "scopeText": "草稿可以自行打印；",
+              "surface": "打印"
+            },
+            "object": {
+              "scopeText": "草稿可以自行打印；",
+              "surface": "草稿"
+            }
+          },
+          {
+            "expectedId": "d-submit-final",
+            "propositionScopeTexts": [
+              "请提交电子定稿。"
+            ],
+            "action": {
+              "scopeText": "请提交电子定稿。",
+              "surface": "提交"
+            },
+            "object": {
+              "scopeText": "请提交电子定稿。",
+              "surface": "电子定稿"
+            }
+          }
+        ],
+        "directives": [
+          {
+            "expectedId": "d-optional-print-draft",
+            "propositionScopeTexts": [
+              "草稿可以自行打印；"
+            ],
+            "semantics": {
+              "actor": "addressed_group",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "optional"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "action": {
+              "scopeText": "草稿可以自行打印；",
+              "surface": "打印"
+            },
+            "object": {
+              "scopeText": "草稿可以自行打印；",
+              "surface": "草稿"
+            },
+            "effect": "physical_action",
+            "expectedDefaultSelected": false
+          },
+          {
+            "expectedId": "d-submit-final",
+            "propositionScopeTexts": [
+              "请提交电子定稿。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": {
+              "scopeText": "请提交电子定稿。",
+              "surface": "提交"
+            },
+            "object": {
+              "scopeText": "请提交电子定稿。",
+              "surface": "电子定稿"
+            },
+            "effect": "external_transfer",
+            "expectedDefaultSelected": false
+          }
+        ],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b8-07",
+      "semanticFamilyId": "completed-material-index-and-current-gap-review",
+      "coverageTags": [
+        "completed",
+        "safe_default"
+      ],
+      "sourceTitle": "材料目录复核",
+      "sourceText": "材料目录已经整理完成。请核对缺失项。",
+      "referenceTime": "2026-09-04T21:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "selections": [
+          {
+            "expectedId": "d-completed-index",
+            "propositionScopeTexts": [
+              "材料目录已经整理完成。"
+            ],
+            "action": {
+              "scopeText": "材料目录已经整理完成。",
+              "surface": "整理"
+            },
+            "object": {
+              "scopeText": "材料目录已经整理完成。",
+              "surface": "材料目录"
+            }
+          },
+          {
+            "expectedId": "d-review-gaps",
+            "propositionScopeTexts": [
+              "请核对缺失项。"
+            ],
+            "action": {
+              "scopeText": "请核对缺失项。",
+              "surface": "核对"
+            },
+            "object": {
+              "scopeText": "请核对缺失项。",
+              "surface": "缺失项"
+            }
+          }
+        ],
+        "directives": [
+          {
+            "expectedId": "d-completed-index",
+            "propositionScopeTexts": [
+              "材料目录已经整理完成。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "past",
+              "status": "completed",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "action": {
+              "scopeText": "材料目录已经整理完成。",
+              "surface": "整理"
+            },
+            "object": {
+              "scopeText": "材料目录已经整理完成。",
+              "surface": "材料目录"
+            },
+            "effect": "local_change",
+            "expectedDefaultSelected": false
+          },
+          {
+            "expectedId": "d-review-gaps",
+            "propositionScopeTexts": [
+              "请核对缺失项。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": {
+              "scopeText": "请核对缺失项。",
+              "surface": "核对"
+            },
+            "object": {
+              "scopeText": "请核对缺失项。",
+              "surface": "缺失项"
+            },
+            "effect": "local_change",
+            "expectedDefaultSelected": true
+          }
+        ],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b8-08",
+      "semanticFamilyId": "technician-upload-and-addressee-save-code",
+      "coverageTags": [
+        "actor",
+        "third_party",
+        "object_fidelity"
+      ],
+      "sourceTitle": "设备故障记录",
+      "sourceText": "技术人员须上传设备日志；你只需保存故障编号。",
+      "referenceTime": "2026-09-04T21:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "selections": [
+          {
+            "expectedId": "d-technician-upload",
+            "propositionScopeTexts": [
+              "技术人员须上传设备日志；"
+            ],
+            "action": {
+              "scopeText": "技术人员须上传设备日志；",
+              "surface": "上传"
+            },
+            "object": {
+              "scopeText": "技术人员须上传设备日志；",
+              "surface": "设备日志"
+            }
+          },
+          {
+            "expectedId": "d-save-fault-code",
+            "propositionScopeTexts": [
+              "你只需保存故障编号。"
+            ],
+            "action": {
+              "scopeText": "你只需保存故障编号。",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeText": "你只需保存故障编号。",
+              "surface": "故障编号"
+            }
+          }
+        ],
+        "directives": [
+          {
+            "expectedId": "d-technician-upload",
+            "propositionScopeTexts": [
+              "技术人员须上传设备日志；"
+            ],
+            "semantics": {
+              "actor": "addressed_group",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": {
+              "scopeText": "技术人员须上传设备日志；",
+              "surface": "上传"
+            },
+            "object": {
+              "scopeText": "技术人员须上传设备日志；",
+              "surface": "设备日志"
+            },
+            "effect": "external_transfer",
+            "expectedDefaultSelected": false
+          },
+          {
+            "expectedId": "d-save-fault-code",
+            "propositionScopeTexts": [
+              "你只需保存故障编号。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeText": "你只需保存故障编号。",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeText": "你只需保存故障编号。",
+              "surface": "故障编号"
+            },
+            "effect": "local_change",
+            "expectedDefaultSelected": true
+          }
+        ],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b8-09",
+      "semanticFamilyId": "shuttle-contact-arrangement-cancelled",
+      "coverageTags": [
+        "revision",
+        "cancels"
+      ],
+      "sourceTitle": "校车联系取消",
+      "sourceText": "先前安排要求联系校车司机。该安排停止执行。",
+      "referenceTime": "2026-09-04T21:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": false,
+        "selections": [
+          {
+            "expectedId": "d-old-contact-driver",
+            "propositionScopeTexts": [
+              "先前安排要求联系校车司机。"
+            ],
+            "action": {
+              "scopeText": "先前安排要求联系校车司机。",
+              "surface": "联系"
+            },
+            "object": {
+              "scopeText": "先前安排要求联系校车司机。",
+              "surface": "校车司机"
+            }
+          }
+        ],
+        "directives": [
+          {
+            "expectedId": "d-old-contact-driver",
+            "propositionScopeTexts": [
+              "先前安排要求联系校车司机。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "past",
+              "status": "cancelled",
+              "validity": "superseded",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "contact",
+            "action": {
+              "scopeText": "先前安排要求联系校车司机。",
+              "surface": "联系"
+            },
+            "object": {
+              "scopeText": "先前安排要求联系校车司机。",
+              "surface": "校车司机"
+            },
+            "effect": "external_interaction",
+            "expectedDefaultSelected": false
+          }
+        ],
+        "ignoredScopeTexts": [
+          "该安排停止执行。"
+        ],
+        "forbiddenDefaultSurfaces": [
+          "联系校车司机"
+        ],
+        "revisionRelations": [
+          {
+            "kind": "cancels",
+            "targetExpectedId": "d-old-contact-driver",
+            "replacementExpectedIds": [],
+            "evidenceScopeTexts": [
+              "先前安排要求联系校车司机。",
+              "该安排停止执行。"
+            ],
+            "resolution": "adjacent_unique_referent",
+            "referentType": "安排"
+          }
+        ],
+        "unresolvedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b8-10",
+      "semanticFamilyId": "credential-notice-replaced-by-electronic-save",
+      "coverageTags": [
+        "revision",
+        "supersedes"
+      ],
+      "sourceTitle": "凭证通知替换",
+      "sourceText": "原通知要求打印旧凭证。该通知作废。从现在起保存电子凭证。",
+      "referenceTime": "2026-09-04T21:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "selections": [
+          {
+            "expectedId": "d-old-print-proof",
+            "propositionScopeTexts": [
+              "原通知要求打印旧凭证。"
+            ],
+            "action": {
+              "scopeText": "原通知要求打印旧凭证。",
+              "surface": "打印"
+            },
+            "object": {
+              "scopeText": "原通知要求打印旧凭证。",
+              "surface": "旧凭证"
+            }
+          },
+          {
+            "expectedId": "d-save-electronic-proof",
+            "propositionScopeTexts": [
+              "从现在起保存电子凭证。"
+            ],
+            "action": {
+              "scopeText": "从现在起保存电子凭证。",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeText": "从现在起保存电子凭证。",
+              "surface": "电子凭证"
+            }
+          }
+        ],
+        "directives": [
+          {
+            "expectedId": "d-old-print-proof",
+            "propositionScopeTexts": [
+              "原通知要求打印旧凭证。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "past",
+              "status": "cancelled",
+              "validity": "superseded",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "action": {
+              "scopeText": "原通知要求打印旧凭证。",
+              "surface": "打印"
+            },
+            "object": {
+              "scopeText": "原通知要求打印旧凭证。",
+              "surface": "旧凭证"
+            },
+            "effect": "physical_action",
+            "expectedDefaultSelected": false
+          },
+          {
+            "expectedId": "d-save-electronic-proof",
+            "propositionScopeTexts": [
+              "从现在起保存电子凭证。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": {
+              "scopeText": "从现在起保存电子凭证。",
+              "surface": "保存"
+            },
+            "object": {
+              "scopeText": "从现在起保存电子凭证。",
+              "surface": "电子凭证"
+            },
+            "effect": "local_change",
+            "expectedDefaultSelected": true
+          }
+        ],
+        "ignoredScopeTexts": [
+          "该通知作废。"
+        ],
+        "forbiddenDefaultSurfaces": [
+          "打印旧凭证"
+        ],
+        "revisionRelations": [
+          {
+            "kind": "supersedes",
+            "targetExpectedId": "d-old-print-proof",
+            "replacementExpectedIds": [
+              "d-save-electronic-proof"
+            ],
+            "evidenceScopeTexts": [
+              "原通知要求打印旧凭证。",
+              "该通知作废。",
+              "从现在起保存电子凭证。"
+            ],
+            "resolution": "adjacent_unique_referent",
+            "referentType": "通知"
+          }
+        ],
+        "unresolvedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b8-11",
+      "semanticFamilyId": "paper-registration-amended-inline-to-online",
+      "coverageTags": [
+        "revision",
+        "amends",
+        "same_scope"
+      ],
+      "sourceTitle": "登记方式修改",
+      "sourceText": "原任务要求填写纸质登记表，现改为填写在线登记表。",
+      "referenceTime": "2026-09-04T21:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "selections": [
+          {
+            "expectedId": "d-old-fill-paper",
+            "propositionScopeTexts": [
+              "原任务要求填写纸质登记表，"
+            ],
+            "action": {
+              "scopeText": "原任务要求填写纸质登记表，",
+              "surface": "填写"
+            },
+            "object": {
+              "scopeText": "原任务要求填写纸质登记表，",
+              "surface": "纸质登记表"
+            }
+          },
+          {
+            "expectedId": "d-fill-online",
+            "propositionScopeTexts": [
+              "现改为填写在线登记表。"
+            ],
+            "action": {
+              "scopeText": "现改为填写在线登记表。",
+              "surface": "填写"
+            },
+            "object": {
+              "scopeText": "现改为填写在线登记表。",
+              "surface": "在线登记表"
+            }
+          }
+        ],
+        "directives": [
+          {
+            "expectedId": "d-old-fill-paper",
+            "propositionScopeTexts": [
+              "原任务要求填写纸质登记表，"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "past",
+              "status": "cancelled",
+              "validity": "superseded",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "fill",
+            "action": {
+              "scopeText": "原任务要求填写纸质登记表，",
+              "surface": "填写"
+            },
+            "object": {
+              "scopeText": "原任务要求填写纸质登记表，",
+              "surface": "纸质登记表"
+            },
+            "effect": "local_change",
+            "expectedDefaultSelected": false
+          },
+          {
+            "expectedId": "d-fill-online",
+            "propositionScopeTexts": [
+              "现改为填写在线登记表。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "fill",
+            "action": {
+              "scopeText": "现改为填写在线登记表。",
+              "surface": "填写"
+            },
+            "object": {
+              "scopeText": "现改为填写在线登记表。",
+              "surface": "在线登记表"
+            },
+            "effect": "local_change",
+            "expectedDefaultSelected": true
+          }
+        ],
+        "ignoredScopeTexts": [],
+        "forbiddenDefaultSurfaces": [
+          "填写纸质登记表"
+        ],
+        "revisionRelations": [
+          {
+            "kind": "amends",
+            "targetExpectedId": "d-old-fill-paper",
+            "replacementExpectedIds": [
+              "d-fill-online"
+            ],
+            "evidenceScopeTexts": [
+              "原任务要求填写纸质登记表，",
+              "现改为填写在线登记表。"
+            ],
+            "resolution": "adjacent_unique_referent",
+            "referentType": null
+          }
+        ],
+        "unresolvedRevisionScopeTexts": []
+      }
+    },
+    {
+      "id": "rco-task-b8-12",
+      "semanticFamilyId": "two-old-tasks-ambiguous-cancellation",
+      "coverageTags": [
+        "revision",
+        "ambiguous"
+      ],
+      "sourceTitle": "两项旧任务取消",
+      "sourceText": "旧任务要求发送甲清单。原任务要求发送乙清单。上述任务取消。",
+      "referenceTime": "2026-09-04T21:05:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "selections": [
+          {
+            "expectedId": "d-old-send-a",
+            "propositionScopeTexts": [
+              "旧任务要求发送甲清单。"
+            ],
+            "action": {
+              "scopeText": "旧任务要求发送甲清单。",
+              "surface": "发送"
+            },
+            "object": {
+              "scopeText": "旧任务要求发送甲清单。",
+              "surface": "甲清单"
+            }
+          },
+          {
+            "expectedId": "d-old-send-b",
+            "propositionScopeTexts": [
+              "原任务要求发送乙清单。"
+            ],
+            "action": {
+              "scopeText": "原任务要求发送乙清单。",
+              "surface": "发送"
+            },
+            "object": {
+              "scopeText": "原任务要求发送乙清单。",
+              "surface": "乙清单"
+            }
+          }
+        ],
+        "directives": [
+          {
+            "expectedId": "d-old-send-a",
+            "propositionScopeTexts": [
+              "旧任务要求发送甲清单。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": {
+              "scopeText": "旧任务要求发送甲清单。",
+              "surface": "发送"
+            },
+            "object": {
+              "scopeText": "旧任务要求发送甲清单。",
+              "surface": "甲清单"
+            },
+            "effect": "external_transfer",
+            "expectedDefaultSelected": false
+          },
+          {
+            "expectedId": "d-old-send-b",
+            "propositionScopeTexts": [
+              "原任务要求发送乙清单。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": {
+              "scopeText": "原任务要求发送乙清单。",
+              "surface": "发送"
+            },
+            "object": {
+              "scopeText": "原任务要求发送乙清单。",
+              "surface": "乙清单"
+            },
+            "effect": "external_transfer",
+            "expectedDefaultSelected": false
+          }
+        ],
+        "ignoredScopeTexts": [
+          "上述任务取消。"
+        ],
+        "forbiddenDefaultSurfaces": [
+          "发送甲清单",
+          "发送乙清单"
+        ],
+        "revisionRelations": [],
+        "unresolvedRevisionScopeTexts": [
+          "上述任务取消。"
+        ]
+      }
+    }
+  ]
+}

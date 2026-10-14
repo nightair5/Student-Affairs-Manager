@@ -1,0 +1,22 @@
+{
+  "version": "baseline-hard-corrections-snapshot-1",
+  "baseCommit": "604a0e8ca90174c9d59b7331d45f64f18fc80a4a",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "files": [
+    { "path": "src/experiments/realInput01/factCorrections.ts", "sha256": "8663cc3fab8f672c7385beaae2726953839804588b4207f9976d68a7b94cc874" },
+    { "path": "src/experiments/realInput01/FactCorrectionEditor.tsx", "sha256": "c2af462ec76adaa738f2824150d2af6e3e038da43b002a26df10e988f2ebf94b" },
+    { "path": "src/experiments/realInput01/factCorrections.test.ts", "sha256": "1a6df6da3669779b15d3104f7d65217ef777d6cab131d4078bb230fbc20f94f1" },
+    { "path": "src/experiments/realInput01/acceptance.test.tsx", "sha256": "6659f20a1882f28f5d90b71b32d042ad9aebd1196f53b873bed42f3c7dea7679" },
+    { "path": "docs/recognition-optimization/mainline-real-input-01/runs/baseline-hard-corrections-20260915a/RUN.mjs", "sha256": "592e8b5dc9fad226d268d652df47adcbc391e1d66b9e31670c3cbf34e45d899a" },
+    { "path": "docs/recognition-optimization/mainline-real-input-01/runs/baseline-hard-corrections-20260915a/REPLAY.json", "sha256": "7545562c1808aba900e71f3209cb640d1872f3dff1e0d7ef806dd91804ec6787" },
+    { "path": "docs/recognition-optimization/mainline-real-input-01/runs/baseline-hard-corrections-20260915a/CHECK.mjs", "sha256": "f2808b289e9de5e470e6412aceb9cf830753b03d0151bdf2a7bd2e2d48204c48" }
+  ],
+  "protectedUnchanged": [
+    "candidate03 and all other candidates",
+    "model raw answers and Expected",
+    "original scorer",
+    "global schema and canonical repository contract",
+    "model request ledger"
+  ],
+  "scope": "实验草稿的人工依赖核对、引用与环校验、可追溯保存和对应回放测试。"
+}

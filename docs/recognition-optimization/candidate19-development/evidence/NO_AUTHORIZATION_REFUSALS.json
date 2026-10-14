@@ -1,0 +1,24 @@
+{
+  "role": "ZERO_CALL_ENGINEERING",
+  "refused": [
+    {
+      "mode": "--prepare-authorized",
+      "exit": 2,
+      "result": {
+        "status": "STOPPED",
+        "code": "D26_HOST_C19_AUTHORIZATION_REQUIRED_NO_GRANT_NO_SEND",
+        "retry": false
+      }
+    },
+    {
+      "mode": "--dispatch-next",
+      "exit": 2,
+      "result": {
+        "status": "STOPPED",
+        "code": "D26_HOST_C19_AUTHORIZATION_REQUIRED_NO_GRANT_NO_SEND",
+        "retry": false
+      }
+    }
+  ],
+  "executionDirectoryExists": false
+}

@@ -1,0 +1,122 @@
+{
+  "role": "ZERO_CALL_ENGINEERING",
+  "roundtrip": [
+    {
+      "sourceId": "C19-DEV-S01",
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT",
+      "bothArmLegalPositive": "PASS",
+      "minimalSemanticNegative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "EVENT_MISSING",
+          "factId": "E1"
+        },
+        {
+          "kind": "INDEPENDENT_TIME_WRONG",
+          "factId": "P1"
+        }
+      ],
+      "orderInvariant": "PASS"
+    },
+    {
+      "sourceId": "C19-DEV-S02",
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT",
+      "bothArmLegalPositive": "PASS",
+      "minimalSemanticNegative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "EVENT_MISSING",
+          "factId": "E1"
+        },
+        {
+          "kind": "EVENT_MISSING",
+          "factId": "E2"
+        },
+        {
+          "kind": "INDEPENDENT_TIME_WRONG",
+          "factId": "P1"
+        },
+        {
+          "kind": "INDEPENDENT_TIME_WRONG",
+          "factId": "P2"
+        },
+        {
+          "kind": "INDEPENDENT_TIME_WRONG",
+          "factId": "P3"
+        },
+        {
+          "kind": "INDEPENDENT_TIME_WRONG",
+          "factId": "P4"
+        }
+      ],
+      "orderInvariant": "PASS"
+    },
+    {
+      "sourceId": "C19-DEV-S03",
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT",
+      "bothArmLegalPositive": "PASS",
+      "minimalSemanticNegative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TASK_FIELD_WRONG",
+          "taskId": "T1",
+          "field": "currentness"
+        },
+        {
+          "kind": "TASK_FIELD_WRONG",
+          "taskId": "T1",
+          "field": "actionability"
+        },
+        {
+          "kind": "PREREQUISITE_TRUTH_WRONG",
+          "taskId": "T2",
+          "predecessorId": "T1"
+        }
+      ],
+      "orderInvariant": "PASS"
+    },
+    {
+      "sourceId": "C19-DEV-S04",
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT",
+      "bothArmLegalPositive": "PASS",
+      "minimalSemanticNegative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TASK_PRESENCE",
+          "fn": 1,
+          "fp": 1
+        }
+      ],
+      "orderInvariant": "PASS"
+    },
+    {
+      "sourceId": "C19-DEV-S05",
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT",
+      "bothArmLegalPositive": "PASS",
+      "minimalSemanticNegative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "SOURCE_DECLARED_TIME_TYPE_WRONG",
+          "factId": "P0",
+          "expectedType": "submission_deadline",
+          "actualType": "event_start"
+        }
+      ],
+      "orderInvariant": "PASS"
+    },
+    {
+      "sourceId": "C19-DEV-S06",
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT",
+      "bothArmLegalPositive": "PASS",
+      "minimalSemanticNegative": "DETECTED",
+      "negativeRisks": [
+        {
+          "kind": "TASK_PRESENCE",
+          "fn": 1,
+          "fp": 0
+        }
+      ],
+      "orderInvariant": "PASS"
+    }
+  ]
+}

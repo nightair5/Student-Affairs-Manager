@@ -1,0 +1,565 @@
+{
+  "arms": {
+    "03": {
+      "requests": 12,
+      "waitingMs": 80178,
+      "costUpperMicroCny": 261536,
+      "schemaParsed": 12,
+      "strictComplete": 0,
+      "issueCases": 2,
+      "metrics": {
+        "task": {
+          "predicted": 20,
+          "reference": 19,
+          "correct": 19,
+          "falsePositive": 1,
+          "falseNegative": 0
+        },
+        "requiresAction": {
+          "predicted": 21,
+          "reference": 20,
+          "correct": 19,
+          "falsePositive": 2,
+          "falseNegative": 1
+        },
+        "time": {
+          "predicted": 17,
+          "reference": 16,
+          "correct": 5,
+          "falsePositive": 12,
+          "falseNegative": 11
+        },
+        "material": {
+          "predicted": 16,
+          "reference": 17,
+          "correct": 10,
+          "falsePositive": 6,
+          "falseNegative": 7
+        },
+        "event": {
+          "predicted": 3,
+          "reference": 1,
+          "correct": 0,
+          "falsePositive": 3,
+          "falseNegative": 1
+        },
+        "condition": {
+          "predicted": 20,
+          "reference": 19,
+          "correct": 18,
+          "falsePositive": 2,
+          "falseNegative": 1
+        },
+        "revision": {
+          "predicted": 3,
+          "reference": 3,
+          "correct": 2,
+          "falsePositive": 1,
+          "falseNegative": 1
+        },
+        "evidence": {
+          "predicted": 56,
+          "reference": 53,
+          "correct": 12,
+          "falsePositive": 44,
+          "falseNegative": 41
+        },
+        "semantic": {
+          "predicted": 24,
+          "reference": 22,
+          "correct": 1,
+          "falsePositive": 23,
+          "falseNegative": 21
+        },
+        "coverage": {
+          "predicted": 44,
+          "reference": 43,
+          "correct": 21,
+          "falsePositive": 23,
+          "falseNegative": 22
+        }
+      },
+      "units": [
+        {
+          "unitId": "R01-03",
+          "responseSha": "c84a79f38b4774d709020ad8bc293ac963ed2e8669bf87b5110afc9fc6e1c7fd",
+          "resultSha": "e8cca5c7b2baf31a2809b85719223d4d33c5db2ca053489352cd5e7d39da26a4",
+          "waitingMs": 8405,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R02-03",
+          "responseSha": "cc75cb13ba7fe0880be7f78efcea3aa6f30cbfc610be7e69b1b74a7b655ecefe",
+          "resultSha": "317a1673edfa231af1d2b41af5e1664bca6d3676628d8ed5186cb96b80ab3354",
+          "waitingMs": 5294,
+          "issues": [
+            {
+              "code": "TIME_NEEDS_REVIEW",
+              "entityIds": [
+                "time-001"
+              ]
+            },
+            {
+              "code": "TIME_NEEDS_REVIEW",
+              "entityIds": [
+                "time-002"
+              ]
+            }
+          ],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R03-03",
+          "responseSha": "d4528a573bc6a2496cc980393589827f4f73a8f4fa1f72c3223fb322d582df76",
+          "resultSha": "9a3c1b47fea88ace8d993085d9e66bc2c12dddee0d73ee018c8eb42b4b2a587f",
+          "waitingMs": 5709,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R04-03",
+          "responseSha": "f0f55ecc4728277bd9289a3ab57d9747c3491b04e892eedf3bcf027433e599e7",
+          "resultSha": "782aeb4e18d37ae753c49f98ba4d8a59815649d8d383bce01007b8c2a1d13da6",
+          "waitingMs": 5630,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R05-03",
+          "responseSha": "d7f934bdc4fa6807c30417ed015100d884c8c3183a8d6389fb4bd445ce53de70",
+          "resultSha": "9ea8869a8dac8a025a477414b5b4ca35f3932de5e2272712e6c95ebb6593ac84",
+          "waitingMs": 5818,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R06-03",
+          "responseSha": "ed86b9f701bc20f93e9fc733262cf8445c2b1d52b48ca6d7a2cd18dfa421d7b5",
+          "resultSha": "0a4d594d7424c7c9bda308c322f5f407467ec781c8352397c90d9438f54c2be5",
+          "waitingMs": 5135,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R07-03",
+          "responseSha": "c4096bcb1aee7845b442cf82910f23a987872e1e00b4e7018a3d7e1c21d67caf",
+          "resultSha": "4e64e948f6cd42df6a099377fddfa6766d4269c82ec1b4ca820da508ff4ae818",
+          "waitingMs": 7396,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R08-03",
+          "responseSha": "d81eae44f040fee8107f520e02130363b17ef4cd96f1ad995e032bf17fcc0ccc",
+          "resultSha": "24583a6451cb9180d4e7120bf6f2d30d6f834640b55e1d5b344e5e05d0ce256b",
+          "waitingMs": 7872,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R09-03",
+          "responseSha": "36a7f4d2e9e520d9c84c93e0c44ed61efcd390b74e7676f1230dbda97e915251",
+          "resultSha": "92592a4b1b0d3b9a379e6a71fd33f2e2ad304ea85880d22bcbe3f5a24af9b001",
+          "waitingMs": 4386,
+          "issues": [
+            {
+              "code": "TIME_NEEDS_REVIEW",
+              "entityIds": [
+                "tp-2"
+              ]
+            },
+            {
+              "code": "EVENT_NOT_TASK_ASSOCIATED",
+              "entityIds": [
+                "ev-1"
+              ]
+            }
+          ],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R10-03",
+          "responseSha": "a161f9c4d4c46761615d84c270b80eebe434557328bdc8a9e2d81ac1b8935c90",
+          "resultSha": "328e25c761a93c1c25209bc57ccc0645926909b142ce81277fd8db714e1c6fcb",
+          "waitingMs": 7986,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R11-03",
+          "responseSha": "235e4c50a28f027e6077a0e88eb91c0173bb84f58ce825a697b9755072862b62",
+          "resultSha": "4a7b86ec7b873dff941009eb2d659046563ee4a29153ad422719ba224dd1fc9e",
+          "waitingMs": 8563,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R12-03",
+          "responseSha": "b1345792219f0dc84b60a2726d8d2b90c5b83e9a852f9a68f9cf3375e5bf8c5b",
+          "resultSha": "b4b50707972523040111c6ddd6e33fa06fb2cdafdda237f9a59d1a580c4028f3",
+          "waitingMs": 7984,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        }
+      ]
+    },
+    "07": {
+      "requests": 12,
+      "waitingMs": 83228,
+      "costUpperMicroCny": 272200,
+      "schemaParsed": 12,
+      "strictComplete": 0,
+      "issueCases": 5,
+      "metrics": {
+        "task": {
+          "predicted": 18,
+          "reference": 19,
+          "correct": 18,
+          "falsePositive": 0,
+          "falseNegative": 1
+        },
+        "requiresAction": {
+          "predicted": 19,
+          "reference": 20,
+          "correct": 18,
+          "falsePositive": 1,
+          "falseNegative": 2
+        },
+        "time": {
+          "predicted": 16,
+          "reference": 16,
+          "correct": 6,
+          "falsePositive": 10,
+          "falseNegative": 10
+        },
+        "material": {
+          "predicted": 21,
+          "reference": 17,
+          "correct": 10,
+          "falsePositive": 11,
+          "falseNegative": 7
+        },
+        "event": {
+          "predicted": 2,
+          "reference": 1,
+          "correct": 0,
+          "falsePositive": 2,
+          "falseNegative": 1
+        },
+        "condition": {
+          "predicted": 18,
+          "reference": 19,
+          "correct": 16,
+          "falsePositive": 2,
+          "falseNegative": 3
+        },
+        "revision": {
+          "predicted": 4,
+          "reference": 3,
+          "correct": 1,
+          "falsePositive": 3,
+          "falseNegative": 2
+        },
+        "evidence": {
+          "predicted": 57,
+          "reference": 53,
+          "correct": 13,
+          "falsePositive": 44,
+          "falseNegative": 40
+        },
+        "semantic": {
+          "predicted": 26,
+          "reference": 22,
+          "correct": 1,
+          "falsePositive": 25,
+          "falseNegative": 21
+        },
+        "coverage": {
+          "predicted": 42,
+          "reference": 43,
+          "correct": 16,
+          "falsePositive": 26,
+          "falseNegative": 27
+        }
+      },
+      "units": [
+        {
+          "unitId": "R01-07",
+          "responseSha": "8f73d3c9e2b12bbaebd7f8d1aa3fc7672cf54661c9e8d34d94f792b994750ee9",
+          "resultSha": "78b99fb4d8434e60290bc4d4e849ae879c6d600d84ebc2c818194500acb469b7",
+          "waitingMs": 9422,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R02-07",
+          "responseSha": "8959b4de7361e64ed476a3f449272801c8c5df9dd2ab4a35fd275d28dc337712",
+          "resultSha": "86bc2345625b85c20d604164208b63a225047cf9a4c5f102684a07b33e3157c9",
+          "waitingMs": 5372,
+          "issues": [
+            {
+              "code": "TIME_NEEDS_REVIEW",
+              "entityIds": [
+                "time-0001"
+              ]
+            }
+          ],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R03-07",
+          "responseSha": "3f70650f3bd282b8edb393e4f76b1dd6c1f187ba9669f1f22fb4dd0fd3ba7f17",
+          "resultSha": "09792844619ca688b312208b24fcc1f688ada4637600608efb91f8bde6657fe0",
+          "waitingMs": 4663,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R04-07",
+          "responseSha": "d74f6d5b88c6fbe978108bdd16871099ff62182d24ce959630941ee86a6f7224",
+          "resultSha": "854a0765984cb75d541d749a6bce7296307b1aca0c098bfabdc230c480518709",
+          "waitingMs": 6982,
+          "issues": [
+            {
+              "code": "CONDITION_CONTRADICTION",
+              "entityIds": [
+                "task-check-bottle-seal"
+              ]
+            }
+          ],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R05-07",
+          "responseSha": "593fce6c8b897eff1a2dc542cefa4a17d2c82eedccdd995bffeed33b14783dbc",
+          "resultSha": "b0743ecda1173d8624c4c79c5cd3dd4c99acd0282a66625c2961cc9483d5d999",
+          "waitingMs": 5225,
+          "issues": [
+            {
+              "code": "UNRESOLVED_SOURCE_SCOPE",
+              "entityIds": []
+            }
+          ],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R06-07",
+          "responseSha": "5c1a229f7b33788a4db518f3a3603541c979b2976334e00b90c413891678557d",
+          "resultSha": "607554058f4b1c3d2682a63594ccb2abced64471da09799b28fa13141c935ea1",
+          "waitingMs": 5371,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R07-07",
+          "responseSha": "b3f8e3962f853901faa407fb11686f5f38f53609f5aa9ca2d6241f5500ac3437",
+          "resultSha": "6d0e43ed0177fdf18edbd04c567b3d61d2b1a6fbdc0a78f29da662d89fc49811",
+          "waitingMs": 7740,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R08-07",
+          "responseSha": "5c6f74512a44768a035d7afdef90fa913d76eb74f8e94a1e0d7627b352dcb9e9",
+          "resultSha": "ec615e7374c07cce4d55ac4c49dd174d2eab4da2742488db32a16769dafe0279",
+          "waitingMs": 7549,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R09-07",
+          "responseSha": "e1bfeb45315eedb5b4c6bd1fbde9fc1ac90d2aa8d006d6ff657945097121200e",
+          "resultSha": "5b40f3c14df5f5164bb5abb21f0f2bbc06306d561b22f02cd12b77a262df2db6",
+          "waitingMs": 5694,
+          "issues": [
+            {
+              "code": "TIME_NEEDS_REVIEW",
+              "entityIds": [
+                "tp-end-20260928-2100"
+              ]
+            },
+            {
+              "code": "EVENT_NOT_TASK_ASSOCIATED",
+              "entityIds": [
+                "evt-stargazing-night"
+              ]
+            }
+          ],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R10-07",
+          "responseSha": "4bd02a2c03f3a1a70ca5df7d44ea8a2da6a07f5c55abf5489b011d4395f80f94",
+          "resultSha": "e4aa5caffb347d1bb9e5562b51a43ac3b2af899439d8eb8ce813a3b6f0cd6423",
+          "waitingMs": 9207,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R11-07",
+          "responseSha": "28faad0a80fd104cc013e9d31658d9504b8dfcdd95dd47184df9ca2eb461330e",
+          "resultSha": "42b12048c5fa0ad7c90cdda36f5f73bc1912cde89452def460bcc7044090c5e5",
+          "waitingMs": 7437,
+          "issues": [],
+          "returnedModel": "deepseek-flash"
+        },
+        {
+          "unitId": "R12-07",
+          "responseSha": "a1ab8c2232c462de6ccb5bdfaa97648b24a16083f853448236586d3d296adc13",
+          "resultSha": "6cb2531d33154044351faa385afe773545a619d65a02cf23a2135cec497e72ad",
+          "waitingMs": 8566,
+          "issues": [
+            {
+              "code": "COVERAGE_TIME",
+              "entityIds": [
+                "task-save-final-labels"
+              ]
+            },
+            {
+              "code": "BAD_REVISION_REFERENCE",
+              "entityIds": [
+                "directive-send-source-files"
+              ]
+            },
+            {
+              "code": "REVISION_NEEDS_REVIEW",
+              "entityIds": [
+                "directive-send-source-files"
+              ]
+            }
+          ],
+          "returnedModel": "deepseek-flash"
+        }
+      ]
+    }
+  },
+  "ledger": {
+    "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "lines": 264,
+    "bytes": 200447,
+    "sha256": "9d4352be315600eeafe887284492398b95e9b2a3dd97721a39f5fe2439316d52",
+    "tailHash": "bad2a759a5f62264b1cfe6dc2941793cfb6d28cb332f5e78ee642ee5ba637bcb",
+    "totalAttempts": 128,
+    "totalCostUpperMicroCny": 6130417,
+    "a01UnknownReserveMicroCny": 3300000
+  },
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "label": "已见材料开发回归，12份为比较单位，24独立请求；非盲测/商业准确率",
+  "decision": "NOT_ADOPT",
+  "businessAdjudication": {
+    "method": "沿用固定COMPARISON_RULES，人工阅读原文/原答/转换；保守区分语义事实、机械结构、严格匹配。正常主动核对不算重大修改，准备状态表达不足单列。非独立盲法。",
+    "semanticNoMajor": {
+      "03": 10,
+      "07": 9
+    },
+    "semanticOrStructuralNoMajor": {
+      "03": 9,
+      "07": 7
+    },
+    "denominator": 12,
+    "cases": [
+      {
+        "case": "R01",
+        "a": "两个任务、截止和三项材料/渠道正确。",
+        "b": "保持正确。截图渠道字段null，但从原任务及附带要求可知，不计实质错误。",
+        "majorA": false,
+        "majorB": false,
+        "fix": "材料准备状态由用户明确选择；不改正确事实。"
+      },
+      {
+        "case": "R02",
+        "a": "保留近期与另行通知两个时间说法，日期待定。",
+        "b": "近期仍在任务描述，但时间实体仅有另行通知。未被变为无日期；时间实体覆盖不完整单列，不把已保留的描述当成任务时间语义丢失。",
+        "majorA": false,
+        "majorB": false,
+        "fix": "核对日期待定；如需完整时间事实，人工补关联近期。"
+      },
+      {
+        "case": "R03",
+        "a": "保存原始照片，无额外材料，无日期。",
+        "b": "把操作对象原始照片多列为必需材料，产生额外准备核对。",
+        "majorA": false,
+        "majorB": true,
+        "fix": "不应新增独立准备义务；区分任务对象与附带材料。"
+      },
+      {
+        "case": "R04",
+        "a": "条件false且独立检查无条件，未新增材料。",
+        "b": "多列采样瓶为必需材料；独立任务not_applicable同时带factScopeIds，触发CONDITION_CONTRADICTION。",
+        "majorA": false,
+        "majorB": true,
+        "fix": "移除没有依据的额外材料要求；明确核对独立任务条件关系，不能解除真正false的取消条件。"
+      },
+      {
+        "case": "R05",
+        "a": "明确true的补交要求、PDF和截止正确。",
+        "b": "任务核心事实正确，但未说明准备情况的来源片段留unresolved，增加结构/表达阻碍。",
+        "majorA": false,
+        "majorB": false,
+        "structuralB": true,
+        "fix": "准备状态未知不可伪造；当前契约/覆盖表达限制保留，不计成模型把true理解错。"
+      },
+      {
+        "case": "R06",
+        "a": "领取以出现空闲设备为条件，状态unknown，学生证归属正确。",
+        "b": "保持unknown与学生证，领取时出示作为渠道更明确。",
+        "majorA": false,
+        "majorB": false,
+        "fix": "正常暂缓或核对条件，不凭空宣称设备已空闲。"
+      },
+      {
+        "case": "R07",
+        "a": "旧寄送取消，新PDF上传、日期、命名、渠道正确。",
+        "b": "同样保留替代；旧纸质材料只归已作废任务，不变成新待办，重复取消关系及旧时态差异单列。",
+        "majorA": false,
+        "majorB": false,
+        "fix": "确认有效新要求，不确认旧要求。"
+      },
+      {
+        "case": "R08",
+        "a": "取消旧参访，独立反思DOCX提交和截止正确。",
+        "b": "同样正确，保留取消事件和独立任务。",
+        "majorA": false,
+        "majorB": false,
+        "fix": "独立任务可核对，旧参访不成为新增执行任务。"
+      },
+      {
+        "case": "R09",
+        "a": "纯活动信息，无待办，开始及21:00结束原文都存在；本机无法把仅时刻的结束规范化为同一天。",
+        "b": "同样无待办、原始时刻正确；相同本机归一化/独立事件承接阻碍。",
+        "majorA": false,
+        "majorB": false,
+        "structuralA": true,
+        "structuralB": true,
+        "fix": "共同转换/承接限制，不说成模型漏时间或新候选改善。"
+      },
+      {
+        "case": "R10",
+        "a": "两任务与四材料的格式、数量、归属正确。",
+        "b": "保持正确。原文明示照片已完成，但当前模型材料结构没有准备状态字段，两臂均需用户核对。",
+        "majorA": false,
+        "majorB": false,
+        "fix": "已有照片可按原文核对；维修收据未知不能默认缺少。"
+      },
+      {
+        "case": "R11",
+        "a": "多造准备密封袋任务；提交条件错误标true，同时仍保留登记单前置依赖；密封袋关联到多余任务。",
+        "b": "不再多造任务，提交保留登记单依赖，不宣称前置完成。三材料粒度较细，但两个袋、编号标签及提交归属仍在；反向有袋而任务列表遗漏该ID，现有factAssets从明确反向关联恢复，单列结构差异。",
+        "majorA": true,
+        "majorB": false,
+        "fix": "03需删除多余义务并核对条件/材料关系；07无需改核心义务，仍需正常材料与依赖核对。"
+      },
+      {
+        "case": "R12",
+        "a": "旧取消实体保留；但保存最终版无原文明示却增加制作任务前置，需核对/去除不必要依赖。",
+        "b": "遗漏取消旧实体并指向悬空ID；保存无日期却coverage.time=present；额外最终版展签材料。",
+        "majorA": true,
+        "majorB": true,
+        "fix": "07须补旧取消实体/关系，核对错误时间覆盖和材料；现有回放保留失败，不自动修分或确认。"
+      }
+    ],
+    "countCaveat": "R03/R04/R12额外材料为3个新增核对点；R07旧作废材料与R11样本包装粒度不冒充新增执行材料错误。R11改进一例，不代表全体准确率。准备状态未知的公共限制不通过选择missing掩盖。结构数量不等于实际用户点击次数。",
+    "adoptionReason": "少一个多余任务，但少一个必要的旧取消实体；无需重大纠正通知未增加，目标材料错误有新增且修订退化，不满足采用条件。"
+  }
+}

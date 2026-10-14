@@ -1,0 +1,206 @@
+- link "跳到主要内容":
+  - /url: "#main-content"
+- banner:
+  - button "返回今日首页":
+    - strong: 事务管家
+  - button "新事务":
+    - text: 新事务
+- navigation "手机端主要导航":
+  - button "今日":
+    - generic: 今日
+  - button "4 收件箱":
+    - emphasis: "4"
+    - generic: 收件箱
+  - button "项目":
+    - generic: 项目
+  - button "日历":
+    - generic: 日历
+  - button "更多":
+    - generic: 更多
+- generic "匿名工程输入 · 普通产品路径 · 不发送模型请求"
+- main:
+  - text: 来源先保存，确认后入库
+  - heading "待确认" [level=1]
+  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。
+  - strong: "2"
+  - text: 份需关注
+  - group "收件箱视图":
+    - button "全部来源"
+    - button "待确认 2" [pressed]
+  - button "新建手动来源":
+    - text: 新建手动来源
+  - checkbox "选择全部待核对"
+  - text: 选择全部待核对
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: 匿名契约工程夹具（非模型输出） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 甲组讨论于2026年11月12日14:00开始。乙组讨论于2026年11月13日15:00开始。丙组讨论于2026年11月14日16:00开始。仅供了解。
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 0 任务 · 独立事件及时间请在核对页查看
+    - button "核对 0 项任务、3 个事件":
+      - text: 核对 0 项任务、3 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: ObligationAuthority 固定录制（非实时调用） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 活动信息 **时间** 2026年10月12日（周一） 12:30-14:00 **地点** 海韵园办公楼A栋302室 **报名** 扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00，主办方提供50份免费午餐，按报名顺序先到先得（讲座的听众总人数不作限制，感兴趣均可报名）。
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 1 任务 · 1 材料 · 3 时间 · 1 活动
+    - button "核对 1 项任务、0 个事件":
+      - text: 核对 1 项任务、0 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+- status:
+  - generic: 匿名工程建议已生成；没有模型请求，核对后走普通正式保存。
+  - button "关闭提示": ×
+- dialog "识别出 0 项任务、3 个事件":
+  - banner:
+    - generic: 第 2 步 · 匿名契约工程夹具（非模型输出） · 无新模型请求
+    - heading "识别出 0 项任务、3 个事件" [level=2]
+    - paragraph: 先看标题和时间；不准确时再点“编辑”。
+    - button "稍后处理并关闭" [active]:
+  - status "未确认编辑检查点":
+    - strong: 本来源核对会话
+    - paragraph: 编辑在确认前不会创建任务。
+  - strong: 0 项任务、3 个事件待确认
+  - generic: 确认后才会进入今日和任务中心
+  - region "项目匹配与识别质量":
+    - strong: 项目归属建议
+    - text: 未主动建立或匹配项目。
+    - generic: 选择项目归属
+    - combobox "选择项目归属":
+      - option "新建项目"
+      - option "作为独立事项" [selected]
+      - option "稍后决定"
+    - strong: 需要重点核对
+    - generic: 包含事件安排；存在识别冲突；存在质量标记
+    - button "只保留原文明确"
+    - region "聚焦复核原因":
+      - strong: 这份通知包含多个时间、材料或阶段
+      - generic: 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。
+      - list:
+        - strong: 包含事件安排
+        - generic: 识别到 3 个事件，请核对开始时间、地点和是否需要创建。
+        - strong: 存在识别冲突
+        - generic: 1 项结果互相冲突，不会自动替你决定。
+        - strong: 存在质量标记
+        - generic: 1 项质量标记需要人工复核。
+      - generic "来源提取元数据":
+        - generic: 77 字
+      - strong: 质量标记
+      - list:
+        - listitem: 时间归属与所引原文对象不一致，相关事件需重新核对；无关联项可继续保存。
+    - strong: 发现 1 项冲突
+    - article:
+      - paragraph: 时间归属与所引原文对象不一致，相关事件需重新核对；无关联项可继续保存。
+      - button "在原文中定位"
+  - generic "原始通知与定位依据":
+    - text: 原始通知与定位依据
+  - paragraph: 甲组讨论于2026年11月12日14:00开始。乙组讨论于2026年11月13日15:00开始。丙组讨论于2026年11月14日16:00开始。仅供了解。
+  - region "项目树待确认事项":
+    - region "同一通知的独立事件与信息":
+      - region "通知补充说明":
+        - heading "通知补充说明" [level=3]
+        - paragraph: 原回答保留的信息；未关联到具体事项，不会据此新增任务或日程。
+        - blockquote: 仅供了解。
+        - generic "查看补充说明原文依据"
+      - heading "同一通知的事件" [level=3]
+      - article:
+        - strong: 甲组讨论
+        - paragraph: 地点未说明；原文未说明时间
+        - paragraph: 甲组讨论于2026年11月12日14:00开始。
+        - paragraph: 保留，待正式确认
+        - text: 处置“甲组讨论”
+        - combobox "处置“甲组讨论”":
+          - option "保留" [selected]
+          - option "暂缓"
+          - option "拒绝多余事件"
+        - button "编辑事件"
+      - article:
+        - strong: 乙组讨论
+        - paragraph: 地点未说明；2026年11月13日 15:00（原文：2026年11月13日15:00）
+        - paragraph: 乙组讨论于2026年11月13日15:00开始。
+        - paragraph: 保留，待正式确认
+        - text: 处置“乙组讨论”
+        - combobox "处置“乙组讨论”":
+          - option "保留" [selected]
+          - option "暂缓"
+          - option "拒绝多余事件"
+        - button "编辑事件"
+      - article:
+        - strong: 丙组讨论
+        - paragraph: 地点未说明；2026年11月14日 16:00（原文：2026年11月14日16:00）
+        - paragraph: 丙组讨论于2026年11月14日16:00开始。
+        - paragraph: 保留，待正式确认
+        - text: 处置“丙组讨论”
+        - combobox "处置“丙组讨论”":
+          - option "保留" [selected]
+          - option "暂缓"
+          - option "拒绝多余事件"
+        - button "编辑事件"
+      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。
+      - button "依据原文补充遗漏事件"
+      - button "依据原文补充遗漏任务"
+    - heading "时间节点" [level=3]
+    - checkbox "event_start 2026年11月12日14:00" [checked]
+    - strong: event_start
+    - generic: 2026年11月12日14:00
+    - button "在原文中定位"
+    - checkbox "event_start 2026年11月13日15:00" [checked]
+    - strong: event_start
+    - generic: 2026年11月13日15:00
+    - button "在原文中定位"
+    - checkbox "event_start 2026年11月14日16:00" [checked]
+    - strong: event_start
+    - generic: 2026年11月14日16:00
+    - button "在原文中定位"
+  - contentinfo:
+    - button "确认信息并保存独立事件"
+    - button "完成"
+- generic "本批真实录制 · 选择来源与独立读回"
+- paragraph: 6aa3550f02d3 / source e364676630c0；rco-mainline-01-02-i1-d27-plan-recorded-morning-v6-delivery-final；source-event-task-relations-1 / source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-shared-attribute-index-1.2.0 / authority-local-coverage-1.1.0 / obligation-local-relation-1.0.0 / authority-endpoint-composition-1.1.0 / authority-support-context-1.1.0 / source-information-preview-1.0.0 / source-window-endpoints-1.1.0 / source-window-plan-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。本次V6单臂4官方已见节选：4份确定录制；另4份旧V5只读回归，不混入新分母，不是配对胜负或Holdout；另6份义务先行及2份坏owner/前置等待工程控制，不计模型样本。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。
+- paragraph: 当前生成契约：single-authority-source-contract-5.0.0；single-authority-generation-1.0.0；ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT
+- text: 录制来源
+- combobox "录制来源":
+  - option "V6-REAL-20261008-01 / ObligationAuthority / 原冻结：CURRENT_V6_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "V6-REAL-20261008-02 / ObligationAuthority / 原冻结：CURRENT_V6_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "V6-REAL-20261008-03 / ObligationAuthority / 原冻结：CURRENT_V6_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "V6-REAL-20261008-04 / ObligationAuthority / 原冻结：CURRENT_V6_SINGLE_ARM_SETTLED_NOT_COMPARISON"
+  - option "V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：KNOWN_SETTLED_READ_ONLY_NOT_NEW_MODEL_SCORE"
+  - option "obligation-fixture-equipment / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "obligation-fixture-registration / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "obligation-fixture-shared-window / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "obligation-fixture-no-task / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "contract-fixture-deadline / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+  - option "authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT" [selected]
+  - option "contract-fixture-dependency / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"
+- textbox "本批匿名通知原文": 甲组讨论于2026年11月12日14:00开始。乙组讨论于2026年11月13日15:00开始。丙组讨论于2026年11月14日16:00开始。仅供了解。
+- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-10-06T09:00:00+08:00。
+- paragraph: 另有8份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT。
+- button "注入正式保存失败"
+- button "注入提交后读回失败"
+- button "注入检查点失败"
+- status: 未注入故障
+- button "本批独立canonical读回"
+- button "页面测量读回"

@@ -1,0 +1,131 @@
+{
+  "stage": "MAINLINE05_J03_SAME_PACKAGE",
+  "status": "PASS_J03_BROWSER_RESTORATION_COMPLETE_PENDING_FINAL_REVIEW",
+  "implementationSnapshot": "../browser-final-20260906a/failure.json",
+  "implementationArraySha256": "2c9fb255df8b9baaf240ee7c443f10654a1e7b7b7560bca0a37669dd7ab5c3d5",
+  "tabId": "763114649",
+  "origin": "http://127.0.0.1:6627",
+  "databaseName": "rco-mainline-01-02-i1-mainline05-688bf3e0-6e60-449a-acec-01a11d1fdfc4",
+  "timezone": {
+    "originalSensors": "无替代",
+    "changeActor": "user",
+    "targetObservedAfterReload": "America/Los_Angeles",
+    "business": "Asia/Shanghai",
+    "restoredActor": "user",
+    "restoredSettingUserConfirmed": "无替代",
+    "restoredPageObservedAfterReload": "Asia/Shanghai"
+  },
+  "before": {
+    "tasks": 31,
+    "sha256": "03e308722c052a4e8e14b0bbe90382c851082664baaba78c8241d5a6b2ee8a9a",
+    "independentReadAt": "2026-09-06T13:23:21.924Z"
+  },
+  "cases": [
+    {
+      "id": "J03-date-only",
+      "fixture": "old no-date notice",
+      "sourceId": "source:f109b901",
+      "input": "逐键2026-09-14，Backspace，再5 → 2026-09-15",
+      "unsavedConfirmEnabled": false,
+      "savedAt": "2026-09-06T13:26:04.158Z",
+      "confirmedAt": "2026-09-06T13:26:32.954Z",
+      "operation": "single confirmation",
+      "afterRefreshTasks": "2026-09-15（仅日期）",
+      "calendar": "9月15日周二 · 1 项；仅日期 保存活动手册",
+      "canonical": {
+        "value": "2026-09-15",
+        "precision": "date_only",
+        "isAllDay": true,
+        "timezone": null,
+        "extractionMethod": "manual"
+      },
+      "result": "PASS"
+    },
+    {
+      "id": "J03-exact",
+      "fixture": "old multi notice",
+      "sourceId": "source:c149ab5f",
+      "input": "ControlOrMeta+A，逐键2026-09-16T09:30，Backspace，再1 → 2026-09-16T09:31",
+      "initialInputValue": "2026-09-10T18:00",
+      "unsavedBatchConfirmEnabled": false,
+      "savedAt": "2026-09-06T13:28:56.321Z",
+      "confirmedAt": "2026-09-06T13:29:05.796Z",
+      "operation": "two-task batch confirmation",
+      "afterRefreshTasks": "2026-09-16T09:31（Asia/Shanghai）",
+      "calendar": "9月16日周三 · 1 项；09:31（Asia/Shanghai） 提交活动报名表",
+      "canonical": {
+        "value": "2026-09-16T09:31",
+        "timezone": "Asia/Shanghai",
+        "precision": "exact",
+        "rawText": "2026年9月10日18:00前"
+      },
+      "unchangedSiblingDeadline": "2026-09-11T18:00（Asia/Shanghai）",
+      "result": "PASS"
+    }
+  ],
+  "after": {
+    "tasks": 34,
+    "sources": 29,
+    "timePoints": 27,
+    "reminders": 0,
+    "noDateExistingTasks": 7,
+    "noDateTimePoints": 0,
+    "noDateReminders": 0,
+    "realBrowserReminderJobs": 0,
+    "oldEntitiesUnchanged": 335,
+    "sha256": "06cb9fbbb6a3fc0c889cdb73a0de934dbe8bba96f4901953e9f82c0b79209719"
+  },
+  "independentRead": {
+    "databaseName": "rco-mainline-01-02-i1-mainline05-688bf3e0-6e60-449a-acec-01a11d1fdfc4",
+    "origin": "http://127.0.0.1:6627",
+    "readMethod": "new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load()",
+    "sha256": "06cb9fbbb6a3fc0c889cdb73a0de934dbe8bba96f4901953e9f82c0b79209719",
+    "observedAt": "2026-09-06T13:30:06.810Z",
+    "evidenceNote": "Official CUA Edge tab 763114649, engineering Independent Read button after reload; actual MAINLINE05_INDEPENDENT_READ console event; separate UI download of its snapshot and separate App export button."
+  },
+  "actualDownload": "download.json",
+  "restorationRead": {
+    "observedAt": "2026-09-06T13:34:56.879Z",
+    "sha256": "06cb9fbbb6a3fc0c889cdb73a0de934dbe8bba96f4901953e9f82c0b79209719",
+    "sameFullObject": true,
+    "browserTimezone": "Asia/Shanghai"
+  },
+  "journeys": {
+    "newlyCompleted": "J03",
+    "reusedWithoutRerun": [
+      "J01",
+      "J02",
+      "J04",
+      "J05",
+      "J06",
+      "J07",
+      "J08",
+      "J09",
+      "J10",
+      "J11",
+      "J12"
+    ],
+    "reusedEvidence": "../browser-final-20260906a/browser.json",
+    "allNecessaryJourneys": "12/12 with source-bound evidence; not 12 new runs"
+  },
+  "attemptNotes": [
+    "Original server stopped: ERR_CONNECTION_REFUSED. Restarted unchanged existing launcher on 6627; retained old run URL/database.",
+    "First attempt to locate HTML summary via role=button had no matches; actual AX and summary text locator worked. No assertion or code changed.",
+    "Sequential entry of old multi notice timed out after final 1; read actual DOM value and entered only remaining 份。 before submitting. No duplicate request or new dataset.",
+    "Download listener timeout retained; actual two filesystem downloads and independent database comparison pass.",
+    "Native desktop control was not retried after user took over Sensors. Original and restored Sensors settings from user screenshots/confirmation; actual runtime timezones observed through product engineering UI after reload."
+  ],
+  "safety": {
+    "wrongDefaultSelection": 0,
+    "unconfirmedFormalWrites": 0,
+    "unintendedDuplicates": 0,
+    "overwrittenOldRecords": 0,
+    "lostOldRecords": 0,
+    "falseDatesOrReminders": 0,
+    "scope": "two current cases plus SHA-reused prior accepted journeys; not population guarantees"
+  },
+  "modelCalls": 0,
+  "modelNetwork": 0,
+  "feesCny": 0,
+  "modelAccuracy": "本轮未测量"
+}

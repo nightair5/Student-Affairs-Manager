@@ -1,0 +1,613 @@
+{
+  "boundary": [
+    "No D1 Expected was changed",
+    "No D2 result was rescored for promotion",
+    "No automatic conversion is an independent human label"
+  ],
+  "cases": [
+    {
+      "automaticConversionAllowed": false,
+      "compatibleWithV3": false,
+      "failures": [
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[0].fields"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[0]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[1]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[2]"
+        }
+      ],
+      "historicalDiagnosticOnly": true,
+      "humanFieldsRequired": [
+        "actions[]",
+        "objects[]",
+        "actionObjectAliases[]",
+        "structured fields",
+        "condition evidence",
+        "completion standard",
+        "relations",
+        "merge rules",
+        "forbidden inferences",
+        "ambiguity rules"
+      ],
+      "legacyReferenceSha256": "033caaaf62373d9cc13da0c7e99baf02461609cc7cdad0e5d81053bc0b2c8f56",
+      "requiresIndependentRelabeling": true,
+      "sourceId": "C12-PD01",
+      "taskCount": 1
+    },
+    {
+      "automaticConversionAllowed": false,
+      "compatibleWithV3": false,
+      "failures": [
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[0].fields"
+        },
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[1].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[1].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[1].fields"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[0]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[1]"
+        }
+      ],
+      "historicalDiagnosticOnly": true,
+      "humanFieldsRequired": [
+        "actions[]",
+        "objects[]",
+        "actionObjectAliases[]",
+        "structured fields",
+        "condition evidence",
+        "completion standard",
+        "relations",
+        "merge rules",
+        "forbidden inferences",
+        "ambiguity rules"
+      ],
+      "legacyReferenceSha256": "0210bac6ee0d21b2a78693a8a98faef0515d0dae44451b1de6e49cdc51b18dab",
+      "requiresIndependentRelabeling": true,
+      "sourceId": "C12-PD02",
+      "taskCount": 2
+    },
+    {
+      "automaticConversionAllowed": false,
+      "compatibleWithV3": false,
+      "failures": [
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[0].fields"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[0]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[1]"
+        }
+      ],
+      "historicalDiagnosticOnly": true,
+      "humanFieldsRequired": [
+        "actions[]",
+        "objects[]",
+        "actionObjectAliases[]",
+        "structured fields",
+        "condition evidence",
+        "completion standard",
+        "relations",
+        "merge rules",
+        "forbidden inferences",
+        "ambiguity rules"
+      ],
+      "legacyReferenceSha256": "223e85c19ea2bc31a59046542e1a4bdc6971dd3dd702dd46076495212a861ac1",
+      "requiresIndependentRelabeling": true,
+      "sourceId": "C12-PD03",
+      "taskCount": 1
+    },
+    {
+      "automaticConversionAllowed": false,
+      "compatibleWithV3": false,
+      "failures": [
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[0].fields"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[0]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[1]"
+        }
+      ],
+      "historicalDiagnosticOnly": true,
+      "humanFieldsRequired": [
+        "actions[]",
+        "objects[]",
+        "actionObjectAliases[]",
+        "structured fields",
+        "condition evidence",
+        "completion standard",
+        "relations",
+        "merge rules",
+        "forbidden inferences",
+        "ambiguity rules"
+      ],
+      "legacyReferenceSha256": "dca3c4d9702884a7f545bacea7bcd57a9b4eaba6a4bfd6dbaf4fa121988ce573",
+      "requiresIndependentRelabeling": true,
+      "sourceId": "C12-PD04",
+      "taskCount": 1
+    },
+    {
+      "automaticConversionAllowed": false,
+      "compatibleWithV3": false,
+      "failures": [
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[0].fields"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[0]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[1]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[2]"
+        }
+      ],
+      "historicalDiagnosticOnly": true,
+      "humanFieldsRequired": [
+        "actions[]",
+        "objects[]",
+        "actionObjectAliases[]",
+        "structured fields",
+        "condition evidence",
+        "completion standard",
+        "relations",
+        "merge rules",
+        "forbidden inferences",
+        "ambiguity rules"
+      ],
+      "legacyReferenceSha256": "bee5d57d71dda4f842ac83347dfa6f6c62c346506fcf9f2fcb175869f4ab408d",
+      "requiresIndependentRelabeling": true,
+      "sourceId": "C12-PD05",
+      "taskCount": 1
+    },
+    {
+      "automaticConversionAllowed": false,
+      "compatibleWithV3": false,
+      "failures": [
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[0].fields"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[0]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[1]"
+        }
+      ],
+      "historicalDiagnosticOnly": true,
+      "humanFieldsRequired": [
+        "actions[]",
+        "objects[]",
+        "actionObjectAliases[]",
+        "structured fields",
+        "condition evidence",
+        "completion standard",
+        "relations",
+        "merge rules",
+        "forbidden inferences",
+        "ambiguity rules"
+      ],
+      "legacyReferenceSha256": "e93c1dba87b8fe790fa234376f5e0e59c2a164e4b7a3e90bdc001b6309266a2c",
+      "requiresIndependentRelabeling": true,
+      "sourceId": "C12-PD06",
+      "taskCount": 1
+    },
+    {
+      "automaticConversionAllowed": false,
+      "compatibleWithV3": false,
+      "failures": [
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[0].fields"
+        },
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[1].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[1].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[1].fields"
+        },
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[2].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[2].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[2].fields"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[0]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[1]"
+        }
+      ],
+      "historicalDiagnosticOnly": true,
+      "humanFieldsRequired": [
+        "actions[]",
+        "objects[]",
+        "actionObjectAliases[]",
+        "structured fields",
+        "condition evidence",
+        "completion standard",
+        "relations",
+        "merge rules",
+        "forbidden inferences",
+        "ambiguity rules"
+      ],
+      "legacyReferenceSha256": "4553fe6c0cc10e77cdae665caabce7782ff6ab7f0516c76628b230cb61d91b0f",
+      "requiresIndependentRelabeling": true,
+      "sourceId": "C12-PD07",
+      "taskCount": 3
+    },
+    {
+      "automaticConversionAllowed": false,
+      "compatibleWithV3": false,
+      "failures": [
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[0]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[1]"
+        }
+      ],
+      "historicalDiagnosticOnly": true,
+      "humanFieldsRequired": [
+        "actions[]",
+        "objects[]",
+        "actionObjectAliases[]",
+        "structured fields",
+        "condition evidence",
+        "completion standard",
+        "relations",
+        "merge rules",
+        "forbidden inferences",
+        "ambiguity rules"
+      ],
+      "legacyReferenceSha256": "15e84c3ae2eaffbdea6649f1ed8100f553bb8a61d7691ebc135d662806b3fbf7",
+      "requiresIndependentRelabeling": true,
+      "sourceId": "C12-PD08",
+      "taskCount": 0
+    },
+    {
+      "automaticConversionAllowed": false,
+      "compatibleWithV3": false,
+      "failures": [
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[0].fields"
+        },
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[1].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[1].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[1].fields"
+        },
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[2].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[2].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[2].fields"
+        },
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[3].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[3].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[3].fields"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[0]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[1]"
+        }
+      ],
+      "historicalDiagnosticOnly": true,
+      "humanFieldsRequired": [
+        "actions[]",
+        "objects[]",
+        "actionObjectAliases[]",
+        "structured fields",
+        "condition evidence",
+        "completion standard",
+        "relations",
+        "merge rules",
+        "forbidden inferences",
+        "ambiguity rules"
+      ],
+      "legacyReferenceSha256": "26649f80a7d5ac3494bb88426907578e2fd37ed501ac2c3114b39d75012c7ea3",
+      "requiresIndependentRelabeling": true,
+      "sourceId": "C12-PD09",
+      "taskCount": 4
+    },
+    {
+      "automaticConversionAllowed": false,
+      "compatibleWithV3": false,
+      "failures": [
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[0].fields"
+        },
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[1].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[1].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[1].fields"
+        },
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[2].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[2].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[2].fields"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[0]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[1]"
+        }
+      ],
+      "historicalDiagnosticOnly": true,
+      "humanFieldsRequired": [
+        "actions[]",
+        "objects[]",
+        "actionObjectAliases[]",
+        "structured fields",
+        "condition evidence",
+        "completion standard",
+        "relations",
+        "merge rules",
+        "forbidden inferences",
+        "ambiguity rules"
+      ],
+      "legacyReferenceSha256": "4abbe7682f557bf4d1e09c6543469f5554bae01649244a6210c81a3b80aa0f02",
+      "requiresIndependentRelabeling": true,
+      "sourceId": "C12-PD10",
+      "taskCount": 3
+    },
+    {
+      "automaticConversionAllowed": false,
+      "compatibleWithV3": false,
+      "failures": [
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[0]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[1]"
+        }
+      ],
+      "historicalDiagnosticOnly": true,
+      "humanFieldsRequired": [
+        "actions[]",
+        "objects[]",
+        "actionObjectAliases[]",
+        "structured fields",
+        "condition evidence",
+        "completion standard",
+        "relations",
+        "merge rules",
+        "forbidden inferences",
+        "ambiguity rules"
+      ],
+      "legacyReferenceSha256": "0f4e286aa930b0cf24793bb207303b08d18b60386e29e153e3c6238dfc9ef95b",
+      "requiresIndependentRelabeling": true,
+      "sourceId": "C12-PD11",
+      "taskCount": 0
+    },
+    {
+      "automaticConversionAllowed": false,
+      "compatibleWithV3": false,
+      "failures": [
+        {
+          "code": "ACTIONS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].actions"
+        },
+        {
+          "code": "OBJECTS_ARRAY_MISSING",
+          "path": "scorerReference.tasks[0].objects"
+        },
+        {
+          "code": "FIELDS_OBJECT_MISSING",
+          "path": "scorerReference.tasks[0].fields"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[0]"
+        },
+        {
+          "code": "NATURAL_LANGUAGE_CHECK_NOT_MACHINE_READABLE",
+          "path": "scorerReference.checks[1]"
+        }
+      ],
+      "historicalDiagnosticOnly": true,
+      "humanFieldsRequired": [
+        "actions[]",
+        "objects[]",
+        "actionObjectAliases[]",
+        "structured fields",
+        "condition evidence",
+        "completion standard",
+        "relations",
+        "merge rules",
+        "forbidden inferences",
+        "ambiguity rules"
+      ],
+      "legacyReferenceSha256": "f17660c79e3752a9f6bda59fd566a26db6bb07f983dec3690ee5d5b463da9813",
+      "requiresIndependentRelabeling": true,
+      "sourceId": "C12-PD12",
+      "taskCount": 1
+    }
+  ],
+  "compatible": 0,
+  "naturalLanguageCheckFailures": 12,
+  "officialD2DecisionPreserved": "REJECT_CANDIDATE12_ENGINEERING_SCREEN",
+  "sources": 12,
+  "sourceVersion": "candidate12-d1-provisional-references-1.0.0",
+  "status": "HISTORICAL_REFERENCES_INCOMPATIBLE_NO_RETROACTIVE_RESCORING",
+  "taskIdentityFailures": 10,
+  "version": "candidate12-d3-historical-compatibility-1"
+}

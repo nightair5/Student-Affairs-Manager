@@ -1,0 +1,134 @@
+{
+  "stage": "RCO-5-MAINLINE-05",
+  "status": "BLOCKED_SCOPE_EXTENSION_REQUIRED",
+  "auditDeliveryChecks": {
+    "documents": 12,
+    "jsonValid": true,
+    "sensitiveLiteralFindings": 0,
+    "contextLines": 69,
+    "diffWhitespaceErrors": 0,
+    "protectedFiles": 864,
+    "protectedChanges": 0,
+    "snapshotSourceChangesAfterReview": 0,
+    "logPrefixUnchanged": true,
+    "scope": "Audit delivery only, not engineering or browser acceptance"
+  },
+  "targeted": {
+    "attempt": "core-07",
+    "passed": 37,
+    "failed": 1,
+    "total": 38,
+    "files": 6,
+    "failure": "real task dependencies require the parent to be confirmed or in the same explicit batch",
+    "actual": "ITEM_NOT_CONFIRMABLE",
+    "cause": "frozen MULTIPLE_DEADLINES includes dependency-owned time"
+  },
+  "old42": {
+    "checked": 42,
+    "equal": 42
+  },
+  "old17": "PROTECTED_NOT_RERUN",
+  "type": {
+    "status": "FAIL",
+    "attempt": "type-targeted-05",
+    "error": "TS18047 CalendarPage.tsx(159,97): value possibly null"
+  },
+  "servePreflight": "PASS_BUILD_ONLY",
+  "independent": {
+    "status": "BLOCKED_SCOPE_ONLY",
+    "task": "/root/mainline05_dependency_scope_review",
+    "passed": 16,
+    "failed": 1,
+    "fullImplementation": "NOT_RUN"
+  },
+  "engineering": "NOT_RUN",
+  "browser": "NOT_RUN",
+  "download": "NOT_RUN",
+  "observedDirectedSafety": {
+    "wrongDefaults": 0,
+    "undatedTimePoints": 0,
+    "undatedReminders": 0,
+    "note": "Executed assertions only, not full user-journey acceptance."
+  },
+  "modelCalls": 0,
+  "modelNetwork": 0,
+  "costCny": 0,
+  "modelAccuracy": "本轮未测量",
+  "logs": [
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\characterization-01.log",
+      "sha256": "84ef6643c5c14673c29cbae8405f598fbb6aa25349b02ae95a80a9e402fba070",
+      "bytes": 260
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-01.log",
+      "sha256": "0084cce4eb321bed0b830e91e5fb1bad8e54bb0cde736a17896b8feb847de7b6",
+      "bytes": 14604
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-02.log",
+      "sha256": "aa9694670aa259285b2781a47b644bb45d51cdff20afd2754f08f0a7cc29a20a",
+      "bytes": 291
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-03.log",
+      "sha256": "dff035651651eff8cf1a5234c6080e31f7dbad007deba7ad5fcc0cde4017ac19",
+      "bytes": 12899
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-04.log",
+      "sha256": "808621c4d75e0f02aa14259e41d3563408f7209e6531f74bde5a4445fbf3da27",
+      "bytes": 291
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-05.log",
+      "sha256": "5b5834d868b98496eacd79a0d375f4450a336a8bf2649db668c16d3258d74836",
+      "bytes": 2305
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-06.log",
+      "sha256": "5cb7fd2f58da9ce8ff12522c57df3f9f459720b956ac413cde771bdbbe066c61",
+      "bytes": 1172
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\core-07.log",
+      "sha256": "5d77d2b90e4344da1c16368b23bcc4845cd8380b4509e9d701544b545e8aa142",
+      "bytes": 2217
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\dependency-diagnostic-02.log",
+      "sha256": "872f375b6d4e17133b440fd2535ce3b2e3e077343f38557377ae426086b96594",
+      "bytes": 708
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\serve-preflight-01.log",
+      "sha256": "2c2a1eeba02faf38ae1bc1080381110da0be199cae4cb2de56a6ce506885702f",
+      "bytes": 120
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\type-targeted-01.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\type-targeted-02.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\type-targeted-03.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\type-targeted-04.log",
+      "sha256": "9a7d1a97aae9dcc2d7a7869f80c6651085ad6d112553b2e0c8a07ba99a4c950d",
+      "bytes": 111
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-XQqQkq\\type-targeted-05.log",
+      "sha256": "cc3c3fcb679f6e29bf69eb59eac538d51495b98d92c2f8d0635148ba05749428",
+      "bytes": 80
+    }
+  ]
+}

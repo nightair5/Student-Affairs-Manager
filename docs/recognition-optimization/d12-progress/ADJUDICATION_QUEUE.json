@@ -1,0 +1,53 @@
+{
+  "version": "d12-adjudication-queue-1",
+  "role": "ENGINEERING_REVIEW_NOT_HUMAN_GOLD",
+  "inputAnswersAlreadySeen": true,
+  "decisionAuthor": "Codex engineering review",
+  "independentHuman": false,
+  "items": [
+    {
+      "id": "current_obligation_false_condition",
+      "sources": [
+        "C13-D5R1-S04"
+      ],
+      "status": "FUTURE_CONTRACT_REQUIRED",
+      "problem": "Candidate15 no-current-task rule permits empty tasks; D9 expects non-actionable false-condition task.",
+      "proposedProductInvariant": "No current selectable obligation when explicit exclusion applies; preserve source and explanatory information. Adjudicate acceptable internal representations before a new run.",
+      "mustNot": "Change D9 Expected or declare the historical Candidate15 answer passed."
+    },
+    {
+      "id": "scope_support_vs_exact_set",
+      "sources": [
+        "C13-D5R1-S01",
+        "C13-D5R1-S02",
+        "C13-D5R1-S03",
+        "C13-D5R1-S08"
+      ],
+      "status": "REVIEW_SOURCE_AND_REFERENCE_PER_FIELD",
+      "problem": "v6 compares proposition scope sets exactly; mismatch alone does not classify insufficient, irrelevant, or contradictory support.",
+      "proposedProductInvariant": "Predeclare necessary and acceptable supporting evidence; wrong object/time attribution remains a real failure.",
+      "mustNot": "Accept arbitrary supersets or drop evidence requirements to raise a score."
+    },
+    {
+      "id": "action_boundary",
+      "sources": [
+        "C13-D5R1-S05"
+      ],
+      "status": "FUTURE_CONTRACT_REQUIRED",
+      "problem": "Surface includes action and object together; exact action matching gives zero matches.",
+      "proposedProductInvariant": "Minimal grounded action/object with consistent aliases; prove both equivalent expressions and meaning-changing negative cases.",
+      "mustNot": "Add output-specific aliases after seeing a new run."
+    },
+    {
+      "id": "revision_endpoints",
+      "sources": [
+        "C13-D5R1-S10",
+        "C13-D5R1-S11"
+      ],
+      "status": "CONFIRMED_REFERENCE_VALIDATION_FAILURE",
+      "problem": "Revision targets a scope ID or a missing prior task.",
+      "proposedProductInvariant": "All endpoints must exist as entities; old task may be non-actionable but cannot vanish while referenced.",
+      "mustNot": "Guess missing entity IDs or relax canonical integrity."
+    }
+  ]
+}

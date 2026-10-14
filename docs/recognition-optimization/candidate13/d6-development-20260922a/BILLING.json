@@ -1,0 +1,48 @@
+{
+  "version": "candidate13-d6-billing-1",
+  "verified": true,
+  "method": "official-deepseek-document-review",
+  "checkedAt": "2026-09-22T05:19:26.308Z",
+  "validUntil": "2026-09-22T17:19:26.308Z",
+  "route": {
+    "endpoint": "https://api.deepseek.com/responses",
+    "model": "deepseek-flash",
+    "mappedModel": "DeepSeek-V4.1-Flash",
+    "temperature": 0,
+    "reasoning": "none",
+    "maxOutputTokens": 8192
+  },
+  "policy": {
+    "version": "candidate13-d6-usd-batch-1",
+    "maxRequests": 24,
+    "hardLimitMicroUsd": 1000000,
+    "unit": {
+      "version": "candidate13-d6-usd-budget-1",
+      "model": "deepseek-flash",
+      "endpoint": "https://api.deepseek.com/responses",
+      "temperature": 0,
+      "reasoningEffort": "none",
+      "outputTokenCeiling": 8192,
+      "requestByteCeiling": 65536,
+      "inputPriceMicroUsdPerMillion": 300000,
+      "outputPriceMicroUsdPerMillion": 1200000
+    }
+  },
+  "peakPrices": {
+    "cacheMissInputUsdPerMillion": 0.3,
+    "outputUsdPerMillion": 1.2
+  },
+  "actualFrozenRequestBytes": 385464,
+  "actualRequestInputTokenUpperBound": 385464,
+  "outputTokenUpperBound": 196608,
+  "exactWorstMicroUsd": 351580,
+  "exactWorstUsd": 0.35158,
+  "conservativeLegacyEnvelopeUsd": 0.7077888,
+  "hardLimitUsd": 1,
+  "documents": [
+    {
+      "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "claim": "deepseek-flash maps to DeepSeek-V4.1-Flash; peak cache-miss input USD 0.30/M and output USD 1.20/M"
+    }
+  ]
+}

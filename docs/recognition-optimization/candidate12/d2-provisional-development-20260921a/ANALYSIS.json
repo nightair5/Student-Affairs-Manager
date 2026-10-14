@@ -1,0 +1,2408 @@
+{
+  "version": "candidate12-d2-postrun-analysis-1",
+  "status": "D2_EXECUTION_COMPLETE_SCORING_PACKAGE_INVALID",
+  "evaluationRole": "SEEN_SYNTHETIC_DEVELOPMENT",
+  "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+  "claimCeiling": "ENGINEERING_SCREENING_ONLY",
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "requests": 24,
+  "sources": 12,
+  "frozenScorerCompatibility": {
+    "status": "FAIL",
+    "scorerVersion": "candidate11-scoring-2.0.0",
+    "referenceShapeVersion": "candidate12-provisional-r1",
+    "failures": [
+      {
+        "sourceId": "C12-PD01",
+        "error": "C11_REFERENCE_IDENTITY_INVALID"
+      },
+      {
+        "sourceId": "C12-PD02",
+        "error": "C11_REFERENCE_IDENTITY_INVALID"
+      },
+      {
+        "sourceId": "C12-PD03",
+        "error": "C11_REFERENCE_IDENTITY_INVALID"
+      },
+      {
+        "sourceId": "C12-PD04",
+        "error": "C11_REFERENCE_IDENTITY_INVALID"
+      },
+      {
+        "sourceId": "C12-PD05",
+        "error": "C11_REFERENCE_IDENTITY_INVALID"
+      },
+      {
+        "sourceId": "C12-PD06",
+        "error": "C11_REFERENCE_IDENTITY_INVALID"
+      },
+      {
+        "sourceId": "C12-PD07",
+        "error": "C11_REFERENCE_IDENTITY_INVALID"
+      },
+      {
+        "sourceId": "C12-PD09",
+        "error": "C11_REFERENCE_IDENTITY_INVALID"
+      },
+      {
+        "sourceId": "C12-PD10",
+        "error": "C11_REFERENCE_IDENTITY_INVALID"
+      },
+      {
+        "sourceId": "C12-PD12",
+        "error": "C11_REFERENCE_IDENTITY_INVALID"
+      }
+    ],
+    "impact": "The preregistered frozen scorer cannot consume the frozen scorerReference objects. No Expected value was changed; the official gate therefore fails closed."
+  },
+  "officialDecision": "REJECT_CANDIDATE12_ENGINEERING_SCREEN",
+  "officialDecisionReason": "FROZEN_SCORER_REFERENCE_CONTRACT_MISMATCH",
+  "diagnosticOnly": {
+    "method": "postrun-task-structure-diagnostic-1",
+    "notPreregistered": true,
+    "notPromotionEvidence": true,
+    "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE",
+    "arms": {
+      "A": {
+        "sources": 12,
+        "determinate": 12,
+        "schemaAndReferenceValid": 11,
+        "completeSources": 6,
+        "criticalMajor": 11,
+        "major": 18,
+        "severe": 1,
+        "forbidden": 2,
+        "teachingLeak": 0,
+        "task": {
+          "tp": 13,
+          "fp": 2,
+          "fn": 5,
+          "precision": 0.8666666666666667,
+          "recall": 0.7222222222222222,
+          "f1": 0.7878787878787877
+        }
+      },
+      "B": {
+        "sources": 12,
+        "determinate": 12,
+        "schemaAndReferenceValid": 12,
+        "completeSources": 6,
+        "criticalMajor": 9,
+        "major": 12,
+        "severe": 0,
+        "forbidden": 1,
+        "teachingLeak": 0,
+        "task": {
+          "tp": 16,
+          "fp": 1,
+          "fn": 2,
+          "precision": 0.9411764705882353,
+          "recall": 0.8888888888888888,
+          "f1": 0.9142857142857143
+        }
+      }
+    },
+    "pairs": [
+      {
+        "sourceId": "C12-PD01",
+        "AComplete": true,
+        "BComplete": true,
+        "completeDelta": 0,
+        "taskFnDelta": 0,
+        "criticalMajorDelta": 0
+      },
+      {
+        "sourceId": "C12-PD02",
+        "AComplete": true,
+        "BComplete": true,
+        "completeDelta": 0,
+        "taskFnDelta": 0,
+        "criticalMajorDelta": 0
+      },
+      {
+        "sourceId": "C12-PD03",
+        "AComplete": false,
+        "BComplete": false,
+        "completeDelta": 0,
+        "taskFnDelta": 0,
+        "criticalMajorDelta": 0
+      },
+      {
+        "sourceId": "C12-PD04",
+        "AComplete": false,
+        "BComplete": false,
+        "completeDelta": 0,
+        "taskFnDelta": -1,
+        "criticalMajorDelta": 2
+      },
+      {
+        "sourceId": "C12-PD05",
+        "AComplete": true,
+        "BComplete": true,
+        "completeDelta": 0,
+        "taskFnDelta": 0,
+        "criticalMajorDelta": 0
+      },
+      {
+        "sourceId": "C12-PD06",
+        "AComplete": true,
+        "BComplete": true,
+        "completeDelta": 0,
+        "taskFnDelta": 0,
+        "criticalMajorDelta": 0
+      },
+      {
+        "sourceId": "C12-PD07",
+        "AComplete": false,
+        "BComplete": false,
+        "completeDelta": 0,
+        "taskFnDelta": 0,
+        "criticalMajorDelta": 0
+      },
+      {
+        "sourceId": "C12-PD08",
+        "AComplete": true,
+        "BComplete": true,
+        "completeDelta": 0,
+        "taskFnDelta": 0,
+        "criticalMajorDelta": 0
+      },
+      {
+        "sourceId": "C12-PD09",
+        "AComplete": false,
+        "BComplete": false,
+        "completeDelta": 0,
+        "taskFnDelta": -2,
+        "criticalMajorDelta": -4
+      },
+      {
+        "sourceId": "C12-PD10",
+        "AComplete": false,
+        "BComplete": false,
+        "completeDelta": 0,
+        "taskFnDelta": 0,
+        "criticalMajorDelta": 0
+      },
+      {
+        "sourceId": "C12-PD11",
+        "AComplete": true,
+        "BComplete": true,
+        "completeDelta": 0,
+        "taskFnDelta": 0,
+        "criticalMajorDelta": 0
+      },
+      {
+        "sourceId": "C12-PD12",
+        "AComplete": false,
+        "BComplete": false,
+        "completeDelta": 0,
+        "taskFnDelta": 0,
+        "criticalMajorDelta": 0
+      }
+    ],
+    "gates": {
+      "allDeterminate": true,
+      "bothArmsSchemaAndReferenceValid": false,
+      "candidate12Safety": false,
+      "noRegression": true,
+      "completeSourceGain": false
+    }
+  },
+  "cases": [
+    {
+      "unitId": "C12-D1-PD01-A",
+      "ordinal": 1,
+      "sourceId": "C12-PD01",
+      "arm": "A",
+      "candidateVersion": "real-input-source-semantics-3",
+      "requestBytes": 14075,
+      "responseSha": "1c3c9a74b993afa99acab162d909c10793f5dfa553437039b84c0387ba278633",
+      "usage": {
+        "input_tokens": 4438,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1050,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5488
+      },
+      "costUpperMicroCny": 17276,
+      "waitingMs": 4464,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": true,
+        "criticalMajor": 0,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD01-T1",
+            "predictedId": "task-submit-training-registration",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD01-B",
+      "ordinal": 2,
+      "sourceId": "C12-PD01",
+      "arm": "B",
+      "candidateVersion": "real-input-source-semantics-12",
+      "requestBytes": 16109,
+      "responseSha": "d3338e2201e0c8f411b80d989eec623ce7f3f3086573497a05ff827715e91ddf",
+      "usage": {
+        "input_tokens": 4859,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 970,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5829
+      },
+      "costUpperMicroCny": 17478,
+      "waitingMs": 4152,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": true,
+        "criticalMajor": 0,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD01-T1",
+            "predictedId": "task-submit-training-form",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD02-B",
+      "ordinal": 3,
+      "sourceId": "C12-PD02",
+      "arm": "B",
+      "candidateVersion": "real-input-source-semantics-12",
+      "requestBytes": 16095,
+      "responseSha": "7b4d75b6822d061f5d6918a2b246f46410163dc710eb820a995213f3aa457fea",
+      "usage": {
+        "input_tokens": 4865,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 1617,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6482
+      },
+      "costUpperMicroCny": 22666,
+      "waitingMs": 5959,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": true,
+        "criticalMajor": 0,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD02-T1",
+            "predictedId": "task-0001",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          },
+          {
+            "goldId": "PD02-T2",
+            "predictedId": "task-0002",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD02-A",
+      "ordinal": 4,
+      "sourceId": "C12-PD02",
+      "arm": "A",
+      "candidateVersion": "real-input-source-semantics-3",
+      "requestBytes": 14061,
+      "responseSha": "20e7178a01bfc684ded3b9f81602596f48d45821f3927b956e2482a97a81ef0b",
+      "usage": {
+        "input_tokens": 4444,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1647,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6091
+      },
+      "costUpperMicroCny": 22064,
+      "waitingMs": 5619,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": true,
+        "criticalMajor": 0,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD02-T1",
+            "predictedId": "task-service-hours-registration",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          },
+          {
+            "goldId": "PD02-T2",
+            "predictedId": "task-submit-service-summary",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD03-A",
+      "ordinal": 5,
+      "sourceId": "C12-PD03",
+      "arm": "A",
+      "candidateVersion": "real-input-source-semantics-3",
+      "requestBytes": 13614,
+      "responseSha": "9c1c6fe743457c1a6a16f8e2b7233f238895d98a150190ce4b6a4168fb2eba7e",
+      "usage": {
+        "input_tokens": 4242,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1026,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5268
+      },
+      "costUpperMicroCny": 16692,
+      "waitingMs": 3904,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": false,
+        "criticalMajor": 0,
+        "major": 3,
+        "severe": 0,
+        "forbidden": 2,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 1,
+          "precision": 0,
+          "recall": 0,
+          "f1": 0
+        },
+        "alignment": [
+          {
+            "goldId": "PD03-T1",
+            "predictedId": null,
+            "fields": [],
+            "aligned": false
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD03-B",
+      "ordinal": 6,
+      "sourceId": "C12-PD03",
+      "arm": "B",
+      "candidateVersion": "real-input-source-semantics-12",
+      "requestBytes": 15648,
+      "responseSha": "ed16a74380297105e065f406cb05bde318c119f081377f21775d4c6fd0a02e1c",
+      "usage": {
+        "input_tokens": 4663,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 695,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5358
+      },
+      "costUpperMicroCny": 14886,
+      "waitingMs": 3504,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": false,
+        "criticalMajor": 0,
+        "major": 2,
+        "severe": 0,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1,
+          "precision": 0,
+          "recall": 0,
+          "f1": 0
+        },
+        "alignment": [
+          {
+            "goldId": "PD03-T1",
+            "predictedId": null,
+            "fields": [],
+            "aligned": false
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD04-B",
+      "ordinal": 7,
+      "sourceId": "C12-PD04",
+      "arm": "B",
+      "candidateVersion": "real-input-source-semantics-12",
+      "requestBytes": 15836,
+      "responseSha": "47268e2169ed6491cdfde73f3b36fc89988da9adb08b29f51ad3f9714c98c721",
+      "usage": {
+        "input_tokens": 4770,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 826,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5596
+      },
+      "costUpperMicroCny": 16148,
+      "waitingMs": 3839,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": false,
+        "criticalMajor": 2,
+        "major": 2,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD04-T1",
+            "predictedId": "task-0001-pay-makeup-exam-fee",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": false
+              },
+              {
+                "path": "semantics.validity",
+                "pass": false
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 1
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD04-A",
+      "ordinal": 8,
+      "sourceId": "C12-PD04",
+      "arm": "A",
+      "candidateVersion": "real-input-source-semantics-3",
+      "requestBytes": 13802,
+      "responseSha": "08bd8f42e77e192ee12de30ec289a2e3401ac0fb10f75f9a4230621a338d491b",
+      "usage": {
+        "input_tokens": 4349,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1449,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5798
+      },
+      "costUpperMicroCny": 20290,
+      "waitingMs": 5344,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": false,
+        "referenceValid": false,
+        "complete": false,
+        "criticalMajor": 0,
+        "major": 1,
+        "severe": 1,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": null,
+          "recall": 0,
+          "f1": 0
+        },
+        "alignment": [],
+        "revision": {
+          "status": "NOT_SCORED"
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD05-A",
+      "ordinal": 9,
+      "sourceId": "C12-PD05",
+      "arm": "A",
+      "candidateVersion": "real-input-source-semantics-3",
+      "requestBytes": 13711,
+      "responseSha": "b00a3b04a359c545c184423229dd93cadd43db642e084832c9e66356a44d72cc",
+      "usage": {
+        "input_tokens": 4301,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1061,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5362
+      },
+      "costUpperMicroCny": 17090,
+      "waitingMs": 4082,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": true,
+        "criticalMajor": 0,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD05-T1",
+            "predictedId": "task-upload-research-plan-mentor-opinion",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD05-B",
+      "ordinal": 10,
+      "sourceId": "C12-PD05",
+      "arm": "B",
+      "candidateVersion": "real-input-source-semantics-12",
+      "requestBytes": 15745,
+      "responseSha": "1f6ec32f8a136fa48fba9e314850a7b086f532de43949fc37366596b6de92121",
+      "usage": {
+        "input_tokens": 4722,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 1061,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5783
+      },
+      "costUpperMicroCny": 17932,
+      "waitingMs": 4283,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": true,
+        "criticalMajor": 0,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD05-T1",
+            "predictedId": "task-upload-research-plan-mentor-opinion",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD06-B",
+      "ordinal": 11,
+      "sourceId": "C12-PD06",
+      "arm": "B",
+      "candidateVersion": "real-input-source-semantics-12",
+      "requestBytes": 15829,
+      "responseSha": "858391d63d0f9f8dbf33f0772f9ab9ec836286448d29931081f880780ba1ff85",
+      "usage": {
+        "input_tokens": 4729,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 674,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5403
+      },
+      "costUpperMicroCny": 14850,
+      "waitingMs": 3101,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": true,
+        "criticalMajor": 0,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD06-T1",
+            "predictedId": "task-check-bank-id",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD06-A",
+      "ordinal": 12,
+      "sourceId": "C12-PD06",
+      "arm": "A",
+      "candidateVersion": "real-input-source-semantics-3",
+      "requestBytes": 13795,
+      "responseSha": "76c804f7792cca53c308ecc23ef107f4a7abda79e51e249a25e55dfe9f3b570a",
+      "usage": {
+        "input_tokens": 4308,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 680,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4988
+      },
+      "costUpperMicroCny": 14056,
+      "waitingMs": 3360,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": true,
+        "criticalMajor": 0,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD06-T1",
+            "predictedId": "task-review-bank-id",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD07-A",
+      "ordinal": 13,
+      "sourceId": "C12-PD07",
+      "arm": "A",
+      "candidateVersion": "real-input-source-semantics-3",
+      "requestBytes": 13759,
+      "responseSha": "c63aeaaad5c878f31191b809d44a8aba3b5f48a8eb33b054847a6933f42afb5b",
+      "usage": {
+        "input_tokens": 4312,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1609,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5921
+      },
+      "costUpperMicroCny": 21496,
+      "waitingMs": 5663,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": false,
+        "criticalMajor": 4,
+        "major": 4,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD07-T1",
+            "predictedId": "task-register-graduation-destination",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          },
+          {
+            "goldId": "PD07-T2",
+            "predictedId": "task-download-confirmation-form",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": false
+              },
+              {
+                "path": "actionable",
+                "pass": false
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          },
+          {
+            "goldId": "PD07-T3",
+            "predictedId": "task-upload-confirmation-form",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": false
+              },
+              {
+                "path": "actionable",
+                "pass": false
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD07-B",
+      "ordinal": 14,
+      "sourceId": "C12-PD07",
+      "arm": "B",
+      "candidateVersion": "real-input-source-semantics-12",
+      "requestBytes": 15793,
+      "responseSha": "0383d0793065c60e18b219dda206565526af0c38ff35f0687011b40f64ca8e44",
+      "usage": {
+        "input_tokens": 4733,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 1556,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6289
+      },
+      "costUpperMicroCny": 21914,
+      "waitingMs": 5756,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": false,
+        "criticalMajor": 4,
+        "major": 4,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD07-T1",
+            "predictedId": "task-register-graduation-destination",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          },
+          {
+            "goldId": "PD07-T2",
+            "predictedId": "task-download-confirmation-form",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": false
+              },
+              {
+                "path": "actionable",
+                "pass": false
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          },
+          {
+            "goldId": "PD07-T3",
+            "predictedId": "task-upload-confirmation-form",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": false
+              },
+              {
+                "path": "actionable",
+                "pass": false
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD08-B",
+      "ordinal": 15,
+      "sourceId": "C12-PD08",
+      "arm": "B",
+      "candidateVersion": "real-input-source-semantics-12",
+      "requestBytes": 15763,
+      "responseSha": "94779c922cd242f3947405436a510445c77929807f5ddd0c864b8bb9a39d7c35",
+      "usage": {
+        "input_tokens": 4718,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 220,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4938
+      },
+      "costUpperMicroCny": 11196,
+      "waitingMs": 1776,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": true,
+        "criticalMajor": 0,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "precision": null,
+          "recall": 1,
+          "f1": 0
+        },
+        "alignment": [],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD08-A",
+      "ordinal": 16,
+      "sourceId": "C12-PD08",
+      "arm": "A",
+      "candidateVersion": "real-input-source-semantics-3",
+      "requestBytes": 13729,
+      "responseSha": "32a3d01af830aaadd59cefdd9a77b0e9c3f184d63375b1b55f338b598a442fed",
+      "usage": {
+        "input_tokens": 4297,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 220,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4517
+      },
+      "costUpperMicroCny": 10354,
+      "waitingMs": 1908,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": true,
+        "criticalMajor": 0,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "precision": null,
+          "recall": 1,
+          "f1": 0
+        },
+        "alignment": [],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD09-A",
+      "ordinal": 17,
+      "sourceId": "C12-PD09",
+      "arm": "A",
+      "candidateVersion": "real-input-source-semantics-3",
+      "requestBytes": 13799,
+      "responseSha": "8461a1bf891deef0877c542e9f0ff76e4efb95f4c1fa0e20bba31ecac92fb459",
+      "usage": {
+        "input_tokens": 4332,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1991,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6323
+      },
+      "costUpperMicroCny": 24592,
+      "waitingMs": 6997,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": false,
+        "criticalMajor": 5,
+        "major": 7,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 2,
+          "precision": 1,
+          "recall": 0.5,
+          "f1": 0.6666666666666666
+        },
+        "alignment": [
+          {
+            "goldId": "PD09-T1-OLD",
+            "predictedId": null,
+            "fields": [],
+            "aligned": false
+          },
+          {
+            "goldId": "PD09-T2-OLD",
+            "predictedId": null,
+            "fields": [],
+            "aligned": false
+          },
+          {
+            "goldId": "PD09-T1-NEW",
+            "predictedId": "task-annual-review-submit",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": false
+              },
+              {
+                "path": "timeRaw",
+                "pass": false
+              }
+            ],
+            "aligned": true
+          },
+          {
+            "goldId": "PD09-T2-NEW",
+            "predictedId": "task-financial-summary-submit",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": false
+              },
+              {
+                "path": "timeRaw",
+                "pass": false
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "FAIL",
+          "expected": 2,
+          "actual": 2,
+          "matched": 0,
+          "mapping": {
+            "PD09-T1-OLD": null,
+            "PD09-T2-OLD": null,
+            "PD09-T1-NEW": "task-annual-review-submit",
+            "PD09-T2-NEW": "task-financial-summary-submit"
+          }
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD09-B",
+      "ordinal": 18,
+      "sourceId": "C12-PD09",
+      "arm": "B",
+      "candidateVersion": "real-input-source-semantics-12",
+      "requestBytes": 15833,
+      "responseSha": "0dd7df29c914d80b21a362ebfd368bde7b8e0abe2116d92d77a3f84d40ee3cda",
+      "usage": {
+        "input_tokens": 4753,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 2337,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7090
+      },
+      "costUpperMicroCny": 28202,
+      "waitingMs": 7921,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": false,
+        "criticalMajor": 1,
+        "major": 1,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD09-T1-OLD",
+            "predictedId": "task-annual-review-submit-old",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          },
+          {
+            "goldId": "PD09-T2-OLD",
+            "predictedId": "task-financial-summary-submit-old",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          },
+          {
+            "goldId": "PD09-T1-NEW",
+            "predictedId": "task-annual-review-submit-new",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          },
+          {
+            "goldId": "PD09-T2-NEW",
+            "predictedId": "task-financial-summary-submit-new",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "FAIL",
+          "expected": 2,
+          "actual": 2,
+          "matched": 0,
+          "mapping": {
+            "PD09-T1-OLD": "task-annual-review-submit-old",
+            "PD09-T2-OLD": "task-financial-summary-submit-old",
+            "PD09-T1-NEW": "task-annual-review-submit-new",
+            "PD09-T2-NEW": "task-financial-summary-submit-new"
+          }
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD10-B",
+      "ordinal": 19,
+      "sourceId": "C12-PD10",
+      "arm": "B",
+      "candidateVersion": "real-input-source-semantics-12",
+      "requestBytes": 15984,
+      "responseSha": "408c4fb7da36229f79aaca8407a6a8bd713493644bde529c77ef6202480f1a1c",
+      "usage": {
+        "input_tokens": 4800,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 1625,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6425
+      },
+      "costUpperMicroCny": 22600,
+      "waitingMs": 6125,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": false,
+        "criticalMajor": 1,
+        "major": 2,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1,
+          "recall": 0.6666666666666666,
+          "f1": 0.8
+        },
+        "alignment": [
+          {
+            "goldId": "PD10-T1-OLD",
+            "predictedId": null,
+            "fields": [],
+            "aligned": false
+          },
+          {
+            "goldId": "PD10-T2-OLD",
+            "predictedId": "task-paper-signin-submit",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          },
+          {
+            "goldId": "PD10-T1-NEW",
+            "predictedId": "task-online-report-submit",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "FAIL",
+          "expected": 2,
+          "actual": 1,
+          "matched": 1,
+          "mapping": {
+            "PD10-T1-OLD": null,
+            "PD10-T2-OLD": "task-paper-signin-submit",
+            "PD10-T1-NEW": "task-online-report-submit"
+          }
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD10-A",
+      "ordinal": 20,
+      "sourceId": "C12-PD10",
+      "arm": "A",
+      "candidateVersion": "real-input-source-semantics-3",
+      "requestBytes": 13950,
+      "responseSha": "ba5145f445bfc854e3b840400dd961a789631584f3427258babb54735f59eb5a",
+      "usage": {
+        "input_tokens": 4379,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1636,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6015
+      },
+      "costUpperMicroCny": 21846,
+      "waitingMs": 5875,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": false,
+        "criticalMajor": 1,
+        "major": 2,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1,
+          "recall": 0.6666666666666666,
+          "f1": 0.8
+        },
+        "alignment": [
+          {
+            "goldId": "PD10-T1-OLD",
+            "predictedId": null,
+            "fields": [],
+            "aligned": false
+          },
+          {
+            "goldId": "PD10-T2-OLD",
+            "predictedId": "task-paper-signin-cancelled",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          },
+          {
+            "goldId": "PD10-T1-NEW",
+            "predictedId": "task-online-report-submit",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": true
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "FAIL",
+          "expected": 2,
+          "actual": 1,
+          "matched": 1,
+          "mapping": {
+            "PD10-T1-OLD": null,
+            "PD10-T2-OLD": "task-paper-signin-cancelled",
+            "PD10-T1-NEW": "task-online-report-submit"
+          }
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD11-A",
+      "ordinal": 21,
+      "sourceId": "C12-PD11",
+      "arm": "A",
+      "candidateVersion": "real-input-source-semantics-3",
+      "requestBytes": 13729,
+      "responseSha": "ed83a8cb5d6d2af70b416f446a98f22dde18763229a221a1653eef880741fe4f",
+      "usage": {
+        "input_tokens": 4315,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 456,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4771
+      },
+      "costUpperMicroCny": 12278,
+      "waitingMs": 2829,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": true,
+        "criticalMajor": 0,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "precision": null,
+          "recall": 1,
+          "f1": 0
+        },
+        "alignment": [],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD11-B",
+      "ordinal": 22,
+      "sourceId": "C12-PD11",
+      "arm": "B",
+      "candidateVersion": "real-input-source-semantics-12",
+      "requestBytes": 15763,
+      "responseSha": "d43a97abb69bdc06e4134259ae5d84a17a0e5d8e55eee902f4902088c013521b",
+      "usage": {
+        "input_tokens": 4736,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 234,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4970
+      },
+      "costUpperMicroCny": 11344,
+      "waitingMs": 1758,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": true,
+        "criticalMajor": 0,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "precision": null,
+          "recall": 1,
+          "f1": 0
+        },
+        "alignment": [],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD12-B",
+      "ordinal": 23,
+      "sourceId": "C12-PD12",
+      "arm": "B",
+      "candidateVersion": "real-input-source-semantics-12",
+      "requestBytes": 16165,
+      "responseSha": "f8d79849ed2a70ccb3611afc335354b077278d6b61e7f6ea9e11d1a89f6ed0f4",
+      "usage": {
+        "input_tokens": 4874,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 1277,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6151
+      },
+      "costUpperMicroCny": 19964,
+      "waitingMs": 5077,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": false,
+        "criticalMajor": 1,
+        "major": 1,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD12-T1",
+            "predictedId": "task-submit-exemption-application",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": false
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    },
+    {
+      "unitId": "C12-D1-PD12-A",
+      "ordinal": 24,
+      "sourceId": "C12-PD12",
+      "arm": "A",
+      "candidateVersion": "real-input-source-semantics-3",
+      "requestBytes": 14131,
+      "responseSha": "b5c8d327bf727c8a87c04d7beb5912336611b63217421b43e35d31ffaf586188",
+      "usage": {
+        "input_tokens": 4453,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1241,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5694
+      },
+      "costUpperMicroCny": 18834,
+      "waitingMs": 4508,
+      "evaluation": {
+        "determinate": true,
+        "schemaValid": true,
+        "referenceValid": true,
+        "complete": false,
+        "criticalMajor": 1,
+        "major": 1,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "ambiguity": [],
+        "task": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "alignment": [
+          {
+            "goldId": "PD12-T1",
+            "predictedId": "task-submit-exemption-application",
+            "fields": [
+              {
+                "path": "semantics.status",
+                "pass": true
+              },
+              {
+                "path": "semantics.validity",
+                "pass": true
+              },
+              {
+                "path": "condition.value",
+                "pass": true
+              },
+              {
+                "path": "actionable",
+                "pass": true
+              },
+              {
+                "path": "materials",
+                "pass": false
+              },
+              {
+                "path": "timeRaw",
+                "pass": true
+              }
+            ],
+            "aligned": true
+          }
+        ],
+        "revision": {
+          "status": "NOT_APPLICABLE",
+          "expected": 0,
+          "actual": 0
+        },
+        "completionStandard": "NOT_SCORABLE_FROM_FROZEN_SCORER_REFERENCE"
+      }
+    }
+  ],
+  "operational": {
+    "actualCalls": 24,
+    "settledCalls": 24,
+    "retries": 0,
+    "repairs": 0,
+    "verifiers": 0,
+    "providerBilledCny": "NOT_OBSERVABLE",
+    "localAuditableCostUpperMicroCny": 436048,
+    "authorizedWorstMicroCny": 51904512,
+    "usage": {
+      "inputTokens": 109392,
+      "outputTokens": 27158
+    }
+  },
+  "ledger": {
+    "before": {
+      "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+      "rows": 693,
+      "reserves": 338,
+      "bytes": 572913,
+      "sha256": "2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e",
+      "tail": "13b520d270d26335072f99920e47a4443e8bc586365eb20cda61c4122d7ab3bd",
+      "nextSequence": 693
+    },
+    "after": {
+      "rows": 742,
+      "bytes": 631869,
+      "sha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+      "tail": "6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922",
+      "nextSequence": 742
+    }
+  },
+  "boundaries": [
+    "Seen synthetic Development only",
+    "provisional model-authored reference",
+    "frozen scorer/reference interface mismatch fails the official gate closed",
+    "postrun diagnostic is descriptive and not preregistered",
+    "not a real accept-and-save conversion rate",
+    "no Holdout, human trial, deployment or production authorization"
+  ],
+  "generatedAt": "2026-09-21T13:41:44.559Z"
+}

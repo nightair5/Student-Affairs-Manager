@@ -1,0 +1,77 @@
+Error opening data file ./ȇ����raineddata
+Please make sure the TESSDATA_PREFIX environment variable is set to your "tessdata" directory.
+Failed loading language 'ȇ����
+{
+  "kind": "actual local Node PDF text plus raster OCR diagnostic; not browser acceptance",
+  "referenceTextUsedForRecognition": false,
+  "rows": [
+    {
+      "unitId": "B05",
+      "format": "text-pdf",
+      "sha256": "8eb4e56e1da156fce9db0e2ab7c9e74dd7aeb5f5207422189b3f1eedf6b67ea6",
+      "pages": [
+        {
+          "number": 1,
+          "parserText": "若活动获批，请提交场地申请表。活动已获批。",
+          "ocrText": "若 活动 获 批 ， 请 提交 场地 申请 表 。 活 动 已 获 批 。\n",
+          "confidence": 89,
+          "parserEmpty": false,
+          "ocrEmpty": false
+        }
+      ]
+    },
+    {
+      "unitId": "B06",
+      "format": "scan-pdf",
+      "sha256": "3fe1bdf8033db7dabfdc308c23625fda1e7da8fe3b287c76b96234af0b89550b",
+      "pages": [
+        {
+          "number": 1,
+          "parserText": "",
+          "ocrText": "若 活动 获 批 ， 请 提交 场地 申请 表 。 活 动 未 获 批 。\n",
+          "confidence": 90,
+          "parserEmpty": true,
+          "ocrEmpty": false
+        }
+      ]
+    },
+    {
+      "unitId": "B07",
+      "format": "mixed-pdf",
+      "sha256": "2eb69adc48654137b3218e630362723750809679d4146d6a6cd8d1884866a0aa",
+      "pages": [
+        {
+          "number": 1,
+          "parserText": "若活动获批，请提交场地申请表。",
+          "ocrText": "若 活 动 获 批 ， 请 提交 场地 申请 表 。\n",
+          "confidence": 82,
+          "parserEmpty": false,
+          "ocrEmpty": false
+        },
+        {
+          "number": 2,
+          "parserText": "",
+          "ocrText": "目前 尚未 收 到 审批 结果 。\n",
+          "confidence": 92,
+          "parserEmpty": true,
+          "ocrEmpty": false
+        }
+      ]
+    },
+    {
+      "unitId": "B08",
+      "format": "page-mixed-pdf",
+      "sha256": "1d23427a358457fb001ebc5f5fd32ca42423458c0355304b3f15601ebd79bdee",
+      "pages": [
+        {
+          "number": 1,
+          "parserText": "此前打印纸质报名表的要求已作废。",
+          "ocrText": "此 前 打印 纸 质 报名 表 的 要 求 已 作废 。\n现 要 求 提 交 电 子 报名 表 。\n",
+          "confidence": 90,
+          "parserEmpty": false,
+          "ocrEmpty": false
+        }
+      ]
+    }
+  ]
+}

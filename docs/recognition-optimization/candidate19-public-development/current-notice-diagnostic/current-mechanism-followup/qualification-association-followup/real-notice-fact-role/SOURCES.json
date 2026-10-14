@@ -1,0 +1,262 @@
+{
+  "sources": [
+    {
+      "sourceId": "RN-01",
+      "sourceVersionId": "RN-01-v1",
+      "sourceText": "根据学校部署和学院实际工作安排，2026年6月学位申请系统提交截止时间为6月10日，系统申请学位时，需上传最终版学位论文，请上传word版和pdf版，pdf版请上传完成所有签字，包含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分的完成整版本。学院将按程序进行审核，提交学院学位评定分委员会审议后，上报学校。纸质版材料提交时间为6月15-16日（上午9:00-11:30,下午2:30-5:30），请按时将相关材料提交至学院A208办公室研究生秘书处。",
+      "sourceSha256": "d738d9b4f00d3c52ff06c00e9b1bbafa2d0150893235f8561f0b1d314af12217",
+      "referenceTime": "2026-05-27T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "OFFICIAL_PUBLIC_EXCERPT_DEVELOPMENT_NOT_HOLDOUT",
+      "modelOutput": "NOT_RUN",
+      "minimumFacts": {
+        "tasks": [
+          "系统申请学位并上传最终版学位论文",
+          "提交纸质版学位申请材料"
+        ],
+        "times": [
+          {
+            "owner": "系统申请学位",
+            "role": "submission_deadline",
+            "raw": "6月10日",
+            "value": "2026-06-10",
+            "precision": "date"
+          },
+          {
+            "owner": "纸质版材料提交",
+            "role": "window",
+            "raw": "6月15-16日（上午9:00-11:30,下午2:30-5:30）",
+            "dates": [
+              "2026-06-15",
+              "2026-06-16"
+            ],
+            "sessions": [
+              [
+                "09:00",
+                "11:30"
+              ],
+              [
+                "14:30",
+                "17:30"
+              ]
+            ]
+          }
+        ],
+        "materials": [
+          {
+            "name": "最终版学位论文",
+            "format": [
+              "word",
+              "pdf"
+            ],
+            "completion": "pdf完成所有签字并含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分"
+          },
+          {
+            "name": "纸质版材料",
+            "destination": "学院A208办公室研究生秘书处"
+          }
+        ],
+        "information": [
+          "学院按程序审核并上报学校"
+        ],
+        "events": [],
+        "qualification": "学位申请人状态未提供，不能个人true"
+      },
+      "disputes": [
+        "6月10日仅日期，不编具体截止时刻；纸质材料的两天分段窗口不能并成连续跨夜营业；排除后续材料清单及涉密例外，本节选不评价整篇通知"
+      ],
+      "provenance": {
+        "url": "https://cee.xmu.edu.cn/info/1038/41505.htm",
+        "title": "关于提交2026年6月批次学位申请材料的通知-环境与生态学院",
+        "publishedDate": "2026-05-27",
+        "acquiredAt": "2026-10-09T10:08:59.564403+00:00",
+        "backend": "scrapling",
+        "httpStatus": 200,
+        "acquisitionSha256": "b045bfdda96c3a4d86c819554498f7ae8b06fb0f31a498064660619e5e1246df",
+        "start": "根据学校部署",
+        "endExclusive": "请依序提交如下学位申请材料：",
+        "normalization": "remove acquisition layout whitespace only",
+        "sourceBoundary": "Only selected paragraph(s); not full original notice. Original acquisition remains local read-only."
+      }
+    },
+    {
+      "sourceId": "RN-02",
+      "sourceVersionId": "RN-02-v1",
+      "sourceText": "1.8月13日起，所有已申请办理2026-2027学年生源地信用助学贷款的学生(含申请续贷的我校在籍老生），均需登录厦门大学学工系统https://xmuxg.xmu.edu.cn/app/515，点击“生源地贷款”模块(也可点击“更多”或使用搜索功能查找)，选择“2026-2027学年生源地贷款”业务期，准确填写相关信息，并上传贷款机构提供的回执材料照片或截图（务必完整清晰且确保是本学年申请，在国家开发银行、河北农村信用社办理贷款的学生，请务必在系统上提交当前学年准确的回执校验码，否则将无法进行入学确认）。",
+      "sourceSha256": "21d5501f8328cd2f3c1c6e65bbff075c02c338c2884f81af3cb4fe6834f63daf",
+      "referenceTime": "2026-08-12T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "OFFICIAL_PUBLIC_EXCERPT_DEVELOPMENT_NOT_HOLDOUT",
+      "modelOutput": "NOT_RUN",
+      "minimumFacts": {
+        "tasks": [
+          "登录学工系统填报生源地贷款信息并上传回执材料",
+          "指定贷款机构学生提交当前学年回执校验码"
+        ],
+        "times": [
+          {
+            "owner": "回执填报",
+            "role": "window_start",
+            "value": "2026-08-13",
+            "precision": "date"
+          }
+        ],
+        "materials": [
+          {
+            "name": "贷款机构回执材料",
+            "format": [
+              "照片",
+              "截图"
+            ],
+            "criteria": "完整清晰且本学年申请",
+            "destination": "厦门大学学工系统生源地贷款模块2026-2027学年业务期"
+          },
+          {
+            "name": "回执校验码",
+            "criteria": "本学年准确",
+            "condition": "国家开发银行或河北农村信用社办理贷款"
+          }
+        ],
+        "qualification": "已申请办理2026-2027学年贷款；指定机构状态未提供，unknown",
+        "events": [],
+        "information": [
+          "否则无法进行入学确认"
+        ]
+      },
+      "disputes": [
+        "只节选确认方式第1项；未包含新生另行入口、盖章或缴费说明，不能据节选声称全篇覆盖",
+        "本段没有截止，不把8月13日起改截止或个人计划"
+      ],
+      "provenance": {
+        "url": "https://xsc.xmu.edu.cn/info/1017/111282.htm",
+        "title": "关于做好2026-2027学年生源地信用助学贷款高校确认工作的通知-厦门大学学生处",
+        "publishedDate": "2026-08-12",
+        "acquiredAt": "2026-10-09T10:13:16.131549+00:00",
+        "backend": "scrapling",
+        "httpStatus": 200,
+        "acquisitionSha256": "abe6e08a4314725d721095a6c3c1752f626176c062e335ef9cf8803a77bb3a72",
+        "start": "1.\n8",
+        "endExclusive": "2.\n校学生资助",
+        "normalization": "remove acquisition layout whitespace only",
+        "sourceBoundary": "Only selected paragraph(s); not full original notice. Original acquisition remains local read-only."
+      }
+    },
+    {
+      "sourceId": "RN-03",
+      "sourceVersionId": "RN-03-v1",
+      "sourceText": "活动速览\n你的读者积分攒够了吗？\n2025年4月24日—2026年4月23日 年度转结积分\n满 300 分即可参与兑换\n兑换要求\n线上兑换时间：2026 年 5 月 9 日 10:00 起至 6 月 30 日 21:00止\n线下兑换时间：5 月 9 日至 6 月 30 日 10:00-21:00（周三 12:00-18:00 及节假日除外）\n礼品兑换及领取地点：\n（思明校区）总馆三楼期刊/工具书阅览室服务台\n（翔安校区）德旺图书馆服务台\n兑换步骤\n1. 兑换入口：登录“我的图书馆”--“积分商城”。\n2. 选好物：根据积分情况挑选喜欢的礼品，选择礼品领取地点，确认并提交申请。\n3. 领惊喜：带上你的校园卡，到礼品领取地点，带走心仪好礼！\n温馨提示\n1. 年度转结积分一次性核销，不拆分、不累计、不转赠；\n2. 仅限本人持校园卡办理，不可代领；\n3. 礼品数量有限，先到先得，兑完即止；\n4. 6月30日21:00兑换截止，逾期未兑换积分将自动失效；\n5. 节假日开放情况请关注图书馆即时通知。",
+      "sourceSha256": "d8f02d2aea265e66a313c4d53a340cf1f5730f065e06850aea333212946b7cc5",
+      "referenceTime": "2026-05-09T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "OFFICIAL_PUBLIC_EXCERPT_DEVELOPMENT_NOT_HOLDOUT",
+      "modelOutput": "NOT_RUN",
+      "minimumFacts": {
+        "tasks": [
+          "选择礼品及领取地点并提交积分兑换申请",
+          "本人持校园卡领取已申请的礼品"
+        ],
+        "optional": "有意参与且年度转结积分满300分，个人积分未提供，资格unknown",
+        "prerequisite": "领取对应已提交申请；不得猜提交已完成",
+        "times": [
+          {
+            "owner": "线上兑换",
+            "role": "window",
+            "start": "2026-05-09T10:00",
+            "end": "2026-06-30T21:00"
+          },
+          {
+            "owner": "线下兑换领取",
+            "role": "window",
+            "startDate": "2026-05-09",
+            "endDate": "2026-06-30",
+            "daily": [
+              "10:00",
+              "21:00"
+            ],
+            "exclusions": [
+              "周三12:00-18:00",
+              "节假日，未提供具体日历"
+            ]
+          }
+        ],
+        "materials": [
+          {
+            "name": "校园卡",
+            "owner": "本人领取礼品"
+          }
+        ],
+        "destination": [
+          "思明校区总馆三楼期刊/工具书阅览室服务台",
+          "翔安校区德旺图书馆服务台"
+        ],
+        "channel": "我的图书馆积分商城",
+        "information": [
+          "2025年4月24日—2026年4月23日年度转结积分",
+          "积分一次性核销、不拆分不累计不转赠",
+          "不可代领",
+          "数量有限先到先得兑完即止",
+          "6月30日21:00后未兑换积分自动失效",
+          "节假日开放请关注即时通知"
+        ]
+      },
+      "disputes": [
+        "活动/服务窗口与各任务关联允许无损合法表示，不要求虚构单场活动或强迫礼品选择单独拆任务",
+        "持卡是否是准备动作、引用在领取任务或材料可同义，但必须保留本人持卡义务",
+        "实际节假日、剩余礼品和个人积分未知，不补成确定"
+      ],
+      "provenance": {
+        "url": "https://library.xmu.edu.cn/info/5191/15738255.htm",
+        "title": "积分兑好礼，书香攒荣光-厦门大学知识资源港",
+        "publishedDate": "2026-05-09",
+        "acquiredAt": "2026-10-09T10:13:29.649444+00:00",
+        "backend": "scrapling",
+        "httpStatus": 200,
+        "acquisitionSha256": "49a8e73867849b56c62550b8c498f47ff4d54a1662832975324ecb10cf941158",
+        "start": "活动速览\n",
+        "endExclusive": "2026 厦门大学图书馆积分兑换正式开启",
+        "normalization": "trim only",
+        "sourceBoundary": "Only selected paragraph(s); not full original notice. Original acquisition remains local read-only."
+      }
+    },
+    {
+      "sourceId": "RN-04",
+      "sourceVersionId": "RN-04-v1",
+      "sourceText": "根据工作安排，信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https://i.xmu.edu.cn）进行升级维护。维护期间，信息门户将暂时无法访问，给您带来不便，敬请谅解！",
+      "sourceSha256": "4d04f6129779d657e1752686b597a03ecaffd09c396f4fdfe60d1b9de9aee586",
+      "referenceTime": "2026-04-13T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "OFFICIAL_PUBLIC_EXCERPT_DEVELOPMENT_NOT_HOLDOUT",
+      "modelOutput": "NOT_RUN",
+      "minimumFacts": {
+        "tasks": [],
+        "events": [
+          {
+            "title": "厦门大学信息门户升级维护",
+            "start": "2026-04-14T00:00",
+            "end": "2026-04-14T03:00"
+          }
+        ],
+        "information": [
+          "维护期间信息门户暂时无法访问"
+        ],
+        "materials": []
+      },
+      "disputes": [
+        "只节选维护主段，未包括后续可选访问入口；维护是中心动作，不给学生生成升级维护待办"
+      ],
+      "provenance": {
+        "url": "https://inc.xmu.edu.cn/info/1091/9372.htm",
+        "title": "关于厦门大学信息门户系统维护通知-厦门大学信息与网络中心",
+        "publishedDate": "2026-04-13",
+        "acquiredAt": "2026-10-09T10:13:45.913238+00:00",
+        "backend": "scrapling",
+        "httpStatus": 200,
+        "acquisitionSha256": "760714cee4c15a325b54127f5aaf4bdaa62f15b1493a3bdb4ddcd26701433401",
+        "start": "根据工作安排",
+        "endExclusive": "若您有业务需求",
+        "normalization": "remove acquisition layout whitespace only",
+        "sourceBoundary": "Only selected paragraph(s); not full original notice. Original acquisition remains local read-only."
+      }
+    }
+  ]
+}

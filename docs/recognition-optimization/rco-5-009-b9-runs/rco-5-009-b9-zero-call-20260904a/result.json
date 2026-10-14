@@ -1,0 +1,2647 @@
+{
+  "schemaVersion": "rco-5-009-b9-zero-call-result-1.0.0",
+  "authorizationId": "RCO-5-009-B9-ZERO-CALL",
+  "datasetId": "rco-5-009-b9-development-20260904",
+  "runId": "rco-5-009-b9-zero-call-20260904a",
+  "status": "COMPLETED",
+  "currentPhase": "COMPLETED",
+  "currentCaseId": null,
+  "classification": "FIRST_RUN_B9_ZERO_CALL_NOW_SEEN_DEVELOPMENT",
+  "startedAt": "2026-09-04T16:03:29.690Z",
+  "completedAt": "2026-09-04T16:03:29.750Z",
+  "dataFreezeCommit": "98123829e763b804eb6ed8669c7f0e483aed49dd",
+  "runnerFreezeCommit": "053e3ede62376eaef185cec408712d15a55e0ed5",
+  "runnerFreezeSha256": "4e3d6596b203f8012f3b52a8c7698c2f4fb62046eecf6a7f361cbd386625a03a",
+  "accounting": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "verifierCalls": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE",
+    "pipelineRuns": 1,
+    "casePipelineExecutions": 12
+  },
+  "inputClassification": "anonymous_synthetic_codex_authored_candidate_classification_development",
+  "responseAuthority": "FROZEN_LOCAL_CLOSED_SET_FIXTURES",
+  "multipleObjectChoiceStatus": "NOT_EXPRESSIBLE_BY_POLICY_1.2.0",
+  "evaluation": {
+    "schemaVersion": "rco-5-009-b9-evaluation-1.0.0",
+    "gate": "FAIL",
+    "gateFailures": [
+      "requiresActionExact:0.9166666666666666<1",
+      "EXPECTED_COUNTS_DO_NOT_MATCH_DATA_FREEZE"
+    ],
+    "counts": {
+      "expectedCases": 12,
+      "actualCases": 12,
+      "expectedCandidates": 19,
+      "actualCandidates": 19,
+      "expectedLedger": {
+        "accepted_local": 11,
+        "accepted_model": 2,
+        "ignored_local": 1,
+        "ignored_model": 2,
+        "quarantined": 3
+      },
+      "actualLedger": {
+        "accepted_local": 11,
+        "accepted_model": 2,
+        "ignored_local": 1,
+        "ignored_model": 2,
+        "quarantined": 3
+      },
+      "expectedTasks": 13,
+      "actualTasks": 13,
+      "expectedSelectedTasks": 7,
+      "actualSelectedTasks": 7,
+      "expectedRevisionRelations": 1,
+      "actualRevisionRelations": 1,
+      "expectedIssueCodes": 1,
+      "actualIssueCodes": 1
+    },
+    "metrics": {
+      "caseIdentityExact": 1,
+      "sourceFingerprintExact": 1,
+      "candidatePolicyVersionExact": 1,
+      "candidateIdentityExact": 1,
+      "candidateDispositionExact": 1,
+      "actionSpanExact": 1,
+      "singletonOrEmptyObjectSpanExact": 1,
+      "inputFixtureTransportExact": 1,
+      "ledgerDispositionExact": 1,
+      "acceptedCandidateTaskBijectionExact": 1,
+      "taskSemanticExact": 1,
+      "taskSelectedExact": 1,
+      "requiresActionExact": 0.9166666666666666,
+      "responseContractCompletenessExact": 1,
+      "semanticCoverageCompletenessExact": 1,
+      "expectedIssueCodesExact": 1,
+      "materializerValidationExact": 1,
+      "revisionUncertaintyExact": 1,
+      "resolvedRevisionRelationExact": 1,
+      "unresolvedActionScopeExact": 1,
+      "outOfVocabularyUnresolvedActionExact": 1,
+      "conditionUnknownExact": 1,
+      "safeDefaultRecall": 1,
+      "siblingSurvivalRate": 1,
+      "unsafeDefaultSelections": 0,
+      "extraDefaultSelections": 0
+    },
+    "metricCounts": {
+      "candidateIdentityExact": {
+        "passed": 19,
+        "total": 19,
+        "value": 1
+      },
+      "candidateDispositionExact": {
+        "passed": 19,
+        "total": 19,
+        "value": 1
+      },
+      "actionSpanExact": {
+        "passed": 19,
+        "total": 19,
+        "value": 1
+      },
+      "singletonOrEmptyObjectSpanExact": {
+        "passed": 19,
+        "total": 19,
+        "value": 1
+      },
+      "inputFixtureTransportExact": {
+        "passed": 19,
+        "total": 19,
+        "value": 1
+      },
+      "ledgerDispositionExact": {
+        "passed": 19,
+        "total": 19,
+        "value": 1
+      },
+      "acceptedCandidateTaskBijectionExact": {
+        "passed": 13,
+        "total": 13,
+        "value": 1
+      },
+      "taskSemanticExact": {
+        "passed": 13,
+        "total": 13,
+        "value": 1
+      },
+      "taskSelectedExact": {
+        "passed": 13,
+        "total": 13,
+        "value": 1
+      },
+      "safeDefaultRecall": {
+        "passed": 7,
+        "total": 7,
+        "value": 1
+      },
+      "siblingSurvivalRate": {
+        "passed": 1,
+        "total": 1,
+        "value": 1
+      },
+      "caseIdentityExact": {
+        "passed": 12,
+        "total": 12,
+        "value": 1
+      },
+      "sourceFingerprintExact": {
+        "passed": 12,
+        "total": 12,
+        "value": 1
+      },
+      "candidatePolicyVersionExact": {
+        "passed": 12,
+        "total": 12,
+        "value": 1
+      },
+      "requiresActionExact": {
+        "passed": 11,
+        "total": 12,
+        "value": 0.9166666666666666
+      },
+      "responseContractCompletenessExact": {
+        "passed": 12,
+        "total": 12,
+        "value": 1
+      },
+      "semanticCoverageCompletenessExact": {
+        "passed": 12,
+        "total": 12,
+        "value": 1
+      },
+      "expectedIssueCodesExact": {
+        "passed": 12,
+        "total": 12,
+        "value": 1
+      },
+      "materializerValidationExact": {
+        "passed": 12,
+        "total": 12,
+        "value": 1
+      },
+      "revisionUncertaintyExact": {
+        "passed": 12,
+        "total": 12,
+        "value": 1
+      },
+      "resolvedRevisionRelationExact": {
+        "passed": 12,
+        "total": 12,
+        "value": 1
+      },
+      "unresolvedActionScopeExact": {
+        "passed": 12,
+        "total": 12,
+        "value": 1
+      },
+      "outOfVocabularyUnresolvedActionExact": {
+        "passed": 1,
+        "total": 1,
+        "value": 1
+      },
+      "conditionUnknownExact": {
+        "passed": 1,
+        "total": 1,
+        "value": 1
+      }
+    },
+    "cases": [
+      {
+        "caseId": "rco-task-b9-01",
+        "passed": true,
+        "failures": [],
+        "counts": {
+          "expectedCandidates": 1,
+          "actualCandidates": 1,
+          "expectedTasks": 1,
+          "actualTasks": 1,
+          "expectedRelations": 0,
+          "actualRelations": 0
+        },
+        "checks": {
+          "caseIdentityExact": true,
+          "sourceFingerprintExact": true,
+          "candidatePolicyVersionExact": true,
+          "candidateSetExact": true,
+          "candidateDispositionExact": true,
+          "actionSpanExact": true,
+          "singletonOrEmptyObjectSpanExact": true,
+          "inputFixtureTransportExact": true,
+          "ledgerDispositionExact": true,
+          "acceptedCandidateTaskBijectionExact": true,
+          "taskSemanticExact": true,
+          "taskSelectedExact": true,
+          "requiresActionExact": true,
+          "responseContractCompletenessExact": true,
+          "semanticCoverageCompletenessExact": true,
+          "expectedIssueCodesExact": true,
+          "materializerValidationExact": true,
+          "revisionUncertaintyExact": true,
+          "resolvedRevisionRelationExact": true,
+          "unresolvedActionScopeExact": true,
+          "conditionUnknownExact": true,
+          "unsafeDefaultSelectionsExact": true
+        },
+        "scoreParts": {
+          "candidateIdentityExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "candidateDispositionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "actionSpanExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "singletonOrEmptyObjectSpanExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "inputFixtureTransportExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "ledgerDispositionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "acceptedCandidateTaskBijectionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "taskSemanticExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "taskSelectedExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "safeDefaultRecall": {
+            "passed": 0,
+            "total": 0
+          },
+          "siblingSurvivalRate": {
+            "passed": 0,
+            "total": 0
+          }
+        }
+      },
+      {
+        "caseId": "rco-task-b9-02",
+        "passed": true,
+        "failures": [],
+        "counts": {
+          "expectedCandidates": 1,
+          "actualCandidates": 1,
+          "expectedTasks": 0,
+          "actualTasks": 0,
+          "expectedRelations": 0,
+          "actualRelations": 0
+        },
+        "checks": {
+          "caseIdentityExact": true,
+          "sourceFingerprintExact": true,
+          "candidatePolicyVersionExact": true,
+          "candidateSetExact": true,
+          "candidateDispositionExact": true,
+          "actionSpanExact": true,
+          "singletonOrEmptyObjectSpanExact": true,
+          "inputFixtureTransportExact": true,
+          "ledgerDispositionExact": true,
+          "acceptedCandidateTaskBijectionExact": true,
+          "taskSemanticExact": true,
+          "taskSelectedExact": true,
+          "requiresActionExact": true,
+          "responseContractCompletenessExact": true,
+          "semanticCoverageCompletenessExact": true,
+          "expectedIssueCodesExact": true,
+          "materializerValidationExact": true,
+          "revisionUncertaintyExact": true,
+          "resolvedRevisionRelationExact": true,
+          "unresolvedActionScopeExact": true,
+          "conditionUnknownExact": true,
+          "unsafeDefaultSelectionsExact": true
+        },
+        "scoreParts": {
+          "candidateIdentityExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "candidateDispositionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "actionSpanExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "singletonOrEmptyObjectSpanExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "inputFixtureTransportExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "ledgerDispositionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "acceptedCandidateTaskBijectionExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "taskSemanticExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "taskSelectedExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "safeDefaultRecall": {
+            "passed": 0,
+            "total": 0
+          },
+          "siblingSurvivalRate": {
+            "passed": 0,
+            "total": 0
+          }
+        }
+      },
+      {
+        "caseId": "rco-task-b9-03",
+        "passed": true,
+        "failures": [],
+        "counts": {
+          "expectedCandidates": 2,
+          "actualCandidates": 2,
+          "expectedTasks": 2,
+          "actualTasks": 2,
+          "expectedRelations": 0,
+          "actualRelations": 0
+        },
+        "checks": {
+          "caseIdentityExact": true,
+          "sourceFingerprintExact": true,
+          "candidatePolicyVersionExact": true,
+          "candidateSetExact": true,
+          "candidateDispositionExact": true,
+          "actionSpanExact": true,
+          "singletonOrEmptyObjectSpanExact": true,
+          "inputFixtureTransportExact": true,
+          "ledgerDispositionExact": true,
+          "acceptedCandidateTaskBijectionExact": true,
+          "taskSemanticExact": true,
+          "taskSelectedExact": true,
+          "requiresActionExact": true,
+          "responseContractCompletenessExact": true,
+          "semanticCoverageCompletenessExact": true,
+          "expectedIssueCodesExact": true,
+          "materializerValidationExact": true,
+          "revisionUncertaintyExact": true,
+          "resolvedRevisionRelationExact": true,
+          "unresolvedActionScopeExact": true,
+          "conditionUnknownExact": true,
+          "unsafeDefaultSelectionsExact": true
+        },
+        "scoreParts": {
+          "candidateIdentityExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "candidateDispositionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "actionSpanExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "singletonOrEmptyObjectSpanExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "inputFixtureTransportExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "ledgerDispositionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "acceptedCandidateTaskBijectionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "taskSemanticExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "taskSelectedExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "safeDefaultRecall": {
+            "passed": 1,
+            "total": 1
+          },
+          "siblingSurvivalRate": {
+            "passed": 0,
+            "total": 0
+          }
+        }
+      },
+      {
+        "caseId": "rco-task-b9-04",
+        "passed": true,
+        "failures": [],
+        "counts": {
+          "expectedCandidates": 1,
+          "actualCandidates": 1,
+          "expectedTasks": 0,
+          "actualTasks": 0,
+          "expectedRelations": 0,
+          "actualRelations": 0
+        },
+        "checks": {
+          "caseIdentityExact": true,
+          "sourceFingerprintExact": true,
+          "candidatePolicyVersionExact": true,
+          "candidateSetExact": true,
+          "candidateDispositionExact": true,
+          "actionSpanExact": true,
+          "singletonOrEmptyObjectSpanExact": true,
+          "inputFixtureTransportExact": true,
+          "ledgerDispositionExact": true,
+          "acceptedCandidateTaskBijectionExact": true,
+          "taskSemanticExact": true,
+          "taskSelectedExact": true,
+          "requiresActionExact": true,
+          "responseContractCompletenessExact": true,
+          "semanticCoverageCompletenessExact": true,
+          "expectedIssueCodesExact": true,
+          "materializerValidationExact": true,
+          "revisionUncertaintyExact": true,
+          "resolvedRevisionRelationExact": true,
+          "unresolvedActionScopeExact": true,
+          "conditionUnknownExact": true,
+          "unsafeDefaultSelectionsExact": true
+        },
+        "scoreParts": {
+          "candidateIdentityExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "candidateDispositionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "actionSpanExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "singletonOrEmptyObjectSpanExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "inputFixtureTransportExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "ledgerDispositionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "acceptedCandidateTaskBijectionExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "taskSemanticExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "taskSelectedExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "safeDefaultRecall": {
+            "passed": 0,
+            "total": 0
+          },
+          "siblingSurvivalRate": {
+            "passed": 0,
+            "total": 0
+          }
+        }
+      },
+      {
+        "caseId": "rco-task-b9-05",
+        "passed": true,
+        "failures": [],
+        "counts": {
+          "expectedCandidates": 2,
+          "actualCandidates": 2,
+          "expectedTasks": 2,
+          "actualTasks": 2,
+          "expectedRelations": 0,
+          "actualRelations": 0
+        },
+        "checks": {
+          "caseIdentityExact": true,
+          "sourceFingerprintExact": true,
+          "candidatePolicyVersionExact": true,
+          "candidateSetExact": true,
+          "candidateDispositionExact": true,
+          "actionSpanExact": true,
+          "singletonOrEmptyObjectSpanExact": true,
+          "inputFixtureTransportExact": true,
+          "ledgerDispositionExact": true,
+          "acceptedCandidateTaskBijectionExact": true,
+          "taskSemanticExact": true,
+          "taskSelectedExact": true,
+          "requiresActionExact": true,
+          "responseContractCompletenessExact": true,
+          "semanticCoverageCompletenessExact": true,
+          "expectedIssueCodesExact": true,
+          "materializerValidationExact": true,
+          "revisionUncertaintyExact": true,
+          "resolvedRevisionRelationExact": true,
+          "unresolvedActionScopeExact": true,
+          "conditionUnknownExact": true,
+          "unsafeDefaultSelectionsExact": true
+        },
+        "scoreParts": {
+          "candidateIdentityExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "candidateDispositionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "actionSpanExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "singletonOrEmptyObjectSpanExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "inputFixtureTransportExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "ledgerDispositionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "acceptedCandidateTaskBijectionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "taskSemanticExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "taskSelectedExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "safeDefaultRecall": {
+            "passed": 2,
+            "total": 2
+          },
+          "siblingSurvivalRate": {
+            "passed": 0,
+            "total": 0
+          }
+        }
+      },
+      {
+        "caseId": "rco-task-b9-06",
+        "passed": true,
+        "failures": [],
+        "counts": {
+          "expectedCandidates": 2,
+          "actualCandidates": 2,
+          "expectedTasks": 1,
+          "actualTasks": 1,
+          "expectedRelations": 0,
+          "actualRelations": 0
+        },
+        "checks": {
+          "caseIdentityExact": true,
+          "sourceFingerprintExact": true,
+          "candidatePolicyVersionExact": true,
+          "candidateSetExact": true,
+          "candidateDispositionExact": true,
+          "actionSpanExact": true,
+          "singletonOrEmptyObjectSpanExact": true,
+          "inputFixtureTransportExact": true,
+          "ledgerDispositionExact": true,
+          "acceptedCandidateTaskBijectionExact": true,
+          "taskSemanticExact": true,
+          "taskSelectedExact": true,
+          "requiresActionExact": true,
+          "responseContractCompletenessExact": true,
+          "semanticCoverageCompletenessExact": true,
+          "expectedIssueCodesExact": true,
+          "materializerValidationExact": true,
+          "revisionUncertaintyExact": true,
+          "resolvedRevisionRelationExact": true,
+          "unresolvedActionScopeExact": true,
+          "conditionUnknownExact": true,
+          "unsafeDefaultSelectionsExact": true
+        },
+        "scoreParts": {
+          "candidateIdentityExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "candidateDispositionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "actionSpanExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "singletonOrEmptyObjectSpanExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "inputFixtureTransportExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "ledgerDispositionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "acceptedCandidateTaskBijectionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "taskSemanticExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "taskSelectedExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "safeDefaultRecall": {
+            "passed": 1,
+            "total": 1
+          },
+          "siblingSurvivalRate": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      {
+        "caseId": "rco-task-b9-07",
+        "passed": false,
+        "failures": [
+          "requiresActionExact"
+        ],
+        "counts": {
+          "expectedCandidates": 2,
+          "actualCandidates": 2,
+          "expectedTasks": 1,
+          "actualTasks": 1,
+          "expectedRelations": 0,
+          "actualRelations": 0
+        },
+        "checks": {
+          "caseIdentityExact": true,
+          "sourceFingerprintExact": true,
+          "candidatePolicyVersionExact": true,
+          "candidateSetExact": true,
+          "candidateDispositionExact": true,
+          "actionSpanExact": true,
+          "singletonOrEmptyObjectSpanExact": true,
+          "inputFixtureTransportExact": true,
+          "ledgerDispositionExact": true,
+          "acceptedCandidateTaskBijectionExact": true,
+          "taskSemanticExact": true,
+          "taskSelectedExact": true,
+          "requiresActionExact": false,
+          "responseContractCompletenessExact": true,
+          "semanticCoverageCompletenessExact": true,
+          "expectedIssueCodesExact": true,
+          "materializerValidationExact": true,
+          "revisionUncertaintyExact": true,
+          "resolvedRevisionRelationExact": true,
+          "unresolvedActionScopeExact": true,
+          "conditionUnknownExact": true,
+          "unsafeDefaultSelectionsExact": true
+        },
+        "scoreParts": {
+          "candidateIdentityExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "candidateDispositionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "actionSpanExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "singletonOrEmptyObjectSpanExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "inputFixtureTransportExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "ledgerDispositionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "acceptedCandidateTaskBijectionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "taskSemanticExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "taskSelectedExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "safeDefaultRecall": {
+            "passed": 0,
+            "total": 0
+          },
+          "siblingSurvivalRate": {
+            "passed": 0,
+            "total": 0
+          }
+        }
+      },
+      {
+        "caseId": "rco-task-b9-08",
+        "passed": true,
+        "failures": [],
+        "counts": {
+          "expectedCandidates": 3,
+          "actualCandidates": 3,
+          "expectedTasks": 3,
+          "actualTasks": 3,
+          "expectedRelations": 1,
+          "actualRelations": 1
+        },
+        "checks": {
+          "caseIdentityExact": true,
+          "sourceFingerprintExact": true,
+          "candidatePolicyVersionExact": true,
+          "candidateSetExact": true,
+          "candidateDispositionExact": true,
+          "actionSpanExact": true,
+          "singletonOrEmptyObjectSpanExact": true,
+          "inputFixtureTransportExact": true,
+          "ledgerDispositionExact": true,
+          "acceptedCandidateTaskBijectionExact": true,
+          "taskSemanticExact": true,
+          "taskSelectedExact": true,
+          "requiresActionExact": true,
+          "responseContractCompletenessExact": true,
+          "semanticCoverageCompletenessExact": true,
+          "expectedIssueCodesExact": true,
+          "materializerValidationExact": true,
+          "revisionUncertaintyExact": true,
+          "resolvedRevisionRelationExact": true,
+          "unresolvedActionScopeExact": true,
+          "conditionUnknownExact": true,
+          "unsafeDefaultSelectionsExact": true
+        },
+        "scoreParts": {
+          "candidateIdentityExact": {
+            "passed": 3,
+            "total": 3
+          },
+          "candidateDispositionExact": {
+            "passed": 3,
+            "total": 3
+          },
+          "actionSpanExact": {
+            "passed": 3,
+            "total": 3
+          },
+          "singletonOrEmptyObjectSpanExact": {
+            "passed": 3,
+            "total": 3
+          },
+          "inputFixtureTransportExact": {
+            "passed": 3,
+            "total": 3
+          },
+          "ledgerDispositionExact": {
+            "passed": 3,
+            "total": 3
+          },
+          "acceptedCandidateTaskBijectionExact": {
+            "passed": 3,
+            "total": 3
+          },
+          "taskSemanticExact": {
+            "passed": 3,
+            "total": 3
+          },
+          "taskSelectedExact": {
+            "passed": 3,
+            "total": 3
+          },
+          "safeDefaultRecall": {
+            "passed": 1,
+            "total": 1
+          },
+          "siblingSurvivalRate": {
+            "passed": 0,
+            "total": 0
+          }
+        }
+      },
+      {
+        "caseId": "rco-task-b9-09",
+        "passed": true,
+        "failures": [],
+        "counts": {
+          "expectedCandidates": 0,
+          "actualCandidates": 0,
+          "expectedTasks": 0,
+          "actualTasks": 0,
+          "expectedRelations": 0,
+          "actualRelations": 0
+        },
+        "checks": {
+          "caseIdentityExact": true,
+          "sourceFingerprintExact": true,
+          "candidatePolicyVersionExact": true,
+          "candidateSetExact": true,
+          "candidateDispositionExact": true,
+          "actionSpanExact": true,
+          "singletonOrEmptyObjectSpanExact": true,
+          "inputFixtureTransportExact": true,
+          "ledgerDispositionExact": true,
+          "acceptedCandidateTaskBijectionExact": true,
+          "taskSemanticExact": true,
+          "taskSelectedExact": true,
+          "requiresActionExact": true,
+          "responseContractCompletenessExact": true,
+          "semanticCoverageCompletenessExact": true,
+          "expectedIssueCodesExact": true,
+          "materializerValidationExact": true,
+          "revisionUncertaintyExact": true,
+          "resolvedRevisionRelationExact": true,
+          "unresolvedActionScopeExact": true,
+          "conditionUnknownExact": true,
+          "unsafeDefaultSelectionsExact": true
+        },
+        "scoreParts": {
+          "candidateIdentityExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "candidateDispositionExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "actionSpanExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "singletonOrEmptyObjectSpanExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "inputFixtureTransportExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "ledgerDispositionExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "acceptedCandidateTaskBijectionExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "taskSemanticExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "taskSelectedExact": {
+            "passed": 0,
+            "total": 0
+          },
+          "safeDefaultRecall": {
+            "passed": 0,
+            "total": 0
+          },
+          "siblingSurvivalRate": {
+            "passed": 0,
+            "total": 0
+          }
+        }
+      },
+      {
+        "caseId": "rco-task-b9-10",
+        "passed": true,
+        "failures": [],
+        "counts": {
+          "expectedCandidates": 2,
+          "actualCandidates": 2,
+          "expectedTasks": 1,
+          "actualTasks": 1,
+          "expectedRelations": 0,
+          "actualRelations": 0
+        },
+        "checks": {
+          "caseIdentityExact": true,
+          "sourceFingerprintExact": true,
+          "candidatePolicyVersionExact": true,
+          "candidateSetExact": true,
+          "candidateDispositionExact": true,
+          "actionSpanExact": true,
+          "singletonOrEmptyObjectSpanExact": true,
+          "inputFixtureTransportExact": true,
+          "ledgerDispositionExact": true,
+          "acceptedCandidateTaskBijectionExact": true,
+          "taskSemanticExact": true,
+          "taskSelectedExact": true,
+          "requiresActionExact": true,
+          "responseContractCompletenessExact": true,
+          "semanticCoverageCompletenessExact": true,
+          "expectedIssueCodesExact": true,
+          "materializerValidationExact": true,
+          "revisionUncertaintyExact": true,
+          "resolvedRevisionRelationExact": true,
+          "unresolvedActionScopeExact": true,
+          "conditionUnknownExact": true,
+          "unsafeDefaultSelectionsExact": true
+        },
+        "scoreParts": {
+          "candidateIdentityExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "candidateDispositionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "actionSpanExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "singletonOrEmptyObjectSpanExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "inputFixtureTransportExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "ledgerDispositionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "acceptedCandidateTaskBijectionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "taskSemanticExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "taskSelectedExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "safeDefaultRecall": {
+            "passed": 1,
+            "total": 1
+          },
+          "siblingSurvivalRate": {
+            "passed": 0,
+            "total": 0
+          }
+        }
+      },
+      {
+        "caseId": "rco-task-b9-11",
+        "passed": true,
+        "failures": [],
+        "counts": {
+          "expectedCandidates": 2,
+          "actualCandidates": 2,
+          "expectedTasks": 1,
+          "actualTasks": 1,
+          "expectedRelations": 0,
+          "actualRelations": 0
+        },
+        "checks": {
+          "caseIdentityExact": true,
+          "sourceFingerprintExact": true,
+          "candidatePolicyVersionExact": true,
+          "candidateSetExact": true,
+          "candidateDispositionExact": true,
+          "actionSpanExact": true,
+          "singletonOrEmptyObjectSpanExact": true,
+          "inputFixtureTransportExact": true,
+          "ledgerDispositionExact": true,
+          "acceptedCandidateTaskBijectionExact": true,
+          "taskSemanticExact": true,
+          "taskSelectedExact": true,
+          "requiresActionExact": true,
+          "responseContractCompletenessExact": true,
+          "semanticCoverageCompletenessExact": true,
+          "expectedIssueCodesExact": true,
+          "materializerValidationExact": true,
+          "revisionUncertaintyExact": true,
+          "resolvedRevisionRelationExact": true,
+          "unresolvedActionScopeExact": true,
+          "conditionUnknownExact": true,
+          "unsafeDefaultSelectionsExact": true
+        },
+        "scoreParts": {
+          "candidateIdentityExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "candidateDispositionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "actionSpanExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "singletonOrEmptyObjectSpanExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "inputFixtureTransportExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "ledgerDispositionExact": {
+            "passed": 2,
+            "total": 2
+          },
+          "acceptedCandidateTaskBijectionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "taskSemanticExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "taskSelectedExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "safeDefaultRecall": {
+            "passed": 1,
+            "total": 1
+          },
+          "siblingSurvivalRate": {
+            "passed": 0,
+            "total": 0
+          }
+        }
+      },
+      {
+        "caseId": "rco-task-b9-12",
+        "passed": true,
+        "failures": [],
+        "counts": {
+          "expectedCandidates": 1,
+          "actualCandidates": 1,
+          "expectedTasks": 1,
+          "actualTasks": 1,
+          "expectedRelations": 0,
+          "actualRelations": 0
+        },
+        "checks": {
+          "caseIdentityExact": true,
+          "sourceFingerprintExact": true,
+          "candidatePolicyVersionExact": true,
+          "candidateSetExact": true,
+          "candidateDispositionExact": true,
+          "actionSpanExact": true,
+          "singletonOrEmptyObjectSpanExact": true,
+          "inputFixtureTransportExact": true,
+          "ledgerDispositionExact": true,
+          "acceptedCandidateTaskBijectionExact": true,
+          "taskSemanticExact": true,
+          "taskSelectedExact": true,
+          "requiresActionExact": true,
+          "responseContractCompletenessExact": true,
+          "semanticCoverageCompletenessExact": true,
+          "expectedIssueCodesExact": true,
+          "materializerValidationExact": true,
+          "revisionUncertaintyExact": true,
+          "resolvedRevisionRelationExact": true,
+          "unresolvedActionScopeExact": true,
+          "conditionUnknownExact": true,
+          "unsafeDefaultSelectionsExact": true
+        },
+        "scoreParts": {
+          "candidateIdentityExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "candidateDispositionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "actionSpanExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "singletonOrEmptyObjectSpanExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "inputFixtureTransportExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "ledgerDispositionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "acceptedCandidateTaskBijectionExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "taskSemanticExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "taskSelectedExact": {
+            "passed": 1,
+            "total": 1
+          },
+          "safeDefaultRecall": {
+            "passed": 0,
+            "total": 0
+          },
+          "siblingSurvivalRate": {
+            "passed": 0,
+            "total": 0
+          }
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "caseIdentityExact": 1,
+    "sourceFingerprintExact": 1,
+    "candidatePolicyVersionExact": 1,
+    "candidateIdentityExact": 1,
+    "candidateDispositionExact": 1,
+    "actionSpanExact": 1,
+    "singletonOrEmptyObjectSpanExact": 1,
+    "inputFixtureTransportExact": 1,
+    "ledgerDispositionExact": 1,
+    "acceptedCandidateTaskBijectionExact": 1,
+    "taskSemanticExact": 1,
+    "taskSelectedExact": 1,
+    "requiresActionExact": 0.9166666666666666,
+    "responseContractCompletenessExact": 1,
+    "semanticCoverageCompletenessExact": 1,
+    "expectedIssueCodesExact": 1,
+    "materializerValidationExact": 1,
+    "revisionUncertaintyExact": 1,
+    "resolvedRevisionRelationExact": 1,
+    "unresolvedActionScopeExact": 1,
+    "outOfVocabularyUnresolvedActionExact": 1,
+    "conditionUnknownExact": 1,
+    "safeDefaultRecall": 1,
+    "siblingSurvivalRate": 1,
+    "unsafeDefaultSelections": 0,
+    "extraDefaultSelections": 0
+  },
+  "counts": {
+    "expectedCases": 12,
+    "actualCases": 12,
+    "expectedCandidates": 19,
+    "actualCandidates": 19,
+    "expectedLedger": {
+      "accepted_local": 11,
+      "accepted_model": 2,
+      "ignored_local": 1,
+      "ignored_model": 2,
+      "quarantined": 3
+    },
+    "actualLedger": {
+      "accepted_local": 11,
+      "accepted_model": 2,
+      "ignored_local": 1,
+      "ignored_model": 2,
+      "quarantined": 3
+    },
+    "expectedTasks": 13,
+    "actualTasks": 13,
+    "expectedSelectedTasks": 7,
+    "actualSelectedTasks": 7,
+    "expectedRevisionRelations": 1,
+    "actualRevisionRelations": 1,
+    "expectedIssueCodes": 1,
+    "actualIssueCodes": 1
+  },
+  "gateFailures": [
+    "requiresActionExact:0.9166666666666666<1",
+    "EXPECTED_COUNTS_DO_NOT_MATCH_DATA_FREEZE"
+  ],
+  "gate": "FAIL",
+  "decision": "B9_ZERO_CALL_DIRECT_CANDIDATE_GATE_FAIL_RETAIN_RESULT_AND_USE_B10_FOR_ANY_FIX",
+  "evidenceBoundary": {
+    "data": "Single-author synthetic Development evidence only.",
+    "response": "Frozen local response fixtures are representability inputs, not a model measurement.",
+    "scope": "No image, OCR, real material, independent human truth, user timing, browser acceptance or release evidence.",
+    "generalization": "B9 became seen when this single batch pipeline attempt started."
+  },
+  "knownLabelLimitations": [
+    {
+      "caseId": "rco-task-b9-12",
+      "code": "IMPLEMENTATION_BOUNDARY_LABEL_NOT_INDEPENDENT_SEMANTIC_TRUTH",
+      "detail": "The source explicitly says the card-color condition is currently true, while frozen Expected keeps the condition unknown to test the present deterministic boundary. This case cannot support a semantic-accuracy claim."
+    }
+  ],
+  "paidRun": "NOT_AUTHORIZED",
+  "stablePath": "UNCHANGED",
+  "rco6": "NOT_STARTED",
+  "deployment": "NOT_RUN",
+  "cases": [
+    {
+      "caseId": "rco-task-b9-01",
+      "sourceText": "保存纸质值班簿。",
+      "sourceFingerprint": "sha256:36008c655efa6ce803a0cc81c78df41a89db6eefe248ffe6d8d5d19053215666",
+      "candidatePolicyVersion": "local-action-candidate-policy-1.2.0",
+      "candidates": [
+        {
+          "key": "b9-01-save",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:36008c655efa:0:2",
+          "action": "保存",
+          "occurrence": 1,
+          "actionSourceStart": 0,
+          "actionSourceEnd": 2,
+          "actionSourceSlice": "保存",
+          "objectCandidates": [
+            {
+              "id": "object:36008c655efa:2:7",
+              "surface": "纸质值班簿",
+              "sourceStart": 2,
+              "sourceEnd": 7,
+              "sourceSlice": "纸质值班簿"
+            }
+          ],
+          "defaultObjectCandidateId": "object:36008c655efa:2:7",
+          "localDisposition": "needs_model",
+          "clauseRole": "unclassified",
+          "currentness": "unknown",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:36008c655efa:2:7",
+          "responseObjectOwnerKey": "b9-01-save"
+        }
+      ],
+      "ledger": [
+        {
+          "candidateKey": "b9-01-save",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:36008c655efa:0:2",
+          "status": "accepted_model",
+          "objectCandidateId": "object:36008c655efa:2:7",
+          "reasonCodes": [
+            "NO_DETERMINISTIC_PROPOSITION_OR_NON_TASK_MARKER",
+            "MODEL_CLASSIFIED_PROPOSITION_WITH_OWNED_OBJECT"
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "candidateKey": "b9-01-save",
+          "id": "task:action:local-action-candidate-policy-1.2.0:36008c655efa:0:2",
+          "originCandidateId": "action:local-action-candidate-policy-1.2.0:36008c655efa:0:2",
+          "occurrenceId": "action:local-action-candidate-policy-1.2.0:36008c655efa:0:2",
+          "action": "保存",
+          "actionSourceStart": 0,
+          "actionSourceEnd": 2,
+          "actionSourceSlice": "保存",
+          "object": "纸质值班簿",
+          "objectCandidateId": "object:36008c655efa:2:7",
+          "objectSourceStart": 2,
+          "objectSourceEnd": 7,
+          "objectSourceSlice": "纸质值班簿",
+          "semantics": {
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "uncertain",
+            "tense": "unknown",
+            "status": "unknown",
+            "validity": "uncertain",
+            "modality": "unknown"
+          },
+          "selected": false,
+          "needsConfirmation": true,
+          "conditionStatus": "none",
+          "conditionTruth": "none"
+        }
+      ],
+      "requiresAction": null,
+      "responseContractComplete": true,
+      "semanticCoverageComplete": true,
+      "issueCodes": [],
+      "materializerIssueCodes": [],
+      "runnerIssueCodes": [],
+      "revisionRelations": [],
+      "unresolvedRevisionScopeTexts": [],
+      "suppressedRevisionScopeTexts": [],
+      "unresolvedActionScopeTexts": [],
+      "unsafeDefaultSelections": []
+    },
+    {
+      "caseId": "rco-task-b9-02",
+      "sourceText": "会议记录提到保存纸质值班簿这一操作。",
+      "sourceFingerprint": "sha256:16560d56f122933391d92923a867f2dbd393cbe5b864e1eb3d3d776eaf4d4ef7",
+      "candidatePolicyVersion": "local-action-candidate-policy-1.2.0",
+      "candidates": [
+        {
+          "key": "b9-02-save",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:16560d56f122:6:8",
+          "action": "保存",
+          "occurrence": 1,
+          "actionSourceStart": 6,
+          "actionSourceEnd": 8,
+          "actionSourceSlice": "保存",
+          "objectCandidates": [
+            {
+              "id": "object:16560d56f122:8:17",
+              "surface": "纸质值班簿这一操作",
+              "sourceStart": 8,
+              "sourceEnd": 17,
+              "sourceSlice": "纸质值班簿这一操作"
+            }
+          ],
+          "defaultObjectCandidateId": "object:16560d56f122:8:17",
+          "localDisposition": "needs_model",
+          "clauseRole": "unclassified",
+          "currentness": "unknown",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "mention_only",
+          "responseObjectCandidateId": null,
+          "responseObjectOwnerKey": null
+        }
+      ],
+      "ledger": [
+        {
+          "candidateKey": "b9-02-save",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:16560d56f122:6:8",
+          "status": "ignored_model",
+          "objectCandidateId": null,
+          "reasonCodes": [
+            "NO_DETERMINISTIC_PROPOSITION_OR_NON_TASK_MARKER",
+            "MODEL_CLASSIFIED_MENTION_ONLY"
+          ]
+        }
+      ],
+      "tasks": [],
+      "requiresAction": false,
+      "responseContractComplete": true,
+      "semanticCoverageComplete": true,
+      "issueCodes": [],
+      "materializerIssueCodes": [],
+      "runnerIssueCodes": [],
+      "revisionRelations": [],
+      "unresolvedRevisionScopeTexts": [],
+      "suppressedRevisionScopeTexts": [],
+      "unresolvedActionScopeTexts": [],
+      "unsafeDefaultSelections": []
+    },
+    {
+      "caseId": "rco-task-b9-03",
+      "sourceText": "请准备提交场地申请包。",
+      "sourceFingerprint": "sha256:815c266ca9e6e95368400e8b328152d29ecff0cc37e0677b50dd6a0f0b11f068",
+      "candidatePolicyVersion": "local-action-candidate-policy-1.2.0",
+      "candidates": [
+        {
+          "key": "b9-03-prepare",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:815c266ca9e6:1:3",
+          "action": "准备",
+          "occurrence": 1,
+          "actionSourceStart": 1,
+          "actionSourceEnd": 3,
+          "actionSourceSlice": "准备",
+          "objectCandidates": [
+            {
+              "id": "object:815c266ca9e6:5:10",
+              "surface": "场地申请包",
+              "sourceStart": 5,
+              "sourceEnd": 10,
+              "sourceSlice": "场地申请包"
+            }
+          ],
+          "defaultObjectCandidateId": "object:815c266ca9e6:5:10",
+          "localDisposition": "local_proposition",
+          "clauseRole": "directive",
+          "currentness": "current",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:815c266ca9e6:5:10",
+          "responseObjectOwnerKey": "b9-03-prepare"
+        },
+        {
+          "key": "b9-03-submit",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:815c266ca9e6:3:5",
+          "action": "提交",
+          "occurrence": 1,
+          "actionSourceStart": 3,
+          "actionSourceEnd": 5,
+          "actionSourceSlice": "提交",
+          "objectCandidates": [
+            {
+              "id": "object:815c266ca9e6:5:10",
+              "surface": "场地申请包",
+              "sourceStart": 5,
+              "sourceEnd": 10,
+              "sourceSlice": "场地申请包"
+            }
+          ],
+          "defaultObjectCandidateId": "object:815c266ca9e6:5:10",
+          "localDisposition": "needs_model",
+          "clauseRole": "unclassified",
+          "currentness": "unknown",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:815c266ca9e6:5:10",
+          "responseObjectOwnerKey": "b9-03-submit"
+        }
+      ],
+      "ledger": [
+        {
+          "candidateKey": "b9-03-prepare",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:815c266ca9e6:1:3",
+          "status": "accepted_local",
+          "objectCandidateId": "object:815c266ca9e6:5:10",
+          "reasonCodes": [
+            "DETERMINISTIC_PROPOSITION_SYNTAX",
+            "MODEL_OBJECT_USED_ONLY_WITHIN_LOCAL_CLOSED_SET"
+          ]
+        },
+        {
+          "candidateKey": "b9-03-submit",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:815c266ca9e6:3:5",
+          "status": "accepted_model",
+          "objectCandidateId": "object:815c266ca9e6:5:10",
+          "reasonCodes": [
+            "NO_DETERMINISTIC_PROPOSITION_OR_NON_TASK_MARKER",
+            "MODEL_CLASSIFIED_PROPOSITION_WITH_OWNED_OBJECT"
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "candidateKey": "b9-03-prepare",
+          "id": "task:action:local-action-candidate-policy-1.2.0:815c266ca9e6:1:3",
+          "originCandidateId": "action:local-action-candidate-policy-1.2.0:815c266ca9e6:1:3",
+          "occurrenceId": "action:local-action-candidate-policy-1.2.0:815c266ca9e6:1:3",
+          "action": "准备",
+          "actionSourceStart": 1,
+          "actionSourceEnd": 3,
+          "actionSourceSlice": "准备",
+          "object": "场地申请包",
+          "objectCandidateId": "object:815c266ca9e6:5:10",
+          "objectSourceStart": 5,
+          "objectSourceEnd": 10,
+          "objectSourceSlice": "场地申请包",
+          "semantics": {
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required"
+          },
+          "selected": true,
+          "needsConfirmation": false,
+          "conditionStatus": "none",
+          "conditionTruth": "none"
+        },
+        {
+          "candidateKey": "b9-03-submit",
+          "id": "task:action:local-action-candidate-policy-1.2.0:815c266ca9e6:3:5",
+          "originCandidateId": "action:local-action-candidate-policy-1.2.0:815c266ca9e6:3:5",
+          "occurrenceId": "action:local-action-candidate-policy-1.2.0:815c266ca9e6:3:5",
+          "action": "提交",
+          "actionSourceStart": 3,
+          "actionSourceEnd": 5,
+          "actionSourceSlice": "提交",
+          "object": "场地申请包",
+          "objectCandidateId": "object:815c266ca9e6:5:10",
+          "objectSourceStart": 5,
+          "objectSourceEnd": 10,
+          "objectSourceSlice": "场地申请包",
+          "semantics": {
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "uncertain",
+            "tense": "unknown",
+            "status": "unknown",
+            "validity": "uncertain",
+            "modality": "unknown"
+          },
+          "selected": false,
+          "needsConfirmation": true,
+          "conditionStatus": "none",
+          "conditionTruth": "none"
+        }
+      ],
+      "requiresAction": true,
+      "responseContractComplete": true,
+      "semanticCoverageComplete": true,
+      "issueCodes": [],
+      "materializerIssueCodes": [],
+      "runnerIssueCodes": [],
+      "revisionRelations": [],
+      "unresolvedRevisionScopeTexts": [],
+      "suppressedRevisionScopeTexts": [],
+      "unresolvedActionScopeTexts": [],
+      "unsafeDefaultSelections": []
+    },
+    {
+      "caseId": "rco-task-b9-04",
+      "sourceText": "请保存。",
+      "sourceFingerprint": "sha256:8643a6b4e767b6afbb0ca446e6d4f83452afaa6ad3a9bf8e5f8ce45c9c3eb92d",
+      "candidatePolicyVersion": "local-action-candidate-policy-1.2.0",
+      "candidates": [
+        {
+          "key": "b9-04-save",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:8643a6b4e767:1:3",
+          "action": "保存",
+          "occurrence": 1,
+          "actionSourceStart": 1,
+          "actionSourceEnd": 3,
+          "actionSourceSlice": "保存",
+          "objectCandidates": [],
+          "defaultObjectCandidateId": null,
+          "localDisposition": "local_proposition",
+          "clauseRole": "directive",
+          "currentness": "current",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "uncertain",
+          "responseObjectCandidateId": null,
+          "responseObjectOwnerKey": null
+        }
+      ],
+      "ledger": [
+        {
+          "candidateKey": "b9-04-save",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:8643a6b4e767:1:3",
+          "status": "quarantined",
+          "objectCandidateId": null,
+          "reasonCodes": [
+            "DETERMINISTIC_PROPOSITION_SYNTAX",
+            "LOCAL_PROPOSITION_OBJECT_UNRESOLVED"
+          ]
+        }
+      ],
+      "tasks": [],
+      "requiresAction": null,
+      "responseContractComplete": true,
+      "semanticCoverageComplete": false,
+      "issueCodes": [],
+      "materializerIssueCodes": [],
+      "runnerIssueCodes": [],
+      "revisionRelations": [],
+      "unresolvedRevisionScopeTexts": [],
+      "suppressedRevisionScopeTexts": [],
+      "unresolvedActionScopeTexts": [],
+      "unsafeDefaultSelections": []
+    },
+    {
+      "caseId": "rco-task-b9-05",
+      "sourceText": "请核对北区柜号再核对南区柜号。",
+      "sourceFingerprint": "sha256:8c16466898427babc758a3ed6d466f09fae278d6e329064ae318916bd6277fc9",
+      "candidatePolicyVersion": "local-action-candidate-policy-1.2.0",
+      "candidates": [
+        {
+          "key": "b9-05-review-north",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:8c1646689842:1:3",
+          "action": "核对",
+          "occurrence": 1,
+          "actionSourceStart": 1,
+          "actionSourceEnd": 3,
+          "actionSourceSlice": "核对",
+          "objectCandidates": [
+            {
+              "id": "object:8c1646689842:3:7",
+              "surface": "北区柜号",
+              "sourceStart": 3,
+              "sourceEnd": 7,
+              "sourceSlice": "北区柜号"
+            }
+          ],
+          "defaultObjectCandidateId": "object:8c1646689842:3:7",
+          "localDisposition": "local_proposition",
+          "clauseRole": "directive",
+          "currentness": "current",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:8c1646689842:3:7",
+          "responseObjectOwnerKey": "b9-05-review-north"
+        },
+        {
+          "key": "b9-05-review-south",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:8c1646689842:8:10",
+          "action": "核对",
+          "occurrence": 2,
+          "actionSourceStart": 8,
+          "actionSourceEnd": 10,
+          "actionSourceSlice": "核对",
+          "objectCandidates": [
+            {
+              "id": "object:8c1646689842:10:14",
+              "surface": "南区柜号",
+              "sourceStart": 10,
+              "sourceEnd": 14,
+              "sourceSlice": "南区柜号"
+            }
+          ],
+          "defaultObjectCandidateId": "object:8c1646689842:10:14",
+          "localDisposition": "local_proposition",
+          "clauseRole": "directive",
+          "currentness": "current",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:8c1646689842:10:14",
+          "responseObjectOwnerKey": "b9-05-review-south"
+        }
+      ],
+      "ledger": [
+        {
+          "candidateKey": "b9-05-review-north",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:8c1646689842:1:3",
+          "status": "accepted_local",
+          "objectCandidateId": "object:8c1646689842:3:7",
+          "reasonCodes": [
+            "DETERMINISTIC_PROPOSITION_SYNTAX",
+            "MODEL_OBJECT_USED_ONLY_WITHIN_LOCAL_CLOSED_SET"
+          ]
+        },
+        {
+          "candidateKey": "b9-05-review-south",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:8c1646689842:8:10",
+          "status": "accepted_local",
+          "objectCandidateId": "object:8c1646689842:10:14",
+          "reasonCodes": [
+            "DETERMINISTIC_PROPOSITION_SYNTAX",
+            "MODEL_OBJECT_USED_ONLY_WITHIN_LOCAL_CLOSED_SET"
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "candidateKey": "b9-05-review-north",
+          "id": "task:action:local-action-candidate-policy-1.2.0:8c1646689842:1:3",
+          "originCandidateId": "action:local-action-candidate-policy-1.2.0:8c1646689842:1:3",
+          "occurrenceId": "action:local-action-candidate-policy-1.2.0:8c1646689842:1:3",
+          "action": "核对",
+          "actionSourceStart": 1,
+          "actionSourceEnd": 3,
+          "actionSourceSlice": "核对",
+          "object": "北区柜号",
+          "objectCandidateId": "object:8c1646689842:3:7",
+          "objectSourceStart": 3,
+          "objectSourceEnd": 7,
+          "objectSourceSlice": "北区柜号",
+          "semantics": {
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required"
+          },
+          "selected": true,
+          "needsConfirmation": false,
+          "conditionStatus": "none",
+          "conditionTruth": "none"
+        },
+        {
+          "candidateKey": "b9-05-review-south",
+          "id": "task:action:local-action-candidate-policy-1.2.0:8c1646689842:8:10",
+          "originCandidateId": "action:local-action-candidate-policy-1.2.0:8c1646689842:8:10",
+          "occurrenceId": "action:local-action-candidate-policy-1.2.0:8c1646689842:8:10",
+          "action": "核对",
+          "actionSourceStart": 8,
+          "actionSourceEnd": 10,
+          "actionSourceSlice": "核对",
+          "object": "南区柜号",
+          "objectCandidateId": "object:8c1646689842:10:14",
+          "objectSourceStart": 10,
+          "objectSourceEnd": 14,
+          "objectSourceSlice": "南区柜号",
+          "semantics": {
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required"
+          },
+          "selected": true,
+          "needsConfirmation": false,
+          "conditionStatus": "none",
+          "conditionTruth": "none"
+        }
+      ],
+      "requiresAction": true,
+      "responseContractComplete": true,
+      "semanticCoverageComplete": true,
+      "issueCodes": [],
+      "materializerIssueCodes": [],
+      "runnerIssueCodes": [],
+      "revisionRelations": [],
+      "unresolvedRevisionScopeTexts": [],
+      "suppressedRevisionScopeTexts": [],
+      "unresolvedActionScopeTexts": [],
+      "unsafeDefaultSelections": []
+    },
+    {
+      "caseId": "rco-task-b9-06",
+      "sourceText": "请整理器材交接摘要。核对备用箱序号。",
+      "sourceFingerprint": "sha256:90f89558101026187af3717926fce77aaa43509997ef09941433ceadf80ee35a",
+      "candidatePolicyVersion": "local-action-candidate-policy-1.2.0",
+      "candidates": [
+        {
+          "key": "b9-06-prepare",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:90f895581010:1:3",
+          "action": "整理",
+          "occurrence": 1,
+          "actionSourceStart": 1,
+          "actionSourceEnd": 3,
+          "actionSourceSlice": "整理",
+          "objectCandidates": [
+            {
+              "id": "object:90f895581010:3:9",
+              "surface": "器材交接摘要",
+              "sourceStart": 3,
+              "sourceEnd": 9,
+              "sourceSlice": "器材交接摘要"
+            }
+          ],
+          "defaultObjectCandidateId": "object:90f895581010:3:9",
+          "localDisposition": "local_proposition",
+          "clauseRole": "directive",
+          "currentness": "current",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:90f895581010:3:9",
+          "responseObjectOwnerKey": "b9-06-prepare"
+        },
+        {
+          "key": "b9-06-review",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:90f895581010:10:12",
+          "action": "核对",
+          "occurrence": 1,
+          "actionSourceStart": 10,
+          "actionSourceEnd": 12,
+          "actionSourceSlice": "核对",
+          "objectCandidates": [
+            {
+              "id": "object:90f895581010:12:17",
+              "surface": "备用箱序号",
+              "sourceStart": 12,
+              "sourceEnd": 17,
+              "sourceSlice": "备用箱序号"
+            }
+          ],
+          "defaultObjectCandidateId": "object:90f895581010:12:17",
+          "localDisposition": "needs_model",
+          "clauseRole": "unclassified",
+          "currentness": "unknown",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:90f895581010:3:9",
+          "responseObjectOwnerKey": "b9-06-prepare"
+        }
+      ],
+      "ledger": [
+        {
+          "candidateKey": "b9-06-prepare",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:90f895581010:1:3",
+          "status": "accepted_local",
+          "objectCandidateId": "object:90f895581010:3:9",
+          "reasonCodes": [
+            "DETERMINISTIC_PROPOSITION_SYNTAX",
+            "MODEL_OBJECT_USED_ONLY_WITHIN_LOCAL_CLOSED_SET"
+          ]
+        },
+        {
+          "candidateKey": "b9-06-review",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:90f895581010:10:12",
+          "status": "quarantined",
+          "objectCandidateId": null,
+          "reasonCodes": [
+            "NO_DETERMINISTIC_PROPOSITION_OR_NON_TASK_MARKER",
+            "OBJECT_CANDIDATE_INVALID",
+            "MODEL_CLASSIFICATION_UNUSABLE"
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "candidateKey": "b9-06-prepare",
+          "id": "task:action:local-action-candidate-policy-1.2.0:90f895581010:1:3",
+          "originCandidateId": "action:local-action-candidate-policy-1.2.0:90f895581010:1:3",
+          "occurrenceId": "action:local-action-candidate-policy-1.2.0:90f895581010:1:3",
+          "action": "整理",
+          "actionSourceStart": 1,
+          "actionSourceEnd": 3,
+          "actionSourceSlice": "整理",
+          "object": "器材交接摘要",
+          "objectCandidateId": "object:90f895581010:3:9",
+          "objectSourceStart": 3,
+          "objectSourceEnd": 9,
+          "objectSourceSlice": "器材交接摘要",
+          "semantics": {
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required"
+          },
+          "selected": true,
+          "needsConfirmation": false,
+          "conditionStatus": "none",
+          "conditionTruth": "none"
+        }
+      ],
+      "requiresAction": true,
+      "responseContractComplete": false,
+      "semanticCoverageComplete": false,
+      "issueCodes": [
+        "OBJECT_CANDIDATE_INVALID"
+      ],
+      "materializerIssueCodes": [],
+      "runnerIssueCodes": [],
+      "revisionRelations": [],
+      "unresolvedRevisionScopeTexts": [],
+      "suppressedRevisionScopeTexts": [],
+      "unresolvedActionScopeTexts": [],
+      "unsafeDefaultSelections": []
+    },
+    {
+      "caseId": "rco-task-b9-07",
+      "sourceText": "档案载明旧流程要求保存红色门签。核对蓝色门签是否属于该流程尚未说明。该流程后来作废。",
+      "sourceFingerprint": "sha256:d36ba7a3997f99989a125fb6f9692e16631f73e61b3a44a8c766a74546e70afb",
+      "candidatePolicyVersion": "local-action-candidate-policy-1.2.0",
+      "candidates": [
+        {
+          "key": "b9-07-save-red",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:d36ba7a3997f:9:11",
+          "action": "保存",
+          "occurrence": 1,
+          "actionSourceStart": 9,
+          "actionSourceEnd": 11,
+          "actionSourceSlice": "保存",
+          "objectCandidates": [
+            {
+              "id": "object:d36ba7a3997f:11:15",
+              "surface": "红色门签",
+              "sourceStart": 11,
+              "sourceEnd": 15,
+              "sourceSlice": "红色门签"
+            }
+          ],
+          "defaultObjectCandidateId": "object:d36ba7a3997f:11:15",
+          "localDisposition": "local_proposition",
+          "clauseRole": "directive",
+          "currentness": "historical",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:d36ba7a3997f:11:15",
+          "responseObjectOwnerKey": "b9-07-save-red"
+        },
+        {
+          "key": "b9-07-review-blue",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:d36ba7a3997f:16:18",
+          "action": "核对",
+          "occurrence": 1,
+          "actionSourceStart": 16,
+          "actionSourceEnd": 18,
+          "actionSourceSlice": "核对",
+          "objectCandidates": [
+            {
+              "id": "object:d36ba7a3997f:18:33",
+              "surface": "蓝色门签是否属于该流程尚未说明",
+              "sourceStart": 18,
+              "sourceEnd": 33,
+              "sourceSlice": "蓝色门签是否属于该流程尚未说明"
+            }
+          ],
+          "defaultObjectCandidateId": "object:d36ba7a3997f:18:33",
+          "localDisposition": "needs_model",
+          "clauseRole": "unclassified",
+          "currentness": "unknown",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "uncertain",
+          "responseObjectCandidateId": null,
+          "responseObjectOwnerKey": null
+        }
+      ],
+      "ledger": [
+        {
+          "candidateKey": "b9-07-save-red",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:d36ba7a3997f:9:11",
+          "status": "accepted_local",
+          "objectCandidateId": "object:d36ba7a3997f:11:15",
+          "reasonCodes": [
+            "DETERMINISTIC_PROPOSITION_SYNTAX",
+            "MODEL_OBJECT_USED_ONLY_WITHIN_LOCAL_CLOSED_SET"
+          ]
+        },
+        {
+          "candidateKey": "b9-07-review-blue",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:d36ba7a3997f:16:18",
+          "status": "quarantined",
+          "objectCandidateId": null,
+          "reasonCodes": [
+            "NO_DETERMINISTIC_PROPOSITION_OR_NON_TASK_MARKER",
+            "MODEL_CLASSIFIED_UNCERTAIN"
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "candidateKey": "b9-07-save-red",
+          "id": "task:action:local-action-candidate-policy-1.2.0:d36ba7a3997f:9:11",
+          "originCandidateId": "action:local-action-candidate-policy-1.2.0:d36ba7a3997f:9:11",
+          "occurrenceId": "action:local-action-candidate-policy-1.2.0:d36ba7a3997f:9:11",
+          "action": "保存",
+          "actionSourceStart": 9,
+          "actionSourceEnd": 11,
+          "actionSourceSlice": "保存",
+          "object": "红色门签",
+          "objectCandidateId": "object:d36ba7a3997f:11:15",
+          "objectSourceStart": 11,
+          "objectSourceEnd": 15,
+          "objectSourceSlice": "红色门签",
+          "semantics": {
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "past",
+            "status": "unknown",
+            "validity": "uncertain",
+            "modality": "required"
+          },
+          "selected": false,
+          "needsConfirmation": true,
+          "conditionStatus": "none",
+          "conditionTruth": "none"
+        }
+      ],
+      "requiresAction": null,
+      "responseContractComplete": true,
+      "semanticCoverageComplete": false,
+      "issueCodes": [],
+      "materializerIssueCodes": [],
+      "runnerIssueCodes": [],
+      "revisionRelations": [],
+      "unresolvedRevisionScopeTexts": [
+        "该流程后来作废。"
+      ],
+      "suppressedRevisionScopeTexts": [
+        "该流程后来作废。"
+      ],
+      "unresolvedActionScopeTexts": [],
+      "unsafeDefaultSelections": []
+    },
+    {
+      "caseId": "rco-task-b9-08",
+      "sourceText": "旧规则要求发送东组路线表。该规则调整为上传西组值守表。请保存今日门岗记录。",
+      "sourceFingerprint": "sha256:0eceb4b70db39f2b32073d7a183efd61c743cefd1ab8b02739aa5d2018e97afa",
+      "candidatePolicyVersion": "local-action-candidate-policy-1.2.0",
+      "candidates": [
+        {
+          "key": "b9-08-send-east",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:5:7",
+          "action": "发送",
+          "occurrence": 1,
+          "actionSourceStart": 5,
+          "actionSourceEnd": 7,
+          "actionSourceSlice": "发送",
+          "objectCandidates": [
+            {
+              "id": "object:0eceb4b70db3:7:12",
+              "surface": "东组路线表",
+              "sourceStart": 7,
+              "sourceEnd": 12,
+              "sourceSlice": "东组路线表"
+            }
+          ],
+          "defaultObjectCandidateId": "object:0eceb4b70db3:7:12",
+          "localDisposition": "local_proposition",
+          "clauseRole": "directive",
+          "currentness": "historical",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:0eceb4b70db3:7:12",
+          "responseObjectOwnerKey": "b9-08-send-east"
+        },
+        {
+          "key": "b9-08-upload-west",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:19:21",
+          "action": "上传",
+          "occurrence": 1,
+          "actionSourceStart": 19,
+          "actionSourceEnd": 21,
+          "actionSourceSlice": "上传",
+          "objectCandidates": [
+            {
+              "id": "object:0eceb4b70db3:21:26",
+              "surface": "西组值守表",
+              "sourceStart": 21,
+              "sourceEnd": 26,
+              "sourceSlice": "西组值守表"
+            }
+          ],
+          "defaultObjectCandidateId": "object:0eceb4b70db3:21:26",
+          "localDisposition": "local_proposition",
+          "clauseRole": "directive",
+          "currentness": "current",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:0eceb4b70db3:21:26",
+          "responseObjectOwnerKey": "b9-08-upload-west"
+        },
+        {
+          "key": "b9-08-save-today",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:28:30",
+          "action": "保存",
+          "occurrence": 1,
+          "actionSourceStart": 28,
+          "actionSourceEnd": 30,
+          "actionSourceSlice": "保存",
+          "objectCandidates": [
+            {
+              "id": "object:0eceb4b70db3:30:36",
+              "surface": "今日门岗记录",
+              "sourceStart": 30,
+              "sourceEnd": 36,
+              "sourceSlice": "今日门岗记录"
+            }
+          ],
+          "defaultObjectCandidateId": "object:0eceb4b70db3:30:36",
+          "localDisposition": "local_proposition",
+          "clauseRole": "directive",
+          "currentness": "current",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:0eceb4b70db3:30:36",
+          "responseObjectOwnerKey": "b9-08-save-today"
+        }
+      ],
+      "ledger": [
+        {
+          "candidateKey": "b9-08-send-east",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:5:7",
+          "status": "accepted_local",
+          "objectCandidateId": "object:0eceb4b70db3:7:12",
+          "reasonCodes": [
+            "DETERMINISTIC_PROPOSITION_SYNTAX",
+            "MODEL_OBJECT_USED_ONLY_WITHIN_LOCAL_CLOSED_SET"
+          ]
+        },
+        {
+          "candidateKey": "b9-08-upload-west",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:19:21",
+          "status": "accepted_local",
+          "objectCandidateId": "object:0eceb4b70db3:21:26",
+          "reasonCodes": [
+            "DETERMINISTIC_PROPOSITION_SYNTAX",
+            "MODEL_OBJECT_USED_ONLY_WITHIN_LOCAL_CLOSED_SET"
+          ]
+        },
+        {
+          "candidateKey": "b9-08-save-today",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:28:30",
+          "status": "accepted_local",
+          "objectCandidateId": "object:0eceb4b70db3:30:36",
+          "reasonCodes": [
+            "DETERMINISTIC_PROPOSITION_SYNTAX",
+            "MODEL_OBJECT_USED_ONLY_WITHIN_LOCAL_CLOSED_SET"
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "candidateKey": "b9-08-send-east",
+          "id": "task:action:local-action-candidate-policy-1.2.0:0eceb4b70db3:5:7",
+          "originCandidateId": "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:5:7",
+          "occurrenceId": "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:5:7",
+          "action": "发送",
+          "actionSourceStart": 5,
+          "actionSourceEnd": 7,
+          "actionSourceSlice": "发送",
+          "object": "东组路线表",
+          "objectCandidateId": "object:0eceb4b70db3:7:12",
+          "objectSourceStart": 7,
+          "objectSourceEnd": 12,
+          "objectSourceSlice": "东组路线表",
+          "semantics": {
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "past",
+            "status": "cancelled",
+            "validity": "superseded",
+            "modality": "required"
+          },
+          "selected": false,
+          "needsConfirmation": true,
+          "conditionStatus": "none",
+          "conditionTruth": "none"
+        },
+        {
+          "candidateKey": "b9-08-upload-west",
+          "id": "task:action:local-action-candidate-policy-1.2.0:0eceb4b70db3:19:21",
+          "originCandidateId": "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:19:21",
+          "occurrenceId": "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:19:21",
+          "action": "上传",
+          "actionSourceStart": 19,
+          "actionSourceEnd": 21,
+          "actionSourceSlice": "上传",
+          "object": "西组值守表",
+          "objectCandidateId": "object:0eceb4b70db3:21:26",
+          "objectSourceStart": 21,
+          "objectSourceEnd": 26,
+          "objectSourceSlice": "西组值守表",
+          "semantics": {
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required"
+          },
+          "selected": false,
+          "needsConfirmation": true,
+          "conditionStatus": "none",
+          "conditionTruth": "none"
+        },
+        {
+          "candidateKey": "b9-08-save-today",
+          "id": "task:action:local-action-candidate-policy-1.2.0:0eceb4b70db3:28:30",
+          "originCandidateId": "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:28:30",
+          "occurrenceId": "action:local-action-candidate-policy-1.2.0:0eceb4b70db3:28:30",
+          "action": "保存",
+          "actionSourceStart": 28,
+          "actionSourceEnd": 30,
+          "actionSourceSlice": "保存",
+          "object": "今日门岗记录",
+          "objectCandidateId": "object:0eceb4b70db3:30:36",
+          "objectSourceStart": 30,
+          "objectSourceEnd": 36,
+          "objectSourceSlice": "今日门岗记录",
+          "semantics": {
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required"
+          },
+          "selected": true,
+          "needsConfirmation": false,
+          "conditionStatus": "none",
+          "conditionTruth": "none"
+        }
+      ],
+      "requiresAction": true,
+      "responseContractComplete": true,
+      "semanticCoverageComplete": true,
+      "issueCodes": [],
+      "materializerIssueCodes": [],
+      "runnerIssueCodes": [],
+      "revisionRelations": [
+        {
+          "kind": "amends",
+          "targetCandidateKey": "b9-08-send-east",
+          "replacementCandidateKeys": [
+            "b9-08-upload-west"
+          ],
+          "evidenceScopeTexts": [
+            "旧规则要求发送东组路线表。",
+            "该规则调整为上传西组值守表。"
+          ],
+          "resolution": "adjacent_unique_referent",
+          "referentType": "规则"
+        }
+      ],
+      "unresolvedRevisionScopeTexts": [],
+      "suppressedRevisionScopeTexts": [],
+      "unresolvedActionScopeTexts": [],
+      "unsafeDefaultSelections": []
+    },
+    {
+      "caseId": "rco-task-b9-09",
+      "sourceText": "请抄录会场温度。",
+      "sourceFingerprint": "sha256:acbdfbfa6e6f0fc8b1832b6faef79e2215dea5f4255f778f7d6701b9997ebcbd",
+      "candidatePolicyVersion": "local-action-candidate-policy-1.2.0",
+      "candidates": [],
+      "ledger": [],
+      "tasks": [],
+      "requiresAction": null,
+      "responseContractComplete": true,
+      "semanticCoverageComplete": false,
+      "issueCodes": [],
+      "materializerIssueCodes": [],
+      "runnerIssueCodes": [],
+      "revisionRelations": [],
+      "unresolvedRevisionScopeTexts": [],
+      "suppressedRevisionScopeTexts": [],
+      "unresolvedActionScopeTexts": [
+        "请抄录会场温度。"
+      ],
+      "unsafeDefaultSelections": []
+    },
+    {
+      "caseId": "rco-task-b9-10",
+      "sourceText": "资料标题是“上传调试包”。请检查消防门编号。",
+      "sourceFingerprint": "sha256:84e1a5baaa9e1062f7ade6e021f9b684acdbd22f17773871608d9170a6452159",
+      "candidatePolicyVersion": "local-action-candidate-policy-1.2.0",
+      "candidates": [
+        {
+          "key": "b9-10-upload-decoy",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:84e1a5baaa9e:6:8",
+          "action": "上传",
+          "occurrence": 1,
+          "actionSourceStart": 6,
+          "actionSourceEnd": 8,
+          "actionSourceSlice": "上传",
+          "objectCandidates": [
+            {
+              "id": "object:84e1a5baaa9e:8:11",
+              "surface": "调试包",
+              "sourceStart": 8,
+              "sourceEnd": 11,
+              "sourceSlice": "调试包"
+            }
+          ],
+          "defaultObjectCandidateId": "object:84e1a5baaa9e:8:11",
+          "localDisposition": "needs_model",
+          "clauseRole": "unclassified",
+          "currentness": "unknown",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "mention_only",
+          "responseObjectCandidateId": null,
+          "responseObjectOwnerKey": null
+        },
+        {
+          "key": "b9-10-review-door",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:84e1a5baaa9e:14:16",
+          "action": "检查",
+          "occurrence": 1,
+          "actionSourceStart": 14,
+          "actionSourceEnd": 16,
+          "actionSourceSlice": "检查",
+          "objectCandidates": [
+            {
+              "id": "object:84e1a5baaa9e:16:21",
+              "surface": "消防门编号",
+              "sourceStart": 16,
+              "sourceEnd": 21,
+              "sourceSlice": "消防门编号"
+            }
+          ],
+          "defaultObjectCandidateId": "object:84e1a5baaa9e:16:21",
+          "localDisposition": "local_proposition",
+          "clauseRole": "directive",
+          "currentness": "current",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:84e1a5baaa9e:16:21",
+          "responseObjectOwnerKey": "b9-10-review-door"
+        }
+      ],
+      "ledger": [
+        {
+          "candidateKey": "b9-10-upload-decoy",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:84e1a5baaa9e:6:8",
+          "status": "ignored_model",
+          "objectCandidateId": null,
+          "reasonCodes": [
+            "NO_DETERMINISTIC_PROPOSITION_OR_NON_TASK_MARKER",
+            "MODEL_CLASSIFIED_MENTION_ONLY"
+          ]
+        },
+        {
+          "candidateKey": "b9-10-review-door",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:84e1a5baaa9e:14:16",
+          "status": "accepted_local",
+          "objectCandidateId": "object:84e1a5baaa9e:16:21",
+          "reasonCodes": [
+            "DETERMINISTIC_PROPOSITION_SYNTAX",
+            "MODEL_OBJECT_USED_ONLY_WITHIN_LOCAL_CLOSED_SET"
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "candidateKey": "b9-10-review-door",
+          "id": "task:action:local-action-candidate-policy-1.2.0:84e1a5baaa9e:14:16",
+          "originCandidateId": "action:local-action-candidate-policy-1.2.0:84e1a5baaa9e:14:16",
+          "occurrenceId": "action:local-action-candidate-policy-1.2.0:84e1a5baaa9e:14:16",
+          "action": "检查",
+          "actionSourceStart": 14,
+          "actionSourceEnd": 16,
+          "actionSourceSlice": "检查",
+          "object": "消防门编号",
+          "objectCandidateId": "object:84e1a5baaa9e:16:21",
+          "objectSourceStart": 16,
+          "objectSourceEnd": 21,
+          "objectSourceSlice": "消防门编号",
+          "semantics": {
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required"
+          },
+          "selected": true,
+          "needsConfirmation": false,
+          "conditionStatus": "none",
+          "conditionTruth": "none"
+        }
+      ],
+      "requiresAction": true,
+      "responseContractComplete": true,
+      "semanticCoverageComplete": true,
+      "issueCodes": [],
+      "materializerIssueCodes": [],
+      "runnerIssueCodes": [],
+      "revisionRelations": [],
+      "unresolvedRevisionScopeTexts": [],
+      "suppressedRevisionScopeTexts": [],
+      "unresolvedActionScopeTexts": [],
+      "unsafeDefaultSelections": []
+    },
+    {
+      "caseId": "rco-task-b9-11",
+      "sourceText": "请保存已经检查的晚班记录。",
+      "sourceFingerprint": "sha256:0be8b1e3e07090b05d3b4ccdd87aef3d92e74abcdce4579979019205ff7ddc54",
+      "candidatePolicyVersion": "local-action-candidate-policy-1.2.0",
+      "candidates": [
+        {
+          "key": "b9-11-save",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:0be8b1e3e070:1:3",
+          "action": "保存",
+          "occurrence": 1,
+          "actionSourceStart": 1,
+          "actionSourceEnd": 3,
+          "actionSourceSlice": "保存",
+          "objectCandidates": [
+            {
+              "id": "object:0be8b1e3e070:3:12",
+              "surface": "已经检查的晚班记录",
+              "sourceStart": 3,
+              "sourceEnd": 12,
+              "sourceSlice": "已经检查的晚班记录"
+            }
+          ],
+          "defaultObjectCandidateId": "object:0be8b1e3e070:3:12",
+          "localDisposition": "local_proposition",
+          "clauseRole": "directive",
+          "currentness": "current",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:0be8b1e3e070:3:12",
+          "responseObjectOwnerKey": "b9-11-save"
+        },
+        {
+          "key": "b9-11-review-contained",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:0be8b1e3e070:5:7",
+          "action": "检查",
+          "occurrence": 1,
+          "actionSourceStart": 5,
+          "actionSourceEnd": 7,
+          "actionSourceSlice": "检查",
+          "objectCandidates": [
+            {
+              "id": "object:0be8b1e3e070:7:12",
+              "surface": "的晚班记录",
+              "sourceStart": 7,
+              "sourceEnd": 12,
+              "sourceSlice": "的晚班记录"
+            }
+          ],
+          "defaultObjectCandidateId": "object:0be8b1e3e070:7:12",
+          "localDisposition": "local_non_task",
+          "clauseRole": "directive",
+          "currentness": "completed",
+          "conditionStatus": "none",
+          "conditionTruth": "none",
+          "responseVerdict": "mention_only",
+          "responseObjectCandidateId": null,
+          "responseObjectOwnerKey": null
+        }
+      ],
+      "ledger": [
+        {
+          "candidateKey": "b9-11-save",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:0be8b1e3e070:1:3",
+          "status": "accepted_local",
+          "objectCandidateId": "object:0be8b1e3e070:3:12",
+          "reasonCodes": [
+            "DETERMINISTIC_PROPOSITION_SYNTAX",
+            "MODEL_OBJECT_USED_ONLY_WITHIN_LOCAL_CLOSED_SET"
+          ]
+        },
+        {
+          "candidateKey": "b9-11-review-contained",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:0be8b1e3e070:5:7",
+          "status": "ignored_local",
+          "objectCandidateId": null,
+          "reasonCodes": [
+            "ACTION_SURFACE_EMBEDDED_IN_OBJECT"
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "candidateKey": "b9-11-save",
+          "id": "task:action:local-action-candidate-policy-1.2.0:0be8b1e3e070:1:3",
+          "originCandidateId": "action:local-action-candidate-policy-1.2.0:0be8b1e3e070:1:3",
+          "occurrenceId": "action:local-action-candidate-policy-1.2.0:0be8b1e3e070:1:3",
+          "action": "保存",
+          "actionSourceStart": 1,
+          "actionSourceEnd": 3,
+          "actionSourceSlice": "保存",
+          "object": "已经检查的晚班记录",
+          "objectCandidateId": "object:0be8b1e3e070:3:12",
+          "objectSourceStart": 3,
+          "objectSourceEnd": 12,
+          "objectSourceSlice": "已经检查的晚班记录",
+          "semantics": {
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required"
+          },
+          "selected": true,
+          "needsConfirmation": false,
+          "conditionStatus": "none",
+          "conditionTruth": "none"
+        }
+      ],
+      "requiresAction": true,
+      "responseContractComplete": true,
+      "semanticCoverageComplete": true,
+      "issueCodes": [],
+      "materializerIssueCodes": [],
+      "runnerIssueCodes": [],
+      "revisionRelations": [],
+      "unresolvedRevisionScopeTexts": [],
+      "suppressedRevisionScopeTexts": [],
+      "unresolvedActionScopeTexts": [],
+      "unsafeDefaultSelections": []
+    },
+    {
+      "caseId": "rco-task-b9-12",
+      "sourceText": "若门卡颜色异常，请联系服务席。页面按钮名为“返回”。当前门卡颜色异常。",
+      "sourceFingerprint": "sha256:9df9155bcbddf92707db05b88cb30ccb8fe0947886f3865a36f6cedf2419925c",
+      "candidatePolicyVersion": "local-action-candidate-policy-1.2.0",
+      "candidates": [
+        {
+          "key": "b9-12-contact",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:9df9155bcbdd:9:11",
+          "action": "联系",
+          "occurrence": 1,
+          "actionSourceStart": 9,
+          "actionSourceEnd": 11,
+          "actionSourceSlice": "联系",
+          "objectCandidates": [
+            {
+              "id": "object:9df9155bcbdd:11:14",
+              "surface": "服务席",
+              "sourceStart": 11,
+              "sourceEnd": 14,
+              "sourceSlice": "服务席"
+            }
+          ],
+          "defaultObjectCandidateId": "object:9df9155bcbdd:11:14",
+          "localDisposition": "local_proposition",
+          "clauseRole": "directive",
+          "currentness": "current",
+          "conditionStatus": "no_match",
+          "conditionTruth": "unknown",
+          "responseVerdict": "proposition",
+          "responseObjectCandidateId": "object:9df9155bcbdd:11:14",
+          "responseObjectOwnerKey": "b9-12-contact"
+        }
+      ],
+      "ledger": [
+        {
+          "candidateKey": "b9-12-contact",
+          "candidateId": "action:local-action-candidate-policy-1.2.0:9df9155bcbdd:9:11",
+          "status": "accepted_local",
+          "objectCandidateId": "object:9df9155bcbdd:11:14",
+          "reasonCodes": [
+            "DETERMINISTIC_PROPOSITION_SYNTAX",
+            "MODEL_OBJECT_USED_ONLY_WITHIN_LOCAL_CLOSED_SET"
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "candidateKey": "b9-12-contact",
+          "id": "task:action:local-action-candidate-policy-1.2.0:9df9155bcbdd:9:11",
+          "originCandidateId": "action:local-action-candidate-policy-1.2.0:9df9155bcbdd:9:11",
+          "occurrenceId": "action:local-action-candidate-policy-1.2.0:9df9155bcbdd:9:11",
+          "action": "联系",
+          "actionSourceStart": 9,
+          "actionSourceEnd": 11,
+          "actionSourceSlice": "联系",
+          "object": "服务席",
+          "objectCandidateId": "object:9df9155bcbdd:11:14",
+          "objectSourceStart": 11,
+          "objectSourceEnd": 14,
+          "objectSourceSlice": "服务席",
+          "semantics": {
+            "actor": "addressee",
+            "speechAct": "hypothetical",
+            "polarity": "uncertain",
+            "tense": "future",
+            "status": "unknown",
+            "validity": "uncertain",
+            "modality": "required"
+          },
+          "selected": false,
+          "needsConfirmation": true,
+          "conditionStatus": "no_match",
+          "conditionTruth": "unknown"
+        }
+      ],
+      "requiresAction": null,
+      "responseContractComplete": true,
+      "semanticCoverageComplete": true,
+      "issueCodes": [],
+      "materializerIssueCodes": [],
+      "runnerIssueCodes": [],
+      "revisionRelations": [],
+      "unresolvedRevisionScopeTexts": [],
+      "suppressedRevisionScopeTexts": [],
+      "unresolvedActionScopeTexts": [],
+      "unsafeDefaultSelections": []
+    }
+  ]
+}

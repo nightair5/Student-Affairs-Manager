@@ -1,0 +1,130 @@
+{
+  "version": "source-information-preview-1.0.0",
+  "role": "ENGINEERING_REPLAY",
+  "fixedDenominatorPerArm": 4,
+  "originalFrozenAndPostReportsUnchanged": true,
+  "modelOriginal": {
+    "Candidate19": {
+      "correct": 0,
+      "incorrect": 0,
+      "unknown": 4
+    },
+    "SingleAuthority": {
+      "provisionallyCorrect": 1,
+      "incorrect": 0,
+      "unknown": 3
+    }
+  },
+  "currentDisplay": {
+    "Candidate19": {
+      "correct": 0,
+      "incorrect": 0,
+      "unknown": 4
+    },
+    "SingleAuthority": {
+      "provisionallyCorrect": 1,
+      "incorrect": 0,
+      "unknown": 3
+    }
+  },
+  "winner": "EVIDENCE_INCOMPLETE_NO_WINNER",
+  "diagnostics": [
+    {
+      "ordinal": 1,
+      "candidate": "Candidate19",
+      "responseSha256": "fa34c6b1824a0d2af89565f2d880cba2014a311389642d739ec8d6315c2a7dc7",
+      "role": "POST_COMPARISON_PROGRAM_SAME_RAW_NOT_NEW_MODEL",
+      "modelOriginalChanged": false,
+      "firstInformation": {
+        "version": "source-information-preview-1.0.0",
+        "sourceId": "authority-development-SA-01",
+        "sourceVersionId": "authority-development-SA-01-v1",
+        "inferredFacts": 0,
+        "items": [
+          {
+            "text": "完成学习后提供学习证明。",
+            "evidenceIds": [
+              "d26-scope-0005-f0de4d3342d3c10ac0d8fc30a83c9d81ed8beb15ac8856a132bb7ae633364f43"
+            ]
+          },
+          {
+            "text": "本消息仅告知活动，",
+            "evidenceIds": [
+              "d26-scope-0006-f6593b457ab3a7333f2b83f35a1c3f2db74278edcc8e166bd13c0c8f9e9509af"
+            ]
+          },
+          {
+            "text": "无需报名。",
+            "evidenceIds": [
+              "d26-scope-0007-56a86b8259769fa630c2a3901c9411fbc2761d2c5f28245de074cf1afd57d46e"
+            ]
+          }
+        ],
+        "suppressed": []
+      },
+      "eventDescription": [
+        "2026年12月3日13:30开展影像叙事工作坊，\n结束时间暂未公布。\n全程在线，\n安排作品讨论，"
+      ],
+      "counts": {
+        "tasks": 0,
+        "events": 1,
+        "timePoints": 2,
+        "materials": 0
+      },
+      "wholeOutcome": "UNKNOWN_EXISTING_INFORMATION_VISIBLE_ENTITY_RELATION_NOT_ADJUDICATED",
+      "newModelRequests": 0
+    },
+    {
+      "ordinal": 2,
+      "candidate": "SingleAuthority",
+      "responseSha256": "0fbe21fa409604a32f7d791c93a8622d5269b7fe63b92cb65370c81f2e6e2ed2",
+      "role": "POST_COMPARISON_PROGRAM_SAME_RAW_NOT_NEW_MODEL",
+      "modelOriginalChanged": false,
+      "firstInformation": {
+        "version": "source-information-preview-1.0.0",
+        "sourceId": "authority-development-SA-01",
+        "sourceVersionId": "authority-development-SA-01-v1",
+        "inferredFacts": 0,
+        "items": [
+          {
+            "text": "本消息仅告知活动，",
+            "evidenceIds": [
+              "d26-scope-0006-f6593b457ab3a7333f2b83f35a1c3f2db74278edcc8e166bd13c0c8f9e9509af"
+            ]
+          },
+          {
+            "text": "无需报名。",
+            "evidenceIds": [
+              "d26-scope-0007-56a86b8259769fa630c2a3901c9411fbc2761d2c5f28245de074cf1afd57d46e"
+            ]
+          }
+        ],
+        "suppressed": [
+          {
+            "text": "全程在线，",
+            "reason": "ENTITY_EVIDENCE_ALREADY_DISPLAYED"
+          },
+          {
+            "text": "安排作品讨论，",
+            "reason": "ENTITY_EVIDENCE_ALREADY_DISPLAYED"
+          },
+          {
+            "text": "完成学习后提供学习证明。",
+            "reason": "ENTITY_EVIDENCE_ALREADY_DISPLAYED"
+          }
+        ]
+      },
+      "eventDescription": [
+        "2026年12月3日13:30开展影像叙事工作坊，\n结束时间暂未公布。\n全程在线，\n安排作品讨论，\n完成学习后提供学习证明。"
+      ],
+      "counts": {
+        "tasks": 0,
+        "events": 1,
+        "timePoints": 2,
+        "materials": 0
+      },
+      "wholeOutcome": "PROVISIONALLY_CORRECT_EXISTING_NESTED_ATTRIBUTES",
+      "newModelRequests": 0
+    }
+  ]
+}

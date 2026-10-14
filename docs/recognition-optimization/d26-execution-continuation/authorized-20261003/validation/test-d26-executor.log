@@ -1,0 +1,22 @@
+✔ D26 no authorization or old D25 scope stops before any fake side effect (2.3057ms)
+✔ D26 identity, model, request, price, budget and extra calls drift block before reserve (1.2764ms)
+✔ D26 uncertain reserve halts the batch without retry (0.494ms)
+✔ D26 uncertain persist1 halts the batch without retry (0.2413ms)
+✔ D26 uncertain persist2 halts the batch without retry (0.2944ms)
+✔ D26 uncertain send halts the batch without retry (0.4207ms)
+✔ D26 uncertain raw halts the batch without retry (0.2874ms)
+✔ D26 uncertain persist3 halts the batch without retry (0.5787ms)
+✔ D26 uncertain settle halts the batch without retry (0.2949ms)
+✔ D26 uncertain persist4 halts the batch without retry (0.2802ms)
+✔ D26 definite HTTP/parse failure preserves first answer and settles a conservative budget upper (0.2649ms)
+✔ D26 raw, state and settlement must agree on HTTP, observed usage and budget upper (0.2301ms)
+✔ D26 pricing cannot silently reuse an expired old snapshot or a nonofficial source (0.1785ms)
+✔ D26 OS lock rejects concurrent entry and retains lock on uncertainty (4.7339ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 97.9022

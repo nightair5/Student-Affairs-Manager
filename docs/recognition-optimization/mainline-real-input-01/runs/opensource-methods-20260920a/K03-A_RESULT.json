@@ -1,0 +1,161 @@
+{
+  "version": "real-input-contrastive-result-1",
+  "unitId": "K03-A",
+  "sourceId": "OS03",
+  "arm": "A",
+  "armName": "candidate03-baseline",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "requestSha": "e8ee819ba98571b65f0cf46852b318ea4620fae2a04ebac289ab14b81c48b9d2",
+  "responseSha": "94662c13fb0f20f4f02bd75dfd282c6a7ff39d41faf530aeb4e52e8adee7ee6d",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "exampleVersion": null,
+  "scorerSha": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+  "referenceSha": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-write-equipment-instructions",
+        "propositionScopeIds": [
+          "scope-0001-d75a02b6dc27f411a7cb56bc24b0e0c376f9052aa0e2121b1ead2c78373aad9a",
+          "scope-0003-c66f426a6392ded2fe47e87f782b6a6b588995209d7e17d50edeee636011c289"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "prepare",
+        "action": {
+          "scopeId": "scope-0001-d75a02b6dc27f411a7cb56bc24b0e0c376f9052aa0e2121b1ead2c78373aad9a",
+          "surface": "编写"
+        },
+        "object": {
+          "scopeId": "scope-0001-d75a02b6dc27f411a7cb56bc24b0e0c376f9052aa0e2121b1ead2c78373aad9a",
+          "surface": "设备说明"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "编写设备说明",
+          "description": "编写设备说明。",
+          "completionCriteria": [],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-backup-last-semester-maintenance-records",
+        "propositionScopeIds": [
+          "scope-0002-319860cb538e2b0b0e126e0b13d63dff47b9ff43a26505ae400499939c548841",
+          "scope-0003-c66f426a6392ded2fe47e87f782b6a6b588995209d7e17d50edeee636011c289"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "save",
+        "action": {
+          "scopeId": "scope-0002-319860cb538e2b0b0e126e0b13d63dff47b9ff43a26505ae400499939c548841",
+          "surface": "备份"
+        },
+        "object": {
+          "scopeId": "scope-0002-319860cb538e2b0b0e126e0b13d63dff47b9ff43a26505ae400499939c548841",
+          "surface": "上一学期的维修记录"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "备份上一学期的维修记录",
+          "description": "备份上一学期的维修记录。",
+          "completionCriteria": [],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0003-c66f426a6392ded2fe47e87f782b6a6b588995209d7e17d50edeee636011c289"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "opensource-dev-OS03",
+    "sourceVersionId": "opensource-dev-OS03:1",
+    "sourceFingerprint": "sha256:64ca354ea5734eed3f075f08ebd2636afe509e261216de3d6dbbc1664d4e5ded"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 5188,
+  "parseError": null,
+  "totalAttempts": 295,
+  "usage": {
+    "input_tokens": 4226,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 907,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5133
+  },
+  "costUpperMicroCny": 15708,
+  "totalCostUpperMicroCny": 13740811,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化"
+}

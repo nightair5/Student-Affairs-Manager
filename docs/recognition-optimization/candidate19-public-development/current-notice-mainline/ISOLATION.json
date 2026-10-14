@@ -1,0 +1,51 @@
+{
+  "version": "current-notice-isolation-proof-1",
+  "manifest": {
+    "origin": "http://127.0.0.1:6851",
+    "database": "rco-mainline-01-02-i1-d27-plan-recorded-currentnoticefinal1005",
+    "build": "d2b0cc6800cc / source 97e42e786c60",
+    "role": "ENGINEERING_REPLAY",
+    "batch": "C19-PUBLIC-DEVELOPMENT-R1",
+    "batchLabel": "当前4来源：1份确定录制、1份发送状态不确定、2份停发；付费现场封存。另12份为历史回归，不混入当前分母；另2份公开摘录的手写合法契约，仅证明程序时间转换，非模型输出",
+    "knownSettledRecordings": 1,
+    "historicalControls": 12,
+    "anonymousFixtures": 2,
+    "plannedRequests": 4,
+    "batchComplete": false,
+    "files": [
+      {
+        "name": "browser.js",
+        "sha256": "e842a69b86b6d4e3ae7e5ff9fa41869698ac98e9ac519c18322f180db6e3b5b1"
+      },
+      {
+        "name": "browser.css",
+        "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+      }
+    ],
+    "recordingsSha256": "caa02bc611723c4d30341f2e837ef5558cfd135e0e478f34a3686e71c7dff4df",
+    "modelCallsByBrowser": 0
+  },
+  "blockedRoutes": [
+    {
+      "path": "/api/deepseek",
+      "status": 403,
+      "body": "C19_MODEL_AND_EXTERNAL_ROUTES_DISABLED"
+    },
+    {
+      "path": "/api/sync",
+      "status": 403,
+      "body": "C19_MODEL_AND_EXTERNAL_ROUTES_DISABLED"
+    },
+    {
+      "path": "/dispatch",
+      "status": 403,
+      "body": "C19_MODEL_AND_EXTERNAL_ROUTES_DISABLED"
+    }
+  ],
+  "uniqueCanonicalEntityIds": true,
+  "sourceCount": 5,
+  "sourceVersionsInWorkspace": true,
+  "oldPortsOrDatabasesAccessed": false,
+  "modelCalls": 0,
+  "ledgerWrites": 0
+}

@@ -1,0 +1,242 @@
+{
+  "version": "candidate13-d6-result-1",
+  "unitId": "D5R1-S09-A",
+  "sourceId": "C13-D5R1-S09",
+  "arm": "A",
+  "ordinal": 17,
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "requestSha256": "0fceaf92a47463369c64b16f6d4b567c59cc3901cbb4d7f878a7b82b89176765",
+  "responseSha256": "56e97e076431b90da9d2e7c45f918552fa66229a1501227528558d0d7bb8420f",
+  "transportStatus": "COMPLETED_HTTP_200",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "waitingMs": 5669,
+  "parseError": null,
+  "parseStage": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-no-cancel-reservation",
+        "propositionScopeIds": [
+          "scope-0004-cb64e3f9cdb37810080cd95e8596fb0b5e31eaf0b41eb21040b1ddd8a7b2ebe7"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "negative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "other",
+        "action": {
+          "scopeId": "scope-0004-cb64e3f9cdb37810080cd95e8596fb0b5e31eaf0b41eb21040b1ddd8a7b2ebe7",
+          "surface": "取消预约"
+        },
+        "object": {
+          "scopeId": "scope-0004-cb64e3f9cdb37810080cd95e8596fb0b5e31eaf0b41eb21040b1ddd8a7b2ebe7",
+          "surface": "预约"
+        },
+        "effect": "unknown",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "不取消预约",
+          "description": "无需取消预约。",
+          "completionCriteria": [],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-no-upload-explanation",
+        "propositionScopeIds": [
+          "scope-0005-f45cc3a27b9bcd42ef7dba08fe777dfb0f5c93615f5b20329b875eb78afd6b16"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "negative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "upload",
+        "action": {
+          "scopeId": "scope-0005-f45cc3a27b9bcd42ef7dba08fe777dfb0f5c93615f5b20329b875eb78afd6b16",
+          "surface": "上传"
+        },
+        "object": {
+          "scopeId": "scope-0005-f45cc3a27b9bcd42ef7dba08fe777dfb0f5c93615f5b20329b875eb78afd6b16",
+          "surface": "说明"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "不上传说明",
+          "description": "不要上传说明。",
+          "completionCriteria": [],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-no-email-admin",
+        "propositionScopeIds": [
+          "scope-0006-b6ff6885179c16d8cd5af9f69aa1e14735cc2841965a301c224f64f721aecc6f"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "negative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "send",
+        "action": {
+          "scopeId": "scope-0006-b6ff6885179c16d8cd5af9f69aa1e14735cc2841965a301c224f64f721aecc6f",
+          "surface": "发邮件"
+        },
+        "object": {
+          "scopeId": "scope-0006-b6ff6885179c16d8cd5af9f69aa1e14735cc2841965a301c224f64f721aecc6f",
+          "surface": "管理员"
+        },
+        "effect": "external_interaction",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "不给管理员发邮件",
+          "description": "也不必给管理员发邮件。",
+          "completionCriteria": [],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "tp-wednesday-evening",
+        "type": "event_start",
+        "rawText": "周三晚",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-7013504177b9fcd5745e786a7a1e028ff72669593aba0585d79097df3a302b42"
+        ],
+        "confidence": 0.9,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [
+      {
+        "tempId": "event-library-search-maintenance",
+        "title": "图书馆检索服务维护",
+        "description": "图书馆检索服务将在周三晚维护。",
+        "startTimePointTempId": "tp-wednesday-evening",
+        "endTimePointTempId": null,
+        "location": null,
+        "scopeIds": [
+          "scope-0002-7013504177b9fcd5745e786a7a1e028ff72669593aba0585d79097df3a302b42"
+        ],
+        "confidence": 0.9,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": []
+      }
+    ],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-1e14be6e2c1dd8b940d1b88c59c39598584885abdbc705f8266b04badc8d31e0",
+      "scope-0003-c1dbc20153dac98e3a71556238b7c695cdeb6f9943a1232657de47bda8d2eb97",
+      "scope-0007-c206b8691340aea8a9ffcde24913fd14c1c0d942e4728239e851db7ffdc782f6"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C13-D5R1-S09",
+    "sourceVersionId": "C13-D5R1-S09-v1",
+    "sourceFingerprint": "sha256:b6ab4070b47ff69e107132b449f97c07a1a2d6483538fe1f25df34fa6713b839"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4466,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 1470,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5936
+  },
+  "costUpperMicroUsd": 3104,
+  "providerBilledUsd": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0,
+  "verifierCalls": 0
+}

@@ -1,0 +1,11 @@
+file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/serve-mainline-real-input-01.mjs:9
+const check = (condition, code) => { if (!condition) throw Error('REAL_INPUT_LAUNCHER_' + code) }
+                                                           ^
+
+Error: REAL_INPUT_LAUNCHER_BROWSER_ANSWER_DEPENDENCY
+    at check (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/serve-mainline-real-input-01.mjs:9:60)
+    at createLocalApp (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/serve-mainline-real-input-01.mjs:49:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/serve-mainline-real-input-01.mjs:91:16
+
+Node.js v24.18.0

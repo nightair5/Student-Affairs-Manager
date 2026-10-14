@@ -1,0 +1,292 @@
+{
+  "type": "READ_ONLY_ENGINEERING_DIAGNOSTIC",
+  "origin": "ENGINEERING_REPLAY",
+  "status": "KNOWN_MEASUREMENT_CONTRACT_MISMATCH_NOT_FIXED",
+  "modulePath": "src/experiments/candidate14/measurement.ts",
+  "moduleSha256": "8ba67888d077b2dc7e1c857a1924c29108cfc8e5e776f66788a442a780c39f20",
+  "moduleVersion": "candidate14-product-metrics-2.4.0",
+  "judgmentProvenance": "Synthetic inputs authored for engineering counterexamples; not independent human labels.",
+  "modelCalls": 0,
+  "humanTrials": 0,
+  "persistentDatabaseWrites": 0,
+  "registration": {
+    "registrationId": "review-only",
+    "trialId": "offline-engineering",
+    "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "firstOutputSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "origin": "ENGINEERING_REPLAY",
+    "status": "REGISTERED",
+    "registeredAtMs": 0
+  },
+  "results": [
+    {
+      "id": "READING_COUNTED_AS_EDIT",
+      "expectation": "No edit occurred. Reading duration must not be labelled active editing.",
+      "judgment": {
+        "firstWholeCorrect": true,
+        "finalDispositionCorrect": true,
+        "disposition": "confirmed"
+      },
+      "events": [
+        {
+          "kind": "trial_started",
+          "atMs": 0,
+          "sequence": 1,
+          "eventId": "event-1",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "first_snapshot_frozen",
+          "atMs": 1,
+          "sequence": 2,
+          "eventId": "event-2",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "suggestion_interactive",
+          "atMs": 2,
+          "sequence": 3,
+          "eventId": "event-3",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "confirmation_requested",
+          "atMs": 10002,
+          "sequence": 4,
+          "eventId": "event-4",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "commit_succeeded",
+          "atMs": 10003,
+          "operationId": "save",
+          "sequence": 5,
+          "eventId": "event-5",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "readback_verified",
+          "atMs": 10004,
+          "operationId": "save",
+          "sequence": 6,
+          "eventId": "event-6",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        }
+      ],
+      "result": {
+        "status": "DETERMINATE",
+        "registryVerified": true,
+        "registrationId": "review-only",
+        "trialId": "offline-engineering",
+        "origin": "ENGINEERING_REPLAY",
+        "firstWholeCorrect": true,
+        "correctDisposition": true,
+        "lowModificationCorrectDisposition": true,
+        "substantiveEditCount": 0,
+        "activeEditMs": 10000,
+        "wallMs": 10004,
+        "systemWaitMs": 0
+      }
+    },
+    {
+      "id": "BATCH_SAVE_CORRECTION_NOT_COUNTED",
+      "expectation": "An observed time correction needs an explicit edit-to-save mapping; absent mapping must not silently mean zero corrections.",
+      "judgment": {
+        "firstWholeCorrect": false,
+        "finalDispositionCorrect": true,
+        "disposition": "confirmed"
+      },
+      "events": [
+        {
+          "kind": "trial_started",
+          "atMs": 0,
+          "sequence": 1,
+          "eventId": "event-1",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "first_snapshot_frozen",
+          "atMs": 1,
+          "sequence": 2,
+          "eventId": "event-2",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "suggestion_interactive",
+          "atMs": 2,
+          "sequence": 3,
+          "eventId": "event-3",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "edit_activity",
+          "atMs": 3,
+          "editCategory": "time",
+          "operationId": "field-edit",
+          "sequence": 4,
+          "eventId": "event-4",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "confirmation_requested",
+          "atMs": 8,
+          "sequence": 5,
+          "eventId": "event-5",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "commit_succeeded",
+          "atMs": 9,
+          "operationId": "batch-save",
+          "sequence": 6,
+          "eventId": "event-6",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "readback_verified",
+          "atMs": 10,
+          "operationId": "batch-save",
+          "sequence": 7,
+          "eventId": "event-7",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        }
+      ],
+      "result": {
+        "status": "DETERMINATE",
+        "registryVerified": true,
+        "registrationId": "review-only",
+        "trialId": "offline-engineering",
+        "origin": "ENGINEERING_REPLAY",
+        "firstWholeCorrect": false,
+        "correctDisposition": true,
+        "lowModificationCorrectDisposition": true,
+        "substantiveEditCount": 0,
+        "activeEditMs": 6,
+        "wallMs": 10,
+        "systemWaitMs": 0
+      }
+    },
+    {
+      "id": "TIMEOUT_READING_COUNTED_AS_EDIT",
+      "expectation": "Keep timeout and elapsed engagement, but do not label a no-edit timeout as active editing.",
+      "judgment": {
+        "firstWholeCorrect": false,
+        "finalDispositionCorrect": false,
+        "disposition": "timed_out"
+      },
+      "events": [
+        {
+          "kind": "trial_started",
+          "atMs": 0,
+          "sequence": 1,
+          "eventId": "event-1",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "first_snapshot_frozen",
+          "atMs": 1,
+          "sequence": 2,
+          "eventId": "event-2",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "suggestion_interactive",
+          "atMs": 2,
+          "sequence": 3,
+          "eventId": "event-3",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "timed_out",
+          "atMs": 12,
+          "sequence": 4,
+          "eventId": "event-4",
+          "registrationId": "review-only",
+          "trialId": "offline-engineering",
+          "sourceIdentitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "candidateIdentitySha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "snapshotSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        }
+      ],
+      "result": {
+        "status": "DETERMINATE",
+        "registryVerified": true,
+        "registrationId": "review-only",
+        "trialId": "offline-engineering",
+        "origin": "ENGINEERING_REPLAY",
+        "firstWholeCorrect": false,
+        "correctDisposition": false,
+        "lowModificationCorrectDisposition": false,
+        "substantiveEditCount": 0,
+        "activeEditMs": 10,
+        "wallMs": 12,
+        "systemWaitMs": 0
+      }
+    }
+  ]
+}

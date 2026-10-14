@@ -1,0 +1,127 @@
+{
+  "batch": "V5-OBLIGATION-AUTHORITY-DEVELOPMENT-R1",
+  "role": "AUTHORIZED_EXECUTION_STOPPED_UNCERTAIN_NOT_MODEL_QUALITY_RESULT",
+  "authorized": {
+    "count": 8,
+    "hardLimitUsd": 2.6,
+    "authorizationSource": "CURRENT_USER_MESSAGE",
+    "authorizationSha256": "142122135370b5bf30c08e0551a93e23a30b0e0f411d4a6842b63fdc5cad5104",
+    "userMessageSha256": "8f1a2c6bde6fac897c4854cace21a70d97f45339590e0c35eebd0a7ce5419495",
+    "committedHead": "72e4b580d4df051c0507ab8cb981d9c3df07069d",
+    "snapshotCommit": "73a8b9235520ddd598a03001ffc475218367c7bd",
+    "manifestSha256": "b2749c885ee466b187fe2a74537997f78a9ec2b3e494d02e4b6fd494379b1fea",
+    "identitiesSha256": "bf8c3ddfea61b6353f5d12d72021dd1042faeb4ef27b7b23b6b74df22dad594f",
+    "grantId": "obligation-c51934f2-0630-4880-8e89-3f94eaa7caa4",
+    "priceVerifiedAt": "2026-10-07T13:40:42.000Z"
+  },
+  "outcomes": {
+    "SETTLED": 0,
+    "UNCERTAIN": 1,
+    "NOT_SENT": 7,
+    "attemptedIdentityOrdinal": 1,
+    "actualUpstreamDelivery": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "modelRequestCount": "UNKNOWN; at most ordinal1 may have reached upstream",
+    "newUsableRecordings": 0
+  },
+  "ledger": {
+    "rows": 1026,
+    "sha256": "489da37a7b83c2d3d6c00d8f2ef949e6d3fae4f8e9e250e5bac7ca80a84ec278",
+    "tail": "9df85fd703dbbe31c8510ccdf60b00ba84d51215ab07e5b00f8d8fce179912d7",
+    "batchRows": 2,
+    "grant": 1,
+    "reserve": 1,
+    "settle": 0,
+    "legalAppends": 2,
+    "baseline1024PrefixUnchanged": true
+  },
+  "cost": {
+    "hardLimitMicroUsd": 2600000,
+    "reserveUpperMicroUsd": 324404,
+    "internalSettlement": "NONE; 0 settles",
+    "observedUsage": "NOT_OBSERVABLE_NO_RAW",
+    "providerActualUsd": "NOT_OBSERVABLE",
+    "reservedUpperIsNotActualCharge": true
+  },
+  "stop": {
+    "code": "D26_SAFETY_STOP_UNCERTAIN",
+    "failedPhase": "TRANSPORT_ENTER",
+    "phaseCode": "OTHER_FAILURE",
+    "observedAt": "2026-10-07T13:43:16.474Z",
+    "responseHeadersObserved": false,
+    "rawFiles": 0,
+    "HALT": true,
+    "lock": true,
+    "automaticRetry": false,
+    "attemptsAfterStop": 0
+  },
+  "recovery": {
+    "attempted": [
+      "Read-only host, exact identity/phase/receipt/state/HALT/lock and full ledger prefix audit",
+      "One no-credential CONNECT/TLS current route diagnostic: PASS, 0 POST/model requests; does not prove original request delivery"
+    ],
+    "notPerformed": [
+      "prepare again",
+      "dispatch again",
+      "lock/HALT deletion",
+      "settle reconstruction",
+      "retry/replacement identity",
+      "old sealed-batch recovery"
+    ],
+    "minimumMissing": "Request-specific supplier response/usage/delivery evidence or reliable not-delivered evidence for ordinal1 identity5226a924b92676866252e461b02e2c915a9dea8fdedca3ad77e689989bef62e1/request206bfbcf29ba3f4938b809ee83ea70f249c13132364816c8567f6c4fcd15313f; generic balance/current TLS/no raw insufficient. Reconciliation/recovery needs an explicit concrete decision and scope, not more generic budget."
+  },
+  "quality": {
+    "selection": "EVIDENCE_INCOMPLETE_NO_WINNER",
+    "sameBatchFirstRate": "UNKNOWN",
+    "V5": {
+      "modelFirstFacts": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      },
+      "displayBeforeHuman": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      },
+      "humanFinal": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      }
+    },
+    "V6": {
+      "modelFirstFacts": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      },
+      "displayBeforeHuman": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      },
+      "humanFinal": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      }
+    },
+    "newRawBrowser": "NOT_RUN_NO_RECORDING",
+    "oldRawRegression": "Unchanged 0 correct/3 wrong/1 unknown over4; not new-model improvement"
+  },
+  "localProduct": {
+    "engineeringCommit": "73a8b9235520ddd598a03001ffc475218367c7bd",
+    "freezeCommit": "72e4b580d4df051c0507ab8cb981d9c3df07069d",
+    "URL": "http://127.0.0.1:6886/",
+    "mode": "FIXED_OLD_RECORDING_AND_ENGINEERING_FIXTURES_NOT_NEW_RAW_NOT_REALTIME_AI",
+    "readback": "4Task/4Event/12Time/1Material/0Project; includes3 personal planned_start; original deadline intact",
+    "browserProof": "../../BROWSER_EVIDENCE.md"
+  }
+}

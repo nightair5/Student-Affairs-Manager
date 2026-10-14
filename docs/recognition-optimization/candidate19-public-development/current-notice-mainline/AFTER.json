@@ -1,0 +1,786 @@
+{
+  "version": "current-notice-engineering-diagnostic-1",
+  "modelCalls": 0,
+  "cases": [
+    {
+      "id": "heading-clock",
+      "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+      "first": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "createdAt": "2026-09-29T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "活动信息",
+          "sourceType": "text",
+          "notificationType": "event_notice",
+          "summary": "0项任务，1项事件。请核对后确认。",
+          "requiresAction": false,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "P0",
+            "type": "event_start",
+            "rawText": "12:30",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-10-12T12:30",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-d1281342abfa2e07a2858550d190769709de035b48e1d8ca83bb1cc9bede3bc4",
+              "d26-scope-0004-bf39a3f7baba1b733f74352a4a9cba14045db6dab78101258df24d5de0a46237"
+            ]
+          },
+          {
+            "tempId": "P1",
+            "type": "event_end",
+            "rawText": "14:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-10-12T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-d1281342abfa2e07a2858550d190769709de035b48e1d8ca83bb1cc9bede3bc4",
+              "d26-scope-0004-bf39a3f7baba1b733f74352a4a9cba14045db6dab78101258df24d5de0a46237"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "活动信息",
+            "description": "活动信息\n时间\n2026年10月12日（周一）\n12:30-14:00\n地点\n海韵园办公楼A栋302室",
+            "startTimePointTempId": "P0",
+            "endTimePointTempId": "P1",
+            "location": "海韵园办公楼A栋302室",
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0001-36c79b365efb9c6c6f86cf3eb3ed66eb4742314bc08e1c9d1fd7f6f062fa0e80",
+              "d26-scope-0002-5b8f67dc585399db7ae6c29d598a4841d7c6e34ded35cb53f39c502fc7a27928",
+              "d26-scope-0003-d1281342abfa2e07a2858550d190769709de035b48e1d8ca83bb1cc9bede3bc4",
+              "d26-scope-0004-bf39a3f7baba1b733f74352a4a9cba14045db6dab78101258df24d5de0a46237",
+              "d26-scope-0005-3b1473a17d2243c51a7f224e1c1c44ab5b3d2a76236c7d9039d608b53b7b84b7",
+              "d26-scope-0006-50537c95e92a5f719ea62d51489bcd4f11c12736a7086d8f9030bbb30ad65b32"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-36c79b365efb9c6c6f86cf3eb3ed66eb4742314bc08e1c9d1fd7f6f062fa0e80",
+            "sourceId": "heading-clock",
+            "quote": "活动信息",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-5b8f67dc585399db7ae6c29d598a4841d7c6e34ded35cb53f39c502fc7a27928",
+            "sourceId": "heading-clock",
+            "quote": "时间",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-d1281342abfa2e07a2858550d190769709de035b48e1d8ca83bb1cc9bede3bc4",
+            "sourceId": "heading-clock",
+            "quote": "2026年10月12日（周一）",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-bf39a3f7baba1b733f74352a4a9cba14045db6dab78101258df24d5de0a46237",
+            "sourceId": "heading-clock",
+            "quote": "12:30-14:00",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-3b1473a17d2243c51a7f224e1c1c44ab5b3d2a76236c7d9039d608b53b7b84b7",
+            "sourceId": "heading-clock",
+            "quote": "地点",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-50537c95e92a5f719ea62d51489bcd4f11c12736a7086d8f9030bbb30ad65b32",
+            "sourceId": "heading-clock",
+            "quote": "海韵园办公楼A栋302室",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "conversion": {
+        "version": "source-support-accounting-projection-1.1.0",
+        "role": "POST_COMPARISON_PROGRAM_CONVERSION",
+        "inferredFacts": 0,
+        "originalWire": {
+          "schemaVersion": "explicit-source-contract-4.0.0",
+          "tasks": [],
+          "materials": [],
+          "revisions": [],
+          "conflicts": [],
+          "prerequisiteStates": [],
+          "events": [
+            {
+              "tempId": "E1",
+              "title": "活动信息",
+              "description": "",
+              "location": "海韵园办公楼A栋302室",
+              "startTimePointTempId": "P0",
+              "endTimePointTempId": "P1",
+              "relatedTaskTempIds": [],
+              "scopeIds": [
+                "scope-0001-36c79b365efb9c6c6f86cf3eb3ed66eb4742314bc08e1c9d1fd7f6f062fa0e80",
+                "scope-0002-5b8f67dc585399db7ae6c29d598a4841d7c6e34ded35cb53f39c502fc7a27928",
+                "scope-0003-d1281342abfa2e07a2858550d190769709de035b48e1d8ca83bb1cc9bede3bc4",
+                "scope-0004-bf39a3f7baba1b733f74352a4a9cba14045db6dab78101258df24d5de0a46237",
+                "scope-0005-3b1473a17d2243c51a7f224e1c1c44ab5b3d2a76236c7d9039d608b53b7b84b7",
+                "scope-0006-50537c95e92a5f719ea62d51489bcd4f11c12736a7086d8f9030bbb30ad65b32"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit"
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "P0",
+              "type": "event_start",
+              "rawText": "12:30",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "scopeIds": [
+                "scope-0003-d1281342abfa2e07a2858550d190769709de035b48e1d8ca83bb1cc9bede3bc4",
+                "scope-0004-bf39a3f7baba1b733f74352a4a9cba14045db6dab78101258df24d5de0a46237"
+              ],
+              "confidence": 1
+            },
+            {
+              "tempId": "P1",
+              "type": "event_end",
+              "rawText": "14:00",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "scopeIds": [
+                "scope-0003-d1281342abfa2e07a2858550d190769709de035b48e1d8ca83bb1cc9bede3bc4",
+                "scope-0004-bf39a3f7baba1b733f74352a4a9cba14045db6dab78101258df24d5de0a46237"
+              ],
+              "confidence": 1
+            }
+          ],
+          "scopeAccounting": [
+            {
+              "scopeId": "scope-0001-36c79b365efb9c6c6f86cf3eb3ed66eb4742314bc08e1c9d1fd7f6f062fa0e80",
+              "kind": "event",
+              "primaryEntityIds": [
+                "E1"
+              ],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0002-5b8f67dc585399db7ae6c29d598a4841d7c6e34ded35cb53f39c502fc7a27928",
+              "kind": "event",
+              "primaryEntityIds": [
+                "E1"
+              ],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0003-d1281342abfa2e07a2858550d190769709de035b48e1d8ca83bb1cc9bede3bc4",
+              "kind": "event",
+              "primaryEntityIds": [
+                "E1"
+              ],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0004-bf39a3f7baba1b733f74352a4a9cba14045db6dab78101258df24d5de0a46237",
+              "kind": "event",
+              "primaryEntityIds": [
+                "E1"
+              ],
+              "secondaryEntityIds": [
+                "P0",
+                "P1"
+              ]
+            },
+            {
+              "scopeId": "scope-0005-3b1473a17d2243c51a7f224e1c1c44ab5b3d2a76236c7d9039d608b53b7b84b7",
+              "kind": "event",
+              "primaryEntityIds": [
+                "E1"
+              ],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0006-50537c95e92a5f719ea62d51489bcd4f11c12736a7086d8f9030bbb30ad65b32",
+              "kind": "event",
+              "primaryEntityIds": [
+                "E1"
+              ],
+              "secondaryEntityIds": []
+            }
+          ]
+        },
+        "changes": [],
+        "projectedAccounting": [
+          {
+            "scopeId": "scope-0001-36c79b365efb9c6c6f86cf3eb3ed66eb4742314bc08e1c9d1fd7f6f062fa0e80",
+            "kind": "event",
+            "primaryEntityIds": [
+              "E1"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0002-5b8f67dc585399db7ae6c29d598a4841d7c6e34ded35cb53f39c502fc7a27928",
+            "kind": "event",
+            "primaryEntityIds": [
+              "E1"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-d1281342abfa2e07a2858550d190769709de035b48e1d8ca83bb1cc9bede3bc4",
+            "kind": "event",
+            "primaryEntityIds": [
+              "E1"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0004-bf39a3f7baba1b733f74352a4a9cba14045db6dab78101258df24d5de0a46237",
+            "kind": "event",
+            "primaryEntityIds": [
+              "E1"
+            ],
+            "secondaryEntityIds": [
+              "P0",
+              "P1"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-3b1473a17d2243c51a7f224e1c1c44ab5b3d2a76236c7d9039d608b53b7b84b7",
+            "kind": "event",
+            "primaryEntityIds": [
+              "E1"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0006-50537c95e92a5f719ea62d51489bcd4f11c12736a7086d8f9030bbb30ad65b32",
+            "kind": "event",
+            "primaryEntityIds": [
+              "E1"
+            ],
+            "secondaryEntityIds": []
+          }
+        ]
+      },
+      "timeAudit": [
+        {
+          "entityId": "P0",
+          "before": {
+            "normalizedValue": "2026-10-12T12:30",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false
+          },
+          "after": {
+            "normalizedValue": "2026-10-12T12:30",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false
+          },
+          "interpretation": {
+            "version": "source-time-semantics-2.1.0",
+            "point": {
+              "rawText": "12:30",
+              "type": "event_start",
+              "normalizedValue": "2026-10-12T12:30",
+              "rangeEndNormalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceSpan": {
+                "start": 0,
+                "end": 5
+              },
+              "dateKind": "inherited",
+              "timeKind": "clock",
+              "correctionApplied": false,
+              "issues": []
+            },
+            "knownDate": "2026-10-12",
+            "dayPeriod": null,
+            "certainty": "stated",
+            "sourceContext": "2026年10月12日（周一）\n12:30-14:00",
+            "conversions": []
+          }
+        },
+        {
+          "entityId": "P1",
+          "before": {
+            "normalizedValue": "2026-10-12T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false
+          },
+          "after": {
+            "normalizedValue": "2026-10-12T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false
+          },
+          "interpretation": {
+            "version": "source-time-semantics-2.1.0",
+            "point": {
+              "rawText": "14:00",
+              "type": "event_end",
+              "normalizedValue": "2026-10-12T14:00",
+              "rangeEndNormalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceSpan": {
+                "start": 0,
+                "end": 5
+              },
+              "dateKind": "inherited",
+              "timeKind": "clock",
+              "correctionApplied": false,
+              "issues": []
+            },
+            "knownDate": "2026-10-12",
+            "dayPeriod": null,
+            "certainty": "stated",
+            "sourceContext": "2026年10月12日（周一）\n12:30-14:00",
+            "conversions": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "midnight-deadline",
+      "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+      "first": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "createdAt": "2026-05-20T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "进行网上申报",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，0项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "进行网上申报",
+            "description": "报名截止日期：\n2026年6月30日24:00\n申请人请于相应截止日期前登录报名网站:\nhttps:\n//centralscience.xmu.edu.cn/进行网上申报。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [
+              "P0"
+            ],
+            "tempId": "T1",
+            "actionVerb": "进行",
+            "actionObject": "网上申报",
+            "evidenceIds": [
+              "d26-scope-0001-1c876d9461f2bc9e33ea1829982323abbc7315eac08ead15937d54cb338197f3",
+              "d26-scope-0002-f4ef724c09185a2f734576fa7900e103a5c1704d69ef603adeab9615dce2e993",
+              "d26-scope-0003-c51b9ca07fea0097c88ccaa4f2acbfd71ac7224adf3d67cb4b423d595f613dda",
+              "d26-scope-0004-c09d715d718cc37162472ae7928e05b939e28b4a602b6fce4a696ad4b5f93cb2",
+              "d26-scope-0005-08a9af36e21d45536d972f90854fb6654e4380ddd3b9fd2f2813c983ddb1d7f0"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "P0",
+            "type": "registration_deadline",
+            "rawText": "2026年6月30日24:00",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-07-01T00:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0002-f4ef724c09185a2f734576fa7900e103a5c1704d69ef603adeab9615dce2e993"
+            ]
+          }
+        ],
+        "events": [],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-1c876d9461f2bc9e33ea1829982323abbc7315eac08ead15937d54cb338197f3",
+            "sourceId": "midnight-deadline",
+            "quote": "报名截止日期：",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-f4ef724c09185a2f734576fa7900e103a5c1704d69ef603adeab9615dce2e993",
+            "sourceId": "midnight-deadline",
+            "quote": "2026年6月30日24:00",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-c51b9ca07fea0097c88ccaa4f2acbfd71ac7224adf3d67cb4b423d595f613dda",
+            "sourceId": "midnight-deadline",
+            "quote": "申请人请于相应截止日期前登录报名网站:",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-c09d715d718cc37162472ae7928e05b939e28b4a602b6fce4a696ad4b5f93cb2",
+            "sourceId": "midnight-deadline",
+            "quote": "https:",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-08a9af36e21d45536d972f90854fb6654e4380ddd3b9fd2f2813c983ddb1d7f0",
+            "sourceId": "midnight-deadline",
+            "quote": "//centralscience.xmu.edu.cn/进行网上申报。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "conversion": {
+        "version": "source-support-accounting-projection-1.1.0",
+        "role": "POST_COMPARISON_PROGRAM_CONVERSION",
+        "inferredFacts": 0,
+        "originalWire": {
+          "schemaVersion": "explicit-source-contract-4.0.0",
+          "tasks": [
+            {
+              "id": "T1",
+              "propositionScopeIds": [
+                "scope-0001-1c876d9461f2bc9e33ea1829982323abbc7315eac08ead15937d54cb338197f3",
+                "scope-0002-f4ef724c09185a2f734576fa7900e103a5c1704d69ef603adeab9615dce2e993",
+                "scope-0003-c51b9ca07fea0097c88ccaa4f2acbfd71ac7224adf3d67cb4b423d595f613dda",
+                "scope-0004-c09d715d718cc37162472ae7928e05b939e28b4a602b6fce4a696ad4b5f93cb2",
+                "scope-0005-08a9af36e21d45536d972f90854fb6654e4380ddd3b9fd2f2813c983ddb1d7f0"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "affirmative",
+                "tense": "future",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "register",
+              "action": {
+                "surface": "进行",
+                "scopeId": "scope-0005-08a9af36e21d45536d972f90854fb6654e4380ddd3b9fd2f2813c983ddb1d7f0"
+              },
+              "object": {
+                "surface": "网上申报",
+                "scopeId": "scope-0005-08a9af36e21d45536d972f90854fb6654e4380ddd3b9fd2f2813c983ddb1d7f0"
+              },
+              "effect": "external_transfer",
+              "detail": {
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "进行网上申报",
+                "description": "",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "confidence": 1,
+                "userConfirmationRequired": true
+              },
+              "condition": {
+                "value": "not_applicable",
+                "conditionScopeIds": [],
+                "factScopeIds": []
+              },
+              "coverage": {
+                "time": {
+                  "status": "present",
+                  "entityIds": [
+                    "P0"
+                  ],
+                  "scopeIds": [
+                    "scope-0002-f4ef724c09185a2f734576fa7900e103a5c1704d69ef603adeab9615dce2e993"
+                  ]
+                },
+                "material": {
+                  "status": "not_stated",
+                  "entityIds": [],
+                  "scopeIds": []
+                },
+                "event": {
+                  "status": "not_stated",
+                  "entityIds": [],
+                  "scopeIds": []
+                }
+              }
+            }
+          ],
+          "materials": [],
+          "revisions": [],
+          "conflicts": [],
+          "prerequisiteStates": [],
+          "events": [],
+          "timePoints": [
+            {
+              "tempId": "P0",
+              "type": "registration_deadline",
+              "rawText": "2026年6月30日24:00",
+              "relatedTaskTempIds": [
+                "T1"
+              ],
+              "relatedMaterialTempIds": [],
+              "scopeIds": [
+                "scope-0002-f4ef724c09185a2f734576fa7900e103a5c1704d69ef603adeab9615dce2e993"
+              ],
+              "confidence": 1
+            }
+          ],
+          "scopeAccounting": [
+            {
+              "scopeId": "scope-0001-1c876d9461f2bc9e33ea1829982323abbc7315eac08ead15937d54cb338197f3",
+              "kind": "action",
+              "primaryEntityIds": [
+                "T1"
+              ],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0002-f4ef724c09185a2f734576fa7900e103a5c1704d69ef603adeab9615dce2e993",
+              "kind": "action",
+              "primaryEntityIds": [
+                "T1"
+              ],
+              "secondaryEntityIds": [
+                "P0"
+              ]
+            },
+            {
+              "scopeId": "scope-0003-c51b9ca07fea0097c88ccaa4f2acbfd71ac7224adf3d67cb4b423d595f613dda",
+              "kind": "action",
+              "primaryEntityIds": [
+                "T1"
+              ],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0004-c09d715d718cc37162472ae7928e05b939e28b4a602b6fce4a696ad4b5f93cb2",
+              "kind": "action",
+              "primaryEntityIds": [
+                "T1"
+              ],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0005-08a9af36e21d45536d972f90854fb6654e4380ddd3b9fd2f2813c983ddb1d7f0",
+              "kind": "action",
+              "primaryEntityIds": [
+                "T1"
+              ],
+              "secondaryEntityIds": []
+            }
+          ]
+        },
+        "changes": [],
+        "projectedAccounting": [
+          {
+            "scopeId": "scope-0001-1c876d9461f2bc9e33ea1829982323abbc7315eac08ead15937d54cb338197f3",
+            "kind": "action",
+            "primaryEntityIds": [
+              "T1"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0002-f4ef724c09185a2f734576fa7900e103a5c1704d69ef603adeab9615dce2e993",
+            "kind": "action",
+            "primaryEntityIds": [
+              "T1"
+            ],
+            "secondaryEntityIds": [
+              "P0"
+            ]
+          },
+          {
+            "scopeId": "scope-0003-c51b9ca07fea0097c88ccaa4f2acbfd71ac7224adf3d67cb4b423d595f613dda",
+            "kind": "action",
+            "primaryEntityIds": [
+              "T1"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0004-c09d715d718cc37162472ae7928e05b939e28b4a602b6fce4a696ad4b5f93cb2",
+            "kind": "action",
+            "primaryEntityIds": [
+              "T1"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0005-08a9af36e21d45536d972f90854fb6654e4380ddd3b9fd2f2813c983ddb1d7f0",
+            "kind": "action",
+            "primaryEntityIds": [
+              "T1"
+            ],
+            "secondaryEntityIds": []
+          }
+        ]
+      },
+      "timeAudit": [
+        {
+          "entityId": "P0",
+          "before": {
+            "normalizedValue": "2026-07-01T00:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false
+          },
+          "after": {
+            "normalizedValue": "2026-07-01T00:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false
+          },
+          "interpretation": {
+            "version": "source-time-semantics-2.1.0",
+            "point": {
+              "rawText": "2026年6月30日24:00",
+              "type": "registration_deadline",
+              "normalizedValue": "2026-07-01T00:00",
+              "rangeEndNormalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceSpan": {
+                "start": 0,
+                "end": 15
+              },
+              "dateKind": "absolute",
+              "timeKind": "clock",
+              "correctionApplied": false,
+              "issues": []
+            },
+            "knownDate": "2026-07-01",
+            "dayPeriod": null,
+            "certainty": "stated",
+            "sourceContext": "2026年6月30日24:00",
+            "conversions": [
+              "END_OF_DAY_24_00"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

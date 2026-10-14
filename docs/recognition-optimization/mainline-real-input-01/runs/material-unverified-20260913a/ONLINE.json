@@ -1,0 +1,61 @@
+{
+  "kind": "HTTP_NOT_BROWSER_ACCEPTANCE",
+  "assets": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "sha256": "0c57b67f30c3e97dd1a95fbeec331b53790817806450776673256062e49439de",
+      "match": true
+    },
+    {
+      "path": "browser.js",
+      "status": 200,
+      "sha256": "6c3deb989bf02eb187f40529e148463c0ed4aefe79b6339fa58a300acf3e49cc",
+      "match": true
+    },
+    {
+      "path": "browser.css",
+      "status": 200,
+      "sha256": "40088489b4456bd0c3c6653826c75b6a0ed1241d0f282dbea89c08486cc78fae",
+      "match": true
+    },
+    {
+      "path": "recorded/Q01-06.json",
+      "status": 200,
+      "sha256": "48f2f5985b56e674d6cf39feda176609dd33cba71f10a54d63a5368844e35fd9",
+      "match": true
+    },
+    {
+      "path": "recorded/Q07-06.json",
+      "status": 200,
+      "sha256": "97f3b37101e44547f736cf60fa92863165a023407486cf03d274d1c371b9f4f4",
+      "match": true
+    },
+    {
+      "path": "recorded/R11-07.json",
+      "status": 200,
+      "sha256": "2affb502f44bca729e85fbd7bed086462181f8ae3e02e5e4906d918d9bfefe05",
+      "match": true
+    },
+    {
+      "path": "recorded/R12-07.json",
+      "status": 200,
+      "sha256": "6229a53b20518be42ea7b6bb874905e8cec1c69f11a028fc23926fa07fc110fb",
+      "match": true
+    }
+  ],
+  "status": {
+    "experiment": "real-input-https-preview-1",
+    "modelCallsEnabled": false,
+    "storage": "browser-only-new-origin",
+    "records": [
+      "Q01-06",
+      "Q07-06",
+      "R11-07",
+      "R12-07"
+    ],
+    "candidateAdopted": false
+  },
+  "modelEndpointPostStatus": 405,
+  "passed": true
+}

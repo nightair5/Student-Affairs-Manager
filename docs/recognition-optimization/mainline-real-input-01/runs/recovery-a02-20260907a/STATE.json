@@ -1,0 +1,42 @@
+{
+  "version": "real-input-a02-recovery-plan-1",
+  "unitId": "A02",
+  "originalRun": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a",
+  "grantBasis": {
+    "version": "real-input-a02-grant-1",
+    "grantId": "f2ce0af8-47b7-4eb9-b166-ec383639cf77",
+    "parentTail": "1b063b08f8d5fafc8dda00e6cb1ead9ae3b2c609b4097dbce01ca3a2b96b1cad",
+    "parentSequence": 3,
+    "ledgerPrefixBytes": 944,
+    "ledgerPrefixSha": "0bcec9835fc290bf3a77d9ba6114bfb727b9a9db87bed5df84551a767345d716",
+    "manifestSha": "7ed6c3c2054e0d101328f882e0efc5e4415d0db8d3cc1f2bc98157ce324d9a9c",
+    "bindingSha": "d478c58f7f44e68a852bc7712c5d3e7994f2390750f5915d65204963dff9e73b",
+    "priorNonce": "f8bd6d1a-92aa-4e4d-acd7-f7db66d9dc13",
+    "priorRequestSha": "cedb11d8d88142cb6ed60fd0dbe5124312a646a6914b8ca28161f3f024a09d3f",
+    "target": {
+      "unitId": "A02",
+      "candidateSha": "cac6a0073bc43389702ac319b8127ee1d131b0e27f791cb063971d50a624de54",
+      "requestSha": "6cbf184da3dbc6d2ab8322b29482a0686fa2657c37ae34f4c8ce84ffae54404a",
+      "inputSha": "b14f83da2ef395dd3171e0af5debdc3cfc591e72aafd651cf0c682de44186ed9",
+      "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+      "requestBytes": 11549
+    },
+    "head": "afd81ee4e8bac9285287c85f9ea389139bea12f6",
+    "sourcesSha": "7d06b14222c732ad2af6f836df35991e25f868f684af53a558589fa31fecb5c1",
+    "billingEvidence": {
+      "checkedAt": "2026-09-07T08:14:17.256Z",
+      "validUntil": "2026-09-08T08:14:17.256Z",
+      "evidenceSha": "ead7e823ffbe1a07bc5e23ac0e03dd128dbc1b3cccc8f6f167c9ad1ea94128d8"
+    },
+    "route": {
+      "proxyHost": "127.0.0.1",
+      "proxyPort": 10081,
+      "targetHost": "api.deepseek.com",
+      "targetPort": 443
+    }
+  },
+  "status": "PREPARED_NOT_DISPATCHED_REVIEW_REQUIRED",
+  "modelRequests": 0,
+  "oldLedger": "UNCHANGED_BEFORE_APPROVAL",
+  "automaticContinuation": false
+}

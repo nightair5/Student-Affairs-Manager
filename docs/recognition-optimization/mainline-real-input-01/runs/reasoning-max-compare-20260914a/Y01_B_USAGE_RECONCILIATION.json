@@ -1,0 +1,24 @@
+{
+  "version": "reasoning-max-y01b-usage-reconciliation-1",
+  "originalSemanticStatus": "incomplete",
+  "replayable": false,
+  "originalRawPath": "docs\\recognition-optimization\\mainline-real-input-01\\runs\\reasoning-compare-20260914a\\Y01-B_RAW.jsonl",
+  "unitId": "Y01-B",
+  "responseId": "31c97b7a-2284-48a6-a367-63311d43b901",
+  "responseSha": "19e2ac3591f48a8232eddea0bbd7c1c67e5a62afd8d9867c81055210435028b6",
+  "semanticStatus": "incomplete",
+  "incompleteReason": "max_output_tokens",
+  "costUpperMicroCny": 75140,
+  "usage": {
+    "input_tokens": 4802,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 8192,
+    "output_tokens_details": {
+      "reasoning_tokens": 6719
+    },
+    "total_tokens": 12994
+  },
+  "reconciledAt": "2026-09-14T09:21:38.231Z"
+}

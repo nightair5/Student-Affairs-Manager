@@ -1,0 +1,40 @@
+{
+  "stage": "RCO-5-MAINLINE-05",
+  "status": "BLOCKED_SCOPE_EXTENSION_REQUIRED",
+  "targeted": {
+    "attempt": "core-07",
+    "passed": 37,
+    "failed": 1,
+    "total": 38,
+    "files": 6,
+    "failure": "real task dependencies require the parent to be confirmed or in the same explicit batch",
+    "actual": "ITEM_NOT_CONFIRMABLE",
+    "cause": "frozen MULTIPLE_DEADLINES includes dependency-owned time"
+  },
+  "type": {
+    "status": "FAIL",
+    "attempt": "type-targeted-05",
+    "error": "TS18047 CalendarPage.tsx(159,97): value possibly null"
+  },
+  "implementationPathsCreated": 23,
+  "notCreated": [
+    "scripts/check-mainline-05.mjs",
+    "scripts/check-mainline-05.node-test.mjs"
+  ],
+  "journeys": {
+    "J01": "NOT_RUN",
+    "J02": "NOT_RUN",
+    "J03": "NOT_RUN",
+    "J04": "NOT_RUN",
+    "J05": "NOT_RUN",
+    "J06": "NOT_RUN",
+    "J07": "NOT_RUN",
+    "J08": "NOT_RUN",
+    "J09": "NOT_RUN",
+    "J10": "NOT_RUN",
+    "J11": "NOT_RUN",
+    "J12": "NOT_RUN"
+  },
+  "next": "Approve only semanticComposer.ts exception; continue the same complete package.",
+  "modelAccuracy": "本轮未测量"
+}

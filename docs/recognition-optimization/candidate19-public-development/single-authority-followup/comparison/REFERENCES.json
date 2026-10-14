@@ -1,0 +1,121 @@
+{
+  "version": "single-authority-paired-facts-1.0.0",
+  "references": [
+    {
+      "sourceId": "authority-development-SA-01",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "assertions": [
+        {
+          "id": "entities",
+          "description": "0任务、1独立工作坊；在线形式、作品讨论及学习证明保留为该活动信息，不另造事件",
+          "critical": true
+        },
+        {
+          "id": "time",
+          "description": "工作坊开始2026-12-03T13:30 exact；结束null unknown，保留结束时间暂未公布及依据",
+          "critical": true
+        },
+        {
+          "id": "graph",
+          "description": "起止引用同一工作坊；不因未公布而漏结束事实",
+          "critical": true
+        },
+        {
+          "id": "prose",
+          "description": "所有标题、描述、附注、额外实体及依据逐项暂定裁决；无未决或无据新增",
+          "critical": false
+        }
+      ],
+      "disputes": [
+        "标题、自由描述、未决或缺依据不满分；未公布null可正确，未说明不等于unknown；同值时间的无损合法表示允许"
+      ]
+    },
+    {
+      "sourceId": "authority-development-SA-02",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "assertions": [
+        {
+          "id": "entities",
+          "description": "0任务、3独立活动：东区研讨、西区研讨、成果介绍会；名称相近不能合并",
+          "critical": true
+        },
+        {
+          "id": "time",
+          "description": "两场研讨开始2026-12-04T10:00、结束2026-12-04T11:30；介绍会开始2026-12-05T09:00 exact",
+          "critical": true
+        },
+        {
+          "id": "graph",
+          "description": "共享开始/结束须有双方owner；无损同值独立时间表示也合法；介绍会不接研讨时间",
+          "critical": true
+        },
+        {
+          "id": "prose",
+          "description": "交流室属于介绍会；各区对象、全部描述和额外实体逐项裁决，介绍会结束原文未说明不猜",
+          "critical": false
+        }
+      ],
+      "disputes": [
+        "标题、自由描述、未决或缺依据不满分；未公布null可正确，未说明不等于unknown；同值时间的无损合法表示允许"
+      ]
+    },
+    {
+      "sourceId": "authority-development-SA-03",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "assertions": [
+        {
+          "id": "entities",
+          "description": "填写与递交借用表两个真实义务；领取钥匙资格unknown，不当成已符合；材料PDF/命名/收件页面/完成回执保留",
+          "critical": true
+        },
+        {
+          "id": "time",
+          "description": "递交窗口开始2026-12-01T09:00、结束2026-12-02T16:00；不是deadline或个人计划",
+          "critical": true
+        },
+        {
+          "id": "graph",
+          "description": "递交依赖填写，前置完成状态不写true；材料和窗口owner为递交，钥匙资格与前置完成分开",
+          "critical": true
+        },
+        {
+          "id": "prose",
+          "description": "没有独立活动；所有动作对象、字段与描述逐项裁决；已完成/资格或无据时间新增为关键风险",
+          "critical": false
+        }
+      ],
+      "disputes": [
+        "标题、自由描述、未决或缺依据不满分；未公布null可正确，未说明不等于unknown；同值时间的无损合法表示允许"
+      ]
+    },
+    {
+      "sourceId": "authority-development-SA-04",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "assertions": [
+        {
+          "id": "entities",
+          "description": "0任务、0事件、0时间，不把资料/证明名称、否定动作或版式变成义务",
+          "critical": true
+        },
+        {
+          "id": "time",
+          "description": "没有时间，不能生成截止、日程或默认时刻",
+          "critical": true
+        },
+        {
+          "id": "graph",
+          "description": "纯信息原文完整核对，不伪造业务实体或空项目",
+          "critical": true
+        },
+        {
+          "id": "prose",
+          "description": "全部信息保留且不无据新增；自由描述、标题及覆盖暂定裁决",
+          "critical": false
+        }
+      ],
+      "disputes": [
+        "标题、自由描述、未决或缺依据不满分；未公布null可正确，未说明不等于unknown；同值时间的无损合法表示允许"
+      ]
+    }
+  ]
+}

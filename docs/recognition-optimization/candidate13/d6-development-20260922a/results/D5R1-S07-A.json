@@ -1,0 +1,147 @@
+{
+  "version": "candidate13-d6-result-1",
+  "unitId": "D5R1-S07-A",
+  "sourceId": "C13-D5R1-S07",
+  "arm": "A",
+  "ordinal": 13,
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "requestSha256": "e3f0969bba1742997b42b683652883cbaec6ade5343ca576452783d74d4a1279",
+  "responseSha256": "fb8d135342c5c4846fab06649821c4f1a5329e919877670c1dc9435eaf1f53b7",
+  "transportStatus": "COMPLETED_HTTP_200",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "waitingMs": 3555,
+  "parseError": null,
+  "parseStage": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-deliver-poster-draft",
+        "propositionScopeIds": [
+          "scope-0002-b6e1134565c1e6aa16631db6d8016eb72a0be74fe4973988befd13491784829b",
+          "scope-0003-3d652eaff44a37cf140b4a9dc68b7106fa50ac0dcc9474d263843ab8d10c1c29",
+          "scope-0004-1d4e479554fc3f36d9402d8d615d13c3b24f289e1f145637826b768b84a54fca"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0002-b6e1134565c1e6aa16631db6d8016eb72a0be74fe4973988befd13491784829b",
+          "surface": "交付"
+        },
+        "object": {
+          "scopeId": "scope-0002-b6e1134565c1e6aa16631db6d8016eb72a0be74fe4973988befd13491784829b",
+          "surface": "展览海报初稿"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "交付展览海报初稿",
+          "description": "请在月底前后向策展组交付展览海报初稿，以策展组确认收到初稿为完成；确切日期稍后公布。",
+          "completionCriteria": [
+            "策展组确认收到初稿"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [
+            "tp-end-of-month"
+          ],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "tp-end-of-month",
+        "type": "submission_deadline",
+        "rawText": "月底前后",
+        "relatedTaskTempIds": [
+          "task-deliver-poster-draft"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-b6e1134565c1e6aa16631db6d8016eb72a0be74fe4973988befd13491784829b"
+        ],
+        "confidence": 0.8,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      },
+      {
+        "tempId": "tp-exact-date-later",
+        "type": "submission_deadline",
+        "rawText": "确切日期稍后公布",
+        "relatedTaskTempIds": [
+          "task-deliver-poster-draft"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0004-1d4e479554fc3f36d9402d8d615d13c3b24f289e1f145637826b768b84a54fca"
+        ],
+        "confidence": 0.7,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-e2860f9c10d82aae4c1c07ae6bf49f735b13547b8b97565c063912a42ef223c3"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C13-D5R1-S07",
+    "sourceVersionId": "C13-D5R1-S07-v1",
+    "sourceFingerprint": "sha256:f7a64ee5a1640b0d407ec9b7514ec5ea874c9d503f84bf788edc419fb3fab524"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4314,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 780,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5094
+  },
+  "costUpperMicroUsd": 2231,
+  "providerBilledUsd": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0,
+  "verifierCalls": 0
+}

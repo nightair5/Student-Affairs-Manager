@@ -1,0 +1,142 @@
+{
+  "directory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline-01-checks-5PbI6L",
+  "okay": true,
+  "results": [
+    {
+      "name": "protection-before",
+      "exitCode": 0,
+      "log": "protection-before.log"
+    },
+    {
+      "name": "lint",
+      "exitCode": 0,
+      "log": "lint.log"
+    },
+    {
+      "name": "typecheck-app",
+      "exitCode": 0,
+      "log": "typecheck-app.log"
+    },
+    {
+      "name": "typecheck-node",
+      "exitCode": 0,
+      "log": "typecheck-node.log"
+    },
+    {
+      "name": "schema-contract",
+      "exitCode": 0,
+      "log": "schema-contract.log"
+    },
+    {
+      "name": "time-contract",
+      "exitCode": 0,
+      "log": "time-contract.log"
+    },
+    {
+      "name": "vitest-all",
+      "exitCode": 0,
+      "log": "vitest-all.log"
+    },
+    {
+      "name": "server",
+      "exitCode": 0,
+      "log": "server.log"
+    },
+    {
+      "name": "worker",
+      "exitCode": 0,
+      "log": "worker.log"
+    },
+    {
+      "name": "time-parity",
+      "exitCode": 0,
+      "log": "time-parity.log"
+    },
+    {
+      "name": "multimodal-library",
+      "exitCode": 0,
+      "log": "multimodal-library.log"
+    },
+    {
+      "name": "seen-replay-library",
+      "exitCode": 0,
+      "log": "seen-replay-library.log"
+    },
+    {
+      "name": "functions",
+      "exitCode": 0,
+      "log": "functions.log"
+    },
+    {
+      "name": "build",
+      "exitCode": 0,
+      "directory": "build"
+    },
+    {
+      "name": "new-build-security-and-isolation",
+      "exitCode": 0,
+      "files": 18,
+      "findings": []
+    },
+    {
+      "name": "security-scan",
+      "exitCode": 0,
+      "log": "security-scan.log"
+    },
+    {
+      "name": "dependency-audit",
+      "exitCode": 0,
+      "log": "dependency-audit.log"
+    },
+    {
+      "name": "protection-after",
+      "exitCode": 0,
+      "log": "protection-after.log"
+    }
+  ],
+  "testCounts": {
+    "vitest": {
+      "passed": 850,
+      "skipped": 1
+    },
+    "adapters": {
+      "server": 8,
+      "worker": 25,
+      "timeParity": 1,
+      "multimodalLibrary": 23,
+      "seenReplayLibrary": 4,
+      "functions": 5
+    },
+    "total": {
+      "passed": 916,
+      "failed": 0,
+      "skipped": 1
+    }
+  },
+  "boundaries": {
+    "modelAccuracy": "NOT_MEASURED",
+    "modelCalls": 0,
+    "verifier": 0,
+    "repair": 0,
+    "retry": 0,
+    "modelNetworkRequests": 0,
+    "apiKeyAccess": "NONE",
+    "cny": 0,
+    "cloudflareDryRun": "NOT_RUN: not a release; avoid deployment credential tooling",
+    "liveOCR": "SKIPPED: outside this stage",
+    "environment": "current host timezone; not two-timezone CI acceptance"
+  },
+  "warning": "Existing production bundle chunk exceeds 500 kB; no performance acceptance claimed",
+  "scannerSupplement": {
+    "status": "PASS",
+    "textAssetsChecked": 17,
+    "includes": ".mjs plus .js/.css/.html",
+    "excludedNonTextAssets": 1,
+    "findings": [],
+    "sourceScanFinalFiles": 683
+  },
+  "lintWarnings": [
+    "Isolated browser.tsx has no component export; Fast Refresh warning only. Production does not import this entry."
+  ],
+  "deliveryState": "ENGINEERING_PASS / PRODUCT_ACCEPTANCE_FAIL"
+}

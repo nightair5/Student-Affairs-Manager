@@ -1,0 +1,24 @@
+{
+  "version": "baseline-hard-corrections-experiment-audit-1",
+  "status": "PASS_WITH_WARNINGS",
+  "classification": "synthetic_proxy + simulation_only",
+  "reviewerIndependence": "same-family provisional",
+  "findings": [
+    "Frozen-reference SHA and source fingerprints gate execution.",
+    "Reference denominators are computed from frozen references.",
+    "Model-task outcomes are bound to frozen action-object identities and per-case adjudication.",
+    "Replay arithmetic reconciles and no self-normalization was found.",
+    "Zero-call and protected-scope constraints remain satisfied."
+  ],
+  "warnings": [
+    "Historical adjudication contains a disclosed 3-versus-4 correction-summary error.",
+    "Some command-level exit logs are not committed even though final summaries and reruns pass.",
+    "Real-browser dependency edit, save, refresh and download acceptance is NOT_RUN."
+  ],
+  "evidencePaths": [
+    "docs/recognition-optimization/mainline-real-input-01/runs/baseline-hard-corrections-20260915a/RUN.mjs",
+    "docs/recognition-optimization/mainline-real-input-01/runs/baseline-hard-corrections-20260915a/REPLAY.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/baseline-hard-corrections-20260915a/CHECKS.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/baseline-hard-corrections-20260915a/AUDIT.md"
+  ]
+}

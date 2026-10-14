@@ -1,0 +1,634 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "derivedFromVisibleRepositoryReadback": true,
+  "originalSnapshot": {
+    "path": ".data\\autonomous-three-hour-20261008\\browser-originals\\RA01-V7-PARTIAL-CANONICAL.json",
+    "sha256": "a5815ee515c93a98330106167d132c38e911badfe50dcad6afd9b0b06f03bd32"
+  },
+  "counts": {
+    "Task": 4,
+    "Project": 0,
+    "Event": 2,
+    "TimePoint": 6,
+    "Material": 0
+  },
+  "tasks": [
+    {
+      "id": "task:source:27548b39:draft:1:task-fill-borrow-registration",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "填写借用登记",
+      "description": "请在指定时间内激活借用账号并填写借用登记。\n两项操作均在该办理窗口内完成，\n不设具体截止时刻，\n也未要求两项操作按先后顺序。",
+      "nextAction": "填写借用登记",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-08T14:31:15.461Z",
+      "updatedAt": "2026-10-08T14:31:15.461Z",
+      "version": 2
+    },
+    {
+      "id": "task:source:27548b39:draft:1:task-activate-account",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "激活借用账号",
+      "description": "请在指定时间内激活借用账号并填写借用登记。\n两项操作均在该办理窗口内完成，\n不设具体截止时刻，\n也未要求两项操作按先后顺序。",
+      "nextAction": "激活借用账号",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-08T14:33:31.510Z",
+      "updatedAt": "2026-10-08T14:33:31.510Z",
+      "version": 2
+    },
+    {
+      "id": "task:source:da6553c1:draft:1:task-test-headphones",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "测试耳机",
+      "description": "取得音像研习班录取资格的学员需先测试耳机。",
+      "nextAction": "测试耳机",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-08T14:37:25.334Z",
+      "updatedAt": "2026-10-08T14:37:25.334Z",
+      "version": 2
+    },
+    {
+      "id": "task:source:da6553c1:draft:1:task-install-meeting-software",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "安装音像研习班会议软件",
+      "description": "测试完成后安装音像研习班会议软件。",
+      "nextAction": "安装音像研习班会议软件",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [
+        "task:source:da6553c1:draft:1:task-test-headphones"
+      ],
+      "createdAt": "2026-10-08T14:37:25.334Z",
+      "updatedAt": "2026-10-08T14:37:25.334Z",
+      "version": 2
+    }
+  ],
+  "events": [
+    {
+      "id": "event:source:da6553c1:draft:1:event-audio-video-workshop",
+      "projectId": null,
+      "title": "音像研习班",
+      "description": "音像研习班于2026年12月18日13:25开始，\n14:55结束。",
+      "startTimePointId": "time:source:da6553c1:draft:1:time-event-start",
+      "endTimePointId": "time:source:da6553c1:draft:1:time-event-end",
+      "location": null,
+      "createdAt": "2026-10-08T14:37:25.334Z",
+      "updatedAt": "2026-10-08T14:37:25.334Z"
+    },
+    {
+      "id": "event:source:9ee58fa7:draft:1:event-0001",
+      "projectId": null,
+      "title": "图像解读交流会",
+      "description": "图像解读交流会面向在读本科生。\n有意参加者可通过预约二维码报名图像解读交流会，\n图像解读交流会于2026年12月16日10:10开始，\n结束时间尚未公布。",
+      "startTimePointId": "time:source:9ee58fa7:draft:1:time-0002",
+      "endTimePointId": "time:source:9ee58fa7:draft:1:time-0003",
+      "location": null,
+      "createdAt": "2026-10-08T14:50:34.394Z",
+      "updatedAt": "2026-10-08T14:50:34.394Z"
+    }
+  ],
+  "timePoints": [
+    {
+      "id": "time:source:27548b39:draft:1:time-window-20261220-23",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": "task:source:27548b39:draft:1:task-fill-borrow-registration",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:27548b39:draft:1:task-fill-borrow-registration",
+        "task:source:27548b39:draft:1:task-activate-account"
+      ],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年12月20—23日",
+      "normalizedValue": "2026-12-20",
+      "timezone": null,
+      "isAllDay": true,
+      "precision": "date_only",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T14:31:15.461Z",
+      "updatedAt": "2026-10-08T14:33:31.510Z"
+    },
+    {
+      "id": "time:source:27548b39:draft:1:time-window-end-20261223",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": "task:source:27548b39:draft:1:task-fill-borrow-registration",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:27548b39:draft:1:task-fill-borrow-registration",
+        "task:source:27548b39:draft:1:task-activate-account"
+      ],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "2026年12月20—23日",
+      "normalizedValue": "2026-12-23",
+      "timezone": null,
+      "isAllDay": true,
+      "precision": "date_only",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T14:31:15.461Z",
+      "updatedAt": "2026-10-08T14:33:31.510Z"
+    },
+    {
+      "id": "time:source:da6553c1:draft:1:time-event-start",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:da6553c1:draft:1:event-audio-video-workshop",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年12月18日13:25开始",
+      "normalizedValue": "2026-12-18T13:25",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T14:37:25.334Z",
+      "updatedAt": "2026-10-08T14:37:25.334Z"
+    },
+    {
+      "id": "time:source:da6553c1:draft:1:time-event-end",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:da6553c1:draft:1:event-audio-video-workshop",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "14:55结束",
+      "normalizedValue": "2026-12-18T14:55",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T14:37:25.334Z",
+      "updatedAt": "2026-10-08T14:37:25.334Z"
+    },
+    {
+      "id": "time:source:9ee58fa7:draft:1:time-0002",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:9ee58fa7:draft:1:event-0001",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年12月16日10:10",
+      "normalizedValue": "2026-12-16T10:10",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T14:50:34.394Z",
+      "updatedAt": "2026-10-08T14:50:34.394Z"
+    },
+    {
+      "id": "time:source:9ee58fa7:draft:1:time-0003",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:9ee58fa7:draft:1:event-0001",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "结束时间尚未公布",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-08T14:50:34.394Z",
+      "updatedAt": "2026-10-08T14:50:34.394Z"
+    }
+  ],
+  "materials": [],
+  "drafts": [
+    {
+      "id": "source:9ee58fa7:draft:1",
+      "status": "partially_confirmed",
+      "acceptedEntityTempIds": [
+        "event-0001",
+        "time-0002",
+        "time-0003"
+      ],
+      "rejectedEntityTempIds": [],
+      "remainingConflicts": [
+        {
+          "id": "d26-representation-0",
+          "type": "other",
+          "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+          "entityTempIds": [
+            "task-register-0001"
+          ],
+          "evidenceIds": [],
+          "requiresDecision": true
+        }
+      ],
+      "originalResponseSha256": null,
+      "firstSuggestionSha256": "e213f78fd075dfa51583e94c1297b66b332de7aef292d9691ee4369e60aa56a9"
+    },
+    {
+      "id": "source:da6553c1:draft:1",
+      "status": "confirmed",
+      "acceptedEntityTempIds": [
+        "event-audio-video-workshop",
+        "task-install-meeting-software",
+        "task-test-headphones",
+        "time-event-end",
+        "time-event-start"
+      ],
+      "rejectedEntityTempIds": [],
+      "remainingConflicts": [],
+      "sourceReadiness": [
+        {
+          "version": "source-readiness-review-1.0.0",
+          "groupId": "fnv1a32:bed7d224",
+          "taskIds": [
+            "task-test-headphones"
+          ],
+          "choice": "meets_stated_condition",
+          "actor": "user",
+          "sourceVersionId": "source:da6553c1:version:1",
+          "conditionSnapshot": "{\"value\":\"unknown\",\"conditionScopeIds\":[\"scope-0001-16368d6ac2b640f1fa6dfebaf6a6b2217f77963aae346ec5b2ae54479e81eb06\"],\"factScopeIds\":[\"scope-0005-ba98cea43b439137647dd9de47afea0589c7cb9b7814645903adf36781073531\"]}",
+          "operationId": "f658c8d8-b03d-41b0-8216-56c25fee4bc0",
+          "createdAt": "2026-10-08T14:35:54.978Z"
+        },
+        {
+          "version": "source-readiness-review-1.0.0",
+          "groupId": "fnv1a32:bed7d224",
+          "taskIds": [
+            "task-install-meeting-software"
+          ],
+          "choice": "meets_stated_condition",
+          "actor": "user",
+          "sourceVersionId": "source:da6553c1:version:1",
+          "conditionSnapshot": "{\"value\":\"unknown\",\"conditionScopeIds\":[\"scope-0001-16368d6ac2b640f1fa6dfebaf6a6b2217f77963aae346ec5b2ae54479e81eb06\"],\"factScopeIds\":[\"scope-0005-ba98cea43b439137647dd9de47afea0589c7cb9b7814645903adf36781073531\"]}",
+          "operationId": "f658c8d8-b03d-41b0-8216-56c25fee4bc0",
+          "createdAt": "2026-10-08T14:35:54.978Z"
+        }
+      ],
+      "originalResponseSha256": null,
+      "firstSuggestionSha256": "5c3eadf6ee3a6ed0be822488dc72476364a465685f90208db793e8ffa5f4b7d2"
+    },
+    {
+      "id": "source:27548b39:draft:1",
+      "status": "confirmed",
+      "acceptedEntityTempIds": [
+        "task-fill-borrow-registration",
+        "time-window-20261220-23",
+        "time-window-end-20261223",
+        "task-activate-account"
+      ],
+      "rejectedEntityTempIds": [],
+      "remainingConflicts": [],
+      "sourceReadiness": [
+        {
+          "version": "source-readiness-review-1.0.0",
+          "groupId": "fnv1a32:4c5b0d1e",
+          "taskIds": [
+            "task-activate-account"
+          ],
+          "choice": "no_extra_condition",
+          "actor": "user",
+          "sourceVersionId": "source:27548b39:version:1",
+          "conditionSnapshot": "{\"value\":\"unknown\",\"conditionScopeIds\":[],\"factScopeIds\":[]}",
+          "operationId": "53b5e1f5-9ae3-481c-a678-054668e5a2c5",
+          "createdAt": "2026-10-08T14:23:46.240Z"
+        },
+        {
+          "version": "source-readiness-review-1.0.0",
+          "groupId": "fnv1a32:4c5b0d1e",
+          "taskIds": [
+            "task-fill-borrow-registration"
+          ],
+          "choice": "no_extra_condition",
+          "actor": "user",
+          "sourceVersionId": "source:27548b39:version:1",
+          "conditionSnapshot": "{\"value\":\"unknown\",\"conditionScopeIds\":[],\"factScopeIds\":[]}",
+          "operationId": "53b5e1f5-9ae3-481c-a678-054668e5a2c5",
+          "createdAt": "2026-10-08T14:23:46.240Z"
+        }
+      ],
+      "originalResponseSha256": null,
+      "firstSuggestionSha256": "5e4b74ed8c85879bef205145f162ad7fe2b0a8264d1d4c079aa15f1dc804121d"
+    }
+  ],
+  "sourceVersions": [
+    {
+      "id": "source:9ee58fa7:version:1",
+      "sourceId": "source:9ee58fa7",
+      "contentHash": "fnv1a32:548c1736"
+    },
+    {
+      "id": "source:da6553c1:version:1",
+      "sourceId": "source:da6553c1",
+      "contentHash": "fnv1a32:e25b3df5"
+    },
+    {
+      "id": "source:27548b39:version:1",
+      "sourceId": "source:27548b39",
+      "contentHash": "fnv1a32:f11a199b"
+    }
+  ],
+  "history": [
+    {
+      "id": "53b5e1f5-9ae3-481c-a678-054668e5a2c5",
+      "entityType": "extraction_draft",
+      "entityId": "source:27548b39:draft:1",
+      "action": "user_condition_judgement",
+      "fieldName": "source-readiness:fnv1a32:4c5b0d1e",
+      "before": "unknown",
+      "after": {
+        "choice": "no_extra_condition",
+        "taskIds": [
+          "task-activate-account",
+          "task-fill-borrow-registration"
+        ]
+      },
+      "actor": "user",
+      "reason": "用户后续适用判断；不修改原模型回答或首次展示，不声明前置已完成。",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:23:46.240Z"
+    },
+    {
+      "id": "history:task:source:27548b39:draft:1:task-fill-borrow-registration:created",
+      "entityType": "task",
+      "entityId": "task:source:27548b39:draft:1:task-fill-borrow-registration",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:27548b39:draft:1:task-fill-borrow-registration"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:31:15.461Z"
+    },
+    {
+      "id": "history:time:source:27548b39:draft:1:time-window-20261220-23:created",
+      "entityType": "time_point",
+      "entityId": "time:source:27548b39:draft:1:time-window-20261220-23",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:27548b39:draft:1:time-window-20261220-23"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:31:15.461Z"
+    },
+    {
+      "id": "history:time:source:27548b39:draft:1:time-window-end-20261223:created",
+      "entityType": "time_point",
+      "entityId": "time:source:27548b39:draft:1:time-window-end-20261223",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:27548b39:draft:1:time-window-end-20261223"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:31:15.461Z"
+    },
+    {
+      "id": "history:task:source:27548b39:draft:1:task-activate-account:created",
+      "entityType": "task",
+      "entityId": "task:source:27548b39:draft:1:task-activate-account",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:27548b39:draft:1:task-activate-account"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:33:31.510Z"
+    },
+    {
+      "id": "history:time:source:27548b39:draft:1:time-window-20261220-23:link-added:fnv1a32:d2bd7e52",
+      "entityType": "time_point",
+      "entityId": "time:source:27548b39:draft:1:time-window-20261220-23",
+      "action": "link_added",
+      "fieldName": "relations",
+      "before": {
+        "relatedTaskIds": [
+          "task:source:27548b39:draft:1:task-fill-borrow-registration"
+        ],
+        "relatedMaterialIds": []
+      },
+      "after": {
+        "relatedTaskIds": [
+          "task:source:27548b39:draft:1:task-fill-borrow-registration",
+          "task:source:27548b39:draft:1:task-activate-account"
+        ],
+        "relatedMaterialIds": []
+      },
+      "actor": "user",
+      "reason": "顺序确认补充实体关联",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:33:31.510Z"
+    },
+    {
+      "id": "history:time:source:27548b39:draft:1:time-window-end-20261223:link-added:fnv1a32:cae208b5",
+      "entityType": "time_point",
+      "entityId": "time:source:27548b39:draft:1:time-window-end-20261223",
+      "action": "link_added",
+      "fieldName": "relations",
+      "before": {
+        "relatedTaskIds": [
+          "task:source:27548b39:draft:1:task-fill-borrow-registration"
+        ],
+        "relatedMaterialIds": []
+      },
+      "after": {
+        "relatedTaskIds": [
+          "task:source:27548b39:draft:1:task-fill-borrow-registration",
+          "task:source:27548b39:draft:1:task-activate-account"
+        ],
+        "relatedMaterialIds": []
+      },
+      "actor": "user",
+      "reason": "顺序确认补充实体关联",
+      "sourceVersionId": "source:27548b39:version:1",
+      "changedAt": "2026-10-08T14:33:31.510Z"
+    },
+    {
+      "id": "f658c8d8-b03d-41b0-8216-56c25fee4bc0",
+      "entityType": "extraction_draft",
+      "entityId": "source:da6553c1:draft:1",
+      "action": "user_condition_judgement",
+      "fieldName": "source-readiness:fnv1a32:bed7d224",
+      "before": "unknown",
+      "after": {
+        "choice": "meets_stated_condition",
+        "taskIds": [
+          "task-test-headphones",
+          "task-install-meeting-software"
+        ]
+      },
+      "actor": "user",
+      "reason": "用户后续适用判断；不修改原模型回答或首次展示，不声明前置已完成。",
+      "sourceVersionId": "source:da6553c1:version:1",
+      "changedAt": "2026-10-08T14:35:54.978Z"
+    },
+    {
+      "id": "history:task:source:da6553c1:draft:1:task-test-headphones:created",
+      "entityType": "task",
+      "entityId": "task:source:da6553c1:draft:1:task-test-headphones",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:da6553c1:draft:1:task-test-headphones"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:da6553c1:version:1",
+      "changedAt": "2026-10-08T14:37:25.334Z"
+    },
+    {
+      "id": "history:task:source:da6553c1:draft:1:task-install-meeting-software:created",
+      "entityType": "task",
+      "entityId": "task:source:da6553c1:draft:1:task-install-meeting-software",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:da6553c1:draft:1:task-install-meeting-software"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:da6553c1:version:1",
+      "changedAt": "2026-10-08T14:37:25.334Z"
+    },
+    {
+      "id": "history:time:source:da6553c1:draft:1:time-event-start:created",
+      "entityType": "time_point",
+      "entityId": "time:source:da6553c1:draft:1:time-event-start",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:da6553c1:draft:1:time-event-start"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:da6553c1:version:1",
+      "changedAt": "2026-10-08T14:37:25.334Z"
+    },
+    {
+      "id": "history:time:source:da6553c1:draft:1:time-event-end:created",
+      "entityType": "time_point",
+      "entityId": "time:source:da6553c1:draft:1:time-event-end",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:da6553c1:draft:1:time-event-end"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:da6553c1:version:1",
+      "changedAt": "2026-10-08T14:37:25.334Z"
+    },
+    {
+      "id": "history:event:source:da6553c1:draft:1:event-audio-video-workshop:created",
+      "entityType": "event",
+      "entityId": "event:source:da6553c1:draft:1:event-audio-video-workshop",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:da6553c1:draft:1:event-audio-video-workshop"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:da6553c1:version:1",
+      "changedAt": "2026-10-08T14:37:25.334Z"
+    },
+    {
+      "id": "history:time:source:9ee58fa7:draft:1:time-0002:created",
+      "entityType": "time_point",
+      "entityId": "time:source:9ee58fa7:draft:1:time-0002",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:9ee58fa7:draft:1:time-0002"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:9ee58fa7:version:1",
+      "changedAt": "2026-10-08T14:50:34.394Z"
+    },
+    {
+      "id": "history:time:source:9ee58fa7:draft:1:time-0003:created",
+      "entityType": "time_point",
+      "entityId": "time:source:9ee58fa7:draft:1:time-0003",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:9ee58fa7:draft:1:time-0003"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:9ee58fa7:version:1",
+      "changedAt": "2026-10-08T14:50:34.394Z"
+    },
+    {
+      "id": "history:event:source:9ee58fa7:draft:1:event-0001:created",
+      "entityType": "event",
+      "entityId": "event:source:9ee58fa7:draft:1:event-0001",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:9ee58fa7:draft:1:event-0001"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:9ee58fa7:version:1",
+      "changedAt": "2026-10-08T14:50:34.394Z"
+    }
+  ]
+}

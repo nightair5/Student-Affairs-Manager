@@ -1,0 +1,242 @@
+- banner:
+  - heading "D24 通知核对与覆盖报告" [level=1]
+  - paragraph: 角色：匿名工程回放／非真人试用 · 构建：bf8b6d9c323e / source bb7b80e7f475 · 固定 Candidate17 D17 录制 · 新模型调用关闭
+  - text: 隔离身份
+  - combobox "隔离身份":
+    - option "模拟身份 p1"
+    - option "模拟身份 p2"
+    - option "模拟身份 p3" [selected]
+    - option "模拟身份 p4"
+  - paragraph: 本机浏览器保存；无账号认证或跨设备同步。登记、同意与准备不计通知处理时间。个人资料和同意原件留在负责人本机。
+- region "D23试次控制":
+  - heading "试次与固定来源" [level=2]
+  - paragraph: 数据库：rco-mainline-01-02-i1-real-input-d23-study-engineering-d24release01-p3。本身份已开始 2；真人计划 16，真人实际 0。
+  - paragraph: 当前状态：started；条件：assisted；试次：80aab3b9-2390-444c-9258-5eddf0891ea3。
+  - button "检查真人开始资格"
+  - generic "工程模拟登记／裁决（不会生成真人）"
+  - paragraph: 真实身份引用来自实际登记。本机记录提供可追溯出处，不等同账号鉴权。工程模拟永远保持 ENGINEERING_REPLAY。
+  - text: 负责人接受引用
+  - textbox "负责人接受引用": ENGINEERING_SIMULATION:D24-release-owner
+  - button "记录负责人接受"
+  - text: C17-D16-S01 最小义务与争议（按原文核准）
+  - textbox "C17-D16-S01义务": ENGINEERING_SIMULATION:仅匿名产品链验证，非独立真值，无真人裁决
+  - text: C17-D16-S02 最小义务与争议（按原文核准）
+  - textbox "C17-D16-S02义务": ENGINEERING_SIMULATION:仅匿名产品链验证，非独立真值，无真人裁决
+  - text: C17-D16-S04 最小义务与争议（按原文核准）
+  - textbox "C17-D16-S04义务": ENGINEERING_SIMULATION:仅匿名产品链验证，非独立真值，无真人裁决
+  - text: C17-D16-S05 最小义务与争议（按原文核准）
+  - textbox "C17-D16-S05义务": ENGINEERING_SIMULATION:仅匿名产品链验证，非独立真值，无真人裁决
+  - text: C17-D16-S06 最小义务与争议（按原文核准）
+  - textbox "C17-D16-S06义务": ENGINEERING_SIMULATION:仅匿名产品链验证，非独立真值，无真人裁决
+  - text: C17-D16-S07 最小义务与争议（按原文核准）
+  - textbox "C17-D16-S07义务": ENGINEERING_SIMULATION:仅匿名产品链验证，非独立真值，无真人裁决
+  - text: C17-D16-S09 最小义务与争议（按原文核准）
+  - textbox "C17-D16-S09义务": ENGINEERING_SIMULATION:仅匿名产品链验证，非独立真值，无真人裁决
+  - text: C17-D16-S11 最小义务与争议（按原文核准）
+  - textbox "C17-D16-S11义务": ENGINEERING_SIMULATION:仅匿名产品链验证，非独立真值，无真人裁决
+  - button "核准并冻结材料"
+  - generic "工程模拟知情同意"
+  - text: 工程模拟同意引用
+  - textbox "同意引用": ENGINEERING_SIMULATION:D24-release-p3
+  - paragraph: 参与者已了解：本机保存、固定录制建议、可暂停或退出、采集编辑和操作时间、由指定负责人暂定裁决；不采集真实通知或联系方式。实际同意原件不进入代码仓库。
+  - button "记录模拟同意"
+  - text: 锁定排程
+  - combobox "锁定排程" [disabled]:
+    - option "1 · C17-D16-S02 · 空白手动"
+    - option "2 · C17-D16-S07 · 固定辅助" [selected]
+    - option "3 · C17-D16-S05 · 固定辅助"
+    - option "4 · C17-D16-S11 · 空白手动"
+  - heading "指定原文" [level=3]
+  - generic: "[D16新编匿名Development] 请在月底前后向宣传组提交摄影作品说明稿，以宣传组确认收妥说明稿为完成；确切日期稍后公布。"
+  - paragraph: 来源 SHA f0e9fe97d0af；首次刺激 SHA 7046d52de222。参考时点 2026-09-22，时区上海。空白手动不包含任务答案。
+  - button "看到原文并开始处理" [disabled]
+  - button "暂停处理"
+  - button "退出本试次"
+  - generic "匿名故障注入"
+  - button "注入正式保存失败"
+  - button "注入提交后读回失败"
+  - paragraph: 报告同时保留计划16条、已开始、已打开建议、未打开、退出及未裁决。固定建议来源8份；未暴露和未知不会从计划分母删除。完整处置看总墙钟及阅读、编辑、等待、隐藏、空闲、暂停；工程记录不产生真人正确率。
+  - button "独立读回与试次报告"
+  - status: 下一次正式保存注入失败，手动恢复。
+  - button "独立读回全部身份汇总"
+  - generic "工程模拟裁决接线"
+  - option "p3-1 · C17-D16-S02 · manual · exited"
+  - option "p3-2 · C17-D16-S07 · assisted · started" [selected]
+- group "本试次正式核对与保存":
+  - generic: 本试次正式核对与保存
+  - link "跳到主要内容":
+    - /url: "#main-content"
+  - complementary:
+    - button "返回今日首页":
+      - strong: 事务管家
+      - generic: STUDENT DESK
+    - button "新事务 N":
+      - text: 新事务
+      - generic: "N"
+    - navigation "主要导航":
+      - generic: 执行闭环
+      - button "今日":
+        - text: 今日
+      - button "收件箱":
+        - text: 收件箱
+      - button "打开待确认队列，共 1 项":
+        - text: 待确认
+        - generic: "1"
+      - button "项目":
+        - text: 项目
+      - button "日历":
+        - text: 日历
+      - button "资料库":
+        - text: 资料库
+      - generic: 低频工具
+      - button "所有任务":
+        - text: 所有任务
+      - button "知识问答":
+        - text: 知识问答
+      - button "周报月报":
+        - text: 周报月报
+    - button "搜索事项":
+      - text: 搜索事项
+    - button "新手教程":
+      - text: 新手教程
+    - button "设置与服务":
+      - text: 设置与服务
+    - button "隐私与数据":
+      - text: 隐私与数据
+    - strong: 已在此设备自动保存
+    - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。
+  - region "隔离实验状态":
+    - paragraph: D24来源级核对 · 未确认输入恢复与冲突保护 · 非真人试用 · 独立测试库 · 仅本机已录制结果；新模型调用和旧用户库访问关闭。
+    - paragraph: 仅本轮录入、核对、确认、查询与JSON备份可用；未纳入操作会明确阻断。
+    - paragraph: 新语义保存在独立实验格式中，不能导入稳定入口。卡片分类与耗时仍是旧界面的兼容估计，不代表原文；完整原始属性可在详情核对，不会作为修改写回。
+    - button "准备完整测试库 JSON" [disabled]
+  - main:
+    - text: 来源先保存，确认后入库
+    - heading "待确认" [level=1]
+    - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。
+    - strong: "1"
+    - text: 份需关注
+    - group "收件箱视图":
+      - button "全部来源"
+      - button "待确认 1" [pressed]
+    - button "新建手动来源":
+      - text: 新建手动来源
+    - checkbox "选择全部待核对"
+    - text: 选择全部待核对
+    - article:
+      - checkbox "选择 固定录制 · C17-D16-S07"
+      - generic: 选择 固定录制 · C17-D16-S07
+      - generic: DeepSeek V4 Flash 建议
+      - generic: 待核对
+      - heading "固定录制 · C17-D16-S07" [level=2]
+      - paragraph: "[D16新编匿名Development] 请在月底前后向宣传组提交摄影作品说明稿，以宣传组确认收妥说明稿为完成；确切日期稍后公布。"
+      - paragraph: 识别建议已保存，确认前不会创建正式任务。
+      - term: 项目
+      - definition: 未形成项目建议
+      - term: 实体
+      - definition: 1 任务 · 0 材料 · 0 时间 · 0 活动
+      - button "核对 1 项":
+        - text: 核对 1 项
+      - button "查看来源":
+        - text: 查看来源
+      - button "归档":
+        - text: 归档
+  - status:
+    - generic: 固定录制 · C17-D16-S07（source:41eef35f:draft:1:1）：该草稿未确认：D13_INJECTED_ATOMIC_FAILURE。未确认建议和已保存编辑仍保留。
+    - button "关闭提示": ×
+  - dialog "识别出 1 件事":
+    - banner:
+      - generic: 第 2 步 · D24来源级核对 · 未确认输入恢复与冲突保护 · 非真人试用
+      - heading "识别出 1 件事" [level=2]
+      - paragraph: 先看标题和时间；不准确时再点“编辑”。
+      - button "稍后处理并关闭":
+    - region "本试次暂停与退出":
+      - strong: 试次 started（部分确认不算整份完成）
+      - button "暂停本页处理"
+      - button "退出本页试次"
+    - status "未确认编辑检查点":
+      - strong: 本来源核对会话
+      - paragraph: 编辑在确认前不会创建任务。
+    - strong: 1 项待确认
+    - generic: 确认后才会进入今日和任务中心
+    - generic "原始通知与定位依据":
+      - text: 原始通知与定位依据
+    - paragraph: "[D16新编匿名Development] 请在月底前后向宣传组提交摄影作品说明稿，以宣传组确认收妥说明稿为完成；确切日期稍后公布。"
+    - region "项目树待确认事项":
+      - region "同一通知的独立事件核对":
+        - paragraph: 任务与独立事件在这一页核对。保存事件字段纠正后，确认任务时会在同一笔正式提交中保存独立事件和已选任务。
+        - region "独立事件人工核对":
+          - heading "核对独立事件" [level=3]
+          - paragraph: 此处编辑是你的纠正，原模型回答和首次建议不变。原文依据仍可在上方定位；时间不确定时不生成日程。
+          - region "未处理原文逐片段核对":
+            - heading "尚未处理的原文" [level=3]
+            - paragraph: 若片段包含遗漏任务、事件或时间，请先在本页补录。只有确认它是非任务说明或样本出处后，才单独记录信息核对；不会自动处理所有片段。
+            - paragraph: 当前片段覆盖完整；保存成功仍不代表语义已经裁决。
+          - status: 当前没有未保存的事件输入。
+          - button "依据原文补充独立事件" [disabled]
+      - article:
+        - checkbox "选择该任务"
+        - generic: 选择该任务
+        - generic: "1"
+        - strong: 向宣传组提交摄影作品说明稿
+        - time:
+          - text: 日期待定 · 月底前后
+        - button "编辑":
+          - text: 编辑
+        - generic: 其他
+        - generic: 约 30 分钟
+        - generic: 1 项材料
+        - paragraph: 下一步提交摄影作品说明稿
+        - paragraph: 首次建议、原文和你的修改分开保留。编辑后先点“保存修改”，再正式核对确认；只有显示“检查点已保存”的工程入口可恢复未确认输入。
+        - region "任务完整事实":
+          - paragraph:
+            - strong: 提交 → 摄影作品说明稿
+            - text: · 无附加条件
+          - paragraph: 当前已保存状态：待执行 / 有效；当前处置：pending
+          - paragraph: 时间：已提取；材料：已提取；事件：原文未说明
+          - paragraph: 日期待定：用户已明确接受先保存任务；时间原文和待补充状态仍保留，未分配日期或提醒。
+          - generic "原文依据 · 21–41"
+          - generic "原文依据 · 41–56"
+          - generic "当前已保存任务属性（原答另行保留）"
+          - generic "材料：摄影作品说明稿"
+          - generic "本次完整原文（包括无截止说明）"
+          - generic "原始时间：月底前后"
+          - paragraph: 用户操作：correct_fact ENGINEERING_REPLAY：原文明确表示确切日期稍后公布，当前保留未知 · 2026-10-01T01:39:47.735Z
+          - paragraph: 用户操作：accept_pending_date · 2026-10-01T01:39:48.036Z
+          - paragraph: 用户操作：review_material · 2026-10-01T01:39:48.777Z
+          - paragraph: 用户操作：review_task · 2026-10-01T01:39:48.777Z
+          - paragraph: 模型建议不自动勾选。当前明细为已保存的有效事实；原始响应与首次建议保留不变。
+          - generic "原始响应与首次建议（不含后续编辑）"
+          - generic "全字段与关系明细"
+        - region "事实核对与修改：向宣传组提交摄影作品说明稿":
+          - status: 本项事实编辑尚未正式确认。
+          - paragraph: 请核对当前标题“向宣传组提交摄影作品说明稿”与动作、对象、条件、时间、材料和来源。核对不等于勾选，也不会创建正式任务。
+          - generic "核对时间与当前未知的原文依据"
+          - paragraph: 精确时间可确定到时分；仅日期不代表午夜截止；模糊时段和未公布时间保留原文、未知值，不需要编造日期。个人计划日期与通知截止分别保留。
+          - paragraph: 月底前后 · 当前未知：不生成具体时刻 · 模糊或尚未公布
+          - button "补充遗漏的时间依据" [disabled]
+          - paragraph: 以下操作只记录接受日期待定，不填日期、不取消时间待核对标记，也不会自动创建或勾选任务。
+          - button "已保存：接受日期仍待定" [disabled]
+          - paragraph: 之后再点“本项事实已核对”并主动选择加入任务；未保存的编辑不能确认。
+          - button "重新核对材料：摄影作品说明稿" [disabled]
+          - button "本项已核对（已保存）" [disabled]
+          - generic "修正动作、对象或材料"
+          - region "条件、依赖与事件纠正：向宣传组提交摄影作品说明稿":
+            - paragraph: 人工纠正单独保存，不改变模型原回答。
+            - button "核对执行条件" [disabled]
+            - button "核对前置依赖" [disabled]
+            - button "核对活动关联" [disabled]
+            - button "依据原文补充材料" [disabled]
+        - button "稍后核对此项" [disabled]
+        - button "记录此项不需要" [disabled]
+        - generic "为什么这样拆？"
+        - button "不需要" [disabled]:
+          - text: 不需要
+        - button "加入任务" [disabled]:
+          - text: 加入任务
+      - region "通知漏项与新旧要求纠正":
+        - paragraph: 人工纠正单独保存，不改变模型原回答。
+        - button "纠正旧要求与新要求" [disabled]
+        - button "依据原文补充漏任务" [disabled]
+    - contentinfo:
+      - button "稍后再处理"

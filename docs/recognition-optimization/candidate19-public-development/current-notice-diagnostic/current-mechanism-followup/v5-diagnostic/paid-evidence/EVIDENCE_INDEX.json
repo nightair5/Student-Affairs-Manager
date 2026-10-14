@@ -1,0 +1,115 @@
+{
+  "role": "ACTUAL_MODEL_RECORDINGS_WITH_ENGINEERING_PRODUCT_REPLAY_NOT_HUMAN",
+  "batch": "V5-CURRENT-REAL-NOTICE-DEVELOPMENT-R1",
+  "finalBuild": {
+    "baseHead": "4fd9d6951ecb3096d6777c26ff24896ac541dba1",
+    "sourceDigest": "612fde68461e",
+    "url": "http://127.0.0.1:6880/",
+    "database": "rco-mainline-01-02-i1-d27-plan-recorded-v5-paid-accepted-1007"
+  },
+  "localOriginals": [
+    {
+      "path": ".data/v5-current-notice/diagnostic/ALL_CURRENT_RESULTS.json",
+      "sha256": "1efc50085eb83d079fc4c69e942dba2e40cca645a4b6dff028eefa7689001fe0"
+    },
+    {
+      "path": ".data/v5-current-notice/diagnostic/POST_PROGRAM_CURRENT_RESULTS.json",
+      "sha256": "94aa1966d68fa211be24bede3dcda18b3eb932c2a4fb66271cab8a843baa08ea"
+    },
+    {
+      "path": ".data/v5-current-notice/browser/FINAL_CANONICAL.json",
+      "sha256": "e2693b6000636ada8046b3fe53dd27e727e3b2c0d9dd279baf79dba207189d15"
+    },
+    {
+      "path": ".data/v5-current-notice/browser/FINAL_MEASUREMENT.json",
+      "sha256": "033358030d19ecc9c5e51d1923f0a16b215e0fd0720c5d1fb4564376f20e3fcf"
+    },
+    {
+      "path": ".data/v5-current-notice/browser/ACCEPTED_DOM.json",
+      "sha256": "979d669af4a4fe52621db233fcea952131717b65b1207bfaa4ad18a4a9084b12"
+    },
+    {
+      "path": ".data/v5-current-notice/browser/BEFORE_DOM.json",
+      "sha256": "59f3cb10fbbc4dee3c92e5b21e5f62b76aea28b6ce83d9b7bf5691221ce61925"
+    },
+    {
+      "path": ".data/v5-current-notice/browser/FINAL_HOME.png",
+      "sha256": "025df812cc13cca83c9ce6dc2585ef888953e5870620cf1f11906e4521213614"
+    },
+    {
+      "path": ".data/v5-current-notice/browser/FINAL_HOME_DOM.txt",
+      "sha256": "90e3f3c9d986ef792f66cf0d1bdcd0e784bae2dfc6389ac3231d6bb10dda4280"
+    }
+  ],
+  "publicEvidence": [
+    {
+      "path": "browser/ACCEPTED_DOM.json",
+      "sha256": "59864f605539d783629f9a4af8a0e8de3e48d6e404fed56982dc912aa047a25e"
+    },
+    {
+      "path": "browser/BEFORE_DOM.json",
+      "sha256": "bd91b33276af53fa6869a02d91e9ad2581648f98207c8e1bfe2e2a871eec6530"
+    },
+    {
+      "path": "browser/CANONICAL.json",
+      "sha256": "c8e8c13ae045508f70b07d9a3a112f05c625f8a5654d87cf045a8a8c41810aa7"
+    },
+    {
+      "path": "browser/CONSOLE.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "browser/FINAL_HOME.png",
+      "sha256": "025df812cc13cca83c9ce6dc2585ef888953e5870620cf1f11906e4521213614"
+    },
+    {
+      "path": "browser/FINAL_HOME_DOM.txt",
+      "sha256": "1199d6e1ff3f8b0cf016621d982e6e0a2fbe8c94d070995e234d1cb332a5235b"
+    },
+    {
+      "path": "browser/MEASUREMENT.json",
+      "sha256": "7d4048d188e0925660217730ce6da592e2b7ee4c6d47cfe06f6604822449aaf3"
+    },
+    {
+      "path": "BROWSER_EVIDENCE.md",
+      "sha256": "1204442cab9bc6deddeb6a8f1b9a44df26130a415831be7424961285003d734e"
+    },
+    {
+      "path": "EXECUTION_SUMMARY.json",
+      "sha256": "80988547e2478bf3867d4e954d3fca4a805e1363c540a5e953c0dadb872694fa"
+    },
+    {
+      "path": "FACT_ADJUDICATION.json",
+      "sha256": "ca986033ad975ec266aea452ed24118df2a30ad85ca7b7dd169aab916248d4da"
+    },
+    {
+      "path": "FINAL_READ_ONLY_SCENE.json",
+      "sha256": "e12edffaa3d90d5c3cd75941ddff2e4bc65d1b4fb6211d47803f5e6bdd6193fb"
+    },
+    {
+      "path": "FROZEN_DISPLAY_REPORT.json",
+      "sha256": "8ebbf98513c908361fb3e01330650d4d6b4d5b52b2c120caf306944dbb51a71d"
+    },
+    {
+      "path": "IMPLEMENTATION.md",
+      "sha256": "a20a93ba0a8adb2e5426609f166d095134b6cdf1156a64fe2be0773188c1e0c4"
+    },
+    {
+      "path": "MODEL_FACTS.json",
+      "sha256": "72718a26deee5be4dbc708476bd777a3ae4709902c9d86c69344e56946e34370"
+    },
+    {
+      "path": "POST_PROGRAM_REPORT.json",
+      "sha256": "0cb48e872c0474515e804ab64bbc86d518d116c9b1169345717b81635369533b"
+    },
+    {
+      "path": "PRODUCT_DIAGNOSTIC.json",
+      "sha256": "3ca0b45e934240aeff9d9389e5bbc11873fab8f9f0cb113911f4447507f563cf"
+    },
+    {
+      "path": "VALIDATION.md",
+      "sha256": "e285cfc90d69ae45a16e1b6c80e77dd56bc227dab80cb7e1d5677a68cb45c6b0"
+    }
+  ],
+  "note": "Original HTTP response bytes and authorization remain local; MODEL_FACTS is a structured copy with response SHA, canonical is a public summary. Process pending captures are not final verified readback. Four actual model units; two engineering fixtures excluded from model denominator."
+}

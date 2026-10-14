@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-09T10:52:21.360Z",
+  "role": "LOOPBACK_HTTP_NOT_BROWSER_CLICK",
+  "homepageStatus": 200,
+  "modelPostStatus": 403,
+  "modelPostBody": "C19_MODEL_AND_EXTERNAL_ROUTES_DISABLED",
+  "manifest": {
+    "origin": "http://127.0.0.1:6917",
+    "database": "rco-mainline-01-02-i1-d27-plan-recorded-rn20261009-1805",
+    "build": "ac45bb4693b7 / source fdbf658f9d68",
+    "role": "ENGINEERING_REPLAY",
+    "mode": "ORDINARY_APP_FIXED_RECORDING",
+    "databaseOpenedByPage": "NOT_OBSERVED",
+    "databaseInitializesOnPageLoad": true,
+    "batch": "FACT-ROLE-CURRENT-REAL-NOTICE-DEVELOPMENT-20261009-R1",
+    "batchLabel": "当前事实角色契约：4份官方节选单臂固定录制；不是实时AI、配对获胜或Holdout",
+    "knownSettledRecordings": 4,
+    "historicalControls": 0,
+    "anonymousFixtures": 0,
+    "plannedRequests": 4,
+    "batchComplete": true,
+    "files": [
+      {
+        "name": "browser.js",
+        "sha256": "d19806f1c3f54e15951825ba815cccbb19c95c646d55a92a2eac2dcb27e06830"
+      },
+      {
+        "name": "browser.css",
+        "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+      }
+    ],
+    "recordingsSha256": "b20316bafd872c4e052fe5ce96e5f34821d81354bce56b8090625ab6c4d27334",
+    "modelCallsByBrowser": 0
+  },
+  "recordings": [
+    {
+      "ordinal": 1,
+      "sourceId": "RN-01",
+      "responseSha256": "5fd97a235266bfa882ca4a30210d191ad216461301c550c474f9e8bc8e15d371"
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "RN-02",
+      "responseSha256": "b7736b8e1190f0638c11866bcb15a7092a2cc0a466fc781092e29ba776183e10"
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "RN-03",
+      "responseSha256": "31b93b86730aea7ffdb0e63b8fd66a8bce8fddeab52cebb40b1f47383879bd8e"
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "RN-04",
+      "responseSha256": "ff064f4fe5369622d4da88d1f7c02e79d58e31d9e233d4e2be25a2d6fe5a080e"
+    }
+  ],
+  "browserClicks": 0,
+  "indexedDbOpened": "NOT_OBSERVED"
+}

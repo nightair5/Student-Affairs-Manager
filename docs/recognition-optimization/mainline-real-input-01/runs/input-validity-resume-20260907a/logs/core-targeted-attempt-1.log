@@ -1,0 +1,106 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ ✓ src/experiments/realInput01/factCorrections.test.ts > controlled manual deltas, seen engineering only > keeps original complete structure and empty history equivalent 6ms
+ ✓ src/experiments/realInput01/factCorrections.test.ts > controlled manual deltas, seen engineering only > source action/object corrections stay inside complete proposition, not free text 11ms
+ ✓ src/experiments/realInput01/factCorrections.test.ts > controlled manual deltas, seen engineering only > manual material literals change effective values without becoming source evidence 3ms
+ ✓ src/experiments/realInput01/factCorrections.test.ts > controlled manual deltas, seen engineering only > full affected union preserves independent brother but rejects confirmed shared material or prerequisite 4ms
+ ✓ src/experiments/realInput01/factCorrections.test.ts > controlled manual deltas, seen engineering only > explicit ownership updates both edges; cannot hide an existing time relation 3ms
+ ✓ src/experiments/realInput01/factCorrections.test.ts > controlled manual deltas, seen engineering only > history is exact append-only, changed before/sparse payload and fields outside allowlist reject 5ms
+ ✓ src/experiments/realInput01/modelPolicy.test.ts > real-input live policy, seen engineering only > rejects live authority without explicit profile, old defaults unchanged 23ms
+ ✓ src/experiments/realInput01/modelPolicy.test.ts > real-input live policy, seen engineering only > selected/confidence do not replace explicit current fact review; normal confirm remains nonzero 3ms
+ ✓ src/experiments/realInput01/modelPolicy.test.ts > real-input live policy, seen engineering only > preserves condition condition-true and successful true 2ms
+ ✓ src/experiments/realInput01/modelPolicy.test.ts > real-input live policy, seen engineering only > preserves condition condition-false and successful true 2ms
+ ✓ src/experiments/realInput01/modelPolicy.test.ts > real-input live policy, seen engineering only > preserves condition condition-unknown and successful true 2ms
+ ✓ src/experiments/realInput01/modelPolicy.test.ts > real-input live policy, seen engineering only > old cancellation is blocked and valid new requirement can confirm 2ms
+ ✓ src/experiments/realInput01/modelPolicy.test.ts > real-input live policy, seen engineering only > prerequisite reject/defer/uncheck clears dependent selection; same-batch/confirmed work 12ms
+ ✓ src/experiments/realInput01/modelPolicy.test.ts > real-input live policy, seen engineering only > independent brother keeps its identity after unrelated factual edit and array reorder 3ms
+ ✓ src/experiments/realInput01/modelPolicy.test.ts > real-input live policy, seen engineering only > pure info is not a task, incomplete source stays unresolved 1ms
+ ✓ src/experiments/mainline05/semanticCapture.test.ts > MAINLINE05 source-first capture > persists a real source chain before the response and retains the raw/first response separately 51ms
+ ✓ src/experiments/mainline05/semanticCapture.test.ts > MAINLINE05 source-first capture > retains failed source without fake result when callback fails; operation collisions do not rewrite original 15ms
+ ✓ src/experiments/mainline05/semanticState.test.ts > MAINLINE05 joint state integrity > rejects version tampering on every read 71ms
+ ✓ src/experiments/mainline05/semanticState.test.ts > MAINLINE05 joint state integrity > rejects raw tampering on every read 30ms
+ ✓ src/experiments/mainline05/semanticRepository.test.ts > MAINLINE05 actual repository transactions > missing/wrong/invalid database fails without initialization or fallback 2ms
+ ✓ src/experiments/mainline05/semanticRepository.test.ts > MAINLINE05 actual repository transactions > edit abort leaves no history; confirmation abort preserves previously saved edit; retry succeeds once 122ms
+ ✓ src/experiments/mainline05/semanticRepository.test.ts > MAINLINE05 actual repository transactions > cross-client stale edit rejects and confirmed task properties cannot be overwritten 52ms
+ ✓ src/experiments/mainline05/semanticState.test.ts > MAINLINE05 joint state integrity > rejects first tampering on every read 32ms
+ ✓ src/experiments/mainline05/semanticState.test.ts > MAINLINE05 joint state integrity > rejects binding tampering on every read 34ms
+ ✓ src/experiments/mainline05/semanticState.test.ts > MAINLINE05 joint state integrity > rejects source tampering on every read 27ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > positive no-date confirms, persists and rereads without fake dates or reminders 78ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saved source correction immediately expires old suggestions, prior review=false 157ms
+ ✓ src/experiments/mainline05/semanticState.test.ts > MAINLINE05 joint state integrity > rejects scope tampering on every read 35ms
+ ✓ src/experiments/mainline05/semanticState.test.ts > MAINLINE05 joint state integrity > rejects history tampering on every read 41ms
+ ✓ src/experiments/mainline05/semanticState.test.ts > MAINLINE05 joint state integrity > allows JSON object ordering and whitespace without rewriting original raw text; arrays stay ordered 30ms
+ ✓ src/experiments/mainline05/semanticState.test.ts > MAINLINE05 joint state integrity > rejects a pre-existing receipt object before any source transaction 28ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > positive condition-true confirms, persists and rereads without fake dates or reminders 48ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > positive revision confirms, persists and rereads without fake dates or reminders 47ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > condition-false cannot be confirmed but remains recoverable 33ms
+ ✓ src/experiments/mainline05/semanticState.test.ts > MAINLINE05 joint state integrity > failed semantic references retain the returned original receipt without a valid result or tasks 78ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > condition-unknown cannot be confirmed but remains recoverable 28ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > vague cannot be confirmed but remains recoverable 37ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > information can be reviewed without fake tasks or projects 18ms
+ ✓ src/experiments/mainline05/semanticState.test.ts > MAINLINE05 joint state integrity > rejects changing source identity and first response even if all dependent hashes were recomputed 35ms
+stdout | src/experiments/mainline05/semanticView.test.ts > MAINLINE05 fidelity and view ledger > all 8 human notices retain full supplied facts and explicit positive/negative user outcomes
+MAINLINE05_LEDGER=[{"kind":"multi","tasks":2,"materials":2,"timePoints":2,"wrongDefaults":0},{"kind":"no-date","tasks":1,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"vague","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"information","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"condition-true","tasks":1,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"condition-false","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"condition-unknown","tasks":0,"materials":0,"timePoints":0,"wrongDefaults":0},{"kind":"revision","tasks":1,"materials":0,"timePoints":0,"wrongDefaults":0}]
+
+ ✓ src/experiments/mainline05/semanticView.test.ts > MAINLINE05 fidelity and view ledger > preserves original protected V2 42-field measure 54ms
+ ✓ src/experiments/mainline05/semanticView.test.ts > MAINLINE05 fidelity and view ledger > all 8 human notices retain full supplied facts and explicit positive/negative user outcomes 300ms
+ ✓ src/experiments/mainline05/semanticView.test.ts > MAINLINE05 fidelity and view ledger > date-only labels never invent a clock time and explicit times identify the business timezone 0ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saved source correction immediately expires old suggestions, prior review=true 127ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > ordinary multi supports partial then remainder, same-panel batch, raw text and full material attributes 133ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > edits are explicit, adopted exactly, source raw time and first response remain untouched 64ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > no-date accepts a user date-only value; planned_start and event-time edits reject before history write 133ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > linked event actually persists with original times and does not prevent its correct task confirming 40ms
+ ✓ src/experiments/mainline05/mainlineAcceptance.test.tsx > MAINLINE05 existing interface characterization (not missing-module failures) > valid true-condition response is complete in new semantics but not equivalent to old V2 22ms
+ ✓ src/experiments/mainline05/mainlineAcceptance.test.tsx > MAINLINE05 existing interface characterization (not missing-module failures) > old apply needs draft.result; a source-first semantic draft must use an explicit new entry 4ms
+ ✓ src/experiments/mainline05/mainlineAcceptance.test.tsx > MAINLINE05 existing interface characterization (not missing-module failures) > real App accepts only verified semantic runtime and never reads legacy storage during rendering 19ms
+ ✓ src/experiments/mainline05/mainlineAcceptance.test.tsx > MAINLINE05 existing interface characterization (not missing-module failures) > real calendar keeps undated tasks findable and date-only edits free of artificial clocks in two host timezones 133ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > shared event keeps all original edges and one canonical event: submit then print 72ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > shared event keeps all original edges and one canonical event: print then submit 78ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > cancellation without replacement preserves the separate new directive and allows explicit disposition 34ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > sparse/unknown selections and stale edits are rejected without write 23ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saved correction preserves a previously confirmed task and independent source confirmation 701ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > shared material with independent times grows ownership without duplicated/overwritten facts; reordered=false 94ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > shared material with independent times grows ownership without duplicated/overwritten facts; reordered=true 67ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > bad scope blocks only affected item; unrelated sibling really confirms 35ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > real task dependencies require the parent to be confirmed or in the same explicit batch 45ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > optional suggestion is not default selected, but a genuine safe user confirmation can succeed 17ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > dependency-first sequential confirmation preserves each own date and the explicit dependency 58ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > new ownership mode still rejects own-multiple without bypassing first issues 23ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > new ownership mode still rejects cycle without bypassing first issues 23ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > new ownership mode still rejects bad-prerequisite-scope without bypassing first issues 23ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=false 302ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > bad dependency references reject capture, and an unknown prerequisite cannot be forced through a batch 33ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > the original composer mode retains its historical dependency result; only explicit05 separates ownership 3ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > S01 current prerequisite reject cancels dependent selection while preserving first response 41ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > S01 current prerequisite defer cancels dependent selection while preserving first response 63ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > S01 current prerequisite uncheck cancels dependent selection while preserving first response 44ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > S01 confirmed prerequisite and reversed task order keep valid dependent default selection 54ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > S02 unaccounted information cannot masquerade as fully reviewed 13ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > S02 unresolved information cannot masquerade as fully reviewed 11ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > S03 explicit material-time edges only, order submit 58ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > S03 explicit material-time edges only, order print 60ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=true 348ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > S03 explicit material-time edges only, order batch 41ms
+ ✓ src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > S03 original explicit material deadlines remain present and unchanged after the independent sibling confirms 58ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > failed reading correction leaves old input usable; saving then restoring still requires a new suggestion 102ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > an unsent page correction preserves the explicitly selected page and can confirm normally 98ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > late response for a corrected in-flight input fails cleanly and preserves the response as failure evidence 21ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saves real source and pending run before response; unchanged content does not create a second version 21ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > no selected flag can skip explicit review; reviewed no-date saves with zero time/reminders and reopens 85ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > explicit saved date/title invalidate old review and are the confirmed values; rollback is atomic 152ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-true and nonzero normal confirmations 60ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-false and nonzero normal confirmations 28ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-unknown and nonzero normal confirmations 30ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > truth/status revision and nonzero normal confirmations 92ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > manual material repair persists exact values, keeps originals and independent brother confirmation 474ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > whole-source versions remain immutable, old pending draft is stale, confirmed task survives 278ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > changed source-only reading and duplicate operation cannot silently replace original; failed save rolls back 8ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > tampered first/effective review/raw or canonical is rejected, not repaired 64ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > pure information is explicitly disposed with no fake task; defer does not change unknown truth 26ms
+
+ Test Files  9 passed (9)
+      Tests  94 passed (94)
+   Start at  06:59:43
+   Duration  4.36s (transform 1.57s, setup 0ms, collect 4.64s, tests 6.21s, environment 2ms, prepare 2.52s)
+

@@ -1,0 +1,23 @@
+{
+  "batch": "TASK-REQUIREMENTS-FACT-ROLE-DEVELOPMENT-20261009-R1",
+  "count": 8,
+  "purpose": "Test entity-owned presence and explicit source appointment roles versus the latest TaskRequirements input",
+  "hypothesis": "One entity/owner authority reduces duplicate presence contradictions and appointment-as-deadline errors without losing actual materials, independent duties or unknown endpoints.",
+  "denominatorPerArm": 4,
+  "order": "AB/BA/AB/BA",
+  "commonRules": "Same committed public converter, source references and ordinary first display. Generator schema/field instructions differ as one package; no Prompt-only causal attribution.",
+  "seen": "Author anonymous Development; new outputs unavailable at freeze, same broad scenarios intentionally developed. Neither Holdout nor independent human truth.",
+  "conclusions": [
+    "WHOLE_NET_GAIN_NO_NEW_CRITICAL_RISK",
+    "TARGET_ERRORS_REDUCED_NO_WHOLE_GAIN",
+    "MIXED_PROGRESS",
+    "NO_BENEFIT",
+    "EVIDENCE_INCOMPLETE"
+  ],
+  "extras": {
+    "retry": 0,
+    "repair": 0,
+    "verifier": 0,
+    "extraSamples": 0
+  }
+}

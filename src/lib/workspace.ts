@@ -275,7 +275,7 @@ export function buildConfirmedTask(
         id: `${taskId}-created`,
         field: '任务',
         before: '',
-        after: source.extractionMethod === 'deepseek-v4-flash'
+        after: source.extractionMethod?.startsWith('deepseek-v4-flash')
           ? '由用户确认 DeepSeek 建议后创建'
           : '由用户确认本地规则建议后创建',
         changedAt: now,

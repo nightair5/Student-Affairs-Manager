@@ -1,0 +1,15 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ ✓ src/experiments/realInput01/runtime.test.ts (23 tests) 3389ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > saved correction preserves a previously confirmed task and independent source confirmation  540ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=true  326ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > manual material repair persists exact values, keeps originals and independent brother confirmation  476ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > whole-source versions remain immutable, old pending draft is stale, confirmed task survives  352ms
+ ✓ src/experiments/realInput01/acceptance.test.tsx (10 tests) 631ms
+
+ Test Files  2 passed (2)
+      Tests  33 passed (33)
+   Start at  15:41:42
+   Duration  6.26s (transform 705ms, setup 0ms, collect 1.38s, tests 4.02s, environment 0ms, prepare 469ms)
+

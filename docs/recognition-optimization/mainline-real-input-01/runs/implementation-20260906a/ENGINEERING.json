@@ -1,0 +1,250 @@
+{
+  "stage": "MAINLINE-REAL-INPUT-01",
+  "status": "PASS_PARTIAL_HELPERS_NOT_FULL_ENGINEERING_GATE",
+  "baselineHead": "56d0545fd8ffdd7b71f9feeed1ad9ac22a705dbe",
+  "modelCalls": 0,
+  "feesCny": 0,
+  "checks": [
+    {
+      "name": "new helpers",
+      "status": "PASS",
+      "files": 2,
+      "tests": 20,
+      "command": "node node_modules/vitest/vitest.mjs run src/experiments/realInput01/inputReceipt.test.ts src/experiments/realInput01/modelWire.test.ts --reporter=dot --cache=false",
+      "log": {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/targeted-attempt-2.log",
+        "sha256": "433fcfb6027dc81b9fd103448181fcd03671bb45dc9b5f3150b24bbb0d65e454"
+      }
+    },
+    {
+      "name": "current App TypeScript project",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node node_modules/typescript/bin/tsc -p tsconfig.app.json --noEmit --incremental false",
+      "log": {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/type-attempt-2.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "new-directory ESLint",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node node_modules/eslint/bin/eslint.js src/experiments/realInput01",
+      "log": {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/lint-targeted-attempt-2.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "earlyObservations": {
+    "tests": "Before review: first 12/12 then 17/17. After retained failing regressions and fixes: final 20/20 is the only final denominator; attempts are not summed.",
+    "type": "An earlier console-only attempt exposed TS18046 / TS7006 at modelWire lines 47,107,109 (4 diagnostics). Explicit never-return guards fixed narrowing. The retained type log is the later successful run; this does not erase the earlier failure.",
+    "cache": "The first 12-test run did not explicitly disable the Vitest node_modules cache; all later test runs used --cache=false. Existing protected evaluation caches and tracked files are unchanged."
+  },
+  "notRun": [
+    "full layered engineering",
+    "build/stable bundle isolation",
+    "full functional tests",
+    "full security scan",
+    "dependency audit",
+    "local OCR/PDF",
+    "real Edge",
+    "actual download",
+    "independent repository readback",
+    "live recognition"
+  ],
+  "unchangedEvidence": {
+    "description": "No existing product source, tests or dependencies changed. Historical MAINLINE05 42/42 and other results remain historical evidence only; no new 42-field App measurement.",
+    "protected": {
+      "count": 946,
+      "sha256": "a06efdaf29b96b8da448e9caf87104f05e183bdf08465e037789d650c27a8ef5",
+      "expectedSha256": "a06efdaf29b96b8da448e9caf87104f05e183bdf08465e037789d650c27a8ef5",
+      "pass": true
+    },
+    "existing13Unchanged": true
+  },
+  "interpretation": "Helper tests are not reading accuracy, candidate quality, real App confirmation or persistence acceptance.",
+  "sourceBinding": [
+    {
+      "path": "src/experiments/realInput01/inputReceipt.test.ts",
+      "sha256": "421e2d67fca01e07bc044c75fc935f844b357d8b08f8707a4aa463e59e28fcd6"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.ts",
+      "sha256": "72b342a095d607db888a54819da80cab98fcd35b59c1d52db86157ee204a7372"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.test.ts",
+      "sha256": "c1d30304037b8d5409db82a293dd3efaa7f8545cb3413e85d816a941c8343c19"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "sha256": "7221e249bfbb855db4142a96ce12f8bde98be3e679dc41c3ad77c7e0e8cbd526"
+    },
+    {
+      "path": "src/experiments/realInput01/seenInputs.ts",
+      "sha256": "e8c7cffc614b9be14c35657ddeb19592ddc3d8e8964423764889b46d37dd5583"
+    }
+  ],
+  "retainedAttempts": [
+    {
+      "status": "PASS",
+      "tests": 17,
+      "log": {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/targeted-attempt-1.log",
+        "sha256": "c811dd39e4d23976397a96124ea66131b0de52fae4187183d8968febf711bea7"
+      }
+    },
+    {
+      "status": "EXPECTED_REPRODUCTION_FAIL",
+      "passed": 5,
+      "failed": 2,
+      "log": {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/receipt-reproduction-attempt-1.log",
+        "sha256": "9cb576c2fe827d95159cd9e0f3364a80b19fe868b84f0f666875527cfdaaafda"
+      }
+    },
+    {
+      "status": "EXPECTED_REPRODUCTION_FAIL",
+      "passed": 12,
+      "failed": 1,
+      "log": {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/wire-reproduction-attempt-1.log",
+        "sha256": "84364bc7b6b1c0ee321d2897d62149775560e216a10041bb8eb1ca8df621301e"
+      }
+    },
+    {
+      "status": "PASS",
+      "tests": 20,
+      "log": {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/targeted-attempt-2.log",
+        "sha256": "433fcfb6027dc81b9fd103448181fcd03671bb45dc9b5f3150b24bbb0d65e454"
+      }
+    }
+  ],
+  "documentCorrection": "Independent review caught the in-progress helper log binding selecting the empty lint log. This final record binds exact named targeted-attempt-2.log; retained reproduction failures are not rewritten.",
+  "allLogs": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/lint-targeted-attempt-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/lint-targeted-attempt-2.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/receipt-reproduction-attempt-1.log",
+      "sha256": "9cb576c2fe827d95159cd9e0f3364a80b19fe868b84f0f666875527cfdaaafda"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/targeted-attempt-1.log",
+      "sha256": "c811dd39e4d23976397a96124ea66131b0de52fae4187183d8968febf711bea7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/targeted-attempt-2.log",
+      "sha256": "433fcfb6027dc81b9fd103448181fcd03671bb45dc9b5f3150b24bbb0d65e454"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/type-attempt-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/type-attempt-2.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/wire-reproduction-attempt-1.log",
+      "sha256": "84364bc7b6b1c0ee321d2897d62149775560e216a10041bb8eb1ca8df621301e"
+    }
+  ],
+  "documentDeliveryChecks": {
+    "status": "PASS_DOCUMENT_AND_PROTECTION_CHECK",
+    "protected": 946,
+    "sourceShaBound": 5,
+    "logsBound": 8,
+    "contextLines": 81,
+    "gitDiffCheck": "PASS_TRACKED_DOCS_BEFORE_STAGE; final staged raw logs have EOF-only whitespace warnings",
+    "scope": "PASS",
+    "sensitivePatternCheck": "standalone credential/private-key pattern absent; not a full security scan",
+    "earlyCheck": "An initial ad-hoc unbounded sk- pattern matched nine substrings inside old task-prefixed identifiers. Read-only classification confirmed all nine belong to the protected old log prefix; zero standalone credential-prefix matches. The corrected word-boundary document check passed; no old scanner, test or log content was modified.",
+    "deliveryPaths": 18,
+    "sourcePathsNotStaged": 5,
+    "rawLogWhitespace": {
+      "status": "PRESERVED_GENERATED_EVIDENCE",
+      "note": "git diff --cached --check flags four raw Vitest logs for a new blank line at EOF; actual command tool wrapper reported nonzero. Do not trim retained failure/success attempt logs to erase original output.",
+      "paths": [
+        "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/receipt-reproduction-attempt-1.log",
+        "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/targeted-attempt-1.log",
+        "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/targeted-attempt-2.log",
+        "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/wire-reproduction-attempt-1.log"
+      ]
+    }
+  },
+  "gitLogStorage": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/lint-targeted-attempt-1.log",
+      "workingSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitStoredSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exactSame": true,
+      "onlyCRLFtoLF": true,
+      "removedCrBytes": 0
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/lint-targeted-attempt-2.log",
+      "workingSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitStoredSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exactSame": true,
+      "onlyCRLFtoLF": true,
+      "removedCrBytes": 0
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/receipt-reproduction-attempt-1.log",
+      "workingSha256": "9cb576c2fe827d95159cd9e0f3364a80b19fe868b84f0f666875527cfdaaafda",
+      "gitStoredSha256": "94b9103bf6a35cfa41428c755e8c9e5ad6a243b97361c74223a9ccede63d0c26",
+      "exactSame": false,
+      "onlyCRLFtoLF": true,
+      "removedCrBytes": 75
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/targeted-attempt-1.log",
+      "workingSha256": "c811dd39e4d23976397a96124ea66131b0de52fae4187183d8968febf711bea7",
+      "gitStoredSha256": "f109b9c5e392f52a73cc073f35c71e8139478285e4ed8d25e8aab071ec7c57a8",
+      "exactSame": false,
+      "onlyCRLFtoLF": true,
+      "removedCrBytes": 10
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/targeted-attempt-2.log",
+      "workingSha256": "433fcfb6027dc81b9fd103448181fcd03671bb45dc9b5f3150b24bbb0d65e454",
+      "gitStoredSha256": "2bf1c9b93818c5a35d677e86012e6a008a1b20bff279b2c69b0fb992b19b3fc6",
+      "exactSame": false,
+      "onlyCRLFtoLF": true,
+      "removedCrBytes": 10
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/type-attempt-1.log",
+      "workingSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitStoredSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exactSame": true,
+      "onlyCRLFtoLF": true,
+      "removedCrBytes": 0
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/type-attempt-2.log",
+      "workingSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitStoredSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exactSame": true,
+      "onlyCRLFtoLF": true,
+      "removedCrBytes": 0
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/implementation-20260906a/logs/wire-reproduction-attempt-1.log",
+      "workingSha256": "84364bc7b6b1c0ee321d2897d62149775560e216a10041bb8eb1ca8df621301e",
+      "gitStoredSha256": "d5ec499efcd1cbb902dbdc1971f8750020ea7f165f3ee80e18fdd57f2e1a2ee6",
+      "exactSame": false,
+      "onlyCRLFtoLF": true,
+      "removedCrBytes": 29
+    }
+  ]
+}

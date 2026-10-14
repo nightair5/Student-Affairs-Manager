@@ -1,0 +1,91 @@
+{
+  "version": "current-role-source-facts-1.0.0",
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "sources": [
+    {
+      "sourceId": "current-role-public-FRESH-02",
+      "minimumFacts": [
+        "激活账号、登录并完成预注册；可无损拆合",
+        "该类别开放窗口2026-08-13至2026-08-27，仅日期，不编造时刻",
+        "类别资格未提供个人信息时未知，不默认适用",
+        "新版窗口优先，旧窗口端点未给出，不能造历史日期"
+      ],
+      "disputes": [
+        "仅摘录大陆本科生类别，不声称覆盖全部身份"
+      ],
+      "checks": [
+        "all obligations and non-task events",
+        "time values/precision/owner and reference-time",
+        "material/format/naming/destination/completion",
+        "qualification versus prerequisite, no unsupported personal true",
+        "explicit task-event association or documented ambiguity",
+        "all titles/free prose and extra facts source-supported"
+      ],
+      "rule": "Any definite critical fact error => INCORRECT. Disputed or unadjudicated necessary facts/prose => UNKNOWN. Only complete source-supported facts => PROVISIONAL_CORRECT. User fixes excluded."
+    },
+    {
+      "sourceId": "current-role-public-FRESH-04",
+      "minimumFacts": [
+        "登记为一个核心义务；去向、联系方式、返校安排是条件下的字段要求，不分拆无谓待办",
+        "2026-07-16日期截止，无具体时刻",
+        "学工系统应用是明确操作入口，不是接收回执",
+        "短期离厦条件未知，不假定所有人离校"
+      ],
+      "disputes": [
+        "日前是否包含当天的日终边界未独立裁决；保持日期精度"
+      ],
+      "checks": [
+        "all obligations and non-task events",
+        "time values/precision/owner and reference-time",
+        "material/format/naming/destination/completion",
+        "qualification versus prerequisite, no unsupported personal true",
+        "explicit task-event association or documented ambiguity",
+        "all titles/free prose and extra facts source-supported"
+      ],
+      "rule": "Any definite critical fact error => INCORRECT. Disputed or unadjudicated necessary facts/prose => UNKNOWN. Only complete source-supported facts => PROVISIONAL_CORRECT. User fixes excluded."
+    },
+    {
+      "sourceId": "current-role-public-FRESH-05",
+      "minimumFacts": [
+        "报名为有意参加者的条件义务；是否已录取未知",
+        "活动起止2026-07-06至2026-07-10，日期精度，线上",
+        "报名截止2026-06-30T17:00，与活动起止不同",
+        "正式学员准备终端设备，不能把录取前置写完成",
+        "二维码内容不在文本内，不能推测具体URL"
+      ],
+      "disputes": [
+        "节选未包含课程海报与全部场次，不宣称读全图片"
+      ],
+      "checks": [
+        "all obligations and non-task events",
+        "time values/precision/owner and reference-time",
+        "material/format/naming/destination/completion",
+        "qualification versus prerequisite, no unsupported personal true",
+        "explicit task-event association or documented ambiguity",
+        "all titles/free prose and extra facts source-supported"
+      ],
+      "rule": "Any definite critical fact error => INCORRECT. Disputed or unadjudicated necessary facts/prose => UNKNOWN. Only complete source-supported facts => PROVISIONAL_CORRECT. User fixes excluded."
+    },
+    {
+      "sourceId": "current-role-public-FRESH-06",
+      "minimumFacts": [
+        "讲座为独立事件，2026-10-12T12:30至14:00，地点海韵园办公楼A栋302室",
+        "感兴趣者扫码报名，截止2026-10-11T12:00；不与活动时间混挂",
+        "50份午餐限制不是听众人数限制，不虚构前50名才可听课",
+        "具体二维码链接不在文本中"
+      ],
+      "disputes": [
+        "海报主讲内容不在本节选，不补标题中的业务义务"
+      ],
+      "checks": [
+        "all obligations and non-task events",
+        "time values/precision/owner and reference-time",
+        "material/format/naming/destination/completion",
+        "qualification versus prerequisite, no unsupported personal true",
+        "explicit task-event association or documented ambiguity",
+        "all titles/free prose and extra facts source-supported"
+      ],
+      "rule": "Any definite critical fact error => INCORRECT. Disputed or unadjudicated necessary facts/prose => UNKNOWN. Only complete source-supported facts => PROVISIONAL_CORRECT. User fixes excluded."
+    }
+  ]
+}

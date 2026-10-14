@@ -1,0 +1,250 @@
+TAP version 13
+# Subtest: the only successful path preserves raw response, binds usage and uses the fixed upstream without redirects
+ok 1 - the only successful path preserves raw response, binds usage and uses the fixed upstream without redirects
+  ---
+  duration_ms: 71.6378
+  type: 'test'
+  ...
+# Subtest: credential is not read at gateway initialization or on rejected origins and routes
+ok 2 - credential is not read at gateway initialization or on rejected origins and routes
+  ---
+  duration_ms: 35.2984
+  type: 'test'
+  ...
+# Subtest: browser cannot supply a model, endpoint, request body, usage or alternative budget book
+ok 3 - browser cannot supply a model, endpoint, request body, usage or alternative budget book
+  ---
+  duration_ms: 21.1643
+  type: 'test'
+  ...
+# Subtest: missing credentials do not consume an allowance and are never reflected
+ok 4 - missing credentials do not consume an allowance and are never reflected
+  ---
+  duration_ms: 26.0084
+  type: 'test'
+  ...
+# Subtest: reserved request cannot be duplicated by a second gateway or service restart
+ok 5 - reserved request cannot be duplicated by a second gateway or service restart
+  ---
+  duration_ms: 53.0833
+  type: 'test'
+  ...
+# Subtest: concurrent browser and runner cannot dispatch the same logical request twice
+ok 6 - concurrent browser and runner cannot dispatch the same logical request twice
+  ---
+  duration_ms: 63.1356
+  type: 'test'
+  ...
+# Subtest: HTTP failure stops dispatch, retains the full reserve and returns only a safe code
+ok 7 - HTTP failure stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 47.2575
+  type: 'test'
+  ...
+# Subtest: redirect stops dispatch, retains the full reserve and returns only a safe code
+ok 8 - redirect stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 44.872
+  type: 'test'
+  ...
+# Subtest: wrong content type stops dispatch, retains the full reserve and returns only a safe code
+ok 9 - wrong content type stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 52.1405
+  type: 'test'
+  ...
+# Subtest: response size exceeded stops dispatch, retains the full reserve and returns only a safe code
+ok 10 - response size exceeded stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 56.688
+  type: 'test'
+  ...
+# Subtest: credential echo stops dispatch, retains the full reserve and returns only a safe code
+ok 11 - credential echo stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 52.0245
+  type: 'test'
+  ...
+# Subtest: usage missing stops dispatch, retains the full reserve and returns only a safe code
+ok 12 - usage missing stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 49.4192
+  type: 'test'
+  ...
+# Subtest: model drift stops dispatch, retains the full reserve and returns only a safe code
+ok 13 - model drift stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 47.5939
+  type: 'test'
+  ...
+# Subtest: timeout aborts once; late completion cannot settle or append a second response
+ok 14 - timeout aborts once; late completion cannot settle or append a second response
+  ---
+  duration_ms: 103.7829
+  type: 'test'
+  ...
+# Subtest: raw-result storage failure cannot release money or silently claim success
+ok 15 - raw-result storage failure cannot release money or silently claim success
+  ---
+  duration_ms: 43.6678
+  type: 'test'
+  ...
+# Subtest: frozen request object cannot be swapped after gateway creation
+ok 16 - frozen request object cannot be swapped after gateway creation
+  ---
+  duration_ms: 36.5931
+  type: 'test'
+  ...
+# Subtest: unapproved parameters and non-text content fail before any gateway can be created
+ok 17 - unapproved parameters and non-text content fail before any gateway can be created
+  ---
+  duration_ms: 28.511
+  type: 'test'
+  ...
+# Subtest: JSON escaped output value cannot reach recording, response or settlement
+not ok 18 - JSON escaped output value cannot reach recording, response or settlement
+  ---
+  duration_ms: 46.6353
+  type: 'test'
+  location: 'C:\\Users\\Winner\\student-affairs-multimodal-exp\\scripts\\real-input-model-gateway.node-test.mjs:124:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 502
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 502
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:130:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: JSON escaped object key cannot reach recording, response or settlement
+not ok 19 - JSON escaped object key cannot reach recording, response or settlement
+  ---
+  duration_ms: 47.2685
+  type: 'test'
+  location: 'C:\\Users\\Winner\\student-affairs-multimodal-exp\\scripts\\real-input-model-gateway.node-test.mjs:124:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 502
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 502
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:130:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: nested model JSON value cannot reach recording, response or settlement
+not ok 20 - nested model JSON value cannot reach recording, response or settlement
+  ---
+  duration_ms: 41.9455
+  type: 'test'
+  location: 'C:\\Users\\Winner\\student-affairs-multimodal-exp\\scripts\\real-input-model-gateway.node-test.mjs:124:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 502
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 502
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:130:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: nested model JSON key cannot reach recording, response or settlement
+not ok 21 - nested model JSON key cannot reach recording, response or settlement
+  ---
+  duration_ms: 39.6381
+  type: 'test'
+  location: 'C:\\Users\\Winner\\student-affairs-multimodal-exp\\scripts\\real-input-model-gateway.node-test.mjs:124:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 502
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 502
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:130:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: twice nested model JSON cannot reach recording, response or settlement
+not ok 22 - twice nested model JSON cannot reach recording, response or settlement
+  ---
+  duration_ms: 56.9697
+  type: 'test'
+  location: 'C:\\Users\\Winner\\student-affairs-multimodal-exp\\scripts\\real-input-model-gateway.node-test.mjs:124:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 502
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 502
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:130:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: discarded duplicate JSON property cannot reach recording, response or settlement
+not ok 23 - discarded duplicate JSON property cannot reach recording, response or settlement
+  ---
+  duration_ms: 38.7235
+  type: 'test'
+  location: 'C:\\Users\\Winner\\student-affairs-multimodal-exp\\scripts\\real-input-model-gateway.node-test.mjs:124:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 502
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 502
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:130:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: normal escaped Chinese and nested JSON retain exact raw bytes and can be recorded and settled
+ok 24 - normal escaped Chinese and nested JSON retain exact raw bytes and can be recorded and settled
+  ---
+  duration_ms: 46.5549
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 18
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1241.767

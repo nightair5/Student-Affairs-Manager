@@ -1,0 +1,123 @@
+{
+  "version": "baseline-conversion-download-comparison-1",
+  "claim": "2026-09-13由用户在6632真实页面取得的两个实际文件；证明当时该浏览器实验库的独立读库与完整导出一致，不冒充本轮自动浏览器操作。",
+  "independentDownload": {
+    "file": "real-input-local-evidence (12).json",
+    "bytes": 158212,
+    "fileSha256": "f5aae71cfd42be43a6c9650778ede70f82749607efd3eeb04889603c71d9765a",
+    "embeddedWorkspaceSha256": "a7c6073d673691335ee5eb54cab9f3834ffcfd7a8689e73a4133d08f09fe250d"
+  },
+  "fullExportDownload": {
+    "file": "mainline-real-input-01-workspace (4).json",
+    "bytes": 209921,
+    "fileSha256": "e8b1b8797272378d691e265d5d131c688bb2a83c98b6a96950668679596602fb"
+  },
+  "workspaceExactEqual": true,
+  "workspaceSha256": "7a3b21a3fcbf02c19c5ae56cf3558cf4ea8aedacc214e6779b4100ecfc2b8c7f",
+  "fields": {
+    "tasks": {
+      "independentCount": 1,
+      "exportCount": 1,
+      "equal": true,
+      "sha256": "bfd55ce865a890f22eec856e0c07abd52df65aa7bf06dc0df77cbdf814e77776"
+    },
+    "materials": {
+      "independentCount": 1,
+      "exportCount": 1,
+      "equal": true,
+      "sha256": "5da0e56821bfa925d0cf326e104601ede28d4097a02ad7c0bd9a5847ec71b56e"
+    },
+    "timePoints": {
+      "independentCount": 1,
+      "exportCount": 1,
+      "equal": true,
+      "sha256": "b0d96d9b0b8527fd57d2aa174107b410546e2eca7be66fe96693fba8b224e231"
+    },
+    "sources": {
+      "independentCount": 2,
+      "exportCount": 2,
+      "equal": true,
+      "sha256": "fbedf76baca05cb9b2e422af2b99d80c4bdccfe653e99ca305a9eb4477ef77ff"
+    },
+    "sourceVersions": {
+      "independentCount": 2,
+      "exportCount": 2,
+      "equal": true,
+      "sha256": "ab95f443d07446299cf2c5c066717ebd819fd881da6c9eb756caf8ef8e2bddaf"
+    },
+    "recognitionRuns": {
+      "independentCount": 2,
+      "exportCount": 2,
+      "equal": true,
+      "sha256": "16d0a26ee4a24428411af96bc26f2562fa50f74b1d2ee2477b0a1cb47c17f42d"
+    },
+    "extractionDrafts": {
+      "independentCount": 2,
+      "exportCount": 2,
+      "equal": true,
+      "sha256": "dd46a2edf71b60ec3516b8a89f97b6630b1c438aeea051d44de4dd2f74f3e9de"
+    },
+    "historyRecords": {
+      "independentCount": 5,
+      "exportCount": 5,
+      "equal": true,
+      "sha256": "d3d11fd2c4afce7fbd84488ba471661d468a36205dca4d6458c1c823a6222772"
+    },
+    "changeProposals": {
+      "independentCount": 0,
+      "exportCount": 0,
+      "equal": true,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "events": {
+      "independentCount": 0,
+      "exportCount": 0,
+      "equal": true,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "evidenceRefs": {
+      "independentCount": 8,
+      "exportCount": 8,
+      "equal": true,
+      "sha256": "fe0c724081e07cbdaedcd76fa5e59d450cedbd508bc37bf947579cbacf96c3bd"
+    },
+    "revisions": {
+      "independentCount": 0,
+      "exportCount": 0,
+      "equal": true,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "savedAt": "2026-09-13T11:44:49.631Z",
+  "savedTasks": [
+    {
+      "id": "mainline05:task:source:52f2e332:draft:1:1:task-fill-registration-form",
+      "title": "填写送样登记单"
+    }
+  ],
+  "savedMaterials": [
+    {
+      "id": "mainline05:material:source:52f2e332:draft:1:1:material-registration-form",
+      "name": "送样登记单",
+      "required": true,
+      "status": "unverified",
+      "relatedTaskIds": [
+        "mainline05:task:source:52f2e332:draft:1:1:task-fill-registration-form"
+      ]
+    }
+  ],
+  "savedTimePoints": [
+    {
+      "id": "mainline05:time:source:52f2e332:draft:1:1:tp-fill-deadline",
+      "rawText": "2026年9月17日14:00前",
+      "normalizedValue": "2026-09-17T14:00",
+      "relatedTaskIds": [
+        "mainline05:task:source:52f2e332:draft:1:1:task-fill-registration-form"
+      ]
+    }
+  ],
+  "limits": [
+    "该文件对证明的一项已保存任务及其材料、时间有效。",
+    "文件不含第二条新旧要求替代旅程；本轮官方浏览器连接失败，因此该旅程仍未在当前浏览器复验。"
+  ]
+}

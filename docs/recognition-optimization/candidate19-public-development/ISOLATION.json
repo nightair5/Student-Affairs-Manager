@@ -1,0 +1,29 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "newDatabase": "rco-mainline-01-02-i1-d27-plan-recorded-public1004",
+  "newOrigin": "http://127.0.0.1:6836",
+  "listener": "127.0.0.1",
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/api/deepseek",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/deepseek",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/sync",
+      "status": 403
+    }
+  ],
+  "oldPortsNotVisited": [
+    6835
+  ],
+  "oldUserDatabaseAccess": 0,
+  "newModelCalls": 0,
+  "originalContact": "Only ignored local source originals; committed excerpts use example.invalid"
+}

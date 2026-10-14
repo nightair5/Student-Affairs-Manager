@@ -1,0 +1,6 @@
+src/experiments/mainline05/runtime.ts(18,38): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type 'AnySemanticState' is not assignable to type 'SemanticState'.
+      Type 'RealInputState' is not assignable to type 'SemanticState'.
+        Types of property 'version' are incompatible.
+          Type '"mainline-real-input-state-1"' is not assignable to type '"mainline05-semantic-state-1"'.

@@ -1,0 +1,178 @@
+TAP version 13
+# Subtest: conservative context envelope and integer settlement have no floating-point budget drift
+ok 1 - conservative context envelope and integer settlement have no floating-point budget drift
+  ---
+  duration_ms: 0.9358
+  type: 'test'
+  ...
+# Subtest: normal request reserves durably before completion; only complete usage releases surplus
+ok 2 - normal request reserves durably before completion; only complete usage releases surplus
+  ---
+  duration_ms: 104.2043
+  type: 'test'
+  ...
+# Subtest: all 24 logical units share one ledger across reopened browser/runner handles
+ok 3 - all 24 logical units share one ledger across reopened browser/runner handles
+  ---
+  duration_ms: 2345.2663
+  type: 'test'
+  ...
+# Subtest: 10 yuan is checked using spent upper cost plus the next full reservation
+ok 4 - 10 yuan is checked using spent upper cost plus the next full reservation
+  ---
+  duration_ms: 166.592
+  type: 'test'
+  ...
+# Subtest: concurrent tabs cannot reserve twice; cross-instance overlap retains one pending request
+ok 5 - concurrent tabs cannot reserve twice; cross-instance overlap retains one pending request
+  ---
+  duration_ms: 65.3047
+  type: 'test'
+  ...
+# Subtest: two independent Node processes cannot bypass the shared filesystem lock
+ok 6 - two independent Node processes cannot bypass the shared filesystem lock
+  ---
+  duration_ms: 197.4617
+  type: 'test'
+  ...
+# Subtest: process restart after a durable reservation never resends or releases it
+ok 7 - process restart after a durable reservation never resends or releases it
+  ---
+  duration_ms: 109.9841
+  type: 'test'
+  ...
+# Subtest: timeout/unknown failure retains full reservation and permanently stops this book
+ok 8 - timeout/unknown failure retains full reservation and permanently stops this book
+  ---
+  duration_ms: 160.1575
+  type: 'test'
+  ...
+# Subtest: missing usage cannot settle or release the reservation
+ok 9 - missing usage cannot settle or release the reservation
+  ---
+  duration_ms: 75.8692
+  type: 'test'
+  ...
+# Subtest: mismatched total cannot settle or release the reservation
+ok 10 - mismatched total cannot settle or release the reservation
+  ---
+  duration_ms: 62.3789
+  type: 'test'
+  ...
+# Subtest: zero tokens for nonempty input cannot settle or release the reservation
+ok 11 - zero tokens for nonempty input cannot settle or release the reservation
+  ---
+  duration_ms: 55.5634
+  type: 'test'
+  ...
+# Subtest: excess input cannot settle or release the reservation
+ok 12 - excess input cannot settle or release the reservation
+  ---
+  duration_ms: 61.4834
+  type: 'test'
+  ...
+# Subtest: excess output cannot settle or release the reservation
+ok 13 - excess output cannot settle or release the reservation
+  ---
+  duration_ms: 74.4239
+  type: 'test'
+  ...
+# Subtest: wrong model cannot settle or release the reservation
+ok 14 - wrong model cannot settle or release the reservation
+  ---
+  duration_ms: 98.4203
+  type: 'test'
+  ...
+# Subtest: incomplete response cannot settle or release the reservation
+ok 15 - incomplete response cannot settle or release the reservation
+  ---
+  duration_ms: 63.2405
+  type: 'test'
+  ...
+# Subtest: unsupported reasoning cannot settle or release the reservation
+ok 16 - unsupported reasoning cannot settle or release the reservation
+  ---
+  duration_ms: 57.3994
+  type: 'test'
+  ...
+# Subtest: tools cannot settle or release the reservation
+ok 17 - tools cannot settle or release the reservation
+  ---
+  duration_ms: 60.8827
+  type: 'test'
+  ...
+# Subtest: string usage cannot settle or release the reservation
+ok 18 - string usage cannot settle or release the reservation
+  ---
+  duration_ms: 63.7323
+  type: 'test'
+  ...
+# Subtest: even a parseable HTTP failure is not settled
+ok 19 - even a parseable HTTP failure is not settled
+  ---
+  duration_ms: 86.9422
+  type: 'test'
+  ...
+# Subtest: response reuse is a binding anomaly, not another cheap completed call
+ok 20 - response reuse is a binding anomaly, not another cheap completed call
+  ---
+  duration_ms: 80.7331
+  type: 'test'
+  ...
+# Subtest: price/context/protocol changes halt before dispatch; frozen requests cannot change
+ok 21 - price/context/protocol changes halt before dispatch; frozen requests cannot change
+  ---
+  duration_ms: 53.7493
+  type: 'test'
+  ...
+# Subtest: expired billing review and premature C are rejected
+ok 22 - expired billing review and premature C are rejected
+  ---
+  duration_ms: 50.5911
+  type: 'test'
+  ...
+# Subtest: returned snapshot cannot change the frozen request, including its byte length
+ok 23 - returned snapshot cannot change the frozen request, including its byte length
+  ---
+  duration_ms: 70.8191
+  type: 'test'
+  ...
+# Subtest: snapshot mutation cannot replace B inputs or permit an incompatible C candidate
+ok 24 - snapshot mutation cannot replace B inputs or permit an incompatible C candidate
+  ---
+  duration_ms: 1223.9447
+  type: 'test'
+  ...
+# Subtest: a valid-prefix truncation is detected by the independent write-once receipts
+ok 25 - a valid-prefix truncation is detected by the independent write-once receipts
+  ---
+  duration_ms: 66.9408
+  type: 'test'
+  ...
+# Subtest: missing ledger and abandoned lock do not initialize a fresh allowance
+ok 26 - missing ledger and abandoned lock do not initialize a fresh allowance
+  ---
+  duration_ms: 67.5971
+  type: 'test'
+  ...
+# Subtest: recomputing row hashes does not make a mismatched settlement valid
+ok 27 - recomputing row hashes does not make a mismatched settlement valid
+  ---
+  duration_ms: 52.4695
+  type: 'test'
+  ...
+# Subtest: manifest changes and response shape tricks fail without coercion
+ok 28 - manifest changes and response shape tricks fail without coercion
+  ---
+  duration_ms: 26.7085
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5703.7156

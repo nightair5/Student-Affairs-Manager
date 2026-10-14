@@ -16,6 +16,8 @@ describe('demo parser', () => {
     const result = createSuggestion('', 'file', '课程作业说明.pdf')
     expect(result.confidence).toBe('低')
     expect(result.evidence).toContain('课程作业说明.pdf')
+    expect(result.deadline).toBe('')
+    expect(result.timePoint).toMatchObject({ normalizedValue: null, needsConfirmation: true })
   })
 
   it('splits multiple dates into independent suggestions with local evidence', () => {
@@ -110,7 +112,8 @@ describe('demo parser', () => {
       '联系指导老师',
       '上传确认函',
     ])
-    expect(results.every((item) => item.deadline === '2026-08-06T18:00')).toBe(true)
+    expect(results.every((item) => item.deadline === '2026-08-06')).toBe(true)
+    expect(results.every((item) => item.timePoint?.isAllDay === true)).toBe(true)
     expect(results.every((item) => item.category === '比赛')).toBe(true)
   })
 

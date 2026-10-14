@@ -1,0 +1,4897 @@
+{
+  "version": "candidate11-b2-postrun-analysis-1",
+  "status": "B2_DEVELOPMENT_RESULTS_READY_FOR_REVIEW",
+  "evaluationType": "seen-development-ablation",
+  "validRun": true,
+  "bindingSha": "66ddb8814eb8d19307004f4ac2efcc65174b5debdb6c712325602ebecc07e95c",
+  "requests": 24,
+  "sources": 6,
+  "variants": [
+    "V00",
+    "V10",
+    "V01",
+    "V11"
+  ],
+  "arms": {
+    "V00": {
+      "sources": 6,
+      "schemaAndReferenceValid": 6,
+      "completeSources": 1,
+      "major": 26,
+      "severe": 1,
+      "forbidden": 5,
+      "teachingLeak": 0,
+      "task": {
+        "tp": 11,
+        "fp": 5,
+        "fn": 2,
+        "precision": 0.6875,
+        "recall": 0.8461538461538461,
+        "f1": 0.7586206896551724
+      },
+      "promptBytes": 87510,
+      "fieldCategories": {
+        "time": 2,
+        "material": 3,
+        "condition": 4,
+        "completion": 1,
+        "dependency": 3,
+        "revision": 1,
+        "semantics": 4,
+        "other": 0
+      }
+    },
+    "V10": {
+      "sources": 6,
+      "schemaAndReferenceValid": 6,
+      "completeSources": 1,
+      "major": 27,
+      "severe": 1,
+      "forbidden": 5,
+      "teachingLeak": 0,
+      "task": {
+        "tp": 11,
+        "fp": 5,
+        "fn": 2,
+        "precision": 0.6875,
+        "recall": 0.8461538461538461,
+        "f1": 0.7586206896551724
+      },
+      "promptBytes": 89388,
+      "fieldCategories": {
+        "time": 3,
+        "material": 3,
+        "condition": 4,
+        "completion": 1,
+        "dependency": 3,
+        "revision": 1,
+        "semantics": 4,
+        "other": 0
+      }
+    },
+    "V01": {
+      "sources": 6,
+      "schemaAndReferenceValid": 6,
+      "completeSources": 1,
+      "major": 25,
+      "severe": 1,
+      "forbidden": 4,
+      "teachingLeak": 0,
+      "task": {
+        "tp": 11,
+        "fp": 4,
+        "fn": 2,
+        "precision": 0.7333333333333333,
+        "recall": 0.8461538461538461,
+        "f1": 0.7857142857142856
+      },
+      "promptBytes": 115056,
+      "fieldCategories": {
+        "time": 2,
+        "material": 4,
+        "condition": 4,
+        "completion": 1,
+        "dependency": 2,
+        "revision": 1,
+        "semantics": 4,
+        "other": 0
+      }
+    },
+    "V11": {
+      "sources": 6,
+      "schemaAndReferenceValid": 6,
+      "completeSources": 1,
+      "major": 33,
+      "severe": 1,
+      "forbidden": 5,
+      "teachingLeak": 0,
+      "task": {
+        "tp": 10,
+        "fp": 5,
+        "fn": 3,
+        "precision": 0.6666666666666666,
+        "recall": 0.7692307692307693,
+        "f1": 0.7142857142857142
+      },
+      "promptBytes": 116934,
+      "fieldCategories": {
+        "time": 3,
+        "material": 4,
+        "condition": 6,
+        "completion": 1,
+        "dependency": 3,
+        "revision": 1,
+        "semantics": 6,
+        "other": 0
+      }
+    }
+  },
+  "pairs": [
+    {
+      "sourceId": "C11-B1-D01",
+      "V00": true,
+      "V10": true,
+      "V01": true,
+      "V11": true
+    },
+    {
+      "sourceId": "C11-B1-D02",
+      "V00": false,
+      "V10": false,
+      "V01": false,
+      "V11": false
+    },
+    {
+      "sourceId": "C11-B1-D03",
+      "V00": false,
+      "V10": false,
+      "V01": false,
+      "V11": false
+    },
+    {
+      "sourceId": "C11-B1-D04",
+      "V00": false,
+      "V10": false,
+      "V01": false,
+      "V11": false
+    },
+    {
+      "sourceId": "C11-B1-D05",
+      "V00": false,
+      "V10": false,
+      "V01": false,
+      "V11": false
+    },
+    {
+      "sourceId": "C11-B1-D06",
+      "V00": false,
+      "V10": false,
+      "V01": false,
+      "V11": false
+    }
+  ],
+  "factorial": {
+    "M": {
+      "withoutExamples": 0,
+      "withExamples": 0
+    },
+    "E": {
+      "withoutMethod": 0,
+      "withMethod": 0
+    },
+    "interaction": 0,
+    "metric": "complete source count; descriptive only"
+  },
+  "decision": "REJECT_CANDIDATE11",
+  "selected": null,
+  "cases": [
+    {
+      "unitId": "C11-B1-D01-V00",
+      "ordinal": 1,
+      "sourceId": "C11-B1-D01",
+      "variant": "V00",
+      "requestBytes": 14361,
+      "responseSha": "32337bffe803ee9c47734cdaf0eb5aa5159408c7a6718dbee27bb21dcabeb5cd",
+      "usage": {
+        "input_tokens": 4432,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 987,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5419
+      },
+      "costUpperMicroCny": 16760,
+      "waitingMs": 4362,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": true,
+          "knownChecksPass": true,
+          "taskMetrics": {
+            "expected": 2,
+            "predicted": 2,
+            "alignedPairs": 2,
+            "correctPairs": 2,
+            "alignment": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1,
+              "recall": 1
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D01-T01",
+              "predictedId": "task-check-scholarship-publicity-list",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.speechAct",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.polarity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.modality",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                },
+                {
+                  "path": "detail.completionCriteria",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D01-T02",
+              "predictedId": "task-publish-publicity-after-verification",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.speechAct",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.polarity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.modality",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 1,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": true,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D01-V10",
+      "ordinal": 2,
+      "sourceId": "C11-B1-D01",
+      "variant": "V10",
+      "requestBytes": 14674,
+      "responseSha": "4165a77484ee4eb06649693d1063129d581e452b428249aa0075a7d90f07f972",
+      "usage": {
+        "input_tokens": 4495,
+        "input_tokens_details": {
+          "cached_tokens": 640
+        },
+        "output_tokens": 1028,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5523
+      },
+      "costUpperMicroCny": 17214,
+      "waitingMs": 4600,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": true,
+          "knownChecksPass": true,
+          "taskMetrics": {
+            "expected": 2,
+            "predicted": 2,
+            "alignedPairs": 2,
+            "correctPairs": 2,
+            "alignment": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1,
+              "recall": 1
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D01-T01",
+              "predictedId": "task-check-scholarship-publicity-list",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.speechAct",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.polarity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.modality",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                },
+                {
+                  "path": "detail.completionCriteria",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D01-T02",
+              "predictedId": "task-publish-publicity-after-verification",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.speechAct",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.polarity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.modality",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 1,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": true,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D01-V01",
+      "ordinal": 3,
+      "sourceId": "C11-B1-D01",
+      "variant": "V01",
+      "requestBytes": 18952,
+      "responseSha": "0544d48e6f3d8df510345f18b93fc3970c4bb534f9616b721751b7d7ac399554",
+      "usage": {
+        "input_tokens": 5398,
+        "input_tokens_details": {
+          "cached_tokens": 640
+        },
+        "output_tokens": 1070,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6468
+      },
+      "costUpperMicroCny": 19356,
+      "waitingMs": 4553,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": true,
+          "knownChecksPass": true,
+          "taskMetrics": {
+            "expected": 2,
+            "predicted": 2,
+            "alignedPairs": 2,
+            "correctPairs": 2,
+            "alignment": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1,
+              "recall": 1
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D01-T01",
+              "predictedId": "task-check-scholarship-list",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.speechAct",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.polarity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.modality",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                },
+                {
+                  "path": "detail.completionCriteria",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D01-T02",
+              "predictedId": "task-publish-notice",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.speechAct",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.polarity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.modality",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 1,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": true,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D01-V11",
+      "ordinal": 4,
+      "sourceId": "C11-B1-D01",
+      "variant": "V11",
+      "requestBytes": 19265,
+      "responseSha": "4b5cb480ef2704422c0c678b0e8e87b13120f845aa3741d5a68e2f8d6ae432ce",
+      "usage": {
+        "input_tokens": 5461,
+        "input_tokens_details": {
+          "cached_tokens": 640
+        },
+        "output_tokens": 1071,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6532
+      },
+      "costUpperMicroCny": 19490,
+      "waitingMs": 4477,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": true,
+          "knownChecksPass": true,
+          "taskMetrics": {
+            "expected": 2,
+            "predicted": 2,
+            "alignedPairs": 2,
+            "correctPairs": 2,
+            "alignment": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1,
+              "recall": 1
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D01-T01",
+              "predictedId": "task-check-scholarship-list",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.speechAct",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.polarity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.modality",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                },
+                {
+                  "path": "detail.completionCriteria",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D01-T02",
+              "predictedId": "task-publish-notice",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.speechAct",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.polarity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.modality",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 1,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": true,
+        "major": 0,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D02-V00",
+      "ordinal": 5,
+      "sourceId": "C11-B1-D02",
+      "variant": "V00",
+      "requestBytes": 14240,
+      "responseSha": "42039155f88b6d30ea471c881ecf13828c551e40c3a1af96803fb4462dc87000",
+      "usage": {
+        "input_tokens": 4376,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 807,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5183
+      },
+      "costUpperMicroCny": 15208,
+      "waitingMs": 3805,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 1,
+            "predicted": 1,
+            "alignedPairs": 1,
+            "correctPairs": 0,
+            "alignment": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0,
+              "recall": 0
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D02-T01",
+              "predictedId": "task-approval-hall-use",
+              "aligned": true,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.modality",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                },
+                {
+                  "path": "detail.completionCriteria",
+                  "pass": false
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 0,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "fieldFailures": [
+          {
+            "goldId": "D02-T01",
+            "path": "detail.completionCriteria",
+            "category": "completion"
+          }
+        ],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 1,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D02-V10",
+      "ordinal": 6,
+      "sourceId": "C11-B1-D02",
+      "variant": "V10",
+      "requestBytes": 14553,
+      "responseSha": "175a0679077195234d456ae971c3ed54097cf6e427c7478fcddd602598024a1b",
+      "usage": {
+        "input_tokens": 4439,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 767,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5206
+      },
+      "costUpperMicroCny": 15014,
+      "waitingMs": 3678,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 1,
+            "predicted": 1,
+            "alignedPairs": 1,
+            "correctPairs": 0,
+            "alignment": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0,
+              "recall": 0
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D02-T01",
+              "predictedId": "task-approval-obtain",
+              "aligned": true,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.modality",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": false
+                },
+                {
+                  "path": "detail.completionCriteria",
+                  "pass": false
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 0,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "fieldFailures": [
+          {
+            "goldId": "D02-T01",
+            "path": "timeRaw",
+            "category": "time"
+          },
+          {
+            "goldId": "D02-T01",
+            "path": "detail.completionCriteria",
+            "category": "completion"
+          }
+        ],
+        "fieldCategories": {
+          "time": 1,
+          "material": 0,
+          "condition": 0,
+          "completion": 1,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D02-V11",
+      "ordinal": 7,
+      "sourceId": "C11-B1-D02",
+      "variant": "V11",
+      "requestBytes": 19144,
+      "responseSha": "88425e1f39f4d2b6db799887fe39fc47a18571dbb154ea891d43a478abaf91ed",
+      "usage": {
+        "input_tokens": 5405,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 798,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6203
+      },
+      "costUpperMicroCny": 17194,
+      "waitingMs": 3908,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 1,
+            "predicted": 1,
+            "alignedPairs": 1,
+            "correctPairs": 0,
+            "alignment": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0,
+              "recall": 0
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D02-T01",
+              "predictedId": "task-approval",
+              "aligned": true,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.modality",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                },
+                {
+                  "path": "detail.completionCriteria",
+                  "pass": false
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 0,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "fieldFailures": [
+          {
+            "goldId": "D02-T01",
+            "path": "detail.completionCriteria",
+            "category": "completion"
+          }
+        ],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 1,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D02-V01",
+      "ordinal": 8,
+      "sourceId": "C11-B1-D02",
+      "variant": "V01",
+      "requestBytes": 18831,
+      "responseSha": "2e458b49d69a947db681e6ddb0e1e5ce30d9e2f43d9b3377b3e56b491e903aae",
+      "usage": {
+        "input_tokens": 5342,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 798,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6140
+      },
+      "costUpperMicroCny": 17068,
+      "waitingMs": 4575,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 1,
+            "predicted": 1,
+            "alignedPairs": 1,
+            "correctPairs": 0,
+            "alignment": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0,
+              "recall": 0
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D02-T01",
+              "predictedId": "task-approval",
+              "aligned": true,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.modality",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                },
+                {
+                  "path": "detail.completionCriteria",
+                  "pass": false
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 0,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "fieldFailures": [
+          {
+            "goldId": "D02-T01",
+            "path": "detail.completionCriteria",
+            "category": "completion"
+          }
+        ],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 1,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D03-V10",
+      "ordinal": 9,
+      "sourceId": "C11-B1-D03",
+      "variant": "V10",
+      "requestBytes": 14704,
+      "responseSha": "dcf568c180ac19e071331a5ec1da9b14f600780be1f9e29ea26c9e570a4eb4d9",
+      "usage": {
+        "input_tokens": 4511,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 1474,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5985
+      },
+      "costUpperMicroCny": 20814,
+      "waitingMs": 5433,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 1,
+            "predicted": 3,
+            "alignedPairs": 1,
+            "correctPairs": 1,
+            "alignment": {
+              "tp": 1,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.3333333333333333,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 1,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.3333333333333333,
+              "recall": 1
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D03-T01",
+              "predictedId": "task-upload-poster",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "name": "material-format",
+              "pass": true
+            }
+          ],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 0,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 0,
+          "precision": 0.3333333333333333,
+          "recall": 1,
+          "f1": 0.5
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 0,
+        "forbidden": 2,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D03-V01",
+      "ordinal": 10,
+      "sourceId": "C11-B1-D03",
+      "variant": "V01",
+      "requestBytes": 18982,
+      "responseSha": "fb60fffcfcbd009afafba48e826f3476a7019e7b886b89d08d3cbf3975c7d104",
+      "usage": {
+        "input_tokens": 5414,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1481,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6895
+      },
+      "costUpperMicroCny": 22676,
+      "waitingMs": 5419,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 1,
+            "predicted": 3,
+            "alignedPairs": 1,
+            "correctPairs": 1,
+            "alignment": {
+              "tp": 1,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.3333333333333333,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 1,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.3333333333333333,
+              "recall": 1
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D03-T01",
+              "predictedId": "task-upload-poster",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "name": "material-format",
+              "pass": true
+            }
+          ],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 0,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 0,
+          "precision": 0.3333333333333333,
+          "recall": 1,
+          "f1": 0.5
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 0,
+        "forbidden": 2,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D03-V00",
+      "ordinal": 11,
+      "sourceId": "C11-B1-D03",
+      "variant": "V00",
+      "requestBytes": 14391,
+      "responseSha": "98ce2a59469909d95634f4677ada8d60c0f0157dbe0245702f80ae53e68ecf71",
+      "usage": {
+        "input_tokens": 4448,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 1485,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5933
+      },
+      "costUpperMicroCny": 20776,
+      "waitingMs": 5691,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 1,
+            "predicted": 3,
+            "alignedPairs": 1,
+            "correctPairs": 1,
+            "alignment": {
+              "tp": 1,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.3333333333333333,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 1,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.3333333333333333,
+              "recall": 1
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D03-T01",
+              "predictedId": "task-upload-poster",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "name": "material-format",
+              "pass": true
+            }
+          ],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 0,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 0,
+          "precision": 0.3333333333333333,
+          "recall": 1,
+          "f1": 0.5
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 0,
+        "forbidden": 2,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D03-V11",
+      "ordinal": 12,
+      "sourceId": "C11-B1-D03",
+      "variant": "V11",
+      "requestBytes": 19295,
+      "responseSha": "9cc038da501bd9b4adea5e57722a31aa7197d51cab43e858547978301042079f",
+      "usage": {
+        "input_tokens": 5477,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1480,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6957
+      },
+      "costUpperMicroCny": 22794,
+      "waitingMs": 5212,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 1,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 1,
+            "predicted": 3,
+            "alignedPairs": 1,
+            "correctPairs": 1,
+            "alignment": {
+              "tp": 1,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.3333333333333333,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 1,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.3333333333333333,
+              "recall": 1
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D03-T01",
+              "predictedId": "task-upload-poster",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "name": "material-format",
+              "pass": true
+            }
+          ],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 0,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 0,
+          "precision": 0.3333333333333333,
+          "recall": 1,
+          "f1": 0.5
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 0,
+        "forbidden": 2,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D04-V01",
+      "ordinal": 13,
+      "sourceId": "C11-B1-D04",
+      "variant": "V01",
+      "requestBytes": 19145,
+      "responseSha": "6c9776780f8adba776078f5ce3957a3e4576fe6ccb18248c9780a73296fb3fcf",
+      "usage": {
+        "input_tokens": 5458,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1515,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6973
+      },
+      "costUpperMicroCny": 23036,
+      "waitingMs": 6137,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 2,
+            "predicted": 3,
+            "alignedPairs": 2,
+            "correctPairs": 1,
+            "alignment": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.6666666666666666,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 1,
+              "fp": 2,
+              "fn": 1,
+              "precision": 0.3333333333333333,
+              "recall": 0.5
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D04-T01",
+              "predictedId": "task-proofread-volunteer-list",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D04-T02",
+              "predictedId": "task-backup-interview-recording",
+              "aligned": true,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 2,
+            "unknownCondition": 0,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.6666666666666666,
+          "recall": 1,
+          "f1": 0.8
+        },
+        "fieldFailures": [
+          {
+            "goldId": "D04-T02",
+            "path": "materials",
+            "category": "material"
+          }
+        ],
+        "fieldCategories": {
+          "time": 0,
+          "material": 1,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 2,
+        "severe": 0,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D04-V11",
+      "ordinal": 14,
+      "sourceId": "C11-B1-D04",
+      "variant": "V11",
+      "requestBytes": 19458,
+      "responseSha": "eb7595ca279f08a6d684d04e232a04d3b7d7c59c6ff8087cf419d27c37d5b7aa",
+      "usage": {
+        "input_tokens": 5521,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1342,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6863
+      },
+      "costUpperMicroCny": 21778,
+      "waitingMs": 5274,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 2,
+            "predicted": 3,
+            "alignedPairs": 2,
+            "correctPairs": 2,
+            "alignment": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.6666666666666666,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.6666666666666666,
+              "recall": 1
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D04-T01",
+              "predictedId": "task-proofread-volunteer-list",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D04-T02",
+              "predictedId": "task-backup-interview-recording",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 2,
+            "unknownCondition": 0,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.6666666666666666,
+          "recall": 1,
+          "f1": 0.8
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 0,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D04-V10",
+      "ordinal": 15,
+      "sourceId": "C11-B1-D04",
+      "variant": "V10",
+      "requestBytes": 14867,
+      "responseSha": "1636a5fc69f9acb80748aa2200b91cd6bcd815ba28a18c5a0f74faaf643c0a94",
+      "usage": {
+        "input_tokens": 4555,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 1320,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5875
+      },
+      "costUpperMicroCny": 19670,
+      "waitingMs": 5048,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 2,
+            "predicted": 3,
+            "alignedPairs": 2,
+            "correctPairs": 2,
+            "alignment": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.6666666666666666,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.6666666666666666,
+              "recall": 1
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D04-T01",
+              "predictedId": "task-proofread-volunteer-list",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D04-T02",
+              "predictedId": "task-backup-interview-recordings",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 2,
+            "unknownCondition": 0,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.6666666666666666,
+          "recall": 1,
+          "f1": 0.8
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 0,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D04-V00",
+      "ordinal": 16,
+      "sourceId": "C11-B1-D04",
+      "variant": "V00",
+      "requestBytes": 14554,
+      "responseSha": "e254d15fb5308ceea8f7cd4f5ccddee32f50bc6f53334823864b41bbdda3e914",
+      "usage": {
+        "input_tokens": 4492,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 1320,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5812
+      },
+      "costUpperMicroCny": 19544,
+      "waitingMs": 5030,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 2,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 2,
+            "predicted": 3,
+            "alignedPairs": 2,
+            "correctPairs": 2,
+            "alignment": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.6666666666666666,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.6666666666666666,
+              "recall": 1
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D04-T01",
+              "predictedId": "task-volunteer-list-proofread",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D04-T02",
+              "predictedId": "task-backup-interview-recordings",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 2,
+            "unknownCondition": 0,
+            "falseCondition": 0,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.6666666666666666,
+          "recall": 1,
+          "f1": 0.8
+        },
+        "fieldFailures": [],
+        "fieldCategories": {
+          "time": 0,
+          "material": 0,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 0,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D05-V11",
+      "ordinal": 17,
+      "sourceId": "C11-B1-D05",
+      "variant": "V11",
+      "requestBytes": 19864,
+      "responseSha": "18dfebece6c25493e05a8be867b34eec3a17a76e9366683c51822428222c7168",
+      "usage": {
+        "input_tokens": 5689,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1758,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7447
+      },
+      "costUpperMicroCny": 25442,
+      "waitingMs": 6434,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 3,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 3,
+            "predicted": 3,
+            "alignedPairs": 2,
+            "correctPairs": 1,
+            "alignment": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666
+            },
+            "correctness": {
+              "tp": 1,
+              "fp": 2,
+              "fn": 2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D05-T01",
+              "predictedId": null,
+              "aligned": false,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": false
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": false
+                },
+                {
+                  "path": "condition.value",
+                  "pass": false
+                },
+                {
+                  "path": "actionable",
+                  "pass": false
+                },
+                {
+                  "path": "dependencies",
+                  "pass": false
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": false
+                }
+              ]
+            },
+            {
+              "goldId": "D05-T02",
+              "predictedId": "task-practice-record",
+              "aligned": true,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D05-T03",
+              "predictedId": "task-extra-lunch",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 1,
+            "falseCondition": 1,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 1,
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666,
+          "f1": 0.6666666666666666
+        },
+        "fieldFailures": [
+          {
+            "goldId": "D05-T01",
+            "path": "semantics.status",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D05-T01",
+            "path": "semantics.validity",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D05-T01",
+            "path": "condition.value",
+            "category": "condition"
+          },
+          {
+            "goldId": "D05-T01",
+            "path": "actionable",
+            "category": "condition"
+          },
+          {
+            "goldId": "D05-T01",
+            "path": "dependencies",
+            "category": "dependency"
+          },
+          {
+            "goldId": "D05-T01",
+            "path": "materials",
+            "category": "material"
+          },
+          {
+            "goldId": "D05-T01",
+            "path": "timeRaw",
+            "category": "time"
+          },
+          {
+            "goldId": "D05-T02",
+            "path": "materials",
+            "category": "material"
+          }
+        ],
+        "fieldCategories": {
+          "time": 1,
+          "material": 2,
+          "condition": 2,
+          "completion": 0,
+          "dependency": 1,
+          "revision": 0,
+          "semantics": 2,
+          "other": 0
+        },
+        "complete": false,
+        "major": 10,
+        "severe": 0,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D05-V00",
+      "ordinal": 18,
+      "sourceId": "C11-B1-D05",
+      "variant": "V00",
+      "requestBytes": 14960,
+      "responseSha": "e9e44c121c22ab0eb5d2a0c333825a1444b9e5852eda0529bb75726c8285c7b3",
+      "usage": {
+        "input_tokens": 4660,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2302,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6962
+      },
+      "costUpperMicroCny": 27736,
+      "waitingMs": 8222,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 3,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 3,
+            "predicted": 4,
+            "alignedPairs": 3,
+            "correctPairs": 1,
+            "alignment": {
+              "tp": 3,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.75,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 1,
+              "fp": 3,
+              "fn": 2,
+              "precision": 0.25,
+              "recall": 0.3333333333333333
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D05-T01",
+              "predictedId": "task-set-up-venue",
+              "aligned": true,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": false
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D05-T02",
+              "predictedId": "task-submit-practice-record",
+              "aligned": true,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D05-T03",
+              "predictedId": "task-order-extra-lunch",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 2,
+            "unknownCondition": 1,
+            "falseCondition": 1,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 3,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.75,
+          "recall": 1,
+          "f1": 0.8571428571428571
+        },
+        "fieldFailures": [
+          {
+            "goldId": "D05-T01",
+            "path": "dependencies",
+            "category": "dependency"
+          },
+          {
+            "goldId": "D05-T02",
+            "path": "materials",
+            "category": "material"
+          }
+        ],
+        "fieldCategories": {
+          "time": 0,
+          "material": 1,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 1,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 3,
+        "severe": 0,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D05-V01",
+      "ordinal": 19,
+      "sourceId": "C11-B1-D05",
+      "variant": "V01",
+      "requestBytes": 19551,
+      "responseSha": "b17f6accd60c4f8182aa2d3f687c711b30b1514b87121bce9a2ff0309a4e8551",
+      "usage": {
+        "input_tokens": 5626,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1769,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7395
+      },
+      "costUpperMicroCny": 25404,
+      "waitingMs": 6523,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 3,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 3,
+            "predicted": 3,
+            "alignedPairs": 3,
+            "correctPairs": 2,
+            "alignment": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D05-T01",
+              "predictedId": "task-setup-venue",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D05-T02",
+              "predictedId": "task-submit-practice-record",
+              "aligned": true,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D05-T03",
+              "predictedId": "task-order-extra-lunch",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 1,
+            "unknownCondition": 1,
+            "falseCondition": 1,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "fieldFailures": [
+          {
+            "goldId": "D05-T02",
+            "path": "materials",
+            "category": "material"
+          }
+        ],
+        "fieldCategories": {
+          "time": 0,
+          "material": 1,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 0,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 1,
+        "severe": 0,
+        "forbidden": 0,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D05-V10",
+      "ordinal": 20,
+      "sourceId": "C11-B1-D05",
+      "variant": "V10",
+      "requestBytes": 15273,
+      "responseSha": "499915a73d8e7497f56b24ba53e45084b9ed84bb79f07aebff28a1bf875cddba",
+      "usage": {
+        "input_tokens": 4723,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2331,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7054
+      },
+      "costUpperMicroCny": 28094,
+      "waitingMs": 7888,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "SCORED",
+          "plannedSources": 1,
+          "expectedTasks": 3,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 3,
+            "predicted": 4,
+            "alignedPairs": 3,
+            "correctPairs": 1,
+            "alignment": {
+              "tp": 3,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.75,
+              "recall": 1
+            },
+            "correctness": {
+              "tp": 1,
+              "fp": 3,
+              "fn": 2,
+              "precision": 0.25,
+              "recall": 0.3333333333333333
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D05-T01",
+              "predictedId": "task-setup-venue",
+              "aligned": true,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": false
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D05-T02",
+              "predictedId": "task-submit-practice-record",
+              "aligned": true,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D05-T03",
+              "predictedId": "task-order-extra-lunch",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [],
+          "issues": [],
+          "states": {
+            "actionable": 2,
+            "unknownCondition": 1,
+            "falseCondition": 1,
+            "inactive": 0
+          }
+        },
+        "task": {
+          "tp": 3,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.75,
+          "recall": 1,
+          "f1": 0.8571428571428571
+        },
+        "fieldFailures": [
+          {
+            "goldId": "D05-T01",
+            "path": "dependencies",
+            "category": "dependency"
+          },
+          {
+            "goldId": "D05-T02",
+            "path": "materials",
+            "category": "material"
+          }
+        ],
+        "fieldCategories": {
+          "time": 0,
+          "material": 1,
+          "condition": 0,
+          "completion": 0,
+          "dependency": 1,
+          "revision": 0,
+          "semantics": 0,
+          "other": 0
+        },
+        "complete": false,
+        "major": 3,
+        "severe": 0,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "NOT_APPLICABLE"
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D06-V11",
+      "ordinal": 21,
+      "sourceId": "C11-B1-D06",
+      "variant": "V11",
+      "requestBytes": 19908,
+      "responseSha": "7a02a6178593caf41abc4fc9c1be903ee8e69f632258f906c0992cd25de769d9",
+      "usage": {
+        "input_tokens": 5704,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 2152,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7856
+      },
+      "costUpperMicroCny": 28624,
+      "waitingMs": 7177,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "ADJUDICATED_D06",
+          "plannedSources": 1,
+          "expectedTasks": 4,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 4,
+            "predicted": 3,
+            "alignedPairs": 2,
+            "correctPairs": 2,
+            "alignment": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.6666666666666666,
+              "recall": 0.5
+            },
+            "correctness": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.6666666666666666,
+              "recall": 0.5
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D06-OLD01",
+              "predictedId": null,
+              "aligned": false,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": false
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": false
+                },
+                {
+                  "path": "condition.value",
+                  "pass": false
+                },
+                {
+                  "path": "actionable",
+                  "pass": false
+                },
+                {
+                  "path": "dependencies",
+                  "pass": false
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": false
+                }
+              ]
+            },
+            {
+              "goldId": "D06-OLD02",
+              "predictedId": null,
+              "aligned": false,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": false
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": false
+                },
+                {
+                  "path": "condition.value",
+                  "pass": false
+                },
+                {
+                  "path": "actionable",
+                  "pass": false
+                },
+                {
+                  "path": "dependencies",
+                  "pass": false
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": false
+                }
+              ]
+            },
+            {
+              "goldId": "D06-T01",
+              "predictedId": "task-submit-guest-list",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D06-T02",
+              "predictedId": "task-submit-venue-map",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "name": "revision-one-effective",
+              "pass": true
+            },
+            {
+              "name": "revision-two-effective",
+              "pass": false
+            }
+          ],
+          "issues": [],
+          "adjudicationRule": "frozen action/object plus active-pending versus superseded-cancelled; combined old object is not a legal merge"
+        },
+        "task": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 2,
+          "precision": 0.6666666666666666,
+          "recall": 0.5,
+          "f1": 0.5714285714285715
+        },
+        "fieldFailures": [
+          {
+            "goldId": "D06-OLD01",
+            "path": "semantics.status",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "semantics.validity",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "condition.value",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "actionable",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "dependencies",
+            "category": "dependency"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "materials",
+            "category": "material"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "timeRaw",
+            "category": "time"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "semantics.status",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "semantics.validity",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "condition.value",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "actionable",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "dependencies",
+            "category": "dependency"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "materials",
+            "category": "material"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "timeRaw",
+            "category": "time"
+          },
+          {
+            "goldId": null,
+            "path": "checks.revision-two-effective",
+            "category": "revision"
+          }
+        ],
+        "fieldCategories": {
+          "time": 2,
+          "material": 2,
+          "condition": 4,
+          "completion": 0,
+          "dependency": 2,
+          "revision": 1,
+          "semantics": 4,
+          "other": 0
+        },
+        "complete": false,
+        "major": 19,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "FAIL",
+          "reason": "missing_task_endpoint",
+          "mapping": {
+            "D06-OLD01": null,
+            "D06-OLD02": null,
+            "D06-T01": "task-submit-guest-list",
+            "D06-T02": "task-submit-venue-map"
+          }
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D06-V01",
+      "ordinal": 22,
+      "sourceId": "C11-B1-D06",
+      "variant": "V01",
+      "requestBytes": 19595,
+      "responseSha": "632340fc76a011d10d158e33a529d76bc30807880672e8e6ad7f57acce022377",
+      "usage": {
+        "input_tokens": 5641,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 2156,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7797
+      },
+      "costUpperMicroCny": 28530,
+      "waitingMs": 7252,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "ADJUDICATED_D06",
+          "plannedSources": 1,
+          "expectedTasks": 4,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 4,
+            "predicted": 3,
+            "alignedPairs": 2,
+            "correctPairs": 2,
+            "alignment": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.6666666666666666,
+              "recall": 0.5
+            },
+            "correctness": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.6666666666666666,
+              "recall": 0.5
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D06-OLD01",
+              "predictedId": null,
+              "aligned": false,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": false
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": false
+                },
+                {
+                  "path": "condition.value",
+                  "pass": false
+                },
+                {
+                  "path": "actionable",
+                  "pass": false
+                },
+                {
+                  "path": "dependencies",
+                  "pass": false
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": false
+                }
+              ]
+            },
+            {
+              "goldId": "D06-OLD02",
+              "predictedId": null,
+              "aligned": false,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": false
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": false
+                },
+                {
+                  "path": "condition.value",
+                  "pass": false
+                },
+                {
+                  "path": "actionable",
+                  "pass": false
+                },
+                {
+                  "path": "dependencies",
+                  "pass": false
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": false
+                }
+              ]
+            },
+            {
+              "goldId": "D06-T01",
+              "predictedId": "task-submit-guest-list",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D06-T02",
+              "predictedId": "task-submit-venue-map",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "name": "revision-one-effective",
+              "pass": true
+            },
+            {
+              "name": "revision-two-effective",
+              "pass": false
+            }
+          ],
+          "issues": [],
+          "adjudicationRule": "frozen action/object plus active-pending versus superseded-cancelled; combined old object is not a legal merge"
+        },
+        "task": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 2,
+          "precision": 0.6666666666666666,
+          "recall": 0.5,
+          "f1": 0.5714285714285715
+        },
+        "fieldFailures": [
+          {
+            "goldId": "D06-OLD01",
+            "path": "semantics.status",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "semantics.validity",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "condition.value",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "actionable",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "dependencies",
+            "category": "dependency"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "materials",
+            "category": "material"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "timeRaw",
+            "category": "time"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "semantics.status",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "semantics.validity",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "condition.value",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "actionable",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "dependencies",
+            "category": "dependency"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "materials",
+            "category": "material"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "timeRaw",
+            "category": "time"
+          },
+          {
+            "goldId": null,
+            "path": "checks.revision-two-effective",
+            "category": "revision"
+          }
+        ],
+        "fieldCategories": {
+          "time": 2,
+          "material": 2,
+          "condition": 4,
+          "completion": 0,
+          "dependency": 2,
+          "revision": 1,
+          "semantics": 4,
+          "other": 0
+        },
+        "complete": false,
+        "major": 19,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "FAIL",
+          "reason": "missing_task_endpoint",
+          "mapping": {
+            "D06-OLD01": null,
+            "D06-OLD02": null,
+            "D06-T01": "task-submit-guest-list",
+            "D06-T02": "task-submit-venue-map"
+          }
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D06-V10",
+      "ordinal": 23,
+      "sourceId": "C11-B1-D06",
+      "variant": "V10",
+      "requestBytes": 15317,
+      "responseSha": "f87302a378c2bb4467a3d92e3e088b28a7cf4f841a843ff41732a1ca37184488",
+      "usage": {
+        "input_tokens": 4738,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2063,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6801
+      },
+      "costUpperMicroCny": 25980,
+      "waitingMs": 6962,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "ADJUDICATED_D06",
+          "plannedSources": 1,
+          "expectedTasks": 4,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 4,
+            "predicted": 3,
+            "alignedPairs": 2,
+            "correctPairs": 2,
+            "alignment": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.6666666666666666,
+              "recall": 0.5
+            },
+            "correctness": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.6666666666666666,
+              "recall": 0.5
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D06-OLD01",
+              "predictedId": null,
+              "aligned": false,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": false
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": false
+                },
+                {
+                  "path": "condition.value",
+                  "pass": false
+                },
+                {
+                  "path": "actionable",
+                  "pass": false
+                },
+                {
+                  "path": "dependencies",
+                  "pass": false
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": false
+                }
+              ]
+            },
+            {
+              "goldId": "D06-OLD02",
+              "predictedId": null,
+              "aligned": false,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": false
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": false
+                },
+                {
+                  "path": "condition.value",
+                  "pass": false
+                },
+                {
+                  "path": "actionable",
+                  "pass": false
+                },
+                {
+                  "path": "dependencies",
+                  "pass": false
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": false
+                }
+              ]
+            },
+            {
+              "goldId": "D06-T01",
+              "predictedId": "task-submit-guest-list",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D06-T02",
+              "predictedId": "task-submit-venue-map",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "name": "revision-one-effective",
+              "pass": true
+            },
+            {
+              "name": "revision-two-effective",
+              "pass": false
+            }
+          ],
+          "issues": [],
+          "adjudicationRule": "frozen action/object plus active-pending versus superseded-cancelled; combined old object is not a legal merge"
+        },
+        "task": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 2,
+          "precision": 0.6666666666666666,
+          "recall": 0.5,
+          "f1": 0.5714285714285715
+        },
+        "fieldFailures": [
+          {
+            "goldId": "D06-OLD01",
+            "path": "semantics.status",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "semantics.validity",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "condition.value",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "actionable",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "dependencies",
+            "category": "dependency"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "materials",
+            "category": "material"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "timeRaw",
+            "category": "time"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "semantics.status",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "semantics.validity",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "condition.value",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "actionable",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "dependencies",
+            "category": "dependency"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "materials",
+            "category": "material"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "timeRaw",
+            "category": "time"
+          },
+          {
+            "goldId": null,
+            "path": "checks.revision-two-effective",
+            "category": "revision"
+          }
+        ],
+        "fieldCategories": {
+          "time": 2,
+          "material": 2,
+          "condition": 4,
+          "completion": 0,
+          "dependency": 2,
+          "revision": 1,
+          "semantics": 4,
+          "other": 0
+        },
+        "complete": false,
+        "major": 19,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "FAIL",
+          "reason": "missing_task_endpoint",
+          "mapping": {
+            "D06-OLD01": null,
+            "D06-OLD02": null,
+            "D06-T01": "task-submit-guest-list",
+            "D06-T02": "task-submit-venue-map"
+          }
+        },
+        "ambiguity": []
+      }
+    },
+    {
+      "unitId": "C11-B1-D06-V00",
+      "ordinal": 24,
+      "sourceId": "C11-B1-D06",
+      "variant": "V00",
+      "requestBytes": 15004,
+      "responseSha": "f0684d78880d85f21ca61cf359fa4bfb4126a766115f5c846f65496accae9bbd",
+      "usage": {
+        "input_tokens": 4675,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2047,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6722
+      },
+      "costUpperMicroCny": 25726,
+      "waitingMs": 6953,
+      "evaluation": {
+        "schemaValid": true,
+        "referenceValid": true,
+        "score": {
+          "scorerVersion": "candidate11-scoring-2.0.0",
+          "status": "ADJUDICATED_D06",
+          "plannedSources": 1,
+          "expectedTasks": 4,
+          "complete": false,
+          "knownChecksPass": false,
+          "taskMetrics": {
+            "expected": 4,
+            "predicted": 3,
+            "alignedPairs": 2,
+            "correctPairs": 2,
+            "alignment": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.6666666666666666,
+              "recall": 0.5
+            },
+            "correctness": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.6666666666666666,
+              "recall": 0.5
+            }
+          },
+          "alignment": [
+            {
+              "goldId": "D06-OLD01",
+              "predictedId": null,
+              "aligned": false,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": false
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": false
+                },
+                {
+                  "path": "condition.value",
+                  "pass": false
+                },
+                {
+                  "path": "actionable",
+                  "pass": false
+                },
+                {
+                  "path": "dependencies",
+                  "pass": false
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": false
+                }
+              ]
+            },
+            {
+              "goldId": "D06-OLD02",
+              "predictedId": null,
+              "aligned": false,
+              "correct": false,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": false
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": false
+                },
+                {
+                  "path": "condition.value",
+                  "pass": false
+                },
+                {
+                  "path": "actionable",
+                  "pass": false
+                },
+                {
+                  "path": "dependencies",
+                  "pass": false
+                },
+                {
+                  "path": "materials",
+                  "pass": false
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": false
+                }
+              ]
+            },
+            {
+              "goldId": "D06-T01",
+              "predictedId": "task-submit-guest-list",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            },
+            {
+              "goldId": "D06-T02",
+              "predictedId": "task-submit-venue-map",
+              "aligned": true,
+              "correct": true,
+              "fields": [
+                {
+                  "path": "semantics.status",
+                  "pass": true
+                },
+                {
+                  "path": "semantics.validity",
+                  "pass": true
+                },
+                {
+                  "path": "condition.value",
+                  "pass": true
+                },
+                {
+                  "path": "actionable",
+                  "pass": true
+                },
+                {
+                  "path": "dependencies",
+                  "pass": true
+                },
+                {
+                  "path": "materials",
+                  "pass": true
+                },
+                {
+                  "path": "timeRaw",
+                  "pass": true
+                }
+              ]
+            }
+          ],
+          "checks": [
+            {
+              "name": "revision-one-effective",
+              "pass": true
+            },
+            {
+              "name": "revision-two-effective",
+              "pass": false
+            }
+          ],
+          "issues": [],
+          "adjudicationRule": "frozen action/object plus active-pending versus superseded-cancelled; combined old object is not a legal merge"
+        },
+        "task": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 2,
+          "precision": 0.6666666666666666,
+          "recall": 0.5,
+          "f1": 0.5714285714285715
+        },
+        "fieldFailures": [
+          {
+            "goldId": "D06-OLD01",
+            "path": "semantics.status",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "semantics.validity",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "condition.value",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "actionable",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "dependencies",
+            "category": "dependency"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "materials",
+            "category": "material"
+          },
+          {
+            "goldId": "D06-OLD01",
+            "path": "timeRaw",
+            "category": "time"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "semantics.status",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "semantics.validity",
+            "category": "semantics"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "condition.value",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "actionable",
+            "category": "condition"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "dependencies",
+            "category": "dependency"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "materials",
+            "category": "material"
+          },
+          {
+            "goldId": "D06-OLD02",
+            "path": "timeRaw",
+            "category": "time"
+          },
+          {
+            "goldId": null,
+            "path": "checks.revision-two-effective",
+            "category": "revision"
+          }
+        ],
+        "fieldCategories": {
+          "time": 2,
+          "material": 2,
+          "condition": 4,
+          "completion": 0,
+          "dependency": 2,
+          "revision": 1,
+          "semantics": 4,
+          "other": 0
+        },
+        "complete": false,
+        "major": 19,
+        "severe": 1,
+        "forbidden": 1,
+        "teachingLeak": [],
+        "revisionAdjudication": {
+          "status": "FAIL",
+          "reason": "missing_task_endpoint",
+          "mapping": {
+            "D06-OLD01": null,
+            "D06-OLD02": null,
+            "D06-T01": "task-submit-guest-list",
+            "D06-T02": "task-submit-venue-map"
+          }
+        },
+        "ambiguity": []
+      }
+    }
+  ],
+  "executionFinding": {
+    "code": "RUNNER_CONTEXT_PATH_ERROR",
+    "affectedResults": 24,
+    "originalPath": "packet.context",
+    "correctFrozenPath": "packet.prepared.context",
+    "rawResponsesChanged": false,
+    "modelOutputsChanged": false,
+    "additionalModelCalls": 0,
+    "automaticRepair": false,
+    "note": "The live result diagnostic was a local adapter invocation error. Canonical scoring replays each unchanged raw output through the same frozen adapter and its frozen request context."
+  },
+  "operational": {
+    "actualCalls": 24,
+    "providerBilledCny": "NOT_OBSERVABLE",
+    "localAuditableCostUpperMicroCny": 523928,
+    "authorizedWorstMicroCny": 51904512,
+    "usage": {
+      "inputTokens": 120680,
+      "outputTokens": 35321
+    }
+  },
+  "ledger": {
+    "rows": 693,
+    "bytes": 572913,
+    "sha256": "2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e",
+    "tail": "13b520d270d26335072f99920e47a4443e8bc586365eb20cda61c4122d7ab3bd",
+    "nextSequence": 693
+  },
+  "boundaries": [
+    "Development only",
+    "single engineering author/model-assisted reference",
+    "no significance or generalization claim",
+    "not a real accept-and-save conversion rate",
+    "no Holdout, human trial, deployment or production authorization"
+  ],
+  "generatedAt": "2026-09-21T10:10:00.477Z"
+}

@@ -1,0 +1,373 @@
+{
+  "unitId": "R12-07",
+  "arm": "07",
+  "bindingSha": "7d49dede6304e25e186e96dcee787ad2f477eaf25ac45a1fb1161fea5ec0aab7",
+  "requestSha": "90520e5245517454dd72fb1f5eb25958b6e5d16ddc11cc55631f2302d4f20b01",
+  "responseSha": "a1ab8c2232c462de6ccb5bdfaa97648b24a16083f853448236586d3d296adc13",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "8336a67c2fc27af5a6c82802ba6b51b311fbae38353d13ab8dcaf45d612fbe0e",
+  "scoreInput": "explicit semantic projection into byte-identical historical scorer; raw response unmodified",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-make-exhibit-labels",
+        "propositionScopeIds": [
+          "scope-0002-f3a9d599e62d66976f325d784182da08c3c980d202af34f1fff888f4e33b2df2",
+          "scope-0003-e290b13df3f113aa0df0faf3426af7e7f4e5ca535386705030118dbc34616eca",
+          "scope-0004-f113b3b4e1bbfac8e08f18173e6d4685390a8d0fd5cf418daa4be1ff85470de6",
+          "scope-0005-6a33ba6852f85f98dab299a1f7551eb60ceb39e68004344e818d95f4456e5386"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "prepare",
+        "action": {
+          "scopeId": "scope-0002-f3a9d599e62d66976f325d784182da08c3c980d202af34f1fff888f4e33b2df2",
+          "surface": "制作"
+        },
+        "object": {
+          "scopeId": "scope-0002-f3a9d599e62d66976f325d784182da08c3c980d202af34f1fff888f4e33b2df2",
+          "surface": "展签"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "制作展签",
+          "description": "布展组于2026年9月27日17:00前制作展签，每件作品对应一张A6展签；可以自行选择是否附上二维码，二维码不是必需材料。",
+          "completionCriteria": [
+            "每件作品对应一张A6展签",
+            "于2026年9月27日17:00前完成"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-exhibit-label",
+            "material-qr-code"
+          ],
+          "timePointTempIds": [
+            "time-label-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-save-final-labels",
+        "propositionScopeIds": [
+          "scope-0008-dba73536481d0a8e0c6be90b13d5b2933ea9691bf1588f175e428aef158c822d",
+          "scope-0009-bbd2e588562eb625ae20a2495182dd4748c4edaea8ad38f9556bf66332db8842",
+          "scope-0010-77889bf7abb896d9a5c3c596175b17f8bd99e1aa2046bd2cb4481056857f90bc"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "save",
+        "action": {
+          "scopeId": "scope-0008-dba73536481d0a8e0c6be90b13d5b2933ea9691bf1588f175e428aef158c822d",
+          "surface": "保存"
+        },
+        "object": {
+          "scopeId": "scope-0008-dba73536481d0a8e0c6be90b13d5b2933ea9691bf1588f175e428aef158c822d",
+          "surface": "最终版展签"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "保存最终版展签",
+          "description": "布展组保存最终版展签，便于本人后续修订，此保存操作没有指定日期。",
+          "completionCriteria": [
+            "保存最终版展签"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-final-exhibit-label"
+          ],
+          "timePointTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-exhibit-label",
+        "name": "展签",
+        "required": true,
+        "formatRequirements": [
+          "A6"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-make-exhibit-labels"
+        ],
+        "scopeIds": [
+          "scope-0002-f3a9d599e62d66976f325d784182da08c3c980d202af34f1fff888f4e33b2df2",
+          "scope-0003-e290b13df3f113aa0df0faf3426af7e7f4e5ca535386705030118dbc34616eca"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "material-qr-code",
+        "name": "二维码",
+        "required": false,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-make-exhibit-labels"
+        ],
+        "scopeIds": [
+          "scope-0004-f113b3b4e1bbfac8e08f18173e6d4685390a8d0fd5cf418daa4be1ff85470de6",
+          "scope-0005-6a33ba6852f85f98dab299a1f7551eb60ceb39e68004344e818d95f4456e5386"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "material-final-exhibit-label",
+        "name": "最终版展签",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-save-final-labels"
+        ],
+        "scopeIds": [
+          "scope-0008-dba73536481d0a8e0c6be90b13d5b2933ea9691bf1588f175e428aef158c822d"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-label-deadline",
+        "type": "task_deadline",
+        "rawText": "2026年9月27日17:00前",
+        "relatedTaskTempIds": [
+          "task-make-exhibit-labels"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-f3a9d599e62d66976f325d784182da08c3c980d202af34f1fff888f4e33b2df2"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-27T17:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [
+      {
+        "type": "cancels",
+        "targetDirectiveId": "directive-send-source-files",
+        "scopeIds": [
+          "scope-0006-8081a4a804fec6f24fa19116f59669b608e2b41a5a3ddbd658efb94dd1512efe",
+          "scope-0007-f9a1e9889131ded52bfe7dce145307c6da4805f75a6ae601682694dd9ec47097"
+        ],
+        "fromDirectiveId": null,
+        "effective": "true"
+      }
+    ],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-cbddb0764c84aec9b512143a058ef56c3ae0231e82c61ffd3f3c1efa090346b2",
+      "scope-0009-bbd2e588562eb625ae20a2495182dd4748c4edaea8ad38f9556bf66332db8842",
+      "scope-0010-77889bf7abb896d9a5c3c596175b17f8bd99e1aa2046bd2cb4481056857f90bc"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:04fab72d",
+    "sourceVersionId": "source:04fab72d:version:1",
+    "sourceFingerprint": "sha256:382dfdc9d3bb2ee0d2be792e4d5089c8910c26675f2de09f9df7b2444fbb210f"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 8566,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 2,
+        "reference": 3,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 1,
+        "precision": 1,
+        "recall": 0.6666666666666666
+      },
+      "requiresAction": {
+        "predicted": 2,
+        "reference": 3,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 1,
+        "precision": 1,
+        "recall": 0.6666666666666666
+      },
+      "time": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "material": {
+        "predicted": 3,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 1,
+        "precision": 0.3333333333333333,
+        "recall": 0.5
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 2,
+        "reference": 3,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 1,
+        "precision": 1,
+        "recall": 0.6666666666666666
+      },
+      "revision": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "evidence": {
+        "predicted": 6,
+        "reference": 6,
+        "correct": 1,
+        "falsePositive": 5,
+        "falseNegative": 5,
+        "precision": 0.16666666666666666,
+        "recall": 0.16666666666666666
+      },
+      "semantic": {
+        "predicted": 5,
+        "reference": 3,
+        "correct": 0,
+        "falsePositive": 5,
+        "falseNegative": 3,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 4,
+        "reference": 5,
+        "correct": 2,
+        "falsePositive": 2,
+        "falseNegative": 3,
+        "precision": 0.5,
+        "recall": 0.4
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [
+      {
+        "code": "COVERAGE_TIME",
+        "entityIds": [
+          "task-save-final-labels"
+        ]
+      },
+      {
+        "code": "BAD_REVISION_REFERENCE",
+        "entityIds": [
+          "directive-send-source-files"
+        ]
+      },
+      {
+        "code": "REVISION_NEEDS_REVIEW",
+        "entityIds": [
+          "directive-send-source-files"
+        ]
+      }
+    ],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 2,
+    "referenceTaskCount": 3
+  },
+  "scoreError": null,
+  "totalAttempts": 127,
+  "costUpperMicroCny": 27866,
+  "totalCostUpperMicroCny": 6104677,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份已见材料开发回归；授权同期重复测量，非盲测；24请求不是24份独立材料"
+}

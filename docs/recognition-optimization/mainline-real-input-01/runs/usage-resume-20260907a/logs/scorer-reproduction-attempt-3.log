@@ -1,0 +1,53 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+·········xxxx·············
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/modelWire.test.ts > real input wire projection (zero model calls) > scorer rejects an unsupported displayed task title while retaining the original control
+ FAIL  src/experiments/realInput01/modelWire.test.ts > real input wire projection (zero model calls) > scorer rejects an unsupported displayed task description while retaining the original control
+ FAIL  src/experiments/realInput01/modelWire.test.ts > real input wire projection (zero model calls) > scorer rejects an unsupported displayed task completionCriteria while retaining the original control
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/experiments/realInput01/modelWire.test.ts:34:32
+     32|     envelope.output[0].content[0].text=JSON.stringify(wire)
+     33|     const score=await scoreSeenResponse(JSON.stringify(envelope),origi…
+     34|     expect(score.completeCase).toBe(false)
+       |                                ^
+     35|     expect(score.majorCorrectionRequired).toBe(true)
+     36|     expect(score.metrics.semantic.falsePositive).toBeGreaterThan(0)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/experiments/realInput01/modelWire.test.ts > real input wire projection (zero model calls) > does not award exact scores for ambiguous same-name task ownership matching
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/experiments/realInput01/modelWire.test.ts:49:42
+     47|     const score=()=>{envelope.output[0].content[0].text=JSON.stringify…
+     48|     // Ambiguous matching is disclosed even in an unchanged control; i…
+     49|     expect((await score()).completeCase).toBe(false)
+       |                                          ^
+     50|     ;[wire.tasks[0].detail.timePointTempIds,wire.tasks[1].detail.timeP…
+     51|       [wire.tasks[1].detail.timePointTempIds,wire.tasks[0].detail.time…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 22 passed (26)
+   Start at  11:24:02
+   Duration  740ms (transform 123ms, setup 0ms, collect 158ms, tests 82ms, environment 0ms, prepare 210ms)
+

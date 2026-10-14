@@ -1,0 +1,44 @@
+{
+  "version": "d25-current-audit-reachability-1",
+  "vulnerabilityCounts": {
+    "info": 0,
+    "low": 0,
+    "moderate": 2,
+    "high": 5,
+    "critical": 0,
+    "total": 7
+  },
+  "unchangedLockSha256": "330350e448c1cd29c6c7869c7a978142d95ba84aa12658a9c9bcacdcf763bbe3",
+  "assessment": [
+    {
+      "packages": [
+        "vitest",
+        "@vitest/mocker"
+      ],
+      "risk": "Path traversal via redirect mock in development test runner",
+      "d25Reachability": "Tests execute local trusted anonymous files; no public Vitest server; not in browser production bundle",
+      "compatibleAction": "Separate authorized maintenance: evaluate patched 4.1.11+ with tests; npm audit proposes major 5.0.3, do not apply blindly"
+    },
+    {
+      "packages": [
+        "brace-expansion"
+      ],
+      "risk": "CPU/stack DoS in brace expansion",
+      "d25Reachability": "Tooling dependency, not UI canonical save; never consume untrusted user patterns",
+      "compatibleAction": "Maintenance update to fixed dependency >=5.0.12 through compatible parent"
+    },
+    {
+      "packages": [
+        "wrangler",
+        "miniflare",
+        "sharp",
+        "undici"
+      ],
+      "risk": "Developer runtime/image/WebSocket/network toolkit advisories",
+      "d25Reachability": "D25 server is node:http static allowlist; does not start wrangler/miniflare, accept images or arbitrary network targets",
+      "compatibleAction": "Compatible Wrangler/Miniflare maintenance including sharp>=0.35.4, undici>=7.29.1; verify dry-run and server/worker tests in separate scope"
+    }
+  ],
+  "currentDisposition": "AUDIT_FAIL_RETAINED_NO_NEW_DEPENDENCY_OR_LOCK_EDIT",
+  "productionApproval": "NOT_GRANTED"
+}

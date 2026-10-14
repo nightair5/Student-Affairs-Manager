@@ -1,0 +1,34 @@
+
+ RUN  v3.2.7 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛
+
+ ✓ src/experiments/candidate16/d23Study.test.ts (22 tests) 3118ms
+   ✓ D23 existing formal repository and adjudication binding > actual atomic commit and independent readback are bound; engineering correct judgments never enter human rates  414ms
+   ✓ D23 existing formal repository and adjudication binding > changed canonical readset rejects a previously loaded adjudication  318ms
+   ✓ D23 existing formal repository and adjudication binding > partial actual confirmation keeps the trial active and does not satisfy whole-source success  518ms
+   ✓ D23 existing formal repository and adjudication binding > commit failure writes no canonical tasks, manual retry commits once; postcommit readback failure recovers without resending  548ms
+   ✓ D23 existing formal repository and adjudication binding > independent identity summary excludes engineering and retains legacy measurement unchanged  436ms
+   ✓ D23 existing formal repository and adjudication binding > a later active trial cannot edit or checkpoint an earlier source  453ms
+ ✓ src/experiments/candidate16/d24Product.test.ts (11 tests) 5370ms
+   ✓ D24 actual source disposal and safe unknown-time consent > blank manual entry can add the actual source deadline before material review without changing the empty first response  1339ms
+   ✓ D24 actual source disposal and safe unknown-time consent > S09 exposes only the missing provenance fragment; explicit event plus classification archives 0 tasks and real event/time  541ms
+   ✓ D24 actual source disposal and safe unknown-time consent > unpublished-only wording can remain unknown, while malformed clocks and foreign-object evidence cannot gain uncertainty consent  673ms
+   ✓ D24 actual source disposal and safe unknown-time consent > S02 date-only facts already match the parser; atomic material/task review needs no invented clock  808ms
+   ✓ D24 actual source disposal and safe unknown-time consent > S07 explicit unresolved unknown notice can be judged, consented and saved; raw remains unknown  870ms
+   ✓ D24 actual source disposal and safe unknown-time consent > an injected atomic combined review failure persists neither half and permits manual retry  363ms
+ ✓ src/experiments/candidate16/d22Recovery.test.ts (10 tests) 4707ms
+   ✓ an independent event commit cannot consume a pending task edit; each maps to its actual saved fact  358ms
+   ✓ a committed readback failure survives runtime reopening; only readback recovers and never resubmits  307ms
+ ✓ src/experiments/candidate16/d21EventEvidence.test.ts (1 test) 3402ms
+   ✓ a validated human event title correction can be confirmed without pretending it was a literal source quote  3401ms
+ ✓ src/experiments/candidate16/d19SourceSession.test.ts (3 tests) 7154ms
+   ✓ D19 source review saves independently evidenced event and task atomically; a failed save preserves both for manual retry  2449ms
+   ✓ D19 prefilled mixed fixture has fully evidenced event names and uncertain times before confirmation  2444ms
+   ✓ D19 isolated recovery can open a failed revision answer without disabling the bad-link guard  2259ms
+ ✓ src/experiments/candidate16/d20Rebase.test.ts (1 test) 2023ms
+   ✓ D20 can save an unchanged task after an independent event review, keeping repository CAS and both facts  2021ms
+
+ Test Files  6 passed (6)
+      Tests  48 passed (48)
+   Start at  18:26:44
+   Duration  17.09s (transform 1.18s, setup 0ms, collect 4.43s, tests 25.77s, environment 1ms, prepare 657ms)
+

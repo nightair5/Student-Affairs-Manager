@@ -1,0 +1,166 @@
+{
+  "version": "candidate06-final-checks-1",
+  "baselineHead": "c419aea63a1f6595cb0140cde00eb89dcc092759",
+  "decision": "DO_NOT_ADOPT_CANDIDATE06",
+  "productDelivery": "INCOMPLETE_BROWSER_NOT_RUN",
+  "sourceManifest": "IMPLEMENTATION_SNAPSHOT.json",
+  "postDispatchSourceChanges": [
+    "src/experiments/realInput01/acceptance.test.tsx"
+  ],
+  "engineering": {
+    "fullTest": {
+      "success": true,
+      "total": 1310,
+      "pass": 1309,
+      "fail": 0,
+      "skip": 1
+    },
+    "actualMemory": {
+      "success": true,
+      "pass": 7,
+      "fail": 0,
+      "skip": 44
+    },
+    "actualMemoryConfirmedTasks": 4,
+    "actualMemoryCases": [
+      "Q01-06",
+      "Q07-06",
+      "Q03-06"
+    ],
+    "candidateFocused": {
+      "pass": 11
+    },
+    "budgetGatewayNode": {
+      "pass": 107
+    },
+    "sendPreflight": {
+      "attempt1": "FAILED_MISSING_CARRIER_STARTUP_ARGUMENT",
+      "attempt2": "PASS",
+      "modelDispatchesFromChecks": 0
+    },
+    "finalTypeAndChangedLint": {
+      "appTypeExit": 0,
+      "nodeTypeExit": 0,
+      "changedLintExit": 0,
+      "temporaryOutput": "C:\\Users\\Winner\\AppData\\Local\\Temp\\paired06-final-type-98eba5170b3c4aa7b22d1cd29c2f7c6a"
+    },
+    "fullLint": {
+      "errors": 0,
+      "existingWarnings": 4
+    },
+    "build": "PASS_REUSED_UNCHANGED_PRODUCTION_SOURCE",
+    "schemaTimeContract": "PASS_REUSED_UNCHANGED_CONTRACT",
+    "security": { "status": "PASS", "scannedFiles": 1692 },
+    "logs": [
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/ACTUAL_MEMORY_ATTEMPT_1.json",
+        "bytes": 21195,
+        "sha256": "443afb1b72a39a03bc9ba662cf8d1c2f2eb01440130ac73d23f9579a2d596542"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/BUDGET_GATEWAY_107.log",
+        "bytes": 25936,
+        "sha256": "df276ecab91f6ab4b32ae7eccb53d5d6ff54ff40d808a7005fe5b9650e354333"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/CANDIDATE_TEST_ATTEMPT_3.json",
+        "bytes": 5381,
+        "sha256": "4dccc019173a26d741bfadcfedd644861e4f7eac4d75d824ec003f71ddbebf34"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/ENGINEERING_BUILD.log",
+        "bytes": 349,
+        "sha256": "bdceee80e0d48141fd30c4d3b0db0b68149789953a2681bb6f8f83db951fc32a"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/ENGINEERING_CONTRACT.log",
+        "bytes": 416,
+        "sha256": "367b36a78f2412518e477058012f830017574c3c114b73056dbc255786542ffb"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/ENGINEERING_LINT.log",
+        "bytes": 1154,
+        "sha256": "0ef91133e0db6f0a9c7b5715272ded7d851942383b690f0fbedb85a3826fde15"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/ENGINEERING_SECURITY.log",
+        "bytes": 52,
+        "sha256": "b09d6acbc043592b146073283a2b52da2711620da46aa0109ed04eea5d4c835e"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/ENGINEERING_TYPE_APP.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/ENGINEERING_TYPE_NODE.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/FULL_TEST_ATTEMPT_1.json",
+        "bytes": 484746,
+        "sha256": "60f02a4345021985a6ae5b34f0d76caf86558f075ee9703bef3427f41a2bf1fb"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/PRODUCT_FOCUSED_4.json",
+        "bytes": 20050,
+        "sha256": "6d4b2e7703d5a5dc0c804e98507c920c09192cb65a53377ad58239b553d52666"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/SEND_PREFLIGHT_ATTEMPT_1.log",
+        "bytes": 631,
+        "sha256": "478bc80013022b3fe460dcf18007d5834f4489de2728426a7a767af1f492e222"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/SEND_PREFLIGHT_ATTEMPT_2.log",
+        "bytes": 2274,
+        "sha256": "5e87cf2fef27676d5d5ee113bd2bf63f526f335b797003b1c65f76789a1f419a"
+      }
+    ]
+  },
+  "protection": {
+    "readOnly": 944,
+    "staticEvidence": 607,
+    "sourcePaths": 55,
+    "oldLedgerPrefixUnchanged": true,
+    "oldLogPrefixUnchanged": true,
+    "oldClosuresUnchanged": true,
+    "finalWorkingSnapshotMatches": true
+  },
+  "ledger": {
+    "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "rows": 215,
+    "bytes": 163134,
+    "sha256": "9a92b6886a0a40d7300aaa02054de53fb3df5c3a5397ddea9247ea3e3783ad41",
+    "tail": "8240b6f1b624fe69ba63275bb028bc1872a5a3ce237b4aeef60018128152aea1",
+    "oldPrefixUnchanged": true,
+    "receipts": 215,
+    "historicalRequests": 104,
+    "newRequests": 24,
+    "resumeNewRequests": 0,
+    "unknownA01MicroCny": 3300000,
+    "newCostUpperMicroCny": 530872,
+    "settledTotalUpperMicroCny": 2296681,
+    "occupiedUpperMicroCny": 5596681,
+    "providerActualDebit": "NOT_OBSERVABLE"
+  },
+  "browser": {
+    "status": "NOT_RUN",
+    "attempt": "official cua.getState",
+    "error": "nodeRepl.fetch request failed",
+    "tabsReturned": 0,
+    "originalDatabaseAccessed": false,
+    "priorTaskCount": 13,
+    "priorTaskCountVerifiedThisBatch": false,
+    "download": "NOT_RUN",
+    "systemSettingsChanged": false,
+    "securityBypass": false
+  },
+  "automaticSelection": "NOT_ENABLED",
+  "humanEditingTime": "NOT_RUN",
+  "modelQuality": "MEASURED_SEEN_PAIRED_DEVELOPMENT_NOT_BLIND",
+  "businessGit": "UNCOMMITTED_PRESERVED",
+  "auditGit": "READY_FOR_EXACT_AUDIT_COMMIT",
+  "remoteBefore": "c419aea63a1f6595cb0140cde00eb89dcc092759"
+}

@@ -16,7 +16,7 @@ export type Priority = '高' | '中' | '低'
 export type RiskFlag = '紧急' | '缺材料' | '待确认' | '有依赖' | '已逾期'
 export type SourceType = 'text' | 'file' | 'image' | 'link'
 export type ReminderChannel = 'browser' | 'email' | 'wechat-placeholder'
-export type MaterialStatus = 'missing' | 'preparing' | 'ready' | 'submitted' | 'verified' | 'not_required'
+export type MaterialStatus = 'missing' | 'preparing' | 'ready' | 'submitted' | 'verified' | 'not_required' | 'unverified'
 export type ReminderDeliveryStatus = 'draft' | 'scheduled' | 'sent' | 'failed' | 'unsupported'
 export type CanonicalDraftStatus = 'processing' | 'needs_review' | 'partially_confirmed' | 'confirmed' | 'rejected' | 'failed' | 'archived'
 export type CanonicalSourceStatus = 'uploaded' | 'extracting' | 'needs_review' | 'partially_confirmed' | 'confirmed' | 'failed' | 'archived'
@@ -43,6 +43,18 @@ export type TimePointType =
   | 'planned_start'
 export type InferenceLevel = 'explicit' | 'strong_inference' | 'optional_suggestion'
 
+export interface SourceReviewMetadata {
+  sourceType?: SourceType
+  mimeType?: string
+  characterCount?: number
+  pageCount?: number
+  extractionMethod?: 'manual' | 'parser' | 'ocr' | 'mixed' | 'web' | 'unknown'
+  /** Normalized OCR confidence in the inclusive 0..1 range. */
+  ocrConfidence?: number
+  partialExtraction?: boolean
+  qualityFlags?: string[]
+}
+
 export interface Material {
   id: string
   name: string
@@ -58,6 +70,11 @@ export interface Reminder {
   channel: ReminderChannel
   scheduledAt: string
   enabled: boolean
+  /** Exact delivery state when projected from canonical v8. */
+  status?: ReminderDeliveryStatus
+  errorMessage?: string
+  /** Actual audited delivery time; never inferred from scheduledAt. */
+  sentAt?: string | null
 }
 
 export interface HistoryEntry {
@@ -89,6 +106,8 @@ export interface Task {
   status: TaskStatus
   deadline: string
   estimatedMinutes: number
+  estimatedMinutesKnown?: boolean
+  sourceDeadlineLabel?: string
   nextAction: string
   description: string
   priority: Priority
@@ -115,6 +134,8 @@ export interface Task {
 
 export interface Source {
   id: string
+  /** Canonical v8 version currently represented by rawText/content. */
+  currentVersionId?: string
   type: SourceType
   title: string
   contentPreview: string
@@ -128,10 +149,11 @@ export interface Source {
   status?: CanonicalSourceStatus
   processingError?: string
   parserVersion?: string
+  reviewMetadata?: SourceReviewMetadata
   createdAt: string
   updatedAt?: string
   extractionStatus: '已识别' | '待确认' | '部分确认' | '已确认' | '已拒绝'
-  extractionMethod?: 'local-rules' | 'deepseek-v4-flash'
+  extractionMethod?: 'local-rules' | 'deepseek-v4-flash' | 'deepseek-v4-flash-vision-exp'
   duplicateOfSourceIds?: string[]
   duplicateReviewStatus?: '待核对' | '保留为独立来源'
 }
@@ -208,8 +230,14 @@ export interface ReminderRecord {
   enabled: boolean
   status: ReminderDeliveryStatus
   errorMessage?: string
+  /** Actual audited delivery time; never inferred from scheduledAt. */
+  sentAt?: string | null
 }
 
+/**
+ * @deprecated Legacy confirmation compatibility only. Workspace v8 stores
+ * rich extraction drafts and canonical entities without this lossy adapter.
+ */
 export interface ParsedSuggestion {
   id: string
   title: string
@@ -223,6 +251,8 @@ export interface ParsedSuggestion {
   evidence: string
   evidenceRefs?: EvidenceReference[]
   confidence: '高' | '中' | '低'
+  /** Deterministic RCO-2 time interpretation; legacy deadline mirrors normalizedValue or ''. */
+  timePoint?: import('./lib/timeSemantics').ChineseTimeAst
 }
 
 export type DraftItemStatus = '待确认' | '已确认' | '已拒绝'
@@ -239,6 +269,12 @@ export interface DraftItem {
 export interface ExtractionDraft {
   id: string
   sourceId: string
+  /** Canonical v8 version used by the recognition run that produced this draft. */
+  sourceVersionId?: string
+  /** Bounded provenance metadata stored with that SourceVersion. */
+  sourceReviewMetadata?: SourceReviewMetadata
+  /** Append-only canonical attempt order; completion time never changes precedence. */
+  attemptOrder?: number
   status: '待确认' | '部分确认' | '已确认' | '已拒绝'
   items: DraftItem[]
   createdAt: string

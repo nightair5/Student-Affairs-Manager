@@ -1,0 +1,2051 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "schemaVersion": 8,
+  "counts": {
+    "tasks": 1,
+    "projects": 0,
+    "events": 2,
+    "timePoints": 4,
+    "materials": 0
+  },
+  "tasks": [
+    {
+      "id": "task:source:558d5965:draft:1:task-0001",
+      "title": "完成相关信息登记",
+      "nextAction": "完成相关信息登记",
+      "status": "todo",
+      "completionCriteria": [
+        "于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记",
+        "确保填写的信息完整、准确"
+      ],
+      "evidenceIds": [
+        "d26-scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52",
+        "d26-scope-0002-4ec225deaa6d4cb602632f662b82280256022635768200908f0a1c6b836b6c7e",
+        "d26-scope-0003-136ded923337c33f407eeda1e5f166eb78cfca02e8ed33e1e19bedfa6aefabcb"
+      ],
+      "sourceId": "source:558d5965"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:source:7dfd2268:draft:1:event",
+      "projectId": null,
+      "title": "设计讨论",
+      "description": "设计讨论\n2026年11月20日\n09:30-11:00",
+      "startTimePointId": "time:source:7dfd2268:draft:1:date",
+      "endTimePointId": "time:source:7dfd2268:draft:1:end",
+      "location": null,
+      "createdAt": "2026-10-07T11:09:14.929Z",
+      "updatedAt": "2026-10-07T11:09:14.929Z",
+      "legacyData": {
+        "recognitionTempId": "event",
+        "evidenceIds": [
+          "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+          "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+          "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+        ],
+        "inferenceLevel": "explicit",
+        "sourceReviewDraftId": "source:7dfd2268:draft:1"
+      }
+    },
+    {
+      "id": "event:source:d42625ec:draft:1:E3",
+      "projectId": null,
+      "title": "丙组讨论",
+      "description": "丙组讨论于2026年11月14日16:00开始。",
+      "startTimePointId": "time:source:d42625ec:draft:1:P3",
+      "endTimePointId": null,
+      "location": null,
+      "createdAt": "2026-10-07T11:11:14.854Z",
+      "updatedAt": "2026-10-07T11:11:14.854Z",
+      "legacyData": {
+        "recognitionTempId": "E3",
+        "evidenceIds": [
+          "d26-scope-0003-774a3a3eb7cdccc382bfd1ac15c0ba4e72784739263e3de47c322c522683fda3"
+        ],
+        "inferenceLevel": "explicit",
+        "sourceReviewDraftId": "source:d42625ec:draft:1"
+      }
+    }
+  ],
+  "timePoints": [
+    {
+      "id": "time:source:7dfd2268:draft:1:date",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:7dfd2268:draft:1:event",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "09:30-11:00",
+      "normalizedValue": "2026-11-20T09:30",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-07T11:09:14.929Z",
+      "updatedAt": "2026-10-07T11:09:14.929Z",
+      "legacyData": {
+        "recognitionTempId": "date",
+        "evidenceIds": [
+          "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+          "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+        ],
+        "confidence": 1,
+        "sharedEventIds": [
+          "event:source:7dfd2268:draft:1:event"
+        ]
+      }
+    },
+    {
+      "id": "time:source:7dfd2268:draft:1:end",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:7dfd2268:draft:1:event",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "09:30-11:00",
+      "normalizedValue": "2026-11-20T11:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-07T11:09:14.929Z",
+      "updatedAt": "2026-10-07T11:09:14.929Z",
+      "legacyData": {
+        "recognitionTempId": "end",
+        "evidenceIds": [
+          "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+          "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+        ],
+        "confidence": 1,
+        "sharedEventIds": [
+          "event:source:7dfd2268:draft:1:event"
+        ]
+      }
+    },
+    {
+      "id": "time:source:558d5965:draft:1:time-0001",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": "task:source:558d5965:draft:1:task-0001",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:558d5965:draft:1:task-0001"
+      ],
+      "relatedMaterialIds": [],
+      "type": "task_deadline",
+      "rawText": "7月16日前",
+      "normalizedValue": "2026-07-16",
+      "timezone": null,
+      "isAllDay": true,
+      "precision": "date_only",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-07T11:10:14.780Z",
+      "updatedAt": "2026-10-07T11:10:14.780Z",
+      "legacyData": {
+        "recognitionTempId": "time-0001",
+        "evidenceIds": [
+          "d26-scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52"
+        ],
+        "confidence": 0.95
+      }
+    },
+    {
+      "id": "time:source:d42625ec:draft:1:P3",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:d42625ec:draft:1:E3",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年11月14日16:00",
+      "normalizedValue": "2026-11-14T16:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-07T11:11:14.854Z",
+      "updatedAt": "2026-10-07T11:11:14.854Z",
+      "legacyData": {
+        "recognitionTempId": "P3",
+        "evidenceIds": [
+          "d26-scope-0003-774a3a3eb7cdccc382bfd1ac15c0ba4e72784739263e3de47c322c522683fda3"
+        ],
+        "confidence": 1,
+        "sharedEventIds": [
+          "event:source:d42625ec:draft:1:E3"
+        ]
+      }
+    }
+  ],
+  "evidenceRefs": [
+    {
+      "id": "evidence:source:7dfd2268:draft:1:d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+      "sourceVersionId": "source:7dfd2268:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "设计讨论",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T11:09:14.929Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7"
+      }
+    },
+    {
+      "id": "evidence:source:7dfd2268:draft:1:d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+      "sourceVersionId": "source:7dfd2268:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "2026年11月20日",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T11:09:14.929Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac"
+      }
+    },
+    {
+      "id": "evidence:source:7dfd2268:draft:1:d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+      "sourceVersionId": "source:7dfd2268:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "09:30-11:00",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T11:09:14.929Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+      }
+    },
+    {
+      "id": "evidence:source:558d5965:draft:1:d26-scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52",
+      "sourceVersionId": "source:558d5965:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https:",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T11:10:14.780Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52"
+      }
+    },
+    {
+      "id": "evidence:source:558d5965:draft:1:d26-scope-0002-4ec225deaa6d4cb602632f662b82280256022635768200908f0a1c6b836b6c7e",
+      "sourceVersionId": "source:558d5965:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "//xmuxg.xmu.edu.cn/app/182），",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T11:10:14.780Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-4ec225deaa6d4cb602632f662b82280256022635768200908f0a1c6b836b6c7e"
+      }
+    },
+    {
+      "id": "evidence:source:558d5965:draft:1:d26-scope-0003-136ded923337c33f407eeda1e5f166eb78cfca02e8ed33e1e19bedfa6aefabcb",
+      "sourceVersionId": "source:558d5965:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "并确保填写的信息完整、准确。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T11:10:14.780Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0003-136ded923337c33f407eeda1e5f166eb78cfca02e8ed33e1e19bedfa6aefabcb"
+      }
+    },
+    {
+      "id": "evidence:source:d42625ec:draft:1:d26-scope-0003-774a3a3eb7cdccc382bfd1ac15c0ba4e72784739263e3de47c322c522683fda3",
+      "sourceVersionId": "source:d42625ec:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "丙组讨论于2026年11月14日16:00开始。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T11:11:14.854Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0003-774a3a3eb7cdccc382bfd1ac15c0ba4e72784739263e3de47c322c522683fda3"
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "source:d42625ec:draft:1",
+      "status": "partially_confirmed",
+      "commitOperationIds": [
+        "source-review:source:d42625ec:draft:1:fnv1a32:048871c4"
+      ],
+      "acceptedEntityTempIds": [
+        "E3",
+        "P3"
+      ],
+      "rejectedEntityTempIds": [],
+      "sourceReviewReadback": {
+        "version": "source-review-d26-1",
+        "draftId": "source:d42625ec:draft:1",
+        "commitId": "source-review:source:d42625ec:draft:1:fnv1a32:048871c4",
+        "disposition": "partial",
+        "entityIds": [
+          "event:source:d42625ec:draft:1:E3",
+          "time:source:d42625ec:draft:1:P3"
+        ],
+        "entityHashes": {
+          "event:source:d42625ec:draft:1:E3": "fnv1a32:e7e96cf0",
+          "time:source:d42625ec:draft:1:P3": "fnv1a32:d23308d0"
+        },
+        "verifiedAt": "2026-10-07T11:11:14.919Z"
+      },
+      "firstSuggestionDisplayed": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-single-authority-1.0.0",
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "createdAt": "2026-10-06T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "甲组讨论",
+          "sourceType": "text",
+          "notificationType": "event_notice",
+          "summary": "0项任务，3项事件。请核对后确认。",
+          "requiresAction": false,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "P1",
+            "rawText": "2026年11月12日14:00",
+            "type": "event_start",
+            "confidence": 1,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-11-12T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0001-755146fa7b1bfc8cf9d7685f7282c9df64731d48734e8181dc82d4a0980cca64"
+            ]
+          },
+          {
+            "tempId": "P2",
+            "rawText": "2026年11月13日15:00",
+            "type": "event_start",
+            "confidence": 1,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-11-13T15:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0002-9e18ffc7882eaba9d6cdebdb9bf55a7fe3a3c3e2373927e775bf8f2ff6081ea2"
+            ]
+          },
+          {
+            "tempId": "P3",
+            "rawText": "2026年11月14日16:00",
+            "type": "event_start",
+            "confidence": 1,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-11-14T16:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-774a3a3eb7cdccc382bfd1ac15c0ba4e72784739263e3de47c322c522683fda3"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "甲组讨论",
+            "description": "甲组讨论于2026年11月12日14:00开始。",
+            "startTimePointTempId": null,
+            "endTimePointTempId": null,
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0001-755146fa7b1bfc8cf9d7685f7282c9df64731d48734e8181dc82d4a0980cca64"
+            ],
+            "selected": true
+          },
+          {
+            "tempId": "E2",
+            "title": "乙组讨论",
+            "description": "乙组讨论于2026年11月13日15:00开始。",
+            "startTimePointTempId": "P2",
+            "endTimePointTempId": null,
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0002-9e18ffc7882eaba9d6cdebdb9bf55a7fe3a3c3e2373927e775bf8f2ff6081ea2"
+            ],
+            "selected": true
+          },
+          {
+            "tempId": "E3",
+            "title": "丙组讨论",
+            "description": "丙组讨论于2026年11月14日16:00开始。",
+            "startTimePointTempId": "P3",
+            "endTimePointTempId": null,
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0003-774a3a3eb7cdccc382bfd1ac15c0ba4e72784739263e3de47c322c522683fda3"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-755146fa7b1bfc8cf9d7685f7282c9df64731d48734e8181dc82d4a0980cca64",
+            "sourceId": "source:d42625ec",
+            "quote": "甲组讨论于2026年11月12日14:00开始。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-9e18ffc7882eaba9d6cdebdb9bf55a7fe3a3c3e2373927e775bf8f2ff6081ea2",
+            "sourceId": "source:d42625ec",
+            "quote": "乙组讨论于2026年11月13日15:00开始。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-774a3a3eb7cdccc382bfd1ac15c0ba4e72784739263e3de47c322c522683fda3",
+            "sourceId": "source:d42625ec",
+            "quote": "丙组讨论于2026年11月14日16:00开始。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-2c0109a139110bbcd1134bf41c9d841b83ce984b0f420efff553736ce7598f70",
+            "sourceId": "source:d42625ec",
+            "quote": "仅供了解。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "owner-risk-0",
+            "type": "other",
+            "message": "时间归属与所引原文对象不一致，相关事件需重新核对；无关联项可继续保存。",
+            "entityTempIds": [
+              "P1",
+              "E2",
+              "E1"
+            ],
+            "requiresDecision": true,
+            "evidenceIds": [
+              "d26-scope-0001-755146fa7b1bfc8cf9d7685f7282c9df64731d48734e8181dc82d4a0980cca64"
+            ]
+          }
+        ],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "仅供了解。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "时间归属与所引原文对象不一致，相关事件需重新核对；无关联项可继续保存。"
+          ]
+        }
+      },
+      "conversionAudits": {
+        "support": {
+          "version": "authority-support-context-1.0.0",
+          "inferredFacts": 0,
+          "operation": "EXISTING_TASK_SUPPORT_TO_LEGACY_INFORMATION_INDEX",
+          "changes": [],
+          "original": {
+            "schemaVersion": "single-authority-source-contract-5.0.0",
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "甲组讨论",
+                "description": "",
+                "location": null,
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0001-755146fa7b1bfc8cf9d7685f7282c9df64731d48734e8181dc82d4a0980cca64"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "attributes": []
+              },
+              {
+                "tempId": "E2",
+                "title": "乙组讨论",
+                "description": "",
+                "location": null,
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0002-9e18ffc7882eaba9d6cdebdb9bf55a7fe3a3c3e2373927e775bf8f2ff6081ea2"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "attributes": []
+              },
+              {
+                "tempId": "E3",
+                "title": "丙组讨论",
+                "description": "",
+                "location": null,
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0003-774a3a3eb7cdccc382bfd1ac15c0ba4e72784739263e3de47c322c522683fda3"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "attributes": []
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "P1",
+                "rawText": "2026年11月12日14:00",
+                "type": "event_start",
+                "scopeIds": [
+                  "scope-0001-755146fa7b1bfc8cf9d7685f7282c9df64731d48734e8181dc82d4a0980cca64"
+                ],
+                "owners": [
+                  {
+                    "kind": "event_start",
+                    "entityId": "E2"
+                  }
+                ],
+                "confidence": 1
+              },
+              {
+                "tempId": "P2",
+                "rawText": "2026年11月13日15:00",
+                "type": "event_start",
+                "scopeIds": [
+                  "scope-0002-9e18ffc7882eaba9d6cdebdb9bf55a7fe3a3c3e2373927e775bf8f2ff6081ea2"
+                ],
+                "owners": [
+                  {
+                    "kind": "event_start",
+                    "entityId": "E2"
+                  }
+                ],
+                "confidence": 1
+              },
+              {
+                "tempId": "P3",
+                "rawText": "2026年11月14日16:00",
+                "type": "event_start",
+                "scopeIds": [
+                  "scope-0003-774a3a3eb7cdccc382bfd1ac15c0ba4e72784739263e3de47c322c522683fda3"
+                ],
+                "owners": [
+                  {
+                    "kind": "event_start",
+                    "entityId": "E3"
+                  }
+                ],
+                "confidence": 1
+              }
+            ],
+            "tasks": [],
+            "materials": [],
+            "revisions": [],
+            "conflicts": [],
+            "prerequisiteStates": [],
+            "scopeAccounting": [
+              {
+                "scopeId": "scope-0001-755146fa7b1bfc8cf9d7685f7282c9df64731d48734e8181dc82d4a0980cca64",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-9e18ffc7882eaba9d6cdebdb9bf55a7fe3a3c3e2373927e775bf8f2ff6081ea2",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E2"
+                ]
+              },
+              {
+                "scopeId": "scope-0003-774a3a3eb7cdccc382bfd1ac15c0ba4e72784739263e3de47c322c522683fda3",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E3"
+                ]
+              },
+              {
+                "scopeId": "scope-0004-2c0109a139110bbcd1134bf41c9d841b83ce984b0f420efff553736ce7598f70",
+                "kind": "information",
+                "primaryEntityIds": []
+              }
+            ]
+          }
+        },
+        "endpoints": {
+          "version": "authority-endpoint-composition-1.0.0",
+          "inferredFacts": 0,
+          "operation": "ADJACENT_EXPLICIT_SAME_EVENT_DATE_CLOCK_COMPOSITION",
+          "changes": [],
+          "original": {
+            "schemaVersion": "single-authority-source-contract-5.0.0",
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "甲组讨论",
+                "description": "",
+                "location": null,
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0001-755146fa7b1bfc8cf9d7685f7282c9df64731d48734e8181dc82d4a0980cca64"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "attributes": []
+              },
+              {
+                "tempId": "E2",
+                "title": "乙组讨论",
+                "description": "",
+                "location": null,
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0002-9e18ffc7882eaba9d6cdebdb9bf55a7fe3a3c3e2373927e775bf8f2ff6081ea2"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "attributes": []
+              },
+              {
+                "tempId": "E3",
+                "title": "丙组讨论",
+                "description": "",
+                "location": null,
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0003-774a3a3eb7cdccc382bfd1ac15c0ba4e72784739263e3de47c322c522683fda3"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "attributes": []
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "P1",
+                "rawText": "2026年11月12日14:00",
+                "type": "event_start",
+                "scopeIds": [
+                  "scope-0001-755146fa7b1bfc8cf9d7685f7282c9df64731d48734e8181dc82d4a0980cca64"
+                ],
+                "owners": [
+                  {
+                    "kind": "event_start",
+                    "entityId": "E2"
+                  }
+                ],
+                "confidence": 1
+              },
+              {
+                "tempId": "P2",
+                "rawText": "2026年11月13日15:00",
+                "type": "event_start",
+                "scopeIds": [
+                  "scope-0002-9e18ffc7882eaba9d6cdebdb9bf55a7fe3a3c3e2373927e775bf8f2ff6081ea2"
+                ],
+                "owners": [
+                  {
+                    "kind": "event_start",
+                    "entityId": "E2"
+                  }
+                ],
+                "confidence": 1
+              },
+              {
+                "tempId": "P3",
+                "rawText": "2026年11月14日16:00",
+                "type": "event_start",
+                "scopeIds": [
+                  "scope-0003-774a3a3eb7cdccc382bfd1ac15c0ba4e72784739263e3de47c322c522683fda3"
+                ],
+                "owners": [
+                  {
+                    "kind": "event_start",
+                    "entityId": "E3"
+                  }
+                ],
+                "confidence": 1
+              }
+            ],
+            "tasks": [],
+            "materials": [],
+            "revisions": [],
+            "conflicts": [],
+            "prerequisiteStates": [],
+            "scopeAccounting": [
+              {
+                "scopeId": "scope-0001-755146fa7b1bfc8cf9d7685f7282c9df64731d48734e8181dc82d4a0980cca64",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-9e18ffc7882eaba9d6cdebdb9bf55a7fe3a3c3e2373927e775bf8f2ff6081ea2",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E2"
+                ]
+              },
+              {
+                "scopeId": "scope-0003-774a3a3eb7cdccc382bfd1ac15c0ba4e72784739263e3de47c322c522683fda3",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E3"
+                ]
+              },
+              {
+                "scopeId": "scope-0004-2c0109a139110bbcd1134bf41c9d841b83ce984b0f420efff553736ce7598f70",
+                "kind": "information",
+                "primaryEntityIds": []
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "source:58ba4f0b:draft:1",
+      "status": "failed",
+      "commitOperationIds": [],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": []
+    },
+    {
+      "id": "source:484e93e5:draft:1",
+      "status": "failed",
+      "commitOperationIds": [],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": []
+    },
+    {
+      "id": "source:46d251f4:draft:1",
+      "status": "failed",
+      "commitOperationIds": [],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": []
+    },
+    {
+      "id": "source:558d5965:draft:1",
+      "status": "partially_confirmed",
+      "commitOperationIds": [
+        "source-review:source:558d5965:draft:1:fnv1a32:f2b7cf4d"
+      ],
+      "acceptedEntityTempIds": [
+        "task-0001",
+        "time-0001"
+      ],
+      "rejectedEntityTempIds": [],
+      "sourceReviewReadback": {
+        "version": "source-review-d26-1",
+        "draftId": "source:558d5965:draft:1",
+        "commitId": "source-review:source:558d5965:draft:1:fnv1a32:f2b7cf4d",
+        "disposition": "partial",
+        "entityIds": [
+          "task:source:558d5965:draft:1:task-0001",
+          "time:source:558d5965:draft:1:time-0001"
+        ],
+        "entityHashes": {
+          "task:source:558d5965:draft:1:task-0001": "fnv1a32:c9f8b8bd",
+          "time:source:558d5965:draft:1:time-0001": "fnv1a32:56fa6b21"
+        },
+        "verifiedAt": "2026-10-07T11:10:14.812Z"
+      },
+      "firstSuggestionDisplayed": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-single-authority-1.0.0",
+        "modelName": "SingleAuthority 固定录制（非实时调用）",
+        "createdAt": "2026-07-10T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "完成相关信息登记",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "3项任务，0项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "完成相关信息登记",
+            "description": "一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https:\n//xmuxg.xmu.edu.cn/app/182），\n并确保填写的信息完整、准确。",
+            "completionCriteria": [
+              "于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记",
+              "确保填写的信息完整、准确"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [
+              "time-0001"
+            ],
+            "tempId": "task-0001",
+            "actionVerb": "完成相关信息登记",
+            "actionObject": "相关信息登记",
+            "evidenceIds": [
+              "d26-scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52",
+              "d26-scope-0002-4ec225deaa6d4cb602632f662b82280256022635768200908f0a1c6b836b6c7e",
+              "d26-scope-0003-136ded923337c33f407eeda1e5f166eb78cfca02e8ed33e1e19bedfa6aefabcb"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          },
+          {
+            "parentTempId": "task-0001",
+            "hierarchyType": "subtask",
+            "title": "如实登记去向、联系方式及返校安排",
+            "description": "离校同学应如实登记去向、联系方式及返校安排；",
+            "completionCriteria": [
+              "如实登记去向、联系方式及返校安排"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-0002",
+            "actionVerb": "如实登记",
+            "actionObject": "去向、联系方式及返校安排",
+            "evidenceIds": [
+              "d26-scope-0004-28e8165cde36c759bc2ad43665b2857286c88d477cc7e93561b9e84e6e53bc54"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          },
+          {
+            "parentTempId": "task-0001",
+            "hierarchyType": "subtask",
+            "title": "及时做好相关登记",
+            "description": "暑期留校同学如短期离厦外出，\n视同离校学生管理，\n亦应及时做好相关登记。",
+            "completionCriteria": [
+              "及时做好相关登记"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-0003",
+            "actionVerb": "及时做好相关登记",
+            "actionObject": "相关登记",
+            "evidenceIds": [
+              "d26-scope-0005-ffd32180158f19014574b06583ffb3f4bb18cc9dc445c8655f20b887e042d9f9",
+              "d26-scope-0006-5324959c22b93eddf1c85657789e44c48c70a5208f09e44cb120ad156f45ded4",
+              "d26-scope-0007-8b10a5ebd58a0a96a574ab11b18065ef483549a85d8b2aa8ae2242fa9cc80ddf"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "task_deadline",
+            "rawText": "7月16日前",
+            "confidence": 0.95,
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-07-16",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": true,
+            "precision": "date_only",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52"
+            ]
+          }
+        ],
+        "events": [],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52",
+            "sourceId": "source:558d5965",
+            "quote": "一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https:",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-4ec225deaa6d4cb602632f662b82280256022635768200908f0a1c6b836b6c7e",
+            "sourceId": "source:558d5965",
+            "quote": "//xmuxg.xmu.edu.cn/app/182），",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-136ded923337c33f407eeda1e5f166eb78cfca02e8ed33e1e19bedfa6aefabcb",
+            "sourceId": "source:558d5965",
+            "quote": "并确保填写的信息完整、准确。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-28e8165cde36c759bc2ad43665b2857286c88d477cc7e93561b9e84e6e53bc54",
+            "sourceId": "source:558d5965",
+            "quote": "离校同学应如实登记去向、联系方式及返校安排；",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-ffd32180158f19014574b06583ffb3f4bb18cc9dc445c8655f20b887e042d9f9",
+            "sourceId": "source:558d5965",
+            "quote": "暑期留校同学如短期离厦外出，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-5324959c22b93eddf1c85657789e44c48c70a5208f09e44cb120ad156f45ded4",
+            "sourceId": "source:558d5965",
+            "quote": "视同离校学生管理，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0007-8b10a5ebd58a0a96a574ab11b18065ef483549a85d8b2aa8ae2242fa9cc80ddf",
+            "sourceId": "source:558d5965",
+            "quote": "亦应及时做好相关登记。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0002"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          },
+          {
+            "id": "d26-representation-1",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0003"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "//xmuxg.xmu.edu.cn/app/182），",
+            "reason": "other"
+          },
+          {
+            "text": "并确保填写的信息完整、准确。",
+            "reason": "other"
+          },
+          {
+            "text": "暑期留校同学如短期离厦外出，",
+            "reason": "other"
+          },
+          {
+            "text": "视同离校学生管理，",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。"
+          ]
+        }
+      },
+      "conversionAudits": {
+        "support": {
+          "version": "authority-support-context-1.0.0",
+          "inferredFacts": 0,
+          "operation": "EXISTING_TASK_SUPPORT_TO_LEGACY_INFORMATION_INDEX",
+          "changes": [
+            {
+              "scopeId": "scope-0002-4ec225deaa6d4cb602632f662b82280256022635768200908f0a1c6b836b6c7e",
+              "taskId": "task-0001",
+              "reason": "URL_CONTINUATION"
+            },
+            {
+              "scopeId": "scope-0003-136ded923337c33f407eeda1e5f166eb78cfca02e8ed33e1e19bedfa6aefabcb",
+              "taskId": "task-0001",
+              "reason": "LITERAL_SUPPORT"
+            },
+            {
+              "scopeId": "scope-0005-ffd32180158f19014574b06583ffb3f4bb18cc9dc445c8655f20b887e042d9f9",
+              "taskId": "task-0003",
+              "reason": "LITERAL_SUPPORT"
+            },
+            {
+              "scopeId": "scope-0006-5324959c22b93eddf1c85657789e44c48c70a5208f09e44cb120ad156f45ded4",
+              "taskId": "task-0003",
+              "reason": "LITERAL_SUPPORT"
+            }
+          ],
+          "original": {
+            "schemaVersion": "single-authority-source-contract-5.0.0",
+            "events": [],
+            "timePoints": [
+              {
+                "tempId": "time-0001",
+                "type": "task_deadline",
+                "rawText": "7月16日前",
+                "scopeIds": [
+                  "scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52"
+                ],
+                "confidence": 0.95,
+                "owners": [
+                  {
+                    "kind": "task",
+                    "entityId": "task-0001"
+                  }
+                ]
+              }
+            ],
+            "materials": [],
+            "tasks": [
+              {
+                "id": "task-0001",
+                "propositionScopeIds": [
+                  "scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52",
+                  "scope-0002-4ec225deaa6d4cb602632f662b82280256022635768200908f0a1c6b836b6c7e",
+                  "scope-0003-136ded923337c33f407eeda1e5f166eb78cfca02e8ed33e1e19bedfa6aefabcb"
+                ],
+                "semantics": {
+                  "actor": "addressed_group",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "register",
+                "action": {
+                  "scopeId": "scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52",
+                  "surface": "完成相关信息登记"
+                },
+                "object": {
+                  "scopeId": "scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52",
+                  "surface": "相关信息登记"
+                },
+                "effect": "external_transfer",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "通过学工系统“暑假离留校登记”应用完成相关信息登记",
+                  "description": "各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记，并确保填写的信息完整、准确。",
+                  "completionCriteria": [
+                    "于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记",
+                    "确保填写的信息完整、准确"
+                  ],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [],
+                  "confidence": 0.95,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": {
+                    "status": "present",
+                    "absenceScopeIds": []
+                  },
+                  "material": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  },
+                  "event": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  }
+                }
+              },
+              {
+                "id": "task-0002",
+                "propositionScopeIds": [
+                  "scope-0004-28e8165cde36c759bc2ad43665b2857286c88d477cc7e93561b9e84e6e53bc54"
+                ],
+                "semantics": {
+                  "actor": "addressed_group",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "register",
+                "action": {
+                  "scopeId": "scope-0004-28e8165cde36c759bc2ad43665b2857286c88d477cc7e93561b9e84e6e53bc54",
+                  "surface": "如实登记"
+                },
+                "object": {
+                  "scopeId": "scope-0004-28e8165cde36c759bc2ad43665b2857286c88d477cc7e93561b9e84e6e53bc54",
+                  "surface": "去向、联系方式及返校安排"
+                },
+                "effect": "external_transfer",
+                "detail": {
+                  "parentTempId": "task-0001",
+                  "hierarchyType": "subtask",
+                  "title": "离校同学如实登记去向、联系方式及返校安排",
+                  "description": "离校同学应如实登记去向、联系方式及返校安排。",
+                  "completionCriteria": [
+                    "如实登记去向、联系方式及返校安排"
+                  ],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [],
+                  "confidence": 0.95,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "unknown",
+                  "conditionScopeIds": [
+                    "scope-0004-28e8165cde36c759bc2ad43665b2857286c88d477cc7e93561b9e84e6e53bc54"
+                  ],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  },
+                  "material": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  },
+                  "event": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  }
+                }
+              },
+              {
+                "id": "task-0003",
+                "propositionScopeIds": [
+                  "scope-0005-ffd32180158f19014574b06583ffb3f4bb18cc9dc445c8655f20b887e042d9f9",
+                  "scope-0006-5324959c22b93eddf1c85657789e44c48c70a5208f09e44cb120ad156f45ded4",
+                  "scope-0007-8b10a5ebd58a0a96a574ab11b18065ef483549a85d8b2aa8ae2242fa9cc80ddf"
+                ],
+                "semantics": {
+                  "actor": "addressed_group",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "register",
+                "action": {
+                  "scopeId": "scope-0007-8b10a5ebd58a0a96a574ab11b18065ef483549a85d8b2aa8ae2242fa9cc80ddf",
+                  "surface": "及时做好相关登记"
+                },
+                "object": {
+                  "scopeId": "scope-0007-8b10a5ebd58a0a96a574ab11b18065ef483549a85d8b2aa8ae2242fa9cc80ddf",
+                  "surface": "相关登记"
+                },
+                "effect": "external_transfer",
+                "detail": {
+                  "parentTempId": "task-0001",
+                  "hierarchyType": "subtask",
+                  "title": "暑期留校同学短期离厦外出及时做好相关登记",
+                  "description": "暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。",
+                  "completionCriteria": [
+                    "及时做好相关登记"
+                  ],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [],
+                  "confidence": 0.95,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "unknown",
+                  "conditionScopeIds": [
+                    "scope-0005-ffd32180158f19014574b06583ffb3f4bb18cc9dc445c8655f20b887e042d9f9"
+                  ],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  },
+                  "material": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  },
+                  "event": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  }
+                }
+              }
+            ],
+            "revisions": [],
+            "conflicts": [],
+            "scopeAccounting": [
+              {
+                "scopeId": "scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52",
+                "kind": "action",
+                "primaryEntityIds": [
+                  "task-0001"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-4ec225deaa6d4cb602632f662b82280256022635768200908f0a1c6b836b6c7e",
+                "kind": "information",
+                "primaryEntityIds": [
+                  "task-0001"
+                ]
+              },
+              {
+                "scopeId": "scope-0003-136ded923337c33f407eeda1e5f166eb78cfca02e8ed33e1e19bedfa6aefabcb",
+                "kind": "information",
+                "primaryEntityIds": [
+                  "task-0001"
+                ]
+              },
+              {
+                "scopeId": "scope-0004-28e8165cde36c759bc2ad43665b2857286c88d477cc7e93561b9e84e6e53bc54",
+                "kind": "action",
+                "primaryEntityIds": [
+                  "task-0002"
+                ]
+              },
+              {
+                "scopeId": "scope-0005-ffd32180158f19014574b06583ffb3f4bb18cc9dc445c8655f20b887e042d9f9",
+                "kind": "information",
+                "primaryEntityIds": [
+                  "task-0003"
+                ]
+              },
+              {
+                "scopeId": "scope-0006-5324959c22b93eddf1c85657789e44c48c70a5208f09e44cb120ad156f45ded4",
+                "kind": "information",
+                "primaryEntityIds": [
+                  "task-0003"
+                ]
+              },
+              {
+                "scopeId": "scope-0007-8b10a5ebd58a0a96a574ab11b18065ef483549a85d8b2aa8ae2242fa9cc80ddf",
+                "kind": "action",
+                "primaryEntityIds": [
+                  "task-0003"
+                ]
+              }
+            ],
+            "prerequisiteStates": []
+          }
+        },
+        "endpoints": {
+          "version": "authority-endpoint-composition-1.0.0",
+          "inferredFacts": 0,
+          "operation": "ADJACENT_EXPLICIT_SAME_EVENT_DATE_CLOCK_COMPOSITION",
+          "changes": [],
+          "original": {
+            "schemaVersion": "single-authority-source-contract-5.0.0",
+            "events": [],
+            "timePoints": [
+              {
+                "tempId": "time-0001",
+                "type": "task_deadline",
+                "rawText": "7月16日前",
+                "scopeIds": [
+                  "scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52"
+                ],
+                "confidence": 0.95,
+                "owners": [
+                  {
+                    "kind": "task",
+                    "entityId": "task-0001"
+                  }
+                ]
+              }
+            ],
+            "materials": [],
+            "tasks": [
+              {
+                "id": "task-0001",
+                "propositionScopeIds": [
+                  "scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52",
+                  "scope-0002-4ec225deaa6d4cb602632f662b82280256022635768200908f0a1c6b836b6c7e",
+                  "scope-0003-136ded923337c33f407eeda1e5f166eb78cfca02e8ed33e1e19bedfa6aefabcb"
+                ],
+                "semantics": {
+                  "actor": "addressed_group",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "register",
+                "action": {
+                  "scopeId": "scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52",
+                  "surface": "完成相关信息登记"
+                },
+                "object": {
+                  "scopeId": "scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52",
+                  "surface": "相关信息登记"
+                },
+                "effect": "external_transfer",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "通过学工系统“暑假离留校登记”应用完成相关信息登记",
+                  "description": "各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记，并确保填写的信息完整、准确。",
+                  "completionCriteria": [
+                    "于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记",
+                    "确保填写的信息完整、准确"
+                  ],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [],
+                  "confidence": 0.95,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": {
+                    "status": "present",
+                    "absenceScopeIds": []
+                  },
+                  "material": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  },
+                  "event": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  }
+                }
+              },
+              {
+                "id": "task-0002",
+                "propositionScopeIds": [
+                  "scope-0004-28e8165cde36c759bc2ad43665b2857286c88d477cc7e93561b9e84e6e53bc54"
+                ],
+                "semantics": {
+                  "actor": "addressed_group",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "register",
+                "action": {
+                  "scopeId": "scope-0004-28e8165cde36c759bc2ad43665b2857286c88d477cc7e93561b9e84e6e53bc54",
+                  "surface": "如实登记"
+                },
+                "object": {
+                  "scopeId": "scope-0004-28e8165cde36c759bc2ad43665b2857286c88d477cc7e93561b9e84e6e53bc54",
+                  "surface": "去向、联系方式及返校安排"
+                },
+                "effect": "external_transfer",
+                "detail": {
+                  "parentTempId": "task-0001",
+                  "hierarchyType": "subtask",
+                  "title": "离校同学如实登记去向、联系方式及返校安排",
+                  "description": "离校同学应如实登记去向、联系方式及返校安排。",
+                  "completionCriteria": [
+                    "如实登记去向、联系方式及返校安排"
+                  ],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [],
+                  "confidence": 0.95,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "unknown",
+                  "conditionScopeIds": [
+                    "scope-0004-28e8165cde36c759bc2ad43665b2857286c88d477cc7e93561b9e84e6e53bc54"
+                  ],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  },
+                  "material": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  },
+                  "event": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  }
+                }
+              },
+              {
+                "id": "task-0003",
+                "propositionScopeIds": [
+                  "scope-0005-ffd32180158f19014574b06583ffb3f4bb18cc9dc445c8655f20b887e042d9f9",
+                  "scope-0006-5324959c22b93eddf1c85657789e44c48c70a5208f09e44cb120ad156f45ded4",
+                  "scope-0007-8b10a5ebd58a0a96a574ab11b18065ef483549a85d8b2aa8ae2242fa9cc80ddf"
+                ],
+                "semantics": {
+                  "actor": "addressed_group",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "register",
+                "action": {
+                  "scopeId": "scope-0007-8b10a5ebd58a0a96a574ab11b18065ef483549a85d8b2aa8ae2242fa9cc80ddf",
+                  "surface": "及时做好相关登记"
+                },
+                "object": {
+                  "scopeId": "scope-0007-8b10a5ebd58a0a96a574ab11b18065ef483549a85d8b2aa8ae2242fa9cc80ddf",
+                  "surface": "相关登记"
+                },
+                "effect": "external_transfer",
+                "detail": {
+                  "parentTempId": "task-0001",
+                  "hierarchyType": "subtask",
+                  "title": "暑期留校同学短期离厦外出及时做好相关登记",
+                  "description": "暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。",
+                  "completionCriteria": [
+                    "及时做好相关登记"
+                  ],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "high",
+                  "dependencyTempIds": [],
+                  "confidence": 0.95,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "unknown",
+                  "conditionScopeIds": [
+                    "scope-0005-ffd32180158f19014574b06583ffb3f4bb18cc9dc445c8655f20b887e042d9f9"
+                  ],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  },
+                  "material": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  },
+                  "event": {
+                    "status": "not_stated",
+                    "absenceScopeIds": []
+                  }
+                }
+              }
+            ],
+            "revisions": [],
+            "conflicts": [],
+            "scopeAccounting": [
+              {
+                "scopeId": "scope-0001-67d55afa0b41c6cdf09991587753f3f011d97ec7c02c00ac64088360dcc02b52",
+                "kind": "action",
+                "primaryEntityIds": [
+                  "task-0001"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-4ec225deaa6d4cb602632f662b82280256022635768200908f0a1c6b836b6c7e",
+                "kind": "information",
+                "primaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0003-136ded923337c33f407eeda1e5f166eb78cfca02e8ed33e1e19bedfa6aefabcb",
+                "kind": "information",
+                "primaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0004-28e8165cde36c759bc2ad43665b2857286c88d477cc7e93561b9e84e6e53bc54",
+                "kind": "action",
+                "primaryEntityIds": [
+                  "task-0002"
+                ]
+              },
+              {
+                "scopeId": "scope-0005-ffd32180158f19014574b06583ffb3f4bb18cc9dc445c8655f20b887e042d9f9",
+                "kind": "information",
+                "primaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0006-5324959c22b93eddf1c85657789e44c48c70a5208f09e44cb120ad156f45ded4",
+                "kind": "information",
+                "primaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0007-8b10a5ebd58a0a96a574ab11b18065ef483549a85d8b2aa8ae2242fa9cc80ddf",
+                "kind": "action",
+                "primaryEntityIds": [
+                  "task-0003"
+                ]
+              }
+            ],
+            "prerequisiteStates": []
+          }
+        }
+      }
+    },
+    {
+      "id": "source:7dfd2268:draft:1",
+      "status": "confirmed",
+      "commitOperationIds": [
+        "source-review:source:7dfd2268:draft:1:fnv1a32:4e064690"
+      ],
+      "acceptedEntityTempIds": [
+        "date",
+        "end",
+        "event"
+      ],
+      "rejectedEntityTempIds": [],
+      "sourceReviewReadback": {
+        "version": "source-review-d26-1",
+        "draftId": "source:7dfd2268:draft:1",
+        "commitId": "source-review:source:7dfd2268:draft:1:fnv1a32:4e064690",
+        "disposition": "no_task",
+        "entityIds": [
+          "event:source:7dfd2268:draft:1:event",
+          "time:source:7dfd2268:draft:1:date",
+          "time:source:7dfd2268:draft:1:end"
+        ],
+        "entityHashes": {
+          "event:source:7dfd2268:draft:1:event": "fnv1a32:1b2b5db2",
+          "time:source:7dfd2268:draft:1:date": "fnv1a32:5aa572e0",
+          "time:source:7dfd2268:draft:1:end": "fnv1a32:bb4b7d9b"
+        },
+        "verifiedAt": "2026-10-07T11:09:57.522Z"
+      },
+      "firstSuggestionDisplayed": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-single-authority-1.0.0",
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "createdAt": "2026-10-07T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "设计讨论",
+          "sourceType": "text",
+          "notificationType": "event_notice",
+          "summary": "0项任务，1项事件。请核对后确认。",
+          "requiresAction": false,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "date",
+            "type": "event_start",
+            "rawText": "09:30-11:00",
+            "confidence": 1,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-11-20T09:30",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+              "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+            ]
+          },
+          {
+            "tempId": "end",
+            "type": "event_end",
+            "rawText": "09:30-11:00",
+            "confidence": 1,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "normalizedValue": "2026-11-20T11:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+              "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event",
+            "title": "设计讨论",
+            "description": "设计讨论\n2026年11月20日\n09:30-11:00",
+            "startTimePointTempId": "date",
+            "endTimePointTempId": "end",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+              "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+              "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+            "sourceId": "source:7dfd2268",
+            "quote": "设计讨论",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+            "sourceId": "source:7dfd2268",
+            "quote": "2026年11月20日",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+            "sourceId": "source:7dfd2268",
+            "quote": "09:30-11:00",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-6aa4f8e3a00334807eef2bcf48d79a654c6ce300df591dd1f5e19c723f5286b1",
+            "sourceId": "source:7dfd2268",
+            "quote": "仅供了解，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-75677193379f49d5b78d95c1cd563c889688e80d64c14a90f455e794b2f53128",
+            "sourceId": "source:7dfd2268",
+            "quote": "无需报名。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "仅供了解，",
+            "reason": "other"
+          },
+          {
+            "text": "无需报名。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "conversionAudits": {
+        "support": {
+          "version": "authority-support-context-1.0.0",
+          "inferredFacts": 0,
+          "operation": "EXISTING_TASK_SUPPORT_TO_LEGACY_INFORMATION_INDEX",
+          "changes": [],
+          "original": {
+            "schemaVersion": "single-authority-source-contract-5.0.0",
+            "tasks": [],
+            "materials": [],
+            "revisions": [],
+            "conflicts": [],
+            "prerequisiteStates": [],
+            "events": [
+              {
+                "tempId": "event",
+                "title": "设计讨论",
+                "description": "设计讨论",
+                "location": null,
+                "relatedTaskTempIds": [],
+                "attributes": [],
+                "scopeIds": [
+                  "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                  "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                  "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "date",
+                "type": "event_start",
+                "rawText": "2026年11月20日",
+                "scopeIds": [
+                  "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac"
+                ],
+                "owners": [
+                  {
+                    "kind": "event_start",
+                    "entityId": "event"
+                  }
+                ],
+                "confidence": 1
+              },
+              {
+                "tempId": "clock",
+                "type": "event_start",
+                "rawText": "09:30-11:00",
+                "scopeIds": [
+                  "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ],
+                "owners": [
+                  {
+                    "kind": "event_start",
+                    "entityId": "event"
+                  }
+                ],
+                "confidence": 1
+              },
+              {
+                "tempId": "end",
+                "type": "event_end",
+                "rawText": "09:30-11:00",
+                "scopeIds": [
+                  "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ],
+                "owners": [
+                  {
+                    "kind": "event_end",
+                    "entityId": "event"
+                  }
+                ],
+                "confidence": 1
+              }
+            ],
+            "scopeAccounting": [
+              {
+                "scopeId": "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "event"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "event"
+                ]
+              },
+              {
+                "scopeId": "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "event"
+                ]
+              },
+              {
+                "scopeId": "scope-0004-6aa4f8e3a00334807eef2bcf48d79a654c6ce300df591dd1f5e19c723f5286b1",
+                "kind": "information",
+                "primaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0005-75677193379f49d5b78d95c1cd563c889688e80d64c14a90f455e794b2f53128",
+                "kind": "information",
+                "primaryEntityIds": []
+              }
+            ]
+          }
+        },
+        "endpoints": {
+          "version": "authority-endpoint-composition-1.0.0",
+          "inferredFacts": 0,
+          "operation": "ADJACENT_EXPLICIT_SAME_EVENT_DATE_CLOCK_COMPOSITION",
+          "changes": [
+            {
+              "eventId": "event",
+              "retainedStartId": "date",
+              "retiredClockStartId": "clock",
+              "endId": "end",
+              "scopeIds": [
+                "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+              ],
+              "rawText": "2026年11月20日\n09:30-11:00"
+            }
+          ],
+          "original": {
+            "schemaVersion": "single-authority-source-contract-5.0.0",
+            "tasks": [],
+            "materials": [],
+            "revisions": [],
+            "conflicts": [],
+            "prerequisiteStates": [],
+            "events": [
+              {
+                "tempId": "event",
+                "title": "设计讨论",
+                "description": "设计讨论",
+                "location": null,
+                "relatedTaskTempIds": [],
+                "attributes": [],
+                "scopeIds": [
+                  "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                  "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                  "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "date",
+                "type": "event_start",
+                "rawText": "2026年11月20日",
+                "scopeIds": [
+                  "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac"
+                ],
+                "owners": [
+                  {
+                    "kind": "event_start",
+                    "entityId": "event"
+                  }
+                ],
+                "confidence": 1
+              },
+              {
+                "tempId": "clock",
+                "type": "event_start",
+                "rawText": "09:30-11:00",
+                "scopeIds": [
+                  "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ],
+                "owners": [
+                  {
+                    "kind": "event_start",
+                    "entityId": "event"
+                  }
+                ],
+                "confidence": 1
+              },
+              {
+                "tempId": "end",
+                "type": "event_end",
+                "rawText": "09:30-11:00",
+                "scopeIds": [
+                  "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ],
+                "owners": [
+                  {
+                    "kind": "event_end",
+                    "entityId": "event"
+                  }
+                ],
+                "confidence": 1
+              }
+            ],
+            "scopeAccounting": [
+              {
+                "scopeId": "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "event"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "event"
+                ]
+              },
+              {
+                "scopeId": "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "event"
+                ]
+              },
+              {
+                "scopeId": "scope-0004-6aa4f8e3a00334807eef2bcf48d79a654c6ce300df591dd1f5e19c723f5286b1",
+                "kind": "information",
+                "primaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0005-75677193379f49d5b78d95c1cd563c889688e80d64c14a90f455e794b2f53128",
+                "kind": "information",
+                "primaryEntityIds": []
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "localCompleteReserializedSha256": "c4d426213637d33756ba16e72d798330f72986314659df27a492e888060ee1e0"
+}

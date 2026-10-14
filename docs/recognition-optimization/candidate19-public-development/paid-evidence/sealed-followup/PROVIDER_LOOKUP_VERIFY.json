@@ -1,0 +1,134 @@
+{
+  "version": "provider-console-lookup-verification-1",
+  "role": "READ_ONLY_PROVIDER_LOOKUP_NOT_QUALITY_EVALUATION",
+  "observedAt": "2026-10-05T06:12:10.132Z",
+  "startingHead": "1c2cca3791dd06bb55a36e87158bea6a65c6a8e1",
+  "providerLookup": {
+    "route": "official Computer Use / Edge browser 3",
+    "loginRequired": false,
+    "usage": "AGGREGATE_ONLY_ON_VISIBLE_PAGE",
+    "billing": "RECHARGE_AND_GIFT_ON_VISIBLE_PAGE",
+    "export": "NOT_OBTAINED_DOWNLOAD_TIMEOUT",
+    "specificRequestAssociation": "NOT_ESTABLISHED",
+    "supportEntry": "OFFICIAL_HELP_FEEDBACK_FORM_VERIFIED",
+    "supportSubmitted": false,
+    "privateArtifacts": [
+      {
+        "name": "billing-structure.json",
+        "sha256": "8739c3ba75089d2e694844efec80ca41c38e92d01b5ebca3bfd5701b297cdfda"
+      },
+      {
+        "name": "feedback-blank.png",
+        "sha256": "c9d2628776eb67be603850b578dd1f711be62926a179c729f0b3d5b7d604abe7"
+      },
+      {
+        "name": "feedback-form.txt",
+        "sha256": "8fce8e80b8abdefdfb2459878274a0365d9f0e8fad9c2856f0ccc5e4be4c545d"
+      },
+      {
+        "name": "OBSERVATION.json",
+        "sha256": "9d42d6c22d72ee26f49570c37c5a3cf6628ae9eb07a61f9da7f2d6f74a69fcc0"
+      },
+      {
+        "name": "usage-final-visible.txt",
+        "sha256": "a8e539be09c3fa63b13f454eaaf3f982283b217b238a3ff7291df5c13cb16ff3"
+      },
+      {
+        "name": "usage-observed.txt",
+        "sha256": "501bd9fadeb83f9dd20ef169e3a045cec4f3b6ddb5a68cbd76eec5448ec5debb"
+      },
+      {
+        "name": "usage-private.png",
+        "sha256": "af48ab6717a76309d7b36292c567921504600bb80823bf31122f39f9d790c748"
+      }
+    ]
+  },
+  "ordinal2": {
+    "delivery": "UNCERTAIN",
+    "billing": "UNKNOWN",
+    "responseRecoverability": "UNKNOWN",
+    "outputEvaluation": "UNKNOWN"
+  },
+  "recovery": {
+    "evidenceConditionSatisfied": false,
+    "externalReconciliationSupported": false,
+    "uncertainOrdinalCanBeSkipped": false,
+    "implementedThisTurn": false,
+    "authorized": false
+  },
+  "checks": [
+    {
+      "command": "node scripts/public-notice-recorded-readonly.mjs",
+      "exitCode": 0,
+      "logSha256": "d802fd5eb62a61275d6d7cd7728aeaff8d8706e183d85dcdd9553afdfea7f3dc"
+    },
+    {
+      "command": "node scripts/report-public-notice-recorded.mjs --verify",
+      "exitCode": 0,
+      "logSha256": "dfd6570505d67a38f82f3b2bd7082c89fb4bde024bf4815106dd6d8b5212c800"
+    },
+    {
+      "command": "node scripts/verify-recognition-history.mjs --verify",
+      "exitCode": 0,
+      "logSha256": "270d3d3db15a85ff051525ca82a724f840c2e45fc33e6b5f6094abd65121024a"
+    }
+  ],
+  "integrity": {
+    "protectedFiles": 84,
+    "frozenFiles": 119,
+    "archives": 7,
+    "priorSceneDeepEqual": true,
+    "localIntegrity": {
+      "stateSha256": "72bc4d1aa6312f42840d0c280ae4ef29e049e6cee09017862a9a63f87b471819",
+      "authorizationSha256": "7cef55e3d7a4390aacf1d566578c0a21f894d143092c6dd94277ff1933b2d917",
+      "priceEvidenceSha256": "283064f7b492b25a7d0b770d53a0ed01a61479020e3349b33923806c6c3882b4",
+      "userAuthorizationSha256": "380aa6ab55b2010d24d06aa38028bc095aa72a553f1825b1ab0450715bdb5e37"
+    },
+    "ledger": {
+      "rows": 1000,
+      "sha256": "fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d",
+      "tail": "3607e0c9b993aa4004bbddcbc06cfe9c76423f88ae274f52db221863bb9ecd15",
+      "batchRows": 4
+    },
+    "prior996PrefixSha256": "c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750",
+    "ledgerShaAfter": "fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d",
+    "haltAndLockPreserved": true,
+    "oldTwelveUnchanged": 12,
+    "oldPhaseJournalStillAbsent": true
+  },
+  "quality": {
+    "denominator": 4,
+    "modelFirstFacts": {
+      "correct": 1,
+      "incorrect": 0,
+      "unknown": 3,
+      "denominator": 4
+    },
+    "currentDisplayBeforeHuman": {
+      "correct": 1,
+      "incorrect": 0,
+      "unknown": 3,
+      "denominator": 4
+    },
+    "provisional": true,
+    "newModelQualityEvidence": false
+  },
+  "reusedEngineeringEvidence": {
+    "sourceDelivery": "1c2cca3791dd06bb55a36e87158bea6a65c6a8e1",
+    "validation": "VALIDATION.md",
+    "browser": "BROWSER_EVIDENCE.md",
+    "newProductCode": false,
+    "newBuild": false,
+    "newProductBrowserRun": false,
+    "fullSuiteRerun": false
+  },
+  "operations": {
+    "model": 0,
+    "grant": 0,
+    "reserve": 0,
+    "settle": 0,
+    "ledgerWrites": 0,
+    "originalSceneMutations": 0,
+    "secretPlaintextAccess": 0
+  }
+}

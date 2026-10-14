@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "rco-5-007-component-freeze-1.0.0",
+  "authorizationId": "RCO-5-007",
+  "classification": "SEEN_DIAGNOSTIC_REPLAY",
+  "createdAt": "2026-09-03",
+  "predictionDependencyPaths": [
+    "scripts/run-rco-5-007-replay.ts",
+    "scripts/rco-5-007-integrity.mjs",
+    "src/recognition/taskFormationPolicyV2.ts",
+    "src/recognition/scopeReferenceContract.ts",
+    "src/recognition/scopeIndexV11.ts",
+    "docs/recognition-optimization/rco-5-007-replay/b1-source-input.json",
+    "docs/recognition-optimization/rco-5-006-b1-runs/rco-5-006-b1-m1-20260903b/raw-results.json",
+    "package-lock.json",
+    "package.json"
+  ],
+  "scoringDependencyPaths": [
+    "scripts/score-rco-5-007-replay.mjs",
+    "scripts/rco-5-007-integrity.mjs",
+    "docs/recognition-optimization/RCO-5-006-B1_DEVELOPMENT_DATASET.json",
+    "docs/recognition-optimization/rco-5-007-replay/predictions.json",
+    "docs/recognition-optimization/rco-5-006-b1-runs/rco-5-006-b1-m1-20260903b/result.json"
+  ],
+  "protectedArtifactPaths": [
+    "docs/recognition-optimization/RCO-5-006-B1_DEVELOPMENT_DATASET.json",
+    "docs/recognition-optimization/RCO-5-006-B1_FREEZE.json",
+    "docs/recognition-optimization/RCO-5-006-B1_PLAN.md",
+    "docs/recognition-optimization/RCO-5-006-B1_TRACKER.md",
+    "docs/recognition-optimization/rco-5-006-b1-runs/rco-5-006-b1-m1-20260903b/checkpoint.json",
+    "docs/recognition-optimization/rco-5-006-b1-runs/rco-5-006-b1-m1-20260903b/raw-results.json"
+  ],
+  "sha256": {
+    "scripts/run-rco-5-007-replay.ts": "981b3871385b933b71b298e802d71d756319ba5f91f403746c324940cbc9e23a",
+    "scripts/rco-5-007-integrity.mjs": "9bd2cec0c405ea13fecf7d91dadee900d66d42ebeea40c53445cf8f0cef7890e",
+    "src/recognition/taskFormationPolicyV2.ts": "61d7c1d634f3e04d90ae034cf479528a6f62da5be141d06fcf6820db8c0de54d",
+    "src/recognition/scopeReferenceContract.ts": "2f3b12b464991d8ea57fe08cad1217050485ddc69b310f13b489f6dcaae71cf2",
+    "src/recognition/scopeIndexV11.ts": "2706131f0c133872042761016e8ccac0487ce854be3472f2d189e5c901889515",
+    "docs/recognition-optimization/rco-5-007-replay/b1-source-input.json": "28c681a77c730e8d120ec34f1bcee374572cf36bee2eaa44adc2d42c572ad146",
+    "docs/recognition-optimization/rco-5-006-b1-runs/rco-5-006-b1-m1-20260903b/raw-results.json": "9b564d24ffd5cda03a4d68731652d370ca59dab50a1e7d8cef889f4329f9f93a",
+    "package-lock.json": "0712a7885770a869293149bab34cfb2d740562694d8bd30980141df9a5d2a0b1",
+    "package.json": "df4c657cb2f43d2555a7d0cda93f86ac8afb15034530756bb009082dfc0a2123",
+    "scripts/score-rco-5-007-replay.mjs": "36d7adbd5788ec4b53bc56588a47f40a1a8be51b36a3eeb89539adf7b9b44007",
+    "docs/recognition-optimization/RCO-5-006-B1_DEVELOPMENT_DATASET.json": "e9379259ffe23879f25fecc70318dc8049c3c9e7b054d5a25f47aeb593b32170",
+    "docs/recognition-optimization/rco-5-007-replay/predictions.json": "e1351b3b3bd037218524ba21a521ffe73794ddc2515ffe84578c57570f4f7c6d",
+    "docs/recognition-optimization/rco-5-006-b1-runs/rco-5-006-b1-m1-20260903b/result.json": "2e1541df0ddafaee46837d22f0a8b1b84b4fb4c92a523bb5b602199d8860f33e",
+    "docs/recognition-optimization/RCO-5-006-B1_FREEZE.json": "7292a4a11d0c80d934a9203d88254dd056d24a1b07171826bdc96090bd896e48",
+    "docs/recognition-optimization/RCO-5-006-B1_PLAN.md": "223caf1761e18814d26a9645c5bcdeaad089c9c057ee02cca876ab4529fbd853",
+    "docs/recognition-optimization/RCO-5-006-B1_TRACKER.md": "17121afb9711f6bda8eb7a93a1f3e03748e323c9aa730ab7cf4eb99e452e2a36",
+    "docs/recognition-optimization/rco-5-006-b1-runs/rco-5-006-b1-m1-20260903b/checkpoint.json": "481f86a9cee3d67a4c41fc417388cf75c437d844afb61ff542e02f7b568b80c6",
+    "scripts/prepare-rco-5-007-source-input.mjs": "7c5c96aa14ff0ad980fb01bedf2e08937b011dd65ee121b0f88a0c366fedf9c8",
+    "scripts/freeze-rco-5-007-components.mjs": "e226599f259e935fbd57b278fdde1035c56c914536deeadc36cf7e385cece07a",
+    "src/recognition/taskFormationPolicyV2.test.ts": "b4862bbdd8b4a17f37a575359681d3b8fe4d8cc94c1af707a40c78ff0364ba23",
+    "scripts/rco-5-007-replay.node-test.mjs": "a71ed325767038b2255b6da1b98989325b721a9ffc8cf92434280469ee841e74",
+    "docs/recognition-optimization/RCO-5-007_PLAN.md": "badadfd03fe6107c09695031961076c238c73db01fde328d5f0457dce202f9e1",
+    "docs/recognition-optimization/RCO-5-007_SEMANTIC_POLICY_V2.md": "d572f2e8bc6c0e09c58a34f3a0a55113bd4df3ff601b018e57a2e3331cc4e39c"
+  },
+  "rule": "Any dependency or protected-artifact hash mismatch stops prediction or scoring."
+}

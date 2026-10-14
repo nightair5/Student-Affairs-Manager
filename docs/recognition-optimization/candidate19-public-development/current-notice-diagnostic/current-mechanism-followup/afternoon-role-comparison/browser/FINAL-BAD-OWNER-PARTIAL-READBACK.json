@@ -1,0 +1,67 @@
+{
+  "view": "FOCUSED_READBACK_EVIDENCE_NOT_FULL_BACKUP",
+  "original": {
+    "path": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\afternoon-mainline-20261008\\browser-originals\\FINAL-BAD-OWNER-PARTIAL-READBACK.json",
+    "sha256": "6e33b618950a24e0897f43981f5e9e6c82d652ad51142196cf93638660ac6058"
+  },
+  "canonicalCounts": {
+    "tasks": 1,
+    "events": 4,
+    "timePoints": 9,
+    "materials": 0
+  },
+  "tasks": [],
+  "events": [
+    {
+      "id": "event:source:fd77460a:draft:1:E3",
+      "projectId": null,
+      "title": "丙组讨论",
+      "description": "丙组讨论于2026年11月14日16:00开始。",
+      "startTimePointId": "time:source:fd77460a:draft:1:P3",
+      "endTimePointId": null,
+      "location": null,
+      "createdAt": "2026-10-08T10:37:28.448Z",
+      "updatedAt": "2026-10-08T10:37:28.448Z",
+      "legacyData": {
+        "recognitionTempId": "E3",
+        "evidenceIds": [
+          "d26-scope-0003-84b0166fedee8f5cdf8393f967febbb70f2ed579d08cf239c90cec6253852bfa"
+        ],
+        "inferenceLevel": "explicit",
+        "sourceReviewDraftId": "source:fd77460a:draft:1"
+      }
+    }
+  ],
+  "timePoints": [
+    {
+      "id": "time:source:fd77460a:draft:1:P3",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:fd77460a:draft:1:E3",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年11月14日16:00",
+      "normalizedValue": "2026-11-14T16:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T10:37:28.448Z",
+      "updatedAt": "2026-10-08T10:37:28.448Z",
+      "legacyData": {
+        "recognitionTempId": "P3",
+        "evidenceIds": [
+          "d26-scope-0003-84b0166fedee8f5cdf8393f967febbb70f2ed579d08cf239c90cec6253852bfa"
+        ],
+        "confidence": 1,
+        "sharedEventIds": [
+          "event:source:fd77460a:draft:1:E3"
+        ]
+      }
+    }
+  ],
+  "sourceFactsNotInvented": true
+}

@@ -1,0 +1,1079 @@
+{
+  "version": "c19-partial-replay-diagnostic-1",
+  "batch": "C19-C17-C19-DEVELOPMENT-R1",
+  "status": "NO_WINNER_INCOMPLETE_BATCH",
+  "plannedSources": 6,
+  "plannedRequests": 12,
+  "observedRequests": 2,
+  "notRunRequests": 10,
+  "rows": [
+    {
+      "ordinal": 1,
+      "candidate": "Candidate17",
+      "sourceId": "C19-DEV-S01",
+      "source": {
+        "sourceId": "C19-DEV-S01",
+        "sourceVersionId": "C19-DEV-S01-v1",
+        "sourceText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+        "sourceSha256": "15d3153166d43aa37568018eab9f8661de221c3773313689ecf766e78c181e95",
+        "referenceTime": "2026-10-03T09:00:00+08:00",
+        "timezone": "Asia/Shanghai",
+        "role": "NEW_MODEL_ASSISTED_SYNTHETIC_DEVELOPMENT_NOT_HOLDOUT",
+        "targets": [
+          "NO_TASK_EVENT_TIME"
+        ]
+      },
+      "rawResponseSha256": "05a1b54cc527707cab1ff02bf88587574ea0d9fa6b6124d00dfba7c989f8fcf6",
+      "wire": {
+        "schemaVersion": "real-input-model-wire-1",
+        "tasks": [],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577",
+          "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1",
+          "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+          "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105"
+        ],
+        "unresolvedScopeIds": []
+      },
+      "denominator": "One observed source; planned 6 per arm and 12 total. Not a complete batch score or winner.",
+      "originalAdapted": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "tasks": [],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577",
+          "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1",
+          "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+          "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105"
+        ],
+        "unresolvedScopeIds": [],
+        "sourceId": "C19-DEV-S01",
+        "sourceVersionId": "C19-DEV-S01-v1",
+        "sourceFingerprint": "sha256:085bac1e700eca4f22d5f18cb7f19f95c72081e8ae7d8e085a5250c5882839b4"
+      },
+      "firstDisplay": {
+        "result": {
+          "schemaVersion": "mainline04-task-semantics-1",
+          "tasks": [],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "revisions": [],
+          "conflicts": [],
+          "informationScopeIds": [
+            "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577",
+            "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1",
+            "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+            "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105"
+          ],
+          "unresolvedScopeIds": [],
+          "sourceId": "C19-DEV-S01",
+          "sourceVersionId": "C19-DEV-S01-v1",
+          "sourceFingerprint": "sha256:085bac1e700eca4f22d5f18cb7f19f95c72081e8ae7d8e085a5250c5882839b4"
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [],
+          "generatedProse": [],
+          "times": [],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        }
+      },
+      "conversion": null,
+      "coverageAudit": {
+        "legacy": null,
+        "declarations": [],
+        "unknownCoverage": []
+      },
+      "unitOfflineDiagnostic": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "EVENT_MISSING",
+            "factId": "E1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P1"
+          }
+        ],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "expected": 0,
+          "actual": 0
+        },
+        "matchedObligations": [],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "expected": 0,
+            "actual": 0
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 1,
+            "forbidden": 0,
+            "keyMajor": 1
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "E1",
+                "pass": false
+              },
+              {
+                "id": "P1",
+                "pass": false
+              },
+              {
+                "id": "I3",
+                "pass": true
+              },
+              {
+                "id": "I4",
+                "pass": true
+              },
+              {
+                "id": "I5",
+                "pass": true
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "[\"EVENT_MISSING\",\"E1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P1\",null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [
+          {
+            "id": "E1",
+            "presence": false
+          }
+        ],
+        "proseChecks": [],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "role": "INCOMPLETE_BATCH_RECORDED_OFFLINE_DIAGNOSTIC_NOT_FINAL_COMPARISON"
+    },
+    {
+      "ordinal": 2,
+      "candidate": "Candidate19",
+      "sourceId": "C19-DEV-S01",
+      "source": {
+        "sourceId": "C19-DEV-S01",
+        "sourceVersionId": "C19-DEV-S01-v1",
+        "sourceText": "校园失物查询网站将在周日晚间暂停查询。此前登记的信息保持不变，不需要重新登记，也不要发送补充邮件。",
+        "sourceSha256": "15d3153166d43aa37568018eab9f8661de221c3773313689ecf766e78c181e95",
+        "referenceTime": "2026-10-03T09:00:00+08:00",
+        "timezone": "Asia/Shanghai",
+        "role": "NEW_MODEL_ASSISTED_SYNTHETIC_DEVELOPMENT_NOT_HOLDOUT",
+        "targets": [
+          "NO_TASK_EVENT_TIME"
+        ]
+      },
+      "rawResponseSha256": "3e725f3f2b99787f4124fd0862a6bff877d169835b106424413f3c33ddda2efa",
+      "wire": {
+        "schemaVersion": "explicit-source-contract-4.0.0",
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "校园失物查询网站将在周日晚间暂停查询",
+            "description": "校园失物查询网站将在周日晚间暂停查询。",
+            "startTimePointTempId": "time-0001",
+            "endTimePointTempId": null,
+            "location": null,
+            "scopeIds": [
+              "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577"
+            ],
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "relatedTaskTempIds": []
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "event_start",
+            "rawText": "周日晚间",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577"
+            ],
+            "confidence": 0.9
+          }
+        ],
+        "materials": [],
+        "tasks": [
+          {
+            "id": "task-0001",
+            "propositionScopeIds": [
+              "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "register",
+            "action": {
+              "scopeId": "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+              "surface": "重新登记"
+            },
+            "object": {
+              "scopeId": "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+              "surface": "重新登记"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "不需要重新登记",
+              "description": "不需要重新登记。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "low",
+              "dependencyTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          },
+          {
+            "id": "task-0002",
+            "propositionScopeIds": [
+              "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": {
+              "scopeId": "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105",
+              "surface": "发送"
+            },
+            "object": {
+              "scopeId": "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105",
+              "surface": "补充邮件"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "不要发送补充邮件",
+              "description": "不要发送补充邮件。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "low",
+              "dependencyTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          }
+        ],
+        "revisions": [],
+        "conflicts": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ],
+            "secondaryEntityIds": [
+              "time-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0001"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0002"
+            ],
+            "secondaryEntityIds": []
+          }
+        ],
+        "prerequisiteStates": []
+      },
+      "denominator": "One observed source; planned 6 per arm and 12 total. Not a complete batch score or winner.",
+      "originalAdapted": {
+        "schemaVersion": "mainline04-task-semantics-1",
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "校园失物查询网站将在周日晚间暂停查询",
+            "description": "校园失物查询网站将在周日晚间暂停查询。",
+            "startTimePointTempId": "time-0001",
+            "endTimePointTempId": null,
+            "location": null,
+            "scopeIds": [
+              "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577"
+            ],
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "relatedTaskTempIds": []
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "event_start",
+            "rawText": "周日晚间",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577"
+            ],
+            "confidence": 0.9,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true
+          }
+        ],
+        "materials": [],
+        "tasks": [
+          {
+            "id": "task-0001",
+            "propositionScopeIds": [
+              "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "register",
+            "action": {
+              "scopeId": "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+              "surface": "重新登记"
+            },
+            "object": {
+              "scopeId": "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+              "surface": "重新登记"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "不需要重新登记",
+              "description": "不需要重新登记。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "low",
+              "dependencyTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": []
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "task-0002",
+            "propositionScopeIds": [
+              "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "present",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": {
+              "scopeId": "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105",
+              "surface": "发送"
+            },
+            "object": {
+              "scopeId": "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105",
+              "surface": "补充邮件"
+            },
+            "effect": "external_transfer",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "不要发送补充邮件",
+              "description": "不要发送补充邮件。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "low",
+              "dependencyTempIds": [],
+              "confidence": 0.9,
+              "userConfirmationRequired": true,
+              "materialTempIds": [],
+              "timePointTempIds": []
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1"
+        ],
+        "unresolvedScopeIds": [],
+        "sourceId": "C19-DEV-S01",
+        "sourceVersionId": "C19-DEV-S01-v1",
+        "sourceFingerprint": "sha256:085bac1e700eca4f22d5f18cb7f19f95c72081e8ae7d8e085a5250c5882839b4"
+      },
+      "firstDisplay": {
+        "result": {
+          "schemaVersion": "mainline04-task-semantics-1",
+          "events": [
+            {
+              "tempId": "event-0001",
+              "title": "校园失物查询网站将在周日晚间暂停查询",
+              "description": "校园失物查询网站将在周日晚间暂停查询。",
+              "startTimePointTempId": "time-0001",
+              "endTimePointTempId": null,
+              "location": null,
+              "scopeIds": [
+                "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577"
+              ],
+              "confidence": 0.95,
+              "inferenceLevel": "explicit",
+              "relatedTaskTempIds": []
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-0001",
+              "type": "event_start",
+              "rawText": "周日晚间",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "scopeIds": [
+                "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577"
+              ],
+              "confidence": 0.9,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true
+            }
+          ],
+          "materials": [],
+          "tasks": [
+            {
+              "id": "task-0001",
+              "propositionScopeIds": [
+                "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "negative",
+                "tense": "present",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "register",
+              "action": {
+                "scopeId": "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+                "surface": "重新登记"
+              },
+              "object": {
+                "scopeId": "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+                "surface": "重新登记"
+              },
+              "effect": "local_change",
+              "detail": {
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "重新登记重新登记",
+                "description": "不需要重新登记，",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "low",
+                "dependencyTempIds": [],
+                "confidence": 0.9,
+                "userConfirmationRequired": true,
+                "materialTempIds": [],
+                "timePointTempIds": []
+              },
+              "condition": {
+                "value": "not_applicable",
+                "conditionScopeIds": [],
+                "factScopeIds": []
+              },
+              "coverage": {
+                "time": "not_stated",
+                "material": "not_stated",
+                "event": "not_stated"
+              },
+              "eventTempIds": []
+            },
+            {
+              "id": "task-0002",
+              "propositionScopeIds": [
+                "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105"
+              ],
+              "semantics": {
+                "actor": "addressee",
+                "speechAct": "directive",
+                "polarity": "negative",
+                "tense": "present",
+                "status": "pending",
+                "validity": "active",
+                "modality": "required"
+              },
+              "inferenceLevel": "explicit",
+              "actionType": "send",
+              "action": {
+                "scopeId": "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105",
+                "surface": "发送"
+              },
+              "object": {
+                "scopeId": "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105",
+                "surface": "补充邮件"
+              },
+              "effect": "external_transfer",
+              "detail": {
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "发送补充邮件",
+                "description": "也不要发送补充邮件。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "low",
+                "dependencyTempIds": [],
+                "confidence": 0.9,
+                "userConfirmationRequired": true,
+                "materialTempIds": [],
+                "timePointTempIds": []
+              },
+              "condition": {
+                "value": "not_applicable",
+                "conditionScopeIds": [],
+                "factScopeIds": []
+              },
+              "coverage": {
+                "time": "not_stated",
+                "material": "not_stated",
+                "event": "not_stated"
+              },
+              "eventTempIds": []
+            }
+          ],
+          "revisions": [],
+          "conflicts": [],
+          "informationScopeIds": [
+            "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1"
+          ],
+          "unresolvedScopeIds": [],
+          "sourceId": "C19-DEV-S01",
+          "sourceVersionId": "C19-DEV-S01-v1",
+          "sourceFingerprint": "sha256:085bac1e700eca4f22d5f18cb7f19f95c72081e8ae7d8e085a5250c5882839b4"
+        },
+        "audit": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "task-0001",
+              "kind": "task",
+              "title": "不需要重新登记",
+              "description": "不需要重新登记。"
+            },
+            {
+              "entityId": "task-0002",
+              "kind": "task",
+              "title": "不要发送补充邮件",
+              "description": "不要发送补充邮件。"
+            },
+            {
+              "entityId": "event-0001",
+              "kind": "event",
+              "title": "校园失物查询网站将在周日晚间暂停查询",
+              "description": "校园失物查询网站将在周日晚间暂停查询。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-0001",
+              "kind": "task",
+              "title": "重新登记重新登记",
+              "description": "不需要重新登记，"
+            },
+            {
+              "entityId": "task-0002",
+              "kind": "task",
+              "title": "发送补充邮件",
+              "description": "也不要发送补充邮件。"
+            },
+            {
+              "entityId": "event-0001",
+              "kind": "event",
+              "title": "校园失物查询网站将在周日晚间暂停查询",
+              "description": "校园失物查询网站将在周日晚间暂停查询。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-0001",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "周日晚间",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 4
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "晚",
+                "certainty": "partial",
+                "sourceContext": "校园失物查询网站将在周日晚间暂停查询"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        }
+      },
+      "conversion": {
+        "version": "explicit-source-contract-4.0.0",
+        "operation": "VALIDATED_TYPED_DECLARATIONS_AND_EXPLICIT_EDGE_INVERSES_ONLY",
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577",
+            "kind": "event",
+            "entityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+            "kind": "action",
+            "entityIds": [
+              "task-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105",
+            "kind": "action",
+            "entityIds": [
+              "task-0002"
+            ]
+          }
+        ],
+        "prerequisiteStates": [],
+        "inferredFacts": 0,
+        "originalDeclarations": [
+          {
+            "taskId": "task-0001",
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          },
+          {
+            "taskId": "task-0002",
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          }
+        ],
+        "typedAccounting": [
+          {
+            "scopeId": "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ],
+            "secondaryEntityIds": [
+              "time-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0001"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0002"
+            ],
+            "secondaryEntityIds": []
+          }
+        ]
+      },
+      "coverageAudit": {
+        "legacy": null,
+        "declarations": [
+          {
+            "taskId": "task-0001",
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          },
+          {
+            "taskId": "task-0002",
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          }
+        ],
+        "unknownCoverage": []
+      },
+      "unitOfflineDiagnostic": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "TASK_PRESENCE",
+            "fn": 0,
+            "fp": 2
+          },
+          {
+            "kind": "INDEPENDENT_INFORMATION_MISSING",
+            "factId": "I4"
+          },
+          {
+            "kind": "INDEPENDENT_INFORMATION_MISSING",
+            "factId": "I5"
+          }
+        ],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 0,
+          "expected": 0,
+          "actual": 2
+        },
+        "matchedObligations": [],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 0,
+            "expected": 0,
+            "actual": 2
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 1,
+            "forbidden": 0,
+            "keyMajor": 1
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "E1",
+                "pass": true
+              },
+              {
+                "id": "P1",
+                "pass": true
+              },
+              {
+                "id": "I3",
+                "pass": true
+              },
+              {
+                "id": "I4",
+                "pass": false
+              },
+              {
+                "id": "I5",
+                "pass": false
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "FP:重新登记|重新登记",
+          "FP:发送|补充邮件",
+          "[\"INDEPENDENT_INFORMATION_MISSING\",\"I4\",null,null,null]",
+          "[\"INDEPENDENT_INFORMATION_MISSING\",\"I5\",null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [
+          {
+            "id": "E1",
+            "actualId": "event-0001",
+            "presence": true,
+            "valueCorrect": true,
+            "evidenceSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "proseChecks": [],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "role": "INCOMPLETE_BATCH_RECORDED_OFFLINE_DIAGNOSTIC_NOT_FINAL_COMPARISON"
+    }
+  ],
+  "humanMetrics": "NOT_OBSERVABLE"
+}

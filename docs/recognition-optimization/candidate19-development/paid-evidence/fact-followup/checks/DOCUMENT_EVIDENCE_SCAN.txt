@@ -1,0 +1,9 @@
+2026-10-04, after the current documents and anonymous evidence were collected.
+Command: npm run security:scan
+Exit code: 0
+Observed stdout:
+
+> student-affairs-steward@0.1.0 security:scan
+> node scripts/scan-secrets.mjs
+
+Secret scan passed across 4049 source/build files.

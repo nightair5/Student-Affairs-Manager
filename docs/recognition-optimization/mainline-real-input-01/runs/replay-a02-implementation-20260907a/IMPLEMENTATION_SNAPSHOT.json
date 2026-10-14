@@ -1,0 +1,262 @@
+{
+  "status": "NOT_COMPLETE_BROWSER_CONTROL_STOP",
+  "head": "c1a5446f0ec58646fbace9e6c460e2c438d89554",
+  "sources": [
+    {
+      "path": "src/App.tsx",
+      "exists": true,
+      "workingSha256": "efc7c2c9bf852773517489571cc8696a343864cbe647f03ca83a3e2acde37ae1"
+    },
+    {
+      "path": "src/components/IntakePanel.tsx",
+      "exists": true,
+      "workingSha256": "92b1e9b2dd3312b380b7d01dcff3e8c9ec2c5c3d919ef2f8802b85d1d3c5418b"
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "exists": true,
+      "workingSha256": "fe7d30fddff3dcceb237f13914e9fa26ceb7da10fcc291266412764c67a7872b"
+    },
+    {
+      "path": "src/lib/fileExtraction.ts",
+      "exists": true,
+      "workingSha256": "83240cbd5e5a097933cc046a07c7474ab8a52449b63fd3e205c062ade61386ea"
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "exists": true,
+      "workingSha256": "bd7444b50b0031fcf85bc42009ae1d0556a64a05cf4d0f379628a43b780ecb91"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "exists": true,
+      "workingSha256": "21c38c5a10eda7446c8af941f9eecf6c9d0506e63eab954600118ec51b4ab5b8"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "exists": true,
+      "workingSha256": "90ab765b73e283cb8a3fbdfcf6ebc00a87d034a4cd67e4bcb1b09f869a4fe5ce"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.ts",
+      "exists": true,
+      "workingSha256": "0867190caceed2f98ccaf8a1a7807597127e023360a1147399dec8a289fb444e"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticCapture.ts",
+      "exists": true,
+      "workingSha256": "1240b21eb8860209b52a95b8b0b807b46fc6266e300872de24a240d4f199fb99"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "exists": true,
+      "workingSha256": "ec34e396b428669b9538387e6def3465bc6988a1f249e64f0fe2722d8bba79eb"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "exists": true,
+      "workingSha256": "f80222197fb38350dae898795839e405eb7ae349877bc618119c741f931adb35"
+    },
+    {
+      "path": "src/experiments/mainline05/runtime.ts",
+      "exists": true,
+      "workingSha256": "9d6837cf4022fb989b7122a1f39c414355ee6f8f861e4d4df814146141edf83f"
+    },
+    {
+      "path": "src/experiments/mainline05/SemanticFacts.tsx",
+      "exists": true,
+      "workingSha256": "11f88d0798b199e71a28a60c50ce9f701dbece61e3eb72742690ac859e902fa0"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.ts",
+      "exists": true,
+      "workingSha256": "72b342a095d607db888a54819da80cab98fcd35b59c1d52db86157ee204a7372"
+    },
+    {
+      "path": "src/experiments/realInput01/inputAcquisition.ts",
+      "exists": true,
+      "workingSha256": "38339eacc4104653a9823adc8011744920b305852e91146346a645be396a2214"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "exists": true,
+      "workingSha256": "7221e249bfbb855db4142a96ce12f8bde98be3e679dc41c3ad77c7e0e8cbd526"
+    },
+    {
+      "path": "src/experiments/realInput01/modelClient.ts",
+      "exists": true,
+      "workingSha256": "767edb637cf741d4f27a96d5059836cd7b17e8c643e9936d974e380bde21df0b"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.ts",
+      "exists": true,
+      "workingSha256": "4c0e6d34b6c66bddbfb68e51b8e340155cfc5a47356814bb92803d180fb5283a"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.ts",
+      "exists": true,
+      "workingSha256": "9ece61c979de2e07da05533a8a366bf00976062f608eeed4d3dedb40f9562e78"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.ts",
+      "exists": true,
+      "workingSha256": "c275639a4c923768c16fc680574eb45bfd6faccda63251c6f80a5c1cf330a005"
+    },
+    {
+      "path": "src/experiments/realInput01/browser.tsx",
+      "exists": true,
+      "workingSha256": "cc075b7bbf3c2abeb710c58017fb900360b4e14c204c915fd458d75312fdad3d"
+    },
+    {
+      "path": "src/experiments/realInput01/InputReview.tsx",
+      "exists": true,
+      "workingSha256": "e127677313b8eb66c55e154a278ca2fb7c703049e7243cd87701bc92d8b34da8"
+    },
+    {
+      "path": "src/experiments/realInput01/FactCorrectionEditor.tsx",
+      "exists": true,
+      "workingSha256": "140aac986c7c3d676436efcdd7a95bd1d0a7b146f81b22a28f037e8e7be4931b"
+    },
+    {
+      "path": "src/experiments/realInput01/seenInputs.ts",
+      "exists": true,
+      "workingSha256": "e8c7cffc614b9be14c35657ddeb19592ddc3d8e8964423764889b46d37dd5583"
+    },
+    {
+      "path": "src/experiments/realInput01/evaluation.ts",
+      "exists": true,
+      "workingSha256": "09ef0efff89c25761c721696da88de5fd73b74af0a417470e8f6af11979a6745"
+    },
+    {
+      "path": "src/experiments/realInput01/inputReceipt.test.ts",
+      "exists": true,
+      "workingSha256": "421e2d67fca01e07bc044c75fc935f844b357d8b08f8707a4aa463e59e28fcd6"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.test.ts",
+      "exists": true,
+      "workingSha256": "dc417bf97d7cd0dedbffcdb70396cf0a915808cf423e7578b6a9c6cc1747f0ce"
+    },
+    {
+      "path": "src/experiments/realInput01/modelPolicy.test.ts",
+      "exists": true,
+      "workingSha256": "bd8b511aede51694775c9fbdbc08dd2a0deea8611eb6b1e08a6736b0a8a1ac9b"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.test.ts",
+      "exists": true,
+      "workingSha256": "482c023fa42ea4b5a761dfcb720a6797b97d7d86364489bbe9505da9366d02eb"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.test.ts",
+      "exists": true,
+      "workingSha256": "6859a42dfabb42206c016e035c86954b4b63e9c23da85556af9597cada73cdf1"
+    },
+    {
+      "path": "src/experiments/realInput01/acceptance.test.tsx",
+      "exists": true,
+      "workingSha256": "b3e89917cc4b79c4e02427db1877f60374cdd635c730c70d9c2bc01f4a78afcc"
+    },
+    {
+      "path": "src/experiments/realInput01/extraction.test.ts",
+      "exists": true,
+      "workingSha256": "6cc076a1fd8c5d3cbf2cba4979b8464eb532b450e4b0faf3dd173e51b3c418eb"
+    },
+    {
+      "path": "scripts/serve-mainline-real-input-01.mjs",
+      "exists": true,
+      "workingSha256": "70002bc2c79922c99693906eeb32a4b2272b49456eb1e0ee947db69e2ee4862e"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.mjs",
+      "exists": true,
+      "workingSha256": "5c6f4aefd3ee911bd4f35629954274ab0fd8ea55f3789dfb9de0290c7df86a03"
+    },
+    {
+      "path": "scripts/real-input-budget.mjs",
+      "exists": true,
+      "workingSha256": "52a2e52080f7205c5c78242fb2cfed8dd51dd222aea7bb185041aee321a9befe"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.mjs",
+      "exists": true,
+      "workingSha256": "9be6f85299e6b70a3813ac5d0bd76742fd15bd95ca63877b06f78862fdb649d5"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.node-test.mjs",
+      "exists": true,
+      "workingSha256": "fd39a73fa919204dcbb11dbcf4b79bf9172c1a07a9802020b0f90b7f788bb631"
+    },
+    {
+      "path": "scripts/check-mainline-real-input-01.node-test.mjs",
+      "exists": true,
+      "workingSha256": "b751e9221439ecb51042bb07d9ec658e5ec40fb7081cce3021b0900142ad6662"
+    },
+    {
+      "path": "scripts/run-mainline-real-input-01.mjs",
+      "exists": true,
+      "workingSha256": "52930a4d79499b228bbb9258d1ec99554f28df807b59b8576c6bc24f631aaf81"
+    },
+    {
+      "path": "scripts/real-input-budget.node-test.mjs",
+      "exists": true,
+      "workingSha256": "cb76c22543e6ae342cd6dfcd55548d3f6288183c553b18c17cdb68eb502c4b44"
+    },
+    {
+      "path": "scripts/render-mainline-real-input-01-fixtures.mjs",
+      "exists": true,
+      "workingSha256": "a5e88226104488cb61d50ea1c2fa92544ddd58974b08d5d4f0544cccacf6aafd"
+    },
+    {
+      "path": "src/pages/DashboardPage.tsx",
+      "exists": true,
+      "workingSha256": "b0a475cb2c075fa789b360ead943c59d3b3be87da46a7adc49c9cf20be1bacec"
+    }
+  ],
+  "changed": [
+    "src/experiments/mainline05/semanticState.ts",
+    "src/experiments/mainline05/semanticConfirmation.ts",
+    "src/experiments/mainline05/semanticView.ts",
+    "src/experiments/mainline05/SemanticFacts.tsx",
+    "src/experiments/realInput01/factCorrections.ts",
+    "src/experiments/realInput01/runtime.ts",
+    "src/experiments/realInput01/browser.tsx",
+    "src/experiments/realInput01/FactCorrectionEditor.tsx",
+    "src/experiments/realInput01/factCorrections.test.ts",
+    "src/experiments/realInput01/runtime.test.ts",
+    "scripts/serve-mainline-real-input-01.mjs"
+  ],
+  "readOnlyImplementationCount": 31,
+  "protectedCount": 945,
+  "protectedSha256": "df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394",
+  "staticEvidenceCount": 160,
+  "ledgerUnchanged": true,
+  "receiptCount": 5,
+  "logPrefix": {
+    "bytes": 286643,
+    "sha256": "74a6bdfbaaae7fd27509d39c9eec51612bafd08245ee7c8ed1d551e54e98bd4a"
+  },
+  "logs": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/targeted-before.log",
+      "sha256": "44f6d22bbfccdd3c365314bb44b1329f8b6152fe25ec547612eb26018d5badd6"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/targeted-material-1.log",
+      "sha256": "4d9a29448ccefeea42fe57720a3167454559ee7849e881b96efece1279caee25"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/targeted-replay-1.log",
+      "sha256": "28e0ce05af63d5f36dbee643999abbe7434fba98864badcf8f03105f830936f7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/type-targeted-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/type-targeted-2.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "errors": []
+}

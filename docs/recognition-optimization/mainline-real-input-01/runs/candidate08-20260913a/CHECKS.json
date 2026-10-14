@@ -1,0 +1,85 @@
+{
+  "version": "candidate08-final-checks-1",
+  "checkedAt": "2026-09-13T12:59:19.109Z",
+  "head": "de017e5bfb759263ec24270ae85d624ffcb88471",
+  "upstream": "de017e5bfb759263ec24270ae85d624ffcb88471",
+  "sourceCount": 70,
+  "protectedCount": 944,
+  "historyCount": 607,
+  "ledger": {
+    "path": "C:/Users/Winner/student-affairs-multimodal-exp/docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "lines": 345,
+    "bytes": 261483,
+    "sha256": "e8503b7934eceadc278810ccffacae506edd320257a9b4890414fb0eaa1dcdc2",
+    "sequence": 344,
+    "tailHash": "64325fd5feddd249822a24a74bb0e0394997cb6f282d608aeb71aad46346dee8",
+    "cumulativeAttempts": 168
+  },
+  "requests": {
+    "authorized": 40,
+    "completedHttp200": 40,
+    "settled": 40,
+    "transportFailures": 0,
+    "cumulativeAttempts": 168,
+    "batchWaitingMs": 258222,
+    "batchCostUpperMicroCny": 1067565,
+    "cumulativeCostUpperMicroCny": 7197982,
+    "providerBilledCny": "NOT_OBSERVABLE"
+  },
+  "tests": {
+    "candidateAndWire": {
+      "passed": 12,
+      "failed": 0
+    },
+    "paired08Budget": "PASS_1",
+    "paired08Gateway": "PASS_1",
+    "typeApp": "PASS",
+    "typeNode": "PASS",
+    "lint": "PASS_0_ERRORS_4_EXISTING_WARNINGS",
+    "safeViteBuild": "PASS",
+    "vitestInitial": {
+      "passed": 1342,
+      "failed": 3,
+      "skipped": 3
+    },
+    "vitestFailedLayerRetry": {
+      "passed": 3,
+      "failed": 0
+    },
+    "uniqueVitestWithPassEvidence": 1345,
+    "local6632ReadOnlyProbe": "PASS_MODEL_POST_405",
+    "contract": "PASS",
+    "timeAst": "PASS",
+    "server": "PASS",
+    "cloudflareWorker": "PASS",
+    "timeParity": "PASS",
+    "multimodalLibrary": "PASS",
+    "functions": "PASS",
+    "secretScan": "PASS_1951",
+    "historicalRco5007": "FAIL_3_OF_4_PACKAGE_LOCK_FREEZE_HASH_MISMATCH_UNCHANGED_BY_THIS_BATCH"
+  },
+  "environment": {
+    "rootEnvReadByTestsOrBuild": false,
+    "freshEnvDir": true,
+    "freshCacheDir": true,
+    "temporaryBuildOutput": true
+  },
+  "model": {
+    "calls": 40,
+    "transportFailures": 0,
+    "retry": 0,
+    "repair": 0,
+    "verifier": 0,
+    "identityMismatch": 0
+  },
+  "decision": {
+    "adoptCandidate08": false,
+    "reason": "17/20输出无法通过确定性角色引用契约；无需重大纠正数仍为0，且未证明减少材料或任务错误。",
+    "local6632Enabled": false,
+    "browserJourneys": "NOT_RUN_NON_ADOPTION",
+    "confirmedTasksFromThisBatch": 0,
+    "suggestionToConfirmedSaveRatio": "NOT_RUN_NON_ADOPTION",
+    "actualUserEditOperations": "NOT_RUN",
+    "nextPriority": "在新请求前先把证据角色的拥有者约束压缩为单一、可由JSON Schema直接表达的字段职责；不能在模型输出后放宽转换器吞掉错误。"
+  }
+}

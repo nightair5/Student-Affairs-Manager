@@ -1,0 +1,168 @@
+{
+  "version": "candidate12-d2-result-1",
+  "unitId": "C12-D1-PD05-B",
+  "sourceId": "C12-PD05",
+  "arm": "B",
+  "ordinal": 10,
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "requestSha": "1f764530e010a54ec6a4f954471daf9cbc976e9e6f30b983c15f7cbefb3ad1f8",
+  "responseSha": "1f6ec32f8a136fa48fba9e314850a7b086f532de43949fc37366596b6de92121",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "diagnostic": null,
+  "waitingMs": 4283,
+  "parseError": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-upload-research-plan-mentor-opinion",
+        "propositionScopeIds": [
+          "scope-0001-e50fa0e24f29cefac4dc76fe6a0370437ebc0fbca76cf30755f44b9c27c4efb6",
+          "scope-0002-2e20dbe229280de9c14750a39dfbfca5bb627e1df4920c11b1fdbd4cf69600c3"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "upload",
+        "action": {
+          "scopeId": "scope-0002-2e20dbe229280de9c14750a39dfbfca5bb627e1df4920c11b1fdbd4cf69600c3",
+          "surface": "上传"
+        },
+        "object": {
+          "scopeId": "scope-0002-2e20dbe229280de9c14750a39dfbfca5bb627e1df4920c11b1fdbd4cf69600c3",
+          "surface": "研究计划和导师意见表"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "上传研究计划和导师意见表",
+          "description": "如获得学院推荐，请于近期把研究计划和导师意见表一并上传至项目平台。",
+          "completionCriteria": [
+            "研究计划和导师意见表已一并上传至项目平台"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-research-plan",
+            "material-mentor-opinion-form"
+          ],
+          "timePointTempIds": [
+            "time-recent"
+          ],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "unknown",
+          "conditionScopeIds": [
+            "scope-0001-e50fa0e24f29cefac4dc76fe6a0370437ebc0fbca76cf30755f44b9c27c4efb6"
+          ],
+          "factScopeIds": [
+            "scope-0003-b2406712b6a1041929f876e57b5dcfe50d8d6de5e46a47f8c80066e0491901dc",
+            "scope-0004-fcdb84c352a612fef7390ae3f26bb30ee27a0a908bb8cb0cc1c120e0a186c19d"
+          ]
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-research-plan",
+        "name": "研究计划",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "项目平台",
+        "relatedTaskTempIds": [
+          "task-upload-research-plan-mentor-opinion"
+        ],
+        "scopeIds": [
+          "scope-0002-2e20dbe229280de9c14750a39dfbfca5bb627e1df4920c11b1fdbd4cf69600c3"
+        ],
+        "confidence": 0.9
+      },
+      {
+        "tempId": "material-mentor-opinion-form",
+        "name": "导师意见表",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "项目平台",
+        "relatedTaskTempIds": [
+          "task-upload-research-plan-mentor-opinion"
+        ],
+        "scopeIds": [
+          "scope-0002-2e20dbe229280de9c14750a39dfbfca5bb627e1df4920c11b1fdbd4cf69600c3"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-recent",
+        "type": "submission_deadline",
+        "rawText": "近期",
+        "relatedTaskTempIds": [
+          "task-upload-research-plan-mentor-opinion"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-2e20dbe229280de9c14750a39dfbfca5bb627e1df4920c11b1fdbd4cf69600c3"
+        ],
+        "confidence": 0.6,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0003-b2406712b6a1041929f876e57b5dcfe50d8d6de5e46a47f8c80066e0491901dc",
+      "scope-0004-fcdb84c352a612fef7390ae3f26bb30ee27a0a908bb8cb0cc1c120e0a186c19d"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C12-PD05",
+    "sourceVersionId": "C12-PD05-v1",
+    "sourceFingerprint": "sha256:368e8d74e1cb0e0c05c60d5d881012e9fa9a142513983bd463c7ed1ecb7dbcd1"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4722,
+    "input_tokens_details": {
+      "cached_tokens": 4224
+    },
+    "output_tokens": 1061,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5783
+  },
+  "costUpperMicroCny": 17932,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0
+}

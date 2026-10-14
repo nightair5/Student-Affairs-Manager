@@ -1,0 +1,27 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+xx---------------------
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > candidate02 paid records replay without a model request > C05 creates a separately identified run and confirms valid tasks without overwriting old work
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > candidate02 paid records replay without a model request > C08 creates a separately identified run and confirms valid tasks without overwriting old work
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/experiments/realInput01/acceptance.test.tsx:37:24
+     35| 
+     36| describe('candidate02 paid records replay without a model request',()=…
+     37|   it.each(['C05','C08'])('%s creates a separately identified run and c…
+       |                        ^
+     38|     const root='docs/recognition-optimization/mainline-real-input-01/r…
+     39|     const initial=JSON.parse(readFileSync(root+'correction-loop-202609…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 21 skipped (23)
+   Start at  13:43:10
+   Duration  11.58s (transform 622ms, setup 0ms, collect 1.03s, tests 10.03s, environment 0ms, prepare 230ms)
+

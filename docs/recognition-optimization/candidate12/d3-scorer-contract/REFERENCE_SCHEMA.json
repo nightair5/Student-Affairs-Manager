@@ -1,0 +1,628 @@
+{
+  "$defs": {
+    "alias": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/nonEmpty"
+        },
+        "object": {
+          "$ref": "#/$defs/nonEmpty"
+        }
+      },
+      "required": [
+        "action",
+        "object"
+      ],
+      "type": "object"
+    },
+    "ambiguity": {
+      "additionalProperties": false,
+      "properties": {
+        "allowedValues": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        },
+        "fieldPath": {
+          "$ref": "#/$defs/nonEmpty"
+        },
+        "resolution": {
+          "enum": [
+            "accept_any",
+            "require_adjudication"
+          ]
+        },
+        "ruleId": {
+          "$ref": "#/$defs/nonEmpty"
+        }
+      },
+      "required": [
+        "ruleId",
+        "fieldPath",
+        "allowedValues",
+        "resolution"
+      ],
+      "type": "object"
+    },
+    "check": {
+      "additionalProperties": false,
+      "properties": {
+        "checkId": {
+          "$ref": "#/$defs/nonEmpty"
+        },
+        "operator": {
+          "enum": [
+            "equals",
+            "oneOf",
+            "setEquals",
+            "requiredFragments",
+            "forbiddenFragments",
+            "countEquals"
+          ]
+        },
+        "path": {
+          "$ref": "#/$defs/nonEmpty"
+        },
+        "value": {}
+      },
+      "required": [
+        "checkId",
+        "path",
+        "operator",
+        "value"
+      ],
+      "type": "object"
+    },
+    "evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "actionEvidence": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        },
+        "basis": {
+          "enum": [
+            "explicit_action_object",
+            "strongly_inferred_action_object"
+          ]
+        },
+        "objectEvidence": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        }
+      },
+      "required": [
+        "basis",
+        "actionEvidence",
+        "objectEvidence"
+      ],
+      "type": "object"
+    },
+    "forbidden": {
+      "additionalProperties": false,
+      "properties": {
+        "assertion": {
+          "$ref": "#/$defs/forbiddenAssertion"
+        },
+        "code": {
+          "$ref": "#/$defs/nonEmpty"
+        },
+        "evidence": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        },
+        "kind": {
+          "enum": [
+            "task",
+            "field",
+            "merge",
+            "relation"
+          ]
+        },
+        "statement": {
+          "$ref": "#/$defs/nonEmpty"
+        }
+      },
+      "required": [
+        "code",
+        "kind",
+        "statement",
+        "evidence",
+        "assertion"
+      ],
+      "type": "object"
+    },
+    "forbiddenAssertion": {
+      "additionalProperties": false,
+      "properties": {
+        "operator": {
+          "enum": [
+            "equals",
+            "contains",
+            "setEquals"
+          ]
+        },
+        "path": {
+          "enum": [
+            "actions",
+            "objects",
+            "semanticStatus",
+            "semanticValidity",
+            "actionable",
+            "condition.value",
+            "completionStandard.accepted",
+            "dependencies"
+          ]
+        },
+        "value": {}
+      },
+      "required": [
+        "path",
+        "operator",
+        "value"
+      ],
+      "type": "object"
+    },
+    "material": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        },
+        "formatRequirements": {
+          "$ref": "#/$defs/strings"
+        },
+        "materialId": {
+          "$ref": "#/$defs/nonEmpty"
+        },
+        "names": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        },
+        "namingRequirements": {
+          "$ref": "#/$defs/strings"
+        },
+        "relatedReferenceTaskIds": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        },
+        "required": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "materialId",
+        "names",
+        "required",
+        "formatRequirements",
+        "namingRequirements",
+        "relatedReferenceTaskIds",
+        "evidence"
+      ],
+      "type": "object"
+    },
+    "merge": {
+      "additionalProperties": false,
+      "properties": {
+        "reason": {
+          "$ref": "#/$defs/nonEmpty"
+        },
+        "withReferenceTaskIds": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        }
+      },
+      "required": [
+        "withReferenceTaskIds",
+        "reason"
+      ],
+      "type": "object"
+    },
+    "nonEmpty": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "nonEmptyStrings": {
+      "items": {
+        "$ref": "#/$defs/nonEmpty"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "strings": {
+      "items": {
+        "$ref": "#/$defs/nonEmpty"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "task": {
+      "additionalProperties": false,
+      "properties": {
+        "actionable": {
+          "type": "boolean"
+        },
+        "actionObjectAliases": {
+          "items": {
+            "$ref": "#/$defs/alias"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "actions": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        },
+        "allowedMerges": {
+          "items": {
+            "$ref": "#/$defs/merge"
+          },
+          "type": "array"
+        },
+        "ambiguityRules": {
+          "items": {
+            "$ref": "#/$defs/ambiguity"
+          },
+          "type": "array"
+        },
+        "cancellationRelations": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "effective": {
+                "const": true
+              },
+              "evidence": {
+                "$ref": "#/$defs/nonEmptyStrings"
+              },
+              "fromReferenceTaskId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "relationId": {
+                "$ref": "#/$defs/nonEmpty"
+              },
+              "targetReferenceTaskId": {
+                "$ref": "#/$defs/nonEmpty"
+              },
+              "type": {
+                "const": "cancels"
+              }
+            },
+            "required": [
+              "relationId",
+              "type",
+              "fromReferenceTaskId",
+              "targetReferenceTaskId",
+              "effective",
+              "evidence"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "completionStandard": {
+          "additionalProperties": false,
+          "properties": {
+            "accepted": {
+              "$ref": "#/$defs/nonEmptyStrings"
+            },
+            "evidence": {
+              "$ref": "#/$defs/nonEmptyStrings"
+            }
+          },
+          "required": [
+            "accepted",
+            "evidence"
+          ],
+          "type": "object"
+        },
+        "condition": {
+          "additionalProperties": false,
+          "properties": {
+            "evidence": {
+              "$ref": "#/$defs/strings"
+            },
+            "value": {
+              "enum": [
+                "true",
+                "false",
+                "unknown",
+                "not_applicable"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "evidence"
+          ],
+          "type": "object"
+        },
+        "dependencies": {
+          "$ref": "#/$defs/strings"
+        },
+        "forbiddenInferences": {
+          "items": {
+            "$ref": "#/$defs/forbidden"
+          },
+          "type": "array"
+        },
+        "forbiddenMerges": {
+          "items": {
+            "$ref": "#/$defs/merge"
+          },
+          "type": "array"
+        },
+        "materials": {
+          "items": {
+            "$ref": "#/$defs/material"
+          },
+          "type": "array"
+        },
+        "objects": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        },
+        "optionalFields": {
+          "$ref": "#/$defs/strings"
+        },
+        "referenceTaskId": {
+          "$ref": "#/$defs/nonEmpty"
+        },
+        "replacementRelations": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "effective": {
+                "const": true
+              },
+              "evidence": {
+                "$ref": "#/$defs/nonEmptyStrings"
+              },
+              "fromReferenceTaskId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "relationId": {
+                "$ref": "#/$defs/nonEmpty"
+              },
+              "targetReferenceTaskId": {
+                "$ref": "#/$defs/nonEmpty"
+              },
+              "type": {
+                "const": "replaces"
+              }
+            },
+            "required": [
+              "relationId",
+              "type",
+              "fromReferenceTaskId",
+              "targetReferenceTaskId",
+              "effective",
+              "evidence"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "requiredFields": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        },
+        "revisionRelations": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "effective": {
+                "const": true
+              },
+              "evidence": {
+                "$ref": "#/$defs/nonEmptyStrings"
+              },
+              "fromReferenceTaskId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "relationId": {
+                "$ref": "#/$defs/nonEmpty"
+              },
+              "targetReferenceTaskId": {
+                "$ref": "#/$defs/nonEmpty"
+              },
+              "type": {
+                "const": "amends"
+              }
+            },
+            "required": [
+              "relationId",
+              "type",
+              "fromReferenceTaskId",
+              "targetReferenceTaskId",
+              "effective",
+              "evidence"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "semanticStatus": {
+          "enum": [
+            "pending",
+            "completed",
+            "cancelled",
+            "historical"
+          ]
+        },
+        "semanticValidity": {
+          "enum": [
+            "active",
+            "cancelled",
+            "superseded",
+            "expired"
+          ]
+        },
+        "taskBasis": {
+          "enum": [
+            "explicit_action_object",
+            "strongly_inferred_action_object"
+          ]
+        },
+        "taskEvidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "timePoints": {
+          "items": {
+            "$ref": "#/$defs/timePoint"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "referenceTaskId",
+        "actions",
+        "objects",
+        "actionObjectAliases",
+        "taskBasis",
+        "taskEvidence",
+        "semanticStatus",
+        "semanticValidity",
+        "actionable",
+        "condition",
+        "materials",
+        "timePoints",
+        "completionStandard",
+        "dependencies",
+        "revisionRelations",
+        "cancellationRelations",
+        "replacementRelations",
+        "allowedMerges",
+        "forbiddenMerges",
+        "forbiddenInferences",
+        "requiredFields",
+        "optionalFields",
+        "ambiguityRules"
+      ],
+      "type": "object"
+    },
+    "timePoint": {
+      "additionalProperties": false,
+      "properties": {
+        "actionable": {
+          "type": "boolean"
+        },
+        "evidence": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        },
+        "normalizedValues": {
+          "$ref": "#/$defs/strings"
+        },
+        "precision": {
+          "enum": [
+            "exact",
+            "date_only",
+            "range",
+            "vague",
+            "unknown"
+          ]
+        },
+        "rawTexts": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        },
+        "relatedReferenceTaskIds": {
+          "$ref": "#/$defs/nonEmptyStrings"
+        },
+        "timePointId": {
+          "$ref": "#/$defs/nonEmpty"
+        },
+        "type": {
+          "enum": [
+            "deadline",
+            "event_time",
+            "availability",
+            "publication_time",
+            "other"
+          ]
+        }
+      },
+      "required": [
+        "timePointId",
+        "rawTexts",
+        "type",
+        "normalizedValues",
+        "precision",
+        "actionable",
+        "relatedReferenceTaskIds",
+        "evidence"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "urn:student-affairs:candidate12:reference-contract:3.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "checks": {
+      "items": {
+        "$ref": "#/$defs/check"
+      },
+      "type": "array"
+    },
+    "contractVersion": {
+      "const": "candidate12-reference-contract-3.0.0"
+    },
+    "coverage": {
+      "enum": [
+        "complete",
+        "partial"
+      ]
+    },
+    "provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "labelerAStatus": {
+          "$ref": "#/$defs/nonEmpty"
+        },
+        "modelAssistanceUsed": {
+          "type": "boolean"
+        },
+        "reviewerBStatus": {
+          "$ref": "#/$defs/nonEmpty"
+        }
+      },
+      "required": [
+        "labelerAStatus",
+        "reviewerBStatus",
+        "modelAssistanceUsed"
+      ],
+      "type": "object"
+    },
+    "referenceVersion": {
+      "$ref": "#/$defs/nonEmpty"
+    },
+    "sourceId": {
+      "$ref": "#/$defs/nonEmpty"
+    },
+    "tasks": {
+      "items": {
+        "$ref": "#/$defs/task"
+      },
+      "type": "array"
+    },
+    "truthStatus": {
+      "enum": [
+        "INDEPENDENT_HUMAN",
+        "PROVISIONAL_MODEL_AUTHORED",
+        "CONTRACT_FIXTURE"
+      ]
+    }
+  },
+  "required": [
+    "contractVersion",
+    "referenceVersion",
+    "sourceId",
+    "coverage",
+    "truthStatus",
+    "provenance",
+    "tasks",
+    "checks"
+  ],
+  "title": "candidate12-reference-contract-3.0.0",
+  "type": "object"
+}

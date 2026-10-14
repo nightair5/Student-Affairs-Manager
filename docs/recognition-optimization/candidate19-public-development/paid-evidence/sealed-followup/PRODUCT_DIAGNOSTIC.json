@@ -1,0 +1,1164 @@
+{
+  "version": "sealed-event-label-diagnostic-1",
+  "referenceRole": "single-author/model-assisted/provisional",
+  "role": "OLD_RAW_PROGRAM_COMPATIBILITY_AND_AUTHORED_FIXTURES_NOT_NEW_MODEL_EFFECT",
+  "startingComponentCommit": "071882533535fcd09c0ba5fc6c84e1ab53436e21",
+  "productComponent": "event-time-label-context-1.0.0",
+  "candidateChange": false,
+  "generatedFacts": 0,
+  "cases": [
+    {
+      "id": "event-label-handling",
+      "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+      "sourceText": "为配合设备维护，数据查询服务将临时暂停，暂停期间无法办理。\n暂停办理时间：2026年6月3日16:40—2026年6月5日9:10",
+      "sourceSha256": "7b93f15d7ca9ef7acd9aa8486a65d0a89493e155d3068e4d000f94a21f80e055",
+      "referenceTime": "2026-06-01T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "originalWire": {
+        "schemaVersion": "explicit-source-contract-4.0.0",
+        "tasks": [],
+        "materials": [],
+        "revisions": [],
+        "conflicts": [],
+        "prerequisiteStates": [],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "数据查询服务",
+            "description": "为配合设备维护，暂停期间无法办理。",
+            "location": null,
+            "startTimePointTempId": "P0",
+            "endTimePointTempId": "P1",
+            "relatedTaskTempIds": [],
+            "scopeIds": [
+              "scope-0001-12d0c61f620d30461c33a20394894ba31a3a5e63cf14839954c52870efd53949",
+              "scope-0002-2a4122291fccbeeb3ce3f8393f0e7708d46ccc7c4326d967d7c3b8b3e66a4a4b",
+              "scope-0003-c3adb7fdd43a0964b0154c87b15a55568a9e13de113e954a280f57c5a3b07077",
+              "scope-0004-e1e4d281d8ae27984181f58f754f165f70f0d5dacedfa46d85cdd4ec29fc8595",
+              "scope-0005-2e037f32dca45fae7eb1b01f4b42aa75bfa3a06c02c304f1c2a784f004a0ac68"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit"
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "P0",
+            "type": "event_start",
+            "rawText": "2026年6月3日16:40",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0005-2e037f32dca45fae7eb1b01f4b42aa75bfa3a06c02c304f1c2a784f004a0ac68"
+            ],
+            "confidence": 1
+          },
+          {
+            "tempId": "P1",
+            "type": "event_end",
+            "rawText": "2026年6月5日9:10",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0005-2e037f32dca45fae7eb1b01f4b42aa75bfa3a06c02c304f1c2a784f004a0ac68"
+            ],
+            "confidence": 1
+          }
+        ],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-12d0c61f620d30461c33a20394894ba31a3a5e63cf14839954c52870efd53949",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "E1"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-2a4122291fccbeeb3ce3f8393f0e7708d46ccc7c4326d967d7c3b8b3e66a4a4b",
+            "kind": "event",
+            "primaryEntityIds": [
+              "E1"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-c3adb7fdd43a0964b0154c87b15a55568a9e13de113e954a280f57c5a3b07077",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "E1"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-e1e4d281d8ae27984181f58f754f165f70f0d5dacedfa46d85cdd4ec29fc8595",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "P0",
+              "P1"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-2e037f32dca45fae7eb1b01f4b42aa75bfa3a06c02c304f1c2a784f004a0ac68",
+            "kind": "event",
+            "primaryEntityIds": [
+              "E1"
+            ],
+            "secondaryEntityIds": [
+              "P0",
+              "P1"
+            ]
+          }
+        ]
+      },
+      "authoredEnvelopeSha256": "8f79fe7472bf1dc5209f681b24061c39a9335bf20994170b3783a66ab77c24c1",
+      "before": {
+        "status": "REJECTED",
+        "code": "PRODUCT_SUPPORT_UNSUPPORTED_CONTEXT_REFERENCE"
+      },
+      "after": {
+        "status": "DISPLAYABLE",
+        "supportAudit": {
+          "version": "source-support-accounting-projection-1.1.0",
+          "role": "POST_COMPARISON_PROGRAM_CONVERSION",
+          "inferredFacts": 0,
+          "originalWire": {
+            "schemaVersion": "explicit-source-contract-4.0.0",
+            "tasks": [],
+            "materials": [],
+            "revisions": [],
+            "conflicts": [],
+            "prerequisiteStates": [],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "数据查询服务",
+                "description": "为配合设备维护，暂停期间无法办理。",
+                "location": null,
+                "startTimePointTempId": "P0",
+                "endTimePointTempId": "P1",
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0001-12d0c61f620d30461c33a20394894ba31a3a5e63cf14839954c52870efd53949",
+                  "scope-0002-2a4122291fccbeeb3ce3f8393f0e7708d46ccc7c4326d967d7c3b8b3e66a4a4b",
+                  "scope-0003-c3adb7fdd43a0964b0154c87b15a55568a9e13de113e954a280f57c5a3b07077",
+                  "scope-0004-e1e4d281d8ae27984181f58f754f165f70f0d5dacedfa46d85cdd4ec29fc8595",
+                  "scope-0005-2e037f32dca45fae7eb1b01f4b42aa75bfa3a06c02c304f1c2a784f004a0ac68"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "P0",
+                "type": "event_start",
+                "rawText": "2026年6月3日16:40",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-2e037f32dca45fae7eb1b01f4b42aa75bfa3a06c02c304f1c2a784f004a0ac68"
+                ],
+                "confidence": 1
+              },
+              {
+                "tempId": "P1",
+                "type": "event_end",
+                "rawText": "2026年6月5日9:10",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-2e037f32dca45fae7eb1b01f4b42aa75bfa3a06c02c304f1c2a784f004a0ac68"
+                ],
+                "confidence": 1
+              }
+            ],
+            "scopeAccounting": [
+              {
+                "scopeId": "scope-0001-12d0c61f620d30461c33a20394894ba31a3a5e63cf14839954c52870efd53949",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-2a4122291fccbeeb3ce3f8393f0e7708d46ccc7c4326d967d7c3b8b3e66a4a4b",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0003-c3adb7fdd43a0964b0154c87b15a55568a9e13de113e954a280f57c5a3b07077",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0004-e1e4d281d8ae27984181f58f754f165f70f0d5dacedfa46d85cdd4ec29fc8595",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": [
+                  "P0",
+                  "P1"
+                ]
+              },
+              {
+                "scopeId": "scope-0005-2e037f32dca45fae7eb1b01f4b42aa75bfa3a06c02c304f1c2a784f004a0ac68",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": [
+                  "P0",
+                  "P1"
+                ]
+              }
+            ]
+          },
+          "changes": [
+            {
+              "scopeId": "scope-0001-12d0c61f620d30461c33a20394894ba31a3a5e63cf14839954c52870efd53949",
+              "entityId": "E1",
+              "reason": "INDEPENDENT_EVENT_CONTEXT"
+            },
+            {
+              "scopeId": "scope-0003-c3adb7fdd43a0964b0154c87b15a55568a9e13de113e954a280f57c5a3b07077",
+              "entityId": "E1",
+              "reason": "INDEPENDENT_EVENT_CONTEXT"
+            },
+            {
+              "scopeId": "scope-0004-e1e4d281d8ae27984181f58f754f165f70f0d5dacedfa46d85cdd4ec29fc8595",
+              "entityId": "P0",
+              "reason": "EVENT_TIME_LABEL_CONTEXT",
+              "policyVersion": "event-time-label-context-1.0.0"
+            },
+            {
+              "scopeId": "scope-0004-e1e4d281d8ae27984181f58f754f165f70f0d5dacedfa46d85cdd4ec29fc8595",
+              "entityId": "P1",
+              "reason": "EVENT_TIME_LABEL_CONTEXT",
+              "policyVersion": "event-time-label-context-1.0.0"
+            }
+          ],
+          "projectedAccounting": [
+            {
+              "scopeId": "scope-0001-12d0c61f620d30461c33a20394894ba31a3a5e63cf14839954c52870efd53949",
+              "kind": "information",
+              "primaryEntityIds": [],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0002-2a4122291fccbeeb3ce3f8393f0e7708d46ccc7c4326d967d7c3b8b3e66a4a4b",
+              "kind": "event",
+              "primaryEntityIds": [
+                "E1"
+              ],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0003-c3adb7fdd43a0964b0154c87b15a55568a9e13de113e954a280f57c5a3b07077",
+              "kind": "information",
+              "primaryEntityIds": [],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0004-e1e4d281d8ae27984181f58f754f165f70f0d5dacedfa46d85cdd4ec29fc8595",
+              "kind": "information",
+              "primaryEntityIds": [],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0005-2e037f32dca45fae7eb1b01f4b42aa75bfa3a06c02c304f1c2a784f004a0ac68",
+              "kind": "event",
+              "primaryEntityIds": [
+                "E1"
+              ],
+              "secondaryEntityIds": [
+                "P0",
+                "P1"
+              ]
+            }
+          ]
+        },
+        "firstSuggestion": {
+          "schemaVersion": "2.0",
+          "promptVersion": "source-grounded-nonaction-projection-1.0.1",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "createdAt": "2026-06-01T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "数据查询服务",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，1项事件。请核对后确认。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "P0",
+              "type": "event_start",
+              "rawText": "2026年6月3日16:40",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-06-03T16:40",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0005-2e037f32dca45fae7eb1b01f4b42aa75bfa3a06c02c304f1c2a784f004a0ac68"
+              ]
+            },
+            {
+              "tempId": "P1",
+              "type": "event_end",
+              "rawText": "2026年6月5日9:10",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-06-05T09:10",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0005-2e037f32dca45fae7eb1b01f4b42aa75bfa3a06c02c304f1c2a784f004a0ac68"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "E1",
+              "title": "数据查询服务",
+              "description": "为配合设备维护，\n数据查询服务将临时暂停，\n暂停期间无法办理。\n暂停办理时间：\n2026年6月3日16:40—2026年6月5日9:10",
+              "startTimePointTempId": "P0",
+              "endTimePointTempId": "P1",
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-12d0c61f620d30461c33a20394894ba31a3a5e63cf14839954c52870efd53949",
+                "d26-scope-0002-2a4122291fccbeeb3ce3f8393f0e7708d46ccc7c4326d967d7c3b8b3e66a4a4b",
+                "d26-scope-0003-c3adb7fdd43a0964b0154c87b15a55568a9e13de113e954a280f57c5a3b07077",
+                "d26-scope-0004-e1e4d281d8ae27984181f58f754f165f70f0d5dacedfa46d85cdd4ec29fc8595",
+                "d26-scope-0005-2e037f32dca45fae7eb1b01f4b42aa75bfa3a06c02c304f1c2a784f004a0ac68"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-12d0c61f620d30461c33a20394894ba31a3a5e63cf14839954c52870efd53949",
+              "sourceId": "event-label-handling",
+              "quote": "为配合设备维护，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-2a4122291fccbeeb3ce3f8393f0e7708d46ccc7c4326d967d7c3b8b3e66a4a4b",
+              "sourceId": "event-label-handling",
+              "quote": "数据查询服务将临时暂停，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-c3adb7fdd43a0964b0154c87b15a55568a9e13de113e954a280f57c5a3b07077",
+              "sourceId": "event-label-handling",
+              "quote": "暂停期间无法办理。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-e1e4d281d8ae27984181f58f754f165f70f0d5dacedfa46d85cdd4ec29fc8595",
+              "sourceId": "event-label-handling",
+              "quote": "暂停办理时间：",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-2e037f32dca45fae7eb1b01f4b42aa75bfa3a06c02c304f1c2a784f004a0ac68",
+              "sourceId": "event-label-handling",
+              "quote": "2026年6月3日16:40—2026年6月5日9:10",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "为配合设备维护，",
+              "reason": "other"
+            },
+            {
+              "text": "暂停期间无法办理。",
+              "reason": "other"
+            },
+            {
+              "text": "暂停办理时间：",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "assemblyAudit": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "数据查询服务",
+              "description": "为配合设备维护，\n数据查询服务将临时暂停，\n暂停期间无法办理。\n暂停办理时间：\n2026年6月3日16:40—2026年6月5日9:10"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "数据查询服务",
+              "description": "0项任务，1项事件。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "数据查询服务",
+              "description": "为配合设备维护，\n数据查询服务将临时暂停，\n暂停期间无法办理。\n暂停办理时间：\n2026年6月3日16:40—2026年6月5日9:10"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "数据查询服务",
+              "description": "0项任务，1项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "P0",
+              "before": {
+                "normalizedValue": "2026-06-03T16:40",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-06-03T16:40",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年6月3日16:40",
+                  "type": "event_start",
+                  "normalizedValue": "2026-06-03T16:40",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 14
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-06-03",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "2026年6月3日16:40—2026年6月5日9:10"
+              }
+            },
+            {
+              "entityId": "P1",
+              "before": {
+                "normalizedValue": "2026-06-05T09:10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-06-05T09:10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年6月5日9:10",
+                  "type": "event_end",
+                  "normalizedValue": "2026-06-05T09:10",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 13
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-06-05",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "2026年6月3日16:40—2026年6月5日9:10\n2026年6月3日16:40—2026年6月5日9:10"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        }
+      }
+    },
+    {
+      "id": "event-label-operation",
+      "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+      "sourceText": "为配合设备维护，设备借用服务将临时暂停，暂停期间无法办理。\n服务暂停运行时段：2026年7月6日10:20—2026年7月8日11:30",
+      "sourceSha256": "c63d086f1916f91fe88474c1fdbada14917366750aba641cedd4c1d249060a0b",
+      "referenceTime": "2026-06-01T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "originalWire": {
+        "schemaVersion": "explicit-source-contract-4.0.0",
+        "tasks": [],
+        "materials": [],
+        "revisions": [],
+        "conflicts": [],
+        "prerequisiteStates": [],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "设备借用服务",
+            "description": "为配合设备维护，暂停期间无法办理。",
+            "location": null,
+            "startTimePointTempId": "P0",
+            "endTimePointTempId": "P1",
+            "relatedTaskTempIds": [],
+            "scopeIds": [
+              "scope-0001-8809ad51c4f8dfa0ed76c5e04fe46653d8b7d39a0bfe053bf8d93ad4200ea257",
+              "scope-0002-c4ca9b51de2d33b9e553aedfdf0a2e4da6bac0ea3e8a3a32d06118d08f533f96",
+              "scope-0003-0189ad25baa17b221ab7e12c93affff0f00b5e213f169fc2c693d64790f48723",
+              "scope-0004-1abb7fdfe0b046c27fcb47825a0286ebf3da044ccb30e0c4c7457b4cdbac7e2d",
+              "scope-0005-c0cec7e17b81afc96ff6ce8e09647588a504942902e1a44c64a56f81c8860bd7"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit"
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "P0",
+            "type": "event_start",
+            "rawText": "2026年7月6日10:20",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0005-c0cec7e17b81afc96ff6ce8e09647588a504942902e1a44c64a56f81c8860bd7"
+            ],
+            "confidence": 1
+          },
+          {
+            "tempId": "P1",
+            "type": "event_end",
+            "rawText": "2026年7月8日11:30",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0005-c0cec7e17b81afc96ff6ce8e09647588a504942902e1a44c64a56f81c8860bd7"
+            ],
+            "confidence": 1
+          }
+        ],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-8809ad51c4f8dfa0ed76c5e04fe46653d8b7d39a0bfe053bf8d93ad4200ea257",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "E1"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-c4ca9b51de2d33b9e553aedfdf0a2e4da6bac0ea3e8a3a32d06118d08f533f96",
+            "kind": "event",
+            "primaryEntityIds": [
+              "E1"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-0189ad25baa17b221ab7e12c93affff0f00b5e213f169fc2c693d64790f48723",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "E1"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-1abb7fdfe0b046c27fcb47825a0286ebf3da044ccb30e0c4c7457b4cdbac7e2d",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "P0",
+              "P1"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-c0cec7e17b81afc96ff6ce8e09647588a504942902e1a44c64a56f81c8860bd7",
+            "kind": "event",
+            "primaryEntityIds": [
+              "E1"
+            ],
+            "secondaryEntityIds": [
+              "P0",
+              "P1"
+            ]
+          }
+        ]
+      },
+      "authoredEnvelopeSha256": "97e66fa25f4be59d8d431030ac1e8a0b8bac3d8b0cda4b34c298d375681cd3ce",
+      "before": {
+        "status": "REJECTED",
+        "code": "PRODUCT_SUPPORT_UNSUPPORTED_CONTEXT_REFERENCE"
+      },
+      "after": {
+        "status": "DISPLAYABLE",
+        "supportAudit": {
+          "version": "source-support-accounting-projection-1.1.0",
+          "role": "POST_COMPARISON_PROGRAM_CONVERSION",
+          "inferredFacts": 0,
+          "originalWire": {
+            "schemaVersion": "explicit-source-contract-4.0.0",
+            "tasks": [],
+            "materials": [],
+            "revisions": [],
+            "conflicts": [],
+            "prerequisiteStates": [],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "设备借用服务",
+                "description": "为配合设备维护，暂停期间无法办理。",
+                "location": null,
+                "startTimePointTempId": "P0",
+                "endTimePointTempId": "P1",
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0001-8809ad51c4f8dfa0ed76c5e04fe46653d8b7d39a0bfe053bf8d93ad4200ea257",
+                  "scope-0002-c4ca9b51de2d33b9e553aedfdf0a2e4da6bac0ea3e8a3a32d06118d08f533f96",
+                  "scope-0003-0189ad25baa17b221ab7e12c93affff0f00b5e213f169fc2c693d64790f48723",
+                  "scope-0004-1abb7fdfe0b046c27fcb47825a0286ebf3da044ccb30e0c4c7457b4cdbac7e2d",
+                  "scope-0005-c0cec7e17b81afc96ff6ce8e09647588a504942902e1a44c64a56f81c8860bd7"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "P0",
+                "type": "event_start",
+                "rawText": "2026年7月6日10:20",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-c0cec7e17b81afc96ff6ce8e09647588a504942902e1a44c64a56f81c8860bd7"
+                ],
+                "confidence": 1
+              },
+              {
+                "tempId": "P1",
+                "type": "event_end",
+                "rawText": "2026年7月8日11:30",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-c0cec7e17b81afc96ff6ce8e09647588a504942902e1a44c64a56f81c8860bd7"
+                ],
+                "confidence": 1
+              }
+            ],
+            "scopeAccounting": [
+              {
+                "scopeId": "scope-0001-8809ad51c4f8dfa0ed76c5e04fe46653d8b7d39a0bfe053bf8d93ad4200ea257",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-c4ca9b51de2d33b9e553aedfdf0a2e4da6bac0ea3e8a3a32d06118d08f533f96",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0003-0189ad25baa17b221ab7e12c93affff0f00b5e213f169fc2c693d64790f48723",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0004-1abb7fdfe0b046c27fcb47825a0286ebf3da044ccb30e0c4c7457b4cdbac7e2d",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": [
+                  "P0",
+                  "P1"
+                ]
+              },
+              {
+                "scopeId": "scope-0005-c0cec7e17b81afc96ff6ce8e09647588a504942902e1a44c64a56f81c8860bd7",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": [
+                  "P0",
+                  "P1"
+                ]
+              }
+            ]
+          },
+          "changes": [
+            {
+              "scopeId": "scope-0001-8809ad51c4f8dfa0ed76c5e04fe46653d8b7d39a0bfe053bf8d93ad4200ea257",
+              "entityId": "E1",
+              "reason": "INDEPENDENT_EVENT_CONTEXT"
+            },
+            {
+              "scopeId": "scope-0003-0189ad25baa17b221ab7e12c93affff0f00b5e213f169fc2c693d64790f48723",
+              "entityId": "E1",
+              "reason": "INDEPENDENT_EVENT_CONTEXT"
+            },
+            {
+              "scopeId": "scope-0004-1abb7fdfe0b046c27fcb47825a0286ebf3da044ccb30e0c4c7457b4cdbac7e2d",
+              "entityId": "P0",
+              "reason": "EVENT_TIME_LABEL_CONTEXT",
+              "policyVersion": "event-time-label-context-1.0.0"
+            },
+            {
+              "scopeId": "scope-0004-1abb7fdfe0b046c27fcb47825a0286ebf3da044ccb30e0c4c7457b4cdbac7e2d",
+              "entityId": "P1",
+              "reason": "EVENT_TIME_LABEL_CONTEXT",
+              "policyVersion": "event-time-label-context-1.0.0"
+            }
+          ],
+          "projectedAccounting": [
+            {
+              "scopeId": "scope-0001-8809ad51c4f8dfa0ed76c5e04fe46653d8b7d39a0bfe053bf8d93ad4200ea257",
+              "kind": "information",
+              "primaryEntityIds": [],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0002-c4ca9b51de2d33b9e553aedfdf0a2e4da6bac0ea3e8a3a32d06118d08f533f96",
+              "kind": "event",
+              "primaryEntityIds": [
+                "E1"
+              ],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0003-0189ad25baa17b221ab7e12c93affff0f00b5e213f169fc2c693d64790f48723",
+              "kind": "information",
+              "primaryEntityIds": [],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0004-1abb7fdfe0b046c27fcb47825a0286ebf3da044ccb30e0c4c7457b4cdbac7e2d",
+              "kind": "information",
+              "primaryEntityIds": [],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0005-c0cec7e17b81afc96ff6ce8e09647588a504942902e1a44c64a56f81c8860bd7",
+              "kind": "event",
+              "primaryEntityIds": [
+                "E1"
+              ],
+              "secondaryEntityIds": [
+                "P0",
+                "P1"
+              ]
+            }
+          ]
+        },
+        "firstSuggestion": {
+          "schemaVersion": "2.0",
+          "promptVersion": "source-grounded-nonaction-projection-1.0.1",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "createdAt": "2026-06-01T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "设备借用服务",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，1项事件。请核对后确认。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "P0",
+              "type": "event_start",
+              "rawText": "2026年7月6日10:20",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-07-06T10:20",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0005-c0cec7e17b81afc96ff6ce8e09647588a504942902e1a44c64a56f81c8860bd7"
+              ]
+            },
+            {
+              "tempId": "P1",
+              "type": "event_end",
+              "rawText": "2026年7月8日11:30",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-07-08T11:30",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0005-c0cec7e17b81afc96ff6ce8e09647588a504942902e1a44c64a56f81c8860bd7"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "E1",
+              "title": "设备借用服务",
+              "description": "为配合设备维护，\n设备借用服务将临时暂停，\n暂停期间无法办理。\n服务暂停运行时段：\n2026年7月6日10:20—2026年7月8日11:30",
+              "startTimePointTempId": "P0",
+              "endTimePointTempId": "P1",
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-8809ad51c4f8dfa0ed76c5e04fe46653d8b7d39a0bfe053bf8d93ad4200ea257",
+                "d26-scope-0002-c4ca9b51de2d33b9e553aedfdf0a2e4da6bac0ea3e8a3a32d06118d08f533f96",
+                "d26-scope-0003-0189ad25baa17b221ab7e12c93affff0f00b5e213f169fc2c693d64790f48723",
+                "d26-scope-0004-1abb7fdfe0b046c27fcb47825a0286ebf3da044ccb30e0c4c7457b4cdbac7e2d",
+                "d26-scope-0005-c0cec7e17b81afc96ff6ce8e09647588a504942902e1a44c64a56f81c8860bd7"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-8809ad51c4f8dfa0ed76c5e04fe46653d8b7d39a0bfe053bf8d93ad4200ea257",
+              "sourceId": "event-label-operation",
+              "quote": "为配合设备维护，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-c4ca9b51de2d33b9e553aedfdf0a2e4da6bac0ea3e8a3a32d06118d08f533f96",
+              "sourceId": "event-label-operation",
+              "quote": "设备借用服务将临时暂停，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-0189ad25baa17b221ab7e12c93affff0f00b5e213f169fc2c693d64790f48723",
+              "sourceId": "event-label-operation",
+              "quote": "暂停期间无法办理。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-1abb7fdfe0b046c27fcb47825a0286ebf3da044ccb30e0c4c7457b4cdbac7e2d",
+              "sourceId": "event-label-operation",
+              "quote": "服务暂停运行时段：",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-c0cec7e17b81afc96ff6ce8e09647588a504942902e1a44c64a56f81c8860bd7",
+              "sourceId": "event-label-operation",
+              "quote": "2026年7月6日10:20—2026年7月8日11:30",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "为配合设备维护，",
+              "reason": "other"
+            },
+            {
+              "text": "暂停期间无法办理。",
+              "reason": "other"
+            },
+            {
+              "text": "服务暂停运行时段：",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "assemblyAudit": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "设备借用服务",
+              "description": "为配合设备维护，\n设备借用服务将临时暂停，\n暂停期间无法办理。\n服务暂停运行时段：\n2026年7月6日10:20—2026年7月8日11:30"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "设备借用服务",
+              "description": "0项任务，1项事件。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "设备借用服务",
+              "description": "为配合设备维护，\n设备借用服务将临时暂停，\n暂停期间无法办理。\n服务暂停运行时段：\n2026年7月6日10:20—2026年7月8日11:30"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "设备借用服务",
+              "description": "0项任务，1项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "P0",
+              "before": {
+                "normalizedValue": "2026-07-06T10:20",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-07-06T10:20",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年7月6日10:20",
+                  "type": "event_start",
+                  "normalizedValue": "2026-07-06T10:20",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 14
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-07-06",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "2026年7月6日10:20—2026年7月8日11:30"
+              }
+            },
+            {
+              "entityId": "P1",
+              "before": {
+                "normalizedValue": "2026-07-08T11:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-07-08T11:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年7月8日11:30",
+                  "type": "event_end",
+                  "normalizedValue": "2026-07-08T11:30",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 14
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-07-08",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "2026年7月6日10:20—2026年7月8日11:30\n2026年7月6日10:20—2026年7月8日11:30"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        }
+      }
+    }
+  ],
+  "negatives": [
+    {
+      "label": "如果审核通过后暂停办理时间",
+      "status": "REJECTED",
+      "code": "PRODUCT_SUPPORT_UNSUPPORTED_CONTEXT_REFERENCE"
+    },
+    {
+      "label": "不要暂停办理时间",
+      "status": "REJECTED",
+      "code": "PRODUCT_SUPPORT_UNSUPPORTED_CONTEXT_REFERENCE"
+    },
+    {
+      "label": "尚未公布暂停办理时间",
+      "status": "REJECTED",
+      "code": "PRODUCT_SUPPORT_UNSUPPORTED_CONTEXT_REFERENCE"
+    },
+    {
+      "label": "请提交申请时间",
+      "status": "REJECTED",
+      "code": "PRODUCT_SUPPORT_UNSUPPORTED_CONTEXT_REFERENCE"
+    }
+  ],
+  "currentFour": {
+    "modelFacts": {
+      "tentativeCorrect": 1,
+      "incorrect": 0,
+      "unknown": 3,
+      "denominator": 4
+    },
+    "frozenWire": {
+      "accepted": 0,
+      "rejected": 1,
+      "unknown": 3
+    },
+    "frozenFirstDisplay": {
+      "correct": 0,
+      "incorrect": 1,
+      "unknown": 3
+    },
+    "currentFirstDisplay": {
+      "tentativeCorrect": 1,
+      "incorrect": 0,
+      "unknown": 3
+    },
+    "thisTurnComparedWithPreviousDisplay": "UNCHANGED",
+    "humanMetrics": "NOT_OBSERVABLE"
+  },
+  "oldTwelveFirstDisplayUnchanged": 12,
+  "oldScores": {
+    "C17": "2/6",
+    "C19": "1/6",
+    "conclusion": "MIXED_PROGRESS"
+  },
+  "modelCalls": 0,
+  "ledgerWrites": 0
+}

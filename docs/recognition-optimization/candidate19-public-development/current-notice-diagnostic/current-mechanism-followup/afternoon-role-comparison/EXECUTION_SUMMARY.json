@@ -1,0 +1,48 @@
+{
+  "batch": "V6-ROLE-AUTHORITY-DEVELOPMENT-20261008-R1",
+  "scope": {
+    "maxRequests": 16,
+    "hardLimitUsd": 6,
+    "started": "2026-10-08T08:20:58Z",
+    "expires": "2026-10-08T12:20:58Z",
+    "iterations": 2
+  },
+  "counts": {
+    "planned": 8,
+    "settled": 5,
+    "uncertain": 1,
+    "notSent": 2,
+    "grant": 1,
+    "reserve": 6,
+    "settle": 5,
+    "retry": 0,
+    "repair": 0,
+    "verifier": 0
+  },
+  "usage": {
+    "input": 25110,
+    "output": 8657,
+    "total": 33767,
+    "cached": 17664
+  },
+  "fees": {
+    "internalConservativeSettledUsd": 0.017923,
+    "uncertainReservedUsd": 0.324404,
+    "occupiedAndSettledUsd": 0.342327,
+    "providerDeduction": "NOT_OBSERVABLE",
+    "boundBatchUsd": 2.595232,
+    "hardBatchUsd": 2.6
+  },
+  "uncertain": {
+    "ordinal": 6,
+    "identity": "cda33ab14805f62adc4371a6715c1a19d7531d6723536ea2d5023de642b27a7a",
+    "requestSha256": "e006e6c48c66a2c994e27694954c5f4026f90f09f607a559f4f8e6cf9724a8b2",
+    "lastBoundary": "TLS_API_ENTER -> TLS_ADAPTER_OR_NETWORK_FAILED",
+    "postObserved": false,
+    "delivery": "UNKNOWN",
+    "charge": "UNKNOWN",
+    "haltAndLock": "PRESERVED"
+  },
+  "decision": "STOP_ALL_PAID_KEEP_SAFE_ENGINEERING",
+  "winner": "EVIDENCE_INCOMPLETE_NO_WINNER"
+}

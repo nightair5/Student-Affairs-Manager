@@ -1,0 +1,21 @@
+✔ without new authorization no reserve/send/raw/settle (1.9146ms)
+✔ request/identity/price cap drift blocks before reserve (0.8346ms)
+✔ uncertain reserve preserves state and stops subsequent send (0.5355ms)
+✔ uncertain persist1 preserves state and stops subsequent send (0.3542ms)
+✔ uncertain persist2 preserves state and stops subsequent send (0.5345ms)
+✔ uncertain send preserves state and stops subsequent send (0.7281ms)
+✔ uncertain raw preserves state and stops subsequent send (0.8557ms)
+✔ uncertain persist3 preserves state and stops subsequent send (0.4252ms)
+✔ uncertain settle preserves state and stops subsequent send (0.536ms)
+✔ uncertain persist4 preserves state and stops subsequent send (0.4393ms)
+✔ determinate HTTP/parse failure settles once, retains ordinal and conservative upper (0.3942ms)
+✔ resume is read-only, order and settled results cannot be repeated (0.2525ms)
+✔ actual filesystem cross-process lock rejects concurrent entry, remains after uncertainty (9.33ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 131.2625

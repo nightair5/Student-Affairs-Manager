@@ -1,0 +1,55 @@
+{
+  "version": "real-input-contrastive-billing-1",
+  "verified": true,
+  "method": "official-public-document-review",
+  "checkedAt": "2026-09-20T10:13:07.445Z",
+  "validUntil": "2026-09-20T22:13:07.445Z",
+  "policy": {
+    "version": "real-input-contrastive-budget-1",
+    "maxRequests": 314,
+    "limitMicroCny": 20000000,
+    "reservationMicroCny": 3300000,
+    "arms": {
+      "A": {
+        "version": "real-input-contrastive-baseline-1",
+        "model": "deepseek-flash",
+        "endpoint": "https://api.deepseek.com/responses",
+        "temperature": 0,
+        "reasoningEffort": "none",
+        "inputTokenCeiling": 1048576,
+        "outputTokenCeiling": 8192,
+        "requestByteCeiling": 65536,
+        "inputPriceMicroPerMillion": 2000000,
+        "outputPriceMicroPerMillion": 8000000,
+        "reservationMicroCny": 3300000,
+        "limitMicroCny": 20000000,
+        "maxRequests": 314
+      },
+      "B": {
+        "version": "real-input-contrastive-candidate-1",
+        "model": "deepseek-flash",
+        "endpoint": "https://api.deepseek.com/responses",
+        "temperature": 0,
+        "reasoningEffort": "none",
+        "inputTokenCeiling": 1048576,
+        "outputTokenCeiling": 8192,
+        "requestByteCeiling": 65536,
+        "inputPriceMicroPerMillion": 2000000,
+        "outputPriceMicroPerMillion": 8000000,
+        "reservationMicroCny": 3300000,
+        "limitMicroCny": 20000000,
+        "maxRequests": 314
+      }
+    }
+  },
+  "documents": [
+    {
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "claim": "deepseek-flash is V4.1 Flash; peak uncached input CNY 2/M and output CNY 8/M; off-peak half"
+    },
+    {
+      "url": "https://api-docs.deepseek.com/api/create-response/",
+      "claim": "Responses API accepts deepseek-flash and returns usage"
+    }
+  ]
+}

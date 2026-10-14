@@ -1,0 +1,56 @@
+{
+  "sources": [
+    {
+      "sourceId": "REQ-01",
+      "sourceText": "请在2026年11月20日16:00前完成仪器借用登记。登记时须填写设备编号和联系电话；跨校使用者还须填写接收单位。同一登记不需要另填第二份表。登记提交后，请于2026年11月21日09:00到器材室领取借用卡。",
+      "minimumFacts": {
+        "tasks": [
+          "完成仪器借用登记",
+          "领取借用卡"
+        ],
+        "requirements": [
+          "登记设备编号和联系电话",
+          "跨校使用者填写接收单位"
+        ],
+        "time": [
+          "登记截止2026-11-20T16:00",
+          "领取时间2026-11-21T09:00，不改成登记截止"
+        ],
+        "location": "领取器材室",
+        "prerequisite": "登记提交后领取，未提供完成状态不得true",
+        "events": 0
+      },
+      "sourceVersionId": "REQ-01-v1",
+      "sourceSha256": "068c0a90e30e8b77b481efe346bf078bfd82e3e3ce38ec72231983e57f59eb20",
+      "referenceTime": "2026-10-09T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "AUTHOR_ANONYMOUS_DEVELOPMENT_NOT_HOLDOUT",
+      "disputes": []
+    },
+    {
+      "sourceId": "REQ-02",
+      "sourceText": "摄影工作坊于2026年11月25日14:00开始，16:00结束，地点为艺文楼C204。有意参加者可在2026年11月22日18:00前通过报名二维码报名摄影工作坊。报名时须填写年级；需借用器材者还须注明器材型号。获得录取后需自行准备相机；是否录取尚未通知。报名成功以收到确认邮件为准。",
+      "minimumFacts": {
+        "tasks": [
+          "可选报名摄影工作坊",
+          "录取后准备相机"
+        ],
+        "requirements": [
+          "报名填写年级",
+          "需借用器材者注明器材型号"
+        ],
+        "event": "摄影工作坊，艺文楼C204，2026-11-25T14:00至16:00",
+        "deadline": "报名2026-11-22T18:00",
+        "channel": "报名二维码，不猜链接或文件",
+        "completion": "收到确认邮件",
+        "qualification": "准备相机的录取资格unknown，不编成已完成前置"
+      },
+      "sourceVersionId": "REQ-02-v1",
+      "sourceSha256": "9f1ca19ed7e129173555ae2e4fe089cf92c81c24ff6ee9aac74e8df2fa6cec29",
+      "referenceTime": "2026-10-09T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "AUTHOR_ANONYMOUS_DEVELOPMENT_NOT_HOLDOUT",
+      "disputes": []
+    }
+  ]
+}

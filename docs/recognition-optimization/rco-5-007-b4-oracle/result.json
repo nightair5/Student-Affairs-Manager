@@ -1,0 +1,1105 @@
+{
+  "schemaVersion": "rco-5-007-b4-oracle-1.0.0",
+  "authorizationId": "RCO-5-007-P2-B4",
+  "classification": "FIRST_RUN_B4_ORACLE_NOW_SEEN_DEVELOPMENT",
+  "firstRunAgainstFrozenCommit": "fc2aeb78f8d01f06a4c14be6c31bfdb91073d5be",
+  "datasetId": "rco-5-007-b4-challenge-20260904",
+  "datasetSha256": "ba88df11c66fcae93632766b394598a8cd309b4ffa628f81d8243f85ac19771c",
+  "accounting": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE"
+  },
+  "interpretation": "Expected-derived perfect anchors isolate frozen P2 on a challenge set unseen until this one run. This is not model accuracy, independent human ground truth, or release evidence.",
+  "metrics": {
+    "caseCount": 16,
+    "scoreableCases": 16,
+    "taskPrecision": 1,
+    "taskRecall": 1,
+    "taskF1": 1,
+    "requiresActionAccuracy": 1,
+    "semanticFieldAccuracy": 0.9751552795031055,
+    "exactTaskBoundaryAccuracy": 1,
+    "completeTaskCaseAccuracy": 0.9375,
+    "majorCorrectionRate": 0.0625,
+    "safeDefaultRecall": 1,
+    "forbiddenDefaultSelections": 0
+  },
+  "gate": "PASS",
+  "decision": "B4_ORACLE_PASS_ELIGIBLE_FOR_SEPARATE_PAID_MODEL_AUTHORIZATION",
+  "cases": [
+    {
+      "caseId": "rco-task-b4-01",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-01",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "若备用电源仍未接通，",
+              "请联系值班工程师。",
+              "经确认备用电源仍未接通。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "contact",
+            "action": "联系",
+            "object": "值班工程师",
+            "effect": "external_interaction",
+            "selected": false
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-01",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 0,
+          "total": 0
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-02",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-02",
+        "status": "completed",
+        "requiresAction": false,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "如果实验名单通过复核，",
+              "再上传最终名单。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "hypothetical",
+              "polarity": "uncertain",
+              "tense": "future",
+              "status": "unknown",
+              "validity": "uncertain",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": "上传",
+            "object": "最终名单",
+            "effect": "external_transfer",
+            "selected": false
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-02",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 0,
+          "total": 0
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-03",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-03",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "请先检查报到人员清单，"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": "检查",
+            "object": "报到人员清单",
+            "effect": "local_change",
+            "selected": true
+          },
+          {
+            "id": "task-2",
+            "propositionScopeTexts": [
+              "再保存异常人员说明。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": "保存",
+            "object": "异常人员说明",
+            "effect": "local_change",
+            "selected": true
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-03",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 14,
+          "total": 14
+        },
+        "safeDefaults": {
+          "correct": 2,
+          "total": 2
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-04",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-04",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "获奖成员须填写领奖信息。"
+            ],
+            "semantics": {
+              "actor": "addressed_group",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "fill",
+            "action": "填写",
+            "object": "领奖信息",
+            "effect": "local_change",
+            "selected": false
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-04",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 0,
+          "total": 0
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-05",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-05",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "请于周三前办理纸质材料递交。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": "办理",
+            "object": "纸质材料递交",
+            "effect": "external_transfer",
+            "selected": false
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-05",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 0,
+          "total": 0
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-06",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-06",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "请在月底前办妥在线支付。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "pay",
+            "action": "办妥",
+            "object": "在线支付",
+            "effect": "external_interaction",
+            "selected": false
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-06",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 0,
+          "total": 0
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-07",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-07",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "此前通知要求发送获奖名单，",
+              "该通知停止执行。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": "发送",
+            "object": "获奖名单",
+            "effect": "external_transfer",
+            "selected": false
+          },
+          {
+            "id": "task-2",
+            "propositionScopeTexts": [
+              "现要求只核对奖项名称。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": "核对",
+            "object": "奖项名称",
+            "effect": "local_change",
+            "selected": true
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-07",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 10,
+          "total": 14
+        },
+        "safeDefaults": {
+          "correct": 1,
+          "total": 1
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": false,
+        "majorCorrection": true
+      }
+    },
+    {
+      "caseId": "rco-task-b4-08",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-08",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "原要求报名线下活动，",
+              "现已撤销。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "past",
+              "status": "cancelled",
+              "validity": "superseded",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "register",
+            "action": "报名",
+            "object": "线下活动",
+            "effect": "external_interaction",
+            "selected": false
+          },
+          {
+            "id": "task-2",
+            "propositionScopeTexts": [
+              "最新要求是准备线上问答提纲。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "action": "准备",
+            "object": "线上问答提纲",
+            "effect": "local_change",
+            "selected": true
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-08",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 14,
+          "total": 14
+        },
+        "safeDefaults": {
+          "correct": 1,
+          "total": 1
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-09",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-09",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "请保存安全提醒摘要。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": "保存",
+            "object": "安全提醒摘要",
+            "effect": "local_change",
+            "selected": true
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-09",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 1,
+          "total": 1
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-10",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-10",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "参观手册可自行打印；"
+            ],
+            "semantics": {
+              "actor": "addressed_group",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "optional"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "action": "打印",
+            "object": "参观手册",
+            "effect": "physical_action",
+            "selected": false
+          },
+          {
+            "id": "task-2",
+            "propositionScopeTexts": [
+              "但请携带校园卡到入口核验。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "carry",
+            "action": "携带",
+            "object": "校园卡",
+            "effect": "physical_action",
+            "selected": true
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-10",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 14,
+          "total": 14
+        },
+        "safeDefaults": {
+          "correct": 1,
+          "total": 1
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-11",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-11",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "请填写诚信声明并签名。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "fill",
+            "action": "填写",
+            "object": "诚信声明",
+            "effect": "local_change",
+            "selected": true
+          },
+          {
+            "id": "task-2",
+            "propositionScopeTexts": [
+              "请填写诚信声明并签名。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "sign",
+            "action": "签名",
+            "object": "诚信声明",
+            "effect": "physical_action",
+            "selected": false
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-11",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 14,
+          "total": 14
+        },
+        "safeDefaults": {
+          "correct": 1,
+          "total": 1
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-12",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-12",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "电子作品须在11月29日20:00前上传。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": "上传",
+            "object": "电子作品",
+            "effect": "external_transfer",
+            "selected": false
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-12",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 0,
+          "total": 0
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-13",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-13",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "当报警灯未熄灭时，",
+              "请发送设备编号。",
+              "现况是报警灯未熄灭。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": "发送",
+            "object": "设备编号",
+            "effect": "external_transfer",
+            "selected": false
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-13",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 0,
+          "total": 0
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-14",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-14",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "你需要检查自己的到场时间。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": "检查",
+            "object": "到场时间",
+            "effect": "local_change",
+            "selected": true
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-14",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 1,
+          "total": 1
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-15",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-15",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "请整理评议摘要。",
+              "摘要和反馈表都参照会议记录。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "action": "整理",
+            "object": "评议摘要",
+            "effect": "local_change",
+            "selected": true
+          },
+          {
+            "id": "task-2",
+            "propositionScopeTexts": [
+              "请打印签到页。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "action": "打印",
+            "object": "签到页",
+            "effect": "physical_action",
+            "selected": true
+          },
+          {
+            "id": "task-3",
+            "propositionScopeTexts": [
+              "另请填写反馈表。",
+              "摘要和反馈表都参照会议记录。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "fill",
+            "action": "填写",
+            "object": "反馈表",
+            "effect": "local_change",
+            "selected": true
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-15",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 21,
+          "total": 21
+        },
+        "safeDefaults": {
+          "correct": 3,
+          "total": 3
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    },
+    {
+      "caseId": "rco-task-b4-16",
+      "contractIssues": [],
+      "prediction": {
+        "caseId": "rco-task-b4-16",
+        "status": "completed",
+        "requiresAction": false,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "本次不得上传现场录像。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "future",
+              "status": "cancelled",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": "上传",
+            "object": "现场录像",
+            "effect": "external_transfer",
+            "selected": false
+          }
+        ]
+      },
+      "score": {
+        "caseId": "rco-task-b4-16",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 0,
+          "total": 0
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      }
+    }
+  ],
+  "stablePath": "UNCHANGED",
+  "rco6": "NOT_STARTED",
+  "deployment": "NOT_RUN"
+}

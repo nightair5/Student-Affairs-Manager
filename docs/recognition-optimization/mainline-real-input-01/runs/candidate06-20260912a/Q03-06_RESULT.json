@@ -1,0 +1,231 @@
+{
+  "unitId": "Q03-06",
+  "arm": "06",
+  "bindingSha": "301c71c90c23b743d1ff01ab83d914e3da4affcb3df06bb090c7602d05ba0dbf",
+  "requestSha": "30803c84e0878d408b67c244066d46d376e94ec7511446dd3cad397172b129ad",
+  "responseSha": "61342c9b7358f1f6df1a8f078e525bafaf1f5e325d1ad4d5d0a9218227b1c8eb",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "71ab3cbb872361b24ae5c87ca3d1c99b3f43c0061c3ad9a43d3fb7c0c9f66e38",
+  "scoreInput": "explicit semantic projection into byte-identical historical scorer; raw response unmodified",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-save-photos",
+        "propositionScopeIds": [
+          "scope-0001-ee508973c4ed613225cf3408896a1958409f772e1cba39ac98689cf2dffb7330",
+          "scope-0002-f5c4607ee21c633424453b0bea22d2a169f23b85845b1d8ede3951fbdef548e4",
+          "scope-0003-9b2ab48e788d08cb3d19dcfbbec4784e8f1e19a295727e0fbd4987b8581005a5"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "save",
+        "action": {
+          "scopeId": "scope-0002-f5c4607ee21c633424453b0bea22d2a169f23b85845b1d8ede3951fbdef548e4",
+          "surface": "保存"
+        },
+        "object": {
+          "scopeId": "scope-0002-f5c4607ee21c633424453b0bea22d2a169f23b85845b1d8ede3951fbdef548e4",
+          "surface": "服务现场原始照片"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "保存服务现场原始照片",
+          "description": "参与者保存服务现场原始照片，以供本人以后查询。",
+          "completionCriteria": [
+            "服务现场原始照片已保存"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-original-photos"
+          ],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-original-photos",
+        "name": "服务现场原始照片",
+        "required": true,
+        "formatRequirements": [
+          "原始照片"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-save-photos"
+        ],
+        "scopeIds": [
+          "scope-0002-f5c4607ee21c633424453b0bea22d2a169f23b85845b1d8ede3951fbdef548e4"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-ee508973c4ed613225cf3408896a1958409f772e1cba39ac98689cf2dffb7330",
+      "scope-0003-9b2ab48e788d08cb3d19dcfbbec4784e8f1e19a295727e0fbd4987b8581005a5",
+      "scope-0004-6317ff3882f40e009aaa6b9bfb66ab566505b3e01ba38e883a778369d790436a",
+      "scope-0005-462aea6e31de404eb216a077f8d4f0990a3e752201683f35f4e681f5cab601e4",
+      "scope-0006-055d6d57a1cb2bc2b9adbe7bc2331be57dc9755874995380ee2fe78f85d4f1da",
+      "scope-0007-0458cbb3527ee9c0da5c56265bb10011fd0d4f435321e64bd5fcbf075850c638",
+      "scope-0008-b945d6a286dab54fd7467cac8f4f6c1d8fa8481052dcdfefded99da47dbbe970"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:6208469f",
+    "sourceVersionId": "source:6208469f:version:1",
+    "sourceFingerprint": "sha256:03974b331875c27e53d72a655227516dfc3ff01cc821f970b9962870c7f098c1"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 4311,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "material": {
+        "predicted": 1,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 0,
+        "precision": 0,
+        "recall": null
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 2,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 1,
+    "referenceTaskCount": 1
+  },
+  "scoreError": null,
+  "totalAttempts": 86,
+  "costUpperMicroCny": 16384,
+  "totalCostUpperMicroCny": 5190295,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份已见材料开发回归；授权同期重复测量，非盲测；24请求不是24份独立材料"
+}

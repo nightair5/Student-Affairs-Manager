@@ -1,0 +1,50 @@
+{
+  "report": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate19\\channel-followup-v1\\REPORT.json",
+  "summary": {
+    "Candidate17": {
+      "denominator": 6,
+      "provisionalPass": 4,
+      "factError": 2,
+      "unknown": 0,
+      "channelDispositions": []
+    },
+    "Candidate19": {
+      "denominator": 6,
+      "provisionalPass": 5,
+      "factError": 0,
+      "unknown": 1,
+      "channelDispositions": [
+        {
+          "sourceId": "C19-DEV-S05",
+          "materialId": "material-0001",
+          "materialName": "志愿服务统计表",
+          "ownerIds": [
+            "task-0001"
+          ],
+          "originalValue": "平台",
+          "displayedValue": null,
+          "status": "RECEIPT_CONTEXT_UNRESOLVED",
+          "evidence": [
+            {
+              "id": "d26-scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331",
+              "quote": "请在2026年11月13日09:25前上传志愿服务统计表。"
+            },
+            {
+              "id": "d26-scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+              "quote": "统计表须为PDF，"
+            },
+            {
+              "id": "d26-scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601",
+              "quote": "文件名包含小组编号。"
+            },
+            {
+              "id": "d26-scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c",
+              "quote": "看到平台显示接收成功才算办结。"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "ledgerUnchanged": true
+}

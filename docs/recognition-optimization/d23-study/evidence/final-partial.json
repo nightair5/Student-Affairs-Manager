@@ -1,0 +1,398 @@
+{
+  "format": "D23_BROWSER_WITNESS_SUMMARY_1",
+  "originalSha256": "d066e073cb233afdd077169fa4cd4aa8c5ee79a13e7d7b76bd77caa419128f25",
+  "originalLocalPath": ".data/d23/browser-originals/final-partial.json",
+  "build": "c510c44b38f1 / source f0ddf4198c8b",
+  "database": "rco-mainline-01-02-i1-real-input-d23-study-engineering-final01-p4",
+  "role": "ENGINEERING_REPLAY",
+  "humanMetrics": "NOT_OBSERVABLE",
+  "registry": {
+    "version": "d23-study-protocol-1",
+    "role": "ENGINEERING_REPLAY",
+    "database": "rco-mainline-01-02-i1-real-input-d23-study-engineering-final01-p4",
+    "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+    "revision": 11,
+    "owner": {
+      "ref": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+      "acceptedAt": "2026-09-30T09:56:10.918Z"
+    },
+    "freeze": {
+      "ownerRef": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+      "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+      "at": "2026-09-30T09:56:11.285Z",
+      "obligations": {
+        "C17-D16-S01": "工程模拟接线检查；不是人工真值，真实负责人仍须依据原文核准。",
+        "C17-D16-S02": "工程模拟接线检查；不是人工真值，真实负责人仍须依据原文核准。",
+        "C17-D16-S04": "工程模拟接线检查；不是人工真值，真实负责人仍须依据原文核准。",
+        "C17-D16-S05": "工程模拟接线检查；不是人工真值，真实负责人仍须依据原文核准。",
+        "C17-D16-S06": "工程模拟接线检查；不是人工真值，真实负责人仍须依据原文核准。",
+        "C17-D16-S07": "工程模拟接线检查；不是人工真值，真实负责人仍须依据原文核准。",
+        "C17-D16-S09": "工程模拟接线检查；不是人工真值，真实负责人仍须依据原文核准。",
+        "C17-D16-S11": "工程模拟接线检查；不是人工真值，真实负责人仍须依据原文核准。"
+      }
+    },
+    "participants": [
+      {
+        "id": "p4",
+        "consentRef": "ENGINEERING_SIMULATED_CONSENT_ONLY",
+        "scopeRef": "ENGINEERING_SIMULATION_ONLY",
+        "acceptedAt": "2026-09-30T09:56:11.848Z",
+        "role": "ENGINEERING_REPLAY"
+      }
+    ],
+    "trials": [
+      {
+        "id": "b5baae87-e953-4777-85ed-b3a39f9e1873",
+        "participantId": "p4",
+        "slotId": "p4-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "materialId": "C17-D16-S02",
+        "sourceSha256": "91618a256c8d2164f54ff274636ef5c790e5d3990d99ee7e2520ddc115fa1bdf",
+        "stimulusSha256": "45b6477598761938c10e44f20b5c16d4997b201ed46794c3fad35899b68c7a7d",
+        "recordId": "d21-record-03",
+        "scopeRef": "ENGINEERING_SIMULATION_ONLY",
+        "consentRef": "ENGINEERING_SIMULATED_CONSENT_ONLY",
+        "ownerRef": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+        "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+        "status": "partial",
+        "events": [
+          {
+            "id": "2686eda3-e7eb-4f3e-a450-fdbaa0125eff",
+            "kind": "source_visible",
+            "atMs": 1790762172654
+          },
+          {
+            "id": "6dca7786-5152-49c0-912d-230f66cdae9c",
+            "kind": "start",
+            "atMs": 1790762172654
+          },
+          {
+            "id": "4bb09db7-b87c-4130-9a07-7557af76edf2",
+            "kind": "load_wait",
+            "atMs": 1790762173245
+          },
+          {
+            "id": "baf0c304-f5eb-4815-a3e4-dede50232556",
+            "kind": "draft_open",
+            "atMs": 1790762173323
+          },
+          {
+            "id": "9b893f6b-bf70-411a-95ce-fb28ad8d3bc5",
+            "kind": "load_end",
+            "atMs": 1790762173399
+          },
+          {
+            "id": "89a78059-1a0b-4d08-9bca-0575c3c083bf",
+            "kind": "reload",
+            "atMs": 1790764066962
+          },
+          {
+            "id": "e85acea2-9cee-4b42-aca8-2764d9fddf6d",
+            "kind": "pause",
+            "atMs": 1790764081718
+          },
+          {
+            "id": "448d213b-a3cd-4104-9a9a-531324c8bd0f",
+            "kind": "resume",
+            "atMs": 1790764092024
+          }
+        ],
+        "adjudications": [],
+        "draftId": "source:054b2927:draft:1:1"
+      }
+    ],
+    "activeTrialId": "b5baae87-e953-4777-85ed-b3a39f9e1873"
+  },
+  "pendingReadback": null,
+  "canonicalCounts": {
+    "sources": 1,
+    "sourceVersions": 1,
+    "recognitionRuns": 1,
+    "extractionDrafts": 1,
+    "tasks": 1,
+    "projects": 0,
+    "events": 0,
+    "timePoints": 1,
+    "materials": 0,
+    "evidenceRefs": 7,
+    "historyRecords": 3
+  },
+  "canonicalFacts": {
+    "tasks": [
+      {
+        "id": "mainline05:task:source:054b2927:draft:1:1:task-1",
+        "title": "核对迎新志愿者分组",
+        "status": "todo"
+      }
+    ],
+    "events": [],
+    "timePoints": [
+      {
+        "id": "mainline05:time:source:054b2927:draft:1:1:time-1",
+        "taskId": "mainline05:task:source:054b2927:draft:1:1:task-1",
+        "eventId": null,
+        "type": "task_deadline",
+        "rawText": "10月20日前",
+        "normalizedValue": "2026-10-20",
+        "precision": "date_only",
+        "needsConfirmation": false
+      }
+    ],
+    "materials": []
+  },
+  "report": {
+    "version": "d23-semantic-measurement-1",
+    "role": "ENGINEERING_REPLAY",
+    "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+    "planned": 16,
+    "registered": 1,
+    "started": 1,
+    "rows": [
+      {
+        "trial": {
+          "id": "b5baae87-e953-4777-85ed-b3a39f9e1873",
+          "participantId": "p4",
+          "slotId": "p4-1",
+          "role": "ENGINEERING_REPLAY",
+          "condition": "assisted",
+          "materialId": "C17-D16-S02",
+          "sourceSha256": "91618a256c8d2164f54ff274636ef5c790e5d3990d99ee7e2520ddc115fa1bdf",
+          "stimulusSha256": "45b6477598761938c10e44f20b5c16d4997b201ed46794c3fad35899b68c7a7d",
+          "recordId": "d21-record-03",
+          "scopeRef": "ENGINEERING_SIMULATION_ONLY",
+          "consentRef": "ENGINEERING_SIMULATED_CONSENT_ONLY",
+          "ownerRef": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+          "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+          "status": "partial",
+          "events": [
+            {
+              "id": "2686eda3-e7eb-4f3e-a450-fdbaa0125eff",
+              "kind": "source_visible",
+              "atMs": 1790762172654
+            },
+            {
+              "id": "6dca7786-5152-49c0-912d-230f66cdae9c",
+              "kind": "start",
+              "atMs": 1790762172654
+            },
+            {
+              "id": "4bb09db7-b87c-4130-9a07-7557af76edf2",
+              "kind": "load_wait",
+              "atMs": 1790762173245
+            },
+            {
+              "id": "baf0c304-f5eb-4815-a3e4-dede50232556",
+              "kind": "draft_open",
+              "atMs": 1790762173323
+            },
+            {
+              "id": "9b893f6b-bf70-411a-95ce-fb28ad8d3bc5",
+              "kind": "load_end",
+              "atMs": 1790762173399
+            },
+            {
+              "id": "89a78059-1a0b-4d08-9bca-0575c3c083bf",
+              "kind": "reload",
+              "atMs": 1790764066962
+            },
+            {
+              "id": "e85acea2-9cee-4b42-aca8-2764d9fddf6d",
+              "kind": "pause",
+              "atMs": 1790764081718
+            },
+            {
+              "id": "448d213b-a3cd-4104-9a9a-531324c8bd0f",
+              "kind": "resume",
+              "atMs": 1790764092024
+            }
+          ],
+          "adjudications": [],
+          "draftId": "source:054b2927:draft:1:1"
+        },
+        "evidenceError": null,
+        "outcome": "unadjudicated",
+        "complete": false,
+        "first": "NOT_ADJUDICATED",
+        "firstOutputLoaded": true,
+        "correctDisposition": false,
+        "lowEdit": false,
+        "zeroSubstantive": false,
+        "timing": {
+          "version": "d23-semantic-measurement-1",
+          "observed": {
+            "readingMs": 44960,
+            "activeEditMs": 0,
+            "idleMs": 0,
+            "waitMs": 194,
+            "hiddenMs": 0,
+            "pauseMs": 10306
+          },
+          "missing": [
+            "RELOAD_UNCLOSED_INTERVAL",
+            "UNCLOSED_PROCESSING_INTERVAL"
+          ],
+          "wallMs": null,
+          "completeActiveEditMs": null,
+          "costMeaning": "OBSERVED_UI_ACTIVITY_ONLY",
+          "cognitiveEffort": "NOT_OBSERVABLE"
+        },
+        "failureEvents": [],
+        "legacyMeasurement32": {
+          "version": "low-edit-v2-exploratory-1",
+          "role": "ENGINEERING_REPLAY",
+          "correctDisposition": null,
+          "zeroSubstantiveModification": null,
+          "lowModificationCorrectDisposition": null,
+          "committedFields": [],
+          "fieldCount": 0,
+          "structural": false,
+          "activeEditMs": null,
+          "readMs": null,
+          "waitMs": null,
+          "hiddenMs": null,
+          "idleMs": null,
+          "missing": [
+            "refresh time discontinuity",
+            "unclosed interval",
+            "terminal commit/readback"
+          ],
+          "postTerminalEvents": 0,
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "evidence": {
+          "sha256": "9ae82458ab9ff6c5bf2b7348384534783fc3e23d31176ef5e42680e0cb021122",
+          "currentSha256": "4e3809172b434918e221028bf81470c6ae980a0b1da8eca31680206ea5ba00c8",
+          "commitIds": [
+            "c0490ad1-a02b-4bfe-831c-56fa9c02173b",
+            "65135a93-28e9-4912-b399-849c57c3f992"
+          ],
+          "canonical": {
+            "tasks": [
+              {
+                "id": "mainline05:task:source:054b2927:draft:1:1:task-1",
+                "title": "核对迎新志愿者分组",
+                "status": "todo"
+              }
+            ],
+            "materials": [],
+            "timePoints": [
+              {
+                "id": "mainline05:time:source:054b2927:draft:1:1:time-1",
+                "taskId": "mainline05:task:source:054b2927:draft:1:1:task-1",
+                "eventId": null,
+                "type": "task_deadline",
+                "rawText": "10月20日前",
+                "normalizedValue": "2026-10-20",
+                "precision": "date_only",
+                "needsConfirmation": false
+              }
+            ],
+            "events": [],
+            "evidenceRefs": [
+              {
+                "id": "mainline05:evidence:source:054b2927:draft:1:1:scope-0001-f64aa5e2b0c2634806ead348328776e47b1f4369145863cb6568a54fc4d68560",
+                "sourceVersionId": "source:054b2927:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:054b2927:draft:1:1:scope-0002-033abeaa6127a0ee6f7ed87382da53e364a24daad70802b3d27c54405445c408",
+                "sourceVersionId": "source:054b2927:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:054b2927:draft:1:1:scope-0003-47a827e87d689eb53c458ee7bcf8a47c8842eb50d342aef4d5746dfe3a6254b3",
+                "sourceVersionId": "source:054b2927:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:054b2927:draft:1:1:scope-0004-a2974c679529ebdefd3a0bc245efd2a882bc9320175d46df285b3c5aa5dbb060",
+                "sourceVersionId": "source:054b2927:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:054b2927:draft:1:1:scope-0005-e7ef3a66ca6d79cbb98b355ef25208400135168eaffb572668ceb8b1bbf3d930",
+                "sourceVersionId": "source:054b2927:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:054b2927:draft:1:1:scope-0006-e53512057cf67f2f5cd6e1f6a83513fa0ab497a1ea2383a98619ca9efd480704",
+                "sourceVersionId": "source:054b2927:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:054b2927:draft:1:1:scope-0007-dc37e2ef46fbf6caf2d2312ef17fe0840385a17db1384f3749d1abcb738337d0",
+                "sourceVersionId": "source:054b2927:version:1",
+                "extractionMethod": "manual"
+              }
+            ],
+            "historyRecords": [
+              {
+                "id": "mainline05:history:source:054b2927:draft:1:1:material-review-mode-1",
+                "action": "mainline05_enable_material_review",
+                "sourceVersionId": "source:054b2927:version:1"
+              },
+              {
+                "id": "mainline05:history:source:054b2927:draft:1:1:c0490ad1-a02b-4bfe-831c-56fa9c02173b",
+                "action": "mainline05_review_task",
+                "sourceVersionId": "source:054b2927:version:1"
+              },
+              {
+                "id": "mainline05:history:source:054b2927:draft:1:1:65135a93-28e9-4912-b399-849c57c3f992",
+                "action": "mainline05_confirm",
+                "sourceVersionId": "source:054b2927:version:1"
+              }
+            ]
+          },
+          "links": [],
+          "semanticFields": [],
+          "structural": false,
+          "unlinkedEditIds": [],
+          "fullReadback": false
+        }
+      }
+    ],
+    "groups": [
+      {
+        "condition": "manual",
+        "started": 0,
+        "complete": 0,
+        "partial": 0,
+        "exited": 0,
+        "timeout": 0,
+        "observedFailureN": 0,
+        "unresolvedFailureN": 0,
+        "unadjudicated": 0,
+        "firstSuggestion": "NOT_APPLICABLE",
+        "correctDisposition": "NOT_OBSERVABLE",
+        "lowEdit": "NOT_APPLICABLE",
+        "observedActiveEditMedianMs": null,
+        "completeActiveEditMedianMs": null,
+        "completeTimeN": 0,
+        "missingTimeN": 0,
+        "humanActiveEditTime": "NOT_OBSERVABLE"
+      },
+      {
+        "condition": "assisted",
+        "started": 1,
+        "complete": 0,
+        "partial": 1,
+        "exited": 0,
+        "timeout": 0,
+        "observedFailureN": 0,
+        "unresolvedFailureN": 0,
+        "unadjudicated": 1,
+        "firstSuggestion": "NOT_OBSERVABLE",
+        "correctDisposition": "NOT_OBSERVABLE",
+        "lowEdit": "NOT_OBSERVABLE",
+        "observedActiveEditMedianMs": 0,
+        "completeActiveEditMedianMs": null,
+        "completeTimeN": 0,
+        "missingTimeN": 1,
+        "humanActiveEditTime": "NOT_OBSERVABLE"
+      }
+    ],
+    "realHumanMetrics": "NOT_OBSERVABLE",
+    "modelCalls": 0
+  }
+}

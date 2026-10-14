@@ -1,0 +1,66 @@
+{
+  "version": "personal-plan-measurement-d27-1",
+  "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+  "denominator": 1,
+  "completed": 1,
+  "incomplete": 0,
+  "wallMedianMs": 25393,
+  "reports": [
+    {
+      "version": "personal-plan-measurement-d27-1",
+      "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+      "denominator": 1,
+      "commitCount": 1,
+      "independentReadbackCount": 1,
+      "semanticPlanChanges": 0,
+      "attemptedEditIds": [],
+      "completed": true,
+      "timingStatus": "OBSERVED",
+      "missingReasons": [],
+      "wallMs": 25393,
+      "readingMs": 25370,
+      "activeEditingMs": 0,
+      "idleMs": 0,
+      "hiddenMs": 0,
+      "waitingMs": 23,
+      "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+      "humanFourMetrics": "NOT_OBSERVABLE"
+    }
+  ],
+  "trace": [
+    {
+      "id": "eaa712a8-ee11-4029-8feb-67daa74f42c2",
+      "at": 1790952919595,
+      "kind": "begin"
+    },
+    {
+      "id": "c23fcb64-eaf1-4dd5-93ae-cd52c306af34",
+      "at": 1790952919595,
+      "kind": "read"
+    },
+    {
+      "id": "7f7f506b-14fc-4c16-8232-aa407329b1be",
+      "at": 1790952944941,
+      "kind": "wait"
+    },
+    {
+      "id": "56c26f8b-2ded-48ed-ac27-bb6a509d7600",
+      "at": 1790952944964,
+      "kind": "commit",
+      "commitId": "86968d74-54fb-4709-bf3d-c3eeefad7cce",
+      "semanticChanges": 0
+    },
+    {
+      "id": "327e2c5e-4b90-403c-9ad2-891a71d7fe6d",
+      "at": 1790952944968,
+      "kind": "readback",
+      "commitId": "86968d74-54fb-4709-bf3d-c3eeefad7cce"
+    },
+    {
+      "id": "42ef78c0-be18-4834-b2b5-9c945026c779",
+      "at": 1790952944988,
+      "kind": "end"
+    }
+  ],
+  "humanFourMetrics": "NOT_OBSERVABLE"
+}

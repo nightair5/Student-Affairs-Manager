@@ -1,0 +1,349 @@
+{
+  "version": "candidate13-d6-result-1",
+  "unitId": "D5R1-S11-A",
+  "sourceId": "C13-D5R1-S11",
+  "arm": "A",
+  "ordinal": 21,
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "requestSha256": "476dab5c2738431d7a2610886722bbc50f4d2aafbeabf80ae4988c6c2bf0cd60",
+  "responseSha256": "fbadb21c5194bfd83cfa3ef60fee87e5b42570c9e6b90584d723a119191d63e6",
+  "transportStatus": "COMPLETED_HTTP_200",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "waitingMs": 8456,
+  "parseError": null,
+  "parseStage": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-print-poster",
+        "propositionScopeIds": [
+          "scope-0002-35e928553dfbf6ba3faad9a7f562177fd78f163a4a7a9057f280ccd1789c5fdc",
+          "scope-0009-9e0ea5545d97e3d62293ecbbcb5063777c7b658d5c34c17ba2e4b765a727c314"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "past",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "print",
+        "action": {
+          "scopeId": "scope-0002-35e928553dfbf6ba3faad9a7f562177fd78f163a4a7a9057f280ccd1789c5fdc",
+          "surface": "打印"
+        },
+        "object": {
+          "scopeId": "scope-0002-35e928553dfbf6ba3faad9a7f562177fd78f163a4a7a9057f280ccd1789c5fdc",
+          "surface": "会议海报"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "打印会议海报",
+          "description": "原定打印会议海报，现已被上传电子版要求替代。",
+          "completionCriteria": [],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-register-onsite-venue",
+        "propositionScopeIds": [
+          "scope-0003-923a9ed0735d007d5e637ab0fa4cc166c71f1558f348c58b75fd51d2ee060e3a",
+          "scope-0009-9e0ea5545d97e3d62293ecbbcb5063777c7b658d5c34c17ba2e4b765a727c314"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "past",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "register",
+        "action": {
+          "scopeId": "scope-0003-923a9ed0735d007d5e637ab0fa4cc166c71f1558f348c58b75fd51d2ee060e3a",
+          "surface": "登记"
+        },
+        "object": {
+          "scopeId": "scope-0003-923a9ed0735d007d5e637ab0fa4cc166c71f1558f348c58b75fd51d2ee060e3a",
+          "surface": "现场展示场地"
+        },
+        "effect": "external_interaction",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "登记现场展示场地",
+          "description": "原定登记现场展示场地，现已被预约线上时段要求替代。",
+          "completionCriteria": [],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-upload-electronic-poster",
+        "propositionScopeIds": [
+          "scope-0005-126f864879238207f0a7ba56c2952b1b45c90f8a4ab4968ace1c33c112bcb598",
+          "scope-0006-ef4fdd0e7b52b3f957a531ec6c2ff608a041591084b96ade6be7fe94f0d9ab9b",
+          "scope-0009-9e0ea5545d97e3d62293ecbbcb5063777c7b658d5c34c17ba2e4b765a727c314"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "upload",
+        "action": {
+          "scopeId": "scope-0005-126f864879238207f0a7ba56c2952b1b45c90f8a4ab4968ace1c33c112bcb598",
+          "surface": "上传"
+        },
+        "object": {
+          "scopeId": "scope-0005-126f864879238207f0a7ba56c2952b1b45c90f8a4ab4968ace1c33c112bcb598",
+          "surface": "电子版"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "上传会议海报电子版",
+          "description": "会议海报改为上传电子版，平台显示电子海报上传成功。",
+          "completionCriteria": [
+            "平台显示电子海报上传成功"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-electronic-poster"
+          ],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "present"
+        },
+        "eventTempIds": [
+          "event-poster-upload-success"
+        ]
+      },
+      {
+        "id": "task-book-online-slot",
+        "propositionScopeIds": [
+          "scope-0007-c2540b7a524666a2b09ea024a7c33957faceea28703c92af76f4c70a729b7ba2",
+          "scope-0008-9ced4986fc9bbb28ce1f0866f019aa7b6de280ad760f161ab3ae1a121fde6210",
+          "scope-0009-9e0ea5545d97e3d62293ecbbcb5063777c7b658d5c34c17ba2e4b765a727c314"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "register",
+        "action": {
+          "scopeId": "scope-0007-c2540b7a524666a2b09ea024a7c33957faceea28703c92af76f4c70a729b7ba2",
+          "surface": "预约"
+        },
+        "object": {
+          "scopeId": "scope-0007-c2540b7a524666a2b09ea024a7c33957faceea28703c92af76f4c70a729b7ba2",
+          "surface": "线上时段"
+        },
+        "effect": "external_interaction",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "预约线上展示时段",
+          "description": "现场展示场地改为预约线上时段，页面保存线上展示时段。",
+          "completionCriteria": [
+            "页面保存线上展示时段"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "present"
+        },
+        "eventTempIds": [
+          "event-online-slot-saved"
+        ]
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-electronic-poster",
+        "name": "电子版会议海报",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "平台",
+        "relatedTaskTempIds": [
+          "task-upload-electronic-poster"
+        ],
+        "scopeIds": [
+          "scope-0005-126f864879238207f0a7ba56c2952b1b45c90f8a4ab4968ace1c33c112bcb598",
+          "scope-0006-ef4fdd0e7b52b3f957a531ec6c2ff608a041591084b96ade6be7fe94f0d9ab9b"
+        ],
+        "confidence": 0.85
+      }
+    ],
+    "timePoints": [],
+    "events": [
+      {
+        "tempId": "event-poster-upload-success",
+        "title": "电子海报上传成功",
+        "description": "平台显示电子海报上传成功。",
+        "startTimePointTempId": null,
+        "endTimePointTempId": null,
+        "location": "平台",
+        "scopeIds": [
+          "scope-0006-ef4fdd0e7b52b3f957a531ec6c2ff608a041591084b96ade6be7fe94f0d9ab9b"
+        ],
+        "confidence": 0.85,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": [
+          "task-upload-electronic-poster"
+        ]
+      },
+      {
+        "tempId": "event-online-slot-saved",
+        "title": "线上展示时段保存",
+        "description": "页面保存线上展示时段。",
+        "startTimePointTempId": null,
+        "endTimePointTempId": null,
+        "location": "页面",
+        "scopeIds": [
+          "scope-0008-9ced4986fc9bbb28ce1f0866f019aa7b6de280ad760f161ab3ae1a121fde6210"
+        ],
+        "confidence": 0.85,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": [
+          "task-book-online-slot"
+        ]
+      }
+    ],
+    "revisions": [
+      {
+        "type": "supersedes",
+        "targetDirectiveId": "task-print-poster",
+        "scopeIds": [
+          "scope-0005-126f864879238207f0a7ba56c2952b1b45c90f8a4ab4968ace1c33c112bcb598",
+          "scope-0009-9e0ea5545d97e3d62293ecbbcb5063777c7b658d5c34c17ba2e4b765a727c314"
+        ],
+        "fromDirectiveId": "task-upload-electronic-poster",
+        "effective": "unknown"
+      },
+      {
+        "type": "supersedes",
+        "targetDirectiveId": "task-register-onsite-venue",
+        "scopeIds": [
+          "scope-0007-c2540b7a524666a2b09ea024a7c33957faceea28703c92af76f4c70a729b7ba2",
+          "scope-0009-9e0ea5545d97e3d62293ecbbcb5063777c7b658d5c34c17ba2e4b765a727c314"
+        ],
+        "fromDirectiveId": "task-book-online-slot",
+        "effective": "unknown"
+      }
+    ],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-8b927faa649676d9299424519a857082226dd3649979b9605ffae2fa2e2d4d08",
+      "scope-0004-ff882d48ad0530a751198b5796013fbe7bd1a6de962760e9130b5abdef708dcf"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C13-D5R1-S11",
+    "sourceVersionId": "C13-D5R1-S11-v1",
+    "sourceFingerprint": "sha256:cb6312d1bdaeab5d18eaad55995f2abf8b622cdcfb47453641f4e426f5f3a967"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4589,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 2585,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 7174
+  },
+  "costUpperMicroUsd": 4479,
+  "providerBilledUsd": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0,
+  "verifierCalls": 0
+}

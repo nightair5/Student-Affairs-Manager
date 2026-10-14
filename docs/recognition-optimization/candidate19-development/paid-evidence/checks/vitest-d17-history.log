@@ -1,0 +1,124 @@
+
+ RUN  v3.2.7 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛
+
+ ✓ src/experiments/candidate16/d23Study.test.ts (22 tests) 2120ms
+   ✓ D23 existing formal repository and adjudication binding > partial actual confirmation keeps the trial active and does not satisfy whole-source success  306ms
+   ✓ D23 existing formal repository and adjudication binding > commit failure writes no canonical tasks, manual retry commits once; postcommit readback failure recovers without resending  319ms
+   ✓ D23 existing formal repository and adjudication binding > a later active trial cannot edit or checkpoint an earlier source  362ms
+ ❯ src/experiments/candidate16/d22Recovery.test.ts (10 tests | 10 skipped) 56ms
+   ↓ checkpoint failure retains no false checkpoint, manual retry writes input without creating tasks
+   ↓ opening a recovery form is reading; actual inputs resume activity with one edit identity
+   ↓ resumed typing counts active time without duplicating the logical correction or changing historical measurement
+   ↓ the page relation editor maps a condition commit to its own task, not a concurrent event
+   ↓ material observation cost links to its persisted review without inventing a model correction
+   ↓ partial confirmation selection persists without a correction and stale conflict cleanup is rejected
+   ↓ an independent event commit cannot consume a pending task edit; each maps to its actual saved fact
+   ↓ atomic failure leaves no formal facts and a manual retry creates one task
+   ↓ a committed readback failure survives runtime reopening; only readback recovers and never resubmits
+   ↓ checkpoint reads current storage SourceVersion and rejects an old page without deleting its input
+ ✓ src/experiments/candidate16/d24Product.test.ts (11 tests) 4112ms
+   ✓ D24 actual source disposal and safe unknown-time consent > blank manual entry can add the actual source deadline before material review without changing the empty first response  992ms
+   ✓ D24 actual source disposal and safe unknown-time consent > S09 exposes only the missing provenance fragment; explicit event plus classification archives 0 tasks and real event/time  313ms
+   ✓ D24 actual source disposal and safe unknown-time consent > unpublished-only wording can remain unknown, while malformed clocks and foreign-object evidence cannot gain uncertainty consent  512ms
+   ✓ D24 actual source disposal and safe unknown-time consent > S02 date-only facts already match the parser; atomic material/task review needs no invented clock  616ms
+   ✓ D24 actual source disposal and safe unknown-time consent > S07 explicit unresolved unknown notice can be judged, consented and saved; raw remains unknown  788ms
+   ✓ D24 actual source disposal and safe unknown-time consent > an injected atomic combined review failure persists neither half and permits manual retry  387ms
+ ❯ src/experiments/candidate16/d21EventEvidence.test.ts (1 test | 1 failed) 39ms
+   × a validated human event title correction can be confirmed without pretending it was a literal source quote 38ms
+     → D17_SCORE_LEDGER_DRIFT
+ ❯ src/experiments/candidate16/d20Rebase.test.ts (1 test | 1 failed) 36ms
+   × D20 can save an unchanged task after an independent event review, keeping repository CAS and both facts 35ms
+     → D17_SCORE_LEDGER_DRIFT
+ ❯ src/experiments/candidate16/d19SourceSession.test.ts (3 tests | 2 failed) 2305ms
+   ✓ D19 source review saves independently evidenced event and task atomically; a failed save preserves both for manual retry  2243ms
+   × D19 prefilled mixed fixture has fully evidenced event names and uncertain times before confirmation 33ms
+     → D17_SCORE_LEDGER_DRIFT
+   × D19 isolated recovery can open a failed revision answer without disabling the bad-link guard 28ms
+     → D17_SCORE_LEDGER_DRIFT
+
+ Test Files  4 failed | 2 passed (6)
+      Tests  4 failed | 34 passed | 10 skipped (48)
+   Start at  07:40:58
+   Duration  6.98s (transform 839ms, setup 0ms, collect 3.27s, tests 8.67s, environment 1ms, prepare 481ms)
+
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/candidate16/d22Recovery.test.ts [ src/experiments/candidate16/d22Recovery.test.ts ]
+Error: D17_SCORE_LEDGER_DRIFT
+ ❯ check scripts/score-candidate17-d17.mjs:15:44
+     13| const LEDGER=resolve('C:/Users/Winner/student-affairs-multimodal-exp/d…
+     14| const D16='docs/recognition-optimization/candidate17/d16-development'
+     15| const check=(value,code)=>{if(!value)throw Error('D17_SCORE_'+code)}
+       |                                            ^
+     16| const read=path=>JSON.parse(readFileSync(path,'utf8'))
+     17| const encode=value=>JSON.stringify(value,null,2)+'\n'
+ ❯ scoreD17 scripts/score-candidate17-d17.mjs:26:3
+ ❯ buildD21Preview scripts/serve-d21-review-session.mjs:15:22
+ ❯ src/experiments/candidate16/d22Recovery.test.ts:21:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/candidate16/d19SourceSession.test.ts > D19 prefilled mixed fixture has fully evidenced event names and uncertain times before confirmation
+Error: D17_SCORE_LEDGER_DRIFT
+ ❯ check scripts/score-candidate17-d17.mjs:15:44
+     13| const LEDGER=resolve('C:/Users/Winner/student-affairs-multimodal-exp/d…
+     14| const D16='docs/recognition-optimization/candidate17/d16-development'
+     15| const check=(value,code)=>{if(!value)throw Error('D17_SCORE_'+code)}
+       |                                            ^
+     16| const read=path=>JSON.parse(readFileSync(path,'utf8'))
+     17| const encode=value=>JSON.stringify(value,null,2)+'\n'
+ ❯ scoreD17 scripts/score-candidate17-d17.mjs:26:3
+ ❯ buildD19Preview scripts/serve-d19-source-session.mjs:14:22
+ ❯ src/experiments/candidate16/d19SourceSession.test.ts:51:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/experiments/candidate16/d19SourceSession.test.ts > D19 isolated recovery can open a failed revision answer without disabling the bad-link guard
+Error: D17_SCORE_LEDGER_DRIFT
+ ❯ check scripts/score-candidate17-d17.mjs:15:44
+     13| const LEDGER=resolve('C:/Users/Winner/student-affairs-multimodal-exp/d…
+     14| const D16='docs/recognition-optimization/candidate17/d16-development'
+     15| const check=(value,code)=>{if(!value)throw Error('D17_SCORE_'+code)}
+       |                                            ^
+     16| const read=path=>JSON.parse(readFileSync(path,'utf8'))
+     17| const encode=value=>JSON.stringify(value,null,2)+'\n'
+ ❯ scoreD17 scripts/score-candidate17-d17.mjs:26:3
+ ❯ buildD19Preview scripts/serve-d19-source-session.mjs:14:22
+ ❯ src/experiments/candidate16/d19SourceSession.test.ts:64:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/experiments/candidate16/d20Rebase.test.ts > D20 can save an unchanged task after an independent event review, keeping repository CAS and both facts
+Error: D17_SCORE_LEDGER_DRIFT
+ ❯ check scripts/score-candidate17-d17.mjs:15:44
+     13| const LEDGER=resolve('C:/Users/Winner/student-affairs-multimodal-exp/d…
+     14| const D16='docs/recognition-optimization/candidate17/d16-development'
+     15| const check=(value,code)=>{if(!value)throw Error('D17_SCORE_'+code)}
+       |                                            ^
+     16| const read=path=>JSON.parse(readFileSync(path,'utf8'))
+     17| const encode=value=>JSON.stringify(value,null,2)+'\n'
+ ❯ scoreD17 scripts/score-candidate17-d17.mjs:26:3
+ ❯ buildD20Preview scripts/serve-d20-review-session.mjs:14:22
+ ❯ src/experiments/candidate16/d20Rebase.test.ts:12:25
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/experiments/candidate16/d21EventEvidence.test.ts > a validated human event title correction can be confirmed without pretending it was a literal source quote
+Error: D17_SCORE_LEDGER_DRIFT
+ ❯ check scripts/score-candidate17-d17.mjs:15:44
+     13| const LEDGER=resolve('C:/Users/Winner/student-affairs-multimodal-exp/d…
+     14| const D16='docs/recognition-optimization/candidate17/d16-development'
+     15| const check=(value,code)=>{if(!value)throw Error('D17_SCORE_'+code)}
+       |                                            ^
+     16| const read=path=>JSON.parse(readFileSync(path,'utf8'))
+     17| const encode=value=>JSON.stringify(value,null,2)+'\n'
+ ❯ scoreD17 scripts/score-candidate17-d17.mjs:26:3
+ ❯ buildD21Preview scripts/serve-d21-review-session.mjs:15:22
+ ❯ src/experiments/candidate16/d21EventEvidence.test.ts:16:25
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+

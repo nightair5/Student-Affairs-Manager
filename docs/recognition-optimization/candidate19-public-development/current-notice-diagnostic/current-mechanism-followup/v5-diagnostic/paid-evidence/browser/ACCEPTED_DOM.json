@@ -1,0 +1,1548 @@
+[
+  {
+    "case": "COMPOSED_FIRST",
+    "state": "- link \"跳到主要内容\":\n  - /url: \"#main-content\"\n- complementary:\n  - button \"返回今日首页\":\n    - strong: 事务管家\n    - generic: STUDENT DESK\n  - button \"新事务 N\":\n    - text: 新事务\n    - generic: \"N\"\n  - navigation \"主要导航\":\n    - generic: 执行闭环\n    - button \"今日\":\n      - text: 今日\n    - button \"收件箱\":\n      - text: 收件箱\n    - button \"打开待确认队列，共 1 项\":\n      - text: 待确认\n      - generic: \"1\"\n    - button \"项目\":\n      - text: 项目\n    - button \"日历\":\n      - text: 日历\n    - button \"资料库\":\n      - text: 资料库\n    - generic: 低频工具\n    - button \"所有任务\":\n      - text: 所有任务\n    - button \"知识问答\":\n      - text: 知识问答\n    - button \"周报月报\":\n      - text: 周报月报\n  - button \"搜索事项\":\n    - text: 搜索事项\n  - button \"新手教程\":\n    - text: 新手教程\n  - button \"设置与服务\":\n    - text: 设置与服务\n  - button \"隐私与数据\":\n    - text: 隐私与数据\n  - strong: 已在此设备自动保存\n  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。\n- generic \"匿名工程输入 · 普通产品路径 · 不发送模型请求\"\n- main:\n  - text: 来源先保存，确认后入库\n  - heading \"待确认\" [level=1]\n  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。\n  - strong: \"1\"\n  - text: 份需关注\n  - group \"收件箱视图\":\n    - button \"全部来源\"\n    - button \"待确认 1\" [pressed]\n  - button \"新建手动来源\":\n    - text: 新建手动来源\n  - checkbox \"选择全部待核对\"\n  - text: 选择全部待核对\n  - article:\n    - checkbox \"选择 手动粘贴消息\"\n    - generic: 选择 手动粘贴消息\n    - generic: 匿名契约工程夹具（非模型输出） 建议\n    - generic: 待核对\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n    - paragraph: 识别建议已保存，确认前不会创建正式任务。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 0 任务 · 独立事件及时间请在核对页查看\n    - button \"核对 0 项任务、1 个事件\":\n      - text: 核对 0 项任务、1 个事件\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n- status:\n  - generic: 匿名工程建议已生成；没有模型请求，核对后走普通正式保存。\n  - button \"关闭提示\": ×\n- dialog \"识别出 0 项任务、1 个事件\":\n  - banner:\n    - generic: 第 2 步 · 匿名契约工程夹具（非模型输出） · 无新模型请求\n    - heading \"识别出 0 项任务、1 个事件\" [level=2]\n    - paragraph: 先看标题和时间；不准确时再点“编辑”。\n    - button \"稍后处理并关闭\" [active]:\n  - status \"未确认编辑检查点\":\n    - strong: 本来源核对会话\n    - paragraph: 编辑在确认前不会创建任务。\n  - strong: 0 项任务、1 个事件待确认\n  - generic: 确认后才会进入今日和任务中心\n  - region \"项目匹配与识别质量\":\n    - strong: 项目归属建议\n    - text: 未主动建立或匹配项目。\n    - generic: 选择项目归属\n    - combobox \"选择项目归属\":\n      - option \"新建项目\"\n      - option \"作为独立事项\" [selected]\n      - option \"稍后决定\"\n    - strong: 需要重点核对\n    - generic: 包含事件安排\n    - button \"只保留原文明确\"\n    - region \"聚焦复核原因\":\n      - strong: 这份通知包含多个时间、材料或阶段\n      - generic: 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。\n      - list:\n        - strong: 包含事件安排\n        - generic: 识别到 1 个事件，请核对开始时间、地点和是否需要创建。\n      - generic \"来源提取元数据\":\n        - generic: 39 字\n  - generic \"原始通知与定位依据\":\n    - text: 原始通知与定位依据\n  - paragraph: 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n  - region \"项目树待确认事项\":\n    - region \"同一通知的独立事件与信息\":\n      - region \"通知补充说明\":\n        - heading \"通知补充说明\" [level=3]\n        - paragraph: 原回答保留的信息；未关联到具体事项，不会据此新增任务或日程。\n        - blockquote: 仅供了解，\n        - blockquote: 无需报名。\n        - generic \"查看补充说明原文依据\"\n      - heading \"同一通知的事件\" [level=3]\n      - article:\n        - strong: 设计讨论\n        - paragraph: 地点未说明；2026年11月20日 09:30（原文：09:30-11:00） → 2026年11月20日 11:00（原文：09:30-11:00）\n        - paragraph: 设计讨论 2026年11月20日 09:30-11:00\n        - paragraph: 保留，待正式确认\n        - text: 处置“设计讨论”\n        - combobox \"处置“设计讨论”\":\n          - option \"保留\" [selected]\n          - option \"暂缓\"\n          - option \"拒绝多余事件\"\n        - button \"编辑事件\"\n      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。\n      - button \"依据原文补充遗漏事件\"\n      - button \"依据原文补充遗漏任务\"\n    - heading \"时间节点\" [level=3]\n    - checkbox \"event_start 09:30-11:00\" [checked]\n    - strong: event_start\n    - generic: 09:30-11:00\n    - button \"在原文中定位\"\n    - checkbox \"event_end 09:30-11:00\" [checked]\n    - strong: event_end\n    - generic: 09:30-11:00\n    - button \"在原文中定位\"\n  - contentinfo:\n    - button \"确认信息并保存独立事件\"\n    - button \"完成\"\n- generic \"本批真实录制 · 选择来源与独立读回\"\n- paragraph: 4fd9d6951ecb / source 612fde68461e；rco-mainline-01-02-i1-d27-plan-recorded-v5-paid-accepted-1007；source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-attribute-index-1.0.0 / authority-endpoint-composition-1.0.0 / authority-support-context-1.0.0 / source-information-preview-1.0.0 / source-window-endpoints-1.0.0 / source-window-plan-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。当前V5单臂4份官方已见节选诊断；4份确定录制；不是原封存批替代、不判候选赢家；未知保留分母；另2份同事件日期/时段和坏归属匿名控制，仅工程夹具，不计模型4分母。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。\n- paragraph: 当前生成契约：single-authority-source-contract-5.0.0；single-authority-generation-1.0.0；ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\n- text: 录制来源\n- combobox \"录制来源\":\n  - option \"V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\" [selected]\n  - option \"authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n- textbox \"本批匿名通知原文\": 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-10-07T09:00:00+08:00。\n- paragraph: 另有2份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT。\n- button \"注入正式保存失败\"\n- button \"注入提交后读回失败\"\n- button \"注入检查点失败\"\n- status: 已注入：下一次正式事务失败\n- button \"本批独立canonical读回\"\n- button \"页面测量读回\"\n"
+  },
+  {
+    "case": "FORMAL_FAILURE",
+    "state": "- link \"跳到主要内容\":\n  - /url: \"#main-content\"\n- complementary:\n  - button \"返回今日首页\":\n    - strong: 事务管家\n    - generic: STUDENT DESK\n  - button \"新事务 N\":\n    - text: 新事务\n    - generic: \"N\"\n  - navigation \"主要导航\":\n    - generic: 执行闭环\n    - button \"今日\":\n      - text: 今日\n    - button \"收件箱\":\n      - text: 收件箱\n    - button \"打开待确认队列，共 1 项\":\n      - text: 待确认\n      - generic: \"1\"\n    - button \"项目\":\n      - text: 项目\n    - button \"日历\":\n      - text: 日历\n    - button \"资料库\":\n      - text: 资料库\n    - generic: 低频工具\n    - button \"所有任务\":\n      - text: 所有任务\n    - button \"知识问答\":\n      - text: 知识问答\n    - button \"周报月报\":\n      - text: 周报月报\n  - button \"搜索事项\":\n    - text: 搜索事项\n  - button \"新手教程\":\n    - text: 新手教程\n  - button \"设置与服务\":\n    - text: 设置与服务\n  - button \"隐私与数据\":\n    - text: 隐私与数据\n  - strong: 已在此设备自动保存\n  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。\n- generic \"匿名工程输入 · 普通产品路径 · 不发送模型请求\"\n- main:\n  - text: 来源先保存，确认后入库\n  - heading \"待确认\" [level=1]\n  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。\n  - strong: \"1\"\n  - text: 份需关注\n  - group \"收件箱视图\":\n    - button \"全部来源\"\n    - button \"待确认 1\" [pressed]\n  - button \"新建手动来源\":\n    - text: 新建手动来源\n  - checkbox \"选择全部待核对\"\n  - text: 选择全部待核对\n  - article:\n    - checkbox \"选择 手动粘贴消息\"\n    - generic: 选择 手动粘贴消息\n    - generic: 匿名契约工程夹具（非模型输出） 建议\n    - generic: 待核对\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n    - paragraph: 识别建议已保存，确认前不会创建正式任务。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 0 任务 · 独立事件及时间请在核对页查看\n    - button \"核对 0 项任务、1 个事件\":\n      - text: 核对 0 项任务、1 个事件\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n- status:\n  - generic: 正式提交未完成：RECORDED_INJECTED_FORMAL_SAVE_FAILURE；没有创建半份事实。\n  - button \"关闭提示\": ×\n- dialog \"识别出 0 项任务、1 个事件\":\n  - banner:\n    - generic: 第 2 步 · 匿名契约工程夹具（非模型输出） · 无新模型请求\n    - heading \"识别出 0 项任务、1 个事件\" [level=2]\n    - paragraph: 先看标题和时间；不准确时再点“编辑”。\n    - button \"稍后处理并关闭\":\n  - status \"未确认编辑检查点\":\n    - strong: 本来源核对会话\n    - paragraph: 编辑在确认前不会创建任务。\n  - strong: 0 项任务、1 个事件待确认\n  - generic: 确认后才会进入今日和任务中心\n  - region \"项目匹配与识别质量\":\n    - strong: 项目归属建议\n    - text: 未主动建立或匹配项目。\n    - generic: 选择项目归属\n    - combobox \"选择项目归属\":\n      - option \"新建项目\"\n      - option \"作为独立事项\" [selected]\n      - option \"稍后决定\"\n    - strong: 需要重点核对\n    - generic: 包含事件安排\n    - button \"只保留原文明确\"\n    - region \"聚焦复核原因\":\n      - strong: 这份通知包含多个时间、材料或阶段\n      - generic: 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。\n      - list:\n        - strong: 包含事件安排\n        - generic: 识别到 1 个事件，请核对开始时间、地点和是否需要创建。\n      - generic \"来源提取元数据\":\n        - generic: 39 字\n  - generic \"原始通知与定位依据\":\n    - text: 原始通知与定位依据\n  - paragraph: 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n  - region \"项目树待确认事项\":\n    - region \"同一通知的独立事件与信息\":\n      - region \"通知补充说明\":\n        - heading \"通知补充说明\" [level=3]\n        - paragraph: 原回答保留的信息；未关联到具体事项，不会据此新增任务或日程。\n        - blockquote: 仅供了解，\n        - blockquote: 无需报名。\n        - generic \"查看补充说明原文依据\"\n      - heading \"同一通知的事件\" [level=3]\n      - article:\n        - strong: 设计讨论\n        - paragraph: 地点未说明；2026年11月20日 09:30（原文：09:30-11:00） → 2026年11月20日 11:00（原文：09:30-11:00）\n        - paragraph: 设计讨论 2026年11月20日 09:30-11:00\n        - paragraph: 保留，待正式确认\n        - text: 处置“设计讨论”\n        - combobox \"处置“设计讨论”\":\n          - option \"保留\" [selected]\n          - option \"暂缓\"\n          - option \"拒绝多余事件\"\n        - button \"编辑事件\"\n      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。\n      - button \"依据原文补充遗漏事件\"\n      - button \"依据原文补充遗漏任务\"\n    - heading \"时间节点\" [level=3]\n    - checkbox \"event_start 09:30-11:00\" [checked]\n    - strong: event_start\n    - generic: 09:30-11:00\n    - button \"在原文中定位\"\n    - checkbox \"event_end 09:30-11:00\" [checked]\n    - strong: event_end\n    - generic: 09:30-11:00\n    - button \"在原文中定位\"\n  - contentinfo:\n    - button \"确认信息并保存独立事件\"\n    - button \"完成\"\n- generic \"本批真实录制 · 选择来源与独立读回\"\n- paragraph: 4fd9d6951ecb / source 612fde68461e；rco-mainline-01-02-i1-d27-plan-recorded-v5-paid-accepted-1007；source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-attribute-index-1.0.0 / authority-endpoint-composition-1.0.0 / authority-support-context-1.0.0 / source-information-preview-1.0.0 / source-window-endpoints-1.0.0 / source-window-plan-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。当前V5单臂4份官方已见节选诊断；4份确定录制；不是原封存批替代、不判候选赢家；未知保留分母；另2份同事件日期/时段和坏归属匿名控制，仅工程夹具，不计模型4分母。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。\n- paragraph: 当前生成契约：single-authority-source-contract-5.0.0；single-authority-generation-1.0.0；ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\n- text: 录制来源\n- combobox \"录制来源\":\n  - option \"V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\" [selected]\n  - option \"authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n- textbox \"本批匿名通知原文\": 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-10-07T09:00:00+08:00。\n- paragraph: 另有2份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT。\n- button \"注入正式保存失败\"\n- button \"注入提交后读回失败\"\n- button \"注入检查点失败\"\n- status: 已注入：下一次正式事务失败\n- button \"本批独立canonical读回\"\n- button \"页面测量读回\"\n"
+  },
+  {
+    "case": "NO_HALF",
+    "canonical": {
+      "role": "ENGINEERING_REPLAY",
+      "schemaVersion": 8,
+      "counts": {
+        "tasks": 0,
+        "projects": 0,
+        "events": 0,
+        "timePoints": 0,
+        "materials": 0
+      },
+      "tasks": [],
+      "events": [],
+      "timePoints": [],
+      "evidenceRefs": [],
+      "drafts": [
+        {
+          "id": "source:7dfd2268:draft:1",
+          "status": "needs_review",
+          "commitOperationIds": [],
+          "acceptedEntityTempIds": [],
+          "rejectedEntityTempIds": [],
+          "firstSuggestionDisplayed": {
+            "schemaVersion": "2.0",
+            "promptVersion": "recognition-single-authority-1.0.0",
+            "modelName": "匿名契约工程夹具（非模型输出）",
+            "createdAt": "2026-10-07T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "设计讨论",
+              "sourceType": "text",
+              "notificationType": "event_notice",
+              "summary": "0项任务，1项事件。请核对后确认。",
+              "requiresAction": false,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "date",
+                "type": "event_start",
+                "rawText": "09:30-11:00",
+                "confidence": 1,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "normalizedValue": "2026-11-20T09:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                  "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ]
+              },
+              {
+                "tempId": "end",
+                "type": "event_end",
+                "rawText": "09:30-11:00",
+                "confidence": 1,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "normalizedValue": "2026-11-20T11:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                  "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ]
+              }
+            ],
+            "events": [
+              {
+                "tempId": "event",
+                "title": "设计讨论",
+                "description": "设计讨论\n2026年11月20日\n09:30-11:00",
+                "startTimePointTempId": "date",
+                "endTimePointTempId": "end",
+                "location": null,
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "evidenceIds": [
+                  "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                  "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                  "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ],
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                "sourceId": "source:7dfd2268",
+                "quote": "设计讨论",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                "sourceId": "source:7dfd2268",
+                "quote": "2026年11月20日",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+                "sourceId": "source:7dfd2268",
+                "quote": "09:30-11:00",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0004-6aa4f8e3a00334807eef2bcf48d79a654c6ce300df591dd1f5e19c723f5286b1",
+                "sourceId": "source:7dfd2268",
+                "quote": "仅供了解，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0005-75677193379f49d5b78d95c1cd563c889688e80d64c14a90f455e794b2f53128",
+                "sourceId": "source:7dfd2268",
+                "quote": "无需报名。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [
+              {
+                "text": "仅供了解，",
+                "reason": "other"
+              },
+              {
+                "text": "无需报名。",
+                "reason": "other"
+              }
+            ],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": false,
+              "reviewReasons": []
+            }
+          },
+          "conversionAudits": {
+            "support": {
+              "version": "authority-support-context-1.0.0",
+              "inferredFacts": 0,
+              "operation": "EXISTING_TASK_SUPPORT_TO_LEGACY_INFORMATION_INDEX",
+              "changes": [],
+              "original": {
+                "schemaVersion": "single-authority-source-contract-5.0.0",
+                "tasks": [],
+                "materials": [],
+                "revisions": [],
+                "conflicts": [],
+                "prerequisiteStates": [],
+                "events": [
+                  {
+                    "tempId": "event",
+                    "title": "设计讨论",
+                    "description": "设计讨论",
+                    "location": null,
+                    "relatedTaskTempIds": [],
+                    "attributes": [],
+                    "scopeIds": [
+                      "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                      "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "confidence": 1,
+                    "inferenceLevel": "explicit"
+                  }
+                ],
+                "timePoints": [
+                  {
+                    "tempId": "date",
+                    "type": "event_start",
+                    "rawText": "2026年11月20日",
+                    "scopeIds": [
+                      "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_start",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  },
+                  {
+                    "tempId": "clock",
+                    "type": "event_start",
+                    "rawText": "09:30-11:00",
+                    "scopeIds": [
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_start",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  },
+                  {
+                    "tempId": "end",
+                    "type": "event_end",
+                    "rawText": "09:30-11:00",
+                    "scopeIds": [
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_end",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  }
+                ],
+                "scopeAccounting": [
+                  {
+                    "scopeId": "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0004-6aa4f8e3a00334807eef2bcf48d79a654c6ce300df591dd1f5e19c723f5286b1",
+                    "kind": "information",
+                    "primaryEntityIds": []
+                  },
+                  {
+                    "scopeId": "scope-0005-75677193379f49d5b78d95c1cd563c889688e80d64c14a90f455e794b2f53128",
+                    "kind": "information",
+                    "primaryEntityIds": []
+                  }
+                ]
+              }
+            },
+            "endpoints": {
+              "version": "authority-endpoint-composition-1.0.0",
+              "inferredFacts": 0,
+              "operation": "ADJACENT_EXPLICIT_SAME_EVENT_DATE_CLOCK_COMPOSITION",
+              "changes": [
+                {
+                  "eventId": "event",
+                  "retainedStartId": "date",
+                  "retiredClockStartId": "clock",
+                  "endId": "end",
+                  "scopeIds": [
+                    "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                    "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                  ],
+                  "rawText": "2026年11月20日\n09:30-11:00"
+                }
+              ],
+              "original": {
+                "schemaVersion": "single-authority-source-contract-5.0.0",
+                "tasks": [],
+                "materials": [],
+                "revisions": [],
+                "conflicts": [],
+                "prerequisiteStates": [],
+                "events": [
+                  {
+                    "tempId": "event",
+                    "title": "设计讨论",
+                    "description": "设计讨论",
+                    "location": null,
+                    "relatedTaskTempIds": [],
+                    "attributes": [],
+                    "scopeIds": [
+                      "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                      "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "confidence": 1,
+                    "inferenceLevel": "explicit"
+                  }
+                ],
+                "timePoints": [
+                  {
+                    "tempId": "date",
+                    "type": "event_start",
+                    "rawText": "2026年11月20日",
+                    "scopeIds": [
+                      "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_start",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  },
+                  {
+                    "tempId": "clock",
+                    "type": "event_start",
+                    "rawText": "09:30-11:00",
+                    "scopeIds": [
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_start",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  },
+                  {
+                    "tempId": "end",
+                    "type": "event_end",
+                    "rawText": "09:30-11:00",
+                    "scopeIds": [
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_end",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  }
+                ],
+                "scopeAccounting": [
+                  {
+                    "scopeId": "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0004-6aa4f8e3a00334807eef2bcf48d79a654c6ce300df591dd1f5e19c723f5286b1",
+                    "kind": "information",
+                    "primaryEntityIds": []
+                  },
+                  {
+                    "scopeId": "scope-0005-75677193379f49d5b78d95c1cd563c889688e80d64c14a90f455e794b2f53128",
+                    "kind": "information",
+                    "primaryEntityIds": []
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "localCompleteReserializedSha256": "2e3033b3938140cdce955aa828fbe63e91b225cbc9e4ca5faf05b97f3f316e05"
+    }
+  },
+  {
+    "case": "COMMITTED_READBACK_PENDING",
+    "state": "- link \"跳到主要内容\":\n  - /url: \"#main-content\"\n- complementary:\n  - button \"返回今日首页\":\n    - strong: 事务管家\n    - generic: STUDENT DESK\n  - button \"新事务 N\":\n    - text: 新事务\n    - generic: \"N\"\n  - navigation \"主要导航\":\n    - generic: 执行闭环\n    - button \"今日\":\n      - text: 今日\n    - button \"收件箱\":\n      - text: 收件箱\n    - button \"打开待确认队列，共 1 项\":\n      - text: 待确认\n      - generic: \"1\"\n    - button \"项目\":\n      - text: 项目\n    - button \"日历\":\n      - text: 日历\n    - button \"资料库\":\n      - text: 资料库\n    - generic: 低频工具\n    - button \"所有任务\":\n      - text: 所有任务\n    - button \"知识问答\":\n      - text: 知识问答\n    - button \"周报月报\":\n      - text: 周报月报\n  - button \"搜索事项\":\n    - text: 搜索事项\n  - button \"新手教程\":\n    - text: 新手教程\n  - button \"设置与服务\":\n    - text: 设置与服务\n  - button \"隐私与数据\":\n    - text: 隐私与数据\n  - strong: 已在此设备自动保存\n  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。\n- generic \"匿名工程输入 · 普通产品路径 · 不发送模型请求\"\n- status:\n  - strong: 已提交，读回尚未验证。\n  - paragraph: 提交记录已保留；恢复只重新读回，不重复创建任务。\n  - button \"重新读回并核验\"\n- main:\n  - text: 来源先保存，确认后入库\n  - heading \"待确认\" [level=1]\n  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。\n  - strong: \"1\"\n  - text: 份需关注\n  - group \"收件箱视图\":\n    - button \"全部来源\"\n    - button \"待确认 1\" [pressed]\n  - button \"新建手动来源\":\n    - text: 新建手动来源\n  - checkbox \"选择全部待核对\"\n  - text: 选择全部待核对\n  - article:\n    - checkbox \"选择 手动粘贴消息\"\n    - generic: 选择 手动粘贴消息\n    - generic: 匿名契约工程夹具（非模型输出） 建议\n    - generic: 待核对\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n    - paragraph: 识别建议已保存，确认前不会创建正式任务。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 0 任务 · 独立事件及时间请在核对页查看\n    - button \"核对 0 项任务、1 个事件\":\n      - text: 核对 0 项任务、1 个事件\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n- status:\n  - generic: 已提交，读回尚未验证；输入和提交记录保留，请重新读回，勿重复提交。\n  - button \"关闭提示\": ×\n- dialog \"识别出 0 项任务、1 个事件\":\n  - banner:\n    - generic: 第 2 步 · 匿名契约工程夹具（非模型输出） · 无新模型请求\n    - heading \"识别出 0 项任务、1 个事件\" [level=2]\n    - paragraph: 先看标题和时间；不准确时再点“编辑”。\n    - button \"稍后处理并关闭\":\n  - status \"未确认编辑检查点\":\n    - strong: 本来源核对会话\n    - paragraph: 编辑在确认前不会创建任务。\n  - strong: 0 项任务、1 个事件待确认\n  - generic: 确认后才会进入今日和任务中心\n  - region \"项目匹配与识别质量\":\n    - strong: 项目归属建议\n    - text: 未主动建立或匹配项目。\n    - generic: 选择项目归属\n    - combobox \"选择项目归属\":\n      - option \"新建项目\"\n      - option \"作为独立事项\" [selected]\n      - option \"稍后决定\"\n    - strong: 需要重点核对\n    - generic: 包含事件安排\n    - button \"只保留原文明确\"\n    - region \"聚焦复核原因\":\n      - strong: 这份通知包含多个时间、材料或阶段\n      - generic: 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。\n      - list:\n        - strong: 包含事件安排\n        - generic: 识别到 1 个事件，请核对开始时间、地点和是否需要创建。\n      - generic \"来源提取元数据\":\n        - generic: 39 字\n  - generic \"原始通知与定位依据\":\n    - text: 原始通知与定位依据\n  - paragraph: 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n  - region \"项目树待确认事项\":\n    - region \"同一通知的独立事件与信息\":\n      - region \"通知补充说明\":\n        - heading \"通知补充说明\" [level=3]\n        - paragraph: 原回答保留的信息；未关联到具体事项，不会据此新增任务或日程。\n        - blockquote: 仅供了解，\n        - blockquote: 无需报名。\n        - generic \"查看补充说明原文依据\"\n      - heading \"同一通知的事件\" [level=3]\n      - article:\n        - strong: 设计讨论\n        - paragraph: 地点未说明；2026年11月20日 09:30（原文：09:30-11:00） → 2026年11月20日 11:00（原文：09:30-11:00）\n        - paragraph: 设计讨论 2026年11月20日 09:30-11:00\n        - paragraph: 保留，待正式确认\n        - text: 处置“设计讨论”\n        - combobox \"处置“设计讨论”\":\n          - option \"保留\" [selected]\n          - option \"暂缓\"\n          - option \"拒绝多余事件\"\n        - button \"编辑事件\"\n      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。\n      - button \"依据原文补充遗漏事件\"\n      - button \"依据原文补充遗漏任务\"\n    - heading \"时间节点\" [level=3]\n    - checkbox \"event_start 09:30-11:00\" [checked]\n    - strong: event_start\n    - generic: 09:30-11:00\n    - button \"在原文中定位\"\n    - checkbox \"event_end 09:30-11:00\" [checked]\n    - strong: event_end\n    - generic: 09:30-11:00\n    - button \"在原文中定位\"\n  - contentinfo:\n    - button \"确认信息并保存独立事件\" [disabled]\n    - button \"完成\"\n- generic \"本批真实录制 · 选择来源与独立读回\"\n- paragraph: 4fd9d6951ecb / source 612fde68461e；rco-mainline-01-02-i1-d27-plan-recorded-v5-paid-accepted-1007；source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-attribute-index-1.0.0 / authority-endpoint-composition-1.0.0 / authority-support-context-1.0.0 / source-information-preview-1.0.0 / source-window-endpoints-1.0.0 / source-window-plan-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。当前V5单臂4份官方已见节选诊断；4份确定录制；不是原封存批替代、不判候选赢家；未知保留分母；另2份同事件日期/时段和坏归属匿名控制，仅工程夹具，不计模型4分母。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。\n- paragraph: 当前生成契约：single-authority-source-contract-5.0.0；single-authority-generation-1.0.0；ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\n- text: 录制来源\n- combobox \"录制来源\":\n  - option \"V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\" [selected]\n  - option \"authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n- textbox \"本批匿名通知原文\": 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-10-07T09:00:00+08:00。\n- paragraph: 另有2份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT。\n- button \"注入正式保存失败\"\n- button \"注入提交后读回失败\"\n- button \"注入检查点失败\"\n- status: 已注入：下一次独立读回失败\n- button \"本批独立canonical读回\"\n- button \"页面测量读回\"\n"
+  },
+  {
+    "case": "READBACK_ONLY_RECOVERED",
+    "state": "- link \"跳到主要内容\":\n  - /url: \"#main-content\"\n- complementary:\n  - button \"返回今日首页\":\n    - strong: 事务管家\n    - generic: STUDENT DESK\n  - button \"新事务 N\":\n    - text: 新事务\n    - generic: \"N\"\n  - navigation \"主要导航\":\n    - generic: 执行闭环\n    - button \"今日\":\n      - text: 今日\n    - button \"收件箱\":\n      - text: 收件箱\n    - button \"打开待确认队列，共 1 项\":\n      - text: 待确认\n      - generic: \"1\"\n    - button \"项目\":\n      - text: 项目\n    - button \"日历\":\n      - text: 日历\n    - button \"资料库\":\n      - text: 资料库\n    - generic: 低频工具\n    - button \"所有任务\":\n      - text: 所有任务\n    - button \"知识问答\":\n      - text: 知识问答\n    - button \"周报月报\":\n      - text: 周报月报\n  - button \"搜索事项\":\n    - text: 搜索事项\n  - button \"新手教程\":\n    - text: 新手教程\n  - button \"设置与服务\":\n    - text: 设置与服务\n  - button \"隐私与数据\":\n    - text: 隐私与数据\n  - strong: 已在此设备自动保存\n  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。\n- generic \"匿名工程输入 · 普通产品路径 · 不发送模型请求\"\n- status:\n  - strong: 已提交，读回尚未验证。\n  - paragraph: 提交记录已保留；恢复只重新读回，不重复创建任务。\n  - button \"重新读回并核验\"\n- main:\n  - text: 来源先保存，确认后入库\n  - heading \"待确认\" [level=1]\n  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。\n  - strong: \"1\"\n  - text: 份需关注\n  - group \"收件箱视图\":\n    - button \"全部来源\"\n    - button \"待确认 1\" [pressed]\n  - button \"新建手动来源\":\n    - text: 新建手动来源\n  - checkbox \"选择全部待核对\"\n  - text: 选择全部待核对\n  - article:\n    - checkbox \"选择 手动粘贴消息\"\n    - generic: 选择 手动粘贴消息\n    - generic: 匿名契约工程夹具（非模型输出） 建议\n    - generic: 待核对\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n    - paragraph: 识别建议已保存，确认前不会创建正式任务。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 0 任务 · 独立事件及时间请在核对页查看\n    - button \"核对 0 项任务、1 个事件\":\n      - text: 核对 0 项任务、1 个事件\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n- status:\n  - generic: 已提交，读回尚未验证；输入和提交记录保留，请重新读回，勿重复提交。\n  - button \"关闭提示\": ×\n- dialog \"识别出 0 项任务、1 个事件\":\n  - banner:\n    - generic: 第 2 步 · 匿名契约工程夹具（非模型输出） · 无新模型请求\n    - heading \"识别出 0 项任务、1 个事件\" [level=2]\n    - paragraph: 先看标题和时间；不准确时再点“编辑”。\n    - button \"稍后处理并关闭\":\n  - status \"未确认编辑检查点\":\n    - strong: 本来源核对会话\n    - paragraph: 编辑在确认前不会创建任务。\n  - strong: 0 项任务、1 个事件待确认\n  - generic: 确认后才会进入今日和任务中心\n  - region \"项目匹配与识别质量\":\n    - strong: 项目归属建议\n    - text: 未主动建立或匹配项目。\n    - generic: 选择项目归属\n    - combobox \"选择项目归属\":\n      - option \"新建项目\"\n      - option \"作为独立事项\" [selected]\n      - option \"稍后决定\"\n    - strong: 需要重点核对\n    - generic: 包含事件安排\n    - button \"只保留原文明确\"\n    - region \"聚焦复核原因\":\n      - strong: 这份通知包含多个时间、材料或阶段\n      - generic: 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。\n      - list:\n        - strong: 包含事件安排\n        - generic: 识别到 1 个事件，请核对开始时间、地点和是否需要创建。\n      - generic \"来源提取元数据\":\n        - generic: 39 字\n  - generic \"原始通知与定位依据\":\n    - text: 原始通知与定位依据\n  - paragraph: 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n  - region \"项目树待确认事项\":\n    - region \"同一通知的独立事件与信息\":\n      - region \"通知补充说明\":\n        - heading \"通知补充说明\" [level=3]\n        - paragraph: 原回答保留的信息；未关联到具体事项，不会据此新增任务或日程。\n        - blockquote: 仅供了解，\n        - blockquote: 无需报名。\n        - generic \"查看补充说明原文依据\"\n      - heading \"同一通知的事件\" [level=3]\n      - article:\n        - strong: 设计讨论\n        - paragraph: 地点未说明；2026年11月20日 09:30（原文：09:30-11:00） → 2026年11月20日 11:00（原文：09:30-11:00）\n        - paragraph: 设计讨论 2026年11月20日 09:30-11:00\n        - paragraph: 保留，待正式确认\n        - text: 处置“设计讨论”\n        - combobox \"处置“设计讨论”\":\n          - option \"保留\" [selected]\n          - option \"暂缓\"\n          - option \"拒绝多余事件\"\n        - button \"编辑事件\"\n      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。\n      - button \"依据原文补充遗漏事件\"\n      - button \"依据原文补充遗漏任务\"\n    - heading \"时间节点\" [level=3]\n    - checkbox \"event_start 09:30-11:00\" [checked]\n    - strong: event_start\n    - generic: 09:30-11:00\n    - button \"在原文中定位\"\n    - checkbox \"event_end 09:30-11:00\" [checked]\n    - strong: event_end\n    - generic: 09:30-11:00\n    - button \"在原文中定位\"\n  - contentinfo:\n    - button \"确认信息并保存独立事件\" [disabled]\n    - button \"完成\"\n- generic \"本批真实录制 · 选择来源与独立读回\"\n- paragraph: 4fd9d6951ecb / source 612fde68461e；rco-mainline-01-02-i1-d27-plan-recorded-v5-paid-accepted-1007；source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-attribute-index-1.0.0 / authority-endpoint-composition-1.0.0 / authority-support-context-1.0.0 / source-information-preview-1.0.0 / source-window-endpoints-1.0.0 / source-window-plan-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。当前V5单臂4份官方已见节选诊断；4份确定录制；不是原封存批替代、不判候选赢家；未知保留分母；另2份同事件日期/时段和坏归属匿名控制，仅工程夹具，不计模型4分母。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。\n- paragraph: 当前生成契约：single-authority-source-contract-5.0.0；single-authority-generation-1.0.0；ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\n- text: 录制来源\n- combobox \"录制来源\":\n  - option \"V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\" [selected]\n  - option \"authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n- textbox \"本批匿名通知原文\": 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-10-07T09:00:00+08:00。\n- paragraph: 另有2份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT。\n- button \"注入正式保存失败\"\n- button \"注入提交后读回失败\"\n- button \"注入检查点失败\"\n- status: 已注入：下一次独立读回失败\n- button \"本批独立canonical读回\"\n- button \"页面测量读回\"\n"
+  },
+  {
+    "case": "COMPOSED_CANONICAL",
+    "canonical": {
+      "role": "ENGINEERING_REPLAY",
+      "schemaVersion": 8,
+      "counts": {
+        "tasks": 0,
+        "projects": 0,
+        "events": 1,
+        "timePoints": 2,
+        "materials": 0
+      },
+      "tasks": [],
+      "events": [
+        {
+          "id": "event:source:7dfd2268:draft:1:event",
+          "projectId": null,
+          "title": "设计讨论",
+          "description": "设计讨论\n2026年11月20日\n09:30-11:00",
+          "startTimePointId": "time:source:7dfd2268:draft:1:date",
+          "endTimePointId": "time:source:7dfd2268:draft:1:end",
+          "location": null,
+          "createdAt": "2026-10-07T11:09:14.929Z",
+          "updatedAt": "2026-10-07T11:09:14.929Z",
+          "legacyData": {
+            "recognitionTempId": "event",
+            "evidenceIds": [
+              "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+              "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+              "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+            ],
+            "inferenceLevel": "explicit",
+            "sourceReviewDraftId": "source:7dfd2268:draft:1"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:7dfd2268:draft:1:date",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:7dfd2268:draft:1:event",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_start",
+          "rawText": "09:30-11:00",
+          "normalizedValue": "2026-11-20T09:30",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "createdAt": "2026-10-07T11:09:14.929Z",
+          "updatedAt": "2026-10-07T11:09:14.929Z",
+          "legacyData": {
+            "recognitionTempId": "date",
+            "evidenceIds": [
+              "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+              "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+            ],
+            "confidence": 1,
+            "sharedEventIds": [
+              "event:source:7dfd2268:draft:1:event"
+            ]
+          }
+        },
+        {
+          "id": "time:source:7dfd2268:draft:1:end",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:7dfd2268:draft:1:event",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_end",
+          "rawText": "09:30-11:00",
+          "normalizedValue": "2026-11-20T11:00",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "createdAt": "2026-10-07T11:09:14.929Z",
+          "updatedAt": "2026-10-07T11:09:14.929Z",
+          "legacyData": {
+            "recognitionTempId": "end",
+            "evidenceIds": [
+              "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+              "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+            ],
+            "confidence": 1,
+            "sharedEventIds": [
+              "event:source:7dfd2268:draft:1:event"
+            ]
+          }
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "id": "evidence:source:7dfd2268:draft:1:d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+          "sourceVersionId": "source:7dfd2268:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "设计讨论",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-07T11:09:14.929Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7"
+          }
+        },
+        {
+          "id": "evidence:source:7dfd2268:draft:1:d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+          "sourceVersionId": "source:7dfd2268:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "2026年11月20日",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-07T11:09:14.929Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac"
+          }
+        },
+        {
+          "id": "evidence:source:7dfd2268:draft:1:d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+          "sourceVersionId": "source:7dfd2268:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "09:30-11:00",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-07T11:09:14.929Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+          }
+        }
+      ],
+      "drafts": [
+        {
+          "id": "source:7dfd2268:draft:1",
+          "status": "confirmed",
+          "commitOperationIds": [
+            "source-review:source:7dfd2268:draft:1:fnv1a32:4e064690"
+          ],
+          "acceptedEntityTempIds": [
+            "date",
+            "end",
+            "event"
+          ],
+          "rejectedEntityTempIds": [],
+          "firstSuggestionDisplayed": {
+            "schemaVersion": "2.0",
+            "promptVersion": "recognition-single-authority-1.0.0",
+            "modelName": "匿名契约工程夹具（非模型输出）",
+            "createdAt": "2026-10-07T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "设计讨论",
+              "sourceType": "text",
+              "notificationType": "event_notice",
+              "summary": "0项任务，1项事件。请核对后确认。",
+              "requiresAction": false,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "date",
+                "type": "event_start",
+                "rawText": "09:30-11:00",
+                "confidence": 1,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "normalizedValue": "2026-11-20T09:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                  "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ]
+              },
+              {
+                "tempId": "end",
+                "type": "event_end",
+                "rawText": "09:30-11:00",
+                "confidence": 1,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "normalizedValue": "2026-11-20T11:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                  "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ]
+              }
+            ],
+            "events": [
+              {
+                "tempId": "event",
+                "title": "设计讨论",
+                "description": "设计讨论\n2026年11月20日\n09:30-11:00",
+                "startTimePointTempId": "date",
+                "endTimePointTempId": "end",
+                "location": null,
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "evidenceIds": [
+                  "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                  "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                  "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ],
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                "sourceId": "source:7dfd2268",
+                "quote": "设计讨论",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                "sourceId": "source:7dfd2268",
+                "quote": "2026年11月20日",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+                "sourceId": "source:7dfd2268",
+                "quote": "09:30-11:00",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0004-6aa4f8e3a00334807eef2bcf48d79a654c6ce300df591dd1f5e19c723f5286b1",
+                "sourceId": "source:7dfd2268",
+                "quote": "仅供了解，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0005-75677193379f49d5b78d95c1cd563c889688e80d64c14a90f455e794b2f53128",
+                "sourceId": "source:7dfd2268",
+                "quote": "无需报名。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [
+              {
+                "text": "仅供了解，",
+                "reason": "other"
+              },
+              {
+                "text": "无需报名。",
+                "reason": "other"
+              }
+            ],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": false,
+              "reviewReasons": []
+            }
+          },
+          "conversionAudits": {
+            "support": {
+              "version": "authority-support-context-1.0.0",
+              "inferredFacts": 0,
+              "operation": "EXISTING_TASK_SUPPORT_TO_LEGACY_INFORMATION_INDEX",
+              "changes": [],
+              "original": {
+                "schemaVersion": "single-authority-source-contract-5.0.0",
+                "tasks": [],
+                "materials": [],
+                "revisions": [],
+                "conflicts": [],
+                "prerequisiteStates": [],
+                "events": [
+                  {
+                    "tempId": "event",
+                    "title": "设计讨论",
+                    "description": "设计讨论",
+                    "location": null,
+                    "relatedTaskTempIds": [],
+                    "attributes": [],
+                    "scopeIds": [
+                      "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                      "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "confidence": 1,
+                    "inferenceLevel": "explicit"
+                  }
+                ],
+                "timePoints": [
+                  {
+                    "tempId": "date",
+                    "type": "event_start",
+                    "rawText": "2026年11月20日",
+                    "scopeIds": [
+                      "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_start",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  },
+                  {
+                    "tempId": "clock",
+                    "type": "event_start",
+                    "rawText": "09:30-11:00",
+                    "scopeIds": [
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_start",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  },
+                  {
+                    "tempId": "end",
+                    "type": "event_end",
+                    "rawText": "09:30-11:00",
+                    "scopeIds": [
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_end",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  }
+                ],
+                "scopeAccounting": [
+                  {
+                    "scopeId": "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0004-6aa4f8e3a00334807eef2bcf48d79a654c6ce300df591dd1f5e19c723f5286b1",
+                    "kind": "information",
+                    "primaryEntityIds": []
+                  },
+                  {
+                    "scopeId": "scope-0005-75677193379f49d5b78d95c1cd563c889688e80d64c14a90f455e794b2f53128",
+                    "kind": "information",
+                    "primaryEntityIds": []
+                  }
+                ]
+              }
+            },
+            "endpoints": {
+              "version": "authority-endpoint-composition-1.0.0",
+              "inferredFacts": 0,
+              "operation": "ADJACENT_EXPLICIT_SAME_EVENT_DATE_CLOCK_COMPOSITION",
+              "changes": [
+                {
+                  "eventId": "event",
+                  "retainedStartId": "date",
+                  "retiredClockStartId": "clock",
+                  "endId": "end",
+                  "scopeIds": [
+                    "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                    "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                  ],
+                  "rawText": "2026年11月20日\n09:30-11:00"
+                }
+              ],
+              "original": {
+                "schemaVersion": "single-authority-source-contract-5.0.0",
+                "tasks": [],
+                "materials": [],
+                "revisions": [],
+                "conflicts": [],
+                "prerequisiteStates": [],
+                "events": [
+                  {
+                    "tempId": "event",
+                    "title": "设计讨论",
+                    "description": "设计讨论",
+                    "location": null,
+                    "relatedTaskTempIds": [],
+                    "attributes": [],
+                    "scopeIds": [
+                      "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                      "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "confidence": 1,
+                    "inferenceLevel": "explicit"
+                  }
+                ],
+                "timePoints": [
+                  {
+                    "tempId": "date",
+                    "type": "event_start",
+                    "rawText": "2026年11月20日",
+                    "scopeIds": [
+                      "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_start",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  },
+                  {
+                    "tempId": "clock",
+                    "type": "event_start",
+                    "rawText": "09:30-11:00",
+                    "scopeIds": [
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_start",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  },
+                  {
+                    "tempId": "end",
+                    "type": "event_end",
+                    "rawText": "09:30-11:00",
+                    "scopeIds": [
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_end",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  }
+                ],
+                "scopeAccounting": [
+                  {
+                    "scopeId": "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0004-6aa4f8e3a00334807eef2bcf48d79a654c6ce300df591dd1f5e19c723f5286b1",
+                    "kind": "information",
+                    "primaryEntityIds": []
+                  },
+                  {
+                    "scopeId": "scope-0005-75677193379f49d5b78d95c1cd563c889688e80d64c14a90f455e794b2f53128",
+                    "kind": "information",
+                    "primaryEntityIds": []
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "localCompleteReserializedSha256": "1f5541371065c9e20c1f0393624b4545d1c2b96782bb00dbfce576ed99a73836"
+    }
+  },
+  {
+    "case": "REFRESH_CANONICAL",
+    "canonical": {
+      "role": "ENGINEERING_REPLAY",
+      "schemaVersion": 8,
+      "counts": {
+        "tasks": 0,
+        "projects": 0,
+        "events": 1,
+        "timePoints": 2,
+        "materials": 0
+      },
+      "tasks": [],
+      "events": [
+        {
+          "id": "event:source:7dfd2268:draft:1:event",
+          "projectId": null,
+          "title": "设计讨论",
+          "description": "设计讨论\n2026年11月20日\n09:30-11:00",
+          "startTimePointId": "time:source:7dfd2268:draft:1:date",
+          "endTimePointId": "time:source:7dfd2268:draft:1:end",
+          "location": null,
+          "createdAt": "2026-10-07T11:09:14.929Z",
+          "updatedAt": "2026-10-07T11:09:14.929Z",
+          "legacyData": {
+            "recognitionTempId": "event",
+            "evidenceIds": [
+              "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+              "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+              "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+            ],
+            "inferenceLevel": "explicit",
+            "sourceReviewDraftId": "source:7dfd2268:draft:1"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:7dfd2268:draft:1:date",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:7dfd2268:draft:1:event",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_start",
+          "rawText": "09:30-11:00",
+          "normalizedValue": "2026-11-20T09:30",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "createdAt": "2026-10-07T11:09:14.929Z",
+          "updatedAt": "2026-10-07T11:09:14.929Z",
+          "legacyData": {
+            "recognitionTempId": "date",
+            "evidenceIds": [
+              "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+              "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+            ],
+            "confidence": 1,
+            "sharedEventIds": [
+              "event:source:7dfd2268:draft:1:event"
+            ]
+          }
+        },
+        {
+          "id": "time:source:7dfd2268:draft:1:end",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:7dfd2268:draft:1:event",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_end",
+          "rawText": "09:30-11:00",
+          "normalizedValue": "2026-11-20T11:00",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "createdAt": "2026-10-07T11:09:14.929Z",
+          "updatedAt": "2026-10-07T11:09:14.929Z",
+          "legacyData": {
+            "recognitionTempId": "end",
+            "evidenceIds": [
+              "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+              "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+            ],
+            "confidence": 1,
+            "sharedEventIds": [
+              "event:source:7dfd2268:draft:1:event"
+            ]
+          }
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "id": "evidence:source:7dfd2268:draft:1:d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+          "sourceVersionId": "source:7dfd2268:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "设计讨论",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-07T11:09:14.929Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7"
+          }
+        },
+        {
+          "id": "evidence:source:7dfd2268:draft:1:d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+          "sourceVersionId": "source:7dfd2268:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "2026年11月20日",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-07T11:09:14.929Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac"
+          }
+        },
+        {
+          "id": "evidence:source:7dfd2268:draft:1:d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+          "sourceVersionId": "source:7dfd2268:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "09:30-11:00",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-07T11:09:14.929Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+          }
+        }
+      ],
+      "drafts": [
+        {
+          "id": "source:7dfd2268:draft:1",
+          "status": "confirmed",
+          "commitOperationIds": [
+            "source-review:source:7dfd2268:draft:1:fnv1a32:4e064690"
+          ],
+          "acceptedEntityTempIds": [
+            "date",
+            "end",
+            "event"
+          ],
+          "rejectedEntityTempIds": [],
+          "firstSuggestionDisplayed": {
+            "schemaVersion": "2.0",
+            "promptVersion": "recognition-single-authority-1.0.0",
+            "modelName": "匿名契约工程夹具（非模型输出）",
+            "createdAt": "2026-10-07T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "设计讨论",
+              "sourceType": "text",
+              "notificationType": "event_notice",
+              "summary": "0项任务，1项事件。请核对后确认。",
+              "requiresAction": false,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "date",
+                "type": "event_start",
+                "rawText": "09:30-11:00",
+                "confidence": 1,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "normalizedValue": "2026-11-20T09:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                  "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ]
+              },
+              {
+                "tempId": "end",
+                "type": "event_end",
+                "rawText": "09:30-11:00",
+                "confidence": 1,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "normalizedValue": "2026-11-20T11:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                  "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ]
+              }
+            ],
+            "events": [
+              {
+                "tempId": "event",
+                "title": "设计讨论",
+                "description": "设计讨论\n2026年11月20日\n09:30-11:00",
+                "startTimePointTempId": "date",
+                "endTimePointTempId": "end",
+                "location": null,
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "evidenceIds": [
+                  "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                  "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                  "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                ],
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                "sourceId": "source:7dfd2268",
+                "quote": "设计讨论",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                "sourceId": "source:7dfd2268",
+                "quote": "2026年11月20日",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+                "sourceId": "source:7dfd2268",
+                "quote": "09:30-11:00",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0004-6aa4f8e3a00334807eef2bcf48d79a654c6ce300df591dd1f5e19c723f5286b1",
+                "sourceId": "source:7dfd2268",
+                "quote": "仅供了解，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0005-75677193379f49d5b78d95c1cd563c889688e80d64c14a90f455e794b2f53128",
+                "sourceId": "source:7dfd2268",
+                "quote": "无需报名。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [
+              {
+                "text": "仅供了解，",
+                "reason": "other"
+              },
+              {
+                "text": "无需报名。",
+                "reason": "other"
+              }
+            ],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": false,
+              "reviewReasons": []
+            }
+          },
+          "conversionAudits": {
+            "support": {
+              "version": "authority-support-context-1.0.0",
+              "inferredFacts": 0,
+              "operation": "EXISTING_TASK_SUPPORT_TO_LEGACY_INFORMATION_INDEX",
+              "changes": [],
+              "original": {
+                "schemaVersion": "single-authority-source-contract-5.0.0",
+                "tasks": [],
+                "materials": [],
+                "revisions": [],
+                "conflicts": [],
+                "prerequisiteStates": [],
+                "events": [
+                  {
+                    "tempId": "event",
+                    "title": "设计讨论",
+                    "description": "设计讨论",
+                    "location": null,
+                    "relatedTaskTempIds": [],
+                    "attributes": [],
+                    "scopeIds": [
+                      "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                      "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "confidence": 1,
+                    "inferenceLevel": "explicit"
+                  }
+                ],
+                "timePoints": [
+                  {
+                    "tempId": "date",
+                    "type": "event_start",
+                    "rawText": "2026年11月20日",
+                    "scopeIds": [
+                      "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_start",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  },
+                  {
+                    "tempId": "clock",
+                    "type": "event_start",
+                    "rawText": "09:30-11:00",
+                    "scopeIds": [
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_start",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  },
+                  {
+                    "tempId": "end",
+                    "type": "event_end",
+                    "rawText": "09:30-11:00",
+                    "scopeIds": [
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_end",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  }
+                ],
+                "scopeAccounting": [
+                  {
+                    "scopeId": "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0004-6aa4f8e3a00334807eef2bcf48d79a654c6ce300df591dd1f5e19c723f5286b1",
+                    "kind": "information",
+                    "primaryEntityIds": []
+                  },
+                  {
+                    "scopeId": "scope-0005-75677193379f49d5b78d95c1cd563c889688e80d64c14a90f455e794b2f53128",
+                    "kind": "information",
+                    "primaryEntityIds": []
+                  }
+                ]
+              }
+            },
+            "endpoints": {
+              "version": "authority-endpoint-composition-1.0.0",
+              "inferredFacts": 0,
+              "operation": "ADJACENT_EXPLICIT_SAME_EVENT_DATE_CLOCK_COMPOSITION",
+              "changes": [
+                {
+                  "eventId": "event",
+                  "retainedStartId": "date",
+                  "retiredClockStartId": "clock",
+                  "endId": "end",
+                  "scopeIds": [
+                    "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                    "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                  ],
+                  "rawText": "2026年11月20日\n09:30-11:00"
+                }
+              ],
+              "original": {
+                "schemaVersion": "single-authority-source-contract-5.0.0",
+                "tasks": [],
+                "materials": [],
+                "revisions": [],
+                "conflicts": [],
+                "prerequisiteStates": [],
+                "events": [
+                  {
+                    "tempId": "event",
+                    "title": "设计讨论",
+                    "description": "设计讨论",
+                    "location": null,
+                    "relatedTaskTempIds": [],
+                    "attributes": [],
+                    "scopeIds": [
+                      "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                      "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "confidence": 1,
+                    "inferenceLevel": "explicit"
+                  }
+                ],
+                "timePoints": [
+                  {
+                    "tempId": "date",
+                    "type": "event_start",
+                    "rawText": "2026年11月20日",
+                    "scopeIds": [
+                      "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_start",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  },
+                  {
+                    "tempId": "clock",
+                    "type": "event_start",
+                    "rawText": "09:30-11:00",
+                    "scopeIds": [
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_start",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  },
+                  {
+                    "tempId": "end",
+                    "type": "event_end",
+                    "rawText": "09:30-11:00",
+                    "scopeIds": [
+                      "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3"
+                    ],
+                    "owners": [
+                      {
+                        "kind": "event_end",
+                        "entityId": "event"
+                      }
+                    ],
+                    "confidence": 1
+                  }
+                ],
+                "scopeAccounting": [
+                  {
+                    "scopeId": "scope-0001-6e2c64d2933a0f215693e49a90ff9f938555c480a8ce4d006fe9006b36ede7a7",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0002-59a8abcdd06c15b692aab508e63b3a5e2e5270f4158384c1bb02cd8cbaae4eac",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0003-84bb0d07ef870780c65406fc311bde1f147f6d03c31efc89e01578545c72e0b3",
+                    "kind": "event",
+                    "primaryEntityIds": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0004-6aa4f8e3a00334807eef2bcf48d79a654c6ce300df591dd1f5e19c723f5286b1",
+                    "kind": "information",
+                    "primaryEntityIds": []
+                  },
+                  {
+                    "scopeId": "scope-0005-75677193379f49d5b78d95c1cd563c889688e80d64c14a90f455e794b2f53128",
+                    "kind": "information",
+                    "primaryEntityIds": []
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "localCompleteReserializedSha256": "1f5541371065c9e20c1f0393624b4545d1c2b96782bb00dbfce576ed99a73836"
+    }
+  },
+  {
+    "case": "REAL02_FINAL_FIRST",
+    "state": "- link \"跳到主要内容\":\n  - /url: \"#main-content\"\n- complementary:\n  - button \"返回今日首页\":\n    - strong: 事务管家\n    - generic: STUDENT DESK\n  - button \"新事务 N\":\n    - text: 新事务\n    - generic: \"N\"\n  - navigation \"主要导航\":\n    - generic: 执行闭环\n    - button \"今日\":\n      - text: 今日\n    - button \"收件箱\":\n      - text: 收件箱\n    - button \"打开待确认队列，共 3 项\":\n      - text: 待确认\n      - generic: \"3\"\n    - button \"项目\":\n      - text: 项目\n    - button \"日历\":\n      - text: 日历\n    - button \"资料库\":\n      - text: 资料库\n    - generic: 低频工具\n    - button \"所有任务\":\n      - text: 所有任务\n    - button \"知识问答\":\n      - text: 知识问答\n    - button \"周报月报\":\n      - text: 周报月报\n  - button \"搜索事项\":\n    - text: 搜索事项\n  - button \"新手教程\":\n    - text: 新手教程\n  - button \"设置与服务\":\n    - text: 设置与服务\n  - button \"隐私与数据\":\n    - text: 隐私与数据\n  - strong: 已在此设备自动保存\n  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。\n- generic \"匿名工程输入 · 普通产品路径 · 不发送模型请求\"\n- main:\n  - text: 来源先保存，确认后入库\n  - heading \"待确认\" [level=1]\n  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。\n  - strong: \"1\"\n  - text: 份需关注\n  - group \"收件箱视图\":\n    - button \"全部来源\"\n    - button \"待确认 1\" [pressed]\n  - button \"新建手动来源\":\n    - text: 新建手动来源\n  - checkbox \"选择全部待核对\"\n  - text: 选择全部待核对\n  - article:\n    - checkbox \"选择 手动粘贴消息\"\n    - generic: 选择 手动粘贴消息\n    - generic: SingleAuthority 固定录制（非实时调用） 建议\n    - generic: 待核对\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。\n    - paragraph: 识别建议已保存，确认前不会创建正式任务。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 3 任务 · 0 材料 · 1 时间 · 0 活动\n    - button \"核对 3 项任务、0 个事件\":\n      - text: 核对 3 项任务、0 个事件\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n- status:\n  - generic: 匿名工程建议已生成；没有模型请求，核对后走普通正式保存。\n  - button \"关闭提示\": ×\n- dialog \"识别出 3 件事\":\n  - banner:\n    - generic: 第 2 步 · SingleAuthority 固定录制（非实时调用） · 比较后程序转换 · 无新模型请求\n    - heading \"识别出 3 件事\" [level=2]\n    - paragraph: 先看标题和时间；不准确时再点“编辑”。\n    - button \"稍后处理并关闭\" [active]:\n  - status \"未确认编辑检查点\":\n    - strong: 本来源核对会话\n    - paragraph: 编辑在确认前不会创建任务。\n  - strong: 3 项任务、0 个事件待确认\n  - generic: 确认后才会进入今日和任务中心\n  - region \"项目匹配与识别质量\":\n    - strong: 项目归属建议\n    - text: 未主动建立或匹配项目。\n    - generic: 选择项目归属\n    - combobox \"选择项目归属\":\n      - option \"新建项目\"\n      - option \"作为独立事项\" [selected]\n      - option \"稍后决定\"\n    - strong: 需要重点核对\n    - generic: 存在识别冲突；存在质量标记\n    - button \"只保留原文明确\"\n    - region \"聚焦复核原因\":\n      - strong: 这份通知包含多个时间、材料或阶段\n      - generic: 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。\n      - list:\n        - strong: 存在识别冲突\n        - generic: 2 项结果互相冲突，不会自动替你决定。\n        - strong: 存在质量标记\n        - generic: 1 项质量标记需要人工复核。\n      - generic \"来源提取元数据\":\n        - generic: 144 字\n      - strong: 质量标记\n      - list:\n        - listitem: 资格尚未确认，不能当成已符合；请保留待核对。\n    - strong: 发现 2 项冲突\n    - article:\n      - paragraph: 资格尚未确认，不能当成已符合；请保留待核对。\n      - generic: 暂无可定位依据\n    - article:\n      - paragraph: 资格尚未确认，不能当成已符合；请保留待核对。\n      - generic: 暂无可定位依据\n  - generic \"原始通知与定位依据\":\n    - text: 原始通知与定位依据\n  - paragraph: 一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。\n  - region \"项目树待确认事项\":\n    - region \"同一通知的独立事件与信息\":\n      - heading \"信息与独立事件\" [level=3]\n      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。\n      - button \"依据原文补充遗漏事件\"\n      - button \"依据原文补充遗漏任务\"\n    - article:\n      - checkbox \"选择该任务\" [checked]\n      - generic: 选择该任务\n      - generic: \"1\"\n      - strong: 完成相关信息登记\n      - time:\n        - text: 7月16日前\n      - button \"编辑\":\n        - text: 编辑\n      - generic: 其他\n      - generic: 耗时尚未估计\n      - generic: 原文明确\n      - paragraph: 下一步完成相关信息登记\n      - generic \"为什么这样拆？\"\n      - button \"不需要\":\n        - text: 不需要\n      - button \"加入任务\":\n        - text: 加入任务\n    - article:\n      - checkbox \"选择该任务\"\n      - generic: 选择该任务\n      - generic: \"2\"\n      - strong: 如实登记去向、联系方式及返校安排\n      - time:\n        - text: 原答未提供截止\n      - button \"编辑\":\n        - text: 编辑\n      - generic: 其他\n      - generic: 耗时尚未估计\n      - generic: 原文明确\n      - paragraph: 核对后动作如实登记去向、联系方式及返校安排\n      - status: 资格尚未确认，不能当成已符合；请保留待核对。\n      - generic \"为什么这样拆？\"\n      - button \"不需要\":\n        - text: 不需要\n      - button \"加入任务\" [disabled]:\n        - text: 加入任务\n    - article:\n      - checkbox \"选择该任务\"\n      - generic: 选择该任务\n      - generic: \"3\"\n      - strong: 及时做好相关登记\n      - time:\n        - text: 原答未提供截止\n      - button \"编辑\":\n        - text: 编辑\n      - generic: 其他\n      - generic: 耗时尚未估计\n      - generic: 原文明确\n      - paragraph: 核对后动作及时做好相关登记\n      - status: 资格尚未确认，不能当成已符合；请保留待核对。\n      - generic \"为什么这样拆？\"\n      - button \"不需要\":\n        - text: 不需要\n      - button \"加入任务\" [disabled]:\n        - text: 加入任务\n    - heading \"时间节点\" [level=3]\n    - checkbox \"task_deadline 7月16日前\" [checked]\n    - strong: task_deadline\n    - generic: 7月16日前\n    - button \"在原文中定位\"\n  - contentinfo:\n    - generic \"确认后创建预览\":\n      - strong: 本次将创建\n      - generic: 0 个项目\n      - generic: 1 个任务\n      - generic: 1 个时间节点\n      - generic: 0 项材料\n      - generic: 0 个事件\n    - button \"稍后再处理\"\n    - button \"一次接受本通知（1）\":\n      - text: 一次接受本通知（1）\n- generic \"本批真实录制 · 选择来源与独立读回\"\n- paragraph: 4fd9d6951ecb / source 612fde68461e；rco-mainline-01-02-i1-d27-plan-recorded-v5-paid-accepted-1007；source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-attribute-index-1.0.0 / authority-endpoint-composition-1.0.0 / authority-support-context-1.0.0 / source-information-preview-1.0.0 / source-window-endpoints-1.0.0 / source-window-plan-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。当前V5单臂4份官方已见节选诊断；4份确定录制；不是原封存批替代、不判候选赢家；未知保留分母；另2份同事件日期/时段和坏归属匿名控制，仅工程夹具，不计模型4分母。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。\n- paragraph: 当前生成契约：single-authority-source-contract-5.0.0；single-authority-generation-1.0.0；RECORDED_MODEL_ENGINEERING_REPLAY\n- text: 录制来源\n- combobox \"录制来源\":\n  - option \"V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\" [selected]\n  - option \"V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n  - option \"authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n- textbox \"本批匿名通知原文\": 一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。\n- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-07-10T09:00:00+08:00。\n- paragraph: 另有2份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：RECORDED_MODEL_ENGINEERING_REPLAY。\n- button \"注入正式保存失败\"\n- button \"注入提交后读回失败\"\n- button \"注入检查点失败\"\n- status: 未注入故障\n- button \"本批独立canonical读回\"\n- button \"页面测量读回\"\n"
+  },
+  {
+    "case": "REAL1_FINAL_FIRST",
+    "state": "- link \"跳到主要内容\":\n  - /url: \"#main-content\"\n- complementary:\n  - button \"返回今日首页\":\n    - strong: 事务管家\n    - generic: STUDENT DESK\n  - button \"新事务 N\":\n    - text: 新事务\n    - generic: \"N\"\n  - navigation \"主要导航\":\n    - generic: 执行闭环\n    - button \"今日\":\n      - text: 今日\n    - button \"收件箱\":\n      - text: 收件箱\n    - button \"打开待确认队列，共 2 项\":\n      - text: 待确认\n      - generic: \"2\"\n    - button \"项目\":\n      - text: 项目\n    - button \"日历\":\n      - text: 日历\n    - button \"资料库\":\n      - text: 资料库\n    - generic: 低频工具\n    - button \"所有任务\":\n      - text: 所有任务\n    - button \"知识问答\":\n      - text: 知识问答\n    - button \"周报月报\":\n      - text: 周报月报\n  - button \"搜索事项\":\n    - text: 搜索事项\n  - button \"新手教程\":\n    - text: 新手教程\n  - button \"设置与服务\":\n    - text: 设置与服务\n  - button \"隐私与数据\":\n    - text: 隐私与数据\n  - strong: 已在此设备自动保存\n  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。\n- generic \"匿名工程输入 · 普通产品路径 · 不发送模型请求\"\n- main:\n  - text: 来源先保存，确认后入库\n  - heading \"收件箱\" [level=1]\n  - paragraph: 查看每份来源的真实处理状态。失败不会删除来源；重新识别会沿用原来源与当前版本。\n  - strong: \"2\"\n  - text: 份需关注\n  - group \"收件箱视图\":\n    - button \"全部来源\" [pressed]\n    - button \"待确认 1\"\n  - button \"新建手动来源\":\n    - text: 新建手动来源\n  - checkbox \"选择全部待核对\"\n  - text: 选择全部待核对\n  - article:\n    - generic: SingleAuthority 固定录制 建议\n    - generic: 识别失败\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 为方便新生更好地了解校园文化、简化注册流程，2026级新生须于指定时间内登录迎新系统完成网上预注册流程。 由于系统维护和升级，迎新系统开放时间与入学须知中规定的时间略有不同，请以本通知的时间为准。新生请在指定时间内激活账号和登录系统，不在指定时间内激活账号和登录都会显示“账号和密码错误”。 本科生（大陆地区）：8月13—27日\n    - paragraph: 来源仍保留；可复用同一来源重新识别或手工补充。\n    - term: 项目\n    - definition: 未形成项目建议\n    - term: 实体\n    - definition: 0 任务 · 0 材料 · 0 时间 · 0 活动\n    - alert: 识别失败，来源已保留，可重试或手动补充。\n    - button \"本地规则重试\":\n      - text: 本地规则重试\n    - button \"手工补充\":\n      - text: 手工补充\n    - button \"查看来源\":\n      - text: 查看来源\n  - article:\n    - checkbox \"选择 手动粘贴消息\"\n    - generic: 选择 手动粘贴消息\n    - generic: SingleAuthority 固定录制（非实时调用） 建议\n    - generic: 待核对\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。\n    - paragraph: 识别建议已保存，确认前不会创建正式任务。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 3 任务 · 0 材料 · 1 时间 · 0 活动\n    - button \"核对 2 项任务、0 个事件\":\n      - text: 核对 2 项任务、0 个事件\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n  - article:\n    - generic: 匿名契约工程夹具（非模型输出） 建议\n    - generic: 已确认\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n    - paragraph: 通知已核对，来源已保存；没有创建任务或项目。事件和不确定时间请按原文核对。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 0 任务 · 0 材料 · 2 时间 · 1 活动\n    - button \"查看已确认事实\":\n      - text: 查看已确认事实\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n- status:\n  - generic: 录制输出不能安全生成建议（AUTHORITY_ATTRIBUTE_ACCOUNTING_OWNER）。没有补猜事实或重新调用模型；原始来源已安全保存。可在收件箱重试识别、查看原文或手动整理。\n  - button \"关闭提示\": ×\n- generic \"本批真实录制 · 选择来源与独立读回\"\n- paragraph: 4fd9d6951ecb / source 612fde68461e；rco-mainline-01-02-i1-d27-plan-recorded-v5-paid-accepted-1007；source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-attribute-index-1.0.0 / authority-endpoint-composition-1.0.0 / authority-support-context-1.0.0 / source-information-preview-1.0.0 / source-window-endpoints-1.0.0 / source-window-plan-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。当前V5单臂4份官方已见节选诊断；4份确定录制；不是原封存批替代、不判候选赢家；未知保留分母；另2份同事件日期/时段和坏归属匿名控制，仅工程夹具，不计模型4分母。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。\n- paragraph: 当前生成契约：single-authority-source-contract-5.0.0；single-authority-generation-1.0.0；RECORDED_MODEL_ENGINEERING_REPLAY\n- text: 录制来源\n- combobox \"录制来源\":\n  - option \"V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\" [selected]\n  - option \"V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n  - option \"authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n- textbox \"本批匿名通知原文\": 为方便新生更好地了解校园文化、简化注册流程，2026级新生须于指定时间内登录迎新系统完成网上预注册流程。 由于系统维护和升级，迎新系统开放时间与入学须知中规定的时间略有不同，请以本通知的时间为准。新生请在指定时间内激活账号和登录系统，不在指定时间内激活账号和登录都会显示“账号和密码错误”。 本科生（大陆地区）：8月13—27日\n- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-07-24T09:00:00+08:00。\n- paragraph: 另有2份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：RECORDED_MODEL_ENGINEERING_REPLAY。\n- button \"注入正式保存失败\"\n- button \"注入提交后读回失败\"\n- button \"注入检查点失败\"\n- status: 未注入故障\n- button \"本批独立canonical读回\"\n- button \"页面测量读回\"\n"
+  },
+  {
+    "case": "REAL3_FINAL_FIRST",
+    "state": "- link \"跳到主要内容\":\n  - /url: \"#main-content\"\n- complementary:\n  - button \"返回今日首页\":\n    - strong: 事务管家\n    - generic: STUDENT DESK\n  - button \"新事务 N\":\n    - text: 新事务\n    - generic: \"N\"\n  - navigation \"主要导航\":\n    - generic: 执行闭环\n    - button \"今日\":\n      - text: 今日\n    - button \"收件箱\":\n      - text: 收件箱\n    - button \"打开待确认队列，共 2 项\":\n      - text: 待确认\n      - generic: \"2\"\n    - button \"项目\":\n      - text: 项目\n    - button \"日历\":\n      - text: 日历\n    - button \"资料库\":\n      - text: 资料库\n    - generic: 低频工具\n    - button \"所有任务\":\n      - text: 所有任务\n    - button \"知识问答\":\n      - text: 知识问答\n    - button \"周报月报\":\n      - text: 周报月报\n  - button \"搜索事项\":\n    - text: 搜索事项\n  - button \"新手教程\":\n    - text: 新手教程\n  - button \"设置与服务\":\n    - text: 设置与服务\n  - button \"隐私与数据\":\n    - text: 隐私与数据\n  - strong: 已在此设备自动保存\n  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。\n- generic \"匿名工程输入 · 普通产品路径 · 不发送模型请求\"\n- main:\n  - text: 来源先保存，确认后入库\n  - heading \"收件箱\" [level=1]\n  - paragraph: 查看每份来源的真实处理状态。失败不会删除来源；重新识别会沿用原来源与当前版本。\n  - strong: \"3\"\n  - text: 份需关注\n  - group \"收件箱视图\":\n    - button \"全部来源\" [pressed]\n    - button \"待确认 1\"\n  - button \"新建手动来源\":\n    - text: 新建手动来源\n  - checkbox \"选择全部待核对\"\n  - text: 选择全部待核对\n  - article:\n    - generic: SingleAuthority 固定录制 建议\n    - generic: 识别失败\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 招生对象：在读本科生和研究生、青年研究人员等 收费情况：免费 活动时间：2026年7月6日-7月10日 活动形式：线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线 报名方式：网络报名，有意参加活动可通过下方二维码报名 学习结束后可获得暑期学校结业证书，欢迎大家踊跃报名，我们期待与您相聚云端。 报名截止时间：2026年6月30日17:00\n    - paragraph: 来源仍保留；可复用同一来源重新识别或手工补充。\n    - term: 项目\n    - definition: 未形成项目建议\n    - term: 实体\n    - definition: 0 任务 · 0 材料 · 0 时间 · 0 活动\n    - alert: 识别失败，来源已保留，可重试或手动补充。\n    - button \"本地规则重试\":\n      - text: 本地规则重试\n    - button \"手工补充\":\n      - text: 手工补充\n    - button \"查看来源\":\n      - text: 查看来源\n  - article:\n    - generic: SingleAuthority 固定录制 建议\n    - generic: 识别失败\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 为方便新生更好地了解校园文化、简化注册流程，2026级新生须于指定时间内登录迎新系统完成网上预注册流程。 由于系统维护和升级，迎新系统开放时间与入学须知中规定的时间略有不同，请以本通知的时间为准。新生请在指定时间内激活账号和登录系统，不在指定时间内激活账号和登录都会显示“账号和密码错误”。 本科生（大陆地区）：8月13—27日\n    - paragraph: 来源仍保留；可复用同一来源重新识别或手工补充。\n    - term: 项目\n    - definition: 未形成项目建议\n    - term: 实体\n    - definition: 0 任务 · 0 材料 · 0 时间 · 0 活动\n    - alert: 识别失败，来源已保留，可重试或手动补充。\n    - button \"本地规则重试\":\n      - text: 本地规则重试\n    - button \"手工补充\":\n      - text: 手工补充\n    - button \"查看来源\":\n      - text: 查看来源\n  - article:\n    - checkbox \"选择 手动粘贴消息\"\n    - generic: 选择 手动粘贴消息\n    - generic: SingleAuthority 固定录制（非实时调用） 建议\n    - generic: 待核对\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。\n    - paragraph: 识别建议已保存，确认前不会创建正式任务。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 3 任务 · 0 材料 · 1 时间 · 0 活动\n    - button \"核对 2 项任务、0 个事件\":\n      - text: 核对 2 项任务、0 个事件\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n  - article:\n    - generic: 匿名契约工程夹具（非模型输出） 建议\n    - generic: 已确认\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n    - paragraph: 通知已核对，来源已保存；没有创建任务或项目。事件和不确定时间请按原文核对。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 0 任务 · 0 材料 · 2 时间 · 1 活动\n    - button \"查看已确认事实\":\n      - text: 查看已确认事实\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n- status:\n  - generic: 录制输出不能安全生成建议（SINGLE_AUTHORITY_MISSING_PRESENT_FACT）。没有补猜事实或重新调用模型；原始来源已安全保存。可在收件箱重试识别、查看原文或手动整理。\n  - button \"关闭提示\": ×\n- generic \"本批真实录制 · 选择来源与独立读回\"\n- paragraph: 4fd9d6951ecb / source 612fde68461e；rco-mainline-01-02-i1-d27-plan-recorded-v5-paid-accepted-1007；source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-attribute-index-1.0.0 / authority-endpoint-composition-1.0.0 / authority-support-context-1.0.0 / source-information-preview-1.0.0 / source-window-endpoints-1.0.0 / source-window-plan-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。当前V5单臂4份官方已见节选诊断；4份确定录制；不是原封存批替代、不判候选赢家；未知保留分母；另2份同事件日期/时段和坏归属匿名控制，仅工程夹具，不计模型4分母。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。\n- paragraph: 当前生成契约：single-authority-source-contract-5.0.0；single-authority-generation-1.0.0；RECORDED_MODEL_ENGINEERING_REPLAY\n- text: 录制来源\n- combobox \"录制来源\":\n  - option \"V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\" [selected]\n  - option \"V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n  - option \"authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n- textbox \"本批匿名通知原文\": 招生对象：在读本科生和研究生、青年研究人员等 收费情况：免费 活动时间：2026年7月6日-7月10日 活动形式：线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线 报名方式：网络报名，有意参加活动可通过下方二维码报名 学习结束后可获得暑期学校结业证书，欢迎大家踊跃报名，我们期待与您相聚云端。 报名截止时间：2026年6月30日17:00\n- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-06-23T09:00:00+08:00。\n- paragraph: 另有2份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：RECORDED_MODEL_ENGINEERING_REPLAY。\n- button \"注入正式保存失败\"\n- button \"注入提交后读回失败\"\n- button \"注入检查点失败\"\n- status: 未注入故障\n- button \"本批独立canonical读回\"\n- button \"页面测量读回\"\n"
+  },
+  {
+    "case": "REAL4_FINAL_FIRST",
+    "state": "- link \"跳到主要内容\":\n  - /url: \"#main-content\"\n- complementary:\n  - button \"返回今日首页\":\n    - strong: 事务管家\n    - generic: STUDENT DESK\n  - button \"新事务 N\":\n    - text: 新事务\n    - generic: \"N\"\n  - navigation \"主要导航\":\n    - generic: 执行闭环\n    - button \"今日\":\n      - text: 今日\n    - button \"收件箱\":\n      - text: 收件箱\n    - button \"打开待确认队列，共 2 项\":\n      - text: 待确认\n      - generic: \"2\"\n    - button \"项目\":\n      - text: 项目\n    - button \"日历\":\n      - text: 日历\n    - button \"资料库\":\n      - text: 资料库\n    - generic: 低频工具\n    - button \"所有任务\":\n      - text: 所有任务\n    - button \"知识问答\":\n      - text: 知识问答\n    - button \"周报月报\":\n      - text: 周报月报\n  - button \"搜索事项\":\n    - text: 搜索事项\n  - button \"新手教程\":\n    - text: 新手教程\n  - button \"设置与服务\":\n    - text: 设置与服务\n  - button \"隐私与数据\":\n    - text: 隐私与数据\n  - strong: 已在此设备自动保存\n  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。\n- generic \"匿名工程输入 · 普通产品路径 · 不发送模型请求\"\n- main:\n  - text: 来源先保存，确认后入库\n  - heading \"收件箱\" [level=1]\n  - paragraph: 查看每份来源的真实处理状态。失败不会删除来源；重新识别会沿用原来源与当前版本。\n  - strong: \"4\"\n  - text: 份需关注\n  - group \"收件箱视图\":\n    - button \"全部来源\" [pressed]\n    - button \"待确认 1\"\n  - button \"新建手动来源\":\n    - text: 新建手动来源\n  - checkbox \"选择全部待核对\"\n  - text: 选择全部待核对\n  - article:\n    - generic: SingleAuthority 固定录制 建议\n    - generic: 识别失败\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 活动信息 **时间** 2026年10月12日（周一） 12:30-14:00 **地点** 海韵园办公楼A栋302室 **报名** 扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00，主办方提供50份免费午餐，按报名顺序先到先得（讲座的听众总人数不作限制，感兴趣均可报名）。\n    - paragraph: 来源仍保留；可复用同一来源重新识别或手工补充。\n    - term: 项目\n    - definition: 未形成项目建议\n    - term: 实体\n    - definition: 0 任务 · 0 材料 · 0 时间 · 0 活动\n    - alert: 识别失败，来源已保留，可重试或手动补充。\n    - button \"本地规则重试\":\n      - text: 本地规则重试\n    - button \"手工补充\":\n      - text: 手工补充\n    - button \"查看来源\":\n      - text: 查看来源\n  - article:\n    - generic: SingleAuthority 固定录制 建议\n    - generic: 识别失败\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 招生对象：在读本科生和研究生、青年研究人员等 收费情况：免费 活动时间：2026年7月6日-7月10日 活动形式：线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线 报名方式：网络报名，有意参加活动可通过下方二维码报名 学习结束后可获得暑期学校结业证书，欢迎大家踊跃报名，我们期待与您相聚云端。 报名截止时间：2026年6月30日17:00\n    - paragraph: 来源仍保留；可复用同一来源重新识别或手工补充。\n    - term: 项目\n    - definition: 未形成项目建议\n    - term: 实体\n    - definition: 0 任务 · 0 材料 · 0 时间 · 0 活动\n    - alert: 识别失败，来源已保留，可重试或手动补充。\n    - button \"本地规则重试\":\n      - text: 本地规则重试\n    - button \"手工补充\":\n      - text: 手工补充\n    - button \"查看来源\":\n      - text: 查看来源\n  - article:\n    - generic: SingleAuthority 固定录制 建议\n    - generic: 识别失败\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 为方便新生更好地了解校园文化、简化注册流程，2026级新生须于指定时间内登录迎新系统完成网上预注册流程。 由于系统维护和升级，迎新系统开放时间与入学须知中规定的时间略有不同，请以本通知的时间为准。新生请在指定时间内激活账号和登录系统，不在指定时间内激活账号和登录都会显示“账号和密码错误”。 本科生（大陆地区）：8月13—27日\n    - paragraph: 来源仍保留；可复用同一来源重新识别或手工补充。\n    - term: 项目\n    - definition: 未形成项目建议\n    - term: 实体\n    - definition: 0 任务 · 0 材料 · 0 时间 · 0 活动\n    - alert: 识别失败，来源已保留，可重试或手动补充。\n    - button \"本地规则重试\":\n      - text: 本地规则重试\n    - button \"手工补充\":\n      - text: 手工补充\n    - button \"查看来源\":\n      - text: 查看来源\n  - article:\n    - checkbox \"选择 手动粘贴消息\"\n    - generic: 选择 手动粘贴消息\n    - generic: SingleAuthority 固定录制（非实时调用） 建议\n    - generic: 待核对\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。\n    - paragraph: 识别建议已保存，确认前不会创建正式任务。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 3 任务 · 0 材料 · 1 时间 · 0 活动\n    - button \"核对 2 项任务、0 个事件\":\n      - text: 核对 2 项任务、0 个事件\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n  - article:\n    - generic: 匿名契约工程夹具（非模型输出） 建议\n    - generic: 已确认\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n    - paragraph: 通知已核对，来源已保存；没有创建任务或项目。事件和不确定时间请按原文核对。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 0 任务 · 0 材料 · 2 时间 · 1 活动\n    - button \"查看已确认事实\":\n      - text: 查看已确认事实\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n- status:\n  - generic: 录制输出不能安全生成建议（SINGLE_AUTHORITY_MISSING_PRESENT_FACT）。没有补猜事实或重新调用模型；原始来源已安全保存。可在收件箱重试识别、查看原文或手动整理。\n  - button \"关闭提示\": ×\n- generic \"本批真实录制 · 选择来源与独立读回\"\n- paragraph: 4fd9d6951ecb / source 612fde68461e；rco-mainline-01-02-i1-d27-plan-recorded-v5-paid-accepted-1007；source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-attribute-index-1.0.0 / authority-endpoint-composition-1.0.0 / authority-support-context-1.0.0 / source-information-preview-1.0.0 / source-window-endpoints-1.0.0 / source-window-plan-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。当前V5单臂4份官方已见节选诊断；4份确定录制；不是原封存批替代、不判候选赢家；未知保留分母；另2份同事件日期/时段和坏归属匿名控制，仅工程夹具，不计模型4分母。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。\n- paragraph: 当前生成契约：single-authority-source-contract-5.0.0；single-authority-generation-1.0.0；RECORDED_MODEL_ENGINEERING_REPLAY\n- text: 录制来源\n- combobox \"录制来源\":\n  - option \"V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\" [selected]\n  - option \"endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n  - option \"authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n- textbox \"本批匿名通知原文\": 活动信息 **时间** 2026年10月12日（周一） 12:30-14:00 **地点** 海韵园办公楼A栋302室 **报名** 扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00，主办方提供50份免费午餐，按报名顺序先到先得（讲座的听众总人数不作限制，感兴趣均可报名）。\n- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-09-29T09:00:00+08:00。\n- paragraph: 另有2份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：RECORDED_MODEL_ENGINEERING_REPLAY。\n- button \"注入正式保存失败\"\n- button \"注入提交后读回失败\"\n- button \"注入检查点失败\"\n- status: 未注入故障\n- button \"本批独立canonical读回\"\n- button \"页面测量读回\"\n"
+  },
+  {
+    "case": "CHECKPOINT_FAILURE",
+    "state": "- link \"跳到主要内容\":\n  - /url: \"#main-content\"\n- complementary:\n  - button \"返回今日首页\":\n    - strong: 事务管家\n    - generic: STUDENT DESK\n  - button \"新事务 N\":\n    - text: 新事务\n    - generic: \"N\"\n  - navigation \"主要导航\":\n    - generic: 执行闭环\n    - button \"今日\":\n      - text: 今日\n    - button \"收件箱\":\n      - text: 收件箱\n    - button \"打开待确认队列，共 5 项\":\n      - text: 待确认\n      - generic: \"5\"\n    - button \"项目\":\n      - text: 项目\n    - button \"日历\":\n      - text: 日历\n    - button \"资料库\":\n      - text: 资料库\n    - generic: 低频工具\n    - button \"所有任务\":\n      - text: 所有任务\n    - button \"知识问答\":\n      - text: 知识问答\n    - button \"周报月报\":\n      - text: 周报月报\n  - button \"搜索事项\":\n    - text: 搜索事项\n  - button \"新手教程\":\n    - text: 新手教程\n  - button \"设置与服务\":\n    - text: 设置与服务\n  - button \"隐私与数据\":\n    - text: 隐私与数据\n  - strong: 已在此设备自动保存\n  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。\n- generic \"匿名工程输入 · 普通产品路径 · 不发送模型请求\"\n- main:\n  - text: 来源先保存，确认后入库\n  - heading \"待确认\" [level=1]\n  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。\n  - strong: \"2\"\n  - text: 份需关注\n  - group \"收件箱视图\":\n    - button \"全部来源\"\n    - button \"待确认 2\" [pressed]\n  - button \"新建手动来源\":\n    - text: 新建手动来源\n  - checkbox \"选择全部待核对\"\n  - text: 选择全部待核对\n  - article:\n    - checkbox \"选择 手动粘贴消息\"\n    - generic: 选择 手动粘贴消息\n    - generic: 匿名契约工程夹具（非模型输出） 建议\n    - generic: 待核对\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 甲组讨论于2026年11月12日14:00开始。乙组讨论于2026年11月13日15:00开始。丙组讨论于2026年11月14日16:00开始。仅供了解。\n    - paragraph: 识别建议已保存，确认前不会创建正式任务。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 0 任务 · 独立事件及时间请在核对页查看\n    - button \"核对 0 项任务、3 个事件\":\n      - text: 核对 0 项任务、3 个事件\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n  - article:\n    - checkbox \"选择 手动粘贴消息\"\n    - generic: 选择 手动粘贴消息\n    - generic: SingleAuthority 固定录制（非实时调用） 建议\n    - generic: 待核对\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。\n    - paragraph: 识别建议已保存，确认前不会创建正式任务。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 3 任务 · 0 材料 · 1 时间 · 0 活动\n    - button \"核对 2 项任务、0 个事件\":\n      - text: 核对 2 项任务、0 个事件\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n- status:\n  - generic: 匿名工程建议已生成；没有模型请求，核对后走普通正式保存。\n  - button \"关闭提示\": ×\n- dialog \"识别出 0 项任务、3 个事件\":\n  - banner:\n    - generic: 第 2 步 · 匿名契约工程夹具（非模型输出） · 无新模型请求\n    - heading \"识别出 0 项任务、3 个事件\" [level=2]\n    - paragraph: 先看标题和时间；不准确时再点“编辑”。\n    - button \"稍后处理并关闭\" [active]:\n  - status \"未确认编辑检查点\":\n    - strong: 本来源核对会话\n    - paragraph: 编辑在确认前不会创建任务。\n  - strong: 0 项任务、3 个事件待确认\n  - generic: 确认后才会进入今日和任务中心\n  - region \"项目匹配与识别质量\":\n    - strong: 项目归属建议\n    - text: 未主动建立或匹配项目。\n    - generic: 选择项目归属\n    - combobox \"选择项目归属\":\n      - option \"新建项目\"\n      - option \"作为独立事项\" [selected]\n      - option \"稍后决定\"\n    - strong: 需要重点核对\n    - generic: 包含事件安排；存在识别冲突；存在质量标记\n    - button \"只保留原文明确\"\n    - region \"聚焦复核原因\":\n      - strong: 这份通知包含多个时间、材料或阶段\n      - generic: 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。\n      - list:\n        - strong: 包含事件安排\n        - generic: 识别到 3 个事件，请核对开始时间、地点和是否需要创建。\n        - strong: 存在识别冲突\n        - generic: 1 项结果互相冲突，不会自动替你决定。\n        - strong: 存在质量标记\n        - generic: 1 项质量标记需要人工复核。\n      - generic \"来源提取元数据\":\n        - generic: 77 字\n      - strong: 质量标记\n      - list:\n        - listitem: 时间归属与所引原文对象不一致，相关事件需重新核对；无关联项可继续保存。\n    - strong: 发现 1 项冲突\n    - article:\n      - paragraph: 时间归属与所引原文对象不一致，相关事件需重新核对；无关联项可继续保存。\n      - button \"在原文中定位\"\n  - generic \"原始通知与定位依据\":\n    - text: 原始通知与定位依据\n  - paragraph: 甲组讨论于2026年11月12日14:00开始。乙组讨论于2026年11月13日15:00开始。丙组讨论于2026年11月14日16:00开始。仅供了解。\n  - region \"项目树待确认事项\":\n    - region \"同一通知的独立事件与信息\":\n      - region \"通知补充说明\":\n        - heading \"通知补充说明\" [level=3]\n        - paragraph: 原回答保留的信息；未关联到具体事项，不会据此新增任务或日程。\n        - blockquote: 仅供了解。\n        - generic \"查看补充说明原文依据\"\n      - heading \"同一通知的事件\" [level=3]\n      - article:\n        - strong: 甲组讨论\n        - paragraph: 地点未说明；原文未说明时间\n        - paragraph: 甲组讨论于2026年11月12日14:00开始。\n        - paragraph: 保留，待正式确认\n        - text: 处置“甲组讨论”\n        - combobox \"处置“甲组讨论”\" [disabled]:\n          - option \"保留\" [selected]\n          - option \"暂缓\"\n          - option \"拒绝多余事件\"\n        - button \"编辑事件\" [disabled]\n      - article:\n        - strong: 乙组讨论\n        - paragraph: 地点未说明；2026年11月13日 15:00（原文：2026年11月13日15:00）\n        - paragraph: 乙组讨论于2026年11月13日15:00开始。\n        - paragraph: 保留，待正式确认\n        - text: 处置“乙组讨论”\n        - combobox \"处置“乙组讨论”\" [disabled]:\n          - option \"保留\" [selected]\n          - option \"暂缓\"\n          - option \"拒绝多余事件\"\n        - button \"编辑事件\" [disabled]\n      - article:\n        - strong: 丙组讨论\n        - paragraph: 地点未说明；2026年11月14日 16:00（原文：2026年11月14日16:00）\n        - paragraph: 丙组讨论于2026年11月14日16:00开始。\n        - paragraph: 保留，待正式确认\n        - text: 处置“丙组讨论”\n        - combobox \"处置“丙组讨论”\" [disabled]:\n          - option \"保留\" [selected]\n          - option \"暂缓\"\n          - option \"拒绝多余事件\"\n        - button \"编辑事件\" [disabled]\n      - alert:\n        - paragraph: 事件选择仍在本页，检查点尚未保存；刷新可能丢失，请手动重试。\n        - button \"恢复并保存事件选择\"\n      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。\n      - button \"依据原文补充遗漏事件\"\n      - button \"依据原文补充遗漏任务\"\n      - status: \"事件选择尚未完成，输入保留，可手动重试：Error: RECORDED_INJECTED_CHECKPOINT_FAILURE\"\n    - heading \"时间节点\" [level=3]\n    - checkbox \"event_start 2026年11月12日14:00\" [checked]\n    - strong: event_start\n    - generic: 2026年11月12日14:00\n    - button \"在原文中定位\"\n    - checkbox \"event_start 2026年11月13日15:00\" [checked]\n    - strong: event_start\n    - generic: 2026年11月13日15:00\n    - button \"在原文中定位\"\n    - checkbox \"event_start 2026年11月14日16:00\" [checked]\n    - strong: event_start\n    - generic: 2026年11月14日16:00\n    - button \"在原文中定位\"\n  - contentinfo:\n    - button \"确认信息并保存独立事件\" [disabled]\n    - button \"完成\"\n- generic \"本批真实录制 · 选择来源与独立读回\"\n- paragraph: 4fd9d6951ecb / source 612fde68461e；rco-mainline-01-02-i1-d27-plan-recorded-v5-paid-accepted-1007；source-support-accounting-projection-1.1.0 / event-time-label-context-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.4.0 / source-proven-eligibility-1.0.0 / source-time-semantics-2.1.0 / grounded-first-suggestion-1.4.0 / single-authority-attribute-index-1.0.0 / authority-endpoint-composition-1.0.0 / authority-support-context-1.0.0 / source-information-preview-1.0.0 / source-window-endpoints-1.0.0 / source-window-plan-1.1.0；ENGINEERING_REPLAY；此入口模型请求0。当前V5单臂4份官方已见节选诊断；4份确定录制；不是原封存批替代、不判候选赢家；未知保留分母；另2份同事件日期/时段和坏归属匿名控制，仅工程夹具，不计模型4分母。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。\n- paragraph: 当前生成契约：single-authority-source-contract-5.0.0；single-authority-generation-1.0.0；ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\n- text: 录制来源\n- combobox \"录制来源\":\n  - option \"V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n  - option \"endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n  - option \"authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\" [selected]\n- textbox \"本批匿名通知原文\": 甲组讨论于2026年11月12日14:00开始。乙组讨论于2026年11月13日15:00开始。丙组讨论于2026年11月14日16:00开始。仅供了解。\n- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-10-06T09:00:00+08:00。\n- paragraph: 另有2份匿名定向反例，经同一普通页面处理；由工程作者编写，不是模型回答，也没有新增付费身份。当前：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT。\n- button \"注入正式保存失败\"\n- button \"注入提交后读回失败\"\n- button \"注入检查点失败\"\n- status: 已注入：下一次检查点失败\n- button \"本批独立canonical读回\"\n- button \"页面测量读回\"\n"
+  },
+  {
+    "case": "CHECKPOINT_REFRESH_RESTORED",
+    "state": "- link \"跳到主要内容\":\n  - /url: \"#main-content\"\n- complementary:\n  - button \"返回今日首页\":\n    - strong: 事务管家\n    - generic: STUDENT DESK\n  - button \"新事务 N\":\n    - text: 新事务\n    - generic: \"N\"\n  - navigation \"主要导航\":\n    - generic: 执行闭环\n    - button \"今日\":\n      - text: 今日\n    - button \"收件箱\":\n      - text: 收件箱\n    - button \"打开待确认队列，共 5 项\":\n      - text: 待确认\n      - generic: \"5\"\n    - button \"项目\":\n      - text: 项目\n    - button \"日历\":\n      - text: 日历\n    - button \"资料库\":\n      - text: 资料库\n    - generic: 低频工具\n    - button \"所有任务\":\n      - text: 所有任务\n    - button \"知识问答\":\n      - text: 知识问答\n    - button \"周报月报\":\n      - text: 周报月报\n  - button \"搜索事项\":\n    - text: 搜索事项\n  - button \"新手教程\":\n    - text: 新手教程\n  - button \"设置与服务\":\n    - text: 设置与服务\n  - button \"隐私与数据\":\n    - text: 隐私与数据\n  - strong: 已在此设备自动保存\n  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。\n- generic \"匿名工程输入 · 普通产品路径 · 不发送模型请求\"\n- main:\n  - text: 来源先保存，确认后入库\n  - heading \"收件箱\" [level=1]\n  - paragraph: 查看每份来源的真实处理状态。失败不会删除来源；重新识别会沿用原来源与当前版本。\n  - strong: \"5\"\n  - text: 份需关注\n  - group \"收件箱视图\":\n    - button \"全部来源\" [pressed]\n    - button \"待确认 2\"\n  - button \"新建手动来源\":\n    - text: 新建手动来源\n  - checkbox \"选择全部待核对\"\n  - text: 选择全部待核对\n  - article:\n    - generic: SingleAuthority 固定录制 建议\n    - generic: 识别失败\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 活动信息 **时间** 2026年10月12日（周一） 12:30-14:00 **地点** 海韵园办公楼A栋302室 **报名** 扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00，主办方提供50份免费午餐，按报名顺序先到先得（讲座的听众总人数不作限制，感兴趣均可报名）。\n    - paragraph: 来源仍保留；可复用同一来源重新识别或手工补充。\n    - term: 项目\n    - definition: 未形成项目建议\n    - term: 实体\n    - definition: 0 任务 · 0 材料 · 0 时间 · 0 活动\n    - alert: 识别失败，来源已保留，可重试或手动补充。\n    - button \"本地规则重试\":\n      - text: 本地规则重试\n    - button \"手工补充\":\n      - text: 手工补充\n    - button \"查看来源\":\n      - text: 查看来源\n  - article:\n    - generic: SingleAuthority 固定录制 建议\n    - generic: 识别失败\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 招生对象：在读本科生和研究生、青年研究人员等 收费情况：免费 活动时间：2026年7月6日-7月10日 活动形式：线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线 报名方式：网络报名，有意参加活动可通过下方二维码报名 学习结束后可获得暑期学校结业证书，欢迎大家踊跃报名，我们期待与您相聚云端。 报名截止时间：2026年6月30日17:00\n    - paragraph: 来源仍保留；可复用同一来源重新识别或手工补充。\n    - term: 项目\n    - definition: 未形成项目建议\n    - term: 实体\n    - definition: 0 任务 · 0 材料 · 0 时间 · 0 活动\n    - alert: 识别失败，来源已保留，可重试或手动补充。\n    - button \"本地规则重试\":\n      - text: 本地规则重试\n    - button \"手工补充\":\n      - text: 手工补充\n    - button \"查看来源\":\n      - text: 查看来源\n  - article:\n    - generic: SingleAuthority 固定录制 建议\n    - generic: 识别失败\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 为方便新生更好地了解校园文化、简化注册流程，2026级新生须于指定时间内登录迎新系统完成网上预注册流程。 由于系统维护和升级，迎新系统开放时间与入学须知中规定的时间略有不同，请以本通知的时间为准。新生请在指定时间内激活账号和登录系统，不在指定时间内激活账号和登录都会显示“账号和密码错误”。 本科生（大陆地区）：8月13—27日\n    - paragraph: 来源仍保留；可复用同一来源重新识别或手工补充。\n    - term: 项目\n    - definition: 未形成项目建议\n    - term: 实体\n    - definition: 0 任务 · 0 材料 · 0 时间 · 0 活动\n    - alert: 识别失败，来源已保留，可重试或手动补充。\n    - button \"本地规则重试\":\n      - text: 本地规则重试\n    - button \"手工补充\":\n      - text: 手工补充\n    - button \"查看来源\":\n      - text: 查看来源\n  - article:\n    - checkbox \"选择 手动粘贴消息\"\n    - generic: 选择 手动粘贴消息\n    - generic: 匿名契约工程夹具（非模型输出） 建议\n    - generic: 待核对\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 甲组讨论于2026年11月12日14:00开始。乙组讨论于2026年11月13日15:00开始。丙组讨论于2026年11月14日16:00开始。仅供了解。\n    - paragraph: 识别建议已保存，确认前不会创建正式任务。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 0 任务 · 独立事件及时间请在核对页查看\n    - button \"核对 0 项任务、3 个事件\":\n      - text: 核对 0 项任务、3 个事件\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n  - article:\n    - checkbox \"选择 手动粘贴消息\"\n    - generic: 选择 手动粘贴消息\n    - generic: SingleAuthority 固定录制（非实时调用） 建议\n    - generic: 待核对\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。\n    - paragraph: 识别建议已保存，确认前不会创建正式任务。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 3 任务 · 0 材料 · 1 时间 · 0 活动\n    - button \"核对 2 项任务、0 个事件\":\n      - text: 核对 2 项任务、0 个事件\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n  - article:\n    - generic: 匿名契约工程夹具（非模型输出） 建议\n    - generic: 已确认\n    - heading \"手动粘贴消息\" [level=2]\n    - paragraph: 设计讨论 2026年11月20日 09:30-11:00 仅供了解，无需报名。\n    - paragraph: 通知已核对，来源已保存；没有创建任务或项目。事件和不确定时间请按原文核对。\n    - term: 项目\n    - definition: 独立事项\n    - term: 实体\n    - definition: 0 任务 · 0 材料 · 2 时间 · 1 活动\n    - button \"查看已确认事实\":\n      - text: 查看已确认事实\n    - button \"查看来源\":\n      - text: 查看来源\n    - button \"归档\":\n      - text: 归档\n- dialog \"识别出 0 项任务、3 个事件\":\n  - banner:\n    - generic: 第 2 步 · 匿名契约工程夹具（非模型输出） · 无新模型请求\n    - heading \"识别出 0 项任务、3 个事件\" [level=2]\n    - paragraph: 先看标题和时间；不准确时再点“编辑”。\n    - button \"稍后处理并关闭\" [active]:\n  - status \"未确认编辑检查点\":\n    - strong: 本来源核对会话\n    - paragraph: 编辑在确认前不会创建任务。\n  - strong: 0 项任务、3 个事件待确认\n  - generic: 确认后才会进入今日和任务中心\n  - region \"项目匹配与识别质量\":\n    - strong: 项目归属建议\n    - text: 未主动建立或匹配项目。\n    - generic: 选择项目归属\n    - combobox \"选择项目归属\":\n      - option \"新建项目\"\n      - option \"作为独立事项\" [selected]\n      - option \"稍后决定\"\n    - strong: 需要重点核对\n    - generic: 包含事件安排；存在识别冲突；存在质量标记\n    - button \"只保留原文明确\"\n    - region \"聚焦复核原因\":\n      - strong: 这份通知包含多个时间、材料或阶段\n      - generic: 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。\n      - list:\n        - strong: 包含事件安排\n        - generic: 识别到 3 个事件，请核对开始时间、地点和是否需要创建。\n        - strong: 存在识别冲突\n        - generic: 1 项结果互相冲突，不会自动替你决定。\n        - strong: 存在质量标记\n        - generic: 1 项质量标记需要人工复核。\n      - generic \"来源提取元数据\":\n        - generic: 77 字\n      - strong: 质量标记\n      - list:\n        - listitem: 时间归属与所引原文对象不一致，相关事件需重新核对；无关联项可继续保存。\n    - strong: 发现 1 项冲突\n    - article:\n      - paragraph: 时间归属与所引原文对象不一致，相关事件需重新核对；无关联项可继续保存。\n      - button \"在原文中定位\"\n  - generic \"原始通知与定位依据\":\n    - text: 原始通知与定位依据\n  - paragraph: 甲组讨论于2026年11月12日14:00开始。乙组讨论于2026年11月13日15:00开始。丙组讨论于2026年11月14日16:00开始。仅供了解。\n  - region \"项目树待确认事项\":\n    - region \"同一通知的独立事件与信息\":\n      - region \"通知补充说明\":\n        - heading \"通知补充说明\" [level=3]\n        - paragraph: 原回答保留的信息；未关联到具体事项，不会据此新增任务或日程。\n        - blockquote: 仅供了解。\n        - generic \"查看补充说明原文依据\"\n      - heading \"同一通知的事件\" [level=3]\n      - article:\n        - strong: 甲组讨论\n        - paragraph: 地点未说明；原文未说明时间\n        - paragraph: 甲组讨论于2026年11月12日14:00开始。\n        - paragraph: 暂缓确认\n        - text: 处置“甲组讨论”\n        - combobox \"处置“甲组讨论”\":\n          - option \"保留\"\n          - option \"暂缓\" [selected]\n          - option \"拒绝多余事件\"\n        - button \"编辑事件\"\n      - article:\n        - strong: 乙组讨论\n        - paragraph: 地点未说明；2026年11月13日 15:00（原文：2026年11月13日15:00）\n        - paragraph: 乙组讨论于2026年11月13日15:00开始。\n        - paragraph: 暂缓确认\n        - text: 处置“乙组讨论”\n        - combobox \"处置“乙组讨论”\":\n          - option \"保留\"\n          - option \"暂缓\" [selected]\n          - option \"拒绝多余事件\"\n        - button \"编辑事件\"\n      - article:\n        - strong: 丙组讨论\n        - paragraph: 地点未说明；2026年11月14日 16:00（原文：2026年11月14日16:00）\n        - paragraph: 丙组讨论于2026年11月14日16:00开始。\n        - paragraph: 保留，待正式确认\n        - text: 处置“丙组讨论”\n        - combobox \"处置“丙组讨论”\":\n          - option \"保留\" [selected]\n          - option \"暂缓\"\n          - option \"拒绝多余事件\"\n        - button \"编辑事件\"\n      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。\n      - button \"依据原文补充遗漏事件\"\n      - button \"依据原文补充遗漏任务\"\n    - heading \"时间节点\" [level=3]\n    - checkbox \"event_start 2026年11月12日14:00\" [checked]\n    - strong: event_start\n    - generic: 2026年11月12日14:00\n    - button \"在原文中定位\"\n    - checkbox \"event_start 2026年11月13日15:00\" [checked]\n    - strong: event_start\n    - generic: 2026年11月13日15:00\n    - button \"在原文中定位\"\n    - checkbox \"event_start 2026年11月14日16:00\" [checked]\n    - strong: event_start\n    - generic: 2026年11月14日16:00\n    - button \"在原文中定位\"\n  - contentinfo:\n    - button \"确认信息并保存独立事件\"\n    - button \"完成\"\n- generic \"本批真实录制 · 选择来源与独立读回\"\n- option \"V5-CURRENT-REAL-01 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\" [selected]\n- option \"V5-CURRENT-REAL-02 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n- option \"V5-CURRENT-REAL-03 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n- option \"V5-CURRENT-REAL-04 / SingleAuthority / 原冻结：CURRENT_V5_SINGLE_ARM_SETTLED_NOT_COMPARISON\"\n- option \"endpoint-test / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\"\n- option \"authority-fixture-bad-owner / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT\""
+  }
+]

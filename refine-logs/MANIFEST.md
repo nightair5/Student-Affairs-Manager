@@ -1,0 +1,22 @@
+# 当前交付索引
+
+2026-10-05：[唯一结果](../docs/recognition-optimization/candidate19-public-development/RESULTS.md)、[本次代码及发生层](../docs/recognition-optimization/candidate19-public-development/current-notice-mainline/IMPLEMENTATION.md)、[六真实通知/参照](../docs/recognition-optimization/candidate19-public-development/current-notice-mainline/SOURCES.json)、[前后](../docs/recognition-optimization/candidate19-public-development/current-notice-mainline/AFTER.json)、[旧13回归](../docs/recognition-optimization/candidate19-public-development/current-notice-mainline/OLD_RECORDING_REGRESSION.json)、[浏览器](../docs/recognition-optimization/candidate19-public-development/current-notice-mainline/BROWSER_EVIDENCE.md)、[验证](../docs/recognition-optimization/candidate19-public-development/current-notice-mainline/VALIDATION.md)、[路线](../docs/governance/PROJECT_EXECUTION_ROADMAP.md)、[下一执行](../docs/governance/NEXT_STAGE_EXECUTION_PROMPT.md)、[短交接](../docs/recognition-optimization/CURRENT_CONTEXT.md)。
+
+唯一6851/currentnoticefinal1005；分行日期及24点截止公共修复，2手写wire/3端点工程证明，旧13首屏事实不变。6实际节选新输出0/6未知，不称模型提高。实际4Task0Project4Event1Material12Time（含2个人安排），5commit/readback0edit2failure，4完整1canonical部分/3完整时间2缺失。全量34PASS7FAIL含六历史+server bad port（独立8PASS），audit5H2M production0。84/119/7与1000链保持，新模型/grant/reserve/settle0。下一主线最小C19新真实首答单臂诊断需另冻结核价/新许可；原第2特定证据只是封存支线，不再卡整个项目。
+
+## 保留的冻结与复用入口
+
+最新接续：[供应商只读取证与查询草稿](../docs/recognition-optimization/candidate19-public-development/paid-evidence/sealed-followup/PROVIDER_LOOKUP.md)、[校验摘要](../docs/recognition-optimization/candidate19-public-development/paid-evidence/sealed-followup/PROVIDER_LOOKUP_VERIFY.json)。无新产品代码/模型输出，原第2仍未知；私人原件不进Git，未启用恢复。
+
+原冻结[Manifest](../docs/recognition-optimization/candidate19-development/MANIFEST.json)、[12身份](../docs/recognition-optimization/candidate19-development/PREPARED_REQUEST_IDENTITIES.json)、[历史零调用准备快照](../docs/recognition-optimization/candidate19-development/ZERO_CALL_REPORT.json)不改。旧[16raw转换诊断](../docs/recognition-optimization/source-contract-consistency/RESULTS.md)、[原D26实际比较](../docs/recognition-optimization/d26-execution-continuation/RESULTS.md)保留；不以兼容性改写模型分数，不复用耗尽许可。
+复用D27产品：[结果](../docs/recognition-optimization/d27-planning/D27_RESULTS.md)、[实现](../docs/recognition-optimization/d27-planning/IMPLEMENTATION.md)、[浏览器](../docs/recognition-optimization/d27-planning/BROWSER_EVIDENCE.md)、[验证](../docs/recognition-optimization/d27-planning/VALIDATION.md)、[证据索引](../docs/recognition-optimization/d27-planning/evidence/EVIDENCE_INDEX.json)。普通最小安排复用，旧6792/6798入口与库未动，本轮实际录制通过普通产品链回放，不是新模型调用。
+
+保留的D26本地产品及首次比较原包：[结果](../docs/recognition-optimization/d26-correction/D26_RESULTS.md)、[冻结](../docs/recognition-optimization/d26-correction/MANIFEST.json)、[16身份](../docs/recognition-optimization/d26-correction/PREPARED_REQUEST_IDENTITIES.json)、[历史授权卡](../docs/recognition-optimization/d26-correction/BUDGET_AND_AUTHORIZATION.md)、[原Git快照只读核验](../docs/recognition-optimization/d27-planning/evidence/D26_SNAPSHOT_VERIFY.json)。当前活动图已变，未来只在原快照宿主核验派发，不改旧冻结追随新App。
+
+此前方向审查原件：[全链路审查](../docs/governance/d26-product-review/REVIEW_AND_DECISIONS.md)、[时间参照复现](../docs/governance/d26-product-review/TIME_REFERENCE_FINDING.json)、[验证](../docs/governance/d26-product-review/VALIDATION.md)、[9份活动文件存档](../docs/governance/archive/2026-10-02-product-direction/ARCHIVE_MANIFEST.json)。其中“同一轮全局计划器”已由用户最新D26提示词替换，不能混作当前范围。
+
+D25原工程交付：[结果](../docs/recognition-optimization/d25-accuracy/D25_RESULTS.md)、[根因](../docs/recognition-optimization/d25-accuracy/ROOT_CAUSES.md)、[浏览器](../docs/recognition-optimization/d25-accuracy/BROWSER_EVIDENCE.md)、[验证](../docs/recognition-optimization/d25-accuracy/VALIDATION.md)、[Manifest](../docs/recognition-optimization/d25-accuracy/MANIFEST.json)、[16身份](../docs/recognition-optimization/d25-accuracy/PREPARED_REQUEST_IDENTITIES.json)。这些仍原样，尚无新模型输出；[旧费用申请](../docs/recognition-optimization/d25-accuracy/BUDGET_AND_AUTHORIZATION.md)是历史快照，修订参照后另绑新批，不直接照旧卡派发。
+
+并行探索：[D24](../docs/recognition-optimization/d24-product/D24_RESULTS.md)、[D23计划](../docs/recognition-optimization/d23-study/MATERIAL_PLAN.json)。缺真人条件，不阻挡本地识别与安排改进。旧刺激只说明旧候选纠错成本。
+
+历史：[D17结果](../docs/recognition-optimization/candidate17/d17-development/D17_RESULTS.md)、[D18订正](../docs/recognition-optimization/candidate17/d17-development/D18_INTERPRETATION_CORRECTION.md)、[D19诊断](../docs/recognition-optimization/d19-source-session/D19_RESULTS.md)、[D18存档](../docs/governance/archive/2026-09-29-d18/ARCHIVE_MANIFEST.json)。各依当时版本/数据角色解释。

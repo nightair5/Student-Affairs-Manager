@@ -1,0 +1,167 @@
+{
+  "version": "real-input-contrastive-result-1",
+  "unitId": "K07-A",
+  "sourceId": "OS07",
+  "arm": "A",
+  "armName": "candidate03-baseline",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "requestSha": "6596f3fe3e7c6bfaf5637c416436894eda230f20ec6e166606187ed192c3764f",
+  "responseSha": "13d8662da0cb4966ef902eb37a31b9f9b7cd928502a2564b21849a18a75900da",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "exampleVersion": null,
+  "scorerSha": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+  "referenceSha": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-conditional-key-pickup",
+        "propositionScopeIds": [
+          "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82",
+          "scope-0002-6580b3a054e75cb6e73170c5311faff82479a156c06874f2830bd07109d03923"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "collect",
+        "action": {
+          "scopeId": "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82",
+          "surface": "领取"
+        },
+        "object": {
+          "scopeId": "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82",
+          "surface": "实验钥匙"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "领取实验钥匙",
+          "description": "仅在机房安全检查通过后领取实验钥匙。",
+          "completionCriteria": [
+            "在机房安全检查通过后领取实验钥匙"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "false",
+          "conditionScopeIds": [
+            "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82"
+          ],
+          "factScopeIds": [
+            "scope-0002-6580b3a054e75cb6e73170c5311faff82479a156c06874f2830bd07109d03923"
+          ]
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-do-not-pickup",
+        "propositionScopeIds": [
+          "scope-0002-6580b3a054e75cb6e73170c5311faff82479a156c06874f2830bd07109d03923",
+          "scope-0003-b17b1f7546d71f572c805be19bcc98511716ca41b8f8c3774248e61163d6db3d"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "negative",
+          "tense": "present",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "collect",
+        "action": {
+          "scopeId": "scope-0003-b17b1f7546d71f572c805be19bcc98511716ca41b8f8c3774248e61163d6db3d",
+          "surface": "领取"
+        },
+        "object": {
+          "scopeId": "scope-0001-6955f53b9fbf6424534a13ba93c7815a1d43421b20ec222541f401ba27a91f82",
+          "surface": "实验钥匙"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "不领取实验钥匙",
+          "description": "本次检查未通过，请勿领取。",
+          "completionCriteria": [
+            "本次检查未通过期间不领取实验钥匙"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [],
+    "unresolvedScopeIds": [],
+    "sourceId": "opensource-dev-OS07",
+    "sourceVersionId": "opensource-dev-OS07:1",
+    "sourceFingerprint": "sha256:8cab7a8612da826bf01686d9f4076fd11075b9f4f2f4c3d9d4885ba0af5cebb5"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 5315,
+  "parseError": null,
+  "totalAttempts": 303,
+  "usage": {
+    "input_tokens": 4221,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 956,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5177
+  },
+  "costUpperMicroCny": 16090,
+  "totalCostUpperMicroCny": 13862421,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化"
+}

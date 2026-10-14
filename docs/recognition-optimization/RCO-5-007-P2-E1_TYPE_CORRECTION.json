@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "rco-5-007-p2-e1-type-correction-1.0.0",
+  "authorizationId": "RCO-5-007-P2-E1/B5",
+  "classification": "TYPE_ONLY_CORRECTION_ON_SEEN_B4_FIXTURE",
+  "recordedAt": "2026-09-04T20:20:00+08:00",
+  "originalFreezePath": "docs/recognition-optimization/RCO-5-007-B4_DATA_FREEZE.json",
+  "originalFreezeSha256": "b860f7c70ce0fe31cf33d6c992d7869f36e29b6c94e550cf31f84b3941f105eb",
+  "correctedPath": "src/recognition/taskFormationB4Dataset.test.ts",
+  "beforeFragment": "revisionRefs: []; expectedDefaultSelected: boolean",
+  "afterFragment": "revisionRefs: ScopeReferenceDirective['revisionRefs']; expectedDefaultSelected: boolean",
+  "beforeSourceSha256": "945f94b30d8bf6370b044e6c302324435639c1268ad1edf9dd7df465bf1e93af",
+  "afterSourceSha256": "a481f588e5dae6fb6a447c4705899ad613749ceb23a398bbe47a5d9e0388ad3b",
+  "beforeJavaScriptSha256": "d1ebd153824ea1cf0e8859cd3dcfe08b6d9c5554bcf38ea94ae0edce65aa3c62",
+  "afterJavaScriptSha256": "d1ebd153824ea1cf0e8859cd3dcfe08b6d9c5554bcf38ea94ae0edce65aa3c62",
+  "runtimeEquivalent": true,
+  "frozenDriftCount": 1,
+  "frozenDrift": [
+    {
+      "path": "src/recognition/taskFormationB4Dataset.test.ts",
+      "frozenSha256": "945f94b30d8bf6370b044e6c302324435639c1268ad1edf9dd7df465bf1e93af",
+      "currentSha256": "a481f588e5dae6fb6a447c4705899ad613749ceb23a398bbe47a5d9e0388ad3b"
+    }
+  ],
+  "protectedUnchanged": [
+    "docs/recognition-optimization/RCO-5-007-B4_CHALLENGE_DATASET.json",
+    "docs/recognition-optimization/RCO-5-007-P2_PLAN.md",
+    "scripts/generate-rco-5-007-b4-dataset.mjs",
+    "docs/recognition-optimization/RCO-5-007-P2_COMPONENT_FREEZE.json",
+    "src/recognition/taskFormationEvaluation.ts",
+    "src/recognition/scopeReferenceContract.ts",
+    "src/recognition/scopeIndexV11.ts"
+  ],
+  "b4Status": "SEEN_REGRESSION_ONLY",
+  "modelCalls": 0,
+  "networkRequests": 0,
+  "secretAccess": "NONE"
+}

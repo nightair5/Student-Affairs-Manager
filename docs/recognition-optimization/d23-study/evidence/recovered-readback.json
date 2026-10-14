@@ -1,0 +1,433 @@
+{
+  "format": "D23_BROWSER_WITNESS_SUMMARY_1",
+  "originalSha256": "d0efff07ea2ffc3645e5f0eed5cee2585b7f99918ac836c263f46ad14c761e38",
+  "originalLocalPath": ".data/d23/browser-originals/recovered-readback.json",
+  "build": "c510c44b38f1 / source 8fcc0a0e87e3",
+  "database": "rco-mainline-01-02-i1-real-input-d23-study-engineering-run04-p1",
+  "role": "ENGINEERING_REPLAY",
+  "humanMetrics": "NOT_OBSERVABLE",
+  "registry": {
+    "version": "d23-study-protocol-1",
+    "role": "ENGINEERING_REPLAY",
+    "database": "rco-mainline-01-02-i1-real-input-d23-study-engineering-run04-p1",
+    "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+    "revision": 10,
+    "owner": {
+      "ref": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+      "acceptedAt": "2026-09-30T09:16:47.259Z"
+    },
+    "freeze": {
+      "ownerRef": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+      "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+      "at": "2026-09-30T09:16:47.697Z",
+      "obligations": {
+        "C17-D16-S01": "工程模拟核准；仅验证接线，不作为独立人工标签。",
+        "C17-D16-S02": "工程模拟核准；仅验证接线，不作为独立人工标签。",
+        "C17-D16-S04": "工程模拟核准；仅验证接线，不作为独立人工标签。",
+        "C17-D16-S05": "工程模拟核准；仅验证接线，不作为独立人工标签。",
+        "C17-D16-S06": "工程模拟核准；仅验证接线，不作为独立人工标签。",
+        "C17-D16-S07": "工程模拟核准；仅验证接线，不作为独立人工标签。",
+        "C17-D16-S09": "工程模拟核准；仅验证接线，不作为独立人工标签。",
+        "C17-D16-S11": "工程模拟核准；仅验证接线，不作为独立人工标签。"
+      }
+    },
+    "participants": [
+      {
+        "id": "p1",
+        "consentRef": "ENGINEERING_SIMULATED_CONSENT_ONLY",
+        "scopeRef": "ENGINEERING_SIMULATION_ONLY",
+        "acceptedAt": "2026-09-30T09:16:48.253Z",
+        "role": "ENGINEERING_REPLAY"
+      }
+    ],
+    "trials": [
+      {
+        "id": "d38835b2-bfec-4784-93c8-f55d54497eff",
+        "participantId": "p1",
+        "slotId": "p1-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "materialId": "C17-D16-S01",
+        "sourceSha256": "2bfbae1b2b062526fad9d64f73764d71b74aa852d33925d22c4209452c70f845",
+        "stimulusSha256": "dbba9885dc868b0e65a6586b561af2485801b081d0ff375ef4f025e7128d0a0c",
+        "recordId": "d21-record-02",
+        "scopeRef": "ENGINEERING_SIMULATION_ONLY",
+        "consentRef": "ENGINEERING_SIMULATED_CONSENT_ONLY",
+        "ownerRef": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+        "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+        "status": "candidate_complete",
+        "events": [
+          {
+            "id": "2ede0240-62c1-4a63-94c0-46a5ef57f3e1",
+            "kind": "source_visible",
+            "atMs": 1790759809085
+          },
+          {
+            "id": "9e57fe4f-1d4b-40fe-ba23-13e6b940f794",
+            "kind": "start",
+            "atMs": 1790759809085
+          },
+          {
+            "id": "b5368b91-b5f9-4b91-91a3-90b23901db93",
+            "kind": "load_wait",
+            "atMs": 1790759809713
+          },
+          {
+            "id": "6cda7a71-66b4-4378-8955-6ea6030c556c",
+            "kind": "draft_open",
+            "atMs": 1790759809804
+          },
+          {
+            "id": "3175c460-2a65-4be3-a200-fda371498a94",
+            "kind": "load_end",
+            "atMs": 1790759809896
+          },
+          {
+            "id": "2a1b0a36-33a3-43d6-b93c-06d26041502e",
+            "kind": "pause",
+            "atMs": 1790759824412
+          },
+          {
+            "id": "50a2984c-1ef5-4a80-84af-eb55f5ff1412",
+            "kind": "resume",
+            "atMs": 1790759824717
+          },
+          {
+            "id": "107476b1-e6eb-4e7b-8d9e-92f2f0a9f580",
+            "kind": "candidate_complete",
+            "atMs": 1790760355489
+          }
+        ],
+        "adjudications": [],
+        "draftId": "source:e348b50a:draft:1:1"
+      }
+    ],
+    "activeTrialId": "d38835b2-bfec-4784-93c8-f55d54497eff"
+  },
+  "pendingReadback": null,
+  "canonicalCounts": {
+    "sources": 1,
+    "sourceVersions": 1,
+    "recognitionRuns": 1,
+    "extractionDrafts": 1,
+    "tasks": 1,
+    "projects": 0,
+    "events": 0,
+    "timePoints": 1,
+    "materials": 1,
+    "evidenceRefs": 5,
+    "historyRecords": 4
+  },
+  "canonicalFacts": {
+    "tasks": [
+      {
+        "id": "mainline05:task:source:e348b50a:draft:1:1:task-0001",
+        "title": "提交社团器材盘点表",
+        "status": "todo"
+      }
+    ],
+    "events": [],
+    "timePoints": [
+      {
+        "id": "mainline05:time:source:e348b50a:draft:1:1:time-0001",
+        "taskId": "mainline05:task:source:e348b50a:draft:1:1:task-0001",
+        "eventId": null,
+        "type": "submission_deadline",
+        "rawText": "2026年10月19日16:30前",
+        "normalizedValue": "2026-10-19T16:30",
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "mainline05:material:source:e348b50a:draft:1:1:material-0001",
+        "name": "社团器材盘点表",
+        "required": true,
+        "status": "unverified"
+      }
+    ]
+  },
+  "report": {
+    "version": "d23-semantic-measurement-1",
+    "role": "ENGINEERING_REPLAY",
+    "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+    "planned": 16,
+    "registered": 1,
+    "started": 1,
+    "rows": [
+      {
+        "trial": {
+          "id": "d38835b2-bfec-4784-93c8-f55d54497eff",
+          "participantId": "p1",
+          "slotId": "p1-1",
+          "role": "ENGINEERING_REPLAY",
+          "condition": "assisted",
+          "materialId": "C17-D16-S01",
+          "sourceSha256": "2bfbae1b2b062526fad9d64f73764d71b74aa852d33925d22c4209452c70f845",
+          "stimulusSha256": "dbba9885dc868b0e65a6586b561af2485801b081d0ff375ef4f025e7128d0a0c",
+          "recordId": "d21-record-02",
+          "scopeRef": "ENGINEERING_SIMULATION_ONLY",
+          "consentRef": "ENGINEERING_SIMULATED_CONSENT_ONLY",
+          "ownerRef": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+          "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+          "status": "candidate_complete",
+          "events": [
+            {
+              "id": "2ede0240-62c1-4a63-94c0-46a5ef57f3e1",
+              "kind": "source_visible",
+              "atMs": 1790759809085
+            },
+            {
+              "id": "9e57fe4f-1d4b-40fe-ba23-13e6b940f794",
+              "kind": "start",
+              "atMs": 1790759809085
+            },
+            {
+              "id": "b5368b91-b5f9-4b91-91a3-90b23901db93",
+              "kind": "load_wait",
+              "atMs": 1790759809713
+            },
+            {
+              "id": "6cda7a71-66b4-4378-8955-6ea6030c556c",
+              "kind": "draft_open",
+              "atMs": 1790759809804
+            },
+            {
+              "id": "3175c460-2a65-4be3-a200-fda371498a94",
+              "kind": "load_end",
+              "atMs": 1790759809896
+            },
+            {
+              "id": "2a1b0a36-33a3-43d6-b93c-06d26041502e",
+              "kind": "pause",
+              "atMs": 1790759824412
+            },
+            {
+              "id": "50a2984c-1ef5-4a80-84af-eb55f5ff1412",
+              "kind": "resume",
+              "atMs": 1790759824717
+            },
+            {
+              "id": "107476b1-e6eb-4e7b-8d9e-92f2f0a9f580",
+              "kind": "candidate_complete",
+              "atMs": 1790760355489
+            }
+          ],
+          "adjudications": [],
+          "draftId": "source:e348b50a:draft:1:1"
+        },
+        "evidenceError": null,
+        "outcome": "unadjudicated",
+        "complete": true,
+        "first": "NOT_ADJUDICATED",
+        "correctDisposition": false,
+        "lowEdit": false,
+        "zeroSubstantive": false,
+        "timing": {
+          "version": "d23-semantic-measurement-1",
+          "observed": {
+            "readingMs": 545730,
+            "activeEditMs": 179,
+            "idleMs": 0,
+            "waitMs": 190,
+            "hiddenMs": 0,
+            "pauseMs": 305
+          },
+          "missing": [],
+          "wallMs": 546404,
+          "completeActiveEditMs": 179,
+          "costMeaning": "OBSERVED_UI_ACTIVITY_ONLY",
+          "cognitiveEffort": "NOT_OBSERVABLE"
+        },
+        "failureEvents": [
+          {
+            "id": "5a517f13-6c49-4d14-9f1e-bc2bee4aedc8",
+            "draftId": "source:e348b50a:draft:1:1",
+            "atMs": 1790759922537,
+            "kind": "failure",
+            "error": "D13_INJECTED_ATOMIC_FAILURE"
+          },
+          {
+            "id": "82ad4035-a6ee-4f72-98f5-1616691b8dd9",
+            "draftId": "source:e348b50a:draft:1:1",
+            "atMs": 1790760000513,
+            "kind": "failure",
+            "error": "D22_INJECTED_READBACK_FAILURE"
+          }
+        ],
+        "evidence": {
+          "sha256": "dd1a7dd07f9092c4ab672db2199c129ab54323d3476fb6af9c7fa643424b6bdf",
+          "currentSha256": "f65dbdb0733de1c68c9f43e6cc5210323047097972886f8aef3126eebb617bdf",
+          "commitIds": [
+            "b374fe06-7460-42b2-85d8-e8f152a46b50",
+            "fa43f061-2765-42dc-8b4a-26b42fe804c3",
+            "1d0fcbd6-6465-41b4-8384-2998a074fff4"
+          ],
+          "canonical": {
+            "tasks": [
+              {
+                "id": "mainline05:task:source:e348b50a:draft:1:1:task-0001",
+                "title": "提交社团器材盘点表",
+                "status": "todo"
+              }
+            ],
+            "materials": [
+              {
+                "id": "mainline05:material:source:e348b50a:draft:1:1:material-0001",
+                "name": "社团器材盘点表",
+                "required": true,
+                "status": "unverified"
+              }
+            ],
+            "timePoints": [
+              {
+                "id": "mainline05:time:source:e348b50a:draft:1:1:time-0001",
+                "taskId": "mainline05:task:source:e348b50a:draft:1:1:task-0001",
+                "eventId": null,
+                "type": "submission_deadline",
+                "rawText": "2026年10月19日16:30前",
+                "normalizedValue": "2026-10-19T16:30",
+                "precision": "exact",
+                "needsConfirmation": false
+              }
+            ],
+            "events": [],
+            "evidenceRefs": [
+              {
+                "id": "mainline05:evidence:source:e348b50a:draft:1:1:scope-0001-f4b0440ef59d24f826e362c1459af4b1aa39f17e278f87a376dc6ed77f5d22ae",
+                "sourceVersionId": "source:e348b50a:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:e348b50a:draft:1:1:scope-0002-c17deed2d7f2b9e2060d3ffe242e2861e58a86146328d46932a93dc8b102b1b5",
+                "sourceVersionId": "source:e348b50a:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:e348b50a:draft:1:1:scope-0003-f666d0afb1a2f8736957e063506ffb09307b56e559328a8b75fe7b8000ac8c4a",
+                "sourceVersionId": "source:e348b50a:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:e348b50a:draft:1:1:scope-0004-1c2dc0ddeb8ed692f1ec49c24c68e161532e3b7b1733a2e1151ec808c5b924a0",
+                "sourceVersionId": "source:e348b50a:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:e348b50a:draft:1:1:scope-0005-0d379e878568286e42966f75db0545abaf3997dab0116dfd5fa7bb7465806096",
+                "sourceVersionId": "source:e348b50a:version:1",
+                "extractionMethod": "manual"
+              }
+            ],
+            "historyRecords": [
+              {
+                "id": "mainline05:history:source:e348b50a:draft:1:1:material-review-mode-1",
+                "action": "mainline05_enable_material_review",
+                "sourceVersionId": "source:e348b50a:version:1"
+              },
+              {
+                "id": "mainline05:history:source:e348b50a:draft:1:1:b374fe06-7460-42b2-85d8-e8f152a46b50",
+                "action": "mainline05_review_material",
+                "sourceVersionId": "source:e348b50a:version:1"
+              },
+              {
+                "id": "mainline05:history:source:e348b50a:draft:1:1:fa43f061-2765-42dc-8b4a-26b42fe804c3",
+                "action": "mainline05_review_task",
+                "sourceVersionId": "source:e348b50a:version:1"
+              },
+              {
+                "id": "mainline05:history:source:e348b50a:draft:1:1:1d0fcbd6-6465-41b4-8384-2998a074fff4",
+                "action": "mainline05_confirm",
+                "sourceVersionId": "source:e348b50a:version:1"
+              }
+            ]
+          },
+          "links": [
+            {
+              "editId": "8cdfa0f7-a6d0-415a-9521-eab83d97b67e",
+              "field": "task:task-0001:material-review:material-0001",
+              "checkpoint": [
+                {
+                  "id": "cce4639d-e77b-4e0b-a393-5e3bdbf20c6b",
+                  "at": "2026-09-30T09:18:04.450Z",
+                  "kind": "stage",
+                  "field": "task:task-0001:facts",
+                  "writer": "5c8628e8-0540-475b-81a5-9aaf2cc21a95",
+                  "editId": "8cdfa0f7-a6d0-415a-9521-eab83d97b67e",
+                  "checkpointRevision": "58fe9681-06a8-4552-80b9-e6bb640a89e2"
+                },
+                {
+                  "id": "b5d5cec5-3609-4821-9bb0-0a169b1b9d43",
+                  "at": "2026-09-30T09:18:04.459Z",
+                  "kind": "stage",
+                  "field": "task:task-0001:facts",
+                  "writer": "5c8628e8-0540-475b-81a5-9aaf2cc21a95",
+                  "editId": "8cdfa0f7-a6d0-415a-9521-eab83d97b67e",
+                  "checkpointRevision": "0dd2118b-d5a5-41b4-951d-d55bf565bccb"
+                },
+                {
+                  "id": "b558b1da-7a0b-4081-bf77-bba9ef4b8727",
+                  "at": "2026-09-30T09:18:04.653Z",
+                  "kind": "clear",
+                  "field": "task:task-0001:facts",
+                  "writer": "5c8628e8-0540-475b-81a5-9aaf2cc21a95",
+                  "editId": "8cdfa0f7-a6d0-415a-9521-eab83d97b67e"
+                }
+              ],
+              "commitIds": [
+                "b374fe06-7460-42b2-85d8-e8f152a46b50"
+              ]
+            }
+          ],
+          "semanticFields": [],
+          "structural": false,
+          "unlinkedEditIds": [],
+          "fullReadback": true
+        }
+      }
+    ],
+    "groups": [
+      {
+        "condition": "manual",
+        "started": 0,
+        "complete": 0,
+        "partial": 0,
+        "exited": 0,
+        "timeout": 0,
+        "observedFailureN": 0,
+        "unresolvedFailureN": 0,
+        "unadjudicated": 0,
+        "firstSuggestion": "NOT_APPLICABLE",
+        "correctDisposition": "NOT_OBSERVABLE",
+        "lowEdit": "NOT_APPLICABLE",
+        "observedActiveEditMedianMs": null,
+        "completeActiveEditMedianMs": null,
+        "completeTimeN": 0,
+        "missingTimeN": 0,
+        "humanActiveEditTime": "NOT_OBSERVABLE"
+      },
+      {
+        "condition": "assisted",
+        "started": 1,
+        "complete": 1,
+        "partial": 0,
+        "exited": 0,
+        "timeout": 0,
+        "observedFailureN": 1,
+        "unresolvedFailureN": 0,
+        "unadjudicated": 1,
+        "firstSuggestion": "NOT_OBSERVABLE",
+        "correctDisposition": "NOT_OBSERVABLE",
+        "lowEdit": "NOT_OBSERVABLE",
+        "observedActiveEditMedianMs": 179,
+        "completeActiveEditMedianMs": 179,
+        "completeTimeN": 1,
+        "missingTimeN": 0,
+        "humanActiveEditTime": "NOT_OBSERVABLE"
+      }
+    ],
+    "realHumanMetrics": "NOT_OBSERVABLE",
+    "modelCalls": 0
+  }
+}

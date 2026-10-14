@@ -1,0 +1,112 @@
+✔ ambiguous decoded response keys retain full reserve, survive reopen and halt next dispatch (658.6415ms)
+✔ valid decoded keys, ordering, whitespace and key-looking model text still settle normally (72.9577ms)
+✔ conservative context envelope and integer settlement have no floating-point budget drift (0.3855ms)
+✔ normal request reserves durably before completion; only complete usage releases surplus (64.0474ms)
+✔ all 24 logical units share one ledger across reopened browser/runner handles (1854.3202ms)
+✔ 10 yuan is checked using spent upper cost plus the next full reservation (87.5665ms)
+✔ concurrent tabs cannot reserve twice; cross-instance overlap retains one pending request (37.1433ms)
+✔ two independent Node processes cannot bypass the shared filesystem lock (121.0893ms)
+✔ process restart after a durable reservation never resends or releases it (44.966ms)
+✔ timeout/unknown failure retains full reservation and permanently stops this book (67.9875ms)
+✔ missing usage cannot settle or release the reservation (48.1923ms)
+✔ mismatched total cannot settle or release the reservation (46.2305ms)
+✔ zero tokens for nonempty input cannot settle or release the reservation (49.9049ms)
+✔ excess input cannot settle or release the reservation (45.4408ms)
+✔ excess output cannot settle or release the reservation (47.6845ms)
+✔ wrong model cannot settle or release the reservation (47.1302ms)
+✔ incomplete response cannot settle or release the reservation (50.5154ms)
+✔ unsupported reasoning cannot settle or release the reservation (50.488ms)
+✔ tools cannot settle or release the reservation (52.3524ms)
+✔ string usage cannot settle or release the reservation (46.3243ms)
+✔ even a parseable HTTP failure is not settled (42.5086ms)
+✔ response reuse is a binding anomaly, not another cheap completed call (61.26ms)
+✔ price/context/protocol changes halt before dispatch; frozen requests cannot change (41.3634ms)
+✔ expired billing review and premature C are rejected (36.8159ms)
+✔ returned snapshot cannot change the frozen request, including its byte length (61.5903ms)
+✔ snapshot mutation cannot replace B inputs or permit an incompatible C candidate (926.3705ms)
+✔ a valid-prefix truncation is detected by the independent write-once receipts (46.5736ms)
+✔ missing ledger and abandoned lock do not initialize a fresh allowance (41.9105ms)
+✔ recomputing row hashes does not make a mismatched settlement valid (42.3274ms)
+✔ manifest changes and response shape tricks fail without coercion (17.9078ms)
+✔ the only successful path preserves raw response, binds usage and uses the fixed upstream without redirects (77.0748ms)
+✔ credential is not read at gateway initialization or on rejected origins and routes (30.522ms)
+✔ browser cannot supply a model, endpoint, request body, usage or alternative budget book (25.4053ms)
+✔ missing credentials do not consume an allowance and are never reflected (30.3969ms)
+✔ reserved request cannot be duplicated by a second gateway or service restart (67.3845ms)
+✔ concurrent browser and runner cannot dispatch the same logical request twice (70.1605ms)
+✔ HTTP failure stops dispatch, retains the full reserve and returns only a safe code (73.3078ms)
+✔ redirect stops dispatch, retains the full reserve and returns only a safe code (54.2029ms)
+✔ wrong content type stops dispatch, retains the full reserve and returns only a safe code (55.7369ms)
+✔ response size exceeded stops dispatch, retains the full reserve and returns only a safe code (54.1172ms)
+✔ credential echo stops dispatch, retains the full reserve and returns only a safe code (52.8887ms)
+✔ usage missing stops dispatch, retains the full reserve and returns only a safe code (53.0003ms)
+✔ model drift stops dispatch, retains the full reserve and returns only a safe code (54.052ms)
+✔ timeout aborts once; late completion cannot settle or append a second response (103.1643ms)
+✔ raw-result storage failure cannot release money or silently claim success (43.7104ms)
+✔ safe diagnostic DNS: classified without error text and unknown reserve survives reopening (70.4652ms)
+✔ safe diagnostic connect timeout: classified without error text and unknown reserve survives reopening (64.9272ms)
+✔ safe diagnostic TLS: classified without error text and unknown reserve survives reopening (64.3408ms)
+✔ safe diagnostic connection reset: classified without error text and unknown reserve survives reopening (66.9875ms)
+✔ safe diagnostic unknown code: classified without error text and unknown reserve survives reopening (63.4297ms)
+✔ safe diagnostic HTTP 401: classified without error text and unknown reserve survives reopening (64.5793ms)
+✔ safe diagnostic HTTP 502: classified without error text and unknown reserve survives reopening (61.6713ms)
+✔ safe diagnostic content type: classified without error text and unknown reserve survives reopening (66.1209ms)
+✔ safe diagnostic body timeout: classified without error text and unknown reserve survives reopening (65.4822ms)
+✔ safe diagnostic oversize: classified without error text and unknown reserve survives reopening (63.2246ms)
+✔ safe diagnostic UTF8: classified without error text and unknown reserve survives reopening (64.5794ms)
+✔ safe diagnostic JSON: classified without error text and unknown reserve survives reopening (61.2396ms)
+✔ safe diagnostic reflection: classified without error text and unknown reserve survives reopening (65.5545ms)
+✔ safe diagnostic raw store: classified without error text and unknown reserve survives reopening (62.7961ms)
+✖ safe diagnostic settlement: classified without error text and unknown reserve survives reopening (37.4055ms)
+✔ diagnostic normal and missing-configuration controls do not alter raw success or consume a missing-key reservation (63.1972ms)
+✔ diagnostic uses descriptors not error getters, and never exports arbitrary error properties (37.2979ms)
+✔ local deadline diagnostic remains distinct from transport timeout and late headers cannot rewrite it (90.9056ms)
+✔ uncertainty persistence failure is visible without releasing or retrying the reserved call (39.3037ms)
+✔ frozen request object cannot be swapped after gateway creation (36.3807ms)
+✔ unapproved parameters and non-text content fail before any gateway can be created (26.7912ms)
+✔ JSON escaped output value cannot reach recording, response or settlement (69.8291ms)
+✔ JSON escaped object key cannot reach recording, response or settlement (69.2361ms)
+✔ nested model JSON value cannot reach recording, response or settlement (71.6248ms)
+✔ nested model JSON key cannot reach recording, response or settlement (69.5701ms)
+✔ twice nested model JSON cannot reach recording, response or settlement (70.8747ms)
+✔ discarded duplicate JSON property cannot reach recording, response or settlement (68.4982ms)
+✔ normal escaped Chinese and nested JSON retain exact raw bytes and can be recorded and settled (49.802ms)
+ℹ tests 73
+ℹ suites 0
+ℹ pass 72
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4897.1128
+
+✖ failing tests:
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic settlement: classified without error text and unknown reserve survives reopening (37.4055ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      localHttpStatus: 502,
+      phase: 'SETTLEMENT',
+      reason: 'SETTLEMENT_REJECTED',
+      requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+      reservationAcquired: true,
+  +   uncertaintyRecord: 'FAILED',
+  -   uncertaintyRecord: 'PERSISTED',
+      unitId: 'A01',
+      upstreamHttpStatus: 200,
+      version: 'real-input-safe-diagnostic-1'
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'SETTLEMENT', reason: 'SETTLEMENT_REJECTED', upstreamHttpStatus: 200, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'FAILED' },
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'SETTLEMENT', reason: 'SETTLEMENT_REJECTED', upstreamHttpStatus: 200, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

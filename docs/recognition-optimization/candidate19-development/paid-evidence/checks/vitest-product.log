@@ -1,0 +1,109 @@
+
+ RUN  v3.2.7 C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛
+
+ ✓ src/recognition/factsProvenance.test.ts (52 tests) 57ms
+ ✓ src/recognition/facts.test.ts (54 tests) 81ms
+ ✓ src/recognition/propositionGraph.test.ts (69 tests) 86ms
+ ✓ src/domain/v2/domainCommit.test.ts (15 tests) 258ms
+ ✓ src/domain/v2/confirmationV2.test.ts (47 tests) 570ms
+ ✓ src/recognition/candidateTaskSafetyPolicyV2.test.ts (50 tests) 134ms
+ ✓ src/recognition/actionCandidateB9DataFreeze.test.ts (6 tests) 36ms
+ ✓ src/domain/v2/capture.test.ts (15 tests) 178ms
+ ✓ scripts/rco-5-009-b9-evaluation.test.ts (8 tests) 19ms
+ ✓ src/recognition/scopeReferenceContract.test.ts (13 tests) 24ms
+ ✓ src/domain/v2/legacyView.test.ts (10 tests) 91ms
+ ✓ src/recognition/sourceContractV4.test.ts (18 tests) 156ms
+ ✓ src/lib/repository.test.ts (14 tests) 124ms
+ ✓ src/recognition/scopeReferenceContract.fresh.test.ts (14 tests) 26ms
+ ✓ src/domain/v2/personalPlanD27.test.ts (12 tests) 402ms
+ ✓ src/lib/fileExtraction.test.ts (23 tests) 168ms
+ ✓ src/recognition/scopeReferenceB1Dataset.test.ts (7 tests) 53ms
+ ✓ src/domain/v2/runtimeMigration.test.ts (11 tests) 116ms
+ ✓ src/recognition/candidateTaskSafetyPolicy.test.ts (16 tests) 47ms
+ ✓ src/recognition/taskFormationPolicyV2.test.ts (12 tests) 18ms
+ ✓ src/recognition/schema.test.ts (6 tests) 95ms
+ ✓ src/recognition/actionCandidateV2B8Regression.test.ts (3 tests) 45ms
+ ✓ src/recognition/taskFormationPolicyP1.test.ts (16 tests) 22ms
+ ✓ src/recognition/taskFormationB6Dataset.test.ts (7 tests) 71ms
+ ✓ src/recognition/modelAnchorB8Dataset.test.ts (7 tests) 74ms
+ ✓ src/recognition/modelAnchorB7Dataset.test.ts (7 tests) 62ms
+ ✓ src/recognition/taskFormationB2Dataset.test.ts (7 tests) 35ms
+ ✓ src/recognition/actionCandidateB8Regression.test.ts (3 tests) 46ms
+ ✓ src/recognition/taskFormationB3Dataset.test.ts (7 tests) 45ms
+ ✓ src/recognition/taskFormationB5Dataset.test.ts (7 tests) 45ms
+ ✓ src/lib/parser.test.ts (16 tests) 72ms
+ ✓ src/recognition/taskFormationB4Dataset.test.ts (7 tests) 55ms
+ ✓ src/domain/v2/validators/workspaceValidator.test.ts (18 tests) 64ms
+ ✓ src/lib/repository.d26.test.ts (11 tests) 507ms
+ ✓ src/recognition/actionCandidateComposerV2.test.ts (7 tests) 27ms
+ ✓ src/recognition/focusedReview.test.ts (11 tests) 49ms
+ ✓ src/recognition/actionCandidateComposer.test.ts (7 tests) 25ms
+ ✓ src/recognition/directiveDispositionProduct.test.ts (5 tests) 107ms
+ ✓ src/domain/v2/sourceReviewD26.test.ts (10 tests) 130ms
+ ✓ src/lib/taskLogic.test.ts (13 tests) 20ms
+ ✓ src/recognition/taskFormationPolicyP4.test.ts (7 tests) 18ms
+ ✓ src/recognition/rco5010SeenB9Regression.test.ts (3 tests) 55ms
+ ✓ src/recognition/scopeReferenceContract.metamorphic.test.ts (9 tests) 15ms
+ ✓ src/recognition/taskFormationPolicyP3.test.ts (7 tests) 19ms
+ ✓ src/recognition/actionCandidateFreshAdversarial.test.ts (14 tests) 26ms
+ ✓ src/recognition/rco5010E1Boundary.test.ts (29 tests) 84ms
+ ✓ src/domain/v2/migration.test.ts (7 tests) 119ms
+ ✓ src/recognition/candidate19Generation.test.ts (9 tests) 182ms
+ ↓ src/lib/ocrLiveComponent.test.ts (1 test | 1 skipped)
+ ✓ src/recognition/taskFormationPolicyP2.test.ts (8 tests) 19ms
+ ✓ src/domain/v2/repository.test.ts (7 tests) 57ms
+ ✓ src/recognition/localActionCandidateIndexV2.test.ts (9 tests) 19ms
+ ✓ src/domain/v2/ordinaryMeasurementD26.test.ts (4 tests) 43ms
+ ✓ src/recognition/actionCandidateClassificationContract.test.ts (6 tests) 16ms
+ ✓ src/lib/deepseekExtraction.test.ts (6 tests) 38ms
+ ✓ src/recognition/pipeline.test.ts (8 tests) 38ms
+ ✓ src/lib/sourceWorkflow.test.ts (4 tests) 50ms
+ ✓ src/lib/timeSemantics.test.ts (16 tests) 207ms
+ ✓ src/lib/workspace.test.ts (7 tests) 29ms
+ ✓ src/recognition/localActionCandidateIndex.test.ts (8 tests) 20ms
+ ✓ src/lib/calendar.test.ts (8 tests) 24ms
+ ✓ src/domain/v2/legacyView.d26.test.ts (6 tests) 32ms
+ ✓ src/lib/intake.test.ts (9 tests) 28ms
+ ✓ src/lib/ocrPreprocessing.test.ts (6 tests) 59ms
+ ✓ src/recognition/taskFormationEvaluationV2.test.ts (3 tests) 6ms
+ ✓ src/recognition/revisionRelationResolver.metamorphic.test.ts (3 tests) 15ms
+ ✓ src/recognition/taskFormationEvaluation.test.ts (6 tests) 6ms
+ ✓ src/lib/deepseekExtraction.d26.test.ts (3 tests) 12ms
+ ✓ src/lib/domainEntities.test.ts (3 tests) 18ms
+ ✓ src/lib/storage.test.ts (3 tests) 5ms
+ ✓ src/recognition/directiveGovernorProof.test.ts (29 tests) 37ms
+ ✓ src/recognition/modelAnchorSelectionContract.test.ts (3 tests) 7ms
+ ✓ src/lib/notifications.test.ts (3 tests) 16ms
+ ✓ src/lib/calendarExport.test.ts (4 tests) 22ms
+ ✓ src/lib/sourceDuplicates.test.ts (3 tests) 4ms
+ ✓ src/recognition/countMapComparison.test.ts (7 tests) 3ms
+ ✓ src/domain/v2/sourceRetry.test.ts (1 test) 45ms
+ ✓ src/lib/webMonitoring.test.ts (4 tests) 6ms
+ ✓ src/lib/taskUpdates.test.ts (3 tests) 5ms
+ ✓ src/recognition/scopeIndexV11.test.ts (3 tests) 5ms
+ ✓ src/lib/webMonitorClient.test.ts (2 tests) 7ms
+ ✓ src/lib/workspaceRecoveryUi.test.ts (3 tests) 3ms
+ ✓ src/lib/obsidian.test.ts (3 tests) 3ms
+ ✓ src/lib/knowledge.test.ts (3 tests) 22ms
+ ✓ src/domain/v2/serialization.test.ts (3 tests) 32ms
+ ✓ src/recognition/jsonStructuralEqual.test.ts (4 tests) 3ms
+ ✓ src/lib/schemaMigration.test.ts (1 test) 3ms
+ ✓ src/lib/multimodal.test.ts (3 tests) 3ms
+ ✓ src/lib/syncClient.test.ts (2 tests) 5ms
+stdout | src/recognition/evaluation.test.ts > 60-case recognition evaluation > keeps the anonymous dataset complete and reports reproducible metrics
+RECOGNITION_EVAL={"sampleCount":60,"projectMatchAccuracy":0.8833333333333333,"projectNameAccuracy":0.9,"stageAccuracy":0.3179012345679012,"taskPrecision":1,"taskRecall":0.6419753086419754,"duplicateTaskRate":0,"overFragmentationRate":0.016666666666666666,"materialAccuracy":0.9615384615384616,"timePointAccuracy":0.9,"evidenceAccuracy":0.9166666666666666,"severeErrorRate":0.1,"humanReviewAgreement":0.75,"averageTaskCount":1.35,"averageConfirmationTimeSeconds":null}
+
+ ✓ src/recognition/evaluation.test.ts (2 tests) 81ms
+ ✓ src/lib/reports.test.ts (2 tests) 11ms
+ ✓ src/mobileLayout.test.ts (3 tests) 4ms
+ ✓ src/lib/linkExtraction.test.ts (2 tests) 6ms
+ ✓ src/lib/scheduling.test.ts (2 tests) 18ms
+ ✓ src/lib/emailClient.test.ts (2 tests) 4ms
+ ✓ src/lib/integrationConnections.test.ts (2 tests) 2ms
+ ✓ src/lib/onboarding.test.ts (1 test) 2ms
+
+ Test Files  96 passed | 1 skipped (97)
+      Tests  959 passed | 1 skipped (960)
+   Start at  07:37:49
+   Duration  20.38s (transform 2.72s, setup 0ms, collect 9.04s, tests 5.86s, environment 14ms, prepare 8.99s)
+

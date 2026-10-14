@@ -1,0 +1,868 @@
+{
+  "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+  "sourceId": "PUB-C19-02",
+  "sourceText": "校内申请材料：出国出境交流项目申请表；成绩单；相关语言水平能力证明。\n请按以上顺序将每位同学的材料整理为一份PDF电子版文件，文件命名格式为“申请院校+学生姓名+所在学院”，以便后续审核及面试使用。\n请有意向申报的同学务必于4月21日17:00前，将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid，逾期不予受理。",
+  "wire": {
+    "schemaVersion": "explicit-source-contract-4.0.0",
+    "tasks": [
+      {
+        "id": "T1",
+        "propositionScopeIds": [
+          "scope-0001-f4778795a992fde81036b7104e787ad2df2ae277206062df483bf51a85903946",
+          "scope-0002-a0a478f37a48d04c63b089763faf0038512321f914c4713ba4fc35583146fc1a",
+          "scope-0003-af9afb1e5c18e5de273f1794f63f288b63aef64e6d89da4c5e7e310b28ae7cd5",
+          "scope-0004-531e8928c57a21530cb3320bd73cb4c9c31f67d4b9e62ce8a11beb6ad0933af0",
+          "scope-0005-95db471398361902cc0f63bcbbf5bebed4d42f681d95fdf22666a63fcf5fc938",
+          "scope-0006-75349663e9e928123fb4044429cf2cf71b9fac15f413202106b2af368d11fdcd",
+          "scope-0007-f2c59116b9c77d15f79d1e36f4c411c2f5ce27bb256ba2288d2bdbbae6da6039",
+          "scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c",
+          "scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051",
+          "scope-0010-7fadeb1c9e22aaa5378d1d98e803809894c12cf78bb4e1e9d602e6a9afd11d45"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "surface": "发送",
+          "scopeId": "scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051"
+        },
+        "object": {
+          "surface": "学生申请材料",
+          "scopeId": "scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "发送学生申请材料",
+          "description": "",
+          "completionCriteria": [
+            "逾期不予受理"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "confidence": 1,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "unknown",
+          "conditionScopeIds": [
+            "scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c"
+          ],
+          "factScopeIds": [
+            "scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c"
+          ]
+        },
+        "coverage": {
+          "time": {
+            "status": "present",
+            "entityIds": [
+              "P0"
+            ],
+            "scopeIds": [
+              "scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c"
+            ]
+          },
+          "material": {
+            "status": "present",
+            "entityIds": [
+              "M0",
+              "M1",
+              "M2"
+            ],
+            "scopeIds": [
+              "scope-0001-f4778795a992fde81036b7104e787ad2df2ae277206062df483bf51a85903946",
+              "scope-0002-a0a478f37a48d04c63b089763faf0038512321f914c4713ba4fc35583146fc1a",
+              "scope-0003-af9afb1e5c18e5de273f1794f63f288b63aef64e6d89da4c5e7e310b28ae7cd5",
+              "scope-0004-531e8928c57a21530cb3320bd73cb4c9c31f67d4b9e62ce8a11beb6ad0933af0",
+              "scope-0005-95db471398361902cc0f63bcbbf5bebed4d42f681d95fdf22666a63fcf5fc938",
+              "scope-0006-75349663e9e928123fb4044429cf2cf71b9fac15f413202106b2af368d11fdcd",
+              "scope-0007-f2c59116b9c77d15f79d1e36f4c411c2f5ce27bb256ba2288d2bdbbae6da6039",
+              "scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051",
+              "scope-0010-7fadeb1c9e22aaa5378d1d98e803809894c12cf78bb4e1e9d602e6a9afd11d45"
+            ]
+          },
+          "event": {
+            "status": "not_stated",
+            "entityIds": [],
+            "scopeIds": []
+          }
+        }
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "M0",
+        "name": "学生申请材料",
+        "required": true,
+        "formatRequirements": [
+          "PDF"
+        ],
+        "namingRequirements": [
+          "申请院校+学生姓名+所在学院"
+        ],
+        "quantity": null,
+        "submissionChannel": "exchange@example.invalid",
+        "relatedTaskTempIds": [
+          "T1"
+        ],
+        "scopeIds": [
+          "scope-0001-f4778795a992fde81036b7104e787ad2df2ae277206062df483bf51a85903946",
+          "scope-0002-a0a478f37a48d04c63b089763faf0038512321f914c4713ba4fc35583146fc1a",
+          "scope-0003-af9afb1e5c18e5de273f1794f63f288b63aef64e6d89da4c5e7e310b28ae7cd5",
+          "scope-0004-531e8928c57a21530cb3320bd73cb4c9c31f67d4b9e62ce8a11beb6ad0933af0",
+          "scope-0005-95db471398361902cc0f63bcbbf5bebed4d42f681d95fdf22666a63fcf5fc938",
+          "scope-0006-75349663e9e928123fb4044429cf2cf71b9fac15f413202106b2af368d11fdcd",
+          "scope-0007-f2c59116b9c77d15f79d1e36f4c411c2f5ce27bb256ba2288d2bdbbae6da6039",
+          "scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051",
+          "scope-0010-7fadeb1c9e22aaa5378d1d98e803809894c12cf78bb4e1e9d602e6a9afd11d45"
+        ],
+        "confidence": 1
+      },
+      {
+        "tempId": "M1",
+        "name": "学院回执扫描版",
+        "required": true,
+        "formatRequirements": [
+          "须加盖公章"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "exchange@example.invalid",
+        "relatedTaskTempIds": [
+          "T1"
+        ],
+        "scopeIds": [
+          "scope-0001-f4778795a992fde81036b7104e787ad2df2ae277206062df483bf51a85903946",
+          "scope-0002-a0a478f37a48d04c63b089763faf0038512321f914c4713ba4fc35583146fc1a",
+          "scope-0003-af9afb1e5c18e5de273f1794f63f288b63aef64e6d89da4c5e7e310b28ae7cd5",
+          "scope-0004-531e8928c57a21530cb3320bd73cb4c9c31f67d4b9e62ce8a11beb6ad0933af0",
+          "scope-0005-95db471398361902cc0f63bcbbf5bebed4d42f681d95fdf22666a63fcf5fc938",
+          "scope-0006-75349663e9e928123fb4044429cf2cf71b9fac15f413202106b2af368d11fdcd",
+          "scope-0007-f2c59116b9c77d15f79d1e36f4c411c2f5ce27bb256ba2288d2bdbbae6da6039",
+          "scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051",
+          "scope-0010-7fadeb1c9e22aaa5378d1d98e803809894c12cf78bb4e1e9d602e6a9afd11d45"
+        ],
+        "confidence": 1
+      },
+      {
+        "tempId": "M2",
+        "name": "Excel汇总表",
+        "required": true,
+        "formatRequirements": [
+          "Excel"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "exchange@example.invalid",
+        "relatedTaskTempIds": [
+          "T1"
+        ],
+        "scopeIds": [
+          "scope-0001-f4778795a992fde81036b7104e787ad2df2ae277206062df483bf51a85903946",
+          "scope-0002-a0a478f37a48d04c63b089763faf0038512321f914c4713ba4fc35583146fc1a",
+          "scope-0003-af9afb1e5c18e5de273f1794f63f288b63aef64e6d89da4c5e7e310b28ae7cd5",
+          "scope-0004-531e8928c57a21530cb3320bd73cb4c9c31f67d4b9e62ce8a11beb6ad0933af0",
+          "scope-0005-95db471398361902cc0f63bcbbf5bebed4d42f681d95fdf22666a63fcf5fc938",
+          "scope-0006-75349663e9e928123fb4044429cf2cf71b9fac15f413202106b2af368d11fdcd",
+          "scope-0007-f2c59116b9c77d15f79d1e36f4c411c2f5ce27bb256ba2288d2bdbbae6da6039",
+          "scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051",
+          "scope-0010-7fadeb1c9e22aaa5378d1d98e803809894c12cf78bb4e1e9d602e6a9afd11d45"
+        ],
+        "confidence": 1
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "P0",
+        "type": "submission_deadline",
+        "rawText": "4月21日17:00前",
+        "relatedTaskTempIds": [
+          "T1"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c"
+        ],
+        "confidence": 1
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "scopeAccounting": [
+      {
+        "scopeId": "scope-0001-f4778795a992fde81036b7104e787ad2df2ae277206062df483bf51a85903946",
+        "kind": "action",
+        "primaryEntityIds": [
+          "T1"
+        ],
+        "secondaryEntityIds": [
+          "M0",
+          "M1",
+          "M2"
+        ]
+      },
+      {
+        "scopeId": "scope-0002-a0a478f37a48d04c63b089763faf0038512321f914c4713ba4fc35583146fc1a",
+        "kind": "action",
+        "primaryEntityIds": [
+          "T1"
+        ],
+        "secondaryEntityIds": [
+          "M0",
+          "M1",
+          "M2"
+        ]
+      },
+      {
+        "scopeId": "scope-0003-af9afb1e5c18e5de273f1794f63f288b63aef64e6d89da4c5e7e310b28ae7cd5",
+        "kind": "action",
+        "primaryEntityIds": [
+          "T1"
+        ],
+        "secondaryEntityIds": [
+          "M0",
+          "M1",
+          "M2"
+        ]
+      },
+      {
+        "scopeId": "scope-0004-531e8928c57a21530cb3320bd73cb4c9c31f67d4b9e62ce8a11beb6ad0933af0",
+        "kind": "action",
+        "primaryEntityIds": [
+          "T1"
+        ],
+        "secondaryEntityIds": [
+          "M0",
+          "M1",
+          "M2"
+        ]
+      },
+      {
+        "scopeId": "scope-0005-95db471398361902cc0f63bcbbf5bebed4d42f681d95fdf22666a63fcf5fc938",
+        "kind": "action",
+        "primaryEntityIds": [
+          "T1"
+        ],
+        "secondaryEntityIds": [
+          "M0",
+          "M1",
+          "M2"
+        ]
+      },
+      {
+        "scopeId": "scope-0006-75349663e9e928123fb4044429cf2cf71b9fac15f413202106b2af368d11fdcd",
+        "kind": "action",
+        "primaryEntityIds": [
+          "T1"
+        ],
+        "secondaryEntityIds": [
+          "M0",
+          "M1",
+          "M2"
+        ]
+      },
+      {
+        "scopeId": "scope-0007-f2c59116b9c77d15f79d1e36f4c411c2f5ce27bb256ba2288d2bdbbae6da6039",
+        "kind": "action",
+        "primaryEntityIds": [
+          "T1"
+        ],
+        "secondaryEntityIds": [
+          "M0",
+          "M1",
+          "M2"
+        ]
+      },
+      {
+        "scopeId": "scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c",
+        "kind": "action",
+        "primaryEntityIds": [
+          "T1"
+        ],
+        "secondaryEntityIds": [
+          "P0"
+        ]
+      },
+      {
+        "scopeId": "scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051",
+        "kind": "action",
+        "primaryEntityIds": [
+          "T1"
+        ],
+        "secondaryEntityIds": [
+          "M0",
+          "M1",
+          "M2"
+        ]
+      },
+      {
+        "scopeId": "scope-0010-7fadeb1c9e22aaa5378d1d98e803809894c12cf78bb4e1e9d602e6a9afd11d45",
+        "kind": "action",
+        "primaryEntityIds": [
+          "T1"
+        ],
+        "secondaryEntityIds": [
+          "M0",
+          "M1",
+          "M2"
+        ]
+      }
+    ],
+    "prerequisiteStates": []
+  },
+  "layer": "PUBLIC_CONVERSION",
+  "root": "Single-object destination matcher discarded earlier members of an explicit, closed, same-owner material list",
+  "beforeVersion": "material-channel-role-grounding-1.2.0",
+  "before": {
+    "version": "material-channel-role-grounding-1.2.0",
+    "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+    "inferredFacts": 0,
+    "decisions": [
+      {
+        "materialId": "M0",
+        "materialName": "学生申请材料",
+        "ownerIds": [
+          "T1"
+        ],
+        "originalValue": "exchange@example.invalid",
+        "displayedValue": null,
+        "status": "UNSUPPORTED_OR_AMBIGUOUS_CHANNEL",
+        "evidence": [
+          {
+            "id": "d26-scope-0001-f4778795a992fde81036b7104e787ad2df2ae277206062df483bf51a85903946",
+            "quote": "校内申请材料："
+          },
+          {
+            "id": "d26-scope-0002-a0a478f37a48d04c63b089763faf0038512321f914c4713ba4fc35583146fc1a",
+            "quote": "出国出境交流项目申请表；"
+          },
+          {
+            "id": "d26-scope-0003-af9afb1e5c18e5de273f1794f63f288b63aef64e6d89da4c5e7e310b28ae7cd5",
+            "quote": "成绩单；"
+          },
+          {
+            "id": "d26-scope-0004-531e8928c57a21530cb3320bd73cb4c9c31f67d4b9e62ce8a11beb6ad0933af0",
+            "quote": "相关语言水平能力证明。"
+          },
+          {
+            "id": "d26-scope-0005-95db471398361902cc0f63bcbbf5bebed4d42f681d95fdf22666a63fcf5fc938",
+            "quote": "请按以上顺序将每位同学的材料整理为一份PDF电子版文件，"
+          },
+          {
+            "id": "d26-scope-0006-75349663e9e928123fb4044429cf2cf71b9fac15f413202106b2af368d11fdcd",
+            "quote": "文件命名格式为“申请院校+学生姓名+所在学院”，"
+          },
+          {
+            "id": "d26-scope-0007-f2c59116b9c77d15f79d1e36f4c411c2f5ce27bb256ba2288d2bdbbae6da6039",
+            "quote": "以便后续审核及面试使用。"
+          },
+          {
+            "id": "d26-scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c",
+            "quote": "请有意向申报的同学务必于4月21日17:00前，"
+          },
+          {
+            "id": "d26-scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051",
+            "quote": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid，"
+          },
+          {
+            "id": "d26-scope-0010-7fadeb1c9e22aaa5378d1d98e803809894c12cf78bb4e1e9d602e6a9afd11d45",
+            "quote": "逾期不予受理。"
+          }
+        ],
+        "roleChecks": []
+      },
+      {
+        "materialId": "M1",
+        "materialName": "学院回执扫描版",
+        "ownerIds": [
+          "T1"
+        ],
+        "originalValue": "exchange@example.invalid",
+        "displayedValue": null,
+        "status": "UNSUPPORTED_OR_AMBIGUOUS_CHANNEL",
+        "evidence": [
+          {
+            "id": "d26-scope-0001-f4778795a992fde81036b7104e787ad2df2ae277206062df483bf51a85903946",
+            "quote": "校内申请材料："
+          },
+          {
+            "id": "d26-scope-0002-a0a478f37a48d04c63b089763faf0038512321f914c4713ba4fc35583146fc1a",
+            "quote": "出国出境交流项目申请表；"
+          },
+          {
+            "id": "d26-scope-0003-af9afb1e5c18e5de273f1794f63f288b63aef64e6d89da4c5e7e310b28ae7cd5",
+            "quote": "成绩单；"
+          },
+          {
+            "id": "d26-scope-0004-531e8928c57a21530cb3320bd73cb4c9c31f67d4b9e62ce8a11beb6ad0933af0",
+            "quote": "相关语言水平能力证明。"
+          },
+          {
+            "id": "d26-scope-0005-95db471398361902cc0f63bcbbf5bebed4d42f681d95fdf22666a63fcf5fc938",
+            "quote": "请按以上顺序将每位同学的材料整理为一份PDF电子版文件，"
+          },
+          {
+            "id": "d26-scope-0006-75349663e9e928123fb4044429cf2cf71b9fac15f413202106b2af368d11fdcd",
+            "quote": "文件命名格式为“申请院校+学生姓名+所在学院”，"
+          },
+          {
+            "id": "d26-scope-0007-f2c59116b9c77d15f79d1e36f4c411c2f5ce27bb256ba2288d2bdbbae6da6039",
+            "quote": "以便后续审核及面试使用。"
+          },
+          {
+            "id": "d26-scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c",
+            "quote": "请有意向申报的同学务必于4月21日17:00前，"
+          },
+          {
+            "id": "d26-scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051",
+            "quote": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid，"
+          },
+          {
+            "id": "d26-scope-0010-7fadeb1c9e22aaa5378d1d98e803809894c12cf78bb4e1e9d602e6a9afd11d45",
+            "quote": "逾期不予受理。"
+          }
+        ],
+        "roleChecks": []
+      },
+      {
+        "materialId": "M2",
+        "materialName": "Excel汇总表",
+        "ownerIds": [
+          "T1"
+        ],
+        "originalValue": "exchange@example.invalid",
+        "displayedValue": "exchange@example.invalid",
+        "status": "EXPLICIT_CHANNEL",
+        "evidence": [
+          {
+            "id": "d26-scope-0001-f4778795a992fde81036b7104e787ad2df2ae277206062df483bf51a85903946",
+            "quote": "校内申请材料："
+          },
+          {
+            "id": "d26-scope-0002-a0a478f37a48d04c63b089763faf0038512321f914c4713ba4fc35583146fc1a",
+            "quote": "出国出境交流项目申请表；"
+          },
+          {
+            "id": "d26-scope-0003-af9afb1e5c18e5de273f1794f63f288b63aef64e6d89da4c5e7e310b28ae7cd5",
+            "quote": "成绩单；"
+          },
+          {
+            "id": "d26-scope-0004-531e8928c57a21530cb3320bd73cb4c9c31f67d4b9e62ce8a11beb6ad0933af0",
+            "quote": "相关语言水平能力证明。"
+          },
+          {
+            "id": "d26-scope-0005-95db471398361902cc0f63bcbbf5bebed4d42f681d95fdf22666a63fcf5fc938",
+            "quote": "请按以上顺序将每位同学的材料整理为一份PDF电子版文件，"
+          },
+          {
+            "id": "d26-scope-0006-75349663e9e928123fb4044429cf2cf71b9fac15f413202106b2af368d11fdcd",
+            "quote": "文件命名格式为“申请院校+学生姓名+所在学院”，"
+          },
+          {
+            "id": "d26-scope-0007-f2c59116b9c77d15f79d1e36f4c411c2f5ce27bb256ba2288d2bdbbae6da6039",
+            "quote": "以便后续审核及面试使用。"
+          },
+          {
+            "id": "d26-scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c",
+            "quote": "请有意向申报的同学务必于4月21日17:00前，"
+          },
+          {
+            "id": "d26-scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051",
+            "quote": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid，"
+          },
+          {
+            "id": "d26-scope-0010-7fadeb1c9e22aaa5378d1d98e803809894c12cf78bb4e1e9d602e6a9afd11d45",
+            "quote": "逾期不予受理。"
+          }
+        ],
+        "roleChecks": [
+          {
+            "quote": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid",
+            "object": "Excel汇总表",
+            "polarity": "AFFIRMATIVE",
+            "roleText": "Excel汇总表发送至exchange@example.invalid",
+            "polarityText": "将学生申请材料及学院回执扫描版（须加盖公章）和<对象>发送至<渠道>",
+            "unrelatedQualifier": null
+          }
+        ]
+      }
+    ]
+  },
+  "after": {
+    "version": "material-channel-role-grounding-1.3.0",
+    "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+    "inferredFacts": 0,
+    "decisions": [
+      {
+        "materialId": "M0",
+        "materialName": "学生申请材料",
+        "ownerIds": [
+          "T1"
+        ],
+        "originalValue": "exchange@example.invalid",
+        "displayedValue": "exchange@example.invalid",
+        "status": "EXPLICIT_CHANNEL",
+        "evidence": [
+          {
+            "id": "d26-scope-0001-f4778795a992fde81036b7104e787ad2df2ae277206062df483bf51a85903946",
+            "quote": "校内申请材料："
+          },
+          {
+            "id": "d26-scope-0002-a0a478f37a48d04c63b089763faf0038512321f914c4713ba4fc35583146fc1a",
+            "quote": "出国出境交流项目申请表；"
+          },
+          {
+            "id": "d26-scope-0003-af9afb1e5c18e5de273f1794f63f288b63aef64e6d89da4c5e7e310b28ae7cd5",
+            "quote": "成绩单；"
+          },
+          {
+            "id": "d26-scope-0004-531e8928c57a21530cb3320bd73cb4c9c31f67d4b9e62ce8a11beb6ad0933af0",
+            "quote": "相关语言水平能力证明。"
+          },
+          {
+            "id": "d26-scope-0005-95db471398361902cc0f63bcbbf5bebed4d42f681d95fdf22666a63fcf5fc938",
+            "quote": "请按以上顺序将每位同学的材料整理为一份PDF电子版文件，"
+          },
+          {
+            "id": "d26-scope-0006-75349663e9e928123fb4044429cf2cf71b9fac15f413202106b2af368d11fdcd",
+            "quote": "文件命名格式为“申请院校+学生姓名+所在学院”，"
+          },
+          {
+            "id": "d26-scope-0007-f2c59116b9c77d15f79d1e36f4c411c2f5ce27bb256ba2288d2bdbbae6da6039",
+            "quote": "以便后续审核及面试使用。"
+          },
+          {
+            "id": "d26-scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c",
+            "quote": "请有意向申报的同学务必于4月21日17:00前，"
+          },
+          {
+            "id": "d26-scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051",
+            "quote": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid，"
+          },
+          {
+            "id": "d26-scope-0010-7fadeb1c9e22aaa5378d1d98e803809894c12cf78bb4e1e9d602e6a9afd11d45",
+            "quote": "逾期不予受理。"
+          }
+        ],
+        "roleChecks": [
+          {
+            "quote": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid",
+            "object": "学生申请材料",
+            "polarity": "AFFIRMATIVE",
+            "roleText": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid",
+            "polarityText": "将<对象>及学院回执扫描版（须加盖公章）和Excel汇总表发送至<渠道>",
+            "unrelatedQualifier": null
+          }
+        ]
+      },
+      {
+        "materialId": "M1",
+        "materialName": "学院回执扫描版",
+        "ownerIds": [
+          "T1"
+        ],
+        "originalValue": "exchange@example.invalid",
+        "displayedValue": "exchange@example.invalid",
+        "status": "EXPLICIT_CHANNEL",
+        "evidence": [
+          {
+            "id": "d26-scope-0001-f4778795a992fde81036b7104e787ad2df2ae277206062df483bf51a85903946",
+            "quote": "校内申请材料："
+          },
+          {
+            "id": "d26-scope-0002-a0a478f37a48d04c63b089763faf0038512321f914c4713ba4fc35583146fc1a",
+            "quote": "出国出境交流项目申请表；"
+          },
+          {
+            "id": "d26-scope-0003-af9afb1e5c18e5de273f1794f63f288b63aef64e6d89da4c5e7e310b28ae7cd5",
+            "quote": "成绩单；"
+          },
+          {
+            "id": "d26-scope-0004-531e8928c57a21530cb3320bd73cb4c9c31f67d4b9e62ce8a11beb6ad0933af0",
+            "quote": "相关语言水平能力证明。"
+          },
+          {
+            "id": "d26-scope-0005-95db471398361902cc0f63bcbbf5bebed4d42f681d95fdf22666a63fcf5fc938",
+            "quote": "请按以上顺序将每位同学的材料整理为一份PDF电子版文件，"
+          },
+          {
+            "id": "d26-scope-0006-75349663e9e928123fb4044429cf2cf71b9fac15f413202106b2af368d11fdcd",
+            "quote": "文件命名格式为“申请院校+学生姓名+所在学院”，"
+          },
+          {
+            "id": "d26-scope-0007-f2c59116b9c77d15f79d1e36f4c411c2f5ce27bb256ba2288d2bdbbae6da6039",
+            "quote": "以便后续审核及面试使用。"
+          },
+          {
+            "id": "d26-scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c",
+            "quote": "请有意向申报的同学务必于4月21日17:00前，"
+          },
+          {
+            "id": "d26-scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051",
+            "quote": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid，"
+          },
+          {
+            "id": "d26-scope-0010-7fadeb1c9e22aaa5378d1d98e803809894c12cf78bb4e1e9d602e6a9afd11d45",
+            "quote": "逾期不予受理。"
+          }
+        ],
+        "roleChecks": [
+          {
+            "quote": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid",
+            "object": "学院回执扫描版",
+            "polarity": "AFFIRMATIVE",
+            "roleText": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid",
+            "polarityText": "将学生申请材料及<对象>（须加盖公章）和Excel汇总表发送至<渠道>",
+            "unrelatedQualifier": null
+          },
+          {
+            "quote": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid",
+            "object": "学生申请材料",
+            "polarity": "AFFIRMATIVE",
+            "roleText": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid",
+            "polarityText": "将<对象>及学院回执扫描版（须加盖公章）和Excel汇总表发送至<渠道>",
+            "unrelatedQualifier": null
+          }
+        ]
+      },
+      {
+        "materialId": "M2",
+        "materialName": "Excel汇总表",
+        "ownerIds": [
+          "T1"
+        ],
+        "originalValue": "exchange@example.invalid",
+        "displayedValue": "exchange@example.invalid",
+        "status": "EXPLICIT_CHANNEL",
+        "evidence": [
+          {
+            "id": "d26-scope-0001-f4778795a992fde81036b7104e787ad2df2ae277206062df483bf51a85903946",
+            "quote": "校内申请材料："
+          },
+          {
+            "id": "d26-scope-0002-a0a478f37a48d04c63b089763faf0038512321f914c4713ba4fc35583146fc1a",
+            "quote": "出国出境交流项目申请表；"
+          },
+          {
+            "id": "d26-scope-0003-af9afb1e5c18e5de273f1794f63f288b63aef64e6d89da4c5e7e310b28ae7cd5",
+            "quote": "成绩单；"
+          },
+          {
+            "id": "d26-scope-0004-531e8928c57a21530cb3320bd73cb4c9c31f67d4b9e62ce8a11beb6ad0933af0",
+            "quote": "相关语言水平能力证明。"
+          },
+          {
+            "id": "d26-scope-0005-95db471398361902cc0f63bcbbf5bebed4d42f681d95fdf22666a63fcf5fc938",
+            "quote": "请按以上顺序将每位同学的材料整理为一份PDF电子版文件，"
+          },
+          {
+            "id": "d26-scope-0006-75349663e9e928123fb4044429cf2cf71b9fac15f413202106b2af368d11fdcd",
+            "quote": "文件命名格式为“申请院校+学生姓名+所在学院”，"
+          },
+          {
+            "id": "d26-scope-0007-f2c59116b9c77d15f79d1e36f4c411c2f5ce27bb256ba2288d2bdbbae6da6039",
+            "quote": "以便后续审核及面试使用。"
+          },
+          {
+            "id": "d26-scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c",
+            "quote": "请有意向申报的同学务必于4月21日17:00前，"
+          },
+          {
+            "id": "d26-scope-0009-175d219909c15ea35a00035a64b40f831b4c7841d795c93092a1498bdb634051",
+            "quote": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid，"
+          },
+          {
+            "id": "d26-scope-0010-7fadeb1c9e22aaa5378d1d98e803809894c12cf78bb4e1e9d602e6a9afd11d45",
+            "quote": "逾期不予受理。"
+          }
+        ],
+        "roleChecks": [
+          {
+            "quote": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid",
+            "object": "Excel汇总表",
+            "polarity": "AFFIRMATIVE",
+            "roleText": "Excel汇总表发送至exchange@example.invalid",
+            "polarityText": "将学生申请材料及学院回执扫描版（须加盖公章）和<对象>发送至<渠道>",
+            "unrelatedQualifier": null
+          },
+          {
+            "quote": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid",
+            "object": "学生申请材料",
+            "polarity": "AFFIRMATIVE",
+            "roleText": "将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至exchange@example.invalid",
+            "polarityText": "将<对象>及学院回执扫描版（须加盖公章）和Excel汇总表发送至<渠道>",
+            "unrelatedQualifier": null
+          }
+        ]
+      }
+    ]
+  },
+  "inferredFacts": 0,
+  "unchanged": {
+    "condition": {
+      "value": "unknown",
+      "conditionScopeIds": [
+        "scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c"
+      ],
+      "factScopeIds": [
+        "scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c"
+      ]
+    },
+    "deadline": [
+      {
+        "tempId": "P0",
+        "type": "submission_deadline",
+        "rawText": "4月21日17:00前",
+        "relatedTaskTempIds": [
+          "T1"
+        ],
+        "relatedMaterialTempIds": [],
+        "confidence": 1,
+        "normalizedValue": "2026-04-21T17:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false,
+        "evidenceIds": [
+          "d26-scope-0008-d3350a3e9477ddc66fa3fca0882b777c4146ab689a4ba134ed819a327bca5a1c"
+        ]
+      }
+    ],
+    "formatAndNaming": [
+      {
+        "name": "学生申请材料",
+        "format": [
+          "PDF"
+        ],
+        "naming": [
+          "申请院校+学生姓名+所在学院"
+        ]
+      },
+      {
+        "name": "学院回执扫描版",
+        "format": [
+          "须加盖公章"
+        ],
+        "naming": []
+      },
+      {
+        "name": "Excel汇总表",
+        "format": [
+          "Excel"
+        ],
+        "naming": []
+      }
+    ]
+  },
+  "old12Equality": [
+    {
+      "ordinal": 1,
+      "sourceId": "C19-DEV-S01",
+      "candidate": "Candidate17",
+      "responseSha256": "05a1b54cc527707cab1ff02bf88587574ea0d9fa6b6124d00dfba7c989f8fcf6",
+      "firstSuggestionEqual": true,
+      "diagnosticEqual": true
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "C19-DEV-S01",
+      "candidate": "Candidate19",
+      "responseSha256": "3e725f3f2b99787f4124fd0862a6bff877d169835b106424413f3c33ddda2efa",
+      "firstSuggestionEqual": true,
+      "diagnosticEqual": true
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "C19-DEV-S02",
+      "candidate": "Candidate19",
+      "responseSha256": "1b04a03763bdfa9069ce8a10fb8f74233552e37a63810a4e3a4f6f30f243b16e",
+      "firstSuggestionEqual": true,
+      "diagnosticEqual": true
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "C19-DEV-S02",
+      "candidate": "Candidate17",
+      "responseSha256": "9aca34f978b2a9458272a6d0bfdd78248d87fff45a442e4108dee921800fd630",
+      "firstSuggestionEqual": true,
+      "diagnosticEqual": true
+    },
+    {
+      "ordinal": 5,
+      "sourceId": "C19-DEV-S03",
+      "candidate": "Candidate17",
+      "responseSha256": "d2d9708c9623309d4419fedae2d535ec8fe178c6d9fc518e26ba556c9e5aeb96",
+      "firstSuggestionEqual": true,
+      "diagnosticEqual": true
+    },
+    {
+      "ordinal": 6,
+      "sourceId": "C19-DEV-S03",
+      "candidate": "Candidate19",
+      "responseSha256": "fd8f710ef5bb267cdf61fbe91482351f731d6832cc45e7fc6a435555636497db",
+      "firstSuggestionEqual": true,
+      "diagnosticEqual": true
+    },
+    {
+      "ordinal": 7,
+      "sourceId": "C19-DEV-S04",
+      "candidate": "Candidate19",
+      "responseSha256": "6ae14cd30dd8b18d8608a67f0b4cb38b3cbceb352e93deb441ec2ab26215c760",
+      "firstSuggestionEqual": true,
+      "diagnosticEqual": true
+    },
+    {
+      "ordinal": 8,
+      "sourceId": "C19-DEV-S04",
+      "candidate": "Candidate17",
+      "responseSha256": "19e40dfde51e3f0b46362055714cc2369971c5f3515bdf02181d639448a17140",
+      "firstSuggestionEqual": true,
+      "diagnosticEqual": true
+    },
+    {
+      "ordinal": 9,
+      "sourceId": "C19-DEV-S05",
+      "candidate": "Candidate17",
+      "responseSha256": "9030d9f640367524d14c4d336d3654797146cc85a506fb8292ae3d330dff4fae",
+      "firstSuggestionEqual": true,
+      "diagnosticEqual": true
+    },
+    {
+      "ordinal": 10,
+      "sourceId": "C19-DEV-S05",
+      "candidate": "Candidate19",
+      "responseSha256": "c8febf8c1a7c77cf223e99e52142c31895a9dbc950c9e40c22b2f782d1dd285e",
+      "firstSuggestionEqual": true,
+      "diagnosticEqual": true
+    },
+    {
+      "ordinal": 11,
+      "sourceId": "C19-DEV-S06",
+      "candidate": "Candidate19",
+      "responseSha256": "0f011e226cc43b5ab15acde3301e5def50ba3dd459d44582b1edf5906275ddd7",
+      "firstSuggestionEqual": true,
+      "diagnosticEqual": true
+    },
+    {
+      "ordinal": 12,
+      "sourceId": "C19-DEV-S06",
+      "candidate": "Candidate17",
+      "responseSha256": "0abf4121714faf1110e3e231122d1487e383ceba46107c79df55015564c800d1",
+      "firstSuggestionEqual": true,
+      "diagnosticEqual": true
+    }
+  ],
+  "newModelCalls": 0
+}

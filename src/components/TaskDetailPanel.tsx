@@ -1,3 +1,5 @@
+import type { TaskDateView } from '../experiments/mainline02/taskDateView'
+import type { ReactNode } from 'react'
 import {
   BellRing,
   CalendarClock,
@@ -45,6 +47,10 @@ const materialStatusOptions: Array<{ value: MaterialStatus; label: string }> = [
 ]
 
 interface TaskDetailPanelProps {
+  pendingSave?: boolean
+  semanticContent?: ReactNode
+  readOnly?: boolean
+  dateView?: TaskDateView
   task: Task
   sources: Source[]
   onClose: () => void
@@ -55,6 +61,8 @@ interface TaskDetailPanelProps {
 }
 
 export function TaskDetailPanel({
+  pendingSave,
+  readOnly, dateView, semanticContent,
   task,
   sources,
   onClose,
@@ -63,6 +71,7 @@ export function TaskDetailPanel({
   notificationPermission,
   onRequestNotificationPermission,
 }: TaskDetailPanelProps) {
+  const DetailBody = readOnly ? 'fieldset' : 'div'
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   const [editing, setEditing] = useState(false)
@@ -77,6 +86,7 @@ export function TaskDetailPanel({
 
   const handleSave = (event: FormEvent) => {
     event.preventDefault()
+    if (readOnly) return
     onUpdate(task.id, {
       title: draft.title,
       category: draft.category,
@@ -91,6 +101,7 @@ export function TaskDetailPanel({
   }
 
   const updateMaterialStatus = (materialId: string, status: MaterialStatus) => {
+    if (readOnly) return
     onUpdate(task.id, {
       materials: task.materials.map((material) =>
         material.id === materialId
@@ -112,6 +123,7 @@ export function TaskDetailPanel({
   )
 
   const updateBrowserReminder = (enabled: boolean, scheduledAt?: string) => {
+    if (readOnly) return
     const defaultTime = new Date(new Date(task.deadline).getTime() - 60 * 60 * 1000)
     const defaultScheduledAt = toDateTimeLocalValue(defaultTime)
     const nextReminder = {
@@ -129,6 +141,7 @@ export function TaskDetailPanel({
   }
 
   const handleBrowserReminderToggle = async (enabled: boolean) => {
+    if (readOnly) return
     if (!enabled) {
       updateBrowserReminder(false)
       setNotificationFeedback('浏览器提醒已关闭。')
@@ -152,6 +165,7 @@ export function TaskDetailPanel({
   }
 
   const updateEmailReminder = (enabled: boolean, scheduledAt?: string) => {
+    if (readOnly) return
     const nextReminder = {
       id: emailReminder?.id ?? `${task.id}-email-reminder`,
       channel: 'email' as const,
@@ -170,6 +184,7 @@ export function TaskDetailPanel({
   }
 
   const exportToPhone = async (kind: 'calendar' | 'todo') => {
+    if (readOnly) return
     try {
       const result = await shareOrDownloadIcs(
         `${task.title.replace(/[\\/:*?"<>|]/gu, '-')}-${kind === 'calendar' ? '日历提醒' : '待办'}.ics`,
@@ -200,7 +215,7 @@ export function TaskDetailPanel({
             <button
               className={editing ? 'detail-edit-button active' : 'detail-edit-button'}
               type="button"
-              onClick={() => setEditing((value) => !value)}
+              disabled={readOnly} onClick={() => { if (!readOnly) setEditing((value) => !value) }}
             >
               <Edit3 size={16} />
               {editing ? '取消编辑' : '编辑'}
@@ -216,7 +231,9 @@ export function TaskDetailPanel({
           </div>
         </header>
 
-        <div className="detail-body">
+        <DetailBody className="detail-body" disabled={readOnly} style={readOnly ? { border: 0, minWidth: 0 } : undefined}>
+          {semanticContent}
+          {readOnly && <p>本轮仅查看；正式任务编辑、执行、提醒与ICS未支持。完整备份请使用测试库JSON导出。</p>}
           {editing && (
             <form className="task-edit-form" onSubmit={handleSave}>
               <div className="form-grid">
@@ -337,14 +354,15 @@ export function TaskDetailPanel({
               <Clock3 size={18} />
               <span>
                 <small>截止时间</small>
-                <strong>{formatDeadline(task.deadline)}</strong>
+                <strong>{dateView?.label ?? task.sourceDeadlineLabel ?? formatDeadline(task.deadline)}</strong>
+                {task.plannedStart && <small>我的计划：{task.plannedStart}（不改变原文截止）</small>}
               </span>
             </div>
             <div>
               <BellRing size={18} />
               <span>
                 <small>预计耗时</small>
-                <strong>{formatDuration(task.estimatedMinutes)}</strong>
+                <strong>{task.estimatedMinutesKnown===false?'尚未估计':formatDuration(task.estimatedMinutes)}</strong>
               </span>
             </div>
           </div>
@@ -383,6 +401,7 @@ export function TaskDetailPanel({
                           event.target.value as MaterialStatus,
                         )}
                       >
+                        {material.status === 'unverified' && <option value="unverified">准备情况尚未核实</option>}
                         {materialStatusOptions.map((option) => (
                           <option key={option.value} value={option.value}>{option.label}</option>
                         ))}
@@ -531,7 +550,7 @@ export function TaskDetailPanel({
             </div>
             <p className="muted-copy">
               {task.history.length
-                ? `已保存 ${task.history.length} 条可追溯记录`
+                ? pendingSave ? `本页 ${task.history.length} 条记录含未保存修改，请先处理冲突` : `已保存 ${task.history.length} 条可追溯记录`
                 : '尚无手动修改，后续编辑会在这里留下记录。'}
             </p>
             {task.history.length > 0 && (
@@ -563,14 +582,14 @@ export function TaskDetailPanel({
               </ol>
             )}
           </section>
-        </div>
+        </DetailBody>
 
         {task.status !== '已完成' && (
           <footer className="detail-footer">
             <button
               className="primary-button wide"
               type="button"
-              onClick={() => onComplete(task.id)}
+              disabled={readOnly} onClick={() => { if (!readOnly) onComplete(task.id) }}
             >
               <CheckCircle2 size={17} />
               标记为已完成

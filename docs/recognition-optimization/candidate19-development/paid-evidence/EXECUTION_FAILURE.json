@@ -1,0 +1,22 @@
+{
+  "version": "c19-presend-git-failure-evidence-1",
+  "batch": "C19-C17-C19-DEVELOPMENT-R1",
+  "evidenceOrigin": "Exact stderr observed from dispatch-next ordinal 3; subsequent read-only reconciliation in EXECUTION_REPORT.json",
+  "ordinal": 3,
+  "phase": "Authorization Git remote check inside acquired cross-process lock, before reserve/send",
+  "stderr": "fatal: unable to access 'https://github.com/nightair5/Student-Affairs-Manager.git/': schannel: failed to receive handshake, SSL/TLS connection failed",
+  "safeResult": {"status":"STOPPED","code":"D26_HOST_OPERATION_FAILED_NO_SENSITIVE_DIAGNOSTICS","retry":false},
+  "knownSent": 2,
+  "knownSettled": 2,
+  "knownNotSent": 10,
+  "uncertainSends": 0,
+  "ordinal3Reserve": 0,
+  "ordinal3Settle": 0,
+  "retainedLock": true,
+  "haltJsonExists": false,
+  "audit": "CONSISTENT",
+  "automaticRecovery": "NOT_PERFORMED",
+  "reason": "Authorization/audit precedes the host try/catch; fileLock retains the lock on any exception. The original execution contract prohibits deleting a lock to continue. Remote recovery alone does not authorize changing the execution record.",
+  "codeLocations": ["scripts/candidate19-execution-host.mjs:createCandidate19Host.gitCheck", "scripts/scoped-execution-host.mjs:dispatchNext", "scripts/scoped-execution-core.mjs:fileLock"],
+  "requiredFutureAction": "Explicit narrowly scoped recovery authorization and versioned offline-verified reconciliation; original grant/cap/identities retained, ordinals 1-2 never resent, ambiguous units never released. No recovery performed in this delivery."
+}

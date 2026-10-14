@@ -1,0 +1,68 @@
+{
+  "version": "model-compare-implementation-snapshot-1",
+  "generatedAt": "2026-09-14T11:44:00+08:00",
+  "startingHead": "95ffc393b5a10e6443bbb77413cc1195ad7822e4",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "protectedCount": 944,
+  "historicalEvidenceCount": 607,
+  "sources": [
+    {
+      "path": "scripts/real-input-budget.mjs",
+      "sha256": "9b9e536e4e9cf9997610c475f3e6579b4b80291b5959cc9e23e5e8aa95265836"
+    },
+    {
+      "path": "scripts/real-input-budget.node-test.mjs",
+      "sha256": "61b1697e1f04f6c53e99f8b4ed1af6ac2ddd4e0c101da25015eceeb0772e3f10"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.mjs",
+      "sha256": "27988fcb729d35d66bf19f58ae0800303fe93301e8e6471f3945c6642cd5eece"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.node-test.mjs",
+      "sha256": "bb3acb495588948652ce1f8df66c419ca4148019a5757c2d5d2de407aeb10db0"
+    },
+    {
+      "path": "scripts/run-mainline-real-input-01.mjs",
+      "sha256": "e8749ef504aa1f36cda8607d2773f589d7af506a587c0656058208a2acdd11ee"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate03.ts",
+      "sha256": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508",
+      "unchanged": true
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "sha256": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate09-20260913a/BINDING_FINAL.json",
+      "sha256": "d62abdfdedaf4b538364fe55bacd1e52fc3623f7a5acef9732de75af128125df",
+      "unchanged": true
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate09-20260913a/REFERENCES_FINAL.json",
+      "sha256": "961683067b73fc179a3b914513c7fba2e462086a0e8f57923c4b42b75ffd1e52",
+      "unchanged": true
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate09-20260913a/COMPARISON.json",
+      "sha256": "0726182e8566cb54ef9e47211bbfe073cca021ffea2aa428da5acf6dcdeebd88",
+      "unchanged": true
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+      "sha256": "cde335bf62b473a7e86cbbdaa6a78e53ab0d6bd34a6dcc73fc19c38353d84911",
+      "appendOnly": true
+    }
+  ],
+  "runArtifactsBeforeFinalAudit": {
+    "files": 94,
+    "bytes": 2671410
+  },
+  "frozenRuntimeDiff": "NONE",
+  "newCandidate": false,
+  "productionConfigChanged": false,
+  "formalRepositoryChanged": false
+}

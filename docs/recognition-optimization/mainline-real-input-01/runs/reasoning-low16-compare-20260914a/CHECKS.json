@@ -1,0 +1,74 @@
+{
+  "version": "real-input-reasoning-low16-checks-1",
+  "generatedAt": "2026-09-14T20:14:00+08:00",
+  "startingHead": "934fb9e3afdd02c233f58e0831b1ce1dcf15b9df",
+  "rootEnvRead": false,
+  "newModelRequests": 24,
+  "checks": {
+    "budgetAndGatewayTests": {
+      "status": "PASS",
+      "passed": 124,
+      "failed": 0,
+      "note": "首次运行因临时输出父目录不存在而非代码失败；建立新的临时目录后全层通过"
+    },
+    "nodeSyntax": {"status": "PASS", "files": 3},
+    "lint": {"status": "PASS", "errors": 0, "existingWarnings": 4},
+    "typecheck": {"status": "PASS"},
+    "viteBuild": {
+      "status": "PASS",
+      "envFile": false,
+      "envDir": false,
+      "modules": 1693,
+      "temporaryOutput": "C:/Users/Winner/AppData/Local/Temp/real-input-low16-vite-20260914",
+      "note": "保留既有大分块警告"
+    },
+    "vitest": {
+      "initial": {"passed": 1381, "failed": 1, "skipped": 1},
+      "targetedRerun": {"passed": 1, "failed": 0},
+      "finalCodeFailures": 0,
+      "note": "唯一初始失败是candidate02启动器缺少外部匿名carriers清单；用既有匿名清单定向重跑通过，未修改代码、Expected或断言"
+    },
+    "serverTests": {"status": "PASS", "passed": 8},
+    "cloudflareWorkerTests": {"status": "PASS", "passed": 25},
+    "timeAstAndEvaluationTests": {"status": "PASS", "passed": 24},
+    "functionsTests": {"status": "PASS", "passed": 5},
+    "securityScan": {"status": "PASS", "files": 2317},
+    "historicalFreeze": {
+      "status": "RETAINED_FAILURE",
+      "passed": 3,
+      "failed": 1,
+      "code": "FREEZE_HASH_MISMATCH",
+      "file": "package-lock.json",
+      "expected": "0712f22dcab91e16ca793bc9745887649e46571471b7faf813b64e8cae417030",
+      "actual": "330350e448c1cd29c6c7869c7a978142d95ba84aa12658a9c9bcacdcf763bbe3",
+      "note": "本轮package-lock.json无diff，未改历史冻结断言"
+    },
+    "diffCheck": {"status": "PASS", "note": "仅有既有行尾转换提示"}
+  },
+  "ledger": {
+    "attempts": 290,
+    "rows": 595,
+    "lastSequence": 594,
+    "lastUnit": "L12-B",
+    "settled": 288,
+    "settledIncomplete": 1,
+    "heldUnknown": 1,
+    "settledCostUpperCny": 10.363183,
+    "a01HeldUnknownCny": 3.3,
+    "conservativeTotalUpperCny": 13.663183,
+    "providerBilledActual": "NOT_OBSERVABLE",
+    "sha256": "acd7a263be10887b5727b695faaaa8970cba4c57fd253df33a80116dcf42d0e5",
+    "lastRowHash": "622b837675c52de02dcef78102e022e40c8a974a5973c75f1a2febca181c5f3f"
+  },
+  "protectedHashes": {
+    "candidate03.ts": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508",
+    "modelWire.ts": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2",
+    "package-lock.json": "330350e448c1cd29c6c7869c7a978142d95ba84aa12658a9c9bcacdcf763bbe3"
+  },
+  "result": {
+    "engineering": "PASS_WITH_RETAINED_HISTORICAL_FREEZE_FAILURE",
+    "model": "COMPLETE_12_OF_20_AT_CUMULATIVE_CAP_KEEP_NONE",
+    "browser": "NOT_RUN_OFFICIAL_CONTROL_UNAVAILABLE",
+    "productionChanged": false
+  }
+}

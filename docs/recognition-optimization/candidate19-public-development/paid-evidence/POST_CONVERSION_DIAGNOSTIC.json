@@ -1,0 +1,1806 @@
+{
+  "version": "public-known-recorded-diagnostic-1.0.0",
+  "scope": "SEALED_INCOMPLETE_SINGLE_ARM",
+  "batch": "C19-PUBLIC-DEVELOPMENT-R1",
+  "denominator": 4,
+  "observedModelResponses": 1,
+  "allPlannedUnits": [
+    {
+      "ordinal": 1,
+      "status": "SETTLED",
+      "haltReason": null
+    },
+    {
+      "ordinal": 2,
+      "status": "UNCERTAIN",
+      "haltReason": "SEND_RAW_OR_STATE"
+    },
+    {
+      "ordinal": 3,
+      "status": "NOT_SENT",
+      "haltReason": null
+    },
+    {
+      "ordinal": 4,
+      "status": "NOT_SENT",
+      "haltReason": null
+    }
+  ],
+  "scene": {
+    "role": "SEALED_BATCH_FORENSIC_READ_ONLY",
+    "batch": "C19-PUBLIC-DEVELOPMENT-R1",
+    "denominator": 4,
+    "status": "HALTED_READ_ONLY",
+    "units": [
+      {
+        "ordinal": 1,
+        "status": "SETTLED",
+        "haltReason": null
+      },
+      {
+        "ordinal": 2,
+        "status": "UNCERTAIN",
+        "haltReason": "SEND_RAW_OR_STATE"
+      },
+      {
+        "ordinal": 3,
+        "status": "NOT_SENT",
+        "haltReason": null
+      },
+      {
+        "ordinal": 4,
+        "status": "NOT_SENT",
+        "haltReason": null
+      }
+    ],
+    "verifiedSettled": 1,
+    "lockExists": true,
+    "halt": {
+      "version": "d26-host-halt-1",
+      "role": "SCOPED_DEVELOPMENT_HOST_NOT_AUTHORIZATION",
+      "batch": "C19-PUBLIC-DEVELOPMENT-R1",
+      "code": "UNIT_SEND_RAW_OR_SETTLEMENT_UNCERTAIN",
+      "observedAt": "2026-10-04T15:44:44.476Z",
+      "units": [
+        {
+          "ordinal": 1,
+          "status": "SETTLED"
+        },
+        {
+          "ordinal": 2,
+          "status": "UNCERTAIN"
+        },
+        {
+          "ordinal": 3,
+          "status": "NOT_SENT"
+        },
+        {
+          "ordinal": 4,
+          "status": "NOT_SENT"
+        }
+      ],
+      "instruction": "READ_ONLY_RECONCILIATION_NO_AUTOMATIC_RETRY_OR_LOCK_REMOVAL"
+    },
+    "localIntegrity": {
+      "stateSha256": "72bc4d1aa6312f42840d0c280ae4ef29e049e6cee09017862a9a63f87b471819",
+      "authorizationSha256": "7cef55e3d7a4390aacf1d566578c0a21f894d143092c6dd94277ff1933b2d917",
+      "priceEvidenceSha256": "283064f7b492b25a7d0b770d53a0ed01a61479020e3349b33923806c6c3882b4",
+      "userAuthorizationSha256": "380aa6ab55b2010d24d06aa38028bc095aa72a553f1825b1ab0450715bdb5e37"
+    },
+    "ledger": {
+      "rows": 1000,
+      "sha256": "fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d",
+      "tail": "3607e0c9b993aa4004bbddcbc06cfe9c76423f88ae274f52db221863bb9ecd15",
+      "batchRows": 4
+    },
+    "modelRequests": 0,
+    "ledgerWrites": 0,
+    "dispatch": "DISABLED_NO_MUTATION_API"
+  },
+  "known": [
+    {
+      "sourceId": "PUB-C19-01",
+      "responseSha256": "2e87f9078c1cca3536c4f6d6b7d0845be3c5bad67aaeea63f11874d67465ae9d",
+      "modelWire": {
+        "schemaVersion": "explicit-source-contract-4.0.0",
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "图书馆查收查引服务将临时暂停",
+            "description": "因系统安全升级需要，图书馆查收查引服务将临时暂停，届时相关业务无法办理。",
+            "startTimePointTempId": "time-0001",
+            "endTimePointTempId": "time-0002",
+            "location": null,
+            "scopeIds": [
+              "scope-0001-b19eaae0744542b583faab1b62e38262e248b9eeca567c75f3a7db5654ba916b",
+              "scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c",
+              "scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338",
+              "scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682",
+              "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704"
+            ],
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "relatedTaskTempIds": []
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "event_start",
+            "rawText": "2026年5月9日15:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704"
+            ],
+            "confidence": 0.95
+          },
+          {
+            "tempId": "time-0002",
+            "type": "event_end",
+            "rawText": "2026年5月11日8:30",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704"
+            ],
+            "confidence": 0.95
+          }
+        ],
+        "materials": [],
+        "tasks": [],
+        "revisions": [],
+        "conflicts": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-b19eaae0744542b583faab1b62e38262e248b9eeca567c75f3a7db5654ba916b",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "time-0001",
+              "time-0002"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": [
+              "time-0001",
+              "time-0002"
+            ]
+          }
+        ],
+        "prerequisiteStates": []
+      },
+      "supportAudit": {
+        "version": "source-support-accounting-projection-1.1.0",
+        "role": "POST_COMPARISON_PROGRAM_CONVERSION",
+        "inferredFacts": 0,
+        "originalWire": {
+          "schemaVersion": "explicit-source-contract-4.0.0",
+          "events": [
+            {
+              "tempId": "event-0001",
+              "title": "图书馆查收查引服务将临时暂停",
+              "description": "因系统安全升级需要，图书馆查收查引服务将临时暂停，届时相关业务无法办理。",
+              "startTimePointTempId": "time-0001",
+              "endTimePointTempId": "time-0002",
+              "location": null,
+              "scopeIds": [
+                "scope-0001-b19eaae0744542b583faab1b62e38262e248b9eeca567c75f3a7db5654ba916b",
+                "scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c",
+                "scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338",
+                "scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682",
+                "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704"
+              ],
+              "confidence": 0.95,
+              "inferenceLevel": "explicit",
+              "relatedTaskTempIds": []
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-0001",
+              "type": "event_start",
+              "rawText": "2026年5月9日15:00",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "scopeIds": [
+                "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704"
+              ],
+              "confidence": 0.95
+            },
+            {
+              "tempId": "time-0002",
+              "type": "event_end",
+              "rawText": "2026年5月11日8:30",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "scopeIds": [
+                "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704"
+              ],
+              "confidence": 0.95
+            }
+          ],
+          "materials": [],
+          "tasks": [],
+          "revisions": [],
+          "conflicts": [],
+          "scopeAccounting": [
+            {
+              "scopeId": "scope-0001-b19eaae0744542b583faab1b62e38262e248b9eeca567c75f3a7db5654ba916b",
+              "kind": "information",
+              "primaryEntityIds": [],
+              "secondaryEntityIds": [
+                "event-0001"
+              ]
+            },
+            {
+              "scopeId": "scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c",
+              "kind": "event",
+              "primaryEntityIds": [
+                "event-0001"
+              ],
+              "secondaryEntityIds": []
+            },
+            {
+              "scopeId": "scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338",
+              "kind": "information",
+              "primaryEntityIds": [],
+              "secondaryEntityIds": [
+                "event-0001"
+              ]
+            },
+            {
+              "scopeId": "scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682",
+              "kind": "information",
+              "primaryEntityIds": [],
+              "secondaryEntityIds": [
+                "time-0001",
+                "time-0002"
+              ]
+            },
+            {
+              "scopeId": "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704",
+              "kind": "information",
+              "primaryEntityIds": [],
+              "secondaryEntityIds": [
+                "time-0001",
+                "time-0002"
+              ]
+            }
+          ],
+          "prerequisiteStates": []
+        },
+        "changes": [
+          {
+            "scopeId": "scope-0001-b19eaae0744542b583faab1b62e38262e248b9eeca567c75f3a7db5654ba916b",
+            "entityId": "event-0001",
+            "reason": "INDEPENDENT_EVENT_CONTEXT"
+          },
+          {
+            "scopeId": "scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338",
+            "entityId": "event-0001",
+            "reason": "INDEPENDENT_EVENT_CONTEXT"
+          },
+          {
+            "scopeId": "scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682",
+            "entityId": "time-0001",
+            "reason": "EVENT_TIME_LABEL_CONTEXT"
+          },
+          {
+            "scopeId": "scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682",
+            "entityId": "time-0002",
+            "reason": "EVENT_TIME_LABEL_CONTEXT"
+          },
+          {
+            "scopeId": "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704",
+            "entityId": "time-0001",
+            "reason": "EVENT_TIME_CONTEXT"
+          },
+          {
+            "scopeId": "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704",
+            "entityId": "time-0002",
+            "reason": "EVENT_TIME_CONTEXT"
+          }
+        ],
+        "projectedAccounting": [
+          {
+            "scopeId": "scope-0001-b19eaae0744542b583faab1b62e38262e248b9eeca567c75f3a7db5654ba916b",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          }
+        ]
+      },
+      "firstSuggestion": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "Candidate19 固定录制（非实时调用）",
+        "createdAt": "2026-05-09T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "图书馆查收查引服务将临时暂停",
+          "sourceType": "text",
+          "notificationType": "event_notice",
+          "summary": "0项任务，1项事件。请核对后确认。",
+          "requiresAction": false,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "event_start",
+            "rawText": "2026年5月9日15:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 0.95,
+            "normalizedValue": "2026-05-09T15:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704"
+            ]
+          },
+          {
+            "tempId": "time-0002",
+            "type": "event_end",
+            "rawText": "2026年5月11日8:30",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 0.95,
+            "normalizedValue": "2026-05-11T08:30",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "图书馆查收查引服务将临时暂停",
+            "description": "因系统安全升级需要，\n图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n暂停时间：\n2026年5月9日15:00—2026年5月11日8:30",
+            "startTimePointTempId": "time-0001",
+            "endTimePointTempId": "time-0002",
+            "location": null,
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0001-b19eaae0744542b583faab1b62e38262e248b9eeca567c75f3a7db5654ba916b",
+              "d26-scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c",
+              "d26-scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338",
+              "d26-scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682",
+              "d26-scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-b19eaae0744542b583faab1b62e38262e248b9eeca567c75f3a7db5654ba916b",
+            "sourceId": "PUB-C19-01",
+            "quote": "因系统安全升级需要，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c",
+            "sourceId": "PUB-C19-01",
+            "quote": "图书馆查收查引服务将临时暂停，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338",
+            "sourceId": "PUB-C19-01",
+            "quote": "届时相关业务无法办理。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682",
+            "sourceId": "PUB-C19-01",
+            "quote": "暂停时间：",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704",
+            "sourceId": "PUB-C19-01",
+            "quote": "2026年5月9日15:00—2026年5月11日8:30",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "因系统安全升级需要，",
+            "reason": "other"
+          },
+          {
+            "text": "届时相关业务无法办理。",
+            "reason": "other"
+          },
+          {
+            "text": "暂停时间：",
+            "reason": "other"
+          },
+          {
+            "text": "2026年5月9日15:00—2026年5月11日8:30",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "assemblyAudit": {
+        "version": "grounded-first-suggestion-1.0.0",
+        "originalProse": [
+          {
+            "entityId": "event-0001",
+            "kind": "event",
+            "title": "图书馆查收查引服务将临时暂停",
+            "description": "因系统安全升级需要，\n图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n暂停时间：\n2026年5月9日15:00—2026年5月11日8:30"
+          },
+          {
+            "entityId": "source",
+            "kind": "source",
+            "title": "图书馆查收查引服务将临时暂停",
+            "description": "0项任务，1项事件。"
+          }
+        ],
+        "generatedProse": [
+          {
+            "entityId": "event-0001",
+            "kind": "event",
+            "title": "图书馆查收查引服务将临时暂停",
+            "description": "因系统安全升级需要，\n图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n暂停时间：\n2026年5月9日15:00—2026年5月11日8:30"
+          },
+          {
+            "entityId": "source",
+            "kind": "source",
+            "title": "图书馆查收查引服务将临时暂停",
+            "description": "0项任务，1项事件。请核对后确认。"
+          }
+        ],
+        "times": [
+          {
+            "entityId": "time-0001",
+            "before": {
+              "normalizedValue": "2026-05-09T15:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false
+            },
+            "after": {
+              "normalizedValue": "2026-05-09T15:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false
+            },
+            "interpretation": {
+              "version": "source-time-semantics-2.0.0",
+              "point": {
+                "rawText": "2026年5月9日15:00",
+                "type": "event_start",
+                "normalizedValue": "2026-05-09T15:00",
+                "rangeEndNormalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceSpan": {
+                  "start": 0,
+                  "end": 14
+                },
+                "dateKind": "absolute",
+                "timeKind": "clock",
+                "correctionApplied": false,
+                "issues": []
+              },
+              "knownDate": "2026-05-09",
+              "dayPeriod": null,
+              "certainty": "stated",
+              "sourceContext": "2026年5月9日15:00—2026年5月11日8:30"
+            }
+          },
+          {
+            "entityId": "time-0002",
+            "before": {
+              "normalizedValue": "2026-05-11T08:30",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false
+            },
+            "after": {
+              "normalizedValue": "2026-05-11T08:30",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false
+            },
+            "interpretation": {
+              "version": "source-time-semantics-2.0.0",
+              "point": {
+                "rawText": "2026年5月11日8:30",
+                "type": "event_end",
+                "normalizedValue": "2026-05-11T08:30",
+                "rangeEndNormalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceSpan": {
+                  "start": 0,
+                  "end": 14
+                },
+                "dateKind": "absolute",
+                "timeKind": "clock",
+                "correctionApplied": false,
+                "issues": []
+              },
+              "knownDate": "2026-05-11",
+              "dayPeriod": null,
+              "certainty": "stated",
+              "sourceContext": "2026年5月9日15:00—2026年5月11日8:30\n2026年5月9日15:00—2026年5月11日8:30"
+            }
+          }
+        ],
+        "unresolved": [],
+        "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+      },
+      "role": "POST_OUTPUT_PROGRAM_COMPATIBILITY_NOT_NEW_MODEL_IMPROVEMENT"
+    }
+  ],
+  "frozenReport": {
+    "version": "public-source-fact-adjudication-1.0.0",
+    "denominator": 4,
+    "cases": [
+      {
+        "sourceId": "PUB-C19-01",
+        "adjudicationRecords": 1,
+        "version": "public-source-fact-adjudication-1.0.0",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "stages": {
+          "modelFirstFacts": {
+            "complete": true,
+            "correct": 4,
+            "incorrect": 0,
+            "unknown": 0,
+            "checks": [
+              {
+                "factId": "PUB-C19-01-F1",
+                "verdict": "CORRECT",
+                "reason": "原答tasks为空，events已有真实服务暂停；无预约、办理或恢复待办。",
+                "outputPointer": "raw-01.json/rawHttpText/output[0]/content[0]/text: tasks,events[0]"
+              },
+              {
+                "factId": "PUB-C19-01-F2",
+                "verdict": "CORRECT",
+                "reason": "两个原文时间逐字存在，分别event_start/event_end且被同一暂停事件引用；Asia/Shanghai由冻结请求上下文指定，不由模型猜测。",
+                "outputPointer": "raw-01.json/modelWire: timePoints[0..1],events[0].startTimePointTempId,endTimePointTempId; SOURCES.json/referenceTime,timezone"
+              },
+              {
+                "factId": "PUB-C19-01-F3",
+                "verdict": "CORRECT",
+                "reason": "原事件description完整保留系统安全升级原因、暂停及业务无法办理，没有额外动作。",
+                "outputPointer": "raw-01.json/modelWire: events[0].description,tasks[]"
+              },
+              {
+                "factId": "PUB-C19-01-F4",
+                "verdict": "CORRECT",
+                "reason": "逐项检查全部原标题和description与摘录一致；仅1事件2时间、0任务材料修订；证据都属于原来源，两个值在时间范围片段逐字存在，事件端点类型一致。information支持引用不符合冻结wire规则，属于明确单列的表示/契约拒绝，不能把它伪称正确wire或业务事实新增。",
+                "outputPointer": "raw-01.json/modelWire: all events,timePoints,materials,tasks,revisions,conflicts,scopeAccounting; INITIAL_FROZEN_DIAGNOSTIC.json/cases[0].error"
+              }
+            ],
+            "unregistered": []
+          },
+          "displayBeforeHuman": {
+            "complete": false,
+            "correct": 0,
+            "incorrect": 4,
+            "unknown": 0,
+            "checks": [
+              {
+                "factId": "PUB-C19-01-F1",
+                "verdict": "INCORRECT",
+                "reason": "原冻结程序拒绝整个回答，没有首份事件建议；未由用户补录。",
+                "outputPointer": "INITIAL_FROZEN_DIAGNOSTIC.json/cases[0]: firstSuggestion=null,decode=REJECTED"
+              },
+              {
+                "factId": "PUB-C19-01-F2",
+                "verdict": "INCORRECT",
+                "reason": "原冻结页面无法形成已给出的起止时间。",
+                "outputPointer": "INITIAL_FROZEN_DIAGNOSTIC.json/cases[0]: firstSuggestion=null"
+              },
+              {
+                "factId": "PUB-C19-01-F3",
+                "verdict": "INCORRECT",
+                "reason": "保留原来源不等于已给用户完整首份建议。",
+                "outputPointer": "INITIAL_FROZEN_DIAGNOSTIC.json/cases[0]: firstSuggestion=null"
+              },
+              {
+                "factId": "PUB-C19-01-F4",
+                "verdict": "INCORRECT",
+                "reason": "information引用事件/时间导致原程序PRODUCT_SUPPORT_UNSUPPORTED_CONTEXT_REFERENCE，首份建议缺失。单列产品可展示失败，不改原模型事实或旧批成绩。",
+                "outputPointer": "INITIAL_FROZEN_DIAGNOSTIC.json/cases[0].error"
+              }
+            ],
+            "unregistered": []
+          },
+          "humanFinal": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 4,
+            "checks": [
+              {
+                "factId": "PUB-C19-01-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-01-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-01-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-01-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          }
+        },
+        "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+      },
+      {
+        "sourceId": "PUB-C19-02",
+        "adjudicationRecords": 0,
+        "version": "public-source-fact-adjudication-1.0.0",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "stages": {
+          "modelFirstFacts": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 7,
+            "checks": [
+              {
+                "factId": "PUB-C19-02-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F7",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          },
+          "displayBeforeHuman": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 7,
+            "checks": [
+              {
+                "factId": "PUB-C19-02-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F7",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          },
+          "humanFinal": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 7,
+            "checks": [
+              {
+                "factId": "PUB-C19-02-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F7",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          }
+        },
+        "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+      },
+      {
+        "sourceId": "PUB-C19-03",
+        "adjudicationRecords": 0,
+        "version": "public-source-fact-adjudication-1.0.0",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "stages": {
+          "modelFirstFacts": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 6,
+            "checks": [
+              {
+                "factId": "PUB-C19-03-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          },
+          "displayBeforeHuman": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 6,
+            "checks": [
+              {
+                "factId": "PUB-C19-03-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          },
+          "humanFinal": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 6,
+            "checks": [
+              {
+                "factId": "PUB-C19-03-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          }
+        },
+        "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+      },
+      {
+        "sourceId": "PUB-C19-04",
+        "adjudicationRecords": 0,
+        "version": "public-source-fact-adjudication-1.0.0",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "stages": {
+          "modelFirstFacts": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 6,
+            "checks": [
+              {
+                "factId": "PUB-C19-04-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          },
+          "displayBeforeHuman": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 6,
+            "checks": [
+              {
+                "factId": "PUB-C19-04-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          },
+          "humanFinal": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 6,
+            "checks": [
+              {
+                "factId": "PUB-C19-04-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          }
+        },
+        "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+      }
+    ],
+    "summary": {
+      "modelFirstFacts": {
+        "correct": 1,
+        "incorrect": 0,
+        "unknown": 3,
+        "denominator": 4
+      },
+      "displayBeforeHuman": {
+        "correct": 0,
+        "incorrect": 1,
+        "unknown": 3,
+        "denominator": 4
+      },
+      "humanFinal": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      }
+    }
+  },
+  "postConversionReport": {
+    "version": "public-source-fact-adjudication-1.0.0",
+    "denominator": 4,
+    "cases": [
+      {
+        "sourceId": "PUB-C19-01",
+        "adjudicationRecords": 1,
+        "version": "public-source-fact-adjudication-1.0.0",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "stages": {
+          "modelFirstFacts": {
+            "complete": true,
+            "correct": 4,
+            "incorrect": 0,
+            "unknown": 0,
+            "checks": [
+              {
+                "factId": "PUB-C19-01-F1",
+                "verdict": "CORRECT",
+                "reason": "原答tasks为空，events已有真实服务暂停；无预约、办理或恢复待办。",
+                "outputPointer": "raw-01.json/rawHttpText/output[0]/content[0]/text: tasks,events[0]"
+              },
+              {
+                "factId": "PUB-C19-01-F2",
+                "verdict": "CORRECT",
+                "reason": "两个原文时间逐字存在，分别event_start/event_end且被同一暂停事件引用；Asia/Shanghai由冻结请求上下文指定，不由模型猜测。",
+                "outputPointer": "raw-01.json/modelWire: timePoints[0..1],events[0].startTimePointTempId,endTimePointTempId; SOURCES.json/referenceTime,timezone"
+              },
+              {
+                "factId": "PUB-C19-01-F3",
+                "verdict": "CORRECT",
+                "reason": "原事件description完整保留系统安全升级原因、暂停及业务无法办理，没有额外动作。",
+                "outputPointer": "raw-01.json/modelWire: events[0].description,tasks[]"
+              },
+              {
+                "factId": "PUB-C19-01-F4",
+                "verdict": "CORRECT",
+                "reason": "逐项检查全部原标题和description与摘录一致；仅1事件2时间、0任务材料修订；证据都属于原来源，两个值在时间范围片段逐字存在，事件端点类型一致。information支持引用不符合冻结wire规则，属于明确单列的表示/契约拒绝，不能把它伪称正确wire或业务事实新增。",
+                "outputPointer": "raw-01.json/modelWire: all events,timePoints,materials,tasks,revisions,conflicts,scopeAccounting; INITIAL_FROZEN_DIAGNOSTIC.json/cases[0].error"
+              }
+            ],
+            "unregistered": []
+          },
+          "displayBeforeHuman": {
+            "complete": true,
+            "correct": 4,
+            "incorrect": 0,
+            "unknown": 0,
+            "checks": [
+              {
+                "factId": "PUB-C19-01-F1",
+                "verdict": "CORRECT",
+                "reason": "公共1.1.0仅转换已支持的附属引用元数据，首次页面0任务1事件，无用户补录。",
+                "outputPointer": "POST_CONVERSION_DIAGNOSTIC.json/known[0].firstSuggestion.standaloneTasks,events; browser/01-first-suggestion.txt"
+              },
+              {
+                "factId": "PUB-C19-01-F2",
+                "verdict": "CORRECT",
+                "reason": "源日期基准未变，首次页面两个准确时间与原端点一致，未新增日程值。",
+                "outputPointer": "POST_CONVERSION_DIAGNOSTIC.json/known[0].firstSuggestion.timePoints; browser/04-public-saved.json/timePoints"
+              },
+              {
+                "factId": "PUB-C19-01-F3",
+                "verdict": "CORRECT",
+                "reason": "首次展示description由已有原文依据生成，原因、暂停期间无法办理及起止均保留，不包含额外操作。",
+                "outputPointer": "POST_CONVERSION_DIAGNOSTIC.json/known[0].firstSuggestion.events[0].description"
+              },
+              {
+                "factId": "PUB-C19-01-F4",
+                "verdict": "CORRECT",
+                "reason": "对新转换后全图逐项检查：0任务材料项目、1事件2时间；标题为原答支持标题，description为本来源片段；没有扩充业务事实，点值/类型/owner/实际时间证据一致。不同对象/值/顺序及最小错误引用反例验证同一规则；仍仅作者暂定判断，非独立人工真值。",
+                "outputPointer": "POST_CONVERSION_DIAGNOSTIC.json/known[0].firstSuggestion,supportAudit; browser/04-public-saved.json/events,timePoints,evidenceRefs; src/recognition/independentEventSupport.test.ts"
+              }
+            ],
+            "unregistered": []
+          },
+          "humanFinal": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 4,
+            "checks": [
+              {
+                "factId": "PUB-C19-01-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-01-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-01-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-01-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          }
+        },
+        "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+      },
+      {
+        "sourceId": "PUB-C19-02",
+        "adjudicationRecords": 0,
+        "version": "public-source-fact-adjudication-1.0.0",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "stages": {
+          "modelFirstFacts": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 7,
+            "checks": [
+              {
+                "factId": "PUB-C19-02-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F7",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          },
+          "displayBeforeHuman": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 7,
+            "checks": [
+              {
+                "factId": "PUB-C19-02-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F7",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          },
+          "humanFinal": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 7,
+            "checks": [
+              {
+                "factId": "PUB-C19-02-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-02-F7",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          }
+        },
+        "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+      },
+      {
+        "sourceId": "PUB-C19-03",
+        "adjudicationRecords": 0,
+        "version": "public-source-fact-adjudication-1.0.0",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "stages": {
+          "modelFirstFacts": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 6,
+            "checks": [
+              {
+                "factId": "PUB-C19-03-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          },
+          "displayBeforeHuman": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 6,
+            "checks": [
+              {
+                "factId": "PUB-C19-03-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          },
+          "humanFinal": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 6,
+            "checks": [
+              {
+                "factId": "PUB-C19-03-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-03-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          }
+        },
+        "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+      },
+      {
+        "sourceId": "PUB-C19-04",
+        "adjudicationRecords": 0,
+        "version": "public-source-fact-adjudication-1.0.0",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "stages": {
+          "modelFirstFacts": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 6,
+            "checks": [
+              {
+                "factId": "PUB-C19-04-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          },
+          "displayBeforeHuman": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 6,
+            "checks": [
+              {
+                "factId": "PUB-C19-04-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          },
+          "humanFinal": {
+            "complete": "UNKNOWN",
+            "correct": 0,
+            "incorrect": 0,
+            "unknown": 6,
+            "checks": [
+              {
+                "factId": "PUB-C19-04-F1",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F2",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F3",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F4",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F5",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              },
+              {
+                "factId": "PUB-C19-04-F6",
+                "verdict": "UNKNOWN",
+                "reason": "MISSING_OR_INVALID_ADJUDICATION"
+              }
+            ],
+            "unregistered": []
+          }
+        },
+        "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+      }
+    ],
+    "summary": {
+      "modelFirstFacts": {
+        "correct": 1,
+        "incorrect": 0,
+        "unknown": 3,
+        "denominator": 4
+      },
+      "displayBeforeHuman": {
+        "correct": 1,
+        "incorrect": 0,
+        "unknown": 3,
+        "denominator": 4
+      },
+      "humanFinal": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      }
+    }
+  },
+  "humanFinal": "NOT_OBSERVABLE_ENGINEERING_ONLY",
+  "wireContract": {
+    "knownRejectedByFrozen": 1,
+    "knownAcceptedByFrozen": 0,
+    "unknown": 3,
+    "reason": "Information accounting support references disagree with frozen contract; source facts evaluated separately"
+  },
+  "conclusion": "EVIDENCE_INCOMPLETE_NO_BATCH_ACCURACY_ESTIMATE_NO_RELATIVE_WINNER",
+  "oldTwelveRegression": [
+    {
+      "ordinal": 1,
+      "sourceId": "C19-DEV-S01",
+      "candidate": "Candidate17",
+      "responseSha256": "05a1b54cc527707cab1ff02bf88587574ea0d9fa6b6124d00dfba7c989f8fcf6",
+      "firstSuggestionEqual": true
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "C19-DEV-S01",
+      "candidate": "Candidate19",
+      "responseSha256": "3e725f3f2b99787f4124fd0862a6bff877d169835b106424413f3c33ddda2efa",
+      "firstSuggestionEqual": true
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "C19-DEV-S02",
+      "candidate": "Candidate19",
+      "responseSha256": "1b04a03763bdfa9069ce8a10fb8f74233552e37a63810a4e3a4f6f30f243b16e",
+      "firstSuggestionEqual": true
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "C19-DEV-S02",
+      "candidate": "Candidate17",
+      "responseSha256": "9aca34f978b2a9458272a6d0bfdd78248d87fff45a442e4108dee921800fd630",
+      "firstSuggestionEqual": true
+    },
+    {
+      "ordinal": 5,
+      "sourceId": "C19-DEV-S03",
+      "candidate": "Candidate17",
+      "responseSha256": "d2d9708c9623309d4419fedae2d535ec8fe178c6d9fc518e26ba556c9e5aeb96",
+      "firstSuggestionEqual": true
+    },
+    {
+      "ordinal": 6,
+      "sourceId": "C19-DEV-S03",
+      "candidate": "Candidate19",
+      "responseSha256": "fd8f710ef5bb267cdf61fbe91482351f731d6832cc45e7fc6a435555636497db",
+      "firstSuggestionEqual": true
+    },
+    {
+      "ordinal": 7,
+      "sourceId": "C19-DEV-S04",
+      "candidate": "Candidate19",
+      "responseSha256": "6ae14cd30dd8b18d8608a67f0b4cb38b3cbceb352e93deb441ec2ab26215c760",
+      "firstSuggestionEqual": true
+    },
+    {
+      "ordinal": 8,
+      "sourceId": "C19-DEV-S04",
+      "candidate": "Candidate17",
+      "responseSha256": "19e40dfde51e3f0b46362055714cc2369971c5f3515bdf02181d639448a17140",
+      "firstSuggestionEqual": true
+    },
+    {
+      "ordinal": 9,
+      "sourceId": "C19-DEV-S05",
+      "candidate": "Candidate17",
+      "responseSha256": "9030d9f640367524d14c4d336d3654797146cc85a506fb8292ae3d330dff4fae",
+      "firstSuggestionEqual": true
+    },
+    {
+      "ordinal": 10,
+      "sourceId": "C19-DEV-S05",
+      "candidate": "Candidate19",
+      "responseSha256": "c8febf8c1a7c77cf223e99e52142c31895a9dbc950c9e40c22b2f782d1dd285e",
+      "firstSuggestionEqual": true
+    },
+    {
+      "ordinal": 11,
+      "sourceId": "C19-DEV-S06",
+      "candidate": "Candidate19",
+      "responseSha256": "0f011e226cc43b5ab15acde3301e5def50ba3dd459d44582b1edf5906275ddd7",
+      "firstSuggestionEqual": true
+    },
+    {
+      "ordinal": 12,
+      "sourceId": "C19-DEV-S06",
+      "candidate": "Candidate17",
+      "responseSha256": "0abf4121714faf1110e3e231122d1487e383ceba46107c79df55015564c800d1",
+      "firstSuggestionEqual": true
+    }
+  ],
+  "fees": {
+    "knownUsage": {
+      "input_tokens": 4684,
+      "input_tokens_details": {
+        "cached_tokens": 4096
+      },
+      "output_tokens": 887,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 5571
+    },
+    "knownConservativeInternalMicroUsd": 2470,
+    "uncertainReserveUpperMicroUsd": 324404,
+    "totalHardLimitMicroUsd": 1300000,
+    "providerActualDeduction": "NOT_OBSERVABLE"
+  },
+  "immutable": {
+    "initialDiagnosticSha256": "6907ef10ea5a4be4623708fa00d74eddb684f006f94a136a819a3396fd5ac32d",
+    "rawFileSha256": "d512946b9341fb7b2a3c1d5e3260535f533c25aa6a2a57a0b9fa7f77d2991e14",
+    "manifestSha256": "6f29277d0e6c07065e6d158d1e9335f01eddbe7228fbc20d895d5c977b6afb0f",
+    "identitiesSha256": "77c6881849c21ba709c1ad1aec7f9bb20ab920e5f271f69e5390f915d95a20e9"
+  }
+}

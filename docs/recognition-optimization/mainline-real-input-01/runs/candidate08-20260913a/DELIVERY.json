@@ -1,0 +1,48 @@
+{
+  "version": "candidate08-delivery-1",
+  "deliveredAt": "2026-09-13T21:22:00+08:00",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "businessCommit": "9a573eac83f4e5023e742ce8dc9566ffe6948aef",
+  "remote": "origin",
+  "remoteRef": "refs/heads/codex/e2-multimodal-recognition-exp",
+  "remoteBusinessCommitVerified": "9a573eac83f4e5023e742ce8dc9566ffe6948aef",
+  "decision": {
+    "candidate08": "NOT_ADOPTED",
+    "candidate03RemainsBaseline": true,
+    "enabledOnLocal6632": false,
+    "browserJourneys": "NOT_RUN_NON_ADOPTION",
+    "reason": "17/20 candidate08 outputs failed the frozen evidence-role conversion contract; no reduction in required major corrections was demonstrated."
+  },
+  "requests": {
+    "batch": 40,
+    "http200": 40,
+    "settled": 40,
+    "cumulative": 168,
+    "retry": 0,
+    "repair": 0,
+    "verifier": 0
+  },
+  "ledger": {
+    "lines": 345,
+    "sha256": "e8503b7934eceadc278810ccffacae506edd320257a9b4890414fb0eaa1dcdc2",
+    "tailHash": "64325fd5feddd249822a24a74bb0e0394997cb6f282d608aeb71aad46346dee8"
+  },
+  "evidence": {
+    "report": "AUDIT.md",
+    "comparison": "COMPARISON.json",
+    "independentAudit": "EXPERIMENT_AUDIT.md",
+    "finalChecks": "FINAL_CHECKS.json",
+    "finalImplementationSnapshot": "FINAL_IMPLEMENTATION_SNAPSHOT.json"
+  },
+  "protection": {
+    "declared": 944,
+    "unchangedAtOriginalSha": 938,
+    "authorizedExceptionsAtRecordedAfterSha": 6,
+    "staticEvidence": 607
+  },
+  "notes": [
+    "The two authorized HTTPS access commits that landed during this batch were preserved and rechecked before the business commit.",
+    "Provider billed cost remains NOT_OBSERVABLE; the auditable cumulative upper bound is 7.197982 CNY including the permanent A01 unknown reserve.",
+    "No production deployment or real-user database access occurred."
+  ]
+}

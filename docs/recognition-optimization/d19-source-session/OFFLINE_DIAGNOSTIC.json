@@ -1,0 +1,1386 @@
+{
+  "version": "d19-offline-diagnostic-1",
+  "role": "POSTHOC_PROVISIONAL_SEEN_SYNTHETIC",
+  "newModelCalls": 0,
+  "oldDecisionUnchanged": true,
+  "oldD17": {
+    "decision": "MIXED_PROGRESS",
+    "candidate03Complete": 1,
+    "candidate17Complete": 2,
+    "denominator": 24
+  },
+  "scorer": "recognition-semantic-diagnostic-8.0.0",
+  "selector": "recognition-selector-8.0.0",
+  "d17": {
+    "denominator": 24,
+    "cases": [
+      {
+        "ordinal": 1,
+        "sourceId": "C17-D16-S01",
+        "arm": "A",
+        "candidate": "Candidate03",
+        "requestSha256": "e287994e203dbf3d6eb0aa436d5f57fbe3a75037b924ff861514cd01fac7353c",
+        "responseSha256": "c7fbb1a2c1e3b4cda459536be9b6f9f017dd859c4df3d67bdb4ffa8013c85312",
+        "oldComplete": false,
+        "oldSevere": 0,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T1",
+              "field": "materials"
+            },
+            {
+              "kind": "MATERIAL_FACT_WRONG",
+              "taskId": "T1"
+            },
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T1",
+              "field": "completionStandards"
+            }
+          ],
+          "disputes": [
+            {
+              "kind": "INFORMATION_COVERAGE_OR_METADATA_SCOPE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "matchedObligations": [
+            "提交|社团器材盘点表"
+          ]
+        }
+      },
+      {
+        "ordinal": 2,
+        "sourceId": "C17-D16-S01",
+        "arm": "B",
+        "candidate": "Candidate17",
+        "requestSha256": "24e62e94cb525eddde7e438387d2844185b67395725d378f5ede404116d0bcc4",
+        "responseSha256": "dbba9885dc868b0e65a6586b561af2485801b081d0ff375ef4f025e7128d0a0c",
+        "oldComplete": false,
+        "oldSevere": 0,
+        "diagnostic": {
+          "status": "REFERENCE_DISPUTE",
+          "completeStatus": "UNKNOWN",
+          "relationFactsPass": true,
+          "risks": [],
+          "disputes": [
+            {
+              "kind": "INFORMATION_COVERAGE_OR_METADATA_SCOPE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "matchedObligations": [
+            "提交|社团器材盘点表"
+          ]
+        }
+      },
+      {
+        "ordinal": 3,
+        "sourceId": "C17-D16-S02",
+        "arm": "B",
+        "candidate": "Candidate17",
+        "requestSha256": "9830acfb3424a84a6f233ffa4df7c962fea4c30c6285aa24946ef5d71ea7864b",
+        "responseSha256": "45b6477598761938c10e44f20b5c16d4997b201ed46794c3fad35899b68c7a7d",
+        "oldComplete": false,
+        "oldSevere": 0,
+        "diagnostic": {
+          "status": "REFERENCE_DISPUTE",
+          "completeStatus": "UNKNOWN",
+          "relationFactsPass": true,
+          "risks": [],
+          "disputes": [
+            {
+              "kind": "INFORMATION_COVERAGE_OR_METADATA_SCOPE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "expected": 2,
+            "actual": 2
+          },
+          "matchedObligations": [
+            "上传|场地使用承诺函",
+            "核对|迎新志愿者分组"
+          ]
+        }
+      },
+      {
+        "ordinal": 4,
+        "sourceId": "C17-D16-S02",
+        "arm": "A",
+        "candidate": "Candidate03",
+        "requestSha256": "9c082fd38f2fa596e81217d4a4a05188ae36377dd7e21394f9a77f0b3d35144c",
+        "responseSha256": "c40646b24f9a1795b704c805b36156c14e453795287c14705c921846d4de5f64",
+        "oldComplete": false,
+        "oldSevere": 0,
+        "diagnostic": {
+          "status": "REFERENCE_DISPUTE",
+          "completeStatus": "UNKNOWN",
+          "relationFactsPass": true,
+          "risks": [],
+          "disputes": [
+            {
+              "kind": "INFORMATION_COVERAGE_OR_METADATA_SCOPE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "expected": 2,
+            "actual": 2
+          },
+          "matchedObligations": [
+            "上传|场地使用承诺函",
+            "核对|迎新志愿者分组"
+          ]
+        }
+      },
+      {
+        "ordinal": 5,
+        "sourceId": "C17-D16-S03",
+        "arm": "A",
+        "candidate": "Candidate03",
+        "requestSha256": "78f7a801b06963ee263011238ae211a3479f27e7825a374d7f6f6047ea38d9f5",
+        "responseSha256": "63a8f2cbd43c3db007c6864fcafa0df32947e935a422b3cf5abdf9541cb30d55",
+        "oldComplete": false,
+        "oldSevere": 0,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "EVIDENCE_MISSING_OR_CONTRADICTORY",
+              "taskId": "T1",
+              "role": "condition"
+            },
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T1",
+              "field": "materials"
+            },
+            {
+              "kind": "MATERIAL_FACT_WRONG",
+              "taskId": "T1"
+            }
+          ],
+          "disputes": [
+            {
+              "kind": "INFORMATION_COVERAGE_OR_METADATA_SCOPE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "matchedObligations": [
+            "领用|演播室通行证"
+          ]
+        }
+      },
+      {
+        "ordinal": 6,
+        "sourceId": "C17-D16-S03",
+        "arm": "B",
+        "candidate": "Candidate17",
+        "requestSha256": "0c39c5fa199588375a870287eb1ae265e08cc9c150af400765f1840f9c7b69bc",
+        "responseSha256": "d9006487800ded7d6c954b2180d312dc1287d239c8648dd6ef282806c70448ac",
+        "oldComplete": false,
+        "oldSevere": 0,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "EVIDENCE_MISSING_OR_CONTRADICTORY",
+              "taskId": "T1",
+              "role": "condition"
+            }
+          ],
+          "disputes": [
+            {
+              "kind": "INFORMATION_COVERAGE_OR_METADATA_SCOPE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "matchedObligations": [
+            "领用|演播室通行证"
+          ]
+        }
+      },
+      {
+        "ordinal": 7,
+        "sourceId": "C17-D16-S04",
+        "arm": "B",
+        "candidate": "Candidate17",
+        "requestSha256": "6bf91bec7407fa8b7d79a04eddd7ff4819090ae3a6793a3842e1a231e0cb51d4",
+        "responseSha256": "fc0666b26a2956cc476985e7ca1c19304989045153f03bf3e5f9eebecbec9fb5",
+        "oldComplete": true,
+        "oldSevere": 0,
+        "diagnostic": {
+          "status": "SCORED",
+          "completeStatus": true,
+          "relationFactsPass": true,
+          "risks": [],
+          "disputes": [],
+          "taskPresence": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "expected": 0,
+            "actual": 0
+          },
+          "matchedObligations": []
+        }
+      },
+      {
+        "ordinal": 8,
+        "sourceId": "C17-D16-S04",
+        "arm": "A",
+        "candidate": "Candidate03",
+        "requestSha256": "ee00de022a6e6ca99b717f21039e80eca3a338adfcf96d9baed9997ee85216f7",
+        "responseSha256": "ec574a9bfd18576b23d0c4fe9a3b34485b44ca38f7f6f0d51547c48617b78bb8",
+        "oldComplete": false,
+        "oldSevere": 0,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "EVIDENCE_MISSING_OR_CONTRADICTORY",
+              "taskId": "T1",
+              "role": "condition"
+            }
+          ],
+          "disputes": [
+            {
+              "kind": "INFORMATION_COVERAGE_OR_METADATA_SCOPE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "matchedObligations": []
+        }
+      },
+      {
+        "ordinal": 9,
+        "sourceId": "C17-D16-S05",
+        "arm": "A",
+        "candidate": "Candidate03",
+        "requestSha256": "c703090e87738da4201f2e539e5ce7411738afd8997bed3417203004a9389bac",
+        "responseSha256": "d0112d72f5c29b4d1f36121a34b4952572ba859b763660cd93bc2ca9c2172f87",
+        "oldComplete": false,
+        "oldSevere": 1,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T1",
+              "field": "materials"
+            },
+            {
+              "kind": "MATERIAL_FACT_WRONG",
+              "taskId": "T1"
+            }
+          ],
+          "disputes": [
+            {
+              "kind": "TIME_TYPE_OR_RAW_BOUNDARY_NOT_ADJUDICATED",
+              "taskId": "T1"
+            }
+          ],
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "matchedObligations": []
+        }
+      },
+      {
+        "ordinal": 10,
+        "sourceId": "C17-D16-S05",
+        "arm": "B",
+        "candidate": "Candidate17",
+        "requestSha256": "a0c56bb88afa193e509fef62c19a2ae41797830444c11a8fdd8fa5ce8660f196",
+        "responseSha256": "378c6e6cec6e22ae44c1070f8c887f0adf6fb8371960e7837fe16903e7df916f",
+        "oldComplete": false,
+        "oldSevere": 1,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "MATERIAL_FACT_WRONG",
+              "taskId": "T1"
+            },
+            {
+              "kind": "TIME_VALUE_OR_COVERAGE_WRONG",
+              "taskId": "T1"
+            },
+            {
+              "kind": "TIME_GRAPH_CONFLICT",
+              "taskId": "task-0001",
+              "pointId": "time-0001"
+            },
+            {
+              "kind": "INDEPENDENT_INFORMATION_EVENT_OR_TIME_MISSING",
+              "checks": [],
+              "extraEntities": 1
+            }
+          ],
+          "disputes": [],
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "matchedObligations": []
+        }
+      },
+      {
+        "ordinal": 11,
+        "sourceId": "C17-D16-S06",
+        "arm": "B",
+        "candidate": "Candidate17",
+        "requestSha256": "26864ad9c040d4082cc2042814107f3b2d3af668e489e0fdc81579c9893d0c07",
+        "responseSha256": "4b3844e396253ccca568a747bc13ba432fbcf940688b7c133417d59b75c62823",
+        "oldComplete": false,
+        "oldSevere": 1,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T2",
+              "field": "condition"
+            }
+          ],
+          "disputes": [
+            {
+              "kind": "MATERIAL_EVIDENCE_OR_VIEW_NOT_ADJUDICATED",
+              "taskId": "T1"
+            },
+            {
+              "kind": "MATERIAL_EVIDENCE_OR_VIEW_NOT_ADJUDICATED",
+              "taskId": "T2"
+            },
+            {
+              "kind": "INFORMATION_COVERAGE_OR_METADATA_SCOPE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "expected": 2,
+            "actual": 2
+          },
+          "matchedObligations": [
+            "填写|校友访谈记录表",
+            "提交|校友访谈记录表"
+          ]
+        }
+      },
+      {
+        "ordinal": 12,
+        "sourceId": "C17-D16-S06",
+        "arm": "A",
+        "candidate": "Candidate03",
+        "requestSha256": "f02d92ca5546f2fd54e9ac69e80136b974c6bd0072d411266bef5e5a3980ce8e",
+        "responseSha256": "cce1e0a4fdf9a890703ac001a12856b0ad94f01052899c10767c751306a0efa3",
+        "oldComplete": false,
+        "oldSevere": 2,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T2",
+              "field": "condition"
+            },
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T2",
+              "field": "actionability"
+            }
+          ],
+          "disputes": [
+            {
+              "kind": "MATERIAL_EVIDENCE_OR_VIEW_NOT_ADJUDICATED",
+              "taskId": "T1"
+            },
+            {
+              "kind": "MATERIAL_EVIDENCE_OR_VIEW_NOT_ADJUDICATED",
+              "taskId": "T2"
+            },
+            {
+              "kind": "INFORMATION_COVERAGE_OR_METADATA_SCOPE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "expected": 2,
+            "actual": 2
+          },
+          "matchedObligations": [
+            "填写|校友访谈记录表",
+            "提交|校友访谈记录表"
+          ]
+        }
+      },
+      {
+        "ordinal": 13,
+        "sourceId": "C17-D16-S07",
+        "arm": "A",
+        "candidate": "Candidate03",
+        "requestSha256": "7972c50bdd87fe3ebeaa0f07889a41fcf6f223a0cd47598dec63358fc3eb6822",
+        "responseSha256": "f9d62c89ba665579edbf2006e4db7ea34f339576a6fa18ca28f4f89fbf8c22d8",
+        "oldComplete": false,
+        "oldSevere": 1,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T1",
+              "field": "materials"
+            },
+            {
+              "kind": "MATERIAL_FACT_WRONG",
+              "taskId": "T1"
+            },
+            {
+              "kind": "TIME_VALUE_OR_COVERAGE_WRONG",
+              "taskId": "T1"
+            },
+            {
+              "kind": "TIME_GRAPH_CONFLICT",
+              "taskId": "task-submit-photo-description",
+              "pointId": "time-exact-date-later"
+            },
+            {
+              "kind": "INDEPENDENT_INFORMATION_EVENT_OR_TIME_MISSING",
+              "checks": [],
+              "extraEntities": 1
+            }
+          ],
+          "disputes": [],
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "matchedObligations": [
+            "提交|摄影作品说明稿"
+          ]
+        }
+      },
+      {
+        "ordinal": 14,
+        "sourceId": "C17-D16-S07",
+        "arm": "B",
+        "candidate": "Candidate17",
+        "requestSha256": "96de60809329fcb46be5f20a9850b8ebd7948222eb56705ecdcd8bde4da3aaa7",
+        "responseSha256": "7046d52de22285ae09c1a3ca6bef67b12244ff1973bbf104a7456858df2924cd",
+        "oldComplete": false,
+        "oldSevere": 1,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T1",
+              "field": "materials"
+            },
+            {
+              "kind": "MATERIAL_FACT_WRONG",
+              "taskId": "T1"
+            },
+            {
+              "kind": "TIME_VALUE_OR_COVERAGE_WRONG",
+              "taskId": "T1"
+            }
+          ],
+          "disputes": [
+            {
+              "kind": "INFORMATION_COVERAGE_OR_METADATA_SCOPE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "matchedObligations": [
+            "提交|摄影作品说明稿"
+          ]
+        }
+      },
+      {
+        "ordinal": 15,
+        "sourceId": "C17-D16-S08",
+        "arm": "B",
+        "candidate": "Candidate17",
+        "requestSha256": "d2ab8f567cd878f539577db0e744f552e138a325930fd7a6e301cdb5d3a6f844",
+        "responseSha256": "7b0140da6afc0e184247c97d32a4afc5009df9a55a7aa1862ae9e719b393c80f",
+        "oldComplete": false,
+        "oldSevere": 2,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T2",
+              "field": "condition"
+            },
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T2",
+              "field": "actionability"
+            }
+          ],
+          "disputes": [
+            {
+              "kind": "INFORMATION_COVERAGE_OR_METADATA_SCOPE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "expected": 2,
+            "actual": 2
+          },
+          "matchedObligations": [
+            "提交|志愿服务签到证明",
+            "核对|培训证件信息"
+          ]
+        }
+      },
+      {
+        "ordinal": 16,
+        "sourceId": "C17-D16-S08",
+        "arm": "A",
+        "candidate": "Candidate03",
+        "requestSha256": "d60aa43815fc0c8dba1b8da57dff686fc595b9987d8e7c1ae5cd1acabf229e48",
+        "responseSha256": "625a22148686380f9b29b38aa661908a8691e64ccd150f2f5d36a4a7be19d877",
+        "oldComplete": false,
+        "oldSevere": 2,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T2",
+              "field": "condition"
+            },
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T2",
+              "field": "actionability"
+            }
+          ],
+          "disputes": [
+            {
+              "kind": "INFORMATION_COVERAGE_OR_METADATA_SCOPE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "expected": 2,
+            "actual": 2
+          },
+          "matchedObligations": [
+            "提交|志愿服务签到证明",
+            "核对|培训证件信息"
+          ]
+        }
+      },
+      {
+        "ordinal": 17,
+        "sourceId": "C17-D16-S09",
+        "arm": "A",
+        "candidate": "Candidate03",
+        "requestSha256": "d6aa4dff66c0bb1e77edab3dc6b92b6d04ae8f76caf61823f09819d86711cfdd",
+        "responseSha256": "773c8148e9dad9b1e0c24530b5ba63fcd73c821e779856675be723a7deffc005",
+        "oldComplete": false,
+        "oldSevere": 0,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "TASK_PRESENCE",
+              "fn": 0,
+              "fp": 3
+            },
+            {
+              "kind": "INDEPENDENT_INFORMATION_EVENT_OR_TIME_MISSING",
+              "checks": [
+                {
+                  "id": "E1",
+                  "pass": false
+                },
+                {
+                  "id": "I2",
+                  "pass": false
+                },
+                {
+                  "id": "I3",
+                  "pass": false
+                },
+                {
+                  "id": "I4",
+                  "pass": false
+                }
+              ],
+              "extraEntities": 0
+            }
+          ],
+          "disputes": [],
+          "taskPresence": {
+            "tp": 0,
+            "fp": 3,
+            "fn": 0,
+            "expected": 0,
+            "actual": 3
+          },
+          "matchedObligations": []
+        }
+      },
+      {
+        "ordinal": 18,
+        "sourceId": "C17-D16-S09",
+        "arm": "B",
+        "candidate": "Candidate17",
+        "requestSha256": "5dd3fa6048c07da682a42c4df706022faa328d7dca638ec08c3d8fe8aa1d11af",
+        "responseSha256": "2b4e1b2c861af8d7ce243fe2e5a0eddc26a1dd91fb85c45da042ca0c1d28f6bd",
+        "oldComplete": false,
+        "oldSevere": 0,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "INDEPENDENT_INFORMATION_EVENT_OR_TIME_MISSING",
+              "checks": [
+                {
+                  "id": "E1",
+                  "pass": false
+                },
+                {
+                  "id": "P1",
+                  "pass": false
+                }
+              ],
+              "extraEntities": 0
+            }
+          ],
+          "disputes": [],
+          "taskPresence": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "expected": 0,
+            "actual": 0
+          },
+          "matchedObligations": []
+        }
+      },
+      {
+        "ordinal": 19,
+        "sourceId": "C17-D16-S10",
+        "arm": "B",
+        "candidate": "Candidate17",
+        "requestSha256": "bfd0e8b634b0b3f097280dbeaf833e539ba543608bdebd06dc5efc798af3f35e",
+        "responseSha256": "39955df82ac9101287526d0e1bbf09390f40a19fd70056573a30f2a34a603aa2",
+        "oldComplete": false,
+        "oldSevere": 1,
+        "diagnostic": {
+          "status": "REFERENCE_DISPUTE",
+          "completeStatus": "UNKNOWN",
+          "relationFactsPass": true,
+          "risks": [],
+          "disputes": [
+            {
+              "kind": "REVISION_EVIDENCE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "expected": 2,
+            "actual": 2
+          },
+          "matchedObligations": []
+        }
+      },
+      {
+        "ordinal": 20,
+        "sourceId": "C17-D16-S10",
+        "arm": "A",
+        "candidate": "Candidate03",
+        "requestSha256": "538d754685925d329a4066c3cc88ffa49c13277957e4d52acfc49174e265aba6",
+        "responseSha256": "52ec7f60dffaca9f38b6f1aa4371ac5ff661c113acf136ae752678cba1287adf",
+        "oldComplete": false,
+        "oldSevere": 1,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": false,
+          "risks": [
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T1",
+              "field": "action"
+            },
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T2",
+              "field": "action"
+            },
+            {
+              "kind": "REVISION_FACT_OR_ENDPOINT_WRONG"
+            }
+          ],
+          "disputes": [],
+          "taskPresence": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "expected": 2,
+            "actual": 2
+          },
+          "matchedObligations": []
+        }
+      },
+      {
+        "ordinal": 21,
+        "sourceId": "C17-D16-S11",
+        "arm": "A",
+        "candidate": "Candidate03",
+        "requestSha256": "8dd79c99fa9bc27ce4fc08f6ab74c5f44fcee67ff1deb3f0da3e5d9fa56bf469",
+        "responseSha256": "75ae6d96a7101dee4036a73fb299d66bb312e716bdae70cc2a54a3d71c72e8c8",
+        "oldComplete": false,
+        "oldSevere": 3,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": false,
+          "risks": [
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T1",
+              "field": "currentness"
+            },
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T2",
+              "field": "currentness"
+            },
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T3",
+              "field": "materials"
+            },
+            {
+              "kind": "MATERIAL_FACT_WRONG",
+              "taskId": "T3"
+            },
+            {
+              "kind": "REVISION_FACT_OR_ENDPOINT_WRONG"
+            }
+          ],
+          "disputes": [
+            {
+              "kind": "SUPPORTING_SCOPE_NOT_ADJUDICATED",
+              "taskId": "T1",
+              "role": "proposition",
+              "scopeIds": [
+                "scope-0009-51411db89dfa4efa8cfdaf3265a2f3855addfd130285e9cfeaf01d0f6f6206cc"
+              ]
+            },
+            {
+              "kind": "SUPPORTING_SCOPE_NOT_ADJUDICATED",
+              "taskId": "T2",
+              "role": "proposition",
+              "scopeIds": [
+                "scope-0009-51411db89dfa4efa8cfdaf3265a2f3855addfd130285e9cfeaf01d0f6f6206cc"
+              ]
+            }
+          ],
+          "taskPresence": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "expected": 4,
+            "actual": 4
+          },
+          "matchedObligations": [
+            "提交|数字版",
+            "预订|线上时段"
+          ]
+        }
+      },
+      {
+        "ordinal": 22,
+        "sourceId": "C17-D16-S11",
+        "arm": "B",
+        "candidate": "Candidate17",
+        "requestSha256": "9dc7f841618944c15e4bc1a9df2cf66c7ee60b653ec69b21d0470b18e410fabe",
+        "responseSha256": "bd0e18d8817c00fda9d5d530d2507075642dfa99ffdcc22db1ee0087eb15a211",
+        "oldComplete": false,
+        "oldSevere": 3,
+        "diagnostic": {
+          "status": "FACT_RISK",
+          "completeStatus": false,
+          "relationFactsPass": true,
+          "risks": [
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T1",
+              "field": "currentness"
+            },
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T2",
+              "field": "currentness"
+            },
+            {
+              "kind": "TASK_FIELD_WRONG",
+              "taskId": "T3",
+              "field": "materials"
+            },
+            {
+              "kind": "MATERIAL_FACT_WRONG",
+              "taskId": "T3"
+            }
+          ],
+          "disputes": [
+            {
+              "kind": "REVISION_EVIDENCE_NOT_ADJUDICATED"
+            },
+            {
+              "kind": "INFORMATION_COVERAGE_OR_METADATA_SCOPE_NOT_ADJUDICATED"
+            }
+          ],
+          "taskPresence": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "expected": 4,
+            "actual": 4
+          },
+          "matchedObligations": [
+            "提交|数字版",
+            "预订|线上时段"
+          ]
+        }
+      },
+      {
+        "ordinal": 23,
+        "sourceId": "C17-D16-S12",
+        "arm": "B",
+        "candidate": "Candidate17",
+        "requestSha256": "700b9daecd6370123fee621e150ae3f7546ba4b5217a890f5e57464bddd79901",
+        "responseSha256": "4d25d2bfc54ae3f16566410e40ee516e8ab71115534e22e833a64cab2ab2f2ac",
+        "oldComplete": true,
+        "oldSevere": 0,
+        "diagnostic": {
+          "status": "SCORED",
+          "completeStatus": true,
+          "relationFactsPass": true,
+          "risks": [],
+          "disputes": [],
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "matchedObligations": [
+            "校对|活动志愿者名单"
+          ]
+        }
+      },
+      {
+        "ordinal": 24,
+        "sourceId": "C17-D16-S12",
+        "arm": "A",
+        "candidate": "Candidate03",
+        "requestSha256": "230f31b9ef377fbbb82a70d8c5d499fb38b6cb29cb8dd3f85406d67fba4ef0d4",
+        "responseSha256": "cce13d0ee4785ccb53ceb8a70570cc04e18dd8b3e0cd8e07a112c56365bbb502",
+        "oldComplete": true,
+        "oldSevere": 0,
+        "diagnostic": {
+          "status": "SCORED",
+          "completeStatus": true,
+          "relationFactsPass": true,
+          "risks": [],
+          "disputes": [],
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "matchedObligations": [
+            "校对|活动志愿者名单"
+          ]
+        }
+      }
+    ],
+    "pairs": [
+      {
+        "sourceId": "C17-D16-S01",
+        "candidate03Ordinal": 1,
+        "candidate17Ordinal": 2,
+        "comparison": {
+          "status": "UNKNOWN",
+          "reason": "REFERENCE_OR_MEASUREMENT_UNRESOLVED"
+        }
+      },
+      {
+        "sourceId": "C17-D16-S02",
+        "candidate03Ordinal": 4,
+        "candidate17Ordinal": 3,
+        "comparison": {
+          "status": "UNKNOWN",
+          "reason": "REFERENCE_OR_MEASUREMENT_UNRESOLVED"
+        }
+      },
+      {
+        "sourceId": "C17-D16-S03",
+        "candidate03Ordinal": 5,
+        "candidate17Ordinal": 6,
+        "comparison": {
+          "status": "TIE",
+          "lostObligations": [],
+          "newRisks": []
+        }
+      },
+      {
+        "sourceId": "C17-D16-S04",
+        "candidate03Ordinal": 8,
+        "candidate17Ordinal": 7,
+        "comparison": {
+          "status": "IMPROVED",
+          "lostObligations": [],
+          "newRisks": []
+        }
+      },
+      {
+        "sourceId": "C17-D16-S05",
+        "candidate03Ordinal": 9,
+        "candidate17Ordinal": 10,
+        "comparison": {
+          "status": "RISK_REGRESSION",
+          "lostObligations": [],
+          "newRisks": [
+            {
+              "kind": "TIME_VALUE_OR_COVERAGE_WRONG",
+              "taskId": "T1"
+            },
+            {
+              "kind": "TIME_GRAPH_CONFLICT",
+              "taskId": "task-0001",
+              "pointId": "time-0001"
+            },
+            {
+              "kind": "INDEPENDENT_INFORMATION_EVENT_OR_TIME_MISSING",
+              "checks": [],
+              "extraEntities": 1
+            }
+          ]
+        }
+      },
+      {
+        "sourceId": "C17-D16-S06",
+        "candidate03Ordinal": 12,
+        "candidate17Ordinal": 11,
+        "comparison": {
+          "status": "TIE",
+          "lostObligations": [],
+          "newRisks": []
+        }
+      },
+      {
+        "sourceId": "C17-D16-S07",
+        "candidate03Ordinal": 13,
+        "candidate17Ordinal": 14,
+        "comparison": {
+          "status": "TIE",
+          "lostObligations": [],
+          "newRisks": []
+        }
+      },
+      {
+        "sourceId": "C17-D16-S08",
+        "candidate03Ordinal": 16,
+        "candidate17Ordinal": 15,
+        "comparison": {
+          "status": "TIE",
+          "lostObligations": [],
+          "newRisks": []
+        }
+      },
+      {
+        "sourceId": "C17-D16-S09",
+        "candidate03Ordinal": 17,
+        "candidate17Ordinal": 18,
+        "comparison": {
+          "status": "RISK_REGRESSION",
+          "lostObligations": [],
+          "newRisks": [
+            {
+              "kind": "INDEPENDENT_INFORMATION_EVENT_OR_TIME_MISSING",
+              "checks": [
+                {
+                  "id": "E1",
+                  "pass": false
+                },
+                {
+                  "id": "P1",
+                  "pass": false
+                }
+              ],
+              "extraEntities": 0
+            }
+          ]
+        }
+      },
+      {
+        "sourceId": "C17-D16-S10",
+        "candidate03Ordinal": 20,
+        "candidate17Ordinal": 19,
+        "comparison": {
+          "status": "UNKNOWN",
+          "reason": "REFERENCE_OR_MEASUREMENT_UNRESOLVED"
+        }
+      },
+      {
+        "sourceId": "C17-D16-S11",
+        "candidate03Ordinal": 21,
+        "candidate17Ordinal": 22,
+        "comparison": {
+          "status": "TIE",
+          "lostObligations": [],
+          "newRisks": []
+        }
+      },
+      {
+        "sourceId": "C17-D16-S12",
+        "candidate03Ordinal": 24,
+        "candidate17Ordinal": 23,
+        "comparison": {
+          "status": "TIE",
+          "lostObligations": [],
+          "newRisks": []
+        }
+      }
+    ],
+    "determinateCompleteByArm": {
+      "A": 1,
+      "B": 2
+    },
+    "unresolvedByArm": {
+      "A": 1,
+      "B": 3
+    }
+  },
+  "d15": {
+    "denominator": 24,
+    "originalDecision": "REJECT_CANDIDATE15_DEVELOPMENT",
+    "referenceVersion": "v6",
+    "v8Comparison": "NOT_COMPARABLE_REFERENCE_V6",
+    "reason": "D15 uses a different frozen reference and scorer; this package preserves all 24 outcomes and does not convert v6 labels into v8 scores",
+    "raw": [
+      {
+        "ordinal": 1,
+        "sourceId": "C13-D5R1-S01",
+        "arm": "A",
+        "responseSha256": "9a4de48a1b9c9ca6c8af121057e7db6fbf2b102fa52e9871ce30869a109d19ed",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 2,
+        "sourceId": "C13-D5R1-S01",
+        "arm": "B",
+        "responseSha256": "c6a8b9d72ebe4b5fa2381925b78f00415cb7c6cfc19a06d23d5c3874239500db",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 3,
+        "sourceId": "C13-D5R1-S02",
+        "arm": "B",
+        "responseSha256": "bbb23ca2d9a46005c7a559dcd5b3b6e0c343673a627fb19c65dd787a26da2af2",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 4,
+        "sourceId": "C13-D5R1-S02",
+        "arm": "A",
+        "responseSha256": "8646830c8ebfa669623f6fdc6696f2dfb5d5e874ddc1dfe195653af49de2c365",
+        "oldStatus": "SCORED",
+        "oldComplete": true,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 5,
+        "sourceId": "C13-D5R1-S03",
+        "arm": "B",
+        "responseSha256": "2080072e0bff6f52e21890ffad31f97903120e2ac55364eb4a41eed8accb7603",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 6,
+        "sourceId": "C13-D5R1-S03",
+        "arm": "A",
+        "responseSha256": "e4d647b510d526761a708c6c704bc387842afd5ec44a93b16a6b58ae6bf6337b",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 7,
+        "sourceId": "C13-D5R1-S04",
+        "arm": "A",
+        "responseSha256": "d7f0350a4c920f702f542d66970e24d2464bf2acd9208b1875107492b306fff3",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 8,
+        "sourceId": "C13-D5R1-S04",
+        "arm": "B",
+        "responseSha256": "9802d301da647b66465b8e5911a75273e910b8b1828c171527e4abcc53ad3da4",
+        "oldStatus": "SCORER_EXCEPTION",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 9,
+        "sourceId": "C13-D5R1-S05",
+        "arm": "B",
+        "responseSha256": "16b71f829d84f88fbda8e6dc191a64956becdac07e397a1f9cc0bd2041d6f484",
+        "oldStatus": "SCORER_EXCEPTION",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 10,
+        "sourceId": "C13-D5R1-S05",
+        "arm": "A",
+        "responseSha256": "51104b897e7347af83a2bf1d4922af097627904ba9d84ec9d0f6b1c7532881db",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 11,
+        "sourceId": "C13-D5R1-S06",
+        "arm": "A",
+        "responseSha256": "b2f40110302b69e118a29e44f9d7cd7b4848af8e65b880051c639b4276d3e16e",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 12,
+        "sourceId": "C13-D5R1-S06",
+        "arm": "B",
+        "responseSha256": "a23934133e4fe0c4af3f4ef77972b50d9fcbc50d95c0fc6547e01ca1f678b4a6",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 13,
+        "sourceId": "C13-D5R1-S07",
+        "arm": "A",
+        "responseSha256": "f269d5623a92b350270c8056952be9256c36c9accde0898cb5a94a39fb4da9e0",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 14,
+        "sourceId": "C13-D5R1-S07",
+        "arm": "B",
+        "responseSha256": "cf4edcbf15ccdec6a0ed3ecba61586f84870ece087c6b291c63117e0945c96ec",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 15,
+        "sourceId": "C13-D5R1-S08",
+        "arm": "B",
+        "responseSha256": "7b5716a24c89b0012fc1884fd4cf1cd56c526f2ae9556a9ffa749c774a41b080",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 16,
+        "sourceId": "C13-D5R1-S08",
+        "arm": "A",
+        "responseSha256": "9948937c25ec2927b2d31a28c4c7a576a75739e7c7afa0e479eb6b73b95182e8",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 17,
+        "sourceId": "C13-D5R1-S09",
+        "arm": "A",
+        "responseSha256": "5d202ce110ab929731ce8396c614f281d855a427e4250a6492c6b59121c14bdd",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 18,
+        "sourceId": "C13-D5R1-S09",
+        "arm": "B",
+        "responseSha256": "2dbe1c3b8d1bfd0edd4d483457abe919e0ea4edcfa676db11a03513c5f04c7b2",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 19,
+        "sourceId": "C13-D5R1-S10",
+        "arm": "B",
+        "responseSha256": "193c4ba36e1d18d421b12ff88368602fd8cade1511fc4258470ef44d8f0b7d49",
+        "oldStatus": "SCHEMA_OR_REFERENCE_FAILURE",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 20,
+        "sourceId": "C13-D5R1-S10",
+        "arm": "A",
+        "responseSha256": "35d83fa7d3add361272e855953e9d20943a87e3f6f2e50f19f090ce71d80bdeb",
+        "oldStatus": "SCORER_EXCEPTION",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 21,
+        "sourceId": "C13-D5R1-S11",
+        "arm": "B",
+        "responseSha256": "82338352adb9c710373bca8763045b0df9a060de7a0be9576553a60d51f97278",
+        "oldStatus": "SCHEMA_OR_REFERENCE_FAILURE",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 22,
+        "sourceId": "C13-D5R1-S11",
+        "arm": "A",
+        "responseSha256": "bd731aacf5c16edac37e031af97892483ad75d2a21d58b7f5e55568b662a8094",
+        "oldStatus": "SCORED",
+        "oldComplete": false,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 23,
+        "sourceId": "C13-D5R1-S12",
+        "arm": "A",
+        "responseSha256": "a581777bd59f33256f72a42fcc682db74d14d091ec53676e80ab267aaa3ef16b",
+        "oldStatus": "SCORED",
+        "oldComplete": true,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      },
+      {
+        "ordinal": 24,
+        "sourceId": "C13-D5R1-S12",
+        "arm": "B",
+        "responseSha256": "c165e2a36cf769578067d21d050a77f646888a1bc01919696600fbc63b0d808f",
+        "oldStatus": "SCORED",
+        "oldComplete": true,
+        "v8Status": "NOT_COMPARABLE_REFERENCE_V6"
+      }
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "status": "LOCAL_IMPLEMENTATION_VERIFIED_BROWSER_BLOCKED_AUDIT_ONLY",
+  "baseline": "f9513485b9217bf38dd8748a3600ee349ed3ea33",
+  "target": {
+    "passed": 6,
+    "failed": 0
+  },
+  "fullAttempt": {
+    "passed": 1263,
+    "failed": 1,
+    "skipped": 1,
+    "remaining": "new test default 5s timeout; now same 60s as group; assertions unchanged"
+  },
+  "finalByUniqueIdentity": {
+    "passed": 1264,
+    "unresolved": 0,
+    "skipped": 1,
+    "method": "reuse unaffected full-run cases; reverify all six changed group cases; not summed attempts"
+  },
+  "typeApp": "PASS",
+  "typeNode": "PASS",
+  "lint": {
+    "errors": 0,
+    "warnings": 4
+  },
+  "build": {
+    "build": "PASS",
+    "stableBundleIsolation": "PASS",
+    "hits": []
+  },
+  "secretScan": "PASS",
+  "securityReview": "REPLAY_CLOSE_REVIEW.md",
+  "frameworkEnvironment": {
+    "configFile": false,
+    "envFile": false,
+    "temporaryEnvDirCacheOutput": true
+  },
+  "unchangedNodeChecks": {
+    "budget": 49,
+    "gateway": 47,
+    "binding": "prior IMPLEMENTATION_SNAPSHOT logs and unchanged source SHA; not rerun"
+  },
+  "browser": {
+    "origin": "http://127.0.0.1:6631",
+    "tab": "763114931",
+    "status": "NOT_COMPLETED",
+    "lastObservedTasks": 7,
+    "newWritesByAgent": 0,
+    "observed": "actual App accessibility snapshot; subsequent official debugger attach failures",
+    "independentRead": "NOT_RUN_THIS_TURN",
+    "specificRootTrigger": "NOT_DETERMINED",
+    "recovery": "Restart Codex Desktop; preserve Edge original origin and database"
+  },
+  "model": {
+    "newRequests": 0,
+    "historicalRequests": 32,
+    "accuracy": "本轮未测量",
+    "fees": 0
+  },
+  "ledger": "68 rows unchanged; A01 held-unknown 3300000 microCNY unchanged",
+  "protection": "REPLAY_CLOSE_IMPLEMENTATION_SNAPSHOT.json",
+  "git": {
+    "scope": "audit only; retain 14 uncommitted implementation files",
+    "baselineRemoteVerified": true
+  }
+}

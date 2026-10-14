@@ -1,0 +1,85 @@
+# Keep frozen D2 evidence byte-identical across Windows and Unix checkouts.
+docs/recognition-optimization/candidate12/d2-provisional-development-20260921a/** -text
+scripts/analyze-candidate12-d2-postrun.mjs text eol=lf
+docs/recognition-optimization/candidate12/d3-scorer-contract/** -text
+scripts/candidate12-reference-contract.mjs text eol=lf
+scripts/compile-candidate12-reference.mjs text eol=lf
+scripts/score-candidate12-contract-v3.mjs text eol=lf
+scripts/candidate12-d3-fixtures.mjs text eol=lf
+scripts/build-candidate12-d3.mjs text eol=lf
+scripts/candidate12-d3.node-test.mjs text eol=lf
+docs/recognition-optimization/candidate13/d4-freeze/** -text
+scripts/candidate13-d4-fixtures.mjs text eol=lf
+scripts/candidate13-d4-isolation.mjs text eol=lf
+scripts/freeze-candidate13-d4.mjs text eol=lf
+scripts/candidate13-d4.node-test.mjs text eol=lf
+src/experiments/realInput01/candidate13.ts text eol=lf
+src/experiments/realInput01/candidate13.test.ts text eol=lf
+
+# Governance v2: stable active hashes and exact historical document bytes.
+AGENTS.md text eol=lf
+PRD.md text eol=lf
+docs/governance/** text eol=lf
+docs/governance/archive/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/verify-governance-protection.mjs text eol=lf
+scripts/governance-protection.node-test.mjs text eol=lf
+
+# D11 raw, receipts, identities, and audit files carry byte-level SHA-256 evidence.
+docs/recognition-optimization/candidate15/d11-development-20260928a/** -text
+
+# D12 diagnostics keep evidence hashes stable without modifying D11.
+docs/recognition-optimization/d12-progress/** -text
+scripts/score-candidate15-diagnostic.mjs text eol=lf
+scripts/diagnose-recognition-d12.mjs text eol=lf
+scripts/verify-recognition-history.mjs text eol=lf
+scripts/recognition-progress-policy.mjs text eol=lf
+scripts/recognition-d12.check.mjs text eol=lf
+
+# D13 new package; old frozen paths remain untouched.
+docs/recognition-optimization/candidate16/d13-development/** -text
+scripts/*candidate16*d13* text eol=lf
+scripts/recognition-semantic-v7.mjs text eol=lf
+src/experiments/candidate16/** text eol=lf
+src/experiments/realInput01/candidate16.ts text eol=lf
+
+# D19 generated diagnostic is checked byte-for-byte; keep its LF bytes on Windows.
+docs/recognition-optimization/d19-source-session/OFFLINE_DIAGNOSTIC.json -text
+scripts/d19-offline-diagnostic.mjs text eol=lf
+
+# D24 browser readback and validation artifacts carry exact byte-level evidence.
+docs/recognition-optimization/d24-product/** -text whitespace=cr-at-eol
+docs/recognition-optimization/d24-product/validation/*.log whitespace=-blank-at-eof,cr-at-eol
+
+# D25 frozen request and component hashes must survive another Windows checkout.
+docs/recognition-optimization/d25-accuracy/** -text whitespace=cr-at-eol
+docs/recognition-optimization/d25-accuracy/validation/*.log whitespace=-blank-at-eof,cr-at-eol
+scripts/*d25*.mjs text eol=lf
+scripts/*d25*.mts text eol=lf
+scripts/d25-ledger-append.ps1 text eol=lf
+src/experiments/candidate18/** text eol=lf
+src/experiments/realInput01/candidate18.ts text eol=lf
+src/experiments/realInput01/sourceFactsV3.ts text eol=lf
+src/experiments/realInput01/firstSuggestionGuard.ts text eol=lf
+
+# D26 is a new freeze. Requests and evidence remain byte-exact on every checkout.
+docs/recognition-optimization/d26-correction/** -text whitespace=cr-at-eol
+docs/recognition-optimization/d26-correction/validation/*.log whitespace=-blank-at-eof,cr-at-eol
+scripts/*d26*.mjs text eol=lf
+src/experiments/d26/** text eol=lf
+
+# D27 anonymous browser evidence retains its recorded bytes across checkouts.
+docs/recognition-optimization/d27-planning/evidence/** -text whitespace=cr-at-eol
+docs/recognition-optimization/d27-planning/evidence/CURRENT_PRODUCT_VITEST.txt -text whitespace=-blank-at-eof,cr-at-eol
+docs/recognition-optimization/d27-planning/evidence/LINT.txt -text whitespace=-blank-at-eof,cr-at-eol
+
+# D26 continuation observations and exact tool logs remain unchanged on checkout.
+docs/recognition-optimization/d26-execution-continuation/** -text whitespace=cr-at-eol
+docs/recognition-optimization/d26-execution-continuation/evidence/*.txt whitespace=-blank-at-eof,cr-at-eol
+
+# Candidate19 identities, freeze and anonymous readback retain exact SHA bytes.
+docs/recognition-optimization/candidate19-development/** -text whitespace=cr-at-eol
+docs/recognition-optimization/candidate19-development/evidence/*.log whitespace=-blank-at-eof,cr-at-eol
+
+# New public paid observations keep original raw and readback SHA bytes.
+# This does not change any previously frozen public request artifact.
+docs/recognition-optimization/candidate19-public-development/paid-evidence/** -text whitespace=cr-at-eol

@@ -1,0 +1,98 @@
+{
+  "status": "ANONYMOUS_CANONICAL_AND_MEASUREMENT_ASSERTIONS_PASS",
+  "role": "ENGINEERING_REPLAY",
+  "pending": {
+    "Task": 3,
+    "Project": 0,
+    "Event": 2,
+    "Material": 1,
+    "TimePoint": 7,
+    "plannedStarts": 3,
+    "planHistory": 1
+  },
+  "recovered": {
+    "Task": 3,
+    "Project": 0,
+    "Event": 2,
+    "Material": 1,
+    "TimePoint": 7,
+    "plannedStarts": 3,
+    "planHistory": 1
+  },
+  "final09": {
+    "Task": 3,
+    "Project": 0,
+    "Event": 2,
+    "Material": 1,
+    "TimePoint": 7,
+    "plannedStarts": 3,
+    "planHistory": 2
+  },
+  "final10": {
+    "Task": 3,
+    "Project": 0,
+    "Event": 2,
+    "Material": 1,
+    "TimePoint": 7,
+    "plannedStarts": 3,
+    "planHistory": 1
+  },
+  "firstCommitId": "6157de49-a61f-46f4-9160-d8e33c76b681",
+  "recoveryDidNotResubmit": true,
+  "originalFactsUnchanged": true,
+  "exactDeadline": "2026-10-06T16:00",
+  "vagueTime": {
+    "normalizedValue": null,
+    "rawText": "周三晚",
+    "precision": "vague",
+    "needsConfirmation": true
+  },
+  "readingOnly": {
+    "version": "personal-plan-measurement-d27-1",
+    "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+    "denominator": 1,
+    "commitCount": 1,
+    "independentReadbackCount": 1,
+    "semanticPlanChanges": 0,
+    "planChangeCountStatus": "OBSERVED",
+    "attemptedEditIds": [],
+    "completed": true,
+    "timingStatus": "OBSERVED",
+    "missingReasons": [],
+    "wallMs": 29838,
+    "readingMs": 29812,
+    "activeEditingMs": 0,
+    "idleMs": 0,
+    "hiddenMs": 0,
+    "waitingMs": 26,
+    "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+    "humanFourMetrics": "NOT_OBSERVABLE"
+  },
+  "refreshRetry": {
+    "version": "personal-plan-measurement-d27-1",
+    "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+    "denominator": 1,
+    "commitCount": 1,
+    "independentReadbackCount": 1,
+    "semanticPlanChanges": 1,
+    "planChangeCountStatus": "OBSERVED",
+    "attemptedEditIds": [
+      "a870b37d-2e23-4fde-b2e1-4a330511c364"
+    ],
+    "completed": false,
+    "timingStatus": "MISSING",
+    "missingReasons": [
+      "REFRESH_OR_CRASH_GAP"
+    ],
+    "wallMs": null,
+    "readingMs": 314,
+    "activeEditingMs": 4989,
+    "idleMs": 249744,
+    "hiddenMs": 0,
+    "waitingMs": 20,
+    "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+    "humanFourMetrics": "NOT_OBSERVABLE"
+  },
+  "humanFourMetrics": "NOT_OBSERVABLE",
+  "modelCalls": 0
+}

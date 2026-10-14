@@ -45,6 +45,7 @@ function displayValue(
   if (key === 'materials' && Array.isArray(value)) {
     const materials = value as Task['materials']
     const statusLabels = {
+      unverified: '准备情况尚未核实',
       missing: '缺失',
       preparing: '准备中',
       ready: '已准备',

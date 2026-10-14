@@ -1,0 +1,700 @@
+{
+  "kind": "engineering-fidelity-not-model-accuracy",
+  "control": {
+    "path": "direct-domain-control",
+    "material": "handcrafted engineering response; not semantic gold",
+    "checked": 42,
+    "equal": 42,
+    "fidelity": 1,
+    "complete": true,
+    "differences": [],
+    "rows": [
+      {
+        "task": "submit",
+        "field": "action",
+        "supplied": "提交",
+        "stored": "提交",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "object",
+        "supplied": "活动报名表",
+        "stored": "活动报名表",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "title",
+        "supplied": "提交活动报名表",
+        "stored": "提交活动报名表",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "description",
+        "supplied": "提交活动报名表",
+        "stored": "提交活动报名表",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "completionCriteria",
+        "supplied": [],
+        "stored": [],
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "time.rawText",
+        "supplied": "2026年9月10日18:00前",
+        "stored": "2026年9月10日18:00前",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "time.normalizedValue",
+        "supplied": "2026-09-10T18:00",
+        "stored": "2026-09-10T18:00",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "time.timezone",
+        "supplied": "Asia/Shanghai",
+        "stored": "Asia/Shanghai",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "time.isAllDay",
+        "supplied": false,
+        "stored": false,
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "time.precision",
+        "supplied": "exact",
+        "stored": "exact",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "time.task",
+        "supplied": [
+          "task:source:1ca4e0cd:draft:1:submit"
+        ],
+        "stored": [
+          "task:source:1ca4e0cd:draft:1:submit"
+        ],
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "time.material",
+        "supplied": [
+          "material:source:1ca4e0cd:draft:1:m0"
+        ],
+        "stored": [
+          "material:source:1ca4e0cd:draft:1:m0"
+        ],
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.name",
+        "supplied": "活动报名表",
+        "stored": "活动报名表",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.formatRequirements",
+        "supplied": [
+          "PDF"
+        ],
+        "stored": [
+          "PDF"
+        ],
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.namingRequirements",
+        "supplied": [
+          "组别"
+        ],
+        "stored": [
+          "组别"
+        ],
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.quantity",
+        "supplied": 1,
+        "stored": 1,
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.submissionChannel",
+        "supplied": "活动平台",
+        "stored": "活动平台",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.task",
+        "supplied": [
+          "task:source:1ca4e0cd:draft:1:submit"
+        ],
+        "stored": [
+          "task:source:1ca4e0cd:draft:1:submit"
+        ],
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.deadline",
+        "supplied": "time:source:1ca4e0cd:draft:1:d0",
+        "stored": "time:source:1ca4e0cd:draft:1:d0",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "evidence.source",
+        "supplied": "source:1ca4e0cd:version:1",
+        "stored": "source:1ca4e0cd:version:1",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "evidence.quote",
+        "supplied": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+        "stored": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "action",
+        "supplied": "打印",
+        "stored": "打印",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "object",
+        "supplied": "入场凭证",
+        "stored": "入场凭证",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "title",
+        "supplied": "打印入场凭证",
+        "stored": "打印入场凭证",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "description",
+        "supplied": "打印入场凭证",
+        "stored": "打印入场凭证",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "completionCriteria",
+        "supplied": [],
+        "stored": [],
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "time.rawText",
+        "supplied": "2026年9月11日18:00前",
+        "stored": "2026年9月11日18:00前",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "time.normalizedValue",
+        "supplied": "2026-09-11T18:00",
+        "stored": "2026-09-11T18:00",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "time.timezone",
+        "supplied": "Asia/Shanghai",
+        "stored": "Asia/Shanghai",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "time.isAllDay",
+        "supplied": false,
+        "stored": false,
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "time.precision",
+        "supplied": "exact",
+        "stored": "exact",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "time.task",
+        "supplied": [
+          "task:source:1ca4e0cd:draft:1:print"
+        ],
+        "stored": [
+          "task:source:1ca4e0cd:draft:1:print"
+        ],
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "time.material",
+        "supplied": [
+          "material:source:1ca4e0cd:draft:1:m1"
+        ],
+        "stored": [
+          "material:source:1ca4e0cd:draft:1:m1"
+        ],
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.name",
+        "supplied": "入场凭证",
+        "stored": "入场凭证",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.formatRequirements",
+        "supplied": [
+          "A4"
+        ],
+        "stored": [
+          "A4"
+        ],
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.namingRequirements",
+        "supplied": [],
+        "stored": [],
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.quantity",
+        "supplied": 1,
+        "stored": 1,
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.submissionChannel",
+        "supplied": null,
+        "stored": null,
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.task",
+        "supplied": [
+          "task:source:1ca4e0cd:draft:1:print"
+        ],
+        "stored": [
+          "task:source:1ca4e0cd:draft:1:print"
+        ],
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.deadline",
+        "supplied": "time:source:1ca4e0cd:draft:1:d1",
+        "stored": "time:source:1ca4e0cd:draft:1:d1",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "evidence.source",
+        "supplied": "source:1ca4e0cd:version:1",
+        "stored": "source:1ca4e0cd:version:1",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "evidence.quote",
+        "supplied": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+        "stored": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+        "equal": true
+      }
+    ]
+  },
+  "client": {
+    "path": "real-client-projection-and-domain",
+    "material": "handcrafted engineering response; not semantic gold",
+    "checked": 42,
+    "equal": 40,
+    "fidelity": 0.9523809523809523,
+    "complete": false,
+    "differences": [
+      {
+        "task": "submit",
+        "field": "time.rawText",
+        "supplied": "2026年9月10日18:00前",
+        "stored": "2026-09-10T18:00",
+        "equal": false
+      },
+      {
+        "task": "print",
+        "field": "time.rawText",
+        "supplied": "2026年9月11日18:00前",
+        "stored": "2026-09-11T18:00",
+        "equal": false
+      }
+    ],
+    "rows": [
+      {
+        "task": "submit",
+        "field": "action",
+        "supplied": "提交",
+        "stored": "提交",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "object",
+        "supplied": "活动报名表",
+        "stored": "活动报名表",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "title",
+        "supplied": "提交活动报名表",
+        "stored": "提交活动报名表",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "description",
+        "supplied": "提交活动报名表",
+        "stored": "提交活动报名表",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "completionCriteria",
+        "supplied": [],
+        "stored": [],
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "time.rawText",
+        "supplied": "2026年9月10日18:00前",
+        "stored": "2026-09-10T18:00",
+        "equal": false
+      },
+      {
+        "task": "submit",
+        "field": "time.normalizedValue",
+        "supplied": "2026-09-10T18:00",
+        "stored": "2026-09-10T18:00",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "time.timezone",
+        "supplied": "Asia/Shanghai",
+        "stored": "Asia/Shanghai",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "time.isAllDay",
+        "supplied": false,
+        "stored": false,
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "time.precision",
+        "supplied": "exact",
+        "stored": "exact",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "time.task",
+        "supplied": [
+          "task:source:1ca4e0cd:draft:1:submit"
+        ],
+        "stored": [
+          "task:source:1ca4e0cd:draft:1:submit"
+        ],
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "time.material",
+        "supplied": [
+          "material:source:1ca4e0cd:draft:1:m0"
+        ],
+        "stored": [
+          "material:source:1ca4e0cd:draft:1:m0"
+        ],
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.name",
+        "supplied": "活动报名表",
+        "stored": "活动报名表",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.formatRequirements",
+        "supplied": [
+          "PDF"
+        ],
+        "stored": [
+          "PDF"
+        ],
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.namingRequirements",
+        "supplied": [
+          "组别"
+        ],
+        "stored": [
+          "组别"
+        ],
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.quantity",
+        "supplied": 1,
+        "stored": 1,
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.submissionChannel",
+        "supplied": "活动平台",
+        "stored": "活动平台",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.task",
+        "supplied": [
+          "task:source:1ca4e0cd:draft:1:submit"
+        ],
+        "stored": [
+          "task:source:1ca4e0cd:draft:1:submit"
+        ],
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "material.deadline",
+        "supplied": "time:source:1ca4e0cd:draft:1:d0",
+        "stored": "time:source:1ca4e0cd:draft:1:d0",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "evidence.source",
+        "supplied": "source:1ca4e0cd:version:1",
+        "stored": "source:1ca4e0cd:version:1",
+        "equal": true
+      },
+      {
+        "task": "submit",
+        "field": "evidence.quote",
+        "supplied": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+        "stored": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "action",
+        "supplied": "打印",
+        "stored": "打印",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "object",
+        "supplied": "入场凭证",
+        "stored": "入场凭证",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "title",
+        "supplied": "打印入场凭证",
+        "stored": "打印入场凭证",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "description",
+        "supplied": "打印入场凭证",
+        "stored": "打印入场凭证",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "completionCriteria",
+        "supplied": [],
+        "stored": [],
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "time.rawText",
+        "supplied": "2026年9月11日18:00前",
+        "stored": "2026-09-11T18:00",
+        "equal": false
+      },
+      {
+        "task": "print",
+        "field": "time.normalizedValue",
+        "supplied": "2026-09-11T18:00",
+        "stored": "2026-09-11T18:00",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "time.timezone",
+        "supplied": "Asia/Shanghai",
+        "stored": "Asia/Shanghai",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "time.isAllDay",
+        "supplied": false,
+        "stored": false,
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "time.precision",
+        "supplied": "exact",
+        "stored": "exact",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "time.task",
+        "supplied": [
+          "task:source:1ca4e0cd:draft:1:print"
+        ],
+        "stored": [
+          "task:source:1ca4e0cd:draft:1:print"
+        ],
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "time.material",
+        "supplied": [
+          "material:source:1ca4e0cd:draft:1:m1"
+        ],
+        "stored": [
+          "material:source:1ca4e0cd:draft:1:m1"
+        ],
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.name",
+        "supplied": "入场凭证",
+        "stored": "入场凭证",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.formatRequirements",
+        "supplied": [
+          "A4"
+        ],
+        "stored": [
+          "A4"
+        ],
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.namingRequirements",
+        "supplied": [],
+        "stored": [],
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.quantity",
+        "supplied": 1,
+        "stored": 1,
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.submissionChannel",
+        "supplied": null,
+        "stored": null,
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.task",
+        "supplied": [
+          "task:source:1ca4e0cd:draft:1:print"
+        ],
+        "stored": [
+          "task:source:1ca4e0cd:draft:1:print"
+        ],
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "material.deadline",
+        "supplied": "time:source:1ca4e0cd:draft:1:d1",
+        "stored": "time:source:1ca4e0cd:draft:1:d1",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "evidence.source",
+        "supplied": "source:1ca4e0cd:version:1",
+        "stored": "source:1ca4e0cd:version:1",
+        "equal": true
+      },
+      {
+        "task": "print",
+        "field": "evidence.quote",
+        "supplied": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+        "stored": "请于2026年9月10日18:00前提交活动报名表，PDF格式，文件名为组别，1份，交至活动平台。请于2026年9月11日18:00前打印入场凭证，A4格式，1份。",
+        "equal": true
+      }
+    ]
+  }
+}

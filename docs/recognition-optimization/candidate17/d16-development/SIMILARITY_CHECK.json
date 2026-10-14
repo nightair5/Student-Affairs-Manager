@@ -1,0 +1,99 @@
+{
+  "similarity": [
+    {
+      "sourceId": "C17-D16-S01",
+      "maxHistoricalFourGramOverlap": 0.371,
+      "closestPath": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+      "exactOverlap": false,
+      "templateSourceId": "C13-D5R1-S01"
+    },
+    {
+      "sourceId": "C17-D16-S02",
+      "maxHistoricalFourGramOverlap": 0.382,
+      "closestPath": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+      "exactOverlap": false,
+      "templateSourceId": "C13-D5R1-S02"
+    },
+    {
+      "sourceId": "C17-D16-S03",
+      "maxHistoricalFourGramOverlap": 0.417,
+      "closestPath": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+      "exactOverlap": false,
+      "templateSourceId": "C13-D5R1-S03"
+    },
+    {
+      "sourceId": "C17-D16-S04",
+      "maxHistoricalFourGramOverlap": 0.295,
+      "closestPath": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+      "exactOverlap": false,
+      "templateSourceId": "C13-D5R1-S04"
+    },
+    {
+      "sourceId": "C17-D16-S05",
+      "maxHistoricalFourGramOverlap": 0.49,
+      "closestPath": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+      "exactOverlap": false,
+      "templateSourceId": "C13-D5R1-S05"
+    },
+    {
+      "sourceId": "C17-D16-S06",
+      "maxHistoricalFourGramOverlap": 0.157,
+      "closestPath": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+      "exactOverlap": false,
+      "templateSourceId": "C13-D5R1-S06"
+    },
+    {
+      "sourceId": "C17-D16-S07",
+      "maxHistoricalFourGramOverlap": 0.41,
+      "closestPath": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+      "exactOverlap": false,
+      "templateSourceId": "C13-D5R1-S07"
+    },
+    {
+      "sourceId": "C17-D16-S08",
+      "maxHistoricalFourGramOverlap": 0.232,
+      "closestPath": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+      "exactOverlap": false,
+      "templateSourceId": "C13-D5R1-S08"
+    },
+    {
+      "sourceId": "C17-D16-S09",
+      "maxHistoricalFourGramOverlap": 0.228,
+      "closestPath": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+      "exactOverlap": false,
+      "templateSourceId": "C13-D5R1-S09"
+    },
+    {
+      "sourceId": "C17-D16-S10",
+      "maxHistoricalFourGramOverlap": 0.304,
+      "closestPath": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+      "exactOverlap": false,
+      "templateSourceId": "C13-D5R1-S10"
+    },
+    {
+      "sourceId": "C17-D16-S11",
+      "maxHistoricalFourGramOverlap": 0.321,
+      "closestPath": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+      "exactOverlap": false,
+      "templateSourceId": "C13-D5R1-S11"
+    },
+    {
+      "sourceId": "C17-D16-S12",
+      "maxHistoricalFourGramOverlap": 0.326,
+      "closestPath": "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+      "exactOverlap": false,
+      "templateSourceId": "C13-D5R1-S12"
+    }
+  ],
+  "method": "Unicode four-gram overlap against historical sources, prompt text and fixtures; reject >=0.68; structural templates remain seen provisional Development",
+  "scannedPaths": [
+    "docs/recognition-optimization/candidate13/d5-development/SOURCES.json",
+    "docs/recognition-optimization/candidate15/d8-development/SOURCES.json",
+    "docs/recognition-optimization/candidate16/d13-development/SOURCES.json",
+    "docs/recognition-optimization/candidate11/b1-preparation/SOURCES.json",
+    "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/PROVISIONAL_SOURCES.json",
+    "src/experiments/realInput01/candidate03.ts",
+    "src/experiments/realInput01/candidate16.ts",
+    "src/experiments/mainline01/fixtures.ts"
+  ]
+}

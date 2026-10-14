@@ -1,0 +1,88 @@
+{
+  "version": "candidate13-d6-result-1",
+  "unitId": "D5R1-S09-B",
+  "sourceId": "C13-D5R1-S09",
+  "arm": "B",
+  "ordinal": 18,
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "requestSha256": "2d14cbe84e1a7d8f598686540455e67d7d92a09137c61a1dabbb70e65fdb4e23",
+  "responseSha256": "a1e65c76d2ccdd4fb9c7d2c0f11cbfc0111a3609285b1029c562c57d7b776b27",
+  "transportStatus": "COMPLETED_HTTP_200",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "waitingMs": 2967,
+  "parseError": null,
+  "parseStage": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "tp-maintenance-wednesday-evening",
+        "type": "event_start",
+        "rawText": "周三晚",
+        "relatedTaskTempIds": [],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-7013504177b9fcd5745e786a7a1e028ff72669593aba0585d79097df3a302b42"
+        ],
+        "confidence": 0.9,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [
+      {
+        "tempId": "ev-library-search-maintenance",
+        "title": "图书馆检索服务维护",
+        "description": "图书馆检索服务将在周三晚维护。",
+        "startTimePointTempId": "tp-maintenance-wednesday-evening",
+        "endTimePointTempId": null,
+        "location": null,
+        "scopeIds": [
+          "scope-0002-7013504177b9fcd5745e786a7a1e028ff72669593aba0585d79097df3a302b42"
+        ],
+        "confidence": 0.9,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": []
+      }
+    ],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-1e14be6e2c1dd8b940d1b88c59c39598584885abdbc705f8266b04badc8d31e0",
+      "scope-0003-c1dbc20153dac98e3a71556238b7c695cdeb6f9943a1232657de47bda8d2eb97",
+      "scope-0004-cb64e3f9cdb37810080cd95e8596fb0b5e31eaf0b41eb21040b1ddd8a7b2ebe7",
+      "scope-0005-f45cc3a27b9bcd42ef7dba08fe777dfb0f5c93615f5b20329b875eb78afd6b16",
+      "scope-0006-b6ff6885179c16d8cd5af9f69aa1e14735cc2841965a301c224f64f721aecc6f",
+      "scope-0007-c206b8691340aea8a9ffcde24913fd14c1c0d942e4728239e851db7ffdc782f6"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C13-D5R1-S09",
+    "sourceVersionId": "C13-D5R1-S09-v1",
+    "sourceFingerprint": "sha256:b6ab4070b47ff69e107132b449f97c07a1a2d6483538fe1f25df34fa6713b839"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 5324,
+    "input_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "output_tokens": 522,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5846
+  },
+  "costUpperMicroUsd": 2224,
+  "providerBilledUsd": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0,
+  "verifierCalls": 0
+}

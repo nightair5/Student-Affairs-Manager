@@ -1,3 +1,4 @@
+import type { TaskDateView } from '../experiments/mainline02/taskDateView'
 import {
   AlarmClock,
   ArrowUpRight,
@@ -18,6 +19,8 @@ import {
 
 function deadlineParts(value: string): { date: string; time: string; weekday: string } {
   const deadline = new Date(value)
+  if (!Number.isFinite(deadline.getTime())) return { date: '时间待确认', time: '待补充', weekday: '未排期' }
+  if (/^\d{4}-\d{2}-\d{2}$/u.test(value)) return { date: value, time: '仅日期，原文未说明时刻', weekday: '' }
   return {
     date: new Intl.DateTimeFormat('zh-CN', { month: 'long', day: 'numeric' }).format(deadline),
     time: new Intl.DateTimeFormat('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false }).format(deadline),
@@ -26,6 +29,8 @@ function deadlineParts(value: string): { date: string; time: string; weekday: st
 }
 
 interface TaskCardProps {
+  dateView?: TaskDateView
+  readOnly?: boolean
   task: Task
   allTasks?: Task[]
   projectTitle?: string
@@ -39,6 +44,7 @@ interface TaskCardProps {
 }
 
 export function TaskCard({
+  dateView, readOnly,
   task,
   allTasks = [task],
   projectTitle,
@@ -51,8 +57,10 @@ export function TaskCard({
   onTogglePin,
 }: TaskCardProps) {
   const materials = getMaterialProgress(task)
-  const deadline = deadlineParts(task.deadline)
-  const priority = calculateTaskPriority(task, allTasks)
+  const waitingFor = allTasks.filter(t => task.dependencyIds?.includes(t.id) && t.status !== '已完成')
+  const unknownMaterials = task.materials.filter(m => m.status === 'unverified').length
+  const deadline = dateView ? { date: dateView.label, time: '', weekday: dateView.noDeadlineProven ? '不自动排期' : '' } : !task.deadline ? {date:task.sourceDeadlineLabel||'原文未说明截止',time:'',weekday:'个人安排另列'} : deadlineParts(task.deadline)
+  const priority = calculateTaskPriority(task, allTasks, new Date(), dateView ? { [task.id]: dateView } : undefined)
 
   return (
     <article
@@ -73,18 +81,20 @@ export function TaskCard({
           <span><Clock3 size={15} />截止时间</span>
           <strong>{deadline.date}</strong>
           <em>{deadline.weekday} · {deadline.time}</em>
-          <small>{formatDeadlineDistance(task.deadline)}</small>
+          <small>{dateView ? dateView.noDeadlineProven ? '不自动生成提醒' : '' : task.deadline ? formatDeadlineDistance(task.deadline) : '不虚构截止时间'}</small>
         </div>
         <div className="task-duration-block">
           <span>预计用时</span>
-          <strong>{formatDuration(task.estimatedMinutes)}</strong>
-          {materials.total > 0 && <small><Paperclip size={13} />材料 {materials.done}/{materials.total}</small>}
+          <strong>{task.estimatedMinutesKnown===false?'尚未估计':formatDuration(task.estimatedMinutes)}</strong>
+          {materials.total > 0 && <small><Paperclip size={13} />{unknownMaterials ? `材料 ${unknownMaterials} 项准备情况未核实` : `材料 ${materials.done}/${materials.total}`}</small>}
         </div>
       </div>
 
       <p className="priority-reason">排序理由：{priority.reasons.slice(0, 2).join('；')}</p>
+      {task.plannedStart && <p>我的计划：{Number.isFinite(Date.parse(task.plannedStart)) ? new Intl.DateTimeFormat('zh-CN', {month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(task.plannedStart)) : '待核对'}（原文截止另列）</p>}
 
       <div className="next-action">
+        {waitingFor.length > 0 && <p role="status">等待先完成：{waitingFor.map(t => t.title).join('、')}</p>}
         <span>下一步</span>
         <strong>{task.nextAction}</strong>
       </div>
@@ -104,15 +114,15 @@ export function TaskCard({
         </div>
         <div className="task-card-actions-primary">
           {(onStart || onSnooze || onTogglePin) && <div className="task-quick-actions" aria-label="快速操作">
-            {task.status === '待开始' && onStart && <button type="button" onClick={() => onStart(task.id)}><Play size={15} />开始</button>}
-            {onSnooze && <button type="button" onClick={() => onSnooze(task.id)}><AlarmClock size={15} />稍后</button>}
-            {onTogglePin && <button type="button" aria-pressed={priority.isPinned} onClick={() => onTogglePin(task.id)}><Pin size={15} />{priority.isPinned ? '取消置顶' : '置顶'}</button>}
+            {task.status === '待开始' && onStart && <button type="button" disabled={readOnly || waitingFor.length > 0} onClick={() => { if (!readOnly && !waitingFor.length) onStart(task.id) }}><Play size={15} />开始</button>}
+            {onSnooze && <button type="button" disabled={readOnly} onClick={() => { if (!readOnly) onSnooze(task.id) }}><AlarmClock size={15} />稍后</button>}
+            {onTogglePin && <button type="button" aria-pressed={priority.isPinned} disabled={readOnly} onClick={() => { if (!readOnly) onTogglePin(task.id) }}><Pin size={15} />{priority.isPinned ? '取消置顶' : '置顶'}</button>}
           </div>}
           {onComplete && (
             <button
               className="complete-button"
               type="button"
-              onClick={() => onComplete(task.id)}
+              disabled={readOnly} onClick={() => { if (!readOnly) onComplete(task.id) }}
             >
               <CheckCircle2 size={19} />
               标记完成

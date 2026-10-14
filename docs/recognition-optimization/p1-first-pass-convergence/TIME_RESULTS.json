@@ -1,0 +1,470 @@
+{
+  "version": "task-time-observed-post-program-report-1",
+  "batch": "TASK-TIME-AUTHORITY-DEVELOPMENT-20261013-R1",
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL_NOT_HOLDOUT",
+  "denominatorPerArm": 3,
+  "decision": "EVIDENCE_INCOMPLETE_NO_WINNER",
+  "generation": {
+    "candidate": "task-time-authority-generation-1.0.0",
+    "prompt": "recognition-task-time-authority-1.0.0",
+    "frozenSnapshot": "00aefde4c2c6757422d350a623116d86928d70f1",
+    "unchangedRequest": true
+  },
+  "program": {
+    "time": "task-time-authority-projection-1.0.1",
+    "material": "material-channel-role-grounding-1.4.1",
+    "sourceWindowPlan": "source-window-plan-1.2.1",
+    "ordinaryProvider": "ordinary-provider-declared-support-1.0.0"
+  },
+  "counts": {
+    "raw": {
+      "FactRoleAuthority": {
+        "correct": 0,
+        "error": 0,
+        "unknown": 3
+      },
+      "TaskTimeAuthority": {
+        "correct": 1,
+        "error": 0,
+        "unknown": 2
+      }
+    },
+    "frozenFirst": {
+      "FactRoleAuthority": {
+        "correct": 0,
+        "error": 1,
+        "unknown": 2
+      },
+      "TaskTimeAuthority": {
+        "correct": 0,
+        "error": 1,
+        "unknown": 2
+      }
+    },
+    "postFirst": {
+      "FactRoleAuthority": {
+        "correct": 0,
+        "error": 1,
+        "unknown": 2
+      },
+      "TaskTimeAuthority": {
+        "correct": 1,
+        "error": 0,
+        "unknown": 2
+      }
+    }
+  },
+  "observations": [
+    {
+      "ordinal": 1,
+      "sourceId": "TT-01",
+      "candidate": "FactRoleAuthority",
+      "status": "SETTLED",
+      "responseSha256": "f3759e4fc5b800bbba7700a850ad39a228c36b5bc82301f690a1ff4fc7246cab",
+      "rawMinimumFacts": "UNKNOWN_WINDOW_REPRESENTATION_AND_SUPPORT_INDEX",
+      "frozenFirst": "INCORRECT_FIRST_DATA_FAILURE",
+      "postFirst": "INCORRECT_COMPILATION_REJECTION"
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "TT-01",
+      "candidate": "TaskTimeAuthority",
+      "status": "SETTLED",
+      "responseSha256": "b8b0526e3d622ddc8aa7bfde33ef024d68ce1bf11f1e6c833ed7aedf4892705d",
+      "rawMinimumFacts": "PROVISIONAL_COMPLETE",
+      "frozenFirst": "INCORRECT_FIRST_DATA_FAILURE",
+      "postFirst": "PROVISIONAL_COMPLETE"
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "TT-02",
+      "candidate": "TaskTimeAuthority",
+      "status": "NOT_SENT",
+      "responseSha256": null,
+      "rawMinimumFacts": "UNKNOWN_NOT_SENT",
+      "frozenFirst": "UNKNOWN_NOT_SENT",
+      "postFirst": "UNKNOWN_NOT_SENT"
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "TT-02",
+      "candidate": "FactRoleAuthority",
+      "status": "NOT_SENT",
+      "responseSha256": null,
+      "rawMinimumFacts": "UNKNOWN_NOT_SENT",
+      "frozenFirst": "UNKNOWN_NOT_SENT",
+      "postFirst": "UNKNOWN_NOT_SENT"
+    },
+    {
+      "ordinal": 5,
+      "sourceId": "TT-03",
+      "candidate": "FactRoleAuthority",
+      "status": "NOT_SENT",
+      "responseSha256": null,
+      "rawMinimumFacts": "UNKNOWN_NOT_SENT",
+      "frozenFirst": "UNKNOWN_NOT_SENT",
+      "postFirst": "UNKNOWN_NOT_SENT"
+    },
+    {
+      "ordinal": 6,
+      "sourceId": "TT-03",
+      "candidate": "TaskTimeAuthority",
+      "status": "NOT_SENT",
+      "responseSha256": null,
+      "rawMinimumFacts": "UNKNOWN_NOT_SENT",
+      "frozenFirst": "UNKNOWN_NOT_SENT",
+      "postFirst": "UNKNOWN_NOT_SENT"
+    }
+  ],
+  "notes": [
+    "Counts refer to provisional minimal whole facts, not independent accuracy, generalization or human savings.",
+    "FactRole TT01 contains supported actions/deadline/materials and full window prose; its information-support/window representation remains unadjudicated. Its compiler rejection is a first-data failure, not proof every raw fact is wrong.",
+    "TaskTime TT01 title, descriptions and completion criteria reviewed against anonymous source; leak/independent adjudication remain NOT_ADJUDICATED.",
+    "No new model output was generated after the public-program fixes. The partial paired batch cannot select a winner."
+  ],
+  "beforeAfter": {
+    "source": "TT-01",
+    "rawUnchanged": true,
+    "before": {
+      "tasks": 2,
+      "materials": [
+        {
+          "name": "课程报告PDF",
+          "channel": null
+        },
+        {
+          "name": "纸质课程报告",
+          "channel": null
+        }
+      ],
+      "timePoints": 3,
+      "conflicts": 4
+    },
+    "after": {
+      "tasks": 2,
+      "materials": [
+        {
+          "name": "课程报告PDF",
+          "channel": "学业系统"
+        },
+        {
+          "name": "纸质课程报告",
+          "channel": "学习中心B305窗口"
+        }
+      ],
+      "timePoints": 9,
+      "conflicts": 0,
+      "windows": [
+        {
+          "state": "RESOLVED_DISCRETE",
+          "intervals": [
+            {
+              "intervalId": "TTW-2-0-2026-11-09-0",
+              "startPointId": "TTW-2-0-2026-11-09-0-start",
+              "endPointId": "TTW-2-0-2026-11-09-0-end",
+              "start": "2026-11-09T09:00",
+              "end": "2026-11-09T11:30",
+              "precision": "exact",
+              "date": "2026-11-09",
+              "sessionIndex": 0
+            },
+            {
+              "intervalId": "TTW-2-0-2026-11-09-1",
+              "startPointId": "TTW-2-0-2026-11-09-1-start",
+              "endPointId": "TTW-2-0-2026-11-09-1-end",
+              "start": "2026-11-09T14:30",
+              "end": "2026-11-09T17:30",
+              "precision": "exact",
+              "date": "2026-11-09",
+              "sessionIndex": 1
+            },
+            {
+              "intervalId": "TTW-2-0-2026-11-10-0",
+              "startPointId": "TTW-2-0-2026-11-10-0-start",
+              "endPointId": "TTW-2-0-2026-11-10-0-end",
+              "start": "2026-11-10T09:00",
+              "end": "2026-11-10T11:30",
+              "precision": "exact",
+              "date": "2026-11-10",
+              "sessionIndex": 0
+            },
+            {
+              "intervalId": "TTW-2-0-2026-11-10-1",
+              "startPointId": "TTW-2-0-2026-11-10-1-start",
+              "endPointId": "TTW-2-0-2026-11-10-1-end",
+              "start": "2026-11-10T14:30",
+              "end": "2026-11-10T17:30",
+              "precision": "exact",
+              "date": "2026-11-10",
+              "sessionIndex": 1
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "execution": {
+    "settled": 2,
+    "uncertain": 0,
+    "notSent": 4,
+    "grant": 1,
+    "reserve": 2,
+    "settle": 2,
+    "actualRequests": 2,
+    "maxPackageRequests": 16,
+    "packageHardLimitUsd": 6,
+    "batchAllocatedLimitUsd": 2,
+    "outstandingReserveMicroUsd": 0,
+    "usage": {
+      "input": 12752,
+      "output": 4932,
+      "cached": 5120,
+      "microUsd": 9745
+    },
+    "providerDeduction": "NOT_OBSERVABLE",
+    "stopReason": "GIT_LIVE_REMOTE_PREFLIGHT_FAILED_BEFORE_ORDINAL_3_RESERVE",
+    "lockRetained": true,
+    "haltFilePresent": false,
+    "sceneReadOnly": true,
+    "remainingPermission": "EXPIRED_NO_AUTOMATIC_RESUME"
+  },
+  "browser": {
+    "url": "http://127.0.0.1:6931/",
+    "build": "d6581377deb9 / source 237eaaab104b",
+    "codeCommit": "7a2d8f22aa68e099de8cd40072adba163d485235",
+    "sourceHash": "237eaaab104b6e91cc99eff07a588e9e47630eabd4ecf484cdffb97e0f9f856f",
+    "workspace": "rco-mainline-01-02-i1-d27-plan-recorded-p1-time-20261013-final",
+    "role": "ENGINEERING_REPLAY_REAL_RECORDING_PLUS_ONE_PROXY_FIXTURE",
+    "counts": {
+      "events": 0,
+      "materials": 3,
+      "projects": 0,
+      "sources": 2,
+      "tasks": 3,
+      "timePoints": 10
+    },
+    "sourceFacts": [
+      {
+        "id": "time:source:f612bd63:draft:1:TTD-1-0",
+        "owners": [
+          "task:source:f612bd63:draft:1:task-electronic-report-submission"
+        ],
+        "precision": "exact",
+        "rawText": "电子提交截止时间为2026年11月5日18:20。",
+        "type": "submission_deadline",
+        "value": "2026-11-05T18:20"
+      },
+      {
+        "id": "time:source:f612bd63:draft:1:TTW-2-0-2026-11-09-0-start",
+        "owners": [
+          "task:source:f612bd63:draft:1:task-paper-report-submission"
+        ],
+        "precision": "exact",
+        "rawText": "纸质课程报告的办理时间为2026年11月9-10日，每天上午9:00-11:30、下午14:30-17:30；",
+        "type": "event_start",
+        "value": "2026-11-09T09:00"
+      },
+      {
+        "id": "time:source:f612bd63:draft:1:TTW-2-0-2026-11-09-0-end",
+        "owners": [
+          "task:source:f612bd63:draft:1:task-paper-report-submission"
+        ],
+        "precision": "exact",
+        "rawText": "纸质课程报告的办理时间为2026年11月9-10日，每天上午9:00-11:30、下午14:30-17:30；",
+        "type": "event_end",
+        "value": "2026-11-09T11:30"
+      },
+      {
+        "id": "time:source:f612bd63:draft:1:TTW-2-0-2026-11-09-1-start",
+        "owners": [
+          "task:source:f612bd63:draft:1:task-paper-report-submission"
+        ],
+        "precision": "exact",
+        "rawText": "纸质课程报告的办理时间为2026年11月9-10日，每天上午9:00-11:30、下午14:30-17:30；",
+        "type": "event_start",
+        "value": "2026-11-09T14:30"
+      },
+      {
+        "id": "time:source:f612bd63:draft:1:TTW-2-0-2026-11-09-1-end",
+        "owners": [
+          "task:source:f612bd63:draft:1:task-paper-report-submission"
+        ],
+        "precision": "exact",
+        "rawText": "纸质课程报告的办理时间为2026年11月9-10日，每天上午9:00-11:30、下午14:30-17:30；",
+        "type": "event_end",
+        "value": "2026-11-09T17:30"
+      },
+      {
+        "id": "time:source:f612bd63:draft:1:TTW-2-0-2026-11-10-0-start",
+        "owners": [
+          "task:source:f612bd63:draft:1:task-paper-report-submission"
+        ],
+        "precision": "exact",
+        "rawText": "纸质课程报告的办理时间为2026年11月9-10日，每天上午9:00-11:30、下午14:30-17:30；",
+        "type": "event_start",
+        "value": "2026-11-10T09:00"
+      },
+      {
+        "id": "time:source:f612bd63:draft:1:TTW-2-0-2026-11-10-0-end",
+        "owners": [
+          "task:source:f612bd63:draft:1:task-paper-report-submission"
+        ],
+        "precision": "exact",
+        "rawText": "纸质课程报告的办理时间为2026年11月9-10日，每天上午9:00-11:30、下午14:30-17:30；",
+        "type": "event_end",
+        "value": "2026-11-10T11:30"
+      },
+      {
+        "id": "time:source:f612bd63:draft:1:TTW-2-0-2026-11-10-1-start",
+        "owners": [
+          "task:source:f612bd63:draft:1:task-paper-report-submission"
+        ],
+        "precision": "exact",
+        "rawText": "纸质课程报告的办理时间为2026年11月9-10日，每天上午9:00-11:30、下午14:30-17:30；",
+        "type": "event_start",
+        "value": "2026-11-10T14:30"
+      },
+      {
+        "id": "time:source:f612bd63:draft:1:TTW-2-0-2026-11-10-1-end",
+        "owners": [
+          "task:source:f612bd63:draft:1:task-paper-report-submission"
+        ],
+        "precision": "exact",
+        "rawText": "纸质课程报告的办理时间为2026年11月9-10日，每天上午9:00-11:30、下午14:30-17:30；",
+        "type": "event_end",
+        "value": "2026-11-10T17:30"
+      }
+    ],
+    "personalPlan": [
+      {
+        "id": "personal-plan:task:source:f612bd63:draft:1:task-paper-report-submission",
+        "owners": [
+          "task:source:f612bd63:draft:1:task-paper-report-submission"
+        ],
+        "precision": "exact",
+        "rawText": "个人计划起点（不替代原文截止）",
+        "type": "planned_start",
+        "value": "2026-11-09T01:00:00.000Z"
+      }
+    ],
+    "materials": [
+      {
+        "channel": "学业系统",
+        "id": "material:source:f612bd63:draft:1:material-course-report-pdf",
+        "name": "课程报告PDF",
+        "relatedTaskIds": [
+          "task:source:f612bd63:draft:1:task-electronic-report-submission"
+        ]
+      },
+      {
+        "channel": "学习中心B305窗口",
+        "id": "material:source:f612bd63:draft:1:material-paper-course-report",
+        "name": "纸质课程报告",
+        "relatedTaskIds": [
+          "task:source:f612bd63:draft:1:task-paper-report-submission"
+        ]
+      },
+      {
+        "channel": "甲业务系统",
+        "id": "material:source:690fd339:draft:1:material-receipt",
+        "name": "本学年回执",
+        "relatedTaskIds": [
+          "task:source:690fd339:draft:1:task-upload"
+        ]
+      }
+    ],
+    "fieldEdits": [
+      {
+        "draftId": "source:690fd339:draft:1",
+        "pageEditIds": [],
+        "semanticFields": [],
+        "failureEvents": 1,
+        "verifiedCommitIds": [
+          "source-review:source:690fd339:draft:1:fnv1a32:d2cb75c1"
+        ]
+      },
+      {
+        "draftId": "source:f612bd63:draft:1",
+        "pageEditIds": [],
+        "semanticFields": [],
+        "failureEvents": 0,
+        "verifiedCommitIds": [
+          "source-review:source:f612bd63:draft:1:fnv1a32:7acc8674"
+        ]
+      }
+    ],
+    "checks": {
+      "taskTimeFirst": "PASS_REAL_RAW",
+      "sourceAcceptance": "PASS_NO_FACT_EDITS",
+      "sourceSaveAndIndependentRead": "PASS_2_TASK_2_MATERIAL_9_SOURCE_TIME",
+      "plan": "PASS_11_09_09_00_TO_09_30_INSIDE_ONE_WINDOW_ORIGINAL_DEADLINE_UNCHANGED",
+      "refresh": "PASS",
+      "ordinaryProxyFixture": "PASS_ACTUAL_SERVICE_ADAPTER_LOCAL_TRANSPORT_NOT_MODEL",
+      "readbackFailureRecovery": "PASS_ONLY_RE_READ_SINGLE_COMMIT",
+      "transactionFaultAttempt": "NOT_TRIGGERED_BUTTON_BEHIND_MODAL_NOT_CREDITED",
+      "checkpointFault": "REUSED_PRIOR_BROWSER_AND_CURRENT_TESTS_NOT_RECLICKED",
+      "partialAndBadOwner": "REUSED_PRIOR_BROWSER_CURRENT_DIRECT_TESTS_NOT_RECLICKED",
+      "consoleErrors": "NONE_OBSERVED"
+    },
+    "limits": [
+      "Eight identical window quotations clutter the first task summary and time list; no time-budget extension to add another UI patch.",
+      "The Proxy engineering fixture modal says DeepSeek advice although diagnostic/provenance clearly mark fixture and routes are closed; display wording still needs alignment.",
+      "The isolated browser session was reset; frozen-first screenshots survived, final acceptance used a new port/DB.",
+      "No arbitrary live default-output accuracy test, release migration, merge or deployment."
+    ],
+    "humanMetrics": "NOT_OBSERVABLE"
+  },
+  "validation": {
+    "currentGroups": 34,
+    "currentFailed": [],
+    "modelCallsFromTests": 0,
+    "ledgerWritesFromTests": 0,
+    "targetedTests": 87,
+    "lintErrors": 0,
+    "lintExistingWarnings": 8,
+    "typecheck": "PASS",
+    "build": "PASS_EXISTING_CHUNK_WARNING",
+    "security": "PASS_4907_FILES",
+    "history": "REUSE_UNCHANGED_9_GROUPS_3_PASS_6_OLD_FAIL",
+    "audit": {
+      "info": 0,
+      "low": 0,
+      "moderate": 1,
+      "high": 6,
+      "critical": 2,
+      "total": 9
+    },
+    "productionAudit": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "remoteCi": "NOT_OBSERVED"
+  },
+  "protection": {
+    "protected": 84,
+    "frozen": 119,
+    "archives": 7,
+    "oldAssets": 478,
+    "changedOldAssets": 0,
+    "ledger": {
+      "rows": 1096,
+      "sha256": "b5bc4857959794e01156f28c04c2d66b7abdcf53725c9bb9252f514caf13ff08",
+      "tail": "3536f3b407d40b8890f387e313edba67c07c81bd7bf13e5c1ea7544905bb124b",
+      "batchRows": 5
+    },
+    "old1091Prefix": "0870d6ccd38b54315a600d347657606aad3d19ae499e47c36077a9db0276e62f",
+    "legalAppendRowsThisPackage": 5,
+    "sealedStateUnchanged": true
+  },
+  "timeLimit": {
+    "startedAt": "2026-10-13T07:07:49Z",
+    "expiresAt": "2026-10-13T10:07:49Z",
+    "overrunObservedAt": "2026-10-13T11:36:53Z",
+    "status": "TIME_LIMIT_EXCEEDED_STOPPED_NEW_WORK_FINISHING_EVIDENCE_AND_SYNC",
+    "iterations": 2
+  }
+}

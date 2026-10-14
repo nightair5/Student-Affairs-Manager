@@ -1,0 +1,84 @@
+{
+  "stage": "RCO-5-MAINLINE-04-I1-R1",
+  "status": "DIRECTED_PASS_PENDING_INDEPENDENT_REVIEW",
+  "head": "1d039ac8065235528b6a507244e66ef382ba6901",
+  "protection": {
+    "count": 845,
+    "mismatches": []
+  },
+  "prefixes": [
+    {
+      "path": "src/experiments/mainline04/semanticContract.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "src/experiments/mainline04/legacyHandoff.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "src/experiments/mainline04/semanticAcceptance.test.ts",
+      "unchanged": true
+    }
+  ],
+  "logPrefixUnchanged": true,
+  "implementation": [
+    {
+      "path": "src/experiments/mainline04/semanticContract.ts",
+      "sha256": "a08953dfdb50bf0233d603ce46669f87ed4f61c810a322275011c7075b5e578f",
+      "bytes": 9681,
+      "changed": false
+    },
+    {
+      "path": "src/experiments/mainline04/semanticContract.test.ts",
+      "sha256": "ed52c2d572b5709e49e0369c876f4356f1704c466d97439eacdb50d5dc78383a",
+      "bytes": 1920,
+      "changed": false
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.ts",
+      "sha256": "d79136af9c5aead2f84930db879cf0faa26b69618fbf4745c4bc8a745e29446a",
+      "bytes": 12103,
+      "changed": true
+    },
+    {
+      "path": "src/experiments/mainline04/semanticComposer.test.ts",
+      "sha256": "2620001e2370138d82983c06ee6e81cab7ae62682faec0c3b5b3e9959d025311",
+      "bytes": 8063,
+      "changed": true
+    },
+    {
+      "path": "src/experiments/mainline04/legacyHandoff.ts",
+      "sha256": "fad0191afdc9c52ca70b8446a3d4bb3f0dc3d283b71d7aee50a39130167fa664",
+      "bytes": 7968,
+      "changed": true
+    },
+    {
+      "path": "src/experiments/mainline04/legacyHandoff.test.ts",
+      "sha256": "880ab738356affe83b041a7b1dc41a942dad760741e349c968ac371c0fb286c6",
+      "bytes": 4672,
+      "changed": false
+    },
+    {
+      "path": "src/experiments/mainline04/semanticAcceptance.test.ts",
+      "sha256": "1de7719c9ee1b2b13853ba6cf6df976133e7ff629aad8ef76467d55f7ed9d206",
+      "bytes": 21120,
+      "changed": true
+    },
+    {
+      "path": "scripts/check-mainline-04-i1.mjs",
+      "sha256": "71e7b771393fae15a454eb3e67bc6487c2e1d54f89c7535a6c2b8d5c5fbb8958",
+      "bytes": 14606,
+      "changed": false
+    }
+  ],
+  "directed": {
+    "total": 68,
+    "passed": 68,
+    "failed": 0
+  },
+  "directedSha256": "b843b227fb9b0c2d974eb56a20a629d3340e466ff461491faf6b21ba509a009b"
+}

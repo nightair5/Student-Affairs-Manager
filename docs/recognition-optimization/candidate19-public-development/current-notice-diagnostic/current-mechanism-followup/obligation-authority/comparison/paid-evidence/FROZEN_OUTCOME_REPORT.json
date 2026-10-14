@@ -1,0 +1,171 @@
+{
+  "version": "obligation-authority-paired-source-facts-1.0.0",
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "cases": [
+    {
+      "candidate": "SingleAuthority",
+      "sourceId": "obligation-development-OA-01",
+      "modelFirst": "UNKNOWN",
+      "displayFirst": "UNKNOWN",
+      "humanFinal": "UNKNOWN",
+      "reason": "NO_DEFINITE_MODEL_OUTPUT; ordinal1 uncertain, others stopped before send; fixed denominator retained"
+    },
+    {
+      "candidate": "SingleAuthority",
+      "sourceId": "obligation-development-OA-02",
+      "modelFirst": "UNKNOWN",
+      "displayFirst": "UNKNOWN",
+      "humanFinal": "UNKNOWN",
+      "reason": "NO_DEFINITE_MODEL_OUTPUT; ordinal1 uncertain, others stopped before send; fixed denominator retained"
+    },
+    {
+      "candidate": "SingleAuthority",
+      "sourceId": "obligation-development-OA-03",
+      "modelFirst": "UNKNOWN",
+      "displayFirst": "UNKNOWN",
+      "humanFinal": "UNKNOWN",
+      "reason": "NO_DEFINITE_MODEL_OUTPUT; ordinal1 uncertain, others stopped before send; fixed denominator retained"
+    },
+    {
+      "candidate": "SingleAuthority",
+      "sourceId": "obligation-development-OA-04",
+      "modelFirst": "UNKNOWN",
+      "displayFirst": "UNKNOWN",
+      "humanFinal": "UNKNOWN",
+      "reason": "NO_DEFINITE_MODEL_OUTPUT; ordinal1 uncertain, others stopped before send; fixed denominator retained"
+    },
+    {
+      "candidate": "ObligationAuthority",
+      "sourceId": "obligation-development-OA-01",
+      "modelFirst": "UNKNOWN",
+      "displayFirst": "UNKNOWN",
+      "humanFinal": "UNKNOWN",
+      "reason": "NO_DEFINITE_MODEL_OUTPUT; ordinal1 uncertain, others stopped before send; fixed denominator retained"
+    },
+    {
+      "candidate": "ObligationAuthority",
+      "sourceId": "obligation-development-OA-02",
+      "modelFirst": "UNKNOWN",
+      "displayFirst": "UNKNOWN",
+      "humanFinal": "UNKNOWN",
+      "reason": "NO_DEFINITE_MODEL_OUTPUT; ordinal1 uncertain, others stopped before send; fixed denominator retained"
+    },
+    {
+      "candidate": "ObligationAuthority",
+      "sourceId": "obligation-development-OA-03",
+      "modelFirst": "UNKNOWN",
+      "displayFirst": "UNKNOWN",
+      "humanFinal": "UNKNOWN",
+      "reason": "NO_DEFINITE_MODEL_OUTPUT; ordinal1 uncertain, others stopped before send; fixed denominator retained"
+    },
+    {
+      "candidate": "ObligationAuthority",
+      "sourceId": "obligation-development-OA-04",
+      "modelFirst": "UNKNOWN",
+      "displayFirst": "UNKNOWN",
+      "humanFinal": "UNKNOWN",
+      "reason": "NO_DEFINITE_MODEL_OUTPUT; ordinal1 uncertain, others stopped before send; fixed denominator retained"
+    }
+  ],
+  "summary": {
+    "SingleAuthority": {
+      "modelFirstFacts": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      },
+      "displayBeforeHuman": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      },
+      "humanFinal": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      }
+    },
+    "ObligationAuthority": {
+      "modelFirstFacts": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      },
+      "displayBeforeHuman": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      },
+      "humanFinal": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      }
+    }
+  },
+  "selection": "EVIDENCE_INCOMPLETE_NO_WINNER",
+  "completeComparison": false,
+  "requestOutcomes": [
+    {
+      "ordinal": 1,
+      "unitIdentitySha256": "5226a924b92676866252e461b02e2c915a9dea8fdedca3ad77e689989bef62e1",
+      "requestSha256": "206bfbcf29ba3f4938b809ee83ea70f249c13132364816c8567f6c4fcd15313f",
+      "status": "UNCERTAIN",
+      "haltReason": "SEND_RAW_OR_STATE"
+    },
+    {
+      "ordinal": 2,
+      "unitIdentitySha256": "7b1f5d140760b5945dd684b2bd41bd99c118e432ec4eba49bb6357c9a8982052",
+      "requestSha256": "9a3312ea14fce1d03ee8e9f47acb4c3dc0748feebee8fa2ee119f91b408a8cf3",
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 3,
+      "unitIdentitySha256": "00e99c507f32913918245a61dc9cca7bbedd5418c20a70c8315667a0debd6a49",
+      "requestSha256": "f36830ed62a6424b34b9a74ff2c3d398e78c12d8e7f1454626df41f863f59d1e",
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 4,
+      "unitIdentitySha256": "8b72132fdd857d5c2adbf26270b58c4f6b94fbabb361f480f562a2ad3ce2d2db",
+      "requestSha256": "7df70eb797c3d127d5ef112a3696bd0f0805d7f1d63697deecc8ec6145ab6114",
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 5,
+      "unitIdentitySha256": "8f98a7255da33a7cbed4719296079e4b81695eb499c9d2253ade6e5a21800d3f",
+      "requestSha256": "297e88501972009a91ca507e5dbc92b9622ece360294826394d88ae4d0689cbe",
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 6,
+      "unitIdentitySha256": "5bc7ec3e6f11dba7f3ad708f54fbfdd1f1a77095e8f9cfb58a49d738e444c1e3",
+      "requestSha256": "9049d6b178ef5252b1f9eaff64f5b0f77174d0604d771233f0764c22168b4529",
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 7,
+      "unitIdentitySha256": "6ac73ee5330716630b0f518ee29038e496c2cc392be5a90eec5053ac95092ea4",
+      "requestSha256": "ac0235bf2fcee0416cfa36c0be4083d29d8cbf505ed726f0b647c139d2298606",
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 8,
+      "unitIdentitySha256": "5942553e2cc415d9062cc431b961a18b8386ae1a20d75261c50f1375ec9fe78b",
+      "requestSha256": "c5eb6dc2e782cdd46ac79a809dadc9dec8c5f12ec937b368bca679ad4517b791",
+      "status": "NOT_SENT"
+    }
+  ],
+  "registeredDenominator": {
+    "sourcesPerArm": 4,
+    "totalRequests": 8
+  },
+  "notRunSnapshotPreserved": "../NOT_RUN_REPORT.json",
+  "adjudication": "No raw acquired; no facts invented and no positive/negative semantic verdict inferred from transport failure."
+}

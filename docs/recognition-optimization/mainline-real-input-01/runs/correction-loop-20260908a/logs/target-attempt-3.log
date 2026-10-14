@@ -1,0 +1,15 @@
+TEMP C:\Users\Winner\AppData\Local\Temp\real-correction-TdSGmL
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ ✓ src/experiments/realInput01/acceptance.test.tsx (21 tests | 17 skipped) 7104ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; separate confirmation preserves two different deadlines  2479ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; batch confirmation preserves two different deadlines  2176ms
+   ✓ complex notice correction public API, original model answers remain immutable > A08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved  1226ms
+   ✓ complex notice correction public API, original model answers remain immutable > B08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved  1222ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed | 17 skipped (21)
+   Start at  09:41:48
+   Duration  8.53s (transform 601ms, setup 0ms, collect 962ms, tests 7.10s, environment 0ms, prepare 182ms)
+

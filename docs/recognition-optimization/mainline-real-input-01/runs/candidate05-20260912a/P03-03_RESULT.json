@@ -1,0 +1,210 @@
+{
+  "unitId": "P03-03",
+  "arm": "03",
+  "bindingSha": "72e07981d334cb79d94585459d55e48aa0f53ac3e1feddb347ab8850f9c0bcd4",
+  "requestSha": "ce525b4bc802d5fb7ce26e7049e77c7527c824519fcbf6fc4f01932f9f26f815",
+  "responseSha": "9b80524b90c214e0a82d08a7c438b56fa37df9d7becf87cde8e44edb2f5b93f9",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "f79e6bc9427ddeb80cfcdf5668800a85f93c8bffb7c5987b8166c031b0052326",
+  "scoreInput": "explicit semantic projection into byte-identical historical scorer; raw response unmodified",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-save-original-photos",
+        "propositionScopeIds": [
+          "scope-0001-fbfba6c056dcacc57d14a8a3e62e4c4423442997e0fc842f0e9c9c4bc959e4c2",
+          "scope-0002-9079b26462396292ebb467c68b0c421db0d4d38fcd3d2132f0d8b12aa88b1b31",
+          "scope-0003-dc3f91ee28e1880fbfe0b0683df83a10064b0d83394ad0d696a1ee5f60938027",
+          "scope-0004-19769b0965c600dc492871bbd556d92cf2d8623fff2b56d464b8e5e9ade0d55e",
+          "scope-0005-48a11b5443acbed757d1c0a0269eeadb782bff22864a31e5bf93dc435cd15910"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "save",
+        "action": {
+          "scopeId": "scope-0002-9079b26462396292ebb467c68b0c421db0d4d38fcd3d2132f0d8b12aa88b1b31",
+          "surface": "保存"
+        },
+        "object": {
+          "scopeId": "scope-0002-9079b26462396292ebb467c68b0c421db0d4d38fcd3d2132f0d8b12aa88b1b31",
+          "surface": "服务现场原始照片"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "保存服务现场原始照片",
+          "description": "请参与者保存服务现场原始照片，以供本人以后查询。本通知不规定完成日期，也不要求提交照片或额外制作任何材料。",
+          "completionCriteria": [
+            "服务现场原始照片已保存，可供本人以后查询"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0004-19769b0965c600dc492871bbd556d92cf2d8623fff2b56d464b8e5e9ade0d55e",
+      "scope-0005-48a11b5443acbed757d1c0a0269eeadb782bff22864a31e5bf93dc435cd15910",
+      "scope-0006-6f6d6ff1a0dbf478891b685ffe6e4713298c8f630f41a9003a715689eee143a3",
+      "scope-0007-78dd788f5e646f6866dfa1fcb992706d70da14a08038b2637b50112ad401f3d8",
+      "scope-0008-55f833ca896bb67c532502e73b430c16ba240c940705ceb978366e603fb52813"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:8d18edbb",
+    "sourceVersionId": "source:8d18edbb:version:1",
+    "sourceFingerprint": "sha256:4a5acf722a32f22fbfa5c459647bf4049e77a4f1d5d043414cc6d8191c54f26f"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 4136,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "material": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 2,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 1,
+    "referenceTaskCount": 1
+  },
+  "scoreError": null,
+  "totalAttempts": 62,
+  "costUpperMicroCny": 15766,
+  "totalCostUpperMicroCny": 4677789,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12新合成通知首次开发配对验证，非独立盲测；24请求不是24独立通知"
+}

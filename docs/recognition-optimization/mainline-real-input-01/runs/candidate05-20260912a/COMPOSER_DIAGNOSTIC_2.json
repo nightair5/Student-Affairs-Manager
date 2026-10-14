@@ -1,0 +1,256 @@
+[
+  {
+    "id": "P01-03",
+    "issues": [],
+    "items": [
+      {
+        "id": "task-submit-authorization",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      },
+      {
+        "id": "task-upload-trailer",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      }
+    ]
+  },
+  {
+    "id": "P02-03",
+    "issues": [
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "time-001"
+        ]
+      },
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "time-002"
+        ]
+      },
+      {
+        "code": "UNRESOLVED_SOURCE_SCOPE",
+        "entityIds": []
+      }
+    ],
+    "items": [
+      {
+        "id": "task-001",
+        "requiresAction": "true",
+        "issues": [
+          "TIME_NEEDS_REVIEW",
+          "UNRESOLVED_SOURCE_SCOPE"
+        ],
+        "selected": false
+      }
+    ]
+  },
+  {
+    "id": "P03-03",
+    "issues": [],
+    "items": [
+      {
+        "id": "task-save-original-photos",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      }
+    ]
+  },
+  {
+    "id": "P04-03",
+    "issues": [],
+    "items": [
+      {
+        "id": "task-cancel-water-sampling-reservation",
+        "requiresAction": "false",
+        "issues": [],
+        "selected": false
+      },
+      {
+        "id": "task-check-sampling-bottle-seal",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      }
+    ]
+  },
+  {
+    "id": "P05-03",
+    "issues": [],
+    "items": [
+      {
+        "id": "task-submit-trip-proof",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      }
+    ]
+  },
+  {
+    "id": "P05-05",
+    "issues": [],
+    "items": [
+      {
+        "id": "task-1",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      }
+    ]
+  },
+  {
+    "id": "P06-03",
+    "issues": [],
+    "items": [
+      {
+        "id": "task-pickup-projector",
+        "requiresAction": "unknown",
+        "issues": [],
+        "selected": false
+      }
+    ]
+  },
+  {
+    "id": "P07-03",
+    "issues": [],
+    "items": [
+      {
+        "id": "task-old-mail-proof",
+        "requiresAction": "false",
+        "issues": [],
+        "selected": false
+      },
+      {
+        "id": "task-new-upload-proof",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      }
+    ]
+  },
+  {
+    "id": "P08-03",
+    "issues": [],
+    "items": [
+      {
+        "id": "task-cancel-factory-visit",
+        "requiresAction": "false",
+        "issues": [],
+        "selected": false
+      },
+      {
+        "id": "task-submit-course-reflection",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      }
+    ]
+  },
+  {
+    "id": "P09-05",
+    "issues": [
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "t2"
+        ]
+      },
+      {
+        "code": "EVENT_NOT_TASK_ASSOCIATED",
+        "entityIds": [
+          "e1"
+        ]
+      }
+    ],
+    "items": []
+  },
+  {
+    "id": "P09-03",
+    "issues": [
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "tp-2"
+        ]
+      },
+      {
+        "code": "EVENT_NOT_TASK_ASSOCIATED",
+        "entityIds": [
+          "ev-1"
+        ]
+      }
+    ],
+    "items": []
+  },
+  {
+    "id": "P10-03",
+    "issues": [],
+    "items": [
+      {
+        "id": "task-light-inventory-submit",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      },
+      {
+        "id": "task-audio-inventory-submit",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      }
+    ]
+  },
+  {
+    "id": "P11-03",
+    "issues": [],
+    "items": [
+      {
+        "id": "task-fill-registration-form",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      },
+      {
+        "id": "task-submit-sample",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      },
+      {
+        "id": "task-prepare-sealed-bags",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      }
+    ]
+  },
+  {
+    "id": "P12-03",
+    "issues": [],
+    "items": [
+      {
+        "id": "task-make-labels",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      },
+      {
+        "id": "task-save-final-labels",
+        "requiresAction": "true",
+        "issues": [],
+        "selected": false
+      },
+      {
+        "id": "task-send-source-files-cancelled",
+        "requiresAction": "false",
+        "issues": [],
+        "selected": false
+      }
+    ]
+  }
+]

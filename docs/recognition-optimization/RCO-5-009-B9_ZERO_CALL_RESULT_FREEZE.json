@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "rco-5-009-b9-zero-call-result-freeze-1.0.0",
+  "stage": "RCO-5-009-B9-FIRST-ZERO-CALL-RESULT",
+  "status": "FIRST_ZERO_CALL_RESULT_FROZEN_B9_NOW_SEEN",
+  "frozenAt": "2026-09-04T16:07:46.939Z",
+  "authorizationId": "RCO-5-009-B9-ZERO-CALL",
+  "runId": "rco-5-009-b9-zero-call-20260904a",
+  "datasetId": "rco-5-009-b9-development-20260904",
+  "dataFreezeCommit": "98123829e763b804eb6ed8669c7f0e483aed49dd",
+  "runnerFreezeCommit": "053e3ede62376eaef185cec408712d15a55e0ed5",
+  "runnerFreezeWasPushedBeforeRun": true,
+  "componentPaths": [
+    "docs/recognition-optimization/RCO-5-009-B9_ZERO_CALL_RUNNER_FREEZE.json",
+    "docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/checkpoint.json",
+    "docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/result.json",
+    "docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/REPORT.md",
+    "docs/recognition-optimization/RCO-5-009-B9_TRACKER.md"
+  ],
+  "componentSha256": {
+    "docs/recognition-optimization/RCO-5-009-B9_ZERO_CALL_RUNNER_FREEZE.json": "4e3d6596b203f8012f3b52a8c7698c2f4fb62046eecf6a7f361cbd386625a03a",
+    "docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/checkpoint.json": "912b4a0546f28a9d1e8d448ac4b6124213af724bf1d212e4fcca0e8fc9670661",
+    "docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/result.json": "6aa7f888931efe7cc0db14348822954f4ea2f73bae712a1c469a006723f8a1a6",
+    "docs/recognition-optimization/rco-5-009-b9-runs/rco-5-009-b9-zero-call-20260904a/REPORT.md": "6f50e34fabcf7b57b740dca19bac7eabb1db3df48c158069bdc0543288dda026",
+    "docs/recognition-optimization/RCO-5-009-B9_TRACKER.md": "773adf0e785d64751595fef788701eefca72061b481bf52d9078d357d256c9dd"
+  },
+  "componentHashPolicy": "RUNNER_FREEZE_CHECKPOINT_RESULT_REPORT_AND_STAGE_SPECIFIC_TRACKER_ONLY",
+  "mutableMirrorsRecordedNotHashed": [
+    "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+    "docs/recognition-optimization/CURRENT_CONTEXT.md"
+  ],
+  "mutableMirrorPolicy": "GLOBAL_OPTIMIZATION_LOG_AND_CURRENT_CONTEXT_ARE_NON_AUTHORITATIVE_MIRRORS_AND_MUST_NOT_CREATE_TRANSITIVE_HASH_DRIFT",
+  "accounting": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "verifierCalls": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE",
+    "pipelineRuns": 1,
+    "casePipelineExecutions": 12
+  },
+  "runOutcome": "COMPLETED",
+  "failureCode": null,
+  "metrics": {
+    "caseIdentityExact": 1,
+    "sourceFingerprintExact": 1,
+    "candidatePolicyVersionExact": 1,
+    "candidateIdentityExact": 1,
+    "candidateDispositionExact": 1,
+    "actionSpanExact": 1,
+    "singletonOrEmptyObjectSpanExact": 1,
+    "inputFixtureTransportExact": 1,
+    "ledgerDispositionExact": 1,
+    "acceptedCandidateTaskBijectionExact": 1,
+    "taskSemanticExact": 1,
+    "taskSelectedExact": 1,
+    "requiresActionExact": 0.9166666666666666,
+    "responseContractCompletenessExact": 1,
+    "semanticCoverageCompletenessExact": 1,
+    "expectedIssueCodesExact": 1,
+    "materializerValidationExact": 1,
+    "revisionUncertaintyExact": 1,
+    "resolvedRevisionRelationExact": 1,
+    "unresolvedActionScopeExact": 1,
+    "outOfVocabularyUnresolvedActionExact": 1,
+    "conditionUnknownExact": 1,
+    "safeDefaultRecall": 1,
+    "siblingSurvivalRate": 1,
+    "unsafeDefaultSelections": 0,
+    "extraDefaultSelections": 0
+  },
+  "knownLabelLimitations": [
+    {
+      "caseId": "rco-task-b9-12",
+      "code": "IMPLEMENTATION_BOUNDARY_LABEL_NOT_INDEPENDENT_SEMANTIC_TRUTH",
+      "detail": "The source explicitly says the card-color condition is currently true, while frozen Expected keeps the condition unknown to test the present deterministic boundary. This case cannot support a semantic-accuracy claim."
+    }
+  ],
+  "gate": "FAIL",
+  "decision": "B9_ZERO_CALL_DIRECT_CANDIDATE_GATE_FAIL_RETAIN_RESULT_AND_USE_B10_FOR_ANY_FIX",
+  "checkpointStatus": "COMPLETED",
+  "resultStatus": "COMPLETED",
+  "datasetSeenAfterFirstRun": true,
+  "rerunAuthorized": false,
+  "paidRunAuthorized": false,
+  "stablePath": "UNCHANGED",
+  "rco6": "NOT_STARTED",
+  "deployment": "NOT_RUN",
+  "nextGate": "AUDIT_FROZEN_FIRST_RESULT_AND_USE_B10_OR_LATER_FOR_ANY_GENERALIZATION_FIX"
+}

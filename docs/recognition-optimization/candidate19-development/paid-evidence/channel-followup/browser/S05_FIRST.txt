@@ -1,0 +1,203 @@
+- link "跳到主要内容":
+  - /url: "#main-content"
+- complementary:
+  - button "返回今日首页":
+    - strong: 事务管家
+    - generic: STUDENT DESK
+  - button "新事务 N":
+    - text: 新事务
+    - generic: "N"
+  - navigation "主要导航":
+    - generic: 执行闭环
+    - button "今日":
+      - text: 今日
+    - button "收件箱":
+      - text: 收件箱
+    - button "打开待确认队列，共 2 项":
+      - text: 待确认
+      - generic: "2"
+    - button "项目":
+      - text: 项目
+    - button "日历":
+      - text: 日历
+    - button "资料库":
+      - text: 资料库
+    - generic: 低频工具
+    - button "所有任务":
+      - text: 所有任务
+    - button "知识问答":
+      - text: 知识问答
+    - button "周报月报":
+      - text: 周报月报
+  - button "搜索事项":
+    - text: 搜索事项
+  - button "新手教程":
+    - text: 新手教程
+  - button "设置与服务":
+    - text: 设置与服务
+  - button "隐私与数据":
+    - text: 隐私与数据
+  - strong: 已在此设备自动保存
+  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。
+- generic "匿名工程输入 · 普通产品路径 · 不发送模型请求"
+- main:
+  - text: 来源先保存，确认后入库
+  - heading "待确认" [level=1]
+  - paragraph: 这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。
+  - strong: "1"
+  - text: 份需关注
+  - group "收件箱视图":
+    - button "全部来源"
+    - button "待确认 1" [pressed]
+  - button "新建手动来源":
+    - text: 新建手动来源
+  - checkbox "选择全部待核对"
+  - text: 选择全部待核对
+  - article:
+    - checkbox "选择 手动粘贴消息"
+    - generic: 选择 手动粘贴消息
+    - generic: Candidate19 固定录制（非实时调用） 建议
+    - generic: 待核对
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 请在2026年11月13日09:25前上传志愿服务统计表。统计表须为PDF，文件名包含小组编号。看到平台显示接收成功才算办结。培训说明会2026年11月14日14:20开始，15:35结束。
+    - paragraph: 识别建议已保存，确认前不会创建正式任务。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 1 任务 · 1 材料 · 3 时间 · 1 活动
+    - button "核对 1 项任务、1 个事件":
+      - text: 核对 1 项任务、1 个事件
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+- status:
+  - generic: 匿名工程建议已生成；没有模型请求，核对后走普通正式保存。
+  - button "关闭提示": ×
+- dialog "识别出 1 项任务、1 个事件":
+  - banner:
+    - generic: 第 2 步 · Candidate19 固定录制（非实时调用） · 比较后程序转换 · 无新模型请求
+    - heading "识别出 1 项任务、1 个事件" [level=2]
+    - paragraph: 先看标题和时间；不准确时再点“编辑”。
+    - button "稍后处理并关闭" [active]:
+  - status "未确认编辑检查点":
+    - strong: 本来源核对会话
+    - paragraph: 编辑在确认前不会创建任务。
+  - strong: 1 项任务、1 个事件待确认
+  - generic: 确认后才会进入今日和任务中心
+  - region "项目匹配与识别质量":
+    - strong: 项目归属建议
+    - text: 未主动建立或匹配项目。
+    - generic: 选择项目归属
+    - combobox "选择项目归属":
+      - option "新建项目"
+      - option "作为独立事项" [selected]
+      - option "稍后决定"
+    - strong: 需要重点核对
+    - generic: 包含事件安排；存在质量标记
+    - button "只保留原文明确"
+    - region "聚焦复核原因":
+      - strong: 这份通知包含多个时间、材料或阶段
+      - generic: 系统已经完成初步整理，请重点确认标记项；不会自动选择、修改或创建任何事项。
+      - list:
+        - strong: 包含事件安排
+        - generic: 识别到 1 个事件，请核对开始时间、地点和是否需要创建。
+        - strong: 存在质量标记
+        - generic: 1 项质量标记需要人工复核。
+      - generic "来源提取元数据":
+        - generic: 95 字
+      - strong: 质量标记
+      - list:
+        - listitem: 志愿服务统计表的提交渠道原文未明确；“平台”仅出现在办结回执中，保留推测，不作为确定渠道。
+  - generic "原始通知与定位依据":
+    - text: 原始通知与定位依据
+  - paragraph: 请在2026年11月13日09:25前上传志愿服务统计表。统计表须为PDF，文件名包含小组编号。看到平台显示接收成功才算办结。培训说明会2026年11月14日14:20开始，15:35结束。
+  - region "项目树待确认事项":
+    - region "同一通知的独立事件与信息":
+      - region "材料渠道与办结标准":
+        - heading "材料与办结标准" [level=3]
+        - strong: 志愿服务统计表
+        - paragraph: 提交渠道尚未明确。首次模型推测“平台”，原文只用它说明办结回执；不作为确定提交渠道保存。
+        - generic "查看渠道原文依据"
+        - paragraph: 完成标准：看到平台显示接收成功才算办结
+      - heading "同一通知的事件" [level=3]
+      - article:
+        - strong: 培训说明会
+        - paragraph: 地点未说明；2026年11月14日14:20开始 → 15:35结束
+        - button "编辑事件"
+      - paragraph: 没有待办也可以保存停机、维护等事件。纯信息可直接标记已核对，不创建任务或空项目。
+      - button "依据原文补充遗漏事件"
+      - button "依据原文补充遗漏任务"
+    - article:
+      - checkbox "选择该任务" [checked]
+      - generic: 选择该任务
+      - generic: "1"
+      - strong: 上传志愿服务统计表
+      - time:
+        - text: 2026年11月13日09:25前
+      - button "编辑":
+        - text: 编辑
+      - generic: 其他
+      - generic: 耗时尚未估计
+      - generic: 1 项材料
+      - generic: 原文明确
+      - paragraph: 下一步上传志愿服务统计表
+      - generic "为什么这样拆？"
+      - button "不需要":
+        - text: 不需要
+      - button "加入任务":
+        - text: 加入任务
+    - heading "材料" [level=3]
+    - checkbox "志愿服务统计表 PDF" [checked]
+    - strong: 志愿服务统计表
+    - generic: PDF
+    - button "在原文中定位"
+    - heading "时间节点" [level=3]
+    - checkbox "submission_deadline 2026年11月13日09:25前" [checked]
+    - strong: submission_deadline
+    - generic: 2026年11月13日09:25前
+    - button "在原文中定位"
+    - checkbox "event_start 2026年11月14日14:20开始" [checked]
+    - strong: event_start
+    - generic: 2026年11月14日14:20开始
+    - button "在原文中定位"
+    - checkbox "event_end 15:35结束" [checked]
+    - strong: event_end
+    - generic: 15:35结束
+    - button "在原文中定位"
+  - contentinfo:
+    - generic "确认后创建预览":
+      - strong: 本次将创建
+      - generic: 0 个项目
+      - generic: 1 个任务
+      - generic: 3 个时间节点
+      - generic: 1 项材料
+      - generic: 1 个事件
+    - button "稍后再处理"
+    - button "一次接受本通知（1）":
+      - text: 一次接受本通知（1）
+- generic "本批真实录制 · 选择来源与独立读回"
+- paragraph: 78b2b62061d8 / source ed6126124610；rco-mainline-01-02-i1-d27-plan-recorded-channel1004；source-support-accounting-projection-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.0.0；ENGINEERING_REPLAY；此入口模型请求0。原批12份已结算；冻结首屏结构化通过C17 2/6、C19 1/6，MIXED_PROGRESS。下方是后验程序转换，不改原成绩。原答与冻结诊断不改。
+- text: 录制来源
+- combobox "录制来源":
+  - option "C19-DEV-S01 / Candidate17 / 原冻结：COMPLETE_BATCH_SEE_FROZEN_REPORT"
+  - option "C19-DEV-S01 / Candidate19 / 原冻结：COMPLETE_BATCH_SEE_FROZEN_REPORT"
+  - option "C19-DEV-S02 / Candidate19 / 原冻结：COMPLETE_BATCH_SEE_FROZEN_REPORT"
+  - option "C19-DEV-S02 / Candidate17 / 原冻结：COMPLETE_BATCH_SEE_FROZEN_REPORT"
+  - option "C19-DEV-S03 / Candidate17 / 原冻结：COMPLETE_BATCH_SEE_FROZEN_REPORT"
+  - option "C19-DEV-S03 / Candidate19 / 原冻结：COMPLETE_BATCH_SEE_FROZEN_REPORT"
+  - option "C19-DEV-S04 / Candidate19 / 原冻结：COMPLETE_BATCH_SEE_FROZEN_REPORT"
+  - option "C19-DEV-S04 / Candidate17 / 原冻结：COMPLETE_BATCH_SEE_FROZEN_REPORT"
+  - option "C19-DEV-S05 / Candidate17 / 原冻结：COMPLETE_BATCH_SEE_FROZEN_REPORT"
+  - option "C19-DEV-S05 / Candidate19 / 原冻结：COMPLETE_BATCH_SEE_FROZEN_REPORT" [selected]
+  - option "C19-DEV-S06 / Candidate19 / 原冻结：COMPLETE_BATCH_SEE_FROZEN_REPORT"
+  - option "C19-DEV-S06 / Candidate17 / 原冻结：COMPLETE_BATCH_SEE_FROZEN_REPORT"
+- textbox "本批匿名通知原文": 请在2026年11月13日09:25前上传志愿服务统计表。统计表须为PDF，文件名包含小组编号。看到平台显示接收成功才算办结。培训说明会2026年11月14日14:20开始，15:35结束。
+- paragraph: 复制到普通“新事务”；原回答、程序转换与用户修改分别保留。相对日期使用来源原基准 2026-10-03T09:00:00+08:00。
+- button "注入正式保存失败"
+- button "注入提交后读回失败"
+- button "注入检查点失败"
+- status: 未注入故障
+- button "本批独立canonical读回"
+- button "页面测量读回"
+- generic "本批独立读回结果"

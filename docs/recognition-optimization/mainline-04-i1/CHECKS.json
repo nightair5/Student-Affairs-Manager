@@ -1,0 +1,83 @@
+{
+  "stage": "RCO-5-MAINLINE-04-I1",
+  "status": "FAIL_INDEPENDENT_REVIEW",
+  "baselineCommit": "2405cf59023511b28caa7e53e41db1af0e06d3b5",
+  "directed": {
+    "red": {
+      "executedTests": 0,
+      "reason": "missing new module"
+    },
+    "attempts": [
+      {
+        "name": "directed-01",
+        "passed": 47,
+        "failed": 2
+      },
+      {
+        "name": "directed-02",
+        "passed": 48,
+        "failed": 1
+      },
+      {
+        "name": "directed-03",
+        "passed": 49,
+        "failed": 0
+      }
+    ],
+    "sumAttemptsForbidden": true,
+    "finalSetPassed": 49,
+    "finalSetFailed": 0,
+    "oldV2Fields": {
+      "checked": 42,
+      "equal": 42,
+      "method": "observeV2Fidelity genuine CapturePersistenceService + confirmationV2 + MemoryWorkspaceRecordStore reload"
+    },
+    "engineeringCases": 8,
+    "seenB8Candidates": 3,
+    "individualLeafLedger": "NOT_EXPORTED: JSON reporter did not retain test console output; no numeric leaf denominator claimed"
+  },
+  "independent": {
+    "decision": "BLOCKED",
+    "blockers": 2,
+    "wrongDefaultSelectionsObserved": 1,
+    "independentSiblingFalseBlocksObserved": 1,
+    "original49DoNotCoverNewCounterexamples": true,
+    "reviewer": "/root/mainline04_i1_independent",
+    "reproducedBy": "reviewer and primary independently, same unmodified new helper in memory",
+    "reproductionExitCode": 0
+  },
+  "fullLayeredEngineering": "NOT_RUN_STOP_CONDITION",
+  "fullCheckerReview": "NOT_COMPLETED_STOP_CONDITION",
+  "newSemanticApp": "NOT_RUN",
+  "newSemanticCanonical": "NOT_RUN",
+  "protection": {
+    "checkedExistingFiles": 825,
+    "changed": 0,
+    "legacyProtectedFiles": 799,
+    "priorImplementationFiles": 13,
+    "appendOnlyLog": true,
+    "oldTestsChanged": 0,
+    "implementationFilesAfterRejection": "UNCHANGED"
+  },
+  "history": {
+    "old40of42": "UNCHANGED",
+    "old17": "UNCHANGED",
+    "oldR2Environment": {
+      "passed": 3,
+      "failed": 1,
+      "status": "HISTORICAL_UNCHANGED"
+    },
+    "historicalFAIL": "UNCHANGED"
+  },
+  "modelAccuracy": "本轮未测量",
+  "externalRecognitionCalls": 0,
+  "modelNetwork": 0,
+  "feesCny": 0,
+  "keyAccess": 0,
+  "clipboardAccess": 0,
+  "realDatabaseAccess": 0,
+  "newDatasets": 0,
+  "deployment": 0,
+  "businessCommit": "NOT_ALLOWED_FAILED",
+  "delivery": "AUDIT_DOCUMENTS_ONLY"
+}

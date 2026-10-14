@@ -1,0 +1,31 @@
+
+> student-affairs-steward@0.1.0 lint
+> eslint .
+
+
+C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛\src\experiments\candidate11\runtime.tsx
+  11:10  warning  Fast refresh only works when a file only exports components. Move your component(s) to a separate file. If all exports are HOCs, add them to the `extraHOCs` option  react-refresh/only-export-components
+
+C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛\src\experiments\candidate13\d6Runtime.tsx
+  11:10  warning  Fast refresh only works when a file only exports components. Move your component(s) to a separate file. If all exports are HOCs, add them to the `extraHOCs` option  react-refresh/only-export-components
+
+C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛\src\experiments\candidate14\d7Browser.tsx
+  23:10  warning  Fast refresh only works when a file has exports. Move your component(s) to a separate file  react-refresh/only-export-components
+
+C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛\src\experiments\candidate15\d8Runtime.tsx
+  14:10  warning  Fast refresh only works when a file only exports components. Move your component(s) to a separate file. If all exports are HOCs, add them to the `extraHOCs` option  react-refresh/only-export-components
+
+C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛\src\experiments\mainline01\browser.tsx
+  17:10  warning  Fast refresh only works when a file has exports. Move your component(s) to a separate file  react-refresh/only-export-components
+
+C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛\src\experiments\mainline05\browser.tsx
+  58:10  warning  Fast refresh only works when a file has exports. Move your component(s) to a separate file  react-refresh/only-export-components
+
+C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛\src\experiments\realInput01\InputReview.tsx
+  19:81  warning  The ref value 'sequence.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'sequence.current' to a variable inside the effect, and use that variable in the cleanup function  react-hooks/exhaustive-deps
+
+C:\Users\Winner\.codex\worktrees\student-affairs-candidate11\比赛\src\experiments\realInput01\browser.tsx
+  114:10  warning  Fast refresh only works when a file has exports. Move your component(s) to a separate file  react-refresh/only-export-components
+
+✖ 8 problems (0 errors, 8 warnings)
+

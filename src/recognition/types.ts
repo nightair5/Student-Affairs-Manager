@@ -109,6 +109,8 @@ export interface TimePointSuggestionV2 {
 
 export interface EventSuggestion {
   tempId: string
+  /** Local inverse of an explicit source relation; older 2.0 outputs may omit it. */
+  relatedTaskTempIds?: string[]
   title: string
   description: string
   startTimePointTempId: string | null

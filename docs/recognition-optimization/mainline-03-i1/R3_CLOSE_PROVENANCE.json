@@ -1,0 +1,79 @@
+{
+  "stage": "RCO-5-MAINLINE-03-I1-R3-CLOSE",
+  "kind": "retained-real-repository-readback-rehash",
+  "newBrowserOrDatabaseRead": false,
+  "priorRun": {
+    "browser": "Edge",
+    "browserId": "2",
+    "tabs": [
+      "763114512",
+      "763114513"
+    ],
+    "origin": "http://127.0.0.1:12736",
+    "run": "mainline03-de61624d-c2dc-4a41-a629-0509029d2193",
+    "workspaceId": "rco-mainline-01-02-i1-mainline03-de61624d-c2dc-4a41-a629-0509029d2193"
+  },
+  "captureChain": [
+    "Prior R3 used real App and IsolatedTestStore IndexedDB, not a prepopulated page.",
+    "The engineering read button calls runtime.load(), then setSnapshot(value); canonical pre renders JSON.stringify(snapshot).",
+    "After prior final reload, the read button was invoked and completed in a separate tool call before reading the canonical pre.",
+    "Persistent REPL r3final was assigned by JSON.parse(await r3page.playwright.getByLabel('canonical读回JSON',{exact:true}).innerText()).",
+    "Before any download-file parse in the later file-supplement turn, r3final was already retained; it equals r3finalBeforeRefresh in full.",
+    "CLOSE rehashed that retained r3final directly in REPL without opening a tab, reading a download, or invoking repository again.",
+    "The file was separately read through Node fs in the authorized Downloads path; Node SHA-256 of JSON.stringify(parsedFile) equals the retained-object digest."
+  ],
+  "sourceCode": {
+    "path": "src/experiments/mainline03/browser.tsx",
+    "sha256": "93b9d81b975183dd155dfc30848258f2f258b1d793af55ad57f7755a5d297cc1",
+    "readButtonLines": [
+      62,
+      64
+    ],
+    "canonicalPreLine": 69
+  },
+  "retainedReadback": {
+    "variable": "r3final",
+    "wholeObjectSha256": "98fa1768d648bf49c862fdc1433f2630e3c9bed705af68fb67d2ef26e623e75a",
+    "equalsPriorBeforeRefresh": true,
+    "hashMethod": "pure-JavaScript SHA-256 of UTF-8 JSON.stringify; abc known-answer test passed; no hidden browser-state API"
+  },
+  "retainedEarlierCapture": {
+    "variable": "r3beforeMulti",
+    "tasks": 0,
+    "sources": 1,
+    "wholeObjectSha256": "3d0cc5888e713a3bb1b44c262795fb5cf3f3b73f0bcbb9d97862d01d97823887"
+  },
+  "retainedFinalEffects": {
+    "recordReads": 3,
+    "recordWrites": 0,
+    "localStorage": 0,
+    "fetch": 0,
+    "xhr": 0,
+    "webSocket": 0,
+    "beacon": 0,
+    "notificationPermission": 0,
+    "notifications": 0,
+    "actualReminderJobs": 0,
+    "measurementTime": "prior R3 browser final refresh; not a new CLOSE measurement"
+  },
+  "file": {
+    "path": "C:/Users/Winner/Downloads/mainline-02-i1-workspace (7).json",
+    "bytes": 96198,
+    "createdUtc": "2026-09-06T04:20:41.229Z",
+    "modifiedUtc": "2026-09-06T04:20:41.230Z",
+    "fileSha256": "6fddeb86ea9c975e2085d15beb66d640820d4de7863fe7c33f13952aabe1c23e",
+    "wholeObjectSha256": "98fa1768d648bf49c862fdc1433f2630e3c9bed705af68fb67d2ef26e623e75a"
+  },
+  "result": {
+    "sameWorkspace": true,
+    "wholeObjectDigestMatches": true,
+    "separateReadPaths": true,
+    "notTwoHashesOfTheFile": true
+  },
+  "limitations": [
+    "This is retained local browser-readback evidence plus new file verification, not a newly executed Edge protocol.",
+    "The local hashes prove content identity, not a cryptographic signature or service-provider authenticity.",
+    "Prior listener timeouts, tool observation issues, and one message-channel console error remain historical observations; download file evidence does not explain their mechanism."
+  ],
+  "modelAccuracy": "本轮未测量"
+}

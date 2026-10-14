@@ -1,0 +1,2017 @@
+{
+  "references": [
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "C19-DEV-S01",
+      "sourceSha256": "15d3153166d43aa37568018eab9f8661de221c3773313689ecf766e78c181e95",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex single-author source assertions, no model outputs inspected",
+      "seenDegree": "NEW_AUTHORED_DEVELOPMENT_SEEN_DURING_ENGINEERING",
+      "decisions": [
+        "Source values authored independently of adapter; only IDs/scopes mechanically bound",
+        "Standalone events do not become tasks; legitimate unknown qualification is a correct retained pending fact"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "C19-DEV-S01",
+          "completeness": "complete",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577": "校园失物查询网站将在周日晚间暂停查询。",
+            "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1": "此前登记的信息保持不变，",
+            "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64": "不需要重新登记，",
+            "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105": "也不要发送补充邮件。"
+          },
+          "allowedAliases": [],
+          "tasks": [],
+          "relations": [],
+          "noTaskFacts": [
+            {
+              "id": "E1",
+              "kind": "event",
+              "value": "校园失物查询网站",
+              "aliases": [
+                "校园失物查询网站将在周日晚间暂停查询"
+              ],
+              "sourceText": "校园失物查询网站",
+              "scopeIds": [
+                "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577"
+              ],
+              "timeFactIds": [
+                "P1"
+              ],
+              "locationFactIds": []
+            },
+            {
+              "id": "P1",
+              "kind": "time",
+              "value": "周日晚间",
+              "aliases": [],
+              "sourceText": "周日晚间",
+              "scopeIds": [
+                "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577"
+              ],
+              "time": {
+                "tempId": "P1",
+                "rawText": "周日晚间",
+                "type": "event_start",
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577"
+                ],
+                "confidence": 1
+              }
+            },
+            {
+              "id": "I3",
+              "kind": "information",
+              "value": "此前登记的信息保持不变，",
+              "aliases": [],
+              "sourceText": "此前登记的信息保持不变，",
+              "scopeIds": [
+                "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1"
+              ]
+            },
+            {
+              "id": "I4",
+              "kind": "information",
+              "value": "不需要重新登记，",
+              "aliases": [],
+              "sourceText": "不需要重新登记，",
+              "scopeIds": [
+                "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64"
+              ]
+            },
+            {
+              "id": "I5",
+              "kind": "information",
+              "value": "也不要发送补充邮件。",
+              "aliases": [],
+              "sourceText": "也不要发送补充邮件。",
+              "scopeIds": [
+                "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105"
+              ]
+            }
+          ]
+        }
+      ],
+      "forbiddenActions": [],
+      "d26DisplayPolicy": {
+        "eventContradictions": []
+      },
+      "coverageAssertions": [],
+      "prerequisiteAssertions": [],
+      "sourceTimeAssertions": [
+        {
+          "tempId": "P1",
+          "rawText": "周日晚间",
+          "type": "event_start",
+          "normalizedValue": null,
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "relatedTaskTempIds": [],
+          "relatedMaterialTempIds": [],
+          "scopeIds": [
+            "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577"
+          ],
+          "confidence": 1,
+          "role": "SOURCE_AUTHORED_NOT_ADAPTER_DERIVED"
+        }
+      ],
+      "freeProseAndLeakage": "NOT_ADJUDICATED"
+    },
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "C19-DEV-S02",
+      "sourceSha256": "b6ae3d744db6f70621a23d8ad2ac4611c2616df5ad977773440fa7a25c403dfd",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex single-author source assertions, no model outputs inspected",
+      "seenDegree": "NEW_AUTHORED_DEVELOPMENT_SEEN_DURING_ENGINEERING",
+      "decisions": [
+        "Source values authored independently of adapter; only IDs/scopes mechanically bound",
+        "Standalone events do not become tasks; legitimate unknown qualification is a correct retained pending fact"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "C19-DEV-S02",
+          "completeness": "complete",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b": "开放实验室说明会2026年11月12日10:10开始，",
+            "scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef": "11:40结束。",
+            "scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519": "网络调试从周五夜间开始，",
+            "scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d": "恢复时间尚未公布。",
+            "scope-0005-8decfa2698ae847f738cbe9831da2496c9930a5b28e4473ffe4fba48b33a74b2": "两件事仅供了解，",
+            "scope-0006-3108d1553d59b8308b5169f95d3708100920c5e62ca23c7aae3f014f8451f11d": "不要求报名。"
+          },
+          "allowedAliases": [],
+          "tasks": [],
+          "relations": [],
+          "noTaskFacts": [
+            {
+              "id": "E1",
+              "kind": "event",
+              "value": "开放实验室说明会",
+              "aliases": [
+                "开放实验室说明会2026年11月12日10:10开始"
+              ],
+              "sourceText": "开放实验室说明会",
+              "scopeIds": [
+                "scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b",
+                "scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef"
+              ],
+              "timeFactIds": [
+                "P1",
+                "P2"
+              ],
+              "locationFactIds": []
+            },
+            {
+              "id": "P1",
+              "kind": "time",
+              "value": "2026年11月12日10:10",
+              "aliases": [],
+              "sourceText": "2026年11月12日10:10",
+              "scopeIds": [
+                "scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b"
+              ],
+              "time": {
+                "tempId": "P1",
+                "rawText": "2026年11月12日10:10",
+                "type": "event_start",
+                "normalizedValue": "2026-11-12T10:10",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b"
+                ],
+                "confidence": 1
+              }
+            },
+            {
+              "id": "P2",
+              "kind": "time",
+              "value": "11:40",
+              "aliases": [],
+              "sourceText": "11:40",
+              "scopeIds": [
+                "scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef"
+              ],
+              "time": {
+                "tempId": "P2",
+                "rawText": "11:40",
+                "type": "event_end",
+                "normalizedValue": "2026-11-12T11:40",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef"
+                ],
+                "confidence": 1
+              }
+            },
+            {
+              "id": "E2",
+              "kind": "event",
+              "value": "网络调试",
+              "aliases": [
+                "网络调试从周五夜间开始"
+              ],
+              "sourceText": "网络调试",
+              "scopeIds": [
+                "scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519",
+                "scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d"
+              ],
+              "timeFactIds": [
+                "P3",
+                "P4"
+              ],
+              "locationFactIds": []
+            },
+            {
+              "id": "P3",
+              "kind": "time",
+              "value": "周五夜间",
+              "aliases": [],
+              "sourceText": "周五夜间",
+              "scopeIds": [
+                "scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519"
+              ],
+              "time": {
+                "tempId": "P3",
+                "rawText": "周五夜间",
+                "type": "event_start",
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519"
+                ],
+                "confidence": 1
+              }
+            },
+            {
+              "id": "P4",
+              "kind": "time",
+              "value": "恢复时间尚未公布",
+              "aliases": [],
+              "sourceText": "恢复时间尚未公布",
+              "scopeIds": [
+                "scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d"
+              ],
+              "time": {
+                "tempId": "P4",
+                "rawText": "恢复时间尚未公布",
+                "type": "event_end",
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d"
+                ],
+                "confidence": 1
+              }
+            },
+            {
+              "id": "I7",
+              "kind": "information",
+              "value": "两件事仅供了解，",
+              "aliases": [],
+              "sourceText": "两件事仅供了解，",
+              "scopeIds": [
+                "scope-0005-8decfa2698ae847f738cbe9831da2496c9930a5b28e4473ffe4fba48b33a74b2"
+              ]
+            },
+            {
+              "id": "I8",
+              "kind": "information",
+              "value": "不要求报名。",
+              "aliases": [],
+              "sourceText": "不要求报名。",
+              "scopeIds": [
+                "scope-0006-3108d1553d59b8308b5169f95d3708100920c5e62ca23c7aae3f014f8451f11d"
+              ]
+            }
+          ]
+        }
+      ],
+      "forbiddenActions": [],
+      "d26DisplayPolicy": {
+        "eventContradictions": []
+      },
+      "coverageAssertions": [],
+      "prerequisiteAssertions": [],
+      "sourceTimeAssertions": [
+        {
+          "tempId": "P1",
+          "rawText": "2026年11月12日10:10",
+          "type": "event_start",
+          "normalizedValue": "2026-11-12T10:10",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "relatedTaskTempIds": [],
+          "relatedMaterialTempIds": [],
+          "scopeIds": [
+            "scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b"
+          ],
+          "confidence": 1,
+          "role": "SOURCE_AUTHORED_NOT_ADAPTER_DERIVED"
+        },
+        {
+          "tempId": "P2",
+          "rawText": "11:40",
+          "type": "event_end",
+          "normalizedValue": "2026-11-12T11:40",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "relatedTaskTempIds": [],
+          "relatedMaterialTempIds": [],
+          "scopeIds": [
+            "scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef"
+          ],
+          "confidence": 1,
+          "role": "SOURCE_AUTHORED_NOT_ADAPTER_DERIVED"
+        },
+        {
+          "tempId": "P3",
+          "rawText": "周五夜间",
+          "type": "event_start",
+          "normalizedValue": null,
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "relatedTaskTempIds": [],
+          "relatedMaterialTempIds": [],
+          "scopeIds": [
+            "scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519"
+          ],
+          "confidence": 1,
+          "role": "SOURCE_AUTHORED_NOT_ADAPTER_DERIVED"
+        },
+        {
+          "tempId": "P4",
+          "rawText": "恢复时间尚未公布",
+          "type": "event_end",
+          "normalizedValue": null,
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "relatedTaskTempIds": [],
+          "relatedMaterialTempIds": [],
+          "scopeIds": [
+            "scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d"
+          ],
+          "confidence": 1,
+          "role": "SOURCE_AUTHORED_NOT_ADAPTER_DERIVED"
+        }
+      ],
+      "freeProseAndLeakage": "NOT_ADJUDICATED"
+    },
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "C19-DEV-S03",
+      "sourceSha256": "d502bfa67f407bc0812b593d2879044ee39bdb2d7d2fdd4a6c02d78d081fbb31",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex single-author source assertions, no model outputs inspected",
+      "seenDegree": "NEW_AUTHORED_DEVELOPMENT_SEEN_DURING_ENGINEERING",
+      "decisions": [
+        "Source values authored independently of adapter; only IDs/scopes mechanically bound",
+        "Standalone events do not become tasks; legitimate unknown qualification is a correct retained pending fact"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "C19-DEV-S03",
+          "completeness": "complete",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-34fb7b4beedf16dd71c6f5040b499c9c3105afaf3857bb583050d5ccf1c490aa": "先填写场地使用登记。",
+            "scope-0002-99349b43af8beeb2e2ceabf78c295adc8a46bf2f72a96c279ec61ddd15d38bb4": "填好之后递交场地使用登记。",
+            "scope-0003-4a98be05e97d3753a4f04ddb2f061c5f572b0196a5a5c611203de3c140b623a8": "器材领用资格还未公布，",
+            "scope-0004-82c56ff7c1dfd1bfaa5dc0571dc720706a1bb3cf403f6aaaa4fca4b29e19ec22": "符合资格才能领取演示器材。"
+          },
+          "allowedAliases": [],
+          "tasks": [
+            {
+              "id": "T1",
+              "action": {
+                "canonical": "填写",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "场地使用登记",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": "N/A",
+              "times": "N/A",
+              "completionStandards": "N/A",
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0001-34fb7b4beedf16dd71c6f5040b499c9c3105afaf3857bb583050d5ccf1c490aa"
+              ],
+              "objectScopeIds": [
+                "scope-0001-34fb7b4beedf16dd71c6f5040b499c9c3105afaf3857bb583050d5ccf1c490aa"
+              ],
+              "scopeIds": [
+                "scope-0001-34fb7b4beedf16dd71c6f5040b499c9c3105afaf3857bb583050d5ccf1c490aa"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0001-34fb7b4beedf16dd71c6f5040b499c9c3105afaf3857bb583050d5ccf1c490aa"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-34fb7b4beedf16dd71c6f5040b499c9c3105afaf3857bb583050d5ccf1c490aa"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [],
+              "timeEvidence": []
+            },
+            {
+              "id": "T2",
+              "action": {
+                "canonical": "递交",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "场地使用登记",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": "N/A",
+              "times": "N/A",
+              "completionStandards": "N/A",
+              "dependencies": [
+                "T1"
+              ],
+              "actionScopeIds": [
+                "scope-0002-99349b43af8beeb2e2ceabf78c295adc8a46bf2f72a96c279ec61ddd15d38bb4"
+              ],
+              "objectScopeIds": [
+                "scope-0002-99349b43af8beeb2e2ceabf78c295adc8a46bf2f72a96c279ec61ddd15d38bb4"
+              ],
+              "scopeIds": [
+                "scope-0002-99349b43af8beeb2e2ceabf78c295adc8a46bf2f72a96c279ec61ddd15d38bb4"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0002-99349b43af8beeb2e2ceabf78c295adc8a46bf2f72a96c279ec61ddd15d38bb4"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0002-99349b43af8beeb2e2ceabf78c295adc8a46bf2f72a96c279ec61ddd15d38bb4"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [],
+              "timeEvidence": []
+            },
+            {
+              "id": "T3",
+              "action": {
+                "canonical": "领取",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "演示器材",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "unknown",
+              "conditionScopeIds": [
+                "scope-0004-82c56ff7c1dfd1bfaa5dc0571dc720706a1bb3cf403f6aaaa4fca4b29e19ec22"
+              ],
+              "factScopeIds": [
+                "scope-0003-4a98be05e97d3753a4f04ddb2f061c5f572b0196a5a5c611203de3c140b623a8"
+              ],
+              "actionability": "needs_confirmation",
+              "defaultSelection": "not_selected",
+              "confirmation": "required",
+              "materials": "N/A",
+              "times": "N/A",
+              "completionStandards": "N/A",
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0004-82c56ff7c1dfd1bfaa5dc0571dc720706a1bb3cf403f6aaaa4fca4b29e19ec22"
+              ],
+              "objectScopeIds": [
+                "scope-0004-82c56ff7c1dfd1bfaa5dc0571dc720706a1bb3cf403f6aaaa4fca4b29e19ec22"
+              ],
+              "scopeIds": [
+                "scope-0004-82c56ff7c1dfd1bfaa5dc0571dc720706a1bb3cf403f6aaaa4fca4b29e19ec22",
+                "scope-0003-4a98be05e97d3753a4f04ddb2f061c5f572b0196a5a5c611203de3c140b623a8"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0004-82c56ff7c1dfd1bfaa5dc0571dc720706a1bb3cf403f6aaaa4fca4b29e19ec22"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0004-82c56ff7c1dfd1bfaa5dc0571dc720706a1bb3cf403f6aaaa4fca4b29e19ec22",
+                    "scope-0003-4a98be05e97d3753a4f04ddb2f061c5f572b0196a5a5c611203de3c140b623a8"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0004-82c56ff7c1dfd1bfaa5dc0571dc720706a1bb3cf403f6aaaa4fca4b29e19ec22"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0004-82c56ff7c1dfd1bfaa5dc0571dc720706a1bb3cf403f6aaaa4fca4b29e19ec22"
+                  ],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0003-4a98be05e97d3753a4f04ddb2f061c5f572b0196a5a5c611203de3c140b623a8"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0003-4a98be05e97d3753a4f04ddb2f061c5f572b0196a5a5c611203de3c140b623a8"
+                  ],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [],
+              "timeEvidence": []
+            }
+          ],
+          "relations": [],
+          "noTaskFacts": []
+        }
+      ],
+      "forbiddenActions": [],
+      "d26DisplayPolicy": {
+        "eventContradictions": []
+      },
+      "coverageAssertions": [
+        {
+          "taskId": "T1",
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        {
+          "taskId": "T2",
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        {
+          "taskId": "T3",
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        }
+      ],
+      "prerequisiteAssertions": [
+        {
+          "taskId": "T2",
+          "predecessorId": "T1",
+          "completion": "unknown"
+        }
+      ],
+      "sourceTimeAssertions": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED"
+    },
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "C19-DEV-S04",
+      "sourceSha256": "efe4d47f1a03a88791b0d30c272fb253aa9e1b157b936422d5840e5941318409",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex single-author source assertions, no model outputs inspected",
+      "seenDegree": "NEW_AUTHORED_DEVELOPMENT_SEEN_DURING_ENGINEERING",
+      "decisions": [
+        "Source values authored independently of adapter; only IDs/scopes mechanically bound",
+        "Standalone events do not become tasks; legitimate unknown qualification is a correct retained pending fact"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "C19-DEV-S04",
+          "completeness": "complete",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-2e6495c05c46002bd8895552c2e13e438c59b9429f21980ffb41c3cbbbc046c3": "本轮展位申请仅限获准社团。",
+            "scope-0002-a0d76e61e18eba1d02a012a421452b23ffa715c89f50c0d0ddd2ae91972330f6": "你的社团尚未获准，",
+            "scope-0003-fcce7bd4bff9b4122518f31d21a0341f3d3e1c3e4f3dc3b6babc9e3c7f42a30f": "不能提交展位申请。",
+            "scope-0004-78e0209c480fc49fb25ad84a48cb3a16b91474fa09c14530e722fe8c0fb690ef": "另请保存活动联系编号。"
+          },
+          "allowedAliases": [],
+          "tasks": [
+            {
+              "id": "T1",
+              "action": {
+                "canonical": "保存",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "活动联系编号",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": "N/A",
+              "times": "N/A",
+              "completionStandards": "N/A",
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0004-78e0209c480fc49fb25ad84a48cb3a16b91474fa09c14530e722fe8c0fb690ef"
+              ],
+              "objectScopeIds": [
+                "scope-0004-78e0209c480fc49fb25ad84a48cb3a16b91474fa09c14530e722fe8c0fb690ef"
+              ],
+              "scopeIds": [
+                "scope-0004-78e0209c480fc49fb25ad84a48cb3a16b91474fa09c14530e722fe8c0fb690ef"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0004-78e0209c480fc49fb25ad84a48cb3a16b91474fa09c14530e722fe8c0fb690ef"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0004-78e0209c480fc49fb25ad84a48cb3a16b91474fa09c14530e722fe8c0fb690ef"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [],
+              "timeEvidence": []
+            }
+          ],
+          "relations": [],
+          "noTaskFacts": [
+            {
+              "id": "I1",
+              "kind": "information",
+              "value": "本轮展位申请仅限获准社团。",
+              "aliases": [],
+              "sourceText": "本轮展位申请仅限获准社团。",
+              "scopeIds": [
+                "scope-0001-2e6495c05c46002bd8895552c2e13e438c59b9429f21980ffb41c3cbbbc046c3"
+              ]
+            },
+            {
+              "id": "I2",
+              "kind": "information",
+              "value": "你的社团尚未获准，",
+              "aliases": [],
+              "sourceText": "你的社团尚未获准，",
+              "scopeIds": [
+                "scope-0002-a0d76e61e18eba1d02a012a421452b23ffa715c89f50c0d0ddd2ae91972330f6"
+              ]
+            },
+            {
+              "id": "I3",
+              "kind": "information",
+              "value": "不能提交展位申请。",
+              "aliases": [],
+              "sourceText": "不能提交展位申请。",
+              "scopeIds": [
+                "scope-0003-fcce7bd4bff9b4122518f31d21a0341f3d3e1c3e4f3dc3b6babc9e3c7f42a30f"
+              ]
+            }
+          ]
+        }
+      ],
+      "forbiddenActions": [
+        {
+          "action": {
+            "canonical": "提交",
+            "aliases": []
+          },
+          "object": {
+            "canonical": "展位申请",
+            "aliases": []
+          },
+          "scopeIds": [
+            "scope-0003-fcce7bd4bff9b4122518f31d21a0341f3d3e1c3e4f3dc3b6babc9e3c7f42a30f"
+          ],
+          "reason": "explicit_prohibition"
+        }
+      ],
+      "d26DisplayPolicy": {
+        "eventContradictions": []
+      },
+      "coverageAssertions": [
+        {
+          "taskId": "T1",
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        }
+      ],
+      "prerequisiteAssertions": [],
+      "sourceTimeAssertions": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED"
+    },
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "C19-DEV-S05",
+      "sourceSha256": "88d0804e9cf9fd4898278278a5406a43ceadee08b0c58634e9718fdb8d6aa174",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex single-author source assertions, no model outputs inspected",
+      "seenDegree": "NEW_AUTHORED_DEVELOPMENT_SEEN_DURING_ENGINEERING",
+      "decisions": [
+        "Source values authored independently of adapter; only IDs/scopes mechanically bound",
+        "Standalone events do not become tasks; legitimate unknown qualification is a correct retained pending fact"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "C19-DEV-S05",
+          "completeness": "complete",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331": "请在2026年11月13日09:25前上传志愿服务统计表。",
+            "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a": "统计表须为PDF，",
+            "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601": "文件名包含小组编号。",
+            "scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c": "看到平台显示接收成功才算办结。",
+            "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff": "培训说明会2026年11月14日14:20开始，",
+            "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f": "15:35结束。"
+          },
+          "allowedAliases": [],
+          "tasks": [
+            {
+              "id": "T1",
+              "action": {
+                "canonical": "上传",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "志愿服务统计表",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": [
+                "统计表",
+                "PDF",
+                "小组编号"
+              ],
+              "times": [
+                {
+                  "tempId": "P0",
+                  "rawText": "2026年11月13日09:25前",
+                  "type": "submission_deadline",
+                  "normalizedValue": "2026-11-13T09:25",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                  ],
+                  "confidence": 1
+                }
+              ],
+              "completionStandards": [
+                "看到平台显示接收成功才算办结"
+              ],
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+              ],
+              "objectScopeIds": [
+                "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+              ],
+              "scopeIds": [
+                "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331",
+                "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601",
+                "scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331",
+                    "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                    "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601",
+                    "scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [
+                {
+                  "tempId": "M1",
+                  "name": "统计表",
+                  "required": true,
+                  "formatRequirements": [
+                    "PDF"
+                  ],
+                  "namingRequirements": [
+                    "小组编号"
+                  ],
+                  "quantity": null,
+                  "submissionChannel": null,
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "scopeIds": [
+                    "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                    "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601"
+                  ],
+                  "confidence": 1,
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a"
+                      ],
+                      [
+                        "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                      "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ],
+              "timeEvidence": [
+                {
+                  "rawText": "2026年11月13日09:25前",
+                  "type": "submission_deadline",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ]
+            }
+          ],
+          "relations": [],
+          "noTaskFacts": [
+            {
+              "id": "E1",
+              "kind": "event",
+              "value": "培训说明会",
+              "aliases": [
+                "培训说明会2026年11月14日14:20开始"
+              ],
+              "sourceText": "培训说明会",
+              "scopeIds": [
+                "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff",
+                "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f"
+              ],
+              "timeFactIds": [
+                "P1",
+                "P2"
+              ],
+              "locationFactIds": []
+            },
+            {
+              "id": "P1",
+              "kind": "time",
+              "value": "2026年11月14日14:20",
+              "aliases": [],
+              "sourceText": "2026年11月14日14:20",
+              "scopeIds": [
+                "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff"
+              ],
+              "time": {
+                "tempId": "P1",
+                "rawText": "2026年11月14日14:20",
+                "type": "event_start",
+                "normalizedValue": "2026-11-14T14:20",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff"
+                ],
+                "confidence": 1
+              }
+            },
+            {
+              "id": "P2",
+              "kind": "time",
+              "value": "15:35",
+              "aliases": [],
+              "sourceText": "15:35",
+              "scopeIds": [
+                "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f"
+              ],
+              "time": {
+                "tempId": "P2",
+                "rawText": "15:35",
+                "type": "event_end",
+                "normalizedValue": "2026-11-14T15:35",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f"
+                ],
+                "confidence": 1
+              }
+            }
+          ]
+        },
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "C19-DEV-S05",
+          "completeness": "complete",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331": "请在2026年11月13日09:25前上传志愿服务统计表。",
+            "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a": "统计表须为PDF，",
+            "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601": "文件名包含小组编号。",
+            "scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c": "看到平台显示接收成功才算办结。",
+            "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff": "培训说明会2026年11月14日14:20开始，",
+            "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f": "15:35结束。"
+          },
+          "allowedAliases": [],
+          "tasks": [
+            {
+              "id": "T1",
+              "action": {
+                "canonical": "上传",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "志愿服务统计表",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": [
+                "统计表",
+                "PDF",
+                "小组编号"
+              ],
+              "times": [
+                {
+                  "tempId": "P0",
+                  "rawText": "2026年11月13日09:25",
+                  "type": "submission_deadline",
+                  "normalizedValue": "2026-11-13T09:25",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                  ],
+                  "confidence": 1
+                }
+              ],
+              "completionStandards": [
+                "看到平台显示接收成功才算办结"
+              ],
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+              ],
+              "objectScopeIds": [
+                "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+              ],
+              "scopeIds": [
+                "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331",
+                "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601",
+                "scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331",
+                    "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                    "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601",
+                    "scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [
+                {
+                  "tempId": "M1",
+                  "name": "统计表",
+                  "required": true,
+                  "formatRequirements": [
+                    "PDF"
+                  ],
+                  "namingRequirements": [
+                    "小组编号"
+                  ],
+                  "quantity": null,
+                  "submissionChannel": null,
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "scopeIds": [
+                    "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                    "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601"
+                  ],
+                  "confidence": 1,
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a"
+                      ],
+                      [
+                        "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                      "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ],
+              "timeEvidence": [
+                {
+                  "rawText": "2026年11月13日09:25",
+                  "type": "submission_deadline",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ]
+            }
+          ],
+          "relations": [],
+          "noTaskFacts": [
+            {
+              "id": "E1",
+              "kind": "event",
+              "value": "培训说明会",
+              "aliases": [
+                "培训说明会2026年11月14日14:20开始"
+              ],
+              "sourceText": "培训说明会",
+              "scopeIds": [
+                "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff",
+                "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f"
+              ],
+              "timeFactIds": [
+                "P1",
+                "P2"
+              ],
+              "locationFactIds": []
+            },
+            {
+              "id": "P1",
+              "kind": "time",
+              "value": "2026年11月14日14:20",
+              "aliases": [],
+              "sourceText": "2026年11月14日14:20",
+              "scopeIds": [
+                "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff"
+              ],
+              "time": {
+                "tempId": "P1",
+                "rawText": "2026年11月14日14:20",
+                "type": "event_start",
+                "normalizedValue": "2026-11-14T14:20",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff"
+                ],
+                "confidence": 1
+              }
+            },
+            {
+              "id": "P2",
+              "kind": "time",
+              "value": "15:35",
+              "aliases": [],
+              "sourceText": "15:35",
+              "scopeIds": [
+                "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f"
+              ],
+              "time": {
+                "tempId": "P2",
+                "rawText": "15:35",
+                "type": "event_end",
+                "normalizedValue": "2026-11-14T15:35",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f"
+                ],
+                "confidence": 1
+              }
+            }
+          ]
+        },
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "C19-DEV-S05",
+          "completeness": "complete",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331": "请在2026年11月13日09:25前上传志愿服务统计表。",
+            "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a": "统计表须为PDF，",
+            "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601": "文件名包含小组编号。",
+            "scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c": "看到平台显示接收成功才算办结。",
+            "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff": "培训说明会2026年11月14日14:20开始，",
+            "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f": "15:35结束。"
+          },
+          "allowedAliases": [],
+          "tasks": [
+            {
+              "id": "T1",
+              "action": {
+                "canonical": "上传",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "志愿服务统计表",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": [
+                "PDF",
+                "小组编号"
+              ],
+              "times": [
+                {
+                  "tempId": "P0",
+                  "rawText": "2026年11月13日09:25前",
+                  "type": "submission_deadline",
+                  "normalizedValue": "2026-11-13T09:25",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                  ],
+                  "confidence": 1
+                }
+              ],
+              "completionStandards": [
+                "看到平台显示接收成功才算办结"
+              ],
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+              ],
+              "objectScopeIds": [
+                "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+              ],
+              "scopeIds": [
+                "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331",
+                "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601",
+                "scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331",
+                    "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                    "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601",
+                    "scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [
+                {
+                  "tempId": "M1",
+                  "name": "志愿服务统计表",
+                  "required": true,
+                  "formatRequirements": [
+                    "PDF"
+                  ],
+                  "namingRequirements": [
+                    "小组编号"
+                  ],
+                  "quantity": null,
+                  "submissionChannel": null,
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "scopeIds": [
+                    "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                    "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601"
+                  ],
+                  "confidence": 1,
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a"
+                      ],
+                      [
+                        "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                      "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ],
+              "timeEvidence": [
+                {
+                  "rawText": "2026年11月13日09:25前",
+                  "type": "submission_deadline",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ]
+            }
+          ],
+          "relations": [],
+          "noTaskFacts": [
+            {
+              "id": "E1",
+              "kind": "event",
+              "value": "培训说明会",
+              "aliases": [
+                "培训说明会2026年11月14日14:20开始"
+              ],
+              "sourceText": "培训说明会",
+              "scopeIds": [
+                "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff",
+                "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f"
+              ],
+              "timeFactIds": [
+                "P1",
+                "P2"
+              ],
+              "locationFactIds": []
+            },
+            {
+              "id": "P1",
+              "kind": "time",
+              "value": "2026年11月14日14:20",
+              "aliases": [],
+              "sourceText": "2026年11月14日14:20",
+              "scopeIds": [
+                "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff"
+              ],
+              "time": {
+                "tempId": "P1",
+                "rawText": "2026年11月14日14:20",
+                "type": "event_start",
+                "normalizedValue": "2026-11-14T14:20",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff"
+                ],
+                "confidence": 1
+              }
+            },
+            {
+              "id": "P2",
+              "kind": "time",
+              "value": "15:35",
+              "aliases": [],
+              "sourceText": "15:35",
+              "scopeIds": [
+                "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f"
+              ],
+              "time": {
+                "tempId": "P2",
+                "rawText": "15:35",
+                "type": "event_end",
+                "normalizedValue": "2026-11-14T15:35",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f"
+                ],
+                "confidence": 1
+              }
+            }
+          ]
+        },
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "C19-DEV-S05",
+          "completeness": "complete",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331": "请在2026年11月13日09:25前上传志愿服务统计表。",
+            "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a": "统计表须为PDF，",
+            "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601": "文件名包含小组编号。",
+            "scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c": "看到平台显示接收成功才算办结。",
+            "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff": "培训说明会2026年11月14日14:20开始，",
+            "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f": "15:35结束。"
+          },
+          "allowedAliases": [],
+          "tasks": [
+            {
+              "id": "T1",
+              "action": {
+                "canonical": "上传",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "志愿服务统计表",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": [
+                "PDF",
+                "小组编号"
+              ],
+              "times": [
+                {
+                  "tempId": "P0",
+                  "rawText": "2026年11月13日09:25",
+                  "type": "submission_deadline",
+                  "normalizedValue": "2026-11-13T09:25",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                  ],
+                  "confidence": 1
+                }
+              ],
+              "completionStandards": [
+                "看到平台显示接收成功才算办结"
+              ],
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+              ],
+              "objectScopeIds": [
+                "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+              ],
+              "scopeIds": [
+                "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331",
+                "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601",
+                "scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331",
+                    "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                    "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601",
+                    "scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [
+                {
+                  "tempId": "M1",
+                  "name": "志愿服务统计表",
+                  "required": true,
+                  "formatRequirements": [
+                    "PDF"
+                  ],
+                  "namingRequirements": [
+                    "小组编号"
+                  ],
+                  "quantity": null,
+                  "submissionChannel": null,
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "scopeIds": [
+                    "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                    "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601"
+                  ],
+                  "confidence": 1,
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a"
+                      ],
+                      [
+                        "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                      "scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ],
+              "timeEvidence": [
+                {
+                  "rawText": "2026年11月13日09:25",
+                  "type": "submission_deadline",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "evidencePolicy": {
+                    "requiredAnyOf": [
+                      [
+                        "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                      ]
+                    ],
+                    "allowed": [
+                      "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+                    ],
+                    "contradictory": []
+                  }
+                }
+              ]
+            }
+          ],
+          "relations": [],
+          "noTaskFacts": [
+            {
+              "id": "E1",
+              "kind": "event",
+              "value": "培训说明会",
+              "aliases": [
+                "培训说明会2026年11月14日14:20开始"
+              ],
+              "sourceText": "培训说明会",
+              "scopeIds": [
+                "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff",
+                "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f"
+              ],
+              "timeFactIds": [
+                "P1",
+                "P2"
+              ],
+              "locationFactIds": []
+            },
+            {
+              "id": "P1",
+              "kind": "time",
+              "value": "2026年11月14日14:20",
+              "aliases": [],
+              "sourceText": "2026年11月14日14:20",
+              "scopeIds": [
+                "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff"
+              ],
+              "time": {
+                "tempId": "P1",
+                "rawText": "2026年11月14日14:20",
+                "type": "event_start",
+                "normalizedValue": "2026-11-14T14:20",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff"
+                ],
+                "confidence": 1
+              }
+            },
+            {
+              "id": "P2",
+              "kind": "time",
+              "value": "15:35",
+              "aliases": [],
+              "sourceText": "15:35",
+              "scopeIds": [
+                "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f"
+              ],
+              "time": {
+                "tempId": "P2",
+                "rawText": "15:35",
+                "type": "event_end",
+                "normalizedValue": "2026-11-14T15:35",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f"
+                ],
+                "confidence": 1
+              }
+            }
+          ]
+        }
+      ],
+      "forbiddenActions": [],
+      "d26DisplayPolicy": {
+        "eventContradictions": []
+      },
+      "coverageAssertions": [
+        {
+          "taskId": "T1",
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        }
+      ],
+      "prerequisiteAssertions": [],
+      "sourceTimeAssertions": [
+        {
+          "tempId": "P0",
+          "rawText": "2026年11月13日09:25前",
+          "type": "submission_deadline",
+          "normalizedValue": "2026-11-13T09:25",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "relatedTaskTempIds": [
+            "T1"
+          ],
+          "relatedMaterialTempIds": [],
+          "scopeIds": [
+            "scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331"
+          ],
+          "confidence": 1,
+          "role": "SOURCE_AUTHORED_NOT_ADAPTER_DERIVED",
+          "allowedRawTexts": [
+            "2026年11月13日09:25前",
+            "2026年11月13日09:25"
+          ]
+        },
+        {
+          "tempId": "P1",
+          "rawText": "2026年11月14日14:20",
+          "type": "event_start",
+          "normalizedValue": "2026-11-14T14:20",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "relatedTaskTempIds": [],
+          "relatedMaterialTempIds": [],
+          "scopeIds": [
+            "scope-0005-49885e11f6ead5414e8189737852afa5f89ad739461b1abaa702b843d0f224ff"
+          ],
+          "confidence": 1,
+          "role": "SOURCE_AUTHORED_NOT_ADAPTER_DERIVED"
+        },
+        {
+          "tempId": "P2",
+          "rawText": "15:35",
+          "type": "event_end",
+          "normalizedValue": "2026-11-14T15:35",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "relatedTaskTempIds": [],
+          "relatedMaterialTempIds": [],
+          "scopeIds": [
+            "scope-0006-3f19ea4dc685f1ab015bf3853efd6af5f056a1a751bac9932a607e6caf5b2c6f"
+          ],
+          "confidence": 1,
+          "role": "SOURCE_AUTHORED_NOT_ADAPTER_DERIVED"
+        }
+      ],
+      "freeProseAndLeakage": "NOT_ADJUDICATED",
+      "sourceMaterialAssertions": [
+        {
+          "taskId": "T1",
+          "names": [
+            "统计表",
+            "志愿服务统计表"
+          ],
+          "formatRequirements": [
+            "PDF"
+          ],
+          "namingRequirements": [
+            "小组编号"
+          ],
+          "role": "SOURCE_AUTHORED_NOT_ADAPTER_DERIVED"
+        }
+      ]
+    },
+    {
+      "version": "recognition-reference-7.0.0",
+      "sourceId": "C19-DEV-S06",
+      "sourceSha256": "1522eb63567f94fc177b0638f4ed2acdd413ee7b879d5497892c899139a9a56b",
+      "completeness": "complete",
+      "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "author": "Codex single-author source assertions, no model outputs inspected",
+      "seenDegree": "NEW_AUTHORED_DEVELOPMENT_SEEN_DURING_ENGINEERING",
+      "decisions": [
+        "Source values authored independently of adapter; only IDs/scopes mechanically bound",
+        "Standalone events do not become tasks; legitimate unknown qualification is a correct retained pending fact"
+      ],
+      "unresolved": [],
+      "representations": [
+        {
+          "version": "candidate15-reference-contract-6.0.0",
+          "sourceId": "C19-DEV-S06",
+          "completeness": "complete",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "scopeTextById": {
+            "scope-0001-232a3905fbbc49af7bc3b9fa136501155c0073cf424185588a21f1a53be99aff": "请核对储物柜编号。",
+            "scope-0002-c3700f73ba2ff848bfef9129a1b523c1b16482426ed8d6fffcab4d22930d873c": "本通知没有截止日期，",
+            "scope-0003-db3e47e04bff4db062521c9c94f430b4696d79f2536b684b7fa11925edb9915e": "不需要准备附件，",
+            "scope-0004-a6ec7e5bc76d298f23659d49931a39bace46f689578ff45d52d683084627235c": "也没有活动安排。"
+          },
+          "allowedAliases": [],
+          "tasks": [
+            {
+              "id": "T1",
+              "action": {
+                "canonical": "核对",
+                "aliases": []
+              },
+              "object": {
+                "canonical": "储物柜编号",
+                "aliases": []
+              },
+              "actor": "addressee",
+              "currentness": "current",
+              "condition": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": [],
+              "actionability": "actionable",
+              "defaultSelection": "selected",
+              "confirmation": "required",
+              "materials": "N/A",
+              "times": "N/A",
+              "completionStandards": "N/A",
+              "dependencies": "N/A",
+              "actionScopeIds": [
+                "scope-0001-232a3905fbbc49af7bc3b9fa136501155c0073cf424185588a21f1a53be99aff"
+              ],
+              "objectScopeIds": [
+                "scope-0001-232a3905fbbc49af7bc3b9fa136501155c0073cf424185588a21f1a53be99aff"
+              ],
+              "scopeIds": [
+                "scope-0001-232a3905fbbc49af7bc3b9fa136501155c0073cf424185588a21f1a53be99aff"
+              ],
+              "evidencePolicy": {
+                "proposition": {
+                  "requiredAnyOf": [
+                    [
+                      "scope-0001-232a3905fbbc49af7bc3b9fa136501155c0073cf424185588a21f1a53be99aff"
+                    ]
+                  ],
+                  "allowed": [
+                    "scope-0001-232a3905fbbc49af7bc3b9fa136501155c0073cf424185588a21f1a53be99aff"
+                  ],
+                  "contradictory": []
+                },
+                "condition": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                },
+                "fact": {
+                  "requiredAnyOf": [],
+                  "allowed": [],
+                  "contradictory": []
+                }
+              },
+              "parentTaskId": null,
+              "hierarchyType": "task",
+              "materialDetails": [],
+              "timeEvidence": []
+            }
+          ],
+          "relations": [],
+          "noTaskFacts": [
+            {
+              "id": "I1",
+              "kind": "information",
+              "value": "本通知没有截止日期，",
+              "aliases": [],
+              "sourceText": "本通知没有截止日期，",
+              "scopeIds": [
+                "scope-0002-c3700f73ba2ff848bfef9129a1b523c1b16482426ed8d6fffcab4d22930d873c"
+              ]
+            },
+            {
+              "id": "I2",
+              "kind": "information",
+              "value": "不需要准备附件，",
+              "aliases": [],
+              "sourceText": "不需要准备附件，",
+              "scopeIds": [
+                "scope-0003-db3e47e04bff4db062521c9c94f430b4696d79f2536b684b7fa11925edb9915e"
+              ]
+            },
+            {
+              "id": "I3",
+              "kind": "information",
+              "value": "也没有活动安排。",
+              "aliases": [],
+              "sourceText": "也没有活动安排。",
+              "scopeIds": [
+                "scope-0004-a6ec7e5bc76d298f23659d49931a39bace46f689578ff45d52d683084627235c"
+              ]
+            }
+          ]
+        }
+      ],
+      "forbiddenActions": [],
+      "d26DisplayPolicy": {
+        "eventContradictions": []
+      },
+      "coverageAssertions": [
+        {
+          "taskId": "T1",
+          "time": "explicit_none",
+          "material": "explicit_none",
+          "event": "explicit_none"
+        }
+      ],
+      "prerequisiteAssertions": [],
+      "sourceTimeAssertions": [],
+      "freeProseAndLeakage": "NOT_ADJUDICATED"
+    }
+  ]
+}

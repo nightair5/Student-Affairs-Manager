@@ -13,4 +13,14 @@ describe('60-case recognition evaluation', () => {
     expect(metrics.duplicateTaskRate).toBeLessThanOrEqual(0.1)
     expect(metrics.averageConfirmationTimeSeconds).toBeNull()
   })
+
+  it('does not turn empty denominators into perfect metrics', () => {
+    const metrics = evaluateRecognition([])
+    expect(metrics.sampleCount).toBe(0)
+    expect(metrics.taskPrecision).toBeNull()
+    expect(metrics.taskRecall).toBeNull()
+    expect(metrics.materialAccuracy).toBeNull()
+    expect(metrics.evidenceAccuracy).toBeNull()
+    expect(metrics.averageTaskCount).toBeNull()
+  })
 })

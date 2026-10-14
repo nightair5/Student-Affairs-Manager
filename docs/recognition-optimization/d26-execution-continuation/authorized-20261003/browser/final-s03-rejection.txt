@@ -1,0 +1,105 @@
+- link "跳到主要内容":
+  - /url: "#main-content"
+- complementary:
+  - button "返回今日首页":
+    - strong: 事务管家
+    - generic: STUDENT DESK
+  - button "新事务 N":
+    - text: 新事务
+    - generic: "N"
+  - navigation "主要导航":
+    - generic: 执行闭环
+    - button "今日":
+      - text: 今日
+    - button "收件箱":
+      - text: 收件箱
+    - button "打开待确认队列，共 0 项":
+      - text: 待确认
+      - generic: "0"
+    - button "项目":
+      - text: 项目
+    - button "日历":
+      - text: 日历
+    - button "资料库":
+      - text: 资料库
+    - generic: 低频工具
+    - button "所有任务":
+      - text: 所有任务
+    - button "知识问答":
+      - text: 知识问答
+    - button "周报月报":
+      - text: 周报月报
+  - button "搜索事项":
+    - text: 搜索事项
+  - button "新手教程":
+    - text: 新手教程
+  - button "设置与服务":
+    - text: 设置与服务
+  - button "隐私与数据":
+    - text: 隐私与数据
+  - strong: 已在此设备自动保存
+  - paragraph: 同一浏览器与站点地址下可恢复；识别结果确认后才入库。
+- generic "匿名工程输入 · 普通产品路径 · 不发送模型请求"
+- main:
+  - text: 来源先保存，确认后入库
+  - heading "收件箱" [level=1]
+  - paragraph: 查看每份来源的真实处理状态。失败不会删除来源；重新识别会沿用原来源与当前版本。
+  - strong: "1"
+  - text: 份需关注
+  - group "收件箱视图":
+    - button "全部来源" [pressed]
+    - button "待确认 0"
+  - button "新建手动来源":
+    - text: 新建手动来源
+  - article:
+    - generic: Candidate18 固定录制 建议
+    - generic: 识别失败
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 请先填写社团设备登记表，登记表必填栏均已填写后，再提交社团设备登记表；社团设备登记表格式为XLSX，以器材室确认收妥登记表为完成。
+    - paragraph: 来源仍保留；可复用同一来源重新识别或手工补充。
+    - term: 项目
+    - definition: 未形成项目建议
+    - term: 实体
+    - definition: 0 任务 · 0 材料 · 0 时间 · 0 活动
+    - alert: 识别失败，来源已保留，可重试或手动补充。
+    - button "本地规则重试":
+      - text: 本地规则重试
+    - button "手工补充":
+      - text: 手工补充
+    - button "查看来源":
+      - text: 查看来源
+  - article:
+    - generic: Candidate18 固定录制（非实时调用） 建议
+    - generic: 仅供参考
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 图书借阅门户将在周三晚停机，既有借阅记录不受影响。无需删除记录，不要提交说明，也不必向值班员发消息。本通知仅说明停机消息。
+    - paragraph: 识别结果未发现需执行事项；可查看原文并人工判断。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 0 任务 · 0 材料 · 1 时间 · 1 活动
+    - button "核对 0 项":
+      - text: 核对 0 项
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+  - article:
+    - generic: Candidate17 固定录制（非实时调用） 建议
+    - generic: 已确认
+    - heading "手动粘贴消息" [level=2]
+    - paragraph: 请于2026年10月19日16:30前提交实验物资核对表。实验物资核对表须为PDF格式，文件名为实验编号-负责人；门户提示收件成功即结束。
+    - paragraph: 至少一项建议已经人工确认并进入正式工作区。
+    - term: 项目
+    - definition: 独立事项
+    - term: 实体
+    - definition: 1 任务 · 1 材料 · 1 时间 · 0 活动
+    - button "核对 0 项":
+      - text: 核对 0 项
+    - button "查看来源":
+      - text: 查看来源
+    - button "归档":
+      - text: 归档
+- status:
+  - generic: 录制输出不能安全生成建议（REAL_INPUT_FACT_COVERAGE_MISSING_FACT）。没有补猜事实或重新调用模型；原始来源已安全保存。可在收件箱重试识别、查看原文或手动整理。
+  - button "关闭提示": ×

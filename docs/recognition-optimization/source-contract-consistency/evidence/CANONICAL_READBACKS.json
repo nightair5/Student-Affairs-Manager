@@ -1,0 +1,4186 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "humanMetrics": "NOT_OBSERVABLE",
+  "rawReadbacksRetainedLocally": ".data/source-contract-consistency/browser",
+  "evidence": [
+    {
+      "file": "delivered-S01-readback.json",
+      "rawReadbackSha256": "b81371dbd065894ad437ead9ebe7e33382d452bb7f937893d3c3c92c375d81fa",
+      "counts": {
+        "sources": 2,
+        "sourceVersions": 2,
+        "recognitionRuns": 2,
+        "extractionDrafts": 2,
+        "tasks": 0,
+        "projects": 0,
+        "events": 1,
+        "timePoints": 1,
+        "materials": 0,
+        "historyRecords": 2
+      },
+      "tasks": [],
+      "events": [
+        {
+          "id": "event:source:6d133da2:draft:1:event-0001",
+          "title": "图书借阅门户将在周三晚停机",
+          "startTimePointId": "time:source:6d133da2:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:6d133da2:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周三晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+            ],
+            "confidence": 0.9
+          }
+        }
+      ],
+      "materials": [],
+      "recordedRuns": [
+        {
+          "id": "source:6d133da2:run:1",
+          "sourceVersionId": "source:6d133da2:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "4236202ec7bb7b626e68d5a619d5c5323f194983e1c963968e171439c6113876",
+            "requestSha256": "59216fd7c9018cc3d701f7ca7d794a0e902b62782fd359fb427d5fcdf502e8fc",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:3bc6de49:run:1",
+          "sourceVersionId": "source:3bc6de49:version:1",
+          "status": "failed",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "485054874c815f72aa47d8ab0f78900bf0678a3b91267f3c9f1a327d3452e574",
+            "requestSha256": "d286adb90320ad5f686ab5185e74103c2a4a903a3894d61c6b48a82cf9d55d25",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "id": "evidence:source:6d133da2:draft:1:d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70",
+          "sourceVersionId": "source:6d133da2:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "图书借阅门户将在周三晚停机，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:07:11.859Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+          }
+        }
+      ],
+      "commits": [
+        {
+          "draftId": "source:6d133da2:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:3bc6de49:draft:1",
+          "acceptedEntityTempIds": [],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        }
+      ]
+    },
+    {
+      "file": "delivered-S02-readback.json",
+      "rawReadbackSha256": "618f11b4d4162b278f6a4e2ab705fde3ac7c3116cbf8cba3dc4b556a269330ba",
+      "counts": {
+        "sources": 3,
+        "sourceVersions": 3,
+        "recognitionRuns": 3,
+        "extractionDrafts": 3,
+        "tasks": 0,
+        "projects": 0,
+        "events": 2,
+        "timePoints": 2,
+        "materials": 0,
+        "historyRecords": 4
+      },
+      "tasks": [],
+      "events": [
+        {
+          "id": "event:source:6d133da2:draft:1:event-0001",
+          "title": "图书借阅门户将在周三晚停机",
+          "startTimePointId": "time:source:6d133da2:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:8b769bb7:draft:1:event-0001",
+          "title": "实验预约系统将于周四晚维护",
+          "startTimePointId": "time:source:8b769bb7:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:6d133da2:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周三晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+            ],
+            "confidence": 0.9
+          }
+        },
+        {
+          "id": "time:source:8b769bb7:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周四晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+            ],
+            "confidence": 0.9
+          }
+        }
+      ],
+      "materials": [],
+      "recordedRuns": [
+        {
+          "id": "source:8b769bb7:run:1",
+          "sourceVersionId": "source:8b769bb7:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "57477b7df00eca924120c903cb113b0242f9effcf765289beb0efced9493be5c",
+            "requestSha256": "f0889e2c74a5fe05d03e9e0db432832f473c398408ce89201dabe04aaab20fc6",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:6d133da2:run:1",
+          "sourceVersionId": "source:6d133da2:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "4236202ec7bb7b626e68d5a619d5c5323f194983e1c963968e171439c6113876",
+            "requestSha256": "59216fd7c9018cc3d701f7ca7d794a0e902b62782fd359fb427d5fcdf502e8fc",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:3bc6de49:run:1",
+          "sourceVersionId": "source:3bc6de49:version:1",
+          "status": "failed",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "485054874c815f72aa47d8ab0f78900bf0678a3b91267f3c9f1a327d3452e574",
+            "requestSha256": "d286adb90320ad5f686ab5185e74103c2a4a903a3894d61c6b48a82cf9d55d25",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "id": "evidence:source:6d133da2:draft:1:d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70",
+          "sourceVersionId": "source:6d133da2:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "图书借阅门户将在周三晚停机，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:07:11.859Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+          }
+        },
+        {
+          "id": "evidence:source:8b769bb7:draft:1:d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad",
+          "sourceVersionId": "source:8b769bb7:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "实验预约系统将于周四晚维护，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:07:34.832Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+          }
+        }
+      ],
+      "commits": [
+        {
+          "draftId": "source:8b769bb7:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:6d133da2:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:3bc6de49:draft:1",
+          "acceptedEntityTempIds": [],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        }
+      ]
+    },
+    {
+      "file": "delivered-refresh-readback.json",
+      "rawReadbackSha256": "19db154026c7d86f652405d5e8986d0e61c7e8fcf578ffdc11918f279cda7a70",
+      "counts": {
+        "sources": 4,
+        "sourceVersions": 4,
+        "recognitionRuns": 4,
+        "extractionDrafts": 4,
+        "tasks": 0,
+        "projects": 0,
+        "events": 2,
+        "timePoints": 2,
+        "materials": 0,
+        "historyRecords": 4
+      },
+      "tasks": [],
+      "events": [
+        {
+          "id": "event:source:6d133da2:draft:1:event-0001",
+          "title": "图书借阅门户将在周三晚停机",
+          "startTimePointId": "time:source:6d133da2:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:8b769bb7:draft:1:event-0001",
+          "title": "实验预约系统将于周四晚维护",
+          "startTimePointId": "time:source:8b769bb7:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:6d133da2:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周三晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+            ],
+            "confidence": 0.9
+          }
+        },
+        {
+          "id": "time:source:8b769bb7:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周四晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+            ],
+            "confidence": 0.9
+          }
+        }
+      ],
+      "materials": [],
+      "recordedRuns": [
+        {
+          "id": "source:9c4a7be8:run:1",
+          "sourceVersionId": "source:9c4a7be8:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "2481193de27ce58c322e693a1a375fb683689cfed0d8c1388bda49b24addae59",
+            "requestSha256": "ca66c6706f20da64776947acee7e05d7c64db5d7202d11ab58e6a6fce7dc9f7e",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:8b769bb7:run:1",
+          "sourceVersionId": "source:8b769bb7:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "57477b7df00eca924120c903cb113b0242f9effcf765289beb0efced9493be5c",
+            "requestSha256": "f0889e2c74a5fe05d03e9e0db432832f473c398408ce89201dabe04aaab20fc6",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:6d133da2:run:1",
+          "sourceVersionId": "source:6d133da2:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "4236202ec7bb7b626e68d5a619d5c5323f194983e1c963968e171439c6113876",
+            "requestSha256": "59216fd7c9018cc3d701f7ca7d794a0e902b62782fd359fb427d5fcdf502e8fc",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:3bc6de49:run:1",
+          "sourceVersionId": "source:3bc6de49:version:1",
+          "status": "failed",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "485054874c815f72aa47d8ab0f78900bf0678a3b91267f3c9f1a327d3452e574",
+            "requestSha256": "d286adb90320ad5f686ab5185e74103c2a4a903a3894d61c6b48a82cf9d55d25",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "id": "evidence:source:6d133da2:draft:1:d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70",
+          "sourceVersionId": "source:6d133da2:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "图书借阅门户将在周三晚停机，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:07:11.859Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+          }
+        },
+        {
+          "id": "evidence:source:8b769bb7:draft:1:d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad",
+          "sourceVersionId": "source:8b769bb7:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "实验预约系统将于周四晚维护，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:07:34.832Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+          }
+        }
+      ],
+      "commits": [
+        {
+          "draftId": "source:9c4a7be8:draft:1",
+          "acceptedEntityTempIds": [],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:8b769bb7:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:6d133da2:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:3bc6de49:draft:1",
+          "acceptedEntityTempIds": [],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        }
+      ]
+    },
+    {
+      "file": "delivered-formal-failure-canonical.json",
+      "rawReadbackSha256": "66894a1bdcff88ec91b60b709d245fbad24cd2a033003f2fd2d6e205847dd81e",
+      "counts": {
+        "sources": 5,
+        "sourceVersions": 5,
+        "recognitionRuns": 5,
+        "extractionDrafts": 5,
+        "tasks": 0,
+        "projects": 0,
+        "events": 2,
+        "timePoints": 2,
+        "materials": 0,
+        "historyRecords": 4
+      },
+      "tasks": [],
+      "events": [
+        {
+          "id": "event:source:6d133da2:draft:1:event-0001",
+          "title": "图书借阅门户将在周三晚停机",
+          "startTimePointId": "time:source:6d133da2:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:8b769bb7:draft:1:event-0001",
+          "title": "实验预约系统将于周四晚维护",
+          "startTimePointId": "time:source:8b769bb7:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:6d133da2:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周三晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+            ],
+            "confidence": 0.9
+          }
+        },
+        {
+          "id": "time:source:8b769bb7:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周四晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+            ],
+            "confidence": 0.9
+          }
+        }
+      ],
+      "materials": [],
+      "recordedRuns": [
+        {
+          "id": "source:db8b154e:run:1",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "candidate": "EngineeringFixture",
+            "responseSha256": "9e59950972efe31c4427385e345b402e37c65cb77c655d0d71c14ae11af52572",
+            "requestSha256": null,
+            "referenceTime": "2026-10-03T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:9c4a7be8:run:1",
+          "sourceVersionId": "source:9c4a7be8:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "2481193de27ce58c322e693a1a375fb683689cfed0d8c1388bda49b24addae59",
+            "requestSha256": "ca66c6706f20da64776947acee7e05d7c64db5d7202d11ab58e6a6fce7dc9f7e",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:8b769bb7:run:1",
+          "sourceVersionId": "source:8b769bb7:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "57477b7df00eca924120c903cb113b0242f9effcf765289beb0efced9493be5c",
+            "requestSha256": "f0889e2c74a5fe05d03e9e0db432832f473c398408ce89201dabe04aaab20fc6",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:6d133da2:run:1",
+          "sourceVersionId": "source:6d133da2:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "4236202ec7bb7b626e68d5a619d5c5323f194983e1c963968e171439c6113876",
+            "requestSha256": "59216fd7c9018cc3d701f7ca7d794a0e902b62782fd359fb427d5fcdf502e8fc",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:3bc6de49:run:1",
+          "sourceVersionId": "source:3bc6de49:version:1",
+          "status": "failed",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "485054874c815f72aa47d8ab0f78900bf0678a3b91267f3c9f1a327d3452e574",
+            "requestSha256": "d286adb90320ad5f686ab5185e74103c2a4a903a3894d61c6b48a82cf9d55d25",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "id": "evidence:source:6d133da2:draft:1:d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70",
+          "sourceVersionId": "source:6d133da2:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "图书借阅门户将在周三晚停机，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:07:11.859Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+          }
+        },
+        {
+          "id": "evidence:source:8b769bb7:draft:1:d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad",
+          "sourceVersionId": "source:8b769bb7:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "实验预约系统将于周四晚维护，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:07:34.832Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+          }
+        }
+      ],
+      "commits": [
+        {
+          "draftId": "source:db8b154e:draft:1",
+          "acceptedEntityTempIds": [],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:9c4a7be8:draft:1",
+          "acceptedEntityTempIds": [],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:8b769bb7:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:6d133da2:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:3bc6de49:draft:1",
+          "acceptedEntityTempIds": [],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        }
+      ]
+    },
+    {
+      "file": "delivered-formal-retry-canonical.json",
+      "rawReadbackSha256": "5ef23b82d1d3ebc48f73c5e398e3a724b10c58a564e604e23499c22fbe7e01fe",
+      "counts": {
+        "sources": 5,
+        "sourceVersions": 5,
+        "recognitionRuns": 5,
+        "extractionDrafts": 5,
+        "tasks": 1,
+        "projects": 0,
+        "events": 4,
+        "timePoints": 7,
+        "materials": 1,
+        "historyRecords": 13
+      },
+      "tasks": [
+        {
+          "id": "task:source:db8b154e:draft:1:T1",
+          "title": "递交器材清单",
+          "description": "请于2026年11月6日15:20前递交器材清单。\n器材清单必须为PDF。",
+          "status": "todo",
+          "sourceId": "source:db8b154e",
+          "dependencyIds": [],
+          "completionCriteria": [
+            "器材清单必须为PDF"
+          ],
+          "legacyData": {
+            "recognitionTempId": "T1",
+            "actionVerb": "递交",
+            "actionObject": "器材清单",
+            "completionCriteria": [
+              "器材清单必须为PDF"
+            ],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0001-1187efe82d168b9d381b3894e04fb74e7de0824dd1d8866df8dcb825e43efbca",
+              "d26-scope-0002-e5d6445cabf2244947dfcbf0dde48fa9f0c4995a51db341a6cacda0add8ce65e"
+            ],
+            "sourceId": "source:db8b154e",
+            "category": "其他"
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:6d133da2:draft:1:event-0001",
+          "title": "图书借阅门户将在周三晚停机",
+          "startTimePointId": "time:source:6d133da2:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:8b769bb7:draft:1:event-0001",
+          "title": "实验预约系统将于周四晚维护",
+          "startTimePointId": "time:source:8b769bb7:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:db8b154e:draft:1:E1",
+          "title": "系统维护",
+          "startTimePointId": "time:source:db8b154e:draft:1:P2",
+          "endTimePointId": "time:source:db8b154e:draft:1:P3",
+          "legacyData": {
+            "recognitionTempId": "E1",
+            "evidenceIds": [
+              "d26-scope-0005-631bfecb7ed2c06d4885fa1bd35cfc3280f888df873bc12a61f86dae283de4ae",
+              "d26-scope-0006-0da0a8644e6beda274aee0b1a15421dc44d377d18cc27553f38ed99d4dda653a"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:db8b154e:draft:1:E2",
+          "title": "器材讲解会",
+          "startTimePointId": "time:source:db8b154e:draft:1:P4",
+          "endTimePointId": "time:source:db8b154e:draft:1:P5",
+          "legacyData": {
+            "recognitionTempId": "E2",
+            "evidenceIds": [
+              "d26-scope-0003-7c36955f6fee30c95fc436af796d2ddbf45ff72e0a9d95cfba2703b4a4df5ac6",
+              "d26-scope-0004-bad754259acd893f2f0b863ab4e7b150d6b1a3f14b9391fb6dac57a1a46f6a85"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:6d133da2:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周三晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+            ],
+            "confidence": 0.9
+          }
+        },
+        {
+          "id": "time:source:8b769bb7:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周四晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+            ],
+            "confidence": 0.9
+          }
+        },
+        {
+          "id": "time:source:db8b154e:draft:1:P1",
+          "type": "submission_deadline",
+          "rawText": "2026年11月6日15:20前",
+          "normalizedValue": "2026-11-06T15:20",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [
+            "task:source:db8b154e:draft:1:T1"
+          ],
+          "legacyData": {
+            "recognitionTempId": "P1",
+            "evidenceIds": [
+              "d26-scope-0001-1187efe82d168b9d381b3894e04fb74e7de0824dd1d8866df8dcb825e43efbca"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:db8b154e:draft:1:P2",
+          "type": "event_start",
+          "rawText": "周五晚上",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P2",
+            "evidenceIds": [
+              "d26-scope-0005-631bfecb7ed2c06d4885fa1bd35cfc3280f888df873bc12a61f86dae283de4ae"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:db8b154e:draft:1:P3",
+          "type": "event_end",
+          "rawText": "结束时间尚未公布",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P3",
+            "evidenceIds": [
+              "d26-scope-0006-0da0a8644e6beda274aee0b1a15421dc44d377d18cc27553f38ed99d4dda653a"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:db8b154e:draft:1:P4",
+          "type": "event_start",
+          "rawText": "2026年11月7日14:00",
+          "normalizedValue": "2026-11-07T14:00",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P4",
+            "evidenceIds": [
+              "d26-scope-0003-7c36955f6fee30c95fc436af796d2ddbf45ff72e0a9d95cfba2703b4a4df5ac6"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:db8b154e:draft:1:P5",
+          "type": "event_end",
+          "rawText": "15:00",
+          "normalizedValue": "2026-11-07T15:00",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P5",
+            "evidenceIds": [
+              "d26-scope-0004-bad754259acd893f2f0b863ab4e7b150d6b1a3f14b9391fb6dac57a1a46f6a85"
+            ],
+            "confidence": 1
+          }
+        }
+      ],
+      "materials": [
+        {
+          "id": "material:source:db8b154e:draft:1:M1",
+          "name": "器材清单",
+          "formatRequirements": [
+            "PDF"
+          ],
+          "namingRequirements": [],
+          "status": "unverified",
+          "relatedTaskIds": [
+            "task:source:db8b154e:draft:1:T1"
+          ]
+        }
+      ],
+      "recordedRuns": [
+        {
+          "id": "source:db8b154e:run:1",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "candidate": "EngineeringFixture",
+            "responseSha256": "9e59950972efe31c4427385e345b402e37c65cb77c655d0d71c14ae11af52572",
+            "requestSha256": null,
+            "referenceTime": "2026-10-03T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:9c4a7be8:run:1",
+          "sourceVersionId": "source:9c4a7be8:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "2481193de27ce58c322e693a1a375fb683689cfed0d8c1388bda49b24addae59",
+            "requestSha256": "ca66c6706f20da64776947acee7e05d7c64db5d7202d11ab58e6a6fce7dc9f7e",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:8b769bb7:run:1",
+          "sourceVersionId": "source:8b769bb7:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "57477b7df00eca924120c903cb113b0242f9effcf765289beb0efced9493be5c",
+            "requestSha256": "f0889e2c74a5fe05d03e9e0db432832f473c398408ce89201dabe04aaab20fc6",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:6d133da2:run:1",
+          "sourceVersionId": "source:6d133da2:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "4236202ec7bb7b626e68d5a619d5c5323f194983e1c963968e171439c6113876",
+            "requestSha256": "59216fd7c9018cc3d701f7ca7d794a0e902b62782fd359fb427d5fcdf502e8fc",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:3bc6de49:run:1",
+          "sourceVersionId": "source:3bc6de49:version:1",
+          "status": "failed",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "485054874c815f72aa47d8ab0f78900bf0678a3b91267f3c9f1a327d3452e574",
+            "requestSha256": "d286adb90320ad5f686ab5185e74103c2a4a903a3894d61c6b48a82cf9d55d25",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "id": "evidence:source:6d133da2:draft:1:d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70",
+          "sourceVersionId": "source:6d133da2:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "图书借阅门户将在周三晚停机，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:07:11.859Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+          }
+        },
+        {
+          "id": "evidence:source:8b769bb7:draft:1:d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad",
+          "sourceVersionId": "source:8b769bb7:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "实验预约系统将于周四晚维护，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:07:34.832Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+          }
+        },
+        {
+          "id": "evidence:source:db8b154e:draft:1:d26-scope-0001-1187efe82d168b9d381b3894e04fb74e7de0824dd1d8866df8dcb825e43efbca",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "请于2026年11月6日15:20前递交器材清单。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:10:55.227Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-1187efe82d168b9d381b3894e04fb74e7de0824dd1d8866df8dcb825e43efbca"
+          }
+        },
+        {
+          "id": "evidence:source:db8b154e:draft:1:d26-scope-0002-e5d6445cabf2244947dfcbf0dde48fa9f0c4995a51db341a6cacda0add8ce65e",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "器材清单必须为PDF。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:10:55.227Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0002-e5d6445cabf2244947dfcbf0dde48fa9f0c4995a51db341a6cacda0add8ce65e"
+          }
+        },
+        {
+          "id": "evidence:source:db8b154e:draft:1:d26-scope-0003-7c36955f6fee30c95fc436af796d2ddbf45ff72e0a9d95cfba2703b4a4df5ac6",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "器材讲解会于2026年11月7日14:00开始，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:10:55.227Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0003-7c36955f6fee30c95fc436af796d2ddbf45ff72e0a9d95cfba2703b4a4df5ac6"
+          }
+        },
+        {
+          "id": "evidence:source:db8b154e:draft:1:d26-scope-0004-bad754259acd893f2f0b863ab4e7b150d6b1a3f14b9391fb6dac57a1a46f6a85",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "15:00结束。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:10:55.227Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0004-bad754259acd893f2f0b863ab4e7b150d6b1a3f14b9391fb6dac57a1a46f6a85"
+          }
+        },
+        {
+          "id": "evidence:source:db8b154e:draft:1:d26-scope-0005-631bfecb7ed2c06d4885fa1bd35cfc3280f888df873bc12a61f86dae283de4ae",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "系统维护在周五晚上开始，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:10:55.227Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0005-631bfecb7ed2c06d4885fa1bd35cfc3280f888df873bc12a61f86dae283de4ae"
+          }
+        },
+        {
+          "id": "evidence:source:db8b154e:draft:1:d26-scope-0006-0da0a8644e6beda274aee0b1a15421dc44d377d18cc27553f38ed99d4dda653a",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "结束时间尚未公布。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:10:55.227Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0006-0da0a8644e6beda274aee0b1a15421dc44d377d18cc27553f38ed99d4dda653a"
+          }
+        }
+      ],
+      "commits": [
+        {
+          "draftId": "source:db8b154e:draft:1",
+          "acceptedEntityTempIds": [
+            "E1",
+            "E2",
+            "M1",
+            "P1",
+            "P2",
+            "P3",
+            "P4",
+            "P5",
+            "T1"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:9c4a7be8:draft:1",
+          "acceptedEntityTempIds": [],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:8b769bb7:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:6d133da2:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:3bc6de49:draft:1",
+          "acceptedEntityTempIds": [],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        }
+      ]
+    },
+    {
+      "file": "delivered-readback-restored-canonical.json",
+      "rawReadbackSha256": "1a2a1025d54048184bb4c978602be7fad3f5218957c129c9c803999b8e597e67",
+      "counts": {
+        "sources": 6,
+        "sourceVersions": 6,
+        "recognitionRuns": 6,
+        "extractionDrafts": 6,
+        "tasks": 2,
+        "projects": 0,
+        "events": 4,
+        "timePoints": 8,
+        "materials": 2,
+        "historyRecords": 16
+      },
+      "tasks": [
+        {
+          "id": "task:source:db8b154e:draft:1:T1",
+          "title": "递交器材清单",
+          "description": "请于2026年11月6日15:20前递交器材清单。\n器材清单必须为PDF。",
+          "status": "todo",
+          "sourceId": "source:db8b154e",
+          "dependencyIds": [],
+          "completionCriteria": [
+            "器材清单必须为PDF"
+          ],
+          "legacyData": {
+            "recognitionTempId": "T1",
+            "actionVerb": "递交",
+            "actionObject": "器材清单",
+            "completionCriteria": [
+              "器材清单必须为PDF"
+            ],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0001-1187efe82d168b9d381b3894e04fb74e7de0824dd1d8866df8dcb825e43efbca",
+              "d26-scope-0002-e5d6445cabf2244947dfcbf0dde48fa9f0c4995a51db341a6cacda0add8ce65e"
+            ],
+            "sourceId": "source:db8b154e",
+            "category": "其他",
+            "v7Record": {
+              "id": "task:source:db8b154e:draft:1:T1",
+              "hierarchyType": "task",
+              "actionVerb": "递交",
+              "actionObject": "器材清单",
+              "completionCriteria": [
+                "器材清单必须为PDF"
+              ],
+              "evidenceIds": [
+                "d26-scope-0001-1187efe82d168b9d381b3894e04fb74e7de0824dd1d8866df8dcb825e43efbca",
+                "d26-scope-0002-e5d6445cabf2244947dfcbf0dde48fa9f0c4995a51db341a6cacda0add8ce65e"
+              ],
+              "title": "递交器材清单",
+              "category": "其他",
+              "status": "待开始",
+              "deadline": "2026-11-06T15:20",
+              "estimatedMinutes": 60,
+              "estimatedMinutesKnown": false,
+              "nextAction": "递交器材清单",
+              "description": "请于2026年11月6日15:20前递交器材清单。\n器材清单必须为PDF。",
+              "priority": "中",
+              "riskFlags": [],
+              "materials": [
+                {
+                  "id": "material:source:db8b154e:draft:1:M1",
+                  "name": "器材清单",
+                  "done": false,
+                  "status": "unverified",
+                  "taskId": "task:source:db8b154e:draft:1:T1",
+                  "sourceId": "source:db8b154e"
+                }
+              ],
+              "dependencies": [],
+              "dependencyIds": [],
+              "reminders": [],
+              "sourceIds": [
+                "source:db8b154e"
+              ],
+              "priorityReason": "由当前权威实体计算并允许手动调整",
+              "priorityReasons": [
+                "由当前权威实体计算并允许手动调整"
+              ],
+              "timePointIds": [
+                "time:source:db8b154e:draft:1:P1"
+              ],
+              "materialIds": [
+                "material:source:db8b154e:draft:1:M1"
+              ],
+              "createdAt": "2026-10-03T13:10:55.227Z",
+              "updatedAt": "2026-10-03T13:10:55.227Z",
+              "history": [
+                {
+                  "id": "history:task:source:db8b154e:draft:1:T1:created",
+                  "field": "created",
+                  "before": "null",
+                  "after": "{\"id\":\"task:source:db8b154e:draft:1:T1\"}",
+                  "changedAt": "2026-10-03T13:10:55.227Z",
+                  "actor": "user",
+                  "entityType": "task",
+                  "entityId": "task:source:db8b154e:draft:1:T1",
+                  "action": "created"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "task:source:d6d869e1:draft:1:T1",
+          "title": "递交器材清单",
+          "description": "请于2026年11月6日15:20前递交器材清单。\n器材清单必须为PDF，\n文件名用学院和姓名。",
+          "status": "todo",
+          "sourceId": "source:d6d869e1",
+          "dependencyIds": [],
+          "completionCriteria": [
+            "器材清单必须为PDF",
+            "文件名用学院和姓名"
+          ],
+          "legacyData": {
+            "recognitionTempId": "T1",
+            "actionVerb": "递交",
+            "actionObject": "器材清单",
+            "completionCriteria": [
+              "器材清单必须为PDF",
+              "文件名用学院和姓名"
+            ],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0001-0e6f8e8e4a3a9b30e7f9b110f89090a9593310becec8de64f8eaf66b1d5eecd7",
+              "d26-scope-0002-e8702ae24cb3a82a5f385d3b0c4dffe8ebe29e85c30241c59d06cea178df22e2",
+              "d26-scope-0003-9adc765b07f97f5c5a018fd7e3c7645fbe25fcc7a1d8ed14bb24880f9b37db08"
+            ],
+            "sourceId": "source:d6d869e1",
+            "category": "其他"
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:6d133da2:draft:1:event-0001",
+          "title": "图书借阅门户将在周三晚停机",
+          "startTimePointId": "time:source:6d133da2:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:8b769bb7:draft:1:event-0001",
+          "title": "实验预约系统将于周四晚维护",
+          "startTimePointId": "time:source:8b769bb7:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:db8b154e:draft:1:E1",
+          "title": "系统维护",
+          "startTimePointId": "time:source:db8b154e:draft:1:P2",
+          "endTimePointId": "time:source:db8b154e:draft:1:P3",
+          "legacyData": {
+            "recognitionTempId": "E1",
+            "evidenceIds": [
+              "d26-scope-0005-631bfecb7ed2c06d4885fa1bd35cfc3280f888df873bc12a61f86dae283de4ae",
+              "d26-scope-0006-0da0a8644e6beda274aee0b1a15421dc44d377d18cc27553f38ed99d4dda653a"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:db8b154e:draft:1:E2",
+          "title": "器材讲解会",
+          "startTimePointId": "time:source:db8b154e:draft:1:P4",
+          "endTimePointId": "time:source:db8b154e:draft:1:P5",
+          "legacyData": {
+            "recognitionTempId": "E2",
+            "evidenceIds": [
+              "d26-scope-0003-7c36955f6fee30c95fc436af796d2ddbf45ff72e0a9d95cfba2703b4a4df5ac6",
+              "d26-scope-0004-bad754259acd893f2f0b863ab4e7b150d6b1a3f14b9391fb6dac57a1a46f6a85"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:6d133da2:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周三晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+            ],
+            "confidence": 0.9
+          }
+        },
+        {
+          "id": "time:source:8b769bb7:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周四晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+            ],
+            "confidence": 0.9
+          }
+        },
+        {
+          "id": "time:source:db8b154e:draft:1:P1",
+          "type": "submission_deadline",
+          "rawText": "2026年11月6日15:20前",
+          "normalizedValue": "2026-11-06T15:20",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [
+            "task:source:db8b154e:draft:1:T1"
+          ],
+          "legacyData": {
+            "recognitionTempId": "P1",
+            "evidenceIds": [
+              "d26-scope-0001-1187efe82d168b9d381b3894e04fb74e7de0824dd1d8866df8dcb825e43efbca"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:db8b154e:draft:1:P2",
+          "type": "event_start",
+          "rawText": "周五晚上",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P2",
+            "evidenceIds": [
+              "d26-scope-0005-631bfecb7ed2c06d4885fa1bd35cfc3280f888df873bc12a61f86dae283de4ae"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:db8b154e:draft:1:P3",
+          "type": "event_end",
+          "rawText": "结束时间尚未公布",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P3",
+            "evidenceIds": [
+              "d26-scope-0006-0da0a8644e6beda274aee0b1a15421dc44d377d18cc27553f38ed99d4dda653a"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:db8b154e:draft:1:P4",
+          "type": "event_start",
+          "rawText": "2026年11月7日14:00",
+          "normalizedValue": "2026-11-07T14:00",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P4",
+            "evidenceIds": [
+              "d26-scope-0003-7c36955f6fee30c95fc436af796d2ddbf45ff72e0a9d95cfba2703b4a4df5ac6"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:db8b154e:draft:1:P5",
+          "type": "event_end",
+          "rawText": "15:00",
+          "normalizedValue": "2026-11-07T15:00",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P5",
+            "evidenceIds": [
+              "d26-scope-0004-bad754259acd893f2f0b863ab4e7b150d6b1a3f14b9391fb6dac57a1a46f6a85"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:d6d869e1:draft:1:P1",
+          "type": "submission_deadline",
+          "rawText": "2026年11月6日15:20前",
+          "normalizedValue": "2026-11-06T15:20",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [
+            "task:source:d6d869e1:draft:1:T1"
+          ],
+          "legacyData": {
+            "recognitionTempId": "P1",
+            "evidenceIds": [
+              "d26-scope-0001-0e6f8e8e4a3a9b30e7f9b110f89090a9593310becec8de64f8eaf66b1d5eecd7"
+            ],
+            "confidence": 1
+          }
+        }
+      ],
+      "materials": [
+        {
+          "id": "material:source:db8b154e:draft:1:M1",
+          "name": "器材清单",
+          "formatRequirements": [
+            "PDF"
+          ],
+          "namingRequirements": [],
+          "status": "unverified",
+          "relatedTaskIds": [
+            "task:source:db8b154e:draft:1:T1"
+          ]
+        },
+        {
+          "id": "material:source:d6d869e1:draft:1:M1",
+          "name": "器材清单",
+          "formatRequirements": [
+            "PDF"
+          ],
+          "namingRequirements": [
+            "学院和姓名"
+          ],
+          "status": "unverified",
+          "relatedTaskIds": [
+            "task:source:d6d869e1:draft:1:T1"
+          ]
+        }
+      ],
+      "recordedRuns": [
+        {
+          "id": "source:d6d869e1:run:1",
+          "sourceVersionId": "source:d6d869e1:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "candidate": "EngineeringFixture",
+            "responseSha256": "dea93d5b73d25570c3b315994be92bc362f38351378135745cf389e9ac8ebdde",
+            "requestSha256": null,
+            "referenceTime": "2026-10-03T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:db8b154e:run:1",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "candidate": "EngineeringFixture",
+            "responseSha256": "9e59950972efe31c4427385e345b402e37c65cb77c655d0d71c14ae11af52572",
+            "requestSha256": null,
+            "referenceTime": "2026-10-03T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:9c4a7be8:run:1",
+          "sourceVersionId": "source:9c4a7be8:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "2481193de27ce58c322e693a1a375fb683689cfed0d8c1388bda49b24addae59",
+            "requestSha256": "ca66c6706f20da64776947acee7e05d7c64db5d7202d11ab58e6a6fce7dc9f7e",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:8b769bb7:run:1",
+          "sourceVersionId": "source:8b769bb7:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "57477b7df00eca924120c903cb113b0242f9effcf765289beb0efced9493be5c",
+            "requestSha256": "f0889e2c74a5fe05d03e9e0db432832f473c398408ce89201dabe04aaab20fc6",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:6d133da2:run:1",
+          "sourceVersionId": "source:6d133da2:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "4236202ec7bb7b626e68d5a619d5c5323f194983e1c963968e171439c6113876",
+            "requestSha256": "59216fd7c9018cc3d701f7ca7d794a0e902b62782fd359fb427d5fcdf502e8fc",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:3bc6de49:run:1",
+          "sourceVersionId": "source:3bc6de49:version:1",
+          "status": "failed",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "485054874c815f72aa47d8ab0f78900bf0678a3b91267f3c9f1a327d3452e574",
+            "requestSha256": "d286adb90320ad5f686ab5185e74103c2a4a903a3894d61c6b48a82cf9d55d25",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "id": "evidence:source:6d133da2:draft:1:d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70",
+          "sourceVersionId": "source:6d133da2:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "图书借阅门户将在周三晚停机，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:07:11.859Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-2e92fbf6e1c1a1eee3f5d54b4541936fa485b06fcf9deca7f0b208ff646e2e70"
+          }
+        },
+        {
+          "id": "evidence:source:8b769bb7:draft:1:d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad",
+          "sourceVersionId": "source:8b769bb7:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "实验预约系统将于周四晚维护，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:07:34.832Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-35a938932abcbefadeccd1972c7b9ec982302a987247a2a5b6e06779949c6aad"
+          }
+        },
+        {
+          "id": "evidence:source:db8b154e:draft:1:d26-scope-0001-1187efe82d168b9d381b3894e04fb74e7de0824dd1d8866df8dcb825e43efbca",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "请于2026年11月6日15:20前递交器材清单。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:10:55.227Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-1187efe82d168b9d381b3894e04fb74e7de0824dd1d8866df8dcb825e43efbca"
+          }
+        },
+        {
+          "id": "evidence:source:db8b154e:draft:1:d26-scope-0002-e5d6445cabf2244947dfcbf0dde48fa9f0c4995a51db341a6cacda0add8ce65e",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "器材清单必须为PDF。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:10:55.227Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0002-e5d6445cabf2244947dfcbf0dde48fa9f0c4995a51db341a6cacda0add8ce65e"
+          }
+        },
+        {
+          "id": "evidence:source:db8b154e:draft:1:d26-scope-0003-7c36955f6fee30c95fc436af796d2ddbf45ff72e0a9d95cfba2703b4a4df5ac6",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "器材讲解会于2026年11月7日14:00开始，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:10:55.227Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0003-7c36955f6fee30c95fc436af796d2ddbf45ff72e0a9d95cfba2703b4a4df5ac6"
+          }
+        },
+        {
+          "id": "evidence:source:db8b154e:draft:1:d26-scope-0004-bad754259acd893f2f0b863ab4e7b150d6b1a3f14b9391fb6dac57a1a46f6a85",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "15:00结束。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:10:55.227Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0004-bad754259acd893f2f0b863ab4e7b150d6b1a3f14b9391fb6dac57a1a46f6a85"
+          }
+        },
+        {
+          "id": "evidence:source:db8b154e:draft:1:d26-scope-0005-631bfecb7ed2c06d4885fa1bd35cfc3280f888df873bc12a61f86dae283de4ae",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "系统维护在周五晚上开始，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:10:55.227Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0005-631bfecb7ed2c06d4885fa1bd35cfc3280f888df873bc12a61f86dae283de4ae"
+          }
+        },
+        {
+          "id": "evidence:source:db8b154e:draft:1:d26-scope-0006-0da0a8644e6beda274aee0b1a15421dc44d377d18cc27553f38ed99d4dda653a",
+          "sourceVersionId": "source:db8b154e:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "结束时间尚未公布。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:10:55.227Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0006-0da0a8644e6beda274aee0b1a15421dc44d377d18cc27553f38ed99d4dda653a"
+          }
+        },
+        {
+          "id": "evidence:source:d6d869e1:draft:1:d26-scope-0001-0e6f8e8e4a3a9b30e7f9b110f89090a9593310becec8de64f8eaf66b1d5eecd7",
+          "sourceVersionId": "source:d6d869e1:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "请于2026年11月6日15:20前递交器材清单。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:12:00.121Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-0e6f8e8e4a3a9b30e7f9b110f89090a9593310becec8de64f8eaf66b1d5eecd7"
+          }
+        },
+        {
+          "id": "evidence:source:d6d869e1:draft:1:d26-scope-0002-e8702ae24cb3a82a5f385d3b0c4dffe8ebe29e85c30241c59d06cea178df22e2",
+          "sourceVersionId": "source:d6d869e1:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "器材清单必须为PDF，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:12:00.121Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0002-e8702ae24cb3a82a5f385d3b0c4dffe8ebe29e85c30241c59d06cea178df22e2"
+          }
+        },
+        {
+          "id": "evidence:source:d6d869e1:draft:1:d26-scope-0003-9adc765b07f97f5c5a018fd7e3c7645fbe25fcc7a1d8ed14bb24880f9b37db08",
+          "sourceVersionId": "source:d6d869e1:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "文件名用学院和姓名。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:12:00.121Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0003-9adc765b07f97f5c5a018fd7e3c7645fbe25fcc7a1d8ed14bb24880f9b37db08"
+          }
+        }
+      ],
+      "commits": [
+        {
+          "draftId": "source:d6d869e1:draft:1",
+          "acceptedEntityTempIds": [
+            "M1",
+            "P1",
+            "T1"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:db8b154e:draft:1",
+          "acceptedEntityTempIds": [
+            "E1",
+            "E2",
+            "M1",
+            "P1",
+            "P2",
+            "P3",
+            "P4",
+            "P5",
+            "T1"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:9c4a7be8:draft:1",
+          "acceptedEntityTempIds": [],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:8b769bb7:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:6d133da2:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:3bc6de49:draft:1",
+          "acceptedEntityTempIds": [],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        }
+      ]
+    },
+    {
+      "file": "final-mixed-readback.json",
+      "rawReadbackSha256": "7d6f6ed7d67d126d543ad484a93e93046939f692e39c550f03af52da606d4d7c",
+      "counts": {
+        "sources": 3,
+        "sourceVersions": 3,
+        "recognitionRuns": 3,
+        "extractionDrafts": 3,
+        "tasks": 1,
+        "projects": 0,
+        "events": 4,
+        "timePoints": 7,
+        "materials": 1,
+        "historyRecords": 13
+      },
+      "tasks": [
+        {
+          "id": "task:source:faaa6612:draft:1:T1",
+          "title": "递交器材清单",
+          "description": "请于2026年11月6日15:20前递交器材清单。\n器材清单必须为PDF。",
+          "status": "todo",
+          "sourceId": "source:faaa6612",
+          "dependencyIds": [],
+          "completionCriteria": [
+            "器材清单必须为PDF"
+          ],
+          "legacyData": {
+            "recognitionTempId": "T1",
+            "actionVerb": "递交",
+            "actionObject": "器材清单",
+            "completionCriteria": [
+              "器材清单必须为PDF"
+            ],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf",
+              "d26-scope-0002-f14ab7d9858334559342cca8df04f6307d3cf056f2920b30b5458af5e412ad26"
+            ],
+            "sourceId": "source:faaa6612",
+            "category": "其他"
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:0977f440:draft:1:event-0001",
+          "title": "图书借阅门户将在周三晚停机",
+          "startTimePointId": "time:source:0977f440:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-94db5b4b630655e7d7d6f6be821b5eca5eb1b970089c14309acff1963d61cdfd"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:308d3de1:draft:1:event-0001",
+          "title": "实验预约系统将于周四晚维护",
+          "startTimePointId": "time:source:308d3de1:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-a073586bd6efed9945b44a3a983ff90feb1d7da46c0d42e648e7b53d79696a4e"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:faaa6612:draft:1:E2",
+          "title": "器材讲解会",
+          "startTimePointId": "time:source:faaa6612:draft:1:P4",
+          "endTimePointId": "time:source:faaa6612:draft:1:P5",
+          "legacyData": {
+            "recognitionTempId": "E2",
+            "evidenceIds": [
+              "d26-scope-0003-c8f6d9daf67e549f606316d776cf73c56eb578f217e95c7223459a5950fe0675",
+              "d26-scope-0004-37141ba2c5c2df7c830cd4260256534e5dfc2520277c6a41f0c9ea84c968461c"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:faaa6612:draft:1:E1",
+          "title": "系统维护在周五晚上开始",
+          "startTimePointId": "time:source:faaa6612:draft:1:E1:start",
+          "endTimePointId": "time:source:faaa6612:draft:1:E1:end",
+          "legacyData": {
+            "recognitionTempId": "E1",
+            "evidenceIds": [
+              "user-evidence:E1"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:0977f440:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周三晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-94db5b4b630655e7d7d6f6be821b5eca5eb1b970089c14309acff1963d61cdfd"
+            ],
+            "confidence": 0.9
+          }
+        },
+        {
+          "id": "time:source:308d3de1:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周四晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-a073586bd6efed9945b44a3a983ff90feb1d7da46c0d42e648e7b53d79696a4e"
+            ],
+            "confidence": 0.9
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:P1",
+          "type": "submission_deadline",
+          "rawText": "2026年11月6日15:20前",
+          "normalizedValue": "2026-11-06T15:20",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [
+            "task:source:faaa6612:draft:1:T1"
+          ],
+          "legacyData": {
+            "recognitionTempId": "P1",
+            "evidenceIds": [
+              "d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:P4",
+          "type": "event_start",
+          "rawText": "2026年11月7日14:00",
+          "normalizedValue": "2026-11-07T14:00",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P4",
+            "evidenceIds": [
+              "d26-scope-0003-c8f6d9daf67e549f606316d776cf73c56eb578f217e95c7223459a5950fe0675"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:P5",
+          "type": "event_end",
+          "rawText": "15:00",
+          "normalizedValue": "2026-11-07T15:00",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P5",
+            "evidenceIds": [
+              "d26-scope-0004-37141ba2c5c2df7c830cd4260256534e5dfc2520277c6a41f0c9ea84c968461c"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:E1:start",
+          "type": "event_start",
+          "rawText": "周五晚上",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "E1:start",
+            "evidenceIds": [
+              "d26-scope-0005-adf81d81902add98849757317f79700bc5243b9ef2a8c595b084d2e465ff701c"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:E1:end",
+          "type": "event_end",
+          "rawText": "结束时间尚未公布",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "E1:end",
+            "evidenceIds": [
+              "d26-scope-0006-1abf73445ff7c319a56d929b83ca8b823887e073a1befcd6b5e15ef42d458c91"
+            ],
+            "confidence": 1
+          }
+        }
+      ],
+      "materials": [
+        {
+          "id": "material:source:faaa6612:draft:1:M1",
+          "name": "器材清单",
+          "formatRequirements": [
+            "PDF"
+          ],
+          "namingRequirements": [],
+          "status": "unverified",
+          "relatedTaskIds": [
+            "task:source:faaa6612:draft:1:T1"
+          ]
+        }
+      ],
+      "recordedRuns": [
+        {
+          "id": "source:faaa6612:run:1",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "candidate": "EngineeringFixture",
+            "responseSha256": "9e59950972efe31c4427385e345b402e37c65cb77c655d0d71c14ae11af52572",
+            "requestSha256": null,
+            "referenceTime": "2026-10-03T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:308d3de1:run:1",
+          "sourceVersionId": "source:308d3de1:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "57477b7df00eca924120c903cb113b0242f9effcf765289beb0efced9493be5c",
+            "requestSha256": "f0889e2c74a5fe05d03e9e0db432832f473c398408ce89201dabe04aaab20fc6",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:0977f440:run:1",
+          "sourceVersionId": "source:0977f440:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "4236202ec7bb7b626e68d5a619d5c5323f194983e1c963968e171439c6113876",
+            "requestSha256": "59216fd7c9018cc3d701f7ca7d794a0e902b62782fd359fb427d5fcdf502e8fc",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "id": "evidence:source:0977f440:draft:1:d26-scope-0001-94db5b4b630655e7d7d6f6be821b5eca5eb1b970089c14309acff1963d61cdfd",
+          "sourceVersionId": "source:0977f440:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "图书借阅门户将在周三晚停机，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:51:09.881Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-94db5b4b630655e7d7d6f6be821b5eca5eb1b970089c14309acff1963d61cdfd"
+          }
+        },
+        {
+          "id": "evidence:source:308d3de1:draft:1:d26-scope-0001-a073586bd6efed9945b44a3a983ff90feb1d7da46c0d42e648e7b53d79696a4e",
+          "sourceVersionId": "source:308d3de1:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "实验预约系统将于周四晚维护，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:51:53.701Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-a073586bd6efed9945b44a3a983ff90feb1d7da46c0d42e648e7b53d79696a4e"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "请于2026年11月6日15:20前递交器材清单。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0002-f14ab7d9858334559342cca8df04f6307d3cf056f2920b30b5458af5e412ad26",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "器材清单必须为PDF。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0002-f14ab7d9858334559342cca8df04f6307d3cf056f2920b30b5458af5e412ad26"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0003-c8f6d9daf67e549f606316d776cf73c56eb578f217e95c7223459a5950fe0675",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "器材讲解会于2026年11月7日14:00开始，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0003-c8f6d9daf67e549f606316d776cf73c56eb578f217e95c7223459a5950fe0675"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0004-37141ba2c5c2df7c830cd4260256534e5dfc2520277c6a41f0c9ea84c968461c",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "15:00结束。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0004-37141ba2c5c2df7c830cd4260256534e5dfc2520277c6a41f0c9ea84c968461c"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0005-adf81d81902add98849757317f79700bc5243b9ef2a8c595b084d2e465ff701c",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "系统维护在周五晚上开始，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0005-adf81d81902add98849757317f79700bc5243b9ef2a8c595b084d2e465ff701c"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0006-1abf73445ff7c319a56d929b83ca8b823887e073a1befcd6b5e15ef42d458c91",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "结束时间尚未公布。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0006-1abf73445ff7c319a56d929b83ca8b823887e073a1befcd6b5e15ef42d458c91"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:user-evidence:E1",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "请于2026年11月6日15:20前递交器材清单。器材清单必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。",
+          "bbox": null,
+          "fieldPath": "event",
+          "extractionMethod": "manual",
+          "confidence": null,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "user-evidence:E1"
+          }
+        }
+      ],
+      "commits": [
+        {
+          "draftId": "source:faaa6612:draft:1",
+          "acceptedEntityTempIds": [
+            "E1",
+            "E1:end",
+            "E1:start",
+            "E2",
+            "M1",
+            "P1",
+            "P4",
+            "P5",
+            "T1"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:308d3de1:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:0977f440:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        }
+      ]
+    },
+    {
+      "file": "final-dependency-readback.json",
+      "rawReadbackSha256": "ae37a0c96abcfd2132ce17997a532ee8c6425f9e194a2f11361fd47526cda436",
+      "counts": {
+        "sources": 4,
+        "sourceVersions": 4,
+        "recognitionRuns": 4,
+        "extractionDrafts": 4,
+        "tasks": 3,
+        "projects": 0,
+        "events": 4,
+        "timePoints": 7,
+        "materials": 1,
+        "historyRecords": 15
+      },
+      "tasks": [
+        {
+          "id": "task:source:faaa6612:draft:1:T1",
+          "title": "递交器材清单",
+          "description": "请于2026年11月6日15:20前递交器材清单。\n器材清单必须为PDF。",
+          "status": "todo",
+          "sourceId": "source:faaa6612",
+          "dependencyIds": [],
+          "completionCriteria": [
+            "器材清单必须为PDF"
+          ],
+          "legacyData": {
+            "recognitionTempId": "T1",
+            "actionVerb": "递交",
+            "actionObject": "器材清单",
+            "completionCriteria": [
+              "器材清单必须为PDF"
+            ],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf",
+              "d26-scope-0002-f14ab7d9858334559342cca8df04f6307d3cf056f2920b30b5458af5e412ad26"
+            ],
+            "sourceId": "source:faaa6612",
+            "category": "其他",
+            "v7Record": {
+              "id": "task:source:faaa6612:draft:1:T1",
+              "hierarchyType": "task",
+              "actionVerb": "递交",
+              "actionObject": "器材清单",
+              "completionCriteria": [
+                "器材清单必须为PDF"
+              ],
+              "evidenceIds": [
+                "d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf",
+                "d26-scope-0002-f14ab7d9858334559342cca8df04f6307d3cf056f2920b30b5458af5e412ad26"
+              ],
+              "title": "递交器材清单",
+              "category": "其他",
+              "status": "待开始",
+              "deadline": "2026-11-06T15:20",
+              "estimatedMinutes": 60,
+              "estimatedMinutesKnown": false,
+              "nextAction": "递交器材清单",
+              "description": "请于2026年11月6日15:20前递交器材清单。\n器材清单必须为PDF。",
+              "priority": "中",
+              "riskFlags": [],
+              "materials": [
+                {
+                  "id": "material:source:faaa6612:draft:1:M1",
+                  "name": "器材清单",
+                  "done": false,
+                  "status": "unverified",
+                  "taskId": "task:source:faaa6612:draft:1:T1",
+                  "sourceId": "source:faaa6612"
+                }
+              ],
+              "dependencies": [],
+              "dependencyIds": [],
+              "reminders": [],
+              "sourceIds": [
+                "source:faaa6612"
+              ],
+              "priorityReason": "由当前权威实体计算并允许手动调整",
+              "priorityReasons": [
+                "由当前权威实体计算并允许手动调整"
+              ],
+              "timePointIds": [
+                "time:source:faaa6612:draft:1:P1"
+              ],
+              "materialIds": [
+                "material:source:faaa6612:draft:1:M1"
+              ],
+              "createdAt": "2026-10-03T12:53:13.655Z",
+              "updatedAt": "2026-10-03T12:53:13.655Z",
+              "history": [
+                {
+                  "id": "history:task:source:faaa6612:draft:1:T1:created",
+                  "field": "created",
+                  "before": "null",
+                  "after": "{\"id\":\"task:source:faaa6612:draft:1:T1\"}",
+                  "changedAt": "2026-10-03T12:53:13.655Z",
+                  "actor": "user",
+                  "entityType": "task",
+                  "entityId": "task:source:faaa6612:draft:1:T1",
+                  "action": "created"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "task:source:d989e164:draft:1:T1",
+          "title": "填写借用记录",
+          "description": "先填写借用记录。",
+          "status": "todo",
+          "sourceId": "source:d989e164",
+          "dependencyIds": [],
+          "completionCriteria": [],
+          "legacyData": {
+            "recognitionTempId": "T1",
+            "actionVerb": "填写",
+            "actionObject": "借用记录",
+            "completionCriteria": [],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0001-cd60ba51c390cc978ecb5c21b2a0569da53b53c4ef2d28c0f0b3ad899ca1dfee"
+            ],
+            "sourceId": "source:d989e164",
+            "category": "其他"
+          }
+        },
+        {
+          "id": "task:source:d989e164:draft:1:T2",
+          "title": "提交借用记录",
+          "description": "填写完成后提交借用记录。",
+          "status": "todo",
+          "sourceId": "source:d989e164",
+          "dependencyIds": [
+            "task:source:d989e164:draft:1:T1"
+          ],
+          "completionCriteria": [],
+          "legacyData": {
+            "recognitionTempId": "T2",
+            "actionVerb": "提交",
+            "actionObject": "借用记录",
+            "completionCriteria": [],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0002-2d426a18e6b180771eb40c67577d02c7077dd46e2cd282bf40eab80591ef9a57"
+            ],
+            "sourceId": "source:d989e164",
+            "category": "其他"
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:0977f440:draft:1:event-0001",
+          "title": "图书借阅门户将在周三晚停机",
+          "startTimePointId": "time:source:0977f440:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-94db5b4b630655e7d7d6f6be821b5eca5eb1b970089c14309acff1963d61cdfd"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:308d3de1:draft:1:event-0001",
+          "title": "实验预约系统将于周四晚维护",
+          "startTimePointId": "time:source:308d3de1:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-a073586bd6efed9945b44a3a983ff90feb1d7da46c0d42e648e7b53d79696a4e"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:faaa6612:draft:1:E2",
+          "title": "器材讲解会",
+          "startTimePointId": "time:source:faaa6612:draft:1:P4",
+          "endTimePointId": "time:source:faaa6612:draft:1:P5",
+          "legacyData": {
+            "recognitionTempId": "E2",
+            "evidenceIds": [
+              "d26-scope-0003-c8f6d9daf67e549f606316d776cf73c56eb578f217e95c7223459a5950fe0675",
+              "d26-scope-0004-37141ba2c5c2df7c830cd4260256534e5dfc2520277c6a41f0c9ea84c968461c"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:faaa6612:draft:1:E1",
+          "title": "系统维护在周五晚上开始",
+          "startTimePointId": "time:source:faaa6612:draft:1:E1:start",
+          "endTimePointId": "time:source:faaa6612:draft:1:E1:end",
+          "legacyData": {
+            "recognitionTempId": "E1",
+            "evidenceIds": [
+              "user-evidence:E1"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:0977f440:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周三晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-94db5b4b630655e7d7d6f6be821b5eca5eb1b970089c14309acff1963d61cdfd"
+            ],
+            "confidence": 0.9
+          }
+        },
+        {
+          "id": "time:source:308d3de1:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周四晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-a073586bd6efed9945b44a3a983ff90feb1d7da46c0d42e648e7b53d79696a4e"
+            ],
+            "confidence": 0.9
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:P1",
+          "type": "submission_deadline",
+          "rawText": "2026年11月6日15:20前",
+          "normalizedValue": "2026-11-06T15:20",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [
+            "task:source:faaa6612:draft:1:T1"
+          ],
+          "legacyData": {
+            "recognitionTempId": "P1",
+            "evidenceIds": [
+              "d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:P4",
+          "type": "event_start",
+          "rawText": "2026年11月7日14:00",
+          "normalizedValue": "2026-11-07T14:00",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P4",
+            "evidenceIds": [
+              "d26-scope-0003-c8f6d9daf67e549f606316d776cf73c56eb578f217e95c7223459a5950fe0675"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:P5",
+          "type": "event_end",
+          "rawText": "15:00",
+          "normalizedValue": "2026-11-07T15:00",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P5",
+            "evidenceIds": [
+              "d26-scope-0004-37141ba2c5c2df7c830cd4260256534e5dfc2520277c6a41f0c9ea84c968461c"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:E1:start",
+          "type": "event_start",
+          "rawText": "周五晚上",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "E1:start",
+            "evidenceIds": [
+              "d26-scope-0005-adf81d81902add98849757317f79700bc5243b9ef2a8c595b084d2e465ff701c"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:E1:end",
+          "type": "event_end",
+          "rawText": "结束时间尚未公布",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "E1:end",
+            "evidenceIds": [
+              "d26-scope-0006-1abf73445ff7c319a56d929b83ca8b823887e073a1befcd6b5e15ef42d458c91"
+            ],
+            "confidence": 1
+          }
+        }
+      ],
+      "materials": [
+        {
+          "id": "material:source:faaa6612:draft:1:M1",
+          "name": "器材清单",
+          "formatRequirements": [
+            "PDF"
+          ],
+          "namingRequirements": [],
+          "status": "unverified",
+          "relatedTaskIds": [
+            "task:source:faaa6612:draft:1:T1"
+          ]
+        }
+      ],
+      "recordedRuns": [
+        {
+          "id": "source:d989e164:run:1",
+          "sourceVersionId": "source:d989e164:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "candidate": "EngineeringFixture",
+            "responseSha256": "ef749d2701ddcd005862cbbb9b8bac345ac0a06e80b66812e98187cb34b2242b",
+            "requestSha256": null,
+            "referenceTime": "2026-10-03T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:faaa6612:run:1",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "candidate": "EngineeringFixture",
+            "responseSha256": "9e59950972efe31c4427385e345b402e37c65cb77c655d0d71c14ae11af52572",
+            "requestSha256": null,
+            "referenceTime": "2026-10-03T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:308d3de1:run:1",
+          "sourceVersionId": "source:308d3de1:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "57477b7df00eca924120c903cb113b0242f9effcf765289beb0efced9493be5c",
+            "requestSha256": "f0889e2c74a5fe05d03e9e0db432832f473c398408ce89201dabe04aaab20fc6",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:0977f440:run:1",
+          "sourceVersionId": "source:0977f440:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "4236202ec7bb7b626e68d5a619d5c5323f194983e1c963968e171439c6113876",
+            "requestSha256": "59216fd7c9018cc3d701f7ca7d794a0e902b62782fd359fb427d5fcdf502e8fc",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "id": "evidence:source:0977f440:draft:1:d26-scope-0001-94db5b4b630655e7d7d6f6be821b5eca5eb1b970089c14309acff1963d61cdfd",
+          "sourceVersionId": "source:0977f440:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "图书借阅门户将在周三晚停机，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:51:09.881Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-94db5b4b630655e7d7d6f6be821b5eca5eb1b970089c14309acff1963d61cdfd"
+          }
+        },
+        {
+          "id": "evidence:source:308d3de1:draft:1:d26-scope-0001-a073586bd6efed9945b44a3a983ff90feb1d7da46c0d42e648e7b53d79696a4e",
+          "sourceVersionId": "source:308d3de1:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "实验预约系统将于周四晚维护，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:51:53.701Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-a073586bd6efed9945b44a3a983ff90feb1d7da46c0d42e648e7b53d79696a4e"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "请于2026年11月6日15:20前递交器材清单。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0002-f14ab7d9858334559342cca8df04f6307d3cf056f2920b30b5458af5e412ad26",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "器材清单必须为PDF。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0002-f14ab7d9858334559342cca8df04f6307d3cf056f2920b30b5458af5e412ad26"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0003-c8f6d9daf67e549f606316d776cf73c56eb578f217e95c7223459a5950fe0675",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "器材讲解会于2026年11月7日14:00开始，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0003-c8f6d9daf67e549f606316d776cf73c56eb578f217e95c7223459a5950fe0675"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0004-37141ba2c5c2df7c830cd4260256534e5dfc2520277c6a41f0c9ea84c968461c",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "15:00结束。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0004-37141ba2c5c2df7c830cd4260256534e5dfc2520277c6a41f0c9ea84c968461c"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0005-adf81d81902add98849757317f79700bc5243b9ef2a8c595b084d2e465ff701c",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "系统维护在周五晚上开始，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0005-adf81d81902add98849757317f79700bc5243b9ef2a8c595b084d2e465ff701c"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0006-1abf73445ff7c319a56d929b83ca8b823887e073a1befcd6b5e15ef42d458c91",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "结束时间尚未公布。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0006-1abf73445ff7c319a56d929b83ca8b823887e073a1befcd6b5e15ef42d458c91"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:user-evidence:E1",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "请于2026年11月6日15:20前递交器材清单。器材清单必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。",
+          "bbox": null,
+          "fieldPath": "event",
+          "extractionMethod": "manual",
+          "confidence": null,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "user-evidence:E1"
+          }
+        },
+        {
+          "id": "evidence:source:d989e164:draft:1:d26-scope-0001-cd60ba51c390cc978ecb5c21b2a0569da53b53c4ef2d28c0f0b3ad899ca1dfee",
+          "sourceVersionId": "source:d989e164:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "先填写借用记录。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:55:07.997Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-cd60ba51c390cc978ecb5c21b2a0569da53b53c4ef2d28c0f0b3ad899ca1dfee"
+          }
+        },
+        {
+          "id": "evidence:source:d989e164:draft:1:d26-scope-0002-2d426a18e6b180771eb40c67577d02c7077dd46e2cd282bf40eab80591ef9a57",
+          "sourceVersionId": "source:d989e164:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "填写完成后提交借用记录。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:55:07.997Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0002-2d426a18e6b180771eb40c67577d02c7077dd46e2cd282bf40eab80591ef9a57"
+          }
+        }
+      ],
+      "commits": [
+        {
+          "draftId": "source:d989e164:draft:1",
+          "acceptedEntityTempIds": [
+            "T1",
+            "T2"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:faaa6612:draft:1",
+          "acceptedEntityTempIds": [
+            "E1",
+            "E1:end",
+            "E1:start",
+            "E2",
+            "M1",
+            "P1",
+            "P4",
+            "P5",
+            "T1"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:308d3de1:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:0977f440:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        }
+      ]
+    },
+    {
+      "file": "final-revision-readback.json",
+      "rawReadbackSha256": "e1152de8eb818717c13c107dd9ed274deb6077fe7926d6f700b6da52ba6c342d",
+      "counts": {
+        "sources": 5,
+        "sourceVersions": 5,
+        "recognitionRuns": 5,
+        "extractionDrafts": 5,
+        "tasks": 4,
+        "projects": 0,
+        "events": 4,
+        "timePoints": 7,
+        "materials": 1,
+        "historyRecords": 16
+      },
+      "tasks": [
+        {
+          "id": "task:source:faaa6612:draft:1:T1",
+          "title": "递交器材清单",
+          "description": "请于2026年11月6日15:20前递交器材清单。\n器材清单必须为PDF。",
+          "status": "todo",
+          "sourceId": "source:faaa6612",
+          "dependencyIds": [],
+          "completionCriteria": [
+            "器材清单必须为PDF"
+          ],
+          "legacyData": {
+            "recognitionTempId": "T1",
+            "actionVerb": "递交",
+            "actionObject": "器材清单",
+            "completionCriteria": [
+              "器材清单必须为PDF"
+            ],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf",
+              "d26-scope-0002-f14ab7d9858334559342cca8df04f6307d3cf056f2920b30b5458af5e412ad26"
+            ],
+            "sourceId": "source:faaa6612",
+            "category": "其他",
+            "v7Record": {
+              "id": "task:source:faaa6612:draft:1:T1",
+              "hierarchyType": "task",
+              "actionVerb": "递交",
+              "actionObject": "器材清单",
+              "completionCriteria": [
+                "器材清单必须为PDF"
+              ],
+              "evidenceIds": [
+                "d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf",
+                "d26-scope-0002-f14ab7d9858334559342cca8df04f6307d3cf056f2920b30b5458af5e412ad26"
+              ],
+              "title": "递交器材清单",
+              "category": "其他",
+              "status": "待开始",
+              "deadline": "2026-11-06T15:20",
+              "estimatedMinutes": 60,
+              "estimatedMinutesKnown": false,
+              "nextAction": "递交器材清单",
+              "description": "请于2026年11月6日15:20前递交器材清单。\n器材清单必须为PDF。",
+              "priority": "中",
+              "riskFlags": [],
+              "materials": [
+                {
+                  "id": "material:source:faaa6612:draft:1:M1",
+                  "name": "器材清单",
+                  "done": false,
+                  "status": "unverified",
+                  "taskId": "task:source:faaa6612:draft:1:T1",
+                  "sourceId": "source:faaa6612"
+                }
+              ],
+              "dependencies": [],
+              "dependencyIds": [],
+              "reminders": [],
+              "sourceIds": [
+                "source:faaa6612"
+              ],
+              "priorityReason": "由当前权威实体计算并允许手动调整",
+              "priorityReasons": [
+                "由当前权威实体计算并允许手动调整"
+              ],
+              "timePointIds": [
+                "time:source:faaa6612:draft:1:P1"
+              ],
+              "materialIds": [
+                "material:source:faaa6612:draft:1:M1"
+              ],
+              "createdAt": "2026-10-03T12:53:13.655Z",
+              "updatedAt": "2026-10-03T12:53:13.655Z",
+              "history": [
+                {
+                  "id": "history:task:source:faaa6612:draft:1:T1:created",
+                  "field": "created",
+                  "before": "null",
+                  "after": "{\"id\":\"task:source:faaa6612:draft:1:T1\"}",
+                  "changedAt": "2026-10-03T12:53:13.655Z",
+                  "actor": "user",
+                  "entityType": "task",
+                  "entityId": "task:source:faaa6612:draft:1:T1",
+                  "action": "created"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "task:source:d989e164:draft:1:T1",
+          "title": "填写借用记录",
+          "description": "先填写借用记录。",
+          "status": "todo",
+          "sourceId": "source:d989e164",
+          "dependencyIds": [],
+          "completionCriteria": [],
+          "legacyData": {
+            "recognitionTempId": "T1",
+            "actionVerb": "填写",
+            "actionObject": "借用记录",
+            "completionCriteria": [],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0001-cd60ba51c390cc978ecb5c21b2a0569da53b53c4ef2d28c0f0b3ad899ca1dfee"
+            ],
+            "sourceId": "source:d989e164",
+            "category": "其他",
+            "v7Record": {
+              "id": "task:source:d989e164:draft:1:T1",
+              "hierarchyType": "task",
+              "actionVerb": "填写",
+              "actionObject": "借用记录",
+              "completionCriteria": [],
+              "evidenceIds": [
+                "d26-scope-0001-cd60ba51c390cc978ecb5c21b2a0569da53b53c4ef2d28c0f0b3ad899ca1dfee"
+              ],
+              "title": "填写借用记录",
+              "category": "其他",
+              "status": "待开始",
+              "deadline": "",
+              "estimatedMinutes": 60,
+              "estimatedMinutesKnown": false,
+              "nextAction": "填写借用记录",
+              "description": "先填写借用记录。",
+              "priority": "中",
+              "riskFlags": [
+                "待确认"
+              ],
+              "materials": [],
+              "dependencies": [],
+              "dependencyIds": [],
+              "reminders": [],
+              "sourceIds": [
+                "source:d989e164"
+              ],
+              "priorityReason": "由当前权威实体计算并允许手动调整",
+              "priorityReasons": [
+                "由当前权威实体计算并允许手动调整"
+              ],
+              "timePointIds": [
+                "timepoint-task:source:d989e164:draft:1:T1-deadline"
+              ],
+              "materialIds": [],
+              "createdAt": "2026-10-03T12:55:07.997Z",
+              "updatedAt": "2026-10-03T12:55:07.997Z",
+              "history": [
+                {
+                  "id": "history:task:source:d989e164:draft:1:T1:created",
+                  "field": "created",
+                  "before": "null",
+                  "after": "{\"id\":\"task:source:d989e164:draft:1:T1\"}",
+                  "changedAt": "2026-10-03T12:55:07.997Z",
+                  "actor": "user",
+                  "entityType": "task",
+                  "entityId": "task:source:d989e164:draft:1:T1",
+                  "action": "created"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "task:source:d989e164:draft:1:T2",
+          "title": "提交借用记录",
+          "description": "填写完成后提交借用记录。",
+          "status": "todo",
+          "sourceId": "source:d989e164",
+          "dependencyIds": [
+            "task:source:d989e164:draft:1:T1"
+          ],
+          "completionCriteria": [],
+          "legacyData": {
+            "recognitionTempId": "T2",
+            "actionVerb": "提交",
+            "actionObject": "借用记录",
+            "completionCriteria": [],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0002-2d426a18e6b180771eb40c67577d02c7077dd46e2cd282bf40eab80591ef9a57"
+            ],
+            "sourceId": "source:d989e164",
+            "category": "其他",
+            "v7Record": {
+              "id": "task:source:d989e164:draft:1:T2",
+              "hierarchyType": "task",
+              "actionVerb": "提交",
+              "actionObject": "借用记录",
+              "completionCriteria": [],
+              "evidenceIds": [
+                "d26-scope-0002-2d426a18e6b180771eb40c67577d02c7077dd46e2cd282bf40eab80591ef9a57"
+              ],
+              "title": "提交借用记录",
+              "category": "其他",
+              "status": "待开始",
+              "deadline": "",
+              "estimatedMinutes": 60,
+              "estimatedMinutesKnown": false,
+              "nextAction": "提交借用记录",
+              "description": "填写完成后提交借用记录。",
+              "priority": "中",
+              "riskFlags": [
+                "待确认"
+              ],
+              "materials": [],
+              "dependencies": [],
+              "dependencyIds": [
+                "task:source:d989e164:draft:1:T1"
+              ],
+              "reminders": [],
+              "sourceIds": [
+                "source:d989e164"
+              ],
+              "priorityReason": "由当前权威实体计算并允许手动调整",
+              "priorityReasons": [
+                "由当前权威实体计算并允许手动调整"
+              ],
+              "timePointIds": [
+                "timepoint-task:source:d989e164:draft:1:T2-deadline"
+              ],
+              "materialIds": [],
+              "createdAt": "2026-10-03T12:55:07.997Z",
+              "updatedAt": "2026-10-03T12:55:07.997Z",
+              "history": [
+                {
+                  "id": "history:task:source:d989e164:draft:1:T2:created",
+                  "field": "created",
+                  "before": "null",
+                  "after": "{\"id\":\"task:source:d989e164:draft:1:T2\"}",
+                  "changedAt": "2026-10-03T12:55:07.997Z",
+                  "actor": "user",
+                  "entityType": "task",
+                  "entityId": "task:source:d989e164:draft:1:T2",
+                  "action": "created"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "task:source:e1c9b8b2:draft:1:T3",
+          "title": "保存受理编号",
+          "description": "请保存受理编号。",
+          "status": "todo",
+          "sourceId": "source:e1c9b8b2",
+          "dependencyIds": [],
+          "completionCriteria": [],
+          "legacyData": {
+            "recognitionTempId": "T3",
+            "actionVerb": "保存",
+            "actionObject": "受理编号",
+            "completionCriteria": [],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0003-226ee01c6f8573cb1ebe1f5096dd0317ffc7c08720bebe94d1aad30b01b11d89"
+            ],
+            "sourceId": "source:e1c9b8b2",
+            "category": "其他"
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:0977f440:draft:1:event-0001",
+          "title": "图书借阅门户将在周三晚停机",
+          "startTimePointId": "time:source:0977f440:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-94db5b4b630655e7d7d6f6be821b5eca5eb1b970089c14309acff1963d61cdfd"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:308d3de1:draft:1:event-0001",
+          "title": "实验预约系统将于周四晚维护",
+          "startTimePointId": "time:source:308d3de1:draft:1:tp-0001",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-a073586bd6efed9945b44a3a983ff90feb1d7da46c0d42e648e7b53d79696a4e"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:faaa6612:draft:1:E2",
+          "title": "器材讲解会",
+          "startTimePointId": "time:source:faaa6612:draft:1:P4",
+          "endTimePointId": "time:source:faaa6612:draft:1:P5",
+          "legacyData": {
+            "recognitionTempId": "E2",
+            "evidenceIds": [
+              "d26-scope-0003-c8f6d9daf67e549f606316d776cf73c56eb578f217e95c7223459a5950fe0675",
+              "d26-scope-0004-37141ba2c5c2df7c830cd4260256534e5dfc2520277c6a41f0c9ea84c968461c"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:faaa6612:draft:1:E1",
+          "title": "系统维护在周五晚上开始",
+          "startTimePointId": "time:source:faaa6612:draft:1:E1:start",
+          "endTimePointId": "time:source:faaa6612:draft:1:E1:end",
+          "legacyData": {
+            "recognitionTempId": "E1",
+            "evidenceIds": [
+              "user-evidence:E1"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:0977f440:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周三晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-94db5b4b630655e7d7d6f6be821b5eca5eb1b970089c14309acff1963d61cdfd"
+            ],
+            "confidence": 0.9
+          }
+        },
+        {
+          "id": "time:source:308d3de1:draft:1:tp-0001",
+          "type": "event_start",
+          "rawText": "周四晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "tp-0001",
+            "evidenceIds": [
+              "d26-scope-0001-a073586bd6efed9945b44a3a983ff90feb1d7da46c0d42e648e7b53d79696a4e"
+            ],
+            "confidence": 0.9
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:P1",
+          "type": "submission_deadline",
+          "rawText": "2026年11月6日15:20前",
+          "normalizedValue": "2026-11-06T15:20",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [
+            "task:source:faaa6612:draft:1:T1"
+          ],
+          "legacyData": {
+            "recognitionTempId": "P1",
+            "evidenceIds": [
+              "d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:P4",
+          "type": "event_start",
+          "rawText": "2026年11月7日14:00",
+          "normalizedValue": "2026-11-07T14:00",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P4",
+            "evidenceIds": [
+              "d26-scope-0003-c8f6d9daf67e549f606316d776cf73c56eb578f217e95c7223459a5950fe0675"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:P5",
+          "type": "event_end",
+          "rawText": "15:00",
+          "normalizedValue": "2026-11-07T15:00",
+          "precision": "exact",
+          "needsConfirmation": false,
+          "timezone": "Asia/Shanghai",
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "P5",
+            "evidenceIds": [
+              "d26-scope-0004-37141ba2c5c2df7c830cd4260256534e5dfc2520277c6a41f0c9ea84c968461c"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:E1:start",
+          "type": "event_start",
+          "rawText": "周五晚上",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "E1:start",
+            "evidenceIds": [
+              "d26-scope-0005-adf81d81902add98849757317f79700bc5243b9ef2a8c595b084d2e465ff701c"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:faaa6612:draft:1:E1:end",
+          "type": "event_end",
+          "rawText": "结束时间尚未公布",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "E1:end",
+            "evidenceIds": [
+              "d26-scope-0006-1abf73445ff7c319a56d929b83ca8b823887e073a1befcd6b5e15ef42d458c91"
+            ],
+            "confidence": 1
+          }
+        }
+      ],
+      "materials": [
+        {
+          "id": "material:source:faaa6612:draft:1:M1",
+          "name": "器材清单",
+          "formatRequirements": [
+            "PDF"
+          ],
+          "namingRequirements": [],
+          "status": "unverified",
+          "relatedTaskIds": [
+            "task:source:faaa6612:draft:1:T1"
+          ]
+        }
+      ],
+      "recordedRuns": [
+        {
+          "id": "source:e1c9b8b2:run:1",
+          "sourceVersionId": "source:e1c9b8b2:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "candidate": "EngineeringFixture",
+            "responseSha256": "6b89c2406136c59483e4252ae414790f126572ec43c990b9674aeb635e8bd420",
+            "requestSha256": null,
+            "referenceTime": "2026-10-03T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:d989e164:run:1",
+          "sourceVersionId": "source:d989e164:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "candidate": "EngineeringFixture",
+            "responseSha256": "ef749d2701ddcd005862cbbb9b8bac345ac0a06e80b66812e98187cb34b2242b",
+            "requestSha256": null,
+            "referenceTime": "2026-10-03T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:faaa6612:run:1",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "candidate": "EngineeringFixture",
+            "responseSha256": "9e59950972efe31c4427385e345b402e37c65cb77c655d0d71c14ae11af52572",
+            "requestSha256": null,
+            "referenceTime": "2026-10-03T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:308d3de1:run:1",
+          "sourceVersionId": "source:308d3de1:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "57477b7df00eca924120c903cb113b0242f9effcf765289beb0efced9493be5c",
+            "requestSha256": "f0889e2c74a5fe05d03e9e0db432832f473c398408ce89201dabe04aaab20fc6",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:0977f440:run:1",
+          "sourceVersionId": "source:0977f440:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "4236202ec7bb7b626e68d5a619d5c5323f194983e1c963968e171439c6113876",
+            "requestSha256": "59216fd7c9018cc3d701f7ca7d794a0e902b62782fd359fb427d5fcdf502e8fc",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "id": "evidence:source:0977f440:draft:1:d26-scope-0001-94db5b4b630655e7d7d6f6be821b5eca5eb1b970089c14309acff1963d61cdfd",
+          "sourceVersionId": "source:0977f440:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "图书借阅门户将在周三晚停机，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:51:09.881Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-94db5b4b630655e7d7d6f6be821b5eca5eb1b970089c14309acff1963d61cdfd"
+          }
+        },
+        {
+          "id": "evidence:source:308d3de1:draft:1:d26-scope-0001-a073586bd6efed9945b44a3a983ff90feb1d7da46c0d42e648e7b53d79696a4e",
+          "sourceVersionId": "source:308d3de1:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "实验预约系统将于周四晚维护，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:51:53.701Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-a073586bd6efed9945b44a3a983ff90feb1d7da46c0d42e648e7b53d79696a4e"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "请于2026年11月6日15:20前递交器材清单。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-1804517484a3e22e4f90dc4d904345ec2529c34daf473430d380eda30366dadf"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0002-f14ab7d9858334559342cca8df04f6307d3cf056f2920b30b5458af5e412ad26",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "器材清单必须为PDF。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0002-f14ab7d9858334559342cca8df04f6307d3cf056f2920b30b5458af5e412ad26"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0003-c8f6d9daf67e549f606316d776cf73c56eb578f217e95c7223459a5950fe0675",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "器材讲解会于2026年11月7日14:00开始，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0003-c8f6d9daf67e549f606316d776cf73c56eb578f217e95c7223459a5950fe0675"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0004-37141ba2c5c2df7c830cd4260256534e5dfc2520277c6a41f0c9ea84c968461c",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "15:00结束。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0004-37141ba2c5c2df7c830cd4260256534e5dfc2520277c6a41f0c9ea84c968461c"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0005-adf81d81902add98849757317f79700bc5243b9ef2a8c595b084d2e465ff701c",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "系统维护在周五晚上开始，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0005-adf81d81902add98849757317f79700bc5243b9ef2a8c595b084d2e465ff701c"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:d26-scope-0006-1abf73445ff7c319a56d929b83ca8b823887e073a1befcd6b5e15ef42d458c91",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "结束时间尚未公布。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0006-1abf73445ff7c319a56d929b83ca8b823887e073a1befcd6b5e15ef42d458c91"
+          }
+        },
+        {
+          "id": "evidence:source:faaa6612:draft:1:user-evidence:E1",
+          "sourceVersionId": "source:faaa6612:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "请于2026年11月6日15:20前递交器材清单。器材清单必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。",
+          "bbox": null,
+          "fieldPath": "event",
+          "extractionMethod": "manual",
+          "confidence": null,
+          "createdAt": "2026-10-03T12:53:13.655Z",
+          "legacyData": {
+            "recognitionEvidenceId": "user-evidence:E1"
+          }
+        },
+        {
+          "id": "evidence:source:d989e164:draft:1:d26-scope-0001-cd60ba51c390cc978ecb5c21b2a0569da53b53c4ef2d28c0f0b3ad899ca1dfee",
+          "sourceVersionId": "source:d989e164:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "先填写借用记录。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:55:07.997Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-cd60ba51c390cc978ecb5c21b2a0569da53b53c4ef2d28c0f0b3ad899ca1dfee"
+          }
+        },
+        {
+          "id": "evidence:source:d989e164:draft:1:d26-scope-0002-2d426a18e6b180771eb40c67577d02c7077dd46e2cd282bf40eab80591ef9a57",
+          "sourceVersionId": "source:d989e164:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "填写完成后提交借用记录。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:55:07.997Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0002-2d426a18e6b180771eb40c67577d02c7077dd46e2cd282bf40eab80591ef9a57"
+          }
+        },
+        {
+          "id": "evidence:source:e1c9b8b2:draft:1:d26-scope-0003-226ee01c6f8573cb1ebe1f5096dd0317ffc7c08720bebe94d1aad30b01b11d89",
+          "sourceVersionId": "source:e1c9b8b2:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "请保存受理编号。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T12:56:56.088Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0003-226ee01c6f8573cb1ebe1f5096dd0317ffc7c08720bebe94d1aad30b01b11d89"
+          }
+        }
+      ],
+      "commits": [
+        {
+          "draftId": "source:e1c9b8b2:draft:1",
+          "acceptedEntityTempIds": [
+            "T3"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:d989e164:draft:1",
+          "acceptedEntityTempIds": [
+            "T1",
+            "T2"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:faaa6612:draft:1",
+          "acceptedEntityTempIds": [
+            "E1",
+            "E1:end",
+            "E1:start",
+            "E2",
+            "M1",
+            "P1",
+            "P4",
+            "P5",
+            "T1"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:308d3de1:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:0977f440:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "tp-0001"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        }
+      ]
+    },
+    {
+      "file": "closing-dependency-readback.json",
+      "rawReadbackSha256": "f2e696605484c99438bf84efcd1653d493e0072deb2c391660af4bdc8b4baf20",
+      "counts": {
+        "sources": 1,
+        "sourceVersions": 1,
+        "recognitionRuns": 1,
+        "extractionDrafts": 1,
+        "tasks": 2,
+        "projects": 0,
+        "events": 0,
+        "timePoints": 0,
+        "materials": 0,
+        "historyRecords": 2
+      },
+      "tasks": [
+        {
+          "id": "task:source:70f749b2:draft:1:T1",
+          "title": "填写借用记录",
+          "description": "先填写借用记录。",
+          "status": "todo",
+          "sourceId": "source:70f749b2",
+          "dependencyIds": [],
+          "completionCriteria": [],
+          "legacyData": {
+            "recognitionTempId": "T1",
+            "actionVerb": "填写",
+            "actionObject": "借用记录",
+            "completionCriteria": [],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0001-1e19e25cc8b4955f0ecfcd76e8df324c9e0178c4ee7471894420737521766e69"
+            ],
+            "sourceId": "source:70f749b2",
+            "category": "其他"
+          }
+        },
+        {
+          "id": "task:source:70f749b2:draft:1:T2",
+          "title": "提交借用记录",
+          "description": "填写完成后提交借用记录。",
+          "status": "todo",
+          "sourceId": "source:70f749b2",
+          "dependencyIds": [
+            "task:source:70f749b2:draft:1:T1"
+          ],
+          "completionCriteria": [],
+          "legacyData": {
+            "recognitionTempId": "T2",
+            "actionVerb": "提交",
+            "actionObject": "借用记录",
+            "completionCriteria": [],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0002-a9b9dfce31db60b955ddc414e20fcb5ba61faa5603274b68c6e3e81165bee20e"
+            ],
+            "sourceId": "source:70f749b2",
+            "category": "其他"
+          }
+        }
+      ],
+      "events": [],
+      "timePoints": [],
+      "materials": [],
+      "recordedRuns": [
+        {
+          "id": "source:70f749b2:run:1",
+          "sourceVersionId": "source:70f749b2:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "candidate": "EngineeringFixture",
+            "responseSha256": "ef749d2701ddcd005862cbbb9b8bac345ac0a06e80b66812e98187cb34b2242b",
+            "requestSha256": null,
+            "referenceTime": "2026-10-03T09:00:00+08:00"
+          }
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "id": "evidence:source:70f749b2:draft:1:d26-scope-0001-1e19e25cc8b4955f0ecfcd76e8df324c9e0178c4ee7471894420737521766e69",
+          "sourceVersionId": "source:70f749b2:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "先填写借用记录。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:57:55.011Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-1e19e25cc8b4955f0ecfcd76e8df324c9e0178c4ee7471894420737521766e69"
+          }
+        },
+        {
+          "id": "evidence:source:70f749b2:draft:1:d26-scope-0002-a9b9dfce31db60b955ddc414e20fcb5ba61faa5603274b68c6e3e81165bee20e",
+          "sourceVersionId": "source:70f749b2:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "填写完成后提交借用记录。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:57:55.011Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0002-a9b9dfce31db60b955ddc414e20fcb5ba61faa5603274b68c6e3e81165bee20e"
+          }
+        }
+      ],
+      "commits": [
+        {
+          "draftId": "source:70f749b2:draft:1",
+          "acceptedEntityTempIds": [
+            "T1",
+            "T2"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        }
+      ]
+    },
+    {
+      "file": "closing-event-readback.json",
+      "rawReadbackSha256": "ba60211cc1d41b10d8b42b7e0dd9eb88a5118ba25d286f66fc23ac071539bffd",
+      "counts": {
+        "sources": 2,
+        "sourceVersions": 2,
+        "recognitionRuns": 2,
+        "extractionDrafts": 2,
+        "tasks": 2,
+        "projects": 0,
+        "events": 1,
+        "timePoints": 1,
+        "materials": 0,
+        "historyRecords": 4
+      },
+      "tasks": [
+        {
+          "id": "task:source:70f749b2:draft:1:T1",
+          "title": "填写借用记录",
+          "description": "先填写借用记录。",
+          "status": "todo",
+          "sourceId": "source:70f749b2",
+          "dependencyIds": [],
+          "completionCriteria": [],
+          "legacyData": {
+            "recognitionTempId": "T1",
+            "actionVerb": "填写",
+            "actionObject": "借用记录",
+            "completionCriteria": [],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0001-1e19e25cc8b4955f0ecfcd76e8df324c9e0178c4ee7471894420737521766e69"
+            ],
+            "sourceId": "source:70f749b2",
+            "category": "其他",
+            "v7Record": {
+              "id": "task:source:70f749b2:draft:1:T1",
+              "hierarchyType": "task",
+              "actionVerb": "填写",
+              "actionObject": "借用记录",
+              "completionCriteria": [],
+              "evidenceIds": [
+                "d26-scope-0001-1e19e25cc8b4955f0ecfcd76e8df324c9e0178c4ee7471894420737521766e69"
+              ],
+              "title": "填写借用记录",
+              "category": "其他",
+              "status": "待开始",
+              "deadline": "",
+              "estimatedMinutes": 60,
+              "estimatedMinutesKnown": false,
+              "nextAction": "填写借用记录",
+              "description": "先填写借用记录。",
+              "priority": "中",
+              "riskFlags": [
+                "待确认"
+              ],
+              "materials": [],
+              "dependencies": [],
+              "dependencyIds": [],
+              "reminders": [],
+              "sourceIds": [
+                "source:70f749b2"
+              ],
+              "priorityReason": "由当前权威实体计算并允许手动调整",
+              "priorityReasons": [
+                "由当前权威实体计算并允许手动调整"
+              ],
+              "timePointIds": [
+                "timepoint-task:source:70f749b2:draft:1:T1-deadline"
+              ],
+              "materialIds": [],
+              "createdAt": "2026-10-03T13:57:55.011Z",
+              "updatedAt": "2026-10-03T13:57:55.011Z",
+              "history": [
+                {
+                  "id": "history:task:source:70f749b2:draft:1:T1:created",
+                  "field": "created",
+                  "before": "null",
+                  "after": "{\"id\":\"task:source:70f749b2:draft:1:T1\"}",
+                  "changedAt": "2026-10-03T13:57:55.011Z",
+                  "actor": "user",
+                  "entityType": "task",
+                  "entityId": "task:source:70f749b2:draft:1:T1",
+                  "action": "created"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "task:source:70f749b2:draft:1:T2",
+          "title": "提交借用记录",
+          "description": "填写完成后提交借用记录。",
+          "status": "todo",
+          "sourceId": "source:70f749b2",
+          "dependencyIds": [
+            "task:source:70f749b2:draft:1:T1"
+          ],
+          "completionCriteria": [],
+          "legacyData": {
+            "recognitionTempId": "T2",
+            "actionVerb": "提交",
+            "actionObject": "借用记录",
+            "completionCriteria": [],
+            "inferenceLevel": "explicit",
+            "prioritySuggestion": "medium",
+            "priority": "中",
+            "evidenceIds": [
+              "d26-scope-0002-a9b9dfce31db60b955ddc414e20fcb5ba61faa5603274b68c6e3e81165bee20e"
+            ],
+            "sourceId": "source:70f749b2",
+            "category": "其他",
+            "v7Record": {
+              "id": "task:source:70f749b2:draft:1:T2",
+              "hierarchyType": "task",
+              "actionVerb": "提交",
+              "actionObject": "借用记录",
+              "completionCriteria": [],
+              "evidenceIds": [
+                "d26-scope-0002-a9b9dfce31db60b955ddc414e20fcb5ba61faa5603274b68c6e3e81165bee20e"
+              ],
+              "title": "提交借用记录",
+              "category": "其他",
+              "status": "待开始",
+              "deadline": "",
+              "estimatedMinutes": 60,
+              "estimatedMinutesKnown": false,
+              "nextAction": "提交借用记录",
+              "description": "填写完成后提交借用记录。",
+              "priority": "中",
+              "riskFlags": [
+                "待确认"
+              ],
+              "materials": [],
+              "dependencies": [],
+              "dependencyIds": [
+                "task:source:70f749b2:draft:1:T1"
+              ],
+              "reminders": [],
+              "sourceIds": [
+                "source:70f749b2"
+              ],
+              "priorityReason": "由当前权威实体计算并允许手动调整",
+              "priorityReasons": [
+                "由当前权威实体计算并允许手动调整"
+              ],
+              "timePointIds": [
+                "timepoint-task:source:70f749b2:draft:1:T2-deadline"
+              ],
+              "materialIds": [],
+              "createdAt": "2026-10-03T13:57:55.011Z",
+              "updatedAt": "2026-10-03T13:57:55.011Z",
+              "history": [
+                {
+                  "id": "history:task:source:70f749b2:draft:1:T2:created",
+                  "field": "created",
+                  "before": "null",
+                  "after": "{\"id\":\"task:source:70f749b2:draft:1:T2\"}",
+                  "changedAt": "2026-10-03T13:57:55.011Z",
+                  "actor": "user",
+                  "entityType": "task",
+                  "entityId": "task:source:70f749b2:draft:1:T2",
+                  "action": "created"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:bcb2957b:draft:1:event-0001",
+          "title": "图书借阅门户",
+          "startTimePointId": "time:source:bcb2957b:draft:1:event-0001:start",
+          "endTimePointId": null,
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "user-evidence:event-0001"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:bcb2957b:draft:1:event-0001:start",
+          "type": "event_start",
+          "rawText": "周三晚",
+          "normalizedValue": null,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "timezone": null,
+          "relatedTaskIds": [],
+          "legacyData": {
+            "recognitionTempId": "event-0001:start",
+            "evidenceIds": [
+              "d26-scope-0001-95e4264748874f21c6e7e53f443745727c09b5d7464f6a8a0a67d280389521bd"
+            ],
+            "confidence": 0.9
+          }
+        }
+      ],
+      "materials": [],
+      "recordedRuns": [
+        {
+          "id": "source:bcb2957b:run:1",
+          "sourceVersionId": "source:bcb2957b:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "candidate": "Candidate18",
+            "responseSha256": "4236202ec7bb7b626e68d5a619d5c5323f194983e1c963968e171439c6113876",
+            "requestSha256": "59216fd7c9018cc3d701f7ca7d794a0e902b62782fd359fb427d5fcdf502e8fc",
+            "referenceTime": "2026-09-22T09:00:00+08:00"
+          }
+        },
+        {
+          "id": "source:70f749b2:run:1",
+          "sourceVersionId": "source:70f749b2:version:1",
+          "status": "succeeded",
+          "recordedResponse": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "candidate": "EngineeringFixture",
+            "responseSha256": "ef749d2701ddcd005862cbbb9b8bac345ac0a06e80b66812e98187cb34b2242b",
+            "requestSha256": null,
+            "referenceTime": "2026-10-03T09:00:00+08:00"
+          }
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "id": "evidence:source:70f749b2:draft:1:d26-scope-0001-1e19e25cc8b4955f0ecfcd76e8df324c9e0178c4ee7471894420737521766e69",
+          "sourceVersionId": "source:70f749b2:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "先填写借用记录。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:57:55.011Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-1e19e25cc8b4955f0ecfcd76e8df324c9e0178c4ee7471894420737521766e69"
+          }
+        },
+        {
+          "id": "evidence:source:70f749b2:draft:1:d26-scope-0002-a9b9dfce31db60b955ddc414e20fcb5ba61faa5603274b68c6e3e81165bee20e",
+          "sourceVersionId": "source:70f749b2:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "填写完成后提交借用记录。",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T13:57:55.011Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0002-a9b9dfce31db60b955ddc414e20fcb5ba61faa5603274b68c6e3e81165bee20e"
+          }
+        },
+        {
+          "id": "evidence:source:bcb2957b:draft:1:d26-scope-0001-95e4264748874f21c6e7e53f443745727c09b5d7464f6a8a0a67d280389521bd",
+          "sourceVersionId": "source:bcb2957b:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "图书借阅门户将在周三晚停机，",
+          "bbox": null,
+          "fieldPath": "description",
+          "extractionMethod": "parser",
+          "confidence": 1,
+          "createdAt": "2026-10-03T14:00:43.260Z",
+          "legacyData": {
+            "recognitionEvidenceId": "d26-scope-0001-95e4264748874f21c6e7e53f443745727c09b5d7464f6a8a0a67d280389521bd"
+          }
+        },
+        {
+          "id": "evidence:source:bcb2957b:draft:1:user-evidence:event-0001",
+          "sourceVersionId": "source:bcb2957b:version:1",
+          "page": null,
+          "textStart": null,
+          "textEnd": null,
+          "quotedText": "图书借阅门户将在周三晚停机，既有借阅记录不受影响。无需删除记录，不要提交说明，也不必向值班员发消息。本通知仅说明停机消息。",
+          "bbox": null,
+          "fieldPath": "event",
+          "extractionMethod": "manual",
+          "confidence": null,
+          "createdAt": "2026-10-03T14:00:43.260Z",
+          "legacyData": {
+            "recognitionEvidenceId": "user-evidence:event-0001"
+          }
+        }
+      ],
+      "commits": [
+        {
+          "draftId": "source:bcb2957b:draft:1",
+          "acceptedEntityTempIds": [
+            "event-0001",
+            "event-0001:start"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        },
+        {
+          "draftId": "source:70f749b2:draft:1",
+          "acceptedEntityTempIds": [
+            "T1",
+            "T2"
+          ],
+          "rejectedEntityTempIds": [],
+          "pendingReceipt": null
+        }
+      ]
+    }
+  ]
+}

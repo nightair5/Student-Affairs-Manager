@@ -1,0 +1,12 @@
+{
+  "policy": {"version":"real-input-budget-2","model":"deepseek-v4-flash-vision-exp","endpoint":"https://api.deepseek.com/responses","temperature":0,"reasoningEffort":"none","inputTokenCeiling":1048576,"outputTokenCeiling":8192,"requestByteCeiling":65536,"inputPriceMicroPerMillion":3000000,"outputPriceMicroPerMillion":9000000,"reservationMicroCny":3300000,"limitMicroCny":10000000,"maxRequests":24},
+  "checkedAt":"2026-09-07T15:21:55.706Z",
+  "validUntil":"2026-09-08T15:21:55.706Z",
+  "lockRoot":"C:\\Users\\Winner\\AppData\\Local\\Temp\\real-input-paid-lock-JzSkjA",
+  "documents":[
+    {"url":"https://api-docs.deepseek.com/zh-cn/quick_start/pricing/","status":200,"path":"C:\\Users\\Winner\\AppData\\Local\\Temp\\real-input-a02-fd0e04f3775048ea900c52c390ef700c\\pricing.html","sha256":"899affbdbc33d0be620d8dea59e86f5036c11b5410b14d060b8d2874c74f38e5"},
+    {"url":"https://api-docs.deepseek.com/api/create-response/","status":200,"path":"C:\\Users\\Winner\\AppData\\Local\\Temp\\real-input-a02-fd0e04f3775048ea900c52c390ef700c\\responses.html","sha256":"633196e46984642a973dbd66d506ae72c9cd3c1db46e24f8d5a16f2ff0e46960"}
+  ],
+  "verification":"This turn fetched both official documents over verified HTTPS without credentials. HTTP 200; complete byte hashes match the retained official HTML. Highest CNY input 3/million, output 9/million; conservative 1048576+8192 bound 3219456 micro CNY < 3300000. Model and Responses parameters unchanged. Not account authentication or a model request.",
+  "providerBilledCny":"NOT_OBSERVABLE"
+}

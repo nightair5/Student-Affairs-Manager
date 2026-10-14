@@ -1,0 +1,37 @@
+{
+  "version": "v5-current-real-source-facts-1.0.0",
+  "role": "ACTUAL_MODEL_RESULTS_ORIGINAL_FROZEN_COMPILER_NOT_REWRITTEN_SCORE",
+  "denominator": 4,
+  "summary": {
+    "correct": 0,
+    "incorrect": 4,
+    "unknown": 0
+  },
+  "cases": [
+    {
+      "sourceId": "V5-CURRENT-REAL-01",
+      "status": "REJECTED",
+      "reason": "SINGLE_AUTHORITY_MISSING_PRESENT_FACT",
+      "responseSha256": "71888da3173a23ec37842cd46396f195fda5e32215800ebe410fbb586ba264b3"
+    },
+    {
+      "sourceId": "V5-CURRENT-REAL-02",
+      "status": "REJECTED",
+      "reason": "SOURCE_CONTRACT_INFORMATION_ENTITY",
+      "responseSha256": "9eaa3ebff9560c4db55d632c4b15183066bccb9e6ca3e32621bf3ace793a39be"
+    },
+    {
+      "sourceId": "V5-CURRENT-REAL-03",
+      "status": "REJECTED",
+      "reason": "SINGLE_AUTHORITY_ATTRIBUTE_EVIDENCE",
+      "responseSha256": "7d1841de380483a55bc54aa7f6f7ec4aa1cbd1c499f6f13dbb696ba098beaf40"
+    },
+    {
+      "sourceId": "V5-CURRENT-REAL-04",
+      "status": "REJECTED",
+      "reason": "SINGLE_AUTHORITY_DUPLICATE_ENDPOINT",
+      "responseSha256": "839213d54377d1747bbc28c6bf049fc93152864b13f9209537672761702ca90e"
+    }
+  ],
+  "note": "Pre-output historical FROZEN_REPORT.json remains NOT_RUN snapshot; these are new actual paid results."
+}

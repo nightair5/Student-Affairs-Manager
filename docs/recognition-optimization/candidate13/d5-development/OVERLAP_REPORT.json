@@ -1,0 +1,121 @@
+{
+  "version": "candidate13-d5-overlap-1.0.0",
+  "method": "normalized character bigram Jaccard over frozen local corpus lines",
+  "threshold": 0.8,
+  "corpusPaths": [
+    "docs/recognition-optimization/candidate11/b1-preparation",
+    "docs/recognition-optimization/candidate11/b2-development-20260921a",
+    "docs/recognition-optimization/candidate12/c2-provisional-development",
+    "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation",
+    "docs/recognition-optimization/candidate12/d2-provisional-development-20260921a",
+    "docs/recognition-optimization/candidate12/d3-scorer-contract",
+    "docs/recognition-optimization/candidate13/d4-freeze",
+    "src/experiments/realInput01/candidate03.ts",
+    "src/experiments/realInput01/candidate12.ts",
+    "src/experiments/realInput01/candidate13.ts"
+  ],
+  "corpusFragments": 13279,
+  "limitations": [
+    "Local deterministic screen only",
+    "No external embedding",
+    "Passing does not prove zero conceptual overlap"
+  ],
+  "items": [
+    {
+      "sourceId": "C13-D5R1-S01",
+      "exactMatches": [],
+      "maxBigramJaccard": 0.15873,
+      "nearestPath": "docs/recognition-optimization/candidate12/d2-provisional-development-20260921a/results/C12-D1-PD01-A.json",
+      "nearestFragmentSha256": "a186283df8018c0d288c9267ef50e673588e619a2fa046fc2ca042ef414e0648",
+      "decision": "PASS_LOCAL_SCREEN"
+    },
+    {
+      "sourceId": "C13-D5R1-S02",
+      "exactMatches": [],
+      "maxBigramJaccard": 0.134146,
+      "nearestPath": "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/EXPERIMENT_DESIGN.md",
+      "nearestFragmentSha256": "2c5f07548a3900f344cb4dfa709ec0d57220e9f3a1321455c0a33c9cb7cf4be5",
+      "decision": "PASS_LOCAL_SCREEN"
+    },
+    {
+      "sourceId": "C13-D5R1-S03",
+      "exactMatches": [],
+      "maxBigramJaccard": 0.157143,
+      "nearestPath": "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/EXPERIMENT_DESIGN.md",
+      "nearestFragmentSha256": "2c5f07548a3900f344cb4dfa709ec0d57220e9f3a1321455c0a33c9cb7cf4be5",
+      "decision": "PASS_LOCAL_SCREEN"
+    },
+    {
+      "sourceId": "C13-D5R1-S04",
+      "exactMatches": [],
+      "maxBigramJaccard": 0.15873,
+      "nearestPath": "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/EXPERIMENT_DESIGN.md",
+      "nearestFragmentSha256": "2c5f07548a3900f344cb4dfa709ec0d57220e9f3a1321455c0a33c9cb7cf4be5",
+      "decision": "PASS_LOCAL_SCREEN"
+    },
+    {
+      "sourceId": "C13-D5R1-S05",
+      "exactMatches": [],
+      "maxBigramJaccard": 0.144928,
+      "nearestPath": "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/EXPERIMENT_DESIGN.md",
+      "nearestFragmentSha256": "2c5f07548a3900f344cb4dfa709ec0d57220e9f3a1321455c0a33c9cb7cf4be5",
+      "decision": "PASS_LOCAL_SCREEN"
+    },
+    {
+      "sourceId": "C13-D5R1-S06",
+      "exactMatches": [],
+      "maxBigramJaccard": 0.142857,
+      "nearestPath": "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/EXPERIMENT_DESIGN.md",
+      "nearestFragmentSha256": "2c5f07548a3900f344cb4dfa709ec0d57220e9f3a1321455c0a33c9cb7cf4be5",
+      "decision": "PASS_LOCAL_SCREEN"
+    },
+    {
+      "sourceId": "C13-D5R1-S07",
+      "exactMatches": [],
+      "maxBigramJaccard": 0.15873,
+      "nearestPath": "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/EXPERIMENT_DESIGN.md",
+      "nearestFragmentSha256": "2c5f07548a3900f344cb4dfa709ec0d57220e9f3a1321455c0a33c9cb7cf4be5",
+      "decision": "PASS_LOCAL_SCREEN"
+    },
+    {
+      "sourceId": "C13-D5R1-S08",
+      "exactMatches": [],
+      "maxBigramJaccard": 0.140845,
+      "nearestPath": "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/EXPERIMENT_DESIGN.md",
+      "nearestFragmentSha256": "2c5f07548a3900f344cb4dfa709ec0d57220e9f3a1321455c0a33c9cb7cf4be5",
+      "decision": "PASS_LOCAL_SCREEN"
+    },
+    {
+      "sourceId": "C13-D5R1-S09",
+      "exactMatches": [],
+      "maxBigramJaccard": 0.125,
+      "nearestPath": "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/EXPERIMENT_DESIGN.md",
+      "nearestFragmentSha256": "2c5f07548a3900f344cb4dfa709ec0d57220e9f3a1321455c0a33c9cb7cf4be5",
+      "decision": "PASS_LOCAL_SCREEN"
+    },
+    {
+      "sourceId": "C13-D5R1-S10",
+      "exactMatches": [],
+      "maxBigramJaccard": 0.151515,
+      "nearestPath": "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/EXPERIMENT_DESIGN.md",
+      "nearestFragmentSha256": "2c5f07548a3900f344cb4dfa709ec0d57220e9f3a1321455c0a33c9cb7cf4be5",
+      "decision": "PASS_LOCAL_SCREEN"
+    },
+    {
+      "sourceId": "C13-D5R1-S11",
+      "exactMatches": [],
+      "maxBigramJaccard": 0.11236,
+      "nearestPath": "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/EXPERIMENT_DESIGN.md",
+      "nearestFragmentSha256": "2c5f07548a3900f344cb4dfa709ec0d57220e9f3a1321455c0a33c9cb7cf4be5",
+      "decision": "PASS_LOCAL_SCREEN"
+    },
+    {
+      "sourceId": "C13-D5R1-S12",
+      "exactMatches": [],
+      "maxBigramJaccard": 0.151515,
+      "nearestPath": "docs/recognition-optimization/candidate12/d1-provisional-paired-preparation/EXPERIMENT_DESIGN.md",
+      "nearestFragmentSha256": "2c5f07548a3900f344cb4dfa709ec0d57220e9f3a1321455c0a33c9cb7cf4be5",
+      "decision": "PASS_LOCAL_SCREEN"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+▶ local real App serves exact assets, rejects secret paths and unbound endpoints, and retains normal replay
+  ✔ real App bundle; no upstream sender or emitted engineering answers (82.0795ms)
+  ✔ secret, root traversal and unregistered paths are not a static file server (28.7925ms)
+  ✖ cross-origin, host substitution and wrong session capability reject (18.5446ms)
+  ✔ live endpoint is unavailable in explicit zero-call mode (6.7685ms)
+  ✖ valid known engineering source returns labelled replay, unknown source does not fallback (232.2235ms)
+✖ local real App serves exact assets, rejects secret paths and unbound endpoints, and retains normal replay (1123.8677ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 3
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1231.7039
+
+✖ failing tests:
+
+test at scripts\check-mainline-real-input-01.node-test.mjs:28:11
+✖ cross-origin, host substitution and wrong session capability reject (18.5446ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 400
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/check-mainline-real-input-01.node-test.mjs:30:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/check-mainline-real-input-01.node-test.mjs:28:3)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\check-mainline-real-input-01.node-test.mjs:37:11
+✖ valid known engineering source returns labelled replay, unknown source does not fallback (232.2235ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  400 !== 200
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/check-mainline-real-input-01.node-test.mjs:45:58)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/check-mainline-real-input-01.node-test.mjs:37:3)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

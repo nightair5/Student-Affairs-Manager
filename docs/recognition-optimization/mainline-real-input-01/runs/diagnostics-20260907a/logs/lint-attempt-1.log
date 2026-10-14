@@ -1,0 +1,51 @@
+
+> student-affairs-steward@0.1.0 lint
+> eslint .
+
+
+C:\Users\Winner\student-affairs-multimodal-exp\src\App.tsx
+  1490:97  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\Winner\student-affairs-multimodal-exp\src\App.tsx:1490:97
+  1488 |       {!workspaceRecovery && intakeOpen && (
+  1489 |         <IntakePanel
+> 1490 |           realInputPanel={runtime?.realInput && isolatedSnapshot ? runtime.realInput.inputPanel({ workspace: isolatedSnapshot,
+       |                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 1491 |             initialText: realInputInitialText, onSaved: refreshExperiment,
+       | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 1492 |             onDraftReady: async id => { await refreshExperiment(); setIntakeOpen(false); setSelectedDraftId(id); setRealInputInitialText('') } }) : undefined}
+       | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Passing a ref to a function may read its value during render
+  1493 |           textOnly={Boolean(runtime)}
+  1494 |           onClose={() => setIntakeOpen(false)}
+  1495 |           onSubmitIntake={handleIntakeInput}  react-hooks/refs
+
+C:\Users\Winner\student-affairs-multimodal-exp\src\experiments\mainline01\browser.tsx
+  17:10  warning  Fast refresh only works when a file has exports. Move your component(s) to a separate file  react-refresh/only-export-components
+
+C:\Users\Winner\student-affairs-multimodal-exp\src\experiments\mainline05\browser.tsx
+  58:10  warning  Fast refresh only works when a file has exports. Move your component(s) to a separate file  react-refresh/only-export-components
+
+C:\Users\Winner\student-affairs-multimodal-exp\src\experiments\realInput01\FactCorrectionEditor.tsx
+  17:35  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\Winner\student-affairs-multimodal-exp\src\experiments\realInput01\FactCorrectionEditor.tsx:17:35
+  15 |   const [change,setChange] = useState<FactChange | null>(null), [working,setWorking] = useState(false), [error,setError] = useState('')
+  16 |   const savedRevision = semanticRevision(workspace), [bufferRevision,setBufferRevision] = useState(savedRevision)
+> 17 |   const notify = useRef(onDirty); notify.current=onDirty
+     |                                   ^^^^^^^^^^^^^^ Cannot update ref during render
+  18 |   useEffect(() => { notify.current(Boolean(change) || working); return () => notify.current(false) },[change,working])
+  19 |   const blocked = busy || working || current.dispositions[taskId] === 'confirmed' || current.dispositions[taskId] === 'rejected' || !isCurrentDraft(workspace,draftId)
+  20 |   const choose = (value: FactChange) => { setChange(value); setBufferRevision(savedRevision); setError('') }  react-hooks/refs
+
+C:\Users\Winner\student-affairs-multimodal-exp\src\experiments\realInput01\InputReview.tsx
+  18:81  warning  The ref value 'sequence.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'sequence.current' to a variable inside the effect, and use that variable in the cleanup function  react-hooks/exhaustive-deps
+
+C:\Users\Winner\student-affairs-multimodal-exp\src\experiments\realInput01\browser.tsx
+  76:10  warning  Fast refresh only works when a file has exports. Move your component(s) to a separate file  react-refresh/only-export-components
+
+✖ 6 problems (2 errors, 4 warnings)
+

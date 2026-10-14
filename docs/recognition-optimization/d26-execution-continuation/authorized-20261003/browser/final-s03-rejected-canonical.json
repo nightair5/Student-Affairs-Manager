@@ -1,0 +1,2969 @@
+{
+  "schemaVersion": 8,
+  "workspace": {
+    "id": "rco-mainline-01-02-i1-d27-plan-recorded-actual16r6",
+    "title": "D26 实际录制工程回放（非真人）",
+    "createdAt": "2026-09-05T08:00:00.000Z",
+    "updatedAt": "2026-10-03T10:27:43.336Z"
+  },
+  "settings": {
+    "defaultTimezone": "Asia/Shanghai",
+    "locale": "zh-CN"
+  },
+  "sources": [
+    {
+      "id": "source:f4bcb778",
+      "workspaceId": "rco-mainline-01-02-i1-d27-plan-recorded-actual16r6",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "failed",
+      "currentVersionId": "source:f4bcb778:version:1",
+      "createdAt": "2026-10-03T10:27:43.235Z",
+      "updatedAt": "2026-10-03T10:27:43.320Z",
+      "legacyData": {
+        "contentPreview": "请先填写社团设备登记表，登记表必填栏均已填写后，再提交社团设备登记表；社团设备登记表格式为XLSX，以器材室确认收妥登记表为完成。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 65,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "f7e976c6-c497-488a-b70b-adc4cbc97728"
+      }
+    },
+    {
+      "id": "source:7a33d1df",
+      "workspaceId": "rco-mainline-01-02-i1-d27-plan-recorded-actual16r6",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "confirmed",
+      "currentVersionId": "source:7a33d1df:version:1",
+      "createdAt": "2026-10-03T10:24:26.984Z",
+      "updatedAt": "2026-10-03T10:25:36.940Z",
+      "legacyData": {
+        "contentPreview": "请于2026年10月19日16:30前提交实验物资核对表。实验物资核对表须为PDF格式，文件名为实验编号-负责人；门户提示收件成功即结束。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 69,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "63af2b80-246c-4ecc-be27-b730c28c88b8"
+      }
+    },
+    {
+      "id": "source:fb2c8e4f",
+      "workspaceId": "rco-mainline-01-02-i1-d27-plan-recorded-actual16r6",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "confirmed",
+      "currentVersionId": "source:fb2c8e4f:version:1",
+      "createdAt": "2026-10-03T10:23:43.220Z",
+      "updatedAt": "2026-10-03T10:23:57.925Z",
+      "legacyData": {
+        "contentPreview": "图书借阅门户将在周三晚停机，既有借阅记录不受影响。无需删除记录，不要提交说明，也不必向值班员发消息。本通知仅说明停机消息。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 61,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "61fac967-3a44-4be7-9468-a7d5423a7ce8"
+      }
+    }
+  ],
+  "sourceVersions": [
+    {
+      "id": "source:f4bcb778:version:1",
+      "sourceId": "source:f4bcb778",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:422d31bc",
+      "rawText": "请先填写社团设备登记表，登记表必填栏均已填写后，再提交社团设备登记表；社团设备登记表格式为XLSX，以器材室确认收妥登记表为完成。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-03T10:27:43.235Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 65,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    },
+    {
+      "id": "source:7a33d1df:version:1",
+      "sourceId": "source:7a33d1df",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:3bcaa541",
+      "rawText": "请于2026年10月19日16:30前提交实验物资核对表。实验物资核对表须为PDF格式，文件名为实验编号-负责人；门户提示收件成功即结束。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-03T10:24:26.984Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 69,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    },
+    {
+      "id": "source:fb2c8e4f:version:1",
+      "sourceId": "source:fb2c8e4f",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:d17292d4",
+      "rawText": "图书借阅门户将在周三晚停机，既有借阅记录不受影响。无需删除记录，不要提交说明，也不必向值班员发消息。本通知仅说明停机消息。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-03T10:23:43.220Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 61,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    }
+  ],
+  "recognitionRuns": [
+    {
+      "id": "source:f4bcb778:run:1",
+      "sourceVersionId": "source:f4bcb778:version:1",
+      "provider": "manual",
+      "modelName": "Candidate18 固定录制",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "recorded-source-accounting-projection-1",
+      "status": "failed",
+      "startedAt": "2026-10-03T10:27:43.304Z",
+      "completedAt": "2026-10-03T10:27:43.320Z",
+      "durationMs": null,
+      "tokenUsage": null,
+      "qualityFlags": [],
+      "errorCode": "RECOGNITION_FAILED",
+      "legacyData": {
+        "recordedResponse": {
+          "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+          "ordinal": 6,
+          "sourceId": "D26-S03",
+          "sourceVersionId": "D26-S03-v1",
+          "candidate": "Candidate18",
+          "sourceText": "请先填写社团设备登记表，登记表必填栏均已填写后，再提交社团设备登记表；社团设备登记表格式为XLSX，以器材室确认收妥登记表为完成。",
+          "referenceTime": "2026-09-22T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "rawHttpText": "{\"id\":\"9d8fb858-e770-4251-a28c-68edf4e8876e\",\"object\":\"response\",\"created_at\":1791020201,\"status\":\"completed\",\"background\":false,\"completed_at\":1791020205,\"content_filters\":null,\"error\":null,\"frequency_penalty\":0.0,\"incomplete_details\":null,\"instructions\":null,\"max_output_tokens\":8192,\"max_tool_calls\":null,\"model\":\"deepseek-flash\",\"moderation\":null,\"output\":[{\"type\":\"message\",\"id\":\"06e72930-1c09-4838-a28f-da9e3e4ac140\",\"status\":\"completed\",\"content\":[{\"type\":\"output_text\",\"annotations\":[],\"logprobs\":[],\"text\":\"{\\\"schemaVersion\\\":\\\"real-input-source-facts-3\\\",\\\"events\\\":[],\\\"timePoints\\\":[],\\\"materials\\\":[{\\\"tempId\\\":\\\"material-0001\\\",\\\"name\\\":\\\"社团设备登记表\\\",\\\"required\\\":true,\\\"formatRequirements\\\":[\\\"XLSX\\\"],\\\"namingRequirements\\\":[],\\\"quantity\\\":null,\\\"submissionChannel\\\":null,\\\"relatedTaskTempIds\\\":[\\\"task-0001\\\",\\\"task-0002\\\"],\\\"scopeIds\\\":[\\\"scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f\\\",\\\"scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806\\\",\\\"scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464\\\"],\\\"confidence\\\":0.95}],\\\"tasks\\\":[{\\\"id\\\":\\\"task-0001\\\",\\\"propositionScopeIds\\\":[\\\"scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"tense\\\":\\\"future\\\",\\\"status\\\":\\\"pending\\\",\\\"validity\\\":\\\"active\\\",\\\"modality\\\":\\\"required\\\"},\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"actionType\\\":\\\"fill\\\",\\\"action\\\":{\\\"scopeId\\\":\\\"scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f\\\",\\\"surface\\\":\\\"填写\\\"},\\\"object\\\":{\\\"scopeId\\\":\\\"scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f\\\",\\\"surface\\\":\\\"社团设备登记表\\\"},\\\"effect\\\":\\\"local_change\\\",\\\"detail\\\":{\\\"parentTempId\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"title\\\":\\\"填写社团设备登记表\\\",\\\"description\\\":\\\"填写社团设备登记表，登记表必填栏均已填写后，再提交社团设备登记表。\\\",\\\"completionCriteria\\\":[\\\"社团设备登记表必填栏均已填写\\\"],\\\"estimatedMinutes\\\":null,\\\"statusSuggestion\\\":\\\"todo\\\",\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"dependencyTempIds\\\":[],\\\"confidence\\\":0.95,\\\"userConfirmationRequired\\\":true},\\\"condition\\\":{\\\"value\\\":\\\"not_applicable\\\",\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[]},\\\"coverage\\\":{\\\"time\\\":null,\\\"material\\\":null,\\\"event\\\":null}},{\\\"id\\\":\\\"task-0002\\\",\\\"propositionScopeIds\\\":[\\\"scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"tense\\\":\\\"future\\\",\\\"status\\\":\\\"pending\\\",\\\"validity\\\":\\\"active\\\",\\\"modality\\\":\\\"required\\\"},\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"actionType\\\":\\\"submit\\\",\\\"action\\\":{\\\"scopeId\\\":\\\"scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806\\\",\\\"surface\\\":\\\"提交\\\"},\\\"object\\\":{\\\"scopeId\\\":\\\"scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806\\\",\\\"surface\\\":\\\"社团设备登记表\\\"},\\\"effect\\\":\\\"external_transfer\\\",\\\"detail\\\":{\\\"parentTempId\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"title\\\":\\\"提交社团设备登记表\\\",\\\"description\\\":\\\"在登记表必填栏均已填写后，提交社团设备登记表；以器材室确认收妥登记表为完成。\\\",\\\"completionCriteria\\\":[\\\"器材室确认收妥登记表\\\"],\\\"estimatedMinutes\\\":null,\\\"statusSuggestion\\\":\\\"todo\\\",\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"dependencyTempIds\\\":[\\\"task-0001\\\"],\\\"confidence\\\":0.95,\\\"userConfirmationRequired\\\":true},\\\"condition\\\":{\\\"value\\\":\\\"not_applicable\\\",\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[]},\\\"coverage\\\":{\\\"time\\\":null,\\\"material\\\":null,\\\"event\\\":null}}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"informationScopeIds\\\":[\\\"scope-0002-95f4b7b5b967a7be61f6cc9f197e55f7171c20c8f054bc4356c290e2c7d0df68\\\",\\\"scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464\\\",\\\"scope-0005-05ff0ce6c5467215449dc6d45d976ac101e8873ee962108f4be56bec9c511002\\\"],\\\"unresolvedScopeIds\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f\\\",\\\"kind\\\":\\\"action\\\",\\\"entityIds\\\":[\\\"task-0001\\\"]},{\\\"scopeId\\\":\\\"scope-0002-95f4b7b5b967a7be61f6cc9f197e55f7171c20c8f054bc4356c290e2c7d0df68\\\",\\\"kind\\\":\\\"information\\\",\\\"entityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806\\\",\\\"kind\\\":\\\"action\\\",\\\"entityIds\\\":[\\\"task-0002\\\"]},{\\\"scopeId\\\":\\\"scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464\\\",\\\"kind\\\":\\\"information\\\",\\\"entityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0005-05ff0ce6c5467215449dc6d45d976ac101e8873ee962108f4be56bec9c511002\\\",\\\"kind\\\":\\\"information\\\",\\\"entityIds\\\":[]}],\\\"prerequisiteStates\\\":[{\\\"taskId\\\":\\\"task-0002\\\",\\\"predecessorId\\\":\\\"task-0001\\\",\\\"completion\\\":\\\"unknown\\\",\\\"factScopeIds\\\":[\\\"scope-0002-95f4b7b5b967a7be61f6cc9f197e55f7171c20c8f054bc4356c290e2c7d0df68\\\"]}]}\"}],\"phase\":\"final_answer\",\"role\":\"assistant\"}],\"parallel_tool_calls\":true,\"presence_penalty\":0.0,\"previous_response_id\":null,\"prompt_cache_key\":null,\"prompt_cache_retention\":null,\"reasoning\":{\"effort\":\"none\",\"summary\":null},\"safety_identifier\":null,\"service_tier\":\"default\",\"store\":false,\"temperature\":0.0,\"text\":{\"format\":{\"type\":\"json_schema\",\"name\":\"source_semantics\",\"schema\":{\"type\":\"object\",\"properties\":{\"schemaVersion\":{\"type\":\"string\",\"const\":\"real-input-source-facts-3\"},\"events\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"title\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"description\":{\"type\":\"string\",\"maxLength\":4000},\"startTimePointTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"endTimePointTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"location\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1},\"inferenceLevel\":{\"type\":\"string\",\"enum\":[\"explicit\",\"strong_inference\",\"optional_suggestion\"]},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"tempId\",\"title\",\"description\",\"startTimePointTempId\",\"endTimePointTempId\",\"location\",\"scopeIds\",\"confidence\",\"inferenceLevel\",\"relatedTaskTempIds\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"timePoints\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"type\":{\"type\":\"string\",\"enum\":[\"registration_deadline\",\"submission_deadline\",\"task_deadline\",\"event_start\",\"event_end\",\"result_announcement\",\"planned_start\"]},\"rawText\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"relatedMaterialTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1}},\"required\":[\"tempId\",\"type\",\"rawText\",\"relatedTaskTempIds\",\"relatedMaterialTempIds\",\"scopeIds\",\"confidence\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"materials\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"name\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"required\":{\"type\":\"boolean\"},\"formatRequirements\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"namingRequirements\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"quantity\":{\"anyOf\":[{\"type\":\"number\",\"minimum\":0,\"maximum\":10080},{\"type\":\"null\"}]},\"submissionChannel\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1}},\"required\":[\"tempId\",\"name\",\"required\",\"formatRequirements\",\"namingRequirements\",\"quantity\",\"submissionChannel\",\"relatedTaskTempIds\",\"scopeIds\",\"confidence\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"tasks\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"propositionScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"semantics\":{\"type\":\"object\",\"properties\":{\"actor\":{\"type\":\"string\",\"enum\":[\"addressee\",\"addressed_group\",\"issuer\",\"third_party\",\"unknown\"]},\"speechAct\":{\"type\":\"string\",\"enum\":[\"directive\",\"assertive\",\"interrogative\",\"hypothetical\",\"quoted\",\"unknown\"]},\"polarity\":{\"type\":\"string\",\"enum\":[\"affirmative\",\"negative\",\"uncertain\"]},\"tense\":{\"type\":\"string\",\"enum\":[\"future\",\"present\",\"past\",\"unknown\"]},\"status\":{\"type\":\"string\",\"enum\":[\"pending\",\"completed\",\"cancelled\",\"unknown\"]},\"validity\":{\"type\":\"string\",\"enum\":[\"active\",\"superseded\",\"uncertain\"]},\"modality\":{\"type\":\"string\",\"enum\":[\"required\",\"recommended\",\"optional\",\"informational\",\"unknown\"]}},\"required\":[\"actor\",\"speechAct\",\"polarity\",\"tense\",\"status\",\"validity\",\"modality\"],\"additionalProperties\":false},\"inferenceLevel\":{\"type\":\"string\",\"enum\":[\"explicit\",\"strong_inference\",\"optional_suggestion\"]},\"actionType\":{\"type\":\"string\",\"enum\":[\"review\",\"complete\",\"fill\",\"prepare\",\"attend\",\"carry\",\"save\",\"print\",\"submit\",\"upload\",\"send\",\"contact\",\"collect\",\"sign\",\"register\",\"pay\",\"other\"]},\"action\":{\"type\":\"object\",\"properties\":{\"scopeId\":{\"type\":\"string\",\"minLength\":1},\"surface\":{\"type\":\"string\",\"minLength\":1}},\"required\":[\"scopeId\",\"surface\"],\"additionalProperties\":false},\"object\":{\"type\":\"object\",\"properties\":{\"scopeId\":{\"type\":\"string\",\"minLength\":1},\"surface\":{\"type\":\"string\",\"minLength\":1}},\"required\":[\"scopeId\",\"surface\"],\"additionalProperties\":false},\"effect\":{\"type\":\"string\",\"enum\":[\"local_change\",\"external_transfer\",\"external_interaction\",\"physical_action\",\"unknown\"]},\"detail\":{\"type\":\"object\",\"properties\":{\"parentTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"hierarchyType\":{\"type\":\"string\",\"enum\":[\"task\",\"subtask\"]},\"title\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"description\":{\"type\":\"string\",\"maxLength\":4000},\"completionCriteria\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"estimatedMinutes\":{\"anyOf\":[{\"type\":\"number\",\"minimum\":0,\"maximum\":10080},{\"type\":\"null\"}]},\"statusSuggestion\":{\"const\":\"todo\"},\"prioritySuggestion\":{\"type\":\"string\",\"enum\":[\"low\",\"medium\",\"high\",\"urgent\"]},\"dependencyTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1},\"userConfirmationRequired\":{\"const\":true}},\"required\":[\"parentTempId\",\"hierarchyType\",\"title\",\"description\",\"completionCriteria\",\"estimatedMinutes\",\"statusSuggestion\",\"prioritySuggestion\",\"dependencyTempIds\",\"confidence\",\"userConfirmationRequired\"],\"additionalProperties\":false},\"condition\":{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\",\"enum\":[\"true\",\"false\",\"unknown\",\"not_applicable\"]},\"conditionScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"factScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"value\",\"conditionScopeIds\",\"factScopeIds\"],\"additionalProperties\":false},\"coverage\":{\"type\":\"object\",\"properties\":{\"time\":{\"anyOf\":[{\"type\":\"null\"},{\"type\":\"string\",\"enum\":[\"not_stated\",\"not_extracted\",\"unresolved\"]}]},\"material\":{\"anyOf\":[{\"type\":\"null\"},{\"type\":\"string\",\"enum\":[\"not_stated\",\"not_extracted\",\"unresolved\"]}]},\"event\":{\"anyOf\":[{\"type\":\"null\"},{\"type\":\"string\",\"enum\":[\"not_stated\",\"not_extracted\",\"unresolved\"]}]}},\"required\":[\"time\",\"material\",\"event\"],\"additionalProperties\":false}},\"required\":[\"id\",\"propositionScopeIds\",\"semantics\",\"inferenceLevel\",\"actionType\",\"action\",\"object\",\"effect\",\"detail\",\"condition\",\"coverage\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"revisions\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"type\":{\"type\":\"string\",\"enum\":[\"supersedes\",\"cancels\",\"amends\"]},\"targetDirectiveId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"fromDirectiveId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"effective\":{\"type\":\"string\",\"enum\":[\"true\",\"false\",\"unknown\"]}},\"required\":[\"type\",\"targetDirectiveId\",\"scopeIds\",\"fromDirectiveId\",\"effective\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"conflicts\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"type\":{\"type\":\"string\",\"enum\":[\"deadline\",\"project_match\",\"duplicate\",\"hierarchy\",\"other\"]},\"message\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"entityTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"requiresDecision\":{\"type\":\"boolean\"}},\"required\":[\"id\",\"type\",\"message\",\"entityTempIds\",\"scopeIds\",\"requiresDecision\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"informationScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"unresolvedScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeAccounting\":{\"type\":\"array\",\"maxItems\":200,\"items\":{\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"scopeId\",\"kind\",\"entityIds\"],\"properties\":{\"scopeId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"kind\":{\"type\":\"string\",\"enum\":[\"action\",\"event\",\"information\",\"unresolved\"]},\"entityIds\":{\"type\":\"array\",\"maxItems\":200,\"uniqueItems\":true,\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000}}}}},\"prerequisiteStates\":{\"type\":\"array\",\"maxItems\":200,\"items\":{\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"taskId\",\"predecessorId\",\"completion\",\"factScopeIds\"],\"properties\":{\"taskId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"predecessorId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"completion\":{\"type\":\"string\",\"enum\":[\"true\",\"false\",\"unknown\"]},\"factScopeIds\":{\"type\":\"array\",\"maxItems\":200,\"uniqueItems\":true,\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000}}}}}},\"required\":[\"schemaVersion\",\"events\",\"timePoints\",\"materials\",\"tasks\",\"revisions\",\"conflicts\",\"informationScopeIds\",\"unresolvedScopeIds\",\"scopeAccounting\",\"prerequisiteStates\"],\"additionalProperties\":false},\"description\":null,\"strict\":null},\"verbosity\":null},\"tool_choice\":\"auto\",\"tools\":[],\"top_logprobs\":0,\"top_p\":1.0,\"truncation\":\"disabled\",\"usage\":{\"input_tokens\":4394,\"input_tokens_details\":{\"cached_tokens\":3840},\"output_tokens\":1470,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":5864},\"user\":null,\"metadata\":{}}",
+          "responseSha256": "2481193de27ce58c322e693a1a375fb683689cfed0d8c1388bda49b24addae59",
+          "requestSha256": "ca66c6706f20da64776947acee7e05d7c64db5d7202d11ab58e6a6fce7dc9f7e",
+          "frozenOutcome": "false",
+          "projectionVersion": "recorded-source-accounting-projection-1"
+        }
+      }
+    },
+    {
+      "id": "source:7a33d1df:run:1",
+      "sourceVersionId": "source:7a33d1df:version:1",
+      "provider": "manual",
+      "modelName": "Candidate17 固定录制",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "recorded-source-accounting-projection-1",
+      "status": "succeeded",
+      "startedAt": "2026-10-03T10:24:27.049Z",
+      "completedAt": "2026-10-03T10:24:27.062Z",
+      "durationMs": 13,
+      "tokenUsage": null,
+      "qualityFlags": [],
+      "errorCode": null,
+      "legacyData": {
+        "recordedResponse": {
+          "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+          "ordinal": 13,
+          "sourceId": "D26-S07",
+          "sourceVersionId": "D26-S07-v1",
+          "candidate": "Candidate17",
+          "sourceText": "请于2026年10月19日16:30前提交实验物资核对表。实验物资核对表须为PDF格式，文件名为实验编号-负责人；门户提示收件成功即结束。",
+          "referenceTime": "2026-09-22T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "rawHttpText": "{\"id\":\"b52a7d7c-de2d-4f3b-a256-a5835369b2d0\",\"object\":\"response\",\"created_at\":1791020292,\"status\":\"completed\",\"background\":false,\"completed_at\":1791020295,\"content_filters\":null,\"error\":null,\"frequency_penalty\":0.0,\"incomplete_details\":null,\"instructions\":null,\"max_output_tokens\":8192,\"max_tool_calls\":null,\"model\":\"deepseek-flash\",\"moderation\":null,\"output\":[{\"type\":\"message\",\"id\":\"2c0b4309-39a0-4259-831a-378406abaa80\",\"status\":\"completed\",\"content\":[{\"type\":\"output_text\",\"annotations\":[],\"logprobs\":[],\"text\":\"{\\\"schemaVersion\\\":\\\"real-input-model-wire-1\\\",\\\"tasks\\\":[{\\\"id\\\":\\\"task-0001\\\",\\\"propositionScopeIds\\\":[\\\"scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"tense\\\":\\\"future\\\",\\\"status\\\":\\\"pending\\\",\\\"validity\\\":\\\"active\\\",\\\"modality\\\":\\\"required\\\"},\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"actionType\\\":\\\"submit\\\",\\\"action\\\":{\\\"scopeId\\\":\\\"scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92\\\",\\\"surface\\\":\\\"提交\\\"},\\\"object\\\":{\\\"scopeId\\\":\\\"scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92\\\",\\\"surface\\\":\\\"实验物资核对表\\\"},\\\"effect\\\":\\\"external_transfer\\\",\\\"detail\\\":{\\\"parentTempId\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"title\\\":\\\"提交实验物资核对表\\\",\\\"description\\\":\\\"请于2026年10月19日16:30前提交实验物资核对表。\\\",\\\"completionCriteria\\\":[\\\"门户提示收件成功\\\"],\\\"estimatedMinutes\\\":null,\\\"statusSuggestion\\\":\\\"todo\\\",\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"dependencyTempIds\\\":[],\\\"materialTempIds\\\":[\\\"material-0001\\\"],\\\"timePointTempIds\\\":[\\\"time-0001\\\"],\\\"confidence\\\":0.95,\\\"userConfirmationRequired\\\":true},\\\"condition\\\":{\\\"value\\\":\\\"not_applicable\\\",\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[]},\\\"coverage\\\":{\\\"time\\\":\\\"present\\\",\\\"material\\\":\\\"present\\\",\\\"event\\\":\\\"not_stated\\\"},\\\"eventTempIds\\\":[]}],\\\"materials\\\":[{\\\"tempId\\\":\\\"material-0001\\\",\\\"name\\\":\\\"实验物资核对表\\\",\\\"required\\\":true,\\\"formatRequirements\\\":[\\\"PDF格式\\\"],\\\"namingRequirements\\\":[\\\"实验编号-负责人\\\"],\\\"quantity\\\":null,\\\"submissionChannel\\\":null,\\\"relatedTaskTempIds\\\":[\\\"task-0001\\\"],\\\"scopeIds\\\":[\\\"scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92\\\",\\\"scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49\\\",\\\"scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e\\\"],\\\"confidence\\\":0.95}],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"time-0001\\\",\\\"type\\\":\\\"submission_deadline\\\",\\\"rawText\\\":\\\"2026年10月19日16:30前\\\",\\\"relatedTaskTempIds\\\":[\\\"task-0001\\\"],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92\\\"],\\\"confidence\\\":0.95}],\\\"events\\\":[],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"informationScopeIds\\\":[\\\"scope-0004-de291caac73c64db4214c412e2e5fc6750486303641cfa2b6d219561ec6b22b1\\\"],\\\"unresolvedScopeIds\\\":[]}\"}],\"phase\":\"final_answer\",\"role\":\"assistant\"}],\"parallel_tool_calls\":true,\"presence_penalty\":0.0,\"previous_response_id\":null,\"prompt_cache_key\":null,\"prompt_cache_retention\":null,\"reasoning\":{\"effort\":\"none\",\"summary\":null},\"safety_identifier\":null,\"service_tier\":\"default\",\"store\":false,\"temperature\":0.0,\"text\":{\"format\":{\"type\":\"json_schema\",\"name\":\"source_semantics\",\"schema\":{\"type\":\"object\",\"properties\":{\"schemaVersion\":{\"const\":\"real-input-model-wire-1\",\"type\":\"string\"},\"tasks\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"propositionScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"semantics\":{\"type\":\"object\",\"properties\":{\"actor\":{\"type\":\"string\",\"enum\":[\"addressee\",\"addressed_group\",\"issuer\",\"third_party\",\"unknown\"]},\"speechAct\":{\"type\":\"string\",\"enum\":[\"directive\",\"assertive\",\"interrogative\",\"hypothetical\",\"quoted\",\"unknown\"]},\"polarity\":{\"type\":\"string\",\"enum\":[\"affirmative\",\"negative\",\"uncertain\"]},\"tense\":{\"type\":\"string\",\"enum\":[\"future\",\"present\",\"past\",\"unknown\"]},\"status\":{\"type\":\"string\",\"enum\":[\"pending\",\"completed\",\"cancelled\",\"unknown\"]},\"validity\":{\"type\":\"string\",\"enum\":[\"active\",\"superseded\",\"uncertain\"]},\"modality\":{\"type\":\"string\",\"enum\":[\"required\",\"recommended\",\"optional\",\"informational\",\"unknown\"]}},\"required\":[\"actor\",\"speechAct\",\"polarity\",\"tense\",\"status\",\"validity\",\"modality\"],\"additionalProperties\":false},\"inferenceLevel\":{\"type\":\"string\",\"enum\":[\"explicit\",\"strong_inference\",\"optional_suggestion\"]},\"actionType\":{\"type\":\"string\",\"enum\":[\"review\",\"complete\",\"fill\",\"prepare\",\"attend\",\"carry\",\"save\",\"print\",\"submit\",\"upload\",\"send\",\"contact\",\"collect\",\"sign\",\"register\",\"pay\",\"other\"]},\"action\":{\"type\":\"object\",\"properties\":{\"scopeId\":{\"type\":\"string\",\"minLength\":1},\"surface\":{\"type\":\"string\",\"minLength\":1}},\"required\":[\"scopeId\",\"surface\"],\"additionalProperties\":false},\"object\":{\"type\":\"object\",\"properties\":{\"scopeId\":{\"type\":\"string\",\"minLength\":1},\"surface\":{\"type\":\"string\",\"minLength\":1}},\"required\":[\"scopeId\",\"surface\"],\"additionalProperties\":false},\"effect\":{\"type\":\"string\",\"enum\":[\"local_change\",\"external_transfer\",\"external_interaction\",\"physical_action\",\"unknown\"]},\"detail\":{\"type\":\"object\",\"properties\":{\"parentTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"hierarchyType\":{\"type\":\"string\",\"enum\":[\"task\",\"subtask\"]},\"title\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"description\":{\"type\":\"string\",\"maxLength\":4000},\"completionCriteria\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"estimatedMinutes\":{\"anyOf\":[{\"type\":\"number\",\"minimum\":0,\"maximum\":10080},{\"type\":\"null\"}]},\"statusSuggestion\":{\"const\":\"todo\"},\"prioritySuggestion\":{\"type\":\"string\",\"enum\":[\"low\",\"medium\",\"high\",\"urgent\"]},\"dependencyTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"materialTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"timePointTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1},\"userConfirmationRequired\":{\"const\":true}},\"required\":[\"parentTempId\",\"hierarchyType\",\"title\",\"description\",\"completionCriteria\",\"estimatedMinutes\",\"statusSuggestion\",\"prioritySuggestion\",\"dependencyTempIds\",\"materialTempIds\",\"timePointTempIds\",\"confidence\",\"userConfirmationRequired\"],\"additionalProperties\":false},\"condition\":{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\",\"enum\":[\"true\",\"false\",\"unknown\",\"not_applicable\"]},\"conditionScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"factScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"value\",\"conditionScopeIds\",\"factScopeIds\"],\"additionalProperties\":false},\"coverage\":{\"type\":\"object\",\"properties\":{\"time\":{\"type\":\"string\",\"enum\":[\"present\",\"not_stated\",\"not_extracted\",\"unresolved\"]},\"material\":{\"type\":\"string\",\"enum\":[\"present\",\"not_stated\",\"not_extracted\",\"unresolved\"]},\"event\":{\"type\":\"string\",\"enum\":[\"present\",\"not_stated\",\"not_extracted\",\"unresolved\"]}},\"required\":[\"time\",\"material\",\"event\"],\"additionalProperties\":false},\"eventTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"id\",\"propositionScopeIds\",\"semantics\",\"inferenceLevel\",\"actionType\",\"action\",\"object\",\"effect\",\"detail\",\"condition\",\"coverage\",\"eventTempIds\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"materials\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"name\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"required\":{\"type\":\"boolean\"},\"formatRequirements\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"namingRequirements\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"quantity\":{\"anyOf\":[{\"type\":\"number\",\"minimum\":0,\"maximum\":10080},{\"type\":\"null\"}]},\"submissionChannel\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1}},\"required\":[\"tempId\",\"name\",\"required\",\"formatRequirements\",\"namingRequirements\",\"quantity\",\"submissionChannel\",\"relatedTaskTempIds\",\"scopeIds\",\"confidence\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"timePoints\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"type\":{\"type\":\"string\",\"enum\":[\"registration_deadline\",\"submission_deadline\",\"task_deadline\",\"event_start\",\"event_end\",\"result_announcement\",\"planned_start\"]},\"rawText\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"relatedMaterialTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1}},\"required\":[\"tempId\",\"type\",\"rawText\",\"relatedTaskTempIds\",\"relatedMaterialTempIds\",\"scopeIds\",\"confidence\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"events\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"title\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"description\":{\"type\":\"string\",\"maxLength\":4000},\"startTimePointTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"endTimePointTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"location\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1},\"inferenceLevel\":{\"type\":\"string\",\"enum\":[\"explicit\",\"strong_inference\",\"optional_suggestion\"]},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"tempId\",\"title\",\"description\",\"startTimePointTempId\",\"endTimePointTempId\",\"location\",\"scopeIds\",\"confidence\",\"inferenceLevel\",\"relatedTaskTempIds\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"revisions\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"type\":{\"type\":\"string\",\"enum\":[\"supersedes\",\"cancels\",\"amends\"]},\"targetDirectiveId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"fromDirectiveId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"effective\":{\"type\":\"string\",\"enum\":[\"true\",\"false\",\"unknown\"]}},\"required\":[\"type\",\"targetDirectiveId\",\"scopeIds\",\"fromDirectiveId\",\"effective\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"conflicts\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"type\":{\"type\":\"string\",\"enum\":[\"deadline\",\"project_match\",\"duplicate\",\"hierarchy\",\"other\"]},\"message\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"entityTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"requiresDecision\":{\"type\":\"boolean\"}},\"required\":[\"id\",\"type\",\"message\",\"entityTempIds\",\"scopeIds\",\"requiresDecision\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"informationScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"unresolvedScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"schemaVersion\",\"tasks\",\"materials\",\"timePoints\",\"events\",\"revisions\",\"conflicts\",\"informationScopeIds\",\"unresolvedScopeIds\"],\"additionalProperties\":false},\"description\":null,\"strict\":null},\"verbosity\":null},\"tool_choice\":\"auto\",\"tools\":[],\"top_logprobs\":0,\"top_p\":1.0,\"truncation\":\"disabled\",\"usage\":{\"input_tokens\":4376,\"input_tokens_details\":{\"cached_tokens\":3840},\"output_tokens\":783,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":5159},\"user\":null,\"metadata\":{}}",
+          "responseSha256": "c53e672f3b63b0ebc7ef7f2c2187126d4be322648293587507935b55963f8c0f",
+          "requestSha256": "2e01c9dff6d92b6a9ab0e5af181845f789d13230a3640b127fc122795902f733",
+          "frozenOutcome": "UNKNOWN",
+          "projectionVersion": "recorded-source-accounting-projection-1"
+        },
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "d26-common-bridge-1",
+          "modelName": "Candidate17 固定录制（非实时调用）",
+          "createdAt": "2026-09-22T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "提交实验物资核对表",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "1项任务，0项事件。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交实验物资核对表",
+              "description": "请于2026年10月19日16:30前提交实验物资核对表。",
+              "completionCriteria": [
+                "门户提示收件成功"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "material-0001"
+              ],
+              "timePointTempIds": [
+                "time-0001"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "tempId": "task-0001",
+              "actionVerb": "提交",
+              "actionObject": "实验物资核对表",
+              "evidenceIds": [
+                "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-0001",
+              "name": "实验物资核对表",
+              "required": true,
+              "formatRequirements": [
+                "PDF格式"
+              ],
+              "namingRequirements": [
+                "实验编号-负责人"
+              ],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-0001"
+              ],
+              "confidence": 0.95,
+              "evidenceIds": [
+                "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+                "d26-scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb",
+                "d26-scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-0001",
+              "type": "submission_deadline",
+              "rawText": "2026年10月19日16:30前",
+              "relatedTaskTempIds": [
+                "task-0001"
+              ],
+              "relatedMaterialTempIds": [],
+              "confidence": 0.95,
+              "normalizedValue": "2026-10-19T16:30",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+              ]
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+              "sourceId": "source:7a33d1df",
+              "quote": "请于2026年10月19日16:30前提交实验物资核对表。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb",
+              "sourceId": "source:7a33d1df",
+              "quote": "实验物资核对表须为PDF格式，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b",
+              "sourceId": "source:7a33d1df",
+              "quote": "文件名为实验编号-负责人；",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-54dfc2c1c0712d9146fe31d9899b09a23df42bfd38952dec7e05bbaa119bf50d",
+              "sourceId": "source:7a33d1df",
+              "quote": "门户提示收件成功即结束。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "门户提示收件成功即结束。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        }
+      }
+    },
+    {
+      "id": "source:fb2c8e4f:run:1",
+      "sourceVersionId": "source:fb2c8e4f:version:1",
+      "provider": "manual",
+      "modelName": "Candidate18 固定录制",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "recorded-source-accounting-projection-1",
+      "status": "succeeded",
+      "startedAt": "2026-10-03T10:23:43.278Z",
+      "completedAt": "2026-10-03T10:23:43.288Z",
+      "durationMs": 10,
+      "tokenUsage": null,
+      "qualityFlags": [],
+      "errorCode": null,
+      "legacyData": {
+        "recordedResponse": {
+          "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+          "ordinal": 2,
+          "sourceId": "D26-S01",
+          "sourceVersionId": "D26-S01-v1",
+          "candidate": "Candidate18",
+          "sourceText": "图书借阅门户将在周三晚停机，既有借阅记录不受影响。无需删除记录，不要提交说明，也不必向值班员发消息。本通知仅说明停机消息。",
+          "referenceTime": "2026-09-22T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "rawHttpText": "{\"id\":\"0ceb16e4-f990-4a33-b1db-13c122e757b3\",\"object\":\"response\",\"created_at\":1791020147,\"status\":\"completed\",\"background\":false,\"completed_at\":1791020150,\"content_filters\":null,\"error\":null,\"frequency_penalty\":0.0,\"incomplete_details\":null,\"instructions\":null,\"max_output_tokens\":8192,\"max_tool_calls\":null,\"model\":\"deepseek-flash\",\"moderation\":null,\"output\":[{\"type\":\"message\",\"id\":\"5048c3ff-2768-4f25-a69b-64ede094b03b\",\"status\":\"completed\",\"content\":[{\"type\":\"output_text\",\"annotations\":[],\"logprobs\":[],\"text\":\"{\\\"schemaVersion\\\":\\\"real-input-source-facts-3\\\",\\\"events\\\":[{\\\"tempId\\\":\\\"event-0001\\\",\\\"title\\\":\\\"图书借阅门户停机\\\",\\\"description\\\":\\\"图书借阅门户将在周三晚停机。\\\",\\\"startTimePointTempId\\\":\\\"tp-0001\\\",\\\"endTimePointTempId\\\":null,\\\"location\\\":null,\\\"scopeIds\\\":[\\\"scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576\\\"],\\\"confidence\\\":0.95,\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"relatedTaskTempIds\\\":[]}],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"tp-0001\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周三晚\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576\\\"],\\\"confidence\\\":0.9}],\\\"materials\\\":[],\\\"tasks\\\":[],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"informationScopeIds\\\":[\\\"scope-0002-fbc0f684895ea64a4aeb4a1ebd8f2efeca080df0cfe9e824f7519bbfbbc59f5a\\\",\\\"scope-0003-180bae71b19d87d18dcd96dd8338f98810756b01ca4b04cdde1d3a92f98b9579\\\",\\\"scope-0004-2ce97682b154157776d68fa5df48643c47b542a8d9e81dabd248f90cbff5312d\\\",\\\"scope-0005-1479de8a6a3df8b8ac60d72f2289a79eb02a6cfa3f2d303e42fcaa4b1f34cf23\\\",\\\"scope-0006-7304b14d42592ffe949f35c934e4e8747d89e5bbb33a6160a84a10009ae29761\\\"],\\\"unresolvedScopeIds\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576\\\",\\\"kind\\\":\\\"event\\\",\\\"entityIds\\\":[\\\"event-0001\\\",\\\"tp-0001\\\"]},{\\\"scopeId\\\":\\\"scope-0002-fbc0f684895ea64a4aeb4a1ebd8f2efeca080df0cfe9e824f7519bbfbbc59f5a\\\",\\\"kind\\\":\\\"information\\\",\\\"entityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0003-180bae71b19d87d18dcd96dd8338f98810756b01ca4b04cdde1d3a92f98b9579\\\",\\\"kind\\\":\\\"information\\\",\\\"entityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0004-2ce97682b154157776d68fa5df48643c47b542a8d9e81dabd248f90cbff5312d\\\",\\\"kind\\\":\\\"information\\\",\\\"entityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0005-1479de8a6a3df8b8ac60d72f2289a79eb02a6cfa3f2d303e42fcaa4b1f34cf23\\\",\\\"kind\\\":\\\"information\\\",\\\"entityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0006-7304b14d42592ffe949f35c934e4e8747d89e5bbb33a6160a84a10009ae29761\\\",\\\"kind\\\":\\\"information\\\",\\\"entityIds\\\":[]}],\\\"prerequisiteStates\\\":[]}\"}],\"phase\":\"final_answer\",\"role\":\"assistant\"}],\"parallel_tool_calls\":true,\"presence_penalty\":0.0,\"previous_response_id\":null,\"prompt_cache_key\":null,\"prompt_cache_retention\":null,\"reasoning\":{\"effort\":\"none\",\"summary\":null},\"safety_identifier\":null,\"service_tier\":\"default\",\"store\":false,\"temperature\":0.0,\"text\":{\"format\":{\"type\":\"json_schema\",\"name\":\"source_semantics\",\"schema\":{\"type\":\"object\",\"properties\":{\"schemaVersion\":{\"type\":\"string\",\"const\":\"real-input-source-facts-3\"},\"events\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"title\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"description\":{\"type\":\"string\",\"maxLength\":4000},\"startTimePointTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"endTimePointTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"location\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1},\"inferenceLevel\":{\"type\":\"string\",\"enum\":[\"explicit\",\"strong_inference\",\"optional_suggestion\"]},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"tempId\",\"title\",\"description\",\"startTimePointTempId\",\"endTimePointTempId\",\"location\",\"scopeIds\",\"confidence\",\"inferenceLevel\",\"relatedTaskTempIds\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"timePoints\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"type\":{\"type\":\"string\",\"enum\":[\"registration_deadline\",\"submission_deadline\",\"task_deadline\",\"event_start\",\"event_end\",\"result_announcement\",\"planned_start\"]},\"rawText\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"relatedMaterialTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1}},\"required\":[\"tempId\",\"type\",\"rawText\",\"relatedTaskTempIds\",\"relatedMaterialTempIds\",\"scopeIds\",\"confidence\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"materials\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"name\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"required\":{\"type\":\"boolean\"},\"formatRequirements\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"namingRequirements\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"quantity\":{\"anyOf\":[{\"type\":\"number\",\"minimum\":0,\"maximum\":10080},{\"type\":\"null\"}]},\"submissionChannel\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1}},\"required\":[\"tempId\",\"name\",\"required\",\"formatRequirements\",\"namingRequirements\",\"quantity\",\"submissionChannel\",\"relatedTaskTempIds\",\"scopeIds\",\"confidence\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"tasks\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"propositionScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"semantics\":{\"type\":\"object\",\"properties\":{\"actor\":{\"type\":\"string\",\"enum\":[\"addressee\",\"addressed_group\",\"issuer\",\"third_party\",\"unknown\"]},\"speechAct\":{\"type\":\"string\",\"enum\":[\"directive\",\"assertive\",\"interrogative\",\"hypothetical\",\"quoted\",\"unknown\"]},\"polarity\":{\"type\":\"string\",\"enum\":[\"affirmative\",\"negative\",\"uncertain\"]},\"tense\":{\"type\":\"string\",\"enum\":[\"future\",\"present\",\"past\",\"unknown\"]},\"status\":{\"type\":\"string\",\"enum\":[\"pending\",\"completed\",\"cancelled\",\"unknown\"]},\"validity\":{\"type\":\"string\",\"enum\":[\"active\",\"superseded\",\"uncertain\"]},\"modality\":{\"type\":\"string\",\"enum\":[\"required\",\"recommended\",\"optional\",\"informational\",\"unknown\"]}},\"required\":[\"actor\",\"speechAct\",\"polarity\",\"tense\",\"status\",\"validity\",\"modality\"],\"additionalProperties\":false},\"inferenceLevel\":{\"type\":\"string\",\"enum\":[\"explicit\",\"strong_inference\",\"optional_suggestion\"]},\"actionType\":{\"type\":\"string\",\"enum\":[\"review\",\"complete\",\"fill\",\"prepare\",\"attend\",\"carry\",\"save\",\"print\",\"submit\",\"upload\",\"send\",\"contact\",\"collect\",\"sign\",\"register\",\"pay\",\"other\"]},\"action\":{\"type\":\"object\",\"properties\":{\"scopeId\":{\"type\":\"string\",\"minLength\":1},\"surface\":{\"type\":\"string\",\"minLength\":1}},\"required\":[\"scopeId\",\"surface\"],\"additionalProperties\":false},\"object\":{\"type\":\"object\",\"properties\":{\"scopeId\":{\"type\":\"string\",\"minLength\":1},\"surface\":{\"type\":\"string\",\"minLength\":1}},\"required\":[\"scopeId\",\"surface\"],\"additionalProperties\":false},\"effect\":{\"type\":\"string\",\"enum\":[\"local_change\",\"external_transfer\",\"external_interaction\",\"physical_action\",\"unknown\"]},\"detail\":{\"type\":\"object\",\"properties\":{\"parentTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"hierarchyType\":{\"type\":\"string\",\"enum\":[\"task\",\"subtask\"]},\"title\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"description\":{\"type\":\"string\",\"maxLength\":4000},\"completionCriteria\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"estimatedMinutes\":{\"anyOf\":[{\"type\":\"number\",\"minimum\":0,\"maximum\":10080},{\"type\":\"null\"}]},\"statusSuggestion\":{\"const\":\"todo\"},\"prioritySuggestion\":{\"type\":\"string\",\"enum\":[\"low\",\"medium\",\"high\",\"urgent\"]},\"dependencyTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1},\"userConfirmationRequired\":{\"const\":true}},\"required\":[\"parentTempId\",\"hierarchyType\",\"title\",\"description\",\"completionCriteria\",\"estimatedMinutes\",\"statusSuggestion\",\"prioritySuggestion\",\"dependencyTempIds\",\"confidence\",\"userConfirmationRequired\"],\"additionalProperties\":false},\"condition\":{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\",\"enum\":[\"true\",\"false\",\"unknown\",\"not_applicable\"]},\"conditionScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"factScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"value\",\"conditionScopeIds\",\"factScopeIds\"],\"additionalProperties\":false},\"coverage\":{\"type\":\"object\",\"properties\":{\"time\":{\"anyOf\":[{\"type\":\"null\"},{\"type\":\"string\",\"enum\":[\"not_stated\",\"not_extracted\",\"unresolved\"]}]},\"material\":{\"anyOf\":[{\"type\":\"null\"},{\"type\":\"string\",\"enum\":[\"not_stated\",\"not_extracted\",\"unresolved\"]}]},\"event\":{\"anyOf\":[{\"type\":\"null\"},{\"type\":\"string\",\"enum\":[\"not_stated\",\"not_extracted\",\"unresolved\"]}]}},\"required\":[\"time\",\"material\",\"event\"],\"additionalProperties\":false}},\"required\":[\"id\",\"propositionScopeIds\",\"semantics\",\"inferenceLevel\",\"actionType\",\"action\",\"object\",\"effect\",\"detail\",\"condition\",\"coverage\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"revisions\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"type\":{\"type\":\"string\",\"enum\":[\"supersedes\",\"cancels\",\"amends\"]},\"targetDirectiveId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"fromDirectiveId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"effective\":{\"type\":\"string\",\"enum\":[\"true\",\"false\",\"unknown\"]}},\"required\":[\"type\",\"targetDirectiveId\",\"scopeIds\",\"fromDirectiveId\",\"effective\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"conflicts\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"type\":{\"type\":\"string\",\"enum\":[\"deadline\",\"project_match\",\"duplicate\",\"hierarchy\",\"other\"]},\"message\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"entityTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"requiresDecision\":{\"type\":\"boolean\"}},\"required\":[\"id\",\"type\",\"message\",\"entityTempIds\",\"scopeIds\",\"requiresDecision\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"informationScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"unresolvedScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeAccounting\":{\"type\":\"array\",\"maxItems\":200,\"items\":{\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"scopeId\",\"kind\",\"entityIds\"],\"properties\":{\"scopeId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"kind\":{\"type\":\"string\",\"enum\":[\"action\",\"event\",\"information\",\"unresolved\"]},\"entityIds\":{\"type\":\"array\",\"maxItems\":200,\"uniqueItems\":true,\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000}}}}},\"prerequisiteStates\":{\"type\":\"array\",\"maxItems\":200,\"items\":{\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"taskId\",\"predecessorId\",\"completion\",\"factScopeIds\"],\"properties\":{\"taskId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"predecessorId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"completion\":{\"type\":\"string\",\"enum\":[\"true\",\"false\",\"unknown\"]},\"factScopeIds\":{\"type\":\"array\",\"maxItems\":200,\"uniqueItems\":true,\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000}}}}}},\"required\":[\"schemaVersion\",\"events\",\"timePoints\",\"materials\",\"tasks\",\"revisions\",\"conflicts\",\"informationScopeIds\",\"unresolvedScopeIds\",\"scopeAccounting\",\"prerequisiteStates\"],\"additionalProperties\":false},\"description\":null,\"strict\":null},\"verbosity\":null},\"tool_choice\":\"auto\",\"tools\":[],\"top_logprobs\":0,\"top_p\":1.0,\"truncation\":\"disabled\",\"usage\":{\"input_tokens\":4437,\"input_tokens_details\":{\"cached_tokens\":0},\"output_tokens\":838,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":5275},\"user\":null,\"metadata\":{}}",
+          "responseSha256": "4236202ec7bb7b626e68d5a619d5c5323f194983e1c963968e171439c6113876",
+          "requestSha256": "59216fd7c9018cc3d701f7ca7d794a0e902b62782fd359fb427d5fcdf502e8fc",
+          "frozenOutcome": "false",
+          "projectionVersion": "recorded-source-accounting-projection-1"
+        },
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "d26-common-bridge-1",
+          "modelName": "Candidate18 固定录制（非实时调用）",
+          "createdAt": "2026-09-22T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "待核对事件",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，1项事件。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "tp-0001",
+              "type": "event_start",
+              "rawText": "周三晚",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 0.9,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "event-0001",
+              "title": "图书借阅门户将在周三晚停机",
+              "description": "图书借阅门户将在周三晚停机，",
+              "startTimePointTempId": "tp-0001",
+              "endTimePointTempId": null,
+              "location": null,
+              "confidence": 0.95,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3",
+              "sourceId": "source:fb2c8e4f",
+              "quote": "图书借阅门户将在周三晚停机，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-cf8dd508e4b7bf322c01b8100c23d5cb39d2cb424314313a188f76cc82939765",
+              "sourceId": "source:fb2c8e4f",
+              "quote": "既有借阅记录不受影响。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-acaa7964efe6c10f971546cb50b7a744c71dafcddd57914b450a4f7a361a94b5",
+              "sourceId": "source:fb2c8e4f",
+              "quote": "无需删除记录，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-ff02942e89eb99d4afc93120118548ca6968f824f32fc37f0f24106905497b2e",
+              "sourceId": "source:fb2c8e4f",
+              "quote": "不要提交说明，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-1c904b293026e0b70a553d6c61f4480c1c5fe7afef6028597060c8d360d68eb5",
+              "sourceId": "source:fb2c8e4f",
+              "quote": "也不必向值班员发消息。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-e6fdfcc007f0a7a9fbdae778394f065063a0a768a04c09282484d8e05993bba7",
+              "sourceId": "source:fb2c8e4f",
+              "quote": "本通知仅说明停机消息。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "既有借阅记录不受影响。",
+              "reason": "other"
+            },
+            {
+              "text": "无需删除记录，",
+              "reason": "other"
+            },
+            {
+              "text": "不要提交说明，",
+              "reason": "other"
+            },
+            {
+              "text": "也不必向值班员发消息。",
+              "reason": "other"
+            },
+            {
+              "text": "本通知仅说明停机消息。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": []
+          }
+        }
+      }
+    }
+  ],
+  "extractionDrafts": [
+    {
+      "id": "source:f4bcb778:draft:1",
+      "recognitionRunId": "source:f4bcb778:run:1",
+      "status": "failed",
+      "result": null,
+      "commitOperationIds": [],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-03T10:27:43.235Z",
+      "updatedAt": "2026-10-03T10:27:43.320Z",
+      "legacyData": {
+        "v7Record": {
+          "id": "source:f4bcb778:draft:1",
+          "sourceId": "source:f4bcb778",
+          "sourceVersionId": "source:f4bcb778:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 65,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "failed",
+          "createdAt": "2026-10-03T10:27:43.235Z",
+          "updatedAt": "2026-10-03T10:27:43.320Z",
+          "schemaVersion": "2.0",
+          "modelName": "Candidate18 固定录制",
+          "promptVersion": "recognition-2.0.0",
+          "items": [],
+          "modelVersion": "local-rules"
+        }
+      }
+    },
+    {
+      "id": "source:7a33d1df:draft:1",
+      "recognitionRunId": "source:7a33d1df:run:1",
+      "status": "confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "d26-common-bridge-1",
+        "modelName": "Candidate17 固定录制（非实时调用）",
+        "createdAt": "2026-09-22T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "提交实验物资核对表",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，0项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "提交实验物资核对表",
+            "description": "请于2026年10月19日16:30前提交实验物资核对表。",
+            "completionCriteria": [
+              "门户提示收件成功"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [
+              "material-0001"
+            ],
+            "timePointTempIds": [
+              "time-0001"
+            ],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "tempId": "task-0001",
+            "actionVerb": "提交",
+            "actionObject": "实验物资核对表",
+            "evidenceIds": [
+              "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-0001",
+            "name": "实验物资核对表",
+            "required": true,
+            "formatRequirements": [
+              "PDF格式"
+            ],
+            "namingRequirements": [
+              "实验编号-负责人"
+            ],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "confidence": 0.95,
+            "evidenceIds": [
+              "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+              "d26-scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb",
+              "d26-scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b"
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "submission_deadline",
+            "rawText": "2026年10月19日16:30前",
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "relatedMaterialTempIds": [],
+            "confidence": 0.95,
+            "normalizedValue": "2026-10-19T16:30",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+            ]
+          }
+        ],
+        "events": [],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+            "sourceId": "source:7a33d1df",
+            "quote": "请于2026年10月19日16:30前提交实验物资核对表。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb",
+            "sourceId": "source:7a33d1df",
+            "quote": "实验物资核对表须为PDF格式，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b",
+            "sourceId": "source:7a33d1df",
+            "quote": "文件名为实验编号-负责人；",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-54dfc2c1c0712d9146fe31d9899b09a23df42bfd38952dec7e05bbaa119bf50d",
+            "sourceId": "source:7a33d1df",
+            "quote": "门户提示收件成功即结束。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "门户提示收件成功即结束。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:7a33d1df:draft:1:fnv1a32:0a99f37f"
+      ],
+      "acceptedEntityTempIds": [
+        "material-0001",
+        "task-0001",
+        "time-0001"
+      ],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-03T10:24:26.984Z",
+      "updatedAt": "2026-10-03T10:25:36.940Z",
+      "legacyData": {
+        "semanticSidecar": {
+          "version": "semantic-ordinary-bridge-1.0.0",
+          "originalSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "tasks": [
+              {
+                "id": "task-0001",
+                "propositionScopeIds": [
+                  "scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "submit",
+                "action": {
+                  "scopeId": "scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+                  "surface": "提交"
+                },
+                "object": {
+                  "scopeId": "scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+                  "surface": "实验物资核对表"
+                },
+                "effect": "external_transfer",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "提交实验物资核对表",
+                  "description": "请于2026年10月19日16:30前提交实验物资核对表。",
+                  "completionCriteria": [
+                    "门户提示收件成功"
+                  ],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [
+                    "material-0001"
+                  ],
+                  "timePointTempIds": [
+                    "time-0001"
+                  ],
+                  "confidence": 0.95,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "present",
+                  "material": "present",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              }
+            ],
+            "materials": [
+              {
+                "tempId": "material-0001",
+                "name": "实验物资核对表",
+                "required": true,
+                "formatRequirements": [
+                  "PDF格式"
+                ],
+                "namingRequirements": [
+                  "实验编号-负责人"
+                ],
+                "quantity": null,
+                "submissionChannel": null,
+                "relatedTaskTempIds": [
+                  "task-0001"
+                ],
+                "scopeIds": [
+                  "scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+                  "scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb",
+                  "scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b"
+                ],
+                "confidence": 0.95
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "time-0001",
+                "type": "submission_deadline",
+                "rawText": "2026年10月19日16:30前",
+                "relatedTaskTempIds": [
+                  "task-0001"
+                ],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+                ],
+                "confidence": 0.95,
+                "normalizedValue": "2026-10-19T16:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              }
+            ],
+            "events": [],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0004-54dfc2c1c0712d9146fe31d9899b09a23df42bfd38952dec7e05bbaa119bf50d"
+            ],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:7a33d1df",
+            "sourceVersionId": "source:7a33d1df:version:1",
+            "sourceFingerprint": "sha256:24511051031e92ce62264effc66671ed912f9db4184ff3337ad47beb02424864"
+          },
+          "firstSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "tasks": [
+              {
+                "id": "task-0001",
+                "propositionScopeIds": [
+                  "scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "submit",
+                "action": {
+                  "scopeId": "scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+                  "surface": "提交"
+                },
+                "object": {
+                  "scopeId": "scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+                  "surface": "实验物资核对表"
+                },
+                "effect": "external_transfer",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "提交实验物资核对表",
+                  "description": "请于2026年10月19日16:30前提交实验物资核对表。",
+                  "completionCriteria": [
+                    "门户提示收件成功"
+                  ],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "materialTempIds": [
+                    "material-0001"
+                  ],
+                  "timePointTempIds": [
+                    "time-0001"
+                  ],
+                  "confidence": 0.95,
+                  "userConfirmationRequired": true
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "present",
+                  "material": "present",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              }
+            ],
+            "materials": [
+              {
+                "tempId": "material-0001",
+                "name": "实验物资核对表",
+                "required": true,
+                "formatRequirements": [
+                  "PDF格式"
+                ],
+                "namingRequirements": [
+                  "实验编号-负责人"
+                ],
+                "quantity": null,
+                "submissionChannel": null,
+                "relatedTaskTempIds": [
+                  "task-0001"
+                ],
+                "scopeIds": [
+                  "scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+                  "scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb",
+                  "scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b"
+                ],
+                "confidence": 0.95
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "time-0001",
+                "type": "submission_deadline",
+                "rawText": "2026年10月19日16:30前",
+                "relatedTaskTempIds": [
+                  "task-0001"
+                ],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+                ],
+                "confidence": 0.95,
+                "normalizedValue": "2026-10-19T16:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              }
+            ],
+            "events": [],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0004-54dfc2c1c0712d9146fe31d9899b09a23df42bfd38952dec7e05bbaa119bf50d"
+            ],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:7a33d1df",
+            "sourceVersionId": "source:7a33d1df:version:1",
+            "sourceFingerprint": "sha256:24511051031e92ce62264effc66671ed912f9db4184ff3337ad47beb02424864"
+          },
+          "sourceScopeEvidence": [
+            {
+              "scopeId": "scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+              "evidenceId": "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+            },
+            {
+              "scopeId": "scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb",
+              "evidenceId": "d26-scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb"
+            },
+            {
+              "scopeId": "scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b",
+              "evidenceId": "d26-scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b"
+            },
+            {
+              "scopeId": "scope-0004-54dfc2c1c0712d9146fe31d9899b09a23df42bfd38952dec7e05bbaa119bf50d",
+              "evidenceId": "d26-scope-0004-54dfc2c1c0712d9146fe31d9899b09a23df42bfd38952dec7e05bbaa119bf50d"
+            }
+          ],
+          "representationGaps": [],
+          "displayAudit": {
+            "version": "grounded-first-suggestion-1.0.0",
+            "originalProse": [
+              {
+                "entityId": "task-0001",
+                "kind": "task",
+                "title": "提交实验物资核对表",
+                "description": "请于2026年10月19日16:30前提交实验物资核对表。"
+              }
+            ],
+            "generatedProse": [
+              {
+                "entityId": "task-0001",
+                "kind": "task",
+                "title": "提交实验物资核对表",
+                "description": "请于2026年10月19日16:30前提交实验物资核对表。"
+              }
+            ],
+            "times": [
+              {
+                "entityId": "time-0001",
+                "before": {
+                  "normalizedValue": "2026-10-19T16:30",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "after": {
+                  "normalizedValue": "2026-10-19T16:30",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "2026年10月19日16:30前",
+                    "type": "submission_deadline",
+                    "normalizedValue": "2026-10-19T16:30",
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "exact",
+                    "needsConfirmation": false,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 17
+                    },
+                    "dateKind": "absolute",
+                    "timeKind": "clock",
+                    "correctionApplied": false,
+                    "issues": []
+                  },
+                  "knownDate": "2026-10-19",
+                  "dayPeriod": null,
+                  "certainty": "stated",
+                  "sourceContext": "请于2026年10月19日16:30前提交实验物资核对表"
+                }
+              }
+            ],
+            "unresolved": [],
+            "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+          },
+          "recordedProvenance": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "ordinal": 13,
+            "sourceId": "D26-S07",
+            "sourceVersionId": "D26-S07-v1",
+            "candidate": "Candidate17",
+            "sourceText": "请于2026年10月19日16:30前提交实验物资核对表。实验物资核对表须为PDF格式，文件名为实验编号-负责人；门户提示收件成功即结束。",
+            "referenceTime": "2026-09-22T09:00:00+08:00",
+            "timezone": "Asia/Shanghai",
+            "rawHttpText": "{\"id\":\"b52a7d7c-de2d-4f3b-a256-a5835369b2d0\",\"object\":\"response\",\"created_at\":1791020292,\"status\":\"completed\",\"background\":false,\"completed_at\":1791020295,\"content_filters\":null,\"error\":null,\"frequency_penalty\":0.0,\"incomplete_details\":null,\"instructions\":null,\"max_output_tokens\":8192,\"max_tool_calls\":null,\"model\":\"deepseek-flash\",\"moderation\":null,\"output\":[{\"type\":\"message\",\"id\":\"2c0b4309-39a0-4259-831a-378406abaa80\",\"status\":\"completed\",\"content\":[{\"type\":\"output_text\",\"annotations\":[],\"logprobs\":[],\"text\":\"{\\\"schemaVersion\\\":\\\"real-input-model-wire-1\\\",\\\"tasks\\\":[{\\\"id\\\":\\\"task-0001\\\",\\\"propositionScopeIds\\\":[\\\"scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"tense\\\":\\\"future\\\",\\\"status\\\":\\\"pending\\\",\\\"validity\\\":\\\"active\\\",\\\"modality\\\":\\\"required\\\"},\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"actionType\\\":\\\"submit\\\",\\\"action\\\":{\\\"scopeId\\\":\\\"scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92\\\",\\\"surface\\\":\\\"提交\\\"},\\\"object\\\":{\\\"scopeId\\\":\\\"scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92\\\",\\\"surface\\\":\\\"实验物资核对表\\\"},\\\"effect\\\":\\\"external_transfer\\\",\\\"detail\\\":{\\\"parentTempId\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"title\\\":\\\"提交实验物资核对表\\\",\\\"description\\\":\\\"请于2026年10月19日16:30前提交实验物资核对表。\\\",\\\"completionCriteria\\\":[\\\"门户提示收件成功\\\"],\\\"estimatedMinutes\\\":null,\\\"statusSuggestion\\\":\\\"todo\\\",\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"dependencyTempIds\\\":[],\\\"materialTempIds\\\":[\\\"material-0001\\\"],\\\"timePointTempIds\\\":[\\\"time-0001\\\"],\\\"confidence\\\":0.95,\\\"userConfirmationRequired\\\":true},\\\"condition\\\":{\\\"value\\\":\\\"not_applicable\\\",\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[]},\\\"coverage\\\":{\\\"time\\\":\\\"present\\\",\\\"material\\\":\\\"present\\\",\\\"event\\\":\\\"not_stated\\\"},\\\"eventTempIds\\\":[]}],\\\"materials\\\":[{\\\"tempId\\\":\\\"material-0001\\\",\\\"name\\\":\\\"实验物资核对表\\\",\\\"required\\\":true,\\\"formatRequirements\\\":[\\\"PDF格式\\\"],\\\"namingRequirements\\\":[\\\"实验编号-负责人\\\"],\\\"quantity\\\":null,\\\"submissionChannel\\\":null,\\\"relatedTaskTempIds\\\":[\\\"task-0001\\\"],\\\"scopeIds\\\":[\\\"scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92\\\",\\\"scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49\\\",\\\"scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e\\\"],\\\"confidence\\\":0.95}],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"time-0001\\\",\\\"type\\\":\\\"submission_deadline\\\",\\\"rawText\\\":\\\"2026年10月19日16:30前\\\",\\\"relatedTaskTempIds\\\":[\\\"task-0001\\\"],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92\\\"],\\\"confidence\\\":0.95}],\\\"events\\\":[],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"informationScopeIds\\\":[\\\"scope-0004-de291caac73c64db4214c412e2e5fc6750486303641cfa2b6d219561ec6b22b1\\\"],\\\"unresolvedScopeIds\\\":[]}\"}],\"phase\":\"final_answer\",\"role\":\"assistant\"}],\"parallel_tool_calls\":true,\"presence_penalty\":0.0,\"previous_response_id\":null,\"prompt_cache_key\":null,\"prompt_cache_retention\":null,\"reasoning\":{\"effort\":\"none\",\"summary\":null},\"safety_identifier\":null,\"service_tier\":\"default\",\"store\":false,\"temperature\":0.0,\"text\":{\"format\":{\"type\":\"json_schema\",\"name\":\"source_semantics\",\"schema\":{\"type\":\"object\",\"properties\":{\"schemaVersion\":{\"const\":\"real-input-model-wire-1\",\"type\":\"string\"},\"tasks\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"propositionScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"semantics\":{\"type\":\"object\",\"properties\":{\"actor\":{\"type\":\"string\",\"enum\":[\"addressee\",\"addressed_group\",\"issuer\",\"third_party\",\"unknown\"]},\"speechAct\":{\"type\":\"string\",\"enum\":[\"directive\",\"assertive\",\"interrogative\",\"hypothetical\",\"quoted\",\"unknown\"]},\"polarity\":{\"type\":\"string\",\"enum\":[\"affirmative\",\"negative\",\"uncertain\"]},\"tense\":{\"type\":\"string\",\"enum\":[\"future\",\"present\",\"past\",\"unknown\"]},\"status\":{\"type\":\"string\",\"enum\":[\"pending\",\"completed\",\"cancelled\",\"unknown\"]},\"validity\":{\"type\":\"string\",\"enum\":[\"active\",\"superseded\",\"uncertain\"]},\"modality\":{\"type\":\"string\",\"enum\":[\"required\",\"recommended\",\"optional\",\"informational\",\"unknown\"]}},\"required\":[\"actor\",\"speechAct\",\"polarity\",\"tense\",\"status\",\"validity\",\"modality\"],\"additionalProperties\":false},\"inferenceLevel\":{\"type\":\"string\",\"enum\":[\"explicit\",\"strong_inference\",\"optional_suggestion\"]},\"actionType\":{\"type\":\"string\",\"enum\":[\"review\",\"complete\",\"fill\",\"prepare\",\"attend\",\"carry\",\"save\",\"print\",\"submit\",\"upload\",\"send\",\"contact\",\"collect\",\"sign\",\"register\",\"pay\",\"other\"]},\"action\":{\"type\":\"object\",\"properties\":{\"scopeId\":{\"type\":\"string\",\"minLength\":1},\"surface\":{\"type\":\"string\",\"minLength\":1}},\"required\":[\"scopeId\",\"surface\"],\"additionalProperties\":false},\"object\":{\"type\":\"object\",\"properties\":{\"scopeId\":{\"type\":\"string\",\"minLength\":1},\"surface\":{\"type\":\"string\",\"minLength\":1}},\"required\":[\"scopeId\",\"surface\"],\"additionalProperties\":false},\"effect\":{\"type\":\"string\",\"enum\":[\"local_change\",\"external_transfer\",\"external_interaction\",\"physical_action\",\"unknown\"]},\"detail\":{\"type\":\"object\",\"properties\":{\"parentTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"hierarchyType\":{\"type\":\"string\",\"enum\":[\"task\",\"subtask\"]},\"title\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"description\":{\"type\":\"string\",\"maxLength\":4000},\"completionCriteria\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"estimatedMinutes\":{\"anyOf\":[{\"type\":\"number\",\"minimum\":0,\"maximum\":10080},{\"type\":\"null\"}]},\"statusSuggestion\":{\"const\":\"todo\"},\"prioritySuggestion\":{\"type\":\"string\",\"enum\":[\"low\",\"medium\",\"high\",\"urgent\"]},\"dependencyTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"materialTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"timePointTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1},\"userConfirmationRequired\":{\"const\":true}},\"required\":[\"parentTempId\",\"hierarchyType\",\"title\",\"description\",\"completionCriteria\",\"estimatedMinutes\",\"statusSuggestion\",\"prioritySuggestion\",\"dependencyTempIds\",\"materialTempIds\",\"timePointTempIds\",\"confidence\",\"userConfirmationRequired\"],\"additionalProperties\":false},\"condition\":{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\",\"enum\":[\"true\",\"false\",\"unknown\",\"not_applicable\"]},\"conditionScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"factScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"value\",\"conditionScopeIds\",\"factScopeIds\"],\"additionalProperties\":false},\"coverage\":{\"type\":\"object\",\"properties\":{\"time\":{\"type\":\"string\",\"enum\":[\"present\",\"not_stated\",\"not_extracted\",\"unresolved\"]},\"material\":{\"type\":\"string\",\"enum\":[\"present\",\"not_stated\",\"not_extracted\",\"unresolved\"]},\"event\":{\"type\":\"string\",\"enum\":[\"present\",\"not_stated\",\"not_extracted\",\"unresolved\"]}},\"required\":[\"time\",\"material\",\"event\"],\"additionalProperties\":false},\"eventTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"id\",\"propositionScopeIds\",\"semantics\",\"inferenceLevel\",\"actionType\",\"action\",\"object\",\"effect\",\"detail\",\"condition\",\"coverage\",\"eventTempIds\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"materials\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"name\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"required\":{\"type\":\"boolean\"},\"formatRequirements\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"namingRequirements\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"quantity\":{\"anyOf\":[{\"type\":\"number\",\"minimum\":0,\"maximum\":10080},{\"type\":\"null\"}]},\"submissionChannel\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1}},\"required\":[\"tempId\",\"name\",\"required\",\"formatRequirements\",\"namingRequirements\",\"quantity\",\"submissionChannel\",\"relatedTaskTempIds\",\"scopeIds\",\"confidence\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"timePoints\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"type\":{\"type\":\"string\",\"enum\":[\"registration_deadline\",\"submission_deadline\",\"task_deadline\",\"event_start\",\"event_end\",\"result_announcement\",\"planned_start\"]},\"rawText\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"relatedMaterialTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1}},\"required\":[\"tempId\",\"type\",\"rawText\",\"relatedTaskTempIds\",\"relatedMaterialTempIds\",\"scopeIds\",\"confidence\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"events\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"title\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"description\":{\"type\":\"string\",\"maxLength\":4000},\"startTimePointTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"endTimePointTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"location\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1},\"inferenceLevel\":{\"type\":\"string\",\"enum\":[\"explicit\",\"strong_inference\",\"optional_suggestion\"]},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"tempId\",\"title\",\"description\",\"startTimePointTempId\",\"endTimePointTempId\",\"location\",\"scopeIds\",\"confidence\",\"inferenceLevel\",\"relatedTaskTempIds\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"revisions\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"type\":{\"type\":\"string\",\"enum\":[\"supersedes\",\"cancels\",\"amends\"]},\"targetDirectiveId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"fromDirectiveId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"effective\":{\"type\":\"string\",\"enum\":[\"true\",\"false\",\"unknown\"]}},\"required\":[\"type\",\"targetDirectiveId\",\"scopeIds\",\"fromDirectiveId\",\"effective\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"conflicts\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"type\":{\"type\":\"string\",\"enum\":[\"deadline\",\"project_match\",\"duplicate\",\"hierarchy\",\"other\"]},\"message\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"entityTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"requiresDecision\":{\"type\":\"boolean\"}},\"required\":[\"id\",\"type\",\"message\",\"entityTempIds\",\"scopeIds\",\"requiresDecision\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"informationScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"unresolvedScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"schemaVersion\",\"tasks\",\"materials\",\"timePoints\",\"events\",\"revisions\",\"conflicts\",\"informationScopeIds\",\"unresolvedScopeIds\"],\"additionalProperties\":false},\"description\":null,\"strict\":null},\"verbosity\":null},\"tool_choice\":\"auto\",\"tools\":[],\"top_logprobs\":0,\"top_p\":1.0,\"truncation\":\"disabled\",\"usage\":{\"input_tokens\":4376,\"input_tokens_details\":{\"cached_tokens\":3840},\"output_tokens\":783,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":5159},\"user\":null,\"metadata\":{}}",
+            "responseSha256": "c53e672f3b63b0ebc7ef7f2c2187126d4be322648293587507935b55963f8c0f",
+            "requestSha256": "2e01c9dff6d92b6a9ab0e5af181845f789d13230a3640b127fc122795902f733",
+            "frozenOutcome": "UNKNOWN",
+            "projectionVersion": "recorded-source-accounting-projection-1"
+          },
+          "scopeRebinding": {
+            "operation": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+            "mapping": [
+              [
+                "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92",
+                "scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+              ],
+              [
+                "scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49",
+                "scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb"
+              ],
+              [
+                "scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e",
+                "scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b"
+              ],
+              [
+                "scope-0004-de291caac73c64db4214c412e2e5fc6750486303641cfa2b6d219561ec6b22b1",
+                "scope-0004-54dfc2c1c0712d9146fe31d9899b09a23df42bfd38952dec7e05bbaa119bf50d"
+              ]
+            ]
+          },
+          "postComparisonConversion": null,
+          "sourceRenderedEvents": []
+        },
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "d26-common-bridge-1",
+          "modelName": "Candidate17 固定录制（非实时调用）",
+          "createdAt": "2026-09-22T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "提交实验物资核对表",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "1项任务，0项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交实验物资核对表",
+              "description": "请于2026年10月19日16:30前提交实验物资核对表。",
+              "completionCriteria": [
+                "门户提示收件成功"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "material-0001"
+              ],
+              "timePointTempIds": [
+                "time-0001"
+              ],
+              "confidence": 0.95,
+              "userConfirmationRequired": true,
+              "tempId": "task-0001",
+              "actionVerb": "提交",
+              "actionObject": "实验物资核对表",
+              "evidenceIds": [
+                "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "material-0001",
+              "name": "实验物资核对表",
+              "required": true,
+              "formatRequirements": [
+                "PDF格式"
+              ],
+              "namingRequirements": [
+                "实验编号-负责人"
+              ],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "task-0001"
+              ],
+              "confidence": 0.95,
+              "evidenceIds": [
+                "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+                "d26-scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb",
+                "d26-scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "time-0001",
+              "type": "submission_deadline",
+              "rawText": "2026年10月19日16:30前",
+              "relatedTaskTempIds": [
+                "task-0001"
+              ],
+              "relatedMaterialTempIds": [],
+              "confidence": 0.95,
+              "normalizedValue": "2026-10-19T16:30",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+              ]
+            }
+          ],
+          "events": [],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+              "sourceId": "source:7a33d1df",
+              "quote": "请于2026年10月19日16:30前提交实验物资核对表。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb",
+              "sourceId": "source:7a33d1df",
+              "quote": "实验物资核对表须为PDF格式，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b",
+              "sourceId": "source:7a33d1df",
+              "quote": "文件名为实验编号-负责人；",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-54dfc2c1c0712d9146fe31d9899b09a23df42bfd38952dec7e05bbaa119bf50d",
+              "sourceId": "source:7a33d1df",
+              "quote": "门户提示收件成功即结束。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "门户提示收件成功即结束。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "task-0001",
+              "kind": "task",
+              "title": "提交实验物资核对表",
+              "description": "请于2026年10月19日16:30前提交实验物资核对表。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "提交实验物资核对表",
+              "description": "1项任务，0项事件。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "task-0001",
+              "kind": "task",
+              "title": "提交实验物资核对表",
+              "description": "请于2026年10月19日16:30前提交实验物资核对表。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "提交实验物资核对表",
+              "description": "1项任务，0项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "time-0001",
+              "before": {
+                "normalizedValue": "2026-10-19T16:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-10-19T16:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年10月19日16:30前",
+                  "type": "submission_deadline",
+                  "normalizedValue": "2026-10-19T16:30",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 17
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-10-19",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请于2026年10月19日16:30前提交实验物资核对表"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:7a33d1df:draft:1",
+          "sourceId": "source:7a33d1df",
+          "sourceVersionId": "source:7a33d1df:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 69,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-03T10:24:26.984Z",
+          "updatedAt": "2026-10-03T10:24:57.592Z",
+          "schemaVersion": "2.0",
+          "modelName": "Candidate17 固定录制（非实时调用）",
+          "promptVersion": "d26-common-bridge-1",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "d26-common-bridge-1",
+            "modelName": "Candidate17 固定录制（非实时调用）",
+            "createdAt": "2026-09-22T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "提交实验物资核对表",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "1项任务，0项事件。请核对后确认。",
+              "requiresAction": true,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [
+              {
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "提交实验物资核对表",
+                "description": "请于2026年10月19日16:30前提交实验物资核对表。",
+                "completionCriteria": [
+                  "门户提示收件成功"
+                ],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [
+                  "material-0001"
+                ],
+                "timePointTempIds": [
+                  "time-0001"
+                ],
+                "confidence": 0.95,
+                "userConfirmationRequired": true,
+                "tempId": "task-0001",
+                "actionVerb": "提交",
+                "actionObject": "实验物资核对表",
+                "evidenceIds": [
+                  "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+                ],
+                "inferenceLevel": "explicit",
+                "selected": true
+              }
+            ],
+            "materials": [
+              {
+                "tempId": "material-0001",
+                "name": "实验物资核对表",
+                "required": true,
+                "formatRequirements": [
+                  "PDF格式"
+                ],
+                "namingRequirements": [
+                  "实验编号-负责人"
+                ],
+                "quantity": null,
+                "submissionChannel": null,
+                "relatedTaskTempIds": [
+                  "task-0001"
+                ],
+                "confidence": 0.95,
+                "evidenceIds": [
+                  "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+                  "d26-scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb",
+                  "d26-scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b"
+                ]
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "time-0001",
+                "type": "submission_deadline",
+                "rawText": "2026年10月19日16:30前",
+                "relatedTaskTempIds": [
+                  "task-0001"
+                ],
+                "relatedMaterialTempIds": [],
+                "confidence": 0.95,
+                "normalizedValue": "2026-10-19T16:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+                ]
+              }
+            ],
+            "events": [],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+                "sourceId": "source:7a33d1df",
+                "quote": "请于2026年10月19日16:30前提交实验物资核对表。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb",
+                "sourceId": "source:7a33d1df",
+                "quote": "实验物资核对表须为PDF格式，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b",
+                "sourceId": "source:7a33d1df",
+                "quote": "文件名为实验编号-负责人；",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0004-54dfc2c1c0712d9146fe31d9899b09a23df42bfd38952dec7e05bbaa119bf50d",
+                "sourceId": "source:7a33d1df",
+                "quote": "门户提示收件成功即结束。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [
+              {
+                "text": "门户提示收件成功即结束。",
+                "reason": "other"
+              }
+            ],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": false,
+              "reviewReasons": []
+            }
+          },
+          "items": [
+            {
+              "id": "draft-item:source:7a33d1df:draft:1:task-0001",
+              "suggestion": {
+                "id": "task-0001",
+                "title": "提交实验物资核对表",
+                "category": "其他",
+                "estimatedMinutes": 20,
+                "nextAction": "提交实验物资核对表",
+                "description": "请于2026年10月19日16:30前提交实验物资核对表。",
+                "priority": "中",
+                "materials": [
+                  "实验物资核对表"
+                ],
+                "evidence": "2026年10月19日16:30前",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "待确认",
+              "updatedAt": "2026-10-03T10:24:57.592Z",
+              "history": [
+                {
+                  "id": "draft-item:source:7a33d1df:draft:1:task-0001-history-2026-10-03T10:24:57.592Z-0",
+                  "field": "识别建议",
+                  "before": "{\"id\":\"task-0001\",\"title\":\"提交实验物资核对表\",\"category\":\"其他\",\"deadline\":\"2026-10-19T16:30\",\"estimatedMinutes\":30,\"nextAction\":\"提交实验物资核对表\",\"description\":\"请于2026年10月19日16:30前提交实验物资核对表。\",\"priority\":\"中\",\"materials\":[\"实验物资核对表\"],\"evidence\":\"2026年10月19日16:30前\",\"confidence\":\"高\"}",
+                  "after": "{\"id\":\"task-0001\",\"title\":\"提交实验物资核对表\",\"category\":\"其他\",\"deadline\":\"2026-10-19T16:30\",\"estimatedMinutes\":20,\"nextAction\":\"提交实验物资核对表\",\"description\":\"请于2026年10月19日16:30前提交实验物资核对表。\",\"priority\":\"中\",\"materials\":[\"实验物资核对表\"],\"evidence\":\"2026年10月19日16:30前\",\"confidence\":\"高\"}",
+                  "changedAt": "2026-10-03T10:24:57.592Z",
+                  "actor": "user",
+                  "entityType": "draft",
+                  "entityId": "draft-item:source:7a33d1df:draft:1:task-0001",
+                  "action": "updated"
+                }
+              ]
+            }
+          ],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:7a33d1df:draft:1",
+          "commitId": "source-review:source:7a33d1df:draft:1:fnv1a32:0a99f37f",
+          "disposition": "confirmed",
+          "entityIds": [
+            "task:source:7a33d1df:draft:1:task-0001",
+            "time:source:7a33d1df:draft:1:time-0001",
+            "material:source:7a33d1df:draft:1:material-0001"
+          ],
+          "entityHashes": {
+            "task:source:7a33d1df:draft:1:task-0001": "fnv1a32:f36dbb3b",
+            "time:source:7a33d1df:draft:1:time-0001": "fnv1a32:6db619f1",
+            "material:source:7a33d1df:draft:1:material-0001": "fnv1a32:22c57605"
+          },
+          "verifiedAt": "2026-10-03T10:25:36.972Z"
+        }
+      }
+    },
+    {
+      "id": "source:fb2c8e4f:draft:1",
+      "recognitionRunId": "source:fb2c8e4f:run:1",
+      "status": "confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "d26-common-bridge-1",
+        "modelName": "Candidate18 固定录制（非实时调用）",
+        "createdAt": "2026-09-22T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "图书借阅门户将在周三晚停机",
+          "sourceType": "text",
+          "notificationType": "event_notice",
+          "summary": "0项任务，1项事件。请核对后确认。",
+          "requiresAction": false,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "tp-0001",
+            "type": "event_start",
+            "rawText": "周三晚",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 0.9,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "图书借阅门户将在周三晚停机",
+            "description": "图书借阅门户将在周三晚停机，",
+            "startTimePointTempId": "tp-0001",
+            "endTimePointTempId": null,
+            "location": null,
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3",
+            "sourceId": "source:fb2c8e4f",
+            "quote": "图书借阅门户将在周三晚停机，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-cf8dd508e4b7bf322c01b8100c23d5cb39d2cb424314313a188f76cc82939765",
+            "sourceId": "source:fb2c8e4f",
+            "quote": "既有借阅记录不受影响。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-acaa7964efe6c10f971546cb50b7a744c71dafcddd57914b450a4f7a361a94b5",
+            "sourceId": "source:fb2c8e4f",
+            "quote": "无需删除记录，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-ff02942e89eb99d4afc93120118548ca6968f824f32fc37f0f24106905497b2e",
+            "sourceId": "source:fb2c8e4f",
+            "quote": "不要提交说明，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-1c904b293026e0b70a553d6c61f4480c1c5fe7afef6028597060c8d360d68eb5",
+            "sourceId": "source:fb2c8e4f",
+            "quote": "也不必向值班员发消息。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-e6fdfcc007f0a7a9fbdae778394f065063a0a768a04c09282484d8e05993bba7",
+            "sourceId": "source:fb2c8e4f",
+            "quote": "本通知仅说明停机消息。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "既有借阅记录不受影响。",
+            "reason": "other"
+          },
+          {
+            "text": "无需删除记录，",
+            "reason": "other"
+          },
+          {
+            "text": "不要提交说明，",
+            "reason": "other"
+          },
+          {
+            "text": "也不必向值班员发消息。",
+            "reason": "other"
+          },
+          {
+            "text": "本通知仅说明停机消息。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": []
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:fb2c8e4f:draft:1:fnv1a32:1a5fe650"
+      ],
+      "acceptedEntityTempIds": [
+        "event-0001",
+        "tp-0001"
+      ],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-03T10:23:43.220Z",
+      "updatedAt": "2026-10-03T10:23:57.925Z",
+      "legacyData": {
+        "semanticSidecar": {
+          "version": "semantic-ordinary-bridge-1.0.0",
+          "originalSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "events": [
+              {
+                "tempId": "event-0001",
+                "title": "图书借阅门户停机",
+                "description": "图书借阅门户将在周三晚停机。",
+                "startTimePointTempId": "tp-0001",
+                "endTimePointTempId": null,
+                "location": null,
+                "scopeIds": [
+                  "scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+                ],
+                "confidence": 0.95,
+                "inferenceLevel": "explicit",
+                "relatedTaskTempIds": []
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "tp-0001",
+                "type": "event_start",
+                "rawText": "周三晚",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+                ],
+                "confidence": 0.9,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              }
+            ],
+            "materials": [],
+            "tasks": [],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0002-cf8dd508e4b7bf322c01b8100c23d5cb39d2cb424314313a188f76cc82939765",
+              "scope-0003-acaa7964efe6c10f971546cb50b7a744c71dafcddd57914b450a4f7a361a94b5",
+              "scope-0004-ff02942e89eb99d4afc93120118548ca6968f824f32fc37f0f24106905497b2e",
+              "scope-0005-1c904b293026e0b70a553d6c61f4480c1c5fe7afef6028597060c8d360d68eb5",
+              "scope-0006-e6fdfcc007f0a7a9fbdae778394f065063a0a768a04c09282484d8e05993bba7"
+            ],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:fb2c8e4f",
+            "sourceVersionId": "source:fb2c8e4f:version:1",
+            "sourceFingerprint": "sha256:0e986c35fa05e9a17028694fe6d1b8bc9f8d65bfb362f02d67127873ca77beec"
+          },
+          "firstSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "events": [
+              {
+                "tempId": "event-0001",
+                "title": "待核对事件",
+                "description": "事件内容缺少对应来源依据，请核对。",
+                "startTimePointTempId": "tp-0001",
+                "endTimePointTempId": null,
+                "location": null,
+                "scopeIds": [
+                  "scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+                ],
+                "confidence": 0.95,
+                "inferenceLevel": "explicit",
+                "relatedTaskTempIds": []
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "tp-0001",
+                "type": "event_start",
+                "rawText": "周三晚",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+                ],
+                "confidence": 0.9,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              }
+            ],
+            "materials": [],
+            "tasks": [],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0002-cf8dd508e4b7bf322c01b8100c23d5cb39d2cb424314313a188f76cc82939765",
+              "scope-0003-acaa7964efe6c10f971546cb50b7a744c71dafcddd57914b450a4f7a361a94b5",
+              "scope-0004-ff02942e89eb99d4afc93120118548ca6968f824f32fc37f0f24106905497b2e",
+              "scope-0005-1c904b293026e0b70a553d6c61f4480c1c5fe7afef6028597060c8d360d68eb5",
+              "scope-0006-e6fdfcc007f0a7a9fbdae778394f065063a0a768a04c09282484d8e05993bba7"
+            ],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:fb2c8e4f",
+            "sourceVersionId": "source:fb2c8e4f:version:1",
+            "sourceFingerprint": "sha256:0e986c35fa05e9a17028694fe6d1b8bc9f8d65bfb362f02d67127873ca77beec"
+          },
+          "sourceScopeEvidence": [
+            {
+              "scopeId": "scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3",
+              "evidenceId": "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+            },
+            {
+              "scopeId": "scope-0002-cf8dd508e4b7bf322c01b8100c23d5cb39d2cb424314313a188f76cc82939765",
+              "evidenceId": "d26-scope-0002-cf8dd508e4b7bf322c01b8100c23d5cb39d2cb424314313a188f76cc82939765"
+            },
+            {
+              "scopeId": "scope-0003-acaa7964efe6c10f971546cb50b7a744c71dafcddd57914b450a4f7a361a94b5",
+              "evidenceId": "d26-scope-0003-acaa7964efe6c10f971546cb50b7a744c71dafcddd57914b450a4f7a361a94b5"
+            },
+            {
+              "scopeId": "scope-0004-ff02942e89eb99d4afc93120118548ca6968f824f32fc37f0f24106905497b2e",
+              "evidenceId": "d26-scope-0004-ff02942e89eb99d4afc93120118548ca6968f824f32fc37f0f24106905497b2e"
+            },
+            {
+              "scopeId": "scope-0005-1c904b293026e0b70a553d6c61f4480c1c5fe7afef6028597060c8d360d68eb5",
+              "evidenceId": "d26-scope-0005-1c904b293026e0b70a553d6c61f4480c1c5fe7afef6028597060c8d360d68eb5"
+            },
+            {
+              "scopeId": "scope-0006-e6fdfcc007f0a7a9fbdae778394f065063a0a768a04c09282484d8e05993bba7",
+              "evidenceId": "d26-scope-0006-e6fdfcc007f0a7a9fbdae778394f065063a0a768a04c09282484d8e05993bba7"
+            }
+          ],
+          "representationGaps": [],
+          "displayAudit": {
+            "version": "grounded-first-suggestion-1.0.0",
+            "originalProse": [
+              {
+                "entityId": "event-0001",
+                "kind": "event",
+                "title": "图书借阅门户停机",
+                "description": "图书借阅门户将在周三晚停机。"
+              }
+            ],
+            "generatedProse": [
+              {
+                "entityId": "event-0001",
+                "kind": "event",
+                "title": "待核对事件",
+                "description": "事件内容缺少对应来源依据，请核对。"
+              }
+            ],
+            "times": [
+              {
+                "entityId": "tp-0001",
+                "before": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "after": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "周三晚",
+                    "type": "event_start",
+                    "normalizedValue": null,
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "vague",
+                    "needsConfirmation": true,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 3
+                    },
+                    "dateKind": "none",
+                    "timeKind": "none",
+                    "correctionApplied": false,
+                    "issues": [
+                      "time_not_found",
+                      "day_period_without_clock"
+                    ]
+                  },
+                  "knownDate": null,
+                  "dayPeriod": "晚",
+                  "certainty": "partial",
+                  "sourceContext": "图书借阅门户将在周三晚停机"
+                }
+              }
+            ],
+            "unresolved": [
+              {
+                "entityId": "event-0001",
+                "reason": "EVENT_SOURCE_SUPPORT_MISSING"
+              }
+            ],
+            "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+          },
+          "recordedProvenance": {
+            "role": "RECORDED_MODEL_ENGINEERING_REPLAY",
+            "ordinal": 2,
+            "sourceId": "D26-S01",
+            "sourceVersionId": "D26-S01-v1",
+            "candidate": "Candidate18",
+            "sourceText": "图书借阅门户将在周三晚停机，既有借阅记录不受影响。无需删除记录，不要提交说明，也不必向值班员发消息。本通知仅说明停机消息。",
+            "referenceTime": "2026-09-22T09:00:00+08:00",
+            "timezone": "Asia/Shanghai",
+            "rawHttpText": "{\"id\":\"0ceb16e4-f990-4a33-b1db-13c122e757b3\",\"object\":\"response\",\"created_at\":1791020147,\"status\":\"completed\",\"background\":false,\"completed_at\":1791020150,\"content_filters\":null,\"error\":null,\"frequency_penalty\":0.0,\"incomplete_details\":null,\"instructions\":null,\"max_output_tokens\":8192,\"max_tool_calls\":null,\"model\":\"deepseek-flash\",\"moderation\":null,\"output\":[{\"type\":\"message\",\"id\":\"5048c3ff-2768-4f25-a69b-64ede094b03b\",\"status\":\"completed\",\"content\":[{\"type\":\"output_text\",\"annotations\":[],\"logprobs\":[],\"text\":\"{\\\"schemaVersion\\\":\\\"real-input-source-facts-3\\\",\\\"events\\\":[{\\\"tempId\\\":\\\"event-0001\\\",\\\"title\\\":\\\"图书借阅门户停机\\\",\\\"description\\\":\\\"图书借阅门户将在周三晚停机。\\\",\\\"startTimePointTempId\\\":\\\"tp-0001\\\",\\\"endTimePointTempId\\\":null,\\\"location\\\":null,\\\"scopeIds\\\":[\\\"scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576\\\"],\\\"confidence\\\":0.95,\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"relatedTaskTempIds\\\":[]}],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"tp-0001\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周三晚\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576\\\"],\\\"confidence\\\":0.9}],\\\"materials\\\":[],\\\"tasks\\\":[],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"informationScopeIds\\\":[\\\"scope-0002-fbc0f684895ea64a4aeb4a1ebd8f2efeca080df0cfe9e824f7519bbfbbc59f5a\\\",\\\"scope-0003-180bae71b19d87d18dcd96dd8338f98810756b01ca4b04cdde1d3a92f98b9579\\\",\\\"scope-0004-2ce97682b154157776d68fa5df48643c47b542a8d9e81dabd248f90cbff5312d\\\",\\\"scope-0005-1479de8a6a3df8b8ac60d72f2289a79eb02a6cfa3f2d303e42fcaa4b1f34cf23\\\",\\\"scope-0006-7304b14d42592ffe949f35c934e4e8747d89e5bbb33a6160a84a10009ae29761\\\"],\\\"unresolvedScopeIds\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576\\\",\\\"kind\\\":\\\"event\\\",\\\"entityIds\\\":[\\\"event-0001\\\",\\\"tp-0001\\\"]},{\\\"scopeId\\\":\\\"scope-0002-fbc0f684895ea64a4aeb4a1ebd8f2efeca080df0cfe9e824f7519bbfbbc59f5a\\\",\\\"kind\\\":\\\"information\\\",\\\"entityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0003-180bae71b19d87d18dcd96dd8338f98810756b01ca4b04cdde1d3a92f98b9579\\\",\\\"kind\\\":\\\"information\\\",\\\"entityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0004-2ce97682b154157776d68fa5df48643c47b542a8d9e81dabd248f90cbff5312d\\\",\\\"kind\\\":\\\"information\\\",\\\"entityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0005-1479de8a6a3df8b8ac60d72f2289a79eb02a6cfa3f2d303e42fcaa4b1f34cf23\\\",\\\"kind\\\":\\\"information\\\",\\\"entityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0006-7304b14d42592ffe949f35c934e4e8747d89e5bbb33a6160a84a10009ae29761\\\",\\\"kind\\\":\\\"information\\\",\\\"entityIds\\\":[]}],\\\"prerequisiteStates\\\":[]}\"}],\"phase\":\"final_answer\",\"role\":\"assistant\"}],\"parallel_tool_calls\":true,\"presence_penalty\":0.0,\"previous_response_id\":null,\"prompt_cache_key\":null,\"prompt_cache_retention\":null,\"reasoning\":{\"effort\":\"none\",\"summary\":null},\"safety_identifier\":null,\"service_tier\":\"default\",\"store\":false,\"temperature\":0.0,\"text\":{\"format\":{\"type\":\"json_schema\",\"name\":\"source_semantics\",\"schema\":{\"type\":\"object\",\"properties\":{\"schemaVersion\":{\"type\":\"string\",\"const\":\"real-input-source-facts-3\"},\"events\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"title\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"description\":{\"type\":\"string\",\"maxLength\":4000},\"startTimePointTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"endTimePointTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"location\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1},\"inferenceLevel\":{\"type\":\"string\",\"enum\":[\"explicit\",\"strong_inference\",\"optional_suggestion\"]},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"tempId\",\"title\",\"description\",\"startTimePointTempId\",\"endTimePointTempId\",\"location\",\"scopeIds\",\"confidence\",\"inferenceLevel\",\"relatedTaskTempIds\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"timePoints\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"type\":{\"type\":\"string\",\"enum\":[\"registration_deadline\",\"submission_deadline\",\"task_deadline\",\"event_start\",\"event_end\",\"result_announcement\",\"planned_start\"]},\"rawText\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"relatedMaterialTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1}},\"required\":[\"tempId\",\"type\",\"rawText\",\"relatedTaskTempIds\",\"relatedMaterialTempIds\",\"scopeIds\",\"confidence\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"materials\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"tempId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"name\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"required\":{\"type\":\"boolean\"},\"formatRequirements\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"namingRequirements\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"quantity\":{\"anyOf\":[{\"type\":\"number\",\"minimum\":0,\"maximum\":10080},{\"type\":\"null\"}]},\"submissionChannel\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"relatedTaskTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1}},\"required\":[\"tempId\",\"name\",\"required\",\"formatRequirements\",\"namingRequirements\",\"quantity\",\"submissionChannel\",\"relatedTaskTempIds\",\"scopeIds\",\"confidence\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"tasks\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"propositionScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"semantics\":{\"type\":\"object\",\"properties\":{\"actor\":{\"type\":\"string\",\"enum\":[\"addressee\",\"addressed_group\",\"issuer\",\"third_party\",\"unknown\"]},\"speechAct\":{\"type\":\"string\",\"enum\":[\"directive\",\"assertive\",\"interrogative\",\"hypothetical\",\"quoted\",\"unknown\"]},\"polarity\":{\"type\":\"string\",\"enum\":[\"affirmative\",\"negative\",\"uncertain\"]},\"tense\":{\"type\":\"string\",\"enum\":[\"future\",\"present\",\"past\",\"unknown\"]},\"status\":{\"type\":\"string\",\"enum\":[\"pending\",\"completed\",\"cancelled\",\"unknown\"]},\"validity\":{\"type\":\"string\",\"enum\":[\"active\",\"superseded\",\"uncertain\"]},\"modality\":{\"type\":\"string\",\"enum\":[\"required\",\"recommended\",\"optional\",\"informational\",\"unknown\"]}},\"required\":[\"actor\",\"speechAct\",\"polarity\",\"tense\",\"status\",\"validity\",\"modality\"],\"additionalProperties\":false},\"inferenceLevel\":{\"type\":\"string\",\"enum\":[\"explicit\",\"strong_inference\",\"optional_suggestion\"]},\"actionType\":{\"type\":\"string\",\"enum\":[\"review\",\"complete\",\"fill\",\"prepare\",\"attend\",\"carry\",\"save\",\"print\",\"submit\",\"upload\",\"send\",\"contact\",\"collect\",\"sign\",\"register\",\"pay\",\"other\"]},\"action\":{\"type\":\"object\",\"properties\":{\"scopeId\":{\"type\":\"string\",\"minLength\":1},\"surface\":{\"type\":\"string\",\"minLength\":1}},\"required\":[\"scopeId\",\"surface\"],\"additionalProperties\":false},\"object\":{\"type\":\"object\",\"properties\":{\"scopeId\":{\"type\":\"string\",\"minLength\":1},\"surface\":{\"type\":\"string\",\"minLength\":1}},\"required\":[\"scopeId\",\"surface\"],\"additionalProperties\":false},\"effect\":{\"type\":\"string\",\"enum\":[\"local_change\",\"external_transfer\",\"external_interaction\",\"physical_action\",\"unknown\"]},\"detail\":{\"type\":\"object\",\"properties\":{\"parentTempId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"hierarchyType\":{\"type\":\"string\",\"enum\":[\"task\",\"subtask\"]},\"title\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"description\":{\"type\":\"string\",\"maxLength\":4000},\"completionCriteria\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":false},\"estimatedMinutes\":{\"anyOf\":[{\"type\":\"number\",\"minimum\":0,\"maximum\":10080},{\"type\":\"null\"}]},\"statusSuggestion\":{\"const\":\"todo\"},\"prioritySuggestion\":{\"type\":\"string\",\"enum\":[\"low\",\"medium\",\"high\",\"urgent\"]},\"dependencyTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"confidence\":{\"type\":\"number\",\"minimum\":0,\"maximum\":1},\"userConfirmationRequired\":{\"const\":true}},\"required\":[\"parentTempId\",\"hierarchyType\",\"title\",\"description\",\"completionCriteria\",\"estimatedMinutes\",\"statusSuggestion\",\"prioritySuggestion\",\"dependencyTempIds\",\"confidence\",\"userConfirmationRequired\"],\"additionalProperties\":false},\"condition\":{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\",\"enum\":[\"true\",\"false\",\"unknown\",\"not_applicable\"]},\"conditionScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"factScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true}},\"required\":[\"value\",\"conditionScopeIds\",\"factScopeIds\"],\"additionalProperties\":false},\"coverage\":{\"type\":\"object\",\"properties\":{\"time\":{\"anyOf\":[{\"type\":\"null\"},{\"type\":\"string\",\"enum\":[\"not_stated\",\"not_extracted\",\"unresolved\"]}]},\"material\":{\"anyOf\":[{\"type\":\"null\"},{\"type\":\"string\",\"enum\":[\"not_stated\",\"not_extracted\",\"unresolved\"]}]},\"event\":{\"anyOf\":[{\"type\":\"null\"},{\"type\":\"string\",\"enum\":[\"not_stated\",\"not_extracted\",\"unresolved\"]}]}},\"required\":[\"time\",\"material\",\"event\"],\"additionalProperties\":false}},\"required\":[\"id\",\"propositionScopeIds\",\"semantics\",\"inferenceLevel\",\"actionType\",\"action\",\"object\",\"effect\",\"detail\",\"condition\",\"coverage\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"revisions\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"type\":{\"type\":\"string\",\"enum\":[\"supersedes\",\"cancels\",\"amends\"]},\"targetDirectiveId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"fromDirectiveId\":{\"anyOf\":[{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},{\"type\":\"null\"}]},\"effective\":{\"type\":\"string\",\"enum\":[\"true\",\"false\",\"unknown\"]}},\"required\":[\"type\",\"targetDirectiveId\",\"scopeIds\",\"fromDirectiveId\",\"effective\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"conflicts\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"type\":{\"type\":\"string\",\"enum\":[\"deadline\",\"project_match\",\"duplicate\",\"hierarchy\",\"other\"]},\"message\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"entityTempIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"requiresDecision\":{\"type\":\"boolean\"}},\"required\":[\"id\",\"type\",\"message\",\"entityTempIds\",\"scopeIds\",\"requiresDecision\"],\"additionalProperties\":false},\"maxItems\":200,\"uniqueItems\":false},\"informationScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"unresolvedScopeIds\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"maxItems\":200,\"uniqueItems\":true},\"scopeAccounting\":{\"type\":\"array\",\"maxItems\":200,\"items\":{\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"scopeId\",\"kind\",\"entityIds\"],\"properties\":{\"scopeId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"kind\":{\"type\":\"string\",\"enum\":[\"action\",\"event\",\"information\",\"unresolved\"]},\"entityIds\":{\"type\":\"array\",\"maxItems\":200,\"uniqueItems\":true,\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000}}}}},\"prerequisiteStates\":{\"type\":\"array\",\"maxItems\":200,\"items\":{\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"taskId\",\"predecessorId\",\"completion\",\"factScopeIds\"],\"properties\":{\"taskId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"predecessorId\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000},\"completion\":{\"type\":\"string\",\"enum\":[\"true\",\"false\",\"unknown\"]},\"factScopeIds\":{\"type\":\"array\",\"maxItems\":200,\"uniqueItems\":true,\"items\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":4000}}}}}},\"required\":[\"schemaVersion\",\"events\",\"timePoints\",\"materials\",\"tasks\",\"revisions\",\"conflicts\",\"informationScopeIds\",\"unresolvedScopeIds\",\"scopeAccounting\",\"prerequisiteStates\"],\"additionalProperties\":false},\"description\":null,\"strict\":null},\"verbosity\":null},\"tool_choice\":\"auto\",\"tools\":[],\"top_logprobs\":0,\"top_p\":1.0,\"truncation\":\"disabled\",\"usage\":{\"input_tokens\":4437,\"input_tokens_details\":{\"cached_tokens\":0},\"output_tokens\":838,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":5275},\"user\":null,\"metadata\":{}}",
+            "responseSha256": "4236202ec7bb7b626e68d5a619d5c5323f194983e1c963968e171439c6113876",
+            "requestSha256": "59216fd7c9018cc3d701f7ca7d794a0e902b62782fd359fb427d5fcdf502e8fc",
+            "frozenOutcome": "false",
+            "projectionVersion": "recorded-source-accounting-projection-1"
+          },
+          "scopeRebinding": {
+            "operation": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+            "mapping": [
+              [
+                "scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576",
+                "scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+              ],
+              [
+                "scope-0002-fbc0f684895ea64a4aeb4a1ebd8f2efeca080df0cfe9e824f7519bbfbbc59f5a",
+                "scope-0002-cf8dd508e4b7bf322c01b8100c23d5cb39d2cb424314313a188f76cc82939765"
+              ],
+              [
+                "scope-0003-180bae71b19d87d18dcd96dd8338f98810756b01ca4b04cdde1d3a92f98b9579",
+                "scope-0003-acaa7964efe6c10f971546cb50b7a744c71dafcddd57914b450a4f7a361a94b5"
+              ],
+              [
+                "scope-0004-2ce97682b154157776d68fa5df48643c47b542a8d9e81dabd248f90cbff5312d",
+                "scope-0004-ff02942e89eb99d4afc93120118548ca6968f824f32fc37f0f24106905497b2e"
+              ],
+              [
+                "scope-0005-1479de8a6a3df8b8ac60d72f2289a79eb02a6cfa3f2d303e42fcaa4b1f34cf23",
+                "scope-0005-1c904b293026e0b70a553d6c61f4480c1c5fe7afef6028597060c8d360d68eb5"
+              ],
+              [
+                "scope-0006-7304b14d42592ffe949f35c934e4e8747d89e5bbb33a6160a84a10009ae29761",
+                "scope-0006-e6fdfcc007f0a7a9fbdae778394f065063a0a768a04c09282484d8e05993bba7"
+              ]
+            ]
+          },
+          "postComparisonConversion": {
+            "version": "source-facts-assembly-3.0.0",
+            "projectionAudit": {
+              "version": "recorded-source-accounting-projection-1",
+              "role": "POST_COMPARISON_PROGRAM_CONVERSION",
+              "extras": [
+                {
+                  "scopeId": "scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3",
+                  "primaryIds": [
+                    "event-0001"
+                  ],
+                  "supportedSecondaryIds": [
+                    "tp-0001"
+                  ]
+                }
+              ],
+              "inferredFacts": 0,
+              "originalFacts": {
+                "schemaVersion": "real-input-source-facts-3",
+                "events": [
+                  {
+                    "tempId": "event-0001",
+                    "title": "图书借阅门户停机",
+                    "description": "图书借阅门户将在周三晚停机。",
+                    "startTimePointTempId": "tp-0001",
+                    "endTimePointTempId": null,
+                    "location": null,
+                    "scopeIds": [
+                      "scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+                    ],
+                    "confidence": 0.95,
+                    "inferenceLevel": "explicit",
+                    "relatedTaskTempIds": []
+                  }
+                ],
+                "timePoints": [
+                  {
+                    "tempId": "tp-0001",
+                    "type": "event_start",
+                    "rawText": "周三晚",
+                    "relatedTaskTempIds": [],
+                    "relatedMaterialTempIds": [],
+                    "scopeIds": [
+                      "scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+                    ],
+                    "confidence": 0.9
+                  }
+                ],
+                "materials": [],
+                "tasks": [],
+                "revisions": [],
+                "conflicts": [],
+                "informationScopeIds": [
+                  "scope-0002-cf8dd508e4b7bf322c01b8100c23d5cb39d2cb424314313a188f76cc82939765",
+                  "scope-0003-acaa7964efe6c10f971546cb50b7a744c71dafcddd57914b450a4f7a361a94b5",
+                  "scope-0004-ff02942e89eb99d4afc93120118548ca6968f824f32fc37f0f24106905497b2e",
+                  "scope-0005-1c904b293026e0b70a553d6c61f4480c1c5fe7afef6028597060c8d360d68eb5",
+                  "scope-0006-e6fdfcc007f0a7a9fbdae778394f065063a0a768a04c09282484d8e05993bba7"
+                ],
+                "unresolvedScopeIds": [],
+                "scopeAccounting": [
+                  {
+                    "scopeId": "scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3",
+                    "kind": "event",
+                    "entityIds": [
+                      "event-0001",
+                      "tp-0001"
+                    ]
+                  },
+                  {
+                    "scopeId": "scope-0002-cf8dd508e4b7bf322c01b8100c23d5cb39d2cb424314313a188f76cc82939765",
+                    "kind": "information",
+                    "entityIds": []
+                  },
+                  {
+                    "scopeId": "scope-0003-acaa7964efe6c10f971546cb50b7a744c71dafcddd57914b450a4f7a361a94b5",
+                    "kind": "information",
+                    "entityIds": []
+                  },
+                  {
+                    "scopeId": "scope-0004-ff02942e89eb99d4afc93120118548ca6968f824f32fc37f0f24106905497b2e",
+                    "kind": "information",
+                    "entityIds": []
+                  },
+                  {
+                    "scopeId": "scope-0005-1c904b293026e0b70a553d6c61f4480c1c5fe7afef6028597060c8d360d68eb5",
+                    "kind": "information",
+                    "entityIds": []
+                  },
+                  {
+                    "scopeId": "scope-0006-e6fdfcc007f0a7a9fbdae778394f065063a0a768a04c09282484d8e05993bba7",
+                    "kind": "information",
+                    "entityIds": []
+                  }
+                ],
+                "prerequisiteStates": []
+              },
+              "projectedAccounting": [
+                {
+                  "scopeId": "scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3",
+                  "kind": "event",
+                  "entityIds": [
+                    "event-0001"
+                  ]
+                },
+                {
+                  "scopeId": "scope-0002-cf8dd508e4b7bf322c01b8100c23d5cb39d2cb424314313a188f76cc82939765",
+                  "kind": "information",
+                  "entityIds": []
+                },
+                {
+                  "scopeId": "scope-0003-acaa7964efe6c10f971546cb50b7a744c71dafcddd57914b450a4f7a361a94b5",
+                  "kind": "information",
+                  "entityIds": []
+                },
+                {
+                  "scopeId": "scope-0004-ff02942e89eb99d4afc93120118548ca6968f824f32fc37f0f24106905497b2e",
+                  "kind": "information",
+                  "entityIds": []
+                },
+                {
+                  "scopeId": "scope-0005-1c904b293026e0b70a553d6c61f4480c1c5fe7afef6028597060c8d360d68eb5",
+                  "kind": "information",
+                  "entityIds": []
+                },
+                {
+                  "scopeId": "scope-0006-e6fdfcc007f0a7a9fbdae778394f065063a0a768a04c09282484d8e05993bba7",
+                  "kind": "information",
+                  "entityIds": []
+                }
+              ]
+            }
+          },
+          "sourceRenderedEvents": [
+            {
+              "entityId": "event-0001",
+              "originalTitle": "图书借阅门户停机",
+              "renderedTitle": "图书借阅门户将在周三晚停机"
+            }
+          ]
+        },
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "d26-common-bridge-1",
+          "modelName": "Candidate18 固定录制（非实时调用）",
+          "createdAt": "2026-09-22T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "图书借阅门户将在周三晚停机",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，1项事件。请核对后确认。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "tp-0001",
+              "type": "event_start",
+              "rawText": "周三晚",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 0.9,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "event-0001",
+              "title": "图书借阅门户将在周三晚停机",
+              "description": "图书借阅门户将在周三晚停机，",
+              "startTimePointTempId": "tp-0001",
+              "endTimePointTempId": null,
+              "location": null,
+              "confidence": 0.95,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3",
+              "sourceId": "source:fb2c8e4f",
+              "quote": "图书借阅门户将在周三晚停机，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-cf8dd508e4b7bf322c01b8100c23d5cb39d2cb424314313a188f76cc82939765",
+              "sourceId": "source:fb2c8e4f",
+              "quote": "既有借阅记录不受影响。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-acaa7964efe6c10f971546cb50b7a744c71dafcddd57914b450a4f7a361a94b5",
+              "sourceId": "source:fb2c8e4f",
+              "quote": "无需删除记录，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-ff02942e89eb99d4afc93120118548ca6968f824f32fc37f0f24106905497b2e",
+              "sourceId": "source:fb2c8e4f",
+              "quote": "不要提交说明，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-1c904b293026e0b70a553d6c61f4480c1c5fe7afef6028597060c8d360d68eb5",
+              "sourceId": "source:fb2c8e4f",
+              "quote": "也不必向值班员发消息。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-e6fdfcc007f0a7a9fbdae778394f065063a0a768a04c09282484d8e05993bba7",
+              "sourceId": "source:fb2c8e4f",
+              "quote": "本通知仅说明停机消息。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "既有借阅记录不受影响。",
+              "reason": "other"
+            },
+            {
+              "text": "无需删除记录，",
+              "reason": "other"
+            },
+            {
+              "text": "不要提交说明，",
+              "reason": "other"
+            },
+            {
+              "text": "也不必向值班员发消息。",
+              "reason": "other"
+            },
+            {
+              "text": "本通知仅说明停机消息。",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": []
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "event-0001",
+              "kind": "event",
+              "title": "图书借阅门户将在周三晚停机",
+              "description": "图书借阅门户将在周三晚停机，"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "待核对事件",
+              "description": "0项任务，1项事件。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "event-0001",
+              "kind": "event",
+              "title": "图书借阅门户将在周三晚停机",
+              "description": "图书借阅门户将在周三晚停机，"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "图书借阅门户将在周三晚停机",
+              "description": "0项任务，1项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "tp-0001",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "周三晚",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 3
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "晚",
+                "certainty": "partial",
+                "sourceContext": "图书借阅门户将在周三晚停机"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:fb2c8e4f:draft:1",
+          "sourceId": "source:fb2c8e4f",
+          "sourceVersionId": "source:fb2c8e4f:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 61,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-03T10:23:43.220Z",
+          "updatedAt": "2026-10-03T10:23:43.288Z",
+          "schemaVersion": "2.0",
+          "modelName": "Candidate18 固定录制（非实时调用）",
+          "promptVersion": "d26-common-bridge-1",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "d26-common-bridge-1",
+            "modelName": "Candidate18 固定录制（非实时调用）",
+            "createdAt": "2026-09-22T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "图书借阅门户将在周三晚停机",
+              "sourceType": "text",
+              "notificationType": "event_notice",
+              "summary": "0项任务，1项事件。请核对后确认。",
+              "requiresAction": false,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "tp-0001",
+                "type": "event_start",
+                "rawText": "周三晚",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 0.9,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "evidenceIds": [
+                  "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+                ]
+              }
+            ],
+            "events": [
+              {
+                "tempId": "event-0001",
+                "title": "图书借阅门户将在周三晚停机",
+                "description": "图书借阅门户将在周三晚停机，",
+                "startTimePointTempId": "tp-0001",
+                "endTimePointTempId": null,
+                "location": null,
+                "confidence": 0.95,
+                "inferenceLevel": "explicit",
+                "evidenceIds": [
+                  "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+                ],
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3",
+                "sourceId": "source:fb2c8e4f",
+                "quote": "图书借阅门户将在周三晚停机，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-cf8dd508e4b7bf322c01b8100c23d5cb39d2cb424314313a188f76cc82939765",
+                "sourceId": "source:fb2c8e4f",
+                "quote": "既有借阅记录不受影响。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-acaa7964efe6c10f971546cb50b7a744c71dafcddd57914b450a4f7a361a94b5",
+                "sourceId": "source:fb2c8e4f",
+                "quote": "无需删除记录，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0004-ff02942e89eb99d4afc93120118548ca6968f824f32fc37f0f24106905497b2e",
+                "sourceId": "source:fb2c8e4f",
+                "quote": "不要提交说明，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0005-1c904b293026e0b70a553d6c61f4480c1c5fe7afef6028597060c8d360d68eb5",
+                "sourceId": "source:fb2c8e4f",
+                "quote": "也不必向值班员发消息。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0006-e6fdfcc007f0a7a9fbdae778394f065063a0a768a04c09282484d8e05993bba7",
+                "sourceId": "source:fb2c8e4f",
+                "quote": "本通知仅说明停机消息。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [
+              {
+                "text": "既有借阅记录不受影响。",
+                "reason": "other"
+              },
+              {
+                "text": "无需删除记录，",
+                "reason": "other"
+              },
+              {
+                "text": "不要提交说明，",
+                "reason": "other"
+              },
+              {
+                "text": "也不必向值班员发消息。",
+                "reason": "other"
+              },
+              {
+                "text": "本通知仅说明停机消息。",
+                "reason": "other"
+              }
+            ],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 0.5,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": true,
+              "reviewReasons": []
+            }
+          },
+          "items": [],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:fb2c8e4f:draft:1",
+          "commitId": "source-review:source:fb2c8e4f:draft:1:fnv1a32:1a5fe650",
+          "disposition": "no_task",
+          "entityIds": [
+            "event:source:fb2c8e4f:draft:1:event-0001",
+            "time:source:fb2c8e4f:draft:1:tp-0001"
+          ],
+          "entityHashes": {
+            "event:source:fb2c8e4f:draft:1:event-0001": "fnv1a32:a8e06e16",
+            "time:source:fb2c8e4f:draft:1:tp-0001": "fnv1a32:ece28e8d"
+          },
+          "verifiedAt": "2026-10-03T10:23:57.935Z"
+        }
+      }
+    }
+  ],
+  "projects": [],
+  "milestones": [],
+  "workPackages": [],
+  "tasks": [
+    {
+      "id": "task:source:7a33d1df:draft:1:task-0001",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "提交实验物资核对表",
+      "description": "请于2026年10月19日16:30前提交实验物资核对表。",
+      "nextAction": "提交实验物资核对表",
+      "status": "todo",
+      "estimatedMinutes": 20,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-03T10:25:36.924Z",
+      "updatedAt": "2026-10-03T10:25:36.924Z",
+      "version": 2,
+      "legacyData": {
+        "recognitionTempId": "task-0001",
+        "actionVerb": "提交",
+        "actionObject": "实验物资核对表",
+        "completionCriteria": [
+          "门户提示收件成功"
+        ],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+        ],
+        "sourceId": "source:7a33d1df",
+        "category": "其他",
+        "v7Record": {
+          "id": "task:source:7a33d1df:draft:1:task-0001",
+          "hierarchyType": "task",
+          "actionVerb": "提交",
+          "actionObject": "实验物资核对表",
+          "completionCriteria": [
+            "门户提示收件成功"
+          ],
+          "evidenceIds": [
+            "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+          ],
+          "title": "提交实验物资核对表",
+          "category": "其他",
+          "status": "待开始",
+          "deadline": "2026-10-19T16:30",
+          "estimatedMinutes": 20,
+          "estimatedMinutesKnown": true,
+          "nextAction": "提交实验物资核对表",
+          "description": "请于2026年10月19日16:30前提交实验物资核对表。",
+          "priority": "中",
+          "riskFlags": [],
+          "materials": [
+            {
+              "id": "material:source:7a33d1df:draft:1:material-0001",
+              "name": "实验物资核对表",
+              "done": false,
+              "status": "unverified",
+              "taskId": "task:source:7a33d1df:draft:1:task-0001",
+              "sourceId": "source:7a33d1df"
+            }
+          ],
+          "dependencies": [],
+          "dependencyIds": [],
+          "reminders": [],
+          "sourceIds": [
+            "source:7a33d1df"
+          ],
+          "priorityReason": "由当前权威实体计算并允许手动调整",
+          "priorityReasons": [
+            "由当前权威实体计算并允许手动调整"
+          ],
+          "timePointIds": [
+            "time:source:7a33d1df:draft:1:time-0001"
+          ],
+          "materialIds": [
+            "material:source:7a33d1df:draft:1:material-0001"
+          ],
+          "createdAt": "2026-10-03T10:25:36.924Z",
+          "updatedAt": "2026-10-03T10:25:36.924Z",
+          "history": [
+            {
+              "id": "history:task:source:7a33d1df:draft:1:task-0001:created",
+              "field": "created",
+              "before": "null",
+              "after": "{\"id\":\"task:source:7a33d1df:draft:1:task-0001\"}",
+              "changedAt": "2026-10-03T10:25:36.924Z",
+              "actor": "user",
+              "entityType": "task",
+              "entityId": "task:source:7a33d1df:draft:1:task-0001",
+              "action": "created"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "materials": [
+    {
+      "id": "material:source:7a33d1df:draft:1:material-0001",
+      "projectId": null,
+      "name": "实验物资核对表",
+      "required": true,
+      "status": "unverified",
+      "requirements": [],
+      "formatRequirements": [
+        "PDF格式"
+      ],
+      "namingRequirements": [
+        "实验编号-负责人"
+      ],
+      "quantity": null,
+      "submissionChannel": null,
+      "relatedTaskIds": [
+        "task:source:7a33d1df:draft:1:task-0001"
+      ],
+      "deadlineTimePointId": null,
+      "createdAt": "2026-10-03T10:25:36.924Z",
+      "updatedAt": "2026-10-03T10:25:36.924Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "material-0001",
+        "evidenceIds": [
+          "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+          "d26-scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb",
+          "d26-scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b"
+        ],
+        "availabilityVersion": "ordinary-availability-unobserved-1",
+        "availabilityOrigin": "not_observed",
+        "sourceReviewDraftId": "source:7a33d1df:draft:1"
+      }
+    }
+  ],
+  "timePoints": [
+    {
+      "id": "time:source:fb2c8e4f:draft:1:tp-0001",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:fb2c8e4f:draft:1:event-0001",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "周三晚",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-03T10:23:57.921Z",
+      "updatedAt": "2026-10-03T10:23:57.921Z",
+      "legacyData": {
+        "recognitionTempId": "tp-0001",
+        "evidenceIds": [
+          "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+        ],
+        "confidence": 0.9
+      }
+    },
+    {
+      "id": "time:source:7a33d1df:draft:1:time-0001",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": "task:source:7a33d1df:draft:1:task-0001",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:7a33d1df:draft:1:task-0001"
+      ],
+      "relatedMaterialIds": [],
+      "type": "submission_deadline",
+      "rawText": "2026年10月19日16:30前",
+      "normalizedValue": "2026-10-19T16:30",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-03T10:25:36.924Z",
+      "updatedAt": "2026-10-03T10:25:36.924Z",
+      "legacyData": {
+        "recognitionTempId": "time-0001",
+        "evidenceIds": [
+          "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+        ],
+        "confidence": 0.95
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "event:source:fb2c8e4f:draft:1:event-0001",
+      "projectId": null,
+      "title": "图书借阅门户将在周三晚停机",
+      "description": "图书借阅门户将在周三晚停机，",
+      "startTimePointId": "time:source:fb2c8e4f:draft:1:tp-0001",
+      "endTimePointId": null,
+      "location": null,
+      "createdAt": "2026-10-03T10:23:57.921Z",
+      "updatedAt": "2026-10-03T10:23:57.921Z",
+      "legacyData": {
+        "recognitionTempId": "event-0001",
+        "evidenceIds": [
+          "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    }
+  ],
+  "evidenceRefs": [
+    {
+      "id": "evidence:source:fb2c8e4f:draft:1:d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3",
+      "sourceVersionId": "source:fb2c8e4f:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "图书借阅门户将在周三晚停机，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-03T10:23:57.921Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-7527818fca4820728e4af6d267e45a444eb74c8fadc9a9f6bacdc991136bc5d3"
+      }
+    },
+    {
+      "id": "evidence:source:7a33d1df:draft:1:d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e",
+      "sourceVersionId": "source:7a33d1df:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "请于2026年10月19日16:30前提交实验物资核对表。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-03T10:25:36.924Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-02ed53ecd30b7b18ec1c22d213fe2a7e7edc86b0664f1a09fcf8202a8fcbac8e"
+      }
+    },
+    {
+      "id": "evidence:source:7a33d1df:draft:1:d26-scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb",
+      "sourceVersionId": "source:7a33d1df:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "实验物资核对表须为PDF格式，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-03T10:25:36.924Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-8946032160010d311c1e896a5a8e9614d35081f9c1ccee559f9fffd9587712fb"
+      }
+    },
+    {
+      "id": "evidence:source:7a33d1df:draft:1:d26-scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b",
+      "sourceVersionId": "source:7a33d1df:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "文件名为实验编号-负责人；",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-03T10:25:36.924Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0003-73f0931f6277de49436da65b52c5ecdb6e426bb35ebcd7b2ffa53bf4f0fe237b"
+      }
+    }
+  ],
+  "changeProposals": [],
+  "historyRecords": [
+    {
+      "id": "history:time:source:fb2c8e4f:draft:1:tp-0001:created",
+      "entityType": "time_point",
+      "entityId": "time:source:fb2c8e4f:draft:1:tp-0001",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:fb2c8e4f:draft:1:tp-0001"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:fb2c8e4f:version:1",
+      "changedAt": "2026-10-03T10:23:57.921Z"
+    },
+    {
+      "id": "history:event:source:fb2c8e4f:draft:1:event-0001:created",
+      "entityType": "event",
+      "entityId": "event:source:fb2c8e4f:draft:1:event-0001",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:fb2c8e4f:draft:1:event-0001"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:fb2c8e4f:version:1",
+      "changedAt": "2026-10-03T10:23:57.921Z"
+    },
+    {
+      "id": "draft-item:source:7a33d1df:draft:1:task-0001-history-2026-10-03T10:24:57.592Z-0",
+      "entityType": "extraction_draft",
+      "entityId": "source:7a33d1df:draft:1",
+      "action": "updated",
+      "fieldName": "识别建议",
+      "before": "{\"id\":\"task-0001\",\"title\":\"提交实验物资核对表\",\"category\":\"其他\",\"deadline\":\"2026-10-19T16:30\",\"estimatedMinutes\":30,\"nextAction\":\"提交实验物资核对表\",\"description\":\"请于2026年10月19日16:30前提交实验物资核对表。\",\"priority\":\"中\",\"materials\":[\"实验物资核对表\"],\"evidence\":\"2026年10月19日16:30前\",\"confidence\":\"高\"}",
+      "after": "{\"id\":\"task-0001\",\"title\":\"提交实验物资核对表\",\"category\":\"其他\",\"deadline\":\"2026-10-19T16:30\",\"estimatedMinutes\":20,\"nextAction\":\"提交实验物资核对表\",\"description\":\"请于2026年10月19日16:30前提交实验物资核对表。\",\"priority\":\"中\",\"materials\":[\"实验物资核对表\"],\"evidence\":\"2026年10月19日16:30前\",\"confidence\":\"高\"}",
+      "actor": "user",
+      "reason": null,
+      "sourceVersionId": null,
+      "changedAt": "2026-10-03T10:24:57.592Z",
+      "needsReview": true,
+      "legacyData": {
+        "v7Record": {
+          "id": "draft-item:source:7a33d1df:draft:1:task-0001-history-2026-10-03T10:24:57.592Z-0",
+          "entityType": "draft",
+          "entityId": "draft-item:source:7a33d1df:draft:1:task-0001",
+          "field": "识别建议",
+          "before": "{\"id\":\"task-0001\",\"title\":\"提交实验物资核对表\",\"category\":\"其他\",\"deadline\":\"2026-10-19T16:30\",\"estimatedMinutes\":30,\"nextAction\":\"提交实验物资核对表\",\"description\":\"请于2026年10月19日16:30前提交实验物资核对表。\",\"priority\":\"中\",\"materials\":[\"实验物资核对表\"],\"evidence\":\"2026年10月19日16:30前\",\"confidence\":\"高\"}",
+          "after": "{\"id\":\"task-0001\",\"title\":\"提交实验物资核对表\",\"category\":\"其他\",\"deadline\":\"2026-10-19T16:30\",\"estimatedMinutes\":20,\"nextAction\":\"提交实验物资核对表\",\"description\":\"请于2026年10月19日16:30前提交实验物资核对表。\",\"priority\":\"中\",\"materials\":[\"实验物资核对表\"],\"evidence\":\"2026年10月19日16:30前\",\"confidence\":\"高\"}",
+          "actor": "user",
+          "action": "updated",
+          "changedAt": "2026-10-03T10:24:57.592Z",
+          "originalEntityId": "draft-item:source:7a33d1df:draft:1:task-0001"
+        }
+      }
+    },
+    {
+      "id": "history:task:source:7a33d1df:draft:1:task-0001:created",
+      "entityType": "task",
+      "entityId": "task:source:7a33d1df:draft:1:task-0001",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:7a33d1df:draft:1:task-0001"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:7a33d1df:version:1",
+      "changedAt": "2026-10-03T10:25:36.924Z"
+    },
+    {
+      "id": "history:material:source:7a33d1df:draft:1:material-0001:created",
+      "entityType": "material",
+      "entityId": "material:source:7a33d1df:draft:1:material-0001",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "material:source:7a33d1df:draft:1:material-0001"
+      },
+      "actor": "user",
+      "reason": "用户确认识别材料",
+      "sourceVersionId": "source:7a33d1df:version:1",
+      "changedAt": "2026-10-03T10:25:36.924Z"
+    },
+    {
+      "id": "history:time:source:7a33d1df:draft:1:time-0001:created",
+      "entityType": "time_point",
+      "entityId": "time:source:7a33d1df:draft:1:time-0001",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:7a33d1df:draft:1:time-0001"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:7a33d1df:version:1",
+      "changedAt": "2026-10-03T10:25:36.924Z"
+    }
+  ],
+  "reminderRecords": [],
+  "preferences": {
+    "onboardingCompletedAt": null,
+    "legacyData": {
+      "courseBlocks": [],
+      "integrations": {
+        "sync": {
+          "endpoint": "http://127.0.0.1:8787"
+        },
+        "webMonitors": [],
+        "connectionIntents": []
+      },
+      "knowledgeSettings": {},
+      "recognitionFeedback": [
+        {
+          "id": "feedback-1791023097630-0",
+          "draftId": "source:7a33d1df:draft:1",
+          "originalKind": "task:draft-item:source:7a33d1df:draft:1:task-0001",
+          "correctedKind": "fields:estimatedMinutes",
+          "action": "modified",
+          "createdAt": "2026-10-03T10:24:57.630Z"
+        }
+      ],
+      "v7MigrationLog": [],
+      "v7LegacyData": {}
+    }
+  },
+  "migrationMetadata": [],
+  "savedAt": "2026-10-03T10:27:43.336Z"
+}

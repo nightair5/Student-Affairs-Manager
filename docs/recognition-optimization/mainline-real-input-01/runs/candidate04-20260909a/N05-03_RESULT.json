@@ -1,0 +1,135 @@
+{
+  "unitId": "N05-03",
+  "arm": "03",
+  "bindingSha": "ecae72c8f778663a2ec1909dc15da90b860b4f30d5696cbec63c3845f772e07f",
+  "requestSha": "262ebb5722a04cfca3f616407b2896f51808201c37205dc3ffd860a3161bf5c8",
+  "responseSha": "b299746f3e5f2fd29c2966dc9aa12f5eac2bdb5cdc92e80ebb21919b2fe1576d",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "referenceSha": "0ae00cbfb99268d6f6faacf660e90f3661fdb92224f36f69f3e7ca299c67b529",
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 17199,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 3,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 1,
+        "precision": 0.3333333333333333,
+        "recall": 0.5
+      },
+      "requiresAction": {
+        "predicted": 3,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 1,
+        "precision": 0.3333333333333333,
+        "recall": 0.5
+      },
+      "time": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 3,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 3,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 5,
+        "reference": 4,
+        "correct": 1,
+        "falsePositive": 4,
+        "falseNegative": 3,
+        "precision": 0.2,
+        "recall": 0.25
+      },
+      "semantic": {
+        "predicted": 4,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 4,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 5,
+        "reference": 4,
+        "correct": 2,
+        "falsePositive": 3,
+        "falseNegative": 2,
+        "precision": 0.4,
+        "recall": 0.5
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [
+      {
+        "code": "CONDITION_CONTRADICTION",
+        "entityIds": [
+          "task_read_rules"
+        ]
+      }
+    ],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 3,
+    "referenceTaskCount": 2
+  },
+  "scoreError": null,
+  "totalAttempts": 41,
+  "newAttempts": 1,
+  "costUpperMicroCny": 32001,
+  "totalCostUpperMicroCny": 4134837,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12新合成通知首次开发配对验证，非独立盲测；24输出不是24独立通知"
+}

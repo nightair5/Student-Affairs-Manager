@@ -1,0 +1,1128 @@
+{
+  "version": "c19-fact-followup-browser-check-1",
+  "role": "ENGINEERING_REPLAY",
+  "status": "PASS",
+  "counts": {
+    "tasks": 5,
+    "projects": 0,
+    "events": 4,
+    "timePoints": 8,
+    "materials": 1
+  },
+  "sourceStates": {
+    "confirmed": 5,
+    "partially_confirmed": 1
+  },
+  "sources": {
+    "C19-DEV-S06": {
+      "sourceId": "source:67fae980",
+      "draftId": "source:67fae980:draft:1",
+      "recordedOrdinal": 11,
+      "candidate": "Candidate19",
+      "responseSha256": "0f011e226cc43b5ab15acde3301e5def50ba3dd459d44582b1edf5906275ddd7",
+      "sourceStatus": "confirmed",
+      "counts": {
+        "tasks": 1,
+        "projects": 0,
+        "events": 0,
+        "timePoints": 0,
+        "materials": 0
+      },
+      "receipt": {
+        "version": "source-review-d26-1",
+        "draftId": "source:67fae980:draft:1",
+        "commitId": "source-review:source:67fae980:draft:1:fnv1a32:c84e9292",
+        "disposition": "confirmed",
+        "entityIds": [
+          "task:source:67fae980:draft:1:task-0001"
+        ],
+        "entityHashes": {
+          "task:source:67fae980:draft:1:task-0001": "fnv1a32:169c7102"
+        },
+        "verifiedAt": "2026-10-04T06:49:28.644Z"
+      },
+      "originalTasks": 1,
+      "firstDisplayTasks": 1,
+      "programDisposition": [],
+      "tasks": [
+        {
+          "id": "task:source:67fae980:draft:1:task-0001",
+          "title": "核对储物柜编号",
+          "status": "todo",
+          "dependencyIds": [],
+          "completionCriteria": []
+        }
+      ],
+      "events": [],
+      "timePoints": [],
+      "materials": []
+    },
+    "C19-DEV-S03": {
+      "sourceId": "source:d6f448eb",
+      "draftId": "source:d6f448eb:draft:1",
+      "recordedOrdinal": 6,
+      "candidate": "Candidate19",
+      "responseSha256": "fd8f710ef5bb267cdf61fbe91482351f731d6832cc45e7fc6a435555636497db",
+      "sourceStatus": "partially_confirmed",
+      "counts": {
+        "tasks": 2,
+        "projects": 0,
+        "events": 0,
+        "timePoints": 0,
+        "materials": 0
+      },
+      "receipt": {
+        "version": "source-review-d26-1",
+        "draftId": "source:d6f448eb:draft:1",
+        "commitId": "source-review:source:d6f448eb:draft:1:fnv1a32:946c4931",
+        "disposition": "partial",
+        "entityIds": [
+          "task:source:d6f448eb:draft:1:task-0001",
+          "task:source:d6f448eb:draft:1:task-0002"
+        ],
+        "entityHashes": {
+          "task:source:d6f448eb:draft:1:task-0001": "fnv1a32:3b359489",
+          "task:source:d6f448eb:draft:1:task-0002": "fnv1a32:9109c8bf"
+        },
+        "verifiedAt": "2026-10-04T06:48:57.724Z"
+      },
+      "originalTasks": 3,
+      "firstDisplayTasks": 3,
+      "programDisposition": [],
+      "tasks": [
+        {
+          "id": "task:source:d6f448eb:draft:1:task-0001",
+          "title": "填写场地使用登记",
+          "status": "todo",
+          "dependencyIds": [],
+          "completionCriteria": []
+        },
+        {
+          "id": "task:source:d6f448eb:draft:1:task-0002",
+          "title": "递交场地使用登记",
+          "status": "todo",
+          "dependencyIds": [
+            "task:source:d6f448eb:draft:1:task-0001"
+          ],
+          "completionCriteria": []
+        }
+      ],
+      "events": [],
+      "timePoints": [],
+      "materials": []
+    },
+    "C19-DEV-S05": {
+      "sourceId": "source:a8f9a65c",
+      "draftId": "source:a8f9a65c:draft:1",
+      "recordedOrdinal": 10,
+      "candidate": "Candidate19",
+      "responseSha256": "c8febf8c1a7c77cf223e99e52142c31895a9dbc950c9e40c22b2f782d1dd285e",
+      "sourceStatus": "confirmed",
+      "counts": {
+        "tasks": 1,
+        "projects": 0,
+        "events": 1,
+        "timePoints": 3,
+        "materials": 1
+      },
+      "receipt": {
+        "version": "source-review-d26-1",
+        "draftId": "source:a8f9a65c:draft:1",
+        "commitId": "source-review:source:a8f9a65c:draft:1:fnv1a32:57b85f1d",
+        "disposition": "confirmed",
+        "entityIds": [
+          "task:source:a8f9a65c:draft:1:task-0001",
+          "event:source:a8f9a65c:draft:1:event-0001",
+          "time:source:a8f9a65c:draft:1:time-0001",
+          "time:source:a8f9a65c:draft:1:time-0002",
+          "time:source:a8f9a65c:draft:1:time-0003",
+          "material:source:a8f9a65c:draft:1:material-0001"
+        ],
+        "entityHashes": {
+          "task:source:a8f9a65c:draft:1:task-0001": "fnv1a32:75158ed4",
+          "event:source:a8f9a65c:draft:1:event-0001": "fnv1a32:8e784b3e",
+          "time:source:a8f9a65c:draft:1:time-0001": "fnv1a32:151eaf36",
+          "time:source:a8f9a65c:draft:1:time-0002": "fnv1a32:6066bdec",
+          "time:source:a8f9a65c:draft:1:time-0003": "fnv1a32:8144857b",
+          "material:source:a8f9a65c:draft:1:material-0001": "fnv1a32:17533a89"
+        },
+        "verifiedAt": "2026-10-04T06:48:22.264Z"
+      },
+      "originalTasks": 1,
+      "firstDisplayTasks": 1,
+      "programDisposition": [],
+      "tasks": [
+        {
+          "id": "task:source:a8f9a65c:draft:1:task-0001",
+          "title": "上传志愿服务统计表",
+          "status": "todo",
+          "dependencyIds": [],
+          "completionCriteria": [
+            "看到平台显示接收成功才算办结"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "event:source:a8f9a65c:draft:1:event-0001",
+          "projectId": null,
+          "title": "培训说明会",
+          "description": "培训说明会2026年11月14日14:20开始，\n15:35结束。",
+          "startTimePointId": "time:source:a8f9a65c:draft:1:time-0002",
+          "endTimePointId": "time:source:a8f9a65c:draft:1:time-0003",
+          "location": null,
+          "createdAt": "2026-10-04T06:48:22.192Z",
+          "updatedAt": "2026-10-04T06:48:22.192Z",
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0005-34a30c92255e16a227de9c2ed05a9444aaf471a4a19dd8219dc3891885cf28c3",
+              "d26-scope-0006-4e9b837d14f9930f9b23e093cb4d38f29c704d211396dbe2dc64bf2c4c4a2661"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:a8f9a65c:draft:1:time-0001",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": "task:source:a8f9a65c:draft:1:task-0001",
+          "materialId": "material:source:a8f9a65c:draft:1:material-0001",
+          "eventId": null,
+          "relatedTaskIds": [
+            "task:source:a8f9a65c:draft:1:task-0001"
+          ],
+          "relatedMaterialIds": [
+            "material:source:a8f9a65c:draft:1:material-0001"
+          ],
+          "type": "submission_deadline",
+          "rawText": "2026年11月13日09:25前",
+          "normalizedValue": "2026-11-13T09:25",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "createdAt": "2026-10-04T06:48:22.192Z",
+          "updatedAt": "2026-10-04T06:48:22.192Z",
+          "legacyData": {
+            "recognitionTempId": "time-0001",
+            "evidenceIds": [
+              "d26-scope-0001-e2225bb1d2b9b8ae36e248e7e5f33b45d2490f3d709c154541edeff27e5d4bcc"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:a8f9a65c:draft:1:time-0002",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:a8f9a65c:draft:1:event-0001",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_start",
+          "rawText": "2026年11月14日14:20开始",
+          "normalizedValue": "2026-11-14T14:20",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "createdAt": "2026-10-04T06:48:22.192Z",
+          "updatedAt": "2026-10-04T06:48:22.192Z",
+          "legacyData": {
+            "recognitionTempId": "time-0002",
+            "evidenceIds": [
+              "d26-scope-0005-34a30c92255e16a227de9c2ed05a9444aaf471a4a19dd8219dc3891885cf28c3"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:a8f9a65c:draft:1:time-0003",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:a8f9a65c:draft:1:event-0001",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_end",
+          "rawText": "15:35结束",
+          "normalizedValue": "2026-11-14T15:35",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "createdAt": "2026-10-04T06:48:22.192Z",
+          "updatedAt": "2026-10-04T06:48:22.192Z",
+          "legacyData": {
+            "recognitionTempId": "time-0003",
+            "evidenceIds": [
+              "d26-scope-0006-4e9b837d14f9930f9b23e093cb4d38f29c704d211396dbe2dc64bf2c4c4a2661"
+            ],
+            "confidence": 1
+          }
+        }
+      ],
+      "materials": [
+        {
+          "id": "material:source:a8f9a65c:draft:1:material-0001",
+          "projectId": null,
+          "name": "志愿服务统计表",
+          "required": true,
+          "status": "unverified",
+          "requirements": [],
+          "formatRequirements": [
+            "PDF"
+          ],
+          "namingRequirements": [
+            "文件名包含小组编号"
+          ],
+          "quantity": null,
+          "submissionChannel": "平台",
+          "relatedTaskIds": [
+            "task:source:a8f9a65c:draft:1:task-0001"
+          ],
+          "deadlineTimePointId": "time:source:a8f9a65c:draft:1:time-0001",
+          "createdAt": "2026-10-04T06:48:22.192Z",
+          "updatedAt": "2026-10-04T06:48:22.192Z",
+          "version": 1,
+          "legacyData": {
+            "recognitionTempId": "material-0001",
+            "evidenceIds": [
+              "d26-scope-0001-e2225bb1d2b9b8ae36e248e7e5f33b45d2490f3d709c154541edeff27e5d4bcc",
+              "d26-scope-0002-14e6e7a3877470f81bf25bdbaf09cbd59aa44c89fd8d93672858affc892a96f9",
+              "d26-scope-0003-3acb494598131003d6897fa6f84e8d70ca97e2bfe77bce110f44c7e57beb2146"
+            ],
+            "availabilityVersion": "ordinary-availability-unobserved-1",
+            "availabilityOrigin": "not_observed",
+            "sourceReviewDraftId": "source:a8f9a65c:draft:1"
+          }
+        }
+      ]
+    },
+    "C19-DEV-S02": {
+      "sourceId": "source:888eb129",
+      "draftId": "source:888eb129:draft:1",
+      "recordedOrdinal": 3,
+      "candidate": "Candidate19",
+      "responseSha256": "1b04a03763bdfa9069ce8a10fb8f74233552e37a63810a4e3a4f6f30f243b16e",
+      "sourceStatus": "confirmed",
+      "counts": {
+        "tasks": 0,
+        "projects": 0,
+        "events": 2,
+        "timePoints": 4,
+        "materials": 0
+      },
+      "receipt": {
+        "version": "source-review-d26-1",
+        "draftId": "source:888eb129:draft:1",
+        "commitId": "source-review:source:888eb129:draft:1:fnv1a32:508c5336",
+        "disposition": "no_task",
+        "entityIds": [
+          "event:source:888eb129:draft:1:event-0001",
+          "event:source:888eb129:draft:1:event-0002",
+          "time:source:888eb129:draft:1:time-0001",
+          "time:source:888eb129:draft:1:time-0002",
+          "time:source:888eb129:draft:1:time-0003",
+          "time:source:888eb129:draft:1:time-0004"
+        ],
+        "entityHashes": {
+          "event:source:888eb129:draft:1:event-0001": "fnv1a32:807e935e",
+          "event:source:888eb129:draft:1:event-0002": "fnv1a32:59a8f28e",
+          "time:source:888eb129:draft:1:time-0001": "fnv1a32:338f2aeb",
+          "time:source:888eb129:draft:1:time-0002": "fnv1a32:b256ea95",
+          "time:source:888eb129:draft:1:time-0003": "fnv1a32:90d0e45e",
+          "time:source:888eb129:draft:1:time-0004": "fnv1a32:d1efe996"
+        },
+        "verifiedAt": "2026-10-04T06:45:31.160Z"
+      },
+      "originalTasks": 0,
+      "firstDisplayTasks": 0,
+      "programDisposition": [],
+      "tasks": [],
+      "events": [
+        {
+          "id": "event:source:888eb129:draft:1:event-0001",
+          "projectId": null,
+          "title": "开放实验室说明会",
+          "description": "开放实验室说明会2026年11月12日10:10开始，\n11:40结束。",
+          "startTimePointId": "time:source:888eb129:draft:1:time-0001",
+          "endTimePointId": "time:source:888eb129:draft:1:time-0002",
+          "location": null,
+          "createdAt": "2026-10-04T06:45:01.514Z",
+          "updatedAt": "2026-10-04T06:45:01.514Z",
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-c016f7a1b8cedbeedcb99cf67cf30e090ba5aeaeb9994f585e388f6945d08e0e",
+              "d26-scope-0002-a3d37178551da4fdfd9550215930de05f599fdaec3f32a4e1528d7edecf3cb16"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        },
+        {
+          "id": "event:source:888eb129:draft:1:event-0002",
+          "projectId": null,
+          "title": "网络调试",
+          "description": "网络调试从周五夜间开始，\n恢复时间尚未公布。",
+          "startTimePointId": "time:source:888eb129:draft:1:time-0003",
+          "endTimePointId": "time:source:888eb129:draft:1:time-0004",
+          "location": null,
+          "createdAt": "2026-10-04T06:45:01.514Z",
+          "updatedAt": "2026-10-04T06:45:01.514Z",
+          "legacyData": {
+            "recognitionTempId": "event-0002",
+            "evidenceIds": [
+              "d26-scope-0003-7e1fa7742b835148ef354d6b23a4129ec8a2f9a98300a923129cb0ab9636ffd2",
+              "d26-scope-0004-ed8b3aa1744ef84305432077c08ab78c246814dd52cf2c9fe7bc11c6334eb19c"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:888eb129:draft:1:time-0001",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:888eb129:draft:1:event-0001",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_start",
+          "rawText": "2026年11月12日10:10开始",
+          "normalizedValue": "2026-11-12T10:10",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "createdAt": "2026-10-04T06:45:01.514Z",
+          "updatedAt": "2026-10-04T06:45:01.514Z",
+          "legacyData": {
+            "recognitionTempId": "time-0001",
+            "evidenceIds": [
+              "d26-scope-0001-c016f7a1b8cedbeedcb99cf67cf30e090ba5aeaeb9994f585e388f6945d08e0e"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:888eb129:draft:1:time-0002",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:888eb129:draft:1:event-0001",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_end",
+          "rawText": "11:40结束",
+          "normalizedValue": "2026-11-12T11:40",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "createdAt": "2026-10-04T06:45:01.514Z",
+          "updatedAt": "2026-10-04T06:45:01.514Z",
+          "legacyData": {
+            "recognitionTempId": "time-0002",
+            "evidenceIds": [
+              "d26-scope-0002-a3d37178551da4fdfd9550215930de05f599fdaec3f32a4e1528d7edecf3cb16"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:888eb129:draft:1:time-0003",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:888eb129:draft:1:event-0002",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_start",
+          "rawText": "周五夜间开始",
+          "normalizedValue": null,
+          "timezone": null,
+          "isAllDay": false,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "createdAt": "2026-10-04T06:45:01.514Z",
+          "updatedAt": "2026-10-04T06:45:01.514Z",
+          "legacyData": {
+            "recognitionTempId": "time-0003",
+            "evidenceIds": [
+              "d26-scope-0003-7e1fa7742b835148ef354d6b23a4129ec8a2f9a98300a923129cb0ab9636ffd2"
+            ],
+            "confidence": 1
+          }
+        },
+        {
+          "id": "time:source:888eb129:draft:1:time-0004",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:888eb129:draft:1:event-0002",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_end",
+          "rawText": "恢复时间尚未公布",
+          "normalizedValue": null,
+          "timezone": null,
+          "isAllDay": false,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "createdAt": "2026-10-04T06:45:01.514Z",
+          "updatedAt": "2026-10-04T06:45:01.514Z",
+          "legacyData": {
+            "recognitionTempId": "time-0004",
+            "evidenceIds": [
+              "d26-scope-0004-ed8b3aa1744ef84305432077c08ab78c246814dd52cf2c9fe7bc11c6334eb19c"
+            ],
+            "confidence": 1
+          }
+        }
+      ],
+      "materials": []
+    },
+    "C19-DEV-S01": {
+      "sourceId": "source:0ec8805e",
+      "draftId": "source:0ec8805e:draft:1",
+      "recordedOrdinal": 2,
+      "candidate": "Candidate19",
+      "responseSha256": "3e725f3f2b99787f4124fd0862a6bff877d169835b106424413f3c33ddda2efa",
+      "sourceStatus": "confirmed",
+      "counts": {
+        "tasks": 0,
+        "projects": 0,
+        "events": 1,
+        "timePoints": 1,
+        "materials": 0
+      },
+      "receipt": {
+        "version": "source-review-d26-1",
+        "draftId": "source:0ec8805e:draft:1",
+        "commitId": "source-review:source:0ec8805e:draft:1:fnv1a32:818e3215",
+        "disposition": "no_task",
+        "entityIds": [
+          "event:source:0ec8805e:draft:1:event-0001",
+          "time:source:0ec8805e:draft:1:time-0001"
+        ],
+        "entityHashes": {
+          "event:source:0ec8805e:draft:1:event-0001": "fnv1a32:1b3b46b4",
+          "time:source:0ec8805e:draft:1:time-0001": "fnv1a32:dbe1cd30"
+        },
+        "verifiedAt": "2026-10-04T06:44:04.662Z"
+      },
+      "originalTasks": 2,
+      "firstDisplayTasks": 0,
+      "programDisposition": [],
+      "tasks": [],
+      "events": [
+        {
+          "id": "event:source:0ec8805e:draft:1:event-0001",
+          "projectId": null,
+          "title": "校园失物查询网站将在周日晚间暂停查询",
+          "description": "校园失物查询网站将在周日晚间暂停查询。",
+          "startTimePointId": "time:source:0ec8805e:draft:1:time-0001",
+          "endTimePointId": null,
+          "location": null,
+          "createdAt": "2026-10-04T06:44:04.637Z",
+          "updatedAt": "2026-10-04T06:44:04.637Z",
+          "legacyData": {
+            "recognitionTempId": "event-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2c33a59f9b6b0f2ae78b74ff06df36c3934ca220a8a7f01a01aa528eef36cca2"
+            ],
+            "inferenceLevel": "explicit"
+          }
+        }
+      ],
+      "timePoints": [
+        {
+          "id": "time:source:0ec8805e:draft:1:time-0001",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:0ec8805e:draft:1:event-0001",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_start",
+          "rawText": "周日晚间",
+          "normalizedValue": null,
+          "timezone": null,
+          "isAllDay": false,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "createdAt": "2026-10-04T06:44:04.637Z",
+          "updatedAt": "2026-10-04T06:44:04.637Z",
+          "legacyData": {
+            "recognitionTempId": "time-0001",
+            "evidenceIds": [
+              "d26-scope-0001-2c33a59f9b6b0f2ae78b74ff06df36c3934ca220a8a7f01a01aa528eef36cca2"
+            ],
+            "confidence": 0.9
+          }
+        }
+      ],
+      "materials": []
+    },
+    "C19-DEV-S04": {
+      "sourceId": "source:6e5fc36c",
+      "draftId": "source:6e5fc36c:draft:1",
+      "recordedOrdinal": 7,
+      "candidate": "Candidate19",
+      "responseSha256": "6ae14cd30dd8b18d8608a67f0b4cb38b3cbceb352e93deb441ec2ab26215c760",
+      "sourceStatus": "confirmed",
+      "counts": {
+        "tasks": 1,
+        "projects": 0,
+        "events": 0,
+        "timePoints": 0,
+        "materials": 0
+      },
+      "receipt": {
+        "version": "source-review-d26-1",
+        "draftId": "source:6e5fc36c:draft:1",
+        "commitId": "source-review:source:6e5fc36c:draft:1:fnv1a32:a3d0fb5b",
+        "disposition": "confirmed",
+        "entityIds": [
+          "task:source:6e5fc36c:draft:1:task-0002"
+        ],
+        "entityHashes": {
+          "task:source:6e5fc36c:draft:1:task-0002": "fnv1a32:2f36e662"
+        },
+        "verifiedAt": "2026-10-04T06:43:35.915Z"
+      },
+      "originalTasks": 2,
+      "firstDisplayTasks": 1,
+      "programDisposition": [
+        {
+          "entityId": "task-0001",
+          "operation": "CURRENT_INAPPLICABLE_INFORMATION",
+          "scopeIds": [
+            "scope-0001-2bc43113296c5189a5bad60db658b5abafcbe57906eb7c28294b75b66c92a36f",
+            "scope-0002-0dd6efda264471527e453d97fe9bfbbfd0a0d4c6475f518993ff075e36da5120",
+            "scope-0003-03400e98821e829f3f5d64a2a4bd0c0bcb5db29d3963f329f62e438877d67d06"
+          ],
+          "reason": "原文明确本次资格不适用并禁止这个动作；保留说明和依据，不增加可执行待办。"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "task:source:6e5fc36c:draft:1:task-0002",
+          "title": "保存活动联系编号",
+          "status": "todo",
+          "dependencyIds": [],
+          "completionCriteria": []
+        }
+      ],
+      "events": [],
+      "timePoints": [],
+      "materials": []
+    }
+  },
+  "atomicFailure": {
+    "s05NoFormalFacts": true,
+    "evidence": "S05_FAILED_CANONICAL.json"
+  },
+  "readbackFailure": {
+    "s02AlreadyCommitted": true,
+    "pendingReceipt": {
+      "version": "source-review-d26-1",
+      "draftId": "source:888eb129:draft:1",
+      "commitId": "source-review:source:888eb129:draft:1:fnv1a32:508c5336",
+      "disposition": "no_task",
+      "entityIds": [
+        "event:source:888eb129:draft:1:event-0001",
+        "event:source:888eb129:draft:1:event-0002",
+        "time:source:888eb129:draft:1:time-0001",
+        "time:source:888eb129:draft:1:time-0002",
+        "time:source:888eb129:draft:1:time-0003",
+        "time:source:888eb129:draft:1:time-0004"
+      ],
+      "entityHashes": {
+        "event:source:888eb129:draft:1:event-0001": "fnv1a32:807e935e",
+        "event:source:888eb129:draft:1:event-0002": "fnv1a32:59a8f28e",
+        "time:source:888eb129:draft:1:time-0001": "fnv1a32:338f2aeb",
+        "time:source:888eb129:draft:1:time-0002": "fnv1a32:b256ea95",
+        "time:source:888eb129:draft:1:time-0003": "fnv1a32:90d0e45e",
+        "time:source:888eb129:draft:1:time-0004": "fnv1a32:d1efe996"
+      }
+    },
+    "onlyRereadRecovery": true,
+    "canonicalArraysUnchanged": true,
+    "commitId": "source-review:source:888eb129:draft:1:fnv1a32:508c5336"
+  },
+  "refresh": {
+    "canonicalArraysEqual": true,
+    "uniqueIds": true,
+    "sourceRelationshipsValid": true
+  },
+  "measurements": [
+    {
+      "sourceId": "C19-DEV-S06",
+      "draftId": "source:67fae980:draft:1",
+      "canonicalStatus": "confirmed",
+      "calculatorOutcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 0
+      },
+      "semantic": {
+        "version": "d22-semantic-active-input-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semanticFields": [],
+        "semanticFieldCount": 0,
+        "storageLeafFields": [],
+        "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+        "correctDisposition": "NOT_ADJUDICATED",
+        "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+        "activeEditMs": 0,
+        "wallMs": 9920,
+        "readMs": 9748,
+        "waitMs": 172,
+        "hiddenMs": 0,
+        "idleMs": 0,
+        "structural": false,
+        "missing": [],
+        "legacyMeasurement32": {
+          "version": "low-edit-v2-exploratory-1",
+          "role": "ENGINEERING_REPLAY",
+          "correctDisposition": null,
+          "zeroSubstantiveModification": null,
+          "lowModificationCorrectDisposition": null,
+          "committedFields": [],
+          "fieldCount": 0,
+          "structural": false,
+          "activeEditMs": 0,
+          "readMs": 9748,
+          "waitMs": 172,
+          "hiddenMs": 0,
+          "idleMs": 0,
+          "missing": [],
+          "postTerminalEvents": 0,
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:67fae980:draft:1:fnv1a32:c84e9292"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "commitIds": [
+        "source-review:source:67fae980:draft:1:fnv1a32:c84e9292"
+      ],
+      "readbackCommitIds": [
+        "source-review:source:67fae980:draft:1:fnv1a32:c84e9292"
+      ],
+      "failureEvents": []
+    },
+    {
+      "sourceId": "C19-DEV-S03",
+      "draftId": "source:d6f448eb:draft:1",
+      "canonicalStatus": "partially_confirmed",
+      "calculatorOutcomes": {
+        "complete": false,
+        "partial": false,
+        "failureEvents": 0
+      },
+      "semantic": {
+        "version": "d22-semantic-active-input-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semanticFields": [],
+        "semanticFieldCount": 0,
+        "storageLeafFields": [],
+        "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+        "correctDisposition": "NOT_ADJUDICATED",
+        "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+        "activeEditMs": null,
+        "wallMs": null,
+        "readMs": null,
+        "waitMs": null,
+        "hiddenMs": null,
+        "idleMs": null,
+        "structural": false,
+        "missing": [
+          "unclosed interval",
+          "terminal commit/readback"
+        ],
+        "legacyMeasurement32": {
+          "version": "low-edit-v2-exploratory-1",
+          "role": "ENGINEERING_REPLAY",
+          "correctDisposition": null,
+          "zeroSubstantiveModification": null,
+          "lowModificationCorrectDisposition": null,
+          "committedFields": [],
+          "fieldCount": 0,
+          "structural": false,
+          "activeEditMs": null,
+          "readMs": null,
+          "waitMs": null,
+          "hiddenMs": null,
+          "idleMs": null,
+          "missing": [
+            "unclosed interval",
+            "terminal commit/readback"
+          ],
+          "postTerminalEvents": 0,
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:d6f448eb:draft:1:fnv1a32:946c4931"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "commitIds": [
+        "source-review:source:d6f448eb:draft:1:fnv1a32:946c4931"
+      ],
+      "readbackCommitIds": [
+        "source-review:source:d6f448eb:draft:1:fnv1a32:946c4931"
+      ],
+      "failureEvents": []
+    },
+    {
+      "sourceId": "C19-DEV-S05",
+      "draftId": "source:a8f9a65c:draft:1",
+      "canonicalStatus": "confirmed",
+      "calculatorOutcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 1
+      },
+      "semantic": {
+        "version": "d22-semantic-active-input-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semanticFields": [],
+        "semanticFieldCount": 0,
+        "storageLeafFields": [],
+        "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+        "correctDisposition": "NOT_ADJUDICATED",
+        "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+        "activeEditMs": null,
+        "wallMs": null,
+        "readMs": null,
+        "waitMs": null,
+        "hiddenMs": null,
+        "idleMs": null,
+        "structural": false,
+        "missing": [
+          "refresh time discontinuity"
+        ],
+        "legacyMeasurement32": {
+          "version": "low-edit-v2-exploratory-1",
+          "role": "ENGINEERING_REPLAY",
+          "correctDisposition": null,
+          "zeroSubstantiveModification": null,
+          "lowModificationCorrectDisposition": null,
+          "committedFields": [],
+          "fieldCount": 0,
+          "structural": false,
+          "activeEditMs": null,
+          "readMs": null,
+          "waitMs": null,
+          "hiddenMs": null,
+          "idleMs": null,
+          "missing": [
+            "refresh time discontinuity"
+          ],
+          "postTerminalEvents": 0,
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:a8f9a65c:draft:1:fnv1a32:57b85f1d"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "commitIds": [
+        "source-review:source:a8f9a65c:draft:1:fnv1a32:57b85f1d"
+      ],
+      "readbackCommitIds": [
+        "source-review:source:a8f9a65c:draft:1:fnv1a32:57b85f1d"
+      ],
+      "failureEvents": [
+        {
+          "id": "f5f523f0-5afe-4fd0-8ebf-a9cd2a71f30e",
+          "draftId": "source:a8f9a65c:draft:1",
+          "atMs": 1791096474838,
+          "kind": "failure",
+          "error": "RECORDED_INJECTED_FORMAL_SAVE_FAILURE"
+        }
+      ]
+    },
+    {
+      "sourceId": "C19-DEV-S02",
+      "draftId": "source:888eb129:draft:1",
+      "canonicalStatus": "confirmed",
+      "calculatorOutcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 1
+      },
+      "semantic": {
+        "version": "d22-semantic-active-input-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semanticFields": [],
+        "semanticFieldCount": 0,
+        "storageLeafFields": [],
+        "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+        "correctDisposition": "NOT_ADJUDICATED",
+        "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+        "activeEditMs": 0,
+        "wallMs": 40561,
+        "readMs": 40488,
+        "waitMs": 73,
+        "hiddenMs": 0,
+        "idleMs": 0,
+        "structural": false,
+        "missing": [],
+        "legacyMeasurement32": {
+          "version": "low-edit-v2-exploratory-1",
+          "role": "ENGINEERING_REPLAY",
+          "correctDisposition": null,
+          "zeroSubstantiveModification": null,
+          "lowModificationCorrectDisposition": null,
+          "committedFields": [],
+          "fieldCount": 0,
+          "structural": false,
+          "activeEditMs": 0,
+          "readMs": 40488,
+          "waitMs": 73,
+          "hiddenMs": 0,
+          "idleMs": 0,
+          "missing": [],
+          "postTerminalEvents": 0,
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:888eb129:draft:1:fnv1a32:508c5336"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "commitIds": [
+        "source-review:source:888eb129:draft:1:fnv1a32:508c5336"
+      ],
+      "readbackCommitIds": [
+        "source-review:source:888eb129:draft:1:fnv1a32:508c5336"
+      ],
+      "failureEvents": [
+        {
+          "id": "e25a9210-914b-45ee-98cd-d951c10aaef1",
+          "draftId": "source:888eb129:draft:1",
+          "atMs": 1791096301551,
+          "kind": "failure",
+          "error": "RECORDED_INJECTED_READBACK_FAILURE"
+        }
+      ]
+    },
+    {
+      "sourceId": "C19-DEV-S01",
+      "draftId": "source:0ec8805e:draft:1",
+      "canonicalStatus": "confirmed",
+      "calculatorOutcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 0
+      },
+      "semantic": {
+        "version": "d22-semantic-active-input-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semanticFields": [],
+        "semanticFieldCount": 0,
+        "storageLeafFields": [],
+        "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+        "correctDisposition": "NOT_ADJUDICATED",
+        "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+        "activeEditMs": 0,
+        "wallMs": 13028,
+        "readMs": 12985,
+        "waitMs": 43,
+        "hiddenMs": 0,
+        "idleMs": 0,
+        "structural": false,
+        "missing": [],
+        "legacyMeasurement32": {
+          "version": "low-edit-v2-exploratory-1",
+          "role": "ENGINEERING_REPLAY",
+          "correctDisposition": null,
+          "zeroSubstantiveModification": null,
+          "lowModificationCorrectDisposition": null,
+          "committedFields": [],
+          "fieldCount": 0,
+          "structural": false,
+          "activeEditMs": 0,
+          "readMs": 12985,
+          "waitMs": 43,
+          "hiddenMs": 0,
+          "idleMs": 0,
+          "missing": [],
+          "postTerminalEvents": 0,
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:0ec8805e:draft:1:fnv1a32:818e3215"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "commitIds": [
+        "source-review:source:0ec8805e:draft:1:fnv1a32:818e3215"
+      ],
+      "readbackCommitIds": [
+        "source-review:source:0ec8805e:draft:1:fnv1a32:818e3215"
+      ],
+      "failureEvents": []
+    },
+    {
+      "sourceId": "C19-DEV-S04",
+      "draftId": "source:6e5fc36c:draft:1",
+      "canonicalStatus": "confirmed",
+      "calculatorOutcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 0
+      },
+      "semantic": {
+        "version": "d22-semantic-active-input-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semanticFields": [],
+        "semanticFieldCount": 0,
+        "storageLeafFields": [],
+        "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+        "correctDisposition": "NOT_ADJUDICATED",
+        "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+        "activeEditMs": 0,
+        "wallMs": 19864,
+        "readMs": 19830,
+        "waitMs": 34,
+        "hiddenMs": 0,
+        "idleMs": 0,
+        "structural": false,
+        "missing": [],
+        "legacyMeasurement32": {
+          "version": "low-edit-v2-exploratory-1",
+          "role": "ENGINEERING_REPLAY",
+          "correctDisposition": null,
+          "zeroSubstantiveModification": null,
+          "lowModificationCorrectDisposition": null,
+          "committedFields": [],
+          "fieldCount": 0,
+          "structural": false,
+          "activeEditMs": 0,
+          "readMs": 19830,
+          "waitMs": 34,
+          "hiddenMs": 0,
+          "idleMs": 0,
+          "missing": [],
+          "postTerminalEvents": 0,
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:6e5fc36c:draft:1:fnv1a32:a3d0fb5b"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "commitIds": [
+        "source-review:source:6e5fc36c:draft:1:fnv1a32:a3d0fb5b"
+      ],
+      "readbackCommitIds": [
+        "source-review:source:6e5fc36c:draft:1:fnv1a32:a3d0fb5b"
+      ],
+      "failureEvents": []
+    }
+  ],
+  "measurementLimits": {
+    "noFieldEditIdsInvented": true,
+    "closedReadOnlyActiveZero": 4,
+    "missingTimeNotZero": 2,
+    "legacyPartialBooleanNotCanonicalStatus": true,
+    "humanMetrics": "NOT_OBSERVABLE",
+    "titleFreeDescriptionLeakage": "NOT_ADJUDICATED"
+  },
+  "unchangedIsolation": "Final DB identity verified. Dual-identity/CAS base reused unchanged from existing tests; no new dual-person browser claim."
+}

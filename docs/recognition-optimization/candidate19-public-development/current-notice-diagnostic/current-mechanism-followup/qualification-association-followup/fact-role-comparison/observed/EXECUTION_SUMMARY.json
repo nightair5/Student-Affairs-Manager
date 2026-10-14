@@ -1,0 +1,51 @@
+{
+  "batch": "TASK-REQUIREMENTS-FACT-ROLE-DEVELOPMENT-20261009-R1",
+  "model": "deepseek-flash",
+  "authorizationSource": "User attached autonomous package exact original stored local; no fabricated per-batch response.",
+  "packageLimits": {
+    "requests": 16,
+    "usd": 6,
+    "hours": 3,
+    "substantiveIterations": 3
+  },
+  "allocatedBatch": {
+    "requests": 8,
+    "grantCount": 1,
+    "reserveCount": 8,
+    "settleCount": 8,
+    "capUsd": 2.6,
+    "provenWorstMicroUsd": 2595232
+  },
+  "actual": {
+    "requests": 8,
+    "settled": 8,
+    "uncertain": 0,
+    "notSent": 0,
+    "retry": 0,
+    "repair": 0,
+    "verifier": 0,
+    "additionalSamples": 0
+  },
+  "usage": {
+    "input": 45644,
+    "output": 16123,
+    "total": 61767,
+    "conservativeMicroUsd": 33042
+  },
+  "conservativeInternalSettlementUsd": 0.033042,
+  "providerActualDeduction": "NOT_OBSERVABLE",
+  "priceBasis": "Actual returned input/output tokens, peak cache-miss rate and per-unit ceil; actual cached usage retained but never assumed for the pre-call upper bound.",
+  "priceSources": [
+    "https://api-docs.deepseek.com/quick_start/pricing/",
+    "https://api-docs.deepseek.com/api/create-response/"
+  ],
+  "grantId": "fact-role-dedaca14-1941-4a43-9d80-0bf593fcc82e",
+  "ledger": {
+    "rows": 1082,
+    "sha256": "b3e3952c66cc1f3a1a1302f8ae7ef36394b5502e59ce044f5a5e5c7f903183af",
+    "tail": "c1dbb74d36a417bde90c9c98c479da7a6fc0a4bba16cffb7967acffd725f9eea",
+    "batchRows": 17
+  },
+  "oldSealedBatches": "UNCHANGED_NOT_RECOVERED",
+  "remainingAuthorization": "Unused caps are not a work target; no more calls needed for these deterministic repairs."
+}

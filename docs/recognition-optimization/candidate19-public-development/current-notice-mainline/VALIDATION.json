@@ -1,0 +1,848 @@
+{
+  "role": "ENGINEERING_ONLY",
+  "modelCalls": 0,
+  "ledgerWrites": 0,
+  "targeted": {
+    "files": [
+      "src/recognition/currentNoticeTimes.test.ts",
+      "src/recognition/sourceAccountingSupportProduct.test.ts"
+    ],
+    "passed": 12
+  },
+  "phases": {
+    "lint": {
+      "phase": "lint",
+      "timezone": "Asia/Shanghai",
+      "envDir": false,
+      "rootEnvRead": false,
+      "modelCalls": 0,
+      "ledgerWrites": 0,
+      "outcome": "PASS",
+      "results": [
+        {
+          "layer": "lint",
+          "label": "lint",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\lint\\Asia-Shanghai\\lint.log"
+        }
+      ]
+    },
+    "test": {
+      "phase": "test",
+      "timezone": "Asia/Shanghai",
+      "envDir": false,
+      "rootEnvRead": false,
+      "modelCalls": 0,
+      "ledgerWrites": 0,
+      "outcome": "FAIL",
+      "results": [
+        {
+          "layer": "current-product",
+          "label": "timezone",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\timezone.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "contract",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\contract.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "time-contract",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\time-contract.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "vitest-product",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-product.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "server",
+          "status": 1,
+          "outcome": "FAIL",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\server.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "worker",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\worker.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "worker-d26",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\worker-d26.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "functions",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\functions.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "time-parity",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\time-parity.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "vitest-safety",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-safety.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "vitest-runtime-current",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-runtime-current.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "carrier-preparation",
+          "status": 0,
+          "outcome": "PASS",
+          "manifest": "C:\\Users\\Winner\\AppData\\Local\\Temp\\c11-engineering-carriers-11be0d89-48ac-4cad-8619-df0b8df45149\\carriers.json"
+        },
+        {
+          "layer": "current-safety",
+          "label": "vitest-carriers",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-carriers.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "current-checks",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\current-checks.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "governance-unit",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\governance-unit.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "multimodal-lib",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\multimodal-lib.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "c11-scoring",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\c11-scoring.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "c11-preview",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\c11-preview.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d25-executor",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d25-executor.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d25-mechanism",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d25-mechanism.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-mechanism",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-mechanism.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-executor",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-executor.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-freeze",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-freeze.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-score-recording",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-score-recording.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-execution-host",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-execution-host.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-execution-report",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-execution-report.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-recorded-projection",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-recorded-projection.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "scoped-execution",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\scoped-execution.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "scoped-diagnostics",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\scoped-diagnostics.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "candidate19-contract",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\candidate19-contract.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "public-notice-diagnostic",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\public-notice-diagnostic.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d25-live-safety",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d25-live-safety.log"
+        },
+        {
+          "layer": "historical",
+          "label": "historical-originals",
+          "status": 0,
+          "outcome": "PASS",
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\historical-originals.json",
+          "ledgerRead": false
+        },
+        {
+          "layer": "historical",
+          "label": "d19-diagnostic",
+          "status": 1,
+          "outcome": "FAIL",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d19-diagnostic.log"
+        },
+        {
+          "layer": "historical",
+          "label": "d9-historical",
+          "status": 1,
+          "outcome": "FAIL",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d9-historical.log"
+        },
+        {
+          "layer": "historical",
+          "label": "rco-5-007",
+          "status": 1,
+          "outcome": "FAIL",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\rco-5-007.log"
+        },
+        {
+          "layer": "historical",
+          "label": "c11-history",
+          "status": 1,
+          "outcome": "FAIL",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\c11-history.log"
+        },
+        {
+          "layer": "historical",
+          "label": "c11-gateway",
+          "status": 1,
+          "outcome": "FAIL",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\c11-gateway.log"
+        },
+        {
+          "layer": "historical",
+          "label": "vitest-d17-history",
+          "status": 1,
+          "outcome": "FAIL",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-d17-history.log"
+        },
+        {
+          "layer": "historical",
+          "label": "vitest-runtime-history",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-runtime-history.log"
+        },
+        {
+          "layer": "historical",
+          "label": "vitest-carriers-history",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-carriers-history.log"
+        }
+      ]
+    },
+    "build": {
+      "phase": "build",
+      "timezone": "Asia/Shanghai",
+      "envDir": false,
+      "rootEnvRead": false,
+      "modelCalls": 0,
+      "ledgerWrites": 0,
+      "outcome": "PASS",
+      "results": [
+        {
+          "layer": "build",
+          "label": "typecheck",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\build\\Asia-Shanghai\\typecheck.log"
+        },
+        {
+          "layer": "build",
+          "label": "build",
+          "status": 0,
+          "outcome": "PASS",
+          "rootEnvRead": false
+        }
+      ]
+    },
+    "security": {
+      "phase": "security",
+      "timezone": "Asia/Shanghai",
+      "envDir": false,
+      "rootEnvRead": false,
+      "modelCalls": 0,
+      "ledgerWrites": 0,
+      "outcome": "PASS",
+      "results": [
+        {
+          "layer": "security",
+          "label": "security",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\security\\Asia-Shanghai\\security.log"
+        }
+      ]
+    }
+  },
+  "serverIsolated": {
+    "command": "node --test server/server-tests.mjs",
+    "passed": 8,
+    "failed": 0,
+    "doesNotEraseOriginalFullRunFailure": true
+  },
+  "fullServerFailure": "✔ sync is closed when the server token is missing (33.0673ms)\n✖ authenticated sync persists data and reports conflicts (3.3628ms)\n✔ email queue stays blocked without a provider (4.9139ms)\n✔ email queue records failure and explicit retry before sent (9.2674ms)\n✔ web fetch is closed unless explicitly enabled and validates public HTTPS targets (1.1621ms)\n✔ public web fetch extracts inert text and revalidates redirects (1.5122ms)\n✔ DeepSeek remains disabled without a server-side key (0.1443ms)\n✔ DeepSeek adapter sends only the bounded question and citations (0.4155ms)\nℹ tests 8\nℹ suites 0\nℹ pass 7\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 164.4919\n\n✖ failing tests:\n\ntest at server\\server-tests.mjs:51:1\n✖ authenticated sync persists data and reports conflicts (3.3628ms)\n  [TypeError: fetch failed] {\n    [cause]: Error: bad port\n        at makeNetworkError (node:internal/deps/undici/undici:11790:35)\n        at mainFetch (node:internal/deps/undici/undici:13173:22)\n        at fetching (node:internal/deps/undici/undici:13160:7)\n        at fetch (node:internal/deps/undici/undici:13024:20)\n        at fetch (node:internal/deps/undici/undici:17692:10)\n        at fetch (node:internal/bootstrap/web/exposed-window-or-worker:83:12)\n        at file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/server/server-tests.mjs:54:27\n        at withServer (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/server/server-tests.mjs:36:11)\n        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n        at async TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/server/server-tests.mjs:52:3)\n  }\n",
+  "audit": {
+    "metadata": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 2,
+        "high": 5,
+        "critical": 0,
+        "total": 7
+      },
+      "dependencies": {
+        "prod": 23,
+        "dev": 326,
+        "optional": 122,
+        "peer": 0,
+        "peerOptional": 0,
+        "total": 359
+      }
+    },
+    "vulnerabilities": {
+      "@vitest/mocker": {
+        "name": "@vitest/mocker",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          {
+            "source": 1193684,
+            "name": "@vitest/mocker",
+            "dependency": "@vitest/mocker",
+            "title": "Vitest: Path Traversal / Arbitrary File Read via @vitest/mocker Redirect Mock",
+            "url": "https://github.com/advisories/GHSA-82fw-gwwq-j7x9",
+            "severity": "moderate",
+            "cwe": [
+              "CWE-22"
+            ],
+            "cvss": {
+              "score": 5.9,
+              "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
+            },
+            "range": ">=2.1.0 <4.1.11"
+          }
+        ],
+        "effects": [
+          "vitest"
+        ],
+        "range": "2.1.0 - 4.1.10",
+        "nodes": [
+          "node_modules/@vitest/mocker"
+        ],
+        "fixAvailable": {
+          "name": "vitest",
+          "version": "5.0.3",
+          "isSemVerMajor": true
+        }
+      },
+      "brace-expansion": {
+        "name": "brace-expansion",
+        "severity": "high",
+        "isDirect": false,
+        "via": [
+          {
+            "source": 1240103,
+            "name": "brace-expansion",
+            "dependency": "brace-expansion",
+            "title": "brace-expansion: Quadratic-time expansion of the `{a},b}` rewrite causes CPU denial of service",
+            "url": "https://github.com/advisories/GHSA-q2hr-2g5m-vwhr",
+            "severity": "moderate",
+            "cwe": [
+              "CWE-400",
+              "CWE-407"
+            ],
+            "cvss": {
+              "score": 5.3,
+              "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+            },
+            "range": ">=4.0.0 <5.0.12"
+          },
+          {
+            "source": 1240107,
+            "name": "brace-expansion",
+            "dependency": "brace-expansion",
+            "title": "brace-expansion: DoS via uncontrolled recursion on nested brace groups causing stack exhaustion",
+            "url": "https://github.com/advisories/GHSA-qhr7-859c-m2p7",
+            "severity": "high",
+            "cwe": [
+              "CWE-400",
+              "CWE-674"
+            ],
+            "cvss": {
+              "score": 7.5,
+              "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+            },
+            "range": ">=4.0.0 <5.0.11"
+          },
+          {
+            "source": 1240111,
+            "name": "brace-expansion",
+            "dependency": "brace-expansion",
+            "title": "brace-expansion: DoS via uncontrolled recursion in parseCommaParts causing stack exhaustion",
+            "url": "https://github.com/advisories/GHSA-6j4f-fj2g-mc7p",
+            "severity": "high",
+            "cwe": [
+              "CWE-400",
+              "CWE-674"
+            ],
+            "cvss": {
+              "score": 7.5,
+              "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+            },
+            "range": ">=4.0.0 <5.0.10"
+          }
+        ],
+        "effects": [],
+        "range": "4.0.0 - 5.0.11",
+        "nodes": [
+          "node_modules/brace-expansion"
+        ],
+        "fixAvailable": true
+      },
+      "miniflare": {
+        "name": "miniflare",
+        "severity": "high",
+        "isDirect": false,
+        "via": [
+          "sharp",
+          "undici"
+        ],
+        "effects": [
+          "wrangler"
+        ],
+        "range": "<=0.0.0-fec45ed61 || 4.20250508.3 - 5.20260926.0-alpha",
+        "nodes": [
+          "node_modules/miniflare"
+        ],
+        "fixAvailable": true
+      },
+      "sharp": {
+        "name": "sharp",
+        "severity": "high",
+        "isDirect": false,
+        "via": [
+          {
+            "source": 1193725,
+            "name": "sharp",
+            "dependency": "sharp",
+            "title": "sharp: Vulnerabilities in libheif: GHSA-g89c-p67h-r497 and GHSA-2jg2-4ch7-h545",
+            "url": "https://github.com/advisories/GHSA-rgj7-g3m4-5g8c",
+            "severity": "high",
+            "cwe": [
+              "CWE-122"
+            ],
+            "cvss": {
+              "score": 0,
+              "vectorString": null
+            },
+            "range": "<0.35.4"
+          }
+        ],
+        "effects": [
+          "miniflare"
+        ],
+        "range": "<0.35.4",
+        "nodes": [
+          "node_modules/sharp"
+        ],
+        "fixAvailable": true
+      },
+      "undici": {
+        "name": "undici",
+        "severity": "high",
+        "isDirect": false,
+        "via": [
+          {
+            "source": 1239933,
+            "name": "undici",
+            "dependency": "undici",
+            "title": "undici vulnerable to Denial of Service via unhandled error in WebSocket permessage-deflate decompression",
+            "url": "https://github.com/advisories/GHSA-3wwx-pv8p-q78v",
+            "severity": "moderate",
+            "cwe": [
+              "CWE-248"
+            ],
+            "cvss": {
+              "score": 5.9,
+              "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+            },
+            "range": ">=7.28.0 <7.29.1"
+          },
+          {
+            "source": 1240036,
+            "name": "undici",
+            "dependency": "undici",
+            "title": "undici vulnerable to Denial of Service via orphaned RetryHandler response body",
+            "url": "https://github.com/advisories/GHSA-pmjh-fq2x-6v4x",
+            "severity": "moderate",
+            "cwe": [
+              "CWE-772"
+            ],
+            "cvss": {
+              "score": 5.9,
+              "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+            },
+            "range": ">=7.11.0 <7.29.1"
+          },
+          {
+            "source": 1240038,
+            "name": "undici",
+            "dependency": "undici",
+            "title": "undici vulnerable to downstream response splitting via retry interceptor",
+            "url": "https://github.com/advisories/GHSA-r53p-7pc4-xj5r",
+            "severity": "low",
+            "cwe": [
+              "CWE-444"
+            ],
+            "cvss": {
+              "score": 3.7,
+              "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+            },
+            "range": ">=7.0.0 <7.29.1"
+          },
+          {
+            "source": 1240041,
+            "name": "undici",
+            "dependency": "undici",
+            "title": "undici vulnerable to Denial of Service via unrequested WebSocket subprotocol",
+            "url": "https://github.com/advisories/GHSA-rfgv-xxqx-mfg5",
+            "severity": "high",
+            "cwe": [
+              "CWE-248",
+              "CWE-252"
+            ],
+            "cvss": {
+              "score": 7.5,
+              "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+            },
+            "range": ">=7.0.0 <7.29.1"
+          },
+          {
+            "source": 1240044,
+            "name": "undici",
+            "dependency": "undici",
+            "title": "undici vulnerable to Denial of Service via unbounded decompression of compressed responses",
+            "url": "https://github.com/advisories/GHSA-3xpg-4rpp-hhhm",
+            "severity": "moderate",
+            "cwe": [
+              "CWE-770"
+            ],
+            "cvss": {
+              "score": 5.9,
+              "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+            },
+            "range": ">=7.15.0 <7.29.1"
+          },
+          {
+            "source": 1240046,
+            "name": "undici",
+            "dependency": "undici",
+            "title": "undici vulnerable to cross-user cookie disclosure via Set-Cookie caching in shared caches",
+            "url": "https://github.com/advisories/GHSA-2jfj-6hjv-fm6j",
+            "severity": "moderate",
+            "cwe": [
+              "CWE-200",
+              "CWE-524"
+            ],
+            "cvss": {
+              "score": 6.5,
+              "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N"
+            },
+            "range": ">=7.0.0 <7.29.1"
+          },
+          {
+            "source": 1240048,
+            "name": "undici",
+            "dependency": "undici",
+            "title": "undici vulnerable to response truncation via oversized chunked responses in the dump interceptor",
+            "url": "https://github.com/advisories/GHSA-2gqq-gqf2-x968",
+            "severity": "low",
+            "cwe": [
+              "CWE-20",
+              "CWE-248"
+            ],
+            "cvss": {
+              "score": 3.7,
+              "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+            },
+            "range": ">=7.1.0 <7.29.1"
+          },
+          {
+            "source": 1240050,
+            "name": "undici",
+            "dependency": "undici",
+            "title": "undici vulnerable to TLS certificate validation bypass via dropped connect options in BalancedPool",
+            "url": "https://github.com/advisories/GHSA-w293-vg96-wgc3",
+            "severity": "high",
+            "cwe": [
+              "CWE-295"
+            ],
+            "cvss": {
+              "score": 7.4,
+              "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N"
+            },
+            "range": ">=7.24.1 <7.29.1"
+          },
+          {
+            "source": 1240052,
+            "name": "undici",
+            "dependency": "undici",
+            "title": "undici vulnerable to caching and replay of unsafe HTTP method responses",
+            "url": "https://github.com/advisories/GHSA-8436-99hf-9mmv",
+            "severity": "low",
+            "cwe": [
+              "CWE-345"
+            ],
+            "cvss": {
+              "score": 3.7,
+              "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+            },
+            "range": ">=7.0.0 <7.29.1"
+          },
+          {
+            "source": 1240055,
+            "name": "undici",
+            "dependency": "undici",
+            "title": "undici vulnerable to Denial of Service via WebSocketStream unclean close",
+            "url": "https://github.com/advisories/GHSA-rx4f-c7p8-82vq",
+            "severity": "moderate",
+            "cwe": [
+              "CWE-248",
+              "CWE-754"
+            ],
+            "cvss": {
+              "score": 5.9,
+              "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+            },
+            "range": ">=7.0.0 <7.29.1"
+          }
+        ],
+        "effects": [
+          "miniflare"
+        ],
+        "range": "7.0.0 - 7.29.0",
+        "nodes": [
+          "node_modules/undici"
+        ],
+        "fixAvailable": true
+      },
+      "vitest": {
+        "name": "vitest",
+        "severity": "moderate",
+        "isDirect": true,
+        "via": [
+          "@vitest/mocker",
+          {
+            "source": 1193683,
+            "name": "vitest",
+            "dependency": "vitest",
+            "title": "Vitest: Path Traversal / Arbitrary File Read via @vitest/mocker Redirect Mock",
+            "url": "https://github.com/advisories/GHSA-82fw-gwwq-j7x9",
+            "severity": "moderate",
+            "cwe": [
+              "CWE-22"
+            ],
+            "cvss": {
+              "score": 5.9,
+              "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
+            },
+            "range": ">=2.1.0 <4.1.11"
+          }
+        ],
+        "effects": [],
+        "range": "2.1.0-beta.1 - 4.1.10",
+        "nodes": [
+          "node_modules/vitest"
+        ],
+        "fixAvailable": {
+          "name": "vitest",
+          "version": "5.0.3",
+          "isSemVerMajor": true
+        }
+      },
+      "wrangler": {
+        "name": "wrangler",
+        "severity": "high",
+        "isDirect": true,
+        "via": [
+          "miniflare"
+        ],
+        "effects": [],
+        "range": "<=0.0.0-7ae5dd357 || 4.16.0 - 4.130.0",
+        "nodes": [
+          "node_modules/wrangler"
+        ],
+        "fixAvailable": true
+      }
+    },
+    "production": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "dependencies": {
+        "prod": 23,
+        "dev": 326,
+        "optional": 122,
+        "peer": 0,
+        "peerOptional": 0,
+        "total": 359
+      }
+    },
+    "dependenciesChanged": false
+  },
+  "historicalProtection": {
+    "protected": 84,
+    "frozen": 119,
+    "archives": 7
+  },
+  "ledger": {
+    "rows": 1000,
+    "sha256": "fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d",
+    "writes": 0
+  }
+}

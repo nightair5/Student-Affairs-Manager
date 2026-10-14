@@ -1,0 +1,82 @@
+{
+  "stage": "MAINLINE-02-I1 review candidate",
+  "head": "1657fb9a5b47504e7264a841b919d4765a710233",
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "sha256": "0c585b53f0c277a90a44f2984922316d41a26a10eaa35742d8d49a50388424fc"
+    },
+    {
+      "path": "src/components/IntakePanel.tsx",
+      "sha256": "bcc673e4a4af808e54b867d3765da4c9e4b32cbd6c3ef17bbe22ff5a8c55c6f9"
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "sha256": "39de88d759815b3c390fd836df4be91aaf0e207ad4513c3bba5a9baef5aa6b3e"
+    },
+    {
+      "path": "src/pages/DashboardPage.tsx",
+      "sha256": "086e26060f74e988a612b62b75796970b30d4b4aa4196cfb96489bb72d7455f9"
+    },
+    {
+      "path": "src/pages/TasksPage.tsx",
+      "sha256": "98fb217780d85af434224c7f5e9da2e2e620c4585e71c6f842ae910eda0d9c45"
+    },
+    {
+      "path": "src/components/TaskCard.tsx",
+      "sha256": "93a2f93ffc130d6ba743845874ad3a39aa0fd4eba393d3acac3b3fd02f4f9f1a"
+    },
+    {
+      "path": "src/pages/CalendarPage.tsx",
+      "sha256": "cb52c7beb639f70c52833c1137c2225375fa8cb27b9ea18bb6b600f9ff6b5368"
+    },
+    {
+      "path": "src/components/TaskDetailPanel.tsx",
+      "sha256": "846a824952aef839a52be21635d1e562a77ee0d2bb6151e405c75139ca83a98f"
+    },
+    {
+      "path": "src/lib/taskLogic.ts",
+      "sha256": "e6ba77b9c6dec502ad239eaae5a774f7d0ce18099bd3c9fdff7ec970225f3d6b"
+    },
+    {
+      "path": "src/experiments/mainline02/browser.tsx",
+      "sha256": "d467287f1e850884266939a61889fb9316e41aa11fe43baa0bcc6897a659029a"
+    },
+    {
+      "path": "src/experiments/mainline02/mainlineAcceptance.test.tsx",
+      "sha256": "4e02d1bf4a3e163543928711a7945b701a2ccacee617496823aee3f2f9cf425b"
+    },
+    {
+      "path": "src/experiments/mainline02/reviewAdapter.test.ts",
+      "sha256": "d07c1e84bb82ad634fb7e53ad2aba852c8bda283e7ab42ca7d32df75b538e9d2"
+    },
+    {
+      "path": "src/experiments/mainline02/reviewAdapter.ts",
+      "sha256": "2093cd51d27a90272e5d7ab12e5f22137ef9696f40b58c59d5f4493c77eac74f"
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.test.ts",
+      "sha256": "7aa83e1f91df88cedd1cd9454d083417d19aa40f25ccbfbd1d3e14b98a32bf83"
+    },
+    {
+      "path": "src/experiments/mainline02/runtime.ts",
+      "sha256": "39ec424ab534da995a7926c192aabb5c9bfe35c54fddffccf750aba40c7d7c89"
+    },
+    {
+      "path": "src/experiments/mainline02/taskDateView.test.ts",
+      "sha256": "ebcc863949b151b6a7cb212dfcecba99a4958fb79f9af9dd3e8c642baab48d65"
+    },
+    {
+      "path": "src/experiments/mainline02/taskDateView.ts",
+      "sha256": "91c146e145531d5a87ee674d088e55e065d46ef686a54437e164f982ee94c022"
+    },
+    {
+      "path": "scripts/check-mainline-02-i1.mjs",
+      "sha256": "55aefa3bb89786c196f6c5cd0606313e6a5a043dabad1402c56db86d849626a4"
+    },
+    {
+      "path": "scripts/serve-mainline-02-i1.mjs",
+      "sha256": "da3813c38702e17eca19cc06d43274fc094caba16fa3ddca6c9ffdee778be4dd"
+    }
+  ]
+}

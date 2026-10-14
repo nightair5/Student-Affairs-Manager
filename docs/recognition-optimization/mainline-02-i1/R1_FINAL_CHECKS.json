@@ -1,0 +1,117 @@
+{
+  "stage": "RCO-5-MAINLINE-02-I1-R1",
+  "decision": "ACCEPTED_ISOLATED_ENGINEERING",
+  "preCommitHead": "54e8f15ad7426ed37339bea56f19da33751aca2d",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "sourceFilesDelivered": 19,
+  "sourceChangesDuringR1": 0,
+  "protection": {
+    "originalProtectedFiles": 701,
+    "changes": [],
+    "priorI1Reports": 17,
+    "reportChanges": [],
+    "implementationSnapshotMatches": 19,
+    "logAppendOnly": true,
+    "outOfScope": [],
+    "contextLines": 81
+  },
+  "engineering": {
+    "targeted": {
+      "passed": 99,
+      "logDirectory": "C:/Users/Winner/AppData/Local/Temp/rco-mainline-02-i1-Lcfq08"
+    },
+    "full": {
+      "passed": 998,
+      "skipped": 1,
+      "vitestPassed": 932,
+      "nodePassed": 66,
+      "logDirectory": "C:/Users/Winner/AppData/Local/Temp/rco-mainline-02-i1-nWXYwl"
+    },
+    "independentReview": "PASS",
+    "lint": "PASS",
+    "types": "PASS",
+    "schemaAndTimeContracts": "PASS",
+    "build": "PASS_WITH_EXISTING_CHUNK_WARNING",
+    "securityAndIsolation": "PASS",
+    "dependencyVulnerabilities": 0,
+    "preFinalDocumentSecretScan": {
+      "files": 766,
+      "passed": true
+    }
+  },
+  "browser": {
+    "family": "Edge",
+    "origin": "http://127.0.0.1:11829",
+    "run": "a95225c8-344b-4dbc-baee-1c140a0fa84a",
+    "registeredGapsCompleted": [
+      "panel_two_item_batch",
+      "save_transaction_rollback",
+      "confirm_failure_after_successful_edits",
+      "cross_tab_stale_revision",
+      "typed_date_only_calendar",
+      "real_json_download_readback"
+    ],
+    "download": {
+      "file": "C:/Users/Winner/Downloads/mainline-02-i1-workspace (4).json",
+      "bytes": 34166,
+      "fileSha256": "1de2da93b384ba6d7a2fdc3f23f0716dd51d54bfe217a0be46880eb3644a6c91",
+      "canonicalSha256": "d1c8d59398590576eb7677b08ab5ee48a2b41166a15755c40b3f7ff424ddf514",
+      "matchesActualStore": true,
+      "validatorIssues": [],
+      "fieldFidelity": "42/42"
+    },
+    "postEngineeringReadbackUnchanged": true,
+    "postRefreshWrites": 0,
+    "wrongDefaults": 0,
+    "unconfirmedWrites": 0,
+    "duplicates": 0,
+    "overwrites": 0,
+    "keyFieldLoss": 0,
+    "limitations": [
+      "download_listener_timed_out_despite_real_files",
+      "nonzero_unattributed_message_channel_log",
+      "engineering_toolbar_pointer_layout_not_accepted"
+    ],
+    "notModelAccuracy": true
+  },
+  "cleanup": {
+    "createdTabsClosed": [
+      "763114430",
+      "763114444",
+      "763114431"
+    ],
+    "serverPid": 42292,
+    "serverStopped": true,
+    "port11829Listening": false,
+    "databasesAndDownloadsPreserved": true,
+    "old12998DatabasesUntouched": true,
+    "userDatabaseAccess": false
+  },
+  "costAndScope": {
+    "model": 0,
+    "verifier": 0,
+    "repair": 0,
+    "retry": 0,
+    "modelNetworkRequests": 0,
+    "RMB": 0,
+    "keyAccess": false,
+    "clipboardAccess": false,
+    "newDataset": false,
+    "realMaterials": false,
+    "humanResearch": false,
+    "deployment": false,
+    "stableEntry": false,
+    "RCO6": false,
+    "modelAccuracy": "本轮未测量"
+  },
+  "git": {
+    "deliveryScope": "19 authorized implementation files + new R1 reports + CURRENT_CONTEXT + append-only log",
+    "commitAndPush": "Subsequent Git tool receipt is authoritative; this file contains pre-commit checks, not a self-contained commit SHA.",
+    "forcePush": false
+  },
+  "nextStage": {
+    "id": "RCO-5-MAINLINE-03-SCOPE",
+    "status": "WAITING_FOR_USER_AUTHORIZATION",
+    "prompt": "R1_NEXT_PROMPT.md"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "status": "PASS_FILE_AND_INDEPENDENT_DATABASE",
+  "downloadPath": "C:\\Users\\Winner\\Downloads\\mainline-05-workspace (1).json",
+  "bytes": 1260173,
+  "fileSha256": "e9fcf0f9481e9f1b70a2e6325448317fec3be78598ab3ac792870294a253dbc3",
+  "parsedJsonSha256": "03e308722c052a4e8e14b0bbe90382c851082664baaba78c8241d5a6b2ee8a9a",
+  "independentRead": {
+    "databaseName": "rco-mainline-01-02-i1-mainline05-688bf3e0-6e60-449a-acec-01a11d1fdfc4",
+    "origin": "http://127.0.0.1:6627",
+    "readMethod": "new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load()",
+    "sha256": "03e308722c052a4e8e14b0bbe90382c851082664baaba78c8241d5a6b2ee8a9a",
+    "observedAt": "2026-09-06T12:07:47.341Z",
+    "evidenceNote": "Official CUA Edge tab 763114631. Actual engineering UI button independently instantiated new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load(), validated the joint graph and logged MAINLINE05_INDEPENDENT_READ. At 12:08:14.856Z the separate button downloaded that completed snapshot as mainline-05-independent-read (1).json. This is not runtime.exportJson or an App-state copy. Product export was separately clicked and produced mainline-05-workspace (1).json. Original downloads are retained; independent file is byte-copied to registered temporary directory."
+  },
+  "workspaceVersion": 8,
+  "jointSemanticValidation": "PASS",
+  "tasks": 31,
+  "noDate": [
+    {
+      "id": "mainline05:task:source:7fe0f66a:draft:1:save",
+      "timePoints": 0,
+      "reminders": 0
+    },
+    {
+      "id": "mainline05:task:source:bf8cca4c:draft:1:conditional",
+      "timePoints": 0,
+      "reminders": 0
+    },
+    {
+      "id": "mainline05:task:source:8bf44f20:draft:1:new",
+      "timePoints": 0,
+      "reminders": 0
+    },
+    {
+      "id": "mainline05:task:source:3ee414c1:draft:1:save",
+      "timePoints": 0,
+      "reminders": 0
+    },
+    {
+      "id": "mainline05:task:source:af35fdc7:draft:1:save",
+      "timePoints": 0,
+      "reminders": 0
+    },
+    {
+      "id": "mainline05:task:source:ddcc1158:draft:1:save",
+      "timePoints": 0,
+      "reminders": 0
+    },
+    {
+      "id": "mainline05:task:source:e2190b2e:draft:1:new",
+      "timePoints": 0,
+      "reminders": 0
+    }
+  ],
+  "modelAccuracy": "本轮未测量",
+  "doesNotProveAllJourneys": true
+}

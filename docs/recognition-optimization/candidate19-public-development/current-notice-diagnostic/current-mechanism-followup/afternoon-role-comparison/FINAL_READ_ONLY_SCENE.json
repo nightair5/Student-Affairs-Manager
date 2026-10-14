@@ -1,0 +1,52 @@
+{
+  "role": "SEALED_BATCH_KNOWN_SETTLED_READ_ONLY",
+  "batch": "V6-ROLE-AUTHORITY-DEVELOPMENT-20261008-R1",
+  "denominator": 8,
+  "verifiedSettled": 5,
+  "units": [
+    {
+      "ordinal": 1,
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 2,
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 3,
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 4,
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 5,
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 6,
+      "status": "UNCERTAIN"
+    },
+    {
+      "ordinal": 7,
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 8,
+      "status": "NOT_SENT"
+    }
+  ],
+  "lockExists": true,
+  "haltExists": true,
+  "winner": "EVIDENCE_INCOMPLETE",
+  "modelRequests": 0,
+  "ledgerWrites": 0,
+  "dispatch": "DISABLED_NO_MUTATION_API",
+  "ledger": {
+    "rows": 1047,
+    "sha256": "8bd95719a88fb94c7557f0202fe394cfc18e90b924fa73e337a25b0612c0aa01",
+    "tail": "c5fba8e50de62d193b27623c7d7f2689c6904fad14a69cc2988792b24daa02e2",
+    "batchRows": 12
+  }
+}

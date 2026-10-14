@@ -1,0 +1,182 @@
+{
+  "version": "real-input-contrastive-result-1",
+  "unitId": "K02-A",
+  "sourceId": "OS02",
+  "arm": "A",
+  "armName": "candidate03-baseline",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "requestSha": "28238d7de29aef2bc3f0618297aabb78783fb089af03e3cccc3dbfe785517f47",
+  "responseSha": "afa36288d4febdad3a85c7492abb045084247e6e10d5987745ae5f3266ab7408",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "exampleVersion": null,
+  "scorerSha": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+  "referenceSha": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-buy-dehumidifier-box",
+        "propositionScopeIds": [
+          "scope-0001-d9c92f673dbe23ad10578b5b2fb211d72793879446ef8f56cc02670c99c58a29"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "other",
+        "action": {
+          "scopeId": "scope-0001-d9c92f673dbe23ad10578b5b2fb211d72793879446ef8f56cc02670c99c58a29",
+          "surface": "购买"
+        },
+        "object": {
+          "scopeId": "scope-0001-d9c92f673dbe23ad10578b5b2fb211d72793879446ef8f56cc02670c99c58a29",
+          "surface": "防潮盒"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "购买防潮盒",
+          "description": "先购买防潮盒。",
+          "completionCriteria": [
+            "防潮盒已购买"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-submit-school-history-photos",
+        "propositionScopeIds": [
+          "scope-0002-f613467911b79f166c8611ca099c0dbe23c21cf918af0b789e1ab038053937d8"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0002-f613467911b79f166c8611ca099c0dbe23c21cf918af0b789e1ab038053937d8",
+          "surface": "交到"
+        },
+        "object": {
+          "scopeId": "scope-0002-f613467911b79f166c8611ca099c0dbe23c21cf918af0b789e1ab038053937d8",
+          "surface": "校史照片"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交校史照片",
+          "description": "再把校史照片交到档案室。",
+          "completionCriteria": [
+            "校史照片已交到档案室"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [
+            "task-buy-dehumidifier-box"
+          ],
+          "materialTempIds": [
+            "material-school-history-photos"
+          ],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-school-history-photos",
+        "name": "校史照片",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "档案室",
+        "relatedTaskTempIds": [
+          "task-submit-school-history-photos"
+        ],
+        "scopeIds": [
+          "scope-0002-f613467911b79f166c8611ca099c0dbe23c21cf918af0b789e1ab038053937d8"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [],
+    "unresolvedScopeIds": [],
+    "sourceId": "opensource-dev-OS02",
+    "sourceVersionId": "opensource-dev-OS02:1",
+    "sourceFingerprint": "sha256:4704935e96e6a3759c04bad86cd630c542d91d48e3071db59511ef5625877eed"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 4802,
+  "parseError": null,
+  "totalAttempts": 293,
+  "usage": {
+    "input_tokens": 4167,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 903,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5070
+  },
+  "costUpperMicroCny": 15558,
+  "totalCostUpperMicroCny": 13708637,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化"
+}

@@ -1,0 +1,16 @@
+{
+  "stage": "MAINLINE-REAL-INPUT-01-complex-correction",
+  "status": "IMPLEMENTED_ENGINEERING_PASS_BROWSER_BLOCKED",
+  "wholePackage": "NOT_COMPLETE",
+  "businessImplementationCommitted": false,
+  "externalModelCalls": 0,
+  "modelAccuracy": "NOT_MEASURED",
+  "realHumanTime": "NOT_RUN",
+  "publicApiJourneys": {"B01_separate": "PASS", "B01_batch": "PASS", "A08_revision": "PASS", "B08_revision": "PASS"},
+  "tests": {"targetedPassed": 83, "fullPassed": 1241, "fullSkipped": 1, "fullFailed": 0, "finalAffectedPassed": 44, "nodePassed": 57, "countsAreNotAdditive": true},
+  "engineering": {"lint": "PASS_WITH_4_EXISTING_WARNINGS", "typeApp": "PASS", "typeNode": "PASS", "build": "PASS", "schemaAndTimeContract": "PASS", "securityScanFiles": 1313, "historicalEnvironment": "OLD_3_PASS_1_FAIL_PRESERVED"},
+  "browser": {"completedJourneys": 0, "status": "NOT_RUN", "originalTab": "763114892", "alternativeTab": "763114900", "errors": ["Emulation.setFocusEmulationEnabled timeout", "ERR_BLOCKED_BY_CLIENT"], "productFaultProven": false, "databaseClearedOrCreated": false, "newStructureDownload": "NOT_RUN"},
+  "protection": {"protectedFiles": 945, "changed": 0, "oldStaticEvidenceRechecked": 70, "oldEngineeringLogsRechecked": 25, "ledgerChanged": false, "originalScoresChanged": false},
+  "snapshot": "IMPLEMENTATION_SNAPSHOT.json",
+  "next": "Resume original isolated browser acceptance under the same authorization; no model calls or new plan."
+}

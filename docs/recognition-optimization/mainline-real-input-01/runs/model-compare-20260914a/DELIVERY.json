@@ -1,0 +1,30 @@
+{
+  "version": "model-compare-delivery-1",
+  "businessCommit": "6a8b459ece9e6cc551a6bd9d07fa042ab4a9ef98",
+  "remoteBusinessCommit": "6a8b459ece9e6cc551a6bd9d07fa042ab4a9ef98",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "remote": "https://github.com/nightair5/Student-Affairs-Manager.git",
+  "push": "PASS; exact remote SHA verified",
+  "modelComparison": {
+    "requests": 40,
+    "http200": 40,
+    "flashNoSubstantiveCorrection": "17/20",
+    "proNoSubstantiveCorrection": "15/20",
+    "flashBusinessErrors": 6,
+    "proBusinessErrors": 10,
+    "decision": "DO_NOT_ADOPT_PRO"
+  },
+  "cost": {
+    "batchPeakPriceUpperCny": 2.256847,
+    "cumulativeUpperIncludingA01UnknownCny": 10.559813,
+    "projectCapCny": 20,
+    "providerBilledCny": "NOT_OBSERVABLE"
+  },
+  "engineering": "PASS_WITH_RETAINED_HISTORICAL_FREEZE_FAILURE",
+  "independentAudit": "PASS_WITH_DISCLOSED_LIMITATIONS; zero current-run blockers",
+  "browser": "NOT_RUN for new journeys after one official control failure; prior 6632 evidence is reused and clearly labeled",
+  "productionDeployment": false,
+  "newCandidate": false,
+  "preferredIsolatedModel": "deepseek-flash",
+  "staging": "Exact paths only; no workspace-wide staging, force push or automatic rebase"
+}

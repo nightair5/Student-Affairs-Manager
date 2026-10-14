@@ -1,0 +1,6 @@
+src/experiments/realInput01/acceptance.test.tsx(68,18): error TS2339: Property 'rawHttpText' does not exist on type 'AnySemanticState'.
+  Property 'rawHttpText' does not exist on type 'SemanticState'.
+src/experiments/realInput01/acceptance.test.tsx(80,20): error TS2339: Property 'rawHttpText' does not exist on type 'AnySemanticState'.
+  Property 'rawHttpText' does not exist on type 'SemanticState'.
+src/experiments/realInput01/runtime.ts(140,74): error TS2345: Argument of type '"real-input-source-semantics-3" | "real-input-source-semantics-5" | "real-input-source-semantics-6" | "real-input-source-semantics-7" | "real-input-source-semantics-4"' is not assignable to parameter of type '"real-input-source-semantics-1" | "real-input-source-semantics-3" | "real-input-source-semantics-5" | "real-input-source-semantics-6" | "real-input-source-semantics-2" | "real-input-source-semantics-4" | undefined'.
+  Type '"real-input-source-semantics-7"' is not assignable to type '"real-input-source-semantics-1" | "real-input-source-semantics-3" | "real-input-source-semantics-5" | "real-input-source-semantics-6" | "real-input-source-semantics-2" | "real-input-source-semantics-4" | undefined'. Did you mean '"real-input-source-semantics-1"'?

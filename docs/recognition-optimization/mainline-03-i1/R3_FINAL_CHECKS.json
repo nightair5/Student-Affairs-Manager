@@ -1,0 +1,137 @@
+{
+  "stage": "RCO-5-MAINLINE-03-I1-R3",
+  "independentReview": {
+    "newOrchestration": "PASS",
+    "docsOnlyFailureDelivery": "PASS",
+    "blockingEngineeringFindings": 0,
+    "downloadStillBlocking": true
+  },
+  "status": "NOT_ACCEPTED_DOWNLOAD_UNVERIFIED",
+  "promotion": false,
+  "base": "beae935cba642027c8222644a6e541f2c636bfb2",
+  "engineering": {
+    "status": "PASS_LAYERED_GATE",
+    "attempts": 1,
+    "resultFile": "docs/recognition-optimization/mainline-03-i1/R3_ENGINEERING_CHECKS.json",
+    "historicalSnapshotIntegrity": {
+      "freezeReferences": 17,
+      "totalFiles": 20,
+      "fullShaBeforeAfter": true,
+      "originalLibrary": {
+        "passed": 4,
+        "failed": 0
+      }
+    },
+    "currentCompatibility": {
+      "passed": 13,
+      "failed": 0,
+      "oldNonRootEntries": 357,
+      "unrelatedDrift": 0
+    },
+    "vitest": {
+      "passed": 986,
+      "skipped": 1,
+      "directed153Included": true
+    },
+    "server": 8,
+    "worker": 25,
+    "timeParity": 1,
+    "multimodalLibrary": 23,
+    "functions": 5,
+    "securityFindings": 0,
+    "dependencyVulnerabilities": 0,
+    "legacyLintWarnings": 1
+  },
+  "historicalCurrentWorkspace": {
+    "source": "R2_FINAL_CHECKS.json",
+    "status": "FAIL_PRESERVED_NOT_RERUN",
+    "passed": 3,
+    "failed": 1
+  },
+  "browser": {
+    "status": "NOT_ACCEPTED",
+    "protocol": {
+      "passed": 10,
+      "partial": 1,
+      "blocked": 1,
+      "total": 12
+    },
+    "canonicalFields": {
+      "passed": 42,
+      "total": 42
+    },
+    "fileFields": "NOT_RUN",
+    "download": {
+      "uiAttempts": 3,
+      "listenerTimeouts": 2,
+      "actualFileObtained": false,
+      "actualFilePath": null,
+      "fileSha256": null,
+      "fileCanonicalComparison": "NOT_RUN"
+    },
+    "sources": 5,
+    "drafts": 5,
+    "tasks": 6,
+    "timePoints": 5,
+    "materials": 4,
+    "historyRecords": 18,
+    "userEdits": 3,
+    "reminders": 0,
+    "genuineUndatedTimes": 0,
+    "actualReminderJobs": 0,
+    "wholeCanonicalEqualAfterRefresh": true,
+    "saveFailureRollback": true,
+    "confirmFailureKeepsHistory": true,
+    "crossTabStaleNoWrite": true,
+    "sameConfirmationDuplicateNoWrite": true,
+    "wrongDefaultSelectedObserved": 0,
+    "unconfirmedFormalWritesObserved": 0,
+    "overwritesObserved": 0,
+    "lossObserved": 0,
+    "finalEpoch": {
+      "recordReads": 3,
+      "recordWrites": 0,
+      "localStorage": 0,
+      "fetch": 0,
+      "xhr": 0,
+      "webSocket": 0,
+      "beacon": 0,
+      "notificationPermission": 0,
+      "notifications": 0
+    },
+    "consoleErrorsObservedSecondTab": 1,
+    "scope": "seen engineering browser cases only; no model quality claim"
+  },
+  "protection": {
+    "checked": 799,
+    "changed": [],
+    "implementationMatches": 12,
+    "appendOnly": true,
+    "outOfScope": []
+  },
+  "cleanup": {
+    "ownTabsClosed": [
+      "763114512",
+      "763114513"
+    ],
+    "serverStoppedAfterPidCommandPortVerification": 43692,
+    "port": 12736,
+    "testDatabaseRetained": true,
+    "temporaryLogsRetained": true,
+    "deletedFiles": 0
+  },
+  "git": {
+    "delivery": "DOCS_ONLY_FAILURE_EVIDENCE",
+    "businessImplementationCommitted": false,
+    "newCheckerCommitted": false,
+    "commitAndRemote": "VERIFY_WITH_FINAL_GIT_RECEIPT"
+  },
+  "modelAccuracy": "本轮未测量",
+  "externalRecognitionCalls": 0,
+  "modelNetwork": 0,
+  "feesCny": 0,
+  "keyAccess": 0,
+  "clipboardAccess": 0,
+  "deployment": 0,
+  "next": "RCO-5-MAINLINE-03-I1-R4-DOWNLOAD-SCOPE pending authorization"
+}

@@ -1,0 +1,29 @@
+{
+  "version": "reasoning-max-post-grant-parser-fix-1",
+  "changedSourcePath": "scripts/run-mainline-real-input-01.mjs",
+  "beforeSha": "b92124e834011db6667f723a88aaa61dbf0e27dbf532bb5de944ac01fd37b5d8",
+  "afterSha": "a06ddf2d80083cf836e5c5efc0d76fdbf01f5a1b2f6d421a07e0e989eff2801c",
+  "reason": "adapt the gateway-verified final message directly because the frozen historical envelope parser caps total output at 8192; retain provider raw and actual usage unchanged",
+  "requestBindingUnchanged": true,
+  "appliesAfterCompletedUnits": [
+    "M01-B",
+    "M01-A",
+    "M02-B",
+    "M02-A",
+    "M03-A",
+    "M03-B",
+    "M04-B",
+    "M04-A",
+    "M05-A",
+    "M05-B",
+    "M06-A",
+    "M06-B",
+    "M07-A",
+    "M07-B",
+    "M08-B",
+    "M08-A"
+  ],
+  "providerRequestsChanged": false,
+  "providerRawChanged": false,
+  "ledgerChangedByFix": false
+}

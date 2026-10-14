@@ -1,11 +1,29 @@
 import {
+  MULTIMODAL_RECOGNITION_MODEL_NAME,
+  MULTIMODAL_RECOGNITION_PROMPT_VERSION,
+  IMAGE_ONLY_EVALUATION_PROMPT_VERSION,
+  RECOGNITION_PROMPT_VERSION,
+  VISION_TEXT_EVALUATION_PROMPT_VERSION,
+  applyDeterministicTimeAst,
   normalizeRecognitionResult,
   recognitionSystemPrompt,
 } from './recognition.mjs'
+import {
+  RECOGNITION_REPAIR_CONTRACT,
+  validateRecognitionResult,
+} from './recognition-contract.generated.mjs'
+import { isValidTimeZone } from './chinese-time-ast.generated.mjs'
+import {parseRecognitionJson} from './recognition-json.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
+const DEEPSEEK_MULTIMODAL_MODEL = MULTIMODAL_RECOGNITION_MODEL_NAME
+const EXPERIMENTAL_ROUTE = /^\/(?:benchmark|e2|fact-?ledger|selection|blind|research-preview)(?:\/|$)/iu
 const MAX_BODY_BYTES = 100_000
+const MAX_MULTIMODAL_BODY_BYTES = 14 * 1024 * 1024
+const MAX_MULTIMODAL_IMAGE_BYTES = 8 * 1024 * 1024
+const MAX_MULTIMODAL_TOTAL_IMAGE_BYTES = 10 * 1024 * 1024
+const MAX_MULTIMODAL_IMAGES = 4
 const MAX_KNOWLEDGE_TOKENS = 2_000
 const MAX_EXTRACTION_TOKENS = 6_000
 const MAX_WEB_RESPONSE_BYTES = 512 * 1024
@@ -26,11 +44,18 @@ const COMMON_SECURITY_HEADERS = Object.freeze({
 const KNOWLEDGE_REQUEST_FIELDS = new Set(['question', 'context'])
 const KNOWLEDGE_CONTEXT_FIELDS = new Set(['title', 'kind', 'excerpt'])
 const EXTRACTION_REQUEST_FIELDS = new Set([
-  'sourceType', 'sourceTitle', 'content', 'referenceTime', 'timezone', 'projectCandidates', 'existingTasks',
+  'sourceType', 'sourceTitle', 'content', 'referenceTime', 'timezone', 'projectCandidates', 'existingTasks', 'contextSelection',
 ])
+const MULTIMODAL_EXTRACTION_REQUEST_FIELDS = new Set([
+  ...EXTRACTION_REQUEST_FIELDS,
+  'consent', 'inputMode', 'ocrTextIncluded', 'images', 'evaluationArm',
+])
+const MULTIMODAL_IMAGE_FIELDS = new Set(['dataUrl', 'mimeType', 'label', 'byteLength', 'pageNumber'])
+const MULTIMODAL_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp'])
 const WEB_FETCH_REQUEST_FIELDS = new Set(['url'])
 const PROJECT_CANDIDATE_FIELDS = new Set(['projectId', 'title', 'category', 'keywords', 'activeMilestones', 'recentSourceTitles', 'dateRange'])
 const EXISTING_TASK_FIELDS = new Set(['id', 'projectId', 'title', 'deadline'])
+const CONTEXT_SELECTION_FIELDS = new Set(['projectIds', 'taskIds'])
 
 function safeText(value, limit) {
   return typeof value === 'string'
@@ -51,6 +76,55 @@ function isBoundedString(value, limit, required = true) {
 function isJsonRequest(request) {
   const contentType = request.headers.get('content-type') ?? ''
   return /^application\/json(?:\s*;|$)/iu.test(contentType)
+}
+
+export function classifyDeepSeekUpstreamStatus(status, multimodal = false) {
+  const subject = multimodal ? '多模态实验' : 'DeepSeek'
+  if (status === 400 || status === 422) {
+    return {
+      error: 'UPSTREAM_REQUEST_REJECTED',
+      message: `${subject} 请求契约被上游拒绝。`,
+      status: 502,
+    }
+  }
+  if (status === 401 || status === 403) {
+    return {
+      error: 'UPSTREAM_AUTH_FAILED',
+      message: `${subject} 服务端凭证未通过上游鉴权。`,
+      status: 503,
+    }
+  }
+  if (status === 402) {
+    return {
+      error: 'UPSTREAM_BILLING_BLOCKED',
+      message: `${subject} 账户当前无法承担本次调用。`,
+      status: 503,
+    }
+  }
+  if (status === 404) {
+    return {
+      error: 'UPSTREAM_MODEL_UNAVAILABLE',
+      message: `${subject} 所需模型当前不可用。`,
+      status: 502,
+    }
+  }
+  if (status === 429) {
+    return {
+      error: 'RATE_LIMITED',
+      message: `${subject} 请求频率受限。`,
+      status: 429,
+    }
+  }
+  return {
+    error: 'UPSTREAM_UNAVAILABLE',
+    message: `${subject} 上游服务暂时无法响应。`,
+    status: 502,
+  }
+}
+
+function safeUpstreamFailure(upstreamStatus, requestId, multimodal = false) {
+  const classified = classifyDeepSeekUpstreamStatus(upstreamStatus, multimodal)
+  return failure(classified.error, classified.message, classified.status, requestId)
 }
 
 function createRequestId() {
@@ -96,7 +170,7 @@ export function validateExtractionRequest(value) {
   if (!isBoundedString(value.content, 24_000)) return 'DEEPSEEK_CONTENT_INVALID'
   if (value.sourceType === 'link' && /^https?:\/\/\S+$/iu.test(value.content.trim())) return 'DEEPSEEK_LINK_TEXT_REQUIRED'
   if (value.sourceTitle !== undefined && !isBoundedString(value.sourceTitle, 160, false)) return 'DEEPSEEK_SOURCE_TITLE_INVALID'
-  if (value.timezone !== undefined && !isBoundedString(value.timezone, 80, false)) return 'DEEPSEEK_TIMEZONE_INVALID'
+  if (value.timezone !== undefined && (!isBoundedString(value.timezone, 80, false) || !isValidTimeZone(value.timezone))) return 'DEEPSEEK_TIMEZONE_INVALID'
   if (!isBoundedString(value.referenceTime, 80) || Number.isNaN(new Date(value.referenceTime).getTime())) {
     return 'DEEPSEEK_REFERENCE_TIME_INVALID'
   }
@@ -120,7 +194,75 @@ export function validateExtractionRequest(value) {
       || !(item.projectId === null || isBoundedString(item.projectId, 100))
       || !isBoundedString(item.deadline, 80))
   )) return 'DEEPSEEK_TASK_CONTEXT_INVALID'
+  const projectIds = (value.projectCandidates ?? []).map((item) => item.projectId)
+  const taskIds = (value.existingTasks ?? []).map((item) => item.id)
+  if (projectIds.length || taskIds.length || value.contextSelection !== undefined) {
+    const selection = value.contextSelection
+    const matches = (selected, sent) => Array.isArray(selected)
+      && selected.every((id) => isBoundedString(id, 100))
+      && new Set(selected).size === selected.length && new Set(sent).size === sent.length
+      && selected.length === sent.length && selected.every((id) => sent.includes(id))
+    if (!hasOnlyFields(selection, CONTEXT_SELECTION_FIELDS)
+      || !matches(selection.projectIds, projectIds) || !matches(selection.taskIds, taskIds)) {
+      return 'DEEPSEEK_CONTEXT_SELECTION_REQUIRED'
+    }
+  }
   return null
+}
+
+function inlineImageBytes(dataUrl, expectedMimeType) {
+  if (typeof dataUrl !== 'string') return null
+  const match = dataUrl.match(/^data:(image\/(?:jpeg|png|gif|webp));base64,([A-Za-z0-9+/]+={0,2})$/u)
+  if (!match || match[1] !== expectedMimeType) return null
+  const encoded = match[2]
+  const padding = encoded.endsWith('==') ? 2 : encoded.endsWith('=') ? 1 : 0
+  const byteLength = Math.floor(encoded.length * 3 / 4) - padding
+  return Number.isSafeInteger(byteLength) && byteLength > 0 ? byteLength : null
+}
+
+export function validateMultimodalExtractionRequest(value) {
+  if (!hasOnlyFields(value, MULTIMODAL_EXTRACTION_REQUEST_FIELDS)) return 'INVALID_REQUEST'
+  const imageOnlyEvaluation = value.evaluationArm === 'image_only'
+  if (!(value.evaluationArm === undefined || imageOnlyEvaluation)) return 'MULTIMODAL_EVALUATION_ARM_INVALID'
+  if (imageOnlyEvaluation && Object.hasOwn(value, 'content')) return 'MULTIMODAL_IMAGE_ONLY_TEXT_FORBIDDEN'
+  const baseValue = Object.fromEntries(
+    Object.entries(value).filter(([key]) => EXTRACTION_REQUEST_FIELDS.has(key)),
+  )
+  const baseError = validateExtractionRequest(imageOnlyEvaluation ? { ...baseValue, content: 'image-only-evaluation' } : baseValue)
+  if (baseError) return baseError
+  if (!['image', 'file'].includes(value.sourceType)) return 'MULTIMODAL_SOURCE_TYPE_INVALID'
+  if (value.consent !== true || (imageOnlyEvaluation ? value.ocrTextIncluded !== false : value.ocrTextIncluded !== true)) {
+    return 'MULTIMODAL_CONSENT_REQUIRED'
+  }
+  if (!['image', 'pdf-pages'].includes(value.inputMode)) return 'MULTIMODAL_MODE_INVALID'
+  if ((value.sourceType === 'image') !== (value.inputMode === 'image')) return 'MULTIMODAL_MODE_INVALID'
+  if (!Array.isArray(value.images) || value.images.length < 1 || value.images.length > MAX_MULTIMODAL_IMAGES) {
+    return 'MULTIMODAL_IMAGES_INVALID'
+  }
+  let totalBytes = 0
+  for (const image of value.images) {
+    if (!hasOnlyFields(image, MULTIMODAL_IMAGE_FIELDS)
+      || !MULTIMODAL_IMAGE_TYPES.has(image.mimeType)
+      || !isBoundedString(image.label, 160)
+      || !Number.isSafeInteger(image.byteLength)
+      || image.byteLength < 1
+      || image.byteLength > MAX_MULTIMODAL_IMAGE_BYTES
+      || !(image.pageNumber === undefined || (Number.isInteger(image.pageNumber) && image.pageNumber >= 1))) {
+      return 'MULTIMODAL_IMAGES_INVALID'
+    }
+    const actualBytes = inlineImageBytes(image.dataUrl, image.mimeType)
+    if (actualBytes === null || actualBytes !== image.byteLength || actualBytes > MAX_MULTIMODAL_IMAGE_BYTES) {
+      return 'MULTIMODAL_IMAGES_INVALID'
+    }
+    totalBytes += actualBytes
+  }
+  return totalBytes <= MAX_MULTIMODAL_TOTAL_IMAGE_BYTES ? null : 'MULTIMODAL_IMAGES_TOO_LARGE'
+}
+
+function extractionModel(env) {
+  return safeText(env.ENABLE_MULTIMODAL_EVALUATION, 10) === 'true'
+    ? DEEPSEEK_MULTIMODAL_MODEL
+    : DEEPSEEK_MODEL
 }
 
 function isIpLiteral(hostname) {
@@ -383,8 +525,42 @@ function success(payload, requestId, status = 200) {
   return json({ ...payload, requestId }, status, requestId)
 }
 
-function failure(code, message, status, requestId) {
-  return json({ error: code, message, requestId }, status, requestId)
+function failure(code, message, status, requestId, details = null) {
+  return json({ error: code, message, ...(details ?? {}), requestId }, status, requestId)
+}
+
+function recognitionCandidate(raw, createdAt, modelName, promptVersion) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return raw
+  return { ...raw, promptVersion, modelName, createdAt }
+}
+
+function safeRecognitionValidation(report) {
+  return {
+    failureCategory: report.failureCategory ?? 'schema',
+    validationIssues: report.issues.slice(0, 20).map((issue) => ({
+      category: issue.category,
+      code: issue.code,
+      path: issue.path,
+    })),
+    repair: {
+      attempted: false,
+      maxAttempts: RECOGNITION_REPAIR_CONTRACT.maxAttempts,
+      status: 'NOT_AUTHORIZED_IN_RCO_1_ZERO_CALL_VALIDATION',
+    },
+  }
+}
+
+function invalidRecognitionResponse(context, report, multimodal = false) {
+  context.errorType = 'INVALID_AI_RESPONSE'
+  return failure(
+    'INVALID_AI_RESPONSE',
+    multimodal
+      ? '多模态实验模型返回的 RecognitionResult 2.0 未通过严格契约。'
+      : 'DeepSeek 返回的 RecognitionResult 2.0 未通过严格契约。',
+    502,
+    context.requestId,
+    safeRecognitionValidation(report),
+  )
 }
 
 function isTrustedOrigin(request, allowedOrigins = '') {
@@ -535,14 +711,9 @@ async function askDeepSeek(request, env, fetcher, isRateLimited, acquireConcurre
       signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
     })
     if (!upstream.ok) {
-      const limited = upstream.status === 429
-      context.errorType = limited ? 'RATE_LIMITED' : 'UPSTREAM_UNAVAILABLE'
-      return failure(
-        context.errorType,
-        limited ? 'DeepSeek 请求频率受限。' : 'DeepSeek 上游服务暂时无法响应。',
-        limited ? 429 : 502,
-        context.requestId,
-      )
+      const classified = classifyDeepSeekUpstreamStatus(upstream.status)
+      context.errorType = classified.error
+      return safeUpstreamFailure(upstream.status, context.requestId)
     }
     const payload = await upstream.json()
     context.outputTokens = Number.isFinite(payload?.usage?.completion_tokens)
@@ -565,6 +736,15 @@ async function askDeepSeek(request, env, fetcher, isRateLimited, acquireConcurre
   } finally {
     release()
   }
+}
+
+function extractionUserText(body, sourceContent, sourceTitle, referenceTime, timezone) {
+  const projectContext = Array.isArray(body.projectCandidates) ? body.projectCandidates : []
+  const existingTaskContext = Array.isArray(body.existingTasks) ? body.existingTasks : []
+  const selectedContext = projectContext.length || existingTaskContext.length
+    ? `\n本次用户选择的项目摘要（仅供匹配建议）：${JSON.stringify(projectContext)}\n本次用户选择的任务摘要（仅供重复检测）：${JSON.stringify(existingTaskContext)}`
+    : ''
+  return `参考时间：${referenceTime}\n时区：${timezone}\n来源类型：${body.sourceType}\n来源标题：${sourceTitle || '未提供'}${selectedContext}\n来源正文：\n${sourceContent}`
 }
 
 async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context) {
@@ -613,9 +793,15 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   const sourceTitle = safeText(body.sourceTitle, 160)
   const referenceTime = safeText(body.referenceTime, 80)
   const timezone = safeText(body.timezone, 80) || 'Asia/Shanghai'
-  const systemPrompt = recognitionSystemPrompt()
-  const projectContext = Array.isArray(body.projectCandidates) ? body.projectCandidates : []
-  const existingTaskContext = Array.isArray(body.existingTasks) ? body.existingTasks : []
+  const selectedModel = extractionModel(env)
+  const selectedPromptVersion = selectedModel === DEEPSEEK_MULTIMODAL_MODEL
+    ? VISION_TEXT_EVALUATION_PROMPT_VERSION
+    : undefined
+  const systemPrompt = recognitionSystemPrompt({
+    modelName: selectedModel,
+    ...(selectedPromptVersion ? { promptVersion: selectedPromptVersion } : {}),
+  })
+  const userText = extractionUserText(body, sourceContent, sourceTitle, referenceTime, timezone)
   const release = acquireConcurrency(clientKey(request))
   if (!release) {
     context.errorType = 'RATE_LIMITED'
@@ -629,7 +815,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        model: DEEPSEEK_MODEL,
+        model: selectedModel,
         thinking: { type: 'disabled' },
         temperature: 0.1,
         max_tokens: MAX_EXTRACTION_TOKENS,
@@ -638,21 +824,17 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
           { role: 'system', content: systemPrompt },
           {
             role: 'user',
-            content: `参考时间：${referenceTime}\n时区：${timezone}\n来源类型：${body.sourceType}\n来源标题：${sourceTitle || '未提供'}\n可选已有项目（仅供匹配建议）：${JSON.stringify(projectContext)}\n已有未完成任务（仅供重复检测）：${JSON.stringify(existingTaskContext)}\n来源正文：\n${sourceContent}`,
+            content: userText,
           },
         ],
       }),
       signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
     })
     if (!upstream.ok) {
-      const limited = upstream.status === 429
-      context.errorType = limited ? 'RATE_LIMITED' : 'UPSTREAM_UNAVAILABLE'
-      return failure(
-        context.errorType,
-        limited ? 'DeepSeek 请求频率受限。' : 'DeepSeek 上游服务暂时无法响应。',
-        limited ? 429 : 502,
-        context.requestId,
-      )
+      const multimodalEvaluation = selectedModel === DEEPSEEK_MULTIMODAL_MODEL
+      const classified = classifyDeepSeekUpstreamStatus(upstream.status, multimodalEvaluation)
+      context.errorType = classified.error
+      return safeUpstreamFailure(upstream.status, context.requestId, multimodalEvaluation)
     }
     const payload = await upstream.json()
     context.outputTokens = Number.isFinite(payload?.usage?.completion_tokens)
@@ -661,22 +843,231 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     const content = safeText(payload?.choices?.[0]?.message?.content, 30_000)
     let parsed
     try {
-      parsed = JSON.parse(content)
+      parsed = parseRecognitionJson(content)
     } catch {
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 未返回有效的任务结构。', 502, context.requestId)
     }
-    const result = normalizeRecognitionResult(parsed, sourceContent, referenceTime)
+    const candidate = recognitionCandidate(
+      parsed,
+      referenceTime,
+      selectedModel,
+      selectedPromptVersion ?? RECOGNITION_PROMPT_VERSION,
+    )
+    const deterministicCandidate = applyDeterministicTimeAst(candidate, referenceTime, timezone)
+    const candidateValidation = validateRecognitionResult(deterministicCandidate, { sourceContent })
+    if (!candidateValidation.valid) return invalidRecognitionResponse(context, candidateValidation)
+    const result = normalizeRecognitionResult(
+      deterministicCandidate,
+      sourceContent,
+      referenceTime,
+      selectedModel,
+      selectedPromptVersion,
+      true,
+      timezone,
+    )
     if (!result) {
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 没有返回有效的 RecognitionResult 2.0。', 502, context.requestId)
     }
-    return success({ model: DEEPSEEK_MODEL, result }, context.requestId)
+    const resultValidation = validateRecognitionResult(result, { sourceContent })
+    if (!resultValidation.valid) return invalidRecognitionResponse(context, resultValidation)
+    return success({
+      model: selectedModel,
+      evaluationArm: selectedModel === DEEPSEEK_MULTIMODAL_MODEL ? 'T' : undefined,
+      result,
+      execution: {
+        tokenUsage: Number.isFinite(payload?.usage?.prompt_tokens) && Number.isFinite(payload?.usage?.completion_tokens)
+          ? {
+              input: payload.usage.prompt_tokens,
+              output: payload.usage.completion_tokens,
+              total: Number.isFinite(payload?.usage?.total_tokens)
+                ? payload.usage.total_tokens
+                : payload.usage.prompt_tokens + payload.usage.completion_tokens,
+            }
+          : null,
+      },
+    }, context.requestId)
   } catch (error) {
     context.errorType = timeoutError(error) ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_UNAVAILABLE'
     return failure(
       context.errorType,
       context.errorType === 'UPSTREAM_TIMEOUT' ? 'DeepSeek 响应超时，请稍后重试。' : 'DeepSeek 上游服务暂时无法响应。',
+      context.errorType === 'UPSTREAM_TIMEOUT' ? 504 : 502,
+      context.requestId,
+    )
+  } finally {
+    release()
+  }
+}
+
+async function extractMultimodalTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context) {
+  if (!isTrustedOrigin(request, env.ALLOWED_ORIGINS)) {
+    context.errorType = 'ORIGIN_NOT_ALLOWED'
+    return failure('ORIGIN_NOT_ALLOWED', '请求来源不受信任。', 403, context.requestId)
+  }
+  const apiKey = safeText(env.DEEPSEEK_API_KEY, 512)
+  if (apiKey.length < 20) {
+    context.errorType = 'DEEPSEEK_NOT_CONFIGURED'
+    return failure('DEEPSEEK_NOT_CONFIGURED', 'DeepSeek 尚未配置服务端密钥。', 503, context.requestId)
+  }
+  if (!isJsonRequest(request)) {
+    context.errorType = 'INVALID_CONTENT_TYPE'
+    return failure('INVALID_CONTENT_TYPE', '请求必须使用 application/json。', 415, context.requestId)
+  }
+  const declaredSize = Number(request.headers.get('content-length') ?? 0)
+  if (Number.isFinite(declaredSize) && declaredSize > MAX_MULTIMODAL_BODY_BYTES) {
+    context.errorType = 'INPUT_TOO_LARGE'
+    return failure('INPUT_TOO_LARGE', '本次图片请求超过允许大小。', 413, context.requestId)
+  }
+  if (isRateLimited(clientKey(request))) {
+    context.errorType = 'RATE_LIMITED'
+    return failure('RATE_LIMITED', '请求过于频繁，请稍后再试。', 429, context.requestId)
+  }
+  const rawBody = await request.text()
+  context.inputLength = rawBody.length
+  if (new TextEncoder().encode(rawBody).byteLength > MAX_MULTIMODAL_BODY_BYTES) {
+    context.errorType = 'INPUT_TOO_LARGE'
+    return failure('INPUT_TOO_LARGE', '本次图片请求超过允许大小。', 413, context.requestId)
+  }
+  let body
+  try {
+    body = JSON.parse(rawBody)
+  } catch {
+    context.errorType = 'INVALID_REQUEST'
+    return failure('INVALID_REQUEST', '请求格式无效。', 400, context.requestId)
+  }
+  const validationError = validateMultimodalExtractionRequest(body)
+  if (validationError) {
+    context.errorType = validationError
+    return failure(validationError, '图片、OCR 文字或显式授权范围无效。', 400, context.requestId)
+  }
+
+  const imageOnlyEvaluation = body.evaluationArm === 'image_only'
+  if (imageOnlyEvaluation && safeText(env.ENABLE_MULTIMODAL_EVALUATION, 10) !== 'true') {
+    context.errorType = 'NOT_FOUND'
+    return failure('NOT_FOUND', '图片版评测入口未启用。', 404, context.requestId)
+  }
+
+  const sourceContent = imageOnlyEvaluation ? '' : safeText(body.content, 24_000)
+  const sourceTitle = safeText(body.sourceTitle, 160)
+  const referenceTime = safeText(body.referenceTime, 80)
+  const timezone = safeText(body.timezone, 80) || 'Asia/Shanghai'
+  const systemPrompt = recognitionSystemPrompt({
+    modelName: DEEPSEEK_MULTIMODAL_MODEL,
+    promptVersion: imageOnlyEvaluation ? IMAGE_ONLY_EVALUATION_PROMPT_VERSION : MULTIMODAL_RECOGNITION_PROMPT_VERSION,
+    multimodal: true,
+    imageOnlyEvaluation,
+  })
+  const imageLabels = body.images.map((image, index) => `${index + 1}. ${safeText(image.label, 160)}`).join('\n')
+  const userText = imageOnlyEvaluation
+    ? `参考时间：${referenceTime}\n时区：${timezone}\n来源类型：${body.sourceType}\n来源标题：${sourceTitle || '未提供'}\n可选已有项目（仅供匹配建议）：${JSON.stringify(body.projectCandidates ?? [])}\n已有未完成任务（仅供重复检测）：${JSON.stringify(body.existingTasks ?? [])}\n本次图片版评测材料：\n${imageLabels}\n模型未收到 OCR 正文；请只依据图片中可见文字输出待确认建议。`
+    : `${extractionUserText(body, sourceContent, sourceTitle, referenceTime, timezone)}\n本次显式授权图片：\n${imageLabels}\n图片只用于补充理解版式与文字对应关系；所有 explicit 字段仍须引用上方 OCR 文字中的逐字依据。`
+  const release = acquireConcurrency(clientKey(request))
+  if (!release) {
+    context.errorType = 'RATE_LIMITED'
+    return failure('RATE_LIMITED', '同时请求过多，请稍后再试。', 429, context.requestId)
+  }
+  try {
+    const upstream = await fetcher(DEEPSEEK_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${apiKey}`,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: DEEPSEEK_MULTIMODAL_MODEL,
+        thinking: { type: 'disabled' },
+        temperature: 0.1,
+        max_tokens: MAX_EXTRACTION_TOKENS,
+        response_format: { type: 'json_object' },
+        messages: [
+          { role: 'system', content: systemPrompt },
+          {
+            role: 'user',
+            content: [
+              { type: 'text', text: userText },
+              ...body.images.map((image) => ({
+                type: 'image_url',
+                image_url: { url: image.dataUrl, detail: 'original' },
+              })),
+            ],
+          },
+        ],
+      }),
+      signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+    })
+    if (!upstream.ok) {
+      const classified = classifyDeepSeekUpstreamStatus(upstream.status, true)
+      context.errorType = classified.error
+      return safeUpstreamFailure(upstream.status, context.requestId, true)
+    }
+    const payload = await upstream.json()
+    context.outputTokens = Number.isFinite(payload?.usage?.completion_tokens)
+      ? payload.usage.completion_tokens
+      : 0
+    const modelOutput = safeText(payload?.choices?.[0]?.message?.content, 30_000)
+    let parsed
+    try {
+      parsed = JSON.parse(modelOutput)
+    } catch {
+      context.errorType = 'INVALID_AI_RESPONSE'
+      return failure('INVALID_AI_RESPONSE', '多模态实验模型未返回有效的任务结构。', 502, context.requestId)
+    }
+    const promptVersion = imageOnlyEvaluation
+      ? IMAGE_ONLY_EVALUATION_PROMPT_VERSION
+      : MULTIMODAL_RECOGNITION_PROMPT_VERSION
+    const candidate = recognitionCandidate(
+      parsed,
+      referenceTime,
+      DEEPSEEK_MULTIMODAL_MODEL,
+      promptVersion,
+    )
+    const deterministicCandidate = applyDeterministicTimeAst(candidate, referenceTime, timezone)
+    const candidateValidation = validateRecognitionResult(
+      deterministicCandidate,
+      imageOnlyEvaluation ? {} : { sourceContent },
+    )
+    if (!candidateValidation.valid) return invalidRecognitionResponse(context, candidateValidation, true)
+    const result = normalizeRecognitionResult(
+      deterministicCandidate,
+      sourceContent,
+      referenceTime,
+      DEEPSEEK_MULTIMODAL_MODEL,
+      promptVersion,
+      !imageOnlyEvaluation,
+      timezone,
+    )
+    if (!result) {
+      context.errorType = 'INVALID_AI_RESPONSE'
+      return failure('INVALID_AI_RESPONSE', '多模态实验模型没有返回有效的 RecognitionResult 2.0。', 502, context.requestId)
+    }
+    const resultValidation = validateRecognitionResult(
+      result,
+      imageOnlyEvaluation ? {} : { sourceContent },
+    )
+    if (!resultValidation.valid) return invalidRecognitionResponse(context, resultValidation, true)
+    return success({
+      model: DEEPSEEK_MULTIMODAL_MODEL,
+      evaluationArm: imageOnlyEvaluation ? 'I' : 'IT',
+      result,
+      execution: {
+        tokenUsage: Number.isFinite(payload?.usage?.prompt_tokens) && Number.isFinite(payload?.usage?.completion_tokens)
+          ? {
+              input: payload.usage.prompt_tokens,
+              output: payload.usage.completion_tokens,
+              total: Number.isFinite(payload?.usage?.total_tokens)
+                ? payload.usage.total_tokens
+                : payload.usage.prompt_tokens + payload.usage.completion_tokens,
+            }
+          : null,
+      },
+    }, context.requestId)
+  } catch (error) {
+    context.errorType = timeoutError(error) ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_UNAVAILABLE'
+    return failure(
+      context.errorType,
+      context.errorType === 'UPSTREAM_TIMEOUT' ? '多模态实验响应超时，请稍后重试。' : '多模态实验上游暂时无法响应。',
       context.errorType === 'UPSTREAM_TIMEOUT' ? 504 : 502,
       context.requestId,
     )
@@ -705,7 +1096,11 @@ export function createWorker({
         client: anonymousClientId(clientKey(request)),
       }
       let response
-      if (request.method === 'OPTIONS' && url.pathname.startsWith('/api/')) {
+      if (EXPERIMENTAL_ROUTE.test(url.pathname)
+        || EXPERIMENTAL_ROUTE.test(url.pathname.replace(/^\/api(?=\/)/u, ''))) {
+        context.errorType = 'NOT_FOUND'
+        response = failure('NOT_FOUND', '该路径在发布版中不可用。', 404, context.requestId)
+      } else if (request.method === 'OPTIONS' && url.pathname.startsWith('/api/')) {
         if (!isTrustedOrigin(request, env.ALLOWED_ORIGINS)) {
           context.errorType = 'ORIGIN_NOT_ALLOWED'
           response = failure('ORIGIN_NOT_ALLOWED', '请求来源不受信任。', 403, context.requestId)
@@ -713,7 +1108,14 @@ export function createWorker({
           response = new Response(null, { status: 204 })
         }
       } else if (request.method === 'GET' && url.pathname === '/api/deepseek/status') {
-        response = success({ configured: safeText(env.DEEPSEEK_API_KEY, 512).length >= 20, model: DEEPSEEK_MODEL }, context.requestId)
+        response = success({
+          configured: safeText(env.DEEPSEEK_API_KEY, 512).length >= 20,
+          capabilityStatus: safeText(env.DEEPSEEK_API_KEY, 512).length >= 20
+            ? 'secret-present-unverified'
+            : 'not-configured',
+          model: extractionModel(env),
+          multimodalModel: DEEPSEEK_MULTIMODAL_MODEL,
+        }, context.requestId)
       } else if (request.method === 'GET' && url.pathname === '/api/source/status') {
         response = success({ configured: true, mode: 'public-https', maxRedirects: MAX_WEB_REDIRECTS }, context.requestId)
       } else if (url.pathname === '/api/source/fetch') {
@@ -730,6 +1132,13 @@ export function createWorker({
         } else {
           response = await extractTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context)
         }
+      } else if (url.pathname === '/api/deepseek/extract-multimodal') {
+        if (request.method !== 'POST') {
+          context.errorType = 'METHOD_NOT_ALLOWED'
+          response = failure('METHOD_NOT_ALLOWED', '该接口只接受 POST。', 405, context.requestId)
+        } else {
+          response = await extractMultimodalTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context)
+        }
       } else if (url.pathname === '/api/deepseek') {
         if (request.method !== 'POST') {
           context.errorType = 'METHOD_NOT_ALLOWED'
@@ -737,6 +1146,9 @@ export function createWorker({
         } else {
           response = await askDeepSeek(request, env, fetcher, isRateLimited, acquireConcurrency, context)
         }
+      } else if (url.pathname.startsWith('/api/')) {
+        context.errorType = 'API_NOT_FOUND'
+        response = failure('API_NOT_FOUND', '未找到该服务接口。', 404, context.requestId)
       } else {
         response = await env.ASSETS.fetch(request)
       }

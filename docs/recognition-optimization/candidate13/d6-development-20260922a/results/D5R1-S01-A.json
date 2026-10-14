@@ -1,0 +1,173 @@
+{
+  "version": "candidate13-d6-result-1",
+  "unitId": "D5R1-S01-A",
+  "sourceId": "C13-D5R1-S01",
+  "arm": "A",
+  "ordinal": 1,
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "requestSha256": "08c71233ccfa45af30f82aa77728183d86c991553a2a7ba4c73f9962a8cd4f19",
+  "responseSha256": "2d31931d5519f9e42cdc148481b22ff609e61f534d2d2ae2eb348088bde59c4c",
+  "transportStatus": "COMPLETED_HTTP_200",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "waitingMs": 4397,
+  "parseError": null,
+  "parseStage": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-archive-ethics",
+        "propositionScopeIds": [
+          "scope-0002-536031250a19ef6338c7c9ac6b41a1387ee682107f16b5bef19fa0799a604945",
+          "scope-0003-631bcc2148c1013b6ccf0fcb959dd9207363a82743872f5e426d232d0b9d7c05",
+          "scope-0004-cb19534f17be4008ce5743db2a31a42d6423dcd0833685a6fe4e2d3be0636f76",
+          "scope-0005-8203ee7eb6724cb9e6575fdb8f401e9d4e7c5227cb6fb37fff8346a49862a504"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0002-536031250a19ef6338c7c9ac6b41a1387ee682107f16b5bef19fa0799a604945",
+          "surface": "归档"
+        },
+        "object": {
+          "scopeId": "scope-0002-536031250a19ef6338c7c9ac6b41a1387ee682107f16b5bef19fa0799a604945",
+          "surface": "研究伦理声明"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "归档研究伦理声明",
+          "description": "请于2026年10月19日16:30前归档研究伦理声明。研究伦理声明须为PDF/A格式，文件名为课题号-负责人；系统显示归档完成即结束。",
+          "completionCriteria": [
+            "系统显示归档完成"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-ethics-statement"
+          ],
+          "timePointTempIds": [
+            "tp-archive-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "present"
+        },
+        "eventTempIds": [
+          "event-archive-complete"
+        ]
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-ethics-statement",
+        "name": "研究伦理声明",
+        "required": true,
+        "formatRequirements": [
+          "PDF/A格式"
+        ],
+        "namingRequirements": [
+          "课题号-负责人"
+        ],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-archive-ethics"
+        ],
+        "scopeIds": [
+          "scope-0003-631bcc2148c1013b6ccf0fcb959dd9207363a82743872f5e426d232d0b9d7c05",
+          "scope-0004-cb19534f17be4008ce5743db2a31a42d6423dcd0833685a6fe4e2d3be0636f76"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "tp-archive-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年10月19日16:30前",
+        "relatedTaskTempIds": [
+          "task-archive-ethics"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-536031250a19ef6338c7c9ac6b41a1387ee682107f16b5bef19fa0799a604945"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-19T16:30",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [
+      {
+        "tempId": "event-archive-complete",
+        "title": "系统显示归档完成",
+        "description": "系统显示归档完成即结束。",
+        "startTimePointTempId": null,
+        "endTimePointTempId": null,
+        "location": null,
+        "scopeIds": [
+          "scope-0005-8203ee7eb6724cb9e6575fdb8f401e9d4e7c5227cb6fb37fff8346a49862a504"
+        ],
+        "confidence": 0.9,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": [
+          "task-archive-ethics"
+        ]
+      }
+    ],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-2e1524d2511733406ce7ad3fc80403e2df552d53d24e0d2d1784cb6f6eca288b"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C13-D5R1-S01",
+    "sourceVersionId": "C13-D5R1-S01-v1",
+    "sourceFingerprint": "sha256:3dd3ac2175c7a909d24b6104bd93c1a831b5b52d45c67e6dae895c6d17e6f054"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4384,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 1023,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5407
+  },
+  "costUpperMicroUsd": 2543,
+  "providerBilledUsd": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0,
+  "verifierCalls": 0
+}

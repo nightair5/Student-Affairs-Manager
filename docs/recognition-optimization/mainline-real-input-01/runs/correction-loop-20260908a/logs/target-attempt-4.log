@@ -1,0 +1,33 @@
+TEMP C:\Users\Winner\AppData\Local\Temp\real-correction-VGSI3m
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ ✓ src/experiments/realInput01/factCorrections.test.ts (23 tests) 70ms
+ ✓ src/experiments/realInput01/modelPolicy.test.ts (9 tests) 108ms
+ ✓ src/experiments/realInput01/runtime.test.ts (30 tests) 7185ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > exact original A02 enters existing source atomically, provenance stays live, duplicate replay preserves confirmed data  836ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > record corruption/identity substitution rejects before writes; original pending source retained on transaction failure  384ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > material edits invalidate their observation; shared confirmed entity cannot be rewritten  736ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: ready  498ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: missing  471ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > explicit material review separates requirement and availability: not_required  472ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > material review save failure is atomic, stale choices refuse, independent sibling can confirm  344ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > saved correction preserves a previously confirmed task and independent source confirmation  578ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=false  315ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=true  366ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > manual material repair persists exact values, keeps originals and independent brother confirmation  608ms
+   ✓ real-input isolated canonical connection, seen responses not model accuracy > whole-source versions remain immutable, old pending draft is stale, confirmed task survives  313ms
+ ✓ src/experiments/realInput01/acceptance.test.tsx (21 tests) 19312ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; separate confirmation preserves two different deadlines  2658ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; batch confirmation preserves two different deadlines  2060ms
+   ✓ complex notice correction public API, original model answers remain immutable > A08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved  1228ms
+   ✓ complex notice correction public API, original model answers remain immutable > B08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved  1310ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > batch actual recorded responses retain raw and first suggestions, never default select, preserve A02 and reject identity substitution  9233ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > original A02 real App driver preserves provenance, material observation and explicit edits through independent reload  928ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > recorded launcher builds real App, serves only bound A02 and rejects unauthorized endpoints without model code  760ms
+
+ Test Files  4 passed (4)
+      Tests  83 passed (83)
+   Start at  09:44:16
+   Duration  20.90s (transform 1.25s, setup 0ms, collect 2.27s, tests 26.68s, environment 1ms, prepare 1.02s)
+

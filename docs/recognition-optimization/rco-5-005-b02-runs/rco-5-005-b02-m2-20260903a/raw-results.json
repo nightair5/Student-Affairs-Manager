@@ -1,0 +1,3625 @@
+{
+  "schemaVersion": "rco-5-005-b02-m2-raw-results-1.0.0",
+  "records": [
+    {
+      "key": "rco-b02-01:facts_first",
+      "caseId": "rco-b02-01",
+      "role": "facts_first",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:15:08.289Z",
+      "completedAt": "2026-09-03T08:15:11.201Z",
+      "latencyMs": 2913,
+      "requestSha256": "8854f9bd4b9f531040c0006b4e707a6c87666a2f322610fd0ede779ea8776d5b",
+      "requestBytes": 3373,
+      "httpStatus": 200,
+      "providerRequestId": "8c4668bb-ffb0-4b8e-adc7-409d0770aa41",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "79433f3fff61f1a2790418652a3cb51055bb930ae197ed9ac7cc4f337f48e74a",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-facts-1.0\",\"requiresAction\":true,\"tasks\":[{\"id\":\"1\",\"action\":\"补全家庭情况说明并保存草稿\",\"object\":\"家庭情况说明\",\"effect\":\"local_change\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"evidence\":\"请先在本机补全家庭情况说明并保存草稿\",\"timeRaw\":[],\"materials\":[],\"event\":null,\"location\":\"本机\"},{\"id\":\"2\",\"action\":\"不要提交\",\"object\":\"资助系统\",\"effect\":\"external_interaction\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"evidence\":\"9月7日前不要提交\",\"timeRaw\":[\"9月7日前\"],\"materials\":[],\"event\":null,\"location\":null}],\"ignored\":[]}",
+      "contentSha256": "bec8835b4e6abacb09320d598f111f62336da77eef116146718ca9a4b0952644",
+      "parsed": {
+        "schemaVersion": "rco-b01-facts-1.0",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "1",
+            "action": "补全家庭情况说明并保存草稿",
+            "object": "家庭情况说明",
+            "effect": "local_change",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "evidence": "请先在本机补全家庭情况说明并保存草稿",
+            "timeRaw": [],
+            "materials": [],
+            "event": null,
+            "location": "本机"
+          },
+          {
+            "id": "2",
+            "action": "不要提交",
+            "object": "资助系统",
+            "effect": "external_interaction",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "evidence": "9月7日前不要提交",
+            "timeRaw": [
+              "9月7日前"
+            ],
+            "materials": [],
+            "event": null,
+            "location": null
+          }
+        ],
+        "ignored": []
+      },
+      "providerUsage": {
+        "inputTokens": 948,
+        "outputTokens": 234,
+        "totalTokens": 1182,
+        "inputTokensDetails": {
+          "cached_tokens": 0
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-01:proposition_graph",
+      "caseId": "rco-b02-01",
+      "role": "proposition_graph",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:15:11.209Z",
+      "completedAt": "2026-09-03T08:15:17.706Z",
+      "latencyMs": 6497,
+      "requestSha256": "957f9aba5a46d2430d588dab87a80eac5ce9e8da443d2e1d8c10231c7769c954",
+      "requestBytes": 11631,
+      "httpStatus": 200,
+      "providerRequestId": "ce322cdc-3b79-4a1d-b229-be5c49272bd7",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "9bdd36c727dd8f91968d0b0e79db3646bc640b11e074d2c31d595209b8a2dd37",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-propositions-1.0\",\"producerRunId\":\"extract-rco-b02-01\",\"nodes\":[{\"id\":\"node-1\",\"kind\":\"directive\",\"scopeId\":\"scope-1\",\"propositionText\":\"资助系统提示：请先在本机补全家庭情况说明并保存草稿。\",\"start\":0,\"end\":26,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"补全\",\"object\":\"家庭情况说明\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-2\",\"kind\":\"directive\",\"scopeId\":\"scope-1\",\"propositionText\":\"资助系统提示：请先在本机补全家庭情况说明并保存草稿。\",\"start\":0,\"end\":26,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"保存\",\"object\":\"草稿\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-3\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"9月7日前不要提交，正式报送时间另行通知。\",\"start\":26,\"end\":47,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"提交\",\"object\":\"家庭情况说明\",\"effect\":\"external_transfer\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-4\",\"kind\":\"time\",\"scopeId\":\"scope-2\",\"propositionText\":\"9月7日前不要提交，正式报送时间另行通知。\",\"start\":26,\"end\":47,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"9月7日前\",\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-5\",\"kind\":\"event\",\"scopeId\":\"scope-2\",\"propositionText\":\"9月7日前不要提交，正式报送时间另行通知。\",\"start\":26,\"end\":47,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":\"正式报送\",\"location\":null}],\"relations\":[{\"id\":\"rel-1\",\"type\":\"task_time\",\"fromId\":\"node-3\",\"toId\":\"node-4\",\"evidenceScopeIds\":[\"scope-2\"]},{\"id\":\"rel-2\",\"type\":\"task_event\",\"fromId\":\"node-3\",\"toId\":\"node-5\",\"evidenceScopeIds\":[\"scope-2\"]}]}",
+      "contentSha256": "d14cd9a2347fd8b42540c930ac077fcb51dfb3d34c0385bd271d433af5b351d7",
+      "parsed": {
+        "schemaVersion": "rco-b01-propositions-1.0",
+        "producerRunId": "extract-rco-b02-01",
+        "nodes": [
+          {
+            "id": "node-1",
+            "kind": "directive",
+            "scopeId": "scope-1",
+            "propositionText": "资助系统提示：请先在本机补全家庭情况说明并保存草稿。",
+            "start": 0,
+            "end": 26,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "补全",
+            "object": "家庭情况说明",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-2",
+            "kind": "directive",
+            "scopeId": "scope-1",
+            "propositionText": "资助系统提示：请先在本机补全家庭情况说明并保存草稿。",
+            "start": 0,
+            "end": 26,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "保存",
+            "object": "草稿",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-3",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "9月7日前不要提交，正式报送时间另行通知。",
+            "start": 26,
+            "end": 47,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "提交",
+            "object": "家庭情况说明",
+            "effect": "external_transfer",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-4",
+            "kind": "time",
+            "scopeId": "scope-2",
+            "propositionText": "9月7日前不要提交，正式报送时间另行通知。",
+            "start": 26,
+            "end": 47,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "9月7日前",
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-5",
+            "kind": "event",
+            "scopeId": "scope-2",
+            "propositionText": "9月7日前不要提交，正式报送时间另行通知。",
+            "start": 26,
+            "end": 47,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": "正式报送",
+            "location": null
+          }
+        ],
+        "relations": [
+          {
+            "id": "rel-1",
+            "type": "task_time",
+            "fromId": "node-3",
+            "toId": "node-4",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          },
+          {
+            "id": "rel-2",
+            "type": "task_event",
+            "fromId": "node-3",
+            "toId": "node-5",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          }
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 3791,
+        "outputTokens": 720,
+        "totalTokens": 4511,
+        "inputTokensDetails": {
+          "cached_tokens": 0
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-01:semantic_verifier",
+      "caseId": "rco-b02-01",
+      "role": "semantic_verifier",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:15:17.715Z",
+      "completedAt": "2026-09-03T08:15:22.678Z",
+      "latencyMs": 4963,
+      "requestSha256": "f79597bbbf4cc88d2b8efb3fab2b66fe6edab18592c7e6971912a370d44bf9cd",
+      "requestBytes": 7592,
+      "httpStatus": 200,
+      "providerRequestId": "e46f05d6-7c95-4dfa-88e4-c1d25871c6fa",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "63c5de5edbb0df714328b9a405b800ecfc27c9c63581aef6c8c2246c30176168",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-verification-1.0\",\"sourceFingerprint\":\"fb70eb85efc2e7dbb9019d66466bec6bda58827b92a8d17dbc2c3a4f36cb4c07\",\"candidateFingerprint\":\"7d18c81c7f32ad4ec85f838f607411192d063f16d5ae931a064d3b3318d860ab\",\"graphCoverage\":\"complete\",\"revisionCoverage\":\"complete\",\"nodeAssessments\":[{\"nodeId\":\"node-1\",\"verdict\":\"entailed\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"effect\":\"local_change\",\"evidence\":\"原文明确指示补全家庭情况说明\"},{\"nodeId\":\"node-2\",\"verdict\":\"entailed\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"effect\":\"local_change\",\"evidence\":\"原文明确指示保存草稿\"},{\"nodeId\":\"node-3\",\"verdict\":\"entailed\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"effect\":\"external_transfer\",\"evidence\":\"原文明确禁止在9月7日前提交\"},{\"nodeId\":\"node-4\",\"verdict\":\"entailed\",\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"effect\":null,\"evidence\":\"原文提及9月7日前的时间限制\"},{\"nodeId\":\"node-5\",\"verdict\":\"entailed\",\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"effect\":null,\"evidence\":\"原文提及正式报送时间另行通知\"}],\"missingDirectives\":[]}",
+      "contentSha256": "cfc4a315296acd7c49af3b3e2b773b89912a9597015113e79bffb03a365897e3",
+      "parsed": {
+        "schemaVersion": "rco-b01-verification-1.0",
+        "sourceFingerprint": "fb70eb85efc2e7dbb9019d66466bec6bda58827b92a8d17dbc2c3a4f36cb4c07",
+        "candidateFingerprint": "7d18c81c7f32ad4ec85f838f607411192d063f16d5ae931a064d3b3318d860ab",
+        "graphCoverage": "complete",
+        "revisionCoverage": "complete",
+        "nodeAssessments": [
+          {
+            "nodeId": "node-1",
+            "verdict": "entailed",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "effect": "local_change",
+            "evidence": "原文明确指示补全家庭情况说明"
+          },
+          {
+            "nodeId": "node-2",
+            "verdict": "entailed",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "effect": "local_change",
+            "evidence": "原文明确指示保存草稿"
+          },
+          {
+            "nodeId": "node-3",
+            "verdict": "entailed",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "effect": "external_transfer",
+            "evidence": "原文明确禁止在9月7日前提交"
+          },
+          {
+            "nodeId": "node-4",
+            "verdict": "entailed",
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "effect": null,
+            "evidence": "原文提及9月7日前的时间限制"
+          },
+          {
+            "nodeId": "node-5",
+            "verdict": "entailed",
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "effect": null,
+            "evidence": "原文提及正式报送时间另行通知"
+          }
+        ],
+        "missingDirectives": []
+      },
+      "providerUsage": {
+        "inputTokens": 2032,
+        "outputTokens": 504,
+        "totalTokens": 2536,
+        "inputTokensDetails": {
+          "cached_tokens": 0
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-02:facts_first",
+      "caseId": "rco-b02-02",
+      "role": "facts_first",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:15:22.685Z",
+      "completedAt": "2026-09-03T08:15:23.693Z",
+      "latencyMs": 1008,
+      "requestSha256": "d5fc8b23106cde1e9670528b092216827e6937711282c61090e28f323c495682",
+      "requestBytes": 3370,
+      "httpStatus": 200,
+      "providerRequestId": "af37931a-d33f-409c-9a0c-a0c17bd77a2c",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "f1dfd919f74284ed7b61720c9a4c67c97191e974f0835842528665111281cdca",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-facts-1.0\",\"requiresAction\":false,\"tasks\":[],\"ignored\":[]}",
+      "contentSha256": "1d453d2945c6426533b8de2a02638b590ee3347f2ee97c761f5d0eae0bc60580",
+      "parsed": {
+        "schemaVersion": "rco-b01-facts-1.0",
+        "requiresAction": false,
+        "tasks": [],
+        "ignored": []
+      },
+      "providerUsage": {
+        "inputTokens": 944,
+        "outputTokens": 29,
+        "totalTokens": 973,
+        "inputTokensDetails": {
+          "cached_tokens": 0
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-02:proposition_graph",
+      "caseId": "rco-b02-02",
+      "role": "proposition_graph",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:15:23.701Z",
+      "completedAt": "2026-09-03T08:15:33.338Z",
+      "latencyMs": 9637,
+      "requestSha256": "c1817afb8fc559da79a2462fccaaaf1d7e3b2425c03a261fb8f4c8462a82fdf3",
+      "requestBytes": 11637,
+      "httpStatus": 200,
+      "providerRequestId": "e93bc730-be9c-4be7-b8c1-3a496f1125dd",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "c6a3547c00aaf006c382211631d115baf8d2261408da8ebfce59c34d113d77d3",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-propositions-1.0\",\"producerRunId\":\"extract-rco-b02-02\",\"nodes\":[{\"id\":\"node-1\",\"kind\":\"directive\",\"scopeId\":\"scope-1\",\"propositionText\":\"学院办公室将在9月6日统一领取培训证书，学生不需要到场，也不用填写领取表。\",\"start\":0,\"end\":37,\"actor\":\"addressed_group\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"领取\",\"object\":\"培训证书\",\"effect\":\"external_transfer\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-2\",\"kind\":\"time\",\"scopeId\":\"scope-1\",\"propositionText\":\"9月6日\",\"start\":9,\"end\":13,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"9月6日\",\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-3\",\"kind\":\"material\",\"scopeId\":\"scope-1\",\"propositionText\":\"培训证书\",\"start\":20,\"end\":24,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"unknown\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":\"培训证书\",\"event\":null,\"location\":null},{\"id\":\"node-4\",\"kind\":\"directive\",\"scopeId\":\"scope-1\",\"propositionText\":\"学生不需要到场\",\"start\":25,\"end\":32,\"actor\":\"addressed_group\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"到场\",\"object\":\"领取现场\",\"effect\":\"unknown\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-5\",\"kind\":\"directive\",\"scopeId\":\"scope-1\",\"propositionText\":\"也不用填写领取表\",\"start\":33,\"end\":37,\"actor\":\"addressed_group\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"填写\",\"object\":\"领取表\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-6\",\"kind\":\"material\",\"scopeId\":\"scope-1\",\"propositionText\":\"领取表\",\"start\":35,\"end\":37,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"unknown\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":\"领取表\",\"event\":null,\"location\":null},{\"id\":\"node-7\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"证书到校后再另行通知\",\"start\":37,\"end\":48,\"actor\":\"issuer\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"通知\",\"object\":\"学生\",\"effect\":\"external_interaction\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-8\",\"kind\":\"event\",\"scopeId\":\"scope-2\",\"propositionText\":\"证书到校\",\"start\":37,\"end\":41,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":\"证书到校\",\"location\":null}],\"relations\":[{\"id\":\"rel-1\",\"type\":\"task_time\",\"fromId\":\"node-1\",\"toId\":\"node-2\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-2\",\"type\":\"task_material\",\"fromId\":\"node-1\",\"toId\":\"node-3\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-3\",\"type\":\"task_material\",\"fromId\":\"node-5\",\"toId\":\"node-6\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-4\",\"type\":\"task_event\",\"fromId\":\"node-7\",\"toId\":\"node-8\",\"evidenceScopeIds\":[\"scope-2\"]}]}",
+      "contentSha256": "f7a282aa4e6f1193f835f66f3d2ce482bcc8798b81605f1cbe8e55bd2eda0e27",
+      "parsed": {
+        "schemaVersion": "rco-b01-propositions-1.0",
+        "producerRunId": "extract-rco-b02-02",
+        "nodes": [
+          {
+            "id": "node-1",
+            "kind": "directive",
+            "scopeId": "scope-1",
+            "propositionText": "学院办公室将在9月6日统一领取培训证书，学生不需要到场，也不用填写领取表。",
+            "start": 0,
+            "end": 37,
+            "actor": "addressed_group",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "领取",
+            "object": "培训证书",
+            "effect": "external_transfer",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-2",
+            "kind": "time",
+            "scopeId": "scope-1",
+            "propositionText": "9月6日",
+            "start": 9,
+            "end": 13,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "9月6日",
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-3",
+            "kind": "material",
+            "scopeId": "scope-1",
+            "propositionText": "培训证书",
+            "start": 20,
+            "end": 24,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "unknown",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": "培训证书",
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-4",
+            "kind": "directive",
+            "scopeId": "scope-1",
+            "propositionText": "学生不需要到场",
+            "start": 25,
+            "end": 32,
+            "actor": "addressed_group",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "到场",
+            "object": "领取现场",
+            "effect": "unknown",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-5",
+            "kind": "directive",
+            "scopeId": "scope-1",
+            "propositionText": "也不用填写领取表",
+            "start": 33,
+            "end": 37,
+            "actor": "addressed_group",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "填写",
+            "object": "领取表",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-6",
+            "kind": "material",
+            "scopeId": "scope-1",
+            "propositionText": "领取表",
+            "start": 35,
+            "end": 37,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "unknown",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": "领取表",
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-7",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "证书到校后再另行通知",
+            "start": 37,
+            "end": 48,
+            "actor": "issuer",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "通知",
+            "object": "学生",
+            "effect": "external_interaction",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-8",
+            "kind": "event",
+            "scopeId": "scope-2",
+            "propositionText": "证书到校",
+            "start": 37,
+            "end": 41,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": "证书到校",
+            "location": null
+          }
+        ],
+        "relations": [
+          {
+            "id": "rel-1",
+            "type": "task_time",
+            "fromId": "node-1",
+            "toId": "node-2",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-2",
+            "type": "task_material",
+            "fromId": "node-1",
+            "toId": "node-3",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-3",
+            "type": "task_material",
+            "fromId": "node-5",
+            "toId": "node-6",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-4",
+            "type": "task_event",
+            "fromId": "node-7",
+            "toId": "node-8",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          }
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 3785,
+        "outputTokens": 1070,
+        "totalTokens": 4855,
+        "inputTokensDetails": {
+          "cached_tokens": 0
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-02:semantic_verifier",
+      "caseId": "rco-b02-02",
+      "role": "semantic_verifier",
+      "dispatched": false,
+      "attemptNo": 1,
+      "status": "skipped_upstream_invalid",
+      "failureCode": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+      "schemaIssues": [
+        "graph.nodes[1].scope",
+        "graph.nodes[2].scope",
+        "graph.nodes[3].scope",
+        "graph.nodes[4].scope",
+        "graph.nodes[5].scope",
+        "graph.nodes[6].scope",
+        "graph.nodes[7].scope"
+      ],
+      "providerUsage": null
+    },
+    {
+      "key": "rco-b02-03:facts_first",
+      "caseId": "rco-b02-03",
+      "role": "facts_first",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:15:33.348Z",
+      "completedAt": "2026-09-03T08:15:36.155Z",
+      "latencyMs": 2807,
+      "requestSha256": "b361cd79631f26688888159ab2b740b83f65fc4a266cc0b765ed8f3bc76bdd02",
+      "requestBytes": 3428,
+      "httpStatus": 200,
+      "providerRequestId": "17617e8d-57bb-4a37-a4fb-16799d885e0f",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "a21c4a742638e3576ca07e8b184c50155fa22802523219de1e000e8aff6438e0",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-facts-1.0\",\"requiresAction\":true,\"tasks\":[{\"id\":\"1\",\"action\":\"标记消息为可疑\",\"object\":\"个人备忘录\",\"effect\":\"local_change\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"evidence\":\"请只在个人备忘录标记它为可疑\",\"timeRaw\":[],\"materials\":[],\"event\":null,\"location\":null},{\"id\":\"2\",\"action\":\"不要回复或上传任何照片\",\"object\":\"消息\",\"effect\":\"unknown\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"evidence\":\"不要回复或上传任何照片\",\"timeRaw\":[],\"materials\":[],\"event\":null,\"location\":null}],\"ignored\":[]}",
+      "contentSha256": "8ccd556ccb008446c4dc7f5229c088d4eb9c5a18bd2edec9e91e5cb937f0aa43",
+      "parsed": {
+        "schemaVersion": "rco-b01-facts-1.0",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "1",
+            "action": "标记消息为可疑",
+            "object": "个人备忘录",
+            "effect": "local_change",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "evidence": "请只在个人备忘录标记它为可疑",
+            "timeRaw": [],
+            "materials": [],
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "2",
+            "action": "不要回复或上传任何照片",
+            "object": "消息",
+            "effect": "unknown",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "evidence": "不要回复或上传任何照片",
+            "timeRaw": [],
+            "materials": [],
+            "event": null,
+            "location": null
+          }
+        ],
+        "ignored": []
+      },
+      "providerUsage": {
+        "inputTokens": 956,
+        "outputTokens": 216,
+        "totalTokens": 1172,
+        "inputTokensDetails": {
+          "cached_tokens": 768
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-03:proposition_graph",
+      "caseId": "rco-b02-03",
+      "role": "proposition_graph",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:15:36.163Z",
+      "completedAt": "2026-09-03T08:15:43.918Z",
+      "latencyMs": 7755,
+      "requestSha256": "8f1b877434fb8f72d767c82aa6a356fa90b966c073b40e341bbde8cd8bcb538c",
+      "requestBytes": 11747,
+      "httpStatus": 200,
+      "providerRequestId": "6f5e37ca-5049-4ca6-abb8-9a0d0150f018",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "ca864472064619ea85f420dd462194bbe5c53accdae9d85e0d7db96d9649645f",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-propositions-1.0\",\"producerRunId\":\"extract-rco-b02-03\",\"nodes\":[{\"id\":\"node-1\",\"kind\":\"directive\",\"scopeId\":\"scope-1\",\"propositionText\":\"把银行卡照片上传到共享盘\",\"start\":0,\"end\":26,\"actor\":\"third_party\",\"speechAct\":\"quoted\",\"polarity\":\"affirmative\",\"tense\":\"unknown\",\"status\":\"pending\",\"validity\":\"superseded\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"上传\",\"object\":\"银行卡照片\",\"effect\":\"external_transfer\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-2\",\"kind\":\"material\",\"scopeId\":\"scope-1\",\"propositionText\":\"银行卡照片\",\"start\":0,\"end\":26,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"unknown\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":\"银行卡照片\",\"event\":null,\"location\":null},{\"id\":\"node-3\",\"kind\":\"location\",\"scopeId\":\"scope-1\",\"propositionText\":\"共享盘\",\"start\":0,\"end\":26,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"unknown\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":\"共享盘\"},{\"id\":\"node-4\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"只在个人备忘录标记它为可疑\",\"start\":26,\"end\":65,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"标记\",\"object\":\"可疑\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-5\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"不要回复或上传任何照片\",\"start\":26,\"end\":65,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"回复或上传\",\"object\":\"任何照片\",\"effect\":\"external_interaction\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-6\",\"kind\":\"event\",\"scopeId\":\"scope-2\",\"propositionText\":\"辅导员已确认该消息作废\",\"start\":26,\"end\":65,\"actor\":\"third_party\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"past\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":\"确认作废\",\"location\":null}],\"relations\":[{\"id\":\"rel-1\",\"type\":\"task_material\",\"fromId\":\"node-1\",\"toId\":\"node-2\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-2\",\"type\":\"task_event\",\"fromId\":\"node-1\",\"toId\":\"node-6\",\"evidenceScopeIds\":[\"scope-1\",\"scope-2\"]},{\"id\":\"rel-3\",\"type\":\"supersedes\",\"fromId\":\"node-6\",\"toId\":\"node-1\",\"evidenceScopeIds\":[\"scope-2\"]}]}",
+      "contentSha256": "b54c96eb450275bfbcf5145d9cbb33dcb2ff25125a6c74b4b52850168ceb94e3",
+      "parsed": {
+        "schemaVersion": "rco-b01-propositions-1.0",
+        "producerRunId": "extract-rco-b02-03",
+        "nodes": [
+          {
+            "id": "node-1",
+            "kind": "directive",
+            "scopeId": "scope-1",
+            "propositionText": "把银行卡照片上传到共享盘",
+            "start": 0,
+            "end": 26,
+            "actor": "third_party",
+            "speechAct": "quoted",
+            "polarity": "affirmative",
+            "tense": "unknown",
+            "status": "pending",
+            "validity": "superseded",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "上传",
+            "object": "银行卡照片",
+            "effect": "external_transfer",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-2",
+            "kind": "material",
+            "scopeId": "scope-1",
+            "propositionText": "银行卡照片",
+            "start": 0,
+            "end": 26,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "unknown",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": "银行卡照片",
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-3",
+            "kind": "location",
+            "scopeId": "scope-1",
+            "propositionText": "共享盘",
+            "start": 0,
+            "end": 26,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "unknown",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": "共享盘"
+          },
+          {
+            "id": "node-4",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "只在个人备忘录标记它为可疑",
+            "start": 26,
+            "end": 65,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "标记",
+            "object": "可疑",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-5",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "不要回复或上传任何照片",
+            "start": 26,
+            "end": 65,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "回复或上传",
+            "object": "任何照片",
+            "effect": "external_interaction",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-6",
+            "kind": "event",
+            "scopeId": "scope-2",
+            "propositionText": "辅导员已确认该消息作废",
+            "start": 26,
+            "end": 65,
+            "actor": "third_party",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "past",
+            "status": "completed",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": "确认作废",
+            "location": null
+          }
+        ],
+        "relations": [
+          {
+            "id": "rel-1",
+            "type": "task_material",
+            "fromId": "node-1",
+            "toId": "node-2",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-2",
+            "type": "task_event",
+            "fromId": "node-1",
+            "toId": "node-6",
+            "evidenceScopeIds": [
+              "scope-1",
+              "scope-2"
+            ]
+          },
+          {
+            "id": "rel-3",
+            "type": "supersedes",
+            "fromId": "node-6",
+            "toId": "node-1",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          }
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 3806,
+        "outputTokens": 822,
+        "totalTokens": 4628,
+        "inputTokensDetails": {
+          "cached_tokens": 3584
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-03:semantic_verifier",
+      "caseId": "rco-b02-03",
+      "role": "semantic_verifier",
+      "dispatched": false,
+      "attemptNo": 1,
+      "status": "skipped_upstream_invalid",
+      "failureCode": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+      "schemaIssues": [
+        "graph.nodes[0].scope",
+        "graph.nodes[1].scope",
+        "graph.nodes[2].scope",
+        "graph.nodes[3].scope",
+        "graph.nodes[4].scope",
+        "graph.nodes[5].scope",
+        "graph.relations[2].nodeKinds",
+        "graph.relations[2].endpointEvidence"
+      ],
+      "providerUsage": null
+    },
+    {
+      "key": "rco-b02-04:facts_first",
+      "caseId": "rco-b02-04",
+      "role": "facts_first",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:15:44.215Z",
+      "completedAt": "2026-09-03T08:15:46.214Z",
+      "latencyMs": 1999,
+      "requestSha256": "b04e855bcc473c904f48c767d01244116f71b32d218c05b21ee15b2c38d476c1",
+      "requestBytes": 3411,
+      "httpStatus": 200,
+      "providerRequestId": "76eafacc-10b8-4753-89a2-32d9fb3ed7c3",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "a501b9439ca2c11e48686c7a38a663a570204cc466eeabb643253b55f9f1e90d",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-facts-1.0\",\"requiresAction\":true,\"tasks\":[{\"id\":\"1\",\"action\":\"参加培训\",\"object\":\"志愿服务岗前培训\",\"effect\":\"local_change\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"evidence\":\"请携带纸质签到码到新地点参加培训\",\"timeRaw\":[\"9月8日14:30\"],\"materials\":[\"纸质签到码\"],\"event\":\"志愿服务岗前培训\",\"location\":\"学生活动中心二楼\"}],\"ignored\":[]}",
+      "contentSha256": "ec972873394456906f94ce1695a4e1421436904f736ecd0b1e7e310bb94539a8",
+      "parsed": {
+        "schemaVersion": "rco-b01-facts-1.0",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "1",
+            "action": "参加培训",
+            "object": "志愿服务岗前培训",
+            "effect": "local_change",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "evidence": "请携带纸质签到码到新地点参加培训",
+            "timeRaw": [
+              "9月8日14:30"
+            ],
+            "materials": [
+              "纸质签到码"
+            ],
+            "event": "志愿服务岗前培训",
+            "location": "学生活动中心二楼"
+          }
+        ],
+        "ignored": []
+      },
+      "providerUsage": {
+        "inputTokens": 960,
+        "outputTokens": 145,
+        "totalTokens": 1105,
+        "inputTokensDetails": {
+          "cached_tokens": 768
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-04:proposition_graph",
+      "caseId": "rco-b02-04",
+      "role": "proposition_graph",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:15:46.221Z",
+      "completedAt": "2026-09-03T08:15:56.786Z",
+      "latencyMs": 10565,
+      "requestSha256": "0f625bcd4efdd5d83f3a3e2fb8e79dd96c378cc824d4857f2b84c6acb501bc3c",
+      "requestBytes": 11766,
+      "httpStatus": 200,
+      "providerRequestId": "dfe1c7ae-0bd9-4930-9c98-872ee27d678e",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "8ba35a430c21b19d90e1731ea1a7170c7c9d5f706d6ff14236dc72031b01aa9f",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-propositions-1.0\",\"producerRunId\":\"extract-rco-b02-04\",\"nodes\":[{\"id\":\"node-1\",\"kind\":\"event\",\"scopeId\":\"scope-1\",\"propositionText\":\"志愿服务岗前培训原定9月8日14:30在海韵楼102室举行。\",\"start\":0,\"end\":30,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"past\",\"status\":\"pending\",\"validity\":\"superseded\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":\"志愿服务岗前培训\",\"location\":null},{\"id\":\"node-2\",\"kind\":\"time\",\"scopeId\":\"scope-1\",\"propositionText\":\"9月8日14:30\",\"start\":8,\"end\":18,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"past\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"9月8日14:30\",\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-3\",\"kind\":\"location\",\"scopeId\":\"scope-1\",\"propositionText\":\"海韵楼102室\",\"start\":22,\"end\":29,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"past\",\"status\":\"unknown\",\"validity\":\"superseded\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":\"海韵楼102室\"},{\"id\":\"node-4\",\"kind\":\"event\",\"scopeId\":\"scope-2\",\"propositionText\":\"时间不变，地点改到学生活动中心二楼；\",\"start\":30,\"end\":48,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":\"志愿服务岗前培训\",\"location\":null},{\"id\":\"node-5\",\"kind\":\"location\",\"scopeId\":\"scope-2\",\"propositionText\":\"学生活动中心二楼\",\"start\":39,\"end\":47,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":\"学生活动中心二楼\"},{\"id\":\"node-6\",\"kind\":\"directive\",\"scopeId\":\"scope-3\",\"propositionText\":\"请携带纸质签到码到新地点参加培训。\",\"start\":48,\"end\":65,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"携带\",\"object\":\"纸质签到码\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-7\",\"kind\":\"material\",\"scopeId\":\"scope-3\",\"propositionText\":\"纸质签到码\",\"start\":52,\"end\":57,\"actor\":\"unknown\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":\"纸质签到码\",\"event\":null,\"location\":null},{\"id\":\"node-8\",\"kind\":\"location\",\"scopeId\":\"scope-3\",\"propositionText\":\"新地点\",\"start\":58,\"end\":61,\"actor\":\"unknown\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":\"新地点\"}],\"relations\":[{\"id\":\"rel-1\",\"type\":\"event_time_start\",\"fromId\":\"node-1\",\"toId\":\"node-2\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-2\",\"type\":\"event_location\",\"fromId\":\"node-1\",\"toId\":\"node-3\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-3\",\"type\":\"event_location\",\"fromId\":\"node-4\",\"toId\":\"node-5\",\"evidenceScopeIds\":[\"scope-2\"]},{\"id\":\"rel-4\",\"type\":\"task_material\",\"fromId\":\"node-6\",\"toId\":\"node-7\",\"evidenceScopeIds\":[\"scope-3\"]},{\"id\":\"rel-5\",\"type\":\"task_event\",\"fromId\":\"node-6\",\"toId\":\"node-4\",\"evidenceScopeIds\":[\"scope-3\"]},{\"id\":\"rel-6\",\"type\":\"event_location\",\"fromId\":\"node-4\",\"toId\":\"node-8\",\"evidenceScopeIds\":[\"scope-3\"]},{\"id\":\"rel-7\",\"type\":\"supersedes\",\"fromId\":\"node-4\",\"toId\":\"node-1\",\"evidenceScopeIds\":[\"scope-2\"]}]}",
+      "contentSha256": "b1d9ffff688c3d439ff29ffec0c5a61de89c1f81a44f84d42d3c14279ec14c94",
+      "parsed": {
+        "schemaVersion": "rco-b01-propositions-1.0",
+        "producerRunId": "extract-rco-b02-04",
+        "nodes": [
+          {
+            "id": "node-1",
+            "kind": "event",
+            "scopeId": "scope-1",
+            "propositionText": "志愿服务岗前培训原定9月8日14:30在海韵楼102室举行。",
+            "start": 0,
+            "end": 30,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "past",
+            "status": "pending",
+            "validity": "superseded",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": "志愿服务岗前培训",
+            "location": null
+          },
+          {
+            "id": "node-2",
+            "kind": "time",
+            "scopeId": "scope-1",
+            "propositionText": "9月8日14:30",
+            "start": 8,
+            "end": 18,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "past",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "9月8日14:30",
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-3",
+            "kind": "location",
+            "scopeId": "scope-1",
+            "propositionText": "海韵楼102室",
+            "start": 22,
+            "end": 29,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "past",
+            "status": "unknown",
+            "validity": "superseded",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": "海韵楼102室"
+          },
+          {
+            "id": "node-4",
+            "kind": "event",
+            "scopeId": "scope-2",
+            "propositionText": "时间不变，地点改到学生活动中心二楼；",
+            "start": 30,
+            "end": 48,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": "志愿服务岗前培训",
+            "location": null
+          },
+          {
+            "id": "node-5",
+            "kind": "location",
+            "scopeId": "scope-2",
+            "propositionText": "学生活动中心二楼",
+            "start": 39,
+            "end": 47,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": "学生活动中心二楼"
+          },
+          {
+            "id": "node-6",
+            "kind": "directive",
+            "scopeId": "scope-3",
+            "propositionText": "请携带纸质签到码到新地点参加培训。",
+            "start": 48,
+            "end": 65,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "携带",
+            "object": "纸质签到码",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-7",
+            "kind": "material",
+            "scopeId": "scope-3",
+            "propositionText": "纸质签到码",
+            "start": 52,
+            "end": 57,
+            "actor": "unknown",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": "纸质签到码",
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-8",
+            "kind": "location",
+            "scopeId": "scope-3",
+            "propositionText": "新地点",
+            "start": 58,
+            "end": 61,
+            "actor": "unknown",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": "新地点"
+          }
+        ],
+        "relations": [
+          {
+            "id": "rel-1",
+            "type": "event_time_start",
+            "fromId": "node-1",
+            "toId": "node-2",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-2",
+            "type": "event_location",
+            "fromId": "node-1",
+            "toId": "node-3",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-3",
+            "type": "event_location",
+            "fromId": "node-4",
+            "toId": "node-5",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          },
+          {
+            "id": "rel-4",
+            "type": "task_material",
+            "fromId": "node-6",
+            "toId": "node-7",
+            "evidenceScopeIds": [
+              "scope-3"
+            ]
+          },
+          {
+            "id": "rel-5",
+            "type": "task_event",
+            "fromId": "node-6",
+            "toId": "node-4",
+            "evidenceScopeIds": [
+              "scope-3"
+            ]
+          },
+          {
+            "id": "rel-6",
+            "type": "event_location",
+            "fromId": "node-4",
+            "toId": "node-8",
+            "evidenceScopeIds": [
+              "scope-3"
+            ]
+          },
+          {
+            "id": "rel-7",
+            "type": "supersedes",
+            "fromId": "node-4",
+            "toId": "node-1",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          }
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 3831,
+        "outputTokens": 1211,
+        "totalTokens": 5042,
+        "inputTokensDetails": {
+          "cached_tokens": 3584
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-04:semantic_verifier",
+      "caseId": "rco-b02-04",
+      "role": "semantic_verifier",
+      "dispatched": false,
+      "attemptNo": 1,
+      "status": "skipped_upstream_invalid",
+      "failureCode": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+      "schemaIssues": [
+        "graph.nodes[1].scope",
+        "graph.nodes[2].scope",
+        "graph.nodes[4].scope",
+        "graph.nodes[6].scope",
+        "graph.nodes[7].scope",
+        "graph.relations[4].endpointEvidence",
+        "graph.relations[5].endpointEvidence",
+        "graph.relations[6].nodeKinds",
+        "graph.relations[6].endpointEvidence"
+      ],
+      "providerUsage": null
+    },
+    {
+      "key": "rco-b02-05:facts_first",
+      "caseId": "rco-b02-05",
+      "role": "facts_first",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:15:56.797Z",
+      "completedAt": "2026-09-03T08:15:58.888Z",
+      "latencyMs": 2091,
+      "requestSha256": "a958ca544380b1a1d95f599a27366da5e0040ecc75af2e74b26551001bb6820f",
+      "requestBytes": 3368,
+      "httpStatus": 200,
+      "providerRequestId": "32d9528f-dadd-464d-b4c3-e9670e10be78",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "2bd2772f763586da4c92a9f9ccb42e4bafefa1fbe327a69844b2a40388f9c875",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-facts-1.0\",\"requiresAction\":true,\"tasks\":[{\"id\":\"1\",\"action\":\"核对收款账户末四位并保存截图\",\"object\":\"收款账户\",\"effect\":\"local_change\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"evidence\":\"现在请在本机核对收款账户末四位并保存截图\",\"timeRaw\":[\"现在\"],\"materials\":[],\"event\":null,\"location\":\"本机\"}],\"ignored\":[\"奖学金结果预计9月10日公布。\",\"截图不要发送给任何人。\"]}",
+      "contentSha256": "2a70ea6d74d1c384cedf5700c5ab956935557e78fbcc211f7d95eaaf9d59be3f",
+      "parsed": {
+        "schemaVersion": "rco-b01-facts-1.0",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "1",
+            "action": "核对收款账户末四位并保存截图",
+            "object": "收款账户",
+            "effect": "local_change",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "evidence": "现在请在本机核对收款账户末四位并保存截图",
+            "timeRaw": [
+              "现在"
+            ],
+            "materials": [],
+            "event": null,
+            "location": "本机"
+          }
+        ],
+        "ignored": [
+          "奖学金结果预计9月10日公布。",
+          "截图不要发送给任何人。"
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 944,
+        "outputTokens": 153,
+        "totalTokens": 1097,
+        "inputTokensDetails": {
+          "cached_tokens": 768
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-05:proposition_graph",
+      "caseId": "rco-b02-05",
+      "role": "proposition_graph",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:15:58.895Z",
+      "completedAt": "2026-09-03T08:16:07.465Z",
+      "latencyMs": 8570,
+      "requestSha256": "d269465d3e68c21f9d182debd774c2da9540058cf91189e0899eada8728f69db",
+      "requestBytes": 11627,
+      "httpStatus": 200,
+      "providerRequestId": "413227a3-221c-47df-ba76-9f4d8dedbf3b",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "f454f368976b4e5efc694fa5d4c9f1c91cd644101f527fc33854e47570d9e17a",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-propositions-1.0\",\"producerRunId\":\"extract-rco-b02-05\",\"nodes\":[{\"id\":\"node-1\",\"kind\":\"event\",\"scopeId\":\"scope-1\",\"propositionText\":\"奖学金结果预计9月10日公布。\",\"start\":0,\"end\":15,\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":\"奖学金结果公布\",\"location\":null},{\"id\":\"node-2\",\"kind\":\"time\",\"scopeId\":\"scope-1\",\"propositionText\":\"奖学金结果预计9月10日公布。\",\"start\":0,\"end\":15,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"9月10日\",\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-3\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"现在请在本机核对收款账户末四位并保存截图，截图不要发送给任何人。\",\"start\":15,\"end\":47,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"核对收款账户末四位并保存截图\",\"object\":\"收款账户末四位和截图\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-4\",\"kind\":\"time\",\"scopeId\":\"scope-2\",\"propositionText\":\"现在请在本机核对收款账户末四位并保存截图，截图不要发送给任何人。\",\"start\":15,\"end\":47,\"actor\":\"unknown\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"现在\",\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-5\",\"kind\":\"location\",\"scopeId\":\"scope-2\",\"propositionText\":\"现在请在本机核对收款账户末四位并保存截图，截图不要发送给任何人。\",\"start\":15,\"end\":47,\"actor\":\"unknown\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":\"本机\"},{\"id\":\"node-6\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"现在请在本机核对收款账户末四位并保存截图，截图不要发送给任何人。\",\"start\":15,\"end\":47,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"发送截图\",\"object\":\"截图\",\"effect\":\"external_transfer\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null}],\"relations\":[{\"id\":\"rel-1\",\"type\":\"event_time_start\",\"fromId\":\"node-1\",\"toId\":\"node-2\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-2\",\"type\":\"task_time\",\"fromId\":\"node-3\",\"toId\":\"node-4\",\"evidenceScopeIds\":[\"scope-2\"]},{\"id\":\"rel-3\",\"type\":\"task_event\",\"fromId\":\"node-3\",\"toId\":\"node-1\",\"evidenceScopeIds\":[\"scope-1\",\"scope-2\"]},{\"id\":\"rel-4\",\"type\":\"event_location\",\"fromId\":\"node-3\",\"toId\":\"node-5\",\"evidenceScopeIds\":[\"scope-2\"]},{\"id\":\"rel-5\",\"type\":\"task_time\",\"fromId\":\"node-6\",\"toId\":\"node-4\",\"evidenceScopeIds\":[\"scope-2\"]}]}",
+      "contentSha256": "35ff2915b120442491fb09b0f14d8f06ba0ad23ff2e0c847915078db10ea716f",
+      "parsed": {
+        "schemaVersion": "rco-b01-propositions-1.0",
+        "producerRunId": "extract-rco-b02-05",
+        "nodes": [
+          {
+            "id": "node-1",
+            "kind": "event",
+            "scopeId": "scope-1",
+            "propositionText": "奖学金结果预计9月10日公布。",
+            "start": 0,
+            "end": 15,
+            "actor": "issuer",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": "奖学金结果公布",
+            "location": null
+          },
+          {
+            "id": "node-2",
+            "kind": "time",
+            "scopeId": "scope-1",
+            "propositionText": "奖学金结果预计9月10日公布。",
+            "start": 0,
+            "end": 15,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "9月10日",
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-3",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "现在请在本机核对收款账户末四位并保存截图，截图不要发送给任何人。",
+            "start": 15,
+            "end": 47,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "核对收款账户末四位并保存截图",
+            "object": "收款账户末四位和截图",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-4",
+            "kind": "time",
+            "scopeId": "scope-2",
+            "propositionText": "现在请在本机核对收款账户末四位并保存截图，截图不要发送给任何人。",
+            "start": 15,
+            "end": 47,
+            "actor": "unknown",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "现在",
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-5",
+            "kind": "location",
+            "scopeId": "scope-2",
+            "propositionText": "现在请在本机核对收款账户末四位并保存截图，截图不要发送给任何人。",
+            "start": 15,
+            "end": 47,
+            "actor": "unknown",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": "本机"
+          },
+          {
+            "id": "node-6",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "现在请在本机核对收款账户末四位并保存截图，截图不要发送给任何人。",
+            "start": 15,
+            "end": 47,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "发送截图",
+            "object": "截图",
+            "effect": "external_transfer",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          }
+        ],
+        "relations": [
+          {
+            "id": "rel-1",
+            "type": "event_time_start",
+            "fromId": "node-1",
+            "toId": "node-2",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-2",
+            "type": "task_time",
+            "fromId": "node-3",
+            "toId": "node-4",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          },
+          {
+            "id": "rel-3",
+            "type": "task_event",
+            "fromId": "node-3",
+            "toId": "node-1",
+            "evidenceScopeIds": [
+              "scope-1",
+              "scope-2"
+            ]
+          },
+          {
+            "id": "rel-4",
+            "type": "event_location",
+            "fromId": "node-3",
+            "toId": "node-5",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          },
+          {
+            "id": "rel-5",
+            "type": "task_time",
+            "fromId": "node-6",
+            "toId": "node-4",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          }
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 3785,
+        "outputTokens": 959,
+        "totalTokens": 4744,
+        "inputTokensDetails": {
+          "cached_tokens": 3584
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-05:semantic_verifier",
+      "caseId": "rco-b02-05",
+      "role": "semantic_verifier",
+      "dispatched": false,
+      "attemptNo": 1,
+      "status": "skipped_upstream_invalid",
+      "failureCode": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+      "schemaIssues": [
+        "graph.relations[3].nodeKinds"
+      ],
+      "providerUsage": null
+    },
+    {
+      "key": "rco-b02-06:facts_first",
+      "caseId": "rco-b02-06",
+      "role": "facts_first",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:16:07.476Z",
+      "completedAt": "2026-09-03T08:16:08.962Z",
+      "latencyMs": 1486,
+      "requestSha256": "0c5cd35ec54e6ac30260e9e2168e9b792126362e660327e73da6cfcffaccae85",
+      "requestBytes": 3383,
+      "httpStatus": 200,
+      "providerRequestId": "8450f4b0-1445-45e6-8611-c602c58e3c6d",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "69fc2147ca42baa05940590f31471369f307487ecd33f8304ad30097765b45ba",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-facts-1.0\",\"requiresAction\":false,\"tasks\":[],\"ignored\":[\"只有系统状态变为“退回修改”时，才需要重写申请理由；当前页面显示“审核中”，请不要提前改动或重复提交。\"]}",
+      "contentSha256": "b6440082392c2cc4eaec0000cabf6a58496a1e7e36a3f71c36a90cd8fdf48316",
+      "parsed": {
+        "schemaVersion": "rco-b01-facts-1.0",
+        "requiresAction": false,
+        "tasks": [],
+        "ignored": [
+          "只有系统状态变为“退回修改”时，才需要重写申请理由；当前页面显示“审核中”，请不要提前改动或重复提交。"
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 947,
+        "outputTokens": 61,
+        "totalTokens": 1008,
+        "inputTokensDetails": {
+          "cached_tokens": 768
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-06:proposition_graph",
+      "caseId": "rco-b02-06",
+      "role": "proposition_graph",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:16:08.969Z",
+      "completedAt": "2026-09-03T08:16:14.898Z",
+      "latencyMs": 5929,
+      "requestSha256": "f50e6f7487ddb143f7fadbb8ede2471a3a3c88c4af40f5c90b74d51525cfb627",
+      "requestBytes": 11663,
+      "httpStatus": 200,
+      "providerRequestId": "09d68199-6d03-4bb3-aad7-65f70b37edad",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "bed8a4868d028ad6f1e78433d2ecc258cae9a5386fa445d366fa79221a3a6e76",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-propositions-1.0\",\"producerRunId\":\"extract-rco-b02-06\",\"nodes\":[{\"id\":\"n1\",\"kind\":\"directive\",\"scopeId\":\"scope-1\",\"propositionText\":\"只有系统状态变为“退回修改”时，才需要重写申请理由；\",\"start\":0,\"end\":26,\"actor\":\"issuer\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"重写\",\"object\":\"申请理由\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"n2\",\"kind\":\"event\",\"scopeId\":\"scope-1\",\"propositionText\":\"系统状态变为“退回修改”\",\"start\":0,\"end\":26,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":\"系统状态变为“退回修改”\",\"location\":null},{\"id\":\"n3\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"当前页面显示“审核中”，请不要提前改动或重复提交。\",\"start\":26,\"end\":51,\"actor\":\"issuer\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"改动或重复提交\",\"object\":\"申请\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"n4\",\"kind\":\"information\",\"scopeId\":\"scope-2\",\"propositionText\":\"当前页面显示“审核中”\",\"start\":26,\"end\":51,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null}],\"relations\":[{\"id\":\"r1\",\"type\":\"task_event\",\"fromId\":\"n1\",\"toId\":\"n2\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"r2\",\"type\":\"task_time\",\"fromId\":\"n3\",\"toId\":\"n4\",\"evidenceScopeIds\":[\"scope-2\"]}]}",
+      "contentSha256": "0971ce6df03cefa93dfb6c0912854c7eff162a68f92bc9c7204316677901768e",
+      "parsed": {
+        "schemaVersion": "rco-b01-propositions-1.0",
+        "producerRunId": "extract-rco-b02-06",
+        "nodes": [
+          {
+            "id": "n1",
+            "kind": "directive",
+            "scopeId": "scope-1",
+            "propositionText": "只有系统状态变为“退回修改”时，才需要重写申请理由；",
+            "start": 0,
+            "end": 26,
+            "actor": "issuer",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "重写",
+            "object": "申请理由",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "n2",
+            "kind": "event",
+            "scopeId": "scope-1",
+            "propositionText": "系统状态变为“退回修改”",
+            "start": 0,
+            "end": 26,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": "系统状态变为“退回修改”",
+            "location": null
+          },
+          {
+            "id": "n3",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "当前页面显示“审核中”，请不要提前改动或重复提交。",
+            "start": 26,
+            "end": 51,
+            "actor": "issuer",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "改动或重复提交",
+            "object": "申请",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "n4",
+            "kind": "information",
+            "scopeId": "scope-2",
+            "propositionText": "当前页面显示“审核中”",
+            "start": 26,
+            "end": 51,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "completed",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          }
+        ],
+        "relations": [
+          {
+            "id": "r1",
+            "type": "task_event",
+            "fromId": "n1",
+            "toId": "n2",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "r2",
+            "type": "task_time",
+            "fromId": "n3",
+            "toId": "n4",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          }
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 3792,
+        "outputTokens": 571,
+        "totalTokens": 4363,
+        "inputTokensDetails": {
+          "cached_tokens": 3584
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-06:semantic_verifier",
+      "caseId": "rco-b02-06",
+      "role": "semantic_verifier",
+      "dispatched": false,
+      "attemptNo": 1,
+      "status": "skipped_upstream_invalid",
+      "failureCode": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+      "schemaIssues": [
+        "graph.nodes[1].scope",
+        "graph.nodes[3].scope",
+        "graph.relations[1].nodeKinds"
+      ],
+      "providerUsage": null
+    },
+    {
+      "key": "rco-b02-07:facts_first",
+      "caseId": "rco-b02-07",
+      "role": "facts_first",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:16:14.909Z",
+      "completedAt": "2026-09-03T08:16:17.694Z",
+      "latencyMs": 2785,
+      "requestSha256": "a0dcc304a78e2dba8a026143a888618b5ffade702f7a91c68aeeb7c606389959",
+      "requestBytes": 3396,
+      "httpStatus": 200,
+      "providerRequestId": "953d7bee-960a-4030-8363-121df8ec5163",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "1556c6ded04c856233030d88ff1ee1c9f3b23c954b20cf75c1d1ef7cd745dead",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-facts-1.0\",\"requiresAction\":true,\"tasks\":[{\"id\":\"1\",\"action\":\"携带护目镜到实验楼B203完成安全签到\",\"object\":\"护目镜\",\"effect\":\"physical_action\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"evidence\":\"参加实验课的同学必须于周二上午携带护目镜到实验楼B203完成安全签到\",\"timeRaw\":[\"周二上午\"],\"materials\":[\"护目镜\"],\"event\":\"安全签到\",\"location\":\"实验楼B203\"}],\"ignored\":[\"实验课讲义可自愿下载。\",\"无需提前上传任何证明。\"]}",
+      "contentSha256": "e6ac9e36ac980c733e540e5348bb8ceac228975160ec39b6c53a675d0d52877b",
+      "parsed": {
+        "schemaVersion": "rco-b01-facts-1.0",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "1",
+            "action": "携带护目镜到实验楼B203完成安全签到",
+            "object": "护目镜",
+            "effect": "physical_action",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "evidence": "参加实验课的同学必须于周二上午携带护目镜到实验楼B203完成安全签到",
+            "timeRaw": [
+              "周二上午"
+            ],
+            "materials": [
+              "护目镜"
+            ],
+            "event": "安全签到",
+            "location": "实验楼B203"
+          }
+        ],
+        "ignored": [
+          "实验课讲义可自愿下载。",
+          "无需提前上传任何证明。"
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 951,
+        "outputTokens": 172,
+        "totalTokens": 1123,
+        "inputTokensDetails": {
+          "cached_tokens": 768
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-07:proposition_graph",
+      "caseId": "rco-b02-07",
+      "role": "proposition_graph",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:16:17.700Z",
+      "completedAt": "2026-09-03T08:16:25.342Z",
+      "latencyMs": 7642,
+      "requestSha256": "e087892260012b9ad08f0184dc1a34fd1ab0b070b3d92df4c6fc2efb744137b6",
+      "requestBytes": 11683,
+      "httpStatus": 200,
+      "providerRequestId": "d05069c9-ab1f-4223-a15d-e2d7d0cb6c52",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "48c140230097d76810c0e27119f090b77bda1c8652c25c120654ff2e241250e4",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-propositions-1.0\",\"producerRunId\":\"extract-rco-b02-07\",\"nodes\":[{\"id\":\"node-1\",\"kind\":\"directive\",\"scopeId\":\"scope-1\",\"propositionText\":\"实验课讲义可自愿下载。\",\"start\":0,\"end\":11,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"optional\",\"inferenceLevel\":\"explicit\",\"action\":\"下载\",\"object\":\"实验课讲义\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-2\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"参加实验课的同学必须于周二上午携带护目镜到实验楼B203完成安全签到\",\"start\":11,\"end\":57,\"actor\":\"addressed_group\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"完成安全签到\",\"object\":\"护目镜\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-3\",\"kind\":\"time\",\"scopeId\":\"scope-2\",\"propositionText\":\"周二上午\",\"start\":24,\"end\":28,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"周二上午\",\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-4\",\"kind\":\"material\",\"scopeId\":\"scope-2\",\"propositionText\":\"护目镜\",\"start\":32,\"end\":35,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"unknown\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":\"护目镜\",\"event\":null,\"location\":null},{\"id\":\"node-5\",\"kind\":\"location\",\"scopeId\":\"scope-2\",\"propositionText\":\"实验楼B203\",\"start\":39,\"end\":45,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"unknown\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":\"实验楼B203\"},{\"id\":\"node-6\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"无需提前上传任何证明\",\"start\":57,\"end\":70,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"上传\",\"object\":\"任何证明\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null}],\"relations\":[{\"id\":\"rel-1\",\"type\":\"task_time\",\"fromId\":\"node-2\",\"toId\":\"node-3\",\"evidenceScopeIds\":[\"scope-2\"]},{\"id\":\"rel-2\",\"type\":\"task_material\",\"fromId\":\"node-2\",\"toId\":\"node-4\",\"evidenceScopeIds\":[\"scope-2\"]},{\"id\":\"rel-3\",\"type\":\"event_location\",\"fromId\":\"node-2\",\"toId\":\"node-5\",\"evidenceScopeIds\":[\"scope-2\"]}]}",
+      "contentSha256": "3cdb72e0320e1a7bb01959c7c89b258a1c44121920e478ad3a781c14a86f5a0a",
+      "parsed": {
+        "schemaVersion": "rco-b01-propositions-1.0",
+        "producerRunId": "extract-rco-b02-07",
+        "nodes": [
+          {
+            "id": "node-1",
+            "kind": "directive",
+            "scopeId": "scope-1",
+            "propositionText": "实验课讲义可自愿下载。",
+            "start": 0,
+            "end": 11,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "optional",
+            "inferenceLevel": "explicit",
+            "action": "下载",
+            "object": "实验课讲义",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-2",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "参加实验课的同学必须于周二上午携带护目镜到实验楼B203完成安全签到",
+            "start": 11,
+            "end": 57,
+            "actor": "addressed_group",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "完成安全签到",
+            "object": "护目镜",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-3",
+            "kind": "time",
+            "scopeId": "scope-2",
+            "propositionText": "周二上午",
+            "start": 24,
+            "end": 28,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "周二上午",
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-4",
+            "kind": "material",
+            "scopeId": "scope-2",
+            "propositionText": "护目镜",
+            "start": 32,
+            "end": 35,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "unknown",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": "护目镜",
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-5",
+            "kind": "location",
+            "scopeId": "scope-2",
+            "propositionText": "实验楼B203",
+            "start": 39,
+            "end": 45,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "unknown",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": "实验楼B203"
+          },
+          {
+            "id": "node-6",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "无需提前上传任何证明",
+            "start": 57,
+            "end": 70,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "上传",
+            "object": "任何证明",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          }
+        ],
+        "relations": [
+          {
+            "id": "rel-1",
+            "type": "task_time",
+            "fromId": "node-2",
+            "toId": "node-3",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          },
+          {
+            "id": "rel-2",
+            "type": "task_material",
+            "fromId": "node-2",
+            "toId": "node-4",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          },
+          {
+            "id": "rel-3",
+            "type": "event_location",
+            "fromId": "node-2",
+            "toId": "node-5",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          }
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 3797,
+        "outputTokens": 826,
+        "totalTokens": 4623,
+        "inputTokensDetails": {
+          "cached_tokens": 3584
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-07:semantic_verifier",
+      "caseId": "rco-b02-07",
+      "role": "semantic_verifier",
+      "dispatched": false,
+      "attemptNo": 1,
+      "status": "skipped_upstream_invalid",
+      "failureCode": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+      "schemaIssues": [
+        "graph.nodes[1].scope",
+        "graph.nodes[2].scope",
+        "graph.nodes[3].scope",
+        "graph.nodes[4].scope",
+        "graph.nodes[5].scope",
+        "graph.relations[2].nodeKinds"
+      ],
+      "providerUsage": null
+    },
+    {
+      "key": "rco-b02-08:facts_first",
+      "caseId": "rco-b02-08",
+      "role": "facts_first",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:16:25.352Z",
+      "completedAt": "2026-09-03T08:16:26.508Z",
+      "latencyMs": 1156,
+      "requestSha256": "b68cf8bb3e36a55c1e3c7bd080920b14107bb7a3a1d27e3c477f039040481d15",
+      "requestBytes": 3378,
+      "httpStatus": 200,
+      "providerRequestId": "0091db99-6b6a-403f-b315-1ce871eda2c4",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "09c9094f1c51fa324cc3da8f7b18034471c3839fdb58385930544b8408d3bb02",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-facts-1.0\",\"requiresAction\":false,\"tasks\":[],\"ignored\":[\"有人询问是否要提前上传照片；目前没有这个要求，也无需报名。\"]}",
+      "contentSha256": "261e31f581fb42eaf7b41af0b79e87f3b4002f22ed86b2631583b992daf063d9",
+      "parsed": {
+        "schemaVersion": "rco-b01-facts-1.0",
+        "requiresAction": false,
+        "tasks": [],
+        "ignored": [
+          "有人询问是否要提前上传照片；目前没有这个要求，也无需报名。"
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 951,
+        "outputTokens": 47,
+        "totalTokens": 998,
+        "inputTokensDetails": {
+          "cached_tokens": 768
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-08:proposition_graph",
+      "caseId": "rco-b02-08",
+      "role": "proposition_graph",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:16:26.515Z",
+      "completedAt": "2026-09-03T08:16:34.353Z",
+      "latencyMs": 7838,
+      "requestSha256": "5260f883701d4567e8df95b8c6f6581736f1ba70d0d193019921dee2ee50d346",
+      "requestBytes": 11706,
+      "httpStatus": 200,
+      "providerRequestId": "cdff1698-50dd-40d7-a413-971b8a04f44e",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "f49d3aa8807673518f1e4449b9829e5b7d8d12eafd82e1e81b6f791206d7898e",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-propositions-1.0\",\"producerRunId\":\"extract-rco-b02-08\",\"nodes\":[{\"id\":\"n1\",\"kind\":\"event\",\"scopeId\":\"scope-1\",\"propositionText\":\"毕业照拍摄将于9月18日8:00在校史馆前举行。\",\"start\":0,\"end\":24,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":\"毕业照拍摄\",\"location\":null},{\"id\":\"n2\",\"kind\":\"time\",\"scopeId\":\"scope-1\",\"propositionText\":\"毕业照拍摄将于9月18日8:00在校史馆前举行。\",\"start\":0,\"end\":24,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"9月18日8:00\",\"material\":null,\"event\":null,\"location\":null},{\"id\":\"n3\",\"kind\":\"location\",\"scopeId\":\"scope-1\",\"propositionText\":\"毕业照拍摄将于9月18日8:00在校史馆前举行。\",\"start\":0,\"end\":24,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":\"校史馆前\"},{\"id\":\"n4\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"有人询问是否要提前上传照片；\",\"start\":24,\"end\":38,\"actor\":\"third_party\",\"speechAct\":\"interrogative\",\"polarity\":\"uncertain\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":\"上传\",\"object\":\"照片\",\"effect\":\"external_transfer\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"n5\",\"kind\":\"directive\",\"scopeId\":\"scope-3\",\"propositionText\":\"目前没有这个要求，也无需报名。\",\"start\":38,\"end\":53,\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":\"上传\",\"object\":\"照片\",\"effect\":\"external_transfer\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"n6\",\"kind\":\"directive\",\"scopeId\":\"scope-3\",\"propositionText\":\"目前没有这个要求，也无需报名。\",\"start\":38,\"end\":53,\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":\"报名\",\"object\":\"毕业照拍摄\",\"effect\":\"unknown\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null}],\"relations\":[{\"id\":\"r1\",\"type\":\"event_time_start\",\"fromId\":\"n1\",\"toId\":\"n2\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"r2\",\"type\":\"event_location\",\"fromId\":\"n1\",\"toId\":\"n3\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"r3\",\"type\":\"cancels\",\"fromId\":\"n5\",\"toId\":\"n4\",\"evidenceScopeIds\":[\"scope-3\"]}]}",
+      "contentSha256": "5978673b168775d1d00cbb3775815627a00914a8e002562777c02ea5c28197cb",
+      "parsed": {
+        "schemaVersion": "rco-b01-propositions-1.0",
+        "producerRunId": "extract-rco-b02-08",
+        "nodes": [
+          {
+            "id": "n1",
+            "kind": "event",
+            "scopeId": "scope-1",
+            "propositionText": "毕业照拍摄将于9月18日8:00在校史馆前举行。",
+            "start": 0,
+            "end": 24,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": "毕业照拍摄",
+            "location": null
+          },
+          {
+            "id": "n2",
+            "kind": "time",
+            "scopeId": "scope-1",
+            "propositionText": "毕业照拍摄将于9月18日8:00在校史馆前举行。",
+            "start": 0,
+            "end": 24,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "9月18日8:00",
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "n3",
+            "kind": "location",
+            "scopeId": "scope-1",
+            "propositionText": "毕业照拍摄将于9月18日8:00在校史馆前举行。",
+            "start": 0,
+            "end": 24,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": "校史馆前"
+          },
+          {
+            "id": "n4",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "有人询问是否要提前上传照片；",
+            "start": 24,
+            "end": 38,
+            "actor": "third_party",
+            "speechAct": "interrogative",
+            "polarity": "uncertain",
+            "tense": "present",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": "上传",
+            "object": "照片",
+            "effect": "external_transfer",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "n5",
+            "kind": "directive",
+            "scopeId": "scope-3",
+            "propositionText": "目前没有这个要求，也无需报名。",
+            "start": 38,
+            "end": 53,
+            "actor": "issuer",
+            "speechAct": "assertive",
+            "polarity": "negative",
+            "tense": "present",
+            "status": "completed",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": "上传",
+            "object": "照片",
+            "effect": "external_transfer",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "n6",
+            "kind": "directive",
+            "scopeId": "scope-3",
+            "propositionText": "目前没有这个要求，也无需报名。",
+            "start": 38,
+            "end": 53,
+            "actor": "issuer",
+            "speechAct": "assertive",
+            "polarity": "negative",
+            "tense": "present",
+            "status": "completed",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": "报名",
+            "object": "毕业照拍摄",
+            "effect": "unknown",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          }
+        ],
+        "relations": [
+          {
+            "id": "r1",
+            "type": "event_time_start",
+            "fromId": "n1",
+            "toId": "n2",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "r2",
+            "type": "event_location",
+            "fromId": "n1",
+            "toId": "n3",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "r3",
+            "type": "cancels",
+            "fromId": "n5",
+            "toId": "n4",
+            "evidenceScopeIds": [
+              "scope-3"
+            ]
+          }
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 3815,
+        "outputTokens": 851,
+        "totalTokens": 4666,
+        "inputTokensDetails": {
+          "cached_tokens": 3584
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-08:semantic_verifier",
+      "caseId": "rco-b02-08",
+      "role": "semantic_verifier",
+      "dispatched": false,
+      "attemptNo": 1,
+      "status": "skipped_upstream_invalid",
+      "failureCode": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+      "schemaIssues": [
+        "graph.relations[2].endpointEvidence"
+      ],
+      "providerUsage": null
+    },
+    {
+      "key": "rco-b02-09:facts_first",
+      "caseId": "rco-b02-09",
+      "role": "facts_first",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:16:34.362Z",
+      "completedAt": "2026-09-03T08:16:36.646Z",
+      "latencyMs": 2285,
+      "requestSha256": "5bf9e08c7064cf6080a873e2c59ad1c860fc7c3c03fdb7c75a1e8382324997af",
+      "requestBytes": 3373,
+      "httpStatus": 200,
+      "providerRequestId": "7dced9c0-351c-463c-aa79-fcf3c78997e6",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "d2c7bc95b8acf5d5a95b8ec12b590577d34d6a0af7898ca25acc158d6d6f4a7e",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-facts-1.0\",\"requiresAction\":true,\"tasks\":[{\"id\":\"1\",\"action\":\"核对姓名拼音并保存修改\",\"object\":\"班级名单\",\"effect\":\"local_change\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"evidence\":\"请你在今天18:30前只在本机核对姓名拼音并保存修改\",\"timeRaw\":[\"今天18:30前\"],\"materials\":[],\"event\":null,\"location\":\"本机\"}],\"ignored\":[]}",
+      "contentSha256": "e9c839dee53db0ad170466d723af43e028b0c50485997c8f8c7a319f6cda72ff",
+      "parsed": {
+        "schemaVersion": "rco-b01-facts-1.0",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "1",
+            "action": "核对姓名拼音并保存修改",
+            "object": "班级名单",
+            "effect": "local_change",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "evidence": "请你在今天18:30前只在本机核对姓名拼音并保存修改",
+            "timeRaw": [
+              "今天18:30前"
+            ],
+            "materials": [],
+            "event": null,
+            "location": "本机"
+          }
+        ],
+        "ignored": []
+      },
+      "providerUsage": {
+        "inputTokens": 947,
+        "outputTokens": 142,
+        "totalTokens": 1089,
+        "inputTokensDetails": {
+          "cached_tokens": 768
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-09:proposition_graph",
+      "caseId": "rco-b02-09",
+      "role": "proposition_graph",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:16:36.652Z",
+      "completedAt": "2026-09-03T08:16:45.404Z",
+      "latencyMs": 8752,
+      "requestSha256": "844fef237bc15ad2aa890438d0a1fa5ce05de1c708cbb3bf64b1c4560257bbd1",
+      "requestBytes": 11631,
+      "httpStatus": 200,
+      "providerRequestId": "650ec759-f76c-4f16-90da-1fd30e2f65e9",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "41b8bbf723dfb7b5dd82696e5381a837c896905291c49cf4b647e4bdc8cc3748",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-propositions-1.0\",\"producerRunId\":\"extract-rco-b02-09\",\"nodes\":[{\"id\":\"node-1\",\"kind\":\"directive\",\"scopeId\":\"scope-1\",\"propositionText\":\"班委昨天已经提交班级名单。\",\"start\":0,\"end\":13,\"actor\":\"third_party\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"past\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":\"提交\",\"object\":\"班级名单\",\"effect\":\"external_transfer\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-2\",\"kind\":\"time\",\"scopeId\":\"scope-1\",\"propositionText\":\"昨天\",\"start\":2,\"end\":4,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"past\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"昨天\",\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-3\",\"kind\":\"material\",\"scopeId\":\"scope-1\",\"propositionText\":\"班级名单\",\"start\":9,\"end\":13,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"past\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":\"班级名单\",\"event\":null,\"location\":null},{\"id\":\"node-4\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"请你在今天18:30前只在本机核对姓名拼音并保存修改，不得再次提交名单。\",\"start\":13,\"end\":49,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"核对姓名拼音并保存修改\",\"object\":\"姓名拼音\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-5\",\"kind\":\"time\",\"scopeId\":\"scope-2\",\"propositionText\":\"今天18:30前\",\"start\":17,\"end\":25,\"actor\":\"unknown\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"今天18:30前\",\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-6\",\"kind\":\"location\",\"scopeId\":\"scope-2\",\"propositionText\":\"本机\",\"start\":29,\"end\":31,\"actor\":\"unknown\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":\"本机\"},{\"id\":\"node-7\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"不得再次提交名单。\",\"start\":42,\"end\":49,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"提交\",\"object\":\"名单\",\"effect\":\"external_transfer\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null}],\"relations\":[{\"id\":\"rel-1\",\"type\":\"task_time\",\"fromId\":\"node-1\",\"toId\":\"node-2\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-2\",\"type\":\"task_material\",\"fromId\":\"node-1\",\"toId\":\"node-3\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-3\",\"type\":\"task_time\",\"fromId\":\"node-4\",\"toId\":\"node-5\",\"evidenceScopeIds\":[\"scope-2\"]},{\"id\":\"rel-4\",\"type\":\"event_location\",\"fromId\":\"node-4\",\"toId\":\"node-6\",\"evidenceScopeIds\":[\"scope-2\"]}]}",
+      "contentSha256": "6e672d7e322b30b1f5184bd2719ce175756d0e7894a9619392b8f28646898ec1",
+      "parsed": {
+        "schemaVersion": "rco-b01-propositions-1.0",
+        "producerRunId": "extract-rco-b02-09",
+        "nodes": [
+          {
+            "id": "node-1",
+            "kind": "directive",
+            "scopeId": "scope-1",
+            "propositionText": "班委昨天已经提交班级名单。",
+            "start": 0,
+            "end": 13,
+            "actor": "third_party",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "past",
+            "status": "completed",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": "提交",
+            "object": "班级名单",
+            "effect": "external_transfer",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-2",
+            "kind": "time",
+            "scopeId": "scope-1",
+            "propositionText": "昨天",
+            "start": 2,
+            "end": 4,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "past",
+            "status": "completed",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "昨天",
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-3",
+            "kind": "material",
+            "scopeId": "scope-1",
+            "propositionText": "班级名单",
+            "start": 9,
+            "end": 13,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "past",
+            "status": "completed",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": "班级名单",
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-4",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "请你在今天18:30前只在本机核对姓名拼音并保存修改，不得再次提交名单。",
+            "start": 13,
+            "end": 49,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "核对姓名拼音并保存修改",
+            "object": "姓名拼音",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-5",
+            "kind": "time",
+            "scopeId": "scope-2",
+            "propositionText": "今天18:30前",
+            "start": 17,
+            "end": 25,
+            "actor": "unknown",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "今天18:30前",
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-6",
+            "kind": "location",
+            "scopeId": "scope-2",
+            "propositionText": "本机",
+            "start": 29,
+            "end": 31,
+            "actor": "unknown",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": "本机"
+          },
+          {
+            "id": "node-7",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "不得再次提交名单。",
+            "start": 42,
+            "end": 49,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "提交",
+            "object": "名单",
+            "effect": "external_transfer",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          }
+        ],
+        "relations": [
+          {
+            "id": "rel-1",
+            "type": "task_time",
+            "fromId": "node-1",
+            "toId": "node-2",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-2",
+            "type": "task_material",
+            "fromId": "node-1",
+            "toId": "node-3",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-3",
+            "type": "task_time",
+            "fromId": "node-4",
+            "toId": "node-5",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          },
+          {
+            "id": "rel-4",
+            "type": "event_location",
+            "fromId": "node-4",
+            "toId": "node-6",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          }
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 3789,
+        "outputTokens": 973,
+        "totalTokens": 4762,
+        "inputTokensDetails": {
+          "cached_tokens": 3584
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-09:semantic_verifier",
+      "caseId": "rco-b02-09",
+      "role": "semantic_verifier",
+      "dispatched": false,
+      "attemptNo": 1,
+      "status": "skipped_upstream_invalid",
+      "failureCode": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+      "schemaIssues": [
+        "graph.nodes[1].scope",
+        "graph.nodes[2].scope",
+        "graph.nodes[4].scope",
+        "graph.nodes[5].scope",
+        "graph.nodes[6].scope",
+        "graph.relations[3].nodeKinds"
+      ],
+      "providerUsage": null
+    },
+    {
+      "key": "rco-b02-10:facts_first",
+      "caseId": "rco-b02-10",
+      "role": "facts_first",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:16:45.413Z",
+      "completedAt": "2026-09-03T08:16:48.447Z",
+      "latencyMs": 3034,
+      "requestSha256": "d5023fb9903fd4ccdb2560b5dadbb7fed3f982a20768fd91721212cfc48778f6",
+      "requestBytes": 3366,
+      "httpStatus": 200,
+      "providerRequestId": "af0873d3-f710-4b73-a4d3-e45313a5dfce",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "cf6b8924319369f366e47d3c06648434e36273c807f160543b0def914a253996",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-facts-1.0\",\"requiresAction\":true,\"tasks\":[{\"id\":\"1\",\"action\":\"整理选题摘要\",\"object\":\"选题摘要\",\"effect\":\"local_change\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"evidence\":\"周五12:00前整理选题摘要\",\"timeRaw\":[\"周五12:00前\"],\"materials\":[],\"event\":null,\"location\":null},{\"id\":\"2\",\"action\":\"填写导师反馈记录\",\"object\":\"导师反馈记录\",\"effect\":\"local_change\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"evidence\":\"下周一17:00前在本机填写导师反馈记录\",\"timeRaw\":[\"下周一17:00前\"],\"materials\":[],\"event\":null,\"location\":\"本机\"}],\"ignored\":[\"两份材料暂不上传\"]}",
+      "contentSha256": "28fc9381faf2d1b826129e38cadbdd4629d23b1e5ca35a58043058ad00e97217",
+      "parsed": {
+        "schemaVersion": "rco-b01-facts-1.0",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "1",
+            "action": "整理选题摘要",
+            "object": "选题摘要",
+            "effect": "local_change",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "evidence": "周五12:00前整理选题摘要",
+            "timeRaw": [
+              "周五12:00前"
+            ],
+            "materials": [],
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "2",
+            "action": "填写导师反馈记录",
+            "object": "导师反馈记录",
+            "effect": "local_change",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "evidence": "下周一17:00前在本机填写导师反馈记录",
+            "timeRaw": [
+              "下周一17:00前"
+            ],
+            "materials": [],
+            "event": null,
+            "location": "本机"
+          }
+        ],
+        "ignored": [
+          "两份材料暂不上传"
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 948,
+        "outputTokens": 245,
+        "totalTokens": 1193,
+        "inputTokensDetails": {
+          "cached_tokens": 768
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-10:proposition_graph",
+      "caseId": "rco-b02-10",
+      "role": "proposition_graph",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:16:48.455Z",
+      "completedAt": "2026-09-03T08:16:56.272Z",
+      "latencyMs": 7817,
+      "requestSha256": "f7cf76499ecfeadbbd8b9a12d71adcf3770c44ae08aa3623007adb90e6e44de9",
+      "requestBytes": 11688,
+      "httpStatus": 200,
+      "providerRequestId": "abe90650-a0e1-4a00-9b19-0f4e9674d51a",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "40a5343c458deafd13834226f62a6119b27fe0894b5a4daccffa43b13395426f",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-propositions-1.0\",\"producerRunId\":\"extract-rco-b02-10\",\"nodes\":[{\"id\":\"node-1\",\"kind\":\"directive\",\"scopeId\":\"scope-1\",\"propositionText\":\"研究训练准备：周五12:00前整理选题摘要；\",\"start\":0,\"end\":22,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"整理\",\"object\":\"选题摘要\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-2\",\"kind\":\"time\",\"scopeId\":\"scope-1\",\"propositionText\":\"周五12:00前\",\"start\":6,\"end\":15,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"周五12:00前\",\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-3\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"下周一17:00前在本机填写导师反馈记录。\",\"start\":22,\"end\":43,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"填写\",\"object\":\"导师反馈记录\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-4\",\"kind\":\"time\",\"scopeId\":\"scope-2\",\"propositionText\":\"下周一17:00前\",\"start\":22,\"end\":31,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"下周一17:00前\",\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-5\",\"kind\":\"location\",\"scopeId\":\"scope-2\",\"propositionText\":\"本机\",\"start\":34,\"end\":36,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":\"本机\"},{\"id\":\"node-6\",\"kind\":\"directive\",\"scopeId\":\"scope-3\",\"propositionText\":\"两份材料暂不上传。\",\"start\":43,\"end\":52,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"上传\",\"object\":\"两份材料\",\"effect\":\"external_transfer\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null}],\"relations\":[{\"id\":\"rel-1\",\"type\":\"task_time\",\"fromId\":\"node-1\",\"toId\":\"node-2\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-2\",\"type\":\"task_time\",\"fromId\":\"node-3\",\"toId\":\"node-4\",\"evidenceScopeIds\":[\"scope-2\"]},{\"id\":\"rel-3\",\"type\":\"task_material\",\"fromId\":\"node-3\",\"toId\":\"node-5\",\"evidenceScopeIds\":[\"scope-2\"]}]}",
+      "contentSha256": "4330d84c76a9e5b21c89eff909c29ec6bfa4e9a43d6c859be777e34be953d2e7",
+      "parsed": {
+        "schemaVersion": "rco-b01-propositions-1.0",
+        "producerRunId": "extract-rco-b02-10",
+        "nodes": [
+          {
+            "id": "node-1",
+            "kind": "directive",
+            "scopeId": "scope-1",
+            "propositionText": "研究训练准备：周五12:00前整理选题摘要；",
+            "start": 0,
+            "end": 22,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "整理",
+            "object": "选题摘要",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-2",
+            "kind": "time",
+            "scopeId": "scope-1",
+            "propositionText": "周五12:00前",
+            "start": 6,
+            "end": 15,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "周五12:00前",
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-3",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "下周一17:00前在本机填写导师反馈记录。",
+            "start": 22,
+            "end": 43,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "填写",
+            "object": "导师反馈记录",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-4",
+            "kind": "time",
+            "scopeId": "scope-2",
+            "propositionText": "下周一17:00前",
+            "start": 22,
+            "end": 31,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "下周一17:00前",
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-5",
+            "kind": "location",
+            "scopeId": "scope-2",
+            "propositionText": "本机",
+            "start": 34,
+            "end": 36,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": "本机"
+          },
+          {
+            "id": "node-6",
+            "kind": "directive",
+            "scopeId": "scope-3",
+            "propositionText": "两份材料暂不上传。",
+            "start": 43,
+            "end": 52,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "上传",
+            "object": "两份材料",
+            "effect": "external_transfer",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          }
+        ],
+        "relations": [
+          {
+            "id": "rel-1",
+            "type": "task_time",
+            "fromId": "node-1",
+            "toId": "node-2",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-2",
+            "type": "task_time",
+            "fromId": "node-3",
+            "toId": "node-4",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          },
+          {
+            "id": "rel-3",
+            "type": "task_material",
+            "fromId": "node-3",
+            "toId": "node-5",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          }
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 3811,
+        "outputTokens": 832,
+        "totalTokens": 4643,
+        "inputTokensDetails": {
+          "cached_tokens": 3584
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-10:semantic_verifier",
+      "caseId": "rco-b02-10",
+      "role": "semantic_verifier",
+      "dispatched": false,
+      "attemptNo": 1,
+      "status": "skipped_upstream_invalid",
+      "failureCode": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+      "schemaIssues": [
+        "graph.nodes[1].scope",
+        "graph.nodes[3].scope",
+        "graph.nodes[4].scope",
+        "graph.relations[2].nodeKinds"
+      ],
+      "providerUsage": null
+    },
+    {
+      "key": "rco-b02-11:facts_first",
+      "caseId": "rco-b02-11",
+      "role": "facts_first",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:16:56.283Z",
+      "completedAt": "2026-09-03T08:16:59.039Z",
+      "latencyMs": 2756,
+      "requestSha256": "1141fbfb18a8fc7538f02612f4d2c39875a9438ec266d4ce478767202db1259b",
+      "requestBytes": 3414,
+      "httpStatus": 200,
+      "providerRequestId": "1429c090-3bb9-4439-ad37-54ad0ca49259",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "b034e58811d998689792e9301b2755b910b2fcaefb4ac95c631f7d1f9ea002a8",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-facts-1.0\",\"requiresAction\":true,\"tasks\":[{\"id\":\"1\",\"action\":\"检查证明上的姓名和证件号\",\"object\":\"证明\",\"effect\":\"local_change\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"evidence\":\"学生现在先检查证明上的姓名和证件号\",\"timeRaw\":[\"现在\"],\"materials\":[],\"event\":null,\"location\":null},{\"id\":\"2\",\"action\":\"把核对结果告知辅导员\",\"object\":\"核对结果\",\"effect\":\"external_interaction\",\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"evidence\":\"无论有无错误，都要在今天17:00前把核对结果告知辅导员\",\"timeRaw\":[\"今天17:00前\"],\"materials\":[],\"event\":null,\"location\":null}],\"ignored\":[]}",
+      "contentSha256": "c581a6b7228086ad7d492fe4931257fc6bdadde2caa9a0674f19741604971f51",
+      "parsed": {
+        "schemaVersion": "rco-b01-facts-1.0",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "1",
+            "action": "检查证明上的姓名和证件号",
+            "object": "证明",
+            "effect": "local_change",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "evidence": "学生现在先检查证明上的姓名和证件号",
+            "timeRaw": [
+              "现在"
+            ],
+            "materials": [],
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "2",
+            "action": "把核对结果告知辅导员",
+            "object": "核对结果",
+            "effect": "external_interaction",
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "evidence": "无论有无错误，都要在今天17:00前把核对结果告知辅导员",
+            "timeRaw": [
+              "今天17:00前"
+            ],
+            "materials": [],
+            "event": null,
+            "location": null
+          }
+        ],
+        "ignored": []
+      },
+      "providerUsage": {
+        "inputTokens": 955,
+        "outputTokens": 242,
+        "totalTokens": 1197,
+        "inputTokensDetails": {
+          "cached_tokens": 768
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-11:proposition_graph",
+      "caseId": "rco-b02-11",
+      "role": "proposition_graph",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:16:59.048Z",
+      "completedAt": "2026-09-03T08:17:09.034Z",
+      "latencyMs": 9986,
+      "requestSha256": "08ebc60b6a3f16e3b47c08c1a5063e7eb57b36d27fc940aece138395316b025b",
+      "requestBytes": 11784,
+      "httpStatus": 200,
+      "providerRequestId": "91cd5f13-143b-4a59-b2a7-37e57b182392",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "8f699cc5793d5db619b3e5dca7eeab026d765ae564c443aee4e5ed421d7f7e03",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-propositions-1.0\",\"producerRunId\":\"extract-rco-b02-11\",\"nodes\":[{\"id\":\"node-1\",\"kind\":\"directive\",\"scopeId\":\"scope-1\",\"propositionText\":\"辅导员将在9月9日把盖章证明交给学院。\",\"start\":0,\"end\":19,\"actor\":\"issuer\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"交给\",\"object\":\"盖章证明\",\"effect\":\"external_transfer\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-2\",\"kind\":\"time\",\"scopeId\":\"scope-1\",\"propositionText\":\"9月9日\",\"start\":6,\"end\":11,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"9月9日\",\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-3\",\"kind\":\"material\",\"scopeId\":\"scope-1\",\"propositionText\":\"盖章证明\",\"start\":12,\"end\":16,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"unknown\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":\"盖章证明\",\"event\":null,\"location\":null},{\"id\":\"node-4\",\"kind\":\"location\",\"scopeId\":\"scope-1\",\"propositionText\":\"学院\",\"start\":17,\"end\":19,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"unknown\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":\"学院\"},{\"id\":\"node-5\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"学生现在先检查证明上的姓名和证件号；\",\"start\":19,\"end\":37,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"检查\",\"object\":\"证明上的姓名和证件号\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-6\",\"kind\":\"material\",\"scopeId\":\"scope-2\",\"propositionText\":\"证明上的姓名和证件号\",\"start\":27,\"end\":36,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"unknown\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":\"证明上的姓名和证件号\",\"event\":null,\"location\":null},{\"id\":\"node-7\",\"kind\":\"directive\",\"scopeId\":\"scope-3\",\"propositionText\":\"无论有无错误，都要在今天17:00前把核对结果告知辅导员。\",\"start\":37,\"end\":66,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"告知\",\"object\":\"核对结果\",\"effect\":\"external_interaction\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-8\",\"kind\":\"time\",\"scopeId\":\"scope-3\",\"propositionText\":\"今天17:00前\",\"start\":45,\"end\":54,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"今天17:00前\",\"material\":null,\"event\":null,\"location\":null}],\"relations\":[{\"id\":\"rel-1\",\"type\":\"task_time\",\"fromId\":\"node-1\",\"toId\":\"node-2\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-2\",\"type\":\"task_material\",\"fromId\":\"node-1\",\"toId\":\"node-3\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-3\",\"type\":\"event_location\",\"fromId\":\"node-1\",\"toId\":\"node-4\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-4\",\"type\":\"task_material\",\"fromId\":\"node-5\",\"toId\":\"node-6\",\"evidenceScopeIds\":[\"scope-2\"]},{\"id\":\"rel-5\",\"type\":\"task_time\",\"fromId\":\"node-7\",\"toId\":\"node-8\",\"evidenceScopeIds\":[\"scope-3\"]}]}",
+      "contentSha256": "52202efc70d92413b2d1806ae6cdd7b103c0c8baf2f3623a691702fced49a946",
+      "parsed": {
+        "schemaVersion": "rco-b01-propositions-1.0",
+        "producerRunId": "extract-rco-b02-11",
+        "nodes": [
+          {
+            "id": "node-1",
+            "kind": "directive",
+            "scopeId": "scope-1",
+            "propositionText": "辅导员将在9月9日把盖章证明交给学院。",
+            "start": 0,
+            "end": 19,
+            "actor": "issuer",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "交给",
+            "object": "盖章证明",
+            "effect": "external_transfer",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-2",
+            "kind": "time",
+            "scopeId": "scope-1",
+            "propositionText": "9月9日",
+            "start": 6,
+            "end": 11,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "9月9日",
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-3",
+            "kind": "material",
+            "scopeId": "scope-1",
+            "propositionText": "盖章证明",
+            "start": 12,
+            "end": 16,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "unknown",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": "盖章证明",
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-4",
+            "kind": "location",
+            "scopeId": "scope-1",
+            "propositionText": "学院",
+            "start": 17,
+            "end": 19,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "unknown",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": "学院"
+          },
+          {
+            "id": "node-5",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "学生现在先检查证明上的姓名和证件号；",
+            "start": 19,
+            "end": 37,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "检查",
+            "object": "证明上的姓名和证件号",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-6",
+            "kind": "material",
+            "scopeId": "scope-2",
+            "propositionText": "证明上的姓名和证件号",
+            "start": 27,
+            "end": 36,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "unknown",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": "证明上的姓名和证件号",
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-7",
+            "kind": "directive",
+            "scopeId": "scope-3",
+            "propositionText": "无论有无错误，都要在今天17:00前把核对结果告知辅导员。",
+            "start": 37,
+            "end": 66,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "告知",
+            "object": "核对结果",
+            "effect": "external_interaction",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-8",
+            "kind": "time",
+            "scopeId": "scope-3",
+            "propositionText": "今天17:00前",
+            "start": 45,
+            "end": 54,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "今天17:00前",
+            "material": null,
+            "event": null,
+            "location": null
+          }
+        ],
+        "relations": [
+          {
+            "id": "rel-1",
+            "type": "task_time",
+            "fromId": "node-1",
+            "toId": "node-2",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-2",
+            "type": "task_material",
+            "fromId": "node-1",
+            "toId": "node-3",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-3",
+            "type": "event_location",
+            "fromId": "node-1",
+            "toId": "node-4",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-4",
+            "type": "task_material",
+            "fromId": "node-5",
+            "toId": "node-6",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          },
+          {
+            "id": "rel-5",
+            "type": "task_time",
+            "fromId": "node-7",
+            "toId": "node-8",
+            "evidenceScopeIds": [
+              "scope-3"
+            ]
+          }
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 3825,
+        "outputTokens": 1129,
+        "totalTokens": 4954,
+        "inputTokensDetails": {
+          "cached_tokens": 3584
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-11:semantic_verifier",
+      "caseId": "rco-b02-11",
+      "role": "semantic_verifier",
+      "dispatched": false,
+      "attemptNo": 1,
+      "status": "skipped_upstream_invalid",
+      "failureCode": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+      "schemaIssues": [
+        "graph.nodes[1].scope",
+        "graph.nodes[2].scope",
+        "graph.nodes[3].scope",
+        "graph.nodes[5].scope",
+        "graph.nodes[7].scope",
+        "graph.relations[2].nodeKinds"
+      ],
+      "providerUsage": null
+    },
+    {
+      "key": "rco-b02-12:facts_first",
+      "caseId": "rco-b02-12",
+      "role": "facts_first",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:17:09.046Z",
+      "completedAt": "2026-09-03T08:17:10.337Z",
+      "latencyMs": 1291,
+      "requestSha256": "a31382e2b51275eb85f823b53fb992eb689a6a501f7a79f923909fbd01711876",
+      "requestBytes": 3392,
+      "httpStatus": 200,
+      "providerRequestId": "a09602a0-e143-4b30-8448-1525ae62be78",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "ea96e12b630a46356c77c8c3b5faf3caa8e27752bcd5d7306a8bd0082bc46d78",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-facts-1.0\",\"requiresAction\":false,\"tasks\":[],\"ignored\":[\"学院将在9月14日前完成资格审核，学生无需催办。只有页面显示“退回修改”时才需改写材料，目前状态仍为“审核中”。\"]}",
+      "contentSha256": "eead7a268b18d7f84252a9936df0154935da057b52d5a0a88ccc2f4b1000ea5b",
+      "parsed": {
+        "schemaVersion": "rco-b01-facts-1.0",
+        "requiresAction": false,
+        "tasks": [],
+        "ignored": [
+          "学院将在9月14日前完成资格审核，学生无需催办。只有页面显示“退回修改”时才需改写材料，目前状态仍为“审核中”。"
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 951,
+        "outputTokens": 65,
+        "totalTokens": 1016,
+        "inputTokensDetails": {
+          "cached_tokens": 768
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-12:proposition_graph",
+      "caseId": "rco-b02-12",
+      "role": "proposition_graph",
+      "dispatched": true,
+      "attemptNo": 1,
+      "startedAt": "2026-09-03T08:17:10.345Z",
+      "completedAt": "2026-09-03T08:17:17.711Z",
+      "latencyMs": 7366,
+      "requestSha256": "c083dc5157ea1e0e3f0cc6bd28c6f00cfbd9095912528e1a4270aa44e521e18b",
+      "requestBytes": 11681,
+      "httpStatus": 200,
+      "providerRequestId": "5b26540c-2c36-4273-90dc-9999060f7fb8",
+      "returnedModel": "deepseek-v4-flash-vision-exp",
+      "responseSha256": "c2496a980e3fcd77dfaaa6f16131e2f190d5f345feab1abcfd9fdc9518f2fe4a",
+      "status": "completed",
+      "failureCode": null,
+      "content": "{\"schemaVersion\":\"rco-b01-propositions-1.0\",\"producerRunId\":\"extract-rco-b02-12\",\"nodes\":[{\"id\":\"node-1\",\"kind\":\"directive\",\"scopeId\":\"scope-1\",\"propositionText\":\"学院将在9月14日前完成资格审核，学生无需催办。\",\"start\":0,\"end\":24,\"actor\":\"issuer\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"完成资格审核\",\"object\":\"资格审核\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-2\",\"kind\":\"time\",\"scopeId\":\"scope-1\",\"propositionText\":\"9月14日前\",\"start\":6,\"end\":12,\"actor\":\"unknown\",\"speechAct\":\"unknown\",\"polarity\":\"affirmative\",\"tense\":\"unknown\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":\"9月14日前\",\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-3\",\"kind\":\"directive\",\"scopeId\":\"scope-1\",\"propositionText\":\"学生无需催办\",\"start\":17,\"end\":23,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"negative\",\"tense\":\"present\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"optional\",\"inferenceLevel\":\"explicit\",\"action\":\"催办\",\"object\":\"资格审核\",\"effect\":\"unknown\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-4\",\"kind\":\"directive\",\"scopeId\":\"scope-2\",\"propositionText\":\"只有页面显示“退回修改”时才需改写材料\",\"start\":24,\"end\":48,\"actor\":\"addressee\",\"speechAct\":\"directive\",\"polarity\":\"affirmative\",\"tense\":\"future\",\"status\":\"pending\",\"validity\":\"active\",\"modality\":\"required\",\"inferenceLevel\":\"explicit\",\"action\":\"改写材料\",\"object\":\"材料\",\"effect\":\"local_change\",\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null},{\"id\":\"node-5\",\"kind\":\"event\",\"scopeId\":\"scope-2\",\"propositionText\":\"页面显示“退回修改”\",\"start\":29,\"end\":42,\"actor\":\"unknown\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"unknown\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":\"页面显示“退回修改”\",\"location\":null},{\"id\":\"node-6\",\"kind\":\"information\",\"scopeId\":\"scope-2\",\"propositionText\":\"目前状态仍为“审核中”\",\"start\":48,\"end\":56,\"actor\":\"issuer\",\"speechAct\":\"assertive\",\"polarity\":\"affirmative\",\"tense\":\"present\",\"status\":\"completed\",\"validity\":\"active\",\"modality\":\"informational\",\"inferenceLevel\":\"explicit\",\"action\":null,\"object\":null,\"effect\":null,\"timeRaw\":null,\"material\":null,\"event\":null,\"location\":null}],\"relations\":[{\"id\":\"rel-1\",\"type\":\"task_time\",\"fromId\":\"node-1\",\"toId\":\"node-2\",\"evidenceScopeIds\":[\"scope-1\"]},{\"id\":\"rel-2\",\"type\":\"task_event\",\"fromId\":\"node-4\",\"toId\":\"node-5\",\"evidenceScopeIds\":[\"scope-2\"]}]}",
+      "contentSha256": "aff58754cc55d96925bd02c469b59a9cc170e3dbfb05fdb0726bf1ed3c32f32c",
+      "parsed": {
+        "schemaVersion": "rco-b01-propositions-1.0",
+        "producerRunId": "extract-rco-b02-12",
+        "nodes": [
+          {
+            "id": "node-1",
+            "kind": "directive",
+            "scopeId": "scope-1",
+            "propositionText": "学院将在9月14日前完成资格审核，学生无需催办。",
+            "start": 0,
+            "end": 24,
+            "actor": "issuer",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "完成资格审核",
+            "object": "资格审核",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-2",
+            "kind": "time",
+            "scopeId": "scope-1",
+            "propositionText": "9月14日前",
+            "start": 6,
+            "end": 12,
+            "actor": "unknown",
+            "speechAct": "unknown",
+            "polarity": "affirmative",
+            "tense": "unknown",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": "9月14日前",
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-3",
+            "kind": "directive",
+            "scopeId": "scope-1",
+            "propositionText": "学生无需催办",
+            "start": 17,
+            "end": 23,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "negative",
+            "tense": "present",
+            "status": "pending",
+            "validity": "active",
+            "modality": "optional",
+            "inferenceLevel": "explicit",
+            "action": "催办",
+            "object": "资格审核",
+            "effect": "unknown",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-4",
+            "kind": "directive",
+            "scopeId": "scope-2",
+            "propositionText": "只有页面显示“退回修改”时才需改写材料",
+            "start": 24,
+            "end": 48,
+            "actor": "addressee",
+            "speechAct": "directive",
+            "polarity": "affirmative",
+            "tense": "future",
+            "status": "pending",
+            "validity": "active",
+            "modality": "required",
+            "inferenceLevel": "explicit",
+            "action": "改写材料",
+            "object": "材料",
+            "effect": "local_change",
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          },
+          {
+            "id": "node-5",
+            "kind": "event",
+            "scopeId": "scope-2",
+            "propositionText": "页面显示“退回修改”",
+            "start": 29,
+            "end": 42,
+            "actor": "unknown",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "unknown",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": "页面显示“退回修改”",
+            "location": null
+          },
+          {
+            "id": "node-6",
+            "kind": "information",
+            "scopeId": "scope-2",
+            "propositionText": "目前状态仍为“审核中”",
+            "start": 48,
+            "end": 56,
+            "actor": "issuer",
+            "speechAct": "assertive",
+            "polarity": "affirmative",
+            "tense": "present",
+            "status": "completed",
+            "validity": "active",
+            "modality": "informational",
+            "inferenceLevel": "explicit",
+            "action": null,
+            "object": null,
+            "effect": null,
+            "timeRaw": null,
+            "material": null,
+            "event": null,
+            "location": null
+          }
+        ],
+        "relations": [
+          {
+            "id": "rel-1",
+            "type": "task_time",
+            "fromId": "node-1",
+            "toId": "node-2",
+            "evidenceScopeIds": [
+              "scope-1"
+            ]
+          },
+          {
+            "id": "rel-2",
+            "type": "task_event",
+            "fromId": "node-4",
+            "toId": "node-5",
+            "evidenceScopeIds": [
+              "scope-2"
+            ]
+          }
+        ]
+      },
+      "providerUsage": {
+        "inputTokens": 3800,
+        "outputTokens": 798,
+        "totalTokens": 4598,
+        "inputTokensDetails": {
+          "cached_tokens": 3584
+        },
+        "outputTokensDetails": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "key": "rco-b02-12:semantic_verifier",
+      "caseId": "rco-b02-12",
+      "role": "semantic_verifier",
+      "dispatched": false,
+      "attemptNo": 1,
+      "status": "skipped_upstream_invalid",
+      "failureCode": "UPSTREAM_GRAPH_SCHEMA_INVALID",
+      "schemaIssues": [
+        "graph.nodes[1].scope",
+        "graph.nodes[2].scope",
+        "graph.nodes[3].scope",
+        "graph.nodes[4].scope",
+        "graph.nodes[5].scope"
+      ],
+      "providerUsage": null
+    }
+  ]
+}

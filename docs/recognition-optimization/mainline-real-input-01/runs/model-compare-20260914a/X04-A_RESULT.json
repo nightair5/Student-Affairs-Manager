@@ -1,0 +1,226 @@
+{
+  "version": "real-input-model-compare-result-1",
+  "unitId": "X04-A",
+  "arm": "A",
+  "cohort": "later8",
+  "previousId": "V04",
+  "bindingSha": "0e053544594dd40c5e99d577a290441ef4c32b44ce36d280cbef44bd87bde7d1",
+  "requestSha": "d706202d8b53f3b2bfe508731f4d3c58824ced5d997802222a4526d06a9ed529",
+  "responseSha": "3e595b5d52cba9f5b0d04928d16ce536b273d2b7f9cad799245d9db3c9b6247a",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "wireVersion": "real-input-model-wire-1",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "ab7da30fc52a9de9a69a0569caa3ceafdfb4bf73eeda35e4835719aff80f565d",
+  "scoreInput": "candidate03 semantic projection into frozen scorer; gateway-validated provider raw unchanged; parser copy model-neutralized only",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-save-receipt",
+        "propositionScopeIds": [
+          "scope-0002-9099a6c17aa590a394a16f9032d4621c3067b648c81d66f9dc629fe897d50153",
+          "scope-0003-cb924dd2c263aab53559b88948603c1746f0c59159019c5fe6c964c459f28259",
+          "scope-0004-18eaae3b74789a76a8f5c51d51a9677b5676b0aac3ed63a17d81fc8e3d8c1e7e",
+          "scope-0005-30597bbbd4d726f2806880f82466fc4bf9a68fbc00a47aa36dd2f5fb012c9e37"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "save",
+        "action": {
+          "scopeId": "scope-0002-9099a6c17aa590a394a16f9032d4621c3067b648c81d66f9dc629fe897d50153",
+          "surface": "保存"
+        },
+        "object": {
+          "scopeId": "scope-0002-9099a6c17aa590a394a16f9032d4621c3067b648c81d66f9dc629fe897d50153",
+          "surface": "本人收到的培训回执"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "保存培训回执",
+          "description": "请成员保存本人收到的培训回执，供以后查询。本通知没有规定保存日期，也不要求上传、打印或制作其他材料。",
+          "completionCriteria": [
+            "本人收到的培训回执已保存，可供以后查询"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-2b2cc33090e2ba05c00fc40127900327caf32462f86b695b414803ffed099695",
+      "scope-0004-18eaae3b74789a76a8f5c51d51a9677b5676b0aac3ed63a17d81fc8e3d8c1e7e",
+      "scope-0005-30597bbbd4d726f2806880f82466fc4bf9a68fbc00a47aa36dd2f5fb012c9e37",
+      "scope-0006-449766a5993f822c462da2a1af6797049d4ef4f97f497578ee4415108e4efb10",
+      "scope-0007-77b1c4fd9d5009d6101b806fd037abbf2c6a681cf291d278d6b3eb0b844c4c7b"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:a3e3abaa",
+    "sourceVersionId": "source:a3e3abaa:version:1",
+    "sourceFingerprint": "sha256:92ea68e7376396b6c05d3fb80adf2b39902b272ff588069de82b0338fab60454"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 4794,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "time": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "material": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 1,
+    "referenceTaskCount": 1
+  },
+  "scoreError": null,
+  "totalAttempts": 240,
+  "usage": {
+    "input_tokens": 4482,
+    "input_tokens_details": {
+      "cached_tokens": 4348
+    },
+    "output_tokens": 806,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5288
+  },
+  "costUpperMicroCny": 15412,
+  "totalCostUpperMicroCny": 10126367,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；同candidate03、同正文、同参数，仅模型身份不同；40请求不是40份材料"
+}

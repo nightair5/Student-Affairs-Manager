@@ -1,0 +1,107 @@
+{
+  "status": "HISTORY_PRESERVED_LEDGER_APPEND_REVIEW_REQUIRED",
+  "protectedFiles": 84,
+  "archives": 7,
+  "frozenFiles": 119,
+  "activeDocuments": "GIT_VERSIONED_NOT_A_RUNTIME_FREEZE",
+  "historicalDecisions": "UNCHANGED",
+  "ledger": {
+    "rows": 1009,
+    "sha256": "c730854da5eabbef8c6c62d1da2dea6511ecf2f586fa9872fd2c9b4a1baa140f",
+    "appendRows": 169,
+    "mode": "READ_ONLY"
+  },
+  "dispatchAuthorized": false,
+  "qualityPromotion": false,
+  "batchAuthorizedAppend": [
+    {
+      "sequence": 1000,
+      "hash": "5c91dc9f86243d5196b48323ca6faedb5c86f7c98e42e8b2187542e6bbbbd8ce",
+      "event": "scopedGrant",
+      "grantId": "C19-CURRENT-20261005-41bc765a-2d70-42f3-9387-9823cf13b4ba",
+      "batch": "C19-CURRENT-REAL-NOTICE-DEVELOPMENT-R1"
+    },
+    {
+      "sequence": 1001,
+      "hash": "099f67182e78953cb2a9ec5432974dc177cfd27c0d4813b082093d90c9d1cbf4",
+      "event": "scopedReserve",
+      "grantId": "C19-CURRENT-20261005-41bc765a-2d70-42f3-9387-9823cf13b4ba",
+      "batch": "C19-CURRENT-REAL-NOTICE-DEVELOPMENT-R1"
+    },
+    {
+      "sequence": 1002,
+      "hash": "2d13e6c7e452836873863d82afb48fad57c638877ed81d1fde41f44246b95efb",
+      "event": "scopedSettle",
+      "grantId": "C19-CURRENT-20261005-41bc765a-2d70-42f3-9387-9823cf13b4ba",
+      "batch": "C19-CURRENT-REAL-NOTICE-DEVELOPMENT-R1"
+    },
+    {
+      "sequence": 1003,
+      "hash": "ed36a2e8f35bb6e362c39eeb3790dc934bda81fa085fdbce332ab5bca2c53608",
+      "event": "scopedReserve",
+      "grantId": "C19-CURRENT-20261005-41bc765a-2d70-42f3-9387-9823cf13b4ba",
+      "batch": "C19-CURRENT-REAL-NOTICE-DEVELOPMENT-R1"
+    },
+    {
+      "sequence": 1004,
+      "hash": "6bcbd012462e6de537b3cdcaf513fa654ffecf2d972b64938660bf918777f19e",
+      "event": "scopedSettle",
+      "grantId": "C19-CURRENT-20261005-41bc765a-2d70-42f3-9387-9823cf13b4ba",
+      "batch": "C19-CURRENT-REAL-NOTICE-DEVELOPMENT-R1"
+    },
+    {
+      "sequence": 1005,
+      "hash": "ea0e1d8fb8437784cd41d392a3ab73bc0fb81b4a32200db05f1380e8408c01d9",
+      "event": "scopedReserve",
+      "grantId": "C19-CURRENT-20261005-41bc765a-2d70-42f3-9387-9823cf13b4ba",
+      "batch": "C19-CURRENT-REAL-NOTICE-DEVELOPMENT-R1"
+    },
+    {
+      "sequence": 1006,
+      "hash": "a7e94d39a7f7fbefdeb4e2d98d0568750b473b50dff172693e2dfad2b5537574",
+      "event": "scopedSettle",
+      "grantId": "C19-CURRENT-20261005-41bc765a-2d70-42f3-9387-9823cf13b4ba",
+      "batch": "C19-CURRENT-REAL-NOTICE-DEVELOPMENT-R1"
+    },
+    {
+      "sequence": 1007,
+      "hash": "79eb99a9898eed2bd0c13a31665cfb4813cefaf06c9e1538ed1b55376b2b5bf1",
+      "event": "scopedReserve",
+      "grantId": "C19-CURRENT-20261005-41bc765a-2d70-42f3-9387-9823cf13b4ba",
+      "batch": "C19-CURRENT-REAL-NOTICE-DEVELOPMENT-R1"
+    },
+    {
+      "sequence": 1008,
+      "hash": "bc3a60a1abe2b3f84cb5e30ea447befa74e49eb63176984ad43a197dc9791987",
+      "event": "scopedSettle",
+      "grantId": "C19-CURRENT-20261005-41bc765a-2d70-42f3-9387-9823cf13b4ba",
+      "batch": "C19-CURRENT-REAL-NOTICE-DEVELOPMENT-R1"
+    }
+  ],
+  "before": {
+    "rows": 1000,
+    "sha256": "fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d"
+  },
+  "after": {
+    "rows": 1009,
+    "sha256": "c730854da5eabbef8c6c62d1da2dea6511ecf2f586fa9872fd2c9b4a1baa140f",
+    "tail": "bc3a60a1abe2b3f84cb5e30ea447befa74e49eb63176984ad43a197dc9791987"
+  },
+  "original996PrefixSha256": "c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750",
+  "original1000PrefixUnchanged": true,
+  "userAuditFilesPreserved": 8,
+  "localExcludeOnly": "/.audit-2026-10-05/",
+  "ledgerReadsAfterSettlement": "READ_ONLY",
+  "oldPublicBatch": "1 SETTLED / 1 UNCERTAIN / 2 NOT_SENT; original sealed site untouched",
+  "userAuditByteUnchanged": 7,
+  "userAuditUpdatesPreserved": [
+    {
+      "name": "README.md",
+      "unchanged": false,
+      "originalSha256": "6a9b23ee4f8fdc84700bb3fde6f48d4ac0433d2713ecb33a336ae0b4e85296fa",
+      "currentSha256": "2cddda1f40caede072ff5e95cc3ea295ced3ff6acfc31bd6635b0f9e35069771",
+      "currentBytes": 14396
+    }
+  ],
+  "userAuditHandling": "All eight files retained; README changed during this run outside this package. No write, rollback or Git staging by this package."
+}

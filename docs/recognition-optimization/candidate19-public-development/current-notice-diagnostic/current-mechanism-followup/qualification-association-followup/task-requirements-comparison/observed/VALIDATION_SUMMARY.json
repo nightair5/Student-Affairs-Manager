@@ -1,0 +1,372 @@
+{
+  "role": "ENGINEERING_NOT_RELEASE_COMPLETE",
+  "test": {
+    "command": "npm run test",
+    "exitCode": 1,
+    "totalIndependentGroups": 42,
+    "pass": 36,
+    "failed": [
+      {
+        "label": "d19-diagnostic",
+        "layer": "historical",
+        "error": "D17_SCORE_LEDGER_DRIFT",
+        "historicalUnchanged": true
+      },
+      {
+        "label": "d9-historical",
+        "layer": "historical",
+        "error": "D9_GUARD_FILE_DRIFT_scripts/serve-candidate15-d8.mjs",
+        "historicalUnchanged": true
+      },
+      {
+        "label": "rco-5-007",
+        "layer": "historical",
+        "error": "FREEZE_HASH_MISMATCH:package-lock.json",
+        "historicalUnchanged": true
+      },
+      {
+        "label": "c11-history",
+        "layer": "historical",
+        "error": "C11_HISTORY_PROTECTED_CHANGED:AGENTS.md",
+        "historicalUnchanged": true
+      },
+      {
+        "label": "c11-gateway",
+        "layer": "historical",
+        "error": "C11_HISTORY_PROTECTED_CHANGED:AGENTS.md",
+        "historicalUnchanged": true
+      },
+      {
+        "label": "vitest-d17-history",
+        "layer": "historical",
+        "error": "D17_SCORE_LEDGER_DRIFT",
+        "historicalUnchanged": true
+      }
+    ],
+    "unavailable": 0,
+    "groups": [
+      {
+        "layer": "current-product",
+        "label": "timezone",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-product",
+        "label": "contract",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-product",
+        "label": "time-contract",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-product",
+        "label": "vitest-product",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-product",
+        "label": "server",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-product",
+        "label": "worker",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-product",
+        "label": "worker-d26",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-product",
+        "label": "functions",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-product",
+        "label": "time-parity",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "vitest-safety",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "vitest-runtime-current",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "carrier-preparation",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "vitest-carriers",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "current-checks",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "governance-unit",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "multimodal-lib",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "c11-scoring",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "c11-preview",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "d25-executor",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "d25-mechanism",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-mechanism",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-executor",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-freeze",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-score-recording",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-execution-host",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-execution-report",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "d26-recorded-projection",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "scoped-execution",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "scoped-diagnostics",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "candidate19-contract",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "public-notice-diagnostic",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "current-completed-readonly",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "current-safety",
+        "label": "d25-live-safety",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "historical",
+        "label": "historical-originals",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "historical",
+        "label": "d19-diagnostic",
+        "status": 1,
+        "outcome": "FAIL"
+      },
+      {
+        "layer": "historical",
+        "label": "d9-historical",
+        "status": 1,
+        "outcome": "FAIL"
+      },
+      {
+        "layer": "historical",
+        "label": "rco-5-007",
+        "status": 1,
+        "outcome": "FAIL"
+      },
+      {
+        "layer": "historical",
+        "label": "c11-history",
+        "status": 1,
+        "outcome": "FAIL"
+      },
+      {
+        "layer": "historical",
+        "label": "c11-gateway",
+        "status": 1,
+        "outcome": "FAIL"
+      },
+      {
+        "layer": "historical",
+        "label": "vitest-d17-history",
+        "status": 1,
+        "outcome": "FAIL"
+      },
+      {
+        "layer": "historical",
+        "label": "vitest-runtime-history",
+        "status": 0,
+        "outcome": "PASS"
+      },
+      {
+        "layer": "historical",
+        "label": "vitest-carriers-history",
+        "status": 0,
+        "outcome": "PASS"
+      }
+    ]
+  },
+  "targetAfterFinalReceiptChange": {
+    "passed": 26,
+    "files": [
+      "sourceContractV6.test.ts",
+      "authoritySupportContext.test.ts",
+      "taskRequirementsContract.test.ts"
+    ]
+  },
+  "lint": {
+    "exitCode": 0,
+    "errors": 0,
+    "existingWarnings": 8
+  },
+  "build": {
+    "exitCode": 0
+  },
+  "audit": {
+    "development": {
+      "critical": 2,
+      "high": 6,
+      "moderate": 1,
+      "exitCode": 1
+    },
+    "production": {
+      "vulnerabilities": 0,
+      "exitCode": 0
+    },
+    "dependenciesChanged": false
+  },
+  "browser": {
+    "status": "NOT_RUN",
+    "policyError": "Computer Use has been stopped for this turn because it could not determine the current browser URL on Windows with enough confidence to enforce policy. Stop your work and send a final message noting why Computer Use ended.",
+    "alternateMethodUsed": false
+  },
+  "persistence": {
+    "method": "ENGINEERING_MEMORY_STORE_NOT_BROWSER_IDB",
+    "evidence": "PERSISTENCE_REPLAY.json",
+    "browserRefreshClaim": false
+  },
+  "assets": {
+    "count": 74,
+    "changed": [],
+    "handoverKeptUntracked": true
+  },
+  "history": {
+    "protected": 84,
+    "frozen": 119,
+    "archived": 7,
+    "originalScoresUnchanged": true,
+    "ledgerOld1048PrefixRetained": true,
+    "ledgerRows": 1065,
+    "ledgerSha256": "f648795b2037014e78a6fa3b45dae532230c12d9911992ef3eb996b2c06c06a7"
+  },
+  "actualModelRequestsByTests": 0,
+  "ledgerWritesByTests": 0,
+  "globalTimeoutChanged": false,
+  "oldAssertionsChanged": false,
+  "security": {
+    "command": "npm run security:scan",
+    "exitCode": 0,
+    "sourceBuildFiles": 4823
+  },
+  "finalBuild": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "afterFinalReceiptChange": true
+  },
+  "changedSourceLint": {
+    "exitCode": 0
+  }
+}

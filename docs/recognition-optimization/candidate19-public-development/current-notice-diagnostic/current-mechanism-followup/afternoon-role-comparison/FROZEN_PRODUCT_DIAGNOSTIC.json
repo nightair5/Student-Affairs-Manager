@@ -1,0 +1,46 @@
+{
+  "version": "frozen-program-observed-before-post-program-fix",
+  "localOriginalSha256": "ae32c775b0db80e19015e7c94cc7ebadffe2bc2e5fa175f017acadae54cfdefa",
+  "records": [
+    {
+      "ordinal": 1,
+      "sourceId": "role-development-RA-01",
+      "candidate": "ObligationAuthority",
+      "responseSha256": "6c0481eeb2fdf282531600bc2d917d268d67e4c2bac39eea9a0b9a8bf38d68bb",
+      "decodeError": "SOURCE_CONTRACT_PRIMARY_REFERENCE",
+      "displayAvailable": false
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "role-development-RA-01",
+      "candidate": "RoleAuthority",
+      "responseSha256": "5083bfad2d5cc5486cf02bc5883fac347fb9ac0283084434354160e9ff883f31",
+      "decodeError": "SOURCE_CONTRACT_PRIMARY_REFERENCE",
+      "displayAvailable": false
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "role-development-RA-02",
+      "candidate": "RoleAuthority",
+      "responseSha256": "52a48114409cc15527b3d9777f6a2a07bb3f2286a6e61d64df27ebc3bf96abdb",
+      "decodeError": "SOURCE_CONTRACT_PRIMARY_REFERENCE",
+      "displayAvailable": false
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "role-development-RA-02",
+      "candidate": "ObligationAuthority",
+      "responseSha256": "97b78909a10455b2d17af827db166612234b173593b2cabf2e411f4835cc9970",
+      "decodeError": "SOURCE_CONTRACT_PRIMARY_REFERENCE",
+      "displayAvailable": false
+    },
+    {
+      "ordinal": 5,
+      "sourceId": "role-development-RA-03",
+      "candidate": "ObligationAuthority",
+      "responseSha256": "1afb7b0c1e15f2f61a1968c6eceaa32082bd11e75e9243f2e9eb51869cd04ce1",
+      "decodeError": "AUTHORITY_SUPPORT_CONTEXT_REFERENCE",
+      "displayAvailable": false
+    }
+  ]
+}

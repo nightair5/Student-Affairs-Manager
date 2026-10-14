@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "rco-experiment-audit-1.0.0",
+  "date": "2026-09-02",
+  "stage": "RCO-5",
+  "reviewIndependence": "same-family",
+  "acceptanceStatus": "provisional",
+  "mode": "read-only",
+  "verdict": "WARN",
+  "integrityStatus": "CONTRACT_EVIDENCE_REPRODUCED_WITH_AUTHORITY_CHAIN_WARNINGS",
+  "checks": {
+    "groundTruth": "PASS",
+    "normalization": "PASS",
+    "resultExistence": "WARN",
+    "candidateIsolation": "WARN",
+    "scope": "PASS",
+    "failureClassification": "PASS",
+    "stageSequencing": "PASS"
+  },
+  "targetedTests": {
+    "passed": 14,
+    "failed": 0
+  },
+  "fullGate": {
+    "regularTestsPassed": 365,
+    "liveOcrSkipped": 1,
+    "securityFilesScanned": 267,
+    "highVulnerabilities": 0,
+    "cloudflareDryRunEnvironments": 3,
+    "deployed": false
+  },
+  "modelCalls": 0,
+  "repairCalls": 0,
+  "secretAccess": "NONE",
+  "realData": "NOT_USED",
+  "humanStudy": "NOT_RUN",
+  "qualityGate": "NOT_RUN",
+  "rco6": "BLOCKED_BY_RCO_G5",
+  "promotion": "NO_PROMOTION",
+  "files": {
+    "facts": "e6f1003d703ade7d1f55a3d62787e00855e34e591075f807cf008a1a01cf58e1",
+    "factsTest": "332b55865100868d097217a839db0e0d7ebab98ba4c4c3314ed5f168b3052c63",
+    "schema": "81f636bcf62a4e35221ba7e620a0410b3cc39bbf7481882e42ab1222839eab40",
+    "timeSemantics": "d72109638ce4c653602478d2cd09049ab5a896a17c041422e8f5b583b8afde7d"
+  },
+  "claimsNotSupported": [
+    "model quality improvement",
+    "recognition accuracy",
+    "human editing-time improvement",
+    "real-data generalization",
+    "browser acceptance",
+    "release readiness"
+  ]
+}

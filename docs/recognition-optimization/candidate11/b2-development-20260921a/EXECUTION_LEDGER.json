@@ -1,0 +1,911 @@
+{
+  "version": "candidate11-b2-execution-ledger-1",
+  "grantSequence": 644,
+  "grantId": "f62bc5d0-1827-4a9f-a53a-44effef24cdf",
+  "units": [
+    {
+      "unitId": "C11-B1-D01-V00",
+      "ordinal": 1,
+      "sourceId": "C11-B1-D01",
+      "variant": "V00",
+      "requestSha": "f80f71f046b73c1ce896194db6fd5bf59f680f48309caaa2d866c30b9611c7f2",
+      "reserve": {
+        "sequence": 645,
+        "nonce": "dfd32c83-acf2-47b1-bcb5-56de9a1789d6",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "ff4d9ee99a1cde4f2dc63e44978d8598dd997c2f854720cf17154ac92162ffff"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D01-V00.jsonl",
+        "responseSha": "32337bffe803ee9c47734cdaf0eb5aa5159408c7a6718dbee27bb21dcabeb5cd",
+        "httpStatus": 200
+      },
+      "providerRequestId": "c59d11db-87f3-4f1f-8b13-a7a6cf788aee",
+      "usage": {
+        "input_tokens": 4432,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 987,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5419
+      },
+      "settlement": {
+        "sequence": 646,
+        "status": "settled",
+        "costUpperMicroCny": 16760,
+        "ledgerHash": "fbfe972e9f34f67614d6b774f2e10c2ac6e9d5fda7bf6ea2036e9c50ddf18f59"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D01-V10",
+      "ordinal": 2,
+      "sourceId": "C11-B1-D01",
+      "variant": "V10",
+      "requestSha": "22f8da79bc9e90e50a72d2177b4a14edc909887048eee4742d2b6fbb039a66bd",
+      "reserve": {
+        "sequence": 647,
+        "nonce": "f3037c1e-3547-42ac-948c-63088c4534ac",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "59e6df0cf1aab8ef9d42fb42d950538e27e1a0c1003fc0bef6791573a6c60ce5"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D01-V10.jsonl",
+        "responseSha": "4165a77484ee4eb06649693d1063129d581e452b428249aa0075a7d90f07f972",
+        "httpStatus": 200
+      },
+      "providerRequestId": "1c5df78b-69ba-4d0e-bd63-5303d821dbd4",
+      "usage": {
+        "input_tokens": 4495,
+        "input_tokens_details": {
+          "cached_tokens": 640
+        },
+        "output_tokens": 1028,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5523
+      },
+      "settlement": {
+        "sequence": 648,
+        "status": "settled",
+        "costUpperMicroCny": 17214,
+        "ledgerHash": "de01df97a294c1971a94b64d14cc29c68db68f6aea73a083d7e36631e7895e87"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D01-V01",
+      "ordinal": 3,
+      "sourceId": "C11-B1-D01",
+      "variant": "V01",
+      "requestSha": "193a05becd48a1de6c4b0475a28397e8019d29545b1c878fbcccb8412d16173f",
+      "reserve": {
+        "sequence": 649,
+        "nonce": "3df0ef82-6259-439f-943f-d690254352d7",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "f60ba71898434f35db8099b397b4a2a2d8d90993af9e944e9983186ca783d645"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D01-V01.jsonl",
+        "responseSha": "0544d48e6f3d8df510345f18b93fc3970c4bb534f9616b721751b7d7ac399554",
+        "httpStatus": 200
+      },
+      "providerRequestId": "de310c8f-a07e-45b8-9b60-2d041bfa93de",
+      "usage": {
+        "input_tokens": 5398,
+        "input_tokens_details": {
+          "cached_tokens": 640
+        },
+        "output_tokens": 1070,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6468
+      },
+      "settlement": {
+        "sequence": 650,
+        "status": "settled",
+        "costUpperMicroCny": 19356,
+        "ledgerHash": "cbd31c551289cdf13f5958d140c79db443cd9816997d520ef3781a85d8d77524"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D01-V11",
+      "ordinal": 4,
+      "sourceId": "C11-B1-D01",
+      "variant": "V11",
+      "requestSha": "7b9efecbe2554f214e67ba4dfc0920a229e2009a0706d38165c7bbfca86ec95a",
+      "reserve": {
+        "sequence": 651,
+        "nonce": "75d18d40-4402-4650-962d-3b30488178c8",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "72cf8d79f4aedb578802d9a8e68f7ba5fad1bedf58fc47dabc046f049ce31edc"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D01-V11.jsonl",
+        "responseSha": "4b5cb480ef2704422c0c678b0e8e87b13120f845aa3741d5a68e2f8d6ae432ce",
+        "httpStatus": 200
+      },
+      "providerRequestId": "14641ac5-a209-4c61-8a19-4833eb3d7366",
+      "usage": {
+        "input_tokens": 5461,
+        "input_tokens_details": {
+          "cached_tokens": 640
+        },
+        "output_tokens": 1071,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6532
+      },
+      "settlement": {
+        "sequence": 652,
+        "status": "settled",
+        "costUpperMicroCny": 19490,
+        "ledgerHash": "a0c75f43a32e28acce518409295e18d729bdc315566f8e134971c652fbab153d"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D02-V00",
+      "ordinal": 5,
+      "sourceId": "C11-B1-D02",
+      "variant": "V00",
+      "requestSha": "e8279420fbfedf16337110197a3dea9dc046b09288f76bd108e178d7b3df31a5",
+      "reserve": {
+        "sequence": 653,
+        "nonce": "b861c62b-e579-4f6a-ab6f-dde2780fca83",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "ebbc6278456ee5b6ee8dd34cf3209d1b6b8445281ac76d77769138a37b31fc3e"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D02-V00.jsonl",
+        "responseSha": "42039155f88b6d30ea471c881ecf13828c551e40c3a1af96803fb4462dc87000",
+        "httpStatus": 200
+      },
+      "providerRequestId": "b9a4ddc4-6c4a-42a2-8ab1-c6dc90ecd77c",
+      "usage": {
+        "input_tokens": 4376,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 807,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5183
+      },
+      "settlement": {
+        "sequence": 654,
+        "status": "settled",
+        "costUpperMicroCny": 15208,
+        "ledgerHash": "8e40f7227305da5083dac94545e79a0ad058cc0a77d23e8b9c45cb55c5f10bb9"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D02-V10",
+      "ordinal": 6,
+      "sourceId": "C11-B1-D02",
+      "variant": "V10",
+      "requestSha": "0d4abbff3c300ca4ed9d14520a4bd6237c796ef832f83453d1d3e2a575ac49ee",
+      "reserve": {
+        "sequence": 655,
+        "nonce": "78f5a948-6abc-4ceb-8629-74c81e2200b5",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "4dc8676edaa5e20622db5d4322292f8e260a1d1e8fc6f4836cfa5e060f791f9f"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D02-V10.jsonl",
+        "responseSha": "175a0679077195234d456ae971c3ed54097cf6e427c7478fcddd602598024a1b",
+        "httpStatus": 200
+      },
+      "providerRequestId": "e7ccdb04-1c51-4d1f-bc2e-9d11c68c7889",
+      "usage": {
+        "input_tokens": 4439,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 767,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5206
+      },
+      "settlement": {
+        "sequence": 656,
+        "status": "settled",
+        "costUpperMicroCny": 15014,
+        "ledgerHash": "add016a91a23d39d9c8cd1e3e7dbd4bf7fa589a20ddf605b4d51d97921fa1025"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D02-V11",
+      "ordinal": 7,
+      "sourceId": "C11-B1-D02",
+      "variant": "V11",
+      "requestSha": "30651bcefb19c3376aeb7c8e95585526076512d3d2a92f7a387c21d42a777e12",
+      "reserve": {
+        "sequence": 657,
+        "nonce": "f3235227-dab6-4a24-ad67-70a764d24ecb",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "49b1b8d5c3bab45a31b173bcd730ed4e0ea057b924f9fa1264624934893a5f62"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D02-V11.jsonl",
+        "responseSha": "88425e1f39f4d2b6db799887fe39fc47a18571dbb154ea891d43a478abaf91ed",
+        "httpStatus": 200
+      },
+      "providerRequestId": "1e3b02de-10d1-4bf2-9576-c21f006c337d",
+      "usage": {
+        "input_tokens": 5405,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 798,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6203
+      },
+      "settlement": {
+        "sequence": 658,
+        "status": "settled",
+        "costUpperMicroCny": 17194,
+        "ledgerHash": "6ad8098e42f8ab5afffa50f8660348cdd08f24896c07e89495eaac8b1cd5f150"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D02-V01",
+      "ordinal": 8,
+      "sourceId": "C11-B1-D02",
+      "variant": "V01",
+      "requestSha": "059e578c8f7e0ae4747f41b6a8e8cf3dbd6f67d9f8fe27a350cf74dd822c1fa8",
+      "reserve": {
+        "sequence": 659,
+        "nonce": "4f09a3ac-8643-40ba-a925-421ddeab821d",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "0ac2184fd53ea894da1cfa2baa1d65e3708851faa37019525e509decebd708ff"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D02-V01.jsonl",
+        "responseSha": "2e458b49d69a947db681e6ddb0e1e5ce30d9e2f43d9b3377b3e56b491e903aae",
+        "httpStatus": 200
+      },
+      "providerRequestId": "c592fa4b-0782-49a7-84bc-99d9731e7322",
+      "usage": {
+        "input_tokens": 5342,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 798,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6140
+      },
+      "settlement": {
+        "sequence": 660,
+        "status": "settled",
+        "costUpperMicroCny": 17068,
+        "ledgerHash": "92be3d37cabfa9141f9e6468e4bf7dabc54cd6f95f4cf5c69d7952bd46cfa8cf"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D03-V10",
+      "ordinal": 9,
+      "sourceId": "C11-B1-D03",
+      "variant": "V10",
+      "requestSha": "9867346fc5944699a51cc6767b406f920577b6dd3aec8886824c833be8cf3fec",
+      "reserve": {
+        "sequence": 661,
+        "nonce": "b991c83f-b3ce-4655-87e1-9c7d73be4391",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "9d1d3ae5445ef42fa6e153a554d4fb891cc7d1b54429a3f644fc8f9e09569df2"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D03-V10.jsonl",
+        "responseSha": "dcf568c180ac19e071331a5ec1da9b14f600780be1f9e29ea26c9e570a4eb4d9",
+        "httpStatus": 200
+      },
+      "providerRequestId": "a172c907-de68-4779-8447-4401ba6aa2ad",
+      "usage": {
+        "input_tokens": 4511,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 1474,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5985
+      },
+      "settlement": {
+        "sequence": 662,
+        "status": "settled",
+        "costUpperMicroCny": 20814,
+        "ledgerHash": "9b27f7bf7c6352751e2eb18a5048bbd9e0aad317d139e43cfad75583932ad94a"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D03-V01",
+      "ordinal": 10,
+      "sourceId": "C11-B1-D03",
+      "variant": "V01",
+      "requestSha": "b0cb6b45e06ac686f6d6265a6a4928b3d17552b10a3c470731e1237b30ad58ef",
+      "reserve": {
+        "sequence": 663,
+        "nonce": "87e5ab20-f05f-42d6-b1cb-4278ebb473ae",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "13388d93af0eaae9464974aff6d44862dda9ab1ea84bdc4f33b5acb12cadefa7"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D03-V01.jsonl",
+        "responseSha": "fb60fffcfcbd009afafba48e826f3476a7019e7b886b89d08d3cbf3975c7d104",
+        "httpStatus": 200
+      },
+      "providerRequestId": "cf7e8218-5b87-4b06-b61d-dead5cab5c0b",
+      "usage": {
+        "input_tokens": 5414,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1481,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6895
+      },
+      "settlement": {
+        "sequence": 664,
+        "status": "settled",
+        "costUpperMicroCny": 22676,
+        "ledgerHash": "8ff5b8dc74c80efda2ec79c452c389299af87f6f78ad1ceb5ad12b921482f763"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D03-V00",
+      "ordinal": 11,
+      "sourceId": "C11-B1-D03",
+      "variant": "V00",
+      "requestSha": "e7d02b9a9606061f60e02fd08539884babc263733a90a53782af0b8c584fc86f",
+      "reserve": {
+        "sequence": 665,
+        "nonce": "b2a47449-f114-4363-81bc-50d9b314d2db",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "3554f22bd5950e820d661528117536970eb42b4a8bb26da7ecd59e8f5862b2a2"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D03-V00.jsonl",
+        "responseSha": "98ce2a59469909d95634f4677ada8d60c0f0157dbe0245702f80ae53e68ecf71",
+        "httpStatus": 200
+      },
+      "providerRequestId": "4d473496-4300-44a9-8a40-900c49d2db66",
+      "usage": {
+        "input_tokens": 4448,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 1485,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5933
+      },
+      "settlement": {
+        "sequence": 666,
+        "status": "settled",
+        "costUpperMicroCny": 20776,
+        "ledgerHash": "19dc349eb49af350a06a79ac50ae0dde2e9ab9656b7d6630f3d00c85f2c5c8d9"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D03-V11",
+      "ordinal": 12,
+      "sourceId": "C11-B1-D03",
+      "variant": "V11",
+      "requestSha": "1765b2ff4e90a1dc7d662b5f074030157d5f7b2a397884500ff0fdad758f5af5",
+      "reserve": {
+        "sequence": 667,
+        "nonce": "0e13ef57-20df-4043-9e27-8f0db8b67fa1",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "6717c5a9a0f3744cc77cd4b9cff0cb0996a1d9abb15b1c4fe1042351de19b3ec"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D03-V11.jsonl",
+        "responseSha": "9cc038da501bd9b4adea5e57722a31aa7197d51cab43e858547978301042079f",
+        "httpStatus": 200
+      },
+      "providerRequestId": "4eb417dc-942e-4033-83e4-f1b995f56739",
+      "usage": {
+        "input_tokens": 5477,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1480,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6957
+      },
+      "settlement": {
+        "sequence": 668,
+        "status": "settled",
+        "costUpperMicroCny": 22794,
+        "ledgerHash": "a00fa9b9924e4c64f9fabcfe36a828bff08baf048980b92c81daed629e985264"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D04-V01",
+      "ordinal": 13,
+      "sourceId": "C11-B1-D04",
+      "variant": "V01",
+      "requestSha": "fb5903c97646bf60589714734afe1fba8a0e3977f29527a70b142bde4c087eb4",
+      "reserve": {
+        "sequence": 669,
+        "nonce": "d9bedff6-0b29-4ca3-9684-feb99d839513",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "e397fb1f4dadd76e9e5db830080bfce5405c49c30e217ba889c25128ece5e87d"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D04-V01.jsonl",
+        "responseSha": "6c9776780f8adba776078f5ce3957a3e4576fe6ccb18248c9780a73296fb3fcf",
+        "httpStatus": 200
+      },
+      "providerRequestId": "ccaf4b0e-c6da-4458-90eb-8c13099daf09",
+      "usage": {
+        "input_tokens": 5458,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1515,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6973
+      },
+      "settlement": {
+        "sequence": 670,
+        "status": "settled",
+        "costUpperMicroCny": 23036,
+        "ledgerHash": "9482ec3e852e158a86c96de66093e30a4f14653f0b779449a21921bc23df0a3f"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D04-V11",
+      "ordinal": 14,
+      "sourceId": "C11-B1-D04",
+      "variant": "V11",
+      "requestSha": "6ca8b0194d90a878d0516aefe09b0bfcf65a54ef774f3728217a24d319f2ebcb",
+      "reserve": {
+        "sequence": 671,
+        "nonce": "6779f6e4-7a46-419d-9587-6a9b875bface",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "0a0a79f15b096c7bce9321a04e82f4acc0ea172fa8c88a26c660216eaf34c088"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D04-V11.jsonl",
+        "responseSha": "eb7595ca279f08a6d684d04e232a04d3b7d7c59c6ff8087cf419d27c37d5b7aa",
+        "httpStatus": 200
+      },
+      "providerRequestId": "37fbd9d0-522f-4b59-a152-2e4da4910b55",
+      "usage": {
+        "input_tokens": 5521,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1342,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6863
+      },
+      "settlement": {
+        "sequence": 672,
+        "status": "settled",
+        "costUpperMicroCny": 21778,
+        "ledgerHash": "46100cd77f6dde987cf341511bd545d4a5a6600a002b43cb77dc93aca0587a17"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D04-V10",
+      "ordinal": 15,
+      "sourceId": "C11-B1-D04",
+      "variant": "V10",
+      "requestSha": "6ecf88e46383cca8a90d821421581621f3e76a51ef92c832c7dc094f905b002e",
+      "reserve": {
+        "sequence": 673,
+        "nonce": "6d8c01cd-e545-40bb-9474-d6372c79bdd6",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "67a1e4737c440f06ea84a6f636aa01ab6da06da9d99468c0c3a3696a2e556da9"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D04-V10.jsonl",
+        "responseSha": "1636a5fc69f9acb80748aa2200b91cd6bcd815ba28a18c5a0f74faaf643c0a94",
+        "httpStatus": 200
+      },
+      "providerRequestId": "3bb3b585-8783-4675-a41b-e2e3326e4f46",
+      "usage": {
+        "input_tokens": 4555,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 1320,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5875
+      },
+      "settlement": {
+        "sequence": 674,
+        "status": "settled",
+        "costUpperMicroCny": 19670,
+        "ledgerHash": "d256d23a42e14ae9ab60e1d3163c26eb00da1b830165dc7f84ec90ea2ad0775c"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D04-V00",
+      "ordinal": 16,
+      "sourceId": "C11-B1-D04",
+      "variant": "V00",
+      "requestSha": "ebcbfdba3ed4d5c1e1b0985107736e0ff28422eb7511ec7df65fe329b3017cad",
+      "reserve": {
+        "sequence": 675,
+        "nonce": "02df5cbd-02c7-4710-a887-e66045312c35",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "53cf39fc77fefafd858acfcde365f9d9538d76ec6207b00d1cdc279a26240b43"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D04-V00.jsonl",
+        "responseSha": "e254d15fb5308ceea8f7cd4f5ccddee32f50bc6f53334823864b41bbdda3e914",
+        "httpStatus": 200
+      },
+      "providerRequestId": "d413443c-dc54-4841-947f-8d08aad79053",
+      "usage": {
+        "input_tokens": 4492,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 1320,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5812
+      },
+      "settlement": {
+        "sequence": 676,
+        "status": "settled",
+        "costUpperMicroCny": 19544,
+        "ledgerHash": "9f4fa083821740a8254a1c99798725f84164856653e893bd4bb22e85f63b6634"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D05-V11",
+      "ordinal": 17,
+      "sourceId": "C11-B1-D05",
+      "variant": "V11",
+      "requestSha": "2a73b979d3adcc1007238103c7bbebe796b0327ba4a84f56e40af89b3e33f7c0",
+      "reserve": {
+        "sequence": 677,
+        "nonce": "6657c5e3-5896-47d4-8750-59225b955e3a",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "d0599c8236768ea28626252c9844295fd506c24e4e5fefafc0cae7fa7f4395f8"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D05-V11.jsonl",
+        "responseSha": "18dfebece6c25493e05a8be867b34eec3a17a76e9366683c51822428222c7168",
+        "httpStatus": 200
+      },
+      "providerRequestId": "1d9dd086-23b8-4528-846d-af903fbba0c1",
+      "usage": {
+        "input_tokens": 5689,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1758,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7447
+      },
+      "settlement": {
+        "sequence": 678,
+        "status": "settled",
+        "costUpperMicroCny": 25442,
+        "ledgerHash": "d79e9cc72ff5a30584b5197d0cb7612580e86a1318f8aff3d438d4b90e252d2a"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D05-V00",
+      "ordinal": 18,
+      "sourceId": "C11-B1-D05",
+      "variant": "V00",
+      "requestSha": "0859068dc6361c9dc20c1e0caa9121588064cbbfbf228da52c80723033f167f9",
+      "reserve": {
+        "sequence": 679,
+        "nonce": "1d550eb4-7c49-473e-aa7a-f7e7a34d753d",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "7fe95c577622fc082e84ba07a38b9ca02de01580e9e0198dfcf3414ef3e7bf60"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D05-V00.jsonl",
+        "responseSha": "e9e44c121c22ab0eb5d2a0c333825a1444b9e5852eda0529bb75726c8285c7b3",
+        "httpStatus": 200
+      },
+      "providerRequestId": "a4d75270-2e2c-41f8-a6f8-0af4d09a33c2",
+      "usage": {
+        "input_tokens": 4660,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2302,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6962
+      },
+      "settlement": {
+        "sequence": 680,
+        "status": "settled",
+        "costUpperMicroCny": 27736,
+        "ledgerHash": "34e955acf87e9e7f691826eeee203d61b236e89c562de58b9919539ae6ffe19b"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D05-V01",
+      "ordinal": 19,
+      "sourceId": "C11-B1-D05",
+      "variant": "V01",
+      "requestSha": "d3a9ee8c28c95e82f7edff8a18f977c15754a9d99eb5266b7d30c26530f5440d",
+      "reserve": {
+        "sequence": 681,
+        "nonce": "4dab4165-a0d0-4458-b371-7d7329351046",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "68dd43c03fd4a81dbfe279763f39e1763c944a25d1dfd715d436a1ad38f75095"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D05-V01.jsonl",
+        "responseSha": "b17f6accd60c4f8182aa2d3f687c711b30b1514b87121bce9a2ff0309a4e8551",
+        "httpStatus": 200
+      },
+      "providerRequestId": "0b5e1a12-9c89-41b2-8c3f-25c00ce98f2f",
+      "usage": {
+        "input_tokens": 5626,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 1769,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7395
+      },
+      "settlement": {
+        "sequence": 682,
+        "status": "settled",
+        "costUpperMicroCny": 25404,
+        "ledgerHash": "b490cf4586cbb52a48bc98d42f08d83f3609454199633051ec429cf24c6128ad"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D05-V10",
+      "ordinal": 20,
+      "sourceId": "C11-B1-D05",
+      "variant": "V10",
+      "requestSha": "208dca7a13c83e49f19627731a554c5b044cd01e52b19b8a531b0bc1c419270e",
+      "reserve": {
+        "sequence": 683,
+        "nonce": "0506482b-c75c-4e32-894b-48a34194a055",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "4c3e36abb7357871cbae7c859475025936ac01010013fd8fb252c11918e757da"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D05-V10.jsonl",
+        "responseSha": "499915a73d8e7497f56b24ba53e45084b9ed84bb79f07aebff28a1bf875cddba",
+        "httpStatus": 200
+      },
+      "providerRequestId": "a55a1fef-4e92-40be-b26b-1edfa09da4b5",
+      "usage": {
+        "input_tokens": 4723,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2331,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7054
+      },
+      "settlement": {
+        "sequence": 684,
+        "status": "settled",
+        "costUpperMicroCny": 28094,
+        "ledgerHash": "dbea78fc63ffc5b0648c5231ede822420b10460d00f2802c144a18465c3489c5"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D06-V11",
+      "ordinal": 21,
+      "sourceId": "C11-B1-D06",
+      "variant": "V11",
+      "requestSha": "2c6cf7d7f29ddff799b03c56c39e587d20cb45d906cd0e5f13f20ab08ea7d844",
+      "reserve": {
+        "sequence": 685,
+        "nonce": "e71decbd-5d3e-4f9a-be04-f525f329a0ea",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "dd9d25485a3d467021d31dd12d17cfe03915a93cd929a1e6cde1779320990956"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D06-V11.jsonl",
+        "responseSha": "7a02a6178593caf41abc4fc9c1be903ee8e69f632258f906c0992cd25de769d9",
+        "httpStatus": 200
+      },
+      "providerRequestId": "a36a0dd4-5ec7-4515-8d2a-95ef1c182a4f",
+      "usage": {
+        "input_tokens": 5704,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 2152,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7856
+      },
+      "settlement": {
+        "sequence": 686,
+        "status": "settled",
+        "costUpperMicroCny": 28624,
+        "ledgerHash": "0724559987df957ba842b0c1e7cdc3e1601f9f5721c38b043f437f44761bf54a"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D06-V01",
+      "ordinal": 22,
+      "sourceId": "C11-B1-D06",
+      "variant": "V01",
+      "requestSha": "1d770f47cd3301f19bc6ffa956731a4f6d029d252bdefc089d11e75649d7c1bd",
+      "reserve": {
+        "sequence": 687,
+        "nonce": "2a93416d-96ed-4526-ab8f-2a775b11f2e1",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "cfeabcd810c9028da0a5042aad88f428e6232dae9b10838f0b710e9b65585cc8"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D06-V01.jsonl",
+        "responseSha": "632340fc76a011d10d158e33a529d76bc30807880672e8e6ad7f57acce022377",
+        "httpStatus": 200
+      },
+      "providerRequestId": "6dde165b-516b-49f6-ab6c-a674a4e18684",
+      "usage": {
+        "input_tokens": 5641,
+        "input_tokens_details": {
+          "cached_tokens": 4992
+        },
+        "output_tokens": 2156,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 7797
+      },
+      "settlement": {
+        "sequence": 688,
+        "status": "settled",
+        "costUpperMicroCny": 28530,
+        "ledgerHash": "ad5658cb8e2a7334f6e3e43846b5021ee3d21916af817102bf912f60ecb4b888"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D06-V10",
+      "ordinal": 23,
+      "sourceId": "C11-B1-D06",
+      "variant": "V10",
+      "requestSha": "357f8eecdbc8f2f3efc2c7626812a235bd2474641fd9164fa2cd02dc12d86971",
+      "reserve": {
+        "sequence": 689,
+        "nonce": "fbf2cb69-905c-449f-ac05-03f7cb8cc6b9",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "1cdf1cf97221eba94c7c046a056e8933a6888f00b5e55ef4c70cfdca3b069d62"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D06-V10.jsonl",
+        "responseSha": "f87302a378c2bb4467a3d92e3e088b28a7cf4f841a843ff41732a1ca37184488",
+        "httpStatus": 200
+      },
+      "providerRequestId": "7075e27a-8c14-4b6c-9d14-2b46cc0da0ee",
+      "usage": {
+        "input_tokens": 4738,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2063,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6801
+      },
+      "settlement": {
+        "sequence": 690,
+        "status": "settled",
+        "costUpperMicroCny": 25980,
+        "ledgerHash": "853a6d0a29c6da90470509824aea062bf99be69350f52c50347e3e74b52c957d"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    },
+    {
+      "unitId": "C11-B1-D06-V00",
+      "ordinal": 24,
+      "sourceId": "C11-B1-D06",
+      "variant": "V00",
+      "requestSha": "b64ef317e481c521ea01384996f0aeca3192979dad8c44ee43aa38014d8f4d60",
+      "reserve": {
+        "sequence": 691,
+        "nonce": "a7be89c0-5d32-484e-ba20-e01551ce4c05",
+        "reservedMicroCny": 2162688,
+        "ledgerHash": "3387bf379100bfc7eb5fabbf80e226729f4587d355d2a6bea8b21496a7817d46"
+      },
+      "raw": {
+        "path": "raw/C11-B1-D06-V00.jsonl",
+        "responseSha": "f0684d78880d85f21ca61cf359fa4bfb4126a766115f5c846f65496accae9bbd",
+        "httpStatus": 200
+      },
+      "providerRequestId": "cb84a1fc-60ee-414e-a5f3-1d1f1344ce8b",
+      "usage": {
+        "input_tokens": 4675,
+        "input_tokens_details": {
+          "cached_tokens": 3968
+        },
+        "output_tokens": 2047,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6722
+      },
+      "settlement": {
+        "sequence": 692,
+        "status": "settled",
+        "costUpperMicroCny": 25726,
+        "ledgerHash": "13b520d270d26335072f99920e47a4443e8bc586365eb20cda61c4122d7ab3bd"
+      },
+      "providerBilledCny": "NOT_OBSERVABLE"
+    }
+  ],
+  "ledgerBefore": {
+    "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+    "rows": 644,
+    "reserves": 314,
+    "bytes": 519152,
+    "sha256": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597",
+    "tail": "37ffce66d2e92d036481308f84b08a24c70d42c313cdaf7aaa8ad505f3f2822e",
+    "nextSequence": 644
+  },
+  "ledgerAfter": {
+    "rows": 693,
+    "bytes": 572913,
+    "sha256": "2051d8e775123579c3fa262f671a757e690983f64bc5945d692faaeb24b5322e",
+    "tail": "13b520d270d26335072f99920e47a4443e8bc586365eb20cda61c4122d7ab3bd",
+    "nextSequence": 693
+  }
+}

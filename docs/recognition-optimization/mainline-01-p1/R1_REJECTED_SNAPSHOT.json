@@ -1,0 +1,52 @@
+{
+  "status": "REJECTED_STOPPED_WAIT_AUTHORIZATION",
+  "date": "2026-09-05",
+  "head": "644789d9be866bf5e048f3014f673b177a68be5d",
+  "notAComponentFreeze": true,
+  "sourceHashes": [
+    {
+      "path": "src/domain/v2/domainCommit.ts",
+      "sha256": "5df82c96521dedce0fa17eb697314524ed8bd07531f3889017854f97e7cfac6c"
+    },
+    {
+      "path": "src/components/DraftReviewPanel.tsx",
+      "sha256": "974cb01e495937028c0c3924990cfb72201ee5f071a65222836f3a31a9a13bb7"
+    },
+    {
+      "path": "src/domain/v2/confirmationV2.ts",
+      "sha256": "c2934720550df17a482ff9bf25274b3327b7e133759e1e54164794c285f2fe82"
+    },
+    {
+      "path": "src/domain/v2/confirmationV2.test.ts",
+      "sha256": "b38b994e7951f19933191c6ae6e1e53d79f5462314217b6d7baf2c01fa102e46"
+    },
+    {
+      "path": "src/experiments/mainline01p1/confirmationHarness.ts",
+      "sha256": "e1917f33a58c178a89c8144d5d1eb06a286cec5eb6ab0924a7b366b9dee145a8"
+    },
+    {
+      "path": "src/experiments/mainline01p1/confirmationHarness.test.ts",
+      "sha256": "068b52535a9de04072c3cc668da7d4626686d8a601cdb59c0f92721a4285fc84"
+    },
+    {
+      "path": "src/experiments/mainline01p1/browser.tsx",
+      "sha256": "9aba8fbab9aef155ee34e699648cdfbe8dbb723118910ef231490207b238abf8"
+    },
+    {
+      "path": "scripts/serve-mainline-01-p1.mjs",
+      "sha256": "ab3b341d38cebc885d6b6c28f7a24b352a7350a317ef94e74e8c439c26cf067b"
+    },
+    {
+      "path": "scripts/check-mainline-01-p1.mjs",
+      "sha256": "f72f252c07b1be278a78921eb867d9b9e194cfb1f9d6646b089c73f61c5311c7"
+    }
+  ],
+  "protection": {
+    "checked": 673,
+    "changed": [],
+    "appendOnly": true,
+    "outOfScope": []
+  },
+  "restore": "Current uncommitted R1 implementation already exists. Verify these hashes. Do not apply old FAILED_IMPLEMENTATION.patch.",
+  "stop": "New saved-edit/commit-adoption mismatch. No more source changes or full/browser gates after review."
+}

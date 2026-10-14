@@ -1,0 +1,26 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saved source correction immediately expires old suggestions, prior review=false 97ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saved source correction immediately expires old suggestions, prior review=true 84ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saved correction preserves a previously confirmed task and independent source confirmation 531ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=false 298ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > object correction keeps the current default title consistent and preserves explicit user title=true 325ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > saves real source and pending run before response; unchanged content does not create a second version 22ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > no selected flag can skip explicit review; reviewed no-date saves with zero time/reminders and reopens 85ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > explicit saved date/title invalidate old review and are the confirmed values; rollback is atomic 155ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-true and nonzero normal confirmations 63ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-false and nonzero normal confirmations 30ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > truth/status condition-unknown and nonzero normal confirmations 30ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > truth/status revision and nonzero normal confirmations 91ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > manual material repair persists exact values, keeps originals and independent brother confirmation 422ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > whole-source versions remain immutable, old pending draft is stale, confirmed task survives 303ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > changed source-only reading and duplicate operation cannot silently replace original; failed save rolls back 8ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > tampered first/effective review/raw or canonical is rejected, not repaired 66ms
+ ✓ src/experiments/realInput01/runtime.test.ts > real-input isolated canonical connection, seen responses not model accuracy > pure information is explicitly disposed with no fake task; defer does not change unknown truth 26ms
+
+ Test Files  1 passed (1)
+      Tests  17 passed (17)
+   Start at  06:58:10
+   Duration  3.51s (transform 305ms, setup 0ms, collect 442ms, tests 2.64s, environment 0ms, prepare 163ms)
+

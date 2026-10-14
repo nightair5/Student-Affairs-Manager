@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "candidate12-human-holdout-submission-1.0.0",
+  "title": "Candidate12 independent human Holdout submission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "status", "candidateFreeze", "protocolVersion", "roles", "declarations", "sources", "signatures"],
+  "properties": {
+    "version": {"const": "candidate12-human-holdout-submission-1.0.0"},
+    "status": {"const": "INDEPENDENT_HUMAN_DOUBLE_REVIEW_COMPLETE"},
+    "candidateFreeze": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit", "candidateBundleSha"],
+      "properties": {
+        "commit": {"const": "c03368054ff8c357f055658c2d2d39b45bbcb761"},
+        "candidateBundleSha": {"const": "880488f038cec55763276f525c1847638533fe95d79a64599e9585dc8d92296a"}
+      }
+    },
+    "protocolVersion": {"const": "candidate12-human-protocol-1.0.0"},
+    "roles": {
+      "type": "object",
+      "required": ["sourceProviderId", "labelerAId", "reviewerBId"],
+      "properties": {
+        "sourceProviderId": {"type": "string", "minLength": 3},
+        "labelerAId": {"type": "string", "minLength": 3},
+        "reviewerBId": {"type": "string", "minLength": 3},
+        "conflictAdjudicatorId": {"type": ["string", "null"]}
+      }
+    },
+    "declarations": {
+      "type": "object",
+      "required": ["labelerAndReviewerAreDifferentPeople", "candidateFrozenBeforeSourceAccess", "candidateOutputsSeen", "b1b2ModelOutputsSeen", "teachingAnswersSeen", "scoringResultsSeen", "modelAssistanceUsed", "allPersonalDataRemoved", "allDisagreementsResolved"],
+      "properties": {
+        "labelerAndReviewerAreDifferentPeople": {"const": true},
+        "candidateFrozenBeforeSourceAccess": {"const": true},
+        "candidateOutputsSeen": {"const": false},
+        "b1b2ModelOutputsSeen": {"const": false},
+        "teachingAnswersSeen": {"const": false},
+        "scoringResultsSeen": {"const": false},
+        "modelAssistanceUsed": {"const": false},
+        "allPersonalDataRemoved": {"const": true},
+        "allDisagreementsResolved": {"const": true}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {"$ref": "#/$defs/source"}
+    },
+    "signatures": {
+      "type": "object",
+      "required": ["labelerASignedAt", "reviewerBSignedAt"],
+      "properties": {
+        "labelerASignedAt": {"type": "string", "format": "date-time"},
+        "reviewerBSignedAt": {"type": "string", "format": "date-time"},
+        "adjudicatorSignedAt": {"type": ["string", "null"], "format": "date-time"}
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "sourceVersionId", "sourceText", "sourceSha256", "coverageTags", "provenance", "reference", "referenceSha256"],
+      "properties": {
+        "sourceId": {"type": "string", "pattern": "^C12-H(0[1-9]|1[0-2])$"},
+        "sourceVersionId": {"type": "string", "pattern": "^C12-H(0[1-9]|1[0-2])-v[1-9][0-9]*$"},
+        "sourceText": {"type": "string", "minLength": 20, "maxLength": 24000},
+        "sourceSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "coverageTags": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+        "provenance": {
+          "type": "object",
+          "required": ["originType", "acquiredAt", "anonymizationMethod", "personalDataRemoved", "seenStatus"],
+          "properties": {
+            "originType": {"enum": ["ANONYMIZED_REAL_NOTICE", "INDEPENDENT_HUMAN_AUTHORED_NOTICE"]},
+            "acquiredAt": {"type": "string", "format": "date-time"},
+            "anonymizationMethod": {"type": "string", "minLength": 5},
+            "personalDataRemoved": {"const": true},
+            "seenStatus": {"const": "UNSEEN_FOR_CANDIDATE12"}
+          }
+        },
+        "reference": {"$ref": "#/$defs/reference"},
+        "referenceSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["referenceVersion", "coverage", "minimalObligations", "retainedFacts", "materials", "timePoints", "revisions", "composition", "forbiddenInferences", "ambiguities", "scorerReference", "review"],
+      "properties": {
+        "referenceVersion": {"type": "string", "minLength": 5},
+        "coverage": {"const": "complete"},
+        "minimalObligations": {"type": "array"},
+        "retainedFacts": {"type": "array"},
+        "materials": {"type": "array"},
+        "timePoints": {"type": "array"},
+        "revisions": {"type": "array"},
+        "composition": {"type": "object"},
+        "forbiddenInferences": {"type": "array"},
+        "ambiguities": {"type": "array", "maxItems": 0},
+        "scorerReference": {"type": "object"},
+        "review": {
+          "type": "object",
+          "required": ["labelerAStatus", "reviewerBStatus", "adjudicationStatus", "disagreementIds"],
+          "properties": {
+            "labelerAStatus": {"const": "COMPLETE"},
+            "reviewerBStatus": {"const": "APPROVED"},
+            "adjudicationStatus": {"const": "RESOLVED"},
+            "disagreementIds": {"type": "array"}
+          }
+        }
+      }
+    }
+  }
+}

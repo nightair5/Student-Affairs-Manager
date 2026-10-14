@@ -1,0 +1,286 @@
+{
+  "unitId": "R02-03",
+  "arm": "03",
+  "bindingSha": "7d49dede6304e25e186e96dcee787ad2f477eaf25ac45a1fb1161fea5ec0aab7",
+  "requestSha": "eeac0e181ee226cc0216051fda2fa6eb340824f8d8b73012ce70ad0b13c12c43",
+  "responseSha": "cc75cb13ba7fe0880be7f78efcea3aa6f30cbfc610be7e69b1b74a7b655ecefe",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "8336a67c2fc27af5a6c82802ba6b51b311fbae38353d13ab8dcaf45d612fbe0e",
+  "scoreInput": "explicit semantic projection into byte-identical historical scorer; raw response unmodified",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-001",
+        "propositionScopeIds": [
+          "scope-0002-ecda216c7eb648cc5adc6b801c16800da693521a76a675ebba8c58eb6b3b205d",
+          "scope-0003-30ba8ea19fbbaad56592f9984d9a5df8e213c095aec85ed7f08ca7d88af71c09",
+          "scope-0004-3124ff79faa6f33c589b308ca3edf1b4c895fd2f40d77cbb77cd48220bd03c05",
+          "scope-0005-5939ae4eaf4b2b57dfe4a9ecbcc8b4e80cc46eba9c48fddd21629aca05781755",
+          "scope-0006-c66bc55dec461f5be44bdda633f4a8b9d6254900655e9dc7ff419e763131f361",
+          "scope-0007-3e6f2f9cc79c1d3327c5cb4ac68d43a54d9037794118921ec948c94bc08d153d"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "collect",
+        "action": {
+          "scopeId": "scope-0002-ecda216c7eb648cc5adc6b801c16800da693521a76a675ebba8c58eb6b3b205d",
+          "surface": "整理"
+        },
+        "object": {
+          "scopeId": "scope-0002-ecda216c7eb648cc5adc6b801c16800da693521a76a675ebba8c58eb6b3b205d",
+          "surface": "传感器异常记录"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "整理传感器异常记录",
+          "description": "巡查员整理传感器异常记录；异常记录必须包含设备编号和异常出现时段；提交渠道暂未指定；具体完成日期由实验室另行通知；不必等待下一份通知才开始。",
+          "completionCriteria": [
+            "异常记录已整理",
+            "异常记录包含设备编号",
+            "异常记录包含异常出现时段"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-001"
+          ],
+          "timePointTempIds": [
+            "time-001"
+          ],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-001",
+        "name": "传感器异常记录",
+        "required": true,
+        "formatRequirements": [
+          "必须包含设备编号",
+          "必须包含异常出现时段"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-001"
+        ],
+        "scopeIds": [
+          "scope-0004-3124ff79faa6f33c589b308ca3edf1b4c895fd2f40d77cbb77cd48220bd03c05",
+          "scope-0005-5939ae4eaf4b2b57dfe4a9ecbcc8b4e80cc46eba9c48fddd21629aca05781755"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-001",
+        "type": "task_deadline",
+        "rawText": "近期",
+        "relatedTaskTempIds": [
+          "task-001"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-ecda216c7eb648cc5adc6b801c16800da693521a76a675ebba8c58eb6b3b205d"
+        ],
+        "confidence": 0.6,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      },
+      {
+        "tempId": "time-002",
+        "type": "task_deadline",
+        "rawText": "具体完成日期由实验室另行通知",
+        "relatedTaskTempIds": [
+          "task-001"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0003-30ba8ea19fbbaad56592f9984d9a5df8e213c095aec85ed7f08ca7d88af71c09"
+        ],
+        "confidence": 0.8,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-6d7eac5cf5dca1ae12af962fa2b0f3116092cd73f0ed83d63075980239ed221b",
+      "scope-0006-c66bc55dec461f5be44bdda633f4a8b9d6254900655e9dc7ff419e763131f361",
+      "scope-0007-3e6f2f9cc79c1d3327c5cb4ac68d43a54d9037794118921ec948c94bc08d153d"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:ee59675e",
+    "sourceVersionId": "source:ee59675e:version:1",
+    "sourceFingerprint": "sha256:5eed0e47bbc643082adb61d045193e3f86092597ce150e2ccab6fbe11c4033d4"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 5294,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 0,
+        "precision": 0.5,
+        "recall": 1
+      },
+      "material": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 4,
+        "reference": 3,
+        "correct": 1,
+        "falsePositive": 3,
+        "falseNegative": 2,
+        "precision": 0.25,
+        "recall": 0.3333333333333333
+      },
+      "semantic": {
+        "predicted": 3,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 1,
+        "precision": 0.3333333333333333,
+        "recall": 0.5
+      },
+      "coverage": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 2,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "time-001"
+        ]
+      },
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "time-002"
+        ]
+      }
+    ],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 1,
+    "referenceTaskCount": 1
+  },
+  "scoreError": null,
+  "totalAttempts": 107,
+  "costUpperMicroCny": 18252,
+  "totalCostUpperMicroCny": 5669991,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份已见材料开发回归；授权同期重复测量，非盲测；24请求不是24份独立材料"
+}

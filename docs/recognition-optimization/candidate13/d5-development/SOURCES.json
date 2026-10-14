@@ -1,0 +1,172 @@
+{
+  "version": "candidate13-d5r1-sources-1.1.0",
+  "status": "FROZEN_SYNTHETIC_DEVELOPMENT",
+  "generatedAt": "2026-09-22T02:36:22.970Z",
+  "evaluationRole": "SYNTHETIC_DEVELOPMENT",
+  "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+  "eligibleForIndependentHoldout": false,
+  "sources": [
+    {
+      "sourceId": "C13-D5R1-S01",
+      "sourceVersionId": "C13-D5R1-S01-v1",
+      "title": "单任务材料格式",
+      "sourceText": "[D5匿名合成Development]\n请于2026年10月19日16:30前归档研究伦理声明。研究伦理声明须为PDF/A格式，文件名为课题号-负责人；系统显示归档完成即结束。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "coverageTags": [
+        "single",
+        "exact_time",
+        "material_format"
+      ],
+      "sourceSha256": "895f80c62d76f543e31ca29ead43776faf05ac982ca3941138d3b2507a82ebb7"
+    },
+    {
+      "sourceId": "C13-D5R1-S02",
+      "sourceVersionId": "C13-D5R1-S02-v1",
+      "title": "两个独立义务",
+      "sourceText": "[D5匿名合成Development]\n请在10月20日前确认竞赛队伍信息，页面显示确认完成；另于10月22日前上传监护人知情书，监护人知情书须为JPG，平台显示知情书已接收。两项分别办理。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "coverageTags": [
+        "multi",
+        "date_only",
+        "material"
+      ],
+      "sourceSha256": "18c8acf9f6960d586ebe4f4881822c6605694acc2d3aeddcef213c0c10eaac51"
+    },
+    {
+      "sourceId": "C13-D5R1-S03",
+      "sourceVersionId": "C13-D5R1-S03-v1",
+      "title": "条件为真",
+      "sourceText": "[D5匿名合成Development]\n你的入场申请已获批准。获批准的同学须在10月16日11:30前领取实验室门禁卡，以在领取册签字为完成。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "coverageTags": [
+        "condition_true",
+        "exact_time"
+      ],
+      "sourceSha256": "cd998b634d186b6e2fb9c2b9c3e241ba2c6d9fee688029917911e92b213d03ae"
+    },
+    {
+      "sourceId": "C13-D5R1-S04",
+      "sourceVersionId": "C13-D5R1-S04-v1",
+      "title": "条件为假",
+      "sourceText": "[D5匿名合成Development]\n进入复评名单的同学须参加作品复评陈述，以完成作品复评陈述为准。你的作品未进入复评名单，本通知不要求你参加。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "coverageTags": [
+        "condition_false",
+        "inactive"
+      ],
+      "sourceSha256": "79c44b2ab80fc9d862add2f30240ec5fdadbcc5c786a7187fe7ce0ecd279dae3"
+    },
+    {
+      "sourceId": "C13-D5R1-S05",
+      "sourceVersionId": "C13-D5R1-S05-v1",
+      "title": "条件未知与模糊时间",
+      "sourceText": "[D5匿名合成Development]\n若安排你担任主持人，请提交主持提纲，以平台显示提纲已收取为完成。暂定下周二下午办理，主持人安排尚未确定。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "coverageTags": [
+        "condition_unknown",
+        "vague_time"
+      ],
+      "sourceSha256": "4a07654bfd4b8d289934c99e25e0d686efe8d6b476b7295ec6fe5b31ab8c7ab5"
+    },
+    {
+      "sourceId": "C13-D5R1-S06",
+      "sourceVersionId": "C13-D5R1-S06-v1",
+      "title": "共享材料与依赖",
+      "sourceText": "[D5匿名合成Development]\n请先补全田野调查名册，名册必填栏均已填写后，再报送田野调查名册；田野调查名册格式为XLSX，以办公室确认收到名册为完成。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "coverageTags": [
+        "shared_material",
+        "dependency",
+        "multi"
+      ],
+      "sourceSha256": "7d9e41736da4b83712f55559ffbee5e4ff57965f56b79f710d7a57f1d69c5628"
+    },
+    {
+      "sourceId": "C13-D5R1-S07",
+      "sourceVersionId": "C13-D5R1-S07-v1",
+      "title": "仅有模糊期限",
+      "sourceText": "[D5匿名合成Development]\n请在月底前后向策展组交付展览海报初稿，以策展组确认收到初稿为完成；确切日期稍后公布。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "coverageTags": [
+        "vague_time",
+        "single"
+      ],
+      "sourceSha256": "e5861deffaaa3fd97c191479e4965797faf729c47df15b4432f656a1ba8dd782"
+    },
+    {
+      "sourceId": "C13-D5R1-S08",
+      "sourceVersionId": "C13-D5R1-S08-v1",
+      "title": "前置依赖",
+      "sourceText": "[D5匿名合成Development]\n请先核验报销银行卡信息，页面显示银行卡核验完成后，才能上传差旅报销声明。差旅报销声明须为PDF；系统显示声明上传成功即完成。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "coverageTags": [
+        "dependency",
+        "material",
+        "multi"
+      ],
+      "sourceSha256": "0783267766ec15d7b86467b79f4c17039430dd915c56cb4673ca63edbe7eeb61"
+    },
+    {
+      "sourceId": "C13-D5R1-S09",
+      "sourceVersionId": "C13-D5R1-S09-v1",
+      "title": "禁止项与正确无任务",
+      "sourceText": "[D5匿名合成Development]\n图书馆检索服务将在周三晚维护，原有预约记录不受影响。无需取消预约，不要上传说明，也不必给管理员发邮件。本通知仅说明维护安排。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "coverageTags": [
+        "no_task",
+        "forbidden",
+        "background"
+      ],
+      "sourceSha256": "8fe0a0b5f05cf5e5e9c70f2c4976401a4b2d9aaef7e5d1639cbaa2bc9f12c834"
+    },
+    {
+      "sourceId": "C13-D5R1-S10",
+      "sourceVersionId": "C13-D5R1-S10-v1",
+      "title": "两个取消端点",
+      "sourceText": "[D5匿名合成Development]\n原通知要求归还实验室备用钥匙并签署旧版值班名册。现通知：取消归还实验室备用钥匙，同时取消签署旧版值班名册；两项都无需办理。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "coverageTags": [
+        "multi_endpoint_cancellation",
+        "historical"
+      ],
+      "sourceSha256": "8090eca0f1022322d14c171cb727c2822d722d5bdf818665eddd47c05b00e0ed"
+    },
+    {
+      "sourceId": "C13-D5R1-S11",
+      "sourceVersionId": "C13-D5R1-S11-v1",
+      "title": "两个替代端点",
+      "sourceText": "[D5匿名合成Development]\n原定打印会议海报，并登记现场展示场地。现调整为：会议海报改为上传电子版，平台显示电子海报上传成功；现场展示场地改为预约线上时段，页面保存线上展示时段。两项分别替代原要求。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "coverageTags": [
+        "multi_endpoint_replacement",
+        "historical",
+        "multi"
+      ],
+      "sourceSha256": "515fd17ebd4cd7e73389a92f5be9506756780bf0fe077b649d44d4834b48b50d"
+    },
+    {
+      "sourceId": "C13-D5R1-S12",
+      "sourceVersionId": "C13-D5R1-S12-v1",
+      "title": "完成标准边界",
+      "sourceText": "[D5匿名合成Development]\n请复核项目成员资料，以页面显示资料复核完成为完成标准。无需院长签字，也不要创建“联系项目办”任务。",
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "coverageTags": [
+        "completion_standard",
+        "forbidden"
+      ],
+      "sourceSha256": "d285ab2c8f543d11e443785ac7616b3aec74f034ea91740f84874a78b744feef"
+    }
+  ]
+}

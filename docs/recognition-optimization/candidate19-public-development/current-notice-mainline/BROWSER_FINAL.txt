@@ -1,0 +1,195 @@
+- link "跳到主要内容":
+  - /url: "#main-content"
+- banner:
+  - button "返回今日首页":
+    - strong: 事务管家
+  - button "新事务":
+    - text: 新事务
+- navigation "手机端主要导航":
+  - button "今日":
+    - generic: 今日
+  - button "1 收件箱":
+    - emphasis: "1"
+    - generic: 收件箱
+  - button "项目":
+    - generic: 项目
+  - button "日历":
+    - generic: 日历
+  - button "更多":
+    - generic: 更多
+- generic "匿名工程输入 · 普通产品路径 · 不发送模型请求"
+- main:
+  - text: 10月5日星期一
+  - heading "今天只看最重要的 3 件事" [level=1]:
+    - text: 今天只看最重要的
+    - emphasis: "3"
+    - text: 件事
+  - paragraph: 不用管理所有事情。先处理首页，再去任务中心查看其余内容。
+  - strong: 收到新通知？直接粘贴
+  - generic: 日期、事项和材料会先拆成待确认建议。
+  - generic: 匿名工程输入 · 模型派发关闭
+  - textbox "快速粘贴通知":
+    - /placeholder: 粘贴老师消息、群通知或网页正文……
+  - button "上传文件或链接":
+    - text: 上传文件或链接
+  - button "智能拆分任务" [disabled]:
+    - text: 智能拆分任务
+  - generic: 本入口只接受列出的匿名工程通知，不外发、不调用模型；编辑、确认和保存使用普通产品路径。
+  - button "还有 1 项建议等你确认 关闭页面也不会丢失，可以稍后处理。":
+    - strong: 还有 1 项建议等你确认
+    - generic: 关闭页面也不会丢失，可以稍后处理。
+  - region "今日与近期安排":
+    - generic: PLAN
+    - heading "今日与近期安排" [level=2]:
+      - text: 今日与近期安排
+    - paragraph: 原文截止保留；以下时段是可修改、可撤回的个人建议。
+    - generic "可用时间与估计 · 09:00—18:00 · 7天"
+    - generic "已保存安排 · 2项"
+    - list:
+      - strong: 填写场地使用登记
+      - generic: 10/6 09:00—10/6 09:30 · 30分钟 · 产品暂估，可改
+      - generic: 原文截止：未说明
+      - strong: 递交场地使用登记
+      - generic: 10/6 09:30—10/6 10:00 · 30分钟 · 产品暂估，可改
+      - generic: 原文截止：未说明
+      - generic: 须实际完成前置事项才能开始，安排在后不代表已完成。
+    - heading "待接受方案 · 3项时段" [level=3]
+    - list:
+      - strong: 上传志愿服务统计表
+      - generic: 10/6 09:00—10/6 09:30 · 30分钟 · 产品暂估，可改
+      - generic: 原文截止：2026年11月13日09:25前。按原文截止先后分配共同可用时间。
+      - button "调整安排"
+      - checkbox "保留并锁定"
+      - text: 保留并锁定
+      - button "以后再安排"
+      - strong: 填写场地使用登记
+      - generic: 10/6 09:30—10/6 10:00 · 30分钟 · 产品暂估，可改
+      - generic: 原文截止：未说明。没有原文截止，按稳定顺序放入可用时间。
+      - button "调整安排"
+      - checkbox "保留并锁定"
+      - text: 保留并锁定
+      - button "以后再安排"
+      - strong: 递交场地使用登记
+      - generic: 10/6 10:00—10/6 10:30 · 30分钟 · 产品暂估，可改
+      - generic: 原文截止：未说明。排在前置事项之后；须实际完成前置才可开始。
+      - button "调整安排"
+      - checkbox "保留并锁定"
+      - text: 保留并锁定
+      - button "以后再安排"
+    - generic "未新排入或需要处理 · 1项"
+    - list:
+      - strong: 进行网上申报
+      - text: ：原文截止已过，需明确改期决定。
+    - generic "安排依据与待定点"
+    - status: 上次未确认的安排调整已恢复；请查看当前结果后接受。
+    - button "接受这份安排"
+    - button "撤回上次安排"
+    - button "重新读取并核对"
+    - generic "本次安排记录与时间"
+  - region "现在先做这些":
+    - generic: TODAY
+    - heading "现在先做这些" [level=2]
+    - button "全部 4 项":
+      - text: 全部 4 项
+    - article:
+      - generic: 独立事项 · 其他
+      - button "查看 进行网上申报 详情":
+        - text: 查看详情
+      - heading "进行网上申报" [level=3]
+      - text: 截止时间
+      - strong: 7月1日
+      - emphasis: 周三 · 00:00
+      - text: 已逾期 97 天
+      - generic: 预计用时
+      - strong: 尚未估计
+      - paragraph: 排序理由：已逾期 97 天
+      - generic: 下一步
+      - strong: 进行网上申报
+      - generic "任务风险":
+        - text: 已逾期
+      - generic "快速操作":
+        - button "开始":
+          - text: 开始
+        - button "稍后":
+          - text: 稍后
+        - button "置顶":
+          - text: 置顶
+      - button "标记完成":
+        - text: 标记完成
+    - article:
+      - generic: 独立事项 · 其他
+      - button "查看 填写场地使用登记 详情":
+        - text: 查看详情
+      - heading "填写场地使用登记" [level=3]
+      - text: 截止时间
+      - strong: 原文未说明截止
+      - emphasis: 个人安排另列 ·
+      - text: 不虚构截止时间
+      - generic: 预计用时
+      - strong: 尚未估计
+      - paragraph: 排序理由：截止时间需要核对；关键信息需要核对
+      - paragraph: 我的计划：10月6日 09:00（原文截止另列）
+      - generic: 下一步
+      - strong: 填写场地使用登记
+      - generic "任务风险":
+        - text: 待确认
+      - generic "快速操作":
+        - button "开始":
+          - text: 开始
+        - button "稍后":
+          - text: 稍后
+        - button "置顶":
+          - text: 置顶
+      - button "标记完成":
+        - text: 标记完成
+    - article:
+      - generic: 独立事项 · 其他
+      - button "查看 上传志愿服务统计表 详情":
+        - text: 查看详情
+      - heading "上传志愿服务统计表" [level=3]
+      - text: 截止时间
+      - strong: 11月13日
+      - emphasis: 周五 · 09:25
+      - text: 39 天后截止
+      - generic: 预计用时
+      - strong: 尚未估计
+      - text: 材料 1 项准备情况未核实
+      - paragraph: 排序理由：你设为高优先级
+      - generic: 下一步
+      - strong: 上传志愿服务统计表
+      - generic "任务风险":
+        - generic: 节奏正常
+      - generic "快速操作":
+        - button "开始":
+          - text: 开始
+        - button "稍后":
+          - text: 稍后
+        - button "置顶":
+          - text: 置顶
+      - button "标记完成":
+        - text: 标记完成
+  - region "受阻与稍后":
+    - generic: BLOCKED / WAITING
+    - heading "受阻与稍后" [level=2]
+    - paragraph: 这些事项暂不进入今日 Top 3；完成前置项或到达稍后时间后再重新排序。
+    - generic: 1 项
+    - button "受阻 递交场地使用登记 有 1 项前置事项未完成":
+      - text: 受阻
+      - strong: 递交场地使用登记
+      - generic: 有 1 项前置事项未完成
+- generic "本批真实录制 · 选择来源与独立读回" [active]
+- option "PUB-C19-01 / Candidate19 / 原冻结：KNOWN_SETTLED_IN_SEALED_INCOMPLETE_BATCH"
+- option "C19-DEV-S01 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+- option "C19-DEV-S01 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+- option "C19-DEV-S02 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+- option "C19-DEV-S02 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+- option "C19-DEV-S03 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+- option "C19-DEV-S03 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+- option "C19-DEV-S04 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+- option "C19-DEV-S04 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+- option "C19-DEV-S05 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+- option "C19-DEV-S05 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+- option "C19-DEV-S06 / Candidate19 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+- option "C19-DEV-S06 / Candidate17 / 原冻结：HISTORICAL_REGRESSION_NOT_CURRENT_FOUR"
+- option "heading-clock / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT" [selected]
+- option "midnight-deadline / 匿名契约夹具（非模型） / 原冻结：ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT"

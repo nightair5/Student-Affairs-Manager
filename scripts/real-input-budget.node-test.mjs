@@ -1,0 +1,895 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { mkdtemp, mkdir, readFile, writeFile, unlink } from 'node:fs/promises'
+import { join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { spawn } from 'node:child_process'
+import { BILLING_POLICY, FLASH41_POLICY, FLASH41_PAIRED06_POLICY, FLASH41_PAIRED07_POLICY, FLASH41_PAIRED08_POLICY, FLASH41_PAIRED09_POLICY,
+  MODEL_COMPARE_POLICY, MODEL_COMPARE_FLASH_POLICY, MODEL_COMPARE_PRO_POLICY, modelComparePolicyFor,
+  REASONING_COMPARE_POLICY, REASONING_COMPARE_NONE_POLICY, REASONING_COMPARE_LOW_POLICY, reasoningComparePolicyFor,
+  REASONING_MAX_POLICY, REASONING_MAX_NONE_POLICY, REASONING_MAX_MAX_POLICY, reasoningMaxPolicyFor,
+  REASONING_LOW16_POLICY, REASONING_LOW16_NONE_POLICY, REASONING_LOW16_LOW_POLICY, reasoningLow16PolicyFor,
+  sha256, costUpperMicroCny, validateManifest, validateUsageEnvelope, validateUsageAccountingEnvelope,
+  initializeBudget, openBudget, reconcileIncompleteUsage } from './real-input-budget.mjs'
+
+async function batchFixture() {
+  const f=await recoveryFixture(),r=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant})
+  await (await reserve(r,'A02')).complete(envelope('A02'))
+  const state=await r.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const grant={version:'real-input-batch-grant-1',grantId:'22222222-2222-4222-8222-222222222222',
+    parentTail:state.tail,parentSequence:state.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    manifestSha:f.manifestSha,bindingSha:f.grant.bindingSha,head:'a'.repeat(40),sourcesSha:sha256('current42'),
+    reviewSha:sha256('batch review'),targets:f.manifest.units.slice(2),billingEvidence:f.manifest.billingEvidence,
+    route:f.grant.route,priorNonce:state.reservations[0].nonce,a02ResponseSha:state.reservations[1].responseSha,maxTotalRequests:16}
+  return {...f,batchGrant:grant,batchPrefix:prefix}
+}
+if(process.argv[2]!=='--reserve-child') {
+test('batch permits fourteen exact units only and preserves old unknown/settled requests',async()=>{
+  const f=await batchFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  for(const u of f.batchGrant.targets)await (await reserve(b,u.unitId)).complete(envelope(u.unitId))
+  const s=await b.snapshot();assert.equal(s.reservations.length,16);assert.equal(s.reservations[0].status,'held-unknown')
+  assert.equal(s.reservations[0].costUpperMicroCny,3300000);assert.equal(s.recovery.status,'settled')
+  assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.batchPrefix.length),f.batchPrefix)
+  for(const id of ['A01','A02','A03','C01'])await assert.rejects(()=>reserve(b,id))
+  await assert.rejects(()=>f.a01.complete(envelope('A01')))
+  const old=await openBudget(f.dir,f.manifestSha);await assert.rejects(()=>reserve(old,'A03'),/HALTED/)
+})
+test('batch parallel and restart cannot repeat or skip a crashed request',async()=>{
+  const f=await batchFixture(),a=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  const results=await Promise.allSettled([reserve(a,'A03'),reserve(b,'A03')])
+  assert.equal(results.filter(x=>x.status==='fulfilled').length,1)
+  const restarted=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  await assert.rejects(()=>reserve(restarted,'A03'));await assert.rejects(()=>reserve(restarted,'A04'))
+  assert.equal((await restarted.snapshot()).reservations.length,3)
+})
+test('batch invalid usage or unknown failure preserves reservation and stops successors',async()=>{
+  for(const invalid of [false,true]){
+    const f=await batchFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant}),l=await reserve(b,'A03')
+    if(invalid)await assert.rejects(()=>l.complete(envelope('A03').replace('"usage":','"usage":{},"usage":')))
+    else await l.uncertain()
+    assert.equal((await b.snapshot()).reservations[2].costUpperMicroCny,3300000)
+    await assert.rejects(()=>reserve(b,'A04'));await assert.rejects(()=>l.complete(envelope('A03')))
+  }
+})
+test('batch changed grant, prefix, target, price expiry and order fail before dispatch',async()=>{
+  const f=await batchFixture()
+  for(const mutate of [g=>{g.targets[0].requestSha=sha256('changed')},g=>{g.parentTail=sha256('changed')},g=>{g.maxTotalRequests=24},g=>{g.ledgerPrefixSha=sha256('changed')}]){
+    const g=structuredClone(f.batchGrant);mutate(g);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:g}))
+  }
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  await assert.rejects(()=>reserve(b,'A04'));await assert.rejects(()=>reserve(b,'A03',BILLING_POLICY,'2027-01-01T00:00:00.000Z'))
+  assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.batchPrefix)
+  await (await reserve(b,'A03')).complete(envelope('A03'))
+  await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:{...f.batchGrant,reviewSha:sha256('changed')}}))
+})
+test('batch held A01 is counted against total even after lawful new settlements',async()=>{
+  const f=await batchFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  for(const id of ['A03','A04']){
+    const e=JSON.parse(envelope(id));e.usage.input_tokens=1048576;e.usage.output_tokens=8192;e.usage.total_tokens=1056768
+    await (await reserve(b,id)).complete(JSON.stringify(e))
+  }
+  await assert.rejects(()=>reserve(b,'A05'),/LIMIT/);assert.equal((await b.snapshot()).reservations.length,4)
+})
+
+
+}
+async function recoveryFixture() {
+  const fixture=await setup(),a01=await reserve(fixture.budget,'A01')
+  await a01.uncertain()
+  const before=await fixture.budget.snapshot(),prefix=await readFile(join(fixture.dir,'CALL_LEDGER.jsonl'))
+  const grant={version:'real-input-a02-grant-1',grantId:'11111111-1111-4111-8111-111111111111',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    manifestSha:fixture.manifestSha,bindingSha:sha256('frozen input binding'),priorNonce:before.reservations[0].nonce,
+    priorRequestSha:before.reservations[0].requestSha,target:fixture.manifest.units[1],head:'a'.repeat(40),
+    sourcesSha:sha256('reviewed42sources'),reviewSha:sha256('independent pass'),
+    billingEvidence:fixture.manifest.billingEvidence,route:{proxyHost:'127.0.0.1',proxyPort:10081,targetHost:'api.deepseek.com',targetPort:443}}
+  return {...fixture,before,prefix,grant,a01}
+}
+
+async function candidate02Fixture() {
+  const f=await batchFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.batchGrant})
+  for(const u of f.batchGrant.targets)await (await reserve(b,u.unitId)).complete(envelope(u.unitId))
+  const s=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const grant={...f.batchGrant,version:'real-input-candidate02-grant-1',grantId:'33333333-3333-4333-8333-333333333333',
+    parentTail:s.tail,parentSequence:s.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),maxTotalRequests:24,
+    targets:Array.from({length:8},(_,i)=>row(`C${String(i+1).padStart(2,'0')}`,'candidate-02',`A${String(i+1).padStart(2,'0')}`))}
+  return {...f,grant,prefix}
+}
+async function candidate03Fixture() {
+  const f=await candidate02Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await (await reserve(b,u.unitId)).complete(envelope(u.unitId))
+  const s=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const grant={...f.grant,version:'real-input-candidate03-grant-1',grantId:'44444444-4444-4444-8444-444444444444',
+    parentTail:s.tail,parentSequence:s.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),maxTotalRequests:32,
+    targets:Array.from({length:8},(_,i)=>row(`D${String(i+1).padStart(2,'0')}`,'candidate-03',`A${String(i+1).padStart(2,'0')}`))}
+  return {...f,previousGrant:f.grant,grant,prefix}
+}
+async function paired04Fixture() {
+  const f=await candidate03Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await (await reserve(b,u.unitId)).complete(envelope(u.unitId))
+  const s=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const targets=Array.from({length:12},(_,i)=>['03','04'].map(arm=>row(`N${String(i+1).padStart(2,'0')}-${arm}`,'candidate-'+arm,'new-pair-'+i))).flat()
+  const grant={...f.grant,version:'real-input-paired04-grant-1',grantId:'55555555-5555-4555-8555-555555555555',
+    parentTail:s.tail,parentSequence:s.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),maxTotalRequests:56,targets}
+  return {...f,grant,prefix}
+}
+async function paired05Fixture() {
+  const f=await paired04Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await(await reserve(b,u.unitId)).complete(envelope(u.unitId))
+  const s=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const targets=Array.from({length:12},(_,i)=>['03','05'].map(a=>row(`P${String(i+1).padStart(2,'0')}-${a}`,'flash41-'+a,'new05-'+i))).flat()
+  return {...f,prefix,grant:{...f.grant,version:'real-input-paired05-grant-1',grantId:'66666666-6666-4666-8666-666666666666',
+    parentTail:s.tail,parentSequence:s.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),maxTotalRequests:80,policy:FLASH41_POLICY,targets}}
+}
+const flashEnvelope=(id,...usage)=>{const e=JSON.parse(envelope(id,...usage));e.model='deepseek-flash';return JSON.stringify(e)}
+async function paired06Fixture() {
+  const f=await paired05Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await(await reserve(b,u.unitId,FLASH41_POLICY)).complete(flashEnvelope(u.unitId))
+  const before=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  // Deliberately shuffled case blocks and balanced arm order. These are budget-only placeholders.
+  const order=[7,2,11,4,1,12,3,10,5,8,6,9]
+  const targets=order.flatMap((n,i)=>(i%2?['06','03']:['03','06']).map(arm=>
+    row(`Q${String(n).padStart(2,'0')}-${arm}`,'flash41-'+arm,'new05-'+(n-1))))
+  return {...f,before,prefix,grant:{...f.grant,version:'real-input-paired06-grant-1',grantId:'77777777-7777-4777-8777-777777777777',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    maxTotalRequests:104,policy:FLASH41_PAIRED06_POLICY,targets}}
+}
+if(process.argv[2]!=='--reserve-child') {
+  test('paired06: balanced shuffled pairs settle once through 104; original 80 and receipts stay intact',async()=>{
+    const f=await paired06Fixture();assert.equal(f.before.nextSequence,166)
+    for(const u of f.grant.targets){
+      const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      await(await reserve(reopened,u.unitId,FLASH41_PAIRED06_POLICY)).complete(flashEnvelope(u.unitId))
+    }
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await b.snapshot()
+    assert.equal(s.reservations.length,104);assert.equal(s.nextSequence,215)
+    assert.deepEqual(s.reservations.slice(0,80),f.before.reservations)
+    assert.equal(s.reservations[0].status,'held-unknown');assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    for(const id of ['Q07-03','Q09-06','Q13-06','A01','P01-03'])await assert.rejects(()=>reserve(b,id,FLASH41_PAIRED06_POLICY))
+    assert.equal(costUpperMicroCny(1048576,8192,FLASH41_PAIRED06_POLICY),2162688)
+    assert.equal(FLASH41_POLICY.maxRequests,80);assert.equal(BILLING_POLICY.maxRequests,24)
+  })
+  test('paired06: invalid parent, duplicate pair, candidate/input drift, unbalanced order and price reject before mutation',async()=>{
+    const f=await paired06Fixture()
+    const changes=[g=>{g.parentTail=sha256('wrong')},g=>{g.parentSequence=165},g=>{g.maxTotalRequests=105},
+      g=>{g.policy.maxRequests=105},g=>{g.policy.inputPriceMicroPerMillion=1},g=>{g.ledgerPrefixSha=sha256('bad')},
+      g=>{g.targets[0].unitId='P07-03'},g=>{g.targets.splice(2,2,...structuredClone(g.targets.slice(0,2)))},
+      g=>{g.targets[1].inputSha=sha256('different')},g=>{g.targets[0].scorerSha=sha256('different')},
+      g=>{g.targets.filter(u=>u.unitId.endsWith('-03')).forEach(u=>{u.candidateSha=sha256('different')})},
+      g=>{g.targets.filter(u=>u.unitId.endsWith('-06')).forEach(u=>{u.candidateSha=sha256('flash41-05')})},
+      g=>{g.targets=g.targets.flatMap((_,i,a)=>i%2?[]:a.slice(i,i+2).sort((a,b)=>a.unitId.localeCompare(b.unitId)))}]
+    for(const change of changes){const g=structuredClone(f.grant);change(g);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:g}))}
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    await assert.rejects(()=>reserve(b,'Q07-06',FLASH41_PAIRED06_POLICY))
+    await assert.rejects(()=>reserve(b,'Q07-03',FLASH41_POLICY))
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+    await(await reserve(b,'Q07-03',FLASH41_PAIRED06_POLICY)).complete(flashEnvelope('Q07-03'))
+    await assert.rejects(()=>reserve(b,'Q07-03',FLASH41_PAIRED06_POLICY))
+  })
+  test('paired06: concurrency and crash preserve full unknown reserve; restart cannot retry or dispatch successor',async()=>{
+    const f=await paired06Fixture(),a=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    const results=await Promise.allSettled([reserve(a,'Q07-03',FLASH41_PAIRED06_POLICY),reserve(b,'Q07-03',FLASH41_PAIRED06_POLICY)])
+    assert.equal(results.filter(r=>r.status==='fulfilled').length,1)
+    const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await reopened.snapshot()
+    assert.equal(s.reservations.length,81);assert.equal(held(s),6600000)
+    await assert.rejects(()=>reserve(reopened,'Q07-03',FLASH41_PAIRED06_POLICY))
+    await assert.rejects(()=>reserve(reopened,'Q07-06',FLASH41_PAIRED06_POLICY))
+    await results.find(r=>r.status==='fulfilled').value.uncertain()
+    assert.equal((await reopened.snapshot()).paired06.stopped,true)
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+  })
+  test('paired06: repeated or ambiguous response identity/usage never releases a reservation',async()=>{
+    for(const mode of ['duplicate','ambiguous']){
+      const f=await paired06Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      await(await reserve(b,'Q07-03',FLASH41_PAIRED06_POLICY)).complete(flashEnvelope('Q07-03'))
+      const lease=await reserve(b,'Q07-06',FLASH41_PAIRED06_POLICY)
+      const raw=mode==='duplicate'?flashEnvelope('Q07-03'):flashEnvelope('Q07-06').replace('"usage":','"usage":{},"us\\u0061ge":')
+      await assert.rejects(()=>lease.complete(raw))
+      const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await reopened.snapshot()
+      assert.equal(s.reservations.length,82);assert.equal(s.reservations.at(-1).costUpperMicroCny,3300000)
+      assert.equal(s.paired06.stopped,true);assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+      await assert.rejects(()=>reserve(reopened,'Q02-06',FLASH41_PAIRED06_POLICY))
+    }
+  })
+}
+if(process.argv[2]!=='--reserve-child') {
+  test('paired05: new price/model, 24 bounded calls, old 56 and unknown reserve survive restart',async()=>{
+    const f=await paired05Fixture()
+    for(const u of f.grant.targets){const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant});await(await reserve(b,u.unitId,FLASH41_POLICY)).complete(flashEnvelope(u.unitId))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await b.snapshot()
+    assert.equal(s.reservations.length,80);assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    assert.equal(costUpperMicroCny(1048576,8192,FLASH41_POLICY),2162688)
+    await assert.rejects(()=>reserve(b,'P12-05',FLASH41_POLICY))
+  })
+  test('paired05: altered grant/policy, wrong identity and duplicate usage never release unknown reserve',async()=>{
+    const f=await paired05Fixture()
+    for(const mutate of [g=>{g.maxTotalRequests=81},g=>{g.parentTail=sha256('bad')},g=>{g.policy.inputPriceMicroPerMillion=1},g=>{g.targets[1].inputSha=sha256('bad')}]){
+      const g=structuredClone(f.grant);mutate(g);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:g}))}
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    await assert.rejects(()=>reserve(b,'P01-05',FLASH41_POLICY))
+    const lease=await reserve(b,'P01-03',FLASH41_POLICY)
+    await assert.rejects(()=>lease.complete(flashEnvelope('P01-03').replace('"usage":','"usage":{},"us\\u0061ge":')))
+    const r=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await r.snapshot()
+    assert.equal(s.reservations.at(-1).costUpperMicroCny,3300000)
+    await assert.rejects(()=>reserve(r,'P01-05',FLASH41_POLICY))
+    assert.throws(()=>validateUsageEnvelope(envelope('P01-03'),200,FLASH41_POLICY))
+    assert.throws(()=>validateUsageEnvelope(flashEnvelope('P01-03'),200,BILLING_POLICY))
+  })
+}
+if(process.argv[2]!=='--reserve-child') {
+  test('paired04: 24 interleaved new requests preserve 32 old requests and A01 unknown across reopening',async()=>{
+    const f=await paired04Fixture()
+    for(const u of f.grant.targets){const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant});await(await reserve(b,u.unitId)).complete(envelope(u.unitId))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await b.snapshot()
+    assert.equal(s.reservations.length,56);assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+    assert.equal(s.reservations[0].status,'held-unknown');assert.equal(s.candidate03.grant.maxTotalRequests,32)
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    for(const id of ['A01','D01','N01-03','N13-04'])await assert.rejects(()=>reserve(b,id))
+  })
+  test('paired04: grant limits, pairing, old baseline, input drift and skipped order reject without mutation',async()=>{
+    const f=await paired04Fixture()
+    for(const mutate of [g=>{g.maxTotalRequests=57},g=>{g.parentTail=sha256('bad')},g=>{g.targets[0].unitId='A01'},
+      g=>{g.targets[1].inputSha=sha256('wrong')},g=>{g.targets[0].scorerSha=sha256('bad')},
+      g=>{g.targets.filter(u=>u.unitId.endsWith('-03')).forEach(u=>u.candidateSha=sha256('wrong-old'))}]){
+      const g=structuredClone(f.grant);mutate(g);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:g}))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    await assert.rejects(()=>reserve(b,'N01-04'));await assert.rejects(()=>b.reserve('N01-03','wrong',BILLING_POLICY,NOW))
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+  })
+  test('paired04: concurrent crash, unknown usage and remaining monetary cap stop next dispatch',async()=>{
+    for(const mode of ['crash','usage','cost']){
+      const f=await paired04Fixture(),a=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      const results=await Promise.allSettled([reserve(a,'N01-03'),reserve(b,'N01-03')]);assert.equal(results.filter(r=>r.status==='fulfilled').length,1)
+      const lease=results.find(r=>r.status==='fulfilled').value
+      if(mode==='usage')await assert.rejects(()=>lease.complete(envelope('N01-03').replace('"usage":','"usage":{},"usage":')))
+      if(mode==='cost'){await lease.complete(envelope('N01-03',1048576,8192));await(await reserve(a,'N01-04')).complete(envelope('N01-04',1048576,8192))}
+      const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      await assert.rejects(()=>reserve(reopened,mode==='cost'?'N02-03':'N01-04'))
+      assert.equal((await reopened.snapshot()).reservations[0].costUpperMicroCny,3300000)
+    }
+  })
+}
+if(process.argv[2]!=='--reserve-child') {
+  test('candidate03 only appends eight D units to the original 24; restart and old prefix preserved',async()=>{
+    const f=await candidate03Fixture()
+    for(const u of f.grant.targets){const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      await (await reserve(b,u.unitId)).complete(envelope(u.unitId))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await b.snapshot()
+    assert.equal(s.reservations.length,32);assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+    assert.equal(s.reservations[0].status,'held-unknown')
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    for(const id of ['A01','C01','D01','D09'])await assert.rejects(()=>reserve(b,id))
+  })
+  test('candidate03 rejects altered inputs, old candidate, limits, parent and request without journal mutation',async()=>{
+    const f=await candidate03Fixture()
+    for(const change of [g=>{g.targets[0].unitId='C01'},g=>{g.targets[0].inputSha=sha256('changed')},
+      g=>{g.maxTotalRequests=33},g=>{g.parentSequence++},g=>{g.parentTail=sha256('other')},
+      g=>{g.targets.forEach(t=>{t.candidateSha=f.previousGrant.targets[0].candidateSha})}]){
+      const g=structuredClone(f.grant);change(g);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:g}))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    await assert.rejects(()=>b.reserve('D01','different request',BILLING_POLICY,NOW))
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+  })
+  test('candidate03 concurrent reserve, crash, duplicate usage and reopen cannot retry or release unknown',async()=>{
+    for(const kind of ['crash','usage']){
+      const f=await candidate03Fixture(),a=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      const attempts=await Promise.allSettled([reserve(a,'D01'),reserve(b,'D01')])
+      assert.equal(attempts.filter(x=>x.status==='fulfilled').length,1)
+      const lease=attempts.find(x=>x.status==='fulfilled').value
+      if(kind==='usage')await assert.rejects(()=>lease.complete(envelope('D01').replace('"input_tokens":100','"input_tokens":900,"\\u0069nput_tokens":100')))
+      const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      assert.equal(held(await reopened.snapshot()),6600000)
+      await assert.rejects(()=>reserve(reopened,'D01'));await assert.rejects(()=>reserve(reopened,'D02'))
+    }
+  })
+}
+if(process.argv[2]!=='--reserve-child') {
+  test('candidate02 appends eight original-A inputs; old unknown and all historical receipts survive',async()=>{
+    const f=await candidate02Fixture()
+    for(const u of f.grant.targets){const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      assert.equal((await b.snapshot()).units.length,24);await (await reserve(b,u.unitId)).complete(envelope(u.unitId))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await b.snapshot()
+    assert.equal(s.reservations.length,24);assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+    assert.equal(s.reservations[0].status,'held-unknown');assert.equal(s.batch.grant.maxTotalRequests,16)
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    for(const id of ['A01','A02','B08','C01','C09'])await assert.rejects(()=>reserve(b,id))
+  })
+  test('candidate02 validates grant/input/price/parent and cannot substitute old candidate',async()=>{
+    const f=await candidate02Fixture()
+    for(const mutate of [g=>{g.targets[0].inputSha=sha256('B01')},g=>{g.targets[0].candidateSha=f.manifest.units[0].candidateSha},
+      g=>{g.targets[1].scorerSha=sha256('other')},g=>{g.parentTail=sha256('wrong')},g=>{g.parentSequence++},g=>{g.maxTotalRequests=25}]){
+      const g=structuredClone(f.grant);mutate(g);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:g}))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    await assert.rejects(()=>reserve(b,'C02'));await assert.rejects(()=>reserve(b,'C01',BILLING_POLICY,'2027-01-01T00:00:00Z'))
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+  })
+  test('candidate02 concurrent reserve, crash and invalid usage never release or retry',async()=>{
+    for(const outcome of ['crash','invalid','unknown']){
+      const f=await candidate02Fixture(),a=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      const results=await Promise.allSettled([reserve(a,'C01'),reserve(b,'C01')]);assert.equal(results.filter(r=>r.status==='fulfilled').length,1)
+      const lease=results.find(r=>r.status==='fulfilled').value
+      if(outcome==='invalid')await assert.rejects(()=>lease.complete(envelope('C01').replace('"usage":','"usage":{},"usage":')))
+      if(outcome==='unknown')await lease.uncertain()
+      const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      for(const id of ['C01','C02'])await assert.rejects(()=>reserve(reopened,id))
+      assert.equal((await reopened.snapshot()).reservations[16].costUpperMicroCny,3300000)
+    }
+  })
+  test('candidate02 preserves ten yuan cap including held A01',async()=>{
+    const f=await candidate02Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    for(const id of ['C01','C02'])await (await reserve(b,id)).complete(envelope(id,1048576,8192))
+    await assert.rejects(()=>reserve(b,'C03'),/LIMIT/);assert.equal((await b.snapshot()).reservations.length,18)
+  })
+}
+if(process.argv[2]!=='--reserve-child') {
+  test('separate Node crash after recovery reservation cannot return the grant on reopen',async()=>{
+    const f=await recoveryFixture()
+    const code="import {openBudget} from "+JSON.stringify(new URL('./real-input-budget.mjs',import.meta.url).href)+";"
+      +"const b=await openBudget("+JSON.stringify(f.dir)+","+JSON.stringify(f.manifestSha)+",{recoveryGrant:"+JSON.stringify(f.grant)+"});"
+      +"await b.reserve('A02',"+JSON.stringify(body('A02'))+",undefined,"+JSON.stringify(NOW)+");process.exit(0)"
+    const exit=await new Promise((resolve,reject)=>{const child=spawn(process.execPath,['--input-type=module','-e',code],{stdio:'ignore',windowsHide:true})
+      child.once('error',reject);child.once('exit',resolve)})
+    assert.equal(exit,0)
+    const b=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant})
+    assert.equal(held(await b.snapshot()),6600000)
+    await assert.rejects(()=>reserve(b,'A02'),/RECOVERY_CONSUMED/)
+  })
+  test('recovery rejects expired billing, changed limits and request payload before reservation',async()=>{
+    const f=await recoveryFixture(),b=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant})
+    await assert.rejects(()=>reserve(b,'A02',BILLING_POLICY,'2027-01-01T00:00:00.000Z'),/RECOVERY_BILLING_EXPIRED/)
+    await assert.rejects(()=>reserve(b,'A02',{...BILLING_POLICY,limitMicroCny:20000000}),/POLICY_CHANGED/)
+    await assert.rejects(()=>b.reserve('A02','changed',BILLING_POLICY,NOW),/REQUEST_NOT_FROZEN/)
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+    assert.ok(await reserve(b,'A02'))
+  })
+  test('one-shot A02 recovery preserves A01 unknown cost and prefix while normal completion cannot unlock A03',async()=>{
+    const f=await recoveryFixture(),b=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant})
+    const lease=await reserve(b,'A02'),pending=await b.snapshot()
+    assert.equal(pending.reservations.length,2);assert.equal(held(pending),6600000)
+    assert.equal(pending.reservations[0].status,'held-unknown')
+    const result=await lease.complete(envelope('A02'))
+    assert.equal(result.costUpperMicroCny,390)
+    const reopened=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant}),after=await reopened.snapshot()
+    assert.equal(held(after),3300000);assert.equal(spent(after),390)
+    assert.equal(after.recovery.status,'settled');assert.equal(after.recovery.priorHalt,'TRANSPORT_OR_CRASH_UNKNOWN')
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    await assert.rejects(()=>reserve(reopened,'A02'),/RECOVERY_CONSUMED/)
+    await assert.rejects(()=>reserve(reopened,'A03'),/RECOVERY_UNIT/)
+    const old=await openBudget(f.dir,f.manifestSha);await assert.rejects(()=>reserve(old,'A03'),/HALTED/)
+  })
+  test('recovery competing callers and crash/reopen consume at most one new reservation without sending',async()=>{
+    const f=await recoveryFixture(),b=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant})
+    const result=await Promise.allSettled([reserve(b,'A02'),reserve(b,'A02')])
+    assert.equal(result.filter(x=>x.status==='fulfilled').length,1)
+    const reopened=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant})
+    assert.equal(held(await reopened.snapshot()),6600000)
+    await assert.rejects(()=>reserve(reopened,'A02'),/RECOVERY_CONSUMED/)
+    await assert.rejects(()=>f.a01.complete(envelope('A01')),/LEASE_ALREADY_FINALIZED/)
+  })
+  test('recovery rejects changed prior, target, route and binding fields before ledger writes',async()=>{
+    for(const mutate of [g=>g.parentTail='0'.repeat(64),g=>g.parentSequence++,g=>g.ledgerPrefixSha='0'.repeat(64),
+      g=>g.priorNonce='22222222-2222-4222-8222-222222222222',g=>g.priorRequestSha='0'.repeat(64),
+      g=>g.target.requestSha='0'.repeat(64),g=>g.target.unitId='A03',g=>g.route.proxyPort=10082,
+      g=>g.manifestSha='0'.repeat(64)]) {
+      const f=await recoveryFixture(),grant=structuredClone(f.grant);mutate(grant)
+      await assert.rejects(async()=>{const b=await openBudget(f.dir,f.manifestSha,{recoveryGrant:grant});await reserve(b,'A02')},/REAL_INPUT_BUDGET_/)
+      assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+    }
+  })
+  test('recovery rejects ordinary pending without the designated transport halt',async()=>{
+    const f=await recoveryFixture(),other=await setup();await reserve(other.budget,'A01')
+    await assert.rejects(async()=>{const b=await openBudget(other.dir,other.manifestSha,{recoveryGrant:f.grant});await reserve(b,'A02')},/REAL_INPUT_BUDGET_/)
+  })
+  test('A02 invalid usage and uncertainty retain both reservations and never reopen the grant',async()=>{
+    for(const invalid of [true,false]) {
+      const f=await recoveryFixture(),b=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant}),lease=await reserve(b,'A02')
+      if(invalid)await assert.rejects(()=>lease.complete(envelope('A02').replace('"input_tokens":100','"input_tokens":900,"\\u0069nput_tokens":100')),/RESPONSE_OR_USAGE_INVALID/)
+      else await lease.uncertain()
+      const reopened=await openBudget(f.dir,f.manifestSha,{recoveryGrant:f.grant})
+      assert.equal(held(await reopened.snapshot()),6600000)
+      await assert.rejects(()=>reserve(reopened,'A02'),/RECOVERY_CONSUMED/)
+      await assert.rejects(()=>lease.complete(envelope('A02')),/LEASE_ALREADY_FINALIZED/)
+    }
+  })
+}
+
+const NOW='2026-09-06T15:00:00.000Z'
+const body=id=>JSON.stringify({engineeringBudgetProbe:id}) // No semantic dataset and no fetch.
+const row=(id,candidate='candidate-A',input=id)=>({unitId:id,candidateSha:sha256(candidate),requestSha:sha256(body(id)),
+  inputSha:sha256(input),scorerSha:sha256('fixed-scorer'),requestBytes:Buffer.byteLength(body(id))})
+const baseUnits=()=>Array.from({length:16},(_,i)=>row(`${i<8?'A':'B'}${String(i%8+1).padStart(2,'0')}`))
+const candidateC=()=>Array.from({length:8},(_,i)=>row(`C${String(i+1).padStart(2,'0')}`,'candidate-C',`B${String(i+1).padStart(2,'0')}`))
+const envelope=(id,input=100,output=10)=>JSON.stringify({id:'resp_'+id,object:'response',status:'completed',model:BILLING_POLICY.model,
+  usage:{input_tokens:input,input_tokens_details:{cached_tokens:0},output_tokens:output,output_tokens_details:{reasoning_tokens:0},total_tokens:input+output},
+  output:[{type:'message',role:'assistant',content:[{type:'output_text',text:'{}'}]}]})
+async function setup() {
+  const parent=process.env.REAL_INPUT_TEST_TEMP
+  assert.ok(parent && resolve(parent)===parent,'Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root')
+  const root=await mkdtemp(join(parent,'budget-test-')),dir=join(root,'run'),lockRoot=join(root,'budget-control')
+  await mkdir(dir);await mkdir(lockRoot)
+  const manifest={version:'real-input-request-manifest-2',packageId:'MAINLINE-REAL-INPUT-01',policy:BILLING_POLICY,
+    billingEvidence:{checkedAt:NOW,validUntil:'2026-09-07T15:00:00.000Z',evidenceSha:sha256('zero-call billing fixture, not actual authorization')},lockRoot,units:baseUnits()}
+  const manifestSha=await initializeBudget(dir,manifest)
+  return {dir,lockRoot,manifest,manifestSha,budget:await openBudget(dir,manifestSha)}
+}
+const reserve=(b,id,policy=BILLING_POLICY,now=NOW)=>b.reserve(id,body(id),policy,now)
+const held=s=>s.reservations.filter(r=>r.status!=='settled').reduce((n,r)=>n+r.reservedMicroCny,0)
+const spent=s=>s.reservations.filter(r=>r.status==='settled').reduce((n,r)=>n+r.costUpperMicroCny,0)
+async function corruptLast(dir,lockRoot,mutate) {
+  const p=join(dir,'CALL_LEDGER.jsonl'),lines=(await readFile(p,'utf8')).trimEnd().split('\n').map(JSON.parse)
+  const last=lines.at(-1);mutate(last.event)
+  last.hash=sha256(JSON.stringify({sequence:last.sequence,previous:last.previous,event:last.event}))
+  await writeFile(p,lines.map(x=>JSON.stringify(x)).join('\n')+'\n')
+  await writeFile(join(lockRoot,'records',String(last.sequence).padStart(8,'0')+'.json'),JSON.stringify(last))
+}
+if (process.argv[2]==='--reserve-child') {
+  try {
+    const budget=await openBudget(resolve(process.argv[3]),process.argv[4]);await reserve(budget,'A01')
+    process.stdout.write('RESERVED')
+  } catch(error) {process.stdout.write(error.message);process.exitCode=1}
+} else {
+  test('ambiguous decoded response keys retain full reserve, survive reopen and halt next dispatch',async()=>{
+    const raw=envelope('A01')
+    const variants=[
+      raw.replace('"input_tokens":100','"input_tokens":1048576,"input_tokens":100'),
+      raw.replace('"input_tokens":100','"input_tokens":100,"input_tokens":1048576'),
+      raw.replace('"input_tokens":100','"input_tokens":1048576,"\\u0069nput_tokens":100'),
+      raw.replace('"cached_tokens":0','"cached_tokens":100,"cached_tokens":0'),
+      raw.replace('"reasoning_tokens":0','"reasoning_tokens":5,"reasoning_tokens":0'),
+      raw.replace('"usage":{','"usage":{},"usage":{'),
+      raw.replace('"model":','"model":"wrong-model","model":'),
+      raw.replace('"id":','"id":"wrong-id","id":'),
+      raw.replace('"status":','"status":"incomplete","status":'),
+      raw.replace('"total_tokens":110','"total_tokens":999,"total_tokens":110'),
+      raw.replace('"input_tokens":100','"input_tokens":100,"input_tokens":100'),
+    ]
+    for(const text of variants){
+      const {dir,manifestSha,budget}=await setup(),lease=await reserve(budget,'A01')
+      await assert.rejects(()=>lease.complete(text),/RESPONSE_OR_USAGE_INVALID/)
+      const reopened=await openBudget(dir,manifestSha),snapshot=await reopened.snapshot()
+      assert.equal(held(snapshot),3300000);assert.equal(spent(snapshot),0)
+      assert.equal(snapshot.halted,'RESPONSE_OR_USAGE_INVALID');assert.equal(snapshot.reservations[0].status,'pending')
+      await assert.rejects(()=>reserve(reopened,'A02'),/HALTED/)
+      assert.equal((await readFile(join(dir,'CALL_LEDGER.jsonl'),'utf8')).includes('"kind":"settle"'),false)
+    }
+  })
+  test('valid decoded keys, ordering, whitespace and key-looking model text still settle normally',async()=>{
+    const value=JSON.parse(envelope('A01'))
+    value.output[0].content[0].text='{"input_tokens":1048576,"input_tokens":100} braces } [ and escaped quote "'
+    const raw=JSON.stringify(value,null,2).replace('"input_tokens":','"\\u0069nput_tokens":')
+    const {dir,manifestSha,budget}=await setup();await (await reserve(budget,'A01')).complete(raw)
+    const reopened=await openBudget(dir,manifestSha);assert.equal(spent(await reopened.snapshot()),390)
+    await (await reserve(reopened,'A02')).complete(envelope('A02'))
+    assert.equal(spent(await reopened.snapshot()),780)
+  })
+  test('conservative context envelope and integer settlement have no floating-point budget drift',()=>{
+    assert.equal(costUpperMicroCny(1048576,8192),3219456)
+    assert.ok(costUpperMicroCny(1048576,8192)<3300000)
+    assert.equal(costUpperMicroCny(1,1),12)
+    for(const n of [-1,1.5,NaN,Infinity,'10',1048577])assert.throws(()=>costUpperMicroCny(n,1))
+  })
+  test('normal request reserves durably before completion; only complete usage releases surplus',async()=>{
+    const {budget,dir,manifestSha}=await setup(),lease=await reserve(budget,'A01')
+    let state=await (await openBudget(dir,manifestSha)).snapshot()
+    assert.equal(held(state),3300000);assert.equal(spent(state),0);assert.equal(state.reservations.length,1)
+    const value=await lease.complete(envelope('A01'))
+    assert.equal(value.costUpperMicroCny,390)
+    state=await budget.snapshot();assert.equal(held(state),0);assert.equal(spent(state),390)
+    await assert.rejects(()=>lease.complete(envelope('A01')),/LEASE_ALREADY_FINALIZED/)
+    await assert.rejects(()=>reserve(budget,'A01'),/DUPLICATE_REQUEST/)
+    assert.equal((await budget.snapshot()).reservations.length,1)
+  })
+  test('all 24 logical units share one ledger across reopened browser/runner handles',async()=>{
+    const {dir,manifestSha}=await setup()
+    for (const id of baseUnits().map(x=>x.unitId)) {
+      const b=await openBudget(dir,manifestSha),lease=await reserve(b,id);await lease.complete(envelope(id))
+    }
+    const b=await openBudget(dir,manifestSha);await b.registerCandidateC(candidateC())
+    for(const id of candidateC().map(x=>x.unitId)){const lease=await reserve(await openBudget(dir,manifestSha),id);await lease.complete(envelope(id))}
+    const state=await b.snapshot();assert.equal(state.reservations.length,24);assert.equal(spent(state),24*390)
+    await assert.rejects(()=>reserve(b,'C09'),/LIMIT/)
+    assert.equal((await b.snapshot()).reservations.length,24)
+  })
+  test('10 yuan is checked using spent upper cost plus the next full reservation',async()=>{
+    const {budget}=await setup()
+    for(const id of ['A01','A02','A03']){const lease=await reserve(budget,id);await lease.complete(envelope(id,1048576,8192))}
+    assert.equal(spent(await budget.snapshot()),9658368)
+    await assert.rejects(()=>reserve(budget,'A04'),/LIMIT/)
+    assert.equal((await budget.snapshot()).reservations.length,3)
+  })
+  test('concurrent tabs cannot reserve twice; cross-instance overlap retains one pending request',async()=>{
+    const {budget,dir,manifestSha}=await setup(),b2=await openBudget(dir,manifestSha)
+    const results=await Promise.allSettled([reserve(budget,'A01'),reserve(b2,'A01')])
+    assert.equal(results.filter(x=>x.status==='fulfilled').length,1)
+    assert.equal((await budget.snapshot()).reservations.length,1)
+    await assert.rejects(()=>reserve(b2,'A02'),/INFLIGHT_OR_CRASH_UNKNOWN/)
+  })
+  test('two independent Node processes cannot bypass the shared filesystem lock',async()=>{
+    const {dir,manifestSha,budget}=await setup()
+    const child=()=>new Promise((done,reject)=>{const p=spawn(process.execPath,[fileURLToPath(import.meta.url),'--reserve-child',dir,manifestSha],{windowsHide:true});let out='';p.stdout.on('data',x=>{out+=x});p.on('error',reject);p.on('close',code=>done({code,out}))})
+    const results=await Promise.all([child(),child()])
+    assert.equal(results.filter(x=>x.code===0&&x.out==='RESERVED').length,1)
+    assert.equal((await budget.snapshot()).reservations.length,1)
+  })
+  test('process restart after a durable reservation never resends or releases it',async()=>{
+    const {dir,manifestSha,budget}=await setup();await reserve(budget,'A01')
+    const restarted=await openBudget(dir,manifestSha)
+    await assert.rejects(()=>reserve(restarted,'A01'),/DUPLICATE_REQUEST/)
+    await assert.rejects(()=>reserve(restarted,'A02'),/INFLIGHT_OR_CRASH_UNKNOWN/)
+    assert.equal(held(await restarted.snapshot()),3300000)
+  })
+  test('timeout/unknown failure retains full reservation and permanently stops this book',async()=>{
+    const {budget,dir,manifestSha}=await setup();const lease=await reserve(budget,'A01');await lease.uncertain()
+    const restarted=await openBudget(dir,manifestSha),state=await restarted.snapshot()
+    assert.equal(held(state),3300000);assert.equal(state.halted,'TRANSPORT_OR_CRASH_UNKNOWN')
+    await assert.rejects(()=>reserve(restarted,'A02'),/HALTED/)
+    await assert.rejects(()=>lease.complete(envelope('A01')),/LEASE_ALREADY_FINALIZED/)
+  })
+  for (const [name,mutate] of [
+    ['missing usage',e=>{delete e.usage}],['mismatched total',e=>{e.usage.total_tokens++}],
+    ['zero tokens for nonempty input',e=>{e.usage.input_tokens=0;e.usage.total_tokens=e.usage.output_tokens}],
+    ['excess input',e=>{e.usage.input_tokens=1048577;e.usage.total_tokens=1048587}],
+    ['excess output',e=>{e.usage.output_tokens=8193;e.usage.total_tokens=8293}],
+    ['wrong model',e=>{e.model='other'}],['incomplete response',e=>{e.status='incomplete'}],
+    ['unsupported reasoning',e=>{e.usage.output_tokens_details.reasoning_tokens=1}],
+    ['tools',e=>{e.output=[{type:'function_call'}]}],['string usage',e=>{e.usage.input_tokens='100'}],
+  ]) test(`${name} cannot settle or release the reservation`,async()=>{
+    const {budget}=await setup(),lease=await reserve(budget,'A01'),e=JSON.parse(envelope('A01'));mutate(e)
+    await assert.rejects(()=>lease.complete(JSON.stringify(e)),/RESPONSE_OR_USAGE_INVALID/)
+    const state=await budget.snapshot();assert.equal(held(state),3300000);assert.equal(spent(state),0)
+    await assert.rejects(()=>reserve(budget,'A02'),/HALTED/)
+  })
+  test('even a parseable HTTP failure is not settled',async()=>{
+    const {budget}=await setup(),lease=await reserve(budget,'A01')
+    await assert.rejects(()=>lease.complete(envelope('A01'),500),/RESPONSE_OR_USAGE_INVALID/)
+    assert.equal(held(await budget.snapshot()),3300000)
+  })
+  test('response reuse is a binding anomaly, not another cheap completed call',async()=>{
+    const {budget}=await setup();await (await reserve(budget,'A01')).complete(envelope('A01'))
+    await assert.rejects(()=>(async()=>{await (await reserve(budget,'A02')).complete(envelope('A01'))})(),/RESPONSE_OR_USAGE_INVALID/)
+    const state=await budget.snapshot();assert.equal(spent(state),390);assert.equal(held(state),3300000)
+  })
+  test('price/context/protocol changes halt before dispatch; frozen requests cannot change',async()=>{
+    const {budget}=await setup()
+    await assert.rejects(()=>budget.reserve('A01','changed',BILLING_POLICY,NOW),/REQUEST_NOT_FROZEN/)
+    assert.equal((await budget.snapshot()).reservations.length,0)
+    await assert.rejects(()=>reserve(budget,'A01',{...BILLING_POLICY,inputPriceMicroPerMillion:4000000}),/POLICY_CHANGED/)
+    await assert.rejects(()=>reserve(budget,'A01'),/HALTED/)
+  })
+  test('expired billing review and premature C are rejected',async()=>{
+    const {budget,manifest}=await setup()
+    assert.throws(()=>validateManifest({...manifest,policy:{...BILLING_POLICY,inputTokenCeiling:999999}}),/POLICY_CHANGED/)
+    await assert.rejects(()=>budget.registerCandidateC(candidateC()),/C_PRECONDITION/)
+    await assert.rejects(()=>reserve(budget,'A01',BILLING_POLICY,'2026-09-08T00:00:00.000Z'),/BILLING_REVIEW_EXPIRED/)
+    assert.equal((await budget.snapshot()).reservations.length,0)
+  })
+  test('returned snapshot cannot change the frozen request, including its byte length',async()=>{
+    const {budget,dir,manifestSha}=await setup(),snapshot=await budget.snapshot(),changed=body('different-body')
+    snapshot.units[0].requestSha=sha256(changed);snapshot.units[0].requestBytes=Buffer.byteLength(changed)
+    await assert.rejects(()=>budget.reserve('A01',changed,BILLING_POLICY,NOW),/REQUEST_NOT_FROZEN/)
+    assert.equal(sha256(await readFile(join(dir,'REQUEST_MANIFEST.json'))),manifestSha)
+    assert.equal((await budget.snapshot()).reservations.length,0)
+    await (await reserve(budget,'A01')).complete(envelope('A01'))
+    assert.equal(spent(await budget.snapshot()),390)
+  })
+  test('snapshot mutation cannot replace B inputs or permit an incompatible C candidate',async()=>{
+    const {budget}=await setup()
+    for(const id of baseUnits().map(x=>x.unitId))await (await reserve(budget,id)).complete(envelope(id))
+    const snapshot=await budget.snapshot(),changed=candidateC()
+    for(let i=0;i<8;i++){snapshot.units[8+i].inputSha=sha256('different-input-'+i);changed[i].inputSha=snapshot.units[8+i].inputSha}
+    await assert.rejects(()=>budget.registerCandidateC(changed))
+    await assert.rejects(()=>budget.registerCandidateC(candidateC().map(x=>({...x,candidateSha:sha256('candidate-A')}))))
+    await assert.rejects(()=>budget.registerCandidateC(candidateC().map(x=>({...x,scorerSha:sha256('different-scorer')}))))
+    assert.equal((await budget.snapshot()).units.length,16)
+    await budget.registerCandidateC(candidateC())
+    await (await reserve(budget,'C01')).complete(envelope('C01'))
+    assert.equal((await budget.snapshot()).reservations.length,17)
+  })
+  test('a valid-prefix truncation is detected by the independent write-once receipts',async()=>{
+    const {dir,manifest,manifestSha,budget}=await setup();await (await reserve(budget,'A01')).complete(envelope('A01'))
+    const p=join(dir,'CALL_LEDGER.jsonl'),first=(await readFile(p,'utf8')).split('\n')[0]
+    await writeFile(p,first+'\n')
+    await assert.rejects(()=>openBudget(dir,manifestSha),/LEDGER_RECEIPT_COUNT/)
+    await assert.rejects(()=>initializeBudget(dir,manifest),/EEXIST/)
+  })
+  test('missing ledger and abandoned lock do not initialize a fresh allowance',async()=>{
+    const a=await setup();await unlink(join(a.dir,'CALL_LEDGER.jsonl'))
+    await assert.rejects(()=>openBudget(a.dir,a.manifestSha),/ENOENT/)
+    const b=await setup();await mkdir(join(b.lockRoot,'ledger.lock'))
+    await assert.rejects(()=>openBudget(b.dir,b.manifestSha),/BUSY_OR_ABANDONED_LOCK/)
+  })
+  test('recomputing row hashes does not make a mismatched settlement valid',async()=>{
+    const {dir,lockRoot,manifestSha,budget}=await setup();await (await reserve(budget,'A01')).complete(envelope('A01'))
+    await corruptLast(dir,lockRoot,e=>{e.costUpperMicroCny=0})
+    await assert.rejects(()=>openBudget(dir,manifestSha),/SETTLEMENT_AMOUNT/)
+  })
+  test('manifest changes and response shape tricks fail without coercion',async()=>{
+    const {dir,manifestSha,manifest}=await setup()
+    const sparse=structuredClone(manifest);sparse.units.length=17;assert.throws(()=>validateManifest(sparse),/JSON_ARRAY/)
+    assert.throws(()=>validateUsageEnvelope(envelope('A01'), '200'),/HTTP_OR_RESPONSE_LIMIT/)
+    await writeFile(join(dir,'REQUEST_MANIFEST.json'),JSON.stringify({...manifest,packageId:'other'}))
+    await assert.rejects(()=>openBudget(dir,manifestSha),/MANIFEST_CHANGED/)
+  })
+}
+async function paired07Fixture() {
+  const f=await paired06Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await(await reserve(b,u.unitId,FLASH41_PAIRED06_POLICY)).complete(flashEnvelope(u.unitId))
+  const before=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  // Deliberately shuffled case blocks and balanced arm order. These are budget-only placeholders.
+  const order=[7,2,11,4,1,12,3,10,5,8,6,9]
+  const targets=order.flatMap((n,i)=>(i%2?['07','03']:['03','07']).map(arm=>
+    row(`R${String(n).padStart(2,'0')}-${arm}`,'flash41-'+arm,'new05-'+(n-1))))
+  return {...f,before,prefix,grant:{...f.grant,version:'real-input-paired07-grant-1',grantId:'88888888-8888-4888-8888-888888888888',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    maxTotalRequests:128,policy:FLASH41_PAIRED07_POLICY,targets}}
+}
+async function paired08Fixture() {
+  const f=await paired07Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await(await reserve(b,u.unitId,FLASH41_PAIRED07_POLICY)).complete(flashEnvelope(u.unitId))
+  const before=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const cases=[...Array.from({length:12},(_,i)=>`S${String(i+1).padStart(2,'0')}`),...Array.from({length:8},(_,i)=>`T${String(i+1).padStart(2,'0')}`)]
+  const targets=cases.flatMap((id,i)=>(i<10?['03','08']:['08','03']).map(arm=>row(`${id}-${arm}`,'flash41-'+arm,i<12?'new05-'+i:'fresh08-'+(i-12))))
+  return {...f,before,prefix,grant:{...f.grant,version:'real-input-paired08-grant-1',grantId:'99999999-9999-4999-8999-999999999999',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    maxTotalRequests:168,policy:FLASH41_PAIRED08_POLICY,targets}}
+}
+if(process.argv[2]!=='--reserve-child') {
+  test('paired08: twenty balanced pairs append through 168 under the explicit twenty-yuan cap',async()=>{
+    const f=await paired08Fixture();assert.equal(f.before.nextSequence,264);assert.equal(f.before.reservations.length,128)
+    for(const u of f.grant.targets){const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant});await(await reserve(reopened,u.unitId,FLASH41_PAIRED08_POLICY)).complete(flashEnvelope(u.unitId))}
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await b.snapshot()
+    assert.equal(s.reservations.length,168);assert.equal(s.nextSequence,345);assert.equal(s.paired08.stopped,false)
+    assert.deepEqual(s.reservations.slice(0,128),f.before.reservations);assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    assert.equal(FLASH41_PAIRED08_POLICY.limitMicroCny,20000000);assert.equal(costUpperMicroCny(1048576,8192,FLASH41_PAIRED08_POLICY),3219456)
+    await assert.rejects(()=>reserve(b,'T08-08',FLASH41_PAIRED08_POLICY));await assert.rejects(()=>reserve(b,'S01-03',FLASH41_PAIRED07_POLICY))
+  })
+  test('paired07: balanced shuffled pairs settle once through 128; original 104 and receipts stay intact',async()=>{
+    const f=await paired07Fixture();assert.equal(f.before.nextSequence,215)
+    for(const u of f.grant.targets){
+      const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      await(await reserve(reopened,u.unitId,FLASH41_PAIRED07_POLICY)).complete(flashEnvelope(u.unitId))
+    }
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await b.snapshot()
+    assert.equal(s.reservations.length,128);assert.equal(s.nextSequence,264)
+    assert.deepEqual(s.reservations.slice(0,104),f.before.reservations)
+    assert.equal(s.reservations[0].status,'held-unknown');assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+    for(const id of ['R07-03','R09-07','R13-07','A01','P01-03'])await assert.rejects(()=>reserve(b,id,FLASH41_PAIRED07_POLICY))
+    assert.equal(costUpperMicroCny(1048576,8192,FLASH41_PAIRED07_POLICY),2162688)
+    assert.equal(FLASH41_POLICY.maxRequests,80);assert.equal(BILLING_POLICY.maxRequests,24)
+  })
+  test('paired07: invalid parent, duplicate pair, candidate/input drift, unbalanced order and price reject before mutation',async()=>{
+    const f=await paired07Fixture()
+    const changes=[g=>{g.parentTail=sha256('wrong')},g=>{g.parentSequence=165},g=>{g.maxTotalRequests=105},
+      g=>{g.policy.maxRequests=105},g=>{g.policy.inputPriceMicroPerMillion=1},g=>{g.ledgerPrefixSha=sha256('bad')},
+      g=>{g.targets[0].unitId='P07-03'},g=>{g.targets.splice(2,2,...structuredClone(g.targets.slice(0,2)))},
+      g=>{g.targets[1].inputSha=sha256('different')},g=>{g.targets[0].scorerSha=sha256('different')},
+      g=>{g.targets.filter(u=>u.unitId.endsWith('-03')).forEach(u=>{u.candidateSha=sha256('different')})},
+      g=>{g.targets.filter(u=>u.unitId.endsWith('-07')).forEach(u=>{u.candidateSha=sha256('flash41-06')})},
+      g=>{g.targets=g.targets.flatMap((_,i,a)=>i%2?[]:a.slice(i,i+2).sort((a,b)=>a.unitId.localeCompare(b.unitId)))}]
+    for(const change of changes){const g=structuredClone(f.grant);change(g);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:g}))}
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+    const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    await assert.rejects(()=>reserve(b,'R07-07',FLASH41_PAIRED07_POLICY))
+    await assert.rejects(()=>reserve(b,'R07-03',FLASH41_POLICY))
+    assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+    await(await reserve(b,'R07-03',FLASH41_PAIRED07_POLICY)).complete(flashEnvelope('R07-03'))
+    await assert.rejects(()=>reserve(b,'R07-03',FLASH41_PAIRED07_POLICY))
+  })
+  test('paired07: concurrency and crash preserve full unknown reserve; restart cannot retry or dispatch successor',async()=>{
+    const f=await paired07Fixture(),a=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+    const results=await Promise.allSettled([reserve(a,'R07-03',FLASH41_PAIRED07_POLICY),reserve(b,'R07-03',FLASH41_PAIRED07_POLICY)])
+    assert.equal(results.filter(r=>r.status==='fulfilled').length,1)
+    const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await reopened.snapshot()
+    assert.equal(s.reservations.length,105);assert.equal(held(s),6600000)
+    await assert.rejects(()=>reserve(reopened,'R07-03',FLASH41_PAIRED07_POLICY))
+    await assert.rejects(()=>reserve(reopened,'R07-07',FLASH41_PAIRED07_POLICY))
+    await results.find(r=>r.status==='fulfilled').value.uncertain()
+    assert.equal((await reopened.snapshot()).paired07.stopped,true)
+    assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+  })
+  test('paired07: repeated or ambiguous response identity/usage never releases a reservation',async()=>{
+    for(const mode of ['duplicate','ambiguous']){
+      const f=await paired07Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+      await(await reserve(b,'R07-03',FLASH41_PAIRED07_POLICY)).complete(flashEnvelope('R07-03'))
+      const lease=await reserve(b,'R07-07',FLASH41_PAIRED07_POLICY)
+      const raw=mode==='duplicate'?flashEnvelope('R07-03'):flashEnvelope('R07-07').replace('"usage":','"usage":{},"us\\u0061ge":')
+      await assert.rejects(()=>lease.complete(raw))
+      const reopened=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant}),s=await reopened.snapshot()
+      assert.equal(s.reservations.length,106);assert.equal(s.reservations.at(-1).costUpperMicroCny,3300000)
+      assert.equal(s.paired07.stopped,true);assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+      await assert.rejects(()=>reserve(reopened,'R02-07',FLASH41_PAIRED07_POLICY))
+    }
+  })
+}
+
+async function paired09Fixture() {
+  const f=await paired08Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await(await reserve(b,u.unitId,FLASH41_PAIRED08_POLICY)).complete(flashEnvelope(u.unitId))
+  const before=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const targets=f.grant.targets.map(u=>({...u,unitId:u.unitId.replace(/^S/,'U').replace(/^T/,'V').replace(/-08$/,'-09'),
+    candidateSha:u.unitId.endsWith('-08')?sha256('flash41-09'):u.candidateSha}))
+  // request placeholders bind to the new unit identity, not an old request replay.
+  for(const u of targets)Object.assign(u,row(u.unitId,u.unitId.endsWith('-09')?'flash41-09':'flash41-03',u.unitId.startsWith('U')?'new05-'+(Number(u.unitId.slice(1,3))-1):'fresh08-'+(Number(u.unitId.slice(1,3))-1)))
+  return {...f,before,prefix,grant:{...f.grant,version:'real-input-paired09-grant-1',grantId:'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    maxTotalRequests:208,policy:FLASH41_PAIRED09_POLICY,targets}}
+}
+if(process.argv[2]!=='--reserve-child')test('paired09: preserved 168 prefix, reject drift and settle forty exactly once',async()=>{
+  const f=await paired09Fixture()
+  assert.equal(f.before.nextSequence,345);assert.equal(f.before.reservations.length,168)
+  for(const mutate of [
+    g=>{g.parentTail=sha256('wrong')},g=>{g.parentSequence=264},g=>{g.maxTotalRequests=209},
+    g=>{g.policy.limitMicroCny=21000000},g=>{g.targets[0].unitId='S01-03'},
+    g=>{g.targets[1].inputSha=sha256('different')},g=>{g.targets[0].candidateSha=sha256('different')},
+    g=>{g.targets.splice(2,2,...structuredClone(g.targets.slice(0,2)))}
+  ]){const grant=structuredClone(f.grant);mutate(grant);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:grant}))}
+  assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  await assert.rejects(()=>reserve(b,f.grant.targets[1].unitId,FLASH41_PAIRED09_POLICY))
+  await assert.rejects(()=>reserve(b,f.grant.targets[0].unitId,FLASH41_PAIRED08_POLICY))
+  for(const u of f.grant.targets)await(await reserve(b,u.unitId,FLASH41_PAIRED09_POLICY)).complete(flashEnvelope(u.unitId))
+  const s=await b.snapshot()
+  assert.equal(s.reservations.length,208);assert.equal(s.nextSequence,426)
+  assert.deepEqual(s.reservations.slice(0,168),f.before.reservations)
+  assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+  assert.equal(s.reservations[0].costUpperMicroCny,3300000)
+  await assert.rejects(()=>reserve(b,'U01-03',FLASH41_PAIRED09_POLICY))
+  assert.equal(costUpperMicroCny(1048576,8192,FLASH41_PAIRED09_POLICY),3219456)
+})
+
+const modelEnvelope=(id,model,input=100,output=10)=>{const value=JSON.parse(envelope(id,input,output));value.model=model;return JSON.stringify(value)}
+async function modelCompareFixture() {
+  const f=await paired09Fixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets)await(await reserve(b,u.unitId,FLASH41_PAIRED09_POLICY)).complete(flashEnvelope(u.unitId))
+  const before=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const baselines=f.grant.targets.filter(u=>u.unitId.endsWith('-03'))
+  const cases=[...Array.from({length:12},(_,i)=>`W${String(i+1).padStart(2,'0')}`),...Array.from({length:8},(_,i)=>`X${String(i+1).padStart(2,'0')}`)]
+  const targets=cases.flatMap((id,i)=>(i<10?['A','B']:['B','A']).map(arm=>{
+    const value=row(`${id}-${arm}`,arm==='A'?'flash41-03':'pro-03',baselines[i].inputSha)
+    value.inputSha=baselines[i].inputSha
+    if(arm==='A')value.candidateSha=baselines[i].candidateSha
+    return value
+  }))
+  return {...f,before,prefix,grant:{...f.grant,version:'real-input-model-compare-grant-1',grantId:'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    maxTotalRequests:248,policy:MODEL_COMPARE_POLICY,targets}}
+}
+if(process.argv[2]!=='--reserve-child')test('model compare: same candidate/input, distinct model policies, exact order and twenty-yuan cap',async()=>{
+  const f=await modelCompareFixture()
+  assert.equal(f.before.nextSequence,426);assert.equal(f.before.reservations.length,208)
+  for(const mutate of [
+    g=>{g.parentSequence=425},g=>{g.maxTotalRequests=249},g=>{g.policy.limitMicroCny=21000000},
+    g=>{g.targets[0].unitId='U01-03'},g=>{g.targets[1].inputSha=sha256('different')},
+    g=>{g.targets.find(u=>u.unitId.endsWith('-A')).candidateSha=sha256('different')},
+    g=>{g.targets=g.targets.flatMap((_,i,a)=>i%2?[]:a.slice(i,i+2).sort((a,b)=>a.unitId.localeCompare(b.unitId)))}
+  ]){const grant=structuredClone(f.grant);mutate(grant);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:grant}))}
+  assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  await assert.rejects(()=>reserve(b,f.grant.targets[1].unitId,modelComparePolicyFor(f.grant.targets[1].unitId)))
+  for(const u of f.grant.targets){const policy=modelComparePolicyFor(u.unitId)
+    await(await reserve(b,u.unitId,policy)).complete(modelEnvelope(u.unitId,policy.model))}
+  const s=await b.snapshot();assert.equal(s.reservations.length,248);assert.equal(s.nextSequence,507)
+  assert.deepEqual(s.reservations.slice(0,208),f.before.reservations)
+  assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+  assert.equal(modelComparePolicyFor('W01-A'),MODEL_COMPARE_FLASH_POLICY)
+  assert.equal(modelComparePolicyFor('W01-B'),MODEL_COMPARE_PRO_POLICY)
+  assert.equal(costUpperMicroCny(65536,8192,MODEL_COMPARE_PRO_POLICY),811008)
+  assert.ok(costUpperMicroCny(65536,8192,MODEL_COMPARE_PRO_POLICY)<MODEL_COMPARE_POLICY.reservationMicroCny)
+})
+
+const reasoningEnvelope=(id,policy,input=100,output=20,reasoning=0)=>{
+  const value=JSON.parse(modelEnvelope(id,policy.model,input,output));value.usage.output_tokens_details.reasoning_tokens=reasoning
+  value.output=reasoning>0?[{type:'reasoning',id:'rs_'+id,summary:[]},...value.output]:value.output
+  return JSON.stringify(value)
+}
+async function reasoningCompareFixture(){
+  const f=await modelCompareFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets){const policy=modelComparePolicyFor(u.unitId);await(await reserve(b,u.unitId,policy)).complete(modelEnvelope(u.unitId,policy.model))}
+  const before=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const priorA=f.grant.targets.filter(u=>u.unitId.endsWith('-A'))
+  const cases=[...Array.from({length:12},(_,i)=>`Y${String(i+1).padStart(2,'0')}`),...Array.from({length:8},(_,i)=>`Z${String(i+1).padStart(2,'0')}`)]
+  const targets=cases.flatMap((id,i)=>(i<10?['A','B']:['B','A']).map(arm=>{
+    const value=row(`${id}-${arm}`,arm==='A'?'reasoning-none':'reasoning-low',priorA[i].inputSha);value.inputSha=priorA[i].inputSha
+    if(arm==='A')value.candidateSha=priorA[i].candidateSha
+    return value
+  }))
+  return {...f,before,prefix,grant:{...f.grant,version:'real-input-reasoning-compare-grant-1',grantId:'cccccccc-cccc-4ccc-8ccc-cccccccccccc',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),maxTotalRequests:288,policy:REASONING_COMPARE_POLICY,targets}}
+}
+if(process.argv[2]!=='--reserve-child')test('reasoning compare: none remains exact, low accepts separate reasoning output and charges total output once',async()=>{
+  const f=await reasoningCompareFixture();assert.equal(f.before.nextSequence,507);assert.equal(f.before.reservations.length,248)
+  for(const mutate of [g=>{g.parentSequence=506},g=>{g.maxTotalRequests=289},g=>{g.policy.limitMicroCny=21000000},
+    g=>{g.targets[0].unitId='W01-A'},g=>{g.targets[1].inputSha=sha256('different')},
+    g=>{g.targets.find(u=>u.unitId.endsWith('-A')).candidateSha=sha256('different')}]){
+    const grant=structuredClone(f.grant);mutate(grant);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:grant}))
+  }
+  assert.deepEqual(await readFile(join(f.dir,'CALL_LEDGER.jsonl')),f.prefix)
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets){const policy=reasoningComparePolicyFor(u.unitId),reasoning=u.unitId.endsWith('-B')?7:0
+    await(await reserve(b,u.unitId,policy)).complete(reasoningEnvelope(u.unitId,policy,100,20,reasoning))}
+  const s=await b.snapshot();assert.equal(s.reservations.length,288);assert.equal(s.nextSequence,588)
+  assert.deepEqual(s.reservations.slice(0,248),f.before.reservations)
+  assert.equal(reasoningComparePolicyFor('Y01-A'),REASONING_COMPARE_NONE_POLICY)
+  assert.equal(reasoningComparePolicyFor('Y01-B'),REASONING_COMPARE_LOW_POLICY)
+  assert.equal(costUpperMicroCny(100,20,REASONING_COMPARE_LOW_POLICY),360)
+  assert.throws(()=>validateUsageEnvelope(reasoningEnvelope('bad',REASONING_COMPARE_NONE_POLICY,100,20,7),200,REASONING_COMPARE_NONE_POLICY))
+  const missingFinal=JSON.parse(reasoningEnvelope('bad2',REASONING_COMPARE_LOW_POLICY,100,20,7));missingFinal.output=missingFinal.output.slice(0,1)
+  assert.throws(()=>validateUsageEnvelope(JSON.stringify(missingFinal),200,REASONING_COMPARE_LOW_POLICY))
+})
+
+const incompleteReasoningEnvelope=(id,policy,output=8192,reasoning=6719)=>{
+  const value=JSON.parse(reasoningEnvelope(id,policy,100,output,reasoning));value.status='incomplete';value.error=null
+  value.incomplete_details={reason:'max_output_tokens'};value.output=value.output.slice(0,1)
+  return JSON.stringify(value)
+}
+async function reasoningMaxFixture(){
+  const f=await reasoningCompareFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  await(await reserve(b,'Y01-A',REASONING_COMPARE_NONE_POLICY)).complete(reasoningEnvelope('Y01-A',REASONING_COMPARE_NONE_POLICY))
+  const incomplete=incompleteReasoningEnvelope('Y01-B',REASONING_COMPARE_LOW_POLICY)
+  await assert.rejects(()=>reserve(b,'Y01-B',REASONING_COMPARE_LOW_POLICY).then(lease=>lease.complete(incomplete)))
+  let before=await b.snapshot();assert.equal(before.nextSequence,512);assert.equal(before.reservations.at(-1).status,'pending')
+  await reconcileIncompleteUsage(f.dir,f.manifestSha,{unitId:'Y01-B',requestSha:before.reservations.at(-1).requestSha,
+    responseSha:sha256(incomplete),httpStatus:200,rawHttpText:incomplete})
+  const reconciled=await openBudget(f.dir,f.manifestSha),state=await reconciled.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl'))
+  const priorInputs=f.grant.targets.filter(u=>u.unitId.endsWith('-A')).map(u=>u.inputSha)
+  const targets=Array.from({length:20},(_,i)=>`M${String(i+1).padStart(2,'0')}`).flatMap((id,i)=>(i<10?['A','B']:['B','A']).map(arm=>{
+    const value=row(`${id}-${arm}`,arm==='A'?'reasoning-max-none':'reasoning-max-max',priorInputs[i]);value.inputSha=priorInputs[i];return value
+  }))
+  const grant={...f.grant,version:'real-input-reasoning-max-grant-1',grantId:'dddddddd-dddd-4ddd-8ddd-dddddddddddd',
+    parentTail:state.tail,parentSequence:state.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),
+    maxTotalRequests:290,policy:REASONING_MAX_POLICY,targets}
+  return {...f,before:state,prefix,grant,incomplete}
+}
+if(process.argv[2]!=='--reserve-child')test('reasoning max: reconciles trustworthy incomplete usage, keeps it unusable, and continues after a new incomplete answer',async()=>{
+  const f=await reasoningMaxFixture()
+  assert.equal(f.before.nextSequence,513);assert.equal(f.before.reservations.length,250)
+  assert.equal(f.before.reservations.at(-1).status,'settled-incomplete');assert.equal(f.before.reasoningCompare.stopped,true)
+  const accounting=validateUsageAccountingEnvelope(f.incomplete,200,REASONING_COMPARE_LOW_POLICY)
+  assert.equal(accounting.responseStatus,'incomplete');assert.equal(accounting.incompleteReason,'max_output_tokens')
+  assert.throws(()=>validateUsageEnvelope(f.incomplete,200,REASONING_COMPARE_LOW_POLICY),/RESPONSE_INCOMPLETE/)
+  for(const mutate of [g=>{g.parentSequence=512},g=>{g.maxTotalRequests=291},g=>{g.targets[0].unitId='Y01-A'},g=>{g.targets[1].inputSha=sha256('different')}]){
+    const grant=structuredClone(f.grant);mutate(grant);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:grant}))
+  }
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  await(await reserve(b,'M01-A',REASONING_MAX_NONE_POLICY)).complete(reasoningEnvelope('M01-A',REASONING_MAX_NONE_POLICY,100,50,0))
+  const incompleteMax=incompleteReasoningEnvelope('M01-B',REASONING_MAX_MAX_POLICY,32768,30000)
+  const settled=await(await reserve(b,'M01-B',REASONING_MAX_MAX_POLICY)).complete(incompleteMax)
+  assert.equal(settled.semanticUsable,false)
+  await(await reserve(b,'M02-A',REASONING_MAX_NONE_POLICY)).complete(reasoningEnvelope('M02-A',REASONING_MAX_NONE_POLICY,100,50,0))
+  const state=await b.snapshot();assert.equal(state.reservations.at(-2).status,'settled-incomplete');assert.equal(state.reasoningMax.stopped,false)
+  assert.equal(reasoningMaxPolicyFor('M01-A'),REASONING_MAX_NONE_POLICY);assert.equal(reasoningMaxPolicyFor('M01-B'),REASONING_MAX_MAX_POLICY)
+  assert.equal(costUpperMicroCny(100,32768,REASONING_MAX_MAX_POLICY),262344)
+  assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+})
+
+async function reasoningLow16Fixture(){
+  const f=await reasoningMaxFixture(),b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  for(const u of f.grant.targets.slice(0,16)){const policy=reasoningMaxPolicyFor(u.unitId);await(await reserve(b,u.unitId,policy)).complete(reasoningEnvelope(u.unitId,policy,100,50,u.unitId.endsWith('-B')?20:0))}
+  const before=await b.snapshot(),prefix=await readFile(join(f.dir,'CALL_LEDGER.jsonl')),priorInputs=f.grant.targets.filter(u=>u.unitId.endsWith('-A')).map(u=>u.inputSha)
+  const targets=Array.from({length:20},(_,i)=>`L${String(i+1).padStart(2,'0')}`).flatMap((id,i)=>(i<10?['A','B']:['B','A']).map(arm=>{
+    const value=row(`${id}-${arm}`,arm==='A'?'reasoning-low16-none':'reasoning-low16-low',priorInputs[i]);value.inputSha=priorInputs[i];return value
+  }))
+  return {...f,before,prefix,grant:{...f.grant,version:'real-input-reasoning-low16-grant-1',grantId:'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee',
+    parentTail:before.tail,parentSequence:before.nextSequence,ledgerPrefixBytes:prefix.length,ledgerPrefixSha:sha256(prefix),maxTotalRequests:290,policy:REASONING_LOW16_POLICY,targets}}
+}
+if(process.argv[2]!=='--reserve-child')test('reasoning low16: opens a fresh 16K none/low batch without reopening prior Max and accounts incomplete output once',async()=>{
+  const f=await reasoningLow16Fixture();assert.equal(f.before.nextSequence,546);assert.equal(f.before.reservations.length,266)
+  for(const mutate of [g=>{g.parentSequence=545},g=>{g.maxTotalRequests=291},g=>{g.targets[0].unitId='M01-A'},g=>{g.targets[1].inputSha=sha256('different')}]){
+    const grant=structuredClone(f.grant);mutate(grant);await assert.rejects(()=>openBudget(f.dir,f.manifestSha,{batchGrant:grant}))
+  }
+  const b=await openBudget(f.dir,f.manifestSha,{batchGrant:f.grant})
+  await(await reserve(b,'L01-A',REASONING_LOW16_NONE_POLICY)).complete(reasoningEnvelope('L01-A',REASONING_LOW16_NONE_POLICY,100,50,0))
+  const incompleteLow=incompleteReasoningEnvelope('L01-B',REASONING_LOW16_LOW_POLICY,16384,14000)
+  const settled=await(await reserve(b,'L01-B',REASONING_LOW16_LOW_POLICY)).complete(incompleteLow);assert.equal(settled.semanticUsable,false)
+  await(await reserve(b,'L02-A',REASONING_LOW16_NONE_POLICY)).complete(reasoningEnvelope('L02-A',REASONING_LOW16_NONE_POLICY,100,50,0))
+  const state=await b.snapshot();assert.equal(state.reservations.at(-2).status,'settled-incomplete');assert.equal(state.reasoningLow16.stopped,false);assert.equal(state.reasoningMax.stopped,true)
+  assert.equal(reasoningLow16PolicyFor('L01-A'),REASONING_LOW16_NONE_POLICY);assert.equal(reasoningLow16PolicyFor('L01-B'),REASONING_LOW16_LOW_POLICY)
+  assert.equal(costUpperMicroCny(100,16384,REASONING_LOW16_LOW_POLICY),131272)
+  assert.deepEqual((await readFile(join(f.dir,'CALL_LEDGER.jsonl'))).subarray(0,f.prefix.length),f.prefix)
+})

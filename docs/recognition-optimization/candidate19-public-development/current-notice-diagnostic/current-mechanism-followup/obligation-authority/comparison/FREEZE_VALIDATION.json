@@ -1,0 +1,44 @@
+{
+  "batch": "V5-OBLIGATION-AUTHORITY-DEVELOPMENT-R1",
+  "status": "FROZEN_NOT_RUN",
+  "snapshot": "73a8b9235520ddd598a03001ffc475218367c7bd",
+  "manifestSha256": "b2749c885ee466b187fe2a74537997f78a9ec2b3e494d02e4b6fd494379b1fea",
+  "identitiesSha256": "bf8c3ddfea61b6353f5d12d72021dd1042faeb4ef27b7b23b6b74df22dad594f",
+  "components": 198,
+  "artifacts": 5,
+  "units": 8,
+  "sourceCount": 4,
+  "order": "2AB/2BA",
+  "sourceProvenance": "SINGLE_AUTHOR_ANONYMOUS_DEVELOPMENT_NOT_REAL_NOTICE_NOT_HOLDOUT",
+  "exactOverlapOldSources": [],
+  "parameters": {
+    "model": "deepseek-flash",
+    "temperature": 0,
+    "reasoning": {
+      "effort": "none"
+    },
+    "stream": false,
+    "max_output_tokens": 8192
+  },
+  "safety": {
+    "identitiesUnique": true,
+    "requestShaVerified": true,
+    "originalGitBlobsVerified": true,
+    "workingComponentsMatch": true,
+    "ExpectedInRequests": false,
+    "dispatchAuthorized": false,
+    "executionState": "NO_STATE",
+    "grant": 0,
+    "reserve": 0,
+    "settle": 0,
+    "sends": 0
+  },
+  "priceUpper": {
+    "verifiedAt": "2026-10-07T13:35:00.000Z",
+    "unitUpperMicroUsd": 324404,
+    "totalUpperMicroUsd": 2595232,
+    "proposedHardLimitMicroUsd": 2600000,
+    "actualAuthorization": false
+  },
+  "beforeGrant": "Fresh checks and exact NEW user consent required; not a reusable price or authorization."
+}

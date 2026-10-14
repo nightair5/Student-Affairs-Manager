@@ -1,0 +1,90 @@
+{
+  "status": "PROPOSED_REQUIRES_EXPLICIT_AUTHORIZATION_NOT_IMPLEMENTED",
+  "package": "same MAINLINE-REAL-INPUT-01",
+  "goal": "真实A02历史响应可在实际App核对保存；不得把required自动推成missing或必须提供",
+  "baselineHead": "835ae162071b7181ea5bb325b475113e5108da5d",
+  "fileCount": 12,
+  "files": [
+    {
+      "path": "scripts/serve-mainline-real-input-01.mjs",
+      "currentWorkingSha256": "f5a2e6f04dfbee6fe23933c2276b68d028cb7654550cae41d8457b57c63d8af8",
+      "responsibility": "增加显式 recorded-A02 零调用模式；只读绑定原STATE/preparation/raw/request SHA，固定回环历史响应端点；禁止加载.env、网关/预算派发或上游连接；默认人工回放不变。"
+    },
+    {
+      "path": "src/experiments/realInput01/browser.tsx",
+      "currentWorkingSha256": "36f31fa8aad526eb26f74d730739e10e216b746b8c7000aef2ebbc91d143029c",
+      "responsibility": "在真实App测试标签中复用原6631 origin及已核隔离库/待处理A02 handle；明确历史模型回放，匹配失败即拒绝，不造新来源身份、不清库；现有逐项核对、选择、刷新、下载读库复用。"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.ts",
+      "currentWorkingSha256": "b1772951acefc6ef423fa3a3d9c1c7486c0862647e3c5f34358887839930250f",
+      "responsibility": "增加可选已记录响应接线/说明，复用原completeInputRun且保留live_model_candidate来源身份；禁用本模式的新发送；不改原模型输出或人工入口。"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "currentWorkingSha256": "674ceed04f9f7826445ffc8f4834547fdd54d3193d9f17efcaf04943e64462fa",
+      "responsibility": "仅显式新增隔离材料核对增量：必需性与当前准备状态分开；未核验不能自动missing。状态由用户主动选择现有合法枚举后构造，原raw/first及旧默认不变；联合校验、关联范围与原子关系保留。"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "currentWorkingSha256": "e0cc3ad8c220ff39a3aa2f66f90087adce3961324b14649fcfe801e3da6aa4fa",
+      "responsibility": "材料核对/修订需独立显式操作、版本和实体ID；未核验项不能靠普通任务已核对越过；已具备/确实缺少/不作必备材料的合法操作均有成功对照；独立兄弟不连坐。"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "currentWorkingSha256": "a603f42b0071ddc03410d17690f9acc73b9782819e2faf663b40dcf94b595487",
+      "responsibility": "新隔离模式明确展示材料尚待核验和主动核验后的真实状态；不把无截止误写成冲突，不将投影状态反写canonical；消除没有事实支持的缺材料排序来源。"
+    },
+    {
+      "path": "src/experiments/mainline05/SemanticFacts.tsx",
+      "currentWorkingSha256": "264867de2437159eb5bda64c761dc77b5724876d3d1cef54906d80f8e1f05f76",
+      "responsibility": "材料required不再直接翻译为必须提供；显示原文及材料核对状态，保留原始模型分类，明确无截止的原句可回看；旧默认保持。"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.ts",
+      "currentWorkingSha256": "c920e3bef998707450c920985ff1216c8aca450d786dcb1a62bfd3c594b6f7d7",
+      "responsibility": "扩展显式本机材料核对/用户修订载荷，仅处理required和用户观察到的准备状态；不改模型契约或原始响应；共享关联失效/核对范围清晰。"
+    },
+    {
+      "path": "src/experiments/realInput01/FactCorrectionEditor.tsx",
+      "currentWorkingSha256": "b0c039958a3c724d1759fc96d7eb796c82a8caf373724de50b21525ff036fe4d",
+      "responsibility": "提供材料是否作为必备项及当前准备状态的显式选择与保存，未保存不确认，状态不是模型预测，不自动代用户选择。"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.test.ts",
+      "currentWorkingSha256": "fd30847c08d7e0533a60588d4d79729a768c323020b7622f9c567c2815027cbf",
+      "responsibility": "公开入口验证A02历史回放、未核验拒绝、已具备/确实缺少/非必备成功、保存回滚/重复/旧版本、原响应和共享独立兄弟保护；不改旧Expected或冻结断言。"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.test.ts",
+      "currentWorkingSha256": "839cb8bff2d3a95850e304254874ffd3c9764e272406465e8bd80b39cfb0db4c",
+      "responsibility": "核对载荷合法/不合法、用户状态与原文来源分离、旧修订兼容、未保存与历史不可变测试。"
+    },
+    {
+      "path": "src/experiments/realInput01/acceptance.test.tsx",
+      "currentWorkingSha256": "b3e89917cc4b79c4e02427db1877f60374cdd635c730c70d9c2bc01f4a78afcc",
+      "responsibility": "真实App/面板接线与离线传输守卫，人工正常对照保留，SSR与实际Edge分开；实际下载必须文件与独立仓储一致。"
+    }
+  ],
+  "versionDecision": "需明确批准显式隔离材料核对增量；原WorkspaceV8/全局Schema及冻结契约只读。未核验仅保留待核对，不以假missing/ready入正式事实。已核验仅使用现有MaterialStatus域值。若必须扩大版本/Schema/repository或其他文件，先停申请。",
+  "notApprovedThisTurn": [
+    "以上12路径实施",
+    "任何原始响应/Expected/candidate/scorer修改",
+    "新模型请求",
+    "旧账本/收据修改",
+    "预算规则修改",
+    "稳定接入",
+    "新浏览器存储初始化/清库或真实用户库"
+  ],
+  "validation": [
+    "25项本轮内存/SSR结果作为诊断基线，不替代浏览器",
+    "A02与4类旧已见正常对照",
+    "必须保留非零正确确认；未核验材料不能自动判missing；用户明确missing仍有真实风险",
+    "来源/raw/first/人工修改全程分开",
+    "实际Edge明确核对/逐键编辑保存/主动选择/确认/刷新/日历/真实下载与独立读库",
+    "0模型、paid/recover/A03与.env/剪贴板访问",
+    "保护/默认/日志/历史保持"
+  ],
+  "stop": "发现保护变化/重叠修改/超白名单/不能用现有合法域值无损承接/重大安全问题即停止，不改全局Schema救验收",
+  "rollback": "关闭显式历史回放/材料核对增量，保留测试库与所有证据，不删除或覆盖已确认内容"
+}

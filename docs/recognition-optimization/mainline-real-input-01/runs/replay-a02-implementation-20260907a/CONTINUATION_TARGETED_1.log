@@ -1,0 +1,77 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+·························x·x···································
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > real App runtime and public send connection; memory/SSR not browser acceptance > original A02 real App driver preserves provenance, material observation and explicit edits through independent reload
+AssertionError: expected [ …(16) ] to deeply equal [ …(16) ]
+
+- Expected
++ Received
+
+@@ -496,14 +496,14 @@
+            "sendSnapshot": null,
+            "version": "mainline-real-input-state-1",
+          },
+        },
+      },
+-     "status": "needs_review",
++     "status": "confirmed",
+      "title": "A02工程文字",
+      "type": "text",
+-     "updatedAt": "2026-09-07T10:30:37.450Z",
++     "updatedAt": "2026-09-07T10:30:38.076Z",
+      "workspaceId": "rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862",
+    },
+    {
+      "createdAt": "2026-09-07T03:08:52.267Z",
+      "currentVersionId": "source:72b67d35:version:1",
+
+ ❯ src/experiments/realInput01/acceptance.test.tsx:77:90
+     75|     expect(result.timePoints).toEqual([]);expect(result.reminderRecord…
+     76|     expect(buildBrowserReminderJobs(runtime.view(result).tasks,new Dat…
+     77|     expect(result.sourceVersions).toEqual(pending.sourceVersions);expe…
+       |                                                                                          ^
+     78|     const final=stateOfRuntime(result,draftId);expect(final.rawRespons…
+     79|     expect(final.version===REAL_STATE_VERSION&&final.rawHttpText).toBe…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > real App runtime and public send connection; memory/SSR not browser acceptance > recorded launcher builds real App, serves only bound A02 and rejects unauthorized endpoints without model code
+AssertionError: 
+file:///C:/Users/Winner/student-affairs-multimodal-exp/[eval1]:13
+      const capability=js.body.match(/"capability":\s*"([a-f0-9]{64})"/)[1];
+                                                                        ^
+
+TypeError: Cannot read properties of null (reading '1')
+    at file:///C:/Users/Winner/student-affairs-multimodal-exp/[eval1]:13:73
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.18.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ [eval1]:13:73
+ ❯ src/experiments/realInput01/acceptance.test.tsx:127:57
+    125|     `],{encoding:'utf8',timeout:60000,maxBuffer:1024*1024})
+    126|     expect(probe.error?.message??'').toBe('')
+    127|     expect(probe.status,probe.stdout+'\n'+probe.stderr).toBe(0)
+       |                                                         ^
+    128|   },65000)
+    129|   it('the input renderer is a React component retaining original text …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  2 failed | 61 passed (63)
+   Start at  18:30:35
+   Duration  9.30s (transform 1.00s, setup 0ms, collect 1.90s, tests 12.22s, environment 1ms, prepare 781ms)
+

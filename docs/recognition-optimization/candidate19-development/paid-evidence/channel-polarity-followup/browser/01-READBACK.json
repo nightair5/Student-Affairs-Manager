@@ -1,0 +1,3700 @@
+{
+  "schemaVersion": 8,
+  "workspace": {
+    "id": "rco-mainline-01-02-i1-d27-plan-recorded-polarity1004",
+    "title": "C19 原批12份录制产品回放（非真人）",
+    "createdAt": "2026-09-05T08:00:00.000Z",
+    "updatedAt": "2026-10-04T10:50:22.850Z"
+  },
+  "settings": {
+    "defaultTimezone": "Asia/Shanghai",
+    "locale": "zh-CN"
+  },
+  "sources": [
+    {
+      "id": "source:986a3170",
+      "workspaceId": "rco-mainline-01-02-i1-d27-plan-recorded-polarity1004",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "confirmed",
+      "currentVersionId": "source:986a3170:version:1",
+      "createdAt": "2026-10-04T10:50:22.734Z",
+      "updatedAt": "2026-10-04T10:52:22.216Z",
+      "legacyData": {
+        "recognitionProvenance": {
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "promptVersion": "ENGINEERING_FIXTURE_NOT_GENERATED",
+          "candidateVersion": "ENGINEERING_FIXTURE_NOT_CANDIDATE",
+          "build": "879ba5ce7f0f / source a11946dc1504",
+          "responseRole": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+          "componentVersion": "source-support-accounting-projection-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.2.0",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai"
+        },
+        "contentPreview": "请于2026年11月6日15:20前递交场地申请。场地申请必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 115,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "b017c2cd-12cb-406a-8368-679cd9d96721"
+      }
+    }
+  ],
+  "sourceVersions": [
+    {
+      "id": "source:986a3170:version:1",
+      "sourceId": "source:986a3170",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:73285075",
+      "rawText": "请于2026年11月6日15:20前递交场地申请。场地申请必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-04T10:50:22.734Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 115,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    }
+  ],
+  "recognitionRuns": [
+    {
+      "id": "source:986a3170:run:1",
+      "sourceVersionId": "source:986a3170:version:1",
+      "provider": "manual",
+      "modelName": "匿名契约工程夹具（非模型输出）",
+      "promptVersion": "ENGINEERING_FIXTURE_NOT_GENERATED",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "source-support-accounting-projection-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.2.0",
+      "status": "succeeded",
+      "startedAt": "2026-10-04T10:50:22.806Z",
+      "completedAt": "2026-10-04T10:50:22.834Z",
+      "durationMs": 28,
+      "tokenUsage": null,
+      "qualityFlags": [],
+      "errorCode": null,
+      "legacyData": {
+        "recordedResponse": {
+          "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+          "ordinal": 101,
+          "sourceId": "channel-role-receipt-print-optional",
+          "sourceVersionId": "channel-role-receipt-print-optional-v1",
+          "candidate": "EngineeringFixture",
+          "sourceText": "请于2026年11月6日15:20前递交场地申请。场地申请必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+          "referenceTime": "2026-10-03T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "rawHttpText": "{\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[{\\\"id\\\":\\\"T1\\\",\\\"propositionScopeIds\\\":[\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\",\\\"scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd\\\",\\\"scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"tense\\\":\\\"future\\\",\\\"status\\\":\\\"pending\\\",\\\"validity\\\":\\\"active\\\",\\\"modality\\\":\\\"required\\\"},\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"actionType\\\":\\\"other\\\",\\\"action\\\":{\\\"surface\\\":\\\"递交\\\",\\\"scopeId\\\":\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\"},\\\"object\\\":{\\\"surface\\\":\\\"场地申请\\\",\\\"scopeId\\\":\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\"},\\\"effect\\\":\\\"local_change\\\",\\\"detail\\\":{\\\"parentTempId\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"title\\\":\\\"递交场地申请\\\",\\\"description\\\":\\\"\\\",\\\"completionCriteria\\\":[\\\"场地申请必须为PDF\\\"],\\\"estimatedMinutes\\\":null,\\\"statusSuggestion\\\":\\\"todo\\\",\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"dependencyTempIds\\\":[],\\\"confidence\\\":1,\\\"userConfirmationRequired\\\":true},\\\"condition\\\":{\\\"value\\\":\\\"not_applicable\\\",\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[]},\\\"coverage\\\":{\\\"time\\\":{\\\"status\\\":\\\"present\\\",\\\"entityIds\\\":[\\\"P1\\\"],\\\"scopeIds\\\":[\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\"]},\\\"material\\\":{\\\"status\\\":\\\"present\\\",\\\"entityIds\\\":[\\\"M1\\\"],\\\"scopeIds\\\":[\\\"scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd\\\",\\\"scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab\\\"]},\\\"event\\\":{\\\"status\\\":\\\"not_stated\\\",\\\"entityIds\\\":[],\\\"scopeIds\\\":[]}}}],\\\"materials\\\":[{\\\"tempId\\\":\\\"M1\\\",\\\"name\\\":\\\"场地申请\\\",\\\"required\\\":true,\\\"formatRequirements\\\":[\\\"PDF\\\"],\\\"namingRequirements\\\":[],\\\"quantity\\\":null,\\\"submissionChannel\\\":\\\"青禾办事站\\\",\\\"relatedTaskTempIds\\\":[\\\"T1\\\"],\\\"scopeIds\\\":[\\\"scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd\\\",\\\"scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab\\\"],\\\"confidence\\\":1}],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"submission_deadline\\\",\\\"rawText\\\":\\\"2026年11月6日15:20前\\\",\\\"relatedTaskTempIds\\\":[\\\"T1\\\"],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P2\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周五晚上\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-661adce92925c5fda0475016b386a207e2ece6e71cf37c52e79e7ecfad6b7bea\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P3\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"结束时间尚未公布\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0006-7758049b68a7eaa8cdf13e03516b88ac94d17777394625a66ae2b9eb00955b1e\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P4\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"2026年11月7日14:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-a42951e23325b850274344f2fad96b9fc97a5ad6ec3818b938946b59d8e636b0\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P5\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"15:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0004-e802e2ceac713cbf8d61875cac71eaab9d5e2e63aabdcccccb874200ace4f7c3\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"系统维护\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P2\\\",\\\"endTimePointTempId\\\":\\\"P3\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-661adce92925c5fda0475016b386a207e2ece6e71cf37c52e79e7ecfad6b7bea\\\",\\\"scope-0006-7758049b68a7eaa8cdf13e03516b88ac94d17777394625a66ae2b9eb00955b1e\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"},{\\\"tempId\\\":\\\"E2\\\",\\\"title\\\":\\\"器材讲解会\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P4\\\",\\\"endTimePointTempId\\\":\\\"P5\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-a42951e23325b850274344f2fad96b9fc97a5ad6ec3818b938946b59d8e636b0\\\",\\\"scope-0004-e802e2ceac713cbf8d61875cac71eaab9d5e2e63aabdcccccb874200ace4f7c3\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"P1\\\"]},{\\\"scopeId\\\":\\\"scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"M1\\\"]},{\\\"scopeId\\\":\\\"scope-0003-a42951e23325b850274344f2fad96b9fc97a5ad6ec3818b938946b59d8e636b0\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P4\\\"]},{\\\"scopeId\\\":\\\"scope-0004-e802e2ceac713cbf8d61875cac71eaab9d5e2e63aabdcccccb874200ace4f7c3\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P5\\\"]},{\\\"scopeId\\\":\\\"scope-0005-661adce92925c5fda0475016b386a207e2ece6e71cf37c52e79e7ecfad6b7bea\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P2\\\"]},{\\\"scopeId\\\":\\\"scope-0006-7758049b68a7eaa8cdf13e03516b88ac94d17777394625a66ae2b9eb00955b1e\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P3\\\"]},{\\\"scopeId\\\":\\\"scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"M1\\\"]}],\\\"prerequisiteStates\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+          "responseSha256": "5c4738e665e16e1ccddd65249b87120433dba6ac3f77a49ae6b246ab23ed4828",
+          "requestSha256": null,
+          "frozenOutcome": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+          "projectionVersion": "source-support-accounting-projection-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.2.0"
+        },
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "createdAt": "2026-10-03T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "递交场地申请",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "1项任务，2项事件。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "递交场地申请",
+              "description": "请于2026年11月6日15:20前递交场地申请。\n场地申请必须为PDF。\n请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+              "completionCriteria": [
+                "场地申请必须为PDF"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "M1"
+              ],
+              "timePointTempIds": [
+                "P1"
+              ],
+              "tempId": "T1",
+              "actionVerb": "递交",
+              "actionObject": "场地申请",
+              "evidenceIds": [
+                "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "M1",
+              "name": "场地申请",
+              "required": true,
+              "formatRequirements": [
+                "PDF"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": "青禾办事站",
+              "relatedTaskTempIds": [
+                "T1"
+              ],
+              "confidence": 1,
+              "evidenceIds": [
+                "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "P1",
+              "type": "submission_deadline",
+              "rawText": "2026年11月6日15:20前",
+              "relatedTaskTempIds": [
+                "T1"
+              ],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-11-06T15:20",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+              ]
+            },
+            {
+              "tempId": "P2",
+              "type": "event_start",
+              "rawText": "周五晚上",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658"
+              ]
+            },
+            {
+              "tempId": "P3",
+              "type": "event_end",
+              "rawText": "结束时间尚未公布",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+              ]
+            },
+            {
+              "tempId": "P4",
+              "type": "event_start",
+              "rawText": "2026年11月7日14:00",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-11-07T14:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162"
+              ]
+            },
+            {
+              "tempId": "P5",
+              "type": "event_end",
+              "rawText": "15:00",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-11-07T15:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "E1",
+              "title": "系统维护",
+              "description": "系统维护在周五晚上开始，\n结束时间尚未公布。",
+              "startTimePointTempId": "P2",
+              "endTimePointTempId": "P3",
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+                "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+              ],
+              "selected": true
+            },
+            {
+              "tempId": "E2",
+              "title": "器材讲解会",
+              "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。",
+              "startTimePointTempId": "P4",
+              "endTimePointTempId": "P5",
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+                "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+              "sourceId": "source:986a3170",
+              "quote": "请于2026年11月6日15:20前递交场地申请。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+              "sourceId": "source:986a3170",
+              "quote": "场地申请必须为PDF。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+              "sourceId": "source:986a3170",
+              "quote": "器材讲解会于2026年11月7日14:00开始，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55",
+              "sourceId": "source:986a3170",
+              "quote": "15:00结束。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+              "sourceId": "source:986a3170",
+              "quote": "系统维护在周五晚上开始，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2",
+              "sourceId": "source:986a3170",
+              "quote": "结束时间尚未公布。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109",
+              "sourceId": "source:986a3170",
+              "quote": "请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        }
+      }
+    }
+  ],
+  "extractionDrafts": [
+    {
+      "id": "source:986a3170:draft:1",
+      "recognitionRunId": "source:986a3170:run:1",
+      "status": "confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "递交场地申请",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，2项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "递交场地申请",
+            "description": "请于2026年11月6日15:20前递交场地申请。\n场地申请必须为PDF。\n请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+            "completionCriteria": [
+              "场地申请必须为PDF"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "materialTempIds": [
+              "M1"
+            ],
+            "timePointTempIds": [
+              "P1"
+            ],
+            "tempId": "T1",
+            "actionVerb": "递交",
+            "actionObject": "场地申请",
+            "evidenceIds": [
+              "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+              "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+              "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "M1",
+            "name": "场地申请",
+            "required": true,
+            "formatRequirements": [
+              "PDF"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": "青禾办事站",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "confidence": 1,
+            "evidenceIds": [
+              "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+              "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "P1",
+            "type": "submission_deadline",
+            "rawText": "2026年11月6日15:20前",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-06T15:20",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+            ]
+          },
+          {
+            "tempId": "P2",
+            "type": "event_start",
+            "rawText": "周五晚上",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658"
+            ]
+          },
+          {
+            "tempId": "P3",
+            "type": "event_end",
+            "rawText": "结束时间尚未公布",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+            ]
+          },
+          {
+            "tempId": "P4",
+            "type": "event_start",
+            "rawText": "2026年11月7日14:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-07T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162"
+            ]
+          },
+          {
+            "tempId": "P5",
+            "type": "event_end",
+            "rawText": "15:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-07T15:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "系统维护",
+            "description": "系统维护在周五晚上开始，\n结束时间尚未公布。",
+            "startTimePointTempId": "P2",
+            "endTimePointTempId": "P3",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+              "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+            ],
+            "selected": true
+          },
+          {
+            "tempId": "E2",
+            "title": "器材讲解会",
+            "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。",
+            "startTimePointTempId": "P4",
+            "endTimePointTempId": "P5",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+              "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+            "sourceId": "source:986a3170",
+            "quote": "请于2026年11月6日15:20前递交场地申请。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+            "sourceId": "source:986a3170",
+            "quote": "场地申请必须为PDF。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+            "sourceId": "source:986a3170",
+            "quote": "器材讲解会于2026年11月7日14:00开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55",
+            "sourceId": "source:986a3170",
+            "quote": "15:00结束。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+            "sourceId": "source:986a3170",
+            "quote": "系统维护在周五晚上开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2",
+            "sourceId": "source:986a3170",
+            "quote": "结束时间尚未公布。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109",
+            "sourceId": "source:986a3170",
+            "quote": "请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:986a3170:draft:1:fnv1a32:4f598dd6"
+      ],
+      "acceptedEntityTempIds": [
+        "E1",
+        "E2",
+        "M1",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "T1"
+      ],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-04T10:50:22.734Z",
+      "updatedAt": "2026-10-04T10:52:22.216Z",
+      "legacyData": {
+        "semanticSidecar": {
+          "version": "semantic-ordinary-bridge-1.0.0",
+          "originalSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "tasks": [
+              {
+                "id": "T1",
+                "propositionScopeIds": [
+                  "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                  "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                  "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "递交",
+                  "scopeId": "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                },
+                "object": {
+                  "surface": "场地申请",
+                  "scopeId": "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "递交场地申请",
+                  "description": "",
+                  "completionCriteria": [
+                    "场地申请必须为PDF"
+                  ],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true,
+                  "materialTempIds": [
+                    "M1"
+                  ],
+                  "timePointTempIds": [
+                    "P1"
+                  ]
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "present",
+                  "material": "present",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              }
+            ],
+            "materials": [
+              {
+                "tempId": "M1",
+                "name": "场地申请",
+                "required": true,
+                "formatRequirements": [
+                  "PDF"
+                ],
+                "namingRequirements": [],
+                "quantity": null,
+                "submissionChannel": "青禾办事站",
+                "relatedTaskTempIds": [
+                  "T1"
+                ],
+                "scopeIds": [
+                  "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                  "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+                ],
+                "confidence": 1
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "P1",
+                "type": "submission_deadline",
+                "rawText": "2026年11月6日15:20前",
+                "relatedTaskTempIds": [
+                  "T1"
+                ],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                ],
+                "confidence": 1,
+                "normalizedValue": "2026-11-06T15:20",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              {
+                "tempId": "P2",
+                "type": "event_start",
+                "rawText": "周五晚上",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              {
+                "tempId": "P3",
+                "type": "event_end",
+                "rawText": "结束时间尚未公布",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              {
+                "tempId": "P4",
+                "type": "event_start",
+                "rawText": "2026年11月7日14:00",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162"
+                ],
+                "confidence": 1,
+                "normalizedValue": "2026-11-07T14:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              {
+                "tempId": "P5",
+                "type": "event_end",
+                "rawText": "15:00",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "系统维护",
+                "description": "",
+                "location": null,
+                "startTimePointTempId": "P2",
+                "endTimePointTempId": "P3",
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+                  "scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              },
+              {
+                "tempId": "E2",
+                "title": "器材讲解会",
+                "description": "",
+                "location": null,
+                "startTimePointTempId": "P4",
+                "endTimePointTempId": "P5",
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+                  "scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:986a3170",
+            "sourceVersionId": "source:986a3170:version:1",
+            "sourceFingerprint": "sha256:0926a88565b099cbc7b2b67389436772fb2dd574529288313b456aa89589447e"
+          },
+          "firstSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "tasks": [
+              {
+                "id": "T1",
+                "propositionScopeIds": [
+                  "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                  "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                  "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+                ],
+                "semantics": {
+                  "actor": "addressee",
+                  "speechAct": "directive",
+                  "polarity": "affirmative",
+                  "tense": "future",
+                  "status": "pending",
+                  "validity": "active",
+                  "modality": "required"
+                },
+                "inferenceLevel": "explicit",
+                "actionType": "other",
+                "action": {
+                  "surface": "递交",
+                  "scopeId": "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                },
+                "object": {
+                  "surface": "场地申请",
+                  "scopeId": "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                },
+                "effect": "local_change",
+                "detail": {
+                  "parentTempId": null,
+                  "hierarchyType": "task",
+                  "title": "递交场地申请",
+                  "description": "请于2026年11月6日15:20前递交场地申请。\n场地申请必须为PDF。\n请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+                  "completionCriteria": [
+                    "场地申请必须为PDF"
+                  ],
+                  "estimatedMinutes": null,
+                  "statusSuggestion": "todo",
+                  "prioritySuggestion": "medium",
+                  "dependencyTempIds": [],
+                  "confidence": 1,
+                  "userConfirmationRequired": true,
+                  "materialTempIds": [
+                    "M1"
+                  ],
+                  "timePointTempIds": [
+                    "P1"
+                  ]
+                },
+                "condition": {
+                  "value": "not_applicable",
+                  "conditionScopeIds": [],
+                  "factScopeIds": []
+                },
+                "coverage": {
+                  "time": "present",
+                  "material": "present",
+                  "event": "not_stated"
+                },
+                "eventTempIds": []
+              }
+            ],
+            "materials": [
+              {
+                "tempId": "M1",
+                "name": "场地申请",
+                "required": true,
+                "formatRequirements": [
+                  "PDF"
+                ],
+                "namingRequirements": [],
+                "quantity": null,
+                "submissionChannel": "青禾办事站",
+                "relatedTaskTempIds": [
+                  "T1"
+                ],
+                "scopeIds": [
+                  "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                  "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+                ],
+                "confidence": 1
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "P1",
+                "type": "submission_deadline",
+                "rawText": "2026年11月6日15:20前",
+                "relatedTaskTempIds": [
+                  "T1"
+                ],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                ],
+                "confidence": 1,
+                "normalizedValue": "2026-11-06T15:20",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              {
+                "tempId": "P2",
+                "type": "event_start",
+                "rawText": "周五晚上",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              {
+                "tempId": "P3",
+                "type": "event_end",
+                "rawText": "结束时间尚未公布",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+                ],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              {
+                "tempId": "P4",
+                "type": "event_start",
+                "rawText": "2026年11月7日14:00",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162"
+                ],
+                "confidence": 1,
+                "normalizedValue": "2026-11-07T14:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              {
+                "tempId": "P5",
+                "type": "event_end",
+                "rawText": "15:00",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+                ],
+                "confidence": 1,
+                "normalizedValue": "2026-11-07T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "系统维护",
+                "description": "系统维护在周五晚上开始，\n结束时间尚未公布。",
+                "location": null,
+                "startTimePointTempId": "P2",
+                "endTimePointTempId": "P3",
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+                  "scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              },
+              {
+                "tempId": "E2",
+                "title": "器材讲解会",
+                "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。",
+                "location": null,
+                "startTimePointTempId": "P4",
+                "endTimePointTempId": "P5",
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+                  "scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:986a3170",
+            "sourceVersionId": "source:986a3170:version:1",
+            "sourceFingerprint": "sha256:0926a88565b099cbc7b2b67389436772fb2dd574529288313b456aa89589447e"
+          },
+          "sourceScopeEvidence": [
+            {
+              "scopeId": "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+              "evidenceId": "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+            },
+            {
+              "scopeId": "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+              "evidenceId": "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4"
+            },
+            {
+              "scopeId": "scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+              "evidenceId": "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162"
+            },
+            {
+              "scopeId": "scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55",
+              "evidenceId": "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+            },
+            {
+              "scopeId": "scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+              "evidenceId": "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658"
+            },
+            {
+              "scopeId": "scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2",
+              "evidenceId": "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+            },
+            {
+              "scopeId": "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109",
+              "evidenceId": "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+            }
+          ],
+          "representationGaps": [],
+          "displayAudit": {
+            "version": "grounded-first-suggestion-1.0.0",
+            "originalProse": [
+              {
+                "entityId": "T1",
+                "kind": "task",
+                "title": "递交场地申请",
+                "description": ""
+              },
+              {
+                "entityId": "E1",
+                "kind": "event",
+                "title": "系统维护",
+                "description": ""
+              },
+              {
+                "entityId": "E2",
+                "kind": "event",
+                "title": "器材讲解会",
+                "description": ""
+              }
+            ],
+            "generatedProse": [
+              {
+                "entityId": "T1",
+                "kind": "task",
+                "title": "递交场地申请",
+                "description": "请于2026年11月6日15:20前递交场地申请。\n场地申请必须为PDF。\n请通过青禾办事站提交场地申请并保存回执（无需打印）。"
+              },
+              {
+                "entityId": "E1",
+                "kind": "event",
+                "title": "系统维护",
+                "description": "系统维护在周五晚上开始，\n结束时间尚未公布。"
+              },
+              {
+                "entityId": "E2",
+                "kind": "event",
+                "title": "器材讲解会",
+                "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。"
+              }
+            ],
+            "times": [
+              {
+                "entityId": "P1",
+                "before": {
+                  "normalizedValue": "2026-11-06T15:20",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "after": {
+                  "normalizedValue": "2026-11-06T15:20",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "2026年11月6日15:20前",
+                    "type": "submission_deadline",
+                    "normalizedValue": "2026-11-06T15:20",
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "exact",
+                    "needsConfirmation": false,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 16
+                    },
+                    "dateKind": "absolute",
+                    "timeKind": "clock",
+                    "correctionApplied": false,
+                    "issues": []
+                  },
+                  "knownDate": "2026-11-06",
+                  "dayPeriod": null,
+                  "certainty": "stated",
+                  "sourceContext": "请于2026年11月6日15:20前递交场地申请"
+                }
+              },
+              {
+                "entityId": "P2",
+                "before": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "after": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "周五晚上",
+                    "type": "event_start",
+                    "normalizedValue": null,
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "vague",
+                    "needsConfirmation": true,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 4
+                    },
+                    "dateKind": "none",
+                    "timeKind": "none",
+                    "correctionApplied": false,
+                    "issues": [
+                      "time_not_found",
+                      "day_period_without_clock"
+                    ]
+                  },
+                  "knownDate": null,
+                  "dayPeriod": "晚上",
+                  "certainty": "partial",
+                  "sourceContext": "系统维护在周五晚上开始"
+                }
+              },
+              {
+                "entityId": "P3",
+                "before": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "after": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "结束时间尚未公布",
+                    "type": "event_end",
+                    "normalizedValue": null,
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "vague",
+                    "needsConfirmation": true,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 8
+                    },
+                    "dateKind": "none",
+                    "timeKind": "none",
+                    "correctionApplied": false,
+                    "issues": [
+                      "time_not_found",
+                      "time_unannounced"
+                    ]
+                  },
+                  "knownDate": null,
+                  "dayPeriod": null,
+                  "certainty": "unannounced",
+                  "sourceContext": "结束时间尚未公布"
+                }
+              },
+              {
+                "entityId": "P4",
+                "before": {
+                  "normalizedValue": "2026-11-07T14:00",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "after": {
+                  "normalizedValue": "2026-11-07T14:00",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "2026年11月7日14:00",
+                    "type": "event_start",
+                    "normalizedValue": "2026-11-07T14:00",
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "exact",
+                    "needsConfirmation": false,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 15
+                    },
+                    "dateKind": "absolute",
+                    "timeKind": "clock",
+                    "correctionApplied": false,
+                    "issues": []
+                  },
+                  "knownDate": "2026-11-07",
+                  "dayPeriod": null,
+                  "certainty": "stated",
+                  "sourceContext": "器材讲解会于2026年11月7日14:00开始"
+                }
+              },
+              {
+                "entityId": "P5",
+                "before": {
+                  "normalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true
+                },
+                "after": {
+                  "normalizedValue": "2026-11-07T15:00",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "15:00",
+                    "type": "event_end",
+                    "normalizedValue": "2026-11-07T15:00",
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "exact",
+                    "needsConfirmation": false,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 5
+                    },
+                    "dateKind": "inherited",
+                    "timeKind": "clock",
+                    "correctionApplied": false,
+                    "issues": []
+                  },
+                  "knownDate": "2026-11-07",
+                  "dayPeriod": null,
+                  "certainty": "stated",
+                  "sourceContext": "器材讲解会于2026年11月7日14:00开始\n15:00结束"
+                }
+              }
+            ],
+            "unresolved": [],
+            "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+          },
+          "frozenBridgeResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "recognition-source-contract-4.0.0",
+            "modelName": "匿名契约工程夹具（非模型输出）",
+            "createdAt": "2026-10-03T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "递交场地申请",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "1项任务，2项事件。",
+              "requiresAction": true,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [
+              {
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "递交场地申请",
+                "description": "请于2026年11月6日15:20前递交场地申请。\n场地申请必须为PDF。\n请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+                "completionCriteria": [
+                  "场地申请必须为PDF"
+                ],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "confidence": 1,
+                "userConfirmationRequired": true,
+                "materialTempIds": [
+                  "M1"
+                ],
+                "timePointTempIds": [
+                  "P1"
+                ],
+                "tempId": "T1",
+                "actionVerb": "递交",
+                "actionObject": "场地申请",
+                "evidenceIds": [
+                  "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                  "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                  "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+                ],
+                "inferenceLevel": "explicit",
+                "selected": true
+              }
+            ],
+            "materials": [
+              {
+                "tempId": "M1",
+                "name": "场地申请",
+                "required": true,
+                "formatRequirements": [
+                  "PDF"
+                ],
+                "namingRequirements": [],
+                "quantity": null,
+                "submissionChannel": "青禾办事站",
+                "relatedTaskTempIds": [
+                  "T1"
+                ],
+                "confidence": 1,
+                "evidenceIds": [
+                  "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                  "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+                ]
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "P1",
+                "type": "submission_deadline",
+                "rawText": "2026年11月6日15:20前",
+                "relatedTaskTempIds": [
+                  "T1"
+                ],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": "2026-11-06T15:20",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                ]
+              },
+              {
+                "tempId": "P2",
+                "type": "event_start",
+                "rawText": "周五晚上",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "evidenceIds": [
+                  "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658"
+                ]
+              },
+              {
+                "tempId": "P3",
+                "type": "event_end",
+                "rawText": "结束时间尚未公布",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "evidenceIds": [
+                  "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+                ]
+              },
+              {
+                "tempId": "P4",
+                "type": "event_start",
+                "rawText": "2026年11月7日14:00",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": "2026-11-07T14:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162"
+                ]
+              },
+              {
+                "tempId": "P5",
+                "type": "event_end",
+                "rawText": "15:00",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": "2026-11-07T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+                ]
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "系统维护",
+                "description": "系统维护在周五晚上开始，\n结束时间尚未公布。",
+                "startTimePointTempId": "P2",
+                "endTimePointTempId": "P3",
+                "location": null,
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "evidenceIds": [
+                  "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+                  "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+                ],
+                "selected": true
+              },
+              {
+                "tempId": "E2",
+                "title": "器材讲解会",
+                "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。",
+                "startTimePointTempId": "P4",
+                "endTimePointTempId": "P5",
+                "location": null,
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "evidenceIds": [
+                  "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+                  "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+                ],
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                "sourceId": "source:986a3170",
+                "quote": "请于2026年11月6日15:20前递交场地申请。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                "sourceId": "source:986a3170",
+                "quote": "场地申请必须为PDF。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+                "sourceId": "source:986a3170",
+                "quote": "器材讲解会于2026年11月7日14:00开始，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55",
+                "sourceId": "source:986a3170",
+                "quote": "15:00结束。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+                "sourceId": "source:986a3170",
+                "quote": "系统维护在周五晚上开始，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2",
+                "sourceId": "source:986a3170",
+                "quote": "结束时间尚未公布。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109",
+                "sourceId": "source:986a3170",
+                "quote": "请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 0.5,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": false,
+              "reviewReasons": []
+            }
+          },
+          "supportAccountingAudit": {
+            "version": "source-support-accounting-projection-1.0.0",
+            "role": "POST_COMPARISON_PROGRAM_CONVERSION",
+            "inferredFacts": 0,
+            "originalWire": {
+              "schemaVersion": "explicit-source-contract-4.0.0",
+              "tasks": [
+                {
+                  "id": "T1",
+                  "propositionScopeIds": [
+                    "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                    "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                    "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+                  ],
+                  "semantics": {
+                    "actor": "addressee",
+                    "speechAct": "directive",
+                    "polarity": "affirmative",
+                    "tense": "future",
+                    "status": "pending",
+                    "validity": "active",
+                    "modality": "required"
+                  },
+                  "inferenceLevel": "explicit",
+                  "actionType": "other",
+                  "action": {
+                    "surface": "递交",
+                    "scopeId": "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                  },
+                  "object": {
+                    "surface": "场地申请",
+                    "scopeId": "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                  },
+                  "effect": "local_change",
+                  "detail": {
+                    "parentTempId": null,
+                    "hierarchyType": "task",
+                    "title": "递交场地申请",
+                    "description": "",
+                    "completionCriteria": [
+                      "场地申请必须为PDF"
+                    ],
+                    "estimatedMinutes": null,
+                    "statusSuggestion": "todo",
+                    "prioritySuggestion": "medium",
+                    "dependencyTempIds": [],
+                    "confidence": 1,
+                    "userConfirmationRequired": true
+                  },
+                  "condition": {
+                    "value": "not_applicable",
+                    "conditionScopeIds": [],
+                    "factScopeIds": []
+                  },
+                  "coverage": {
+                    "time": {
+                      "status": "present",
+                      "entityIds": [
+                        "P1"
+                      ],
+                      "scopeIds": [
+                        "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                      ]
+                    },
+                    "material": {
+                      "status": "present",
+                      "entityIds": [
+                        "M1"
+                      ],
+                      "scopeIds": [
+                        "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                        "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+                      ]
+                    },
+                    "event": {
+                      "status": "not_stated",
+                      "entityIds": [],
+                      "scopeIds": []
+                    }
+                  }
+                }
+              ],
+              "materials": [
+                {
+                  "tempId": "M1",
+                  "name": "场地申请",
+                  "required": true,
+                  "formatRequirements": [
+                    "PDF"
+                  ],
+                  "namingRequirements": [],
+                  "quantity": null,
+                  "submissionChannel": "青禾办事站",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "scopeIds": [
+                    "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                    "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+                  ],
+                  "confidence": 1
+                }
+              ],
+              "timePoints": [
+                {
+                  "tempId": "P1",
+                  "type": "submission_deadline",
+                  "rawText": "2026年11月6日15:20前",
+                  "relatedTaskTempIds": [
+                    "T1"
+                  ],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                  ],
+                  "confidence": 1
+                },
+                {
+                  "tempId": "P2",
+                  "type": "event_start",
+                  "rawText": "周五晚上",
+                  "relatedTaskTempIds": [],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658"
+                  ],
+                  "confidence": 1
+                },
+                {
+                  "tempId": "P3",
+                  "type": "event_end",
+                  "rawText": "结束时间尚未公布",
+                  "relatedTaskTempIds": [],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+                  ],
+                  "confidence": 1
+                },
+                {
+                  "tempId": "P4",
+                  "type": "event_start",
+                  "rawText": "2026年11月7日14:00",
+                  "relatedTaskTempIds": [],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162"
+                  ],
+                  "confidence": 1
+                },
+                {
+                  "tempId": "P5",
+                  "type": "event_end",
+                  "rawText": "15:00",
+                  "relatedTaskTempIds": [],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+                  ],
+                  "confidence": 1
+                }
+              ],
+              "events": [
+                {
+                  "tempId": "E1",
+                  "title": "系统维护",
+                  "description": "",
+                  "location": null,
+                  "startTimePointTempId": "P2",
+                  "endTimePointTempId": "P3",
+                  "relatedTaskTempIds": [],
+                  "scopeIds": [
+                    "scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+                    "scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+                  ],
+                  "confidence": 1,
+                  "inferenceLevel": "explicit"
+                },
+                {
+                  "tempId": "E2",
+                  "title": "器材讲解会",
+                  "description": "",
+                  "location": null,
+                  "startTimePointTempId": "P4",
+                  "endTimePointTempId": "P5",
+                  "relatedTaskTempIds": [],
+                  "scopeIds": [
+                    "scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+                    "scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+                  ],
+                  "confidence": 1,
+                  "inferenceLevel": "explicit"
+                }
+              ],
+              "revisions": [],
+              "conflicts": [],
+              "scopeAccounting": [
+                {
+                  "scopeId": "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                  "kind": "action",
+                  "primaryEntityIds": [
+                    "T1"
+                  ],
+                  "secondaryEntityIds": [
+                    "P1"
+                  ]
+                },
+                {
+                  "scopeId": "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                  "kind": "action",
+                  "primaryEntityIds": [
+                    "T1"
+                  ],
+                  "secondaryEntityIds": [
+                    "M1"
+                  ]
+                },
+                {
+                  "scopeId": "scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+                  "kind": "event",
+                  "primaryEntityIds": [
+                    "E2"
+                  ],
+                  "secondaryEntityIds": [
+                    "P4"
+                  ]
+                },
+                {
+                  "scopeId": "scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55",
+                  "kind": "event",
+                  "primaryEntityIds": [
+                    "E2"
+                  ],
+                  "secondaryEntityIds": [
+                    "P5"
+                  ]
+                },
+                {
+                  "scopeId": "scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+                  "kind": "event",
+                  "primaryEntityIds": [
+                    "E1"
+                  ],
+                  "secondaryEntityIds": [
+                    "P2"
+                  ]
+                },
+                {
+                  "scopeId": "scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2",
+                  "kind": "event",
+                  "primaryEntityIds": [
+                    "E1"
+                  ],
+                  "secondaryEntityIds": [
+                    "P3"
+                  ]
+                },
+                {
+                  "scopeId": "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109",
+                  "kind": "action",
+                  "primaryEntityIds": [
+                    "T1"
+                  ],
+                  "secondaryEntityIds": [
+                    "M1"
+                  ]
+                }
+              ],
+              "prerequisiteStates": []
+            },
+            "changes": [],
+            "projectedAccounting": [
+              {
+                "scopeId": "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                "kind": "action",
+                "primaryEntityIds": [
+                  "T1"
+                ],
+                "secondaryEntityIds": [
+                  "P1"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                "kind": "action",
+                "primaryEntityIds": [
+                  "T1"
+                ],
+                "secondaryEntityIds": [
+                  "M1"
+                ]
+              },
+              {
+                "scopeId": "scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E2"
+                ],
+                "secondaryEntityIds": [
+                  "P4"
+                ]
+              },
+              {
+                "scopeId": "scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E2"
+                ],
+                "secondaryEntityIds": [
+                  "P5"
+                ]
+              },
+              {
+                "scopeId": "scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": [
+                  "P2"
+                ]
+              },
+              {
+                "scopeId": "scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": [
+                  "P3"
+                ]
+              },
+              {
+                "scopeId": "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109",
+                "kind": "action",
+                "primaryEntityIds": [
+                  "T1"
+                ],
+                "secondaryEntityIds": [
+                  "M1"
+                ]
+              }
+            ]
+          },
+          "productGraphGuards": [],
+          "productDisposition": {
+            "version": "source-grounded-conditional-nonaction-1.0.0",
+            "role": "POST_HOC_PROGRAM_CONVERSION",
+            "inferredFacts": 0,
+            "directProjection": {
+              "version": "source-grounded-nonaction-projection-1.0.1",
+              "role": "POST_COMPARISON_PROGRAM_CONVERSION",
+              "inferredFacts": 0,
+              "originalTaskCount": 1,
+              "currentSuggestionTaskCount": 1,
+              "decisions": []
+            },
+            "decisions": [],
+            "originalTaskCount": 1,
+            "currentSuggestionTaskCount": 1
+          },
+          "recordedProvenance": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "ordinal": 101,
+            "sourceId": "channel-role-receipt-print-optional",
+            "sourceVersionId": "channel-role-receipt-print-optional-v1",
+            "candidate": "EngineeringFixture",
+            "sourceText": "请于2026年11月6日15:20前递交场地申请。场地申请必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+            "referenceTime": "2026-10-03T09:00:00+08:00",
+            "timezone": "Asia/Shanghai",
+            "rawHttpText": "{\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[{\\\"id\\\":\\\"T1\\\",\\\"propositionScopeIds\\\":[\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\",\\\"scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd\\\",\\\"scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab\\\"],\\\"semantics\\\":{\\\"actor\\\":\\\"addressee\\\",\\\"speechAct\\\":\\\"directive\\\",\\\"polarity\\\":\\\"affirmative\\\",\\\"tense\\\":\\\"future\\\",\\\"status\\\":\\\"pending\\\",\\\"validity\\\":\\\"active\\\",\\\"modality\\\":\\\"required\\\"},\\\"inferenceLevel\\\":\\\"explicit\\\",\\\"actionType\\\":\\\"other\\\",\\\"action\\\":{\\\"surface\\\":\\\"递交\\\",\\\"scopeId\\\":\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\"},\\\"object\\\":{\\\"surface\\\":\\\"场地申请\\\",\\\"scopeId\\\":\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\"},\\\"effect\\\":\\\"local_change\\\",\\\"detail\\\":{\\\"parentTempId\\\":null,\\\"hierarchyType\\\":\\\"task\\\",\\\"title\\\":\\\"递交场地申请\\\",\\\"description\\\":\\\"\\\",\\\"completionCriteria\\\":[\\\"场地申请必须为PDF\\\"],\\\"estimatedMinutes\\\":null,\\\"statusSuggestion\\\":\\\"todo\\\",\\\"prioritySuggestion\\\":\\\"medium\\\",\\\"dependencyTempIds\\\":[],\\\"confidence\\\":1,\\\"userConfirmationRequired\\\":true},\\\"condition\\\":{\\\"value\\\":\\\"not_applicable\\\",\\\"conditionScopeIds\\\":[],\\\"factScopeIds\\\":[]},\\\"coverage\\\":{\\\"time\\\":{\\\"status\\\":\\\"present\\\",\\\"entityIds\\\":[\\\"P1\\\"],\\\"scopeIds\\\":[\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\"]},\\\"material\\\":{\\\"status\\\":\\\"present\\\",\\\"entityIds\\\":[\\\"M1\\\"],\\\"scopeIds\\\":[\\\"scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd\\\",\\\"scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab\\\"]},\\\"event\\\":{\\\"status\\\":\\\"not_stated\\\",\\\"entityIds\\\":[],\\\"scopeIds\\\":[]}}}],\\\"materials\\\":[{\\\"tempId\\\":\\\"M1\\\",\\\"name\\\":\\\"场地申请\\\",\\\"required\\\":true,\\\"formatRequirements\\\":[\\\"PDF\\\"],\\\"namingRequirements\\\":[],\\\"quantity\\\":null,\\\"submissionChannel\\\":\\\"青禾办事站\\\",\\\"relatedTaskTempIds\\\":[\\\"T1\\\"],\\\"scopeIds\\\":[\\\"scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd\\\",\\\"scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab\\\"],\\\"confidence\\\":1}],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"submission_deadline\\\",\\\"rawText\\\":\\\"2026年11月6日15:20前\\\",\\\"relatedTaskTempIds\\\":[\\\"T1\\\"],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P2\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"周五晚上\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-661adce92925c5fda0475016b386a207e2ece6e71cf37c52e79e7ecfad6b7bea\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P3\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"结束时间尚未公布\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0006-7758049b68a7eaa8cdf13e03516b88ac94d17777394625a66ae2b9eb00955b1e\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P4\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"2026年11月7日14:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-a42951e23325b850274344f2fad96b9fc97a5ad6ec3818b938946b59d8e636b0\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P5\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"15:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0004-e802e2ceac713cbf8d61875cac71eaab9d5e2e63aabdcccccb874200ace4f7c3\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"系统维护\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P2\\\",\\\"endTimePointTempId\\\":\\\"P3\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-661adce92925c5fda0475016b386a207e2ece6e71cf37c52e79e7ecfad6b7bea\\\",\\\"scope-0006-7758049b68a7eaa8cdf13e03516b88ac94d17777394625a66ae2b9eb00955b1e\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"},{\\\"tempId\\\":\\\"E2\\\",\\\"title\\\":\\\"器材讲解会\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P4\\\",\\\"endTimePointTempId\\\":\\\"P5\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0003-a42951e23325b850274344f2fad96b9fc97a5ad6ec3818b938946b59d8e636b0\\\",\\\"scope-0004-e802e2ceac713cbf8d61875cac71eaab9d5e2e63aabdcccccb874200ace4f7c3\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"P1\\\"]},{\\\"scopeId\\\":\\\"scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"M1\\\"]},{\\\"scopeId\\\":\\\"scope-0003-a42951e23325b850274344f2fad96b9fc97a5ad6ec3818b938946b59d8e636b0\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P4\\\"]},{\\\"scopeId\\\":\\\"scope-0004-e802e2ceac713cbf8d61875cac71eaab9d5e2e63aabdcccccb874200ace4f7c3\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E2\\\"],\\\"secondaryEntityIds\\\":[\\\"P5\\\"]},{\\\"scopeId\\\":\\\"scope-0005-661adce92925c5fda0475016b386a207e2ece6e71cf37c52e79e7ecfad6b7bea\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P2\\\"]},{\\\"scopeId\\\":\\\"scope-0006-7758049b68a7eaa8cdf13e03516b88ac94d17777394625a66ae2b9eb00955b1e\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P3\\\"]},{\\\"scopeId\\\":\\\"scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab\\\",\\\"kind\\\":\\\"action\\\",\\\"primaryEntityIds\\\":[\\\"T1\\\"],\\\"secondaryEntityIds\\\":[\\\"M1\\\"]}],\\\"prerequisiteStates\\\":[]}\"}]}],\"usage\":{\"input_tokens\":0,\"output_tokens\":0}}",
+            "responseSha256": "5c4738e665e16e1ccddd65249b87120433dba6ac3f77a49ae6b246ab23ed4828",
+            "requestSha256": null,
+            "frozenOutcome": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "projectionVersion": "source-support-accounting-projection-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.2.0"
+          },
+          "scopeRebinding": {
+            "operation": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+            "mapping": [
+              [
+                "scope-0001-93ed4d16c965c733c7dbc0cfae63a83322c97a58f0a423bfaf84fc82bee26ccf",
+                "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+              ],
+              [
+                "scope-0002-a7ef437915a3fa6d70895ba9dcb031b6260ba2e8de42c4ca508c4f63a061d0bd",
+                "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4"
+              ],
+              [
+                "scope-0003-a42951e23325b850274344f2fad96b9fc97a5ad6ec3818b938946b59d8e636b0",
+                "scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162"
+              ],
+              [
+                "scope-0004-e802e2ceac713cbf8d61875cac71eaab9d5e2e63aabdcccccb874200ace4f7c3",
+                "scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+              ],
+              [
+                "scope-0005-661adce92925c5fda0475016b386a207e2ece6e71cf37c52e79e7ecfad6b7bea",
+                "scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658"
+              ],
+              [
+                "scope-0006-7758049b68a7eaa8cdf13e03516b88ac94d17777394625a66ae2b9eb00955b1e",
+                "scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+              ],
+              [
+                "scope-0007-97fa4b2c5d8a86f0d6d25dc458e58c4d719b50205a6103becbb62e183720f2ab",
+                "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+              ]
+            ]
+          },
+          "postComparisonConversion": {
+            "version": "explicit-source-contract-4.0.0",
+            "operation": "VALIDATED_TYPED_DECLARATIONS_AND_EXPLICIT_EDGE_INVERSES_ONLY",
+            "scopeAccounting": [
+              {
+                "scopeId": "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                "kind": "action",
+                "entityIds": [
+                  "T1"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                "kind": "action",
+                "entityIds": [
+                  "T1"
+                ]
+              },
+              {
+                "scopeId": "scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+                "kind": "event",
+                "entityIds": [
+                  "E2"
+                ]
+              },
+              {
+                "scopeId": "scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55",
+                "kind": "event",
+                "entityIds": [
+                  "E2"
+                ]
+              },
+              {
+                "scopeId": "scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+                "kind": "event",
+                "entityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2",
+                "kind": "event",
+                "entityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109",
+                "kind": "action",
+                "entityIds": [
+                  "T1"
+                ]
+              }
+            ],
+            "prerequisiteStates": [],
+            "inferredFacts": 0,
+            "originalDeclarations": [
+              {
+                "taskId": "T1",
+                "coverage": {
+                  "time": {
+                    "status": "present",
+                    "entityIds": [
+                      "P1"
+                    ],
+                    "scopeIds": [
+                      "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                    ]
+                  },
+                  "material": {
+                    "status": "present",
+                    "entityIds": [
+                      "M1"
+                    ],
+                    "scopeIds": [
+                      "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                      "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+                    ]
+                  },
+                  "event": {
+                    "status": "not_stated",
+                    "entityIds": [],
+                    "scopeIds": []
+                  }
+                }
+              }
+            ],
+            "typedAccounting": [
+              {
+                "scopeId": "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                "kind": "action",
+                "primaryEntityIds": [
+                  "T1"
+                ],
+                "secondaryEntityIds": [
+                  "P1"
+                ]
+              },
+              {
+                "scopeId": "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                "kind": "action",
+                "primaryEntityIds": [
+                  "T1"
+                ],
+                "secondaryEntityIds": [
+                  "M1"
+                ]
+              },
+              {
+                "scopeId": "scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E2"
+                ],
+                "secondaryEntityIds": [
+                  "P4"
+                ]
+              },
+              {
+                "scopeId": "scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E2"
+                ],
+                "secondaryEntityIds": [
+                  "P5"
+                ]
+              },
+              {
+                "scopeId": "scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": [
+                  "P2"
+                ]
+              },
+              {
+                "scopeId": "scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": [
+                  "P3"
+                ]
+              },
+              {
+                "scopeId": "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109",
+                "kind": "action",
+                "primaryEntityIds": [
+                  "T1"
+                ],
+                "secondaryEntityIds": [
+                  "M1"
+                ]
+              }
+            ]
+          },
+          "postComparisonCoverage": {
+            "legacy": null,
+            "declarations": [
+              {
+                "taskId": "T1",
+                "coverage": {
+                  "time": {
+                    "status": "present",
+                    "entityIds": [
+                      "P1"
+                    ],
+                    "scopeIds": [
+                      "scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                    ]
+                  },
+                  "material": {
+                    "status": "present",
+                    "entityIds": [
+                      "M1"
+                    ],
+                    "scopeIds": [
+                      "scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                      "scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+                    ]
+                  },
+                  "event": {
+                    "status": "not_stated",
+                    "entityIds": [],
+                    "scopeIds": []
+                  }
+                }
+              }
+            ],
+            "unknownCoverage": []
+          },
+          "sourceRenderedEvents": []
+        },
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "createdAt": "2026-10-03T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "递交场地申请",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "1项任务，2项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "递交场地申请",
+              "description": "请于2026年11月6日15:20前递交场地申请。\n场地申请必须为PDF。\n请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+              "completionCriteria": [
+                "场地申请必须为PDF"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true,
+              "materialTempIds": [
+                "M1"
+              ],
+              "timePointTempIds": [
+                "P1"
+              ],
+              "tempId": "T1",
+              "actionVerb": "递交",
+              "actionObject": "场地申请",
+              "evidenceIds": [
+                "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+              ],
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "M1",
+              "name": "场地申请",
+              "required": true,
+              "formatRequirements": [
+                "PDF"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": "青禾办事站",
+              "relatedTaskTempIds": [
+                "T1"
+              ],
+              "confidence": 1,
+              "evidenceIds": [
+                "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+              ]
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "P1",
+              "type": "submission_deadline",
+              "rawText": "2026年11月6日15:20前",
+              "relatedTaskTempIds": [
+                "T1"
+              ],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-11-06T15:20",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+              ]
+            },
+            {
+              "tempId": "P2",
+              "type": "event_start",
+              "rawText": "周五晚上",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658"
+              ]
+            },
+            {
+              "tempId": "P3",
+              "type": "event_end",
+              "rawText": "结束时间尚未公布",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "evidenceIds": [
+                "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+              ]
+            },
+            {
+              "tempId": "P4",
+              "type": "event_start",
+              "rawText": "2026年11月7日14:00",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-11-07T14:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162"
+              ]
+            },
+            {
+              "tempId": "P5",
+              "type": "event_end",
+              "rawText": "15:00",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-11-07T15:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "E1",
+              "title": "系统维护",
+              "description": "系统维护在周五晚上开始，\n结束时间尚未公布。",
+              "startTimePointTempId": "P2",
+              "endTimePointTempId": "P3",
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+                "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+              ],
+              "selected": true
+            },
+            {
+              "tempId": "E2",
+              "title": "器材讲解会",
+              "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。",
+              "startTimePointTempId": "P4",
+              "endTimePointTempId": "P5",
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+                "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+              "sourceId": "source:986a3170",
+              "quote": "请于2026年11月6日15:20前递交场地申请。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+              "sourceId": "source:986a3170",
+              "quote": "场地申请必须为PDF。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+              "sourceId": "source:986a3170",
+              "quote": "器材讲解会于2026年11月7日14:00开始，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55",
+              "sourceId": "source:986a3170",
+              "quote": "15:00结束。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+              "sourceId": "source:986a3170",
+              "quote": "系统维护在周五晚上开始，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2",
+              "sourceId": "source:986a3170",
+              "quote": "结束时间尚未公布。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109",
+              "sourceId": "source:986a3170",
+              "quote": "请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 0.5,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "T1",
+              "kind": "task",
+              "title": "递交场地申请",
+              "description": "请于2026年11月6日15:20前递交场地申请。\n场地申请必须为PDF。\n请通过青禾办事站提交场地申请并保存回执（无需打印）。"
+            },
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "系统维护",
+              "description": "系统维护在周五晚上开始，\n结束时间尚未公布。"
+            },
+            {
+              "entityId": "E2",
+              "kind": "event",
+              "title": "器材讲解会",
+              "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "递交场地申请",
+              "description": "1项任务，2项事件。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "T1",
+              "kind": "task",
+              "title": "递交场地申请",
+              "description": "请于2026年11月6日15:20前递交场地申请。\n场地申请必须为PDF。\n请通过青禾办事站提交场地申请并保存回执（无需打印）。"
+            },
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "系统维护",
+              "description": "系统维护在周五晚上开始，\n结束时间尚未公布。"
+            },
+            {
+              "entityId": "E2",
+              "kind": "event",
+              "title": "器材讲解会",
+              "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "递交场地申请",
+              "description": "1项任务，2项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "P1",
+              "before": {
+                "normalizedValue": "2026-11-06T15:20",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-11-06T15:20",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年11月6日15:20前",
+                  "type": "submission_deadline",
+                  "normalizedValue": "2026-11-06T15:20",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 16
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-11-06",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请于2026年11月6日15:20前递交场地申请"
+              }
+            },
+            {
+              "entityId": "P2",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "周五晚上",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 4
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "晚上",
+                "certainty": "partial",
+                "sourceContext": "系统维护在周五晚上开始"
+              }
+            },
+            {
+              "entityId": "P3",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "结束时间尚未公布",
+                  "type": "event_end",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 8
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "time_unannounced"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": null,
+                "certainty": "unannounced",
+                "sourceContext": "结束时间尚未公布"
+              }
+            },
+            {
+              "entityId": "P4",
+              "before": {
+                "normalizedValue": "2026-11-07T14:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-11-07T14:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年11月7日14:00",
+                  "type": "event_start",
+                  "normalizedValue": "2026-11-07T14:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 15
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-11-07",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "器材讲解会于2026年11月7日14:00开始"
+              }
+            },
+            {
+              "entityId": "P5",
+              "before": {
+                "normalizedValue": "2026-11-07T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-11-07T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "15:00",
+                  "type": "event_end",
+                  "normalizedValue": "2026-11-07T15:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 5
+                  },
+                  "dateKind": "inherited",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-11-07",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "器材讲解会于2026年11月7日14:00开始\n15:00结束"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "materialChannelGrounding": {
+          "version": "material-channel-role-grounding-1.2.0",
+          "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+          "inferredFacts": 0,
+          "decisions": [
+            {
+              "materialId": "M1",
+              "materialName": "场地申请",
+              "ownerIds": [
+                "T1"
+              ],
+              "originalValue": "青禾办事站",
+              "displayedValue": "青禾办事站",
+              "status": "EXPLICIT_CHANNEL",
+              "evidence": [
+                {
+                  "id": "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                  "quote": "请于2026年11月6日15:20前递交场地申请。"
+                },
+                {
+                  "id": "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                  "quote": "场地申请必须为PDF。"
+                },
+                {
+                  "id": "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109",
+                  "quote": "请通过青禾办事站提交场地申请并保存回执（无需打印）。"
+                }
+              ],
+              "roleChecks": [
+                {
+                  "quote": "请通过青禾办事站提交场地申请并保存回执（无需打印）",
+                  "object": "场地申请",
+                  "polarity": "AFFIRMATIVE",
+                  "roleText": "通过青禾办事站提交场地申请并保存",
+                  "polarityText": "请通过<渠道>提交<对象>并保存回执",
+                  "unrelatedQualifier": "（无需打印）"
+                }
+              ]
+            }
+          ]
+        },
+        "v7Record": {
+          "id": "source:986a3170:draft:1",
+          "sourceId": "source:986a3170",
+          "sourceVersionId": "source:986a3170:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 115,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-04T10:50:22.734Z",
+          "updatedAt": "2026-10-04T10:50:22.834Z",
+          "schemaVersion": "2.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "recognition-source-contract-4.0.0",
+            "modelName": "匿名契约工程夹具（非模型输出）",
+            "createdAt": "2026-10-03T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "递交场地申请",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "1项任务，2项事件。请核对后确认。",
+              "requiresAction": true,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [
+              {
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "递交场地申请",
+                "description": "请于2026年11月6日15:20前递交场地申请。\n场地申请必须为PDF。\n请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+                "completionCriteria": [
+                  "场地申请必须为PDF"
+                ],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "confidence": 1,
+                "userConfirmationRequired": true,
+                "materialTempIds": [
+                  "M1"
+                ],
+                "timePointTempIds": [
+                  "P1"
+                ],
+                "tempId": "T1",
+                "actionVerb": "递交",
+                "actionObject": "场地申请",
+                "evidenceIds": [
+                  "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                  "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                  "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+                ],
+                "inferenceLevel": "explicit",
+                "selected": true
+              }
+            ],
+            "materials": [
+              {
+                "tempId": "M1",
+                "name": "场地申请",
+                "required": true,
+                "formatRequirements": [
+                  "PDF"
+                ],
+                "namingRequirements": [],
+                "quantity": null,
+                "submissionChannel": "青禾办事站",
+                "relatedTaskTempIds": [
+                  "T1"
+                ],
+                "confidence": 1,
+                "evidenceIds": [
+                  "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                  "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+                ]
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "P1",
+                "type": "submission_deadline",
+                "rawText": "2026年11月6日15:20前",
+                "relatedTaskTempIds": [
+                  "T1"
+                ],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": "2026-11-06T15:20",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+                ]
+              },
+              {
+                "tempId": "P2",
+                "type": "event_start",
+                "rawText": "周五晚上",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "evidenceIds": [
+                  "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658"
+                ]
+              },
+              {
+                "tempId": "P3",
+                "type": "event_end",
+                "rawText": "结束时间尚未公布",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "evidenceIds": [
+                  "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+                ]
+              },
+              {
+                "tempId": "P4",
+                "type": "event_start",
+                "rawText": "2026年11月7日14:00",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": "2026-11-07T14:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162"
+                ]
+              },
+              {
+                "tempId": "P5",
+                "type": "event_end",
+                "rawText": "15:00",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": "2026-11-07T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+                ]
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "系统维护",
+                "description": "系统维护在周五晚上开始，\n结束时间尚未公布。",
+                "startTimePointTempId": "P2",
+                "endTimePointTempId": "P3",
+                "location": null,
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "evidenceIds": [
+                  "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+                  "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+                ],
+                "selected": true
+              },
+              {
+                "tempId": "E2",
+                "title": "器材讲解会",
+                "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。",
+                "startTimePointTempId": "P4",
+                "endTimePointTempId": "P5",
+                "location": null,
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "evidenceIds": [
+                  "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+                  "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+                ],
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+                "sourceId": "source:986a3170",
+                "quote": "请于2026年11月6日15:20前递交场地申请。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+                "sourceId": "source:986a3170",
+                "quote": "场地申请必须为PDF。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+                "sourceId": "source:986a3170",
+                "quote": "器材讲解会于2026年11月7日14:00开始，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55",
+                "sourceId": "source:986a3170",
+                "quote": "15:00结束。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+                "sourceId": "source:986a3170",
+                "quote": "系统维护在周五晚上开始，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2",
+                "sourceId": "source:986a3170",
+                "quote": "结束时间尚未公布。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109",
+                "sourceId": "source:986a3170",
+                "quote": "请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 0.5,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": false,
+              "reviewReasons": []
+            }
+          },
+          "items": [
+            {
+              "id": "draft-item:source:986a3170:draft:1:T1",
+              "suggestion": {
+                "id": "T1",
+                "title": "递交场地申请",
+                "category": "其他",
+                "nextAction": "递交场地申请",
+                "description": "请于2026年11月6日15:20前递交场地申请。\n场地申请必须为PDF。\n请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+                "priority": "中",
+                "materials": [
+                  "场地申请"
+                ],
+                "evidence": "2026年11月6日15:20前",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "待确认",
+              "updatedAt": "2026-10-04T10:50:22.834Z",
+              "history": []
+            }
+          ],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:986a3170:draft:1",
+          "commitId": "source-review:source:986a3170:draft:1:fnv1a32:4f598dd6",
+          "disposition": "confirmed",
+          "entityIds": [
+            "task:source:986a3170:draft:1:T1",
+            "event:source:986a3170:draft:1:E1",
+            "event:source:986a3170:draft:1:E2",
+            "time:source:986a3170:draft:1:P1",
+            "time:source:986a3170:draft:1:P2",
+            "time:source:986a3170:draft:1:P3",
+            "time:source:986a3170:draft:1:P4",
+            "time:source:986a3170:draft:1:P5",
+            "material:source:986a3170:draft:1:M1"
+          ],
+          "entityHashes": {
+            "task:source:986a3170:draft:1:T1": "fnv1a32:490d7cf8",
+            "event:source:986a3170:draft:1:E1": "fnv1a32:fd717c1d",
+            "event:source:986a3170:draft:1:E2": "fnv1a32:d06bc71c",
+            "time:source:986a3170:draft:1:P1": "fnv1a32:6ebc9245",
+            "time:source:986a3170:draft:1:P2": "fnv1a32:f595d448",
+            "time:source:986a3170:draft:1:P3": "fnv1a32:7fe3e962",
+            "time:source:986a3170:draft:1:P4": "fnv1a32:9b059822",
+            "time:source:986a3170:draft:1:P5": "fnv1a32:78816084",
+            "material:source:986a3170:draft:1:M1": "fnv1a32:ce7e59f9"
+          },
+          "verifiedAt": "2026-10-04T10:52:22.273Z"
+        }
+      }
+    }
+  ],
+  "projects": [],
+  "milestones": [],
+  "workPackages": [],
+  "tasks": [
+    {
+      "id": "task:source:986a3170:draft:1:T1",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "递交场地申请",
+      "description": "请于2026年11月6日15:20前递交场地申请。\n场地申请必须为PDF。\n请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+      "nextAction": "递交场地申请",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "updatedAt": "2026-10-04T10:52:22.204Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "T1",
+        "actionVerb": "递交",
+        "actionObject": "场地申请",
+        "completionCriteria": [
+          "场地申请必须为PDF"
+        ],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+          "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+          "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+        ],
+        "sourceId": "source:986a3170",
+        "category": "其他"
+      }
+    }
+  ],
+  "materials": [
+    {
+      "id": "material:source:986a3170:draft:1:M1",
+      "projectId": null,
+      "name": "场地申请",
+      "required": true,
+      "status": "unverified",
+      "requirements": [],
+      "formatRequirements": [
+        "PDF"
+      ],
+      "namingRequirements": [],
+      "quantity": null,
+      "submissionChannel": "青禾办事站",
+      "relatedTaskIds": [
+        "task:source:986a3170:draft:1:T1"
+      ],
+      "deadlineTimePointId": null,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "updatedAt": "2026-10-04T10:52:22.204Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "M1",
+        "evidenceIds": [
+          "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+          "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+        ],
+        "availabilityVersion": "ordinary-availability-unobserved-1",
+        "availabilityOrigin": "not_observed",
+        "sourceReviewDraftId": "source:986a3170:draft:1"
+      }
+    }
+  ],
+  "timePoints": [
+    {
+      "id": "time:source:986a3170:draft:1:P1",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": "task:source:986a3170:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:986a3170:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "type": "submission_deadline",
+      "rawText": "2026年11月6日15:20前",
+      "normalizedValue": "2026-11-06T15:20",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "updatedAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionTempId": "P1",
+        "evidenceIds": [
+          "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:986a3170:draft:1:P2",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:986a3170:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "周五晚上",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "updatedAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionTempId": "P2",
+        "evidenceIds": [
+          "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:986a3170:draft:1:P3",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:986a3170:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "结束时间尚未公布",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "updatedAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionTempId": "P3",
+        "evidenceIds": [
+          "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:986a3170:draft:1:P4",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:986a3170:draft:1:E2",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年11月7日14:00",
+      "normalizedValue": "2026-11-07T14:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "updatedAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionTempId": "P4",
+        "evidenceIds": [
+          "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:986a3170:draft:1:P5",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:986a3170:draft:1:E2",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "15:00",
+      "normalizedValue": "2026-11-07T15:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "updatedAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionTempId": "P5",
+        "evidenceIds": [
+          "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+        ],
+        "confidence": 1
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "event:source:986a3170:draft:1:E1",
+      "projectId": null,
+      "title": "系统维护",
+      "description": "系统维护在周五晚上开始，\n结束时间尚未公布。",
+      "startTimePointId": "time:source:986a3170:draft:1:P2",
+      "endTimePointId": "time:source:986a3170:draft:1:P3",
+      "location": null,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "updatedAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionTempId": "E1",
+        "evidenceIds": [
+          "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+          "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    },
+    {
+      "id": "event:source:986a3170:draft:1:E2",
+      "projectId": null,
+      "title": "器材讲解会",
+      "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。",
+      "startTimePointId": "time:source:986a3170:draft:1:P4",
+      "endTimePointId": "time:source:986a3170:draft:1:P5",
+      "location": null,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "updatedAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionTempId": "E2",
+        "evidenceIds": [
+          "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+          "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    }
+  ],
+  "evidenceRefs": [
+    {
+      "id": "evidence:source:986a3170:draft:1:d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04",
+      "sourceVersionId": "source:986a3170:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "请于2026年11月6日15:20前递交场地申请。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-63290827ed33b7a2b08afeccd0d8e92326f621d0fcc08cc5556f4b9e23a0ee04"
+      }
+    },
+    {
+      "id": "evidence:source:986a3170:draft:1:d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4",
+      "sourceVersionId": "source:986a3170:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "场地申请必须为PDF。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-a908fc9dcad6c85be72fe31af6726c2229aa08a823d051633e9fc7f416924cf4"
+      }
+    },
+    {
+      "id": "evidence:source:986a3170:draft:1:d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162",
+      "sourceVersionId": "source:986a3170:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "器材讲解会于2026年11月7日14:00开始，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0003-31942f2d86eba15e067c3b06d84725425cdfab49a46d7b88f7d58d5dda33d162"
+      }
+    },
+    {
+      "id": "evidence:source:986a3170:draft:1:d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55",
+      "sourceVersionId": "source:986a3170:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "15:00结束。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0004-018dbc6723b49c936b59de425c3dfe163f97c222db99f3cd5703e185f707ec55"
+      }
+    },
+    {
+      "id": "evidence:source:986a3170:draft:1:d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658",
+      "sourceVersionId": "source:986a3170:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "系统维护在周五晚上开始，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0005-8a6348bb872068e3aa8aac6755f107064cecd75ee86dd406f7ceef2b129bc658"
+      }
+    },
+    {
+      "id": "evidence:source:986a3170:draft:1:d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2",
+      "sourceVersionId": "source:986a3170:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "结束时间尚未公布。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0006-a2fe2f20928d56e5f295cd30e974bd4b7888daa5405958ae23ed3a12cfffb6e2"
+      }
+    },
+    {
+      "id": "evidence:source:986a3170:draft:1:d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109",
+      "sourceVersionId": "source:986a3170:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "请通过青禾办事站提交场地申请并保存回执（无需打印）。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-04T10:52:22.204Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0007-83467b0631f151e17318c4da6f3890c296989daa49069b5a3daea63f0c7e9109"
+      }
+    }
+  ],
+  "changeProposals": [],
+  "historyRecords": [
+    {
+      "id": "history:task:source:986a3170:draft:1:T1:created",
+      "entityType": "task",
+      "entityId": "task:source:986a3170:draft:1:T1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:986a3170:draft:1:T1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:986a3170:version:1",
+      "changedAt": "2026-10-04T10:52:22.204Z"
+    },
+    {
+      "id": "history:material:source:986a3170:draft:1:M1:created",
+      "entityType": "material",
+      "entityId": "material:source:986a3170:draft:1:M1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "material:source:986a3170:draft:1:M1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别材料",
+      "sourceVersionId": "source:986a3170:version:1",
+      "changedAt": "2026-10-04T10:52:22.204Z"
+    },
+    {
+      "id": "history:time:source:986a3170:draft:1:P1:created",
+      "entityType": "time_point",
+      "entityId": "time:source:986a3170:draft:1:P1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:986a3170:draft:1:P1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:986a3170:version:1",
+      "changedAt": "2026-10-04T10:52:22.204Z"
+    },
+    {
+      "id": "history:time:source:986a3170:draft:1:P2:created",
+      "entityType": "time_point",
+      "entityId": "time:source:986a3170:draft:1:P2",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:986a3170:draft:1:P2"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:986a3170:version:1",
+      "changedAt": "2026-10-04T10:52:22.204Z"
+    },
+    {
+      "id": "history:time:source:986a3170:draft:1:P3:created",
+      "entityType": "time_point",
+      "entityId": "time:source:986a3170:draft:1:P3",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:986a3170:draft:1:P3"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:986a3170:version:1",
+      "changedAt": "2026-10-04T10:52:22.204Z"
+    },
+    {
+      "id": "history:time:source:986a3170:draft:1:P4:created",
+      "entityType": "time_point",
+      "entityId": "time:source:986a3170:draft:1:P4",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:986a3170:draft:1:P4"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:986a3170:version:1",
+      "changedAt": "2026-10-04T10:52:22.204Z"
+    },
+    {
+      "id": "history:time:source:986a3170:draft:1:P5:created",
+      "entityType": "time_point",
+      "entityId": "time:source:986a3170:draft:1:P5",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:986a3170:draft:1:P5"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:986a3170:version:1",
+      "changedAt": "2026-10-04T10:52:22.204Z"
+    },
+    {
+      "id": "history:event:source:986a3170:draft:1:E1:created",
+      "entityType": "event",
+      "entityId": "event:source:986a3170:draft:1:E1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:986a3170:draft:1:E1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:986a3170:version:1",
+      "changedAt": "2026-10-04T10:52:22.204Z"
+    },
+    {
+      "id": "history:event:source:986a3170:draft:1:E2:created",
+      "entityType": "event",
+      "entityId": "event:source:986a3170:draft:1:E2",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:986a3170:draft:1:E2"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:986a3170:version:1",
+      "changedAt": "2026-10-04T10:52:22.204Z"
+    }
+  ],
+  "reminderRecords": [],
+  "preferences": {
+    "onboardingCompletedAt": null,
+    "legacyData": {
+      "courseBlocks": [],
+      "integrations": {
+        "sync": {
+          "endpoint": "http://127.0.0.1:8787"
+        },
+        "webMonitors": [],
+        "connectionIntents": []
+      },
+      "knowledgeSettings": {},
+      "recognitionFeedback": [],
+      "v7MigrationLog": [],
+      "v7LegacyData": {}
+    }
+  },
+  "migrationMetadata": [],
+  "savedAt": "2026-10-04T10:52:22.216Z"
+}

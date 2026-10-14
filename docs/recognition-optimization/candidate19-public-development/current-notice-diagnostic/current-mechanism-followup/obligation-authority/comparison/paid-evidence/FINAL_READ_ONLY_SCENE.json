@@ -1,0 +1,177 @@
+{
+  "status": "HALTED_READ_ONLY",
+  "role": "OBLIGATION_SEALED_READ_ONLY_NOT_DISPATCH",
+  "state": {
+    "version": "scoped-execution-state-2",
+    "batch": "V5-OBLIGATION-AUTHORITY-DEVELOPMENT-R1",
+    "model": "deepseek-flash",
+    "manifestSha256": "b2749c885ee466b187fe2a74537997f78a9ec2b3e494d02e4b6fd494379b1fea",
+    "identitiesSha256": "bf8c3ddfea61b6353f5d12d72021dd1042faeb4ef27b7b23b6b74df22dad594f",
+    "authorized": true,
+    "units": [
+      {
+        "ordinal": 1,
+        "unitIdentitySha256": "5226a924b92676866252e461b02e2c915a9dea8fdedca3ad77e689989bef62e1",
+        "requestSha256": "206bfbcf29ba3f4938b809ee83ea70f249c13132364816c8567f6c4fcd15313f",
+        "status": "UNCERTAIN",
+        "haltReason": "SEND_RAW_OR_STATE"
+      },
+      {
+        "ordinal": 2,
+        "unitIdentitySha256": "7b1f5d140760b5945dd684b2bd41bd99c118e432ec4eba49bb6357c9a8982052",
+        "requestSha256": "9a3312ea14fce1d03ee8e9f47acb4c3dc0748feebee8fa2ee119f91b408a8cf3",
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 3,
+        "unitIdentitySha256": "00e99c507f32913918245a61dc9cca7bbedd5418c20a70c8315667a0debd6a49",
+        "requestSha256": "f36830ed62a6424b34b9a74ff2c3d398e78c12d8e7f1454626df41f863f59d1e",
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 4,
+        "unitIdentitySha256": "8b72132fdd857d5c2adbf26270b58c4f6b94fbabb361f480f562a2ad3ce2d2db",
+        "requestSha256": "7df70eb797c3d127d5ef112a3696bd0f0805d7f1d63697deecc8ec6145ab6114",
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 5,
+        "unitIdentitySha256": "8f98a7255da33a7cbed4719296079e4b81695eb499c9d2253ade6e5a21800d3f",
+        "requestSha256": "297e88501972009a91ca507e5dbc92b9622ece360294826394d88ae4d0689cbe",
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 6,
+        "unitIdentitySha256": "5bc7ec3e6f11dba7f3ad708f54fbfdd1f1a77095e8f9cfb58a49d738e444c1e3",
+        "requestSha256": "9049d6b178ef5252b1f9eaff64f5b0f77174d0604d771233f0764c22168b4529",
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 7,
+        "unitIdentitySha256": "6ac73ee5330716630b0f518ee29038e496c2cc392be5a90eec5053ac95092ea4",
+        "requestSha256": "ac0235bf2fcee0416cfa36c0be4083d29d8cbf505ed726f0b647c139d2298606",
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 8,
+        "unitIdentitySha256": "5942553e2cc415d9062cc431b961a18b8386ae1a20d75261c50f1375ec9fe78b",
+        "requestSha256": "c5eb6dc2e782cdd46ac79a809dadc9dec8c5f12ec937b368bca679ad4517b791",
+        "status": "NOT_SENT"
+      }
+    ],
+    "grantId": "obligation-c51934f2-0630-4880-8e89-3f94eaa7caa4",
+    "committedHead": "72e4b580d4df051c0507ab8cb981d9c3df07069d",
+    "snapshotCommit": "73a8b9235520ddd598a03001ffc475218367c7bd",
+    "hostAuthorizationSha256": "142122135370b5bf30c08e0551a93e23a30b0e0f411d4a6842b63fdc5cad5104",
+    "role": "SCOPED_DEVELOPMENT_HOST_NOT_AUTHORIZATION"
+  },
+  "nextOrdinal": null,
+  "audit": "UNRESOLVED",
+  "uncertainty": "D26_EXEC_UNCERTAIN_OR_DUPLICATE",
+  "priceStatus": "CURRENT_AS_RECORDED_NOT_REVERIFIED",
+  "batchEvidence": {
+    "rows": 2,
+    "grantCount": 1,
+    "reserveCount": 1,
+    "settleCount": 0,
+    "units": [
+      {
+        "ordinal": 1,
+        "reserveCount": 1,
+        "settleCount": 0
+      },
+      {
+        "ordinal": 2,
+        "reserveCount": 0,
+        "settleCount": 0
+      },
+      {
+        "ordinal": 3,
+        "reserveCount": 0,
+        "settleCount": 0
+      },
+      {
+        "ordinal": 4,
+        "reserveCount": 0,
+        "settleCount": 0
+      },
+      {
+        "ordinal": 5,
+        "reserveCount": 0,
+        "settleCount": 0
+      },
+      {
+        "ordinal": 6,
+        "reserveCount": 0,
+        "settleCount": 0
+      },
+      {
+        "ordinal": 7,
+        "reserveCount": 0,
+        "settleCount": 0
+      },
+      {
+        "ordinal": 8,
+        "reserveCount": 0,
+        "settleCount": 0
+      }
+    ]
+  },
+  "localEvidence": {
+    "rawFiles": 0,
+    "receiptFiles": 2,
+    "incompleteStateWrite": false
+  },
+  "dispatchEligibility": "NOT_EVALUATED_READ_ONLY",
+  "lockExists": true,
+  "halt": {
+    "version": "d26-host-halt-1",
+    "role": "SCOPED_DEVELOPMENT_HOST_NOT_AUTHORIZATION",
+    "batch": "V5-OBLIGATION-AUTHORITY-DEVELOPMENT-R1",
+    "code": "UNIT_SEND_RAW_OR_SETTLEMENT_UNCERTAIN",
+    "observedAt": "2026-10-07T13:43:16.474Z",
+    "units": [
+      {
+        "ordinal": 1,
+        "status": "UNCERTAIN"
+      },
+      {
+        "ordinal": 2,
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 3,
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 4,
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 5,
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 6,
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 7,
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 8,
+        "status": "NOT_SENT"
+      }
+    ],
+    "instruction": "READ_ONLY_RECONCILIATION_NO_AUTOMATIC_RETRY_OR_LOCK_REMOVAL"
+  },
+  "ledger": {
+    "rows": 1026,
+    "sha256": "489da37a7b83c2d3d6c00d8f2ef949e6d3fae4f8e9e250e5bac7ca80a84ec278",
+    "tail": "9df85fd703dbbe31c8510ccdf60b00ba84d51215ab07e5b00f8d8fce179912d7",
+    "batchRows": 2
+  },
+  "dispatch": "NOT_PERFORMED",
+  "ledgerWrites": 0
+}

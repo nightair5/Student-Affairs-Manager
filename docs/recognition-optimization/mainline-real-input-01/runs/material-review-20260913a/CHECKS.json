@@ -1,0 +1,166 @@
+{
+  "status": "SCOPE_BLOCKED",
+  "featureImplemented": false,
+  "baseHead": "715252940bf48cd90817941ccdebb9fc82d2dc1e",
+  "protection": {
+    "counts": {
+      "sources": 60,
+      "protected": 944,
+      "static": 607,
+      "frozen": 18,
+      "previousEvidence": 90
+    },
+    "failures": [],
+    "ledgerSha": "9d4352be315600eeafe887284492398b95e9b2a3dd97721a39f5fe2439316d52",
+    "ledgerBytes": 200447,
+    "logPrefixSha": "22665501c57d7b3460dc366006bfa57aa1870231e01aea90e6ca39b9767516a5",
+    "logPrefixBytes": 336889
+  },
+  "baseline": {
+    "sources": 60,
+    "protected": 944,
+    "static": 607,
+    "frozen": 18,
+    "previousEvidence": 90,
+    "ledger": {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+      "lines": 264,
+      "bytes": 200447,
+      "sha256": "9d4352be315600eeafe887284492398b95e9b2a3dd97721a39f5fe2439316d52",
+      "tailHash": "bad2a759a5f62264b1cfe6dc2941793cfb6d28cb332f5e78ee642ee5ba637bcb",
+      "totalAttempts": 128,
+      "totalCostUpperMicroCny": 6130417,
+      "a01UnknownReserveMicroCny": 3300000,
+      "kinds": {
+        "init": 1,
+        "reserve": 1,
+        "halt": 1,
+        "recoveryReserve": 1,
+        "recoverySettle": 1,
+        "batchGrant": 1,
+        "batchReserve": 126,
+        "batchSettle": 126,
+        "candidate02Grant": 1,
+        "candidate03Grant": 1,
+        "paired04Grant": 1,
+        "paired05Grant": 1,
+        "paired06Grant": 1,
+        "paired07Grant": 1
+      },
+      "receiptsVerified": 264,
+      "oldPrefixPreserved": true
+    },
+    "log": {
+      "path": "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+      "bytes": 336889,
+      "sha256": "22665501c57d7b3460dc366006bfa57aa1870231e01aea90e6ca39b9767516a5"
+    },
+    "preserved": [
+      {
+        "path": "src/experiments/mainline05/semanticState.ts",
+        "sha256": "d0326a0a7f06ca643f7ce307c5ceaad3b748fc7fbae095d0738abf68fd9912c7"
+      },
+      {
+        "path": "src/experiments/mainline05/semanticRepository.ts",
+        "sha256": "1259aa87d947fa278e5a1bdd98ab1c516504562f9c948a474a936c13126fa1ee"
+      },
+      {
+        "path": "src/experiments/realInput01/browser.tsx",
+        "sha256": "9d47185b698da500732fd31ca897229f5636dbab27f35a393daaee7557174ff0"
+      },
+      {
+        "path": "src/experiments/realInput01/runtime.ts",
+        "sha256": "687e0a41c967f76750291ab227de588fd63b30c3d8dd3e70e541cc0301a7ffa9"
+      },
+      {
+        "path": "src/experiments/realInput01/acceptance.test.tsx",
+        "sha256": "8bc45a6bbfa8877ad0bb048846a178fc80b28be84b62e03fb462f74509c02b0b"
+      },
+      {
+        "path": "scripts/build-real-input-preview.mjs",
+        "sha256": "719c34f9f52881374fc1e9bef72bd3a727ee98b0d1427aa0c761b6c5347fbac2"
+      },
+      {
+        "path": "cloudflare/real-input-preview.mjs",
+        "sha256": "280a54bcf03156718de6e15c47ebda3537f7b198cdb4292bc59e9881c59823d4"
+      }
+    ],
+    "failures": []
+  },
+  "reproduction": {
+    "status": "CURRENT_LIMITATION_REPRODUCED_NOT_FEATURE_PASS",
+    "checks": [
+      {
+        "name": "explicit unverified material decision",
+        "rejected": true,
+        "error": "REAL_INPUT_CORRECTION_MATERIAL_DECISION"
+      },
+      {
+        "name": "requirement unknown remains invalid",
+        "rejected": true,
+        "error": "REAL_INPUT_CORRECTION_MATERIAL_DECISION"
+      },
+      {
+        "name": "six old statuses",
+        "passed": 6
+      },
+      {
+        "name": "canonical unknown status shape",
+        "issues": [
+          {
+            "code": "INVALID_ENUM",
+            "path": "materials[0].status",
+            "message": "不支持的枚举值：unverified"
+          }
+        ]
+      },
+      {
+        "name": "canonical save unverified rejected",
+        "error": "WORKSPACE_V8_INVALID:INVALID_ENUM:materials[0].status"
+      },
+      {
+        "name": "failed save leaves memory record unchanged",
+        "passed": true
+      },
+      {
+        "name": "R11 public material review unverified",
+        "error": "REAL_INPUT_CORRECTION_MATERIAL_DECISION"
+      },
+      {
+        "name": "R11 explicit simulated ready control",
+        "taskCount": 1,
+        "materialStatus": "ready",
+        "independentMemoryRead": true,
+        "rawPreserved": true,
+        "notActualUserPreparation": true
+      }
+    ],
+    "environment": "esbuild write:false, MemoryWorkspaceRecordStore, no Vite/Vitest/env loader"
+  },
+  "rootTrace": {
+    "historicalResponses": 12,
+    "rawToParsedTasksMaterialsRevisionsUnchanged": 12,
+    "newComparison": false
+  },
+  "engineering": {
+    "secretScan": {
+      "status": "PASS",
+      "files": 1818
+    },
+    "nodeSyntax": "PASS",
+    "fullTestsTypeLintBuild": "NOT_RERUN_PRODUCT_UNCHANGED"
+  },
+  "browser": {
+    "attempts": 0,
+    "reason": "No explicit control recovery message",
+    "R11": "NOT_RUN",
+    "R12": "NOT_RUN",
+    "independentIndexedDB": "NOT_RUN",
+    "actualDownload": "NOT_RUN"
+  },
+  "modelCalls": 0,
+  "fees": 0,
+  "deployment": "NOT_RUN_SOURCE_UNCHANGED",
+  "businessSourceChangesThisTurn": 0,
+  "requestedExceptionFiles": 6
+}

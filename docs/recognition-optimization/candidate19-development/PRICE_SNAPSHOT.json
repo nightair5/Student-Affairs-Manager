@@ -1,0 +1,31 @@
+{
+  "role": "READ_ONLY_BUDGET_SNAPSHOT_NOT_AUTHORIZATION_OR_DISPATCH_PRICE_EVIDENCE",
+  "observedAtUtc": "2026-10-03T17:27:57Z",
+  "officialSources": [
+    "https://api-docs.deepseek.com/quick_start/pricing/?helper=penn&method=individual",
+    "https://api-docs.deepseek.com/guides/responses_api/",
+    "https://api-docs.deepseek.com/api/create-response/"
+  ],
+  "model": "deepseek-flash",
+  "servedVersion": "DeepSeek-V4.1-Flash",
+  "route": "https://api.deepseek.com/responses",
+  "contextListed": "1M",
+  "inputTokenConservativeBound": 1048576,
+  "outputTokensFrozen": 8192,
+  "reasoningEffort": "none",
+  "peakUsdPerMillion": {"cacheMissInput": 0.3, "cacheHitInput": 0.006, "output": 1.2},
+  "offPeakUsdPerMillion": {"cacheMissInput": 0.15, "cacheHitInput": 0.003, "output": 0.6},
+  "peakRule": "Mon-Fri UTC 01:00-04:00 and 06:00-10:00 excluding Chinese public holidays",
+  "tokenBoundMethod": "FULL_OFFICIAL_CONTEXT_UPPER_BOUND_NOT_REQUEST_BYTES",
+  "reasoningMetering": "INCLUDED_IN_OUTPUT_TOKENS",
+  "additionalRule": "No extra text-request fee listed; reverify and stop if changed before grant",
+  "unitUpperMicroUsd": 324404,
+  "requestCount": 12,
+  "batchUpperMicroUsd": 3892848,
+  "proposedHardLimitMicroUsd": 3900000,
+  "authorizationGranted": false,
+  "businessModelRequests": 0,
+  "usage": "NOT_OBSERVABLE",
+  "providerActualCharge": "NOT_OBSERVABLE",
+  "instruction": "Reverify official price and all immutable bindings before any new grant; this file cannot authorize dispatch"
+}

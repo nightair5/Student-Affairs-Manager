@@ -1,0 +1,50 @@
+{
+  "version": "candidate14-d7-corrections-1",
+  "appendOnly": true,
+  "entries": [
+    {
+      "id": "D7-CORR-001",
+      "kind": "REFERENCE_ERROR",
+      "scope": "D5R1-S11",
+      "statement": "旧参照把“登记现场展示场地”缩成“展示时段”，且虚构取消/历史端点完成标准。",
+      "historicalArtifactsModified": false
+    },
+    {
+      "id": "D7-CORR-002",
+      "kind": "CONTRACT_UNREACHABLE",
+      "scope": "D5 references",
+      "statement": "旧参照使用historical/cancelled等当前wire不可达组合。",
+      "historicalArtifactsModified": false
+    },
+    {
+      "id": "D7-CORR-003",
+      "kind": "SCORER_ERROR",
+      "scope": "v4.1",
+      "statement": "task_deadline未完整映射，字段窄等义未预注册，一项任务未对齐时发生多字段级联。",
+      "historicalArtifactsModified": false
+    },
+    {
+      "id": "D7-CORR-004",
+      "kind": "ADAPTER_ERROR",
+      "scope": "D5R1-S05",
+      "statement": "raw保留“暂定…下午”，旧时间适配却生成确定全天且无需确认。",
+      "historicalArtifactsModified": false
+    },
+    {
+      "id": "D7-CORR-005",
+      "kind": "OVERATTRIBUTION",
+      "scope": "D5R1-S11",
+      "statement": "Candidate13实际保留四个端点和两条方向正确的替代关系，不再称其合并端点。",
+      "historicalArtifactsModified": false
+    },
+    {
+      "id": "D7-CORR-006",
+      "kind": "PRODUCT_DISPOSITION_ERROR",
+      "scope": "D5R1-S09",
+      "statement": "正确无任务结果含事件/时间，但旧确认流程无法完成归档。",
+      "historicalArtifactsModified": false
+    }
+  ],
+  "historicalDecision": "REJECT_CANDIDATE13_DEVELOPMENT",
+  "revisedAccuracy": null
+}

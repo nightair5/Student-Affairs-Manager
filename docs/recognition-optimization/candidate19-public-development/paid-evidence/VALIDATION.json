@@ -1,0 +1,178 @@
+{
+  "version": "public-paid-local-validation-1",
+  "targeted": {
+    "newActualSchemaProductTests": 5,
+    "existingSupportTests": 6,
+    "outcome": "PASS",
+    "minimalInvalidVariations": 12,
+    "modelRequestsByTests": 0
+  },
+  "full": {
+    "outcome": "FAIL",
+    "groupCount": 40,
+    "pass": 34,
+    "fail": [
+      {
+        "label": "d19-diagnostic",
+        "outcome": "FAIL"
+      },
+      {
+        "label": "d9-historical",
+        "outcome": "FAIL"
+      },
+      {
+        "label": "rco-5-007",
+        "outcome": "FAIL"
+      },
+      {
+        "label": "c11-history",
+        "outcome": "FAIL"
+      },
+      {
+        "label": "c11-gateway",
+        "outcome": "FAIL"
+      },
+      {
+        "label": "vitest-d17-history",
+        "outcome": "FAIL"
+      }
+    ],
+    "allExited": true,
+    "product": {
+      "files": 103,
+      "testsPass": 1045,
+      "skip": 1
+    },
+    "modelCalls": 0,
+    "ledgerWrites": 0
+  },
+  "lint": {
+    "errors": 0,
+    "existingWarnings": 8,
+    "newWarnings": 0
+  },
+  "build": "PASS_TSC_VITE_EXISTING_BUNDLE_WARNING",
+  "security": "PASS",
+  "newReadOnlyScriptLint": "PASS",
+  "audit": {
+    "firstDirectAttempt": "NETWORK_TLS_ERROR",
+    "proxyAttempt": "COMPLETE",
+    "all": {
+      "info": 0,
+      "low": 0,
+      "moderate": 2,
+      "high": 5,
+      "critical": 0,
+      "total": 7
+    },
+    "production": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "lockChanges": 0
+  },
+  "history": {
+    "protected": 84,
+    "frozen": 119,
+    "archives": 7,
+    "ledger": {
+      "rows": 1000,
+      "sha256": "fe24750479d3a5229e386e8088199ae097f48a1f6872f0eaac016cfaeddbb48d",
+      "tail": "3607e0c9b993aa4004bbddcbc06cfe9c76423f88ae274f52db221863bb9ecd15",
+      "batchRows": 4
+    },
+    "original996PrefixPreserved": true
+  },
+  "originalTwelve": {
+    "responseAndFirstDisplayEqual": 12,
+    "oldScoresUnchanged": true
+  },
+  "browser": "browser/CHECK.json",
+  "paidFreeze": "EXECUTION.json",
+  "evidenceFiles": [
+    {
+      "path": "browser/01-first-suggestion.png",
+      "sha256": "3fe0c14c81666283a18a69d6dd95ed93e7d10d5aa33f20ab4d3fdadd919589a6"
+    },
+    {
+      "path": "browser/01-first-suggestion.txt",
+      "sha256": "fa1889a020fe1e2bd5ac16fe865bb858ce30a98a9fd34de01207c21041551a44"
+    },
+    {
+      "path": "browser/02-before-confirm.json",
+      "sha256": "30db5bae716c66f7eb081fde4479d3d0c00c0b39f878064eea0535a04cf6841e"
+    },
+    {
+      "path": "browser/03-formal-failure-readback.json",
+      "sha256": "30db5bae716c66f7eb081fde4479d3d0c00c0b39f878064eea0535a04cf6841e"
+    },
+    {
+      "path": "browser/03-formal-failure.txt",
+      "sha256": "8bc6d4fac09b79fe736dc76fefa7926d53a69b3316340a03f874773ce2073e1f"
+    },
+    {
+      "path": "browser/04-public-saved.json",
+      "sha256": "2159247f868bc8b3e67ca2c1686e79102de227122e4b62806c3895ded9623f5e"
+    },
+    {
+      "path": "browser/05-unknown-first.txt",
+      "sha256": "f7e9c5c02d7e36e7093afdeb814437e60caafc7742c341d6a6ea5903f1ff312b"
+    },
+    {
+      "path": "browser/06-committed-readback-pending.json",
+      "sha256": "2159247f868bc8b3e67ca2c1686e79102de227122e4b62806c3895ded9623f5e"
+    },
+    {
+      "path": "browser/06-committed-readback-pending.txt",
+      "sha256": "30470fca5ed879dba2f672ca407750a17fceb119ad67f56348503b0e3e8d710a"
+    },
+    {
+      "path": "browser/07-after-readback-only.json",
+      "sha256": "a401bc8c78fdcb956378b349e09d4c6b493a0b9386b785de8009292a6ba6cd75"
+    },
+    {
+      "path": "browser/08-dependency-first.txt",
+      "sha256": "7d1f8fc98e41effd08231edd0e4e08f92ef37d1afc9dcc3aeee2e85c8dc26892"
+    },
+    {
+      "path": "browser/09-partial-confirmed.txt",
+      "sha256": "d5efc2f5b1612fda98ca36240a32712dcfdafee5b8d0bfbf329b6753a89c9969"
+    },
+    {
+      "path": "browser/10-material-first.txt",
+      "sha256": "5b143920b6489fadff7f6bcf5aad5e86e83f18c4af9793faf5f5f4a2dbb8bbd6"
+    },
+    {
+      "path": "browser/11-final-canonical.json",
+      "sha256": "3a682676ec66f16bc7de5eb3ca906ae1902f67c6fa27093c61bdd6ba6b3d9a28"
+    },
+    {
+      "path": "browser/12-measurement.json",
+      "sha256": "c31517f33ca4d77a25b65c7a3d965de69215b8880fe312f041d708893ab1d8d8"
+    },
+    {
+      "path": "browser/13-after-refresh.json",
+      "sha256": "3a682676ec66f16bc7de5eb3ca906ae1902f67c6fa27093c61bdd6ba6b3d9a28"
+    },
+    {
+      "path": "browser/14-refresh-check.json",
+      "sha256": "02d198ed40ed7d34cd9f776af69fb91018815dd252557aa484ee55f41a11185d"
+    },
+    {
+      "path": "browser/15-console.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "browser/16-final-page.png",
+      "sha256": "c611fe115a309f7e3b934d8c28ce7908b8cbc678445b4760ce49e5644c202e20"
+    },
+    {
+      "path": "browser/CHECK.json",
+      "sha256": "7ecef527ea2bd8f1f7f6071604200e2bf4c4cd852b3307f4d89d137bbb248ff2"
+    }
+  ]
+}

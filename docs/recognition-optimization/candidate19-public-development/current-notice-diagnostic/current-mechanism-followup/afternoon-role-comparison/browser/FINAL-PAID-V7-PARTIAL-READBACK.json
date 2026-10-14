@@ -1,0 +1,106 @@
+{
+  "view": "FOCUSED_READBACK_EVIDENCE_NOT_FULL_BACKUP",
+  "original": {
+    "path": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\afternoon-mainline-20261008\\browser-originals\\FINAL-PAID-V7-PARTIAL-READBACK.json",
+    "sha256": "856ca4b1333e83f926f6be0b37aa199c41cb473c8d959f259e14897fa3501d82"
+  },
+  "canonicalCounts": {
+    "tasks": 1,
+    "events": 3,
+    "timePoints": 8,
+    "materials": 0
+  },
+  "tasks": [],
+  "events": [
+    {
+      "id": "event:source:0305cc06:draft:1:event-0001",
+      "projectId": null,
+      "title": "图像解读交流会",
+      "description": "图像解读交流会面向在读本科生。\n有意参加者可通过预约二维码报名图像解读交流会，\n图像解读交流会于2026年12月16日10:10开始，\n结束时间尚未公布。",
+      "startTimePointId": "time:source:0305cc06:draft:1:time-0002",
+      "endTimePointId": "time:source:0305cc06:draft:1:time-0003",
+      "location": null,
+      "createdAt": "2026-10-08T10:34:01.328Z",
+      "updatedAt": "2026-10-08T10:34:01.328Z",
+      "legacyData": {
+        "recognitionTempId": "event-0001",
+        "evidenceIds": [
+          "d26-scope-0001-3136e52dab3392c62744bae65f4da148ea77ed451a81ca0785e5d5d748af583b",
+          "d26-scope-0002-055d215ac1a34cc129d51eae65541158eb54e4c50f94a7d1caf091a83efaa429",
+          "d26-scope-0004-0514b716f64e14d21cf34da1dbdc18be382b6ca02e18a76f3fd9710bcb5552f5",
+          "d26-scope-0005-fb8f87b1f8b9e25593dbda08063a2181958e27f092e8d6cf5f3b677e52dafec8"
+        ],
+        "inferenceLevel": "explicit",
+        "sourceTaskRelations": {
+          "version": "source-event-task-relations-1",
+          "draftId": "source:0305cc06:draft:1",
+          "taskTempIds": [
+            "task-register-0001"
+          ]
+        },
+        "sourceReviewDraftId": "source:0305cc06:draft:1"
+      }
+    }
+  ],
+  "timePoints": [
+    {
+      "id": "time:source:0305cc06:draft:1:time-0002",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:0305cc06:draft:1:event-0001",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年12月16日10:10",
+      "normalizedValue": "2026-12-16T10:10",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-08T10:34:01.328Z",
+      "updatedAt": "2026-10-08T10:34:01.328Z",
+      "legacyData": {
+        "recognitionTempId": "time-0002",
+        "evidenceIds": [
+          "d26-scope-0004-0514b716f64e14d21cf34da1dbdc18be382b6ca02e18a76f3fd9710bcb5552f5"
+        ],
+        "confidence": 0.95,
+        "sharedEventIds": [
+          "event:source:0305cc06:draft:1:event-0001"
+        ]
+      }
+    },
+    {
+      "id": "time:source:0305cc06:draft:1:time-0003",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:0305cc06:draft:1:event-0001",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "结束时间尚未公布",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-08T10:34:01.328Z",
+      "updatedAt": "2026-10-08T10:34:01.328Z",
+      "legacyData": {
+        "recognitionTempId": "time-0003",
+        "evidenceIds": [
+          "d26-scope-0005-fb8f87b1f8b9e25593dbda08063a2181958e27f092e8d6cf5f3b677e52dafec8"
+        ],
+        "confidence": 0.9,
+        "sharedEventIds": [
+          "event:source:0305cc06:draft:1:event-0001"
+        ]
+      }
+    }
+  ],
+  "sourceFactsNotInvented": true
+}

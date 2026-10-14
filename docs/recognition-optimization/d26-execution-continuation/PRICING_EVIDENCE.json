@@ -1,0 +1,44 @@
+{
+  "version": "d26-host-price-evidence-1",
+  "role": "OFFICIAL_PRICE_VERIFIED",
+  "pricing": {
+    "sourceUrl": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "verifiedAt": "2026-10-02T16:16:14.000Z",
+    "validUntil": "2026-10-03T04:16:14.000Z",
+    "peakInputUsdPerMillion": 0.3,
+    "peakOutputUsdPerMillion": 1.2,
+    "maxInputTokens": 1048576,
+    "model": "deepseek-flash",
+    "endpoint": "https://api.deepseek.com/responses",
+    "maxOutputTokens": 8192,
+    "tokenBoundMethod": "FULL_OFFICIAL_CONTEXT_UPPER_BOUND",
+    "reasoningMetering": "INCLUDED_IN_OUTPUT_TOKENS",
+    "additionalChargeUpperMicroUsd": 0
+  },
+  "evidence": {
+    "readOnly": true,
+    "urls": [
+      "https://api-docs.deepseek.com/quick_start/pricing/",
+      "https://api-docs.deepseek.com/guides/responses_api/"
+    ],
+    "pricingHtmlSha256": "210f102275ccf1a6542f08a3bc9e4b4c7c83278cb74b35217bffa112df6363b2",
+    "capture": "Official pricing HTML fetched with Invoke-WebRequest after web tool timeout; verification timestamp uses local capture LastWriteTimeUtc. Responses API documentation read with web tool.",
+    "observedRoute": "DeepSeek-V4.1-Flash",
+    "documentedContext": "1M tokens",
+    "documentedProviderMaxOutput": "384K tokens",
+    "cacheHitPeakUsdPerMillion": 0.006,
+    "offPeakMultiplier": 0.5,
+    "discountOrCacheHitAssumed": false,
+    "toolsImagesOrServerResourcesUsed": false,
+    "feeBoundary": "Token-based input/output charging for the frozen text-only Responses requests. Reasoning is none; documented output usage includes reasoning tokens. No separately billed tools or resources are requested. Any newly documented charge invalidates this proof.",
+    "tokenProof": "Every accepted request is bounded by the full official model context. Use the larger 1048576 interpretation of 1M for every input plus a separately reserved 8192 output. Over-context requests are rejected. This deliberately overbounds; request bytes are not converted to tokens.",
+    "perUnitUpperMicroUsd": 324404,
+    "units": 16,
+    "batchUpperMicroUsd": 5190464,
+    "suggestedHardLimitMicroUsd": 5300000,
+    "failedUnitUpperMicroUsd": 324404,
+    "providerActualDebit": "NOT_OBSERVABLE",
+    "mustReverifyBeforeGrant": true,
+    "authorizationCreated": false
+  }
+}

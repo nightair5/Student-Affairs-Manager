@@ -1,0 +1,33 @@
+{
+  "originalFull": {
+    "groups": 37,
+    "pass": 30,
+    "fail": [
+      "d26-execution-host",
+      "d19-diagnostic",
+      "d9-historical",
+      "rco-5-007",
+      "c11-history",
+      "c11-gateway",
+      "vitest-d17-history"
+    ],
+    "outcome": "FAIL"
+  },
+  "targetedAfterFix": {
+    "tests": 39,
+    "pass": 39,
+    "fail": 0,
+    "command": "node --test scripts/d26-recorded-projection.node-test.mjs scripts/d26-execution-host.node-test.mjs",
+    "source": "actual terminal result; not a rerun of all 37 groups"
+  },
+  "currentProduct": "PASS",
+  "remainingHistoricalFailures": [
+    "d19-diagnostic",
+    "d9-historical",
+    "rco-5-007",
+    "c11-history",
+    "c11-gateway",
+    "vitest-d17-history"
+  ],
+  "fullRerunAfterHostFix": false
+}

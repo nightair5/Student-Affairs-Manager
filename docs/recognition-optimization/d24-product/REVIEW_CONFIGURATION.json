@@ -1,0 +1,300 @@
+{
+  "version": "d24-source-review-freeze-1",
+  "role": "ENGINEERING_REPLAY",
+  "realHumanStatus": "NOT_RUN",
+  "businessModelCalls": 0,
+  "ledgerTransactions": 0,
+  "codeHead": "0b8a6e4534e0ed8ffe220e9bce9193fcc691d2bd",
+  "sourceSha256": "69e9222b263b02f95800832ae9b6d224a0ed41c081a9ba05b32cef22642d8731",
+  "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+  "candidate": "Candidate17_D17_FIXED_RECORDING",
+  "reportVersion": "d24-planned-coverage-1",
+  "correctionVersion": "d24-source-information-1",
+  "historicalMeasurement": "measurement3.2",
+  "lowEdit": "low-edit-v2-exploratory-1",
+  "completionWindowMs": 600000,
+  "primaryOrigin": "http://127.0.0.1:6742",
+  "databases": {
+    "p1": "rco-mainline-01-02-i1-real-input-d23-study-engineering-d24release01-p1",
+    "p2": "rco-mainline-01-02-i1-real-input-d23-study-engineering-d24release01-p2",
+    "p3": "rco-mainline-01-02-i1-real-input-d23-study-engineering-d24release01-p3",
+    "p4": "rco-mainline-01-02-i1-real-input-d23-study-engineering-d24release01-p4"
+  },
+  "sources": [
+    {
+      "id": "C17-D16-S01",
+      "sourceText": "[D16新编匿名Development]\n请于2026年10月19日16:30前提交社团器材盘点表。社团器材盘点表须为PDF格式，文件名为社团编号-经办人；门户提示收件成功即结束。",
+      "sourceSha256": "2bfbae1b2b062526fad9d64f73764d71b74aa852d33925d22c4209452c70f845",
+      "assistedId": "d21-record-02",
+      "manualId": "d13-fixture-manual-d23-s01",
+      "stimulusSha256": "dbba9885dc868b0e65a6586b561af2485801b081d0ff375ef4f025e7128d0a0c",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "single",
+        "exact_time",
+        "material_format"
+      ],
+      "ordinal": 2
+    },
+    {
+      "id": "C17-D16-S02",
+      "sourceText": "[D16新编匿名Development]\n请在10月20日前核对迎新志愿者分组，页面显示核对完成；另于10月22日前上传场地使用承诺函，场地使用承诺函须为PNG，平台显示承诺函已收妥。两项分别办理。",
+      "sourceSha256": "91618a256c8d2164f54ff274636ef5c790e5d3990d99ee7e2520ddc115fa1bdf",
+      "assistedId": "d21-record-03",
+      "manualId": "d13-fixture-manual-d23-s02",
+      "stimulusSha256": "45b6477598761938c10e44f20b5c16d4997b201ed46794c3fad35899b68c7a7d",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "multi",
+        "date_only",
+        "material"
+      ],
+      "ordinal": 3
+    },
+    {
+      "id": "C17-D16-S04",
+      "sourceText": "[D16新编匿名Development]\n列入决赛彩排名单的同学须出席辩论决赛彩排，以完成辩论决赛彩排为准。你的队伍未列入决赛彩排名单，本通知不要求你出席。",
+      "sourceSha256": "9225590c3aa495e23dea327641798bcfae451f83adc430d2a9b122f206e2a29d",
+      "assistedId": "d21-record-07",
+      "manualId": "d13-fixture-manual-d23-s04",
+      "stimulusSha256": "fc0666b26a2956cc476985e7ca1c19304989045153f03bf3e5f9eebecbec9fb5",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "condition_false",
+        "inactive"
+      ],
+      "ordinal": 7
+    },
+    {
+      "id": "C17-D16-S05",
+      "sourceText": "[D16新编匿名Development]\n若安排你担任摄影志愿者，请递交机位安排表，以平台显示安排表已收取为完成。暂定下周二下午办理，摄影岗位安排尚未确定。",
+      "sourceSha256": "504b08c986a35f6ca62513accc7e03dfe37e0eaec916629923b971a238854a22",
+      "assistedId": "d21-record-10",
+      "manualId": "d13-fixture-manual-d23-s05",
+      "stimulusSha256": "378c6e6cec6e22ae44c1070f8c887f0adf6fb8371960e7837fe16903e7df916f",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "condition_unknown",
+        "vague_time"
+      ],
+      "ordinal": 10
+    },
+    {
+      "id": "C17-D16-S06",
+      "sourceText": "[D16新编匿名Development]\n请先填写校友访谈记录表，记录表必填栏均已填写后，再提交校友访谈记录表；校友访谈记录表格式为CSV，以秘书处确认收妥记录表为完成。",
+      "sourceSha256": "56403e58158ef21ca640cd4e3efccf411339e832e9f495dbce908e09c1201b30",
+      "assistedId": "d21-record-11",
+      "manualId": "d13-fixture-manual-d23-s06",
+      "stimulusSha256": "4b3844e396253ccca568a747bc13ba432fbcf940688b7c133417d59b75c62823",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "shared_material",
+        "dependency",
+        "multi"
+      ],
+      "ordinal": 11
+    },
+    {
+      "id": "C17-D16-S07",
+      "sourceText": "[D16新编匿名Development]\n请在月底前后向宣传组提交摄影作品说明稿，以宣传组确认收妥说明稿为完成；确切日期稍后公布。",
+      "sourceSha256": "f0e9fe97d0afebfca848d9ffcc51166ec2f7a7735fe9150d3814607eb116b39d",
+      "assistedId": "d21-record-14",
+      "manualId": "d13-fixture-manual-d23-s07",
+      "stimulusSha256": "7046d52de22285ae09c1a3ca6bef67b12244ff1973bbf104a7456858df2924cd",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "vague_time",
+        "single"
+      ],
+      "ordinal": 14
+    },
+    {
+      "id": "C17-D16-S09",
+      "sourceText": "[D16新编匿名Development]\n校车预约平台将在周三晚停机，已保存行程不受影响。无需删除行程，不要提交说明，也不必向值班员发消息。本通知仅说明停机消息。",
+      "sourceSha256": "51d5c32e81720af258bee0f9627a8fe2a79bc674fd350ba28c8c82075d3abeaf",
+      "assistedId": "d21-record-18",
+      "manualId": "d13-fixture-manual-d23-s09",
+      "stimulusSha256": "2b4e1b2c861af8d7ce243fe2e5a0eddc26a1dd91fb85c45da042ca0c1d28f6bd",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "no_task",
+        "forbidden",
+        "background"
+      ],
+      "ordinal": 18
+    },
+    {
+      "id": "C17-D16-S11",
+      "sourceText": "[D16新编匿名Development]\n原定张贴迎新路线图，并登记线下宣讲教室。现调整为：迎新路线图改为提交数字版，平台显示数字路线图提交成功；线下宣讲教室改为预订线上时段，页面保存线上说明会时段。两项分别替代原要求。",
+      "sourceSha256": "9c1de9a067b3f7f1728e0ab8989925785ec1b949c501142ff093a7baeb64ac8f",
+      "assistedId": "d21-record-22",
+      "manualId": "d13-fixture-manual-d23-s11",
+      "stimulusSha256": "bd0e18d8817c00fda9d5d530d2507075642dfa99ffdcc22db1ee0087eb15a211",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "multi_endpoint_replacement",
+        "historical",
+        "multi"
+      ],
+      "ordinal": 22
+    }
+  ],
+  "recordHashes": [
+    {
+      "id": "d21-record-02",
+      "label": "固定录制 · C17-D16-S01",
+      "kind": "RECORDED_MODEL",
+      "sha256": "629b6fd8794a24882ccd757160da6d25fccb1d47fc56885b6573bf6d765ffe98"
+    },
+    {
+      "id": "d13-fixture-manual-d23-s01",
+      "label": "空白手动 · C17-D16-S01",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "59bb32837df660b446b2d6b7b4341cb198bb3eb72c883459028635c43805b971"
+    },
+    {
+      "id": "d21-record-03",
+      "label": "固定录制 · C17-D16-S02",
+      "kind": "RECORDED_MODEL",
+      "sha256": "5fd491ca8710af33c9a454c32fc3e197a4fb76e74b0249ecfb60c44235f95b83"
+    },
+    {
+      "id": "d13-fixture-manual-d23-s02",
+      "label": "空白手动 · C17-D16-S02",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "fdbbdd51ddd07612c434b156d42b0a6867063b796e3271f5e928d7ec46ffd7ba"
+    },
+    {
+      "id": "d21-record-07",
+      "label": "固定录制 · C17-D16-S04",
+      "kind": "RECORDED_MODEL",
+      "sha256": "0635d0490cd188879894001d0a020db641e510593ce42b747d154773474ce8af"
+    },
+    {
+      "id": "d13-fixture-manual-d23-s04",
+      "label": "空白手动 · C17-D16-S04",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "42c0bc5008e18f1e4b9c939c8a4bd8138e17f10349d6a2852e2e4a8686fddd46"
+    },
+    {
+      "id": "d21-record-10",
+      "label": "固定录制 · C17-D16-S05",
+      "kind": "RECORDED_MODEL",
+      "sha256": "e128fa5e01aac6825b28488f486d773936b61e6c4c78fcc0fc42cf15373cd4a7"
+    },
+    {
+      "id": "d13-fixture-manual-d23-s05",
+      "label": "空白手动 · C17-D16-S05",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "b43f44a38687e1302032e1b01f9a4a571b9dca057cfae3f3bec4fde3c4e5c3eb"
+    },
+    {
+      "id": "d21-record-11",
+      "label": "固定录制 · C17-D16-S06",
+      "kind": "RECORDED_MODEL",
+      "sha256": "87a9d51f747ba5344de1b2f0bb5e0fb7554160a6d26f7817f81fce2285226504"
+    },
+    {
+      "id": "d13-fixture-manual-d23-s06",
+      "label": "空白手动 · C17-D16-S06",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "ea20f755d1c523c752c0570187e6b2409e0a91be3369c11c0fc1336a8f7753c1"
+    },
+    {
+      "id": "d21-record-14",
+      "label": "固定录制 · C17-D16-S07",
+      "kind": "RECORDED_MODEL",
+      "sha256": "eddab99330d2db5ab4bcabce2a8ab3ed24b75f095d089efcc4ee91246d444ff7"
+    },
+    {
+      "id": "d13-fixture-manual-d23-s07",
+      "label": "空白手动 · C17-D16-S07",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "183390f551ea63098974440a840cd26d0f5ffc0f51ea539fb82869ca422ad2c2"
+    },
+    {
+      "id": "d21-record-18",
+      "label": "固定录制 · C17-D16-S09",
+      "kind": "RECORDED_MODEL",
+      "sha256": "f432a1a6a0a6bba39103c2a5d731dd7f946890503f05781cf1a1a20c10372304"
+    },
+    {
+      "id": "d13-fixture-manual-d23-s09",
+      "label": "空白手动 · C17-D16-S09",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "d0db3bfab49b77651c5a352267108073a07737729d699a6a99a5815fb2b2f69f"
+    },
+    {
+      "id": "d21-record-22",
+      "label": "固定录制 · C17-D16-S11",
+      "kind": "RECORDED_MODEL",
+      "sha256": "531fa066ebf86fa6bc2cdd78146816ef9e5c4afaf8baecc88070b7b5651b2c44"
+    },
+    {
+      "id": "d13-fixture-manual-d23-s11",
+      "label": "空白手动 · C17-D16-S11",
+      "kind": "ENGINEERING_FIXTURE",
+      "sha256": "5875e5bb204343c1f77db1111281e7c8ffca94261454a4345d12e4ee1057ded1"
+    }
+  ],
+  "components": [
+    {
+      "path": "src/experiments/realInput01/sourceCoverage.ts",
+      "sha256": "4a36714e5b19efdc5f0daa328e802664d914d694d5afa5822d0a4926dedd00eb"
+    },
+    {
+      "path": "src/experiments/realInput01/SourceCoverageEditor.tsx",
+      "sha256": "0c0d4f8c7c645212dabe7d30ad34e598062dbbd7fa5bb18c7da9a7b5fee572ed"
+    },
+    {
+      "path": "src/experiments/realInput01/FactCorrectionEditor.tsx",
+      "sha256": "f89336297cd287bac1274b56955c719f87740007e51a3eaa32512cd91d6e1f87"
+    },
+    {
+      "path": "src/experiments/realInput01/factCorrections.ts",
+      "sha256": "20a4ef39f102386a4b4576214f083b1bd6f1109f2d867570929d240e936a5e8e"
+    },
+    {
+      "path": "src/experiments/realInput01/reviewTimeEvidence.ts",
+      "sha256": "947834b1eb9a70f7acb53f784e3c8b7e08b390d4e900c2cd6864467a18cc7e24"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "sha256": "a95bdd85d5fa67ae8468a4fda928781088c984278428d859e0b41191c82e3ead"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticView.ts",
+      "sha256": "c3c0536aa83bc8831c4f48641e451290f3befdb28f89b90fe8df49e333744e90"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticConfirmation.ts",
+      "sha256": "dca47e3bdb070db94b3b4fb2efa6fed40a92fd32252c91b26d68281ca89e3d8b"
+    },
+    {
+      "path": "src/experiments/candidate16/measurement.ts",
+      "sha256": "c11b1a79555501ef57a722a8a89d101e7c5e3be1eebff41969856307135785e9"
+    },
+    {
+      "path": "src/experiments/candidate16/d24Report.ts",
+      "sha256": "2041a2a6101456b269b8abaa36455e98219b3aa27273894a4402ed3596db839c"
+    },
+    {
+      "path": "src/experiments/candidate16/d23StudyPage.tsx",
+      "sha256": "065c5b9fc053be80e08a5033cf4639e8351d98ab0569afa7b7e99aa65eec0eac"
+    },
+    {
+      "path": "scripts/serve-d23-study.mjs",
+      "sha256": "f32d59305eb61f352617e61c0725381a48f42e0a423119fe72db426ece7dda98"
+    },
+    {
+      "path": "scripts/serve-d24-study.mjs",
+      "sha256": "3b7f478ecc80a764d73fa365fc3f4b92e8c21c855bb06378e990fda07a1c1aca"
+    }
+  ],
+  "requiredBeforeFirstHuman": [
+    "real scope authorization",
+    "real owner acceptance",
+    "participant personal consent",
+    "owner approval of source obligations and disputes, build and measurement"
+  ]
+}

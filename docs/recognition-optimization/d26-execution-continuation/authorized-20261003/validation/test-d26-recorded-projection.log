@@ -1,0 +1,13 @@
+✔ supported secondary references project only accounting, preserving events, times and raw (17.8766ms)
+✔ cross-scope, wrong-kind, absent-primary and made-up references remain rejected (0.6974ms)
+✔ null coverage with missing event is not silently converted to not_stated or synthesized (0.624ms)
+✔ both candidates keep unknown eligibility and wrong dual time edges for local confirmation guards (2.3379ms)
+✔ source rendering preserves explicit event and fuzzy time, never fabricates an omitted event (1.8356ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 167.2519

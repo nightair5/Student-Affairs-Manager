@@ -1,0 +1,843 @@
+{
+  "version": "candidate13-d6-development-results-1",
+  "date": "2026-09-22",
+  "branch": "codex/e2-candidate11-blind-eval",
+  "base": "593ab7847a5791f8e3fbc6e4b82f94a6c4d0ebb5",
+  "status": {
+    "engineering": "D6_REJECT_CANDIDATE13_READY_FOR_CANDIDATE14_ZERO_CALL_ENGINEERING",
+    "repositoryGate": "HAS_VERIFIED_HISTORICAL_FAILURE_NO_PROMOTION",
+    "modelQuality": "REJECT_CANDIDATE13_DEVELOPMENT",
+    "humanBenefit": "NOT_OBSERVABLE",
+    "merge": "NOT_RUN",
+    "deployment": "NOT_RUN"
+  },
+  "newModelCalls": 72,
+  "realLedgerWrites": 147,
+  "secretReads": "RUNTIME_CONFIGURATION_USED_NOT_PERSISTED",
+  "schemaUpgrade": false,
+  "dependencyUpgrade": false,
+  "protection": {
+    "count": 84,
+    "ledgerSha": "efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a",
+    "ledgerRows": 791,
+    "reserves": 386,
+    "oldOriginAndBrowserLibraries": "NOT_OPERATED"
+  },
+  "historical": {
+    "count": 24,
+    "identityAndSettlementValid": 24,
+    "clientParseAndCompositionValid": 24,
+    "knownChecks": {
+      "candidate03": "9/12",
+      "candidate10": "11/12"
+    },
+    "completeCaseRate": null,
+    "reference": "POST_HOC_PARTIAL_SINGLE_AGENT_DIAGNOSTIC",
+    "qualityConclusion": "NO_PROMOTION_REFERENCE_INCOMPLETE"
+  },
+  "candidate": {
+    "version": "real-input-source-semantics-11",
+    "variants": [
+      "V00",
+      "V10",
+      "V01",
+      "V11"
+    ],
+    "common": "candidate03 plus completion rule",
+    "metaFactor": "M",
+    "exampleFactor": "E",
+    "exampleCount": 10,
+    "oldRequestsUnchanged": true
+  },
+  "tests": {
+    "vitest": {
+      "pass": 1442,
+      "fail": 0,
+      "skip": 1,
+      "skipReason": "Existing opt-in ocrLiveComponent test; isolated temporary carriers used"
+    },
+    "candidate11": {
+      "scoring": 44,
+      "history": 1,
+      "construction": 7,
+      "identity": 6,
+      "gateway": 9,
+      "runtime": 15,
+      "staticPreview": 5,
+      "total": 87,
+      "overlapsVitest": 28
+    },
+    "legacyBudgetGateway": {
+      "pass": 124,
+      "fail": 0,
+      "realNetwork": false,
+      "temporaryLedgerOnly": true
+    },
+    "otherNode": {
+      "server": 8,
+      "worker": 25,
+      "timeParity": 1,
+      "multimodalLibrary": 23,
+      "functions": 5
+    },
+    "historicalFailure": {
+      "suite": "RCO-5-007",
+      "pass": 3,
+      "fail": 1,
+      "error": "FREEZE_HASH_MISMATCH:package-lock.json",
+      "reproducedInParent": true,
+      "waived": false
+    },
+    "priorAttempts": {
+      "windowsEol": "Restored exact parent bytes only after Git canonical equivalence checks; no semantic diff",
+      "fixtures": "Generated 8 carriers in new temporary directory; restored existing OCR language assets",
+      "timing": "One previous full run failed old OCR timeout terminate assertion; same test and code passed final full run with maxWorkers=2",
+      "d3RawNpmTest": "1430 pass, 3 fail, 1 skip: missing REAL_INPUT_CARRIERS_MANIFEST, transient OCR terminate observation, transient A02 5000ms timeout; isolated reruns passed 10/10 and 30/30",
+      "d4RawNpmTest": "1441 pass, 1 fail, 1 skip: candidate02 launcher lacked REAL_INPUT_CARRIERS_MANIFEST and resolved an undefined path; isolated carrier run passed 1442/1442 with 1 skip"
+    },
+    "d6": {
+      "node": {
+        "pass": 17,
+        "fail": 0
+      },
+      "vitest": {
+        "pass": 22,
+        "fail": 0
+      },
+      "lint": {
+        "errors": 0,
+        "warnings": 6
+      },
+      "build": "PASS",
+      "securityScan": "PASS_2784_FILES",
+      "fullNpmTest": {
+        "pass": 1452,
+        "fail": 3,
+        "skip": 1,
+        "timeoutReruns": "2/2 PASS",
+        "remainingHistorical": "REAL_INPUT_CARRIERS_MANIFEST"
+      },
+      "rco5007": {
+        "pass": 3,
+        "fail": 1,
+        "error": "FREEZE_HASH_MISMATCH:package-lock.json"
+      },
+      "d5HistoricalPostLedger": {
+        "pass": 3,
+        "fail": 3,
+        "error": "D3_AUTHORITY_LEDGER_DRIFT"
+      }
+    }
+  },
+  "browser": {
+    "evidence": "TOOL_OBSERVED_MANUAL_SUMMARY",
+    "origin": "http://127.0.0.1:6633/?automation=1",
+    "engineeringCases": 8,
+    "historicalCases": [
+      "OS03",
+      "OS04"
+    ],
+    "actions": [
+      "edit",
+      "explicit material review",
+      "injected atomic failure",
+      "refresh recovery",
+      "partial confirmation",
+      "rejection",
+      "repeat open",
+      "all selected confirmation",
+      "independent repository readback"
+    ],
+    "finalReadback": {
+      "tasks": 3,
+      "drafts": 10,
+      "events": 31,
+      "successfulCommitEvents": 2,
+      "failedCommitEvents": 1,
+      "rejectionEvents": 1,
+      "readbackVerifiedEvents": 2,
+      "observationOrigin": "AUTOMATION"
+    },
+    "viewportChecks": [
+      {
+        "width": 1024,
+        "height": 900
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "consoleErrorsOrWarningsObserved": 0,
+    "exportToDisk": "NOT_VERIFIED_IAB_CONTENT_EXPORT_UNSUPPORTED",
+    "notHumanConversion": true
+  },
+  "preview": {
+    "origin": "http://127.0.0.1:6633",
+    "database": "rco-mainline-01-02-i1-real-input-candidate11-engineering-1",
+    "records": 20,
+    "modelCallsEnabled": false,
+    "staticAssetHashes": [
+      {
+        "path": "index.html",
+        "sha256": "e8b65ceafd1b3ac80fb55946b0befde68c5b3d4931229cfb8356e46a14b89eb9"
+      },
+      {
+        "path": "browser.js",
+        "sha256": "4af7d37990e21a8249031718f544d8f1def58d3156ba7b674de037dd5699e974"
+      },
+      {
+        "path": "browser.css",
+        "sha256": "510c6fd27c3427423c30a4d1312ebcdc719fab8743c32bccfaceabc704b5195f"
+      },
+      {
+        "path": "records/fixture-multi.json",
+        "sha256": "f71968824d3a1d52749d27fbce6539d0e917238cf4368f5f10e09bdbf751d2ad"
+      },
+      {
+        "path": "records/fixture-no-date.json",
+        "sha256": "bad472e5e88336b3bbd431a05050e0d11039b7e46db9a1c5c260ade8c684a726"
+      },
+      {
+        "path": "records/fixture-vague.json",
+        "sha256": "6eda29578b80933673cb3399fdcfe2682ed9faee75ecce2e2876b2824cffdc6a"
+      },
+      {
+        "path": "records/fixture-information.json",
+        "sha256": "2625a555c20bb24c0343d9519fe6a7a24e937dccce48538faf9e837c1bcb62e6"
+      },
+      {
+        "path": "records/fixture-condition-true.json",
+        "sha256": "2eafe3d3b18a937ca2a045904e0dd14025f349c185b54e5c7bcf45db40b01eef"
+      },
+      {
+        "path": "records/fixture-condition-false.json",
+        "sha256": "30496a768006c601dbab5804754687069b91b5261b4f91008f125a992009c9b7"
+      },
+      {
+        "path": "records/fixture-condition-unknown.json",
+        "sha256": "7e9ab766702053f8549a347aaf615151dc5d945b8d842a86f75c04b15237f576"
+      },
+      {
+        "path": "records/fixture-revision.json",
+        "sha256": "491dfe1b2710dd1b0c2aaff64689a3cb3161e490265a60dc06135019ff57e003"
+      },
+      {
+        "path": "records/history-K01-A.json",
+        "sha256": "a3efae238195c82fe6d73da1fdc52fa81e74a2bdaf90e6498528e2524c121f7d"
+      },
+      {
+        "path": "records/history-K02-A.json",
+        "sha256": "346db7f9f896ee58543032ec43a05c9c47c0eefcfe457f1e5ab001df348f39e2"
+      },
+      {
+        "path": "records/history-K03-A.json",
+        "sha256": "d45bc3360d9cd3259dc3bc50b7e8621f0872170b8d7c778200c5e0b2be2449a7"
+      },
+      {
+        "path": "records/history-K04-A.json",
+        "sha256": "68443bac7c71fa3954b80bb0363de4603b512306811ea1f77b0ab5c2b08143f8"
+      },
+      {
+        "path": "records/history-K05-A.json",
+        "sha256": "b5367cb7c401b73197784eb1d92c39df82dcd31d661dd8626d19359d0d664f54"
+      },
+      {
+        "path": "records/history-K06-A.json",
+        "sha256": "604e2f24c200b191363485d2ad53cf118b844a17fceac92fe6ce8d80538f9e87"
+      },
+      {
+        "path": "records/history-K07-A.json",
+        "sha256": "5a61366da8170e882dcb8da34e439d2c836f7cbaf8108013e849932fb269f71c"
+      },
+      {
+        "path": "records/history-K08-A.json",
+        "sha256": "8d965c68962bedbff0a8249c6daef44c3f8cdfc53c034c4ee23b3eb8b4421a43"
+      },
+      {
+        "path": "records/history-K09-A.json",
+        "sha256": "26043d1cc120dfb38d6618fc4e3a6716e5760707477c2ad0b01aa0363cf397f1"
+      },
+      {
+        "path": "records/history-K10-A.json",
+        "sha256": "3d2e42ae360fccca641bd1bc698d5eebafa3d6da497b3c344142eefbdd574171"
+      },
+      {
+        "path": "records/history-K11-A.json",
+        "sha256": "ed72b281bf29298784fea80dbf06c8a774ae8067b49339ddff2b071afde58a53"
+      },
+      {
+        "path": "records/history-K12-A.json",
+        "sha256": "f90e4e565448bb6700b72c391fc9ab2b0f7158e1c86389fed52f39ee0310edba"
+      }
+    ]
+  },
+  "sourceHashes": [
+    {
+      "path": "scripts/score-candidate11-recognition.mjs",
+      "sha256": "f12600d7b061ac8ec15e9d6de4912b96213ab6067d70b47485a6b0e7a33e6343"
+    },
+    {
+      "path": "scripts/verify-candidate11-analysis.mjs",
+      "sha256": "a1c05b6a28afa8fb4b56333c8cd17098dd72bfb43cf65d6a60db7a82c4f7b522"
+    },
+    {
+      "path": "scripts/serve-candidate11.mjs",
+      "sha256": "dc2e16c1406e465c8d0c58c4aa8090adbdd33ba583509df5351ed72f160facc8"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate11.ts",
+      "sha256": "750b3e8fce44057adbb56fccced094b9f54ac0e4b4f2daaa186acf2219404150"
+    },
+    {
+      "path": "src/experiments/candidate11/identity.ts",
+      "sha256": "2b2aa3074e093000647c45f78c2867194fc5d080c92c9df1cd1e463e30b2f4d0"
+    },
+    {
+      "path": "src/experiments/candidate11/runtime.tsx",
+      "sha256": "4af949eb9bfde8217f5a3c6a7fe102c251df582ade4f2b030da377e8c8bb759b"
+    },
+    {
+      "path": "src/experiments/candidate11/replay.ts",
+      "sha256": "aa4e80c821356344f1b5cc7708940ee7f56f7e4e2021fe7e625cea41851e7fb5"
+    },
+    {
+      "path": "src/experiments/candidate11/observation.ts",
+      "sha256": "7262a9bcb038e7c3b8b2e0e6cc00f89e12d8a19c2b456c728eda0c94e9b039d4"
+    },
+    {
+      "path": "src/experiments/candidate11/browser.tsx",
+      "sha256": "f51548ea436e0e95d9c55ecf1139ac563991c75f46c6a60e72ba606b53d2ff1a"
+    }
+  ],
+  "checks": {
+    "lint": {
+      "phase": "lint",
+      "envDir": false,
+      "rootEnvRead": false,
+      "results": [
+        {
+          "label": "lint",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/lint.log"
+        }
+      ]
+    },
+    "test": {
+      "phase": "test",
+      "envDir": false,
+      "rootEnvRead": false,
+      "results": [
+        {
+          "label": "contract",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/contract.log"
+        },
+        {
+          "label": "time-contract",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/time-contract.log"
+        },
+        {
+          "label": "vitest",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/vitest.log"
+        },
+        {
+          "label": "server",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/server.log"
+        },
+        {
+          "label": "worker",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/worker.log"
+        },
+        {
+          "label": "time-parity",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/time-parity.log"
+        },
+        {
+          "label": "multimodal-lib",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/multimodal-lib.log"
+        },
+        {
+          "label": "rco-5-007",
+          "status": 1,
+          "error": null,
+          "log": ".data/candidate11/checks/rco-5-007.log"
+        },
+        {
+          "label": "functions",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/functions.log"
+        },
+        {
+          "label": "c11-scoring",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/c11-scoring.log"
+        },
+        {
+          "label": "c11-history",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/c11-history.log"
+        },
+        {
+          "label": "c11-gateway",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/c11-gateway.log"
+        },
+        {
+          "label": "c11-preview",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/c11-preview.log"
+        }
+      ]
+    },
+    "build": {
+      "phase": "build",
+      "envDir": false,
+      "rootEnvRead": false,
+      "results": [
+        {
+          "label": "typecheck",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/typecheck.log"
+        },
+        {
+          "label": "build",
+          "status": 0,
+          "rootEnvRead": false
+        }
+      ]
+    },
+    "security": {
+      "phase": "security",
+      "envDir": false,
+      "rootEnvRead": false,
+      "results": [
+        {
+          "label": "security",
+          "status": 0,
+          "error": null,
+          "log": ".data/candidate11/checks/security.log"
+        }
+      ]
+    }
+  },
+  "candidate12D2": {
+    "directory": "docs/recognition-optimization/candidate12/d2-provisional-development-20260921a",
+    "runnerCommit": "b44c47335a579c94d7749a632acc4997c64bb390",
+    "grantId": "dda1a7f0-b703-435c-bff9-37e328ed26b6",
+    "calls": 24,
+    "settled": 24,
+    "retries": 0,
+    "repairs": 0,
+    "verifiers": 0,
+    "inputTokens": 109392,
+    "outputTokens": 27158,
+    "localAuditableCostUpperCny": 0.436048,
+    "providerBilledCny": "NOT_OBSERVABLE",
+    "ledgerAfter": {
+      "rows": 742,
+      "bytes": 631869,
+      "sha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+      "tail": "6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922"
+    },
+    "officialDecision": "REJECT_CANDIDATE12_ENGINEERING_SCREEN",
+    "officialDecisionReason": "FROZEN_SCORER_REFERENCE_CONTRACT_MISMATCH",
+    "diagnosticOnly": {
+      "preregistered": false,
+      "candidate03": {
+        "tp": 13,
+        "fp": 2,
+        "fn": 5,
+        "f1": 0.7878787878787877,
+        "completeSources": 6
+      },
+      "candidate12": {
+        "tp": 16,
+        "fp": 1,
+        "fn": 2,
+        "f1": 0.9142857142857143,
+        "completeSources": 6
+      }
+    }
+  },
+  "logHashes": [
+    {
+      "path": ".data/candidate11/checks/lint.log",
+      "sha256": "330074cd4602ab400348781c17a03e7a1e2be3ea91b589e50f076f8f40cc1c5c"
+    },
+    {
+      "path": ".data/candidate11/checks/contract.log",
+      "sha256": "5f1d25d423196cc011a5db69f6e90281e80d77e9aa16b4402b6ba1d053cca32a"
+    },
+    {
+      "path": ".data/candidate11/checks/time-contract.log",
+      "sha256": "724482e94b2a3d606d0bc91efecb4d3eeda6977f835f6c250f7ebb40f5770777"
+    },
+    {
+      "path": ".data/candidate11/checks/vitest.log",
+      "sha256": "b230573c49b2885d163451abbeb7d03a1ec2f2fee133b4208014c0e6d785142f"
+    },
+    {
+      "path": ".data/candidate11/checks/server.log",
+      "sha256": "a5978c1ec36ad073479201ce4215cff380257f2759e6025dc0aa09886d428b64"
+    },
+    {
+      "path": ".data/candidate11/checks/worker.log",
+      "sha256": "8acf19befb70065bfaf80799ebe8601a12c07d639c5bc6d9818ff8a42bd244bf"
+    },
+    {
+      "path": ".data/candidate11/checks/time-parity.log",
+      "sha256": "9f43a0887d194c1837b83d92eb11ba9e843d392e1efc52e37ba578f7750035ae"
+    },
+    {
+      "path": ".data/candidate11/checks/multimodal-lib.log",
+      "sha256": "6ee5fb2bb9a414206aff464d9da72e893a5735fe7be250bbfaacc2c7c71c61a1"
+    },
+    {
+      "path": ".data/candidate11/checks/rco-5-007.log",
+      "sha256": "313c987eb4881f2ade2a66b5e6cc43b3b9d1d4f4b35767fdd96371f11760bf05"
+    },
+    {
+      "path": ".data/candidate11/checks/functions.log",
+      "sha256": "db12c7efe4ab938dd1d7570a2785c2c62013bb452db1538ffd71d057fa3bbf4b"
+    },
+    {
+      "path": ".data/candidate11/checks/c11-scoring.log",
+      "sha256": "b5dc0527fdbfa65ebce9a54fe2d5f8a24675e6de61070457d470df019f8a0e3c"
+    },
+    {
+      "path": ".data/candidate11/checks/c11-history.log",
+      "sha256": "c538e474c3cc2c50b4a28e3cf6660a865dbbbcdff28c252829b9f6a643a19b8b"
+    },
+    {
+      "path": ".data/candidate11/checks/c11-gateway.log",
+      "sha256": "675626d6f000414138a7c1ad50b9481cbcb06c04a1712312f4864bfd5d0b9650"
+    },
+    {
+      "path": ".data/candidate11/checks/c11-preview.log",
+      "sha256": "6eadd5e4eb1d5f548d560fffa2939519a45f37a02db705758d4445b08f895e79"
+    },
+    {
+      "path": ".data/candidate11/checks/typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".data/candidate11/checks/security.log",
+      "sha256": "825b45f9e7c14818d6ce021f27f677f9bf126ec992bebd6ec5c4c68066dd0559"
+    },
+    {
+      "path": ".data-c11-budget-regression-rerun.log",
+      "sha256": "77b9f1ecd1b1c77645702f0d6de25979f9aac4a67f89815fdc4a15f2f44ebd8e"
+    },
+    {
+      "path": ".data-c11-targeted-final.log",
+      "sha256": "72469dbb45b4f40250ef0064a3beabff3e14ad07100046c483701039cc1f7641"
+    }
+  ],
+  "commitsVerifiedBeforeFinal": [
+    "d0407f6b59a8e099b834feaadfaf4d166644d7ab",
+    "8714f0130f62a89ae6230c58a8c3a4664934a8bd"
+  ],
+  "finalCommit": "Resolve current Git HEAD; final artifact cannot contain its own commit hash.",
+  "nextStage": "Candidate14 zero-call engineering correction; Candidate13 may not enter independent Holdout.",
+  "paidGrant": "D2_CONSUMED_COMPLETE",
+  "candidate12D3": {
+    "directory": "docs/recognition-optimization/candidate12/d3-scorer-contract",
+    "status": "D3_SCORER_CONTRACT_READY_FOR_FRESH_DATA",
+    "versions": {
+      "referenceContract": "candidate12-reference-contract-3.0.0",
+      "compiler": "candidate12-reference-compiler-3.0.0",
+      "scorerInput": "candidate12-scorer-input-3.0.0",
+      "scorer": "candidate12-scoring-3.0.0"
+    },
+    "fixtures": {
+      "categories": 24,
+      "valid": 24,
+      "invalid": 24,
+      "testAssertionsPassed": 64
+    },
+    "historicalCompatibility": {
+      "sources": 12,
+      "compatible": 0,
+      "taskIdentityFailures": 10,
+      "naturalLanguageCheckFailures": 12,
+      "autoConversionAllowed": false
+    },
+    "frozenEvidence": {
+      "protectedFiles": 84,
+      "d2ManifestFiles": 60,
+      "d2Raw": 24,
+      "d2Results": 24,
+      "d1AggregateSha256": "4afa5b08a368961ba6782b4ac3d4450f6e6d89c02fa034e1eb426f0390855a5b",
+      "d2AggregateSha256": "2074b8931077a9975ea61293723d1a668728f3baefb5933da84602f61aab6d53",
+      "ledgerRows": 742,
+      "ledgerBytes": 631869,
+      "ledgerSha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+      "ledgerTail": "6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922"
+    },
+    "operations": {
+      "modelCalls": 0,
+      "secretReads": 0,
+      "grants": 0,
+      "reserves": 0,
+      "settlements": 0,
+      "ledgerWrites": 0,
+      "holdoutRequests": 0,
+      "humanTrials": 0,
+      "merge": 0,
+      "deploy": 0
+    },
+    "candidate13": "PLANNED_NOT_IMPLEMENTED_NOT_EVALUATED",
+    "officialD2DecisionPreserved": "REJECT_CANDIDATE12_ENGINEERING_SCREEN"
+  },
+  "candidate13D4": {
+    "directory": "docs/recognition-optimization/candidate13/d4-freeze",
+    "status": "D4_CANDIDATE13_FROZEN_READY_FOR_FRESH_DATA",
+    "candidateVersion": "real-input-source-semantics-13",
+    "promptVersion": "recognition-prompt-candidate13-1.0.0",
+    "referenceContractVersion": "candidate12-reference-contract-3.0.0",
+    "scorerVersion": "candidate12-scoring-3.0.0",
+    "fixtures": {
+      "count": 28,
+      "dataRole": "SEEN_ERROR_FAMILY_SYNTHETIC_ENGINEERING_REGRESSION_ONLY",
+      "eligibleForFreshDevelopment": false,
+      "eligibleForIndependentHoldout": false
+    },
+    "tests": {
+      "node": {
+        "pass": 46,
+        "fail": 0
+      },
+      "candidateVitest": {
+        "pass": 9,
+        "fail": 0
+      },
+      "d3Contract": {
+        "pass": 64,
+        "fail": 0
+      },
+      "isolatedVitest": {
+        "pass": 1442,
+        "fail": 0,
+        "skip": 1
+      },
+      "rawNpmTest": {
+        "pass": 1441,
+        "fail": 1,
+        "skip": 1,
+        "failure": "MISSING_REAL_INPUT_CARRIERS_MANIFEST"
+      },
+      "historicalRco5007": {
+        "pass": 3,
+        "fail": 1,
+        "error": "FREEZE_HASH_MISMATCH:package-lock.json"
+      }
+    },
+    "frozenEvidence": {
+      "protectedFiles": 84,
+      "d1AggregateSha256": "4afa5b08a368961ba6782b4ac3d4450f6e6d89c02fa034e1eb426f0390855a5b",
+      "d2AggregateSha256": "2074b8931077a9975ea61293723d1a668728f3baefb5933da84602f61aab6d53",
+      "d3AggregateSha256": "d158ec4e29e925562993570442626fb35015ced39aeaee0862f29d4cbf820759",
+      "ledgerRows": 742,
+      "ledgerBytes": 631869,
+      "ledgerSha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+      "ledgerTail": "6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922"
+    },
+    "operations": {
+      "modelCalls": 0,
+      "modelConnectivityProbes": 0,
+      "secretReads": 0,
+      "grants": 0,
+      "reserves": 0,
+      "settlements": 0,
+      "ledgerWrites": 0,
+      "freshExpectedReads": 0,
+      "formalRequestIdentities": 0,
+      "humanTrials": 0,
+      "merge": 0,
+      "deploy": 0
+    },
+    "boundaries": {
+      "candidate03Changed": false,
+      "candidate12Changed": false,
+      "defaultCandidateChanged": false,
+      "workspaceSchemaChanged": false,
+      "recognitionResultSchemaChanged": false,
+      "dependenciesChanged": false,
+      "previewChanged": false,
+      "productionChanged": false
+    },
+    "modelEvaluation": "NOT_RUN",
+    "recognitionRate": "NOT_OBSERVABLE",
+    "conversionRate": "NOT_OBSERVABLE",
+    "demonstratedImprovement": false,
+    "officialD2DecisionPreserved": "REJECT_CANDIDATE12_ENGINEERING_SCREEN",
+    "promptSha256": "274607edf843a7aa58da2b9c44619c80cc085df330f10e09cfcec6b328d83c59",
+    "schemaSha256": "52b52e25774d61b8fddecf978f2215d53c0f9b4e47f9d45c74426c0b50a77d7e",
+    "adapterSha256": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2",
+    "candidateBundleSha256": "81037adee63cb48fa66d9aa0f42bb5c8ead18651a606173f386b1ec5c455d617",
+    "fixtureSha256": "42d4672672f71e22266910f0ca69d1e263b214113e49f75ac99f842122fe6201"
+  },
+  "candidate13D6": {
+    "runDirectory": "docs/recognition-optimization/candidate13/d6-development-20260922a",
+    "requests": {
+      "attempted": 24,
+      "settled": 24,
+      "retries": 0,
+      "repairs": 0,
+      "verifiers": 0
+    },
+    "pairSummary": {
+      "candidate03Wins": 2,
+      "candidate13Wins": 3,
+      "ties": 7
+    },
+    "arms": {
+      "A": {
+        "scorerVersion": "candidate13-scoring-4.1.0",
+        "sources": 12,
+        "determinate": true,
+        "schemaAndReferenceValid": 12,
+        "completeSources": 2,
+        "taskMetrics": {
+          "tp": 12,
+          "fp": 9,
+          "fn": 6,
+          "precision": 0.5714285714285714,
+          "recall": 0.6666666666666666,
+          "f1": 0.6153846153846153
+        },
+        "severity": {
+          "criticalMajor": 47,
+          "major": 35,
+          "severe": 0,
+          "forbidden": 2,
+          "teachingLeak": 0
+        },
+        "promotionEligible": false,
+        "boundary": "Synthetic Development engineering score only; human correctness and user conversion remain NOT_OBSERVABLE."
+      },
+      "B": {
+        "scorerVersion": "candidate13-scoring-4.1.0",
+        "sources": 12,
+        "determinate": true,
+        "schemaAndReferenceValid": 12,
+        "completeSources": 2,
+        "taskMetrics": {
+          "tp": 14,
+          "fp": 3,
+          "fn": 4,
+          "precision": 0.8235294117647058,
+          "recall": 0.7777777777777778,
+          "f1": 0.7999999999999999
+        },
+        "severity": {
+          "criticalMajor": 35,
+          "major": 30,
+          "severe": 0,
+          "forbidden": 2,
+          "teachingLeak": 0
+        },
+        "promotionEligible": false,
+        "boundary": "Synthetic Development engineering score only; human correctness and user conversion remain NOT_OBSERVABLE."
+      }
+    },
+    "gates": {
+      "allDeterminate": true,
+      "bothArmsSchemaAndReferenceValid": true,
+      "candidate13Safety": false,
+      "noTaskFnOrCriticalMajorRegression": true,
+      "completeSourceGainAtLeast2": false
+    },
+    "decision": "REJECT_CANDIDATE13_DEVELOPMENT",
+    "metrics": {
+      "syntheticDevelopmentFirstWholeSuggestionAccuracy": {
+        "candidate03": {
+          "numerator": 2,
+          "denominator": 12,
+          "value": 0.16666666666666666
+        },
+        "candidate13": {
+          "numerator": 2,
+          "denominator": 12,
+          "value": 0.16666666666666666
+        }
+      },
+      "correctDispositionRate": "NOT_OBSERVABLE",
+      "lowModificationCorrectDispositionRate": "NOT_OBSERVABLE",
+      "activeEditTime": "NOT_OBSERVABLE"
+    },
+    "operational": {
+      "actualCalls": 24,
+      "retries": 0,
+      "repairs": 0,
+      "verifiers": 0,
+      "providerBilledUsd": "NOT_OBSERVABLE",
+      "localAuditableCostUpperMicroUsd": 67607,
+      "localAuditableCostUpperUsd": 0.067607,
+      "authorizedFrozenWorstUsd": 0.35158,
+      "hardLimitUsd": 1,
+      "usage": {
+        "inputTokens": 116262,
+        "cachedInputTokens": 98176,
+        "outputTokens": 27266
+      }
+    },
+    "ledger": {
+      "before": {
+        "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+        "rows": 742,
+        "bytes": 631869,
+        "sha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+        "tail": "6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922",
+        "nextSequence": 742
+      },
+      "after": {
+        "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+        "rows": 791,
+        "bytes": 694807,
+        "sha256": "efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a",
+        "tail": "0d7d84ba0816cb89cc8e54a2dac02d0413f6608431ce7593c23914bfbb5be3b3",
+        "nextSequence": 791
+      }
+    },
+    "browser": {
+      "origin": "http://127.0.0.1:6634/?automation=1",
+      "database": "rco-mainline-01-02-i1-real-input-candidate13-d6-engineering-1",
+      "actions": [
+        "source open",
+        "evidence review",
+        "edit",
+        "rejection",
+        "partial confirmation",
+        "injected atomic failure",
+        "explicit retry",
+        "independent readback",
+        "refresh recovery"
+      ],
+      "consoleErrorsOrWarningsObserved": 0,
+      "noTaskDisposition": "BLOCKED_BY_TIME_AND_EVENT_REVIEW",
+      "notHumanConversion": true
+    }
+  }
+}

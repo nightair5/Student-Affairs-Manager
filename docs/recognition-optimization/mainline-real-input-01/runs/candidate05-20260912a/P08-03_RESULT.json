@@ -1,0 +1,360 @@
+{
+  "unitId": "P08-03",
+  "arm": "03",
+  "bindingSha": "72e07981d334cb79d94585459d55e48aa0f53ac3e1feddb347ab8850f9c0bcd4",
+  "requestSha": "9d1b38c070b3262323b2839d90f79f8ce87cf0fa8be715ee5608fd6c451ea41e",
+  "responseSha": "b9d81a084f7c951ea196868e62cecd7862ab1cede391bcddd60f06f992207a86",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "f79e6bc9427ddeb80cfcdf5668800a85f93c8bffb7c5987b8166c031b0052326",
+  "scoreInput": "explicit semantic projection into byte-identical historical scorer; raw response unmodified",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-cancel-factory-visit",
+        "propositionScopeIds": [
+          "scope-0002-9f4147b61b0a5952341f0e0222ffa155dbbd4785e32b4524493182170b7af072",
+          "scope-0003-ae22eedf6be452de0a80e229411f9f371c0a4cddab627c5be42e7898e27b43dc",
+          "scope-0004-7451fec7a7d9ad62b862f068ab1d68ff59209db40ce19762f2ac4d99ae4724af"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "negative",
+          "tense": "past",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "attend",
+        "action": {
+          "scopeId": "scope-0002-9f4147b61b0a5952341f0e0222ffa155dbbd4785e32b4524493182170b7af072",
+          "surface": "参加"
+        },
+        "object": {
+          "scopeId": "scope-0002-9f4147b61b0a5952341f0e0222ffa155dbbd4785e32b4524493182170b7af072",
+          "surface": "工厂参访"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "参加工厂参访",
+          "description": "原定要求同学于2026年9月22日09:00参加工厂参访，现因场地关闭而取消，不设替代活动。",
+          "completionCriteria": [],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [
+            "tp-factory-visit-start"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "not_stated",
+          "event": "present"
+        },
+        "eventTempIds": [
+          "event-factory-visit"
+        ]
+      },
+      {
+        "id": "task-submit-course-reflection",
+        "propositionScopeIds": [
+          "scope-0005-62ffbad76a43d586d088eb22aa25e18443ec892c37ef2f252a7d53a553e5466a",
+          "scope-0006-4e0245665d5ba21376174d7ffecfdce2019c111a2cc58d0ad7e67857eca0e6ca",
+          "scope-0007-4a282c3762e9dbe75572791a62185bbee4e99b8d026cd683f079f151d04b6632",
+          "scope-0008-ffdf264f2228dd9da89b76e28ca00d637fa576baa5e1c5360687da122c5f2025",
+          "scope-0009-17c655eeb15c3536fbd31796e3b987385f5652b25a4df36f66368005753e52de"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0005-62ffbad76a43d586d088eb22aa25e18443ec892c37ef2f252a7d53a553e5466a",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0005-62ffbad76a43d586d088eb22aa25e18443ec892c37ef2f252a7d53a553e5466a",
+          "surface": "课程反思"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交课程反思",
+          "description": "请同学于2026年9月26日18:00前提交课程反思，内容围绕已完成的校内实训，须为DOCX。课程反思是独立任务，参访取消不影响这项提交要求。",
+          "completionCriteria": [
+            "于2026年9月26日18:00前提交课程反思",
+            "内容围绕已完成的校内实训",
+            "文件须为DOCX"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-course-reflection"
+          ],
+          "timePointTempIds": [
+            "tp-reflection-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-course-reflection",
+        "name": "课程反思",
+        "required": true,
+        "formatRequirements": [
+          "DOCX"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-submit-course-reflection"
+        ],
+        "scopeIds": [
+          "scope-0005-62ffbad76a43d586d088eb22aa25e18443ec892c37ef2f252a7d53a553e5466a",
+          "scope-0006-4e0245665d5ba21376174d7ffecfdce2019c111a2cc58d0ad7e67857eca0e6ca",
+          "scope-0007-4a282c3762e9dbe75572791a62185bbee4e99b8d026cd683f079f151d04b6632"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "tp-factory-visit-start",
+        "type": "event_start",
+        "rawText": "2026年9月22日09:00",
+        "relatedTaskTempIds": [
+          "task-cancel-factory-visit"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-9f4147b61b0a5952341f0e0222ffa155dbbd4785e32b4524493182170b7af072"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-22T09:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-reflection-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年9月26日18:00前",
+        "relatedTaskTempIds": [
+          "task-submit-course-reflection"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0005-62ffbad76a43d586d088eb22aa25e18443ec892c37ef2f252a7d53a553e5466a"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-26T18:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [
+      {
+        "tempId": "event-factory-visit",
+        "title": "工厂参访",
+        "description": "原定于2026年9月22日09:00进行的工厂参访，因场地关闭而取消，不设替代活动。",
+        "startTimePointTempId": "tp-factory-visit-start",
+        "endTimePointTempId": null,
+        "location": null,
+        "scopeIds": [
+          "scope-0002-9f4147b61b0a5952341f0e0222ffa155dbbd4785e32b4524493182170b7af072",
+          "scope-0003-ae22eedf6be452de0a80e229411f9f371c0a4cddab627c5be42e7898e27b43dc",
+          "scope-0004-7451fec7a7d9ad62b862f068ab1d68ff59209db40ce19762f2ac4d99ae4724af"
+        ],
+        "confidence": 0.95,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": [
+          "task-cancel-factory-visit"
+        ]
+      }
+    ],
+    "revisions": [
+      {
+        "type": "cancels",
+        "targetDirectiveId": "task-cancel-factory-visit",
+        "scopeIds": [
+          "scope-0003-ae22eedf6be452de0a80e229411f9f371c0a4cddab627c5be42e7898e27b43dc",
+          "scope-0004-7451fec7a7d9ad62b862f068ab1d68ff59209db40ce19762f2ac4d99ae4724af"
+        ],
+        "fromDirectiveId": null,
+        "effective": "true"
+      }
+    ],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-5ec626c7adae868e8c73a18a52cfbcfdf4181e3b45578156cf4948efde8c587f",
+      "scope-0008-ffdf264f2228dd9da89b76e28ca00d637fa576baa5e1c5360687da122c5f2025",
+      "scope-0009-17c655eeb15c3536fbd31796e3b987385f5652b25a4df36f66368005753e52de"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:830794dc",
+    "sourceVersionId": "source:830794dc:version:1",
+    "sourceFingerprint": "sha256:a636f817df5c401e6bf5aed6809dd1eed334dbae995e005f459f79b2db05eb58"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 7520,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      },
+      "material": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "event": {
+        "predicted": 1,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 0,
+        "precision": 0,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "evidence": {
+        "predicted": 6,
+        "reference": 5,
+        "correct": 1,
+        "falsePositive": 5,
+        "falseNegative": 4,
+        "precision": 0.16666666666666666,
+        "recall": 0.2
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 1,
+        "falsePositive": 3,
+        "falseNegative": 3,
+        "precision": 0.25,
+        "recall": 0.25
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 2,
+    "referenceTaskCount": 2
+  },
+  "scoreError": null,
+  "totalAttempts": 71,
+  "costUpperMicroCny": 25444,
+  "totalCostUpperMicroCny": 4862313,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12新合成通知首次开发配对验证，非独立盲测；24请求不是24独立通知"
+}

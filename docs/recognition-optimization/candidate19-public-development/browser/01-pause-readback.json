@@ -1,0 +1,1769 @@
+{
+  "schemaVersion": 8,
+  "workspace": {
+    "id": "rco-mainline-01-02-i1-d27-plan-recorded-public1004",
+    "title": "C19 原批12份录制产品回放（非真人）",
+    "createdAt": "2026-09-05T08:00:00.000Z",
+    "updatedAt": "2026-10-04T13:23:31.201Z"
+  },
+  "settings": {
+    "defaultTimezone": "Asia/Shanghai",
+    "locale": "zh-CN"
+  },
+  "sources": [
+    {
+      "id": "source:a77fbc5b",
+      "workspaceId": "rco-mainline-01-02-i1-d27-plan-recorded-public1004",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "confirmed",
+      "currentVersionId": "source:a77fbc5b:version:1",
+      "createdAt": "2026-10-04T13:23:31.166Z",
+      "updatedAt": "2026-10-04T13:23:47.979Z",
+      "legacyData": {
+        "recognitionProvenance": {
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "promptVersion": "ENGINEERING_FIXTURE_NOT_GENERATED",
+          "candidateVersion": "ENGINEERING_FIXTURE_NOT_CANDIDATE",
+          "build": "0bcc3b8b9263 / source 53d0b9c7c4c1",
+          "responseRole": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+          "componentVersion": "source-support-accounting-projection-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.3.0 / source-proven-eligibility-1.0.0",
+          "referenceTime": "2026-05-09T09:00:00+08:00",
+          "timezone": "Asia/Shanghai"
+        },
+        "contentPreview": "因系统安全升级需要，图书馆查收查引服务将临时暂停，届时相关业务无法办理。\n暂停时间：2026年5月9日15:00—2026年5月11日8:30",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 71,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "5a80ac45-3a65-4c1e-82e7-fe3e11a8b713"
+      }
+    }
+  ],
+  "sourceVersions": [
+    {
+      "id": "source:a77fbc5b:version:1",
+      "sourceId": "source:a77fbc5b",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:ba8484f5",
+      "rawText": "因系统安全升级需要，图书馆查收查引服务将临时暂停，届时相关业务无法办理。\n暂停时间：2026年5月9日15:00—2026年5月11日8:30",
+      "rawTextRef": null,
+      "createdAt": "2026-10-04T13:23:31.166Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 71,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    }
+  ],
+  "recognitionRuns": [
+    {
+      "id": "source:a77fbc5b:run:1",
+      "sourceVersionId": "source:a77fbc5b:version:1",
+      "provider": "manual",
+      "modelName": "匿名契约工程夹具（非模型输出）",
+      "promptVersion": "ENGINEERING_FIXTURE_NOT_GENERATED",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "source-support-accounting-projection-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.3.0 / source-proven-eligibility-1.0.0",
+      "status": "succeeded",
+      "startedAt": "2026-10-04T13:23:31.173Z",
+      "completedAt": "2026-10-04T13:23:31.192Z",
+      "durationMs": 19,
+      "tokenUsage": null,
+      "qualityFlags": [],
+      "errorCode": null,
+      "legacyData": {
+        "recordedResponse": {
+          "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+          "ordinal": 101,
+          "sourceId": "PUB-C19-01",
+          "sourceVersionId": "PUB-C19-01-v1",
+          "candidate": "EngineeringFixture",
+          "sourceText": "因系统安全升级需要，图书馆查收查引服务将临时暂停，届时相关业务无法办理。\n暂停时间：2026年5月9日15:00—2026年5月11日8:30",
+          "referenceTime": "2026-05-09T09:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "rawHttpText": "{\"usage\":{\"input_tokens\":0,\"output_tokens\":0},\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[],\\\"materials\\\":[],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P0\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"2026年5月9日15:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"2026年5月11日8:30\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"图书馆查收查引服务\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P0\\\",\\\"endTimePointTempId\\\":\\\"P1\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c\\\",\\\"scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338\\\",\\\"scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-b19eaae0744542b583faab1b62e38262e248b9eeca567c75f3a7db5654ba916b\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P0\\\",\\\"P1\\\"]}],\\\"prerequisiteStates\\\":[]}\"}]}]}",
+          "responseSha256": "776d85cbfb14b263ebd7c344900ea35873f7b01bcfdb1db4f52f1ae27332dda4",
+          "requestSha256": null,
+          "frozenOutcome": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+          "projectionVersion": "source-support-accounting-projection-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.3.0 / source-proven-eligibility-1.0.0"
+        },
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "createdAt": "2026-05-09T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "图书馆查收查引服务",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，1项事件。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "P0",
+              "type": "event_start",
+              "rawText": "2026年5月9日15:00",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-05-09T15:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+              ]
+            },
+            {
+              "tempId": "P1",
+              "type": "event_end",
+              "rawText": "2026年5月11日8:30",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-05-11T08:30",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "E1",
+              "title": "图书馆查收查引服务",
+              "description": "图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n2026年5月9日15:00—2026年5月11日8:30",
+              "startTimePointTempId": "P0",
+              "endTimePointTempId": "P1",
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+                "d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+                "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d",
+              "sourceId": "source:a77fbc5b",
+              "quote": "因系统安全升级需要，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+              "sourceId": "source:a77fbc5b",
+              "quote": "图书馆查收查引服务将临时暂停，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+              "sourceId": "source:a77fbc5b",
+              "quote": "届时相关业务无法办理。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f",
+              "sourceId": "source:a77fbc5b",
+              "quote": "暂停时间：",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5",
+              "sourceId": "source:a77fbc5b",
+              "quote": "2026年5月9日15:00—2026年5月11日8:30",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "因系统安全升级需要，",
+              "reason": "other"
+            },
+            {
+              "text": "暂停时间：",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        }
+      }
+    }
+  ],
+  "extractionDrafts": [
+    {
+      "id": "source:a77fbc5b:draft:1",
+      "recognitionRunId": "source:a77fbc5b:run:1",
+      "status": "confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "匿名契约工程夹具（非模型输出）",
+        "createdAt": "2026-05-09T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "图书馆查收查引服务",
+          "sourceType": "text",
+          "notificationType": "event_notice",
+          "summary": "0项任务，1项事件。请核对后确认。",
+          "requiresAction": false,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "P0",
+            "type": "event_start",
+            "rawText": "2026年5月9日15:00",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-05-09T15:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+            ]
+          },
+          {
+            "tempId": "P1",
+            "type": "event_end",
+            "rawText": "2026年5月11日8:30",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-05-11T08:30",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "图书馆查收查引服务",
+            "description": "图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n2026年5月9日15:00—2026年5月11日8:30",
+            "startTimePointTempId": "P0",
+            "endTimePointTempId": "P1",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+              "d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+              "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d",
+            "sourceId": "source:a77fbc5b",
+            "quote": "因系统安全升级需要，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+            "sourceId": "source:a77fbc5b",
+            "quote": "图书馆查收查引服务将临时暂停，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+            "sourceId": "source:a77fbc5b",
+            "quote": "届时相关业务无法办理。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f",
+            "sourceId": "source:a77fbc5b",
+            "quote": "暂停时间：",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5",
+            "sourceId": "source:a77fbc5b",
+            "quote": "2026年5月9日15:00—2026年5月11日8:30",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "因系统安全升级需要，",
+            "reason": "other"
+          },
+          {
+            "text": "暂停时间：",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:a77fbc5b:draft:1:fnv1a32:d9bb287c"
+      ],
+      "acceptedEntityTempIds": [
+        "E1",
+        "P0",
+        "P1"
+      ],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-04T13:23:31.166Z",
+      "updatedAt": "2026-10-04T13:23:47.979Z",
+      "legacyData": {
+        "semanticSidecar": {
+          "version": "semantic-ordinary-bridge-1.1.0",
+          "originalSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "tasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "P0",
+                "type": "event_start",
+                "rawText": "2026年5月9日15:00",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                ],
+                "confidence": 1,
+                "normalizedValue": "2026-05-09T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              {
+                "tempId": "P1",
+                "type": "event_end",
+                "rawText": "2026年5月11日8:30",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                ],
+                "confidence": 1,
+                "normalizedValue": "2026-05-11T08:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "图书馆查收查引服务",
+                "description": "",
+                "location": null,
+                "startTimePointTempId": "P0",
+                "endTimePointTempId": "P1",
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+                  "scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+                  "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d",
+              "scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f"
+            ],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:a77fbc5b",
+            "sourceVersionId": "source:a77fbc5b:version:1",
+            "sourceFingerprint": "sha256:e4436d1373ef506c65433b59becd6eb031fd1b97cb86917d22d9e04f72b28f81"
+          },
+          "firstSemantic": {
+            "schemaVersion": "mainline04-task-semantics-1",
+            "tasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "P0",
+                "type": "event_start",
+                "rawText": "2026年5月9日15:00",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                ],
+                "confidence": 1,
+                "normalizedValue": "2026-05-09T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              {
+                "tempId": "P1",
+                "type": "event_end",
+                "rawText": "2026年5月11日8:30",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                ],
+                "confidence": 1,
+                "normalizedValue": "2026-05-11T08:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "图书馆查收查引服务",
+                "description": "图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n2026年5月9日15:00—2026年5月11日8:30",
+                "location": null,
+                "startTimePointTempId": "P0",
+                "endTimePointTempId": "P1",
+                "relatedTaskTempIds": [],
+                "scopeIds": [
+                  "scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+                  "scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+                  "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit"
+              }
+            ],
+            "revisions": [],
+            "conflicts": [],
+            "informationScopeIds": [
+              "scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d",
+              "scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f"
+            ],
+            "unresolvedScopeIds": [],
+            "sourceId": "source:a77fbc5b",
+            "sourceVersionId": "source:a77fbc5b:version:1",
+            "sourceFingerprint": "sha256:e4436d1373ef506c65433b59becd6eb031fd1b97cb86917d22d9e04f72b28f81"
+          },
+          "sourceScopeEvidence": [
+            {
+              "scopeId": "scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d",
+              "evidenceId": "d26-scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d"
+            },
+            {
+              "scopeId": "scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+              "evidenceId": "d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd"
+            },
+            {
+              "scopeId": "scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+              "evidenceId": "d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468"
+            },
+            {
+              "scopeId": "scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f",
+              "evidenceId": "d26-scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f"
+            },
+            {
+              "scopeId": "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5",
+              "evidenceId": "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+            }
+          ],
+          "representationGaps": [],
+          "displayAudit": {
+            "version": "grounded-first-suggestion-1.0.0",
+            "originalProse": [
+              {
+                "entityId": "E1",
+                "kind": "event",
+                "title": "图书馆查收查引服务",
+                "description": ""
+              }
+            ],
+            "generatedProse": [
+              {
+                "entityId": "E1",
+                "kind": "event",
+                "title": "图书馆查收查引服务",
+                "description": "图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n2026年5月9日15:00—2026年5月11日8:30"
+              }
+            ],
+            "times": [
+              {
+                "entityId": "P0",
+                "before": {
+                  "normalizedValue": "2026-05-09T15:00",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "after": {
+                  "normalizedValue": "2026-05-09T15:00",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "2026年5月9日15:00",
+                    "type": "event_start",
+                    "normalizedValue": "2026-05-09T15:00",
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "exact",
+                    "needsConfirmation": false,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 14
+                    },
+                    "dateKind": "absolute",
+                    "timeKind": "clock",
+                    "correctionApplied": false,
+                    "issues": []
+                  },
+                  "knownDate": "2026-05-09",
+                  "dayPeriod": null,
+                  "certainty": "stated",
+                  "sourceContext": "2026年5月9日15:00—2026年5月11日8:30"
+                }
+              },
+              {
+                "entityId": "P1",
+                "before": {
+                  "normalizedValue": "2026-05-11T08:30",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "after": {
+                  "normalizedValue": "2026-05-11T08:30",
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false
+                },
+                "interpretation": {
+                  "version": "source-time-semantics-2.0.0",
+                  "point": {
+                    "rawText": "2026年5月11日8:30",
+                    "type": "event_end",
+                    "normalizedValue": "2026-05-11T08:30",
+                    "rangeEndNormalizedValue": null,
+                    "timezone": "Asia/Shanghai",
+                    "isAllDay": false,
+                    "precision": "exact",
+                    "needsConfirmation": false,
+                    "evidenceSpan": {
+                      "start": 0,
+                      "end": 14
+                    },
+                    "dateKind": "absolute",
+                    "timeKind": "clock",
+                    "correctionApplied": false,
+                    "issues": []
+                  },
+                  "knownDate": "2026-05-11",
+                  "dayPeriod": null,
+                  "certainty": "stated",
+                  "sourceContext": "2026年5月9日15:00—2026年5月11日8:30\n2026年5月9日15:00—2026年5月11日8:30"
+                }
+              }
+            ],
+            "unresolved": [],
+            "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+          },
+          "eligibilityAudit": {
+            "version": "source-proven-eligibility-1.0.0",
+            "role": "PROGRAM_SOURCE_CHECK_NOT_NEW_MODEL_OUTPUT",
+            "inferredFacts": 0,
+            "decisions": []
+          },
+          "frozenBridgeResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "recognition-source-contract-4.0.0",
+            "modelName": "匿名契约工程夹具（非模型输出）",
+            "createdAt": "2026-05-09T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "图书馆查收查引服务",
+              "sourceType": "text",
+              "notificationType": "event_notice",
+              "summary": "0项任务，1项事件。",
+              "requiresAction": false,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "P0",
+                "type": "event_start",
+                "rawText": "2026年5月9日15:00",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": "2026-05-09T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                ]
+              },
+              {
+                "tempId": "P1",
+                "type": "event_end",
+                "rawText": "2026年5月11日8:30",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": "2026-05-11T08:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                ]
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "图书馆查收查引服务",
+                "description": "图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n2026年5月9日15:00—2026年5月11日8:30",
+                "startTimePointTempId": "P0",
+                "endTimePointTempId": "P1",
+                "location": null,
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "evidenceIds": [
+                  "d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+                  "d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+                  "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                ],
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d",
+                "sourceId": "source:a77fbc5b",
+                "quote": "因系统安全升级需要，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+                "sourceId": "source:a77fbc5b",
+                "quote": "图书馆查收查引服务将临时暂停，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+                "sourceId": "source:a77fbc5b",
+                "quote": "届时相关业务无法办理。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f",
+                "sourceId": "source:a77fbc5b",
+                "quote": "暂停时间：",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5",
+                "sourceId": "source:a77fbc5b",
+                "quote": "2026年5月9日15:00—2026年5月11日8:30",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [
+              {
+                "text": "因系统安全升级需要，",
+                "reason": "other"
+              },
+              {
+                "text": "暂停时间：",
+                "reason": "other"
+              }
+            ],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": false,
+              "reviewReasons": []
+            }
+          },
+          "supportAccountingAudit": {
+            "version": "source-support-accounting-projection-1.0.0",
+            "role": "POST_COMPARISON_PROGRAM_CONVERSION",
+            "inferredFacts": 0,
+            "originalWire": {
+              "schemaVersion": "explicit-source-contract-4.0.0",
+              "tasks": [],
+              "materials": [],
+              "timePoints": [
+                {
+                  "tempId": "P0",
+                  "type": "event_start",
+                  "rawText": "2026年5月9日15:00",
+                  "relatedTaskTempIds": [],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                  ],
+                  "confidence": 1
+                },
+                {
+                  "tempId": "P1",
+                  "type": "event_end",
+                  "rawText": "2026年5月11日8:30",
+                  "relatedTaskTempIds": [],
+                  "relatedMaterialTempIds": [],
+                  "scopeIds": [
+                    "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                  ],
+                  "confidence": 1
+                }
+              ],
+              "events": [
+                {
+                  "tempId": "E1",
+                  "title": "图书馆查收查引服务",
+                  "description": "",
+                  "location": null,
+                  "startTimePointTempId": "P0",
+                  "endTimePointTempId": "P1",
+                  "relatedTaskTempIds": [],
+                  "scopeIds": [
+                    "scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+                    "scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+                    "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                  ],
+                  "confidence": 1,
+                  "inferenceLevel": "explicit"
+                }
+              ],
+              "revisions": [],
+              "conflicts": [],
+              "scopeAccounting": [
+                {
+                  "scopeId": "scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d",
+                  "kind": "information",
+                  "primaryEntityIds": [],
+                  "secondaryEntityIds": []
+                },
+                {
+                  "scopeId": "scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+                  "kind": "event",
+                  "primaryEntityIds": [
+                    "E1"
+                  ],
+                  "secondaryEntityIds": []
+                },
+                {
+                  "scopeId": "scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+                  "kind": "event",
+                  "primaryEntityIds": [
+                    "E1"
+                  ],
+                  "secondaryEntityIds": []
+                },
+                {
+                  "scopeId": "scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f",
+                  "kind": "information",
+                  "primaryEntityIds": [],
+                  "secondaryEntityIds": []
+                },
+                {
+                  "scopeId": "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5",
+                  "kind": "event",
+                  "primaryEntityIds": [
+                    "E1"
+                  ],
+                  "secondaryEntityIds": [
+                    "P0",
+                    "P1"
+                  ]
+                }
+              ],
+              "prerequisiteStates": []
+            },
+            "changes": [],
+            "projectedAccounting": [
+              {
+                "scopeId": "scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": [
+                  "P0",
+                  "P1"
+                ]
+              }
+            ]
+          },
+          "productGraphGuards": [],
+          "productDisposition": {
+            "version": "source-grounded-conditional-nonaction-1.0.0",
+            "role": "POST_HOC_PROGRAM_CONVERSION",
+            "inferredFacts": 0,
+            "directProjection": {
+              "version": "source-grounded-nonaction-projection-1.0.1",
+              "role": "POST_COMPARISON_PROGRAM_CONVERSION",
+              "inferredFacts": 0,
+              "originalTaskCount": 0,
+              "currentSuggestionTaskCount": 0,
+              "decisions": []
+            },
+            "decisions": [],
+            "originalTaskCount": 0,
+            "currentSuggestionTaskCount": 0
+          },
+          "recordedProvenance": {
+            "role": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "ordinal": 101,
+            "sourceId": "PUB-C19-01",
+            "sourceVersionId": "PUB-C19-01-v1",
+            "candidate": "EngineeringFixture",
+            "sourceText": "因系统安全升级需要，图书馆查收查引服务将临时暂停，届时相关业务无法办理。\n暂停时间：2026年5月9日15:00—2026年5月11日8:30",
+            "referenceTime": "2026-05-09T09:00:00+08:00",
+            "timezone": "Asia/Shanghai",
+            "rawHttpText": "{\"usage\":{\"input_tokens\":0,\"output_tokens\":0},\"model\":\"deepseek-flash\",\"status\":\"completed\",\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"{\\\"schemaVersion\\\":\\\"explicit-source-contract-4.0.0\\\",\\\"tasks\\\":[],\\\"materials\\\":[],\\\"timePoints\\\":[{\\\"tempId\\\":\\\"P0\\\",\\\"type\\\":\\\"event_start\\\",\\\"rawText\\\":\\\"2026年5月9日15:00\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704\\\"],\\\"confidence\\\":1},{\\\"tempId\\\":\\\"P1\\\",\\\"type\\\":\\\"event_end\\\",\\\"rawText\\\":\\\"2026年5月11日8:30\\\",\\\"relatedTaskTempIds\\\":[],\\\"relatedMaterialTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704\\\"],\\\"confidence\\\":1}],\\\"events\\\":[{\\\"tempId\\\":\\\"E1\\\",\\\"title\\\":\\\"图书馆查收查引服务\\\",\\\"description\\\":\\\"\\\",\\\"location\\\":null,\\\"startTimePointTempId\\\":\\\"P0\\\",\\\"endTimePointTempId\\\":\\\"P1\\\",\\\"relatedTaskTempIds\\\":[],\\\"scopeIds\\\":[\\\"scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c\\\",\\\"scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338\\\",\\\"scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704\\\"],\\\"confidence\\\":1,\\\"inferenceLevel\\\":\\\"explicit\\\"}],\\\"revisions\\\":[],\\\"conflicts\\\":[],\\\"scopeAccounting\\\":[{\\\"scopeId\\\":\\\"scope-0001-b19eaae0744542b583faab1b62e38262e248b9eeca567c75f3a7db5654ba916b\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682\\\",\\\"kind\\\":\\\"information\\\",\\\"primaryEntityIds\\\":[],\\\"secondaryEntityIds\\\":[]},{\\\"scopeId\\\":\\\"scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704\\\",\\\"kind\\\":\\\"event\\\",\\\"primaryEntityIds\\\":[\\\"E1\\\"],\\\"secondaryEntityIds\\\":[\\\"P0\\\",\\\"P1\\\"]}],\\\"prerequisiteStates\\\":[]}\"}]}]}",
+            "responseSha256": "776d85cbfb14b263ebd7c344900ea35873f7b01bcfdb1db4f52f1ae27332dda4",
+            "requestSha256": null,
+            "frozenOutcome": "ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT",
+            "projectionVersion": "source-support-accounting-projection-1.0.0 / source-grounded-nonaction-projection-1.0.1 / source-grounded-conditional-nonaction-1.0.0 / explicit-source-contract-4.0.0 / material-channel-role-grounding-1.3.0 / source-proven-eligibility-1.0.0"
+          },
+          "scopeRebinding": {
+            "operation": "IDENTICAL_SOURCE_SCOPE_ID_REBIND_ONLY",
+            "mapping": [
+              [
+                "scope-0001-b19eaae0744542b583faab1b62e38262e248b9eeca567c75f3a7db5654ba916b",
+                "scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d"
+              ],
+              [
+                "scope-0002-bd49606c1dc02d514dddb30d4018b42bb331f4ed3830fa094699109770854c3c",
+                "scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd"
+              ],
+              [
+                "scope-0003-a40018e7932cb258ca636b7ee5560d1bd2b19234518cf1463913a7d0e8559338",
+                "scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468"
+              ],
+              [
+                "scope-0004-703bcf44bbe6b5f4f50fe27ed5d4bbff28fbf4fed420dda2e32c8cbdd7cdb682",
+                "scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f"
+              ],
+              [
+                "scope-0005-59b5e31de0de9d10754b9c1e8907ae791b239498dc7fae4d98dc080ebdd30704",
+                "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+              ]
+            ]
+          },
+          "postComparisonConversion": {
+            "version": "explicit-source-contract-4.0.0",
+            "operation": "VALIDATED_TYPED_DECLARATIONS_AND_EXPLICIT_EDGE_INVERSES_ONLY",
+            "scopeAccounting": [
+              {
+                "scopeId": "scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d",
+                "kind": "information",
+                "entityIds": []
+              },
+              {
+                "scopeId": "scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+                "kind": "event",
+                "entityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+                "kind": "event",
+                "entityIds": [
+                  "E1"
+                ]
+              },
+              {
+                "scopeId": "scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f",
+                "kind": "information",
+                "entityIds": []
+              },
+              {
+                "scopeId": "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5",
+                "kind": "event",
+                "entityIds": [
+                  "E1"
+                ]
+              }
+            ],
+            "prerequisiteStates": [],
+            "inferredFacts": 0,
+            "originalDeclarations": [],
+            "typedAccounting": [
+              {
+                "scopeId": "scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f",
+                "kind": "information",
+                "primaryEntityIds": [],
+                "secondaryEntityIds": []
+              },
+              {
+                "scopeId": "scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5",
+                "kind": "event",
+                "primaryEntityIds": [
+                  "E1"
+                ],
+                "secondaryEntityIds": [
+                  "P0",
+                  "P1"
+                ]
+              }
+            ]
+          },
+          "postComparisonCoverage": {
+            "legacy": null,
+            "declarations": [],
+            "unknownCoverage": []
+          },
+          "sourceRenderedEvents": []
+        },
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "createdAt": "2026-05-09T09:00:00+08:00",
+          "sourceSummary": {
+            "title": "图书馆查收查引服务",
+            "sourceType": "text",
+            "notificationType": "event_notice",
+            "summary": "0项任务，1项事件。请核对后确认。",
+            "requiresAction": false,
+            "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "未主动建立或匹配项目。"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "P0",
+              "type": "event_start",
+              "rawText": "2026年5月9日15:00",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-05-09T15:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+              ]
+            },
+            {
+              "tempId": "P1",
+              "type": "event_end",
+              "rawText": "2026年5月11日8:30",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "confidence": 1,
+              "normalizedValue": "2026-05-11T08:30",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "evidenceIds": [
+                "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "tempId": "E1",
+              "title": "图书馆查收查引服务",
+              "description": "图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n2026年5月9日15:00—2026年5月11日8:30",
+              "startTimePointTempId": "P0",
+              "endTimePointTempId": "P1",
+              "location": null,
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "evidenceIds": [
+                "d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+                "d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+                "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+              ],
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "d26-scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d",
+              "sourceId": "source:a77fbc5b",
+              "quote": "因系统安全升级需要，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+              "sourceId": "source:a77fbc5b",
+              "quote": "图书馆查收查引服务将临时暂停，",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+              "sourceId": "source:a77fbc5b",
+              "quote": "届时相关业务无法办理。",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f",
+              "sourceId": "source:a77fbc5b",
+              "quote": "暂停时间：",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            },
+            {
+              "id": "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5",
+              "sourceId": "source:a77fbc5b",
+              "quote": "2026年5月9日15:00—2026年5月11日8:30",
+              "field": "description",
+              "extractionMethod": "parser",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [
+            {
+              "text": "因系统安全升级需要，",
+              "reason": "other"
+            },
+            {
+              "text": "暂停时间：",
+              "reason": "other"
+            }
+          ],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": false,
+            "reviewReasons": []
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "图书馆查收查引服务",
+              "description": "图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n2026年5月9日15:00—2026年5月11日8:30"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "图书馆查收查引服务",
+              "description": "0项任务，1项事件。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "E1",
+              "kind": "event",
+              "title": "图书馆查收查引服务",
+              "description": "图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n2026年5月9日15:00—2026年5月11日8:30"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "图书馆查收查引服务",
+              "description": "0项任务，1项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "P0",
+              "before": {
+                "normalizedValue": "2026-05-09T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-05-09T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年5月9日15:00",
+                  "type": "event_start",
+                  "normalizedValue": "2026-05-09T15:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 14
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-05-09",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "2026年5月9日15:00—2026年5月11日8:30"
+              }
+            },
+            {
+              "entityId": "P1",
+              "before": {
+                "normalizedValue": "2026-05-11T08:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-05-11T08:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年5月11日8:30",
+                  "type": "event_end",
+                  "normalizedValue": "2026-05-11T08:30",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 14
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-05-11",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "2026年5月9日15:00—2026年5月11日8:30\n2026年5月9日15:00—2026年5月11日8:30"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "materialChannelGrounding": {
+          "version": "material-channel-role-grounding-1.3.0",
+          "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+          "inferredFacts": 0,
+          "decisions": []
+        },
+        "v7Record": {
+          "id": "source:a77fbc5b:draft:1",
+          "sourceId": "source:a77fbc5b",
+          "sourceVersionId": "source:a77fbc5b:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 71,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-04T13:23:31.166Z",
+          "updatedAt": "2026-10-04T13:23:31.192Z",
+          "schemaVersion": "2.0",
+          "modelName": "匿名契约工程夹具（非模型输出）",
+          "promptVersion": "recognition-source-contract-4.0.0",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "recognition-source-contract-4.0.0",
+            "modelName": "匿名契约工程夹具（非模型输出）",
+            "createdAt": "2026-05-09T09:00:00+08:00",
+            "sourceSummary": {
+              "title": "图书馆查收查引服务",
+              "sourceType": "text",
+              "notificationType": "event_notice",
+              "summary": "0项任务，1项事件。请核对后确认。",
+              "requiresAction": false,
+              "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "未主动建立或匹配项目。"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "P0",
+                "type": "event_start",
+                "rawText": "2026年5月9日15:00",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": "2026-05-09T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                ]
+              },
+              {
+                "tempId": "P1",
+                "type": "event_end",
+                "rawText": "2026年5月11日8:30",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "confidence": 1,
+                "normalizedValue": "2026-05-11T08:30",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "evidenceIds": [
+                  "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                ]
+              }
+            ],
+            "events": [
+              {
+                "tempId": "E1",
+                "title": "图书馆查收查引服务",
+                "description": "图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n2026年5月9日15:00—2026年5月11日8:30",
+                "startTimePointTempId": "P0",
+                "endTimePointTempId": "P1",
+                "location": null,
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "evidenceIds": [
+                  "d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+                  "d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+                  "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+                ],
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "d26-scope-0001-29d1856a8864796933f36624efadfe2e8c6b90aa465270ee0fbc854521323a0d",
+                "sourceId": "source:a77fbc5b",
+                "quote": "因系统安全升级需要，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+                "sourceId": "source:a77fbc5b",
+                "quote": "图书馆查收查引服务将临时暂停，",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+                "sourceId": "source:a77fbc5b",
+                "quote": "届时相关业务无法办理。",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0004-d1993ac23f4b59ce4b776da797c9853b9debf80a394685e43df9d2df3572525f",
+                "sourceId": "source:a77fbc5b",
+                "quote": "暂停时间：",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              },
+              {
+                "id": "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5",
+                "sourceId": "source:a77fbc5b",
+                "quote": "2026年5月9日15:00—2026年5月11日8:30",
+                "field": "description",
+                "extractionMethod": "parser",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [
+              {
+                "text": "因系统安全升级需要，",
+                "reason": "other"
+              },
+              {
+                "text": "暂停时间：",
+                "reason": "other"
+              }
+            ],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": false,
+              "reviewReasons": []
+            }
+          },
+          "items": [],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:a77fbc5b:draft:1",
+          "commitId": "source-review:source:a77fbc5b:draft:1:fnv1a32:d9bb287c",
+          "disposition": "no_task",
+          "entityIds": [
+            "event:source:a77fbc5b:draft:1:E1",
+            "time:source:a77fbc5b:draft:1:P0",
+            "time:source:a77fbc5b:draft:1:P1"
+          ],
+          "entityHashes": {
+            "event:source:a77fbc5b:draft:1:E1": "fnv1a32:838676ec",
+            "time:source:a77fbc5b:draft:1:P0": "fnv1a32:6da619fb",
+            "time:source:a77fbc5b:draft:1:P1": "fnv1a32:78a3d7b0"
+          },
+          "verifiedAt": "2026-10-04T13:23:48.000Z"
+        }
+      }
+    }
+  ],
+  "projects": [],
+  "milestones": [],
+  "workPackages": [],
+  "tasks": [],
+  "materials": [],
+  "timePoints": [
+    {
+      "id": "time:source:a77fbc5b:draft:1:P0",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:a77fbc5b:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年5月9日15:00",
+      "normalizedValue": "2026-05-09T15:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-04T13:23:47.973Z",
+      "updatedAt": "2026-10-04T13:23:47.973Z",
+      "legacyData": {
+        "recognitionTempId": "P0",
+        "evidenceIds": [
+          "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:a77fbc5b:draft:1:P1",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:a77fbc5b:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "2026年5月11日8:30",
+      "normalizedValue": "2026-05-11T08:30",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-04T13:23:47.973Z",
+      "updatedAt": "2026-10-04T13:23:47.973Z",
+      "legacyData": {
+        "recognitionTempId": "P1",
+        "evidenceIds": [
+          "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+        ],
+        "confidence": 1
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "event:source:a77fbc5b:draft:1:E1",
+      "projectId": null,
+      "title": "图书馆查收查引服务",
+      "description": "图书馆查收查引服务将临时暂停，\n届时相关业务无法办理。\n2026年5月9日15:00—2026年5月11日8:30",
+      "startTimePointId": "time:source:a77fbc5b:draft:1:P0",
+      "endTimePointId": "time:source:a77fbc5b:draft:1:P1",
+      "location": null,
+      "createdAt": "2026-10-04T13:23:47.973Z",
+      "updatedAt": "2026-10-04T13:23:47.973Z",
+      "legacyData": {
+        "recognitionTempId": "E1",
+        "evidenceIds": [
+          "d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+          "d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+          "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    }
+  ],
+  "evidenceRefs": [
+    {
+      "id": "evidence:source:a77fbc5b:draft:1:d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd",
+      "sourceVersionId": "source:a77fbc5b:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "图书馆查收查引服务将临时暂停，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-04T13:23:47.973Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-90c94858b65793c41b5a0557a7a1242c6e650404ad661e979253329bce8489dd"
+      }
+    },
+    {
+      "id": "evidence:source:a77fbc5b:draft:1:d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468",
+      "sourceVersionId": "source:a77fbc5b:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "届时相关业务无法办理。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-04T13:23:47.973Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0003-8a57cf43ef2f767881af67b690d497564a79cbecaa5fa457ae5889dfd380b468"
+      }
+    },
+    {
+      "id": "evidence:source:a77fbc5b:draft:1:d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5",
+      "sourceVersionId": "source:a77fbc5b:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "2026年5月9日15:00—2026年5月11日8:30",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-04T13:23:47.973Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0005-d4f98e74d3aeac434fd270a4e19fd755a7009e8ed18f95afe91c8dbba93250a5"
+      }
+    }
+  ],
+  "changeProposals": [],
+  "historyRecords": [
+    {
+      "id": "history:time:source:a77fbc5b:draft:1:P0:created",
+      "entityType": "time_point",
+      "entityId": "time:source:a77fbc5b:draft:1:P0",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:a77fbc5b:draft:1:P0"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:a77fbc5b:version:1",
+      "changedAt": "2026-10-04T13:23:47.973Z"
+    },
+    {
+      "id": "history:time:source:a77fbc5b:draft:1:P1:created",
+      "entityType": "time_point",
+      "entityId": "time:source:a77fbc5b:draft:1:P1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:a77fbc5b:draft:1:P1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:a77fbc5b:version:1",
+      "changedAt": "2026-10-04T13:23:47.973Z"
+    },
+    {
+      "id": "history:event:source:a77fbc5b:draft:1:E1:created",
+      "entityType": "event",
+      "entityId": "event:source:a77fbc5b:draft:1:E1",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:a77fbc5b:draft:1:E1"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:a77fbc5b:version:1",
+      "changedAt": "2026-10-04T13:23:47.973Z"
+    }
+  ],
+  "reminderRecords": [],
+  "preferences": {
+    "onboardingCompletedAt": null,
+    "legacyData": {
+      "courseBlocks": [],
+      "integrations": {
+        "sync": {
+          "endpoint": "http://127.0.0.1:8787"
+        },
+        "webMonitors": [],
+        "connectionIntents": []
+      },
+      "knowledgeSettings": {},
+      "recognitionFeedback": [],
+      "v7MigrationLog": [],
+      "v7LegacyData": {}
+    }
+  },
+  "migrationMetadata": [],
+  "savedAt": "2026-10-04T13:23:47.979Z"
+}

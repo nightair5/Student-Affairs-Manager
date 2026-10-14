@@ -1,0 +1,52 @@
+{
+  "version": "c19-fact-followup-protection-build-1",
+  "codeCommit": "4598b59c7c695133c7532e7a05e6adf1b225ada8",
+  "manifest": {
+    "origin": "http://127.0.0.1:6825",
+    "database": "rco-mainline-01-02-i1-d27-plan-recorded-c19factsfinal1004",
+    "build": "95537dfb55d4 / source bb002e92f3e1",
+    "role": "ENGINEERING_REPLAY",
+    "batch": "C19-C17-C19-DEVELOPMENT-R1",
+    "knownSettledRecordings": 12,
+    "plannedRequests": 12,
+    "batchComplete": true,
+    "files": [
+      {
+        "name": "browser.js",
+        "sha256": "fac1dd30b592ebfd4fe6c2743777ff1a5f5a27c120b39f356ed041211cbd9d4c"
+      },
+      {
+        "name": "browser.css",
+        "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+      }
+    ],
+    "recordingsSha256": "c26e31d6d1fd9843c80eaabea153e8c8c554faa2e15377ef5d72badec2eb6085",
+    "modelCallsByBrowser": 0
+  },
+  "sourceSha256": "bb002e92f3e1f4098d663af1606d7b074750f9bd8f8eb61f9d40cecb3589476c",
+  "sourceBytesMatchCommittedProduct": true,
+  "buildHeadLabelIsBeforeCodeCommit": "95537dfb55d413aa493407c32b57e2e09aae958c",
+  "newModelCalls": 0,
+  "newGrant": 0,
+  "newReserve": 0,
+  "newSettle": 0,
+  "ledger": {
+    "rows": 996,
+    "sha256": "c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750",
+    "initialSha256": "c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750",
+    "writes": 0,
+    "fullChainVerified": "checks/history-final.txt and checks/freeze-final.txt"
+  },
+  "protected": {
+    "historical": 84,
+    "frozen": 119,
+    "archives": 7,
+    "unchanged": true
+  },
+  "originalScores": {
+    "Candidate17": "2/6",
+    "Candidate19": "1/6",
+    "selection": "MIXED_PROGRESS"
+  },
+  "humanMetrics": "NOT_OBSERVABLE"
+}

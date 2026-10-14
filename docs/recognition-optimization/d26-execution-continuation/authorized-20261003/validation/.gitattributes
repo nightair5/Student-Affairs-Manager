@@ -1,0 +1,3 @@
+# Captured stdout/stderr keeps its exact byte hashes, including tool formatting.
+# This only changes whitespace review for these new evidence logs, not source tests.
+*.log -text whitespace=-blank-at-eof,-blank-at-eol,cr-at-eol

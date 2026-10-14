@@ -1,0 +1,127 @@
+{
+  "version": "candidate13-d5r1-manifest-1.1.0",
+  "dataRevision": "D5-R1",
+  "status": "CANDIDATE13_V4_DEVELOPMENT_READY_FOR_NEW_AUTHORIZATION",
+  "generatedAt": "2026-09-22T02:36:22.970Z",
+  "preDataFreezeCommit": "ee6ee45caa4e1bd258237ccb4c6bc9792d0c9e34",
+  "invalidatedDraft": {
+    "status": "NEVER_DISPATCHED_NEVER_SCORED",
+    "reason": "v4.0 timePoint.actionable was not expressible by the frozen production output Schema"
+  },
+  "candidate13Freeze": {
+    "candidateVersion": "real-input-source-semantics-13",
+    "promptVersion": "recognition-prompt-candidate13-1.0.0",
+    "promptSha256": "274607edf843a7aa58da2b9c44619c80cc085df330f10e09cfcec6b328d83c59",
+    "candidateBundleSha256": "81037adee63cb48fa66d9aa0f42bb5c8ead18651a606173f386b1ec5c455d617",
+    "originalScorerVersion": "candidate12-scoring-3.0.0",
+    "originalBindingSha256": "900f9f896d710ab99db087931786b41d974850d652095df83b2a1f643c266752"
+  },
+  "evaluationBinding": {
+    "referenceContractVersion": "candidate12-reference-contract-3.0.0",
+    "compilerVersion": "candidate13-reference-compiler-4.1.0",
+    "preparationVersion": "candidate13-d5r1-preparation-1.1.0",
+    "preparationSha256": "41c5b47ee5a984fd38e1f4a5fdf50a85f7c1a115133e6ce8f6eea51cd91f1dc3",
+    "compilerSha256": "c76b6de1c701403aa8abf54453981fceb0293f626b6661aa974cc21c1e600690",
+    "scorerInputVersion": "candidate13-scorer-input-4.1.0",
+    "scorerVersion": "candidate13-scoring-4.1.0",
+    "scorerSha256": "cf2decab8da604970fe830abecddb0d7ea4f635d57abfe705467fcb426162247",
+    "schemaSha256": "52b52e25774d61b8fddecf978f2215d53c0f9b4e47f9d45c74426c0b50a77d7e",
+    "adapterSha256": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2",
+    "measurementVersion": "candidate13-product-metrics-1.0.0",
+    "measurementSha256": "4fb5a0db4d2669d0bd4be7c85cfcbbdd2172c1b5aba956d9351b1f2a6006ffbc",
+    "preparedIdentitySha256": "0f03ac942c41879eb338f89d0a21110ffd264bbf7c23963c3298c47c2c9efaab",
+    "observationSha256": "72f979c51fda738879a891d98131984755f0d208908b518822581a73ccbac31e"
+  },
+  "data": {
+    "sources": 12,
+    "references": 12,
+    "completeReferences": 12,
+    "modelAssistedReferences": 12,
+    "independentHumanReferences": 0,
+    "eligibleForIndependentHoldout": false,
+    "sourceSetSha256": "fd3b0f835567fa37626cda8261f5c2f9fcbbaee5c6c5ed259252f8b3bea6130b",
+    "referenceSetSha256": "7098e58f2631b44b91ef4146c245886a2af6d378f21f08acf3f220ec129eb1a9",
+    "overlapSha256": "875ef91f72299330d6300487a44f1515b98409cdc6ff530181f6f75188eb3dd5"
+  },
+  "experiment": {
+    "arms": {
+      "A": "real-input-source-semantics-3",
+      "B": "real-input-source-semantics-13"
+    },
+    "requests": 24,
+    "order": "6 AB / 6 BA alternating",
+    "fixedConfig": {
+      "model": "deepseek-flash",
+      "temperature": 0,
+      "reasoning": {
+        "effort": "none"
+      },
+      "maxOutputTokens": 8192,
+      "referenceTime": "2026-09-22T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "retry": false,
+      "repair": false,
+      "verifier": false,
+      "orderSeed": "D5R1-C13-20260922-A"
+    },
+    "dispatchAuthorized": false,
+    "resultStatus": "NOT_RUN",
+    "retry": false,
+    "repair": false,
+    "verifier": false,
+    "advancementGate": {
+      "determinateUnits": 24,
+      "schemaAndEvidenceValidPerArm": 12,
+      "candidate13Severe": 0,
+      "candidate13Forbidden": 0,
+      "teachingLeak": 0,
+      "noTaskFnIncrease": true,
+      "noCriticalFieldMajorIncrease": true,
+      "completeSourceNetGainAtLeast": 2
+    }
+  },
+  "metricStatus": {
+    "firstWholeSuggestionAccuracy": "NOT_RUN",
+    "correctDispositionRate": "NOT_OBSERVABLE",
+    "lowModificationCorrectDispositionRate": "NOT_OBSERVABLE",
+    "activeEditTime": "NOT_OBSERVABLE"
+  },
+  "hashes": {
+    "docs/recognition-optimization/candidate13/d5-development/SOURCES.json": "fd3b0f835567fa37626cda8261f5c2f9fcbbaee5c6c5ed259252f8b3bea6130b",
+    "docs/recognition-optimization/candidate13/d5-development/REFERENCES.json": "7098e58f2631b44b91ef4146c245886a2af6d378f21f08acf3f220ec129eb1a9",
+    "docs/recognition-optimization/candidate13/d5-development/PREPARED_REQUEST_IDENTITIES.json": "2a8d9b119295f2c3f625f9dea464f20b58c1a6ac5dacce74aa13026d130e68dc",
+    "docs/recognition-optimization/candidate13/d5-development/OVERLAP_REPORT.json": "875ef91f72299330d6300487a44f1515b98409cdc6ff530181f6f75188eb3dd5"
+  },
+  "protection": {
+    "count": 84,
+    "ledgerSha": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597"
+  },
+  "authorityLedger": {
+    "path": "C:/Users/Winner/student-affairs-multimodal-exp/docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "rows": 742,
+    "bytes": 631869,
+    "sha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+    "tail": "6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922",
+    "writerOpened": false
+  },
+  "operations": {
+    "modelCalls": 0,
+    "connectivityProbes": 0,
+    "secretReads": 0,
+    "grants": 0,
+    "reserves": 0,
+    "settlements": 0,
+    "receipts": 0,
+    "ledgerWrites": 0,
+    "humanTrials": 0,
+    "defaultCandidateChanges": 0,
+    "merges": 0,
+    "deploys": 0
+  },
+  "humanGateStatus": "WAITING_FOR_INDEPENDENT_HUMAN_LABELS_AND_TRIAL",
+  "historicalFailure": {
+    "id": "RCO-5-007",
+    "status": "PRESERVED_FAILING",
+    "error": "FREEZE_HASH_MISMATCH:package-lock.json"
+  }
+}

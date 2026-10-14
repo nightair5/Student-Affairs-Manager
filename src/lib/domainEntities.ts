@@ -11,6 +11,7 @@ import type {
   Task,
   TimePoint,
   MaterialStatus,
+  ReminderDeliveryStatus,
 } from '../types'
 
 export function materialStatusFromLegacy(done: boolean, status?: MaterialStatus): MaterialStatus {
@@ -45,12 +46,36 @@ function draftStatus(draft: ExtractionDraft): CanonicalDraftStatus {
 }
 
 function evidenceMethod(source: Source | undefined): NonNullable<EvidenceReference['extractionMethod']> {
-  if (source?.extractionMethod === 'deepseek-v4-flash') return 'ai'
+  if (source?.extractionMethod?.startsWith('deepseek-v4-flash')) return 'ai'
   return source?.type === 'text' ? 'manual' : 'parser'
 }
 
 function confidenceNumber(value: '高' | '中' | '低'): number {
   return value === '高' ? 0.9 : value === '中' ? 0.65 : 0.35
+}
+
+function validReminderSentAt(value: string | null | undefined): string | null {
+  return value && !Number.isNaN(new Date(value).getTime()) ? value : null
+}
+
+function legacyReminderStatus(reminder: Task['reminders'][number]): {
+  status: ReminderDeliveryStatus
+  errorMessage: string | undefined
+  sentAt: string | null
+} {
+  const sentAt = validReminderSentAt(reminder.sentAt)
+  if (reminder.status === 'sent' && !sentAt) {
+    return { status: 'failed', errorMessage: reminder.errorMessage ?? 'LEGACY_SENT_AT_MISSING', sentAt: null }
+  }
+  const status = reminder.status
+    ?? (reminder.channel === 'wechat-placeholder'
+      ? 'unsupported'
+      : reminder.channel === 'email'
+        ? 'draft'
+        : reminder.enabled
+          ? 'scheduled'
+          : 'draft')
+  return { status, errorMessage: reminder.errorMessage, sentAt }
 }
 
 export interface MaterializedWorkspaceEntities {
@@ -65,6 +90,10 @@ export interface MaterializedWorkspaceEntities {
   reminderRecords: ReminderRecord[]
 }
 
+/**
+ * @deprecated Legacy schema v7 compatibility projection. It must never be
+ * used to rebuild or overwrite canonical Workspace v8 entity arrays.
+ */
 export function materializeWorkspaceEntities(
   tasks: Task[],
   sources: Source[],
@@ -84,7 +113,7 @@ export function materializeWorkspaceEntities(
     return {
       ...draft,
       workflowStatus: draftStatus(draft),
-      modelVersion: draft.modelVersion ?? (source?.extractionMethod === 'deepseek-v4-flash' ? 'deepseek-v4-flash' : 'local-rules'),
+      modelVersion: draft.modelVersion ?? (source?.extractionMethod?.startsWith('deepseek-v4-flash') ? source.extractionMethod : 'local-rules'),
       promptVersion: draft.promptVersion ?? 'extraction-v1',
     }
   })
@@ -184,20 +213,19 @@ export function materializeWorkspaceEntities(
     }))))
   const historyRecords = [...taskHistoryRecords, ...draftHistoryRecords]
 
-  const reminderRecords = normalizedTasks.flatMap((task) => task.reminders.map((reminder): ReminderRecord => ({
-    id: reminder.id,
-    taskId: task.id,
-    channel: reminder.channel,
-    scheduledAt: reminder.scheduledAt,
-    enabled: reminder.enabled,
-    status: reminder.channel === 'wechat-placeholder'
-      ? 'unsupported'
-      : reminder.channel === 'email'
-        ? 'draft'
-        : reminder.enabled
-          ? 'scheduled'
-          : 'draft',
-  })))
+  const reminderRecords = normalizedTasks.flatMap((task) => task.reminders.map((reminder): ReminderRecord => {
+    const delivery = legacyReminderStatus(reminder)
+    return {
+      id: reminder.id,
+      taskId: task.id,
+      channel: reminder.channel,
+      scheduledAt: reminder.scheduledAt,
+      enabled: reminder.enabled,
+      status: delivery.status,
+      errorMessage: delivery.errorMessage,
+      sentAt: delivery.sentAt,
+    }
+  }))
 
   return {
     tasks: normalizedTasks,

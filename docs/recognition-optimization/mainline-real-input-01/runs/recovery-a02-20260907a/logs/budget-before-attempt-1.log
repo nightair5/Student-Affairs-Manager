@@ -1,0 +1,86 @@
+✖ one-shot A02 recovery preserves A01 unknown cost and prefix while normal completion cannot unlock A03 (60.1524ms)
+✖ recovery competing callers and crash/reopen consume at most one new reservation without sending (52.1469ms)
+✔ recovery rejects changed prior, target, route and binding fields before ledger writes (427.157ms)
+✔ recovery rejects ordinary pending without the designated transport halt (70.2074ms)
+✖ A02 invalid usage and uncertainty retain both reservations and never reopen the grant (48.1843ms)
+✔ ambiguous decoded response keys retain full reserve, survive reopen and halt next dispatch (519.8731ms)
+✔ valid decoded keys, ordering, whitespace and key-looking model text still settle normally (66.5549ms)
+✔ conservative context envelope and integer settlement have no floating-point budget drift (0.26ms)
+✔ normal request reserves durably before completion; only complete usage releases surplus (60.3897ms)
+✔ all 24 logical units share one ledger across reopened browser/runner handles (1635.6158ms)
+✔ 10 yuan is checked using spent upper cost plus the next full reservation (86.7882ms)
+✔ concurrent tabs cannot reserve twice; cross-instance overlap retains one pending request (33.7183ms)
+✔ two independent Node processes cannot bypass the shared filesystem lock (123.8368ms)
+✔ process restart after a durable reservation never resends or releases it (47.2072ms)
+✔ timeout/unknown failure retains full reservation and permanently stops this book (47.7423ms)
+✔ missing usage cannot settle or release the reservation (39.5623ms)
+✔ mismatched total cannot settle or release the reservation (43.0502ms)
+✔ zero tokens for nonempty input cannot settle or release the reservation (40.2295ms)
+✔ excess input cannot settle or release the reservation (39.2469ms)
+✔ excess output cannot settle or release the reservation (40.2774ms)
+✔ wrong model cannot settle or release the reservation (42.1989ms)
+✔ incomplete response cannot settle or release the reservation (42.5359ms)
+✔ unsupported reasoning cannot settle or release the reservation (42.8229ms)
+✔ tools cannot settle or release the reservation (40.6085ms)
+✔ string usage cannot settle or release the reservation (43.8081ms)
+✔ even a parseable HTTP failure is not settled (35.3543ms)
+✔ response reuse is a binding anomaly, not another cheap completed call (53.4143ms)
+✔ price/context/protocol changes halt before dispatch; frozen requests cannot change (34.487ms)
+✔ expired billing review and premature C are rejected (37.2491ms)
+✔ returned snapshot cannot change the frozen request, including its byte length (49.8535ms)
+✔ snapshot mutation cannot replace B inputs or permit an incompatible C candidate (757.8274ms)
+✔ a valid-prefix truncation is detected by the independent write-once receipts (39.1672ms)
+✔ missing ledger and abandoned lock do not initialize a fresh allowance (36.2416ms)
+✔ recomputing row hashes does not make a mismatched settlement valid (36.7814ms)
+✔ manifest changes and response shape tricks fail without coercion (15.6526ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 32
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4872.8239
+
+✖ failing tests:
+
+test at scripts\real-input-budget.node-test.mjs:22:3
+✖ one-shot A02 recovery preserves A01 unknown cost and prefix while normal completion cannot unlock A03 (60.1524ms)
+  Error: REAL_INPUT_BUDGET_HALTED
+      at fail (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.mjs:13:30)
+      at check (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.mjs:14:40)
+      at file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.mjs:228:34
+      at async locked (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.mjs:124:12)
+      at async Object.reserve (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.mjs:227:25)
+      at async TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:24:17)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+
+test at scripts\real-input-budget.node-test.mjs:37:3
+✖ recovery competing callers and crash/reopen consume at most one new reservation without sending (52.1469ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:40:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:60:3
+✖ A02 invalid usage and uncertainty retain both reservations and never reopen the grant (48.1843ms)
+  Error: REAL_INPUT_BUDGET_HALTED
+      at fail (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.mjs:13:30)
+      at check (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.mjs:14:40)
+      at file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.mjs:228:34
+      at async locked (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.mjs:124:12)
+      at async Object.reserve (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.mjs:227:25)
+      at async TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:62:109)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)

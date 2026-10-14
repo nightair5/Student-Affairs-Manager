@@ -1,0 +1,130 @@
+{
+  "version": "real-input-contrastive-result-1",
+  "unitId": "K09-B",
+  "sourceId": "OS09",
+  "arm": "B",
+  "armName": "candidate10-contrastive",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "requestSha": "874ef02c98422f71dd39589314f31176e4a02b981b58536d82f8c8221f0e5b6a",
+  "responseSha": "56a77e1d9e8efb32e871ec0fc4d10086b076f0b17cb9bdd95962190b3a04dd7d",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-10",
+  "exampleVersion": "contrastive-evidence-examples-1",
+  "scorerSha": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+  "referenceSha": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-return-borrowing-voucher",
+        "propositionScopeIds": [
+          "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+          "scope-0002-b61619e27a83c8b508bdf6cb535577e09d31c7bff3367c726306211c2a5e5695"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+          "surface": "交回"
+        },
+        "object": {
+          "scopeId": "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae",
+          "surface": "借用凭证"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "交回借用凭证",
+          "description": "在10月12日上午十点前交回借用凭证，编号保持不变。",
+          "completionCriteria": [
+            "借用凭证已交回",
+            "编号保持不变"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [
+            "time-deadline-1012-1000"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "time-deadline-1012-1000",
+        "type": "submission_deadline",
+        "rawText": "10月12日上午十点前",
+        "relatedTaskTempIds": [
+          "task-return-borrowing-voucher"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0001-14f3bbfc83db9d94066d12a9b23cb1908bc3f021df90fb5549a314a1359d8bae"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-12T10:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [],
+    "unresolvedScopeIds": [],
+    "sourceId": "opensource-dev-OS09",
+    "sourceVersionId": "opensource-dev-OS09:1",
+    "sourceFingerprint": "sha256:7b2dbff0478e993def44876b6140d87b1313373aa053491ed95b8deab8b8e5d8"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 4002,
+  "parseError": null,
+  "totalAttempts": 307,
+  "usage": {
+    "input_tokens": 5044,
+    "input_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "output_tokens": 605,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5649
+  },
+  "costUpperMicroCny": 14928,
+  "totalCostUpperMicroCny": 13926663,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化"
+}

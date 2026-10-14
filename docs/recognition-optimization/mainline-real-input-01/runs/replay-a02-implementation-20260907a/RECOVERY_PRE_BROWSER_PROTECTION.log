@@ -1,0 +1,14 @@
+{"baseKeys":["head","sources","protection","old","ledger","receipts","logBoundary","errors"]}
+file:///C:/Users/Winner/student-affairs-multimodal-exp/[eval1]:4
+const checkRead=p=>{if(isRootEnv(p)){blockedEnvReads++;throw Error('ROOT_ENV_READ_FORBIDDEN')}};
+                                                             ^
+
+Error: ROOT_ENV_READ_FORBIDDEN
+    at checkRead (file:///C:/Users/Winner/student-affairs-multimodal-exp/[eval1]:4:62)
+    at fs.<computed> [as readFileSync] (file:///C:/Users/Winner/student-affairs-multimodal-exp/[eval1]:5:117)
+    at read (file:///C:/Users/Winner/student-affairs-multimodal-exp/[eval1]:10:71)
+    at file:///C:/Users/Winner/student-affairs-multimodal-exp/[eval1]:16:70
+    at Array.map (<anonymous>)
+    at file:///C:/Users/Winner/student-affairs-multimodal-exp/[eval1]:16:42
+
+Node.js v24.18.0

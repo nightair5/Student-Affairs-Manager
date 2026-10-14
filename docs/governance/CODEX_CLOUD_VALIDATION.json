@@ -1,0 +1,200 @@
+{
+  "status": "REPOSITORY_CONFIG_VALIDATED_LOCALLY_ACCOUNT_CREATION_BLOCKED",
+  "testedPlatform": "win32",
+  "liveCloudInstallation": "NOT_RUN",
+  "environmentPublished": "NOT_OBSERVED",
+  "setupShellSyntax": "PASS",
+  "configurationTests": 3,
+  "portableVitest": {
+    "files": 24,
+    "tests": 304
+  },
+  "nodeCounts": {
+    "contract": null,
+    "time-contract": null,
+    "lint": null,
+    "portable-product-unit": null,
+    "governance-unit": 12,
+    "server": 8,
+    "worker": 25,
+    "functions": 5,
+    "time-parity": 1,
+    "multimodal-lib": 23,
+    "c11-scoring": 44,
+    "c11-preview": 5,
+    "build": null,
+    "security": null
+  },
+  "report": {
+    "phase": "portable",
+    "node": "24.18.0",
+    "platform": "win32",
+    "locks": [
+      {
+        "path": "package-lock.json",
+        "sha256": "330350e448c1cd29c6c7869c7a978142d95ba84aa12658a9c9bcacdcf763bbe3"
+      },
+      {
+        "path": "functions/package-lock.json",
+        "sha256": "203b51de090c077439e6e35140da64499b58a84fe13fb54ce6c55bcd1143e224"
+      }
+    ],
+    "scope": [
+      "src/domain/v2",
+      "src/experiments/mainline04",
+      "src/experiments/mainline05",
+      "src/experiments/candidate16/d20ReviewSession.test.ts",
+      "src/experiments/candidate16/measurement.test.ts",
+      "src/lib/timeSemantics.test.ts",
+      "src/recognition/scopeIndexV11.test.ts"
+    ],
+    "fullSuiteAssets": {
+      "windowsChineseFont": true,
+      "d17Raw": true,
+      "authorityLedger": "LOCAL_READ_ONLY_NOT_UPLOADED"
+    },
+    "modelCalls": 0,
+    "ledgerTransactions": 0,
+    "rootEnvRead": false,
+    "defaultCandidateChanged": false,
+    "results": [
+      {
+        "label": "contract",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/contract.log"
+      },
+      {
+        "label": "time-contract",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/time-contract.log"
+      },
+      {
+        "label": "lint",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/lint.log"
+      },
+      {
+        "label": "portable-product-unit",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/portable-product-unit.log"
+      },
+      {
+        "label": "governance-unit",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/governance-unit.log"
+      },
+      {
+        "label": "server",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/server.log"
+      },
+      {
+        "label": "worker",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/worker.log"
+      },
+      {
+        "label": "functions",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/functions.log"
+      },
+      {
+        "label": "time-parity",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/time-parity.log"
+      },
+      {
+        "label": "multimodal-lib",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/multimodal-lib.log"
+      },
+      {
+        "label": "c11-scoring",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/c11-scoring.log"
+      },
+      {
+        "label": "c11-preview",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/c11-preview.log"
+      },
+      {
+        "label": "build",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/build.log"
+      },
+      {
+        "label": "security",
+        "status": 0,
+        "error": null,
+        "log": ".data/codex-cloud/security.log"
+      }
+    ],
+    "status": "PORTABLE_CODE_CHECKS_PASS_NOT_FULL_ACCEPTANCE",
+    "historicalOrRecordedAndBrowserAcceptance": "NOT_REPLACED_BY_PORTABLE_SCOPE"
+  },
+  "devHttp": [
+    {
+      "path": "/",
+      "status": 200,
+      "body": "HTML_DOCUMENT"
+    },
+    {
+      "path": "/api/status",
+      "status": 403,
+      "body": "{\"configured\":false,\"modelCallsEnabled\":false,\"error\":{\"code\":\"CODEX_CLOUD_DEVELOPMENT_OFFLINE\"}}"
+    },
+    {
+      "path": "/api/deepseek/extract",
+      "status": 403,
+      "body": "{\"configured\":false,\"modelCallsEnabled\":false,\"error\":{\"code\":\"CODEX_CLOUD_DEVELOPMENT_OFFLINE\"}}"
+    }
+  ],
+  "hashes": [
+    {
+      "path": ".codex/cloud/install.sh",
+      "sha256": "f531b3c0a77b3b73274d5cead9ba48c9ac2a60bd7df12082cd83170c242462ab"
+    },
+    {
+      "path": ".codex/cloud/start.md",
+      "sha256": "8b792d1d70e0d3b44b3d34fa760d19df097b380d2b317b4c3a107d85d90c6016"
+    },
+    {
+      "path": ".codex/cloud/SETUP_REQUEST.md",
+      "sha256": "251d798932ac826e6f56beb815e3bbe14325b5582602f406907c339197fcd148"
+    },
+    {
+      "path": "scripts/codex-cloud-checks.mjs",
+      "sha256": "8fd6d5600205d1cf1951dcb6090aa131dd069fdc7f4fd97b53bfdcf75d4537e3"
+    },
+    {
+      "path": "scripts/codex-cloud.vite.config.mts",
+      "sha256": "5ed8fb1f0900b429cd8a0915d76d530ffc0c813d54fe75d4bf39d7efc0c3c660"
+    }
+  ],
+  "browserErrors": [
+    "js execution timed out; kernel reset (createBrowserTab)",
+    "js execution timed out; kernel reset (getTab)",
+    "Timed out running CDP command Emulation.setFocusEmulationEnabled for tab 1",
+    "js execution timed out; kernel reset (screenshot)"
+  ],
+  "finalEnvironmentFilterRegression": {
+    "tests": 3,
+    "status": "PASS",
+    "credentialGetter": "NOT_READ",
+    "timeParity": "PASS"
+  }
+}

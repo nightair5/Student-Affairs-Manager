@@ -1,0 +1,190 @@
+{
+  "stage": "RCO-5-MAINLINE-03-I1-R3-CLOSE",
+  "status": "PASS_ISOLATED_ACCEPTANCE_AFTER_FILE_SUPPLEMENT",
+  "baselineHead": "40a7f13003563505be0d9408cb87149a13ca643a",
+  "implementationChangesInClose": 0,
+  "dependencyInstallsInClose": 0,
+  "independentReview": {
+    "status": "PASS",
+    "freshNoContext": true,
+    "blockingFindings": 0,
+    "bodyChars": 478,
+    "contextFollowup": "PASS; previously requested short handoff correction completed",
+    "report": "R3_CLOSE_REVIEW.md",
+    "reviewInvocationError": "Initial cross-realm VM invocation rejected prototypes; unchanged validator passed in same realm. Review method error, not product repair."
+  },
+  "newFileDirected": {
+    "file": {
+      "path": "C:/Users/Winner/Downloads/mainline-02-i1-workspace (7).json",
+      "bytes": 96198,
+      "createdUtc": "2026-09-06T04:20:41.229Z",
+      "modifiedUtc": "2026-09-06T04:20:41.230Z",
+      "fileSha256": "6fddeb86ea9c975e2085d15beb66d640820d4de7863fe7c33f13952aabe1c23e",
+      "wholeObjectSha256": "98fa1768d648bf49c862fdc1433f2630e3c9bed705af68fb67d2ef26e623e75a"
+    },
+    "validator": {
+      "valid": true,
+      "issues": 0,
+      "sourceSha256": "eedc119945961612aa09b302fb2acb484c74a6868b409b2fa7f2fa8725e4d580"
+    },
+    "fieldFidelity": {
+      "passed": 42,
+      "total": 42,
+      "basis": "Original 2 tasks x 21 fields; no fixture/Expected change"
+    },
+    "sourceReceipts": 5,
+    "approvedSourceOnlyAdaptations": 4,
+    "retainedUserEdits": 3,
+    "seenB8FailedDraftRetained": true,
+    "genuineUndatedRelatedTimes": 0,
+    "reminderRecords": 0,
+    "originalFileUnchanged": true,
+    "canonicalComparison": {
+      "matches": true,
+      "reference": "Earlier real runtime.load readback retained in REPL r3final, independently rehashed in CLOSE; not assigned from download",
+      "wholeObjectSha256": "98fa1768d648bf49c862fdc1433f2630e3c9bed705af68fb67d2ef26e623e75a",
+      "provenance": "R3_CLOSE_PROVENANCE.json",
+      "newBrowserDatabaseRead": false
+    }
+  },
+  "engineeringEvidence": {
+    "status": "PRIOR_LAYERED_PASS_VERIFIED_NOT_RERUN",
+    "logFiles": 15,
+    "logHashesMatch": true,
+    "fullResultJsonMatches": true,
+    "historicalSnapshotFiles": 20,
+    "historicalFileHashesMatch": true,
+    "source": "R3_CLOSE_BASELINE.json engineeringEvidence",
+    "prior": {
+      "historicalLibrary": 4,
+      "currentCompatibility": 13,
+      "vitestPassed": 986,
+      "vitestSkipped": 1,
+      "directed153IncludedIn986": true,
+      "server": 8,
+      "worker": 25,
+      "timeParity": 1,
+      "multimodalLibrary": 23,
+      "functions": 5,
+      "lintTypesContractsBuildSecurity": "PASS",
+      "securityFindings": 0,
+      "dependencyVulnerabilities": 0,
+      "legacyLintWarnings": 1
+    },
+    "historicalCurrentWorkspace": {
+      "passed": 3,
+      "failed": 1,
+      "status": "FAIL_PRESERVED_NOT_RERUN",
+      "source": "R2_FINAL_CHECKS.json"
+    },
+    "githubCI": "NOT_RUN_OR_CLAIMED_BY_CLOSE; unchanged Node22/old npm test workflow is distinct from local Node24 R3 layered gate"
+  },
+  "browserProtocol": {
+    "status": "PASS_AFTER_SUPPLEMENT",
+    "passed": 12,
+    "total": 12,
+    "newBrowserOperations": 0,
+    "reusedPriorItems": [
+      1,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12
+    ],
+    "supplementedItems": [
+      2,
+      11
+    ],
+    "source": "R3_BROWSER_RESULT.md plus R3_CLOSE_FILE_CHECKS/PROVENANCE/REVIEW",
+    "scope": "Original seen engineering cases, not commercial/browser-matrix/model-quality acceptance",
+    "priorActualReminderJobs": 0,
+    "priorSafety": {
+      "wrongDefaultSelectedObserved": 0,
+      "unconfirmedFormalWritesObserved": 0,
+      "duplicateAdditionalWritesObserved": 0,
+      "overwritesObserved": 0,
+      "lossObserved": 0
+    },
+    "priorSecondTabConsoleErrors": 1
+  },
+  "protection": {
+    "checked": 799,
+    "changed": [],
+    "original12AndR3ScriptMatched": 13,
+    "historicalR3ReportsUnchanged": 11,
+    "optimizationLogAppendOnly": true,
+    "old40of42And17TestsPreserved": true,
+    "allHistoricalFailsPreserved": true,
+    "source": "R3_CLOSE_BASELINE.json; existing R3 checker --protect plus CLOSE raw-SHA guard",
+    "gitDiffCheck": "PASS"
+  },
+  "boundaries": {
+    "externalRecognition": 0,
+    "verifier": 0,
+    "repair": 0,
+    "retry": 0,
+    "modelNetwork": 0,
+    "feesCny": 0,
+    "keyAccess": 0,
+    "clipboardAccess": 0,
+    "realUserDatabaseAccess": 0,
+    "newDataset": 0,
+    "newHoldout": 0,
+    "B10": 0,
+    "realMaterials": 0,
+    "humanStudy": 0,
+    "stableEntryChanges": 0,
+    "deployment": 0,
+    "RCO6": 0
+  },
+  "modelAccuracy": "本轮未测量",
+  "gitDelivery": {
+    "status": "READY_FOR_EXPLICIT_STAGE_COMMIT_PUSH",
+    "stagingList": [
+      "src/App.tsx",
+      "src/experiments/mainline02/runtime.ts",
+      "src/experiments/mainline03/recognitionHandoff.ts",
+      "src/experiments/mainline03/recognitionHandoff.test.ts",
+      "src/experiments/mainline03/seenReplay.ts",
+      "src/experiments/mainline03/seenReplay.test.ts",
+      "src/experiments/mainline03/browser.tsx",
+      "src/experiments/mainline03/mainlineAcceptance.test.tsx",
+      "scripts/serve-mainline-03-i1.mjs",
+      "scripts/check-mainline-03-i1.mjs",
+      "package.json",
+      "package-lock.json",
+      "scripts/check-mainline-03-i1-r3.mjs",
+      "docs/recognition-optimization/mainline-03-i1/R3_CLOSE_AUDIT.md",
+      "docs/recognition-optimization/mainline-03-i1/R3_CLOSE_BASELINE.json",
+      "docs/recognition-optimization/mainline-03-i1/R3_CLOSE_CHECKS.json",
+      "docs/recognition-optimization/mainline-03-i1/R3_CLOSE_FILE_CHECKS.json",
+      "docs/recognition-optimization/mainline-03-i1/R3_CLOSE_IMPLEMENTATION_SNAPSHOT.json",
+      "docs/recognition-optimization/mainline-03-i1/R3_CLOSE_NEXT_PROMPT.md",
+      "docs/recognition-optimization/mainline-03-i1/R3_CLOSE_PROVENANCE.json",
+      "docs/recognition-optimization/mainline-03-i1/R3_CLOSE_REVIEW.md",
+      "docs/recognition-optimization/CURRENT_CONTEXT.md",
+      "docs/recognition-optimization/OPTIMIZATION_LOG.md"
+    ],
+    "expectedFiles": 23,
+    "excluded": [
+      "download original file",
+      "all old R3 reports/results",
+      "temporary evidence",
+      "unapproved paths"
+    ],
+    "commitAndRemote": "Exact commit and push verification supplied by actual Git receipt after this file is committed; not inferred from acceptance",
+    "forcePush": false,
+    "autoRebase": false
+  },
+  "next": {
+    "onlyRecommendation": "RCO-5-MAINLINE-04-SCOPE",
+    "authorized": false,
+    "prompt": "R3_CLOSE_NEXT_PROMPT.md",
+    "purpose": "Read-only minimal semantic handoff scope for registered condition/state/revision/event relations; no model call or implementation"
+  }
+}

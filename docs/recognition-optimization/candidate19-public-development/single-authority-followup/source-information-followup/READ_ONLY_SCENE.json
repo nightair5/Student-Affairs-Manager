@@ -1,0 +1,57 @@
+{
+  "role": "SEALED_BATCH_KNOWN_SETTLED_READ_ONLY",
+  "batch": "C19-SINGLE-AUTHORITY-DEVELOPMENT-R1",
+  "denominator": 8,
+  "verifiedSettled": 2,
+  "units": [
+    {
+      "ordinal": 1,
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 2,
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 3,
+      "status": "UNCERTAIN"
+    },
+    {
+      "ordinal": 4,
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 5,
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 6,
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 7,
+      "status": "NOT_SENT"
+    },
+    {
+      "ordinal": 8,
+      "status": "NOT_SENT"
+    }
+  ],
+  "lockExists": true,
+  "haltExists": true,
+  "winner": "EVIDENCE_INCOMPLETE",
+  "modelRequests": 0,
+  "ledgerWrites": 0,
+  "dispatch": "DISABLED_NO_MUTATION_API",
+  "ledger": {
+    "rows": 1015,
+    "sha256": "25f32a95eb28a264c3bec20500cf0b439ab33ad445dddfe8eba243c469c948d9",
+    "tail": "1d56fe14fa715661c06bcc26360650029e468855676039b331a9240bc3f484c2",
+    "batchRows": 6
+  },
+  "sealedFilesUnchanged": 16,
+  "originalBinding": {
+    "manifestSha256": "b3f49a424ccd7b3c740c4009f30d1708e3bf4b5399ded3c0a4c768a0c65c9b29",
+    "identitiesSha256": "1651fe39ada86fbcecb298b93c72574f2b4401956f4124be0b3dc79a5b3f8459"
+  }
+}

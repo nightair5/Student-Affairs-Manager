@@ -1,0 +1,845 @@
+{
+  "role": "INDEPENDENT_READBACK_EVIDENCE_SUMMARY_NOT_WORKSPACE_EXPORT",
+  "build": "c708a3e45a33 / source 9cb0479bb1d8",
+  "database": "rco-mainline-01-02-i1-d27-plan-recorded-mechanism-complete-1007",
+  "originalReadbackSha256": "1eb265168458f73a642b39af182b4d98a6f04ec10982355f8e6212046d514b3e",
+  "counts": {
+    "Task": 5,
+    "Project": 0,
+    "Event": 3,
+    "TimePoint": 16,
+    "Material": 2
+  },
+  "sourceVersions": [
+    {
+      "id": "source:63242691:version:1",
+      "sourceId": "source:63242691",
+      "versionNo": 1,
+      "rawText": "活动信息\n\n**时间**\n\n2026年10月12日（周一）\n\n12:30-14:00\n\n**地点**\n\n海韵园办公楼A栋302室\n\n**报名**\n\n扫描下方二维码进行报名，听众报名截止时间为2026年10月11日中午12:00，主办方提供50份免费午餐，按报名顺序先到先得（讲座的听众总人数不作限制，感兴趣均可报名）。",
+      "contentHash": "fnv1a32:22d5ac2d"
+    },
+    {
+      "id": "source:db8ea334:version:1",
+      "sourceId": "source:db8ea334",
+      "versionNo": 1,
+      "rawText": "招生对象：在读本科生和研究生、青年研究人员等\n收费情况：免费\n活动时间：2026年7月6日-7月10日\n活动形式：线上讲座，被录取的正式学员可以进入线上会议室听课并提问互动，各学员需自行准备相关终端设备，以便连线\n报名方式：网络报名，有意参加活动可通过下方二维码报名\n学习结束后可获得暑期学校结业证书，欢迎大家踊跃报名，我们期待与您相聚云端。\n报名截止时间：2026年6月30日17:00",
+      "contentHash": "fnv1a32:b9907a25"
+    },
+    {
+      "id": "source:efacceb2:version:1",
+      "sourceId": "source:efacceb2",
+      "versionNo": 1,
+      "rawText": "为方便新生更好地了解校园文化、简化注册流程，2026级新生须于指定时间内登录迎新系统完成网上预注册流程。\n由于系统维护和升级，迎新系统开放时间与入学须知中规定的时间略有不同，请以本通知的时间为准。新生请在指定时间内激活账号和登录系统，不在指定时间内激活账号和登录都会显示“账号和密码错误”。\n本科生（大陆地区）：8月13—27日",
+      "contentHash": "fnv1a32:2b661024"
+    },
+    {
+      "id": "source:fdd6aef6:version:1",
+      "sourceId": "source:fdd6aef6",
+      "versionNo": 1,
+      "rawText": "请在开放时段办理申请。办理申请开放时间为2026年11月6—8日。",
+      "contentHash": "fnv1a32:63354384"
+    },
+    {
+      "id": "source:9a501940:version:1",
+      "sourceId": "source:9a501940",
+      "versionNo": 1,
+      "rawText": "甲组讨论于2026年11月12日14:00开始。乙组讨论于2026年11月13日15:00开始。丙组讨论于2026年11月14日16:00开始。仅供了解。",
+      "contentHash": "fnv1a32:33b07762"
+    },
+    {
+      "id": "source:2d07a89a:version:1",
+      "sourceId": "source:2d07a89a",
+      "versionNo": 1,
+      "rawText": "请于2026年11月6日15:20前递交器材清单。器材清单必须为PDF。器材讲解会于2026年11月7日14:00开始，15:00结束。系统维护在周五晚上开始，结束时间尚未公布。",
+      "contentHash": "fnv1a32:84b2b8a9"
+    },
+    {
+      "id": "source:cfbd9645:version:1",
+      "sourceId": "source:cfbd9645",
+      "versionNo": 1,
+      "rawText": "请于2026年11月6日17:00完成相关信息登记，确保填写的信息完整准确。",
+      "contentHash": "fnv1a32:196cd04c"
+    },
+    {
+      "id": "source:a8a8df4c:version:1",
+      "sourceId": "source:a8a8df4c",
+      "versionNo": 1,
+      "rawText": "请在开放时段办理申请。办理申请开放时间为2026年11月6—8日。",
+      "contentHash": "fnv1a32:63354384"
+    },
+    {
+      "id": "source:35db3d62:version:1",
+      "sourceId": "source:35db3d62",
+      "versionNo": 1,
+      "rawText": "请在开放时段办理申请。办理申请开放时间为2026年11月6—8日。",
+      "contentHash": "fnv1a32:63354384"
+    },
+    {
+      "id": "source:2d7ed0d7:version:1",
+      "sourceId": "source:2d7ed0d7",
+      "versionNo": 1,
+      "rawText": "一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https://xmuxg.xmu.edu.cn/app/182），并确保填写的信息完整、准确。离校同学应如实登记去向、联系方式及返校安排；暑期留校同学如短期离厦外出，视同离校学生管理，亦应及时做好相关登记。",
+      "contentHash": "fnv1a32:2f1ca908"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task:source:2d7ed0d7:draft:1:task-0001",
+      "title": "完成相关信息登记",
+      "nextAction": "完成相关信息登记",
+      "status": "todo",
+      "dependencyIds": []
+    },
+    {
+      "id": "task:source:35db3d62:draft:1:T1",
+      "title": "办理申请",
+      "nextAction": "办理申请",
+      "status": "todo",
+      "dependencyIds": []
+    },
+    {
+      "id": "task:source:a8a8df4c:draft:1:T1",
+      "title": "办理申请",
+      "nextAction": "办理申请",
+      "status": "todo",
+      "dependencyIds": []
+    },
+    {
+      "id": "task:source:cfbd9645:draft:1:T1",
+      "title": "完成相关信息登记",
+      "nextAction": "完成相关信息登记",
+      "status": "todo",
+      "dependencyIds": []
+    },
+    {
+      "id": "task:source:2d07a89a:draft:1:T1",
+      "title": "递交器材清单",
+      "nextAction": "递交器材清单",
+      "status": "todo",
+      "dependencyIds": []
+    }
+  ],
+  "events": [
+    {
+      "id": "event:source:2d07a89a:draft:1:E2",
+      "title": "器材讲解会",
+      "description": "器材讲解会于2026年11月7日14:00开始，\n15:00结束。",
+      "location": null,
+      "startTimePointId": "time:source:2d07a89a:draft:1:P4",
+      "endTimePointId": "time:source:2d07a89a:draft:1:P5"
+    },
+    {
+      "id": "event:source:2d07a89a:draft:1:E1",
+      "title": "系统维护",
+      "description": "系统维护在周五晚上开始，\n结束时间尚未公布。",
+      "location": null,
+      "startTimePointId": "time:source:2d07a89a:draft:1:P2",
+      "endTimePointId": "time:source:2d07a89a:draft:1:P3"
+    },
+    {
+      "id": "event:source:9a501940:draft:1:E3",
+      "title": "丙组讨论",
+      "description": "丙组讨论于2026年11月14日16:00开始。",
+      "location": null,
+      "startTimePointId": "time:source:9a501940:draft:1:P3",
+      "endTimePointId": null
+    }
+  ],
+  "materials": [
+    {
+      "id": "material:source:2d7ed0d7:draft:1:material-0001",
+      "name": "相关信息",
+      "legacyData": {
+        "recognitionTempId": "material-0001",
+        "evidenceIds": [
+          "d26-scope-0001-9af1ec66cde8f005ebeaf0940d9809d2718c7f44990710a8dc514d9f9279d996",
+          "d26-scope-0002-f7d27ea0658d355925cf4d396007a3db902b9cc3d40d10810e49cec845d58770"
+        ],
+        "availabilityVersion": "ordinary-availability-unobserved-1",
+        "availabilityOrigin": "not_observed",
+        "sourceReviewDraftId": "source:2d7ed0d7:draft:1"
+      }
+    },
+    {
+      "id": "material:source:2d07a89a:draft:1:M1",
+      "name": "器材清单",
+      "legacyData": {
+        "recognitionTempId": "M1",
+        "evidenceIds": [
+          "d26-scope-0002-e47092df1ca46a84669f39b0292116ca96c0a819d9dba2e7f3b41fca12a97997"
+        ],
+        "availabilityVersion": "ordinary-availability-unobserved-1",
+        "availabilityOrigin": "not_observed",
+        "sourceReviewDraftId": "source:2d07a89a:draft:1"
+      }
+    }
+  ],
+  "timePoints": [
+    {
+      "id": "time:source:2d7ed0d7:draft:1:time-0001",
+      "type": "task_deadline",
+      "taskId": "task:source:2d7ed0d7:draft:1:task-0001",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:2d7ed0d7:draft:1:task-0001"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "7月16日前",
+      "normalizedValue": "2026-07-16",
+      "timezone": null,
+      "precision": "date_only",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:35db3d62:draft:1:P1",
+      "type": "event_start",
+      "taskId": "task:source:35db3d62:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:35db3d62:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "2026年11月6—8日",
+      "normalizedValue": "2026-11-06",
+      "timezone": null,
+      "precision": "date_only",
+      "needsConfirmation": false,
+      "sourceTimeRole": "window_start"
+    },
+    {
+      "id": "time:source:35db3d62:draft:1:P2",
+      "type": "event_end",
+      "taskId": "task:source:35db3d62:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:35db3d62:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "2026年11月6—8日",
+      "normalizedValue": "2026-11-08",
+      "timezone": null,
+      "precision": "date_only",
+      "needsConfirmation": false,
+      "sourceTimeRole": "window_end"
+    },
+    {
+      "id": "time:source:a8a8df4c:draft:1:P1",
+      "type": "event_start",
+      "taskId": "task:source:a8a8df4c:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:a8a8df4c:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "2026年11月6日",
+      "normalizedValue": "2026-11-06",
+      "timezone": null,
+      "precision": "date_only",
+      "needsConfirmation": false,
+      "sourceTimeRole": "window_start"
+    },
+    {
+      "id": "time:source:a8a8df4c:draft:1:P2",
+      "type": "event_end",
+      "taskId": "task:source:a8a8df4c:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:a8a8df4c:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "2026年11月8日",
+      "normalizedValue": "2026-11-08",
+      "timezone": null,
+      "precision": "date_only",
+      "needsConfirmation": false,
+      "sourceTimeRole": "window_end"
+    },
+    {
+      "id": "time:source:cfbd9645:draft:1:P1",
+      "type": "submission_deadline",
+      "taskId": "task:source:cfbd9645:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:cfbd9645:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "2026年11月6日17:00",
+      "normalizedValue": "2026-11-06T17:00",
+      "timezone": "Asia/Shanghai",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:2d07a89a:draft:1:P1",
+      "type": "submission_deadline",
+      "taskId": "task:source:2d07a89a:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:2d07a89a:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "2026年11月6日15:20前",
+      "normalizedValue": "2026-11-06T15:20",
+      "timezone": "Asia/Shanghai",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:2d07a89a:draft:1:P4",
+      "type": "event_start",
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:2d07a89a:draft:1:E2",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "rawText": "2026年11月7日14:00",
+      "normalizedValue": "2026-11-07T14:00",
+      "timezone": "Asia/Shanghai",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:2d07a89a:draft:1:P5",
+      "type": "event_end",
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:2d07a89a:draft:1:E2",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "rawText": "15:00",
+      "normalizedValue": "2026-11-07T15:00",
+      "timezone": "Asia/Shanghai",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "time:source:2d07a89a:draft:1:P2",
+      "type": "event_start",
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:2d07a89a:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "rawText": "周五晚上",
+      "normalizedValue": null,
+      "timezone": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:2d07a89a:draft:1:P3",
+      "type": "event_end",
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:2d07a89a:draft:1:E1",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "rawText": "结束时间尚未公布",
+      "normalizedValue": null,
+      "timezone": null,
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:9a501940:draft:1:P3",
+      "type": "event_start",
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:9a501940:draft:1:E3",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "rawText": "2026年11月14日16:00",
+      "normalizedValue": "2026-11-14T16:00",
+      "timezone": "Asia/Shanghai",
+      "precision": "exact",
+      "needsConfirmation": false
+    },
+    {
+      "id": "personal-plan:task:source:2d07a89a:draft:1:T1",
+      "type": "planned_start",
+      "taskId": "task:source:2d07a89a:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:2d07a89a:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "个人计划起点（不替代原文截止）",
+      "normalizedValue": "2026-11-06T01:00:00.000Z",
+      "timezone": "Asia/Shanghai",
+      "precision": "exact",
+      "needsConfirmation": false,
+      "personalPlan": {
+        "version": "personal-plan-d27-1",
+        "minutes": 30,
+        "durationOrigin": "product_estimate",
+        "locked": false,
+        "operationId": "0c073880-609a-4ee9-8309-7f944fa877b0",
+        "conditionalOn": []
+      }
+    },
+    {
+      "id": "personal-plan:task:source:cfbd9645:draft:1:T1",
+      "type": "planned_start",
+      "taskId": "task:source:cfbd9645:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:cfbd9645:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "个人计划起点（不替代原文截止）",
+      "normalizedValue": "2026-11-06T01:30:00.000Z",
+      "timezone": "Asia/Shanghai",
+      "precision": "exact",
+      "needsConfirmation": false,
+      "personalPlan": {
+        "version": "personal-plan-d27-1",
+        "minutes": 30,
+        "durationOrigin": "product_estimate",
+        "locked": false,
+        "operationId": "0c073880-609a-4ee9-8309-7f944fa877b0",
+        "conditionalOn": []
+      }
+    },
+    {
+      "id": "personal-plan:task:source:35db3d62:draft:1:T1",
+      "type": "planned_start",
+      "taskId": "task:source:35db3d62:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:35db3d62:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "个人计划起点（不替代原文截止）",
+      "normalizedValue": "2026-11-06T02:00:00.000Z",
+      "timezone": "Asia/Shanghai",
+      "precision": "exact",
+      "needsConfirmation": false,
+      "personalPlan": {
+        "version": "personal-plan-d27-1",
+        "minutes": 30,
+        "durationOrigin": "product_estimate",
+        "locked": false,
+        "operationId": "0c073880-609a-4ee9-8309-7f944fa877b0",
+        "conditionalOn": []
+      }
+    },
+    {
+      "id": "personal-plan:task:source:a8a8df4c:draft:1:T1",
+      "type": "planned_start",
+      "taskId": "task:source:a8a8df4c:draft:1:T1",
+      "materialId": null,
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:a8a8df4c:draft:1:T1"
+      ],
+      "relatedMaterialIds": [],
+      "rawText": "个人计划起点（不替代原文截止）",
+      "normalizedValue": "2026-11-06T02:30:00.000Z",
+      "timezone": "Asia/Shanghai",
+      "precision": "exact",
+      "needsConfirmation": false,
+      "personalPlan": {
+        "version": "personal-plan-d27-1",
+        "minutes": 30,
+        "durationOrigin": "product_estimate",
+        "locked": false,
+        "operationId": "0c073880-609a-4ee9-8309-7f944fa877b0",
+        "conditionalOn": []
+      }
+    }
+  ],
+  "evidenceRefs": [
+    {
+      "id": "evidence:source:2d7ed0d7:draft:1:d26-scope-0001-9af1ec66cde8f005ebeaf0940d9809d2718c7f44990710a8dc514d9f9279d996",
+      "sourceVersionId": "source:2d7ed0d7:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "一、各位同学应于7月16日前通过学工系统“暑假离留校登记”应用完成相关信息登记（https:",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:28:50.695Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-9af1ec66cde8f005ebeaf0940d9809d2718c7f44990710a8dc514d9f9279d996"
+      }
+    },
+    {
+      "id": "evidence:source:2d7ed0d7:draft:1:d26-scope-0002-f7d27ea0658d355925cf4d396007a3db902b9cc3d40d10810e49cec845d58770",
+      "sourceVersionId": "source:2d7ed0d7:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "//xmuxg.xmu.edu.cn/app/182），",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:28:50.695Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-f7d27ea0658d355925cf4d396007a3db902b9cc3d40d10810e49cec845d58770"
+      }
+    },
+    {
+      "id": "evidence:source:2d7ed0d7:draft:1:d26-scope-0003-c42bafc858b0e3bc44b517b3602d5ee09822a3c4d3e584d35b50c831fd2de051",
+      "sourceVersionId": "source:2d7ed0d7:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "并确保填写的信息完整、准确。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:28:50.695Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0003-c42bafc858b0e3bc44b517b3602d5ee09822a3c4d3e584d35b50c831fd2de051"
+      }
+    },
+    {
+      "id": "evidence:source:35db3d62:draft:1:d26-scope-0001-531f3b94e415ccfd9c20d884d5477ef36ece9c0ea2af54915f0c375cedfdb262",
+      "sourceVersionId": "source:35db3d62:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "请在开放时段办理申请。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:29:08.499Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-531f3b94e415ccfd9c20d884d5477ef36ece9c0ea2af54915f0c375cedfdb262"
+      }
+    },
+    {
+      "id": "evidence:source:35db3d62:draft:1:d26-scope-0002-64e69cbe45cfbc2af603ee327c54c5bf6ee5d33914a945f62480e3ee96f74c09",
+      "sourceVersionId": "source:35db3d62:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "办理申请开放时间为2026年11月6—8日。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:29:08.499Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-64e69cbe45cfbc2af603ee327c54c5bf6ee5d33914a945f62480e3ee96f74c09"
+      }
+    },
+    {
+      "id": "evidence:source:a8a8df4c:draft:1:d26-scope-0001-1a11d98ead1296f16705f4082e7a8de9f63784ae88d3dbe2fb01b542acad0ebc",
+      "sourceVersionId": "source:a8a8df4c:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "请在开放时段办理申请。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:29:53.475Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-1a11d98ead1296f16705f4082e7a8de9f63784ae88d3dbe2fb01b542acad0ebc"
+      }
+    },
+    {
+      "id": "evidence:source:a8a8df4c:draft:1:d26-scope-0002-8346eb92db06924383021eef0ec8b1172d0ff87eb470f86f36f9612ddaf337ec",
+      "sourceVersionId": "source:a8a8df4c:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "办理申请开放时间为2026年11月6—8日。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:29:53.475Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-8346eb92db06924383021eef0ec8b1172d0ff87eb470f86f36f9612ddaf337ec"
+      }
+    },
+    {
+      "id": "evidence:source:cfbd9645:draft:1:d26-scope-0001-a5ab228ebfc54387fe838fa1405c5c939ea2a85ed349b04a32f61684c137f9ba",
+      "sourceVersionId": "source:cfbd9645:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "请于2026年11月6日17:00完成相关信息登记，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:32:03.273Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-a5ab228ebfc54387fe838fa1405c5c939ea2a85ed349b04a32f61684c137f9ba"
+      }
+    },
+    {
+      "id": "evidence:source:cfbd9645:draft:1:d26-scope-0002-bc64ce0d97f368f32422a9935531c8e0183fdde00e15eeab575c40e7325988bd",
+      "sourceVersionId": "source:cfbd9645:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "确保填写的信息完整准确。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:32:03.273Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-bc64ce0d97f368f32422a9935531c8e0183fdde00e15eeab575c40e7325988bd"
+      }
+    },
+    {
+      "id": "evidence:source:2d07a89a:draft:1:d26-scope-0001-96494a76f1adc922bee74b3f58df1503d7f3c4bcf7652ab0e7bf17c5ffa0f74b",
+      "sourceVersionId": "source:2d07a89a:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "请于2026年11月6日15:20前递交器材清单。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:37:09.669Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0001-96494a76f1adc922bee74b3f58df1503d7f3c4bcf7652ab0e7bf17c5ffa0f74b"
+      }
+    },
+    {
+      "id": "evidence:source:2d07a89a:draft:1:d26-scope-0002-e47092df1ca46a84669f39b0292116ca96c0a819d9dba2e7f3b41fca12a97997",
+      "sourceVersionId": "source:2d07a89a:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "器材清单必须为PDF。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:37:09.669Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0002-e47092df1ca46a84669f39b0292116ca96c0a819d9dba2e7f3b41fca12a97997"
+      }
+    },
+    {
+      "id": "evidence:source:2d07a89a:draft:1:d26-scope-0003-348b92b530aec59493c0b0aeeb88995ed9117e10561b626a76a59d0cbbb83efe",
+      "sourceVersionId": "source:2d07a89a:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "器材讲解会于2026年11月7日14:00开始，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:37:09.669Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0003-348b92b530aec59493c0b0aeeb88995ed9117e10561b626a76a59d0cbbb83efe"
+      }
+    },
+    {
+      "id": "evidence:source:2d07a89a:draft:1:d26-scope-0004-0a8c462fb4d5e3a3cffd4a66c95cd95e3b0fa1a7ff59d644715a99cdacb5b6dc",
+      "sourceVersionId": "source:2d07a89a:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "15:00结束。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:37:09.669Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0004-0a8c462fb4d5e3a3cffd4a66c95cd95e3b0fa1a7ff59d644715a99cdacb5b6dc"
+      }
+    },
+    {
+      "id": "evidence:source:2d07a89a:draft:1:d26-scope-0005-cf75d0ccab7acf075d849af5ab5b97c8689f3b1192d8e24dcb16b3e6a7115ffa",
+      "sourceVersionId": "source:2d07a89a:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "系统维护在周五晚上开始，",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:37:27.133Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0005-cf75d0ccab7acf075d849af5ab5b97c8689f3b1192d8e24dcb16b3e6a7115ffa"
+      }
+    },
+    {
+      "id": "evidence:source:2d07a89a:draft:1:d26-scope-0006-7241fcc7bbbc7abd990df9ac67549fb9f1687b92500ebd64306ecf40c50189eb",
+      "sourceVersionId": "source:2d07a89a:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "结束时间尚未公布。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:37:27.133Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0006-7241fcc7bbbc7abd990df9ac67549fb9f1687b92500ebd64306ecf40c50189eb"
+      }
+    },
+    {
+      "id": "evidence:source:9a501940:draft:1:d26-scope-0003-473b1a83fba0b087bf610cc7dcde435023218b45bb79fa8faec5d5139e16d9bb",
+      "sourceVersionId": "source:9a501940:version:1",
+      "page": null,
+      "textStart": null,
+      "textEnd": null,
+      "quotedText": "丙组讨论于2026年11月14日16:00开始。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "parser",
+      "confidence": 1,
+      "createdAt": "2026-10-07T09:38:26.546Z",
+      "legacyData": {
+        "recognitionEvidenceId": "d26-scope-0003-473b1a83fba0b087bf610cc7dcde435023218b45bb79fa8faec5d5139e16d9bb"
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "source:63242691:draft:1",
+      "status": "failed",
+      "commitOperationIds": [],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": []
+    },
+    {
+      "id": "source:db8ea334:draft:1",
+      "status": "needs_review",
+      "commitOperationIds": [],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": []
+    },
+    {
+      "id": "source:efacceb2:draft:1",
+      "status": "failed",
+      "commitOperationIds": [],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": []
+    },
+    {
+      "id": "source:fdd6aef6:draft:1",
+      "status": "failed",
+      "commitOperationIds": [],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": []
+    },
+    {
+      "id": "source:9a501940:draft:1",
+      "status": "partially_confirmed",
+      "commitOperationIds": [
+        "source-review:source:9a501940:draft:1:fnv1a32:0934f9ff"
+      ],
+      "acceptedEntityTempIds": [
+        "E3",
+        "P3"
+      ],
+      "rejectedEntityTempIds": []
+    },
+    {
+      "id": "source:2d07a89a:draft:1",
+      "status": "confirmed",
+      "commitOperationIds": [
+        "source-review:source:2d07a89a:draft:1:fnv1a32:89b2bfd9",
+        "source-review:source:2d07a89a:draft:1:fnv1a32:4ce3e679"
+      ],
+      "acceptedEntityTempIds": [
+        "E2",
+        "M1",
+        "P1",
+        "P4",
+        "P5",
+        "T1",
+        "E1",
+        "P2",
+        "P3"
+      ],
+      "rejectedEntityTempIds": []
+    },
+    {
+      "id": "source:cfbd9645:draft:1",
+      "status": "confirmed",
+      "commitOperationIds": [
+        "source-review:source:cfbd9645:draft:1:fnv1a32:b15f27bd"
+      ],
+      "acceptedEntityTempIds": [
+        "P1",
+        "T1"
+      ],
+      "rejectedEntityTempIds": []
+    },
+    {
+      "id": "source:a8a8df4c:draft:1",
+      "status": "confirmed",
+      "commitOperationIds": [
+        "source-review:source:a8a8df4c:draft:1:fnv1a32:377424da"
+      ],
+      "acceptedEntityTempIds": [
+        "P1",
+        "P2",
+        "T1"
+      ],
+      "rejectedEntityTempIds": []
+    },
+    {
+      "id": "source:35db3d62:draft:1",
+      "status": "confirmed",
+      "commitOperationIds": [
+        "source-review:source:35db3d62:draft:1:fnv1a32:05925e23"
+      ],
+      "acceptedEntityTempIds": [
+        "P1",
+        "P2",
+        "T1"
+      ],
+      "rejectedEntityTempIds": []
+    },
+    {
+      "id": "source:2d7ed0d7:draft:1",
+      "status": "partially_confirmed",
+      "commitOperationIds": [
+        "source-review:source:2d7ed0d7:draft:1:fnv1a32:c2ec3513"
+      ],
+      "acceptedEntityTempIds": [
+        "material-0001",
+        "task-0001",
+        "time-0001"
+      ],
+      "rejectedEntityTempIds": []
+    }
+  ],
+  "personalPlanReceipt": {
+    "version": "personal-plan-d27-1",
+    "commitId": "0c073880-609a-4ee9-8309-7f944fa877b0",
+    "kind": "apply",
+    "verified": true,
+    "committedAt": "2026-10-07T09:47:54.648Z",
+    "pointIds": [
+      "personal-plan:task:source:2d07a89a:draft:1:T1",
+      "personal-plan:task:source:cfbd9645:draft:1:T1",
+      "personal-plan:task:source:35db3d62:draft:1:T1",
+      "personal-plan:task:source:a8a8df4c:draft:1:T1"
+    ]
+  }
+}

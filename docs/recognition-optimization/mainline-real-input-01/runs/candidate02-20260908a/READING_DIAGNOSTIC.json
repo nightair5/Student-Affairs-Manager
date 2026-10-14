@@ -1,0 +1,112 @@
+{
+  "images": {
+    "kind": "actual local Node Tesseract engine, not browser acceptance",
+    "cache": "none",
+    "network": "local language files only",
+    "rows": [
+      {
+        "unitId": "B01",
+        "format": "png",
+        "carrierSha256": "5ab9b5578b5ba0e88fe1d902e9afed5178bf7e4a2e68d91176130d87b20a562f",
+        "originalOcrText": "请 于 2026 年 9 月 10 日 18:00 前 提交 活动 报名 表 ，PDF 格 式 ， 文 件 名 为 组 别 ，1\n份 ， 交 至 活动 平台 。 请 于 2026 年 9 月 11 日 18: 00 前 打印 入 场 赁 证 ，A4 格 式 ，1\n份 。\n",
+        "confidence": 91,
+        "waitingMs": 235,
+        "empty": false
+      },
+      {
+        "unitId": "B02",
+        "format": "jpeg",
+        "carrierSha256": "08969831cd0e685c21ea42377f6fc64d3dc1645eb4b97d4e83090da86e8d6c73",
+        "originalOcrText": "请 保存 活动 手册 。 没 有 截止 日 期 要 求 。\n",
+        "confidence": 92,
+        "waitingMs": 63,
+        "empty": false
+      },
+      {
+        "unitId": "B03",
+        "format": "webp",
+        "carrierSha256": "72c12b1b2687e715a703271017fb693ee15f1540f7dd875f73492f9f0431379d",
+        "originalOcrText": "请 近期 提交 活动 总 结 ， 具 体 截止 时 间 另 行 通知 。\n",
+        "confidence": 86,
+        "waitingMs": 70,
+        "empty": false
+      }
+    ]
+  },
+  "pdf": {
+    "kind": "actual local Node PDF text plus raster OCR diagnostic; not browser acceptance",
+    "referenceTextUsedForRecognition": false,
+    "rows": [
+      {
+        "unitId": "B05",
+        "format": "text-pdf",
+        "sha256": "8eb4e56e1da156fce9db0e2ab7c9e74dd7aeb5f5207422189b3f1eedf6b67ea6",
+        "pages": [
+          {
+            "number": 1,
+            "parserText": "若活动获批，请提交场地申请表。活动已获批。",
+            "ocrText": "若 活动 获 批 ， 请 提交 场地 申请 表 。 活 动 已 获 批 。\n",
+            "confidence": 89,
+            "parserEmpty": false,
+            "ocrEmpty": false
+          }
+        ]
+      },
+      {
+        "unitId": "B06",
+        "format": "scan-pdf",
+        "sha256": "3fe1bdf8033db7dabfdc308c23625fda1e7da8fe3b287c76b96234af0b89550b",
+        "pages": [
+          {
+            "number": 1,
+            "parserText": "",
+            "ocrText": "若 活动 获 批 ， 请 提交 场地 申请 表 。 活 动 未 获 批 。\n",
+            "confidence": 90,
+            "parserEmpty": true,
+            "ocrEmpty": false
+          }
+        ]
+      },
+      {
+        "unitId": "B07",
+        "format": "mixed-pdf",
+        "sha256": "2eb69adc48654137b3218e630362723750809679d4146d6a6cd8d1884866a0aa",
+        "pages": [
+          {
+            "number": 1,
+            "parserText": "若活动获批，请提交场地申请表。",
+            "ocrText": "若 活 动 获 批 ， 请 提交 场地 申请 表 。\n",
+            "confidence": 82,
+            "parserEmpty": false,
+            "ocrEmpty": false
+          },
+          {
+            "number": 2,
+            "parserText": "",
+            "ocrText": "目前 尚未 收 到 审批 结果 。\n",
+            "confidence": 92,
+            "parserEmpty": true,
+            "ocrEmpty": false
+          }
+        ]
+      },
+      {
+        "unitId": "B08",
+        "format": "page-mixed-pdf",
+        "sha256": "1d23427a358457fb001ebc5f5fd32ca42423458c0355304b3f15601ebd79bdee",
+        "pages": [
+          {
+            "number": 1,
+            "parserText": "此前打印纸质报名表的要求已作废。",
+            "ocrText": "此 前 打印 纸 质 报名 表 的 要 求 已 作废 。\n现 要 求 提 交 电 子 报名 表 。\n",
+            "confidence": 90,
+            "parserEmpty": false,
+            "ocrEmpty": false
+          }
+        ]
+      }
+    ]
+  },
+  "warnings": "Original engine stdout retained; Tesseract reported an additional language load warning. Outputs are diagnostic, not certified completeness.",
+  "browser": "NOT_COMPLETED"
+}

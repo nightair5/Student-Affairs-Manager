@@ -1,0 +1,429 @@
+{
+  "unitId": "V03-09",
+  "arm": "09",
+  "cohort": "later8",
+  "bindingSha": "d62abdfdedaf4b538364fe55bacd1e52fc3623f7a5acef9732de75af128125df",
+  "requestSha": "58ac0b544e14d10e07077ac52da8b5e450a89399b52afee12ccfdcb5f5c0a732",
+  "responseSha": "d7bc96b1293e71747e7230cb413bba3641b7b01fbcb6ddd351b5965a0ef15e7b",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "961683067b73fc179a3b914513c7fba2e462086a0e8f57923c4b42b75ffd1e52",
+  "scoreInput": "semantic projection into frozen scorer; provider raw unchanged",
+  "rawEvidence": {
+    "schemaVersion": "real-input-typed-fact-wire-2",
+    "tasks": [
+      {
+        "id": "task-1",
+        "propositionScopeIds": [
+          "scope-0002-394ee06bff11cf638c86087e652de4b354e1e4a627e3912bb9db1e940aeecbf4",
+          "scope-0006-849fdb59ae359a5de38dc172097ee4035deb395447ed3ae03520f0bc3f976cd5",
+          "scope-0007-29941c79165576ae07b8cc65a41a2d7ac53495fd45b469f8eb4a43fd60cd2231"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "review",
+        "action": {
+          "scopeId": "scope-0002-394ee06bff11cf638c86087e652de4b354e1e4a627e3912bb9db1e940aeecbf4",
+          "surface": "校对"
+        },
+        "object": {
+          "scopeId": "scope-0002-394ee06bff11cf638c86087e652de4b354e1e4a627e3912bb9db1e940aeecbf4",
+          "surface": "温控实验日志"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "校对温控实验日志",
+          "description": "记录员近期校对温控实验日志，具体截止日期由项目负责人另行通知。",
+          "completionCriteria": [
+            "温控实验日志已完成校对"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "factType": "task"
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-1",
+        "name": "温控实验日志",
+        "required": true,
+        "formatRequirements": [
+          "Markdown"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "scopeIds": [
+          "scope-0002-394ee06bff11cf638c86087e652de4b354e1e4a627e3912bb9db1e940aeecbf4",
+          "scope-0004-46c652887300ad408524f65197087743498111d64a21d6123e67130de9d559cd",
+          "scope-0005-cec87d04feb4786bdfe01c34db9cc4863f1c8cb6d020ee6df64edb1d516bda9d"
+        ],
+        "confidence": 0.95,
+        "factType": "material"
+      },
+      {
+        "tempId": "material-2",
+        "name": "原始温度读数",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "scopeIds": [
+          "scope-0004-46c652887300ad408524f65197087743498111d64a21d6123e67130de9d559cd"
+        ],
+        "confidence": 0.9,
+        "factType": "material"
+      },
+      {
+        "tempId": "material-3",
+        "name": "校准说明",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "scopeIds": [
+          "scope-0004-46c652887300ad408524f65197087743498111d64a21d6123e67130de9d559cd"
+        ],
+        "confidence": 0.9,
+        "factType": "material"
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-1",
+        "type": "task_deadline",
+        "rawText": "具体截止日期由项目负责人另行通知",
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0003-94563a9771bc518de3fe6528ef86df2c2357bf7cabb0415d57e3db1c0db099e9"
+        ],
+        "confidence": 0.95,
+        "factType": "time"
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-18982eaa8d5dbae3e9aa6a55581240a687753670686dc385e6443c4fecc94755"
+    ],
+    "unresolvedScopeIds": []
+  },
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-1",
+        "propositionScopeIds": [
+          "scope-0002-394ee06bff11cf638c86087e652de4b354e1e4a627e3912bb9db1e940aeecbf4",
+          "scope-0006-849fdb59ae359a5de38dc172097ee4035deb395447ed3ae03520f0bc3f976cd5",
+          "scope-0007-29941c79165576ae07b8cc65a41a2d7ac53495fd45b469f8eb4a43fd60cd2231"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "review",
+        "action": {
+          "scopeId": "scope-0002-394ee06bff11cf638c86087e652de4b354e1e4a627e3912bb9db1e940aeecbf4",
+          "surface": "校对"
+        },
+        "object": {
+          "scopeId": "scope-0002-394ee06bff11cf638c86087e652de4b354e1e4a627e3912bb9db1e940aeecbf4",
+          "surface": "温控实验日志"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "校对温控实验日志",
+          "description": "记录员近期校对温控实验日志，具体截止日期由项目负责人另行通知。",
+          "completionCriteria": [
+            "温控实验日志已完成校对"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true,
+          "materialTempIds": [
+            "material-1",
+            "material-2",
+            "material-3"
+          ],
+          "timePointTempIds": [
+            "time-1"
+          ]
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-1",
+        "name": "温控实验日志",
+        "required": true,
+        "formatRequirements": [
+          "Markdown"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "scopeIds": [
+          "scope-0002-394ee06bff11cf638c86087e652de4b354e1e4a627e3912bb9db1e940aeecbf4",
+          "scope-0004-46c652887300ad408524f65197087743498111d64a21d6123e67130de9d559cd",
+          "scope-0005-cec87d04feb4786bdfe01c34db9cc4863f1c8cb6d020ee6df64edb1d516bda9d"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "material-2",
+        "name": "原始温度读数",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "scopeIds": [
+          "scope-0004-46c652887300ad408524f65197087743498111d64a21d6123e67130de9d559cd"
+        ],
+        "confidence": 0.9
+      },
+      {
+        "tempId": "material-3",
+        "name": "校准说明",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "scopeIds": [
+          "scope-0004-46c652887300ad408524f65197087743498111d64a21d6123e67130de9d559cd"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-1",
+        "type": "task_deadline",
+        "rawText": "具体截止日期由项目负责人另行通知",
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0003-94563a9771bc518de3fe6528ef86df2c2357bf7cabb0415d57e3db1c0db099e9"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-18982eaa8d5dbae3e9aa6a55581240a687753670686dc385e6443c4fecc94755"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:3de0cc81",
+    "sourceVersionId": "source:3de0cc81:version:1",
+    "sourceFingerprint": "sha256:9cd5f4144ab18d5ed0177d632b9be47d1c6448949a047e9ab848b8d308fe1812"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 5930,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 3,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 3,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 5,
+        "reference": 3,
+        "correct": 0,
+        "falsePositive": 5,
+        "falseNegative": 3,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "time-1"
+        ]
+      }
+    ],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 1,
+    "referenceTaskCount": 1
+  },
+  "scoreError": null,
+  "totalAttempts": 198,
+  "costUpperMicroCny": 22464,
+  "totalCostUpperMicroCny": 8047159,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；原12+后8分别报告；40请求不是40独立材料"
+}

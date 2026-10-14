@@ -1,0 +1,215 @@
+{
+  "stage": "RCO-5-MAINLINE-03-I1-R1",
+  "outcome": "NOT_ACCEPTED_ENGINEERING_BLOCKED",
+  "stopClass": "NO_PROMOTION_NEEDS_SCOPE_APPROVAL",
+  "base": "c30cdb760a23353af191d6f9c1ee8dbb8d19eb40",
+  "gitDelivery": "R1_DOCUMENTS_ONLY_IMPLEMENTATION_UNCOMMITTED",
+  "protection": {
+    "checked": 768,
+    "changed": [],
+    "appendOnly": true,
+    "outOfScope": [],
+    "sourceSnapshotChanges": []
+  },
+  "targeted": {
+    "passed": 153,
+    "total": 153,
+    "old": 134,
+    "added": 19,
+    "files": 11
+  },
+  "canonicalMemoryFidelity": {
+    "passed": 42,
+    "total": 42
+  },
+  "independentReview": {
+    "status": "PASS",
+    "adversarialRejected": 6,
+    "adversarialTotal": 6,
+    "oldTestsShaReconstructed": 3,
+    "formatFollowup": "PASS"
+  },
+  "engineering": {
+    "attempts": 2,
+    "first": "lint 2 errors then stopped",
+    "second": "lint PASS; app typecheck TS2307 x6 then stopped",
+    "typeDependency": {
+      "node": "v24.18.0",
+      "nodeTypesDeclared": false,
+      "nodeTypesInstalled": false,
+      "nodeTypesLocked": false
+    },
+    "allTests": "NOT_RUN",
+    "build": "NOT_RUN",
+    "fullSecurityScan": "NOT_RUN",
+    "dependencyAudit": "NOT_RUN"
+  },
+  "browser": "NOT_RUN_ENGINEERING_PREREQUISITE_FAILED",
+  "actualDownload": "NOT_RUN",
+  "scopedSecretScan": {
+    "findingFiles": []
+  },
+  "counters": {
+    "externalRecognitionCalls": 0,
+    "verifier": 0,
+    "repair": 0,
+    "retry": 0,
+    "modelNetwork": 0,
+    "costCny": 0,
+    "keyAccess": 0,
+    "clipboardAccess": 0,
+    "userDatabaseAccess": 0,
+    "deployment": 0
+  },
+  "modelAccuracy": "本轮未测量",
+  "contextLines": 85,
+  "logs": [
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline-03-i1-XWF2mj/results.json",
+      "sha256": "110e3b832adab31c2c69ef60fdff024ad0a757f8366d1018ae91b165c3c08d13",
+      "results": {
+        "directory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline-03-i1-XWF2mj",
+        "mode": "targeted",
+        "okay": false,
+        "results": [
+          {
+            "name": "isolated-browser-bundle-and-dependency-check",
+            "exitCode": 0,
+            "log": "isolated-browser-bundle-and-dependency-check.log",
+            "summary": []
+          },
+          {
+            "name": "targeted",
+            "exitCode": 1,
+            "log": "targeted.log",
+            "summary": [
+              "⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯",
+              " FAIL  src/experiments/mainline03/mainlineAcceptance.test.tsx > MAINLINE03 real App and canonical acceptance > R1 rejects internally inconsistent version receipt before creating a Source",
+              " FAIL  src/experiments/mainline03/mainlineAcceptance.test.tsx > MAINLINE03 real App and canonical acceptance > R1 rejects internally inconsistent raw receipt before creating a Source",
+              "AssertionError: promise resolved \"undefined\" instead of rejecting",
+              " Test Files  1 failed | 10 passed (11)",
+              "      Tests  2 failed | 134 passed (136)"
+            ]
+          },
+          {
+            "name": "protection-after",
+            "okay": true,
+            "checked": 752,
+            "changed": [],
+            "appendOnly": true,
+            "outOfScope": []
+          }
+        ]
+      }
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline-03-i1-ylFLCW/results.json",
+      "sha256": "21d999d92c84ae0cedb979145089f53056d5f9edbaff071d9b583541f5ccfef6",
+      "results": {
+        "directory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline-03-i1-ylFLCW",
+        "mode": "targeted",
+        "okay": true,
+        "results": [
+          {
+            "name": "isolated-browser-bundle-and-dependency-check",
+            "exitCode": 0,
+            "log": "isolated-browser-bundle-and-dependency-check.log",
+            "summary": []
+          },
+          {
+            "name": "targeted",
+            "exitCode": 0,
+            "log": "targeted.log",
+            "summary": [
+              " Test Files  11 passed (11)",
+              "      Tests  153 passed (153)"
+            ]
+          },
+          {
+            "name": "protection-after",
+            "okay": true,
+            "checked": 752,
+            "changed": [],
+            "appendOnly": true,
+            "outOfScope": []
+          }
+        ]
+      }
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline-03-i1-l1TQcP/results.json",
+      "sha256": "be34d7805ed8ece7c0920d360b681c518839c99ccfdb03be918ce95560fdb322",
+      "results": {
+        "directory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline-03-i1-l1TQcP",
+        "mode": "full",
+        "okay": false,
+        "results": [
+          {
+            "name": "isolated-browser-bundle-and-dependency-check",
+            "exitCode": 0,
+            "log": "isolated-browser-bundle-and-dependency-check.log",
+            "summary": []
+          },
+          {
+            "name": "lint",
+            "exitCode": 1,
+            "log": "lint.log",
+            "summary": []
+          },
+          {
+            "name": "protection-after",
+            "okay": true,
+            "checked": 752,
+            "changed": [],
+            "appendOnly": true,
+            "outOfScope": []
+          }
+        ]
+      }
+    },
+    {
+      "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline-03-i1-Rx2qfE/results.json",
+      "sha256": "40bbee15f25d73013a583af9e3bccb1926f62eed3bda443c5bc234c786eeacb8",
+      "results": {
+        "directory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline-03-i1-Rx2qfE",
+        "mode": "full",
+        "okay": false,
+        "results": [
+          {
+            "name": "isolated-browser-bundle-and-dependency-check",
+            "exitCode": 0,
+            "log": "isolated-browser-bundle-and-dependency-check.log",
+            "summary": []
+          },
+          {
+            "name": "lint",
+            "exitCode": 0,
+            "log": "lint.log",
+            "summary": []
+          },
+          {
+            "name": "typecheck-app",
+            "exitCode": 2,
+            "log": "typecheck-app.log",
+            "summary": [
+              "src/experiments/mainline03/mainlineAcceptance.test.tsx(1,30): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.",
+              "src/experiments/mainline03/mainlineAcceptance.test.tsx(2,28): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.",
+              "src/experiments/mainline03/recognitionHandoff.test.ts(6,30): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.",
+              "src/experiments/mainline03/recognitionHandoff.test.ts(7,28): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.",
+              "src/experiments/mainline03/seenReplay.test.ts(1,30): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.",
+              "src/experiments/mainline03/seenReplay.test.ts(2,28): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations."
+            ]
+          },
+          {
+            "name": "protection-after",
+            "okay": true,
+            "checked": 752,
+            "changed": [],
+            "appendOnly": true,
+            "outOfScope": []
+          }
+        ]
+      }
+    }
+  ]
+}

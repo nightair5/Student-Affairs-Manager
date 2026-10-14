@@ -1,0 +1,640 @@
+{
+  "version": "personal-plan-measurement-d27-1",
+  "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+  "denominator": 6,
+  "completed": 5,
+  "incomplete": 1,
+  "wallMedianMs": 20742,
+  "reports": [
+    {
+      "version": "personal-plan-measurement-d27-1",
+      "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+      "denominator": 1,
+      "commitCount": 1,
+      "independentReadbackCount": 1,
+      "semanticPlanChanges": 0,
+      "attemptedEditIds": [],
+      "completed": true,
+      "timingStatus": "OBSERVED",
+      "missingReasons": [],
+      "wallMs": 25393,
+      "readingMs": 25370,
+      "activeEditingMs": 0,
+      "idleMs": 0,
+      "hiddenMs": 0,
+      "waitingMs": 23,
+      "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+      "humanFourMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "version": "personal-plan-measurement-d27-1",
+      "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+      "denominator": 1,
+      "commitCount": 1,
+      "independentReadbackCount": 1,
+      "semanticPlanChanges": 0,
+      "attemptedEditIds": [],
+      "completed": true,
+      "timingStatus": "OBSERVED",
+      "missingReasons": [],
+      "wallMs": 33,
+      "readingMs": 20,
+      "activeEditingMs": 0,
+      "idleMs": 0,
+      "hiddenMs": 0,
+      "waitingMs": 13,
+      "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+      "humanFourMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "version": "personal-plan-measurement-d27-1",
+      "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+      "denominator": 1,
+      "commitCount": 1,
+      "independentReadbackCount": 1,
+      "semanticPlanChanges": 0,
+      "attemptedEditIds": [
+        "d412ad23-896e-4838-a056-8c5329c34861",
+        "f6c52867-dfeb-421f-840f-1b9a635326d6",
+        "37c25f28-a9e3-4db2-893f-818da5db5fad",
+        "c4db92d3-47d0-4dc1-acdc-10c608c3dbe1",
+        "4b1b7550-06d9-4bc9-8312-a9c81ad518f5",
+        "96c6eed3-07f4-42aa-9f8c-e114b9160f28"
+      ],
+      "completed": false,
+      "timingStatus": "MISSING",
+      "missingReasons": [
+        "REFRESH_OR_CRASH_GAP"
+      ],
+      "wallMs": null,
+      "readingMs": 348648,
+      "activeEditingMs": 15498,
+      "idleMs": 81963,
+      "hiddenMs": 0,
+      "waitingMs": 42,
+      "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+      "humanFourMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "version": "personal-plan-measurement-d27-1",
+      "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+      "denominator": 1,
+      "commitCount": 1,
+      "independentReadbackCount": 1,
+      "semanticPlanChanges": 2,
+      "attemptedEditIds": [
+        "fb308466-6497-47a2-aca7-4f644398a427",
+        "e6c5fc47-57ac-41f3-8dd7-b289c134563f",
+        "f4c8cc33-3eec-4914-9bdb-ca232f8b47f3"
+      ],
+      "completed": true,
+      "timingStatus": "OBSERVED",
+      "missingReasons": [],
+      "wallMs": 20742,
+      "readingMs": 5285,
+      "activeEditingMs": 5296,
+      "idleMs": 10128,
+      "hiddenMs": 0,
+      "waitingMs": 33,
+      "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+      "humanFourMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "version": "personal-plan-measurement-d27-1",
+      "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+      "denominator": 1,
+      "commitCount": 1,
+      "independentReadbackCount": 1,
+      "semanticPlanChanges": 1,
+      "attemptedEditIds": [
+        "affd1944-dbad-4351-92cf-aa2da43ab8d5"
+      ],
+      "completed": true,
+      "timingStatus": "OBSERVED",
+      "missingReasons": [],
+      "wallMs": 203,
+      "readingMs": 48,
+      "activeEditingMs": 122,
+      "idleMs": 0,
+      "hiddenMs": 0,
+      "waitingMs": 33,
+      "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+      "humanFourMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "version": "personal-plan-measurement-d27-1",
+      "role": "ENGINEERING_REPLAY_OR_UNADJUDICATED_LOCAL_USE",
+      "denominator": 1,
+      "commitCount": 1,
+      "independentReadbackCount": 1,
+      "semanticPlanChanges": 1,
+      "attemptedEditIds": [
+        "57494a4f-e235-4514-893e-19396ca6ab96"
+      ],
+      "completed": true,
+      "timingStatus": "OBSERVED",
+      "missingReasons": [],
+      "wallMs": 34114,
+      "readingMs": 18745,
+      "activeEditingMs": 5002,
+      "idleMs": 10328,
+      "hiddenMs": 0,
+      "waitingMs": 39,
+      "firstSuggestionAccuracy": "NOT_MEASURED_BY_PLAN_TRACE",
+      "humanFourMetrics": "NOT_OBSERVABLE"
+    }
+  ],
+  "trace": [
+    {
+      "id": "eaa712a8-ee11-4029-8feb-67daa74f42c2",
+      "at": 1790952919595,
+      "kind": "begin"
+    },
+    {
+      "id": "c23fcb64-eaf1-4dd5-93ae-cd52c306af34",
+      "at": 1790952919595,
+      "kind": "read"
+    },
+    {
+      "id": "7f7f506b-14fc-4c16-8232-aa407329b1be",
+      "at": 1790952944941,
+      "kind": "wait"
+    },
+    {
+      "id": "56c26f8b-2ded-48ed-ac27-bb6a509d7600",
+      "at": 1790952944964,
+      "kind": "commit",
+      "commitId": "86968d74-54fb-4709-bf3d-c3eeefad7cce",
+      "semanticChanges": 0
+    },
+    {
+      "id": "327e2c5e-4b90-403c-9ad2-891a71d7fe6d",
+      "at": 1790952944968,
+      "kind": "readback",
+      "commitId": "86968d74-54fb-4709-bf3d-c3eeefad7cce"
+    },
+    {
+      "id": "42ef78c0-be18-4834-b2b5-9c945026c779",
+      "at": 1790952944988,
+      "kind": "end"
+    },
+    {
+      "id": "7ffedd52-9918-4e1a-a4c9-7f56624b3dc8",
+      "at": 1790952956532,
+      "kind": "begin"
+    },
+    {
+      "id": "88b0d7f1-1b99-4ae2-bc46-ce764739a915",
+      "at": 1790952956532,
+      "kind": "read"
+    },
+    {
+      "id": "85d426ff-edda-4d37-a269-9cda55f8398a",
+      "at": 1790952956533,
+      "kind": "wait"
+    },
+    {
+      "id": "b610bf13-a094-4a74-ac17-20807ae0ed0f",
+      "at": 1790952956546,
+      "kind": "commit",
+      "commitId": "86968d74-54fb-4709-bf3d-c3eeefad7cce:undo",
+      "semanticChanges": 0
+    },
+    {
+      "id": "e61bdaa9-5c12-47ef-af40-26a66b392eb5",
+      "at": 1790952956550,
+      "kind": "readback",
+      "commitId": "86968d74-54fb-4709-bf3d-c3eeefad7cce:undo"
+    },
+    {
+      "id": "20413c60-fe09-41f1-9526-658676c470b9",
+      "at": 1790952956565,
+      "kind": "end"
+    },
+    {
+      "id": "440c1af0-f0b1-4494-a2cf-51f2c3d51e1b",
+      "at": 1790953006373,
+      "kind": "begin"
+    },
+    {
+      "id": "a026c14e-9576-4766-aef2-af663e1702a7",
+      "at": 1790953006374,
+      "kind": "read"
+    },
+    {
+      "id": "65e274d4-02bb-4391-8603-5c105e3d6cf8",
+      "at": 1790953006639,
+      "kind": "edit",
+      "field": "window:date",
+      "editId": "d412ad23-896e-4838-a056-8c5329c34861"
+    },
+    {
+      "id": "ae46d659-199c-4be6-9a46-606ba1874ff0",
+      "at": 1790953006669,
+      "kind": "edit",
+      "field": "window:date",
+      "editId": "d412ad23-896e-4838-a056-8c5329c34861"
+    },
+    {
+      "id": "16d4ba1f-95b1-4148-be4b-37be4e8c808a",
+      "at": 1790953006688,
+      "kind": "read"
+    },
+    {
+      "id": "9957a08b-52dc-4eb2-b12d-815c619a71f6",
+      "at": 1790953006695,
+      "kind": "edit",
+      "field": "window:days",
+      "editId": "f6c52867-dfeb-421f-840f-1b9a635326d6"
+    },
+    {
+      "id": "14db5416-6019-40ae-8e10-7e6f5a9dec69",
+      "at": 1790953006707,
+      "kind": "read"
+    },
+    {
+      "id": "339b67dc-a69a-4e09-855e-0526e5870033",
+      "at": 1790953006726,
+      "kind": "edit",
+      "field": "window:start",
+      "editId": "37c25f28-a9e3-4db2-893f-818da5db5fad"
+    },
+    {
+      "id": "124575d5-09b5-4db1-9adf-ad3a6ba2269f",
+      "at": 1790953006750,
+      "kind": "edit",
+      "field": "window:start",
+      "editId": "37c25f28-a9e3-4db2-893f-818da5db5fad"
+    },
+    {
+      "id": "022aa179-3c12-443b-9521-9b956ca7d9bd",
+      "at": 1790953006762,
+      "kind": "read"
+    },
+    {
+      "id": "3694e0db-9709-46ab-9451-07a75259dc2a",
+      "at": 1790953006781,
+      "kind": "edit",
+      "field": "window:end",
+      "editId": "c4db92d3-47d0-4dc1-acdc-10c608c3dbe1"
+    },
+    {
+      "id": "42626e78-bb14-4078-9150-9a6725c5a93c",
+      "at": 1790953006809,
+      "kind": "edit",
+      "field": "window:end",
+      "editId": "c4db92d3-47d0-4dc1-acdc-10c608c3dbe1"
+    },
+    {
+      "id": "e263d3d3-4b9a-4f6f-bee9-26c2203d6a0f",
+      "at": 1790953011811,
+      "kind": "idle"
+    },
+    {
+      "id": "c1bce0aa-649f-40bc-8661-dc6d74ea5fe0",
+      "at": 1790953015755,
+      "kind": "edit",
+      "field": "window:end",
+      "editId": "c4db92d3-47d0-4dc1-acdc-10c608c3dbe1"
+    },
+    {
+      "id": "49b7feb9-a0e7-404f-95c8-f9f2fd898ec1",
+      "at": 1790953015795,
+      "kind": "edit",
+      "field": "window:end",
+      "editId": "c4db92d3-47d0-4dc1-acdc-10c608c3dbe1"
+    },
+    {
+      "id": "19b02284-0d58-40b6-bb7d-c2ef4065d035",
+      "at": 1790953015829,
+      "kind": "read"
+    },
+    {
+      "id": "55ceb569-b897-46f2-a359-c9830ead4cf4",
+      "at": 1790953015837,
+      "kind": "edit",
+      "field": "estimate",
+      "editId": "4b1b7550-06d9-4bc9-8312-a9c81ad518f5"
+    },
+    {
+      "id": "5e287c12-3698-4539-a732-182d161da603",
+      "at": 1790953020837,
+      "kind": "idle"
+    },
+    {
+      "id": "efbb15f2-2983-443b-bc64-5244b206dc8d",
+      "at": 1790953026240,
+      "kind": "edit",
+      "field": "estimate",
+      "editId": "4b1b7550-06d9-4bc9-8312-a9c81ad518f5"
+    },
+    {
+      "id": "240d6921-95ed-4f86-8d12-f23ad6f17121",
+      "at": 1790953026513,
+      "kind": "read"
+    },
+    {
+      "id": "37e30947-e361-430e-9656-2b9872ea8029",
+      "at": 1790953026523,
+      "kind": "edit",
+      "field": "task:source:78408314:draft:1:fill:lock",
+      "editId": "96c6eed3-07f4-42aa-9f8c-e114b9160f28"
+    },
+    {
+      "id": "45c24a46-00ab-400a-af2a-505595a0812d",
+      "at": 1790953031518,
+      "kind": "idle"
+    },
+    {
+      "id": "87a84043-daa5-4184-8a1a-771e0cf286c0",
+      "at": 1790953104134,
+      "kind": "edit",
+      "field": "estimate",
+      "editId": "4b1b7550-06d9-4bc9-8312-a9c81ad518f5"
+    },
+    {
+      "id": "0f11febe-1547-4f22-adf1-be1c3a93a6c7",
+      "at": 1790953104163,
+      "kind": "read"
+    },
+    {
+      "id": "a2e070fe-7928-4c35-8885-a46010eda631",
+      "at": 1790953104243,
+      "kind": "read"
+    },
+    {
+      "id": "2f96846a-c29f-423a-937f-8ba680994535",
+      "at": 1790953390335,
+      "kind": "restore"
+    },
+    {
+      "id": "a7ff0527-805c-462a-a20c-a6096b64b387",
+      "at": 1790953390351,
+      "kind": "read"
+    },
+    {
+      "id": "523ee0f4-31f9-4b9c-8969-5582817dcb7c",
+      "at": 1790953390352,
+      "kind": "wait"
+    },
+    {
+      "id": "9649b365-0c58-4b42-9e5c-1193bcbf6046",
+      "at": 1790953390367,
+      "kind": "failure",
+      "reason": "D27_INJECTED_PLAN_COMMIT_FAILURE"
+    },
+    {
+      "id": "604cb8e6-3f79-4e82-a880-083bdd524388",
+      "at": 1790953411795,
+      "kind": "wait"
+    },
+    {
+      "id": "2b0aea69-0204-475f-b2a2-b88d80635c83",
+      "at": 1790953411815,
+      "kind": "commit",
+      "commitId": "74d0cfe5-461e-4a8c-8ecc-1a4cb58948c7",
+      "semanticChanges": 0
+    },
+    {
+      "id": "58ab9698-3903-4657-b0a1-1237cf654780",
+      "at": 1790953411816,
+      "kind": "failure",
+      "reason": "D27_INJECTED_INDEPENDENT_READBACK_FAILURE"
+    },
+    {
+      "id": "1d6e6076-6360-4042-a624-fafad51c8e0e",
+      "at": 1790953452500,
+      "kind": "restore"
+    },
+    {
+      "id": "7651a445-b94c-4b79-8f32-e5aa9723cb79",
+      "at": 1790953452502,
+      "kind": "read"
+    },
+    {
+      "id": "9ba1544b-cf84-406f-9a2a-8af6e33041d0",
+      "at": 1790953452503,
+      "kind": "wait"
+    },
+    {
+      "id": "53a1fe6a-3245-4da8-aeb7-dbccc426c849",
+      "at": 1790953452510,
+      "kind": "readback",
+      "commitId": "74d0cfe5-461e-4a8c-8ecc-1a4cb58948c7"
+    },
+    {
+      "id": "55bfb7e2-c882-405c-83f8-50f39fc79f6a",
+      "at": 1790953452524,
+      "kind": "end"
+    },
+    {
+      "id": "9ee2a6af-df4a-4af9-857b-64dfe6fb9e2d",
+      "at": 1790953476132,
+      "kind": "begin"
+    },
+    {
+      "id": "9aad6586-8b93-42ca-827c-3c460a4a2565",
+      "at": 1790953476133,
+      "kind": "read"
+    },
+    {
+      "id": "8b106d2c-0040-4efb-8edf-68f07f80dfdc",
+      "at": 1790953476400,
+      "kind": "edit",
+      "field": "window:start",
+      "editId": "fb308466-6497-47a2-aca7-4f644398a427"
+    },
+    {
+      "id": "4c2e92ca-a6f6-43f3-85f5-d8c0081f18ce",
+      "at": 1790953476432,
+      "kind": "edit",
+      "field": "window:start",
+      "editId": "fb308466-6497-47a2-aca7-4f644398a427"
+    },
+    {
+      "id": "e450adc5-6ce5-4987-8e13-eb12823aff8a",
+      "at": 1790953481444,
+      "kind": "idle"
+    },
+    {
+      "id": "c5fc395d-7b3c-4d2f-a164-c76f1dedb3a6",
+      "at": 1790953486855,
+      "kind": "edit",
+      "field": "window:start",
+      "editId": "fb308466-6497-47a2-aca7-4f644398a427"
+    },
+    {
+      "id": "ec153a06-4108-43aa-a544-c9ae1df68c0e",
+      "at": 1790953486887,
+      "kind": "edit",
+      "field": "window:start",
+      "editId": "fb308466-6497-47a2-aca7-4f644398a427"
+    },
+    {
+      "id": "ff1f7eb8-38d8-4907-91bb-64d6555964f9",
+      "at": 1790953486947,
+      "kind": "read"
+    },
+    {
+      "id": "f3592706-50ac-49bb-ade4-dc53a2a42506",
+      "at": 1790953491894,
+      "kind": "idle"
+    },
+    {
+      "id": "cb8d8f76-6cc3-4cf1-8839-7e5849261650",
+      "at": 1790953496611,
+      "kind": "edit",
+      "field": "task:source:78408314:draft:1:save:start",
+      "editId": "e6c5fc47-57ac-41f3-8dd7-b289c134563f"
+    },
+    {
+      "id": "3352ab9b-4273-47f3-8cce-4c1fa8938406",
+      "at": 1790953496660,
+      "kind": "edit",
+      "field": "task:source:78408314:draft:1:save:start",
+      "editId": "e6c5fc47-57ac-41f3-8dd7-b289c134563f"
+    },
+    {
+      "id": "3d5fdb92-588b-421c-a6f5-6a76f3f16cbd",
+      "at": 1790953496705,
+      "kind": "read"
+    },
+    {
+      "id": "da032fbf-46c9-4391-9a14-3a3ba973754e",
+      "at": 1790953496726,
+      "kind": "edit",
+      "field": "task:source:78408314:draft:1:save:duration",
+      "editId": "f4c8cc33-3eec-4914-9bdb-ca232f8b47f3"
+    },
+    {
+      "id": "94541949-20bd-473d-9434-d6ef207293f4",
+      "at": 1790953496792,
+      "kind": "read"
+    },
+    {
+      "id": "97281f50-30e6-4bba-8f4e-7b15b492f92e",
+      "at": 1790953496800,
+      "kind": "wait"
+    },
+    {
+      "id": "ef8bfec6-cc37-4cbc-b8b2-9ca6f4e9ed6b",
+      "at": 1790953496833,
+      "kind": "commit",
+      "commitId": "e9318f78-71fb-4395-9ed0-26b6ac84f9ed",
+      "semanticChanges": 2
+    },
+    {
+      "id": "bdc1d038-b6e3-44a5-af7e-851832c0a79e",
+      "at": 1790953496841,
+      "kind": "readback",
+      "commitId": "e9318f78-71fb-4395-9ed0-26b6ac84f9ed"
+    },
+    {
+      "id": "1e80f391-4dd0-454f-85d3-a95b175a3e34",
+      "at": 1790953496874,
+      "kind": "end"
+    },
+    {
+      "id": "129c01d8-28ea-4ab0-a777-de95d6bccbfa",
+      "at": 1790953537081,
+      "kind": "begin"
+    },
+    {
+      "id": "6908a214-a002-40a1-af9b-10b590cf1e80",
+      "at": 1790953537088,
+      "kind": "read"
+    },
+    {
+      "id": "3a26bed7-8a77-4757-9ae0-c28402894d3d",
+      "at": 1790953537090,
+      "kind": "edit",
+      "field": "task:source:78408314:draft:1:save:duration",
+      "editId": "affd1944-dbad-4351-92cf-aa2da43ab8d5"
+    },
+    {
+      "id": "2c079024-254f-413d-8045-8e67a2ec32e7",
+      "at": 1790953537212,
+      "kind": "read"
+    },
+    {
+      "id": "f1708f73-9ad8-4cad-8f50-a1518e7c3524",
+      "at": 1790953537216,
+      "kind": "wait"
+    },
+    {
+      "id": "475e77b1-477a-4b70-a6c0-f3cf4a90dccf",
+      "at": 1790953537249,
+      "kind": "commit",
+      "commitId": "6bcfe7b5-8176-4342-8e0e-f7e2b7581b58",
+      "semanticChanges": 1
+    },
+    {
+      "id": "10d39f6b-62eb-4b48-9048-44d0282988a8",
+      "at": 1790953537257,
+      "kind": "readback",
+      "commitId": "6bcfe7b5-8176-4342-8e0e-f7e2b7581b58"
+    },
+    {
+      "id": "0c3bae85-4ae9-4077-9007-2e041f478fc5",
+      "at": 1790953537284,
+      "kind": "end"
+    },
+    {
+      "id": "8919d0c3-8b6c-4f74-91ff-c364f6b55205",
+      "at": 1790953548129,
+      "kind": "begin"
+    },
+    {
+      "id": "cc318a4d-7ce4-4738-8cf8-4fe79f75189c",
+      "at": 1790953548130,
+      "kind": "read"
+    },
+    {
+      "id": "56527e59-a10e-4a52-ba2d-6437bb374e2c",
+      "at": 1790953548134,
+      "kind": "wait"
+    },
+    {
+      "id": "4f9c5b6a-cfcd-4541-915b-041e6c824289",
+      "at": 1790953548148,
+      "kind": "failure",
+      "reason": "PERSONAL_PLAN_INPUTS_CHANGED"
+    },
+    {
+      "id": "dc54b6c9-f266-4e6c-a694-4400ca1b91e0",
+      "at": 1790953566857,
+      "kind": "edit",
+      "field": "task:source:78408314:draft:1:fill:lock",
+      "editId": "57494a4f-e235-4514-893e-19396ca6ab96"
+    },
+    {
+      "id": "72f352e0-2d87-407e-a1ce-69592412fc81",
+      "at": 1790953571859,
+      "kind": "idle"
+    },
+    {
+      "id": "916e9e3a-752f-468e-bf2c-6e73b86ef7a4",
+      "at": 1790953582187,
+      "kind": "wait"
+    },
+    {
+      "id": "3ce794aa-dda4-4620-954a-46a09a1e9e01",
+      "at": 1790953582212,
+      "kind": "commit",
+      "commitId": "d0701ba6-b3b8-44a5-9743-5cbbe2b8bb92",
+      "semanticChanges": 1
+    },
+    {
+      "id": "9fdc81ef-f15b-43c8-b2f4-b271148d02e0",
+      "at": 1790953582216,
+      "kind": "readback",
+      "commitId": "d0701ba6-b3b8-44a5-9743-5cbbe2b8bb92"
+    },
+    {
+      "id": "b33ab3e0-c3f3-4bc2-a275-3e553baf7b66",
+      "at": 1790953582243,
+      "kind": "end"
+    }
+  ],
+  "humanFourMetrics": "NOT_OBSERVABLE"
+}

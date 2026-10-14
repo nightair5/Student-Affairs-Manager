@@ -1,0 +1,19 @@
+{
+  "stage": "RCO-5-MAINLINE-03-I1-R3",
+  "base": "beae935cba642027c8222644a6e541f2c636bfb2",
+  "script": {
+    "path": "scripts/check-mainline-03-i1-r3.mjs",
+    "sha256": "1ca5298be2c9fb2ebbcf06d7df8b9e357d1d2ba0d5364fae53659d6d143d7fc4"
+  },
+  "baseline": {
+    "path": "docs/recognition-optimization/mainline-03-i1/R3_BASELINE.json",
+    "sha256": "10ff4cb081a722b66fceb4b2436d76657ab0690080b4e14891a18fee6f8b70ca"
+  },
+  "targeted": {
+    "path": "C:/Users/Winner/AppData/Local/Temp/rco-mainline03-r3-xDNFWN/results.json",
+    "sha256": "2131fd0544ea537ac5f03901e429598e662b0569e04bb29aa6fe5841e2f7571c",
+    "compatibility": 13,
+    "historicalLibrary": 4
+  },
+  "snapshotFiles": 20
+}

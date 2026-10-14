@@ -1,0 +1,71 @@
+{
+  "fullTest": "39 independent groups; 33 PASS / 6 historical FAIL; all exited",
+  "finalProduct": "9 groups PASS on final code; 954 tests PASS / 1 SKIP",
+  "failures": [
+    {
+      "label": "d19-diagnostic",
+      "log": ".data/candidate11/checks/test/Asia-Shanghai/d19-diagnostic.log",
+      "sha256": "59b76e216370844d489a9c4d9126342ea921f3255369fe37b5e1abb341511479",
+      "excerpt": [
+        "  Error: D17_SCORE_LEDGER_DRIFT"
+      ]
+    },
+    {
+      "label": "d9-historical",
+      "log": ".data/candidate11/checks/test/Asia-Shanghai/d9-historical.log",
+      "sha256": "79fccb6b6af1fe24439257ebbe1b466b9d912d3fa98e80cf1b50e3e04b5510b1",
+      "excerpt": [
+        "  Error: D9_GUARD_FILE_DRIFT_scripts/serve-candidate15-d8.mjs"
+      ]
+    },
+    {
+      "label": "rco-5-007",
+      "log": ".data/candidate11/checks/test/Asia-Shanghai/rco-5-007.log",
+      "sha256": "e3f42a814a226526570263afd2ea6483ed00aeae6bb975cc38f3036c9d06bffa",
+      "excerpt": [
+        "  Error: FREEZE_HASH_MISMATCH:package-lock.json"
+      ]
+    },
+    {
+      "label": "c11-history",
+      "log": ".data/candidate11/checks/test/Asia-Shanghai/c11-history.log",
+      "sha256": "5a1e53e523d0cee0c51dca8f11643883c54c55fb71f3350b55f211337f73f67c",
+      "excerpt": [
+        "  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md"
+      ]
+    },
+    {
+      "label": "c11-gateway",
+      "log": ".data/candidate11/checks/test/Asia-Shanghai/c11-gateway.log",
+      "sha256": "ed5e60e30da445e0588915eae8215fc1dd9daab7cbb4eb1a1c4308d8f89c9be6",
+      "excerpt": [
+        "  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md",
+        "  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md",
+        "  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md",
+        "  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md",
+        "  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md"
+      ]
+    },
+    {
+      "label": "vitest-d17-history",
+      "log": ".data/candidate11/checks/test/Asia-Shanghai/vitest-d17-history.log",
+      "sha256": "5507c3913d2a13409206d2ac65a44d1ff5ef28f316004d0d39e91c0f6c30e6cb",
+      "excerpt": [
+        " ❯ src/experiments/candidate16/d21EventEvidence.test.ts (1 test | 1 failed) 45ms",
+        "     → D17_SCORE_LEDGER_DRIFT",
+        " ❯ src/experiments/candidate16/d20Rebase.test.ts (1 test | 1 failed) 43ms",
+        "     → D17_SCORE_LEDGER_DRIFT",
+        " ❯ src/experiments/candidate16/d19SourceSession.test.ts (3 tests | 2 failed) 2434ms",
+        "   ✓ D19 source review saves independently evidenced event and task atomically; a failed save preserves both for manual retry  2362ms",
+        "     → D17_SCORE_LEDGER_DRIFT",
+        "   × D19 isolated recovery can open a failed revision answer without disabling the bad-link guard 32ms",
+        "     → D17_SCORE_LEDGER_DRIFT",
+        " Test Files  4 failed | 2 passed (6)",
+        "      Tests  4 failed | 34 passed | 10 skipped (48)",
+        " FAIL  src/experiments/candidate16/d22Recovery.test.ts [ src/experiments/candidate16/d22Recovery.test.ts ]",
+        "Error: D17_SCORE_LEDGER_DRIFT",
+        "     15| const check=(value,code)=>{if(!value)throw Error('D17_SCORE_'+code)}"
+      ]
+    }
+  ]
+}

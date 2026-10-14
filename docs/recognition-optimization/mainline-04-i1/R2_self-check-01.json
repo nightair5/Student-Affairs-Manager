@@ -1,0 +1,40 @@
+{
+  "stage": "RCO-5-MAINLINE-04-I1-R2",
+  "attempt": "self-check-01",
+  "directory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline04-i1-r2-MqtoDm\\self-check-01",
+  "passed": 22,
+  "failed": 0,
+  "cases": [
+    "valid-current-review",
+    "wrong-head",
+    "wrong-branch",
+    "baseline-tamper",
+    "log-prefix",
+    "semantic-sha",
+    "protected-change",
+    "missing-protected",
+    "checker-review-sha",
+    "review-blocked",
+    "review-old-stage",
+    "review-old-baseline",
+    "review-missing-file",
+    "review-duplicate-file",
+    "old-report-write",
+    "path-traversal",
+    "extra-source",
+    "valid-report-path",
+    "relative-escape",
+    "absolute-escape",
+    "embedded-escape",
+    "nested-report"
+  ],
+  "syntheticReviewOnly": true,
+  "protection": {
+    "checked": 870,
+    "changed": [],
+    "appendOnly": true,
+    "outOfScope": [],
+    "readonlyImplementation": 7
+  },
+  "externalModelCalls": 0
+}

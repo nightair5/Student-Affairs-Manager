@@ -20,7 +20,7 @@ flowchart LR
   Material --> History
   Draft --> History
   Task --> Today["今日前三 / 任务中心 / 日历"]
-  Source & Draft & Project & Milestone & WorkPackage & Task & Event & Time & Material & Evidence & History & Reminder --> IDB["当前域名 IndexedDB schema v7"]
+  Source & SourceVersion & RecognitionRun & Draft & Project & Milestone & WorkPackage & Task & Event & Time & Material & Evidence & History & Reminder --> IDB["当前域名 IndexedDB schema v8 canonical facts"]
 ```
 
 ## 信任规则

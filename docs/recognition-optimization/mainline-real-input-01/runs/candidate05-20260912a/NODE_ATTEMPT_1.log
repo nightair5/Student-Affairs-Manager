@@ -1,0 +1,2149 @@
+✖ batch permits fourteen exact units only and preserves old unknown/settled requests (1.4288ms)
+✖ batch parallel and restart cannot repeat or skip a crashed request (0.1601ms)
+✖ batch invalid usage or unknown failure preserves reservation and stops successors (0.146ms)
+✖ batch changed grant, prefix, target, price expiry and order fail before dispatch (0.1797ms)
+✖ batch held A01 is counted against total even after lawful new settlements (0.1604ms)
+✖ paired04: 24 interleaved new requests preserve 32 old requests and A01 unknown across reopening (0.484ms)
+✖ paired04: grant limits, pairing, old baseline, input drift and skipped order reject without mutation (0.2727ms)
+✖ paired04: concurrent crash, unknown usage and remaining monetary cap stop next dispatch (0.2298ms)
+✖ candidate03 only appends eight D units to the original 24; restart and old prefix preserved (0.2422ms)
+✖ candidate03 rejects altered inputs, old candidate, limits, parent and request without journal mutation (0.24ms)
+✖ candidate03 concurrent reserve, crash, duplicate usage and reopen cannot retry or release unknown (0.2014ms)
+✖ candidate02 appends eight original-A inputs; old unknown and all historical receipts survive (0.1646ms)
+✖ candidate02 validates grant/input/price/parent and cannot substitute old candidate (0.1554ms)
+✖ candidate02 concurrent reserve, crash and invalid usage never release or retry (0.1638ms)
+✖ candidate02 preserves ten yuan cap including held A01 (0.1318ms)
+✖ separate Node crash after recovery reservation cannot return the grant on reopen (0.135ms)
+✖ recovery rejects expired billing, changed limits and request payload before reservation (0.1206ms)
+✖ one-shot A02 recovery preserves A01 unknown cost and prefix while normal completion cannot unlock A03 (0.15ms)
+✖ recovery competing callers and crash/reopen consume at most one new reservation without sending (0.1504ms)
+✖ recovery rejects changed prior, target, route and binding fields before ledger writes (0.1511ms)
+✖ recovery rejects ordinary pending without the designated transport halt (0.1086ms)
+✖ A02 invalid usage and uncertainty retain both reservations and never reopen the grant (0.1337ms)
+✖ ambiguous decoded response keys retain full reserve, survive reopen and halt next dispatch (0.1935ms)
+✖ valid decoded keys, ordering, whitespace and key-looking model text still settle normally (0.1536ms)
+✔ conservative context envelope and integer settlement have no floating-point budget drift (0.5289ms)
+✖ normal request reserves durably before completion; only complete usage releases surplus (0.1416ms)
+✖ all 24 logical units share one ledger across reopened browser/runner handles (0.1573ms)
+✖ 10 yuan is checked using spent upper cost plus the next full reservation (0.1368ms)
+✖ concurrent tabs cannot reserve twice; cross-instance overlap retains one pending request (0.1397ms)
+✖ two independent Node processes cannot bypass the shared filesystem lock (0.1258ms)
+✖ process restart after a durable reservation never resends or releases it (0.1082ms)
+✖ timeout/unknown failure retains full reservation and permanently stops this book (0.1052ms)
+✖ missing usage cannot settle or release the reservation (0.1281ms)
+✖ mismatched total cannot settle or release the reservation (0.0791ms)
+✖ zero tokens for nonempty input cannot settle or release the reservation (0.0917ms)
+✖ excess input cannot settle or release the reservation (0.0859ms)
+✖ excess output cannot settle or release the reservation (0.1124ms)
+✖ wrong model cannot settle or release the reservation (0.0797ms)
+✖ incomplete response cannot settle or release the reservation (0.066ms)
+✖ unsupported reasoning cannot settle or release the reservation (0.0587ms)
+✖ tools cannot settle or release the reservation (0.0523ms)
+✖ string usage cannot settle or release the reservation (0.0548ms)
+✖ even a parseable HTTP failure is not settled (0.0987ms)
+✖ response reuse is a binding anomaly, not another cheap completed call (0.105ms)
+✖ price/context/protocol changes halt before dispatch; frozen requests cannot change (0.1381ms)
+✖ expired billing review and premature C are rejected (0.1268ms)
+✖ returned snapshot cannot change the frozen request, including its byte length (0.1218ms)
+✖ snapshot mutation cannot replace B inputs or permit an incompatible C candidate (0.1428ms)
+✖ a valid-prefix truncation is detected by the independent write-once receipts (0.1087ms)
+✖ missing ledger and abandoned lock do not initialize a fresh allowance (0.0941ms)
+✖ recomputing row hashes does not make a mismatched settlement valid (0.1234ms)
+✖ manifest changes and response shape tricks fail without coercion (0.1132ms)
+✔ pinned route sends no credentials to proxy and dispatches only after verified TLS, once (8.6815ms)
+✔ proxy authentication demand and unverified TLS cannot send the API credential or body (0.5273ms)
+✔ abort and alternative destination fail before opening a proxy connection (0.2456ms)
+✖ the only successful path preserves raw response, binds usage and uses the fixed upstream without redirects (7.112ms)
+✖ D unit passes only when present in the exact budget snapshot; original AB gateway rejects it before secret access (0.3733ms)
+✖ paired04 units require exact current budget membership; old gateway cannot dispatch them (0.2618ms)
+✖ credential is not read at gateway initialization or on rejected origins and routes (0.2376ms)
+✖ browser cannot supply a model, endpoint, request body, usage or alternative budget book (0.229ms)
+✖ missing credentials do not consume an allowance and are never reflected (0.2266ms)
+✖ reserved request cannot be duplicated by a second gateway or service restart (0.9215ms)
+✖ concurrent browser and runner cannot dispatch the same logical request twice (0.2204ms)
+✖ HTTP failure stops dispatch, retains the full reserve and returns only a safe code (0.207ms)
+✖ redirect stops dispatch, retains the full reserve and returns only a safe code (0.1713ms)
+✖ wrong content type stops dispatch, retains the full reserve and returns only a safe code (0.1212ms)
+✖ response size exceeded stops dispatch, retains the full reserve and returns only a safe code (0.1212ms)
+✖ credential echo stops dispatch, retains the full reserve and returns only a safe code (0.1385ms)
+✖ usage missing stops dispatch, retains the full reserve and returns only a safe code (0.1339ms)
+✖ model drift stops dispatch, retains the full reserve and returns only a safe code (0.107ms)
+✖ timeout aborts once; late completion cannot settle or append a second response (0.1713ms)
+✖ raw-result storage failure cannot release money or silently claim success (0.1552ms)
+✖ safe diagnostic DNS: classified without error text and unknown reserve survives reopening (0.1795ms)
+✖ safe diagnostic connect timeout: classified without error text and unknown reserve survives reopening (0.1043ms)
+✖ safe diagnostic TLS: classified without error text and unknown reserve survives reopening (0.0988ms)
+✖ safe diagnostic connection reset: classified without error text and unknown reserve survives reopening (0.1222ms)
+✖ safe diagnostic unknown code: classified without error text and unknown reserve survives reopening (0.1327ms)
+✖ safe diagnostic HTTP 401: classified without error text and unknown reserve survives reopening (0.1139ms)
+✖ safe diagnostic HTTP 502: classified without error text and unknown reserve survives reopening (0.2456ms)
+✖ safe diagnostic content type: classified without error text and unknown reserve survives reopening (0.1341ms)
+✖ safe diagnostic body timeout: classified without error text and unknown reserve survives reopening (0.1375ms)
+✖ safe diagnostic oversize: classified without error text and unknown reserve survives reopening (0.1252ms)
+✖ safe diagnostic UTF8: classified without error text and unknown reserve survives reopening (0.092ms)
+✖ safe diagnostic JSON: classified without error text and unknown reserve survives reopening (0.0882ms)
+✖ safe diagnostic reflection: classified without error text and unknown reserve survives reopening (0.0939ms)
+✖ safe diagnostic raw store: classified without error text and unknown reserve survives reopening (0.1146ms)
+✖ safe diagnostic settlement: classified without error text and unknown reserve survives reopening (0.136ms)
+✖ diagnostic normal and missing-configuration controls do not alter raw success or consume a missing-key reservation (0.1775ms)
+✖ diagnostic uses descriptors not error getters, and never exports arbitrary error properties (0.1659ms)
+✖ local deadline diagnostic remains distinct from transport timeout and late headers cannot rewrite it (0.1523ms)
+✖ uncertainty persistence failure is visible without releasing or retrying the reserved call (0.1445ms)
+✖ frozen request object cannot be swapped after gateway creation (0.1283ms)
+✖ unapproved parameters and non-text content fail before any gateway can be created (0.5745ms)
+✖ JSON escaped output value cannot reach recording, response or settlement (0.1765ms)
+✖ JSON escaped object key cannot reach recording, response or settlement (0.0893ms)
+✖ nested model JSON value cannot reach recording, response or settlement (0.0841ms)
+✖ nested model JSON key cannot reach recording, response or settlement (0.0805ms)
+✖ twice nested model JSON cannot reach recording, response or settlement (0.108ms)
+✖ discarded duplicate JSON property cannot reach recording, response or settlement (0.088ms)
+✖ normal escaped Chinese and nested JSON retain exact raw bytes and can be recorded and settled (0.1909ms)
+ℹ tests 100
+ℹ suites 0
+ℹ pass 4
+ℹ fail 96
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126.7899
+
+✖ failing tests:
+
+test at scripts\real-input-budget.node-test.mjs:21:1
+✖ batch permits fourteen exact units only and preserves old unknown/settled requests (1.4288ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:22:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:31:1
+✖ batch parallel and restart cannot repeat or skip a crashed request (0.1601ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:32:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:40:1
+✖ batch invalid usage or unknown failure preserves reservation and stops successors (0.146ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:42:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:49:1
+✖ batch changed grant, prefix, target, price expiry and order fail before dispatch (0.1797ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:50:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:60:1
+✖ batch held A01 is counted against total even after lawful new settlements (0.1604ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:61:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:112:3
+✖ paired04: 24 interleaved new requests preserve 32 old requests and A01 unknown across reopening (0.484ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at candidate02Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:85:17)
+      at candidate03Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:94:17)
+      at paired04Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:103:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:113:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:121:3
+✖ paired04: grant limits, pairing, old baseline, input drift and skipped order reject without mutation (0.2727ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at candidate02Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:85:17)
+      at candidate03Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:94:17)
+      at paired04Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:103:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:122:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:131:3
+✖ paired04: concurrent crash, unknown usage and remaining monetary cap stop next dispatch (0.2298ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at candidate02Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:85:17)
+      at candidate03Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:94:17)
+      at paired04Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:103:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:133:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:145:3
+✖ candidate03 only appends eight D units to the original 24; restart and old prefix preserved (0.2422ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at candidate02Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:85:17)
+      at candidate03Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:94:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:146:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:155:3
+✖ candidate03 rejects altered inputs, old candidate, limits, parent and request without journal mutation (0.24ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at candidate02Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:85:17)
+      at candidate03Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:94:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:156:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:165:3
+✖ candidate03 concurrent reserve, crash, duplicate usage and reopen cannot retry or release unknown (0.2014ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at candidate02Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:85:17)
+      at candidate03Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:94:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:167:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:179:3
+✖ candidate02 appends eight original-A inputs; old unknown and all historical receipts survive (0.1646ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at candidate02Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:85:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:180:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:189:3
+✖ candidate02 validates grant/input/price/parent and cannot substitute old candidate (0.1554ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at candidate02Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:85:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:190:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:198:3
+✖ candidate02 concurrent reserve, crash and invalid usage never release or retry (0.1638ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at candidate02Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:85:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:200:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:210:3
+✖ candidate02 preserves ten yuan cap including held A01 (0.1318ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at candidate02Fixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:85:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:211:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:217:3
+✖ separate Node crash after recovery reservation cannot return the grant on reopen (0.135ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:218:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:229:3
+✖ recovery rejects expired billing, changed limits and request payload before reservation (0.1206ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:230:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:237:3
+✖ one-shot A02 recovery preserves A01 unknown cost and prefix while normal completion cannot unlock A03 (0.15ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:238:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:252:3
+✖ recovery competing callers and crash/reopen consume at most one new reservation without sending (0.1504ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:253:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:261:3
+✖ recovery rejects changed prior, target, route and binding fields before ledger writes (0.1511ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:266:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:271:3
+✖ recovery rejects ordinary pending without the designated transport halt (0.1086ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:272:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:275:3
+✖ A02 invalid usage and uncertainty retain both reservations and never reopen the grant (0.1337ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:72:23)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:277:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:323:3
+✖ ambiguous decoded response keys retain full reserve, survive reopen and halt next dispatch (0.1935ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:339:44)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:348:3
+✖ valid decoded keys, ordering, whitespace and key-looking model text still settle normally (0.1536ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:352:42)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:363:3
+✖ normal request reserves durably before completion; only complete usage releases surplus (0.1416ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:364:42)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:374:3
+✖ all 24 logical units share one ledger across reopened browser/runner handles (0.1573ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:375:35)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:385:3
+✖ 10 yuan is checked using spent upper cost plus the next full reservation (0.1368ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:386:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:392:3
+✖ concurrent tabs cannot reserve twice; cross-instance overlap retains one pending request (0.1397ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:393:42)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:399:3
+✖ two independent Node processes cannot bypass the shared filesystem lock (0.1258ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:400:42)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:406:3
+✖ process restart after a durable reservation never resends or releases it (0.1082ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:407:42)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:413:3
+✖ timeout/unknown failure retains full reservation and permanently stops this book (0.1052ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:414:42)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:428:6
+✖ missing usage cannot settle or release the reservation (0.1281ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:429:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:428:6
+✖ mismatched total cannot settle or release the reservation (0.0791ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:429:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:428:6
+✖ zero tokens for nonempty input cannot settle or release the reservation (0.0917ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:429:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:428:6
+✖ excess input cannot settle or release the reservation (0.0859ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:429:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:428:6
+✖ excess output cannot settle or release the reservation (0.1124ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:429:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:428:6
+✖ wrong model cannot settle or release the reservation (0.0797ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:429:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:428:6
+✖ incomplete response cannot settle or release the reservation (0.066ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:429:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:428:6
+✖ unsupported reasoning cannot settle or release the reservation (0.0587ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:429:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:428:6
+✖ tools cannot settle or release the reservation (0.0523ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:429:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:428:6
+✖ string usage cannot settle or release the reservation (0.0548ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:429:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:434:3
+✖ even a parseable HTTP failure is not settled (0.0987ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:435:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:439:3
+✖ response reuse is a binding anomaly, not another cheap completed call (0.105ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:440:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:444:3
+✖ price/context/protocol changes halt before dispatch; frozen requests cannot change (0.1381ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:445:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:451:3
+✖ expired billing review and premature C are rejected (0.1268ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:452:35)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:458:3
+✖ returned snapshot cannot change the frozen request, including its byte length (0.1218ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:459:42)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:467:3
+✖ snapshot mutation cannot replace B inputs or permit an incompatible C candidate (0.1428ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:468:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:480:3
+✖ a valid-prefix truncation is detected by the independent write-once receipts (0.1087ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:481:51)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:487:3
+✖ missing ledger and abandoned lock do not initialize a fresh allowance (0.0941ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:488:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:493:3
+✖ recomputing row hashes does not make a mismatched settlement valid (0.1234ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:494:51)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:498:3
+✖ manifest changes and response shape tricks fail without coercion (0.1132ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:299:10)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:499:44)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:85:1
+✖ the only successful path preserves raw response, binds usage and uses the fixed upstream without redirects (7.112ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:86:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:94:1
+✖ D unit passes only when present in the exact budget snapshot; original AB gateway rejects it before secret access (0.3733ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:95:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:109:1
+✖ paired04 units require exact current budget membership; old gateway cannot dispatch them (0.2618ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:110:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:123:1
+✖ credential is not read at gateway initialization or on rejected origins and routes (0.2376ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:124:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:131:1
+✖ browser cannot supply a model, endpoint, request body, usage or alternative budget book (0.229ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:132:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:136:1
+✖ missing credentials do not consume an allowance and are never reflected (0.2266ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:137:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:140:1
+✖ reserved request cannot be duplicated by a second gateway or service restart (0.9215ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:141:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:145:1
+✖ concurrent browser and runner cannot dispatch the same logical request twice (0.2204ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:147:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:161:3
+✖ HTTP failure stops dispatch, retains the full reserve and returns only a safe code (0.207ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:162:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:161:3
+✖ redirect stops dispatch, retains the full reserve and returns only a safe code (0.1713ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:162:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:161:3
+✖ wrong content type stops dispatch, retains the full reserve and returns only a safe code (0.1212ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:162:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:161:3
+✖ response size exceeded stops dispatch, retains the full reserve and returns only a safe code (0.1212ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:162:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:161:3
+✖ credential echo stops dispatch, retains the full reserve and returns only a safe code (0.1385ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:162:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:161:3
+✖ usage missing stops dispatch, retains the full reserve and returns only a safe code (0.1339ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:162:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:161:3
+✖ model drift stops dispatch, retains the full reserve and returns only a safe code (0.107ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:162:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:168:1
+✖ timeout aborts once; late completion cannot settle or append a second response (0.1713ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:170:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:176:1
+✖ raw-result storage failure cannot release money or silently claim success (0.1552ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:177:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic DNS: classified without error text and unknown reserve survives reopening (0.1795ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic connect timeout: classified without error text and unknown reserve survives reopening (0.1043ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic TLS: classified without error text and unknown reserve survives reopening (0.0988ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic connection reset: classified without error text and unknown reserve survives reopening (0.1222ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic unknown code: classified without error text and unknown reserve survives reopening (0.1327ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic HTTP 401: classified without error text and unknown reserve survives reopening (0.1139ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic HTTP 502: classified without error text and unknown reserve survives reopening (0.2456ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic content type: classified without error text and unknown reserve survives reopening (0.1341ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic body timeout: classified without error text and unknown reserve survives reopening (0.1375ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic oversize: classified without error text and unknown reserve survives reopening (0.1252ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic UTF8: classified without error text and unknown reserve survives reopening (0.092ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic JSON: classified without error text and unknown reserve survives reopening (0.0882ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic reflection: classified without error text and unknown reserve survives reopening (0.0939ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic raw store: classified without error text and unknown reserve survives reopening (0.1146ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:198:3
+✖ safe diagnostic settlement: classified without error text and unknown reserve survives reopening (0.136ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:199:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:212:1
+✖ diagnostic normal and missing-configuration controls do not alter raw success or consume a missing-key reservation (0.1775ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:213:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:222:1
+✖ diagnostic uses descriptors not error getters, and never exports arbitrary error properties (0.1659ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:224:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:229:1
+✖ local deadline diagnostic remains distinct from transport timeout and late headers cannot rewrite it (0.1523ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:230:28)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:238:1
+✖ uncertainty persistence failure is visible without releasing or retrying the reserved call (0.1445ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:239:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:246:1
+✖ frozen request object cannot be swapped after gateway creation (0.1283ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:247:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:250:1
+✖ unapproved parameters and non-text content fail before any gateway can be created (0.5745ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:253:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:267:3
+✖ JSON escaped output value cannot reach recording, response or settlement (0.1765ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:268:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:267:3
+✖ JSON escaped object key cannot reach recording, response or settlement (0.0893ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:268:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:267:3
+✖ nested model JSON value cannot reach recording, response or settlement (0.0841ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:268:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:267:3
+✖ nested model JSON key cannot reach recording, response or settlement (0.0805ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:268:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:267:3
+✖ twice nested model JSON cannot reach recording, response or settlement (0.108ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:268:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:267:3
+✖ discarded duplicate JSON property cannot reach recording, response or settlement (0.088ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:268:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:282:1
+✖ normal escaped Chinese and nested JSON retain exact raw bytes and can be recorded and settled (0.1909ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(parent&&resolve(parent)===parent)
+  
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:68:56)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:284:67)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

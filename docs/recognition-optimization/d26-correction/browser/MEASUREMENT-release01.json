@@ -1,0 +1,234 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "reports": [
+    {
+      "draftId": "source:3040673a:draft:1",
+      "report": {
+        "version": "ordinary-source-measurement-d26-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semantic": {
+          "version": "d22-semantic-active-input-1",
+          "role": "ENGINEERING_REPLAY",
+          "condition": "assisted",
+          "semanticFields": [
+            "task:draft-item:source:3040673a:draft:1:save:deadline",
+            "task:draft-item:source:3040673a:draft:1:save:title"
+          ],
+          "semanticFieldCount": 2,
+          "storageLeafFields": [
+            "task:draft-item:source:3040673a:draft:1:save:title",
+            "task:draft-item:source:3040673a:draft:1:save:deadline"
+          ],
+          "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+          "correctDisposition": "NOT_ADJUDICATED",
+          "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+          "activeEditMs": 5426,
+          "wallMs": 35470,
+          "readMs": 26242,
+          "waitMs": 29,
+          "hiddenMs": 0,
+          "idleMs": 3773,
+          "structural": false,
+          "missing": [],
+          "legacyMeasurement32": {
+            "version": "low-edit-v2-exploratory-1",
+            "role": "ENGINEERING_REPLAY",
+            "correctDisposition": null,
+            "zeroSubstantiveModification": null,
+            "lowModificationCorrectDisposition": null,
+            "committedFields": [
+              "task:draft-item:source:3040673a:draft:1:save:title",
+              "task:draft-item:source:3040673a:draft:1:save:deadline"
+            ],
+            "fieldCount": 2,
+            "structural": false,
+            "activeEditMs": 5426,
+            "readMs": 26242,
+            "waitMs": 29,
+            "hiddenMs": 0,
+            "idleMs": 3773,
+            "missing": [],
+            "postTerminalEvents": 0,
+            "humanMetrics": "NOT_OBSERVABLE"
+          },
+          "humanMetrics": "NOT_OBSERVABLE",
+          "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+        },
+        "linkage": {
+          "version": "d21-review-session-measurement-2",
+          "role": "ENGINEERING_REPLAY",
+          "checkpointStageCount": 2,
+          "unconfirmedFieldKeys": [],
+          "conflictFieldKeys": [],
+          "pageEditIds": [
+            "5cdc34fe-d726-44a1-9b30-8e16a5051115",
+            "da0a00d9-06d2-47da-9d6a-dae331d96ba3"
+          ],
+          "verifiedCommitIds": [
+            "source-review:source:3040673a:draft:1:fnv1a32:64fc8f95"
+          ],
+          "unverifiedCommitIds": [],
+          "checkpointToEditId": [
+            {
+              "field": "task:draft-item:source:3040673a:draft:1:save:title",
+              "editId": "5cdc34fe-d726-44a1-9b30-8e16a5051115",
+              "checkpointHistoryId": "9a3d0750-3dcf-4202-9d5d-6b9025362ee3",
+              "commitId": "source-review:source:3040673a:draft:1:fnv1a32:64fc8f95",
+              "readbackVerified": true
+            },
+            {
+              "field": "task:draft-item:source:3040673a:draft:1:save:deadline",
+              "editId": "da0a00d9-06d2-47da-9d6a-dae331d96ba3",
+              "checkpointHistoryId": "730544ed-7f36-4b8f-8163-a27be2832624",
+              "commitId": "source-review:source:3040673a:draft:1:fnv1a32:64fc8f95",
+              "readbackVerified": true
+            }
+          ],
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "correctionCheckpointLinks": [
+          {
+            "editId": "5cdc34fe-d726-44a1-9b30-8e16a5051115",
+            "field": "task:draft-item:source:3040673a:draft:1:save:title",
+            "checkpointOperationId": "9a3d0750-3dcf-4202-9d5d-6b9025362ee3",
+            "checkpointRevision": "7db89600-15d2-4ef0-95b9-0db619e78f84",
+            "commits": [
+              {
+                "commitId": "source-review:source:3040673a:draft:1:fnv1a32:64fc8f95",
+                "operationIds": [
+                  "source-review:source:3040673a:draft:1:fnv1a32:64fc8f95"
+                ],
+                "readbackIds": [
+                  "6bea33ed-8820-4865-8015-e5f202005330"
+                ]
+              }
+            ]
+          },
+          {
+            "editId": "da0a00d9-06d2-47da-9d6a-dae331d96ba3",
+            "field": "task:draft-item:source:3040673a:draft:1:save:deadline",
+            "checkpointOperationId": "730544ed-7f36-4b8f-8163-a27be2832624",
+            "checkpointRevision": "5353a1a2-0103-4b58-b536-f4c3f24cf001",
+            "commits": [
+              {
+                "commitId": "source-review:source:3040673a:draft:1:fnv1a32:64fc8f95",
+                "operationIds": [
+                  "source-review:source:3040673a:draft:1:fnv1a32:64fc8f95"
+                ],
+                "readbackIds": [
+                  "6bea33ed-8820-4865-8015-e5f202005330"
+                ]
+              }
+            ]
+          }
+        ],
+        "inputEpisodeCount": 2,
+        "committedCorrectionFields": [
+          "task:draft-item:source:3040673a:draft:1:save:deadline",
+          "task:draft-item:source:3040673a:draft:1:save:title"
+        ],
+        "countingRule": "连续输入及失败后手动重试保留同一editId；按已提交语义字段去重。回改原值保留编辑成本，只有形成已保存差异才记纠正字段；多次已保存纠正另保留全部提交审计。",
+        "uncommittedEditIds": [],
+        "manualInitialEntry": "NOT_APPLICABLE",
+        "assistedCorrection": {
+          "inputEpisodeCount": 2,
+          "fields": [
+            "task:draft-item:source:3040673a:draft:1:save:deadline",
+            "task:draft-item:source:3040673a:draft:1:save:title"
+          ]
+        },
+        "outcomes": {
+          "complete": true,
+          "partial": false,
+          "failureEvents": 0
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "humanTrial": "NOT_RUN",
+        "sourceRole": "ENGINEERING_REPLAY",
+        "correctionGrouping": "date leaf fields share one date episode; event addition is structural; no semantic correctness inferred from saving"
+      }
+    }
+  ],
+  "trace": [
+    {
+      "id": "e6b361e0-430a-4973-8c5f-bca170e20fdf",
+      "draftId": "source:3040673a:draft:1",
+      "atMs": 1790935832217,
+      "kind": "begin"
+    },
+    {
+      "id": "1fe4bd15-5c06-4e4a-90f1-4d2f35738389",
+      "draftId": "source:3040673a:draft:1",
+      "atMs": 1790935832219,
+      "kind": "read"
+    },
+    {
+      "id": "c9ec4992-1d16-4e36-b3aa-b023c9e16dd5",
+      "draftId": "source:3040673a:draft:1",
+      "atMs": 1790935858435,
+      "kind": "edit",
+      "fieldKey": "task:draft-item:source:3040673a:draft:1:save:title",
+      "editId": "5cdc34fe-d726-44a1-9b30-8e16a5051115"
+    },
+    {
+      "id": "6fcce2d1-2231-490b-9a41-d42282602603",
+      "draftId": "source:3040673a:draft:1",
+      "atMs": 1790935858861,
+      "kind": "edit",
+      "fieldKey": "task:draft-item:source:3040673a:draft:1:save:deadline",
+      "editId": "da0a00d9-06d2-47da-9d6a-dae331d96ba3"
+    },
+    {
+      "id": "ff80d16d-6c3a-4274-9906-2bb96821af72",
+      "draftId": "source:3040673a:draft:1",
+      "atMs": 1790935867634,
+      "kind": "wait"
+    },
+    {
+      "id": "cb2d68a1-4f4e-45dd-a5bf-35aef8ec5048",
+      "draftId": "source:3040673a:draft:1",
+      "atMs": 1790935867661,
+      "kind": "commit",
+      "commitId": "source-review:source:3040673a:draft:1:fnv1a32:64fc8f95",
+      "disposition": "confirmed",
+      "includedEditIds": [
+        "5cdc34fe-d726-44a1-9b30-8e16a5051115",
+        "da0a00d9-06d2-47da-9d6a-dae331d96ba3"
+      ],
+      "includedOperationIds": [
+        "source-review:source:3040673a:draft:1:fnv1a32:64fc8f95"
+      ],
+      "fields": [
+        "task:draft-item:source:3040673a:draft:1:save:title",
+        "task:draft-item:source:3040673a:draft:1:save:deadline"
+      ],
+      "semanticFields": [
+        "task:draft-item:source:3040673a:draft:1:save:title",
+        "task:draft-item:source:3040673a:draft:1:save:deadline"
+      ],
+      "structural": false
+    },
+    {
+      "id": "463baa9a-b924-40a8-87c4-3438415a711d",
+      "draftId": "source:3040673a:draft:1",
+      "atMs": 1790935867663,
+      "kind": "wait_end"
+    },
+    {
+      "id": "6bea33ed-8820-4865-8015-e5f202005330",
+      "draftId": "source:3040673a:draft:1",
+      "atMs": 1790935867665,
+      "kind": "readback",
+      "commitId": "source-review:source:3040673a:draft:1:fnv1a32:64fc8f95"
+    },
+    {
+      "id": "c59f48b4-427e-4668-82d7-7cb083780d07",
+      "draftId": "source:3040673a:draft:1",
+      "atMs": 1790935867687,
+      "kind": "end",
+      "disposition": "confirmed",
+      "commitId": "source-review:source:3040673a:draft:1:fnv1a32:64fc8f95"
+    }
+  ]
+}

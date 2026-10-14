@@ -1,0 +1,153 @@
+{
+  "version": "d24-planned-coverage-1",
+  "measurementVersion": "d23-semantic-measurement-1",
+  "role": "ENGINEERING_REPLAY",
+  "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+  "planned": 16,
+  "started": 8,
+  "firstCoverage": {
+    "plannedIndependentSources": 8,
+    "plannedExposures": 8,
+    "startedExposures": 4,
+    "openedExposures": 4,
+    "openedIndependentSources": 4,
+    "confirmedCorrect": 0,
+    "confirmedIncorrect": 0,
+    "unknown": 8,
+    "sources": [
+      {
+        "materialId": "C17-D16-S01",
+        "sourceSha256": "2bfbae1b2b062526fad9d64f73764d71b74aa852d33925d22c4209452c70f845",
+        "stimulusSha256": "dbba9885dc868b0e65a6586b561af2485801b081d0ff375ef4f025e7128d0a0c",
+        "plannedExposures": 1,
+        "startedExposures": 1,
+        "openedExposures": 1,
+        "first": "unknown",
+        "unopenedExposures": 0
+      },
+      {
+        "materialId": "C17-D16-S02",
+        "sourceSha256": "91618a256c8d2164f54ff274636ef5c790e5d3990d99ee7e2520ddc115fa1bdf",
+        "stimulusSha256": "45b6477598761938c10e44f20b5c16d4997b201ed46794c3fad35899b68c7a7d",
+        "plannedExposures": 1,
+        "startedExposures": 1,
+        "openedExposures": 1,
+        "first": "unknown",
+        "unopenedExposures": 0
+      },
+      {
+        "materialId": "C17-D16-S04",
+        "sourceSha256": "9225590c3aa495e23dea327641798bcfae451f83adc430d2a9b122f206e2a29d",
+        "stimulusSha256": "fc0666b26a2956cc476985e7ca1c19304989045153f03bf3e5f9eebecbec9fb5",
+        "plannedExposures": 1,
+        "startedExposures": 0,
+        "openedExposures": 0,
+        "first": "unknown",
+        "unopenedExposures": 1
+      },
+      {
+        "materialId": "C17-D16-S05",
+        "sourceSha256": "504b08c986a35f6ca62513accc7e03dfe37e0eaec916629923b971a238854a22",
+        "stimulusSha256": "378c6e6cec6e22ae44c1070f8c887f0adf6fb8371960e7837fe16903e7df916f",
+        "plannedExposures": 1,
+        "startedExposures": 0,
+        "openedExposures": 0,
+        "first": "unknown",
+        "unopenedExposures": 1
+      },
+      {
+        "materialId": "C17-D16-S06",
+        "sourceSha256": "56403e58158ef21ca640cd4e3efccf411339e832e9f495dbce908e09c1201b30",
+        "stimulusSha256": "4b3844e396253ccca568a747bc13ba432fbcf940688b7c133417d59b75c62823",
+        "plannedExposures": 1,
+        "startedExposures": 0,
+        "openedExposures": 0,
+        "first": "unknown",
+        "unopenedExposures": 1
+      },
+      {
+        "materialId": "C17-D16-S07",
+        "sourceSha256": "f0e9fe97d0afebfca848d9ffcc51166ec2f7a7735fe9150d3814607eb116b39d",
+        "stimulusSha256": "7046d52de22285ae09c1a3ca6bef67b12244ff1973bbf104a7456858df2924cd",
+        "plannedExposures": 1,
+        "startedExposures": 1,
+        "openedExposures": 1,
+        "first": "unknown",
+        "unopenedExposures": 0
+      },
+      {
+        "materialId": "C17-D16-S09",
+        "sourceSha256": "51d5c32e81720af258bee0f9627a8fe2a79bc674fd350ba28c8c82075d3abeaf",
+        "stimulusSha256": "2b4e1b2c861af8d7ce243fe2e5a0eddc26a1dd91fb85c45da042ca0c1d28f6bd",
+        "plannedExposures": 1,
+        "startedExposures": 1,
+        "openedExposures": 1,
+        "first": "unknown",
+        "unopenedExposures": 0
+      },
+      {
+        "materialId": "C17-D16-S11",
+        "sourceSha256": "9c1de9a067b3f7f1728e0ab8989925785ec1b949c501142ff093a7baeb64ac8f",
+        "stimulusSha256": "bd0e18d8817c00fda9d5d530d2507075642dfa99ffdcc22db1ee0087eb15a211",
+        "plannedExposures": 1,
+        "startedExposures": 0,
+        "openedExposures": 0,
+        "first": "unknown",
+        "unopenedExposures": 1
+      }
+    ]
+  },
+  "firstSuggestionQuality": "NOT_OBSERVABLE",
+  "byCondition": [
+    {
+      "condition": "manual",
+      "planned": 8,
+      "notStarted": 4,
+      "started": 4,
+      "completed": 0,
+      "partial": 0,
+      "exited": 3,
+      "timeout": 1,
+      "activeOrPaused": 0,
+      "candidateComplete": 0,
+      "adjudicated": 0,
+      "unresolved": 4,
+      "auxiliaryOpened": "NOT_APPLICABLE",
+      "auxiliaryUnopened": "NOT_APPLICABLE",
+      "correctDisposition": "NOT_OBSERVABLE",
+      "lowEdit": "NOT_APPLICABLE",
+      "time": {
+        "completeN": 4,
+        "missingN": 0,
+        "dispositionWallMedianMs": 271,
+        "completeActiveEditMedianMs": 0
+      }
+    },
+    {
+      "condition": "assisted",
+      "planned": 8,
+      "notStarted": 4,
+      "started": 4,
+      "completed": 4,
+      "partial": 0,
+      "exited": 0,
+      "timeout": 0,
+      "activeOrPaused": 0,
+      "candidateComplete": 4,
+      "adjudicated": 0,
+      "unresolved": 4,
+      "auxiliaryOpened": 4,
+      "auxiliaryUnopened": 4,
+      "correctDisposition": "NOT_OBSERVABLE",
+      "lowEdit": "NOT_OBSERVABLE",
+      "time": {
+        "completeN": 4,
+        "missingN": 0,
+        "dispositionWallMedianMs": 70113.5,
+        "completeActiveEditMedianMs": 364
+      }
+    }
+  ],
+  "realHumanMetrics": "NOT_OBSERVABLE",
+  "modelCalls": 0
+}

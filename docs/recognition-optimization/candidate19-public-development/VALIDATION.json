@@ -1,0 +1,460 @@
+{
+  "phases": {
+    "lint": {
+      "phase": "lint",
+      "timezone": "Asia/Shanghai",
+      "envDir": false,
+      "rootEnvRead": false,
+      "modelCalls": 0,
+      "ledgerWrites": 0,
+      "outcome": "PASS",
+      "results": [
+        {
+          "layer": "lint",
+          "label": "lint",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\lint\\Asia-Shanghai\\lint.log"
+        }
+      ]
+    },
+    "test": {
+      "phase": "test",
+      "timezone": "Asia/Shanghai",
+      "envDir": false,
+      "rootEnvRead": false,
+      "modelCalls": 0,
+      "ledgerWrites": 0,
+      "outcome": "FAIL",
+      "results": [
+        {
+          "layer": "current-product",
+          "label": "timezone",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\timezone.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "contract",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\contract.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "time-contract",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\time-contract.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "vitest-product",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-product.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "server",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\server.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "worker",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\worker.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "worker-d26",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\worker-d26.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "functions",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\functions.log"
+        },
+        {
+          "layer": "current-product",
+          "label": "time-parity",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\time-parity.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "vitest-safety",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-safety.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "vitest-runtime-current",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-runtime-current.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "carrier-preparation",
+          "status": 0,
+          "outcome": "PASS",
+          "manifest": "C:\\Users\\Winner\\AppData\\Local\\Temp\\c11-engineering-carriers-3352c9a6-9026-424f-aca9-3d48c1ec6501\\carriers.json"
+        },
+        {
+          "layer": "current-safety",
+          "label": "vitest-carriers",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-carriers.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "current-checks",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\current-checks.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "governance-unit",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\governance-unit.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "multimodal-lib",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\multimodal-lib.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "c11-scoring",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\c11-scoring.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "c11-preview",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\c11-preview.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d25-executor",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d25-executor.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d25-mechanism",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d25-mechanism.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-mechanism",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-mechanism.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-executor",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-executor.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-freeze",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-freeze.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-score-recording",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-score-recording.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-execution-host",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-execution-host.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-execution-report",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-execution-report.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d26-recorded-projection",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d26-recorded-projection.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "scoped-execution",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\scoped-execution.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "candidate19-contract",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\candidate19-contract.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "public-notice-diagnostic",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\public-notice-diagnostic.log"
+        },
+        {
+          "layer": "current-safety",
+          "label": "d25-live-safety",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d25-live-safety.log"
+        },
+        {
+          "layer": "historical",
+          "label": "historical-originals",
+          "status": 0,
+          "outcome": "PASS",
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\historical-originals.json",
+          "ledgerRead": false
+        },
+        {
+          "layer": "historical",
+          "label": "d19-diagnostic",
+          "status": 1,
+          "outcome": "FAIL",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d19-diagnostic.log"
+        },
+        {
+          "layer": "historical",
+          "label": "d9-historical",
+          "status": 1,
+          "outcome": "FAIL",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d9-historical.log"
+        },
+        {
+          "layer": "historical",
+          "label": "rco-5-007",
+          "status": 1,
+          "outcome": "FAIL",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\rco-5-007.log"
+        },
+        {
+          "layer": "historical",
+          "label": "c11-history",
+          "status": 1,
+          "outcome": "FAIL",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\c11-history.log"
+        },
+        {
+          "layer": "historical",
+          "label": "c11-gateway",
+          "status": 1,
+          "outcome": "FAIL",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\c11-gateway.log"
+        },
+        {
+          "layer": "historical",
+          "label": "vitest-d17-history",
+          "status": 1,
+          "outcome": "FAIL",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-d17-history.log"
+        },
+        {
+          "layer": "historical",
+          "label": "vitest-runtime-history",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-runtime-history.log"
+        },
+        {
+          "layer": "historical",
+          "label": "vitest-carriers-history",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-carriers-history.log"
+        }
+      ]
+    },
+    "build": {
+      "phase": "build",
+      "timezone": "Asia/Shanghai",
+      "envDir": false,
+      "rootEnvRead": false,
+      "modelCalls": 0,
+      "ledgerWrites": 0,
+      "outcome": "PASS",
+      "results": [
+        {
+          "layer": "build",
+          "label": "typecheck",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\build\\Asia-Shanghai\\typecheck.log"
+        },
+        {
+          "layer": "build",
+          "label": "build",
+          "status": 0,
+          "outcome": "PASS",
+          "rootEnvRead": false
+        }
+      ]
+    },
+    "security": {
+      "phase": "security",
+      "timezone": "Asia/Shanghai",
+      "envDir": false,
+      "rootEnvRead": false,
+      "modelCalls": 0,
+      "ledgerWrites": 0,
+      "outcome": "PASS",
+      "results": [
+        {
+          "layer": "security",
+          "label": "security",
+          "status": 0,
+          "outcome": "PASS",
+          "error": null,
+          "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\security\\Asia-Shanghai\\security.log"
+        }
+      ]
+    }
+  },
+  "failures": [
+    {
+      "label": "d19-diagnostic",
+      "reason": [
+        "  Error: D17_SCORE_LEDGER_DRIFT"
+      ]
+    },
+    {
+      "label": "d9-historical",
+      "reason": [
+        "  Error: D9_GUARD_FILE_DRIFT_scripts/serve-candidate15-d8.mjs"
+      ]
+    },
+    {
+      "label": "rco-5-007",
+      "reason": [
+        "  Error: FREEZE_HASH_MISMATCH:package-lock.json"
+      ]
+    },
+    {
+      "label": "c11-history",
+      "reason": [
+        "  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md"
+      ]
+    },
+    {
+      "label": "c11-gateway",
+      "reason": [
+        "  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md",
+        "  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md"
+      ]
+    },
+    {
+      "label": "vitest-d17-history",
+      "reason": [
+        "     → D17_SCORE_LEDGER_DRIFT",
+        "     → D17_SCORE_LEDGER_DRIFT"
+      ]
+    }
+  ],
+  "audit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 2,
+    "high": 5,
+    "critical": 0,
+    "total": 7
+  },
+  "productionAudit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "sourceHashes": {
+    "candidate19": "e6b15e069b53371c507fadb087b2330280ad1874b6488a7dfec28f70145f1b16",
+    "lock": "330350e448c1cd29c6c7869c7a978142d95ba84aa12658a9c9bcacdcf763bbe3"
+  },
+  "gitDiffCheck": "",
+  "limits": "Full test 34/40 passed, six historical failures. Tool scorer duplicate-record check added afterwards and its four directed Node tests passed again."
+}

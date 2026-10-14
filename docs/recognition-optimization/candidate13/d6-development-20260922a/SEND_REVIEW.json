@@ -1,0 +1,39 @@
+{
+  "version": "candidate13-d6-send-review-1",
+  "status": "PASS",
+  "authorizationSha256": "c167b0f58acee16d58a067ded2dd6e479c9e0620032df1c4ae67728bbf2f5bc9",
+  "grantId": "7bcbd608-ba1b-4121-be2f-49c23d8d7029",
+  "head": "69b5943f3480b9a10c57b27ee6d1c9fbb20b3bb1",
+  "d5ManifestSha256": "2acd34fce52396a3be17b70fee28e4fe1f3d11bec796e97c672249406c453f53",
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "billingSha256": "7349a864afe46db574d2f5ea6c011918738e50c8597f90283fe38310d0e274ad",
+  "dependenciesSha256": "eafc03968d0e1b098c14e75160e9a79bb092ce186ca71780a2996492efab733b",
+  "d5Check": {
+    "status": "CANDIDATE13_V4_DEVELOPMENT_READY_FOR_NEW_AUTHORIZATION",
+    "sources": 12,
+    "references": 12,
+    "requests": 24,
+    "modelCalls": 0,
+    "dispatchAuthorized": false,
+    "manifestSha256": "2acd34fce52396a3be17b70fee28e4fe1f3d11bec796e97c672249406c453f53",
+    "ledger": {
+      "path": "C:/Users/Winner/student-affairs-multimodal-exp/docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+      "rows": 742,
+      "bytes": 631869,
+      "sha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+      "tail": "6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922",
+      "writerOpened": false
+    },
+    "protectedFiles": 84
+  },
+  "protectedFiles": 84,
+  "checkedAt": "2026-09-22T05:19:26.319Z",
+  "constraints": {
+    "calls": 24,
+    "repair": 0,
+    "verifier": 0,
+    "retry": 0,
+    "hardLimitUsd": 1,
+    "exactWorstUsd": 0.35158
+  }
+}

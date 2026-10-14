@@ -1,0 +1,2011 @@
+{
+  "schemaVersion": 8,
+  "workspace": {
+    "id": "rco-mainline-01-02-i1-d27-plan-final04",
+    "title": "MAINLINE-01 人工工程响应（非模型预测）",
+    "createdAt": "2026-09-05T08:00:00.000Z",
+    "updatedAt": "2026-10-02T14:36:53.878Z"
+  },
+  "settings": {
+    "defaultTimezone": "Asia/Shanghai",
+    "locale": "zh-CN"
+  },
+  "sources": [
+    {
+      "id": "source:ebc2fa44",
+      "workspaceId": "rco-mainline-01-02-i1-d27-plan-final04",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "confirmed",
+      "currentVersionId": "source:ebc2fa44:version:1",
+      "createdAt": "2026-10-02T14:36:53.825Z",
+      "updatedAt": "2026-10-02T14:37:33.082Z",
+      "legacyData": {
+        "contentPreview": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 136,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "4435310a-4ad5-450e-a743-bc01006623ac"
+      }
+    }
+  ],
+  "sourceVersions": [
+    {
+      "id": "source:ebc2fa44:version:1",
+      "sourceId": "source:ebc2fa44",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:b8f9acf5",
+      "rawText": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-02T14:36:53.825Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 136,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    }
+  ],
+  "recognitionRuns": [
+    {
+      "id": "source:ebc2fa44:run:1",
+      "sourceVersionId": "source:ebc2fa44:version:1",
+      "provider": "manual",
+      "modelName": "anonymous-offline-engineering-input",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "d26-ordinary-engineering-fake-transport",
+      "status": "succeeded",
+      "startedAt": "2026-10-02T14:36:53.857Z",
+      "completedAt": "2026-10-02T14:36:53.861Z",
+      "durationMs": 4,
+      "tokenUsage": null,
+      "qualityFlags": [
+        "MAINLINE-01 人工工程响应（非模型预测）"
+      ],
+      "errorCode": null,
+      "legacyData": {
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "anonymous-plan-fixture-d27-1",
+          "modelName": "D27 匿名手写工程回答（非模型输出）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "设备登记与说明会",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+            "requiresAction": true,
+            "actionReason": "请保存活动手册。没有截止日期要求。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "tempId": "fill",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "填写设备登记表",
+              "actionVerb": "填写",
+              "actionObject": "设备登记表",
+              "description": "保存活动手册",
+              "completionCriteria": [],
+              "estimatedMinutes": 25,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "form"
+              ],
+              "timePointTempIds": [
+                "deadline"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            },
+            {
+              "tempId": "submit",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交设备登记表",
+              "actionVerb": "提交",
+              "actionObject": "设备登记表",
+              "description": "保存活动手册",
+              "completionCriteria": [],
+              "estimatedMinutes": 20,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "fill"
+              ],
+              "materialTempIds": [
+                "form"
+              ],
+              "timePointTempIds": [
+                "deadline"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            },
+            {
+              "tempId": "save",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存活动手册",
+              "actionVerb": "保存",
+              "actionObject": "活动手册",
+              "description": "保存活动手册",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "form",
+              "name": "设备登记表",
+              "required": true,
+              "formatRequirements": [
+                "PDF"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "fill",
+                "submit"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "stop-time",
+              "type": "event_start",
+              "rawText": "周三晚",
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "brief-start",
+              "type": "event_start",
+              "rawText": "2026年10月6日10:00",
+              "normalizedValue": "2026-10-06T10:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "brief-end",
+              "type": "event_end",
+              "rawText": "11:00",
+              "normalizedValue": "2026-10-06T11:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "deadline",
+              "type": "task_deadline",
+              "rawText": "2026年10月6日16:00前",
+              "normalizedValue": "2026-10-06T16:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "fill",
+                "submit"
+              ],
+              "relatedMaterialTempIds": [
+                "form"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            }
+          ],
+          "events": [
+            {
+              "tempId": "stop",
+              "title": "预约平台将在周三晚停机",
+              "description": "",
+              "location": null,
+              "startTimePointTempId": "stop-time",
+              "endTimePointTempId": null,
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "tempId": "briefing",
+              "title": "资料说明会",
+              "description": "",
+              "location": "资料室",
+              "startTimePointTempId": "brief-start",
+              "endTimePointTempId": "brief-end",
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:ebc2fa44",
+              "textStart": 0,
+              "textEnd": 136,
+              "quote": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+              "quotedText": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "extractionDrafts": [
+    {
+      "id": "source:ebc2fa44:draft:1",
+      "recognitionRunId": "source:ebc2fa44:run:1",
+      "status": "confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "anonymous-plan-fixture-d27-1",
+        "modelName": "D27 匿名手写工程回答（非模型输出）",
+        "createdAt": "2026-09-05T08:00:00.000Z",
+        "sourceSummary": {
+          "title": "填写设备登记表",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "3项任务，2项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "请保存活动手册。没有截止日期要求。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "tempId": "fill",
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "填写设备登记表",
+            "actionVerb": "填写",
+            "actionObject": "设备登记表",
+            "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+            "completionCriteria": [],
+            "estimatedMinutes": 25,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [
+              "form"
+            ],
+            "timePointTempIds": [
+              "deadline"
+            ],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "userConfirmationRequired": true,
+            "selected": true
+          },
+          {
+            "tempId": "submit",
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "提交设备登记表",
+            "actionVerb": "提交",
+            "actionObject": "设备登记表",
+            "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+            "completionCriteria": [],
+            "estimatedMinutes": 20,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [
+              "fill"
+            ],
+            "materialTempIds": [
+              "form"
+            ],
+            "timePointTempIds": [
+              "deadline"
+            ],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "userConfirmationRequired": true,
+            "selected": true
+          },
+          {
+            "tempId": "save",
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "保存活动手册",
+            "actionVerb": "保存",
+            "actionObject": "活动手册",
+            "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "userConfirmationRequired": true,
+            "selected": true
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "form",
+            "name": "设备登记表",
+            "required": true,
+            "formatRequirements": [
+              "PDF"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "fill",
+              "submit"
+            ],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "stop-time",
+            "type": "event_start",
+            "rawText": "周三晚",
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          },
+          {
+            "tempId": "brief-start",
+            "type": "event_start",
+            "rawText": "2026年10月6日10:00",
+            "normalizedValue": "2026-10-06T10:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          },
+          {
+            "tempId": "brief-end",
+            "type": "event_end",
+            "rawText": "11:00",
+            "normalizedValue": "2026-10-06T11:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          },
+          {
+            "tempId": "deadline",
+            "type": "task_deadline",
+            "rawText": "2026年10月6日16:00前",
+            "normalizedValue": "2026-10-06T16:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "relatedTaskTempIds": [
+              "fill",
+              "submit"
+            ],
+            "relatedMaterialTempIds": [
+              "form"
+            ],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          }
+        ],
+        "events": [
+          {
+            "tempId": "stop",
+            "title": "预约平台将在周三晚停机",
+            "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+            "location": null,
+            "startTimePointTempId": "stop-time",
+            "endTimePointTempId": null,
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "selected": true
+          },
+          {
+            "tempId": "briefing",
+            "title": "资料说明会",
+            "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+            "location": "资料室",
+            "startTimePointTempId": "brief-start",
+            "endTimePointTempId": "brief-end",
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "notice",
+            "sourceId": "source:ebc2fa44",
+            "textStart": 0,
+            "textEnd": 136,
+            "quote": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+            "quotedText": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+            "field": "description",
+            "extractionMethod": "manual",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:ebc2fa44:draft:1:fnv1a32:9ed19bf2"
+      ],
+      "acceptedEntityTempIds": [
+        "brief-end",
+        "brief-start",
+        "briefing",
+        "deadline",
+        "fill",
+        "form",
+        "save",
+        "stop",
+        "stop-time",
+        "submit"
+      ],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-02T14:36:53.825Z",
+      "updatedAt": "2026-10-02T14:37:33.082Z",
+      "legacyData": {
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "anonymous-plan-fixture-d27-1",
+          "modelName": "D27 匿名手写工程回答（非模型输出）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "填写设备登记表",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "3项任务，2项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "请保存活动手册。没有截止日期要求。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "tempId": "fill",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "填写设备登记表",
+              "actionVerb": "填写",
+              "actionObject": "设备登记表",
+              "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+              "completionCriteria": [],
+              "estimatedMinutes": 25,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "form"
+              ],
+              "timePointTempIds": [
+                "deadline"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            },
+            {
+              "tempId": "submit",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交设备登记表",
+              "actionVerb": "提交",
+              "actionObject": "设备登记表",
+              "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+              "completionCriteria": [],
+              "estimatedMinutes": 20,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "fill"
+              ],
+              "materialTempIds": [
+                "form"
+              ],
+              "timePointTempIds": [
+                "deadline"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            },
+            {
+              "tempId": "save",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存活动手册",
+              "actionVerb": "保存",
+              "actionObject": "活动手册",
+              "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            }
+          ],
+          "materials": [
+            {
+              "tempId": "form",
+              "name": "设备登记表",
+              "required": true,
+              "formatRequirements": [
+                "PDF"
+              ],
+              "namingRequirements": [],
+              "quantity": null,
+              "submissionChannel": null,
+              "relatedTaskTempIds": [
+                "fill",
+                "submit"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            }
+          ],
+          "timePoints": [
+            {
+              "tempId": "stop-time",
+              "type": "event_start",
+              "rawText": "周三晚",
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "brief-start",
+              "type": "event_start",
+              "rawText": "2026年10月6日10:00",
+              "normalizedValue": "2026-10-06T10:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "brief-end",
+              "type": "event_end",
+              "rawText": "11:00",
+              "normalizedValue": "2026-10-06T11:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "deadline",
+              "type": "task_deadline",
+              "rawText": "2026年10月6日16:00前",
+              "normalizedValue": "2026-10-06T16:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [
+                "fill",
+                "submit"
+              ],
+              "relatedMaterialTempIds": [
+                "form"
+              ],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            }
+          ],
+          "events": [
+            {
+              "tempId": "stop",
+              "title": "预约平台将在周三晚停机",
+              "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+              "location": null,
+              "startTimePointTempId": "stop-time",
+              "endTimePointTempId": null,
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "tempId": "briefing",
+              "title": "资料说明会",
+              "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+              "location": "资料室",
+              "startTimePointTempId": "brief-start",
+              "endTimePointTempId": "brief-end",
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:ebc2fa44",
+              "textStart": 0,
+              "textEnd": 136,
+              "quote": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+              "quotedText": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "fill",
+              "kind": "task",
+              "title": "填写设备登记表",
+              "description": "保存活动手册"
+            },
+            {
+              "entityId": "submit",
+              "kind": "task",
+              "title": "提交设备登记表",
+              "description": "保存活动手册"
+            },
+            {
+              "entityId": "save",
+              "kind": "task",
+              "title": "保存活动手册",
+              "description": "保存活动手册"
+            },
+            {
+              "entityId": "stop",
+              "kind": "event",
+              "title": "预约平台将在周三晚停机",
+              "description": ""
+            },
+            {
+              "entityId": "briefing",
+              "kind": "event",
+              "title": "资料说明会",
+              "description": ""
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "设备登记与说明会",
+              "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "fill",
+              "kind": "task",
+              "title": "填写设备登记表",
+              "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。"
+            },
+            {
+              "entityId": "submit",
+              "kind": "task",
+              "title": "提交设备登记表",
+              "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。"
+            },
+            {
+              "entityId": "save",
+              "kind": "task",
+              "title": "保存活动手册",
+              "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。"
+            },
+            {
+              "entityId": "stop",
+              "kind": "event",
+              "title": "预约平台将在周三晚停机",
+              "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。"
+            },
+            {
+              "entityId": "briefing",
+              "kind": "event",
+              "title": "资料说明会",
+              "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "填写设备登记表",
+              "description": "3项任务，2项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "stop-time",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "周三晚",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 3
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "晚",
+                "certainty": "partial",
+                "sourceContext": "预约平台将在周三晚停机"
+              }
+            },
+            {
+              "entityId": "brief-start",
+              "before": {
+                "normalizedValue": "2026-10-06T10:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-10-06T10:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年10月6日10:00",
+                  "type": "event_start",
+                  "normalizedValue": "2026-10-06T10:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 15
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-10-06",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "资料说明会在2026年10月6日10:00开始"
+              }
+            },
+            {
+              "entityId": "brief-end",
+              "before": {
+                "normalizedValue": "2026-10-06T11:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-10-06T11:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "11:00",
+                  "type": "event_end",
+                  "normalizedValue": "2026-10-06T11:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 5
+                  },
+                  "dateKind": "inherited",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-10-06",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "资料说明会在2026年10月6日10:00开始\n11:00结束"
+              }
+            },
+            {
+              "entityId": "deadline",
+              "before": {
+                "normalizedValue": "2026-10-06T16:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-10-06T16:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年10月6日16:00前",
+                  "type": "task_deadline",
+                  "normalizedValue": "2026-10-06T16:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 16
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-10-06",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "请于2026年10月6日16:00前填写设备登记表"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:ebc2fa44:draft:1",
+          "sourceId": "source:ebc2fa44",
+          "sourceVersionId": "source:ebc2fa44:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 136,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-02T14:36:53.825Z",
+          "updatedAt": "2026-10-02T14:36:53.861Z",
+          "schemaVersion": "2.0",
+          "modelName": "D27 匿名手写工程回答（非模型输出）",
+          "promptVersion": "anonymous-plan-fixture-d27-1",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "anonymous-plan-fixture-d27-1",
+            "modelName": "D27 匿名手写工程回答（非模型输出）",
+            "createdAt": "2026-09-05T08:00:00.000Z",
+            "sourceSummary": {
+              "title": "填写设备登记表",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "3项任务，2项事件。请核对后确认。",
+              "requiresAction": true,
+              "actionReason": "请保存活动手册。没有截止日期要求。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [
+              {
+                "tempId": "fill",
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "填写设备登记表",
+                "actionVerb": "填写",
+                "actionObject": "设备登记表",
+                "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+                "completionCriteria": [],
+                "estimatedMinutes": 25,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [
+                  "form"
+                ],
+                "timePointTempIds": [
+                  "deadline"
+                ],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "userConfirmationRequired": true,
+                "selected": true
+              },
+              {
+                "tempId": "submit",
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "提交设备登记表",
+                "actionVerb": "提交",
+                "actionObject": "设备登记表",
+                "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+                "completionCriteria": [],
+                "estimatedMinutes": 20,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [
+                  "fill"
+                ],
+                "materialTempIds": [
+                  "form"
+                ],
+                "timePointTempIds": [
+                  "deadline"
+                ],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "userConfirmationRequired": true,
+                "selected": true
+              },
+              {
+                "tempId": "save",
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "保存活动手册",
+                "actionVerb": "保存",
+                "actionObject": "活动手册",
+                "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [],
+                "timePointTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "userConfirmationRequired": true,
+                "selected": true
+              }
+            ],
+            "materials": [
+              {
+                "tempId": "form",
+                "name": "设备登记表",
+                "required": true,
+                "formatRequirements": [
+                  "PDF"
+                ],
+                "namingRequirements": [],
+                "quantity": null,
+                "submissionChannel": null,
+                "relatedTaskTempIds": [
+                  "fill",
+                  "submit"
+                ],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              }
+            ],
+            "timePoints": [
+              {
+                "tempId": "stop-time",
+                "type": "event_start",
+                "rawText": "周三晚",
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              },
+              {
+                "tempId": "brief-start",
+                "type": "event_start",
+                "rawText": "2026年10月6日10:00",
+                "normalizedValue": "2026-10-06T10:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              },
+              {
+                "tempId": "brief-end",
+                "type": "event_end",
+                "rawText": "11:00",
+                "normalizedValue": "2026-10-06T11:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              },
+              {
+                "tempId": "deadline",
+                "type": "task_deadline",
+                "rawText": "2026年10月6日16:00前",
+                "normalizedValue": "2026-10-06T16:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [
+                  "fill",
+                  "submit"
+                ],
+                "relatedMaterialTempIds": [
+                  "form"
+                ],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              }
+            ],
+            "events": [
+              {
+                "tempId": "stop",
+                "title": "预约平台将在周三晚停机",
+                "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+                "location": null,
+                "startTimePointTempId": "stop-time",
+                "endTimePointTempId": null,
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "selected": true
+              },
+              {
+                "tempId": "briefing",
+                "title": "资料说明会",
+                "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+                "location": "资料室",
+                "startTimePointTempId": "brief-start",
+                "endTimePointTempId": "brief-end",
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "notice",
+                "sourceId": "source:ebc2fa44",
+                "textStart": 0,
+                "textEnd": 136,
+                "quote": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+                "quotedText": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+                "field": "description",
+                "extractionMethod": "manual",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": true,
+              "reviewReasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            }
+          },
+          "items": [
+            {
+              "id": "draft-item:source:ebc2fa44:draft:1:fill",
+              "suggestion": {
+                "id": "fill",
+                "title": "填写设备登记表",
+                "category": "其他",
+                "deadline": "2026-10-06T16:00",
+                "estimatedMinutes": 25,
+                "nextAction": "填写设备登记表",
+                "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+                "priority": "中",
+                "materials": [
+                  "设备登记表"
+                ],
+                "evidence": "2026年10月6日16:00前",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T14:36:53.861Z",
+              "history": []
+            },
+            {
+              "id": "draft-item:source:ebc2fa44:draft:1:submit",
+              "suggestion": {
+                "id": "submit",
+                "title": "提交设备登记表",
+                "category": "其他",
+                "deadline": "2026-10-06T16:00",
+                "estimatedMinutes": 20,
+                "nextAction": "提交设备登记表",
+                "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+                "priority": "中",
+                "materials": [
+                  "设备登记表"
+                ],
+                "evidence": "2026年10月6日16:00前",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T14:36:53.861Z",
+              "history": []
+            },
+            {
+              "id": "draft-item:source:ebc2fa44:draft:1:save",
+              "suggestion": {
+                "id": "save",
+                "title": "保存活动手册",
+                "category": "其他",
+                "deadline": "",
+                "estimatedMinutes": 30,
+                "nextAction": "保存活动手册",
+                "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+                "priority": "中",
+                "materials": [],
+                "evidence": "3项任务，2项事件。请核对后确认。",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T14:36:53.861Z",
+              "history": []
+            }
+          ],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:ebc2fa44:draft:1",
+          "commitId": "source-review:source:ebc2fa44:draft:1:fnv1a32:9ed19bf2",
+          "disposition": "confirmed",
+          "entityIds": [
+            "task:source:ebc2fa44:draft:1:fill",
+            "task:source:ebc2fa44:draft:1:submit",
+            "task:source:ebc2fa44:draft:1:save",
+            "event:source:ebc2fa44:draft:1:stop",
+            "event:source:ebc2fa44:draft:1:briefing",
+            "time:source:ebc2fa44:draft:1:stop-time",
+            "time:source:ebc2fa44:draft:1:brief-start",
+            "time:source:ebc2fa44:draft:1:brief-end",
+            "time:source:ebc2fa44:draft:1:deadline",
+            "material:source:ebc2fa44:draft:1:form"
+          ],
+          "entityHashes": {
+            "task:source:ebc2fa44:draft:1:fill": "fnv1a32:4454ea4e",
+            "task:source:ebc2fa44:draft:1:submit": "fnv1a32:793b5885",
+            "task:source:ebc2fa44:draft:1:save": "fnv1a32:3345cb19",
+            "event:source:ebc2fa44:draft:1:stop": "fnv1a32:99d28a40",
+            "event:source:ebc2fa44:draft:1:briefing": "fnv1a32:ceb19f8e",
+            "time:source:ebc2fa44:draft:1:stop-time": "fnv1a32:b7a4481f",
+            "time:source:ebc2fa44:draft:1:brief-start": "fnv1a32:3e00d12f",
+            "time:source:ebc2fa44:draft:1:brief-end": "fnv1a32:eb021e5e",
+            "time:source:ebc2fa44:draft:1:deadline": "fnv1a32:20eb1aa1",
+            "material:source:ebc2fa44:draft:1:form": "fnv1a32:ea32043f"
+          },
+          "verifiedAt": "2026-10-02T14:37:33.114Z"
+        }
+      }
+    }
+  ],
+  "projects": [],
+  "milestones": [],
+  "workPackages": [],
+  "tasks": [
+    {
+      "id": "task:source:ebc2fa44:draft:1:fill",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "填写设备登记表",
+      "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+      "nextAction": "填写设备登记表",
+      "status": "todo",
+      "estimatedMinutes": 25,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-02T14:37:33.070Z",
+      "updatedAt": "2026-10-02T14:37:33.070Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "fill",
+        "actionVerb": "填写",
+        "actionObject": "设备登记表",
+        "completionCriteria": [],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "notice"
+        ],
+        "sourceId": "source:ebc2fa44",
+        "category": "其他"
+      }
+    },
+    {
+      "id": "task:source:ebc2fa44:draft:1:submit",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "提交设备登记表",
+      "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+      "nextAction": "提交设备登记表",
+      "status": "todo",
+      "estimatedMinutes": 20,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [
+        "task:source:ebc2fa44:draft:1:fill"
+      ],
+      "createdAt": "2026-10-02T14:37:33.070Z",
+      "updatedAt": "2026-10-02T14:37:33.070Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "submit",
+        "actionVerb": "提交",
+        "actionObject": "设备登记表",
+        "completionCriteria": [],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "notice"
+        ],
+        "sourceId": "source:ebc2fa44",
+        "category": "其他"
+      }
+    },
+    {
+      "id": "task:source:ebc2fa44:draft:1:save",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "保存活动手册",
+      "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+      "nextAction": "保存活动手册",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-02T14:37:33.070Z",
+      "updatedAt": "2026-10-02T14:37:33.070Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "save",
+        "actionVerb": "保存",
+        "actionObject": "活动手册",
+        "completionCriteria": [],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "notice"
+        ],
+        "sourceId": "source:ebc2fa44",
+        "category": "其他"
+      }
+    }
+  ],
+  "materials": [
+    {
+      "id": "material:source:ebc2fa44:draft:1:form",
+      "projectId": null,
+      "name": "设备登记表",
+      "required": true,
+      "status": "unverified",
+      "requirements": [],
+      "formatRequirements": [
+        "PDF"
+      ],
+      "namingRequirements": [],
+      "quantity": null,
+      "submissionChannel": null,
+      "relatedTaskIds": [
+        "task:source:ebc2fa44:draft:1:fill",
+        "task:source:ebc2fa44:draft:1:submit"
+      ],
+      "deadlineTimePointId": "time:source:ebc2fa44:draft:1:deadline",
+      "createdAt": "2026-10-02T14:37:33.070Z",
+      "updatedAt": "2026-10-02T14:37:33.070Z",
+      "version": 1,
+      "legacyData": {
+        "recognitionTempId": "form",
+        "evidenceIds": [
+          "notice"
+        ],
+        "availabilityVersion": "ordinary-availability-unobserved-1",
+        "availabilityOrigin": "not_observed",
+        "sourceReviewDraftId": "source:ebc2fa44:draft:1"
+      }
+    }
+  ],
+  "timePoints": [
+    {
+      "id": "time:source:ebc2fa44:draft:1:stop-time",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:ebc2fa44:draft:1:stop",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "周三晚",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-02T14:37:33.070Z",
+      "updatedAt": "2026-10-02T14:37:33.070Z",
+      "legacyData": {
+        "recognitionTempId": "stop-time",
+        "evidenceIds": [
+          "notice"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:ebc2fa44:draft:1:brief-start",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:ebc2fa44:draft:1:briefing",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年10月6日10:00",
+      "normalizedValue": "2026-10-06T10:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-02T14:37:33.070Z",
+      "updatedAt": "2026-10-02T14:37:33.070Z",
+      "legacyData": {
+        "recognitionTempId": "brief-start",
+        "evidenceIds": [
+          "notice"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:ebc2fa44:draft:1:brief-end",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:ebc2fa44:draft:1:briefing",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "11:00",
+      "normalizedValue": "2026-10-06T11:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-02T14:37:33.070Z",
+      "updatedAt": "2026-10-02T14:37:33.070Z",
+      "legacyData": {
+        "recognitionTempId": "brief-end",
+        "evidenceIds": [
+          "notice"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:ebc2fa44:draft:1:deadline",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": "task:source:ebc2fa44:draft:1:fill",
+      "materialId": "material:source:ebc2fa44:draft:1:form",
+      "eventId": null,
+      "relatedTaskIds": [
+        "task:source:ebc2fa44:draft:1:fill",
+        "task:source:ebc2fa44:draft:1:submit"
+      ],
+      "relatedMaterialIds": [
+        "material:source:ebc2fa44:draft:1:form"
+      ],
+      "type": "task_deadline",
+      "rawText": "2026年10月6日16:00前",
+      "normalizedValue": "2026-10-06T16:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-02T14:37:33.070Z",
+      "updatedAt": "2026-10-02T14:37:33.070Z",
+      "legacyData": {
+        "recognitionTempId": "deadline",
+        "evidenceIds": [
+          "notice"
+        ],
+        "confidence": 1
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "event:source:ebc2fa44:draft:1:stop",
+      "projectId": null,
+      "title": "预约平台将在周三晚停机",
+      "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+      "startTimePointId": "time:source:ebc2fa44:draft:1:stop-time",
+      "endTimePointId": null,
+      "location": null,
+      "createdAt": "2026-10-02T14:37:33.070Z",
+      "updatedAt": "2026-10-02T14:37:33.070Z",
+      "legacyData": {
+        "recognitionTempId": "stop",
+        "evidenceIds": [
+          "notice"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    },
+    {
+      "id": "event:source:ebc2fa44:draft:1:briefing",
+      "projectId": null,
+      "title": "资料说明会",
+      "description": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+      "startTimePointId": "time:source:ebc2fa44:draft:1:brief-start",
+      "endTimePointId": "time:source:ebc2fa44:draft:1:brief-end",
+      "location": "资料室",
+      "createdAt": "2026-10-02T14:37:33.070Z",
+      "updatedAt": "2026-10-02T14:37:33.070Z",
+      "legacyData": {
+        "recognitionTempId": "briefing",
+        "evidenceIds": [
+          "notice"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    }
+  ],
+  "evidenceRefs": [
+    {
+      "id": "evidence:source:ebc2fa44:draft:1:notice",
+      "sourceVersionId": "source:ebc2fa44:version:1",
+      "page": null,
+      "textStart": 0,
+      "textEnd": 136,
+      "quotedText": "请于2026年10月6日16:00前填写设备登记表，预计25分钟，PDF格式。填完后提交设备登记表，预计20分钟。请保存活动手册，未规定截止和耗时。资料说明会在2026年10月6日10:00开始，11:00结束，地点为资料室。预约平台将在周三晚停机，具体日期和时刻未公布。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "manual",
+      "confidence": 1,
+      "createdAt": "2026-10-02T14:37:33.070Z",
+      "legacyData": {
+        "recognitionEvidenceId": "notice"
+      }
+    }
+  ],
+  "changeProposals": [],
+  "historyRecords": [
+    {
+      "id": "history:task:source:ebc2fa44:draft:1:fill:created",
+      "entityType": "task",
+      "entityId": "task:source:ebc2fa44:draft:1:fill",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:ebc2fa44:draft:1:fill"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:ebc2fa44:version:1",
+      "changedAt": "2026-10-02T14:37:33.070Z"
+    },
+    {
+      "id": "history:task:source:ebc2fa44:draft:1:submit:created",
+      "entityType": "task",
+      "entityId": "task:source:ebc2fa44:draft:1:submit",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:ebc2fa44:draft:1:submit"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:ebc2fa44:version:1",
+      "changedAt": "2026-10-02T14:37:33.070Z"
+    },
+    {
+      "id": "history:task:source:ebc2fa44:draft:1:save:created",
+      "entityType": "task",
+      "entityId": "task:source:ebc2fa44:draft:1:save",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:ebc2fa44:draft:1:save"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:ebc2fa44:version:1",
+      "changedAt": "2026-10-02T14:37:33.070Z"
+    },
+    {
+      "id": "history:material:source:ebc2fa44:draft:1:form:created",
+      "entityType": "material",
+      "entityId": "material:source:ebc2fa44:draft:1:form",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "material:source:ebc2fa44:draft:1:form"
+      },
+      "actor": "user",
+      "reason": "用户确认识别材料",
+      "sourceVersionId": "source:ebc2fa44:version:1",
+      "changedAt": "2026-10-02T14:37:33.070Z"
+    },
+    {
+      "id": "history:time:source:ebc2fa44:draft:1:stop-time:created",
+      "entityType": "time_point",
+      "entityId": "time:source:ebc2fa44:draft:1:stop-time",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:ebc2fa44:draft:1:stop-time"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:ebc2fa44:version:1",
+      "changedAt": "2026-10-02T14:37:33.070Z"
+    },
+    {
+      "id": "history:time:source:ebc2fa44:draft:1:brief-start:created",
+      "entityType": "time_point",
+      "entityId": "time:source:ebc2fa44:draft:1:brief-start",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:ebc2fa44:draft:1:brief-start"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:ebc2fa44:version:1",
+      "changedAt": "2026-10-02T14:37:33.070Z"
+    },
+    {
+      "id": "history:time:source:ebc2fa44:draft:1:brief-end:created",
+      "entityType": "time_point",
+      "entityId": "time:source:ebc2fa44:draft:1:brief-end",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:ebc2fa44:draft:1:brief-end"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:ebc2fa44:version:1",
+      "changedAt": "2026-10-02T14:37:33.070Z"
+    },
+    {
+      "id": "history:time:source:ebc2fa44:draft:1:deadline:created",
+      "entityType": "time_point",
+      "entityId": "time:source:ebc2fa44:draft:1:deadline",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:ebc2fa44:draft:1:deadline"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:ebc2fa44:version:1",
+      "changedAt": "2026-10-02T14:37:33.070Z"
+    },
+    {
+      "id": "history:event:source:ebc2fa44:draft:1:stop:created",
+      "entityType": "event",
+      "entityId": "event:source:ebc2fa44:draft:1:stop",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:ebc2fa44:draft:1:stop"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:ebc2fa44:version:1",
+      "changedAt": "2026-10-02T14:37:33.070Z"
+    },
+    {
+      "id": "history:event:source:ebc2fa44:draft:1:briefing:created",
+      "entityType": "event",
+      "entityId": "event:source:ebc2fa44:draft:1:briefing",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:ebc2fa44:draft:1:briefing"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:ebc2fa44:version:1",
+      "changedAt": "2026-10-02T14:37:33.070Z"
+    }
+  ],
+  "reminderRecords": [],
+  "preferences": {
+    "onboardingCompletedAt": null,
+    "legacyData": {
+      "courseBlocks": [],
+      "integrations": {
+        "sync": {
+          "endpoint": "http://127.0.0.1:8787"
+        },
+        "webMonitors": [],
+        "connectionIntents": []
+      },
+      "knowledgeSettings": {},
+      "recognitionFeedback": [],
+      "v7MigrationLog": [],
+      "v7LegacyData": {}
+    }
+  },
+  "migrationMetadata": [],
+  "savedAt": "2026-10-02T14:37:33.082Z"
+}

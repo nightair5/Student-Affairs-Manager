@@ -1,0 +1,36 @@
+{
+  "codeHead": "0b8a6e4534e0ed8ffe220e9bce9193fcc691d2bd",
+  "fullSuite": {
+    "command": "npm run test",
+    "exitCode": 1,
+    "log": "full-test.log",
+    "groupSummary": "test.json",
+    "passedGroups": 11,
+    "historicalFailedGroups": 4,
+    "vitestPassedFiles": 157,
+    "vitestPassedTests": 1573,
+    "vitestSkippedTests": 1
+  },
+  "targeted": {
+    "command": "npx vitest run src/experiments/candidate16/d24Product.test.ts src/experiments/mainline05/semanticView.test.ts src/experiments/realInput01/factCorrections.test.ts",
+    "exitCode": 0,
+    "passed": 38,
+    "evidence": "execution tool output; full suite also includes these files"
+  },
+  "lint": {
+    "command": "npm run lint",
+    "exitCode": 0,
+    "errors": 0,
+    "existingWarnings": 8,
+    "log": "lint.log"
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "evidence": "execution tool output; final generated build manifests and isolation receipts",
+    "retainedWarning": "Vite chunk larger than 500 kB"
+  },
+  "role": "ENGINEERING_REPLAY",
+  "humanTrials": 0,
+  "modelCalls": 0
+}

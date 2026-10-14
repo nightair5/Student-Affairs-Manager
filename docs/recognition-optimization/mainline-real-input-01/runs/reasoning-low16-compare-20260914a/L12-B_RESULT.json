@@ -1,0 +1,656 @@
+{
+  "version": "real-input-reasoning-low16-result-1",
+  "unitId": "L12-B",
+  "arm": "B",
+  "effort": "low",
+  "dispatchScope": "within-cumulative-cap",
+  "previousId": "W10",
+  "bindingSha": "1ace528d15cc06bdc279f82bb13cb98e6526e5c3eb203f2bc0fe242aec3a82a1",
+  "requestSha": "a2db22651cb0dabac8b748c17c2eb9480d699806d6d27c7801b2e878a4cc95b3",
+  "responseSha": "c833b468eff105c68cc7eb73a9d3c4407641b027c0f60568cc3fe02a3c633d9c",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "wireVersion": "real-input-model-wire-1",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "c1ac44081f93187295dc14c4f9109217ec019696c1a0eca35c7efc01cceebba7",
+  "scoreInput": "candidate03 final message adapted only after gateway identity and usage verification; provider reasoning and immutable raw retained separately",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "t-light-inventory",
+        "propositionScopeIds": [
+          "scope-0002",
+          "scope-0003",
+          "scope-0006",
+          "scope-0008"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0002",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0002",
+          "surface": "灯光盘点表"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交灯光盘点表",
+          "description": "器材管理员于2026年9月29日16:00前提交灯光盘点表；表格使用XLSX并附两张灯具现状照片。灯具现状照片只属于灯光盘点，不要交叉上传。",
+          "completionCriteria": [
+            "提交灯光盘点表",
+            "表格使用XLSX",
+            "附两张灯具现状照片"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "m-light-table",
+            "m-light-photos"
+          ],
+          "timePointTempIds": [
+            "tp-light-deadline",
+            "tp-photo-completed"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "present"
+        },
+        "eventTempIds": [
+          "e-light-photo-taken"
+        ]
+      },
+      {
+        "id": "t-audio-inventory",
+        "propositionScopeIds": [
+          "scope-0004",
+          "scope-0005",
+          "scope-0007",
+          "scope-0008"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0004",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0004",
+          "surface": "音响盘点表"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交音响盘点表",
+          "description": "音响管理员于2026年9月30日11:00前提交音响盘点表；表格使用PDF并附维修收据。维修收据只属于音响盘点，不要交叉上传。",
+          "completionCriteria": [
+            "提交音响盘点表",
+            "表格使用PDF",
+            "附维修收据"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "m-audio-table",
+            "m-audio-receipt"
+          ],
+          "timePointTempIds": [
+            "tp-audio-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "m-light-table",
+        "name": "灯光盘点表",
+        "required": true,
+        "formatRequirements": [
+          "XLSX"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "t-light-inventory"
+        ],
+        "scopeIds": [
+          "scope-0002",
+          "scope-0003"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "m-light-photos",
+        "name": "灯具现状照片",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": 2,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "t-light-inventory"
+        ],
+        "scopeIds": [
+          "scope-0003",
+          "scope-0006",
+          "scope-0008"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "m-audio-table",
+        "name": "音响盘点表",
+        "required": true,
+        "formatRequirements": [
+          "PDF"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "t-audio-inventory"
+        ],
+        "scopeIds": [
+          "scope-0004",
+          "scope-0005"
+        ],
+        "confidence": 0.95
+      },
+      {
+        "tempId": "m-audio-receipt",
+        "name": "维修收据",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "t-audio-inventory"
+        ],
+        "scopeIds": [
+          "scope-0005",
+          "scope-0007",
+          "scope-0008"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "tp-light-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年9月29日16:00前",
+        "relatedTaskTempIds": [
+          "t-light-inventory"
+        ],
+        "relatedMaterialTempIds": [
+          "m-light-table"
+        ],
+        "scopeIds": [
+          "scope-0002"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-29T16:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-audio-deadline",
+        "type": "submission_deadline",
+        "rawText": "2026年9月30日11:00前",
+        "relatedTaskTempIds": [
+          "t-audio-inventory"
+        ],
+        "relatedMaterialTempIds": [
+          "m-audio-table"
+        ],
+        "scopeIds": [
+          "scope-0004"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-30T11:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "tp-photo-completed",
+        "type": "event_end",
+        "rawText": "已经拍摄完成",
+        "relatedTaskTempIds": [
+          "t-light-inventory"
+        ],
+        "relatedMaterialTempIds": [
+          "m-light-photos"
+        ],
+        "scopeIds": [
+          "scope-0009"
+        ],
+        "confidence": 0.7,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [
+      {
+        "tempId": "e-light-photo-taken",
+        "title": "灯具现状照片拍摄完成",
+        "description": "两张灯具现状照片已经拍摄完成。",
+        "startTimePointTempId": null,
+        "endTimePointTempId": "tp-photo-completed",
+        "location": null,
+        "scopeIds": [
+          "scope-0009"
+        ],
+        "confidence": 0.9,
+        "inferenceLevel": "explicit",
+        "relatedTaskTempIds": [
+          "t-light-inventory"
+        ]
+      }
+    ],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001"
+    ],
+    "unresolvedScopeIds": [
+      "scope-0010"
+    ],
+    "sourceId": "source:9b10b1e1",
+    "sourceVersionId": "source:9b10b1e1:version:1",
+    "sourceFingerprint": "sha256:4ef34e855318b3cd96fe58948a0dca249200fc046e67602a928d51925f5347b7"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 47108,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 3,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 3,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 4,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "event": {
+        "predicted": 1,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 0,
+        "precision": 0,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 10,
+        "reference": 8,
+        "correct": 0,
+        "falsePositive": 10,
+        "falseNegative": 8,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 36,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 36,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 0,
+        "falsePositive": 4,
+        "falseNegative": 4,
+        "precision": 0,
+        "recall": 0
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "t-light-inventory"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "t-light-inventory"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "t-light-inventory"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "t-light-inventory"
+        ]
+      },
+      {
+        "code": "SURFACE_NOT_UNIQUE_IN_SCOPE",
+        "entityIds": [
+          "t-light-inventory"
+        ]
+      },
+      {
+        "code": "SURFACE_NOT_UNIQUE_IN_SCOPE",
+        "entityIds": [
+          "t-light-inventory"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "t-audio-inventory"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "t-audio-inventory"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "t-audio-inventory"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "t-audio-inventory"
+        ]
+      },
+      {
+        "code": "SURFACE_NOT_UNIQUE_IN_SCOPE",
+        "entityIds": [
+          "t-audio-inventory"
+        ]
+      },
+      {
+        "code": "SURFACE_NOT_UNIQUE_IN_SCOPE",
+        "entityIds": [
+          "t-audio-inventory"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "m-light-table"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "m-light-table"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "m-light-photos"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "m-light-photos"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "m-light-photos"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "m-audio-table"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "m-audio-table"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "m-audio-receipt"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "m-audio-receipt"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "m-audio-receipt"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "tp-light-deadline"
+        ]
+      },
+      {
+        "code": "TIME_EVIDENCE_UNRESOLVED",
+        "entityIds": [
+          "tp-light-deadline"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "tp-audio-deadline"
+        ]
+      },
+      {
+        "code": "TIME_EVIDENCE_UNRESOLVED",
+        "entityIds": [
+          "tp-audio-deadline"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "tp-photo-completed"
+        ]
+      },
+      {
+        "code": "TIME_EVIDENCE_UNRESOLVED",
+        "entityIds": [
+          "tp-photo-completed"
+        ]
+      },
+      {
+        "code": "TIME_NEEDS_REVIEW",
+        "entityIds": [
+          "tp-photo-completed"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          "e-light-photo-taken"
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          ""
+        ]
+      },
+      {
+        "code": "BAD_SCOPE",
+        "entityIds": [
+          ""
+        ]
+      },
+      {
+        "code": "UNACCOUNTED_SOURCE_SCOPE",
+        "entityIds": []
+      },
+      {
+        "code": "UNRESOLVED_SOURCE_SCOPE",
+        "entityIds": []
+      }
+    ],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 2,
+    "referenceTaskCount": 2
+  },
+  "scoreError": null,
+  "totalAttempts": 290,
+  "usage": {
+    "input_tokens": 4761,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 9836,
+    "output_tokens_details": {
+      "reasoning_tokens": 8504
+    },
+    "total_tokens": 14597
+  },
+  "reasoningTokens": 8504,
+  "costUpperMicroCny": 88210,
+  "totalCostUpperMicroCny": 13663183,
+  "semanticStatus": "completed",
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "temperatureEffect": "IGNORED_BY_PROVIDER_THINKING_MODE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；同模型、candidate03、正文与16384输出上限，仅reasoning effort不同；累计290次最多派发前12份"
+}

@@ -1,0 +1,222 @@
+{
+  "version": "candidate13-d6-run-manifest-1",
+  "status": "READY_FOR_EXACTLY_24_AUTHORIZED_CALLS",
+  "head": "69b5943f3480b9a10c57b27ee6d1c9fbb20b3bb1",
+  "d5ManifestSha256": "2acd34fce52396a3be17b70fee28e4fe1f3d11bec796e97c672249406c453f53",
+  "grantId": "7bcbd608-ba1b-4121-be2f-49c23d8d7029",
+  "bindingSha256": "3de1006c7e2c3d110138bc9ecb0f6bb8402808003acc0a630d0dc028da4cb4d0",
+  "units": [
+    {
+      "unitId": "D5R1-S01-A",
+      "ordinal": 1,
+      "unitIdentitySha256": "a91963dde6798c6982ea2ec28892bb9c6a99c12147a54e8c1688f27902e6d6ef",
+      "requestSha256": "08c71233ccfa45af30f82aa77728183d86c991553a2a7ba4c73f9962a8cd4f19",
+      "reservedMicroUsd": 14002,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S01-B",
+      "ordinal": 2,
+      "unitIdentitySha256": "8d0ef25adfada58cf184c44feb629f88c8d30560071280bf5958b70052f9fe22",
+      "requestSha256": "45c2251f15948277dfc3d820eaada5006cced9ee6063d75564dde08e39de4669",
+      "reservedMicroUsd": 15237,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S02-B",
+      "ordinal": 3,
+      "unitIdentitySha256": "140b399402d83159892e487574293ddd10d8119fac665ecc947bd870e0783d84",
+      "requestSha256": "1171f9237f490b0b5e93b56aaf0908e58f8997050513be702637cd00c33fae45",
+      "reservedMicroUsd": 15321,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S02-A",
+      "ordinal": 4,
+      "unitIdentitySha256": "b0e25e03b035b00b5a1a55cbd9c93c50b9948e8d55497a4778134c6fbcdabe47",
+      "requestSha256": "c0a2dcfa9b93e22a38b62e349db7eda6b1bb6eea7b58534dac8d3fef7091266a",
+      "reservedMicroUsd": 14086,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S03-A",
+      "ordinal": 5,
+      "unitIdentitySha256": "c316cbbfb989696f47dc74f9d36ad20ea8e98f1b401f3443adde6beefd2edc47",
+      "requestSha256": "4aaf3648a9d42d55638f3ebfa5778509f3673f094b89f0ecf0630bcca8478419",
+      "reservedMicroUsd": 13952,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S03-B",
+      "ordinal": 6,
+      "unitIdentitySha256": "097601abd98080ad20c8438b4d20dddbe91eebb52443978e8f974d69acbfa3f3",
+      "requestSha256": "36dd9bc975f79d1baf870cc086f14eb5361c248b04a4ae8f3d40bd39cfed16b5",
+      "reservedMicroUsd": 15188,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S04-B",
+      "ordinal": 7,
+      "unitIdentitySha256": "0d66d4ae309301574d9872bd1f495ec4cd8d3dd416ae7939b562e8a9eaf6007f",
+      "requestSha256": "ef1ae8a95fa2ec5371b9e12ad2444c079d5195b0aedccc4646bd8b18e4b16621",
+      "reservedMicroUsd": 15233,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S04-A",
+      "ordinal": 8,
+      "unitIdentitySha256": "dc89ac83a4c62f4135c11635d44e4e2aa802ed81736b878432a6e768a9cd14a3",
+      "requestSha256": "154c9b036decc72b3e4291ca1ac7a8e50913c656878f97bfcd9ddb4b55d9d6ac",
+      "reservedMicroUsd": 13998,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S05-A",
+      "ordinal": 9,
+      "unitIdentitySha256": "5a5ab4500fb98e721a41bb8098f2f98fac356b50533aa05eb576ffd5dd4c56ea",
+      "requestSha256": "e5a3d779ae48ddf708dc6ce9b201fc7c430d42c90952fdc7668b862d44d2ef8c",
+      "reservedMicroUsd": 14027,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S05-B",
+      "ordinal": 10,
+      "unitIdentitySha256": "319ced304cdb2b26dbb2aea261d5b0f7380cccef161753c19e25be4e9bbd8f53",
+      "requestSha256": "7e861b75af07598730b480e95381bc1cb1d05b375d045d1a94d320745bf2d845",
+      "reservedMicroUsd": 15262,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S06-B",
+      "ordinal": 11,
+      "unitIdentitySha256": "1a63960687b31e7a1f07dbecef059c3f2d50342c6c5ec1309cc5f733ae384e31",
+      "requestSha256": "9b563f8432eef1bcec55fea5d8250c123532c8a3f0cee2d8971d303142c1d821",
+      "reservedMicroUsd": 15272,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S06-A",
+      "ordinal": 12,
+      "unitIdentitySha256": "f249caa67340ddf7daef92d10adc86ff8f65eb011c5c3c5a3c412e91d4f4ca5e",
+      "requestSha256": "9f604ac913452dcbc598161464af5904ae7e225204be2a4a77842f1f65f8a60a",
+      "reservedMicroUsd": 14036,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S07-A",
+      "ordinal": 13,
+      "unitIdentitySha256": "0d2fbcd46a41cea9acf48c783a2e307db852836fdf3e98a4f29df134eaa9c054",
+      "requestSha256": "e3f0969bba1742997b42b683652883cbaec6ade5343ca576452783d74d4a1279",
+      "reservedMicroUsd": 13947,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S07-B",
+      "ordinal": 14,
+      "unitIdentitySha256": "629d0d44e65bf23633039a1a95ae3723d08838c4a88ca0dc24f784d29b73d860",
+      "requestSha256": "a69e2bed3e13099002fc1a6bbfe1de33b6dad01c575d006a66c04c1d5a3081a3",
+      "reservedMicroUsd": 15183,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S08-B",
+      "ordinal": 15,
+      "unitIdentitySha256": "c7cdebd732b582d786b0dce55500b0bf552b32128412989870eb5a33c303cc7e",
+      "requestSha256": "44f8accf3e19fe0bf9fe705dd15e6697ec994a2cf9834c76076b94d36b5df322",
+      "reservedMicroUsd": 15277,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S08-A",
+      "ordinal": 16,
+      "unitIdentitySha256": "35d4abaced11f22f7b307f71b50d59d00581d52ac32cc63b4b52e5b671fb1c39",
+      "requestSha256": "5c4ef3d0a8eb1135cd3fa72cbb2c410091483aa300147f8ae4cef4248b9f61ee",
+      "reservedMicroUsd": 14041,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S09-A",
+      "ordinal": 17,
+      "unitIdentitySha256": "3e4eee50b23e288abba9cffd09f7828f2c3dd809423205c24d9b0b94e33e99d3",
+      "requestSha256": "0fceaf92a47463369c64b16f6d4b567c59cc3901cbb4d7f878a7b82b89176765",
+      "reservedMicroUsd": 14076,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S09-B",
+      "ordinal": 18,
+      "unitIdentitySha256": "515e7d46fe4641088992b8503279e1f95b1d4a2807e05f838fcf07a704ad65ce",
+      "requestSha256": "2d14cbe84e1a7d8f598686540455e67d7d92a09137c61a1dabbb70e65fdb4e23",
+      "reservedMicroUsd": 15311,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S10-B",
+      "ordinal": 19,
+      "unitIdentitySha256": "d20aa86a86a92fb7a183b6fe9f52623f5ff8d6b63705f359eefc05e9cd649536",
+      "requestSha256": "fbe671de9c8de90684c5717d46f591a57bccb6a0c76b0ff71799af10773592bd",
+      "reservedMicroUsd": 15279,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S10-A",
+      "ordinal": 20,
+      "unitIdentitySha256": "d94a04016d86baed556e5abb1523f84806dba198db9f6574db38e2cc8ccda198",
+      "requestSha256": "d7875a3306e9d63317b1126ea77ba501d1a0e1d7639ea81b482a20a80f384760",
+      "reservedMicroUsd": 14043,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S11-A",
+      "ordinal": 21,
+      "unitIdentitySha256": "a3c53f3297e54011807d5e9e0ba9f36c67f1c5ded0bbb2035b822aafb088389e",
+      "requestSha256": "476dab5c2738431d7a2610886722bbc50f4d2aafbeabf80ae4988c6c2bf0cd60",
+      "reservedMicroUsd": 14179,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S11-B",
+      "ordinal": 22,
+      "unitIdentitySha256": "846e07d2a2649d5df6538806ee189fd993db6c0461ceaf313977dc797edb5792",
+      "requestSha256": "f935cf4278f621e592633c5a13b4b59ecf8f595f8fb89afec2a46e6fd69427e7",
+      "reservedMicroUsd": 15414,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S12-B",
+      "ordinal": 23,
+      "unitIdentitySha256": "ab63ad3bf24f9e8add8b4b53310125a1584fc5bce49e51fe8bf5beb418290871",
+      "requestSha256": "c64ae5588b12ce2b28202f8f1a53bdae44a336400211ff857961400cb2d1e640",
+      "reservedMicroUsd": 15226,
+      "status": "AUTHORIZED_NOT_SENT"
+    },
+    {
+      "unitId": "D5R1-S12-A",
+      "ordinal": 24,
+      "unitIdentitySha256": "8033774ce928ed7c9ef654560b739f0e98d503d5fb61f232ef01a5c7bfeb1f45",
+      "requestSha256": "82d5c34f692c893d700ba9e12b6c4285a4daf5f148a00b2a3c246efe00d475c1",
+      "reservedMicroUsd": 13990,
+      "status": "AUTHORIZED_NOT_SENT"
+    }
+  ],
+  "order": "6 AB / 6 BA, exact D5-R1 ordinal",
+  "selectionRule": [
+    "complete true over false",
+    "lower severe",
+    "lower forbidden",
+    "lower task FN",
+    "lower criticalMajor",
+    "lower major",
+    "lower task FP",
+    "otherwise tie"
+  ],
+  "retry": 0,
+  "repair": 0,
+  "verifier": 0,
+  "operations": {
+    "modelCalls": 0,
+    "reserves": 0,
+    "settlements": 0
+  },
+  "createdAt": "2026-09-22T05:19:26.326Z"
+}

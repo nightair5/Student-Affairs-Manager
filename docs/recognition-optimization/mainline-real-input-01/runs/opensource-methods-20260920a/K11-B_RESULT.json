@@ -1,0 +1,57 @@
+{
+  "version": "real-input-contrastive-result-1",
+  "unitId": "K11-B",
+  "sourceId": "OS11",
+  "arm": "B",
+  "armName": "candidate10-contrastive",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "requestSha": "1fb44a887351e29324f779042d40cc229534d1e6b0470e49f1167495d4044214",
+  "responseSha": "e1838efd2b4bd98cf2c7316e36b07f0b9678042d1fec0068377f64c45987a8bd",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-10",
+  "exampleVersion": "contrastive-evidence-examples-1",
+  "scorerSha": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+  "referenceSha": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-a5204c8084d254fa3b5bb62d98609f8f8b6e961ee588b7a732cc2fee07f382ad",
+      "scope-0002-112a997b24550c39174cab52dba9e319128a57f8c69ce9065bbc4bd0effe617d",
+      "scope-0003-5ec77f18e1737ac590c8a13f47ec227f55057aef4b79f240d5bb3d652c013a61",
+      "scope-0004-3d35f54965fa3cb0211a091ed7d2caea583e3dce798bb6122fecb65d1ae9fcdb"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "opensource-dev-OS11",
+    "sourceVersionId": "opensource-dev-OS11:1",
+    "sourceFingerprint": "sha256:785a8b58fb07a40f73be4ee26fee5b1e16dc4cd84168e470547d91304bb267b8"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 2905,
+  "parseError": null,
+  "totalAttempts": 312,
+  "usage": {
+    "input_tokens": 5155,
+    "input_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "output_tokens": 226,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5381
+  },
+  "costUpperMicroCny": 12118,
+  "totalCostUpperMicroCny": 14001735,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化"
+}

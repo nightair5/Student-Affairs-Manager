@@ -1,0 +1,108 @@
+{
+  "version": "real-input-reasoning-comparison-1",
+  "generatedAt": "2026-09-14T14:41:46+08:00",
+  "status": "INCOMPLETE_PROTOCOL_REJECTED",
+  "label": "已见材料开发回归；同模型、同candidate03、同正文和wire，仅reasoning.effort不同",
+  "plannedSources": 20,
+  "plannedRequests": 40,
+  "actualProviderRequests": 2,
+  "completedSettledRequests": 1,
+  "incompleteResponses": 1,
+  "notRunRequests": 38,
+  "pairedComparableSources": 0,
+  "arms": {
+    "A": {
+      "model": "deepseek-flash",
+      "reasoningEffort": "none",
+      "temperature": 0,
+      "temperatureEffect": "ACTIVE_NON_THINKING_MODE",
+      "completed": 1,
+      "failed": 0,
+      "notRun": 19
+    },
+    "B": {
+      "model": "deepseek-flash",
+      "reasoningEffort": "low",
+      "temperature": 0,
+      "temperatureEffect": "IGNORED_BY_PROVIDER_THINKING_MODE",
+      "completed": 0,
+      "failed": 1,
+      "notRun": 19
+    }
+  },
+  "firstPair": {
+    "sourceId": "Y01",
+    "previousId": "W01",
+    "none": {
+      "http": 200,
+      "status": "completed",
+      "waitingMs": 9698,
+      "inputTokens": 4777,
+      "cachedInputTokens": 4608,
+      "outputTokens": 2275,
+      "reasoningTokens": 0,
+      "costUpperMicroCny": 27754,
+      "schemaParsed": true,
+      "businessAdjudication": {
+        "substantiveCorrectionRequired": false,
+        "tasks": 2,
+        "taskFalsePositive": 0,
+        "taskFalseNegative": 0,
+        "timeFacts": 2,
+        "materialFacts": 3,
+        "note": "两项任务、各自截止时间和三项材料在业务含义上正确；严格评分的来源范围差异单列，不冒充业务错误。"
+      }
+    },
+    "low": {
+      "providerHttp": 200,
+      "localHttp": 502,
+      "providerStatus": "incomplete",
+      "incompleteReason": "max_output_tokens",
+      "waitingMs": 37323,
+      "inputTokensObservedInRaw": 4802,
+      "outputTokensObservedInRaw": 8192,
+      "reasoningTokensObservedInRaw": 6719,
+      "outputTypes": [
+        "reasoning",
+        "message"
+      ],
+      "settled": false,
+      "semanticScore": "NOT_RUN",
+      "reason": "最终答案不完整，按冻结规则拒绝结算和评分；推理项未被当作通知事实。"
+    }
+  },
+  "quality": {
+    "twentySourceBusinessComparison": "NOT_RUN",
+    "noSubstantiveCorrectionPer20": "NOT_AVAILABLE",
+    "errorCounts": "NOT_AVAILABLE",
+    "reviewableSources": "NOT_AVAILABLE",
+    "correctSavableTasks": "NOT_AVAILABLE",
+    "medianWaitMs": "NOT_REPORTED_N_EQUALS_2",
+    "p95WaitMs": "NOT_REPORTED_N_EQUALS_2",
+    "demonstratedReductionInUserEdits": 0,
+    "note": "没有完整配对结果，因此不能声称low减少了多余任务、材料错归属、条件误判或其他用户修改。"
+  },
+  "dispatchStop": {
+    "ledgerSequence": 511,
+    "code": "RESPONSE_OR_USAGE_INVALID",
+    "nextUnitRejectedLocally": "Y02-A",
+    "additionalNetworkRequestsAfterStop": 0,
+    "retry": 0
+  },
+  "cost": {
+    "batchSettledUpperCny": 0.027754,
+    "lowUnknownReservationCny": 3.3,
+    "batchAuthoritativeUpperCny": 3.327754,
+    "cumulativeAuthoritativeUpperCny": 13.887567,
+    "projectCapCny": 20,
+    "providerBilledCny": "NOT_OBSERVABLE",
+    "note": "low原始usage可读，但结算失败；账本按保护规则保留完整3.30元未知预留，不能用公开价格计算值替代实扣。"
+  },
+  "adoption": {
+    "decision": "DO_NOT_ADOPT_LOW_KEEP_NONE",
+    "reason": "low在首个正式同材料样例即触顶并缺失可靠最终答案，等待约为none的3.85倍，且没有任何可比较质量收益。",
+    "candidate03Changed": false,
+    "wireChanged": false,
+    "productionChanged": false
+  }
+}

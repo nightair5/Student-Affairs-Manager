@@ -1,0 +1,18 @@
+{
+  "version": "real-input-reasoning-max-implementation-snapshot-1",
+  "generatedAt": "2026-09-14T18:03:54+08:00",
+  "startingHead": "129dd1c53c142f45c069110dae42f21f0888a2f2",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "protectedCount": 944, "historicalEvidenceCount": 607,
+  "sources": [
+    {"path": "scripts/real-input-budget.mjs", "sha256": "e5604a6560ef5a71aeaa4d833192d4d606740bd5edd145d34690069802d838ca"},
+    {"path": "scripts/real-input-budget.node-test.mjs", "sha256": "f7db891063efe26eea7bb7a36875d03b46728603f8a6f0f87370e91ed4b2bb77"},
+    {"path": "scripts/real-input-model-gateway.mjs", "sha256": "23c1a48682b4fbf1f5447452de102ece73c7e484d932a169f8af1f021257d5cd"},
+    {"path": "scripts/real-input-model-gateway.node-test.mjs", "sha256": "05187cf250d73538d322da1eed54c5c52e646ae85c18917ac348895416925b20"},
+    {"path": "scripts/run-mainline-real-input-01.mjs", "sha256": "a06ddf2d80083cf836e5c5efc0d76fdbf01f5a1b2f6d421a07e0e989eff2801c"},
+    {"path": "src/experiments/realInput01/candidate03.ts", "sha256": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508", "unchanged": true},
+    {"path": "src/experiments/realInput01/modelWire.ts", "sha256": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2", "unchanged": true},
+    {"path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl", "sha256": "fcec75c16702ae90fb1749acf3602b49ba1d8be1caf4b27e1703b718b15a3734", "appendOnly": true}
+  ],
+  "behavior": {"newMaxPolicyExplicit": true, "outputTokenCeiling": 32768, "timeoutMs": 180000, "reasoningItemsUsedAsFacts": false, "incompleteAnswerReplayable": false, "reasoningTokensDoubleBilled": false, "candidate03Changed": false, "wireChanged": false, "formalRepositoryChanged": false, "previewChanged": false, "productionConfigChanged": false}
+}

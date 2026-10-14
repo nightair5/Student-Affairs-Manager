@@ -1,0 +1,37 @@
+✔ without new authorization no reserve/send/raw/settle (1.5295ms)
+✔ request/identity/price cap drift blocks before reserve (0.6228ms)
+✔ uncertain reserve preserves state and stops subsequent send (0.4102ms)
+✔ uncertain persist1 preserves state and stops subsequent send (0.284ms)
+✔ uncertain persist2 preserves state and stops subsequent send (0.2558ms)
+✔ uncertain send preserves state and stops subsequent send (0.3371ms)
+✔ uncertain raw preserves state and stops subsequent send (1.2189ms)
+✔ uncertain persist3 preserves state and stops subsequent send (0.3795ms)
+✔ uncertain settle preserves state and stops subsequent send (0.4395ms)
+✔ uncertain persist4 preserves state and stops subsequent send (0.318ms)
+✔ determinate HTTP/parse failure settles once, retains ordinal and conservative upper (0.3979ms)
+✔ resume is read-only, order and settled results cannot be repeated (0.2519ms)
+✔ actual filesystem cross-process lock rejects concurrent entry, remains after uncertainty (7.404ms)
+✔ HTTP/usage/cost must agree with immutable response, state and settlement (1.1852ms)
+✔ missing authorization cannot prepare grant or dispatch, before credential loading (156.7947ms)
+✔ fresh official price, fixed route/parameters and cap are mandatory (1.5287ms)
+✔ OS writer lock and hash CAS serialize concurrent append; stale prefix never mutates anonymous ledger (1090.8233ms)
+✔ 8 real schema->one-way assembly->common adapter->calibrated scorer positives and semantic negatives (0.7667ms)
+✔ no-task output must still provide its declared event; accounting does not fabricate omissions (4.8048ms)
+✔ single owner time inverse is derived once; wrong objects/edges stay wrong (2.6047ms)
+✔ conditional completion is not current evidence; valid affirmative completion is distinct (1.9406ms)
+✔ cycles, metadata scope leakage and unknown relations cannot gain whole-correct (1.2438ms)
+✔ same-source condition/fact evidence is still checked; legal ordering accepted (2.6399ms)
+✔ selector counts +1 improvement, target progress, mixed risk and missing denominator (0.4574ms)
+✔ risk comparison uses obligation identity, never generated task IDs or aggregate FP/FN booleans (2.4718ms)
+✔ 16 requests, 4AB/4BA, common parameters, distinct schemas explicitly registered, no answers in input (1.0922ms)
+✔ switching the missing obligation is a new per-source risk even at unchanged FN count (3.0217ms)
+✔ all unresolved coverage cannot manufacture first whole correctness (1.4586ms)
+✔ affirmative completion is accepted only with matching current proof; negation stays unproved (2.7804ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1389.4274

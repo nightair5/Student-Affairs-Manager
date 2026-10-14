@@ -1,0 +1,270 @@
+{
+  "version": "candidate16-d13-manifest-1",
+  "batch": "D13-C03-C16-DEVELOPMENT-R1",
+  "status": "ZERO_CALL_REVIEWABLE_BUDGET_NOT_AUTHORIZED",
+  "role": "FULLY_SEEN_SYNTHETIC_DEVELOPMENT",
+  "truthStatus": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "dispatchAuthorized": false,
+  "modelCalls": 0,
+  "actualRequestIdentities": [
+    "4d336fd8e326378d50e75542e83363187073a709e56e97cc4019dac028722f86",
+    "fc92ffab00bbd6a245e5ae10bf241be1c81f1d7e4d361b098cfbbe5938af5025",
+    "3e4c44b2d98a678e1571e53b4b51c245e309d4ba20914fbbbd4da90b8ea264a3",
+    "b7cc0ee08cff41eef1d8d876573b7bb03da30f651befdf858503e0323258c7c5",
+    "686a170a0890da8cb42c33117c86ce5562ac285a2beb033eff993362f3a02c46",
+    "614a0b0a1ce37686019dd89e71c4befdd2c911dcc01f66791be6a074bfb7d793",
+    "f00049c35685fcded44ab1f7b385f248ade58358b7522018c34eee3c2adf4c2e",
+    "62765be369a6e9507a6e37da773872ab3adb14c4b24ff6cdfd6335573dd4983f",
+    "d2bbff4d2038ece0c5428e8755424d3a1970cae9fd7ccae20400752792460cbd",
+    "dd295ed37305e34e502d3e11380b5cb3eed8235db5015e78ee649677ee02fe6e",
+    "3348012fb33294bfbe71e285a6b4427c6fd26c8224d51df5c856605c2f2e8a7c",
+    "5bfbd92c3025c7c9eaa5a66f077b73f9e7c6d5e66116f0e034216a61fcd474e3",
+    "5a5e84cde1a094045682eff828ee3dba50f31fec226b3d8eea07888ab97070ea",
+    "e0ba1a18134688c31ae94d0b98defc35bcfef258ce0d3f97b4c17ad9b2c8500e",
+    "c852bf8c221f2e0313393eddfd83b5f8224f1d81b3d37d077ce66eb22cb2f94d",
+    "74f6833aeffdc1106e545adf64a70c0616b5196bca17ce1bea0d43e01e4a99ad",
+    "b59e8466a135237251fdf438dcebf0a780d9b2952fe2b68137bfe6f3a9248b33",
+    "0dca3b6212225f460f75d5a6a5b307453aa0d9e39dcea5339c0f260b663753d5",
+    "bcf3a5ababf1743e4e2735c40e234f30898334b2d556b6ca8ff8693a170ac501",
+    "3f5e2cdfb57d4bd265060223007373ac2a2eddda5eb41b3695770032747ea8e4",
+    "e577b182a7267df0ca5e691c2d866b9848228883c1b1bc0e7e331fad0206a34d",
+    "d5949ed71026f38ffe4d5405abcc989b965df8768e7ef1d66358f4ff533e1d9e",
+    "0682c1ef0fb6a495d058a12752f1ab4122f9108f7394f4e40663556040898fc9",
+    "0b213f71178076a3c9143b86cd9260893720292ce62311fe30f01fd350bb35cf"
+  ],
+  "order": {
+    "AB": 6,
+    "BA": 6
+  },
+  "requestCount": 24,
+  "requestBytes": [
+    13903,
+    14006,
+    14286,
+    14183,
+    13738,
+    13841,
+    13992,
+    13889,
+    13986,
+    14089,
+    14121,
+    14018,
+    13720,
+    13823,
+    14137,
+    14034,
+    14149,
+    14252,
+    14143,
+    14040,
+    14493,
+    14596,
+    13968,
+    13865
+  ],
+  "tokenCount": "NOT_MEASURED_BYTES_ARE_NOT_TOKENS",
+  "artifacts": [
+    {
+      "path": "REFERENCES.json",
+      "sha256": "3f7d31b474c6dcb282f92bf32fb1b64186d3cb15289cdebb96516aefcc71844f"
+    },
+    {
+      "path": "SOURCES.json",
+      "sha256": "722fc37d5c0ae649eae1ee639c4c4eeec3320469cee212bf7295fdd4fafcd139"
+    },
+    {
+      "path": "LEGAL_WIRE_ORACLES.json",
+      "sha256": "cfd29b597f7c3bb8eff116fbe04d0593aba9fa059b5ea4cf696272e434fe0acf"
+    },
+    {
+      "path": "ROUNDTRIP_RESULTS.json",
+      "sha256": "1b0c486c2877b6813575b4178318d542b6f87f80d12af4cad5735dd62750b986"
+    },
+    {
+      "path": "PREPARED_REQUEST_IDENTITIES.json",
+      "sha256": "0a50d55fb8818cacf01319503df7d127fd1020adc1efcb726eb049ae59a5cbda"
+    },
+    {
+      "path": "POSTHOC_DIAGNOSTIC.json",
+      "sha256": "1b90c582f60a76b2bf663be38e4ffb3d9a9ae1095f469c3d94a27549f7a8e7e3"
+    }
+  ],
+  "components": [
+    {
+      "path": "docs/recognition-optimization/candidate16/d13-development/PRE_REGISTRATION.json",
+      "hashMode": "UTF8_LF",
+      "sha256": "5410543b4fb72896532e25ddce385f7fd58265d377a5857bdd33eb444754a560"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate16/d13-development/SEMANTIC_CONTRACT.md",
+      "hashMode": "UTF8_LF",
+      "sha256": "12f46683f777e7d0cc9e8c503733106ff82338d45ea69dc66c64283f8886c5d8"
+    },
+    {
+      "path": "scripts/candidate13-d6-budget.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "1cb3314c0c4894c593d8d7e47fd8a702e1e280838dba5dd01c85a6a967c9b11e"
+    },
+    {
+      "path": "scripts/candidate15-reference-contract.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "c2f0992afa5c9acae1862fcad5c4b6482d5bb84b66633d9f3ca388f1560284b7"
+    },
+    {
+      "path": "scripts/candidate16-d13-reference.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "ca95ff02cda3bb279d63a0c479748ad01e2d5096e9ba224901b8be8f71a8d647"
+    },
+    {
+      "path": "scripts/candidate16-d13-support.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "2d2f9e24b32f3181280c48cd902129e096cc42fc477e15f21f4822de5b10e0a6"
+    },
+    {
+      "path": "scripts/diagnose-recognition-d12.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "793999fdcc18965304a71656e0ba4bafd575f06f920433d4dfd450b395b94b5a"
+    },
+    {
+      "path": "scripts/prepare-candidate16-d13.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "19905e35cdbbb002ec26e1b985b23128c316e8e438f4c4b08417190d513f1654"
+    },
+    {
+      "path": "scripts/real-input-budget.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "a271dcbadc27aae6394a6dfbafbc5672d055e6ba93dd6fef519739d10244f692"
+    },
+    {
+      "path": "scripts/real-input-model-gateway.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "ffe34719be9299df0eb18133b3122964bb532e479b32816f9a8b53ffba507e29"
+    },
+    {
+      "path": "scripts/recognition-semantic-v7.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "cd32d48cb49535a6e97cde7dfd7740016425e95dba3329740136cac802403e62"
+    },
+    {
+      "path": "scripts/run-candidate15-d11.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "80968e02d54dbaa2adbbb2355612e2879043b16531a4afa4ce906dc0ecfa2430"
+    },
+    {
+      "path": "scripts/score-candidate15-contract.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "8175abb23d29e395be779389be1f18a24ef461c615d50d340fee596d74440afe"
+    },
+    {
+      "path": "scripts/score-candidate15-d11.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "5d84bf834f31db33246ed26b133cfe11d968a21b29db8c5112f65bbd97be1b18"
+    },
+    {
+      "path": "scripts/score-candidate15-diagnostic.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "8155c87c4c6734fb471388f63efef164ac4449a19b9f2044da5e82cddf52361d"
+    },
+    {
+      "path": "scripts/verify-governance-protection.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "d2f761854be42717950aa2eb371191e24593b8b9d38a99fc441d9edc8bc91901"
+    },
+    {
+      "path": "scripts/verify-recognition-history.mjs",
+      "hashMode": "UTF8_LF",
+      "sha256": "d2126a4c2d975973287fd8c9ffad15e9d0641be0158ae3b9686243c4a8c56a62"
+    },
+    {
+      "path": "src/experiments/candidate14/commonAdapter.ts",
+      "hashMode": "UTF8_LF",
+      "sha256": "6e3c1745c9358207fe714d1bf4f1ee25d0dcf3185b8ce8748343d31f7307d427"
+    },
+    {
+      "path": "src/experiments/candidate14/timePolicy.ts",
+      "hashMode": "UTF8_LF",
+      "sha256": "a72b93ab463fbbf523d16433cee7910d2c2fb54a7ebd70d0d7e34e4f0e3a87c2"
+    },
+    {
+      "path": "src/experiments/mainline04/semanticContract.ts",
+      "hashMode": "UTF8_LF",
+      "sha256": "a08953dfdb50bf0233d603ce46669f87ed4f61c810a322275011c7075b5e578f"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate03.ts",
+      "hashMode": "UTF8_LF",
+      "sha256": "f3a2dd9358ca2a50b9b3eba8a090211666db4c0fb8dc5fc146e742c9895f9508"
+    },
+    {
+      "path": "src/experiments/realInput01/candidate16.ts",
+      "hashMode": "UTF8_LF",
+      "sha256": "e1cef96d8405cdb3c352819412b78155af550fad5f916d861bf9e128cbddf10c"
+    },
+    {
+      "path": "src/experiments/realInput01/evidenceRoleWireV2.ts",
+      "hashMode": "UTF8_LF",
+      "sha256": "c22bdd969117e2026f8c383e306503481bbdf389098f368ad0d5d0d41cac27c2"
+    },
+    {
+      "path": "src/experiments/realInput01/factAssembly.ts",
+      "hashMode": "UTF8_LF",
+      "sha256": "e4e5322bfd1c747ba74267fd3685712456028183ff7f32d00c8cdda353dcdadf"
+    },
+    {
+      "path": "src/experiments/realInput01/modelWire.ts",
+      "hashMode": "UTF8_LF",
+      "sha256": "c7c81ae516c30faec850f4d765ae625d2cf1d11f39ed0d515ab93da45efb8be2"
+    },
+    {
+      "path": "src/lib/timeSemantics.ts",
+      "hashMode": "UTF8_LF",
+      "sha256": "5360883752447640136f22c1599ccf2f0412eaed66a2b573310f1aab00f13fed"
+    },
+    {
+      "path": "src/recognition/scopeIndexV11.ts",
+      "hashMode": "UTF8_LF",
+      "sha256": "2706131f0c133872042761016e8ccac0487ce854be3472f2d189e5c901889515"
+    },
+    {
+      "path": "src/recognition/scopeReferenceContract.ts",
+      "hashMode": "UTF8_LF",
+      "sha256": "2f3b12b464991d8ea57fe08cad1217050485ddc69b310f13b489f6dcaae71cf2"
+    },
+    {
+      "path": "src/recognition/types.ts",
+      "hashMode": "UTF8_LF",
+      "sha256": "c15dfe32bc5bc7a300f94f3a1aa1df9d14e7bb30a070d2f2fc5e5359facd22c3"
+    },
+    {
+      "path": "src/types.ts",
+      "hashMode": "UTF8_LF",
+      "sha256": "d4f96f7c1989c5dbfc83a96dbb794c0cb41fe24ac09db09707508a1ad5f77803"
+    }
+  ],
+  "history": {
+    "status": "PASS_HISTORICAL_INTEGRITY",
+    "protectedFiles": 84,
+    "archives": 7,
+    "frozenFiles": 119,
+    "activeDocuments": "GIT_VERSIONED_NOT_A_RUNTIME_FREEZE",
+    "historicalDecisions": "UNCHANGED",
+    "ledger": {
+      "rows": 840,
+      "sha256": "ca5bb4f57d011bcf8f583d48d637076a8c76d380d98b3f5b46b0ea6f6c9f17ea",
+      "appendRows": 0,
+      "mode": "READ_ONLY"
+    },
+    "dispatchAuthorized": false,
+    "qualityPromotion": false
+  },
+  "referenceCoverage": {
+    "complete": 12,
+    "partial": 0,
+    "unresolved": 0
+  },
+  "candidate16Quality": "NOT_EVALUATED",
+  "schemaChange": false,
+  "defaultCandidateChanged": false,
+  "authorizationRequired": true
+}

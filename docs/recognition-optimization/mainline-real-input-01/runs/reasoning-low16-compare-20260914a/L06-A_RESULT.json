@@ -1,0 +1,229 @@
+{
+  "version": "real-input-reasoning-low16-result-1",
+  "unitId": "L06-A",
+  "arm": "A",
+  "effort": "none",
+  "dispatchScope": "within-cumulative-cap",
+  "previousId": "W03",
+  "bindingSha": "1ace528d15cc06bdc279f82bb13cb98e6526e5c3eb203f2bc0fe242aec3a82a1",
+  "requestSha": "be5c8805affdb60a4127f993746348ef32e1e68c78a141ac4e84b2b92d60f68c",
+  "responseSha": "f6cb15a96bbbbcb8226674c8fab97e0570b77287e4ff910e40144225a04dc286",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "wireVersion": "real-input-model-wire-1",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "c1ac44081f93187295dc14c4f9109217ec019696c1a0eca35c7efc01cceebba7",
+  "scoreInput": "candidate03 final message adapted only after gateway identity and usage verification; provider reasoning and immutable raw retained separately",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-save-original-photos",
+        "propositionScopeIds": [
+          "scope-0002-afc280206a5fbb7732d5170f8f5e55b7810d782dfd372a269d99ad219e1bab75",
+          "scope-0003-04508bc05732193c893ba2446c6de598642113b55d29132532cedfa10b3034ec",
+          "scope-0004-e0ad565a2ebc070c07db5025c50a59792d76d4d25c078aee125b13c41382c921",
+          "scope-0005-0a14f6e412acf4ad683939e76d9789e4b8bb7349d5906654cf78573d4ae5e900"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "save",
+        "action": {
+          "scopeId": "scope-0002-afc280206a5fbb7732d5170f8f5e55b7810d782dfd372a269d99ad219e1bab75",
+          "surface": "保存"
+        },
+        "object": {
+          "scopeId": "scope-0002-afc280206a5fbb7732d5170f8f5e55b7810d782dfd372a269d99ad219e1bab75",
+          "surface": "服务现场原始照片"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "保存服务现场原始照片",
+          "description": "请参与者保存服务现场原始照片，以供本人以后查询。本通知不规定完成日期，也不要求提交照片或额外制作任何材料。",
+          "completionCriteria": [
+            "服务现场原始照片被保存，可供本人以后查询"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-e5abd7ddff4cc2910631b1eb25ea31c6d3baccdbf1e518cae5136724c826ddc4",
+      "scope-0006-6f3324a9c9486e0c198dab6892963b472c42f43eabd6c1b402e3448695949628",
+      "scope-0007-cf9b98c668f429a4664dfb1ba02f77e18d37ae32e8325275fb9724d4c7ab914d",
+      "scope-0008-131b825b7883cf84457ac77c1a721c4afd56d1c356398a683a1dbc1d473defbb"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:8e80baf1",
+    "sourceVersionId": "source:8e80baf1:version:1",
+    "sourceFingerprint": "sha256:acd932a6ef5deb7a627444cbb3a6c9897ee53185ef819642d117b9d05d91ef4d"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 4736,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "material": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 2,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 1,
+    "referenceTaskCount": 1
+  },
+  "scoreError": null,
+  "totalAttempts": 277,
+  "usage": {
+    "input_tokens": 4519,
+    "input_tokens_details": {
+      "cached_tokens": 4352
+    },
+    "output_tokens": 749,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5268
+  },
+  "reasoningTokens": 0,
+  "costUpperMicroCny": 15030,
+  "totalCostUpperMicroCny": 13007747,
+  "semanticStatus": "completed",
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "temperatureEffect": "ACTIVE_NON_THINKING_MODE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；同模型、candidate03、正文与16384输出上限，仅reasoning effort不同；累计290次最多派发前12份"
+}

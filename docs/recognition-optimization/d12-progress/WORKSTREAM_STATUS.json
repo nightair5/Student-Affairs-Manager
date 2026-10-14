@@ -1,0 +1,106 @@
+{
+  "role": "ENGINEERING_WORK_ROUTING_NOT_QUALITY_GATE",
+  "version": "recognition-progress-policy-1",
+  "lanes": {
+    "engineeringDelivery": {
+      "blockedBy": [],
+      "status": "NO_LISTED_BLOCKER_NOT_ACCEPTANCE"
+    },
+    "engineeringReplay": {
+      "blockedBy": [],
+      "status": "NO_LISTED_BLOCKER_NOT_ACCEPTANCE"
+    },
+    "comparableQualityClaim": {
+      "blockedBy": [
+        {
+          "id": "current_obligation_false_condition",
+          "evidence": "docs/recognition-optimization/d12-progress/ADJUDICATION_QUEUE.json#current_obligation_false_condition",
+          "scope": "C13-D5R1-S04"
+        },
+        {
+          "id": "scope_support_vs_exact_set",
+          "evidence": "docs/recognition-optimization/d12-progress/ADJUDICATION_QUEUE.json#scope_support_vs_exact_set",
+          "scope": "C13-D5R1-S01,C13-D5R1-S02,C13-D5R1-S03,C13-D5R1-S08"
+        },
+        {
+          "id": "action_boundary",
+          "evidence": "docs/recognition-optimization/d12-progress/ADJUDICATION_QUEUE.json#action_boundary",
+          "scope": "C13-D5R1-S05"
+        }
+      ],
+      "status": "BLOCKED_ON_LISTED_DEPENDENCY"
+    },
+    "frozenComparisonPreparation": {
+      "blockedBy": [
+        {
+          "id": "current_obligation_false_condition",
+          "evidence": "docs/recognition-optimization/d12-progress/ADJUDICATION_QUEUE.json#current_obligation_false_condition",
+          "scope": "C13-D5R1-S04"
+        },
+        {
+          "id": "scope_support_vs_exact_set",
+          "evidence": "docs/recognition-optimization/d12-progress/ADJUDICATION_QUEUE.json#scope_support_vs_exact_set",
+          "scope": "C13-D5R1-S01,C13-D5R1-S02,C13-D5R1-S03,C13-D5R1-S08"
+        },
+        {
+          "id": "action_boundary",
+          "evidence": "docs/recognition-optimization/d12-progress/ADJUDICATION_QUEUE.json#action_boundary",
+          "scope": "C13-D5R1-S05"
+        }
+      ],
+      "status": "BLOCKED_ON_LISTED_DEPENDENCY"
+    },
+    "affectedCanonicalConfirmation": {
+      "blockedBy": [
+        {
+          "id": "revision_endpoints",
+          "evidence": "docs/recognition-optimization/d12-progress/ADJUDICATION_QUEUE.json#revision_endpoints",
+          "scope": "C13-D5R1-S10,C13-D5R1-S11"
+        }
+      ],
+      "status": "BLOCKED_ON_LISTED_DEPENDENCY"
+    },
+    "independentQualityClaim": {
+      "blockedBy": [
+        {
+          "id": "independent-labels",
+          "evidence": "No independent human material supplied",
+          "scope": "declared artifact"
+        }
+      ],
+      "status": "BLOCKED_ON_LISTED_DEPENDENCY"
+    },
+    "humanBenefitClaim": {
+      "blockedBy": [
+        {
+          "id": "human-trials",
+          "evidence": "No registered human trials run",
+          "scope": "declared artifact"
+        }
+      ],
+      "status": "BLOCKED_ON_LISTED_DEPENDENCY"
+    },
+    "paidDispatch": {
+      "blockedBy": [],
+      "status": "NO_LISTED_BLOCKER_NOT_ACCEPTANCE"
+    },
+    "humanStudy": {
+      "blockedBy": [],
+      "status": "NO_LISTED_BLOCKER_NOT_ACCEPTANCE"
+    }
+  },
+  "historicalGateDecisionChanged": false,
+  "authorizations": {
+    "paidDispatch": false,
+    "humanStudy": false,
+    "defaultReplacement": false,
+    "deployment": false
+  },
+  "interpretation": "No listed blocker does not certify completion or grant permission. Each lane still needs its own evidence.",
+  "currentCompletion": {
+    "engineeringReplay": "NOT_RUN_D12",
+    "engineeringDelivery": "SEE_VALIDATION",
+    "newCandidateQuality": "NOT_EVALUATED",
+    "formalSemanticScorer": "FUTURE_VERSION_REQUIRED"
+  }
+}

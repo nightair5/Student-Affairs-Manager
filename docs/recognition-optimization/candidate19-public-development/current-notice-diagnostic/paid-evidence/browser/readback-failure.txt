@@ -1,0 +1,11 @@
+Browser tab: 5, Title: "学生事务管家 · C19真实录制产品修复", URL: "http://127.0.0.1:6855/".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 502-504
++			502 container
++				503 text 已提交，读回尚未验证。 提交记录已保留；恢复只重新读回，不重复创建任务。
++				504 button 重新读回并核验
+~			169 text 已提交，读回尚未验证；输入和提交记录保留，请重新读回，勿重复提交。
+~					431 button (disabled) 加入任务
+~				499 button (disabled) 一次接受本通知（1）
+~					501 text 一次接受本通知 （ 1 ）
+The focused UI element is 0 AXWebArea 学生事务管家 · C19真实录制产品修复, URL: 127.0.0.1:6855/

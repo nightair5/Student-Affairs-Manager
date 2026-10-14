@@ -1,0 +1,233 @@
+{
+  "version": "candidate12-d2-result-1",
+  "unitId": "C12-D1-PD02-A",
+  "sourceId": "C12-PD02",
+  "arm": "A",
+  "ordinal": 4,
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "requestSha": "e66aaabd93446c0ca146727bc2ee081b734a38f3133f0afc0619486e34b2101a",
+  "responseSha": "20e7178a01bfc684ded3b9f81602596f48d45821f3927b956e2482a97a81ef0b",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "diagnostic": null,
+  "waitingMs": 5619,
+  "parseError": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-service-hours-registration",
+        "propositionScopeIds": [
+          "scope-0002-8bde596fa64d3aca8a186bf727dc7e8cbff47739e007588cbda36ffb07a809e8",
+          "scope-0004-7aad722c84580a86ad31bf237fce2d4e5dfba2f8336d5b55f8e5fc74b20777d8",
+          "scope-0005-ba4dd7684b8e7b12de9c310fcefb1a17aa0a4837da89394d3e2f51e1f92e35b1",
+          "scope-0006-ce6a20cfa4e03555a0101e95a77b986f78cb3d0cfbf6f203f267a3aff8974ced"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "complete",
+        "action": {
+          "scopeId": "scope-0002-8bde596fa64d3aca8a186bf727dc7e8cbff47739e007588cbda36ffb07a809e8",
+          "surface": "完成"
+        },
+        "object": {
+          "scopeId": "scope-0002-8bde596fa64d3aca8a186bf727dc7e8cbff47739e007588cbda36ffb07a809e8",
+          "surface": "服务时长登记"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "完成服务时长登记",
+          "description": "在2026年10月12日前完成服务时长登记，并附同一份盖章证明扫描件；证明仅作共同材料，不需另行上交原件。",
+          "completionCriteria": [
+            "在2026年10月12日前完成服务时长登记",
+            "附同一份盖章证明扫描件"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-stamped-certificate-scan"
+          ],
+          "timePointTempIds": [
+            "time-service-hours-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-submit-service-summary",
+        "propositionScopeIds": [
+          "scope-0003-129c327f69ae2b00f8e68c7c6c0ea7f6fadb1295f7b9af8bb2f61d25327203b7",
+          "scope-0004-7aad722c84580a86ad31bf237fce2d4e5dfba2f8336d5b55f8e5fc74b20777d8",
+          "scope-0005-ba4dd7684b8e7b12de9c310fcefb1a17aa0a4837da89394d3e2f51e1f92e35b1",
+          "scope-0006-ce6a20cfa4e03555a0101e95a77b986f78cb3d0cfbf6f203f267a3aff8974ced"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0003-129c327f69ae2b00f8e68c7c6c0ea7f6fadb1295f7b9af8bb2f61d25327203b7",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0003-129c327f69ae2b00f8e68c7c6c0ea7f6fadb1295f7b9af8bb2f61d25327203b7",
+          "surface": "服务总结"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "提交服务总结",
+          "description": "在10月14日前提交服务总结，并附同一份盖章证明扫描件；证明仅作共同材料，不需另行上交原件。",
+          "completionCriteria": [
+            "在10月14日前提交服务总结",
+            "附同一份盖章证明扫描件"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-stamped-certificate-scan"
+          ],
+          "timePointTempIds": [
+            "time-service-summary-deadline"
+          ],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-stamped-certificate-scan",
+        "name": "盖章证明扫描件",
+        "required": true,
+        "formatRequirements": [
+          "扫描件"
+        ],
+        "namingRequirements": [],
+        "quantity": 1,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-service-hours-registration",
+          "task-submit-service-summary"
+        ],
+        "scopeIds": [
+          "scope-0004-7aad722c84580a86ad31bf237fce2d4e5dfba2f8336d5b55f8e5fc74b20777d8",
+          "scope-0005-ba4dd7684b8e7b12de9c310fcefb1a17aa0a4837da89394d3e2f51e1f92e35b1",
+          "scope-0006-ce6a20cfa4e03555a0101e95a77b986f78cb3d0cfbf6f203f267a3aff8974ced"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-service-hours-deadline",
+        "type": "task_deadline",
+        "rawText": "2026年10月12日前",
+        "relatedTaskTempIds": [
+          "task-service-hours-registration"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-8bde596fa64d3aca8a186bf727dc7e8cbff47739e007588cbda36ffb07a809e8"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-12",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": true,
+        "precision": "date_only",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "time-service-summary-deadline",
+        "type": "submission_deadline",
+        "rawText": "10月14日前",
+        "relatedTaskTempIds": [
+          "task-submit-service-summary"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0003-129c327f69ae2b00f8e68c7c6c0ea7f6fadb1295f7b9af8bb2f61d25327203b7"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-10-14",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": true,
+        "precision": "date_only",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-28bc5c88030fe8f97ef55d7e292355ccb23110f118e0f1a824ecc699ef7cbd5a"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C12-PD02",
+    "sourceVersionId": "C12-PD02-v1",
+    "sourceFingerprint": "sha256:f5ee25fd678e0fff99476debc66daaf118824d679f82f763ebbceac1ee3e9f93"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4444,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 1647,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 6091
+  },
+  "costUpperMicroCny": 22064,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0
+}

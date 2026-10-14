@@ -1,0 +1,257 @@
+{
+  "unitId": "P05-05",
+  "arm": "05",
+  "bindingSha": "72e07981d334cb79d94585459d55e48aa0f53ac3e1feddb347ab8850f9c0bcd4",
+  "requestSha": "e56a7742a40f45a004d7ec99157bbd65f68ea171e343a12cad91a491c7779777",
+  "responseSha": "c86f62a0aee75a954aa34c130bcd20c1dedcb2245eb9f4bd06ce9f150ed4a8e2",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "f79e6bc9427ddeb80cfcdf5668800a85f93c8bffb7c5987b8166c031b0052326",
+  "scoreInput": "explicit semantic projection into byte-identical historical scorer; raw response unmodified",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-1",
+        "propositionScopeIds": [
+          "scope-0002-1e573380e4284f42067f92b02556fe2797e5fcdc4a8d73f54d31f897ed541a8c",
+          "scope-0003-56c52fc5a604be60da12e15dbbafbd3ba0852c43a74c5c4c0e8f07f21abb5937",
+          "scope-0004-d79b2d49a3bbb666f6c847a1304917d109431aabdacc5499d33e557c96383178",
+          "scope-0005-ad27e3c3b33307f7772b1d4dad18c5bc8a656aaaf6d13a66beca7cba4f82fbb8",
+          "scope-0006-7d8d1a116b236903d6d2829bfe9eb5a36ba9444b7de395429edc1bec72dd4ada"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0003-56c52fc5a604be60da12e15dbbafbd3ba0852c43a74c5c4c0e8f07f21abb5937",
+          "surface": "补交"
+        },
+        "object": {
+          "scopeId": "scope-0003-56c52fc5a604be60da12e15dbbafbd3ba0852c43a74c5c4c0e8f07f21abb5937",
+          "surface": "行程证明"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "补交行程证明",
+          "description": "财务已退回本次报销单并注明缺少行程证明，报销人需补交行程证明。",
+          "completionCriteria": [
+            "行程证明已补交"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true,
+          "materialTempIds": [
+            "material-1"
+          ],
+          "timePointTempIds": [
+            "time-1"
+          ]
+        },
+        "condition": {
+          "value": "true",
+          "conditionScopeIds": [
+            "scope-0002-1e573380e4284f42067f92b02556fe2797e5fcdc4a8d73f54d31f897ed541a8c"
+          ],
+          "factScopeIds": [
+            "scope-0005-ad27e3c3b33307f7772b1d4dad18c5bc8a656aaaf6d13a66beca7cba4f82fbb8",
+            "scope-0006-7d8d1a116b236903d6d2829bfe9eb5a36ba9444b7de395429edc1bec72dd4ada"
+          ]
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-1",
+        "name": "行程证明",
+        "required": true,
+        "formatRequirements": [
+          "电子PDF"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "scopeIds": [
+          "scope-0003-56c52fc5a604be60da12e15dbbafbd3ba0852c43a74c5c4c0e8f07f21abb5937",
+          "scope-0007-9b71c6123148c8f8a044960cdf4ca0928384f7ceffaec9acd790dbfbd7dd6460"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time-1",
+        "type": "submission_deadline",
+        "rawText": "2026年9月21日15:00",
+        "relatedTaskTempIds": [
+          "task-1"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0004-d79b2d49a3bbb666f6c847a1304917d109431aabdacc5499d33e557c96383178"
+        ],
+        "confidence": 0.95,
+        "normalizedValue": "2026-09-21T15:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-860e41689f50024079b96d058f6fe79ee9e09d3ce709a1518a8c6559ec4dc37a",
+      "scope-0005-ad27e3c3b33307f7772b1d4dad18c5bc8a656aaaf6d13a66beca7cba4f82fbb8",
+      "scope-0006-7d8d1a116b236903d6d2829bfe9eb5a36ba9444b7de395429edc1bec72dd4ada",
+      "scope-0008-19adbc211a2130ba39dd269aa29e1fad84f0ad782ba71d9bbcb664421741fd38"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:7527d27d",
+    "sourceVersionId": "source:7527d27d:version:1",
+    "sourceFingerprint": "sha256:b14d0cbad4cb033d5d7000eff2a82cd841af574fa6e1fe24618c1eab7a497ad6"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 5298,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "material": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 0,
+        "falsePositive": 3,
+        "falseNegative": 3,
+        "precision": 0,
+        "recall": 0
+      },
+      "semantic": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 1,
+    "referenceTaskCount": 1
+  },
+  "scoreError": null,
+  "totalAttempts": 66,
+  "costUpperMicroCny": 17952,
+  "totalCostUpperMicroCny": 4755409,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12新合成通知首次开发配对验证，非独立盲测；24请求不是24独立通知"
+}

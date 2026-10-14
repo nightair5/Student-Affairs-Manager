@@ -1,0 +1,643 @@
+{
+  "head": "c419aea63a1f6595cb0140cde00eb89dcc092759",
+  "sourceManifest": {
+    "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/IMPLEMENTATION_SNAPSHOT.json",
+    "sha256": "30eb426fcee41403fb1d4b3dc625da3c41e2e23469561cd950cd3ba8fb1d9f43"
+  },
+  "protectedManifest": {
+    "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/BASELINE.json",
+    "sha256": "5046d0ba8ef2b3313e48af5a303eda094012e7dfe3dd37a318ee955164f5c3f5"
+  },
+  "staticEvidence": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/BASELINE.json",
+      "sha256": "5046d0ba8ef2b3313e48af5a303eda094012e7dfe3dd37a318ee955164f5c3f5"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/BILLING.json",
+      "sha256": "08534821f3c1d4daa99c01780280e6fd885fe9ce07c78e4bf7a9a548788dd408"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/BINDING.json",
+      "sha256": "ecae72c8f778663a2ec1909dc15da90b860b4f30d5696cbec63c3845f772e07f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/BROWSER_CHECKS.json",
+      "sha256": "12552fe6fc32dc67a2b16ff4e34dcb1c3f3006e9996ff6fc5c01f2f9e5776dba"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/CANDIDATE_FREEZE.json",
+      "sha256": "cdbebddd89b454cfd993fe236c53fccb334b28f1bd47cc77b8b1bc122caf0050"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/COMPARISON.json",
+      "sha256": "177cf093d87d2080bb1491110bf4bdd6fceba46f141fa1a14ab31ddffc61128f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/COMPARISON_RULES.md",
+      "sha256": "a5663f987ed46060f4603a28c0789bd4029770eac7e8410b85f86b0e36fd2334"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/FINAL_AUDIT.md",
+      "sha256": "226c72e3b03287bdde642fcdd92fabcbd889d0221b7ad4a771cc0908fe642924"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/FINAL_CHECKS.json",
+      "sha256": "d73de823f5e159189642fc73f0241ce4ec387cf9312e6c1b4f1d71f838daee15"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/IMPLEMENTATION_SNAPSHOT.json",
+      "sha256": "aa20e614437c4f64ad2cb0f0daf940542d8243453df408ee3b72a71911a2bedb"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/INPUTS.json",
+      "sha256": "5dc880236ca65dc9fe7057ffa8cbe213ab848188e42b0fff5b7922f56e0fb64c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N01-03_RAW.jsonl",
+      "sha256": "4e9cd9de60d487ca3efcfb1b1ae2be41a146760378397e1a4b0890a1799a6c78"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N01-03_RESULT.json",
+      "sha256": "48a38fc1911a3a483e856148a85d1c231eb81323070107be37fe5a16c4c7e80a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N01-04_RAW.jsonl",
+      "sha256": "4cbccbe67f4d1f88233141a0b125345f8da4ef508d2678090c893f47eeb6d05c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N01-04_RESULT.json",
+      "sha256": "1477534395d27dcd7476981c3d9c8cccbc91abaecb952688b281da34ca01d835"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N02-03_RAW.jsonl",
+      "sha256": "54fc496c170f1a424c75585d5eb4a31bb6398aca07dec7761d535c4e09db1c32"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N02-03_RESULT.json",
+      "sha256": "89a77909d7d4c35897049e9d482d9001174e7d76ad139dfba86ceee5cd99b2ec"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N02-04_RAW.jsonl",
+      "sha256": "dc5d9c308c778ebf24ec8cf7e0077912cee03eec50b6a0c522832d7e80e07ed1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N02-04_RESULT.json",
+      "sha256": "d518de24fad18c9038fe699546fb7504296bbcc9b107501be38e86f2220f7a79"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N03-03_RAW.jsonl",
+      "sha256": "73d283e7e4f7913af6cf0ea3df4f6ded031b44016a97e615566b7f36b80ab0ae"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N03-03_RESULT.json",
+      "sha256": "15f568311fa394ddf9e45b629725646a317d0b7abf3399a1555a8118fa6cb3f8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N03-04_RAW.jsonl",
+      "sha256": "f6c990dd715252a90cd1820603a6781c68d18a6ce8e1a421535c77a709d36fa6"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N03-04_RESULT.json",
+      "sha256": "e72b122d060a1e58b70a203f877092dbf2d748136d45ef902cc5285cace0aae3"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N04-03_RAW.jsonl",
+      "sha256": "e36dcfc2e899bc1a49f37b2105e8c1dd18195e7bf21b203acb3d01219f8c8b91"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N04-03_RESULT.json",
+      "sha256": "9a61bb130d5cf87810dd4d870a512381193149df5961a09d1317f02dd27ec67d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N04-04_RAW.jsonl",
+      "sha256": "74fc8eaf116d88faa5cbf206cc4bc1d279839dd0f51b3dc99d2697753bcff469"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N04-04_RESULT.json",
+      "sha256": "f6c7e79cc25e7136146de36d947e1740183e6a525a284a48b44cb9500ac24b96"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N05-03_RAW.jsonl",
+      "sha256": "45c491f40843dfd274cfab24e7a5a7642f4651ebf557150cdb384cd32f69e113"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N05-03_RESULT.json",
+      "sha256": "ceba22031b25b304c6d1dfc77939e590caf88e2723299ad1f4015904e86ff554"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N05-04_RAW.jsonl",
+      "sha256": "a69453266e733b64333d7cd65111b5d9648a36c69bf8f375c58fb68d40281196"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N05-04_RESULT.json",
+      "sha256": "e1e7d498b0c0af5b8bc3600377d534f2aade875c35ec1758ebaba3d04afa83fa"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N06-03_RAW.jsonl",
+      "sha256": "2f5a16f701efd184ce6b341fa1f273df1b68eb3e9d0604e2a3a61a84ef2ff0bb"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N06-03_RESULT.json",
+      "sha256": "d9ccb76f6dc28e1bf502cf85f422dce1d39147e8f5cb382d861bd4ce93ff037c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N06-04_RAW.jsonl",
+      "sha256": "74222151edadd8d8f773f51d30cb8117360341cdb5f5b35becd83ca4eb9b5248"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N06-04_RESULT.json",
+      "sha256": "8516a04eab8fa309d9e634d4ec69bae9d34bbf2391ba972be6b3c003b045696b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N07-03_RAW.jsonl",
+      "sha256": "2b1e4a42fecdccb2055584962b8eb3d11c3be8aae92deae1ae7e6d78c377ffb8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N07-03_RESULT.json",
+      "sha256": "e3a541ab8bdd5a480fbe4e57dafb0e347ea49fe61d07f08d8eb79ff085cbeb03"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N07-04_RAW.jsonl",
+      "sha256": "7782d2b7abe37c2ddf061cf31e5309fb99e93d581d53587a7314816333742ab1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N07-04_RESULT.json",
+      "sha256": "7528e79c211def63fd43ef1455d728bf1e61d0c1eb20197a36e168083c70f765"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N08-03_RAW.jsonl",
+      "sha256": "cb41f6068145e7168b425962c79154d0c3d6774d099131b47594c9ebab94ad7e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N08-03_RESULT.json",
+      "sha256": "b133c48c29cfd96f2b6a29e2113b94654db93c7aa5f4857b7b8765875f3e58db"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N08-04_RAW.jsonl",
+      "sha256": "ae2bfd17185eb4d90a514799d87b211482be047a0ddcca4d23ad8da3a7719d0f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N08-04_RESULT.json",
+      "sha256": "07a715d1cc8990b87624c71a2e679cce3b7639d525683c27267802779f3a5a63"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N09-03_RAW.jsonl",
+      "sha256": "8fdd0e7270b830bfc4326528ca83ddeeb1575ac7f07a5b76e4abac2a6474e681"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N09-03_RESULT.json",
+      "sha256": "0dd5007745b3c6ad0a716b3afb79379c8ae791177afda18e9f4c5daf1fc2dbc1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N09-04_RAW.jsonl",
+      "sha256": "74e7a0ede07f92ec55572beae633650ef32a7653717122ab740812130a717487"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N09-04_RESULT.json",
+      "sha256": "f5853da802b2d74884eb06d8e6fd3b7dbd1fde912f47097600f6df1d93f9b9ce"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N10-03_RAW.jsonl",
+      "sha256": "2f47297ffa207717ed3cf24192566305ee70d99b0c838e7b21a1525a8e5b4cb7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N10-03_RESULT.json",
+      "sha256": "5b877aad7e633d6a8ed24c2e98e23c56e2b186e8cdb7d6514935b4f3416f4165"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N10-04_RAW.jsonl",
+      "sha256": "a2e3146316ad21676a206ae697cec1ca25e8be21d8cee0ca295a719f09a9199a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N10-04_RESULT.json",
+      "sha256": "9be159765cdb205c012b692b1e3037ee50e5ea904c71341a8949f42be363476c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N11-03_RAW.jsonl",
+      "sha256": "1f80bc293b0d961fb544242120d360a85d0186122c7642ddf01f4e6ea6bf8fc6"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N11-03_RESULT.json",
+      "sha256": "cff310ae18d5d354204ee236dcd0bb8c235ba1bcab8a72ae6037d57904105168"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N11-04_RAW.jsonl",
+      "sha256": "39a0e5b08454de1246736ec433559e8496c1e6c0f4583915cc1cc935a6e7277d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N11-04_RESULT.json",
+      "sha256": "b75f575e4de177756ad6380391ed5d9ce0ceeabebc37d1e0de21be43c418dda6"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N12-03_RAW.jsonl",
+      "sha256": "c75d07568ebeb630bb8f9a30b38b274c52b749c37da83b3cc60b3f3c3f5c0e78"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N12-03_RESULT.json",
+      "sha256": "ab9c4378ed9a8c17ff0c6b0d00dfe404e10471ff5319e4976ccd550f6325171c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N12-04_RAW.jsonl",
+      "sha256": "8902abd5000b67b0acfd79987a963b690db3d7e1db1fba375cb7a54dbcb665ff"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/N12-04_RESULT.json",
+      "sha256": "f1c4edf768f67c3d23755320a7431cd96ca579449f3e7e84b77f4187a6436d3a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/PUBLIC_0.html",
+      "sha256": "39b70009b097786b103e4b6a4489c79f8772575d88a259527258b0bb1882c38a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/PUBLIC_1.html",
+      "sha256": "a4788d94a47ee5d9705157d55593aa6dbf96a6c1309647b46e6a2aa8933715ad"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/REFERENCES.json",
+      "sha256": "0ae00cbfb99268d6f6faacf660e90f3661fdb92224f36f69f3e7ca299c67b529"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/REFERENCE_SPEC.json",
+      "sha256": "2d1859eb65ceb793ff535c896c6f81e1bf7746262f014582b1138f619be656ea"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/REPLAY_REVIEW.md",
+      "sha256": "6a6cfae471a77f28c31718121a938425f318e963cee8fa5a293edf13e3e260b2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/SEND_CONTINUATION_REVIEW.json",
+      "sha256": "048ad88e348b3330675bcbd0d79160ccef6d9e10a66c9e1306c8d8c102f1e893"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/SEND_REVIEW.json",
+      "sha256": "dbe8c9d4134e3b49206924cc3e5f83d4101ae1c5a07eeb03eb42f11d3a029c76"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate04-20260909a/STAGING_MANIFEST.json",
+      "sha256": "c1e0f7a40ee9327460b3b1259623f3dcc97dd83b3496bf59e0ae7c4bf75b57af"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/ACCEPTANCE_ATTEMPT_1.json",
+      "sha256": "46689cf89edca18326811508bb446b6c68f3b881352837ae3f164bb066313d19"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/AUDIT.md",
+      "sha256": "dda0787f187a54341202d9ad9c87d541347a1554eadb6776b94520db3c284772"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/BASELINE.json",
+      "sha256": "dbfd8e972b5d61332bbaed1d09c9b105cedb63e5a32a639e54d0b94211380022"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/BILLING.json",
+      "sha256": "b7aeaa4583ff9326ae700a85c0cd514300d8155b20ac247fb885be2824a4a7ce"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/BINDING.json",
+      "sha256": "72e07981d334cb79d94585459d55e48aa0f53ac3e1feddb347ab8850f9c0bcd4"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/CANDIDATE_FREEZE.json",
+      "sha256": "10eaf4d2f5c7a27566948f603fb5d2d5e74ab874bc0c88a0f0911e8bccf7bf9a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/COMPARISON.json",
+      "sha256": "13512611e06cdc03de88c4e079d14df159e406b5a1e5e5566914210d76722b42"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/COMPARISON_RULES.md",
+      "sha256": "1b6089be55d615edb3104f0a603632f8bf1e63ccd4b586c53c3a7da6291c3664"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/COMPOSER_DIAGNOSTIC.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/COMPOSER_DIAGNOSTIC_2.json",
+      "sha256": "99cdff8c4bafe39d61de8dafb0124768032d1ab08b86d8af0fdb2117bb4942b0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/contract-attempt2.log",
+      "sha256": "ce0ae1b382cde06a1e63919a31340da2d1c90873c0f97ab059e0bdb92e37db47"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/ENGINEERING_ATTEMPT_2.json",
+      "sha256": "73c10fa3513df5ff372b83d19a3d385f7a718abd936e21aa1efa9845299af955"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/FINAL_CHECKS.json",
+      "sha256": "705b51d1c94ad746e547ce8cb99e516f3a9ffccbf13ec87ee966c33f8ed17655"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/FOCUSED_REVIEW.md",
+      "sha256": "94af2df7edc73c955eebe685d4c8cfd0136272194f92d8b23736f22c0c35accb"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/FUNCTIONAL_ATTEMPT_1.json",
+      "sha256": "6502b76a4444b560806b2de277365945fa46e95d1e3599e1d1c086eff99dfbbf"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/FUNCTIONAL_FAILED_LAYER_2.json",
+      "sha256": "d06b38a6b0f0d0ad1111ff889f37bd5e579d177038b7095306ace8de1a4f0ef8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/IMPLEMENTATION_SNAPSHOT.json",
+      "sha256": "30eb426fcee41403fb1d4b3dc625da3c41e2e23469561cd950cd3ba8fb1d9f43"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/INPUTS.json",
+      "sha256": "fc8692dcb883bc9db2bba623b6a73665218d59eab7a57d47f588530d2a47a5b1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/lint-attempt1.log",
+      "sha256": "bc8d88509eb2d2c8aad28a912f3c18d15297bc9dbccdfb50c86d18e7cb609067"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/NODE_ATTEMPT_1.log",
+      "sha256": "6e2dfc8384bb93ea0794a2b410ca5e1eb12ccd494e00aa24c9fc6a71faf26660"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/NODE_ATTEMPT_2.log",
+      "sha256": "516507220b765160f2697ad2342c708cdbe3ded99c5a0f0e47a71ce029037dc2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/NODE_ATTEMPT_3.log",
+      "sha256": "7002ad0c65e44b8cdc4d3521687c2f67b2d03fc0288ee2ed86a78ecfa409556c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P01-03_RAW.jsonl",
+      "sha256": "618abb64b6c01f2f84be2c53ef9b8a5a9632052bc0485e3b59a5dbb0ffac14a2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P01-03_RESULT.json",
+      "sha256": "739b7216e93253a1809dded8eeb60f8592ad27dd57a8c4d33455b9938884cd32"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P01-05_RAW.jsonl",
+      "sha256": "276511a1b4094bffb02225106ec66b3d292ea50a2d16d9fd75111e792a4a5de5"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P01-05_RESULT.json",
+      "sha256": "7117e801a0f5a64e6276a82e156697dd08c812cb40e1aba0c7d2964771c8a25c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P02-03_RAW.jsonl",
+      "sha256": "e4141a29ef7999b361998aa7c9d08302d5cc4acfe7297fca368b6a8ca61fda1b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P02-03_RESULT.json",
+      "sha256": "2492cf581f4b23e6a45d6ab4b0d795de3b058f2033b08d775f7142bdfadae4b0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P02-05_RAW.jsonl",
+      "sha256": "6c676df489d251d830f76c4543e645525dbc251a289a6d6923b67c15c4415c2b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P02-05_RESULT.json",
+      "sha256": "e5445e3b6b6bf7dde38594e7e70faaffd1025555e5d3b6fd41d9794edef9ad3b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P03-03_RAW.jsonl",
+      "sha256": "1727ed07b85b52bc84b4435c9621b5b366aae8208d86916ffc5eb5dffd19824e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P03-03_RESULT.json",
+      "sha256": "343f553a7dd3cc1b02e7f0464b0e0c99a3084657018a8ee126407272cae21293"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P03-05_RAW.jsonl",
+      "sha256": "ab9b65fe9034846b959865a5bef6e95f23c81e605d5c2b0bac9c8c0770485201"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P03-05_RESULT.json",
+      "sha256": "9be6ea1bc642210e8747a47f09f9528a4206ceb60ed1c35870762ea8296c819e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P04-03_RAW.jsonl",
+      "sha256": "6a46fb7c76619e063d28f895d8fec1167697f8484dab477098310e8de51efff3"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P04-03_RESULT.json",
+      "sha256": "9456c44adc439d16725f8ba9fa20ff91af23aadaa0b5acbb83a3a3083491adc8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P04-05_RAW.jsonl",
+      "sha256": "f7ab2a2a478c22fd363524ae9a46632593bbaf779f108a2808839eba46569380"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P04-05_RESULT.json",
+      "sha256": "660a2a506bb06910536d67235494f02c4dd9e99bf9518d28d7766f649aa3668c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P05-03_RAW.jsonl",
+      "sha256": "3f474e265820be07ae97b1aaa8f4058c1c14a92715cd599cd9a72b69c28417bb"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P05-03_RESULT.json",
+      "sha256": "34fc89914af626029de549a065fc999baadddf3a09f3bf406fb2b78d1827418c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P05-05_RAW.jsonl",
+      "sha256": "3313549ac408608cf1a786cb4d99d322650861cf8a05f49af6e1f6d2d3a51166"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P05-05_RESULT.json",
+      "sha256": "2945f94a2e5481ddc8020b99525d21fbaf32b55f67aeb37f291743843ad76f17"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P06-03_RAW.jsonl",
+      "sha256": "d414851ead4e72735d0535a89d9b75ac5481ef60de440acfef6af7307b570ee6"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P06-03_RESULT.json",
+      "sha256": "154802693a9b3eb80902e1429a858a44dbc6ead84c21e7d0e2e92b7c2fc179ab"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P06-05_RAW.jsonl",
+      "sha256": "afb0c984916d07f4637a10ec7d256c6fe8a62e7eeb4c5279470821d1ef3badf1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P06-05_RESULT.json",
+      "sha256": "d9d46858cca80b91c4eacc186077fa0cc6abcd7e3bf5f1dcc6dff7075f11d6e8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P07-03_RAW.jsonl",
+      "sha256": "0b0301c18211ed2ef903486bb7dc27fd734367dc43ea976ec080b385c86f0e22"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P07-03_RESULT.json",
+      "sha256": "da14493b51274354de6775f91e256c9844ae467e9ec6f87debf50cb50b725c3a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P07-05_RAW.jsonl",
+      "sha256": "a16ffd30b07a40acd53c58bbb79e337c5b8dbb8a84831653492680dc620b6427"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P07-05_RESULT.json",
+      "sha256": "46fe6752dbf38aa397ed17f4582182d9ff353d6e353d9ccdb46804687eadd8b0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P08-03_RAW.jsonl",
+      "sha256": "03f5db7515c49809abec9b3492c9fa769b9aa4d703ac1c0edd32e7af2414819b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P08-03_RESULT.json",
+      "sha256": "bdc8e4afde57d55f17c7a40d8d59f354aa5ad9faf8bb6e17dbc1143f27fc0d09"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P08-05_RAW.jsonl",
+      "sha256": "f729d11a1f466c8f73a253383359c6dbab012ab7a4c232edb6f500759ce9c1e0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P08-05_RESULT.json",
+      "sha256": "2f8316a587d1c25c280d665278015f38815f76d02227356df42e39c528fba309"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P09-03_RAW.jsonl",
+      "sha256": "b59e2881dab20b1699401bbe114c1b182a996ed7ba3a27bc9ec4a3c1504abd09"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P09-03_RESULT.json",
+      "sha256": "dbfcb98d97748f03e8b9ccde2f8bf6aa8361e055d6b640223558106b7fb6f4ae"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P09-05_RAW.jsonl",
+      "sha256": "bbf1a409ef1dc7f1441917d359dd499eb1574d800d1e958dfb2b7bb494aa8b7c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P09-05_RESULT.json",
+      "sha256": "a35fdc47ae7e2934343cb545fdb0b70d8a1764e3c982752dc3c15cfaa6e03f2f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P10-03_RAW.jsonl",
+      "sha256": "12ac08e0c09fb33528f4ba55bd5e3c535a9be6850e47fde470f2eef247ce245f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P10-03_RESULT.json",
+      "sha256": "38f971bc686bacd76818740c91eff28701660c6bd471b865b01c08cf90ef88ad"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P10-05_RAW.jsonl",
+      "sha256": "0f386e96f40adb21a264a3226d0bbbda01b0051a9d0a1a1a7a996f67a9451b37"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P10-05_RESULT.json",
+      "sha256": "4bf499f9f8f65d18768024b99202ec85655b53c30c750642c67d41e3ba66bac2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P11-03_RAW.jsonl",
+      "sha256": "1999dc5931464a37b8dad0ba18de168b09b3f1f7453602ba00af26f3561e3f6d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P11-03_RESULT.json",
+      "sha256": "f515b4ab51f0f4cf94aedcd8877aa7c6d48f4a1c018ee4b3f61ee03995c7d9e9"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P11-05_RAW.jsonl",
+      "sha256": "3f5cdfc5042a9fddb2b5ab73a30c7ba910a87e5a90e2428e54c7c957f2ff2ed2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P11-05_RESULT.json",
+      "sha256": "d3752398ce42c30055485a7c8d25521e31027a6fe408331220d91bd12fbb3e57"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P12-03_RAW.jsonl",
+      "sha256": "7092dd4ea03d06c6f2f939ecc6a8742d6bdbaf0ec9e827806b7e5e165a58de90"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P12-03_RESULT.json",
+      "sha256": "3653b8fc484545cd5624099a1437935a512479d32164dc7b15586a45c799041c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P12-05_RAW.jsonl",
+      "sha256": "9396892702f279a1050a98aae2e6689c7783cd06cecbcf7f4fa047a5b47f7c95"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/P12-05_RESULT.json",
+      "sha256": "67bbf6a3e22e89438a4b454de7a4c8a2495f97c25be361592866d10f19a9a7ec"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/PUBLIC_VERIFICATION.md",
+      "sha256": "91c5b16b2c5f346e9fbab98f76fb1f000fedebb0aff734f94eceb9e776666ebe"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/RAW_FACT_DIAGNOSTIC.json",
+      "sha256": "3d0f4b7c0ff3d18cc52b941175291ea5c9e72780f189c0e9e3a0c46d8afad0a2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/REFERENCES.json",
+      "sha256": "f79e6bc9427ddeb80cfcdf5668800a85f93c8bffb7c5987b8166c031b0052326"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/REFERENCE_SPEC.json",
+      "sha256": "7ea9572bdae7d8b2de2c525a872aa02cd025a437a5148f5d817f9cb022e5dfe0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/secret-scan-attempt2.log",
+      "sha256": "5cf44e6b1bd75e9ec779796f6ee2fe67566c5fccdd153866e3ded24ba85099bf"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/SEND_PREFLIGHT.json",
+      "sha256": "39b72f65c487a4bd5a883171741b6ec09ce183d4847d835dc3df25b7118ed4a5"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/SEND_REVIEW.json",
+      "sha256": "7640494e4e89ae34d51d08818f10c032e563a9cb79f7ff4db1d069dc15db5456"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/STAGING_MANIFEST.json",
+      "sha256": "3fc17e6c81a8347f1df63d7866acc210db944072584bd202fd138a1bfc05e750"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/TEST_ATTEMPT_1.json",
+      "sha256": "883f340884bd9f908f1d111febf8ec91cb45df2cb6551e3f7f17a5799ae5572d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/TEST_ATTEMPT_2.json",
+      "sha256": "c1ff627b87dad2a943f3e6ff2b2d53229dadfd3ebbc8ed62bf475e10f301a583"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/TEST_ATTEMPT_3.json",
+      "sha256": "d10bef3eb26973e8e5031b95e1274e69b3ef07044c22804932492d2372cb568e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/time-ast-attempt2.log",
+      "sha256": "28498056a5fc7d975a3a38ce5c128afb0c926f8f1091e901d723a767656e008f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/type-app-attempt2.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/type-attempt1.log",
+      "sha256": "a5ffba5da7487c4d7da8049f75eeb0f9bc2fe6cd3b7f0df6dc7203c11e04597c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/type-node-attempt2.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "ledger": {
+    "path": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "bytes": 125822,
+    "sha256": "234bdd806d2dcbef6e6bd481fbe28a2ee8b70ee43e4fc82a854e2fcd8e00da39",
+    "sequence": 166,
+    "tail": "b5671fb4beba0db856f7a752045f45667bd0ac4f152f28e542600fbbea96b67f"
+  },
+  "log": {
+    "path": "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+    "bytes": 323557,
+    "sha256": "4ee187b6bab5f0874d96fc5040484912f6bd89d4f111fc9be6dfce80d1c98425"
+  },
+  "newPaths": [
+    "src/experiments/realInput01/candidate06.ts",
+    "src/experiments/realInput01/candidate06.test.ts"
+  ],
+  "modelCalls": 80,
+  "recovery": "53 working-byte SHAs were checked before any edits; 17 existing uncommitted implementations preserved",
+  "frozenClosure": {
+    "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate05-20260912a/CANDIDATE_FREEZE.json",
+    "sha256": "10eaf4d2f5c7a27566948f603fb5d2d5e74ab874bc0c88a0f0911e8bccf7bf9a"
+  }
+}

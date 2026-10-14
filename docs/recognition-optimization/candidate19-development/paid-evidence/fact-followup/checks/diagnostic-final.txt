@@ -1,0 +1,174 @@
+{
+  "file": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate19\\fact-diagnostic-v1\\REPORT.json",
+  "summary": {
+    "Candidate17": {
+      "denominator": 6,
+      "provisionalStructuredPass": 4,
+      "factError": 2,
+      "unknown": 0,
+      "independentWholeUserCorrect": "NOT_OBSERVABLE"
+    },
+    "Candidate19": {
+      "denominator": 6,
+      "provisionalStructuredPass": 5,
+      "factError": 0,
+      "unknown": 1,
+      "independentWholeUserCorrect": "NOT_OBSERVABLE"
+    }
+  },
+  "cases": [
+    {
+      "ordinal": 1,
+      "status": "FACT_ERROR",
+      "risks": [
+        {
+          "kind": "EVENT_MISSING",
+          "fact": "pause"
+        },
+        {
+          "kind": "TIME_MISSING_OR_ENDPOINT_WRONG",
+          "fact": "pause-start"
+        }
+      ],
+      "disputes": [],
+      "conversion": []
+    },
+    {
+      "ordinal": 2,
+      "status": "PROVISIONAL_STRUCTURED_PASS",
+      "risks": [],
+      "disputes": [],
+      "conversion": []
+    },
+    {
+      "ordinal": 3,
+      "status": "PROVISIONAL_STRUCTURED_PASS",
+      "risks": [],
+      "disputes": [],
+      "conversion": []
+    },
+    {
+      "ordinal": 4,
+      "status": "FACT_ERROR",
+      "risks": [
+        {
+          "kind": "TIME_VALUE_TYPE_PRECISION_WRONG",
+          "fact": "network-start",
+          "detail": {
+            "expected": {
+              "key": "network-start",
+              "owner": "network",
+              "endpoint": "start",
+              "type": "event_start",
+              "token": "周五夜间",
+              "value": null,
+              "precision": "vague",
+              "fragments": [
+                "网络调试从周五夜间开始"
+              ]
+            },
+            "actual": {
+              "tempId": "tp-0003",
+              "type": "planned_start",
+              "rawText": "周五夜间开始",
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "scopeIds": [
+                "scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519"
+              ],
+              "confidence": 0.9,
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true
+            }
+          }
+        },
+        {
+          "kind": "TIME_MISSING_OR_ENDPOINT_WRONG",
+          "fact": "network-end"
+        }
+      ],
+      "disputes": [
+        {
+          "kind": "UNRESOLVED_SOURCE_OR_GRAPH",
+          "fact": "source"
+        }
+      ],
+      "conversion": []
+    },
+    {
+      "ordinal": 5,
+      "status": "PROVISIONAL_STRUCTURED_PASS",
+      "risks": [],
+      "disputes": [],
+      "conversion": []
+    },
+    {
+      "ordinal": 6,
+      "status": "PROVISIONAL_STRUCTURED_PASS",
+      "risks": [],
+      "disputes": [],
+      "conversion": []
+    },
+    {
+      "ordinal": 7,
+      "status": "PROVISIONAL_STRUCTURED_PASS",
+      "risks": [],
+      "disputes": [],
+      "conversion": [
+        {
+          "id": "task-0001",
+          "operation": "CURRENT_INAPPLICABLE_INFORMATION"
+        }
+      ]
+    },
+    {
+      "ordinal": 8,
+      "status": "PROVISIONAL_STRUCTURED_PASS",
+      "risks": [],
+      "disputes": [],
+      "conversion": [
+        {
+          "id": "task-0001",
+          "operation": "CURRENT_INAPPLICABLE_INFORMATION"
+        }
+      ]
+    },
+    {
+      "ordinal": 9,
+      "status": "PROVISIONAL_STRUCTURED_PASS",
+      "risks": [],
+      "disputes": [],
+      "conversion": []
+    },
+    {
+      "ordinal": 10,
+      "status": "UNKNOWN",
+      "risks": [],
+      "disputes": [
+        {
+          "kind": "MATERIAL_CHANNEL_NOT_EXPLICITLY_RESOLVED",
+          "fact": "upload",
+          "detail": "平台"
+        }
+      ],
+      "conversion": []
+    },
+    {
+      "ordinal": 11,
+      "status": "PROVISIONAL_STRUCTURED_PASS",
+      "risks": [],
+      "disputes": [],
+      "conversion": []
+    },
+    {
+      "ordinal": 12,
+      "status": "PROVISIONAL_STRUCTURED_PASS",
+      "risks": [],
+      "disputes": [],
+      "conversion": []
+    }
+  ]
+}

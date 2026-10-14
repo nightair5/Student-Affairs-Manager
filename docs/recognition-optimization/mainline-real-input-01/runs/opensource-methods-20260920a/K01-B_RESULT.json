@@ -1,0 +1,133 @@
+{
+  "version": "real-input-contrastive-result-1",
+  "unitId": "K01-B",
+  "sourceId": "OS01",
+  "arm": "B",
+  "armName": "candidate10-contrastive",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "requestSha": "59aa02c64670086e8ef17d92be087197a883c25440016d6cdca389189b70eef4",
+  "responseSha": "6922c606c9d27aba6c912dcdd99434cd4ce24d7723fbe74d138ab3bfe36c1c97",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-10",
+  "exampleVersion": "contrastive-evidence-examples-1",
+  "scorerSha": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+  "referenceSha": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-deliver-photos",
+        "propositionScopeIds": [
+          "scope-0001-7d21683f7911495deee52795c31e6400673e9dd7d05b7017e14239ddf2746bb6",
+          "scope-0002-ecfd12284fece4c8208190affa7da41eccd8ace9b3cbc0c18dcfb1d292b11a74",
+          "scope-0003-18c2d27fc33002ac2e3b39ad87b750a424d1bb6928885089ee61cb67b7134c7f"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "carry",
+        "action": {
+          "scopeId": "scope-0001-7d21683f7911495deee52795c31e6400673e9dd7d05b7017e14239ddf2746bb6",
+          "surface": "交到"
+        },
+        "object": {
+          "scopeId": "scope-0001-7d21683f7911495deee52795c31e6400673e9dd7d05b7017e14239ddf2746bb6",
+          "surface": "校史照片"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "交校史照片到档案室",
+          "description": "把校史照片交到档案室；照片须装入防潮盒，每盒最多十张。",
+          "completionCriteria": [
+            "校史照片已交到档案室",
+            "照片装入防潮盒",
+            "每盒最多十张"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "mat-moisture-box"
+          ],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "mat-moisture-box",
+        "name": "防潮盒",
+        "required": true,
+        "formatRequirements": [
+          "每盒最多十张"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-deliver-photos"
+        ],
+        "scopeIds": [
+          "scope-0002-ecfd12284fece4c8208190affa7da41eccd8ace9b3cbc0c18dcfb1d292b11a74",
+          "scope-0003-18c2d27fc33002ac2e3b39ad87b750a424d1bb6928885089ee61cb67b7134c7f"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [],
+    "unresolvedScopeIds": [],
+    "sourceId": "opensource-dev-OS01",
+    "sourceVersionId": "opensource-dev-OS01:1",
+    "sourceFingerprint": "sha256:a7a9dbb4835505f50e9d1ccbd07e08cead0016508176a15495074e7a12cd2b03"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 5779,
+  "parseError": null,
+  "totalAttempts": 291,
+  "usage": {
+    "input_tokens": 5105,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 706,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5811
+  },
+  "costUpperMicroCny": 15858,
+  "totalCostUpperMicroCny": 13679041,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化"
+}

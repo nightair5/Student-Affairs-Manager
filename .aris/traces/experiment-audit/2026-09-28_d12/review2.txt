@@ -1,0 +1,20 @@
+Overall WARN.
+
+Actionable current problems:
+
+1. Medium — the new history manifest is an unanchored trust root. GOVERNANCE_BASELINE_V2.json:4 records parentHead, but scripts/verify-recognition-history.mjs:20-40 never verifies it or the manifest itself. The tests at scripts/recognition-d12.check.mjs:91-99 alter protected files while keeping the manifest unchanged. A read-only simulation that changed both D11_RESULTS.md and its manifest hash still returned PASS_HISTORICAL_INTEGRITY.
+Minimal fix: verify frozen D8–D11 bytes against the Git tree at the declared parentHead, or otherwise pin the reviewed manifest externally, then add a coordinated manifest-plus-file tamper regression. Keep every D11 artifact and decision unchanged.
+
+2. Low — PRD “current starting point” is stale and can restart obsolete work. PRD.md:24-29 still presents Candidate14/D7 and unfinished recent browser acceptance as current, while docs/governance/PROJECT_EXECUTION_ROADMAP.md:7-10 records D10 browser evidence and D11/D12 completion. PRD.md:32 calls this a dated snapshot but gives no cutoff and shares the same update date.
+Minimal fix: mark it explicitly as the pre-D12 historical snapshot with a cutoff and supersession link, or replace it with the D12/D13 facts.
+
+A–F update:
+
+- A — WARN: provenance is honestly labeled but remains same-series, seen synthetic proxy with the S04 contract dispute unresolved. It cannot support independent quality.
+- B — PASS: both planned denominators remain 12; analyzed, reference-valid, and scoreable counts are separately reported. No denominator shrinkage or score normalization was found.
+- C — WARN: D12 result claims match the generated JSON, but the PRD current-state claim and history-verifier strength need the fixes above.
+- D — PASS: the diagnostic scorer is executed, preserves all 21 prior non-exception scores exactly, recovers ordinals 8/9/20, and retains reference failures 19/21. The targeted suite passed 9/9.
+- E — PASS: engineering delivery, Development observation, independent validation, and release are separated. No hidden model-call, study, promotion, default-replacement, merge, or deployment authorization was found.
+- F — PASS: D12 is correctly classified as POSTHOC_SEEN_SYNTHETIC_DIAGNOSTIC; human metrics remain NOT_OBSERVABLE.
+
+The current 2-versus-1 old-rule completion counts cannot justify Candidate15 superiority. Future Development comparison needs a frozen revised semantic contract and equal scoring over the full denominator. Independent quality still needs unseen material plus independent human labels/review; release still needs its declared scope, production/browser evidence, rollback, thresholds, and explicit authorization.

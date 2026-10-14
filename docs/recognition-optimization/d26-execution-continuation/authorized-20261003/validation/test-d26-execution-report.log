@@ -1,0 +1,16 @@
+✔ verified absent state and no batch evidence yields 16 NOT_RUN and null accuracy, without scorer calls (1.3563ms)
+✔ absent local state is not evidence of non-delivery when batch receipts, lock, halt or ledger audit are unknown (0.3918ms)
+✔ partial consistent prefix retains 16 units and per-arm denominator 8, without partial winner (0.3097ms)
+✔ all settled but held lock, halt, uncertainty or invalid identity cannot invoke scoring (0.4714ms)
+✔ UNCERTAIN status never becomes not sent because no raw hash exists (0.1476ms)
+✔ full verified batch grades once, separates original answers from program-built first display, and never claims human effects (0.6938ms)
+✔ unknown semantic case retains fixed denominator and null unqualified accuracy (0.2896ms)
+✔ duplicates, missing units and injected scorer identity drift fail closed (0.6505ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 90.6637

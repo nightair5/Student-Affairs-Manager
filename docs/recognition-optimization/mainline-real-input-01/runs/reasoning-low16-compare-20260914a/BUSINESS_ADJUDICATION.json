@@ -1,0 +1,202 @@
+{
+  "version": "real-input-reasoning-low16-business-adjudication-1",
+  "label": "12份已见材料开发回归的业务实质裁决；不是商业准确率、真人转化率或20份结果",
+  "generatedAt": "2026-09-14T19:55:36.4677995+08:00",
+  "comparison": {
+    "configuredSources": 20,
+    "completedSources": 12,
+    "completedRequests": 24,
+    "notRunSources": 8,
+    "notRunRequests": 16,
+    "notRunReason": "实际累计请求从266次开始，用户授权累计上限为290次，只剩24次可派发额度",
+    "arms": {
+      "A": {
+        "reasoningEffort": "none",
+        "completeResponses": 12,
+        "sourcesWithoutSubstantiveCorrection": 10,
+        "sourcesRequiringSubstantiveCorrection": 2,
+        "substantiveFactErrors": 4,
+        "minimumUserCorrectionOperations": 3,
+        "errors": {
+          "extraTasks": 1,
+          "missingTasks": 0,
+          "materialOrOwnership": 1,
+          "time": 0,
+          "condition": 1,
+          "dependency": 1,
+          "cancellationOrRevision": 0
+        }
+      },
+      "B": {
+        "reasoningEffort": "low",
+        "completeResponses": 12,
+        "sourcesWithoutSubstantiveCorrection": 5,
+        "sourcesRequiringSubstantiveCorrection": 7,
+        "substantiveFactErrors": 11,
+        "minimumUserCorrectionOperations": 11,
+        "errors": {
+          "extraTasks": 0,
+          "missingTasks": 0,
+          "materialOrOwnership": 3,
+          "time": 7,
+          "condition": 1,
+          "dependency": 0,
+          "cancellationOrRevision": 0
+        }
+      }
+    },
+    "net": {
+      "sourcesWithoutSubstantiveCorrection": -5,
+      "substantiveFactErrors": 7,
+      "minimumUserCorrectionOperations": 8,
+      "taskFalsePositives": -1,
+      "interpretation": "low消除了W11的多余任务并修正其条件，但在更多来源中制造假时间、材料缺失或错误状态，用户总体需要更多修改"
+    }
+  },
+  "cases": [
+    {
+      "id": "L01",
+      "source": "W01",
+      "A": {"substantive": false, "corrections": []},
+      "B": {"substantive": false, "corrections": []},
+      "decision": "持平；两臂均保留两个任务、三份材料和各自截止时间"
+    },
+    {
+      "id": "L02",
+      "source": "W11",
+      "A": {
+        "substantive": true,
+        "corrections": [
+          "删除多造的独立任务“准备两个密封袋”",
+          "将“提交检测样本”的条件由true改为unknown",
+          "移除密封袋对多余任务的错误关联"
+        ]
+      },
+      "B": {
+        "substantive": true,
+        "corrections": [
+          "删除把任务对象重复建成材料的“检测样本”",
+          "删除把前置关系重复建成时间的“在登记单填写完成后”"
+        ]
+      },
+      "decision": "low减少了多余任务和条件误判，但仍没有把本例变成无需纠正"
+    },
+    {
+      "id": "L03",
+      "source": "W04",
+      "A": {"substantive": false, "corrections": []},
+      "B": {"substantive": false, "corrections": []},
+      "decision": "持平；条件不成立的取消动作与独立检查任务均保留正确"
+    },
+    {
+      "id": "L04",
+      "source": "W12",
+      "A": {
+        "substantive": true,
+        "corrections": ["移除“保存最终版展签”对“制作展签”的无原文依据依赖"]
+      },
+      "B": {
+        "substantive": true,
+        "corrections": ["补回必需的A6展签材料、每件一张规格及其任务关联"]
+      },
+      "decision": "两臂都需要纠正；low换了一种错误，没有净改善"
+    },
+    {
+      "id": "L05",
+      "source": "W02",
+      "A": {"substantive": false, "corrections": []},
+      "B": {
+        "substantive": true,
+        "corrections": [
+          "将无条件任务从condition=false恢复为not_applicable",
+          "删除把“不必等待下一份通知才开始”误建为planned_start的假时间"
+        ]
+      },
+      "decision": "low退化；模糊时间原文应保留，但否定说明不是新时间事实"
+    },
+    {
+      "id": "L06",
+      "source": "W03",
+      "A": {"substantive": false, "corrections": []},
+      "B": {
+        "substantive": true,
+        "corrections": [
+          "删除假时间“完成日期”",
+          "删除假时间“以后”",
+          "删除假时间“目前”"
+        ]
+      },
+      "decision": "low把真正无日期的正常任务变成需要三次时间核对"
+    },
+    {
+      "id": "L07",
+      "source": "W05",
+      "A": {"substantive": false, "corrections": []},
+      "B": {"substantive": false, "corrections": []},
+      "decision": "持平；条件已成立、明确截止和PDF材料均正确"
+    },
+    {
+      "id": "L08",
+      "source": "W06",
+      "A": {"substantive": false, "corrections": []},
+      "B": {
+        "substantive": true,
+        "corrections": ["删除把“领取时”误建为planned_start的假时间"]
+      },
+      "decision": "条件unknown仍应合理待处理；low额外增加时间核对"
+    },
+    {
+      "id": "L09",
+      "source": "W07",
+      "A": {"substantive": false, "corrections": []},
+      "B": {
+        "substantive": true,
+        "corrections": ["将历史纸质校样的required恢复为true，并由取消/替代关系表达当前不再寄送"]
+      },
+      "decision": "取消要求不能反写为历史上从未必需；新PDF任务本身正确"
+    },
+    {
+      "id": "L10",
+      "source": "W08",
+      "A": {"substantive": false, "corrections": []},
+      "B": {"substantive": false, "corrections": []},
+      "decision": "持平；旧参访取消且独立课程反思任务有效"
+    },
+    {
+      "id": "L11",
+      "source": "W09",
+      "A": {"substantive": false, "corrections": []},
+      "B": {"substantive": false, "corrections": []},
+      "decision": "持平；纯信息通知没有生成任务"
+    },
+    {
+      "id": "L12",
+      "source": "W10",
+      "A": {"substantive": false, "corrections": []},
+      "B": {
+        "substantive": true,
+        "corrections": ["删除把“已经拍摄完成”误建为event_end的假时间"]
+      },
+      "decision": "low增加无依据时间；两个盘点任务、材料和截止本来已正确"
+    }
+  ],
+  "strictScorer": {
+    "completeCasesA": 0,
+    "completeCasesB": 0,
+    "note": "原严格评分对来源索引、措辞和粒度逐项精确匹配，所有24个回答均非completeCase；本业务裁决未修改评分器或历史成绩"
+  },
+  "correctTaskDenominators": {
+    "referenceTaskFacts": 19,
+    "currentlyConfirmableCorrectTasks": 13,
+    "notCurrentlyActionable": {
+      "cancelledOrSuperseded": 3,
+      "conditionFalse": 1,
+      "conditionUnknown": 2
+    },
+    "reusedCandidate03EngineeringReplayCorrectlySaved": 12,
+    "reusedCandidate03EngineeringReplaySourcesWithSavedTask": 10,
+    "replayScope": "同20份材料中原12份candidate03历史回答的公开接口工程回放；不是本轮新回答的浏览器保存"
+  },
+  "decision": "KEEP_NONE",
+  "reason": "low的唯一目标收益不足以抵消新增的7条时间错误、3条材料错误和更高的用户纠正负担"
+}

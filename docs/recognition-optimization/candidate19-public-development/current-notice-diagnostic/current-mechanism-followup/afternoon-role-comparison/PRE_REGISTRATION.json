@@ -1,0 +1,41 @@
+{
+  "batch": "V6-ROLE-AUTHORITY-DEVELOPMENT-20261008-R1",
+  "version": "role-authority-paired-source-facts-1.0.0",
+  "hypothesis": "Separate participation authority, qualification, prerequisite and execution channel reduces QR-as-target and interest/admission-as-prerequisite errors without losing obligations, events, time or materials.",
+  "changedComponents": [
+    "V7 participation authority replaces duplicated modality",
+    "literal optional executionChannel separated from business object",
+    "V7 shape/bridge with original V6 input unchanged"
+  ],
+  "commonComponents": "Both arms use same frozen support/context/endpoint/attribute/time/channel/eligibility/nonaction/first-display rules and ordinary event-task commit. V7->V6 role bridge is generation bundle; do not attribute whole-bundle effects only to prompt.",
+  "denominator": "4 sources per arm, all 8 identity outcomes retained including failures/unknown/disputes",
+  "layers": [
+    "modelFirstFacts",
+    "displayBeforeHuman",
+    "humanFinal"
+  ],
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "adjudication": "Use source-first assertions, verdict/reason/outputPointer per layer; any real factual error makes whole incorrect. Incomplete/disputed/unadjudicated prose remains UNKNOWN. Compiler refusal is first-display failure, not proof raw had no facts. No user correction counted as first correct.",
+  "criticalRisks": [
+    "key obligation/event/endpoint omission",
+    "unsupported task",
+    "wrong time/value/type/owner",
+    "false qualification/completion",
+    "bad dependency/activity/revision relation"
+  ],
+  "conclusions": [
+    "WHOLE_NET_GAIN_NO_NEW_CRITICAL_RISK",
+    "TARGET_ERRORS_REDUCED_NO_WHOLE_GAIN",
+    "MIXED_PROGRESS",
+    "NO_BENEFIT",
+    "EVIDENCE_INCOMPLETE"
+  ],
+  "selection": "Definite execution + consistent ledger before comparison; all registered fact layers accounted. Net whole counts and target errors separate; new critical risk cannot be cancelled by score; no net+2 or 100% gate. Incomplete/uncertain means no winner.",
+  "dispatchAuthorized": false,
+  "extras": {
+    "retry": 0,
+    "repair": 0,
+    "verifier": 0,
+    "extraSamples": 0
+  }
+}

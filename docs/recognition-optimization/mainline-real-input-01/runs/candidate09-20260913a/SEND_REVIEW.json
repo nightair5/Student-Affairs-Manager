@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "scope": "PAIRED09_SEND",
+  "head": "206722787a5973400903cdbd305cb4cce0073c23",
+  "bindingSha": "d62abdfdedaf4b538364fe55bacd1e52fc3623f7a5acef9732de75af128125df",
+  "billingSha": "46235b5efed43d32a724b599513b38519a6d23b6b39e20f266a6562b5ba3ac5f",
+  "sourcesSha": "646281f0d177eed68660513ea83da7a5652cd57665bfcc564dcc8a34479c0bbd",
+  "grantId": "ae987464-b3e2-45ad-81e0-44eed605c396",
+  "checkedAt": "2026-09-13T13:55:30.365Z",
+  "reviewer": "primary-agent targeted boundary review; not independent audit",
+  "evidence": [
+    "target-1789307615964.json",
+    "budget09-1789307419518.log",
+    "gateway09-1789307419518.log"
+  ],
+  "checks": {
+    "all20BaselineRequestsByteIdenticalToPrevious": true,
+    "referenceFactsExcludedFromRequestClosure": true,
+    "typedFactsCarryDirectSourceRefs": true,
+    "onlyReverseLinksDerived": true,
+    "danglingTargetsRejected": true,
+    "coverageNotInferredFromEmptyArrays": true,
+    "unknownConditionsPreserved": true,
+    "userConfirmationRequired": true,
+    "old168ReservationsAndPrefixPreservedByNewGrantTest": true,
+    "max208And20YuanEnforced": true,
+    "noCredentialsReadByReview": true,
+    "pinnedProxyAndTlsUnchanged": true,
+    "oldConvertersUnmodified": true
+  }
+}

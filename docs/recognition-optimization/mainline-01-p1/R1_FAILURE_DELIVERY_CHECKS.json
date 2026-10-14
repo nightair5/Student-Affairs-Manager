@@ -1,0 +1,42 @@
+{
+  "status": "FAILURE_DELIVERY_ONLY",
+  "documents": 11,
+  "errors": [],
+  "sourceSnapshotChecked": 9,
+  "sourceChangesAfterStop": [],
+  "contextLines": 73,
+  "contextBytes": 5640,
+  "fullEngineering": "NOT_RUN_REVIEW_BLOCKED",
+  "browserAcceptance": "NOT_RUN_REVIEW_BLOCKED",
+  "modelAccuracy": "本轮未测量",
+  "modelCalls": 0,
+  "keyAccesses": 0,
+  "cny": 0,
+  "protection": {
+    "checked": 673,
+    "changed": [],
+    "appendOnly": true,
+    "outOfScope": []
+  },
+  "targeted": {
+    "passed": 58,
+    "failed": 0,
+    "legacyTests": 17,
+    "originalV2Tests": 28,
+    "newR1Tests": 13,
+    "independentRerunPassed": 58
+  },
+  "independentReview": {
+    "status": "BLOCKED",
+    "newSavedEditNotAdoptedCounterexamples": 1,
+    "nonExplicitWrongDefaultSelectionCounterexamplesNewThisReview": 0,
+    "overallWrongDefaultSelectionRate": "NOT_ESTABLISHED"
+  },
+  "fidelity": {
+    "historicalEqual": 40,
+    "currentV2Equal": 42,
+    "sameFields": 42,
+    "source": "existing artificial engineering response",
+    "notModelAccuracy": true
+  }
+}

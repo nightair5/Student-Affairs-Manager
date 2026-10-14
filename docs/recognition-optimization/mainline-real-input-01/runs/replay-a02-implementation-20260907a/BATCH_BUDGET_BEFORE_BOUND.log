@@ -1,0 +1,118 @@
+✖ batch permits fourteen exact units only and preserves old unknown/settled requests (1.2065ms)
+✖ batch parallel and restart cannot repeat or skip a crashed request (0.1683ms)
+✖ batch invalid usage or unknown failure preserves reservation and stops successors (0.1707ms)
+✖ batch changed grant, prefix, target, price expiry and order fail before dispatch (0.2298ms)
+✖ batch held A01 is counted against total even after lawful new settlements (0.2002ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 81.0124
+
+✖ failing tests:
+
+test at scripts\real-input-budget.node-test.mjs:20:1
+✖ batch permits fourteen exact units only and preserves old unknown/settled requests (1.2065ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:164:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:70:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:21:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:30:1
+✖ batch parallel and restart cannot repeat or skip a crashed request (0.1683ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:164:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:70:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:31:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:39:1
+✖ batch invalid usage or unknown failure preserves reservation and stops successors (0.1707ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:164:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:70:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:41:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:48:1
+✖ batch changed grant, prefix, target, price expiry and order fail before dispatch (0.2298ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:164:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:70:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:49:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-budget.node-test.mjs:59:1
+✖ batch held A01 is counted against total even after lawful new settlements (0.2002ms)
+  AssertionError [ERR_ASSERTION]: Set REAL_INPUT_TEST_TEMP to the predeclared new temporary root
+      at setup (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:164:10)
+      at recoveryFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:70:23)
+      at batchFixture (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:10:17)
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-budget.node-test.mjs:60:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

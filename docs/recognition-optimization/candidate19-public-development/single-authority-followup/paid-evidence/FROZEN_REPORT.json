@@ -1,0 +1,885 @@
+{
+  "version": "single-authority-paired-facts-1.0.0",
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "cases": [
+    {
+      "candidate": "Candidate19",
+      "sourceId": "authority-development-SA-01",
+      "version": "public-source-fact-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "stages": {
+        "modelFirstFacts": {
+          "complete": "UNKNOWN",
+          "correct": 3,
+          "incorrect": 0,
+          "unknown": 1,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "学习证明scope0005仅information，无活动关联；说明是否允许独立信息表达需独立裁决。没有把sourceIndex包含全文算模型已作活动事实。",
+              "outputPointer": "wire.events[0].description/scopeIds; wire.scopeAccounting[4]"
+            },
+            {
+              "factId": "time",
+              "verdict": "CORRECT",
+              "reason": "开始2026-12-03T13:30 exact；明示结束未公布，null和原文保留。unknown是语义状态，v8用vague+null；不改原参照或旧解析。",
+              "outputPointer": "wire.timePoints[0:2]"
+            },
+            {
+              "factId": "graph",
+              "verdict": "CORRECT",
+              "reason": "两起止节点均真实归属同一工作坊，0任务；没有报名、额外活动或关系。",
+              "outputPointer": "wire.events[0] and wire.timePoints"
+            },
+            {
+              "factId": "prose",
+              "verdict": "CORRECT",
+              "reason": "逐项查看唯一标题、描述、地点、活动属性、全scopeAccounting、所有数组：都在本原文有依据，无额外实体/义务；学习证明覆盖问题另列entities。",
+              "outputPointer": "wire.*; sourceText"
+            }
+          ],
+          "unregistered": []
+        },
+        "displayBeforeHuman": {
+          "complete": false,
+          "correct": 3,
+          "incorrect": 1,
+          "unknown": 0,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "INCORRECT",
+              "reason": "第一份活动卡片未包含学习证明，只在完整原文/信息scope中保留；冻结参照要求作为该活动信息，用户不应靠翻原文补齐。",
+              "outputPointer": "diagnostic/01.json:decoded.result.events[0].description; paid-browser/SA01-C19-first.txt"
+            },
+            {
+              "factId": "time",
+              "verdict": "CORRECT",
+              "reason": "开始2026-12-03T13:30 exact；明示结束未公布，null和原文保留。unknown是语义状态，v8用vague+null；不改原参照或旧解析。",
+              "outputPointer": "wire.timePoints[0:2]"
+            },
+            {
+              "factId": "graph",
+              "verdict": "CORRECT",
+              "reason": "两起止节点均真实归属同一工作坊，0任务；没有报名、额外活动或关系。",
+              "outputPointer": "wire.events[0] and wire.timePoints"
+            },
+            {
+              "factId": "prose",
+              "verdict": "CORRECT",
+              "reason": "逐项查看唯一标题、描述、地点、活动属性、全scopeAccounting、所有数组：都在本原文有依据，无额外实体/义务；学习证明覆盖问题另列entities。",
+              "outputPointer": "wire.*; sourceText"
+            }
+          ],
+          "unregistered": []
+        },
+        "humanFinal": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        }
+      },
+      "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+    },
+    {
+      "candidate": "Candidate19",
+      "sourceId": "authority-development-SA-02",
+      "version": "public-source-fact-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "stages": {
+        "modelFirstFacts": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "displayBeforeHuman": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "humanFinal": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        }
+      },
+      "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+    },
+    {
+      "candidate": "Candidate19",
+      "sourceId": "authority-development-SA-03",
+      "version": "public-source-fact-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "stages": {
+        "modelFirstFacts": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "displayBeforeHuman": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "humanFinal": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        }
+      },
+      "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+    },
+    {
+      "candidate": "Candidate19",
+      "sourceId": "authority-development-SA-04",
+      "version": "public-source-fact-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "stages": {
+        "modelFirstFacts": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "displayBeforeHuman": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "humanFinal": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        }
+      },
+      "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+    },
+    {
+      "candidate": "SingleAuthority",
+      "sourceId": "authority-development-SA-01",
+      "version": "public-source-fact-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "stages": {
+        "modelFirstFacts": {
+          "complete": true,
+          "correct": 4,
+          "incorrect": 0,
+          "unknown": 0,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "CORRECT",
+              "reason": "0任务1活动；format/participation/outcome均嵌套属于工作坊，有原文依据，不另造活动。",
+              "outputPointer": "wire.events[0].attributes[0:3]"
+            },
+            {
+              "factId": "time",
+              "verdict": "CORRECT",
+              "reason": "开始2026-12-03T13:30 exact；明示结束未公布，null和原文保留。unknown是语义状态，v8用vague+null；不改原参照或旧解析。",
+              "outputPointer": "wire.timePoints[0:2]"
+            },
+            {
+              "factId": "graph",
+              "verdict": "CORRECT",
+              "reason": "两起止节点均真实归属同一工作坊，0任务；没有报名、额外活动或关系。",
+              "outputPointer": "wire.events[0] and wire.timePoints"
+            },
+            {
+              "factId": "prose",
+              "verdict": "CORRECT",
+              "reason": "逐项查看唯一标题、描述、地点、活动属性、全scopeAccounting、所有数组：都在本原文有依据，无额外实体/义务；学习证明覆盖问题另列entities。",
+              "outputPointer": "wire.*; sourceText"
+            }
+          ],
+          "unregistered": []
+        },
+        "displayBeforeHuman": {
+          "complete": false,
+          "correct": 0,
+          "incorrect": 1,
+          "unknown": 3,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "INCORRECT",
+              "reason": "冻结编译器拒绝SINGLE_AUTHORITY_ATTRIBUTE_EVIDENCE，未形成首次建议；原答有事实不等于冻结显示成功。",
+              "outputPointer": "diagnostic/02.json:decodeError"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "冻结拒绝，未形成显示。",
+              "outputPointer": "diagnostic/02.json:decodeError"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "冻结拒绝，未形成显示。",
+              "outputPointer": "diagnostic/02.json:decodeError"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "冻结拒绝，未形成显示。",
+              "outputPointer": "diagnostic/02.json:decodeError"
+            }
+          ],
+          "unregistered": []
+        },
+        "humanFinal": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        }
+      },
+      "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+    },
+    {
+      "candidate": "SingleAuthority",
+      "sourceId": "authority-development-SA-02",
+      "version": "public-source-fact-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "stages": {
+        "modelFirstFacts": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "displayBeforeHuman": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "humanFinal": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        }
+      },
+      "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+    },
+    {
+      "candidate": "SingleAuthority",
+      "sourceId": "authority-development-SA-03",
+      "version": "public-source-fact-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "stages": {
+        "modelFirstFacts": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "displayBeforeHuman": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "humanFinal": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        }
+      },
+      "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+    },
+    {
+      "candidate": "SingleAuthority",
+      "sourceId": "authority-development-SA-04",
+      "version": "public-source-fact-adjudication-1.0.0",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "stages": {
+        "modelFirstFacts": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "displayBeforeHuman": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        },
+        "humanFinal": {
+          "complete": "UNKNOWN",
+          "correct": 0,
+          "incorrect": 0,
+          "unknown": 4,
+          "checks": [
+            {
+              "factId": "entities",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "time",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "graph",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            },
+            {
+              "factId": "prose",
+              "verdict": "UNKNOWN",
+              "reason": "MISSING_OR_INVALID_ADJUDICATION"
+            }
+          ],
+          "unregistered": []
+        }
+      },
+      "comparison": "SINGLE_ARM_CURRENT_BASELINE_NOT_RELATIVE_IMPROVEMENT"
+    }
+  ],
+  "summary": {
+    "Candidate19": {
+      "modelFirstFacts": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      },
+      "displayBeforeHuman": {
+        "correct": 0,
+        "incorrect": 1,
+        "unknown": 3,
+        "denominator": 4
+      },
+      "humanFinal": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      }
+    },
+    "SingleAuthority": {
+      "modelFirstFacts": {
+        "correct": 1,
+        "incorrect": 0,
+        "unknown": 3,
+        "denominator": 4
+      },
+      "displayBeforeHuman": {
+        "correct": 0,
+        "incorrect": 1,
+        "unknown": 3,
+        "denominator": 4
+      },
+      "humanFinal": {
+        "correct": 0,
+        "incorrect": 0,
+        "unknown": 4,
+        "denominator": 4
+      }
+    }
+  },
+  "selection": "EVIDENCE_INCOMPLETE_NO_WINNER",
+  "execution": {
+    "role": "SEALED_BATCH_KNOWN_SETTLED_READ_ONLY",
+    "batch": "C19-SINGLE-AUTHORITY-DEVELOPMENT-R1",
+    "denominator": 8,
+    "verifiedSettled": 2,
+    "units": [
+      {
+        "ordinal": 1,
+        "status": "SETTLED"
+      },
+      {
+        "ordinal": 2,
+        "status": "SETTLED"
+      },
+      {
+        "ordinal": 3,
+        "status": "UNCERTAIN"
+      },
+      {
+        "ordinal": 4,
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 5,
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 6,
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 7,
+        "status": "NOT_SENT"
+      },
+      {
+        "ordinal": 8,
+        "status": "NOT_SENT"
+      }
+    ],
+    "lockExists": true,
+    "haltExists": true,
+    "winner": "EVIDENCE_INCOMPLETE",
+    "modelRequests": 0,
+    "ledgerWrites": 0,
+    "dispatch": "DISABLED_NO_MUTATION_API",
+    "ledger": {
+      "rows": 1015,
+      "sha256": "25f32a95eb28a264c3bec20500cf0b439ab33ad445dddfe8eba243c469c948d9",
+      "tail": "1d56fe14fa715661c06bcc26360650029e468855676039b331a9240bc3f484c2",
+      "batchRows": 6
+    }
+  }
+}

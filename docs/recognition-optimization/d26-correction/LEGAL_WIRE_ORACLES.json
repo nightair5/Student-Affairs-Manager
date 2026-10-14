@@ -1,0 +1,2044 @@
+{
+  "oracles": [
+    {
+      "sourceId": "D26-S01",
+      "wire": {
+        "schemaVersion": "real-input-model-wire-1",
+        "tasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "P1",
+            "type": "event_start",
+            "rawText": "周三晚",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576"
+            ],
+            "confidence": 1
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "图书借阅门户",
+            "description": "",
+            "startTimePointTempId": "P1",
+            "endTimePointTempId": null,
+            "location": null,
+            "scopeIds": [
+              "scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "relatedTaskTempIds": []
+          }
+        ],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576",
+          "scope-0002-fbc0f684895ea64a4aeb4a1ebd8f2efeca080df0cfe9e824f7519bbfbbc59f5a",
+          "scope-0003-180bae71b19d87d18dcd96dd8338f98810756b01ca4b04cdde1d3a92f98b9579",
+          "scope-0004-2ce97682b154157776d68fa5df48643c47b542a8d9e81dabd248f90cbff5312d",
+          "scope-0005-1479de8a6a3df8b8ac60d72f2289a79eb02a6cfa3f2d303e42fcaa4b1f34cf23",
+          "scope-0006-7304b14d42592ffe949f35c934e4e8747d89e5bbb33a6160a84a10009ae29761"
+        ],
+        "unresolvedScopeIds": []
+      },
+      "rawFacts": {
+        "schemaVersion": "real-input-source-facts-3",
+        "tasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "P1",
+            "type": "event_start",
+            "rawText": "周三晚",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576"
+            ],
+            "confidence": 1
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "图书借阅门户",
+            "description": "",
+            "startTimePointTempId": "P1",
+            "endTimePointTempId": null,
+            "location": null,
+            "scopeIds": [
+              "scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "relatedTaskTempIds": []
+          }
+        ],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576",
+          "scope-0002-fbc0f684895ea64a4aeb4a1ebd8f2efeca080df0cfe9e824f7519bbfbbc59f5a",
+          "scope-0003-180bae71b19d87d18dcd96dd8338f98810756b01ca4b04cdde1d3a92f98b9579",
+          "scope-0004-2ce97682b154157776d68fa5df48643c47b542a8d9e81dabd248f90cbff5312d",
+          "scope-0005-1479de8a6a3df8b8ac60d72f2289a79eb02a6cfa3f2d303e42fcaa4b1f34cf23",
+          "scope-0006-7304b14d42592ffe949f35c934e4e8747d89e5bbb33a6160a84a10009ae29761"
+        ],
+        "unresolvedScopeIds": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-9db77cbcd0c61cdf1cc13654084e11bfdd7dd94b8b5fe459709d051c35b0d576",
+            "kind": "event",
+            "entityIds": [
+              "E1"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-fbc0f684895ea64a4aeb4a1ebd8f2efeca080df0cfe9e824f7519bbfbbc59f5a",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0003-180bae71b19d87d18dcd96dd8338f98810756b01ca4b04cdde1d3a92f98b9579",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0004-2ce97682b154157776d68fa5df48643c47b542a8d9e81dabd248f90cbff5312d",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0005-1479de8a6a3df8b8ac60d72f2289a79eb02a6cfa3f2d303e42fcaa4b1f34cf23",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0006-7304b14d42592ffe949f35c934e4e8747d89e5bbb33a6160a84a10009ae29761",
+            "kind": "information",
+            "entityIds": []
+          }
+        ],
+        "prerequisiteStates": []
+      },
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S02",
+      "wire": {
+        "schemaVersion": "real-input-model-wire-1",
+        "tasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "P1",
+            "type": "event_start",
+            "rawText": "周四晚",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-d151e3e81bd149622392c36fa62a4a5f28eee06c7d02335c6b8efead65747573"
+            ],
+            "confidence": 1
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "实验预约系统",
+            "description": "",
+            "startTimePointTempId": "P1",
+            "endTimePointTempId": null,
+            "location": null,
+            "scopeIds": [
+              "scope-0001-d151e3e81bd149622392c36fa62a4a5f28eee06c7d02335c6b8efead65747573"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "relatedTaskTempIds": []
+          }
+        ],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0001-d151e3e81bd149622392c36fa62a4a5f28eee06c7d02335c6b8efead65747573",
+          "scope-0002-b32c35bd233a89f8e008d66998ec3b45867a561b79bc4fce9f1f3664ef3fa5f3",
+          "scope-0003-26a5db2384eee5561f478df8db4d0e67dbad93c18057e1d7ce4b845dcdfbadc1",
+          "scope-0004-a2fc9f22d47c1e5bc289fb948d44f03f912a9c951070c466caa8d966ed1b02d4",
+          "scope-0005-19b40449282892f4114ebeb4e069d89afea3219c6365b321c713d651f1ec00df",
+          "scope-0006-88c3bc8c2bc1caa3cf23b414471f3bf8139c51ef7de6491a72dd0f3bf9279727"
+        ],
+        "unresolvedScopeIds": []
+      },
+      "rawFacts": {
+        "schemaVersion": "real-input-source-facts-3",
+        "tasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "P1",
+            "type": "event_start",
+            "rawText": "周四晚",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-d151e3e81bd149622392c36fa62a4a5f28eee06c7d02335c6b8efead65747573"
+            ],
+            "confidence": 1
+          }
+        ],
+        "events": [
+          {
+            "tempId": "E1",
+            "title": "实验预约系统",
+            "description": "",
+            "startTimePointTempId": "P1",
+            "endTimePointTempId": null,
+            "location": null,
+            "scopeIds": [
+              "scope-0001-d151e3e81bd149622392c36fa62a4a5f28eee06c7d02335c6b8efead65747573"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "relatedTaskTempIds": []
+          }
+        ],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0001-d151e3e81bd149622392c36fa62a4a5f28eee06c7d02335c6b8efead65747573",
+          "scope-0002-b32c35bd233a89f8e008d66998ec3b45867a561b79bc4fce9f1f3664ef3fa5f3",
+          "scope-0003-26a5db2384eee5561f478df8db4d0e67dbad93c18057e1d7ce4b845dcdfbadc1",
+          "scope-0004-a2fc9f22d47c1e5bc289fb948d44f03f912a9c951070c466caa8d966ed1b02d4",
+          "scope-0005-19b40449282892f4114ebeb4e069d89afea3219c6365b321c713d651f1ec00df",
+          "scope-0006-88c3bc8c2bc1caa3cf23b414471f3bf8139c51ef7de6491a72dd0f3bf9279727"
+        ],
+        "unresolvedScopeIds": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-d151e3e81bd149622392c36fa62a4a5f28eee06c7d02335c6b8efead65747573",
+            "kind": "event",
+            "entityIds": [
+              "E1"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-b32c35bd233a89f8e008d66998ec3b45867a561b79bc4fce9f1f3664ef3fa5f3",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0003-26a5db2384eee5561f478df8db4d0e67dbad93c18057e1d7ce4b845dcdfbadc1",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0004-a2fc9f22d47c1e5bc289fb948d44f03f912a9c951070c466caa8d966ed1b02d4",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0005-19b40449282892f4114ebeb4e069d89afea3219c6365b321c713d651f1ec00df",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0006-88c3bc8c2bc1caa3cf23b414471f3bf8139c51ef7de6491a72dd0f3bf9279727",
+            "kind": "information",
+            "entityIds": []
+          }
+        ],
+        "prerequisiteStates": []
+      },
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S03",
+      "wire": {
+        "schemaVersion": "real-input-model-wire-1",
+        "tasks": [
+          {
+            "id": "T1",
+            "propositionScopeIds": [
+              "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f",
+              "scope-0002-95f4b7b5b967a7be61f6cc9f197e55f7171c20c8f054bc4356c290e2c7d0df68",
+              "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "填写",
+              "scopeId": "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f"
+            },
+            "object": {
+              "surface": "社团设备登记表",
+              "scopeId": "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "填写社团设备登记表",
+              "description": "",
+              "completionCriteria": [
+                "登记表必填栏均已填写"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "M1"
+              ],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "T2",
+            "propositionScopeIds": [
+              "scope-0002-95f4b7b5b967a7be61f6cc9f197e55f7171c20c8f054bc4356c290e2c7d0df68",
+              "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806",
+              "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464",
+              "scope-0005-05ff0ce6c5467215449dc6d45d976ac101e8873ee962108f4be56bec9c511002"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "提交",
+              "scopeId": "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806"
+            },
+            "object": {
+              "surface": "社团设备登记表",
+              "scopeId": "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交社团设备登记表",
+              "description": "",
+              "completionCriteria": [
+                "器材室确认收妥登记表"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "T1"
+              ],
+              "materialTempIds": [
+                "M1"
+              ],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "M1",
+            "name": "社团设备登记表",
+            "required": true,
+            "formatRequirements": [
+              "XLSX"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "T1",
+              "T2"
+            ],
+            "scopeIds": [
+              "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464"
+            ],
+            "confidence": 1
+          }
+        ],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": []
+      },
+      "rawFacts": {
+        "schemaVersion": "real-input-source-facts-3",
+        "tasks": [
+          {
+            "id": "T1",
+            "propositionScopeIds": [
+              "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f",
+              "scope-0002-95f4b7b5b967a7be61f6cc9f197e55f7171c20c8f054bc4356c290e2c7d0df68",
+              "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "填写",
+              "scopeId": "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f"
+            },
+            "object": {
+              "surface": "社团设备登记表",
+              "scopeId": "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f"
+            },
+            "effect": "local_change",
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "填写社团设备登记表",
+              "description": "",
+              "completionCriteria": [
+                "登记表必填栏均已填写"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": null,
+              "event": "not_stated"
+            }
+          },
+          {
+            "id": "T2",
+            "propositionScopeIds": [
+              "scope-0002-95f4b7b5b967a7be61f6cc9f197e55f7171c20c8f054bc4356c290e2c7d0df68",
+              "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806",
+              "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464",
+              "scope-0005-05ff0ce6c5467215449dc6d45d976ac101e8873ee962108f4be56bec9c511002"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "提交",
+              "scopeId": "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806"
+            },
+            "object": {
+              "surface": "社团设备登记表",
+              "scopeId": "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806"
+            },
+            "effect": "local_change",
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交社团设备登记表",
+              "description": "",
+              "completionCriteria": [
+                "器材室确认收妥登记表"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "T1"
+              ],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": null,
+              "event": "not_stated"
+            }
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "M1",
+            "name": "社团设备登记表",
+            "required": true,
+            "formatRequirements": [
+              "XLSX"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "T1",
+              "T2"
+            ],
+            "scopeIds": [
+              "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464"
+            ],
+            "confidence": 1
+          }
+        ],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-27dad68e19cb7e99dc2516fd18655402fcc174d71f4e1231eda7caf300a8607f",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-95f4b7b5b967a7be61f6cc9f197e55f7171c20c8f054bc4356c290e2c7d0df68",
+            "kind": "action",
+            "entityIds": [
+              "T1",
+              "T2"
+            ]
+          },
+          {
+            "scopeId": "scope-0003-c0825242dc3ea02667921d27580d92afccbb49cd9d6b1755c28b036be4cf1806",
+            "kind": "action",
+            "entityIds": [
+              "T2"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-0216fd860bb9886aa61f89ad7e533be77f50c57e702d63ec012c9911d4a4d464",
+            "kind": "action",
+            "entityIds": [
+              "T1",
+              "T2"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-05ff0ce6c5467215449dc6d45d976ac101e8873ee962108f4be56bec9c511002",
+            "kind": "action",
+            "entityIds": [
+              "T2"
+            ]
+          }
+        ],
+        "prerequisiteStates": [
+          {
+            "taskId": "T2",
+            "predecessorId": "T1",
+            "completion": "unknown",
+            "factScopeIds": []
+          }
+        ]
+      },
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S04",
+      "wire": {
+        "schemaVersion": "real-input-model-wire-1",
+        "tasks": [
+          {
+            "id": "T1",
+            "propositionScopeIds": [
+              "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f",
+              "scope-0002-c4c7ca50380a21faa010479137c9c8512007d0b16e316028d52d2c3cbad641fb",
+              "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "补全",
+              "scopeId": "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f"
+            },
+            "object": {
+              "surface": "志愿服务汇总表",
+              "scopeId": "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "补全志愿服务汇总表",
+              "description": "",
+              "completionCriteria": [
+                "汇总表必填栏均已补全"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "M1"
+              ],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "T2",
+            "propositionScopeIds": [
+              "scope-0002-c4c7ca50380a21faa010479137c9c8512007d0b16e316028d52d2c3cbad641fb",
+              "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372",
+              "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592",
+              "scope-0005-f8e8a41850f6d533e68997a5e2f272fd683b5a0569d502aec21eef94913498bd"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "提交",
+              "scopeId": "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372"
+            },
+            "object": {
+              "surface": "志愿服务汇总表",
+              "scopeId": "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交志愿服务汇总表",
+              "description": "",
+              "completionCriteria": [
+                "活动组确认收妥汇总表"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "T1"
+              ],
+              "materialTempIds": [
+                "M1"
+              ],
+              "timePointTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "M1",
+            "name": "志愿服务汇总表",
+            "required": true,
+            "formatRequirements": [
+              "PDF"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "T1",
+              "T2"
+            ],
+            "scopeIds": [
+              "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592"
+            ],
+            "confidence": 1
+          }
+        ],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": []
+      },
+      "rawFacts": {
+        "schemaVersion": "real-input-source-facts-3",
+        "tasks": [
+          {
+            "id": "T1",
+            "propositionScopeIds": [
+              "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f",
+              "scope-0002-c4c7ca50380a21faa010479137c9c8512007d0b16e316028d52d2c3cbad641fb",
+              "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "补全",
+              "scopeId": "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f"
+            },
+            "object": {
+              "surface": "志愿服务汇总表",
+              "scopeId": "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f"
+            },
+            "effect": "local_change",
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "补全志愿服务汇总表",
+              "description": "",
+              "completionCriteria": [
+                "汇总表必填栏均已补全"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": null,
+              "event": "not_stated"
+            }
+          },
+          {
+            "id": "T2",
+            "propositionScopeIds": [
+              "scope-0002-c4c7ca50380a21faa010479137c9c8512007d0b16e316028d52d2c3cbad641fb",
+              "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372",
+              "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592",
+              "scope-0005-f8e8a41850f6d533e68997a5e2f272fd683b5a0569d502aec21eef94913498bd"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "提交",
+              "scopeId": "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372"
+            },
+            "object": {
+              "surface": "志愿服务汇总表",
+              "scopeId": "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372"
+            },
+            "effect": "local_change",
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交志愿服务汇总表",
+              "description": "",
+              "completionCriteria": [
+                "活动组确认收妥汇总表"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [
+                "T1"
+              ],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "coverage": {
+              "time": "not_stated",
+              "material": null,
+              "event": "not_stated"
+            }
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "M1",
+            "name": "志愿服务汇总表",
+            "required": true,
+            "formatRequirements": [
+              "PDF"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "T1",
+              "T2"
+            ],
+            "scopeIds": [
+              "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592"
+            ],
+            "confidence": 1
+          }
+        ],
+        "timePoints": [],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-f2e02ceac00b24a6071c9669f6003018fc1804917a07976dce6c6560feb5f86f",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-c4c7ca50380a21faa010479137c9c8512007d0b16e316028d52d2c3cbad641fb",
+            "kind": "action",
+            "entityIds": [
+              "T1",
+              "T2"
+            ]
+          },
+          {
+            "scopeId": "scope-0003-a2ba4f3937b85fe1595ca1e036f9940ea722e70b8ad93d8e4af47856b6425372",
+            "kind": "action",
+            "entityIds": [
+              "T2"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-012c4ed5a24969a6f6f57a707b62c5872a7838e28fee303a86ac8a55f86cb592",
+            "kind": "action",
+            "entityIds": [
+              "T1",
+              "T2"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-f8e8a41850f6d533e68997a5e2f272fd683b5a0569d502aec21eef94913498bd",
+            "kind": "action",
+            "entityIds": [
+              "T2"
+            ]
+          }
+        ],
+        "prerequisiteStates": [
+          {
+            "taskId": "T2",
+            "predecessorId": "T1",
+            "completion": "unknown",
+            "factScopeIds": []
+          }
+        ]
+      },
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S05",
+      "wire": {
+        "schemaVersion": "real-input-model-wire-1",
+        "tasks": [
+          {
+            "id": "T1",
+            "propositionScopeIds": [
+              "scope-0001-fc9e5cb59a0662dbe1b69afbd1602b562816e1e1789760ea5c7a379c316eb8a8",
+              "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145",
+              "scope-0003-561673d3cdc94367b084c1c72bf9fd8d609895860dd302d12a9803f72411012d",
+              "scope-0004-cde07a7eac4475610facb75587e80117bb75e90e9d746fafe7948b4972e39634",
+              "scope-0005-b9c6cd12f3b91ad08785c040083513b576c736dc5adbfc2be03c1e8f6f86a8de"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "递交",
+              "scopeId": "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145"
+            },
+            "object": {
+              "surface": "场地安排单",
+              "scopeId": "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "递交场地安排单",
+              "description": "",
+              "completionCriteria": [
+                "平台显示安排单已收取"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "PT1_0"
+              ],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0001-fc9e5cb59a0662dbe1b69afbd1602b562816e1e1789760ea5c7a379c316eb8a8"
+              ],
+              "factScopeIds": [
+                "scope-0005-b9c6cd12f3b91ad08785c040083513b576c736dc5adbfc2be03c1e8f6f86a8de"
+              ]
+            },
+            "coverage": {
+              "time": "present",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "PT1_0",
+            "type": "planned_start",
+            "rawText": "暂定下周二下午办理",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0004-cde07a7eac4475610facb75587e80117bb75e90e9d746fafe7948b4972e39634"
+            ],
+            "confidence": 1
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0001-fc9e5cb59a0662dbe1b69afbd1602b562816e1e1789760ea5c7a379c316eb8a8",
+          "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145",
+          "scope-0003-561673d3cdc94367b084c1c72bf9fd8d609895860dd302d12a9803f72411012d",
+          "scope-0004-cde07a7eac4475610facb75587e80117bb75e90e9d746fafe7948b4972e39634",
+          "scope-0005-b9c6cd12f3b91ad08785c040083513b576c736dc5adbfc2be03c1e8f6f86a8de"
+        ],
+        "unresolvedScopeIds": []
+      },
+      "rawFacts": {
+        "schemaVersion": "real-input-source-facts-3",
+        "tasks": [
+          {
+            "id": "T1",
+            "propositionScopeIds": [
+              "scope-0001-fc9e5cb59a0662dbe1b69afbd1602b562816e1e1789760ea5c7a379c316eb8a8",
+              "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145",
+              "scope-0003-561673d3cdc94367b084c1c72bf9fd8d609895860dd302d12a9803f72411012d",
+              "scope-0004-cde07a7eac4475610facb75587e80117bb75e90e9d746fafe7948b4972e39634",
+              "scope-0005-b9c6cd12f3b91ad08785c040083513b576c736dc5adbfc2be03c1e8f6f86a8de"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "递交",
+              "scopeId": "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145"
+            },
+            "object": {
+              "surface": "场地安排单",
+              "scopeId": "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145"
+            },
+            "effect": "local_change",
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0001-fc9e5cb59a0662dbe1b69afbd1602b562816e1e1789760ea5c7a379c316eb8a8"
+              ],
+              "factScopeIds": [
+                "scope-0005-b9c6cd12f3b91ad08785c040083513b576c736dc5adbfc2be03c1e8f6f86a8de"
+              ]
+            },
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "递交场地安排单",
+              "description": "",
+              "completionCriteria": [
+                "平台显示安排单已收取"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "coverage": {
+              "time": null,
+              "material": "not_stated",
+              "event": "not_stated"
+            }
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "PT1_0",
+            "type": "planned_start",
+            "rawText": "暂定下周二下午办理",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0004-cde07a7eac4475610facb75587e80117bb75e90e9d746fafe7948b4972e39634"
+            ],
+            "confidence": 1
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0001-fc9e5cb59a0662dbe1b69afbd1602b562816e1e1789760ea5c7a379c316eb8a8",
+          "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145",
+          "scope-0003-561673d3cdc94367b084c1c72bf9fd8d609895860dd302d12a9803f72411012d",
+          "scope-0004-cde07a7eac4475610facb75587e80117bb75e90e9d746fafe7948b4972e39634",
+          "scope-0005-b9c6cd12f3b91ad08785c040083513b576c736dc5adbfc2be03c1e8f6f86a8de"
+        ],
+        "unresolvedScopeIds": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-fc9e5cb59a0662dbe1b69afbd1602b562816e1e1789760ea5c7a379c316eb8a8",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-eb5c503b2fd4b9d319614755b8b9b7023679c85ed9d56a5d40e224841baea145",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0003-561673d3cdc94367b084c1c72bf9fd8d609895860dd302d12a9803f72411012d",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-cde07a7eac4475610facb75587e80117bb75e90e9d746fafe7948b4972e39634",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-b9c6cd12f3b91ad08785c040083513b576c736dc5adbfc2be03c1e8f6f86a8de",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          }
+        ],
+        "prerequisiteStates": []
+      },
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S06",
+      "wire": {
+        "schemaVersion": "real-input-model-wire-1",
+        "tasks": [
+          {
+            "id": "T1",
+            "propositionScopeIds": [
+              "scope-0001-97988ebdfc09774b6e4683f5abe6cbea35bcd274c586ccc271d7dc006d33c063",
+              "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c",
+              "scope-0003-8193cad4aadb318733c461f76880b47a79eed89d76985971954f909a01baa3f4",
+              "scope-0004-ea3ab19d9907bae8c9672d2d8f961a4a875f68a4d63f448ac7d14a934e6aadca",
+              "scope-0005-dbded8aec9876ec2758db080f22fedfb084a859defbf9f8b30a663d133ad7d65"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "提交",
+              "scopeId": "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c"
+            },
+            "object": {
+              "surface": "签到安排表",
+              "scopeId": "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交签到安排表",
+              "description": "",
+              "completionCriteria": [
+                "平台显示安排表已收取"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "PT1_0"
+              ],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0001-97988ebdfc09774b6e4683f5abe6cbea35bcd274c586ccc271d7dc006d33c063"
+              ],
+              "factScopeIds": [
+                "scope-0005-dbded8aec9876ec2758db080f22fedfb084a859defbf9f8b30a663d133ad7d65"
+              ]
+            },
+            "coverage": {
+              "time": "present",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "PT1_0",
+            "type": "planned_start",
+            "rawText": "暂定下周四上午办理",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0004-ea3ab19d9907bae8c9672d2d8f961a4a875f68a4d63f448ac7d14a934e6aadca"
+            ],
+            "confidence": 1
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0001-97988ebdfc09774b6e4683f5abe6cbea35bcd274c586ccc271d7dc006d33c063",
+          "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c",
+          "scope-0003-8193cad4aadb318733c461f76880b47a79eed89d76985971954f909a01baa3f4",
+          "scope-0004-ea3ab19d9907bae8c9672d2d8f961a4a875f68a4d63f448ac7d14a934e6aadca",
+          "scope-0005-dbded8aec9876ec2758db080f22fedfb084a859defbf9f8b30a663d133ad7d65"
+        ],
+        "unresolvedScopeIds": []
+      },
+      "rawFacts": {
+        "schemaVersion": "real-input-source-facts-3",
+        "tasks": [
+          {
+            "id": "T1",
+            "propositionScopeIds": [
+              "scope-0001-97988ebdfc09774b6e4683f5abe6cbea35bcd274c586ccc271d7dc006d33c063",
+              "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c",
+              "scope-0003-8193cad4aadb318733c461f76880b47a79eed89d76985971954f909a01baa3f4",
+              "scope-0004-ea3ab19d9907bae8c9672d2d8f961a4a875f68a4d63f448ac7d14a934e6aadca",
+              "scope-0005-dbded8aec9876ec2758db080f22fedfb084a859defbf9f8b30a663d133ad7d65"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "informational"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "提交",
+              "scopeId": "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c"
+            },
+            "object": {
+              "surface": "签到安排表",
+              "scopeId": "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c"
+            },
+            "effect": "local_change",
+            "condition": {
+              "value": "unknown",
+              "conditionScopeIds": [
+                "scope-0001-97988ebdfc09774b6e4683f5abe6cbea35bcd274c586ccc271d7dc006d33c063"
+              ],
+              "factScopeIds": [
+                "scope-0005-dbded8aec9876ec2758db080f22fedfb084a859defbf9f8b30a663d133ad7d65"
+              ]
+            },
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交签到安排表",
+              "description": "",
+              "completionCriteria": [
+                "平台显示安排表已收取"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "coverage": {
+              "time": null,
+              "material": "not_stated",
+              "event": "not_stated"
+            }
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "PT1_0",
+            "type": "planned_start",
+            "rawText": "暂定下周四上午办理",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0004-ea3ab19d9907bae8c9672d2d8f961a4a875f68a4d63f448ac7d14a934e6aadca"
+            ],
+            "confidence": 1
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [
+          "scope-0001-97988ebdfc09774b6e4683f5abe6cbea35bcd274c586ccc271d7dc006d33c063",
+          "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c",
+          "scope-0003-8193cad4aadb318733c461f76880b47a79eed89d76985971954f909a01baa3f4",
+          "scope-0004-ea3ab19d9907bae8c9672d2d8f961a4a875f68a4d63f448ac7d14a934e6aadca",
+          "scope-0005-dbded8aec9876ec2758db080f22fedfb084a859defbf9f8b30a663d133ad7d65"
+        ],
+        "unresolvedScopeIds": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-97988ebdfc09774b6e4683f5abe6cbea35bcd274c586ccc271d7dc006d33c063",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-c30d247f1b0befdaab59a01ce052af9b45fa9c59eb5845ed6d826ce211819d9c",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0003-8193cad4aadb318733c461f76880b47a79eed89d76985971954f909a01baa3f4",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-ea3ab19d9907bae8c9672d2d8f961a4a875f68a4d63f448ac7d14a934e6aadca",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-dbded8aec9876ec2758db080f22fedfb084a859defbf9f8b30a663d133ad7d65",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          }
+        ],
+        "prerequisiteStates": []
+      },
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S07",
+      "wire": {
+        "schemaVersion": "real-input-model-wire-1",
+        "tasks": [
+          {
+            "id": "T1",
+            "propositionScopeIds": [
+              "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92",
+              "scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49",
+              "scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e",
+              "scope-0004-de291caac73c64db4214c412e2e5fc6750486303641cfa2b6d219561ec6b22b1"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "提交",
+              "scopeId": "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92"
+            },
+            "object": {
+              "surface": "实验物资核对表",
+              "scopeId": "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交实验物资核对表",
+              "description": "",
+              "completionCriteria": [
+                "门户提示收件成功"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "MT1"
+              ],
+              "timePointTempIds": [
+                "PT1_0"
+              ],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "present",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "MT1",
+            "name": "实验物资核对表",
+            "required": true,
+            "formatRequirements": [
+              "PDF格式"
+            ],
+            "namingRequirements": [
+              "实验编号-负责人"
+            ],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "scopeIds": [
+              "scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49",
+              "scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e"
+            ],
+            "confidence": 1
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "PT1_0",
+            "type": "submission_deadline",
+            "rawText": "2026年10月19日16:30前",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92"
+            ],
+            "confidence": 1
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": []
+      },
+      "rawFacts": {
+        "schemaVersion": "real-input-source-facts-3",
+        "tasks": [
+          {
+            "id": "T1",
+            "propositionScopeIds": [
+              "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92",
+              "scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49",
+              "scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e",
+              "scope-0004-de291caac73c64db4214c412e2e5fc6750486303641cfa2b6d219561ec6b22b1"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "提交",
+              "scopeId": "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92"
+            },
+            "object": {
+              "surface": "实验物资核对表",
+              "scopeId": "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92"
+            },
+            "effect": "local_change",
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "提交实验物资核对表",
+              "description": "",
+              "completionCriteria": [
+                "门户提示收件成功"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "coverage": {
+              "time": null,
+              "material": null,
+              "event": "not_stated"
+            }
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "MT1",
+            "name": "实验物资核对表",
+            "required": true,
+            "formatRequirements": [
+              "PDF格式"
+            ],
+            "namingRequirements": [
+              "实验编号-负责人"
+            ],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "scopeIds": [
+              "scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49",
+              "scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e"
+            ],
+            "confidence": 1
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "PT1_0",
+            "type": "submission_deadline",
+            "rawText": "2026年10月19日16:30前",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92"
+            ],
+            "confidence": 1
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-26afc139801e3fd7f2d6fcffac33531a94ba367b510ca9468378dfa6a6bd7e92",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-c5f753dfc84d2bec83bbe9b3540a4a6a87c60d1fa5632273132d5e4436651f49",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0003-d978e01005db330b0550620ec0451827556edba579a7b32a22570733bb58ee1e",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-de291caac73c64db4214c412e2e5fc6750486303641cfa2b6d219561ec6b22b1",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          }
+        ],
+        "prerequisiteStates": []
+      },
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT"
+    },
+    {
+      "sourceId": "D26-S08",
+      "wire": {
+        "schemaVersion": "real-input-model-wire-1",
+        "tasks": [
+          {
+            "id": "T1",
+            "propositionScopeIds": [
+              "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0",
+              "scope-0002-797a3f5f73da8db14000371708e6ee11442163e0d291cb57b46a5f7372bd2f76",
+              "scope-0006-d5bd56ad04a1dffb07de12c35372cc54e58eeaf0c430d3ba969c3b6eb19e86d5"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "核对",
+              "scopeId": "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0"
+            },
+            "object": {
+              "surface": "校园接待岗位",
+              "scopeId": "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "核对校园接待岗位",
+              "description": "",
+              "completionCriteria": [
+                "页面显示核对完成"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [
+                "PT1_0"
+              ],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "present",
+              "material": "not_stated",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          },
+          {
+            "id": "T2",
+            "propositionScopeIds": [
+              "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d",
+              "scope-0004-66957192528b454e5abb6fc482ed6a30a6539b16de1540bfbec5f3ca6dafa5c1",
+              "scope-0005-446b8c2051d8dec40ac685b28f985c080ff624d4c89986ab3990f2284b5fbc48",
+              "scope-0006-d5bd56ad04a1dffb07de12c35372cc54e58eeaf0c430d3ba969c3b6eb19e86d5"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "上传",
+              "scopeId": "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d"
+            },
+            "object": {
+              "surface": "接待安排确认单",
+              "scopeId": "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d"
+            },
+            "effect": "local_change",
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "上传接待安排确认单",
+              "description": "",
+              "completionCriteria": [
+                "平台显示承诺函已收妥"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [
+                "MT2"
+              ],
+              "timePointTempIds": [
+                "PT2_0"
+              ],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "coverage": {
+              "time": "present",
+              "material": "present",
+              "event": "not_stated"
+            },
+            "eventTempIds": []
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "MT2",
+            "name": "接待安排确认单",
+            "required": true,
+            "formatRequirements": [
+              "PDF"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "T2"
+            ],
+            "scopeIds": [
+              "scope-0004-66957192528b454e5abb6fc482ed6a30a6539b16de1540bfbec5f3ca6dafa5c1"
+            ],
+            "confidence": 1
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "PT1_0",
+            "type": "task_deadline",
+            "rawText": "10月20日前",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0"
+            ],
+            "confidence": 1
+          },
+          {
+            "tempId": "PT2_0",
+            "type": "submission_deadline",
+            "rawText": "10月22日前",
+            "relatedTaskTempIds": [
+              "T2"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d"
+            ],
+            "confidence": 1
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": []
+      },
+      "rawFacts": {
+        "schemaVersion": "real-input-source-facts-3",
+        "tasks": [
+          {
+            "id": "T1",
+            "propositionScopeIds": [
+              "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0",
+              "scope-0002-797a3f5f73da8db14000371708e6ee11442163e0d291cb57b46a5f7372bd2f76",
+              "scope-0006-d5bd56ad04a1dffb07de12c35372cc54e58eeaf0c430d3ba969c3b6eb19e86d5"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "核对",
+              "scopeId": "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0"
+            },
+            "object": {
+              "surface": "校园接待岗位",
+              "scopeId": "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0"
+            },
+            "effect": "local_change",
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "核对校园接待岗位",
+              "description": "",
+              "completionCriteria": [
+                "页面显示核对完成"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "coverage": {
+              "time": null,
+              "material": "not_stated",
+              "event": "not_stated"
+            }
+          },
+          {
+            "id": "T2",
+            "propositionScopeIds": [
+              "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d",
+              "scope-0004-66957192528b454e5abb6fc482ed6a30a6539b16de1540bfbec5f3ca6dafa5c1",
+              "scope-0005-446b8c2051d8dec40ac685b28f985c080ff624d4c89986ab3990f2284b5fbc48",
+              "scope-0006-d5bd56ad04a1dffb07de12c35372cc54e58eeaf0c430d3ba969c3b6eb19e86d5"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "other",
+            "action": {
+              "surface": "上传",
+              "scopeId": "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d"
+            },
+            "object": {
+              "surface": "接待安排确认单",
+              "scopeId": "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d"
+            },
+            "effect": "local_change",
+            "condition": {
+              "value": "not_applicable",
+              "conditionScopeIds": [],
+              "factScopeIds": []
+            },
+            "detail": {
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "上传接待安排确认单",
+              "description": "",
+              "completionCriteria": [
+                "平台显示承诺函已收妥"
+              ],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "confidence": 1,
+              "userConfirmationRequired": true
+            },
+            "coverage": {
+              "time": null,
+              "material": null,
+              "event": "not_stated"
+            }
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "MT2",
+            "name": "接待安排确认单",
+            "required": true,
+            "formatRequirements": [
+              "PDF"
+            ],
+            "namingRequirements": [],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "T2"
+            ],
+            "scopeIds": [
+              "scope-0004-66957192528b454e5abb6fc482ed6a30a6539b16de1540bfbec5f3ca6dafa5c1"
+            ],
+            "confidence": 1
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "PT1_0",
+            "type": "task_deadline",
+            "rawText": "10月20日前",
+            "relatedTaskTempIds": [
+              "T1"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0"
+            ],
+            "confidence": 1
+          },
+          {
+            "tempId": "PT2_0",
+            "type": "submission_deadline",
+            "rawText": "10月22日前",
+            "relatedTaskTempIds": [
+              "T2"
+            ],
+            "relatedMaterialTempIds": [],
+            "scopeIds": [
+              "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d"
+            ],
+            "confidence": 1
+          }
+        ],
+        "events": [],
+        "revisions": [],
+        "conflicts": [],
+        "informationScopeIds": [],
+        "unresolvedScopeIds": [],
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-df430ac961b252cd894223c2787efcd808e65bddb59b9623d5cd3110e595ccd0",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-797a3f5f73da8db14000371708e6ee11442163e0d291cb57b46a5f7372bd2f76",
+            "kind": "action",
+            "entityIds": [
+              "T1"
+            ]
+          },
+          {
+            "scopeId": "scope-0003-a63b6c363fd5609fd5e6fb23b62df6d0517bc226c12bdb2340f257f712d6dc4d",
+            "kind": "action",
+            "entityIds": [
+              "T2"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-66957192528b454e5abb6fc482ed6a30a6539b16de1540bfbec5f3ca6dafa5c1",
+            "kind": "action",
+            "entityIds": [
+              "T2"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-446b8c2051d8dec40ac685b28f985c080ff624d4c89986ab3990f2284b5fbc48",
+            "kind": "action",
+            "entityIds": [
+              "T2"
+            ]
+          },
+          {
+            "scopeId": "scope-0006-d5bd56ad04a1dffb07de12c35372cc54e58eeaf0c430d3ba969c3b6eb19e86d5",
+            "kind": "action",
+            "entityIds": [
+              "T1",
+              "T2"
+            ]
+          }
+        ],
+        "prerequisiteStates": []
+      },
+      "role": "ENGINEERING_ORACLE_NOT_MODEL_OUTPUT"
+    }
+  ]
+}

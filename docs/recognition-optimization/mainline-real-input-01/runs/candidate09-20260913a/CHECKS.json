@@ -1,0 +1,109 @@
+{
+  "head": "206722787a5973400903cdbd305cb4cce0073c23",
+  "sources": 74,
+  "protected": 944,
+  "oldEvidence": 607,
+  "candidateFreezeUnchanged": true,
+  "ledger": {
+    "lines": 426,
+    "sha256": "cb8dd5a522282b187d196d3c2bce84282970c66c1f31d79a0d94eb59ca5f0bf5",
+    "tail": "373595db3b1098afc9f1c6a61ee553093429d06d26b7da9ae7ff93e26f53eb2b",
+    "oldPrefixPreserved": true,
+    "totalAttempts": 208
+  },
+  "tests": {
+    "fullOriginal": "target-1789308444655.json",
+    "originalPassed": 1369,
+    "originalFailed": 1,
+    "originalSkipped": 1,
+    "failure": "Acceptance test occupied live user port 6632; no product failure or user service stopped.",
+    "failedLayerRerun": "target-1789309478759.json",
+    "failedLayerPassed": 1,
+    "distinctPassed": 1370,
+    "skipped": 1
+  },
+  "type": "PASS app/node",
+  "lint": "PASS latest lint-1789309597072.log",
+  "build": "PASS temporary candidate09-final-MLLKjq; root.env disabled",
+  "node": "PASS budget/gateway-1789308482113.log",
+  "artifacts": [
+    {
+      "path": "budget-1789308482113.log",
+      "sha256": "deb406f15ebf7f0a643a77f5238aef82d665ad2cd135f6cc62d9dbe82c99ca20"
+    },
+    {
+      "path": "budget09-1789307419518.log",
+      "sha256": "dabf411602240d7f439838d0d64c2f36920a05134428fb7364b07fc3bfcaca03"
+    },
+    {
+      "path": "gateway-1789308482113.log",
+      "sha256": "bdae05fd38ffb809fad4b8fea9501fe8e13f2aba9f830a8fb3abdf9671d71f0e"
+    },
+    {
+      "path": "gateway09-1789307419518.log",
+      "sha256": "cbbe1d332581fa6efac7ebdc85f99853a15d783b79532ab4d5872429614fe736"
+    },
+    {
+      "path": "lint-1789308464840.log",
+      "sha256": "eb89718229db00c8f2e4fb191c32988463b41e75c0895cc91cdbd1cb78e3957d"
+    },
+    {
+      "path": "lint-1789309597072.log",
+      "sha256": "eb89718229db00c8f2e4fb191c32988463b41e75c0895cc91cdbd1cb78e3957d"
+    },
+    {
+      "path": "target-1789307082278.json",
+      "sha256": "c805e9f5165559fc24057c055285d3cc522d61cf38c88bbd6110b212ea276f55"
+    },
+    {
+      "path": "target-1789307615964.json",
+      "sha256": "834dc89786697874853a95ef1b64ba4b802fa7b174518a14141aa82790f66445"
+    },
+    {
+      "path": "target-1789308338483.json",
+      "sha256": "f1b498a9980fd99bdcb702825ab6883e9f6f8e9eeb51bb30fb0b14e813cd23cf"
+    },
+    {
+      "path": "target-1789308375246.json",
+      "sha256": "9fe9c9bdace98a3782192e7356b954c552daaad2ef0e0bd19da1a6cb251dbc86"
+    },
+    {
+      "path": "target-1789308422300.json",
+      "sha256": "2301a6cdb727e2a3937341fc6b7e32f18e441df9fd631386ede9645a766ac7f5"
+    },
+    {
+      "path": "target-1789308444655.json",
+      "sha256": "71890f1bf514e30897c35c9b6010e5a75ace819caf646691f536020fc7d22ffa"
+    },
+    {
+      "path": "target-1789309478759.json",
+      "sha256": "3c3c44a335eb1ed42ea79f8657921350c08951a4b404a4ae1de58a29090d19c5"
+    },
+    {
+      "path": "type-app-1789307084225.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "type-app-1789307617291.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "type-app-1789308454903.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "type-node-1789307084225.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "type-node-1789307617291.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "type-node-1789308454903.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "noProductionDeployment": true,
+  "knownWarnings": "Existing lint/toolchain/chunk warnings retained; not a full dependency audit."
+}

@@ -1,0 +1,126 @@
+{
+  "status": "INCOMPLETE_AUDIT_ONLY",
+  "baseline": "c39f7e814b85acd494dc9c161ee0d24fa4e1d03f",
+  "implementationSnapshot": "IMPLEMENTATION_SNAPSHOT.json",
+  "model": {
+    "newRequests": 8,
+    "historicalRequests": 32,
+    "response200": 8,
+    "retry": 0,
+    "verifier": 0,
+    "repair": 0,
+    "adoption": "NOT_PROMOTED",
+    "reason": "No reduction in notices needing substantive time correction; recent-time entity still incomplete"
+  },
+  "engineering": {
+    "budgetNode": {
+      "pass": 49,
+      "fail": 0
+    },
+    "gatewayNode": {
+      "pass": 47,
+      "fail": 0
+    },
+    "target": {
+      "pass": 39,
+      "fail": 1
+    },
+    "fullVitest": {
+      "pass": 1261,
+      "fail": 1,
+      "skip": 1
+    },
+    "failure": "D01 MAINLINE05_PENDING_REQUEST_NO_RETRY",
+    "typeApp": "PASS_FINAL",
+    "typeNode": "PASS",
+    "lint": {
+      "errors": 0,
+      "warnings": 4
+    },
+    "build": "PASS",
+    "stableBundleIsolation": "PASS",
+    "schemaContract": "PASS",
+    "timeAst": "PASS",
+    "secretScan": {
+      "status": "PASS",
+      "files": 1435
+    },
+    "dependencyAudit": "REUSED_UNCHANGED_DEPENDENCY_EVIDENCE",
+    "nodeServerWorkerHistoricalTests": "REUSED_UNCHANGED_NOT_RERUN",
+    "frameworkEnv": {
+      "configFile": false,
+      "envFile": false,
+      "newEnvDirCacheOutput": true
+    }
+  },
+  "product": {
+    "D01": "BLOCKED_PENDING_OLD_A01_NOT_CHANGED",
+    "D02": "MEMORY_CONFIRM_AND_INDEPENDENT_RELOAD_PASS",
+    "D05": "MEMORY_CONFIRM_AND_INDEPENDENT_RELOAD_PASS",
+    "D03": "MEMORY_VAGUE_PENDING_REJECTION_PASS",
+    "edge": "NOT_COMPLETED_ERR_BLOCKED_BY_CLIENT",
+    "browserNewWrites": 0,
+    "old7Tasks": "NO_BROWSER_WRITE_THIS_TURN; MEMORY_REGRESSION_PRESERVES",
+    "realUserTime": "NOT_RUN",
+    "automaticSelection": "NOT_ENABLED",
+    "export": "UNCHANGED_NOT_RERUN",
+    "ocr": "UNCHANGED_NOT_RERUN"
+  },
+  "protection": {
+    "files": 945,
+    "history": 402,
+    "oldCandidate02": "UNCHANGED",
+    "oldLedgerPrefix": "51_ROWS_BYTE_EXACT",
+    "ledgerRows": 68,
+    "requests": 32,
+    "logPrefix": "BYTE_EXACT",
+    "accountedUpperMicroCny": 3881040,
+    "a01": "HELD_UNKNOWN_3300000_NEVER_RELEASED"
+  },
+  "logs": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/INTEGRATION_ATTEMPT_1.json",
+      "sha256": "ede205a2d4a7951ec5249dfab5df1ad22ad3ae470f15c80305166000655bf473"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/INTEGRATION_ATTEMPT_2.json",
+      "sha256": "3061fbe11aaa1cc0c5a22a285f7645375304891586baa3df2dea90755aa21b41"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/FULL_TEST.json",
+      "sha256": "374eef870072dc0a59a67498112b5c3ecbc62c42882d03c1c7c200f9d406b4af"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/TYPE_APP.log",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/TYPE_NODE.log",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/LINT.log",
+      "sha256": "0aaee72bf38b0a7e4f3dcf155ca5377afb7971608ef9be2c9bfcbf6870196fd2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/BUILD_CHECKS.json",
+      "sha256": "8b6c7eefe61255ad11fecf2b20911cb5663f1f5e737cf665768164e1bd33d752"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/BUDGET_TEST_2.log",
+      "sha256": "ae6fb14a6ea3d5d7777d7996c916a0381da6de9d5a8bb7a870316a576086e649"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate03-20260908a/GATEWAY_TEST_2.log",
+      "sha256": "b14b33de6824d826ac852604406d1524a38145ff8fb944f70ecea703ab2c1153"
+    }
+  ],
+  "git": {
+    "stagedAuditPaths": 43,
+    "rawLogWhitespace": "5 original logs retain extra EOF blank lines; diff --check warnings recorded, no source whitespace issue, logs not rewritten",
+    "delivery": "AUDIT_ONLY_SOURCE_UNCOMMITTED",
+    "commit": "RECORDED_BY_GIT_NOT_SELF_REFERENTIAL",
+    "forcePush": false,
+    "rebase": false
+  }
+}

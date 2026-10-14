@@ -1,0 +1,84 @@
+{
+  "type": "AUDIT_ONLY_NOT_BUSINESS_DELIVERY",
+  "commit": "7f58758e100dda8cab9c997e18865388489e1b6f",
+  "remoteVerified": "7f58758e100dda8cab9c997e18865388489e1b6f",
+  "branch": "codex/e2-multimodal-recognition-exp",
+  "files": [
+    {
+      "path": "docs/recognition-optimization/CURRENT_CONTEXT.md",
+      "workingSha256": "7d15a3ed99d4b82347272671a043f5f127bc359639fa5a64115cf6a5d5df71d0",
+      "gitStoredSha256": "7d15a3ed99d4b82347272671a043f5f127bc359639fa5a64115cf6a5d5df71d0"
+    },
+    {
+      "path": "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+      "workingSha256": "ba4791b38765152a8edb65a183e93d096a9dc633c2434b9e5256aae67a7d7d63",
+      "gitStoredSha256": "ba4791b38765152a8edb65a183e93d096a9dc633c2434b9e5256aae67a7d7d63"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/material-review-20260913a/AUDIT.md",
+      "workingSha256": "fb2adccdcda636c8abdd5cae0ae1b7db192421975cc29c0d1a4d6acacb0e3d47",
+      "gitStoredSha256": "fb2adccdcda636c8abdd5cae0ae1b7db192421975cc29c0d1a4d6acacb0e3d47"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/material-review-20260913a/CHECKS.json",
+      "workingSha256": "49670907409d5a9c74e0897d3904cc7e67db5001470af749b155bfb3d7c3e619",
+      "gitStoredSha256": "49670907409d5a9c74e0897d3904cc7e67db5001470af749b155bfb3d7c3e619"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/material-review-20260913a/NEXT_SCOPE.json",
+      "workingSha256": "3574a0f431a7ad26d138b12f502deaa9c4aa41816eba3adad09c22bfcc5113b8",
+      "gitStoredSha256": "3574a0f431a7ad26d138b12f502deaa9c4aa41816eba3adad09c22bfcc5113b8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/material-review-20260913a/REPRO.json",
+      "workingSha256": "7a568d582292e6d0e96a2df2d86377f660071f59fa81a2b041e6cf79441201d4",
+      "gitStoredSha256": "7a568d582292e6d0e96a2df2d86377f660071f59fa81a2b041e6cf79441201d4"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/material-review-20260913a/REPRO.mjs",
+      "workingSha256": "50a45e87cd197d3dd2475775cd29af179ee61d1061e061e87aa7d83742318b25",
+      "gitStoredSha256": "50a45e87cd197d3dd2475775cd29af179ee61d1061e061e87aa7d83742318b25"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/material-review-20260913a/ROOT_TRACE.json",
+      "workingSha256": "f8d94da979edabf5965f2a6377ffa2105dd381a83fd8515c2a1c319ecc4fd116",
+      "gitStoredSha256": "f8d94da979edabf5965f2a6377ffa2105dd381a83fd8515c2a1c319ecc4fd116"
+    }
+  ],
+  "preservedUncommitted": [
+    {
+      "path": "src/experiments/mainline05/semanticState.ts",
+      "sha256": "d0326a0a7f06ca643f7ce307c5ceaad3b748fc7fbae095d0738abf68fd9912c7"
+    },
+    {
+      "path": "src/experiments/mainline05/semanticRepository.ts",
+      "sha256": "1259aa87d947fa278e5a1bdd98ab1c516504562f9c948a474a936c13126fa1ee"
+    },
+    {
+      "path": "src/experiments/realInput01/browser.tsx",
+      "sha256": "9d47185b698da500732fd31ca897229f5636dbab27f35a393daaee7557174ff0"
+    },
+    {
+      "path": "src/experiments/realInput01/runtime.ts",
+      "sha256": "687e0a41c967f76750291ab227de588fd63b30c3d8dd3e70e541cc0301a7ffa9"
+    },
+    {
+      "path": "src/experiments/realInput01/acceptance.test.tsx",
+      "sha256": "8bc45a6bbfa8877ad0bb048846a178fc80b28be84b62e03fb462f74509c02b0b"
+    },
+    {
+      "path": "scripts/build-real-input-preview.mjs",
+      "sha256": "719c34f9f52881374fc1e9bef72bd3a727ee98b0d1427aa0c761b6c5347fbac2"
+    },
+    {
+      "path": "cloudflare/real-input-preview.mjs",
+      "sha256": "280a54bcf03156718de6e15c47ebda3537f7b198cdb4292bc59e9881c59823d4"
+    }
+  ],
+  "featureStatus": "SCOPE_BLOCKED",
+  "nextScope": "NEXT_SCOPE.json: six exceptions requested, not authorized",
+  "modelCalls": 0,
+  "deployment": false,
+  "browserVerification": "NOT_RUN",
+  "receiptNote": "Receipt committed separately; final receipt HEAD verified in chat. Working bytes and Git stored bytes are separate."
+}

@@ -1,0 +1,93 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ ❯ src/experiments/realInput01/acceptance.test.tsx (61 tests | 2 failed) 107523ms
+   × paired07 actual recorded response boundary; memory only, not browser acceptance > R11-07 retains raw, failures and prior records, never dispatches or auto-confirms 39ms
+     → MAINLINE05_PAIRED_RECORDED_PROFILE
+   × paired07 actual recorded response boundary; memory only, not browser acceptance > R12-07 retains raw, failures and prior records, never dispatches or auto-confirms 14ms
+     → MAINLINE05_PAIRED_RECORDED_PROFILE
+   ✓ paired07 actual recorded response boundary; memory only, not browser acceptance > only the two selected R responses are public, write/model endpoints remain closed 75ms
+   ✓ HTTPS preview > real runtime picker opens both examples via the existing App callback without refreshing or dispatching  594ms
+   ✓ HTTPS preview > read/identity failures never open a panel or write; UI-open failure retains a recoverable single draft 128ms
+   ✓ HTTPS preview > existing App onDraftReady refreshes canonical view and selects the returned draft without page reload 287ms
+   ✓ HTTPS preview > Q01-06 preserves original identities and explicitly confirms in the new store  1297ms
+   ✓ HTTPS preview > Q07-06 preserves original identities and explicitly confirms in the new store  644ms
+   ✓ HTTPS preview > requires explicit preview profile and retains old recorded initial/name restrictions 2ms
+   ✓ HTTPS preview > Worker exposes only approved static responses and rejects all model/writing requests 73ms
+   ✓ paired06 existing wire recorded boundary > Q01-06 actual settled answer confirms reviewed tasks and independently reloads in memory  913ms
+   ✓ paired06 existing wire recorded boundary > Q07-06 actual settled answer confirms reviewed tasks and independently reloads in memory  544ms
+   ✓ paired06 existing wire recorded boundary > Q03-06 actual settled answer confirms reviewed tasks and independently reloads in memory 246ms
+   ✓ paired06 existing wire recorded boundary > 03 same existing wire stays unselected until actual review, confirms and reloads without dispatch 195ms
+   ✓ paired06 existing wire recorded boundary > 06 same existing wire stays unselected until actual review, confirms and reloads without dispatch 200ms
+   ✓ paired06 existing wire recorded boundary > rejects mismatched version, unit, source and response before any persisted write 48ms
+   ✓ paired06 existing wire recorded boundary > rolls back failed append; valid retry of local replay preserves all pre-existing entities 135ms
+   ✓ paired05 new model recorded boundary > P01-03 true response, manual review, confirm and independent memory reload without a model  927ms
+   ✓ paired05 new model recorded boundary > P05-05 true response, manual review, confirm and independent memory reload without a model  305ms
+   ✓ paired05 new model recorded boundary > P03-03 true response, manual review, confirm and independent memory reload without a model 191ms
+   ✓ paired05 new model recorded boundary > invalid assembly, response identity and duplicate other arm refuse without changing prior records  498ms
+   ✓ paired05 new model recorded boundary > new wire transaction failure is atomic, then a valid positive response succeeds 141ms
+   ✓ paired04 recorded source append > retains original source and response; no queued or dispatchable state, duplicate arm rejected 138ms
+   ✓ paired04 recorded source append > identity, request, response and recomputed source mismatch reject without writing 22ms
+   ✓ paired04 recorded source append > atomic failure leaves no source, run, draft or task; valid response then succeeds 170ms
+   ✓ paired04 recorded source append > adds distinct complex sources without changing any old record, and never confirms by loading  1016ms
+   ✓ explicit pending date confirmation > saves source-bound missing vague time without overwriting the real answer or existing nine tasks  10770ms
+   ✓ explicit pending date confirmation > source, ownership, stale edits and atomic consent boundaries reject without changing the workspace  8397ms
+   ✓ explicit pending date confirmation > targeted safety review: only date uncertainty qualifies, never references, conflicts, conditions, revisions or dependencies  3186ms
+   ✓ candidate03 recorded response integration, no model requests > rejects source/run/version/request/response substitution before any write  2035ms
+   ✓ candidate03 recorded response integration, no model requests > failed transaction rolls back the entire import; successful retry of local save is terminal and duplicate-safe  5824ms
+   ✓ candidate03 recorded response integration, no model requests > D01 preserves originals and confirms only reviewed expressible facts  8923ms
+   ✓ candidate03 recorded response integration, no model requests > D02 preserves originals and confirms only reviewed expressible facts  5964ms
+   ✓ candidate03 recorded response integration, no model requests > D03 preserves originals and confirms only reviewed expressible facts  3242ms
+   ✓ candidate03 recorded response integration, no model requests > D05 preserves originals and confirms only reviewed expressible facts  6934ms
+   ✓ read-close local review without model authorization > real runtime opens InputReview and saves independent corrections, while its send handler rejects before any run  2320ms
+   ✓ candidate02 paid records replay without a model request > the candidate02 launcher exposes local carriers but keeps all upstream sending disabled  824ms
+   ✓ candidate02 paid records replay without a model request > C03 creates a separately identified run and confirms valid tasks without overwriting old work  3807ms
+   ✓ candidate02 paid records replay without a model request > C05 creates a separately identified run and confirms valid tasks without overwriting old work  6917ms
+   ✓ candidate02 paid records replay without a model request > C08 creates a separately identified run and confirms valid tasks without overwriting old work  7269ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; separate confirmation preserves two different deadlines  3136ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; batch confirmation preserves two different deadlines  2544ms
+   ✓ complex notice correction public API, original model answers remain immutable > A08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved  1392ms
+   ✓ complex notice correction public API, original model answers remain immutable > B08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved  1419ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > batch actual recorded responses retain raw and first suggestions, never default select, preserve A02 and reject identity substitution  10564ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > real-input source description changes only the review banner; engineering and ordinary defaults remain 40ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > actual App forwards an existing description only for the real-input runtime 273ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > actual browser open wrapper rejects creation/upgrade events before legacy handlers, retains existing and old-default opens 268ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > original A02 real App driver preserves provenance, material observation and explicit edits through independent reload  1059ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > recorded runtime rejects replacement database initialization and missing original storage 0ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > recorded launcher builds real App, serves only bound A02 and rejects unauthorized endpoints without model code  761ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > the input renderer is a React component retaining original text without invoking save callbacks during render 5ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > the fact editor render preserves saved facts and does not publish dirty or saved notifications during render 33ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > real homepage retains dates and explains review before any send; old presentation remains 2ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > mounts the actual App with isolated capabilities and does not read old storage 4ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: no-date 100ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: multi  366ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: condition-true 122ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: revision 123ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > a failed executor is terminal, no retry; missing or malformed database never falls back 18ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > client sends exactly the bound text request once, then refuses duplicate or changed input 31ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired07 actual recorded response boundary; memory only, not browser acceptance > R11-07 retains raw, failures and prior records, never dispatches or auto-confirms
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > paired07 actual recorded response boundary; memory only, not browser acceptance > R12-07 retains raw, failures and prior records, never dispatches or auto-confirms
+Error: MAINLINE05_PAIRED_RECORDED_PROFILE
+ ❯ assert src/experiments/mainline05/semanticState.ts:100:25
+     98| export const json = (value: unknown): JsonValue => plainJson(value) as…
+     99| export function assert(condition: unknown, code: string): asserts cond…
+    100|   if (!condition) throw Error('MAINLINE05_' + code)
+       |                         ^
+    101| }
+    102| export function exactKeys(value: object, keys: string[]) {
+ ❯ SemanticRepository.appendPairedRecordedSource src/experiments/mainline05/semanticRepository.ts:185:5
+ ❯ replayRecordedPaired04 src/experiments/realInput01/runtime.ts:134:15
+ ❯ openHttpsPreviewExample src/experiments/realInput01/runtime.ts:74:15
+ ❯ src/experiments/realInput01/acceptance.test.tsx:67:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 59 passed (61)
+   Start at  15:58:47
+   Duration  109.41s (transform 820ms, setup 0ms, collect 1.31s, tests 107.52s, environment 0ms, prepare 252ms)
+

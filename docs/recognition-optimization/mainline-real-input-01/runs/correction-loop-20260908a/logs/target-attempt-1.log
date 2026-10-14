@@ -1,0 +1,87 @@
+TEMP C:\Users\Winner\AppData\Local\Temp\real-correction-qHiBFw
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ ✓ src/experiments/realInput01/factCorrections.test.ts (20 tests) 53ms
+ ❯ src/experiments/realInput01/acceptance.test.tsx (21 tests | 4 failed) 18857ms
+   × complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; separate confirmation preserves two different deadlines 465ms
+     → NON_JSON_LIMIT
+   × complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; batch confirmation preserves two different deadlines 320ms
+     → NON_JSON_LIMIT
+   × complex notice correction public API, original model answers remain immutable > A08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved 302ms
+     → NON_JSON_LIMIT
+   × complex notice correction public API, original model answers remain immutable > B08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved 304ms
+     → expected true to be false // Object.is equality
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > batch actual recorded responses retain raw and first suggestions, never default select, preserve A02 and reject identity substitution  11360ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > real-input source description changes only the review banner; engineering and ordinary defaults remain 51ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > actual App forwards an existing description only for the real-input runtime  314ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > actual browser open wrapper rejects creation/upgrade events before legacy handlers, retains existing and old-default opens 276ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > original A02 real App driver preserves provenance, material observation and explicit edits through independent reload  1210ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > recorded runtime rejects replacement database initialization and missing original storage 1ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > recorded launcher builds real App, serves only bound A02 and rejects unauthorized endpoints without model code  3357ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > the input renderer is a React component retaining original text without invoking save callbacks during render 6ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > the fact editor render preserves saved facts and does not publish dirty or saved notifications during render 46ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > real homepage retains dates and explains review before any send; old presentation remains 1ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > mounts the actual App with isolated capabilities and does not read old storage 5ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: no-date 106ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: multi  341ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: condition-true 139ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: revision 174ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > a failed executor is terminal, no retry; missing or malformed database never falls back 26ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > client sends exactly the bound text request once, then refuses duplicate or changed input 49ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; separate confirmation preserves two different deadlines
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; batch confirmation preserves two different deadlines
+Error: NON_JSON_LIMIT
+ ❯ visit src/experiments/mainline04/semanticContract.ts:89:71
+     87|     if (++nodes > 50000 || depth > 35) throw new Error('NON_JSON_LIMIT…
+     88|     if (value === null || typeof value === 'boolean') return
+     89|     if (typeof value === 'string') { if (value.length > 100000) throw …
+       |                                                                       ^
+     90|     if (typeof value === 'number' && Number.isFinite(value)) return
+     91|     if (typeof value !== 'object' || !value || ancestors.has(value)) t…
+ ❯ visit src/experiments/mainline04/semanticContract.ts:103:7
+ ❯ plainJson src/experiments/mainline04/semanticContract.ts:107:3
+ ❯ correctSemanticFact src/experiments/mainline05/semanticConfirmation.ts:122:18
+ ❯ src/experiments/realInput01/acceptance.test.tsx:53:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > complex notice correction public API, original model answers remain immutable > A08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved
+Error: NON_JSON_LIMIT
+ ❯ visit src/experiments/mainline04/semanticContract.ts:89:71
+     87|     if (++nodes > 50000 || depth > 35) throw new Error('NON_JSON_LIMIT…
+     88|     if (value === null || typeof value === 'boolean') return
+     89|     if (typeof value === 'string') { if (value.length > 100000) throw …
+       |                                                                       ^
+     90|     if (typeof value === 'number' && Number.isFinite(value)) return
+     91|     if (typeof value !== 'object' || !value || ancestors.has(value)) t…
+ ❯ visit src/experiments/mainline04/semanticContract.ts:103:7
+ ❯ plainJson src/experiments/mainline04/semanticContract.ts:107:3
+ ❯ correctSemanticFact src/experiments/mainline05/semanticConfirmation.ts:122:18
+ ❯ src/experiments/realInput01/acceptance.test.tsx:76:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > complex notice correction public API, original model answers remain immutable > B08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/experiments/realInput01/acceptance.test.tsx:75:38
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  4 failed | 37 passed (41)
+   Start at  09:40:20
+   Duration  20.50s (transform 741ms, setup 0ms, collect 1.28s, tests 18.91s, environment 0ms, prepare 450ms)
+

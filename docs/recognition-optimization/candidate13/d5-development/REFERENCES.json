@@ -1,0 +1,2665 @@
+{
+  "version": "candidate13-d5r1-references-1.1.0",
+  "status": "FROZEN_MODEL_ASSISTED_REFERENCES",
+  "generatedAt": "2026-09-22T02:36:22.970Z",
+  "evaluationRole": "SYNTHETIC_DEVELOPMENT",
+  "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+  "eligibleForIndependentHoldout": false,
+  "references": [
+    {
+      "sourceId": "C13-D5R1-S01",
+      "referenceSha256": "e8c25b885984cc3a3d71827556eee5cd22979ad6d6fe4e756b0fc2c77a1ba718",
+      "compiledSha256": "7dceebe1a1698c5b6527b6e9aa5b6c903af562ac93b284599ad861e485b6b91f",
+      "reference": {
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "referenceVersion": "C13-D5R1-S01-reference-v1",
+        "sourceId": "C13-D5R1-S01",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "provenance": {
+          "labelerAStatus": "CODEX_MODEL_ASSISTED_AUTHOR",
+          "reviewerBStatus": "NOT_INDEPENDENT_NOT_REVIEWED",
+          "modelAssistanceUsed": true
+        },
+        "tasks": [
+          {
+            "referenceTaskId": "T1",
+            "actions": [
+              "归档"
+            ],
+            "objects": [
+              "研究伦理声明"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "归档",
+                "object": "研究伦理声明"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "归档"
+              ],
+              "objectEvidence": [
+                "研究伦理声明"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [
+              {
+                "materialId": "M1",
+                "names": [
+                  "研究伦理声明"
+                ],
+                "required": true,
+                "formatRequirements": [
+                  "PDF/A"
+                ],
+                "namingRequirements": [
+                  "课题号-负责人"
+                ],
+                "relatedReferenceTaskIds": [
+                  "T1"
+                ],
+                "evidence": [
+                  "研究伦理声明"
+                ]
+              }
+            ],
+            "timePoints": [
+              {
+                "timePointId": "TP1",
+                "rawTexts": [
+                  "2026年10月19日16:30前"
+                ],
+                "type": "deadline",
+                "normalizedValues": [
+                  "2026-10-19T16:30"
+                ],
+                "precision": "exact",
+                "actionable": true,
+                "relatedReferenceTaskIds": [
+                  "T1"
+                ],
+                "evidence": [
+                  "2026年10月19日16:30前"
+                ]
+              }
+            ],
+            "completionStandard": {
+              "accepted": [
+                "系统显示归档完成"
+              ],
+              "evidence": [
+                "系统显示归档完成"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S01-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 1
+          }
+        ]
+      },
+      "compiledReference": {
+        "version": "candidate13-scorer-input-4.1.0",
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "compilerVersion": "candidate13-reference-compiler-4.1.0",
+        "sourceId": "C13-D5R1-S01",
+        "referenceVersion": "C13-D5R1-S01-reference-v1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "inputSha256": "e8c25b885984cc3a3d71827556eee5cd22979ad6d6fe4e756b0fc2c77a1ba718",
+        "tasks": [
+          {
+            "id": "T1",
+            "actionObjectAliases": [
+              {
+                "action": "归档",
+                "object": "研究伦理声明"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": true,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "系统显示归档完成"
+              ],
+              "materials": [
+                {
+                  "name": "研究伦理声明",
+                  "required": true,
+                  "formatRequirements": [
+                    "PDF/A"
+                  ],
+                  "namingRequirements": [
+                    "课题号-负责人"
+                  ]
+                }
+              ],
+              "timePoints": [
+                {
+                  "rawTexts": [
+                    "2026年10月19日16:30前"
+                  ],
+                  "normalizedValues": [
+                    "2026-10-19T16:30"
+                  ],
+                  "type": "deadline",
+                  "precision": "exact"
+                }
+              ],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S01-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 1
+          }
+        ],
+        "boundary": {
+          "strictUnexpectedFacts": true,
+          "deterministicAmbiguityDisposition": "ADJUDICATION_REQUIRED",
+          "candidateDataUsedDuringCompilation": false,
+          "eligibleForIndependentHoldout": false
+        },
+        "compiledSha256": "7dceebe1a1698c5b6527b6e9aa5b6c903af562ac93b284599ad861e485b6b91f"
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S02",
+      "referenceSha256": "2e394001edb38a2a35bdbc2290ebd7fe9a849cb32fa65c479745acebed60ca85",
+      "compiledSha256": "c7b7613299066cf7b79415c16aa3d4a7f4f8bec4429f4463c8a91f0a0aa037d3",
+      "reference": {
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "referenceVersion": "C13-D5R1-S02-reference-v1",
+        "sourceId": "C13-D5R1-S02",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "provenance": {
+          "labelerAStatus": "CODEX_MODEL_ASSISTED_AUTHOR",
+          "reviewerBStatus": "NOT_INDEPENDENT_NOT_REVIEWED",
+          "modelAssistanceUsed": true
+        },
+        "tasks": [
+          {
+            "referenceTaskId": "T1",
+            "actions": [
+              "确认"
+            ],
+            "objects": [
+              "竞赛队伍信息"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "确认",
+                "object": "竞赛队伍信息"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "确认"
+              ],
+              "objectEvidence": [
+                "竞赛队伍信息"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [],
+            "timePoints": [
+              {
+                "timePointId": "TP1",
+                "rawTexts": [
+                  "10月20日前"
+                ],
+                "type": "deadline",
+                "normalizedValues": [
+                  "2026-10-20"
+                ],
+                "precision": "date_only",
+                "actionable": true,
+                "relatedReferenceTaskIds": [
+                  "T1"
+                ],
+                "evidence": [
+                  "10月20日前"
+                ]
+              }
+            ],
+            "completionStandard": {
+              "accepted": [
+                "页面显示确认完成"
+              ],
+              "evidence": [
+                "页面显示确认完成"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          },
+          {
+            "referenceTaskId": "T2",
+            "actions": [
+              "上传"
+            ],
+            "objects": [
+              "监护人知情书"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "上传",
+                "object": "监护人知情书"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "上传"
+              ],
+              "objectEvidence": [
+                "监护人知情书"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [
+              {
+                "materialId": "M1",
+                "names": [
+                  "监护人知情书"
+                ],
+                "required": true,
+                "formatRequirements": [
+                  "JPG"
+                ],
+                "namingRequirements": [],
+                "relatedReferenceTaskIds": [
+                  "T2"
+                ],
+                "evidence": [
+                  "监护人知情书"
+                ]
+              }
+            ],
+            "timePoints": [
+              {
+                "timePointId": "TP2",
+                "rawTexts": [
+                  "10月22日前"
+                ],
+                "type": "deadline",
+                "normalizedValues": [
+                  "2026-10-22"
+                ],
+                "precision": "date_only",
+                "actionable": true,
+                "relatedReferenceTaskIds": [
+                  "T2"
+                ],
+                "evidence": [
+                  "10月22日前"
+                ]
+              }
+            ],
+            "completionStandard": {
+              "accepted": [
+                "平台显示知情书已接收"
+              ],
+              "evidence": [
+                "平台显示知情书已接收"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S02-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 2
+          }
+        ]
+      },
+      "compiledReference": {
+        "version": "candidate13-scorer-input-4.1.0",
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "compilerVersion": "candidate13-reference-compiler-4.1.0",
+        "sourceId": "C13-D5R1-S02",
+        "referenceVersion": "C13-D5R1-S02-reference-v1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "inputSha256": "2e394001edb38a2a35bdbc2290ebd7fe9a849cb32fa65c479745acebed60ca85",
+        "tasks": [
+          {
+            "id": "T1",
+            "actionObjectAliases": [
+              {
+                "action": "确认",
+                "object": "竞赛队伍信息"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": true,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "页面显示确认完成"
+              ],
+              "materials": [],
+              "timePoints": [
+                {
+                  "rawTexts": [
+                    "10月20日前"
+                  ],
+                  "normalizedValues": [
+                    "2026-10-20"
+                  ],
+                  "type": "deadline",
+                  "precision": "date_only"
+                }
+              ],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          },
+          {
+            "id": "T2",
+            "actionObjectAliases": [
+              {
+                "action": "上传",
+                "object": "监护人知情书"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": true,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "平台显示知情书已接收"
+              ],
+              "materials": [
+                {
+                  "name": "监护人知情书",
+                  "required": true,
+                  "formatRequirements": [
+                    "JPG"
+                  ],
+                  "namingRequirements": []
+                }
+              ],
+              "timePoints": [
+                {
+                  "rawTexts": [
+                    "10月22日前"
+                  ],
+                  "normalizedValues": [
+                    "2026-10-22"
+                  ],
+                  "type": "deadline",
+                  "precision": "date_only"
+                }
+              ],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S02-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 2
+          }
+        ],
+        "boundary": {
+          "strictUnexpectedFacts": true,
+          "deterministicAmbiguityDisposition": "ADJUDICATION_REQUIRED",
+          "candidateDataUsedDuringCompilation": false,
+          "eligibleForIndependentHoldout": false
+        },
+        "compiledSha256": "c7b7613299066cf7b79415c16aa3d4a7f4f8bec4429f4463c8a91f0a0aa037d3"
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S03",
+      "referenceSha256": "c1c10a03fe673fdd7ab80ffb17e5117d86a80861627ad3b6191587405859035e",
+      "compiledSha256": "af9bffb6162dd374f7d1182d6e52b04c3bbda05acfafd53b7ae6dd0b12d31ff0",
+      "reference": {
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "referenceVersion": "C13-D5R1-S03-reference-v1",
+        "sourceId": "C13-D5R1-S03",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "provenance": {
+          "labelerAStatus": "CODEX_MODEL_ASSISTED_AUTHOR",
+          "reviewerBStatus": "NOT_INDEPENDENT_NOT_REVIEWED",
+          "modelAssistanceUsed": true
+        },
+        "tasks": [
+          {
+            "referenceTaskId": "T1",
+            "actions": [
+              "领取"
+            ],
+            "objects": [
+              "实验室门禁卡"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "领取",
+                "object": "实验室门禁卡"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "领取"
+              ],
+              "objectEvidence": [
+                "实验室门禁卡"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": true,
+            "condition": {
+              "value": "true",
+              "evidence": [
+                "你的入场申请已获批准"
+              ]
+            },
+            "materials": [],
+            "timePoints": [
+              {
+                "timePointId": "TP1",
+                "rawTexts": [
+                  "10月16日11:30前"
+                ],
+                "type": "deadline",
+                "normalizedValues": [
+                  "2026-10-16T11:30"
+                ],
+                "precision": "exact",
+                "actionable": true,
+                "relatedReferenceTaskIds": [
+                  "T1"
+                ],
+                "evidence": [
+                  "10月16日11:30前"
+                ]
+              }
+            ],
+            "completionStandard": {
+              "accepted": [
+                "在领取册签字"
+              ],
+              "evidence": [
+                "在领取册签字"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S03-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 1
+          }
+        ]
+      },
+      "compiledReference": {
+        "version": "candidate13-scorer-input-4.1.0",
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "compilerVersion": "candidate13-reference-compiler-4.1.0",
+        "sourceId": "C13-D5R1-S03",
+        "referenceVersion": "C13-D5R1-S03-reference-v1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "inputSha256": "c1c10a03fe673fdd7ab80ffb17e5117d86a80861627ad3b6191587405859035e",
+        "tasks": [
+          {
+            "id": "T1",
+            "actionObjectAliases": [
+              {
+                "action": "领取",
+                "object": "实验室门禁卡"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": true,
+              "conditionValue": "true",
+              "completionStandard": [
+                "在领取册签字"
+              ],
+              "materials": [],
+              "timePoints": [
+                {
+                  "rawTexts": [
+                    "10月16日11:30前"
+                  ],
+                  "normalizedValues": [
+                    "2026-10-16T11:30"
+                  ],
+                  "type": "deadline",
+                  "precision": "exact"
+                }
+              ],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S03-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 1
+          }
+        ],
+        "boundary": {
+          "strictUnexpectedFacts": true,
+          "deterministicAmbiguityDisposition": "ADJUDICATION_REQUIRED",
+          "candidateDataUsedDuringCompilation": false,
+          "eligibleForIndependentHoldout": false
+        },
+        "compiledSha256": "af9bffb6162dd374f7d1182d6e52b04c3bbda05acfafd53b7ae6dd0b12d31ff0"
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S04",
+      "referenceSha256": "e2ceed3fe021c9062f0a7d9281f5b6b3c6a8d3c33713c260d690a72401cdcdfb",
+      "compiledSha256": "797ea8b6c786f1715906254a4c9069c5a118773780b409d17264d9fe060cbb0a",
+      "reference": {
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "referenceVersion": "C13-D5R1-S04-reference-v1",
+        "sourceId": "C13-D5R1-S04",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "provenance": {
+          "labelerAStatus": "CODEX_MODEL_ASSISTED_AUTHOR",
+          "reviewerBStatus": "NOT_INDEPENDENT_NOT_REVIEWED",
+          "modelAssistanceUsed": true
+        },
+        "tasks": [
+          {
+            "referenceTaskId": "T1",
+            "actions": [
+              "参加"
+            ],
+            "objects": [
+              "作品复评陈述"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "参加",
+                "object": "作品复评陈述"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "参加"
+              ],
+              "objectEvidence": [
+                "作品复评陈述"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": false,
+            "condition": {
+              "value": "false",
+              "evidence": [
+                "你的作品未进入复评名单"
+              ]
+            },
+            "materials": [],
+            "timePoints": [],
+            "completionStandard": {
+              "accepted": [
+                "完成作品复评陈述"
+              ],
+              "evidence": [
+                "完成作品复评陈述"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S04-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 1
+          }
+        ]
+      },
+      "compiledReference": {
+        "version": "candidate13-scorer-input-4.1.0",
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "compilerVersion": "candidate13-reference-compiler-4.1.0",
+        "sourceId": "C13-D5R1-S04",
+        "referenceVersion": "C13-D5R1-S04-reference-v1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "inputSha256": "e2ceed3fe021c9062f0a7d9281f5b6b3c6a8d3c33713c260d690a72401cdcdfb",
+        "tasks": [
+          {
+            "id": "T1",
+            "actionObjectAliases": [
+              {
+                "action": "参加",
+                "object": "作品复评陈述"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": false,
+              "conditionValue": "false",
+              "completionStandard": [
+                "完成作品复评陈述"
+              ],
+              "materials": [],
+              "timePoints": [],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S04-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 1
+          }
+        ],
+        "boundary": {
+          "strictUnexpectedFacts": true,
+          "deterministicAmbiguityDisposition": "ADJUDICATION_REQUIRED",
+          "candidateDataUsedDuringCompilation": false,
+          "eligibleForIndependentHoldout": false
+        },
+        "compiledSha256": "797ea8b6c786f1715906254a4c9069c5a118773780b409d17264d9fe060cbb0a"
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S05",
+      "referenceSha256": "f4f22291e8dec43b8023b35042ada3ec5f3a4409b4a4d4e1027d3258b5307924",
+      "compiledSha256": "3f461ecc0e43e47cabbbe5bd122d3b2f73c5ae95a292c88e935746cb0b4b5612",
+      "reference": {
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "referenceVersion": "C13-D5R1-S05-reference-v1",
+        "sourceId": "C13-D5R1-S05",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "provenance": {
+          "labelerAStatus": "CODEX_MODEL_ASSISTED_AUTHOR",
+          "reviewerBStatus": "NOT_INDEPENDENT_NOT_REVIEWED",
+          "modelAssistanceUsed": true
+        },
+        "tasks": [
+          {
+            "referenceTaskId": "T1",
+            "actions": [
+              "提交"
+            ],
+            "objects": [
+              "主持提纲"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "主持提纲"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "提交"
+              ],
+              "objectEvidence": [
+                "主持提纲"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": false,
+            "condition": {
+              "value": "unknown",
+              "evidence": [
+                "主持人安排尚未确定"
+              ]
+            },
+            "materials": [],
+            "timePoints": [
+              {
+                "timePointId": "TP1",
+                "rawTexts": [
+                  "下周二下午"
+                ],
+                "type": "deadline",
+                "normalizedValues": [],
+                "precision": "vague",
+                "actionable": false,
+                "relatedReferenceTaskIds": [
+                  "T1"
+                ],
+                "evidence": [
+                  "下周二下午"
+                ]
+              }
+            ],
+            "completionStandard": {
+              "accepted": [
+                "平台显示提纲已收取"
+              ],
+              "evidence": [
+                "平台显示提纲已收取"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S05-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 1
+          }
+        ]
+      },
+      "compiledReference": {
+        "version": "candidate13-scorer-input-4.1.0",
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "compilerVersion": "candidate13-reference-compiler-4.1.0",
+        "sourceId": "C13-D5R1-S05",
+        "referenceVersion": "C13-D5R1-S05-reference-v1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "inputSha256": "f4f22291e8dec43b8023b35042ada3ec5f3a4409b4a4d4e1027d3258b5307924",
+        "tasks": [
+          {
+            "id": "T1",
+            "actionObjectAliases": [
+              {
+                "action": "提交",
+                "object": "主持提纲"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": false,
+              "conditionValue": "unknown",
+              "completionStandard": [
+                "平台显示提纲已收取"
+              ],
+              "materials": [],
+              "timePoints": [
+                {
+                  "rawTexts": [
+                    "下周二下午"
+                  ],
+                  "normalizedValues": [],
+                  "type": "deadline",
+                  "precision": "vague"
+                }
+              ],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S05-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 1
+          }
+        ],
+        "boundary": {
+          "strictUnexpectedFacts": true,
+          "deterministicAmbiguityDisposition": "ADJUDICATION_REQUIRED",
+          "candidateDataUsedDuringCompilation": false,
+          "eligibleForIndependentHoldout": false
+        },
+        "compiledSha256": "3f461ecc0e43e47cabbbe5bd122d3b2f73c5ae95a292c88e935746cb0b4b5612"
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S06",
+      "referenceSha256": "9ef65e4c39d4812744418eac385f4db23d8b4e8979f16808a0bab9cb14448178",
+      "compiledSha256": "370cd42c261d12fcd625b484ab8f03573a0b758c0e0171246d726f91f0a03964",
+      "reference": {
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "referenceVersion": "C13-D5R1-S06-reference-v1",
+        "sourceId": "C13-D5R1-S06",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "provenance": {
+          "labelerAStatus": "CODEX_MODEL_ASSISTED_AUTHOR",
+          "reviewerBStatus": "NOT_INDEPENDENT_NOT_REVIEWED",
+          "modelAssistanceUsed": true
+        },
+        "tasks": [
+          {
+            "referenceTaskId": "T1",
+            "actions": [
+              "补全"
+            ],
+            "objects": [
+              "田野调查名册"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "补全",
+                "object": "田野调查名册"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "补全"
+              ],
+              "objectEvidence": [
+                "田野调查名册"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [
+              {
+                "materialId": "M1",
+                "names": [
+                  "田野调查名册"
+                ],
+                "required": true,
+                "formatRequirements": [
+                  "XLSX"
+                ],
+                "namingRequirements": [],
+                "relatedReferenceTaskIds": [
+                  "T1",
+                  "T2"
+                ],
+                "evidence": [
+                  "田野调查名册"
+                ]
+              }
+            ],
+            "timePoints": [],
+            "completionStandard": {
+              "accepted": [
+                "名册必填栏均已填写"
+              ],
+              "evidence": [
+                "名册必填栏均已填写"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          },
+          {
+            "referenceTaskId": "T2",
+            "actions": [
+              "报送"
+            ],
+            "objects": [
+              "田野调查名册"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "报送",
+                "object": "田野调查名册"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "报送"
+              ],
+              "objectEvidence": [
+                "田野调查名册"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [
+              {
+                "materialId": "M1",
+                "names": [
+                  "田野调查名册"
+                ],
+                "required": true,
+                "formatRequirements": [
+                  "XLSX"
+                ],
+                "namingRequirements": [],
+                "relatedReferenceTaskIds": [
+                  "T1",
+                  "T2"
+                ],
+                "evidence": [
+                  "田野调查名册"
+                ]
+              }
+            ],
+            "timePoints": [],
+            "completionStandard": {
+              "accepted": [
+                "办公室确认收到名册"
+              ],
+              "evidence": [
+                "办公室确认收到名册"
+              ]
+            },
+            "dependencies": [
+              "T1"
+            ],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S06-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 2
+          }
+        ]
+      },
+      "compiledReference": {
+        "version": "candidate13-scorer-input-4.1.0",
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "compilerVersion": "candidate13-reference-compiler-4.1.0",
+        "sourceId": "C13-D5R1-S06",
+        "referenceVersion": "C13-D5R1-S06-reference-v1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "inputSha256": "9ef65e4c39d4812744418eac385f4db23d8b4e8979f16808a0bab9cb14448178",
+        "tasks": [
+          {
+            "id": "T1",
+            "actionObjectAliases": [
+              {
+                "action": "补全",
+                "object": "田野调查名册"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": true,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "名册必填栏均已填写"
+              ],
+              "materials": [
+                {
+                  "name": "田野调查名册",
+                  "required": true,
+                  "formatRequirements": [
+                    "XLSX"
+                  ],
+                  "namingRequirements": []
+                }
+              ],
+              "timePoints": [],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          },
+          {
+            "id": "T2",
+            "actionObjectAliases": [
+              {
+                "action": "报送",
+                "object": "田野调查名册"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": true,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "办公室确认收到名册"
+              ],
+              "materials": [
+                {
+                  "name": "田野调查名册",
+                  "required": true,
+                  "formatRequirements": [
+                    "XLSX"
+                  ],
+                  "namingRequirements": []
+                }
+              ],
+              "timePoints": [],
+              "dependencies": [
+                "补全::田野调查名册"
+              ],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S06-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 2
+          }
+        ],
+        "boundary": {
+          "strictUnexpectedFacts": true,
+          "deterministicAmbiguityDisposition": "ADJUDICATION_REQUIRED",
+          "candidateDataUsedDuringCompilation": false,
+          "eligibleForIndependentHoldout": false
+        },
+        "compiledSha256": "370cd42c261d12fcd625b484ab8f03573a0b758c0e0171246d726f91f0a03964"
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S07",
+      "referenceSha256": "d4f9fdb987f95c4e38320885816232c178bc1c4e5e911338743576f7be0df1dc",
+      "compiledSha256": "0bb12d50101bdde0907f791e3723d6cdfdbca68d85cacf148113647e30fe445a",
+      "reference": {
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "referenceVersion": "C13-D5R1-S07-reference-v1",
+        "sourceId": "C13-D5R1-S07",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "provenance": {
+          "labelerAStatus": "CODEX_MODEL_ASSISTED_AUTHOR",
+          "reviewerBStatus": "NOT_INDEPENDENT_NOT_REVIEWED",
+          "modelAssistanceUsed": true
+        },
+        "tasks": [
+          {
+            "referenceTaskId": "T1",
+            "actions": [
+              "交付"
+            ],
+            "objects": [
+              "展览海报初稿"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "交付",
+                "object": "展览海报初稿"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "交付"
+              ],
+              "objectEvidence": [
+                "展览海报初稿"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [],
+            "timePoints": [
+              {
+                "timePointId": "TP1",
+                "rawTexts": [
+                  "月底前后"
+                ],
+                "type": "deadline",
+                "normalizedValues": [],
+                "precision": "vague",
+                "actionable": true,
+                "relatedReferenceTaskIds": [
+                  "T1"
+                ],
+                "evidence": [
+                  "月底前后"
+                ]
+              }
+            ],
+            "completionStandard": {
+              "accepted": [
+                "策展组确认收到初稿"
+              ],
+              "evidence": [
+                "策展组确认收到初稿"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S07-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 1
+          }
+        ]
+      },
+      "compiledReference": {
+        "version": "candidate13-scorer-input-4.1.0",
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "compilerVersion": "candidate13-reference-compiler-4.1.0",
+        "sourceId": "C13-D5R1-S07",
+        "referenceVersion": "C13-D5R1-S07-reference-v1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "inputSha256": "d4f9fdb987f95c4e38320885816232c178bc1c4e5e911338743576f7be0df1dc",
+        "tasks": [
+          {
+            "id": "T1",
+            "actionObjectAliases": [
+              {
+                "action": "交付",
+                "object": "展览海报初稿"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": true,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "策展组确认收到初稿"
+              ],
+              "materials": [],
+              "timePoints": [
+                {
+                  "rawTexts": [
+                    "月底前后"
+                  ],
+                  "normalizedValues": [],
+                  "type": "deadline",
+                  "precision": "vague"
+                }
+              ],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S07-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 1
+          }
+        ],
+        "boundary": {
+          "strictUnexpectedFacts": true,
+          "deterministicAmbiguityDisposition": "ADJUDICATION_REQUIRED",
+          "candidateDataUsedDuringCompilation": false,
+          "eligibleForIndependentHoldout": false
+        },
+        "compiledSha256": "0bb12d50101bdde0907f791e3723d6cdfdbca68d85cacf148113647e30fe445a"
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S08",
+      "referenceSha256": "e01c4970790d13da93bfbae9ea51c6b375374d08b949175d501cf21c8cd300a2",
+      "compiledSha256": "26d95b83a1011cd19ef7c56c1ba9851c2b37fa75ea1228ddab662e292fb12e2f",
+      "reference": {
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "referenceVersion": "C13-D5R1-S08-reference-v1",
+        "sourceId": "C13-D5R1-S08",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "provenance": {
+          "labelerAStatus": "CODEX_MODEL_ASSISTED_AUTHOR",
+          "reviewerBStatus": "NOT_INDEPENDENT_NOT_REVIEWED",
+          "modelAssistanceUsed": true
+        },
+        "tasks": [
+          {
+            "referenceTaskId": "T1",
+            "actions": [
+              "核验"
+            ],
+            "objects": [
+              "报销银行卡信息"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "核验",
+                "object": "报销银行卡信息"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "核验"
+              ],
+              "objectEvidence": [
+                "报销银行卡信息"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [],
+            "timePoints": [],
+            "completionStandard": {
+              "accepted": [
+                "页面显示银行卡核验完成"
+              ],
+              "evidence": [
+                "页面显示银行卡核验完成"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          },
+          {
+            "referenceTaskId": "T2",
+            "actions": [
+              "上传"
+            ],
+            "objects": [
+              "差旅报销声明"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "上传",
+                "object": "差旅报销声明"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "上传"
+              ],
+              "objectEvidence": [
+                "差旅报销声明"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [
+              {
+                "materialId": "M1",
+                "names": [
+                  "差旅报销声明"
+                ],
+                "required": true,
+                "formatRequirements": [
+                  "PDF"
+                ],
+                "namingRequirements": [],
+                "relatedReferenceTaskIds": [
+                  "T2"
+                ],
+                "evidence": [
+                  "差旅报销声明"
+                ]
+              }
+            ],
+            "timePoints": [],
+            "completionStandard": {
+              "accepted": [
+                "系统显示声明上传成功"
+              ],
+              "evidence": [
+                "系统显示声明上传成功"
+              ]
+            },
+            "dependencies": [
+              "T1"
+            ],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S08-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 2
+          }
+        ]
+      },
+      "compiledReference": {
+        "version": "candidate13-scorer-input-4.1.0",
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "compilerVersion": "candidate13-reference-compiler-4.1.0",
+        "sourceId": "C13-D5R1-S08",
+        "referenceVersion": "C13-D5R1-S08-reference-v1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "inputSha256": "e01c4970790d13da93bfbae9ea51c6b375374d08b949175d501cf21c8cd300a2",
+        "tasks": [
+          {
+            "id": "T1",
+            "actionObjectAliases": [
+              {
+                "action": "核验",
+                "object": "报销银行卡信息"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": true,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "页面显示银行卡核验完成"
+              ],
+              "materials": [],
+              "timePoints": [],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          },
+          {
+            "id": "T2",
+            "actionObjectAliases": [
+              {
+                "action": "上传",
+                "object": "差旅报销声明"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": true,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "系统显示声明上传成功"
+              ],
+              "materials": [
+                {
+                  "name": "差旅报销声明",
+                  "required": true,
+                  "formatRequirements": [
+                    "PDF"
+                  ],
+                  "namingRequirements": []
+                }
+              ],
+              "timePoints": [],
+              "dependencies": [
+                "核验::报销银行卡信息"
+              ],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S08-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 2
+          }
+        ],
+        "boundary": {
+          "strictUnexpectedFacts": true,
+          "deterministicAmbiguityDisposition": "ADJUDICATION_REQUIRED",
+          "candidateDataUsedDuringCompilation": false,
+          "eligibleForIndependentHoldout": false
+        },
+        "compiledSha256": "26d95b83a1011cd19ef7c56c1ba9851c2b37fa75ea1228ddab662e292fb12e2f"
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S09",
+      "referenceSha256": "bc376f96bff850658159a6cbb73260cc7a40766379160b8bea58ca16c7f447b0",
+      "compiledSha256": "1ddd48453fc9eff76d6209bbdc9ea8d743f13c2494fd0d9b3a54e7146f57ec77",
+      "reference": {
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "referenceVersion": "C13-D5R1-S09-reference-v1",
+        "sourceId": "C13-D5R1-S09",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "provenance": {
+          "labelerAStatus": "CODEX_MODEL_ASSISTED_AUTHOR",
+          "reviewerBStatus": "NOT_INDEPENDENT_NOT_REVIEWED",
+          "modelAssistanceUsed": true
+        },
+        "tasks": [],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S09-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 0
+          }
+        ]
+      },
+      "compiledReference": {
+        "version": "candidate13-scorer-input-4.1.0",
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "compilerVersion": "candidate13-reference-compiler-4.1.0",
+        "sourceId": "C13-D5R1-S09",
+        "referenceVersion": "C13-D5R1-S09-reference-v1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "inputSha256": "bc376f96bff850658159a6cbb73260cc7a40766379160b8bea58ca16c7f447b0",
+        "tasks": [],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S09-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 0
+          }
+        ],
+        "boundary": {
+          "strictUnexpectedFacts": true,
+          "deterministicAmbiguityDisposition": "ADJUDICATION_REQUIRED",
+          "candidateDataUsedDuringCompilation": false,
+          "eligibleForIndependentHoldout": false
+        },
+        "compiledSha256": "1ddd48453fc9eff76d6209bbdc9ea8d743f13c2494fd0d9b3a54e7146f57ec77"
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S10",
+      "referenceSha256": "c67e3f92a13da98d272dd6abea41e267805a99aaf3bdc8b4e9feaf9e76cc38f7",
+      "compiledSha256": "876df1ee7c93ee5c3a0f4f5d6290cfe4c2b76aee161c874f7d7ee6b98b84a6f3",
+      "reference": {
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "referenceVersion": "C13-D5R1-S10-reference-v1",
+        "sourceId": "C13-D5R1-S10",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "provenance": {
+          "labelerAStatus": "CODEX_MODEL_ASSISTED_AUTHOR",
+          "reviewerBStatus": "NOT_INDEPENDENT_NOT_REVIEWED",
+          "modelAssistanceUsed": true
+        },
+        "tasks": [
+          {
+            "referenceTaskId": "OLD1",
+            "actions": [
+              "归还"
+            ],
+            "objects": [
+              "实验室备用钥匙"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "归还",
+                "object": "实验室备用钥匙"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "归还"
+              ],
+              "objectEvidence": [
+                "实验室备用钥匙"
+              ]
+            },
+            "semanticStatus": "cancelled",
+            "semanticValidity": "cancelled",
+            "actionable": false,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [],
+            "timePoints": [],
+            "completionStandard": {
+              "accepted": [
+                "完成备用钥匙归还"
+              ],
+              "evidence": [
+                "完成备用钥匙归还"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [
+              {
+                "relationId": "R1",
+                "type": "cancels",
+                "fromReferenceTaskId": null,
+                "targetReferenceTaskId": "OLD1",
+                "effective": true,
+                "evidence": [
+                  "取消归还实验室备用钥匙"
+                ]
+              }
+            ],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          },
+          {
+            "referenceTaskId": "OLD2",
+            "actions": [
+              "签署"
+            ],
+            "objects": [
+              "旧版值班名册"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "签署",
+                "object": "旧版值班名册"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "签署"
+              ],
+              "objectEvidence": [
+                "旧版值班名册"
+              ]
+            },
+            "semanticStatus": "cancelled",
+            "semanticValidity": "cancelled",
+            "actionable": false,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [],
+            "timePoints": [],
+            "completionStandard": {
+              "accepted": [
+                "完成旧版值班名册签署"
+              ],
+              "evidence": [
+                "完成旧版值班名册签署"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [
+              {
+                "relationId": "R2",
+                "type": "cancels",
+                "fromReferenceTaskId": null,
+                "targetReferenceTaskId": "OLD2",
+                "effective": true,
+                "evidence": [
+                  "取消签署旧版值班名册"
+                ]
+              }
+            ],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S10-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 2
+          }
+        ]
+      },
+      "compiledReference": {
+        "version": "candidate13-scorer-input-4.1.0",
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "compilerVersion": "candidate13-reference-compiler-4.1.0",
+        "sourceId": "C13-D5R1-S10",
+        "referenceVersion": "C13-D5R1-S10-reference-v1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "inputSha256": "c67e3f92a13da98d272dd6abea41e267805a99aaf3bdc8b4e9feaf9e76cc38f7",
+        "tasks": [
+          {
+            "id": "OLD1",
+            "actionObjectAliases": [
+              {
+                "action": "归还",
+                "object": "实验室备用钥匙"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "cancelled",
+              "semanticValidity": "cancelled",
+              "actionable": false,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "完成备用钥匙归还"
+              ],
+              "materials": [],
+              "timePoints": [],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [
+                "cancels|NONE|归还::实验室备用钥匙|true"
+              ],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          },
+          {
+            "id": "OLD2",
+            "actionObjectAliases": [
+              {
+                "action": "签署",
+                "object": "旧版值班名册"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "cancelled",
+              "semanticValidity": "cancelled",
+              "actionable": false,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "完成旧版值班名册签署"
+              ],
+              "materials": [],
+              "timePoints": [],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [
+                "cancels|NONE|签署::旧版值班名册|true"
+              ],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S10-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 2
+          }
+        ],
+        "boundary": {
+          "strictUnexpectedFacts": true,
+          "deterministicAmbiguityDisposition": "ADJUDICATION_REQUIRED",
+          "candidateDataUsedDuringCompilation": false,
+          "eligibleForIndependentHoldout": false
+        },
+        "compiledSha256": "876df1ee7c93ee5c3a0f4f5d6290cfe4c2b76aee161c874f7d7ee6b98b84a6f3"
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S11",
+      "referenceSha256": "cf0edc25dbf9097f047f5f0412953598717a56b6d2dc6090651bc75785d806aa",
+      "compiledSha256": "075c82f7999e4e2e09bd5d1d30458c32a72e930ed3931b57a173423094a4768b",
+      "reference": {
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "referenceVersion": "C13-D5R1-S11-reference-v1",
+        "sourceId": "C13-D5R1-S11",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "provenance": {
+          "labelerAStatus": "CODEX_MODEL_ASSISTED_AUTHOR",
+          "reviewerBStatus": "NOT_INDEPENDENT_NOT_REVIEWED",
+          "modelAssistanceUsed": true
+        },
+        "tasks": [
+          {
+            "referenceTaskId": "OLD1",
+            "actions": [
+              "打印"
+            ],
+            "objects": [
+              "会议海报"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "打印",
+                "object": "会议海报"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "打印"
+              ],
+              "objectEvidence": [
+                "会议海报"
+              ]
+            },
+            "semanticStatus": "historical",
+            "semanticValidity": "superseded",
+            "actionable": false,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [],
+            "timePoints": [],
+            "completionStandard": {
+              "accepted": [
+                "打印会议海报"
+              ],
+              "evidence": [
+                "打印会议海报"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          },
+          {
+            "referenceTaskId": "NEW1",
+            "actions": [
+              "上传"
+            ],
+            "objects": [
+              "会议海报"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "上传",
+                "object": "会议海报"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "上传"
+              ],
+              "objectEvidence": [
+                "会议海报"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [],
+            "timePoints": [],
+            "completionStandard": {
+              "accepted": [
+                "平台显示电子海报上传成功"
+              ],
+              "evidence": [
+                "平台显示电子海报上传成功"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [
+              {
+                "relationId": "R1",
+                "type": "replaces",
+                "fromReferenceTaskId": "NEW1",
+                "targetReferenceTaskId": "OLD1",
+                "effective": true,
+                "evidence": [
+                  "会议海报改为上传电子版"
+                ]
+              }
+            ],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          },
+          {
+            "referenceTaskId": "OLD2",
+            "actions": [
+              "登记"
+            ],
+            "objects": [
+              "展示时段"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "登记",
+                "object": "展示时段"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "登记"
+              ],
+              "objectEvidence": [
+                "展示时段"
+              ]
+            },
+            "semanticStatus": "historical",
+            "semanticValidity": "superseded",
+            "actionable": false,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [],
+            "timePoints": [],
+            "completionStandard": {
+              "accepted": [
+                "登记现场展示时段"
+              ],
+              "evidence": [
+                "登记现场展示时段"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          },
+          {
+            "referenceTaskId": "NEW2",
+            "actions": [
+              "预约"
+            ],
+            "objects": [
+              "展示时段"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "预约",
+                "object": "展示时段"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "预约"
+              ],
+              "objectEvidence": [
+                "展示时段"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [],
+            "timePoints": [],
+            "completionStandard": {
+              "accepted": [
+                "页面保存线上展示时段"
+              ],
+              "evidence": [
+                "页面保存线上展示时段"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [
+              {
+                "relationId": "R2",
+                "type": "replaces",
+                "fromReferenceTaskId": "NEW2",
+                "targetReferenceTaskId": "OLD2",
+                "effective": true,
+                "evidence": [
+                  "现场展示场地改为预约线上时段"
+                ]
+              }
+            ],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S11-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 4
+          }
+        ]
+      },
+      "compiledReference": {
+        "version": "candidate13-scorer-input-4.1.0",
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "compilerVersion": "candidate13-reference-compiler-4.1.0",
+        "sourceId": "C13-D5R1-S11",
+        "referenceVersion": "C13-D5R1-S11-reference-v1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "inputSha256": "cf0edc25dbf9097f047f5f0412953598717a56b6d2dc6090651bc75785d806aa",
+        "tasks": [
+          {
+            "id": "OLD1",
+            "actionObjectAliases": [
+              {
+                "action": "打印",
+                "object": "会议海报"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "historical",
+              "semanticValidity": "superseded",
+              "actionable": false,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "打印会议海报"
+              ],
+              "materials": [],
+              "timePoints": [],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          },
+          {
+            "id": "NEW1",
+            "actionObjectAliases": [
+              {
+                "action": "上传",
+                "object": "会议海报"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": true,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "平台显示电子海报上传成功"
+              ],
+              "materials": [],
+              "timePoints": [],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": [
+                "replaces|上传::会议海报|打印::会议海报|true"
+              ]
+            },
+            "forbiddenInferences": []
+          },
+          {
+            "id": "OLD2",
+            "actionObjectAliases": [
+              {
+                "action": "登记",
+                "object": "展示时段"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "historical",
+              "semanticValidity": "superseded",
+              "actionable": false,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "登记现场展示时段"
+              ],
+              "materials": [],
+              "timePoints": [],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": []
+          },
+          {
+            "id": "NEW2",
+            "actionObjectAliases": [
+              {
+                "action": "预约",
+                "object": "展示时段"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": true,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "页面保存线上展示时段"
+              ],
+              "materials": [],
+              "timePoints": [],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": [
+                "replaces|预约::展示时段|登记::展示时段|true"
+              ]
+            },
+            "forbiddenInferences": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S11-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 4
+          }
+        ],
+        "boundary": {
+          "strictUnexpectedFacts": true,
+          "deterministicAmbiguityDisposition": "ADJUDICATION_REQUIRED",
+          "candidateDataUsedDuringCompilation": false,
+          "eligibleForIndependentHoldout": false
+        },
+        "compiledSha256": "075c82f7999e4e2e09bd5d1d30458c32a72e930ed3931b57a173423094a4768b"
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S12",
+      "referenceSha256": "786ab5cdccfe9cbd30f21f59c38af5c1a814cc8c5791d56cc58dc5437e5a7042",
+      "compiledSha256": "b0b9f4732525bb7c5907070a5e7d04a8a32400fc6c2022b1ee605cf4ce576ef8",
+      "reference": {
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "referenceVersion": "C13-D5R1-S12-reference-v1",
+        "sourceId": "C13-D5R1-S12",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "provenance": {
+          "labelerAStatus": "CODEX_MODEL_ASSISTED_AUTHOR",
+          "reviewerBStatus": "NOT_INDEPENDENT_NOT_REVIEWED",
+          "modelAssistanceUsed": true
+        },
+        "tasks": [
+          {
+            "referenceTaskId": "T1",
+            "actions": [
+              "复核"
+            ],
+            "objects": [
+              "项目成员资料"
+            ],
+            "actionObjectAliases": [
+              {
+                "action": "复核",
+                "object": "项目成员资料"
+              }
+            ],
+            "taskBasis": "explicit_action_object",
+            "taskEvidence": {
+              "basis": "explicit_action_object",
+              "actionEvidence": [
+                "复核"
+              ],
+              "objectEvidence": [
+                "项目成员资料"
+              ]
+            },
+            "semanticStatus": "pending",
+            "semanticValidity": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "evidence": []
+            },
+            "materials": [],
+            "timePoints": [],
+            "completionStandard": {
+              "accepted": [
+                "页面显示资料复核完成"
+              ],
+              "evidence": [
+                "页面显示资料复核完成"
+              ]
+            },
+            "dependencies": [],
+            "revisionRelations": [],
+            "cancellationRelations": [],
+            "replacementRelations": [],
+            "allowedMerges": [],
+            "forbiddenMerges": [],
+            "forbiddenInferences": [
+              {
+                "code": "NO_EXTRA_APPROVAL",
+                "kind": "field",
+                "statement": "不得增加院长签字要求",
+                "evidence": [
+                  "无需院长签字"
+                ],
+                "assertion": {
+                  "path": "completionStandard.accepted",
+                  "operator": "contains",
+                  "value": "必须另行获得院长签字"
+                }
+              }
+            ],
+            "requiredFields": [
+              "semanticStatus",
+              "semanticValidity",
+              "actionable",
+              "condition.value",
+              "completionStandard"
+            ],
+            "optionalFields": [
+              "materials",
+              "timePoints",
+              "dependencies"
+            ],
+            "ambiguityRules": []
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S12-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 1
+          }
+        ]
+      },
+      "compiledReference": {
+        "version": "candidate13-scorer-input-4.1.0",
+        "contractVersion": "candidate12-reference-contract-3.0.0",
+        "compilerVersion": "candidate13-reference-compiler-4.1.0",
+        "sourceId": "C13-D5R1-S12",
+        "referenceVersion": "C13-D5R1-S12-reference-v1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "inputSha256": "786ab5cdccfe9cbd30f21f59c38af5c1a814cc8c5791d56cc58dc5437e5a7042",
+        "tasks": [
+          {
+            "id": "T1",
+            "actionObjectAliases": [
+              {
+                "action": "复核",
+                "object": "项目成员资料"
+              }
+            ],
+            "allowedMergeIds": [],
+            "forbiddenMergeIds": [],
+            "expected": {
+              "semanticStatus": "pending",
+              "semanticValidity": "active",
+              "actionable": true,
+              "conditionValue": "not_applicable",
+              "completionStandard": [
+                "页面显示资料复核完成"
+              ],
+              "materials": [],
+              "timePoints": [],
+              "dependencies": [],
+              "revisionRelations": [],
+              "cancellationRelations": [],
+              "replacementRelations": []
+            },
+            "forbiddenInferences": [
+              {
+                "code": "NO_EXTRA_APPROVAL",
+                "kind": "field",
+                "statement": "不得增加院长签字要求",
+                "evidence": [
+                  "无需院长签字"
+                ],
+                "assertion": {
+                  "path": "completionStandard.accepted",
+                  "operator": "contains",
+                  "value": "必须另行获得院长签字"
+                }
+              }
+            ]
+          }
+        ],
+        "checks": [
+          {
+            "checkId": "C13-D5R1-S12-task-count",
+            "path": "tasks",
+            "operator": "countEquals",
+            "value": 1
+          }
+        ],
+        "boundary": {
+          "strictUnexpectedFacts": true,
+          "deterministicAmbiguityDisposition": "ADJUDICATION_REQUIRED",
+          "candidateDataUsedDuringCompilation": false,
+          "eligibleForIndependentHoldout": false
+        },
+        "compiledSha256": "b0b9f4732525bb7c5907070a5e7d04a8a32400fc6c2022b1ee605cf4ce576ef8"
+      }
+    }
+  ]
+}

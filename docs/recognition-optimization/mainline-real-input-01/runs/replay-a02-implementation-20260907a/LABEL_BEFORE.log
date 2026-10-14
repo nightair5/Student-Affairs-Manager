@@ -1,0 +1,73 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+xx··············
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > real App runtime and public send connection; memory/SSR not browser acceptance > real-input source description changes only the review banner; engineering and ordinary defaults remain
+AssertionError: expected '<div class="modal-backdrop detail-bac…' to contain 'A02历史真实模型响应回放 · 本轮零调用'
+
+- Expected
++ Received
+
+- A02历史真实模型响应回放 · 本轮零调用
++ <div class="modal-backdrop detail-backdrop" role="presentation"><aside class="detail-panel review-panel" role="dialog" aria-modal="true" aria-labelledby=":R0:"><header class="detail-header review-header"><div><span class="category-label">第 2 步 · 人工工程响应（非模型预测）</span><h2 id=":R0:">识别出 1 件事</h2><p>先看标题和时间；不准确时再点“编辑”。</p></div><button class="icon-button" type="button" aria-label="稍后处理并关闭"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></header><div class="detail-body review-body"><div class="review-progress"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-checks"><path d="m3 17 2 2 4-4"></path><path d="m3 7 2 2 4-4"></path><path d="M13 6h8"></path><path d="M13 12h8"></path><path d="M13 18h8"></path></svg><span><strong>1 项待确认</strong><small>确认后才会进入今日和任务中心</small></span></div><details class="source-details" open=""><summary><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>原始通知与定位依据</summary><p>原文暂不可用</p></details><section class="review-list recognition-tree" aria-label="项目树待确认事项"><article class="review-item"><header class="review-item-header"><label class="review-task-select"><input type="checkbox"/><span class="sr-only">选择该任务</span></label><span class="review-number">1</span><div><strong>保存活动手册</strong><time><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16.5 12"></polyline></svg>日期待确认</time></div><button class="review-edit" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil-line"><path d="M12 20h9"></path><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"></path><path d="m15 5 3 3"></path></svg>编辑</button></header><div class="review-meta"><span>其他</span><span>约 30 分钟</span></div><p class="review-next"><span>下一步</span>保存活动手册</p><details class="item-evidence"><summary>为什么这样拆？</summary><p>请保存活动手册。
++ 没有截止日期要求。</p><small>系统推测 · 原文未提供可定位依据</small></details><footer class="review-item-actions"><button class="text-button remove" type="button" disabled=""><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg>不需要</button><button class="secondary-button" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg>加入任务</button></footer></article></section></div><footer class="detail-footer review-footer"><button class="secondary-button" type="button">稍后再处理</button></footer></aside></div>
+
+ ❯ src/experiments/realInput01/acceptance.test.tsx:57:20
+     55|     for(const description of ['A02历史真实模型响应回放 · 本轮零调用','真实模型建议 · 尚未逐项核对…
+     56|       const html=renderToStaticMarkup(<DraftReviewPanel {...props} {..…
+     57|       expect(html).toContain(description);expect(withoutBanner(html)).…
+       |                    ^
+     58|     }
+     59|     expect(renderToStaticMarkup(<DraftReviewPanel {...props} isolatedC…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > real App runtime and public send connection; memory/SSR not browser acceptance > actual App forwards an existing description only for the real-input runtime
+AssertionError: \nnode:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: real App must pass the existing source description
+    at file:///C:/Users/Winner/student-affairs-multimodal-exp/[eval1]:5:7
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:224:26
+    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:221:20)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.18.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ [eval1]:5:7
+ ❯ src/experiments/realInput01/acceptance.test.tsx:74:58
+     72|       assert.equal(runInNewContext(code,{runtime:undefined}),undefined…
+     73|     `],{encoding:'utf8',timeout:15000,maxBuffer:1024*1024})
+     74|     expect(probe.status,probe.stdout+'\\n'+probe.stderr).toBe(0)
+       |                                                          ^
+     75|   })
+     76|   it('actual browser open wrapper rejects creation/upgrade events befo…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 14 passed (16)
+   Start at  19:30:44
+   Duration  4.64s (transform 607ms, setup 0ms, collect 980ms, tests 3.36s, environment 0ms, prepare 118ms)
+
+{"rootEnvReadAttempts":0}

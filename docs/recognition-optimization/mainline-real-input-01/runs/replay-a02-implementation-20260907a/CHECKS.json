@@ -1,0 +1,45 @@
+{
+  "status": "NOT_COMPLETE_AUDIT_ONLY",
+  "head": "c1a5446f0ec58646fbace9e6c460e2c438d89554",
+  "targeted": {
+    "files": 3,
+    "pass": 60,
+    "fail": 0
+  },
+  "type": "PASS",
+  "independentReview": "NOT_RUN",
+  "fullEngineering": "NOT_RUN",
+  "actualBrowserNewImplementation": "NOT_RUN_CONTROL_STOP",
+  "modelCalls": 0,
+  "modelAccuracy": "本轮未测量",
+  "protectedCount": 945,
+  "protectedStatus": "PASS",
+  "oldEvidenceUnchanged": 160,
+  "ledgerAndReceipts": "UNCHANGED",
+  "diffCheck": {
+    "exit": 0,
+    "output": "warning: in the working copy of 'docs/recognition-optimization/CURRENT_CONTEXT.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/recognition-optimization/OPTIMIZATION_LOG.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/App.tsx', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/components/DraftReviewPanel.tsx', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/components/IntakePanel.tsx', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/experiments/mainline02/runtime.ts', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/experiments/mainline04/semanticComposer.ts', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/experiments/mainline05/SemanticFacts.tsx', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/experiments/mainline05/runtime.ts', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/experiments/mainline05/semanticCapture.ts', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/experiments/mainline05/semanticConfirmation.ts', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/experiments/mainline05/semanticRepository.ts', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/experiments/mainline05/semanticState.ts', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/experiments/mainline05/semanticView.ts', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/lib/fileExtraction.ts', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/pages/DashboardPage.tsx', LF will be replaced by CRLF the next time Git touches it\n"
+  },
+  "credentialPatternScan": "PASS_NO_KEY_READ",
+  "errors": [],
+  "contextLines": 72,
+  "logBoundary": {
+    "bytes": 288857,
+    "sha256": "c4b2d75ca749afdb6f9e6ee754ea1548743067aa56beba0f12082e6dad0458d5"
+  },
+  "stagingWhitelist": [
+    "docs/recognition-optimization/CURRENT_CONTEXT.md",
+    "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/AUDIT.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BASELINE.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/IMPLEMENTATION_SNAPSHOT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/targeted-before.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/targeted-material-1.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/targeted-replay-1.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/type-targeted-1.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/type-targeted-2.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/CHECKS.json"
+  ],
+  "businessFilesStaged": false,
+  "stagedCheckNote": "Initial git diff --cached --check reported only trailing blank lines in three raw test logs. Raw logs and recorded SHA were preserved. Documentation uses normal whitespace checking; raw logs permit only blank-at-eof via a one-command Git setting, with other whitespace checks retained. No product test or protection check was weakened."
+}

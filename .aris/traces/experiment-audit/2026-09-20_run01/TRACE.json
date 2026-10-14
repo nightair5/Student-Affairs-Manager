@@ -1,0 +1,20 @@
+{
+  "version": "experiment-audit-trace-1",
+  "date": "2026-09-20",
+  "reviewer": "fresh-same-family-model-agent",
+  "reasoningEffort": "ultra",
+  "mode": "read-only",
+  "networkUsed": false,
+  "modelCalls": 0,
+  "fileMutationsByReviewer": 0,
+  "auditResult": {
+    "A": "PASS_DISCLOSURE_ONLY",
+    "B": "FAIL_STRICT_CAUSAL_ATTRIBUTION",
+    "C": "PASS",
+    "D": "FAIL",
+    "E": "FAIL",
+    "F": "PASS",
+    "overall": "FAIL_STRICT_EXPERIMENT_AUDIT"
+  },
+  "report": "docs/recognition-optimization/mainline-real-input-01/runs/opensource-methods-20260920a/EXPERIMENT_AUDIT.md"
+}

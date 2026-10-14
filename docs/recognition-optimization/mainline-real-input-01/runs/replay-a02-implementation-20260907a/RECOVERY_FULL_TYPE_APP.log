@@ -1,0 +1,1 @@
+src/experiments/realInput01/acceptance.test.tsx(93,34): error TS2741: Property 'initialText' is missing in type '{ workspace: WorkspaceV8; onSaved: () => Promise<void>; onDraftReady: () => Promise<void>; }' but required in type '{ workspace: WorkspaceV8; initialText: string; onSaved: () => Promise<void>; onDraftReady: (id: string) => Promise<void>; }'.

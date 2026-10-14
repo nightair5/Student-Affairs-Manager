@@ -1,0 +1,363 @@
+{
+  "version": "recorded-source-fact-diagnostic-1.0.0",
+  "author": "single-author/model-assisted/provisional",
+  "timing": "POST_HOC_NOT_PREREGISTERED",
+  "references": [
+    {
+      "sourceId": "C19-DEV-S01",
+      "completeness": "COMPLETE_MINIMUM_OBLIGATIONS",
+      "tasks": [],
+      "events": [
+        {
+          "key": "pause",
+          "names": [
+            "校园失物查询网站暂停查询",
+            "校园失物查询网站将在周日晚间暂停查询"
+          ],
+          "fragments": [
+            "校园失物查询网站将在周日晚间暂停查询"
+          ],
+          "location": null
+        }
+      ],
+      "times": [
+        {
+          "key": "pause-start",
+          "owner": "pause",
+          "endpoint": "start",
+          "type": "event_start",
+          "token": "周日晚间",
+          "value": null,
+          "precision": "vague",
+          "fragments": [
+            "校园失物查询网站将在周日晚间暂停查询"
+          ]
+        }
+      ],
+      "materials": [],
+      "information": [
+        "此前登记的信息保持不变",
+        "不需要重新登记",
+        "也不要发送补充邮件"
+      ]
+    },
+    {
+      "sourceId": "C19-DEV-S02",
+      "completeness": "COMPLETE_MINIMUM_OBLIGATIONS",
+      "tasks": [],
+      "events": [
+        {
+          "key": "briefing",
+          "names": [
+            "开放实验室说明会"
+          ],
+          "fragments": [
+            "开放实验室说明会2026年11月12日10:10开始",
+            "11:40结束"
+          ],
+          "location": null
+        },
+        {
+          "key": "network",
+          "names": [
+            "网络调试"
+          ],
+          "fragments": [
+            "网络调试从周五夜间开始",
+            "恢复时间尚未公布"
+          ],
+          "location": null
+        }
+      ],
+      "times": [
+        {
+          "key": "briefing-start",
+          "owner": "briefing",
+          "endpoint": "start",
+          "type": "event_start",
+          "token": "2026年11月12日10:10",
+          "value": "2026-11-12T10:10",
+          "precision": "exact",
+          "fragments": [
+            "开放实验室说明会2026年11月12日10:10开始"
+          ]
+        },
+        {
+          "key": "briefing-end",
+          "owner": "briefing",
+          "endpoint": "end",
+          "type": "event_end",
+          "token": "11:40",
+          "value": "2026-11-12T11:40",
+          "precision": "exact",
+          "fragments": [
+            "11:40结束"
+          ]
+        },
+        {
+          "key": "network-start",
+          "owner": "network",
+          "endpoint": "start",
+          "type": "event_start",
+          "token": "周五夜间",
+          "value": null,
+          "precision": "vague",
+          "fragments": [
+            "网络调试从周五夜间开始"
+          ]
+        },
+        {
+          "key": "network-end",
+          "owner": "network",
+          "endpoint": "end",
+          "type": "event_end",
+          "token": "尚未公布",
+          "value": null,
+          "precision": "vague",
+          "fragments": [
+            "恢复时间尚未公布"
+          ]
+        }
+      ],
+      "materials": [],
+      "information": [
+        "两件事仅供了解",
+        "不要求报名"
+      ]
+    },
+    {
+      "sourceId": "C19-DEV-S03",
+      "completeness": "COMPLETE_MINIMUM_OBLIGATIONS",
+      "tasks": [
+        {
+          "key": "fill",
+          "actions": [
+            "填写"
+          ],
+          "objects": [
+            "场地使用登记"
+          ],
+          "actionType": "fill",
+          "condition": "not_applicable",
+          "fragments": [
+            "先填写场地使用登记"
+          ],
+          "dependencies": [],
+          "completion": []
+        },
+        {
+          "key": "submit",
+          "actions": [
+            "递交"
+          ],
+          "objects": [
+            "场地使用登记"
+          ],
+          "actionType": "submit",
+          "condition": "not_applicable",
+          "fragments": [
+            "填好之后递交场地使用登记"
+          ],
+          "dependencies": [
+            "fill"
+          ],
+          "completion": []
+        },
+        {
+          "key": "collect",
+          "actions": [
+            "领取"
+          ],
+          "objects": [
+            "演示器材"
+          ],
+          "actionType": "collect",
+          "condition": "unknown",
+          "fragments": [
+            "器材领用资格还未公布",
+            "符合资格才能领取演示器材"
+          ],
+          "dependencies": [],
+          "completion": []
+        }
+      ],
+      "events": [],
+      "times": [],
+      "materials": [],
+      "information": []
+    },
+    {
+      "sourceId": "C19-DEV-S04",
+      "completeness": "COMPLETE_MINIMUM_OBLIGATIONS",
+      "tasks": [
+        {
+          "key": "save",
+          "actions": [
+            "保存"
+          ],
+          "objects": [
+            "活动联系编号"
+          ],
+          "actionType": "save",
+          "condition": "not_applicable",
+          "fragments": [
+            "另请保存活动联系编号"
+          ],
+          "dependencies": [],
+          "completion": [],
+          "optionalCompletion": [
+            "活动联系编号已保存"
+          ]
+        }
+      ],
+      "events": [],
+      "times": [],
+      "materials": [],
+      "information": [
+        "本轮展位申请仅限获准社团",
+        "你的社团尚未获准",
+        "不能提交展位申请"
+      ]
+    },
+    {
+      "sourceId": "C19-DEV-S05",
+      "completeness": "COMPLETE_MINIMUM_OBLIGATIONS",
+      "tasks": [
+        {
+          "key": "upload",
+          "actions": [
+            "上传"
+          ],
+          "objects": [
+            "志愿服务统计表"
+          ],
+          "actionType": "upload",
+          "condition": "not_applicable",
+          "fragments": [
+            "请在2026年11月13日09:25前上传志愿服务统计表",
+            "统计表须为PDF",
+            "文件名包含小组编号",
+            "看到平台显示接收成功才算办结"
+          ],
+          "dependencies": [],
+          "completion": [
+            [
+              "看到平台显示接收成功才算办结",
+              "平台显示接收成功后办结"
+            ]
+          ]
+        }
+      ],
+      "events": [
+        {
+          "key": "training",
+          "names": [
+            "培训说明会"
+          ],
+          "fragments": [
+            "培训说明会2026年11月14日14:20开始",
+            "15:35结束"
+          ],
+          "location": null
+        }
+      ],
+      "times": [
+        {
+          "key": "deadline",
+          "owner": "upload",
+          "endpoint": "task",
+          "type": "submission_deadline",
+          "token": "2026年11月13日09:25",
+          "value": "2026-11-13T09:25",
+          "precision": "exact",
+          "fragments": [
+            "请在2026年11月13日09:25前上传志愿服务统计表"
+          ]
+        },
+        {
+          "key": "training-start",
+          "owner": "training",
+          "endpoint": "start",
+          "type": "event_start",
+          "token": "2026年11月14日14:20",
+          "value": "2026-11-14T14:20",
+          "precision": "exact",
+          "fragments": [
+            "培训说明会2026年11月14日14:20开始"
+          ]
+        },
+        {
+          "key": "training-end",
+          "owner": "training",
+          "endpoint": "end",
+          "type": "event_end",
+          "token": "15:35",
+          "value": "2026-11-14T15:35",
+          "precision": "exact",
+          "fragments": [
+            "15:35结束"
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "owner": "upload",
+          "names": [
+            "志愿服务统计表",
+            "统计表"
+          ],
+          "fragments": [
+            "请在2026年11月13日09:25前上传志愿服务统计表",
+            "统计表须为PDF",
+            "文件名包含小组编号"
+          ],
+          "formats": [
+            [
+              "PDF"
+            ]
+          ],
+          "naming": [
+            [
+              "文件名包含小组编号",
+              "文件名称含小组编号"
+            ]
+          ],
+          "channels": [
+            null
+          ]
+        }
+      ],
+      "information": []
+    },
+    {
+      "sourceId": "C19-DEV-S06",
+      "completeness": "COMPLETE_MINIMUM_OBLIGATIONS",
+      "tasks": [
+        {
+          "key": "review",
+          "actions": [
+            "核对"
+          ],
+          "objects": [
+            "储物柜编号"
+          ],
+          "actionType": "review",
+          "condition": "not_applicable",
+          "fragments": [
+            "请核对储物柜编号"
+          ],
+          "dependencies": [],
+          "completion": []
+        }
+      ],
+      "events": [],
+      "times": [],
+      "materials": [],
+      "information": [
+        "本通知没有截止日期",
+        "不需要准备附件",
+        "也没有活动安排"
+      ]
+    }
+  ]
+}

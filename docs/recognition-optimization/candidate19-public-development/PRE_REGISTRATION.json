@@ -1,0 +1,25 @@
+{
+  "batch": "C19-PUBLIC-DEVELOPMENT-R1",
+  "design": "CURRENT_C19_SINGLE_ARM_DIAGNOSTIC_NOT_IMPROVEMENT_COMPARISON",
+  "sources": 4,
+  "requests": 4,
+  "denominator": "All four frozen excerpts; not entire webpages, failures/disputes/missing remain",
+  "candidate": "Candidate19 original prompt/schema bytes unchanged",
+  "scorer": "public-source-fact-adjudication-1.0.0",
+  "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "layers": [
+    "modelFirstFacts",
+    "displayBeforeHuman",
+    "humanFinal"
+  ],
+  "decision": "Report correct/incorrect/UNKNOWN per layer; no relative winner, no generalization/human-saving inference",
+  "prose": "Final required assertion includes all title/description/extras/graph; unadjudicated cannot be whole-correct",
+  "legalViews": "Order/synonyms/lossless task merge or material views accepted only if all source obligations, objects, values, precision, evidence and edges preserved; wrong owner/value/type, omission, contradiction or unsupported obligation rejected",
+  "extras": {
+    "retry": 0,
+    "repair": 0,
+    "verifier": 0,
+    "extraSamples": 0
+  },
+  "dispatchAuthorized": false
+}

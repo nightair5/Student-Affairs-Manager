@@ -1,0 +1,453 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "url": "http://127.0.0.1:6872/",
+  "build": "9c8159bac227 / source 2531a3ab070f",
+  "database": "rco-mainline-01-02-i1-d27-plan-recorded-source-info-final-1006",
+  "counts": {
+    "Task": 0,
+    "Project": 0,
+    "Event": 2,
+    "TimePoint": 4,
+    "Material": 0
+  },
+  "refreshCanonicalEqual": true,
+  "failedFormalLeftOnlyPreviousSource": {
+    "Event": 1,
+    "TimePoint": 2
+  },
+  "commitCount": 2,
+  "readbackCount": 2,
+  "traceCount": 27,
+  "noFactEntry": true,
+  "semanticCorrectnessNotInferredFromSave": true,
+  "arms": [
+    {
+      "candidate": "SingleAuthority",
+      "sourceId": "source:d3c454a4",
+      "draftId": "source:d3c454a4:draft:1",
+      "sourceVersionId": "source:d3c454a4:version:1",
+      "sourceRawSha256": "d3b64ff60511e32f71c059a6d9d2a99151f6e6979e191a129ac5ccfe8f5ad04f",
+      "responseSha256": "0fbe21fa409604a32f7d791c93a8622d5269b7fe63b92cb65370c81f2e6e2ed2",
+      "event": {
+        "id": "event:source:d3c454a4:draft:1:event-0001",
+        "projectId": null,
+        "title": "影像叙事工作坊",
+        "description": "2026年12月3日13:30开展影像叙事工作坊，\n结束时间暂未公布。\n全程在线，\n安排作品讨论，\n完成学习后提供学习证明。",
+        "startTimePointId": "time:source:d3c454a4:draft:1:time-0001",
+        "endTimePointId": "time:source:d3c454a4:draft:1:time-0002",
+        "location": null,
+        "createdAt": "2026-10-06T14:36:28.594Z",
+        "updatedAt": "2026-10-06T14:36:28.594Z",
+        "legacyData": {
+          "recognitionTempId": "event-0001",
+          "evidenceIds": [
+            "d26-scope-0001-45966e4642acd33b61198ce9434f770ef90abeb19628e2209e29f7cd164c5598",
+            "d26-scope-0002-ea1fa4f550cf8b1586a1a44b70a5ab0ed8372939b622eb3c080e2086b7f7b238",
+            "d26-scope-0003-824a325c6f3dc3b17871163a6577e5d993a9cd8dee28739f7c5b9cfc431fd5ae",
+            "d26-scope-0004-03571f129d501e0b12f95c5a0b949edc2a4ae403862c59fd9f58387ad646fb2f",
+            "d26-scope-0005-ca12c4dea4746345e6249f704d31a2665444a01c151bcf292b144202d221ac12"
+          ],
+          "inferenceLevel": "explicit",
+          "sourceReviewDraftId": "source:d3c454a4:draft:1"
+        }
+      },
+      "firstSourceInformationDisplayed": {
+        "version": "source-information-preview-1.0.0",
+        "sourceId": "source:d3c454a4",
+        "sourceVersionId": "source:d3c454a4:version:1",
+        "inferredFacts": 0,
+        "items": [
+          {
+            "text": "本消息仅告知活动，",
+            "evidenceIds": [
+              "d26-scope-0006-4daf67269407fbbc03b61426aef0af749fd2053107b01ec4a9c4f855b7f90896"
+            ]
+          },
+          {
+            "text": "无需报名。",
+            "evidenceIds": [
+              "d26-scope-0007-602cee2e4fa319e470c493100f078b13fb2501614eb0bb371220b95aea78d3ce"
+            ]
+          }
+        ],
+        "suppressed": [
+          {
+            "text": "全程在线，",
+            "reason": "ENTITY_EVIDENCE_ALREADY_DISPLAYED"
+          },
+          {
+            "text": "安排作品讨论，",
+            "reason": "ENTITY_EVIDENCE_ALREADY_DISPLAYED"
+          },
+          {
+            "text": "完成学习后提供学习证明。",
+            "reason": "ENTITY_EVIDENCE_ALREADY_DISPLAYED"
+          }
+        ]
+      },
+      "times": [
+        {
+          "id": "time:source:d3c454a4:draft:1:time-0001",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:d3c454a4:draft:1:event-0001",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_start",
+          "rawText": "2026年12月3日13:30",
+          "normalizedValue": "2026-12-03T13:30",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "createdAt": "2026-10-06T14:36:28.594Z",
+          "updatedAt": "2026-10-06T14:36:28.594Z",
+          "legacyData": {
+            "recognitionTempId": "time-0001",
+            "evidenceIds": [
+              "d26-scope-0001-45966e4642acd33b61198ce9434f770ef90abeb19628e2209e29f7cd164c5598"
+            ],
+            "confidence": 1,
+            "sharedEventIds": [
+              "event:source:d3c454a4:draft:1:event-0001"
+            ]
+          }
+        },
+        {
+          "id": "time:source:d3c454a4:draft:1:time-0002",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:d3c454a4:draft:1:event-0001",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_end",
+          "rawText": "结束时间暂未公布。",
+          "normalizedValue": null,
+          "timezone": null,
+          "isAllDay": false,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "createdAt": "2026-10-06T14:36:28.594Z",
+          "updatedAt": "2026-10-06T14:36:28.594Z",
+          "legacyData": {
+            "recognitionTempId": "time-0002",
+            "evidenceIds": [
+              "d26-scope-0002-ea1fa4f550cf8b1586a1a44b70a5ab0ed8372939b622eb3c080e2086b7f7b238"
+            ],
+            "confidence": 1,
+            "sharedEventIds": [
+              "event:source:d3c454a4:draft:1:event-0001"
+            ]
+          }
+        }
+      ],
+      "measurement": {
+        "semantic": {
+          "version": "d22-semantic-active-input-1",
+          "role": "ENGINEERING_REPLAY",
+          "condition": "assisted",
+          "semanticFields": [],
+          "semanticFieldCount": 0,
+          "storageLeafFields": [
+            "event:event-0001:disposition"
+          ],
+          "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+          "correctDisposition": "NOT_ADJUDICATED",
+          "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+          "activeEditMs": null,
+          "wallMs": null,
+          "readMs": null,
+          "waitMs": null,
+          "hiddenMs": null,
+          "idleMs": null,
+          "structural": false,
+          "missing": [
+            "refresh time discontinuity"
+          ],
+          "legacyMeasurement32": {
+            "version": "low-edit-v2-exploratory-1",
+            "role": "ENGINEERING_REPLAY",
+            "correctDisposition": null,
+            "zeroSubstantiveModification": null,
+            "lowModificationCorrectDisposition": null,
+            "committedFields": [
+              "event:event-0001:disposition"
+            ],
+            "fieldCount": 1,
+            "structural": false,
+            "activeEditMs": null,
+            "readMs": null,
+            "waitMs": null,
+            "hiddenMs": null,
+            "idleMs": null,
+            "missing": [
+              "refresh time discontinuity"
+            ],
+            "postTerminalEvents": 0,
+            "humanMetrics": "NOT_OBSERVABLE"
+          },
+          "humanMetrics": "NOT_OBSERVABLE",
+          "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+        },
+        "linkage": {
+          "version": "d21-review-session-measurement-2",
+          "role": "ENGINEERING_REPLAY",
+          "checkpointStageCount": 2,
+          "unconfirmedFieldKeys": [],
+          "conflictFieldKeys": [],
+          "pageEditIds": [
+            "ebb9b0fb-785d-4fad-aa8c-eca95afc7c92",
+            "38b1c09b-f8ee-4d1e-b5f0-2d78c2427049"
+          ],
+          "verifiedCommitIds": [
+            "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021"
+          ],
+          "unverifiedCommitIds": [],
+          "checkpointToEditId": [
+            {
+              "field": "event:event-0001:disposition",
+              "editId": "ebb9b0fb-785d-4fad-aa8c-eca95afc7c92",
+              "checkpointHistoryId": "71253b58-e8dd-4725-b6ea-b1fa3e10d95c",
+              "commitId": "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021",
+              "readbackVerified": true
+            },
+            {
+              "field": "event:event-0001:disposition",
+              "editId": "38b1c09b-f8ee-4d1e-b5f0-2d78c2427049",
+              "checkpointHistoryId": "d9b68d46-5c68-4538-855d-b5562cbf2bb8",
+              "commitId": "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021",
+              "readbackVerified": true
+            }
+          ],
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "correctionCheckpointLinks": [
+          {
+            "editId": "ebb9b0fb-785d-4fad-aa8c-eca95afc7c92",
+            "field": "event:event-0001:disposition",
+            "checkpointOperationId": "71253b58-e8dd-4725-b6ea-b1fa3e10d95c",
+            "checkpointRevision": "b4bae9d1-3bf0-4e51-b19a-2ccf13440184",
+            "commits": [
+              {
+                "commitId": "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021",
+                "operationIds": [
+                  "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021"
+                ],
+                "readbackIds": [
+                  "a09e3948-5e9c-443c-8fbb-c86616045177"
+                ]
+              }
+            ]
+          },
+          {
+            "editId": "38b1c09b-f8ee-4d1e-b5f0-2d78c2427049",
+            "field": "event:event-0001:disposition",
+            "checkpointOperationId": "d9b68d46-5c68-4538-855d-b5562cbf2bb8",
+            "checkpointRevision": "4bca285d-b4a4-4d47-819b-4bd22a6b6a4a",
+            "commits": [
+              {
+                "commitId": "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021",
+                "operationIds": [
+                  "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021"
+                ],
+                "readbackIds": [
+                  "a09e3948-5e9c-443c-8fbb-c86616045177"
+                ]
+              }
+            ]
+          }
+        ],
+        "outcomes": {
+          "complete": true,
+          "partial": false,
+          "failureEvents": 2
+        }
+      }
+    },
+    {
+      "candidate": "Candidate19",
+      "sourceId": "source:62c15ce9",
+      "draftId": "source:62c15ce9:draft:1",
+      "sourceVersionId": "source:62c15ce9:version:1",
+      "sourceRawSha256": "d3b64ff60511e32f71c059a6d9d2a99151f6e6979e191a129ac5ccfe8f5ad04f",
+      "responseSha256": "fa34c6b1824a0d2af89565f2d880cba2014a311389642d739ec8d6315c2a7dc7",
+      "event": {
+        "id": "event:source:62c15ce9:draft:1:event-0001",
+        "projectId": null,
+        "title": "影像叙事工作坊",
+        "description": "2026年12月3日13:30开展影像叙事工作坊，\n结束时间暂未公布。\n全程在线，\n安排作品讨论，",
+        "startTimePointId": "time:source:62c15ce9:draft:1:time-0001",
+        "endTimePointId": "time:source:62c15ce9:draft:1:time-0002",
+        "location": "在线",
+        "createdAt": "2026-10-06T14:33:10.093Z",
+        "updatedAt": "2026-10-06T14:33:10.093Z",
+        "legacyData": {
+          "recognitionTempId": "event-0001",
+          "evidenceIds": [
+            "d26-scope-0001-4910e20487337bad321f9df46686169a03777743b94615bcb76b09492ad127e1",
+            "d26-scope-0002-5112f230758c3a16827fefae4617e9575dea8aa2194afd4326814f62572dcbc2",
+            "d26-scope-0003-b3e7f13fd791afa94b0561f365c4177cb3790cd37f2a232e1e688af5395844e8",
+            "d26-scope-0004-9643b32f349aed2fa3dbc87558fa9cd3e5c169d9f14ee2ead21db83907ffcc5f"
+          ],
+          "inferenceLevel": "explicit",
+          "sourceReviewDraftId": "source:62c15ce9:draft:1"
+        }
+      },
+      "firstSourceInformationDisplayed": {
+        "version": "source-information-preview-1.0.0",
+        "sourceId": "source:62c15ce9",
+        "sourceVersionId": "source:62c15ce9:version:1",
+        "inferredFacts": 0,
+        "items": [
+          {
+            "text": "完成学习后提供学习证明。",
+            "evidenceIds": [
+              "d26-scope-0005-f932f99520cba94feb2b3cf02292005f5c55ca4bd511bc405d75f006ce656343"
+            ]
+          },
+          {
+            "text": "本消息仅告知活动，",
+            "evidenceIds": [
+              "d26-scope-0006-eeac019104ff6fee63e3cc2ad2e2063c85f59e5fbfb5cc7b80c5935ff6b37dee"
+            ]
+          },
+          {
+            "text": "无需报名。",
+            "evidenceIds": [
+              "d26-scope-0007-0214b24e73f9e3f2accdb610f36ee1bee98b458e6adf76fafec21e2cdef2227a"
+            ]
+          }
+        ],
+        "suppressed": []
+      },
+      "times": [
+        {
+          "id": "time:source:62c15ce9:draft:1:time-0001",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:62c15ce9:draft:1:event-0001",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_start",
+          "rawText": "2026年12月3日13:30",
+          "normalizedValue": "2026-12-03T13:30",
+          "timezone": "Asia/Shanghai",
+          "isAllDay": false,
+          "precision": "exact",
+          "needsConfirmation": false,
+          "createdAt": "2026-10-06T14:33:10.093Z",
+          "updatedAt": "2026-10-06T14:33:10.093Z",
+          "legacyData": {
+            "recognitionTempId": "time-0001",
+            "evidenceIds": [
+              "d26-scope-0001-4910e20487337bad321f9df46686169a03777743b94615bcb76b09492ad127e1"
+            ],
+            "confidence": 0.95,
+            "sharedEventIds": [
+              "event:source:62c15ce9:draft:1:event-0001"
+            ]
+          }
+        },
+        {
+          "id": "time:source:62c15ce9:draft:1:time-0002",
+          "projectId": null,
+          "milestoneId": null,
+          "taskId": null,
+          "materialId": null,
+          "eventId": "event:source:62c15ce9:draft:1:event-0001",
+          "relatedTaskIds": [],
+          "relatedMaterialIds": [],
+          "type": "event_end",
+          "rawText": "结束时间暂未公布",
+          "normalizedValue": null,
+          "timezone": null,
+          "isAllDay": false,
+          "precision": "vague",
+          "needsConfirmation": true,
+          "createdAt": "2026-10-06T14:33:10.093Z",
+          "updatedAt": "2026-10-06T14:33:10.093Z",
+          "legacyData": {
+            "recognitionTempId": "time-0002",
+            "evidenceIds": [
+              "d26-scope-0002-5112f230758c3a16827fefae4617e9575dea8aa2194afd4326814f62572dcbc2"
+            ],
+            "confidence": 0.95,
+            "sharedEventIds": [
+              "event:source:62c15ce9:draft:1:event-0001"
+            ]
+          }
+        }
+      ],
+      "measurement": {
+        "semantic": {
+          "version": "d22-semantic-active-input-1",
+          "role": "ENGINEERING_REPLAY",
+          "condition": "assisted",
+          "semanticFields": [],
+          "semanticFieldCount": 0,
+          "storageLeafFields": [],
+          "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+          "correctDisposition": "NOT_ADJUDICATED",
+          "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+          "activeEditMs": 0,
+          "wallMs": 59282,
+          "readMs": 59248,
+          "waitMs": 34,
+          "hiddenMs": 0,
+          "idleMs": 0,
+          "structural": false,
+          "missing": [],
+          "legacyMeasurement32": {
+            "version": "low-edit-v2-exploratory-1",
+            "role": "ENGINEERING_REPLAY",
+            "correctDisposition": null,
+            "zeroSubstantiveModification": null,
+            "lowModificationCorrectDisposition": null,
+            "committedFields": [],
+            "fieldCount": 0,
+            "structural": false,
+            "activeEditMs": 0,
+            "readMs": 59248,
+            "waitMs": 34,
+            "hiddenMs": 0,
+            "idleMs": 0,
+            "missing": [],
+            "postTerminalEvents": 0,
+            "humanMetrics": "NOT_OBSERVABLE"
+          },
+          "humanMetrics": "NOT_OBSERVABLE",
+          "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+        },
+        "linkage": {
+          "version": "d20-review-session-measurement-1",
+          "role": "ENGINEERING_REPLAY",
+          "checkpointStageCount": 0,
+          "unconfirmedFieldKeys": [],
+          "conflictFieldKeys": [],
+          "pageEditIds": [],
+          "verifiedCommitIds": [
+            "source-review:source:62c15ce9:draft:1:fnv1a32:b4da17fb"
+          ],
+          "unverifiedCommitIds": [],
+          "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "correctionCheckpointLinks": [],
+        "outcomes": {
+          "complete": true,
+          "partial": false,
+          "failureEvents": 0
+        }
+      }
+    }
+  ],
+  "consoleErrors": [],
+  "modelRoute": "POST_403",
+  "humanMetrics": "NOT_OBSERVABLE"
+}

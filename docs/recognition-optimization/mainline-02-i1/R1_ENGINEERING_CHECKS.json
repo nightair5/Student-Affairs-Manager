@@ -1,0 +1,119 @@
+{
+  "directory": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline-02-i1-nWXYwl",
+  "mode": "full",
+  "okay": true,
+  "results": [
+    {
+      "name": "lint",
+      "exitCode": 0,
+      "log": "lint.log",
+      "summary": []
+    },
+    {
+      "name": "typecheck-app",
+      "exitCode": 0,
+      "log": "typecheck-app.log",
+      "summary": []
+    },
+    {
+      "name": "typecheck-node",
+      "exitCode": 0,
+      "log": "typecheck-node.log",
+      "summary": []
+    },
+    {
+      "name": "schema-contract",
+      "exitCode": 0,
+      "log": "schema-contract.log",
+      "summary": []
+    },
+    {
+      "name": "time-contract",
+      "exitCode": 0,
+      "log": "time-contract.log",
+      "summary": []
+    },
+    {
+      "name": "vitest-all",
+      "exitCode": 0,
+      "log": "vitest-all.log",
+      "summary": [
+        " Test Files  94 passed | 1 skipped (95)",
+        "      Tests  932 passed | 1 skipped (933)"
+      ]
+    },
+    {
+      "name": "server",
+      "exitCode": 0,
+      "log": "server.log",
+      "summary": []
+    },
+    {
+      "name": "worker",
+      "exitCode": 0,
+      "log": "worker.log",
+      "summary": [
+        "  errorType: 'UPSTREAM_AUTH_FAILED',"
+      ]
+    },
+    {
+      "name": "time-parity",
+      "exitCode": 0,
+      "log": "time-parity.log",
+      "summary": []
+    },
+    {
+      "name": "multimodal-library",
+      "exitCode": 0,
+      "log": "multimodal-library.log",
+      "summary": []
+    },
+    {
+      "name": "seen-replay-library",
+      "exitCode": 0,
+      "log": "seen-replay-library.log",
+      "summary": []
+    },
+    {
+      "name": "functions",
+      "exitCode": 0,
+      "log": "functions.log",
+      "summary": []
+    },
+    {
+      "name": "build",
+      "exitCode": 0,
+      "directory": "build"
+    },
+    {
+      "name": "new-build-security-and-isolation",
+      "exitCode": 0,
+      "files": 18,
+      "findings": []
+    },
+    {
+      "name": "security-scan",
+      "exitCode": 0,
+      "log": "security-scan.log",
+      "summary": [
+        "Secret scan passed across 763 source/build files."
+      ]
+    },
+    {
+      "name": "dependency-audit",
+      "exitCode": 0,
+      "log": "dependency-audit.log",
+      "summary": [
+        "found 0 vulnerabilities"
+      ]
+    },
+    {
+      "name": "protection-after",
+      "okay": true,
+      "checked": 701,
+      "changed": [],
+      "appendOnly": true,
+      "outOfScope": []
+    }
+  ]
+}

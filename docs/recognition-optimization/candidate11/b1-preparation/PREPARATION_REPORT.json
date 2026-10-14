@@ -1,0 +1,37 @@
+{
+  "version": "candidate11-b1-preparation-report-1.0.0",
+  "status": "B1_PREPARED_FOR_REVIEW",
+  "modelCalls": 0,
+  "preparedRequests": 24,
+  "completeEngineeringReferences": 6,
+  "partialReferences": 0,
+  "independentHumanReferences": 0,
+  "manifestSha": "af1f1d2427eec1795691e1d4a62056a614bac72f0254103667632b341794744e",
+  "preparedPackageSha": "16a1331c58e5b39bf5e73e66479e2faa73e62f4f17e74ff02699c7acd5cff13f",
+  "modelSchemaSha": "5d0e17f849c03e3c35c6e42629de266aff5ed2a333e2d1ad91dbad46eae7df7a",
+  "maxPreparedRequestBytes": 19908,
+  "minPreparedRequestBytes": 14240,
+  "protection": {
+    "count": 84,
+    "ledgerSha": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597"
+  },
+  "ledger": {
+    "authoritativePath": "C:/Users/Winner/student-affairs-multimodal-exp/docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "authoritativeSha": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597",
+    "snapshotPath": "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "snapshotSha": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597",
+    "bytes": 519152,
+    "rows": 644,
+    "reserves": 314,
+    "sameBytes": true,
+    "expectedSha": "dc52d9cd04b809be9d22d5298bd45d0e6f0a01307017d48a91aaa91a45e8e597",
+    "writerOpened": false
+  },
+  "historicalFailure": {
+    "id": "RCO-5-007",
+    "status": "PRESERVED_FAILING",
+    "error": "FREEZE_HASH_MISMATCH:package-lock.json"
+  },
+  "dispatch": "DENIED",
+  "authorization": "AWAITING_NEW_MODEL_CALL_AUTHORIZATION"
+}

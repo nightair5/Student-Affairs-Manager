@@ -1,0 +1,157 @@
+{
+  "baselineHead": "d23b107ef59268b7a6146023f65cd91cebe1d7e3",
+  "boundaries": {
+    "candidate13ModelEvaluated": false,
+    "defaultCandidateChanged": false,
+    "dependenciesChanged": false,
+    "historicalD2RescoredForPromotion": false,
+    "historicalExpectedChanged": false,
+    "workspaceSchemaChanged": false
+  },
+  "files": [
+    {
+      "bytes": 14390,
+      "path": "docs/recognition-optimization/candidate12/d3-scorer-contract/REFERENCE_SCHEMA.json",
+      "sha256": "cbb2667f8f5900b2c647bbbd8e1cdad1a65196cfef96c95bc5612d4fdd3a37e8"
+    },
+    {
+      "bytes": 1329,
+      "path": "docs/recognition-optimization/candidate12/d3-scorer-contract/SCORER_INPUT_SCHEMA.json",
+      "sha256": "95146805906c97802c82f0a610a97d64806d68015fa9456db9296be0d2170261"
+    },
+    {
+      "bytes": 164785,
+      "path": "docs/recognition-optimization/candidate12/d3-scorer-contract/CONTRACT_FIXTURES.json",
+      "sha256": "45c2a10efff0d643725efc44cb0bea157270d5ecf608bc483c8965b212eb8e5d"
+    },
+    {
+      "bytes": 18199,
+      "path": "docs/recognition-optimization/candidate12/d3-scorer-contract/HISTORICAL_REFERENCE_COMPATIBILITY_REPORT.json",
+      "sha256": "c8cff2e3a68c3a76bcd640a4110569153f8954abc7e754383321960cdbc922ac"
+    },
+    {
+      "bytes": 1645,
+      "path": "docs/recognition-optimization/candidate12/d3-scorer-contract/README.md",
+      "sha256": "c04e0da2a6ba8772b2c09fc7d1cbe7e1887fd2fb20071082347b1b2b3907ea11"
+    },
+    {
+      "bytes": 2846,
+      "path": "docs/recognition-optimization/candidate12/d3-scorer-contract/REFERENCE_CONTRACT.md",
+      "sha256": "57f3fbb2c600ec9185d092eafe4315c5bbb853c5c0cedb42d321c856abf5ff88"
+    },
+    {
+      "bytes": 1539,
+      "path": "docs/recognition-optimization/candidate12/d3-scorer-contract/CONTRACT_DECISIONS.md",
+      "sha256": "75f2afabe68a5fb5bae8cbf41b565cd128fcb404b62fbd86d4c631ee9522caf0"
+    },
+    {
+      "bytes": 1331,
+      "path": "docs/recognition-optimization/candidate12/d3-scorer-contract/FUTURE_EVALUATION_PREREGISTRATION.md",
+      "sha256": "50fafaedf93ca8e35d91d6c6b905aaac364dc05abed966f7de44ba0b119f6540"
+    },
+    {
+      "bytes": 1111,
+      "path": "docs/recognition-optimization/candidate12/d3-scorer-contract/CANDIDATE13_CHANGE_PLAN.md",
+      "sha256": "43817bda7db9a09d66a1c58bf88adffaef1844be196f86111db5bfa42b7ca6c4"
+    },
+    {
+      "bytes": 2924,
+      "path": "docs/recognition-optimization/candidate12/d3-scorer-contract/VALIDATION.md",
+      "sha256": "f06cc464ef9c1b146ca42ecf3e8eed1710f4eb562ea219d776c3af394639a7ad"
+    },
+    {
+      "bytes": 18039,
+      "path": "scripts/candidate12-reference-contract.mjs",
+      "sha256": "a35a5dbf32b3ed9b5110e7a60d6beb0710774f1fdbcdde5d298f995b74299406"
+    },
+    {
+      "bytes": 3994,
+      "path": "scripts/compile-candidate12-reference.mjs",
+      "sha256": "c95f35b464561a939960c52280cf50e7c4266e653e77a9df49790072dcb6773c"
+    },
+    {
+      "bytes": 13927,
+      "path": "scripts/score-candidate12-contract-v3.mjs",
+      "sha256": "64f33da0e83fdc29c052e0f4320f29d831fbee461659489da7c368ba70a0cf1a"
+    },
+    {
+      "bytes": 13793,
+      "path": "scripts/candidate12-d3-fixtures.mjs",
+      "sha256": "56fa7f303e9d5063a21b6d30ce6f927163c702bf1a2f719675ed525b8818e853"
+    },
+    {
+      "bytes": 18763,
+      "path": "scripts/build-candidate12-d3.mjs",
+      "sha256": "db42a5665abef9b9aeb7c3a3a51a3f113c26a82041e5c0fad25169e57b077fa9"
+    },
+    {
+      "bytes": 8675,
+      "path": "scripts/candidate12-d3.node-test.mjs",
+      "sha256": "030054f4d76dc1fba8a2a22656e86ef5627751ba4387b9b22f14710e14a4cd6d"
+    }
+  ],
+  "fixtures": {
+    "categories": 24,
+    "evaluationRole": "ANONYMOUS_CONTRACT_FIXTURE_ONLY",
+    "invalid": 24,
+    "valid": 24
+  },
+  "frozenEvidence": {
+    "authorityLedger": {
+      "bytes": 631869,
+      "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+      "rows": 742,
+      "sha256": "df4035229093554b6417b0a37571730f68c10ecb7098234814406b49dfae1e1e",
+      "tail": "6812e1b072caeaa4fd3e6e8e55b485c57533bc0a0d9eaaff4dd84bbf48809922",
+      "writerOpened": false
+    },
+    "d1": {
+      "aggregateSha256": "4afa5b08a368961ba6782b4ac3d4450f6e6d89c02fa034e1eb426f0390855a5b",
+      "count": 8
+    },
+    "d2": {
+      "aggregateSha256": "2074b8931077a9975ea61293723d1a668728f3baefb5933da84602f61aab6d53",
+      "count": 61
+    },
+    "d2Manifest": {
+      "decision": "REJECT_CANDIDATE12_ENGINEERING_SCREEN",
+      "manifestFiles": 60,
+      "raw": 24,
+      "results": 24
+    },
+    "protectedFiles": 84
+  },
+  "generatedAt": "2026-09-21T15:07:26.762Z",
+  "historicalCompatibility": {
+    "compatible": 0,
+    "naturalLanguageCheckFailures": 12,
+    "officialD2DecisionPreserved": "REJECT_CANDIDATE12_ENGINEERING_SCREEN",
+    "sources": 12,
+    "taskIdentityFailures": 10
+  },
+  "nextStageRequires": [
+    "fresh anonymous Development or independent human Holdout",
+    "Candidate13 frozen before new Expected is visible",
+    "new model-call authorization and budget only after zero-call package review"
+  ],
+  "operations": {
+    "deploy": 0,
+    "grants": 0,
+    "holdoutRequests": 0,
+    "humanTrials": 0,
+    "ledgerWrites": 0,
+    "merge": 0,
+    "modelCalls": 0,
+    "reserves": 0,
+    "secretReads": 0,
+    "settlements": 0
+  },
+  "status": "D3_SCORER_CONTRACT_READY_FOR_FRESH_DATA",
+  "version": "candidate12-d3-scorer-contract-manifest-1",
+  "versions": {
+    "compiler": "candidate12-reference-compiler-3.0.0",
+    "referenceContract": "candidate12-reference-contract-3.0.0",
+    "scorer": "candidate12-scoring-3.0.0",
+    "scorerInput": "candidate12-scorer-input-3.0.0"
+  }
+}

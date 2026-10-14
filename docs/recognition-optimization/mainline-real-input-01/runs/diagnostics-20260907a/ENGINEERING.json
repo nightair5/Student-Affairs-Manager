@@ -1,0 +1,64 @@
+{
+  "version": "real-input-diagnostic-checks-1",
+  "scope": "ZERO_CALL_DIAGNOSTICS_ONLY",
+  "attempts": [
+    {
+      "log": "logs/gateway-before-attempt-1.log",
+      "tests": 43,
+      "passed": 24,
+      "failed": 19,
+      "meaning": "Old gateway controls pass; 19 added diagnostic expectations fail before implementation."
+    },
+    {
+      "log": "logs/gateway-after-attempt-1.log",
+      "tests": 73,
+      "passed": 72,
+      "failed": 1,
+      "meaning": "New test incorrectly assumed lease.uncertain can be reused after complete has finalized the lease. Existing budget first halts RESPONSE_OR_USAGE_INVALID. No budget source changed."
+    },
+    {
+      "log": "logs/gateway-after-attempt-2.log",
+      "tests": 73,
+      "passed": 73,
+      "failed": 0,
+      "meaning": "Old 54 budget+gateway controls and 19 new diagnostic tests. New assertion follows real lease lifecycle and still requires full pending reserve, halt, reopening and next request refusal."
+    }
+  ],
+  "oldGatewayTests": {
+    "count": 24,
+    "exactReconstructionSha256": "ae1dd78231be79f752011888a53dbf5c7fcd7d50c8278a35f71f4d3f38ac2b21",
+    "method": "In memory remove only newly inserted helper and diagnostic test block including its separator; reconstructed original bytes match old SHA. No file was rewritten for this check."
+  },
+  "syntax": "PASS: node --check gateway and runner",
+  "independentReview": "PASS_SCOPE_ONLY; 73/73 independent rerun plus 2 additional mock probes, separately counted; SHA binding in REVIEW.json",
+  "fullEngineering": "NOT_RUN",
+  "lint": {"status":"FAIL","errors":2,"warnings":4,"log":"logs/lint-attempt-1.log","locations":["src/App.tsx:1490 react-hooks/refs","src/experiments/realInput01/FactCorrectionEditor.tsx:17 react-hooks/refs"],"sourceStatus":"Both files are byte-identical to this turn baseline. No claim these errors passed historical full lint; no suppression or UI fix attempted within the bounded diagnostic step."},
+  "secretScan": {"status":"PASS","files":1130,"log":"logs/security-attempt-1.log","credentialFileRead":false},
+  "browser": "NOT_RUN_THIS_DIAGNOSTIC_TURN",
+  "localTransportObservation": {
+    "method": "Read current process proxy presence and documented local node --help; no .env, proxy address, credential, remote request or setting change.",
+    "node": "v24.18.0",
+    "undici": "7.28.0",
+    "HTTP_PROXY": true,
+    "HTTPS_PROXY": true,
+    "ALL_PROXY": true,
+    "NO_PROXY": true,
+    "NODE_USE_ENV_PROXY": false,
+    "NODE_OPTIONS": false,
+    "NODE_EXTRA_CA_CERTS": false,
+    "NODE_TLS_REJECT_UNAUTHORIZED": false,
+    "processUseEnvProxyFlag": false,
+    "windowsUserProxyEnabled": true,
+    "windowsAutoConfigUrlPresent": false,
+    "interpretation": "Current configuration is a transport-route clue, not proof of historical A01 failure or provider availability."
+  },
+  "newModelRequests": 0,
+  "newModelCostCny": 0,
+  "historicalModelAttempts": 1,
+  "historicalCompleteResponses": 0,
+  "unknownReservationMicroCny": 3300000,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "modelAccuracy": "本轮未测量",
+  "businessDelivery": "NOT_COMPLETE",
+  "oldPaidEvidence": "READ_ONLY; no dispatch or reopening original paid budget for mutation"
+}

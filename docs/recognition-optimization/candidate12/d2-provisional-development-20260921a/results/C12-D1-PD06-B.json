@@ -1,0 +1,108 @@
+{
+  "version": "candidate12-d2-result-1",
+  "unitId": "C12-D1-PD06-B",
+  "sourceId": "C12-PD06",
+  "arm": "B",
+  "ordinal": 11,
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "requestSha": "d71fcbaa3b169f5a2af379b92d9ea273f9469135e52c028f541166b94f18b481",
+  "responseSha": "858391d63d0f9f8dbf33f0772f9ab9ec836286448d29931081f880780ba1ff85",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "diagnostic": null,
+  "waitingMs": 3101,
+  "parseError": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-check-bank-id",
+        "propositionScopeIds": [
+          "scope-0001-3cbaf8ed424e886eced9f30b9537b8dec1693f6a41b694720d5194d4c3a2c946",
+          "scope-0002-3a3a6b8fe15ea75c02bd2e939f7e44f80c05e2973d163c707d880293fb1af300",
+          "scope-0003-e37e24e03c478d07513ed253369469367319399bb0385c31f7bf48ebbd338093",
+          "scope-0004-64249808e6894d09ebfa13b9d4da430a54ce1a157d617ac2dabc73f2106d4221"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "present",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "review",
+        "action": {
+          "scopeId": "scope-0001-3cbaf8ed424e886eced9f30b9537b8dec1693f6a41b694720d5194d4c3a2c946",
+          "surface": "核对"
+        },
+        "object": {
+          "scopeId": "scope-0001-3cbaf8ed424e886eced9f30b9537b8dec1693f6a41b694720d5194d4c3a2c946",
+          "surface": "奖助申请中的银行账号与证件号码"
+        },
+        "effect": "local_change",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "核对奖助申请中的银行账号与证件号码",
+          "description": "核对奖助申请中的银行账号与证件号码，确认页面显示的信息与本人材料一致后点击“完成核对”。本步骤只要求完成核对，不代表审核通过。",
+          "completionCriteria": [
+            "完成核对并点击“完成核对”"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0003-e37e24e03c478d07513ed253369469367319399bb0385c31f7bf48ebbd338093",
+      "scope-0004-64249808e6894d09ebfa13b9d4da430a54ce1a157d617ac2dabc73f2106d4221"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C12-PD06",
+    "sourceVersionId": "C12-PD06-v1",
+    "sourceFingerprint": "sha256:8d134e4856b1b915d05175c2d47a598e179e17fbb36a876646dce48bf836e950"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4729,
+    "input_tokens_details": {
+      "cached_tokens": 4224
+    },
+    "output_tokens": 674,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5403
+  },
+  "costUpperMicroCny": 14850,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0
+}

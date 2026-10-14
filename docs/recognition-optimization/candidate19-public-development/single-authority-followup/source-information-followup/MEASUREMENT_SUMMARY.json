@@ -1,0 +1,193 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "humanMetrics": "NOT_OBSERVABLE",
+  "measurementHistoryUnchanged": true,
+  "traceCount": 27,
+  "reports": [
+    {
+      "candidate": "SingleAuthority",
+      "semantic": {
+        "version": "d22-semantic-active-input-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semanticFields": [],
+        "semanticFieldCount": 0,
+        "storageLeafFields": [
+          "event:event-0001:disposition"
+        ],
+        "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+        "correctDisposition": "NOT_ADJUDICATED",
+        "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+        "activeEditMs": null,
+        "wallMs": null,
+        "readMs": null,
+        "waitMs": null,
+        "hiddenMs": null,
+        "idleMs": null,
+        "structural": false,
+        "missing": [
+          "refresh time discontinuity"
+        ],
+        "legacyMeasurement32": {
+          "version": "low-edit-v2-exploratory-1",
+          "role": "ENGINEERING_REPLAY",
+          "correctDisposition": null,
+          "zeroSubstantiveModification": null,
+          "lowModificationCorrectDisposition": null,
+          "committedFields": [
+            "event:event-0001:disposition"
+          ],
+          "fieldCount": 1,
+          "structural": false,
+          "activeEditMs": null,
+          "readMs": null,
+          "waitMs": null,
+          "hiddenMs": null,
+          "idleMs": null,
+          "missing": [
+            "refresh time discontinuity"
+          ],
+          "postTerminalEvents": 0,
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+      },
+      "linkage": {
+        "version": "d21-review-session-measurement-2",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 2,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [
+          "ebb9b0fb-785d-4fad-aa8c-eca95afc7c92",
+          "38b1c09b-f8ee-4d1e-b5f0-2d78c2427049"
+        ],
+        "verifiedCommitIds": [
+          "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": [
+          {
+            "field": "event:event-0001:disposition",
+            "editId": "ebb9b0fb-785d-4fad-aa8c-eca95afc7c92",
+            "checkpointHistoryId": "71253b58-e8dd-4725-b6ea-b1fa3e10d95c",
+            "commitId": "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021",
+            "readbackVerified": true
+          },
+          {
+            "field": "event:event-0001:disposition",
+            "editId": "38b1c09b-f8ee-4d1e-b5f0-2d78c2427049",
+            "checkpointHistoryId": "d9b68d46-5c68-4538-855d-b5562cbf2bb8",
+            "commitId": "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021",
+            "readbackVerified": true
+          }
+        ],
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "correctionCheckpointLinks": [
+        {
+          "editId": "ebb9b0fb-785d-4fad-aa8c-eca95afc7c92",
+          "field": "event:event-0001:disposition",
+          "checkpointOperationId": "71253b58-e8dd-4725-b6ea-b1fa3e10d95c",
+          "checkpointRevision": "b4bae9d1-3bf0-4e51-b19a-2ccf13440184",
+          "commits": [
+            {
+              "commitId": "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021",
+              "operationIds": [
+                "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021"
+              ],
+              "readbackIds": [
+                "a09e3948-5e9c-443c-8fbb-c86616045177"
+              ]
+            }
+          ]
+        },
+        {
+          "editId": "38b1c09b-f8ee-4d1e-b5f0-2d78c2427049",
+          "field": "event:event-0001:disposition",
+          "checkpointOperationId": "d9b68d46-5c68-4538-855d-b5562cbf2bb8",
+          "checkpointRevision": "4bca285d-b4a4-4d47-819b-4bd22a6b6a4a",
+          "commits": [
+            {
+              "commitId": "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021",
+              "operationIds": [
+                "source-review:source:d3c454a4:draft:1:fnv1a32:1adf0021"
+              ],
+              "readbackIds": [
+                "a09e3948-5e9c-443c-8fbb-c86616045177"
+              ]
+            }
+          ]
+        }
+      ],
+      "outcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 2
+      }
+    },
+    {
+      "candidate": "Candidate19",
+      "semantic": {
+        "version": "d22-semantic-active-input-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semanticFields": [],
+        "semanticFieldCount": 0,
+        "storageLeafFields": [],
+        "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+        "correctDisposition": "NOT_ADJUDICATED",
+        "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+        "activeEditMs": 0,
+        "wallMs": 59282,
+        "readMs": 59248,
+        "waitMs": 34,
+        "hiddenMs": 0,
+        "idleMs": 0,
+        "structural": false,
+        "missing": [],
+        "legacyMeasurement32": {
+          "version": "low-edit-v2-exploratory-1",
+          "role": "ENGINEERING_REPLAY",
+          "correctDisposition": null,
+          "zeroSubstantiveModification": null,
+          "lowModificationCorrectDisposition": null,
+          "committedFields": [],
+          "fieldCount": 0,
+          "structural": false,
+          "activeEditMs": 0,
+          "readMs": 59248,
+          "waitMs": 34,
+          "hiddenMs": 0,
+          "idleMs": 0,
+          "missing": [],
+          "postTerminalEvents": 0,
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+      },
+      "linkage": {
+        "version": "d20-review-session-measurement-1",
+        "role": "ENGINEERING_REPLAY",
+        "checkpointStageCount": 0,
+        "unconfirmedFieldKeys": [],
+        "conflictFieldKeys": [],
+        "pageEditIds": [],
+        "verifiedCommitIds": [
+          "source-review:source:62c15ce9:draft:1:fnv1a32:b4da17fb"
+        ],
+        "unverifiedCommitIds": [],
+        "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+        "humanMetrics": "NOT_OBSERVABLE"
+      },
+      "correctionCheckpointLinks": [],
+      "outcomes": {
+        "complete": true,
+        "partial": false,
+        "failureEvents": 0
+      }
+    }
+  ]
+}

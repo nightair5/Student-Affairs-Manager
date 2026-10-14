@@ -1,0 +1,15 @@
+{
+  "status": "PASS_LOCAL_PREPARATION_FILES_ONLY",
+  "comparisonSource": "CUA visible engineering evidence from explicit button: new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load(); followed by actual browser download and filesystem parsing, not self-hashing twice",
+  "database": "rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862",
+  "origin": "http://127.0.0.1:6631",
+  "files": [
+    {"path":"C:/Users/Winner/Downloads/real-input-local-evidence.json","bytes":50752,"sha256":"fc4e3e0bd7c22c2ea7397b0ba9f5ee5fddb0147826fa96b8fa91cd3a300c2b81","workspaceSha256":"d25779b8e47532ea6f03bbbca949c1d80d1d578da2185f24bfa1bf089ab3016d","independentComparison":true},
+    {"path":"C:/Users/Winner/Downloads/real-input-local-evidence (1).json","bytes":268413,"sha256":"c38ed5f5c6974ee49c4b8f2f94d78eb3b243acebd17174b24633d89461ebe22f","kind":"16 actual source-first prepared requests; zero model requests"},
+    {"path":"C:/Users/Winner/Downloads/real-input-local-evidence (2).json","bytes":104048,"sha256":"7cc9433e30c574932615e99ee1456acb68e42ba1d02d3c6c520156faf7586e84","workspaceSha256":"b7c08ed26349a7ad5e1a67236058aa9c91ed6b678a2cf210647f5d59473b758a","independentComparison":true}
+  ],
+  "sources":16,"runs":16,"drafts":16,"formalTasks":0,"realJobs":0,
+  "jointValidator":"PASS via actual repository button and binder",
+  "confirmedTaskExport":"NOT_RUN",
+  "modelAccuracy":"本轮未测量"
+}

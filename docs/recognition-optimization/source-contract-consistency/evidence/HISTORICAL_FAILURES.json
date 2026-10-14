@@ -1,0 +1,62 @@
+[
+  {
+    "layer": "historical",
+    "label": "d19-diagnostic",
+    "status": 1,
+    "outcome": "FAIL",
+    "error": null,
+    "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d19-diagnostic.log",
+    "logSha256": "abadcb80e112ec419bc3fec1911e0d7b72c600583a7fa66e4d90b0bf814a539c",
+    "excerpt": "Error: D17_SCORE_LEDGER_DRIFT\n      at check (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/score-candidate17-d17.mjs:15:44)\n      at scoreD17 (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/score-candidate17-d17.mjs:26:3)\n      at diagnoseD19 (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/d19-offline-diagnostic.mjs:13:24)\n      at TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/d19-offline-diagnostic.node-test.mjs:14:22)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)\n      at Test.postRun (node:internal/test_runner/test:1465:19)\n      at Test.run (node:internal/test_runner/test:1390:12)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)\n"
+  },
+  {
+    "layer": "historical",
+    "label": "d9-historical",
+    "status": 1,
+    "outcome": "FAIL",
+    "error": null,
+    "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\d9-historical.log",
+    "logSha256": "d0fbfcdd0424a915003c06dc3369e5a14ebba16ac40bb2cf6b4bf835e498cc3f",
+    "excerpt": "Error: D9_GUARD_FILE_DRIFT_scripts/serve-candidate15-d8.mjs\n      at assert (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate15-d9.mjs:12:45)\n      at verifyD9Files (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate15-d9.mjs:51:41)\n      at TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate15-d9.test.mjs:12:20)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.start (node:internal/test_runner/test:1191:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)\n"
+  },
+  {
+    "layer": "historical",
+    "label": "rco-5-007",
+    "status": 1,
+    "outcome": "FAIL",
+    "error": null,
+    "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\rco-5-007.log",
+    "logSha256": "c653e146f99b23364acf8ff50e5f319032b3c00dea161ee01b106dfb735b6e13",
+    "excerpt": "Error: FREEZE_HASH_MISMATCH:package-lock.json\n      at verifyRco5007Freeze (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/rco-5-007-integrity.mjs:17:55)\n      at async TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/rco-5-007-replay.node-test.mjs:21:22)\n      at async Test.run (node:internal/test_runner/test:1332:7)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)\n"
+  },
+  {
+    "layer": "historical",
+    "label": "c11-history",
+    "status": 1,
+    "outcome": "FAIL",
+    "error": null,
+    "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\c11-history.log",
+    "logSha256": "c1de58fb9759026c74783b8dd8b3801b295bc6b0c3b506202fd3204b685f0a07",
+    "excerpt": "Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md\n      at check (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:12:52)\n      at verifyProtectedFiles (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:25:45)\n      at TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/candidate11-history.node-test.mjs:7:16)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.start (node:internal/test_runner/test:1191:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)\n"
+  },
+  {
+    "layer": "historical",
+    "label": "c11-gateway",
+    "status": 1,
+    "outcome": "FAIL",
+    "error": null,
+    "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\c11-gateway.log",
+    "logSha256": "06ff91ba99c2adaacc6ed0bd22e9bf25035dc74db6edefcdada9ecbb088a34e4",
+    "excerpt": "Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md\n      at check (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:12:52)\n      at verifyProtectedFiles (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:25:45)\n      at TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/candidate11-gateway.node-test.mjs:40:16)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)\n      at Test.postRun (node:internal/test_runner/test:1465:19)\n      at Test.run (node:internal/test_runner/test:1390:12)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)\n\ntest at scripts\\candidate11-gateway.node-test.mjs:39:72\n✖ candidate11 mock timeout retains reserve and never auto-retries (0.8245ms)\n  Error: C11_HISTORY_PROTECTED_CHANGED:AGENTS.md\n      at check (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:12:52)\n      at verifyProtectedFiles (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/verify-candidate11-analysis.mjs:25:45)\n      at TestContext.<anonymous> (file:///C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/%E6%AF%94%E8%B5%9B/scripts/candidate11-gateway.node-test.mjs:40:"
+  },
+  {
+    "layer": "historical",
+    "label": "vitest-d17-history",
+    "status": 1,
+    "outcome": "FAIL",
+    "error": null,
+    "log": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate11\\checks\\test\\Asia-Shanghai\\vitest-d17-history.log",
+    "logSha256": "15d33e7345ebe9e06a688b76813bcd3ccd1c9b0664b11682cc3a212431456424",
+    "excerpt": "FAIL  src/experiments/candidate16/d22Recovery.test.ts [ src/experiments/candidate16/d22Recovery.test.ts ]\nError: D17_SCORE_LEDGER_DRIFT\n ❯ check scripts/score-candidate17-d17.mjs:15:44\n     13| const LEDGER=resolve('C:/Users/Winner/student-affairs-multimodal-exp/d…\n     14| const D16='docs/recognition-optimization/candidate17/d16-development'\n     15| const check=(value,code)=>{if(!value)throw Error('D17_SCORE_'+code)}\n       |                                            ^\n     16| const read=path=>JSON.parse(readFileSync(path,'utf8'))\n     17| const encode=value=>JSON.stringify(value,null,2)+'\\n'\n ❯ scoreD17 scripts/score-candidate17-d17.mjs:26:3\n ❯ buildD21Preview scripts/serve-d21-review-session.mjs:15:22\n ❯ src/experiments/candidate16/d22Recovery.test.ts:21:23\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯\n\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  src/experiments/candidate16/d19SourceSession.test.ts > D19 prefilled mixed fixture has fully evidenced event names and uncertain times before confirmation\nError: D17_SCORE_LEDGER_DRIFT\n ❯ check scripts/score-candidate17-d17.mjs:15:44\n     13| const LEDGER=resolve('C:/Users/Winner/student-affairs-multimodal-exp/d…\n     14| const D16='docs/recognition-optimization/candidate17/d16-development'\n     15| const check=(value,code)=>{if(!value)throw Error('D17_SCORE_'+code)}\n       |                                            ^\n     16| const read=path=>JSON.parse(readFileSync(path,'utf8'))\n     17| const encode=value=>JSON.stringify(value,null,2)+'\\n'\n ❯ scoreD17 scripts/score-candidate17-d17.mjs:26:3\n ❯ buildD19Preview scripts/serve-d19-source-sessi"
+  }
+]

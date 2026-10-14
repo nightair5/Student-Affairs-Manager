@@ -1,0 +1,197 @@
+{
+  "version": "public-source-fact-adjudication-1.0.0",
+  "references": [
+    {
+      "sourceId": "C19-CURRENT-REAL-01",
+      "originalMaterialId": "FRESH-02",
+      "sourceSha256": "a82c64b9a8e28d851c5a6699ba6fe16ea87528c5c923cdebb8aee1c469d39f64",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "coverage": "FULL_EXCERPT_NOT_FULL_PAGE",
+      "assertions": [
+        {
+          "id": "C19-CURRENT-REAL-01-F1",
+          "category": "task",
+          "statement": "大陆本科2026级新生在窗口内激活账号、登录并完成网上预注册；可无损拆合，不漏预注册，不新增改密码等动作。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-01-F2",
+          "category": "time",
+          "statement": "开放窗口为2026-08-13至2026-08-27，date_only，不补时刻；保留窗口两端及用途，不把开始日当提交截止。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-01-F3",
+          "category": "condition",
+          "statement": "2026级、大陆地区、本科身份与个人适用状态分开；未提供个人身份，不能断言资格true或false。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-01-F4",
+          "category": "revision",
+          "statement": "本通知窗口优先于入学须知；旧窗口未给出，保留修订说明，不猜旧日期或不存在的任务端点。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-01-F5",
+          "category": "information",
+          "statement": "窗口外账号密码错误是系统说明，不能变成普遍重置密码、联系管理员或立即登录任务。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-01-F6",
+          "category": "evidence",
+          "statement": "所有必要事实有本来源版本的真实依据；错值、错对象、跨来源、矛盾证据或错误关系不通过。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-01-F7",
+          "category": "prose-extras",
+          "statement": "逐项核查标题、自由描述、全部额外任务/事件/材料/时间、覆盖及关系；未裁决不能整份正确，无据义务或关键遗漏不被正确字段抵消。"
+        }
+      ],
+      "unresolved": [
+        "仅摘录大陆本科生类别，不声称覆盖全部身份"
+      ],
+      "adjudication": "Source-first provisional per assertion with original/output pointers; unadjudicated or critical unresolved -> UNKNOWN; legal equivalent representations allowed, no arm-specific exception"
+    },
+    {
+      "sourceId": "C19-CURRENT-REAL-02",
+      "originalMaterialId": "FRESH-04",
+      "sourceSha256": "15b4abc5e1964161570a45c56830db843839362f32ec54a5f4ea9b54979f0bbb",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "coverage": "FULL_EXCERPT_NOT_FULL_PAGE",
+      "assertions": [
+        {
+          "id": "C19-CURRENT-REAL-02-F1",
+          "category": "task",
+          "statement": "各位同学完成暑假离留校登记是核心义务；条件下的字段要求不机械拆成无对象待办。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-02-F2",
+          "category": "time",
+          "statement": "登记截止原文7月16日前，年份由2026原referenceTime确定，date_only；不补23:59、18:00或个人计划。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-02-F3",
+          "category": "channel",
+          "statement": "明确操作入口为学工系统的暑假离留校登记应用及给定URL；陌生但明确目的地不能清空，也不虚构材料格式。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-02-F4",
+          "category": "completion",
+          "statement": "登记信息须完整、准确；离校条件下包含去向、联系方式、返校安排。不能假定已填写或已完成。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-02-F5",
+          "category": "condition",
+          "statement": "短期离厦的留校同学也按离校管理并及时登记；个人是否外出未知，不默认所有人离校或删除基本登记义务。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-02-F6",
+          "category": "evidence",
+          "statement": "所有必要事实有本来源版本的真实依据；错值、错对象、跨来源、矛盾证据或错误关系不通过。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-02-F7",
+          "category": "prose-extras",
+          "statement": "逐项核查标题、自由描述、全部额外任务/事件/材料/时间、覆盖及关系；未裁决不能整份正确，无据义务或关键遗漏不被正确字段抵消。"
+        }
+      ],
+      "unresolved": [
+        "日前是否包含当天的日终边界未独立裁决；保持日期精度"
+      ],
+      "adjudication": "Source-first provisional per assertion with original/output pointers; unadjudicated or critical unresolved -> UNKNOWN; legal equivalent representations allowed, no arm-specific exception"
+    },
+    {
+      "sourceId": "C19-CURRENT-REAL-03",
+      "originalMaterialId": "FRESH-05",
+      "sourceSha256": "e751a6400d42dfeb3894935cb452b04ee18db16926d060d44a5ef0f8deb7d793",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "coverage": "FULL_EXCERPT_NOT_FULL_PAGE",
+      "assertions": [
+        {
+          "id": "C19-CURRENT-REAL-03-F1",
+          "category": "task",
+          "statement": "有意参加者可网络/扫码报名；兴趣、身份和录取状态未提供，不默认所有人必须或已经报名。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-03-F2",
+          "category": "event",
+          "statement": "线上暑期学校是活动事实；开始2026-07-06、结束2026-07-10，date_only，保留起止和线上形式。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-03-F3",
+          "category": "time",
+          "statement": "报名截止2026-06-30T17:00，与7月6至10日活动起止正确归属，不能错挂或遗漏。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-03-F4",
+          "category": "condition",
+          "statement": "正式学员准备终端设备用于连线；被录取前置未说明完成，等待/资格未知不能改true或全部删掉。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-03-F5",
+          "category": "information",
+          "statement": "目标人群、免费、学习结束可获结业证书保留；证书是结果说明，不制造提交证书任务。二维码未读取，不猜URL。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-03-F6",
+          "category": "evidence",
+          "statement": "所有必要事实有本来源版本的真实依据；错值、错对象、跨来源、矛盾证据或错误关系不通过。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-03-F7",
+          "category": "prose-extras",
+          "statement": "逐项核查标题、自由描述、全部额外任务/事件/材料/时间、覆盖及关系；未裁决不能整份正确，无据义务或关键遗漏不被正确字段抵消。"
+        }
+      ],
+      "unresolved": [
+        "节选未包含课程海报与全部场次，不宣称读全图片"
+      ],
+      "adjudication": "Source-first provisional per assertion with original/output pointers; unadjudicated or critical unresolved -> UNKNOWN; legal equivalent representations allowed, no arm-specific exception"
+    },
+    {
+      "sourceId": "C19-CURRENT-REAL-04",
+      "originalMaterialId": "FRESH-06",
+      "sourceSha256": "ebc1612063c03172bf98302cffbc98c1f838830e732fefc246a01fbb0c30723b",
+      "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+      "coverage": "FULL_EXCERPT_NOT_FULL_PAGE",
+      "assertions": [
+        {
+          "id": "C19-CURRENT-REAL-04-F1",
+          "category": "event",
+          "statement": "独立活动在海韵园办公楼A栋302室；日期2026-10-12，起止12:30至14:00，同一事件正确owner，不漏结束。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-04-F2",
+          "category": "task",
+          "statement": "感兴趣听众可扫码报名；个人兴趣未知，不默认强制参加或已报名。未读二维码不猜入口URL。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-04-F3",
+          "category": "time",
+          "statement": "听众报名截止2026-10-11T12:00；与10月12日活动起止分清，不能互换或改个人计划。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-04-F4",
+          "category": "information",
+          "statement": "50份免费午餐按报名顺序先到先得；不是讲座听众上限或只有前50人有资格听课。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-04-F5",
+          "category": "condition",
+          "statement": "听众人数不限、感兴趣均可报名；午餐条件与参加资格分开，不能新增错误资格门槛。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-04-F6",
+          "category": "evidence",
+          "statement": "所有必要事实有本来源版本的真实依据；错值、错对象、跨来源、矛盾证据或错误关系不通过。"
+        },
+        {
+          "id": "C19-CURRENT-REAL-04-F7",
+          "category": "prose-extras",
+          "statement": "逐项核查标题、自由描述、全部额外任务/事件/材料/时间、覆盖及关系；未裁决不能整份正确，无据义务或关键遗漏不被正确字段抵消。"
+        }
+      ],
+      "unresolved": [
+        "海报主讲内容不在本节选，不补标题中的业务义务"
+      ],
+      "adjudication": "Source-first provisional per assertion with original/output pointers; unadjudicated or critical unresolved -> UNKNOWN; legal equivalent representations allowed, no arm-specific exception"
+    }
+  ]
+}

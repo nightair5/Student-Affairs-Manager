@@ -1,0 +1,4851 @@
+{
+  "version": "c19-comparison-report-1",
+  "batch": "C19-C17-C19-DEVELOPMENT-R1",
+  "status": "COMPLETE_DEFINITE_COMPARISON",
+  "plannedSources": 6,
+  "plannedRequests": 12,
+  "units": [
+    {
+      "ordinal": 1,
+      "sourceId": "C19-DEV-S01",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "C19-DEV-S01",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "C19-DEV-S02",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "C19-DEV-S02",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 5,
+      "sourceId": "C19-DEV-S03",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 6,
+      "sourceId": "C19-DEV-S03",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 7,
+      "sourceId": "C19-DEV-S04",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 8,
+      "sourceId": "C19-DEV-S04",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 9,
+      "sourceId": "C19-DEV-S05",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 10,
+      "sourceId": "C19-DEV-S05",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 11,
+      "sourceId": "C19-DEV-S06",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "status": "SETTLED"
+    },
+    {
+      "ordinal": 12,
+      "sourceId": "C19-DEV-S06",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "status": "SETTLED"
+    }
+  ],
+  "cases": [
+    {
+      "batch": "C19-C17-C19-DEVELOPMENT-R1",
+      "ordinal": 1,
+      "sourceId": "C19-DEV-S01",
+      "sourceSha256": "15d3153166d43aa37568018eab9f8661de221c3773313689ecf766e78c181e95",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "requestSha256": "dc5d9a7a7c2120f9de03d669deb2b01c99d3c6283a26ca952bf41aecda312d9b",
+      "referenceSha256": "e7a99d7456b882d9aa9d67ccd961c6abb4b3531bd652d350bd7035982364d0a3",
+      "model": "deepseek-flash",
+      "scorer": "recognition-source-contract-development-11.0.0",
+      "commonLayer": "SOURCE_CONTRACT_4_COMMON_FIRST_DISPLAY",
+      "unitIdentitySha256": "22e6ad313270b7f66c3218247447f37a8b180a9d24b3a94a5424cee5a052a976",
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN",
+      "responseSha256": "05a1b54cc527707cab1ff02bf88587574ea0d9fa6b6124d00dfba7c989f8fcf6",
+      "rawContractScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "EVENT_MISSING",
+            "factId": "E1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P1"
+          }
+        ],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "expected": 0,
+          "actual": 0
+        },
+        "matchedObligations": [],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "expected": 0,
+            "actual": 0
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 1,
+            "forbidden": 0,
+            "keyMajor": 1
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "E1",
+                "pass": false
+              },
+              {
+                "id": "P1",
+                "pass": false
+              },
+              {
+                "id": "I3",
+                "pass": true
+              },
+              {
+                "id": "I4",
+                "pass": true
+              },
+              {
+                "id": "I5",
+                "pass": true
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "[\"EVENT_MISSING\",\"E1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P1\",null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [
+          {
+            "id": "E1",
+            "presence": false
+          }
+        ],
+        "proseChecks": [],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "firstDisplayScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "EVENT_MISSING",
+            "factId": "E1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P1"
+          }
+        ],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "expected": 0,
+          "actual": 0
+        },
+        "matchedObligations": [],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "expected": 0,
+            "actual": 0
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 1,
+            "forbidden": 0,
+            "keyMajor": 1
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "E1",
+                "pass": false
+              },
+              {
+                "id": "P1",
+                "pass": false
+              },
+              {
+                "id": "I3",
+                "pass": true
+              },
+              {
+                "id": "I4",
+                "pass": true
+              },
+              {
+                "id": "I5",
+                "pass": true
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "[\"EVENT_MISSING\",\"E1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P1\",null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [
+          {
+            "id": "E1",
+            "presence": false
+          }
+        ],
+        "proseChecks": [],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "conversion": null,
+      "coverageAudit": {
+        "legacy": null,
+        "declarations": [],
+        "unknownCoverage": []
+      },
+      "humanFinal": "NOT_OBSERVABLE"
+    },
+    {
+      "batch": "C19-C17-C19-DEVELOPMENT-R1",
+      "ordinal": 2,
+      "sourceId": "C19-DEV-S01",
+      "sourceSha256": "15d3153166d43aa37568018eab9f8661de221c3773313689ecf766e78c181e95",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "requestSha256": "04f8c1e817244dfbf83bad3341341e4652cbe3435895ba8e4869705d0cf65aeb",
+      "referenceSha256": "e7a99d7456b882d9aa9d67ccd961c6abb4b3531bd652d350bd7035982364d0a3",
+      "model": "deepseek-flash",
+      "scorer": "recognition-source-contract-development-11.0.0",
+      "commonLayer": "SOURCE_CONTRACT_4_COMMON_FIRST_DISPLAY",
+      "unitIdentitySha256": "5393d7a419c7ada41abd3b54378a197f32e924ffd9d2f8f54e9f0f093047c92e",
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN",
+      "responseSha256": "3e725f3f2b99787f4124fd0862a6bff877d169835b106424413f3c33ddda2efa",
+      "rawContractScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "TASK_PRESENCE",
+            "fn": 0,
+            "fp": 2
+          },
+          {
+            "kind": "INDEPENDENT_INFORMATION_MISSING",
+            "factId": "I4"
+          },
+          {
+            "kind": "INDEPENDENT_INFORMATION_MISSING",
+            "factId": "I5"
+          }
+        ],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 0,
+          "expected": 0,
+          "actual": 2
+        },
+        "matchedObligations": [],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 0,
+            "expected": 0,
+            "actual": 2
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 1,
+            "forbidden": 0,
+            "keyMajor": 1
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "E1",
+                "pass": true
+              },
+              {
+                "id": "P1",
+                "pass": true
+              },
+              {
+                "id": "I3",
+                "pass": true
+              },
+              {
+                "id": "I4",
+                "pass": false
+              },
+              {
+                "id": "I5",
+                "pass": false
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "FP:重新登记|重新登记",
+          "FP:发送|补充邮件",
+          "[\"INDEPENDENT_INFORMATION_MISSING\",\"I4\",null,null,null]",
+          "[\"INDEPENDENT_INFORMATION_MISSING\",\"I5\",null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [
+          {
+            "id": "E1",
+            "actualId": "event-0001",
+            "presence": true,
+            "valueCorrect": true,
+            "evidenceSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "proseChecks": [],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "firstDisplayScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "TASK_PRESENCE",
+            "fn": 0,
+            "fp": 2
+          },
+          {
+            "kind": "INDEPENDENT_INFORMATION_MISSING",
+            "factId": "I4"
+          },
+          {
+            "kind": "INDEPENDENT_INFORMATION_MISSING",
+            "factId": "I5"
+          }
+        ],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 0,
+          "expected": 0,
+          "actual": 2
+        },
+        "matchedObligations": [],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 0,
+            "expected": 0,
+            "actual": 2
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 1,
+            "forbidden": 0,
+            "keyMajor": 1
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "E1",
+                "pass": true
+              },
+              {
+                "id": "P1",
+                "pass": true
+              },
+              {
+                "id": "I3",
+                "pass": true
+              },
+              {
+                "id": "I4",
+                "pass": false
+              },
+              {
+                "id": "I5",
+                "pass": false
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "FP:重新登记|重新登记",
+          "FP:发送|补充邮件",
+          "[\"INDEPENDENT_INFORMATION_MISSING\",\"I4\",null,null,null]",
+          "[\"INDEPENDENT_INFORMATION_MISSING\",\"I5\",null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [
+          {
+            "id": "E1",
+            "actualId": "event-0001",
+            "presence": true,
+            "valueCorrect": true,
+            "evidenceSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "proseChecks": [],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "conversion": {
+        "version": "explicit-source-contract-4.0.0",
+        "operation": "VALIDATED_TYPED_DECLARATIONS_AND_EXPLICIT_EDGE_INVERSES_ONLY",
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577",
+            "kind": "event",
+            "entityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+            "kind": "action",
+            "entityIds": [
+              "task-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105",
+            "kind": "action",
+            "entityIds": [
+              "task-0002"
+            ]
+          }
+        ],
+        "prerequisiteStates": [],
+        "inferredFacts": 0,
+        "originalDeclarations": [
+          {
+            "taskId": "task-0001",
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          },
+          {
+            "taskId": "task-0002",
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          }
+        ],
+        "typedAccounting": [
+          {
+            "scopeId": "scope-0001-d2175f450fa661e632714e804c6a781e49096cf495ee6bb29874af5c15fe9577",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ],
+            "secondaryEntityIds": [
+              "time-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-bda82f7016bb991941574b9293bd625eec2ceaa495b9f468e7644e6ffc8472d1",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-283a70d573deeb14ba0f13645395a76f5b351e6c6a13576fc90b63ebf36ecd64",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0001"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0004-b5e8a0826c3dce5194cbd00241b58c17185c5f3e4f8b7dea38d27ec248d5b105",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0002"
+            ],
+            "secondaryEntityIds": []
+          }
+        ]
+      },
+      "coverageAudit": {
+        "legacy": null,
+        "declarations": [
+          {
+            "taskId": "task-0001",
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          },
+          {
+            "taskId": "task-0002",
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          }
+        ],
+        "unknownCoverage": []
+      },
+      "humanFinal": "NOT_OBSERVABLE"
+    },
+    {
+      "batch": "C19-C17-C19-DEVELOPMENT-R1",
+      "ordinal": 3,
+      "sourceId": "C19-DEV-S02",
+      "sourceSha256": "b6ae3d744db6f70621a23d8ad2ac4611c2616df5ad977773440fa7a25c403dfd",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "requestSha256": "38439882e8f8598f8123adc3a7c3be3418e9c190d80ecdc31a5e7665aa307662",
+      "referenceSha256": "e7a99d7456b882d9aa9d67ccd961c6abb4b3531bd652d350bd7035982364d0a3",
+      "model": "deepseek-flash",
+      "scorer": "recognition-source-contract-development-11.0.0",
+      "commonLayer": "SOURCE_CONTRACT_4_COMMON_FIRST_DISPLAY",
+      "unitIdentitySha256": "1bcdc3a2ae90726cb07c7173c46cb61c1c27bec2dd017fc1ddf3de7f610478a6",
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN",
+      "responseSha256": "1b04a03763bdfa9069ce8a10fb8f74233552e37a63810a4e3a4f6f30f243b16e",
+      "rawContractScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "EVENT_TIME_OR_LOCATION_WRONG",
+            "factId": "E1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P2"
+          },
+          {
+            "kind": "EVENT_TIME_OR_LOCATION_WRONG",
+            "factId": "E2"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P3"
+          },
+          {
+            "kind": "UNSUPPORTED_INDEPENDENT_ENTITY"
+          }
+        ],
+        "disputes": [
+          {
+            "kind": "EVENT_DESCRIPTION_UNRESOLVED",
+            "factId": "E1"
+          },
+          {
+            "kind": "EVENT_DESCRIPTION_UNRESOLVED",
+            "factId": "E2"
+          }
+        ],
+        "taskPresence": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "expected": 0,
+          "actual": 0
+        },
+        "matchedObligations": [],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "expected": 0,
+            "actual": 0
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 1,
+            "forbidden": 0,
+            "keyMajor": 1
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "E1",
+                "pass": false
+              },
+              {
+                "id": "P1",
+                "pass": false
+              },
+              {
+                "id": "P2",
+                "pass": false
+              },
+              {
+                "id": "E2",
+                "pass": false
+              },
+              {
+                "id": "P3",
+                "pass": false
+              },
+              {
+                "id": "P4",
+                "pass": true
+              },
+              {
+                "id": "I7",
+                "pass": true
+              },
+              {
+                "id": "I8",
+                "pass": true
+              }
+            ],
+            "extraEntities": 3
+          },
+          "matches": [],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P2\",null,null,null]",
+          "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E2\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P3\",null,null,null]",
+          "[\"UNSUPPORTED_INDEPENDENT_ENTITY\",null,null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [
+          {
+            "id": "E1",
+            "actualId": "event-0001",
+            "presence": true,
+            "valueCorrect": true,
+            "evidenceSupported": true,
+            "description": "UNRESOLVED"
+          },
+          {
+            "id": "E2",
+            "actualId": "event-0002",
+            "presence": true,
+            "valueCorrect": true,
+            "evidenceSupported": true,
+            "description": "UNRESOLVED"
+          }
+        ],
+        "proseChecks": [],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "firstDisplayScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "EVENT_TIME_OR_LOCATION_WRONG",
+            "factId": "E1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P2"
+          },
+          {
+            "kind": "EVENT_TIME_OR_LOCATION_WRONG",
+            "factId": "E2"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P3"
+          },
+          {
+            "kind": "UNSUPPORTED_INDEPENDENT_ENTITY"
+          }
+        ],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "expected": 0,
+          "actual": 0
+        },
+        "matchedObligations": [],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "expected": 0,
+            "actual": 0
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 1,
+            "forbidden": 0,
+            "keyMajor": 1
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "E1",
+                "pass": false
+              },
+              {
+                "id": "P1",
+                "pass": false
+              },
+              {
+                "id": "P2",
+                "pass": false
+              },
+              {
+                "id": "E2",
+                "pass": false
+              },
+              {
+                "id": "P3",
+                "pass": false
+              },
+              {
+                "id": "P4",
+                "pass": true
+              },
+              {
+                "id": "I7",
+                "pass": true
+              },
+              {
+                "id": "I8",
+                "pass": true
+              }
+            ],
+            "extraEntities": 3
+          },
+          "matches": [],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P2\",null,null,null]",
+          "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E2\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P3\",null,null,null]",
+          "[\"UNSUPPORTED_INDEPENDENT_ENTITY\",null,null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [
+          {
+            "id": "E1",
+            "actualId": "event-0001",
+            "presence": true,
+            "valueCorrect": true,
+            "evidenceSupported": true,
+            "description": "SUPPORTED"
+          },
+          {
+            "id": "E2",
+            "actualId": "event-0002",
+            "presence": true,
+            "valueCorrect": true,
+            "evidenceSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "proseChecks": [],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "conversion": {
+        "version": "explicit-source-contract-4.0.0",
+        "operation": "VALIDATED_TYPED_DECLARATIONS_AND_EXPLICIT_EDGE_INVERSES_ONLY",
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b",
+            "kind": "event",
+            "entityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef",
+            "kind": "event",
+            "entityIds": [
+              "event-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519",
+            "kind": "event",
+            "entityIds": [
+              "event-0002"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d",
+            "kind": "event",
+            "entityIds": [
+              "event-0002"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-8decfa2698ae847f738cbe9831da2496c9930a5b28e4473ffe4fba48b33a74b2",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0006-3108d1553d59b8308b5169f95d3708100920c5e62ca23c7aae3f014f8451f11d",
+            "kind": "information",
+            "entityIds": []
+          }
+        ],
+        "prerequisiteStates": [],
+        "inferredFacts": 0,
+        "originalDeclarations": [],
+        "typedAccounting": [
+          {
+            "scopeId": "scope-0001-d31d067447e8771742582dbd489e6db70f87707281ecb37e4f8afb401456463b",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ],
+            "secondaryEntityIds": [
+              "time-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-c67b782ec6be9906271a57ac2906e06cbffbb24cbea2df39c758f16ad57553ef",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0001"
+            ],
+            "secondaryEntityIds": [
+              "time-0002"
+            ]
+          },
+          {
+            "scopeId": "scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0002"
+            ],
+            "secondaryEntityIds": [
+              "time-0003"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-7885b4ab16a77c4695e13b2cbbd16371ce3ee00297b3d26294ef60222d05b18d",
+            "kind": "event",
+            "primaryEntityIds": [
+              "event-0002"
+            ],
+            "secondaryEntityIds": [
+              "time-0004"
+            ]
+          },
+          {
+            "scopeId": "scope-0005-8decfa2698ae847f738cbe9831da2496c9930a5b28e4473ffe4fba48b33a74b2",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0006-3108d1553d59b8308b5169f95d3708100920c5e62ca23c7aae3f014f8451f11d",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          }
+        ]
+      },
+      "coverageAudit": {
+        "legacy": null,
+        "declarations": [],
+        "unknownCoverage": []
+      },
+      "humanFinal": "NOT_OBSERVABLE"
+    },
+    {
+      "batch": "C19-C17-C19-DEVELOPMENT-R1",
+      "ordinal": 4,
+      "sourceId": "C19-DEV-S02",
+      "sourceSha256": "b6ae3d744db6f70621a23d8ad2ac4611c2616df5ad977773440fa7a25c403dfd",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "requestSha256": "2eae8c03fc21485209e479f6986174c06cab1a8ce9b7060f8b38576b9ed761ce",
+      "referenceSha256": "e7a99d7456b882d9aa9d67ccd961c6abb4b3531bd652d350bd7035982364d0a3",
+      "model": "deepseek-flash",
+      "scorer": "recognition-source-contract-development-11.0.0",
+      "commonLayer": "SOURCE_CONTRACT_4_COMMON_FIRST_DISPLAY",
+      "unitIdentitySha256": "4576fcb1f435f2d739b132f17577c64f5dbf24d17c26b1caaca31bfadeab543f",
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN",
+      "responseSha256": "9aca34f978b2a9458272a6d0bfdd78248d87fff45a442e4108dee921800fd630",
+      "rawContractScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "EVENT_TIME_OR_LOCATION_WRONG",
+            "factId": "E1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P2"
+          },
+          {
+            "kind": "EVENT_TIME_OR_LOCATION_WRONG",
+            "factId": "E2"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P3"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P4"
+          },
+          {
+            "kind": "UNSUPPORTED_INDEPENDENT_ENTITY"
+          }
+        ],
+        "disputes": [
+          {
+            "kind": "EVENT_DESCRIPTION_UNRESOLVED",
+            "factId": "E1"
+          },
+          {
+            "kind": "EVENT_DESCRIPTION_UNRESOLVED",
+            "factId": "E2"
+          }
+        ],
+        "taskPresence": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "expected": 0,
+          "actual": 0
+        },
+        "matchedObligations": [],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "expected": 0,
+            "actual": 0
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 1,
+            "forbidden": 0,
+            "keyMajor": 1
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "E1",
+                "pass": false
+              },
+              {
+                "id": "P1",
+                "pass": false
+              },
+              {
+                "id": "P2",
+                "pass": false
+              },
+              {
+                "id": "E2",
+                "pass": false
+              },
+              {
+                "id": "P3",
+                "pass": false
+              },
+              {
+                "id": "P4",
+                "pass": false
+              },
+              {
+                "id": "I7",
+                "pass": true
+              },
+              {
+                "id": "I8",
+                "pass": true
+              }
+            ],
+            "extraEntities": 3
+          },
+          "matches": [],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P2\",null,null,null]",
+          "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E2\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P3\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P4\",null,null,null]",
+          "[\"UNSUPPORTED_INDEPENDENT_ENTITY\",null,null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [
+          {
+            "id": "E1",
+            "actualId": "event-0001",
+            "presence": true,
+            "valueCorrect": true,
+            "evidenceSupported": true,
+            "description": "UNRESOLVED"
+          },
+          {
+            "id": "E2",
+            "actualId": "event-0002",
+            "presence": true,
+            "valueCorrect": true,
+            "evidenceSupported": true,
+            "description": "UNRESOLVED"
+          }
+        ],
+        "proseChecks": [],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "firstDisplayScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "EVENT_TIME_OR_LOCATION_WRONG",
+            "factId": "E1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P2"
+          },
+          {
+            "kind": "EVENT_TIME_OR_LOCATION_WRONG",
+            "factId": "E2"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P3"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P4"
+          },
+          {
+            "kind": "UNSUPPORTED_INDEPENDENT_ENTITY"
+          }
+        ],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "expected": 0,
+          "actual": 0
+        },
+        "matchedObligations": [],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "expected": 0,
+            "actual": 0
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 1,
+            "forbidden": 0,
+            "keyMajor": 1
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "E1",
+                "pass": false
+              },
+              {
+                "id": "P1",
+                "pass": false
+              },
+              {
+                "id": "P2",
+                "pass": false
+              },
+              {
+                "id": "E2",
+                "pass": false
+              },
+              {
+                "id": "P3",
+                "pass": false
+              },
+              {
+                "id": "P4",
+                "pass": false
+              },
+              {
+                "id": "I7",
+                "pass": true
+              },
+              {
+                "id": "I8",
+                "pass": true
+              }
+            ],
+            "extraEntities": 3
+          },
+          "matches": [],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P2\",null,null,null]",
+          "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E2\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P3\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P4\",null,null,null]",
+          "[\"UNSUPPORTED_INDEPENDENT_ENTITY\",null,null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [
+          {
+            "id": "E1",
+            "actualId": "event-0001",
+            "presence": true,
+            "valueCorrect": true,
+            "evidenceSupported": true,
+            "description": "SUPPORTED"
+          },
+          {
+            "id": "E2",
+            "actualId": "event-0002",
+            "presence": true,
+            "valueCorrect": true,
+            "evidenceSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "proseChecks": [],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "conversion": null,
+      "coverageAudit": {
+        "legacy": null,
+        "declarations": [],
+        "unknownCoverage": []
+      },
+      "humanFinal": "NOT_OBSERVABLE"
+    },
+    {
+      "batch": "C19-C17-C19-DEVELOPMENT-R1",
+      "ordinal": 5,
+      "sourceId": "C19-DEV-S03",
+      "sourceSha256": "d502bfa67f407bc0812b593d2879044ee39bdb2d7d2fdd4a6c02d78d081fbb31",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "requestSha256": "1e31fbd055888d70388ba7bdec13cfbcc259244e63ef9988c77fe08484e53c4b",
+      "referenceSha256": "e7a99d7456b882d9aa9d67ccd961c6abb4b3531bd652d350bd7035982364d0a3",
+      "model": "deepseek-flash",
+      "scorer": "recognition-source-contract-development-11.0.0",
+      "commonLayer": "SOURCE_CONTRACT_4_COMMON_FIRST_DISPLAY",
+      "unitIdentitySha256": "63952bf2162f20e7e40d8dfd8932715548f5760bd000dadce8fb58b44e2d50ec",
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN",
+      "responseSha256": "d2d9708c9623309d4419fedae2d535ec8fe178c6d9fc518e26ba556c9e5aeb96",
+      "rawContractScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "SCORED",
+        "completeStatus": true,
+        "relationFactsPass": true,
+        "risks": [],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0,
+          "expected": 3,
+          "actual": 3
+        },
+        "matchedObligations": [
+          "填写|场地使用登记",
+          "递交|场地使用登记"
+        ],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": true,
+          "taskPresence": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "expected": 3,
+            "actual": 3
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 3,
+          "severity": {
+            "severe": 0,
+            "major": 0,
+            "forbidden": 0,
+            "keyMajor": 0
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": true,
+            "checks": [],
+            "extraEntities": 0
+          },
+          "matches": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-0001",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            },
+            {
+              "expectedId": "T2",
+              "actualId": "task-0002",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            },
+            {
+              "expectedId": "T3",
+              "actualId": "task-0003",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "unknown",
+                  "actual": "unknown"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "needs_confirmation",
+                  "actual": "needs_confirmation"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            }
+          ],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": true,
+        "firstDisplayCompleteStatus": true,
+        "eventChecks": [],
+        "proseChecks": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-0001",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-0002",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          },
+          {
+            "expectedId": "T3",
+            "actualId": "task-0003",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "firstDisplayScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "SCORED",
+        "completeStatus": true,
+        "relationFactsPass": true,
+        "risks": [],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0,
+          "expected": 3,
+          "actual": 3
+        },
+        "matchedObligations": [
+          "填写|场地使用登记",
+          "递交|场地使用登记"
+        ],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": true,
+          "taskPresence": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "expected": 3,
+            "actual": 3
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 3,
+          "severity": {
+            "severe": 0,
+            "major": 0,
+            "forbidden": 0,
+            "keyMajor": 0
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": true,
+            "checks": [],
+            "extraEntities": 0
+          },
+          "matches": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-0001",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            },
+            {
+              "expectedId": "T2",
+              "actualId": "task-0002",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            },
+            {
+              "expectedId": "T3",
+              "actualId": "task-0003",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "unknown",
+                  "actual": "unknown"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "needs_confirmation",
+                  "actual": "needs_confirmation"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            }
+          ],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": true,
+        "firstDisplayCompleteStatus": true,
+        "eventChecks": [],
+        "proseChecks": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-0001",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-0002",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          },
+          {
+            "expectedId": "T3",
+            "actualId": "task-0003",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "conversion": null,
+      "coverageAudit": {
+        "legacy": null,
+        "declarations": [
+          {
+            "taskId": "task-0001",
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            }
+          },
+          {
+            "taskId": "task-0002",
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            }
+          },
+          {
+            "taskId": "task-0003",
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            }
+          }
+        ],
+        "unknownCoverage": []
+      },
+      "humanFinal": "NOT_OBSERVABLE"
+    },
+    {
+      "ordinal": 6,
+      "sourceId": "C19-DEV-S03",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "error": "SOURCE_CONTRACT_INFORMATION_ENTITY",
+      "rawContractScore": {
+        "completeStatus": false,
+        "risks": [
+          {
+            "kind": "SCHEMA_REFERENCE_OR_TRANSPORT_REJECT"
+          }
+        ],
+        "riskUnits": [
+          "SCHEMA_REFERENCE_OR_TRANSPORT_REJECT"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "firstDisplayScore": {
+        "completeStatus": false,
+        "risks": [
+          {
+            "kind": "SCHEMA_REFERENCE_OR_TRANSPORT_REJECT"
+          }
+        ],
+        "riskUnits": [
+          "SCHEMA_REFERENCE_OR_TRANSPORT_REJECT"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "humanFinal": "NOT_OBSERVABLE"
+    },
+    {
+      "batch": "C19-C17-C19-DEVELOPMENT-R1",
+      "ordinal": 7,
+      "sourceId": "C19-DEV-S04",
+      "sourceSha256": "efe4d47f1a03a88791b0d30c272fb253aa9e1b157b936422d5840e5941318409",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "requestSha256": "5e0b08fdd4632dc0e2ceb347537f702df199beea6fe26aca32fdd8c294d53fcb",
+      "referenceSha256": "e7a99d7456b882d9aa9d67ccd961c6abb4b3531bd652d350bd7035982364d0a3",
+      "model": "deepseek-flash",
+      "scorer": "recognition-source-contract-development-11.0.0",
+      "commonLayer": "SOURCE_CONTRACT_4_COMMON_FIRST_DISPLAY",
+      "unitIdentitySha256": "bfe928f39a14cb1bf11241076a342e2cf04f34f6399bee63d0c163b149cef8eb",
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN",
+      "responseSha256": "6ae14cd30dd8b18d8608a67f0b4cb38b3cbceb352e93deb441ec2ab26215c760",
+      "rawContractScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "TASK_PRESENCE",
+            "fn": 0,
+            "fp": 1
+          },
+          {
+            "kind": "INDEPENDENT_INFORMATION_MISSING",
+            "factId": "I3"
+          }
+        ],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 0,
+          "expected": 1,
+          "actual": 2
+        },
+        "matchedObligations": [
+          "保存|活动联系编号"
+        ],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "expected": 1,
+            "actual": 2
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 1,
+          "severity": {
+            "severe": 0,
+            "major": 1,
+            "forbidden": 0,
+            "keyMajor": 1
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "I1",
+                "pass": true
+              },
+              {
+                "id": "I2",
+                "pass": true
+              },
+              {
+                "id": "I3",
+                "pass": false
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-0002",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            }
+          ],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "FP:不能提交|展位申请",
+          "[\"INDEPENDENT_INFORMATION_MISSING\",\"I3\",null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [],
+        "proseChecks": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-0002",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "firstDisplayScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "TASK_PRESENCE",
+            "fn": 0,
+            "fp": 1
+          },
+          {
+            "kind": "INDEPENDENT_INFORMATION_MISSING",
+            "factId": "I3"
+          }
+        ],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 0,
+          "expected": 1,
+          "actual": 2
+        },
+        "matchedObligations": [
+          "保存|活动联系编号"
+        ],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "expected": 1,
+            "actual": 2
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 1,
+          "severity": {
+            "severe": 0,
+            "major": 1,
+            "forbidden": 0,
+            "keyMajor": 1
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "I1",
+                "pass": true
+              },
+              {
+                "id": "I2",
+                "pass": true
+              },
+              {
+                "id": "I3",
+                "pass": false
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-0002",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            }
+          ],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "FP:不能提交|展位申请",
+          "[\"INDEPENDENT_INFORMATION_MISSING\",\"I3\",null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [],
+        "proseChecks": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-0002",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "conversion": {
+        "version": "explicit-source-contract-4.0.0",
+        "operation": "VALIDATED_TYPED_DECLARATIONS_AND_EXPLICIT_EDGE_INVERSES_ONLY",
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-2e6495c05c46002bd8895552c2e13e438c59b9429f21980ffb41c3cbbbc046c3",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0002-a0d76e61e18eba1d02a012a421452b23ffa715c89f50c0d0ddd2ae91972330f6",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0003-fcce7bd4bff9b4122518f31d21a0341f3d3e1c3e4f3dc3b6babc9e3c7f42a30f",
+            "kind": "action",
+            "entityIds": [
+              "task-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0004-78e0209c480fc49fb25ad84a48cb3a16b91474fa09c14530e722fe8c0fb690ef",
+            "kind": "action",
+            "entityIds": [
+              "task-0002"
+            ]
+          }
+        ],
+        "prerequisiteStates": [],
+        "inferredFacts": 0,
+        "originalDeclarations": [
+          {
+            "taskId": "task-0001",
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          },
+          {
+            "taskId": "task-0002",
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          }
+        ],
+        "typedAccounting": [
+          {
+            "scopeId": "scope-0001-2e6495c05c46002bd8895552c2e13e438c59b9429f21980ffb41c3cbbbc046c3",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0002-a0d76e61e18eba1d02a012a421452b23ffa715c89f50c0d0ddd2ae91972330f6",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-fcce7bd4bff9b4122518f31d21a0341f3d3e1c3e4f3dc3b6babc9e3c7f42a30f",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0001"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0004-78e0209c480fc49fb25ad84a48cb3a16b91474fa09c14530e722fe8c0fb690ef",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0002"
+            ],
+            "secondaryEntityIds": []
+          }
+        ]
+      },
+      "coverageAudit": {
+        "legacy": null,
+        "declarations": [
+          {
+            "taskId": "task-0001",
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          },
+          {
+            "taskId": "task-0002",
+            "coverage": {
+              "time": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "material": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              },
+              "event": {
+                "status": "not_stated",
+                "entityIds": [],
+                "scopeIds": []
+              }
+            }
+          }
+        ],
+        "unknownCoverage": []
+      },
+      "humanFinal": "NOT_OBSERVABLE"
+    },
+    {
+      "batch": "C19-C17-C19-DEVELOPMENT-R1",
+      "ordinal": 8,
+      "sourceId": "C19-DEV-S04",
+      "sourceSha256": "efe4d47f1a03a88791b0d30c272fb253aa9e1b157b936422d5840e5941318409",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "requestSha256": "5eaf407b6e20a83b710a6d5f1ba998fce6dcfb7e516a1adb9210de02448268da",
+      "referenceSha256": "e7a99d7456b882d9aa9d67ccd961c6abb4b3531bd652d350bd7035982364d0a3",
+      "model": "deepseek-flash",
+      "scorer": "recognition-source-contract-development-11.0.0",
+      "commonLayer": "SOURCE_CONTRACT_4_COMMON_FIRST_DISPLAY",
+      "unitIdentitySha256": "3e04e9634360d5cbcdca16a258b27938314cb769725047a6245dd72ccaa31e05",
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN",
+      "responseSha256": "19e40dfde51e3f0b46362055714cc2369971c5f3515bdf02181d639448a17140",
+      "rawContractScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "TASK_FIELD_WRONG",
+            "taskId": "T1",
+            "field": "completionStandards"
+          },
+          {
+            "kind": "TASK_PRESENCE",
+            "fn": 0,
+            "fp": 1
+          },
+          {
+            "kind": "INDEPENDENT_INFORMATION_MISSING",
+            "factId": "I3"
+          }
+        ],
+        "disputes": [
+          {
+            "kind": "DISPLAY_TASK_DESCRIPTION_UNRESOLVED",
+            "taskId": "T1"
+          }
+        ],
+        "taskPresence": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 0,
+          "expected": 1,
+          "actual": 2
+        },
+        "matchedObligations": [
+          "保存|活动联系编号"
+        ],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "expected": 1,
+            "actual": 2
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 2,
+            "forbidden": 0,
+            "keyMajor": 2
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "I1",
+                "pass": true
+              },
+              {
+                "id": "I2",
+                "pass": true
+              },
+              {
+                "id": "I3",
+                "pass": false
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-0002",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": false
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            }
+          ],
+          "fieldErrors": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-0002",
+              "field": "completionStandards",
+              "pass": false
+            }
+          ],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "[\"TASK_FIELD_WRONG\",\"completionStandards\",null,\"保存|活动联系编号\",\"\"]",
+          "FP:提交|展位申请",
+          "[\"INDEPENDENT_INFORMATION_MISSING\",\"I3\",null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [],
+        "proseChecks": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-0002",
+            "titleSupported": true,
+            "description": "UNRESOLVED"
+          }
+        ],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "firstDisplayScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "relationFactsPass": true,
+        "risks": [
+          {
+            "kind": "TASK_FIELD_WRONG",
+            "taskId": "T1",
+            "field": "completionStandards"
+          },
+          {
+            "kind": "TASK_PRESENCE",
+            "fn": 0,
+            "fp": 1
+          },
+          {
+            "kind": "INDEPENDENT_INFORMATION_MISSING",
+            "factId": "I3"
+          }
+        ],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 0,
+          "expected": 1,
+          "actual": 2
+        },
+        "matchedObligations": [
+          "保存|活动联系编号"
+        ],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "expected": 1,
+            "actual": 2
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 2,
+            "forbidden": 0,
+            "keyMajor": 2
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "I1",
+                "pass": true
+              },
+              {
+                "id": "I2",
+                "pass": true
+              },
+              {
+                "id": "I3",
+                "pass": false
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-0002",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": false
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            }
+          ],
+          "fieldErrors": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-0002",
+              "field": "completionStandards",
+              "pass": false
+            }
+          ],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [
+          "[\"TASK_FIELD_WRONG\",\"completionStandards\",null,\"保存|活动联系编号\",\"\"]",
+          "FP:提交|展位申请",
+          "[\"INDEPENDENT_INFORMATION_MISSING\",\"I3\",null,null,null]"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": false,
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [],
+        "proseChecks": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-0002",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "conversion": null,
+      "coverageAudit": {
+        "legacy": null,
+        "declarations": [
+          {
+            "taskId": "task-0001",
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            }
+          },
+          {
+            "taskId": "task-0002",
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            }
+          }
+        ],
+        "unknownCoverage": []
+      },
+      "humanFinal": "NOT_OBSERVABLE"
+    },
+    {
+      "batch": "C19-C17-C19-DEVELOPMENT-R1",
+      "ordinal": 9,
+      "sourceId": "C19-DEV-S05",
+      "sourceSha256": "88d0804e9cf9fd4898278278a5406a43ceadee08b0c58634e9718fdb8d6aa174",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "requestSha256": "d0ca3689aff30d82d686e76d22aab056c2d7b5eec540659d925063a39ca21690",
+      "referenceSha256": "e7a99d7456b882d9aa9d67ccd961c6abb4b3531bd652d350bd7035982364d0a3",
+      "model": "deepseek-flash",
+      "scorer": "recognition-source-contract-development-11.0.0",
+      "commonLayer": "SOURCE_CONTRACT_4_COMMON_FIRST_DISPLAY",
+      "unitIdentitySha256": "c1ac7890dcbcc762c78d1500e798fe17630092b9d39cb3ef697157825cde86e4",
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN",
+      "responseSha256": "9030d9f640367524d14c4d336d3654797146cc85a506fb8292ae3d330dff4fae",
+      "rawContractScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 3,
+            "forbidden": 0,
+            "keyMajor": 3
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "E1",
+                "pass": false
+              },
+              {
+                "id": "P1",
+                "pass": false
+              },
+              {
+                "id": "P2",
+                "pass": false
+              }
+            ],
+            "extraEntities": 2
+          },
+          "matches": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-upload-volunteer-service-statistics",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": false
+                },
+                "materialDetails": {
+                  "pass": false
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            }
+          ],
+          "fieldErrors": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-upload-volunteer-service-statistics",
+              "field": "materials",
+              "pass": false
+            },
+            {
+              "expectedId": "T1",
+              "actualId": "task-upload-volunteer-service-statistics",
+              "field": "materialDetails",
+              "pass": false
+            }
+          ],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "risks": [
+          {
+            "kind": "EVENT_TIME_OR_LOCATION_WRONG",
+            "factId": "E1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P2"
+          },
+          {
+            "kind": "UNSUPPORTED_INDEPENDENT_ENTITY"
+          },
+          {
+            "kind": "SOURCE_MATERIAL_FIELD_WRONG",
+            "taskId": "T1",
+            "field": "namingRequirements"
+          }
+        ],
+        "disputes": [
+          {
+            "kind": "REPRESENTATION_MAPPING_UNRESOLVED",
+            "alternatives": 2
+          },
+          {
+            "kind": "EVENT_DESCRIPTION_UNRESOLVED",
+            "factId": "E1"
+          },
+          {
+            "kind": "DISPLAY_TASK_DESCRIPTION_UNRESOLVED",
+            "taskId": "T1"
+          }
+        ],
+        "riskUnits": [
+          "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P2\",null,null,null]",
+          "[\"UNSUPPORTED_INDEPENDENT_ENTITY\",null,null,null,null]",
+          "{\"kind\":\"SOURCE_MATERIAL_FIELD_WRONG\",\"taskId\":\"T1\",\"field\":\"namingRequirements\"}"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": "UNKNOWN",
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [
+          {
+            "id": "E1",
+            "actualId": "event-training-briefing",
+            "presence": true,
+            "valueCorrect": true,
+            "evidenceSupported": true,
+            "description": "UNRESOLVED"
+          }
+        ],
+        "proseChecks": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-upload-volunteer-service-statistics",
+            "titleSupported": true,
+            "description": "UNRESOLVED"
+          }
+        ],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "firstDisplayScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "FACT_RISK",
+        "completeStatus": false,
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": false,
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 0,
+          "severity": {
+            "severe": 0,
+            "major": 3,
+            "forbidden": 0,
+            "keyMajor": 3
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": false,
+            "checks": [
+              {
+                "id": "E1",
+                "pass": false
+              },
+              {
+                "id": "P1",
+                "pass": false
+              },
+              {
+                "id": "P2",
+                "pass": false
+              }
+            ],
+            "extraEntities": 2
+          },
+          "matches": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-upload-volunteer-service-statistics",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": false
+                },
+                "materialDetails": {
+                  "pass": false
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            }
+          ],
+          "fieldErrors": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-upload-volunteer-service-statistics",
+              "field": "materials",
+              "pass": false
+            },
+            {
+              "expectedId": "T1",
+              "actualId": "task-upload-volunteer-service-statistics",
+              "field": "materialDetails",
+              "pass": false
+            }
+          ],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "risks": [
+          {
+            "kind": "EVENT_TIME_OR_LOCATION_WRONG",
+            "factId": "E1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P1"
+          },
+          {
+            "kind": "INDEPENDENT_TIME_WRONG",
+            "factId": "P2"
+          },
+          {
+            "kind": "UNSUPPORTED_INDEPENDENT_ENTITY"
+          },
+          {
+            "kind": "SOURCE_MATERIAL_FIELD_WRONG",
+            "taskId": "T1",
+            "field": "namingRequirements"
+          }
+        ],
+        "disputes": [
+          {
+            "kind": "REPRESENTATION_MAPPING_UNRESOLVED",
+            "alternatives": 2
+          }
+        ],
+        "riskUnits": [
+          "[\"EVENT_TIME_OR_LOCATION_WRONG\",\"E1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P1\",null,null,null]",
+          "[\"INDEPENDENT_TIME_WRONG\",\"P2\",null,null,null]",
+          "[\"UNSUPPORTED_INDEPENDENT_ENTITY\",null,null,null,null]",
+          "{\"kind\":\"SOURCE_MATERIAL_FIELD_WRONG\",\"taskId\":\"T1\",\"field\":\"namingRequirements\"}"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": "UNKNOWN",
+        "firstDisplayCompleteStatus": false,
+        "eventChecks": [
+          {
+            "id": "E1",
+            "actualId": "event-training-briefing",
+            "presence": true,
+            "valueCorrect": true,
+            "evidenceSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "proseChecks": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-upload-volunteer-service-statistics",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "conversion": null,
+      "coverageAudit": {
+        "legacy": null,
+        "declarations": [
+          {
+            "taskId": "task-upload-volunteer-service-statistics",
+            "coverage": {
+              "time": "present",
+              "material": "present",
+              "event": "not_stated"
+            }
+          }
+        ],
+        "unknownCoverage": []
+      },
+      "humanFinal": "NOT_OBSERVABLE"
+    },
+    {
+      "ordinal": 10,
+      "sourceId": "C19-DEV-S05",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "error": "SOURCE_CONTRACT_INFORMATION_ENTITY",
+      "rawContractScore": {
+        "completeStatus": false,
+        "risks": [
+          {
+            "kind": "SCHEMA_REFERENCE_OR_TRANSPORT_REJECT"
+          }
+        ],
+        "riskUnits": [
+          "SCHEMA_REFERENCE_OR_TRANSPORT_REJECT"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "firstDisplayScore": {
+        "completeStatus": false,
+        "risks": [
+          {
+            "kind": "SCHEMA_REFERENCE_OR_TRANSPORT_REJECT"
+          }
+        ],
+        "riskUnits": [
+          "SCHEMA_REFERENCE_OR_TRANSPORT_REJECT"
+        ],
+        "riskIdentityStatus": "MAPPED",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "humanFinal": "NOT_OBSERVABLE"
+    },
+    {
+      "batch": "C19-C17-C19-DEVELOPMENT-R1",
+      "ordinal": 11,
+      "sourceId": "C19-DEV-S06",
+      "sourceSha256": "1522eb63567f94fc177b0638f4ed2acdd413ee7b879d5497892c899139a9a56b",
+      "arm": "B",
+      "candidate": "Candidate19",
+      "requestSha256": "f271f26cb40f0d5ee33f37b4fc49130b1e27299daf4954b76baafba2a697cd14",
+      "referenceSha256": "e7a99d7456b882d9aa9d67ccd961c6abb4b3531bd652d350bd7035982364d0a3",
+      "model": "deepseek-flash",
+      "scorer": "recognition-source-contract-development-11.0.0",
+      "commonLayer": "SOURCE_CONTRACT_4_COMMON_FIRST_DISPLAY",
+      "unitIdentitySha256": "3efe0e22bf07149a0b275e1724d9ed62c889c935e4b10b776f7d43729e6a4f9a",
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN",
+      "responseSha256": "0f011e226cc43b5ab15acde3301e5def50ba3dd459d44582b1edf5906275ddd7",
+      "rawContractScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "SCORED",
+        "completeStatus": true,
+        "relationFactsPass": true,
+        "risks": [],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "matchedObligations": [
+          "核对|储物柜编号"
+        ],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": true,
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 1,
+          "severity": {
+            "severe": 0,
+            "major": 0,
+            "forbidden": 0,
+            "keyMajor": 0
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": true,
+            "checks": [
+              {
+                "id": "I1",
+                "pass": true
+              },
+              {
+                "id": "I2",
+                "pass": true
+              },
+              {
+                "id": "I3",
+                "pass": true
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-0001",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            }
+          ],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": true,
+        "firstDisplayCompleteStatus": true,
+        "eventChecks": [],
+        "proseChecks": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-0001",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "firstDisplayScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "SCORED",
+        "completeStatus": true,
+        "relationFactsPass": true,
+        "risks": [],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "matchedObligations": [
+          "核对|储物柜编号"
+        ],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": true,
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 1,
+          "severity": {
+            "severe": 0,
+            "major": 0,
+            "forbidden": 0,
+            "keyMajor": 0
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": true,
+            "checks": [
+              {
+                "id": "I1",
+                "pass": true
+              },
+              {
+                "id": "I2",
+                "pass": true
+              },
+              {
+                "id": "I3",
+                "pass": true
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-0001",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            }
+          ],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": true,
+        "firstDisplayCompleteStatus": true,
+        "eventChecks": [],
+        "proseChecks": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-0001",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "conversion": {
+        "version": "explicit-source-contract-4.0.0",
+        "operation": "VALIDATED_TYPED_DECLARATIONS_AND_EXPLICIT_EDGE_INVERSES_ONLY",
+        "scopeAccounting": [
+          {
+            "scopeId": "scope-0001-232a3905fbbc49af7bc3b9fa136501155c0073cf424185588a21f1a53be99aff",
+            "kind": "action",
+            "entityIds": [
+              "task-0001"
+            ]
+          },
+          {
+            "scopeId": "scope-0002-c3700f73ba2ff848bfef9129a1b523c1b16482426ed8d6fffcab4d22930d873c",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0003-db3e47e04bff4db062521c9c94f430b4696d79f2536b684b7fa11925edb9915e",
+            "kind": "information",
+            "entityIds": []
+          },
+          {
+            "scopeId": "scope-0004-a6ec7e5bc76d298f23659d49931a39bace46f689578ff45d52d683084627235c",
+            "kind": "information",
+            "entityIds": []
+          }
+        ],
+        "prerequisiteStates": [],
+        "inferredFacts": 0,
+        "originalDeclarations": [
+          {
+            "taskId": "task-0001",
+            "coverage": {
+              "time": {
+                "status": "explicit_none",
+                "entityIds": [],
+                "scopeIds": [
+                  "scope-0002-c3700f73ba2ff848bfef9129a1b523c1b16482426ed8d6fffcab4d22930d873c"
+                ]
+              },
+              "material": {
+                "status": "explicit_none",
+                "entityIds": [],
+                "scopeIds": [
+                  "scope-0003-db3e47e04bff4db062521c9c94f430b4696d79f2536b684b7fa11925edb9915e"
+                ]
+              },
+              "event": {
+                "status": "explicit_none",
+                "entityIds": [],
+                "scopeIds": [
+                  "scope-0004-a6ec7e5bc76d298f23659d49931a39bace46f689578ff45d52d683084627235c"
+                ]
+              }
+            }
+          }
+        ],
+        "typedAccounting": [
+          {
+            "scopeId": "scope-0001-232a3905fbbc49af7bc3b9fa136501155c0073cf424185588a21f1a53be99aff",
+            "kind": "action",
+            "primaryEntityIds": [
+              "task-0001"
+            ],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0002-c3700f73ba2ff848bfef9129a1b523c1b16482426ed8d6fffcab4d22930d873c",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0003-db3e47e04bff4db062521c9c94f430b4696d79f2536b684b7fa11925edb9915e",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          },
+          {
+            "scopeId": "scope-0004-a6ec7e5bc76d298f23659d49931a39bace46f689578ff45d52d683084627235c",
+            "kind": "information",
+            "primaryEntityIds": [],
+            "secondaryEntityIds": []
+          }
+        ]
+      },
+      "coverageAudit": {
+        "legacy": null,
+        "declarations": [
+          {
+            "taskId": "task-0001",
+            "coverage": {
+              "time": {
+                "status": "explicit_none",
+                "entityIds": [],
+                "scopeIds": [
+                  "scope-0002-c3700f73ba2ff848bfef9129a1b523c1b16482426ed8d6fffcab4d22930d873c"
+                ]
+              },
+              "material": {
+                "status": "explicit_none",
+                "entityIds": [],
+                "scopeIds": [
+                  "scope-0003-db3e47e04bff4db062521c9c94f430b4696d79f2536b684b7fa11925edb9915e"
+                ]
+              },
+              "event": {
+                "status": "explicit_none",
+                "entityIds": [],
+                "scopeIds": [
+                  "scope-0004-a6ec7e5bc76d298f23659d49931a39bace46f689578ff45d52d683084627235c"
+                ]
+              }
+            }
+          }
+        ],
+        "unknownCoverage": []
+      },
+      "humanFinal": "NOT_OBSERVABLE"
+    },
+    {
+      "batch": "C19-C17-C19-DEVELOPMENT-R1",
+      "ordinal": 12,
+      "sourceId": "C19-DEV-S06",
+      "sourceSha256": "1522eb63567f94fc177b0638f4ed2acdd413ee7b879d5497892c899139a9a56b",
+      "arm": "A",
+      "candidate": "Candidate17",
+      "requestSha256": "a8bb5ad5bb00fbf8b0ba986cde801ec97eb4001caec6b2895e2da7aded99f0af",
+      "referenceSha256": "e7a99d7456b882d9aa9d67ccd961c6abb4b3531bd652d350bd7035982364d0a3",
+      "model": "deepseek-flash",
+      "scorer": "recognition-source-contract-development-11.0.0",
+      "commonLayer": "SOURCE_CONTRACT_4_COMMON_FIRST_DISPLAY",
+      "unitIdentitySha256": "614cdecdfa733375006420532b964ba151df2a92f27d5f8854fcea9be3d52df0",
+      "dispatchAuthorized": false,
+      "status": "NOT_RUN",
+      "responseSha256": "0abf4121714faf1110e3e231122d1487e383ceba46107c79df55015564c800d1",
+      "rawContractScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "SCORED",
+        "completeStatus": true,
+        "relationFactsPass": true,
+        "risks": [],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "matchedObligations": [
+          "核对|储物柜编号"
+        ],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": true,
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 1,
+          "severity": {
+            "severe": 0,
+            "major": 0,
+            "forbidden": 0,
+            "keyMajor": 0
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": true,
+            "checks": [
+              {
+                "id": "I1",
+                "pass": true
+              },
+              {
+                "id": "I2",
+                "pass": true
+              },
+              {
+                "id": "I3",
+                "pass": true
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-1",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            }
+          ],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": true,
+        "firstDisplayCompleteStatus": true,
+        "eventChecks": [],
+        "proseChecks": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "firstDisplayScore": {
+        "version": "recognition-source-contract-development-11.0.0",
+        "status": "SCORED",
+        "completeStatus": true,
+        "relationFactsPass": true,
+        "risks": [],
+        "disputes": [],
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "matchedObligations": [
+          "核对|储物柜编号"
+        ],
+        "legacy": {
+          "version": "recognition-semantic-scoring-7.0.0",
+          "status": "SCORED",
+          "complete": true,
+          "taskPresence": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "expected": 1,
+            "actual": 1
+          },
+          "currentTaskRisk": {
+            "fn": 0,
+            "unsupportedActionable": 0
+          },
+          "fullyCorrectTasks": 1,
+          "severity": {
+            "severe": 0,
+            "major": 0,
+            "forbidden": 0,
+            "keyMajor": 0
+          },
+          "forbiddenTaskIds": [],
+          "relationsPass": true,
+          "auxiliary": {
+            "pass": true,
+            "checks": [
+              {
+                "id": "I1",
+                "pass": true
+              },
+              {
+                "id": "I2",
+                "pass": true
+              },
+              {
+                "id": "I3",
+                "pass": true
+              }
+            ],
+            "extraEntities": 0
+          },
+          "matches": [
+            {
+              "expectedId": "T1",
+              "actualId": "task-1",
+              "fields": {
+                "action": {
+                  "pass": true
+                },
+                "object": {
+                  "pass": true
+                },
+                "actor": {
+                  "pass": true,
+                  "expected": "addressee",
+                  "actual": "addressee"
+                },
+                "speechAct": {
+                  "pass": true,
+                  "expected": "directive",
+                  "actual": "directive"
+                },
+                "currentness": {
+                  "pass": true,
+                  "expected": "current",
+                  "actual": "current"
+                },
+                "condition": {
+                  "pass": true,
+                  "expected": "not_applicable",
+                  "actual": "not_applicable"
+                },
+                "actionability": {
+                  "pass": true,
+                  "expected": "actionable",
+                  "actual": "actionable"
+                },
+                "confirmation": {
+                  "pass": true,
+                  "expected": true,
+                  "actual": true
+                },
+                "modality": {
+                  "pass": true
+                },
+                "propositionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "conditionScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "factScopes": {
+                  "pass": true,
+                  "missing": [],
+                  "unrelated": [],
+                  "contradictory": []
+                },
+                "materials": {
+                  "pass": true
+                },
+                "materialDetails": {
+                  "pass": true
+                },
+                "times": {
+                  "pass": true
+                },
+                "completionStandards": {
+                  "pass": true
+                },
+                "dependencies": {
+                  "pass": true
+                },
+                "hierarchy": {
+                  "pass": true
+                }
+              }
+            }
+          ],
+          "fieldErrors": [],
+          "referenceCompleteness": "complete",
+          "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+        },
+        "riskUnits": [],
+        "riskIdentityStatus": "MAPPED",
+        "rawProseAdjudication": "SOURCE_SUPPORTED_OR_EXPLICITLY_UNRESOLVED",
+        "humanTruth": "PROVISIONAL",
+        "structuredCompleteStatus": true,
+        "firstDisplayCompleteStatus": true,
+        "eventChecks": [],
+        "proseChecks": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "titleSupported": true,
+            "description": "SUPPORTED"
+          }
+        ],
+        "referenceTruth": "PROVISIONAL",
+        "freeProseAndLeakage": "NOT_ADJUDICATED"
+      },
+      "conversion": null,
+      "coverageAudit": {
+        "legacy": null,
+        "declarations": [
+          {
+            "taskId": "task-1",
+            "coverage": {
+              "time": "not_stated",
+              "material": "not_stated",
+              "event": "not_stated"
+            }
+          }
+        ],
+        "unknownCoverage": []
+      },
+      "humanFinal": "NOT_OBSERVABLE"
+    }
+  ],
+  "summary": {
+    "Candidate17_rawContractScore": {
+      "plannedDenominator": 6,
+      "observable": 6,
+      "wholeCorrect": 2,
+      "wrong": 4,
+      "unknown": 0,
+      "notRun": 0,
+      "rate": "2/6"
+    },
+    "Candidate17_firstDisplayScore": {
+      "plannedDenominator": 6,
+      "observable": 6,
+      "wholeCorrect": 2,
+      "wrong": 4,
+      "unknown": 0,
+      "notRun": 0,
+      "rate": "2/6"
+    },
+    "Candidate19_rawContractScore": {
+      "plannedDenominator": 6,
+      "observable": 6,
+      "wholeCorrect": 1,
+      "wrong": 5,
+      "unknown": 0,
+      "notRun": 0,
+      "rate": "1/6"
+    },
+    "Candidate19_firstDisplayScore": {
+      "plannedDenominator": 6,
+      "observable": 6,
+      "wholeCorrect": 1,
+      "wrong": 5,
+      "unknown": 0,
+      "notRun": 0,
+      "rate": "1/6"
+    }
+  },
+  "selection": {
+    "version": "c19-layered-development-1",
+    "denominator": 6,
+    "observedPairs": 6,
+    "improved": 0,
+    "regressed": 1,
+    "netWhole": -1,
+    "unknown": 0,
+    "riskRegressions": [
+      "C19-DEV-S01",
+      "C19-DEV-S03",
+      "C19-DEV-S04",
+      "C19-DEV-S05"
+    ],
+    "status": "MIXED_PROGRESS",
+    "scope": "PROVISIONAL_SEEN_DEVELOPMENT_NOT_HOLDOUT"
+  },
+  "scene": {
+    "status": "READ_ONLY",
+    "role": "SCOPED_DEVELOPMENT_HOST_NOT_AUTHORIZATION",
+    "state": {
+      "version": "scoped-execution-state-2",
+      "batch": "C19-C17-C19-DEVELOPMENT-R1",
+      "model": "deepseek-flash",
+      "manifestSha256": "794f0949a3342f0fbad6a70cb5916e69bf7f447757260bf2aae78398fef47c79",
+      "identitiesSha256": "7d969f0aeb216bd158fc2a32346a5b1863fa189e5b206386be2205bd5708a5e0",
+      "authorized": true,
+      "units": [
+        {
+          "ordinal": 1,
+          "unitIdentitySha256": "22e6ad313270b7f66c3218247447f37a8b180a9d24b3a94a5424cee5a052a976",
+          "requestSha256": "dc5d9a7a7c2120f9de03d669deb2b01c99d3c6283a26ca952bf41aecda312d9b",
+          "status": "SETTLED",
+          "responseSha256": "05a1b54cc527707cab1ff02bf88587574ea0d9fa6b6124d00dfba7c989f8fcf6",
+          "httpStatus": 200,
+          "usage": {
+            "input_tokens": 4344,
+            "input_tokens_details": {
+              "cached_tokens": 3840
+            },
+            "output_tokens": 222,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 4566
+          },
+          "costUpperMicroUsd": 1570
+        },
+        {
+          "ordinal": 2,
+          "unitIdentitySha256": "5393d7a419c7ada41abd3b54378a197f32e924ffd9d2f8f54e9f0f093047c92e",
+          "requestSha256": "04f8c1e817244dfbf83bad3341341e4652cbe3435895ba8e4869705d0cf65aeb",
+          "status": "SETTLED",
+          "responseSha256": "3e725f3f2b99787f4124fd0862a6bff877d169835b106424413f3c33ddda2efa",
+          "httpStatus": 200,
+          "usage": {
+            "input_tokens": 4596,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 1285,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5881
+          },
+          "costUpperMicroUsd": 2921
+        },
+        {
+          "ordinal": 3,
+          "unitIdentitySha256": "1bcdc3a2ae90726cb07c7173c46cb61c1c27bec2dd017fc1ddf3de7f610478a6",
+          "requestSha256": "38439882e8f8598f8123adc3a7c3be3418e9c190d80ecdc31a5e7665aa307662",
+          "status": "SETTLED",
+          "responseSha256": "1b04a03763bdfa9069ce8a10fb8f74233552e37a63810a4e3a4f6f30f243b16e",
+          "httpStatus": 200,
+          "usage": {
+            "input_tokens": 4725,
+            "input_tokens_details": {
+              "cached_tokens": 4096
+            },
+            "output_tokens": 1145,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5870
+          },
+          "costUpperMicroUsd": 2792
+        },
+        {
+          "ordinal": 4,
+          "unitIdentitySha256": "4576fcb1f435f2d739b132f17577c64f5dbf24d17c26b1caaca31bfadeab543f",
+          "requestSha256": "2eae8c03fc21485209e479f6986174c06cab1a8ce9b7060f8b38576b9ed761ce",
+          "status": "SETTLED",
+          "responseSha256": "9aca34f978b2a9458272a6d0bfdd78248d87fff45a442e4108dee921800fd630",
+          "httpStatus": 200,
+          "usage": {
+            "input_tokens": 4473,
+            "input_tokens_details": {
+              "cached_tokens": 3840
+            },
+            "output_tokens": 953,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5426
+          },
+          "costUpperMicroUsd": 2486
+        },
+        {
+          "ordinal": 5,
+          "unitIdentitySha256": "63952bf2162f20e7e40d8dfd8932715548f5760bd000dadce8fb58b44e2d50ec",
+          "requestSha256": "1e31fbd055888d70388ba7bdec13cfbcc259244e63ef9988c77fe08484e53c4b",
+          "status": "SETTLED",
+          "responseSha256": "d2d9708c9623309d4419fedae2d535ec8fe178c6d9fc518e26ba556c9e5aeb96",
+          "httpStatus": 200,
+          "usage": {
+            "input_tokens": 4359,
+            "input_tokens_details": {
+              "cached_tokens": 3840
+            },
+            "output_tokens": 1335,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5694
+          },
+          "costUpperMicroUsd": 2910
+        },
+        {
+          "ordinal": 6,
+          "unitIdentitySha256": "ff6a86841e40cf6534c8d795397019b7e76edfda88780c516547a67b2e659651",
+          "requestSha256": "136de31824dfd678197a3ca2624a265ffa649bfd252cfb06d89e409da5fc8bdc",
+          "status": "SETTLED",
+          "responseSha256": "fd8f710ef5bb267cdf61fbe91482351f731d6832cc45e7fc6a435555636497db",
+          "httpStatus": 200,
+          "usage": {
+            "input_tokens": 4611,
+            "input_tokens_details": {
+              "cached_tokens": 4096
+            },
+            "output_tokens": 1701,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6312
+          },
+          "costUpperMicroUsd": 3425
+        },
+        {
+          "ordinal": 7,
+          "unitIdentitySha256": "bfe928f39a14cb1bf11241076a342e2cf04f34f6399bee63d0c163b149cef8eb",
+          "requestSha256": "5e0b08fdd4632dc0e2ceb347537f702df199beea6fe26aca32fdd8c294d53fcb",
+          "status": "SETTLED",
+          "responseSha256": "6ae14cd30dd8b18d8608a67f0b4cb38b3cbceb352e93deb441ec2ab26215c760",
+          "httpStatus": 200,
+          "usage": {
+            "input_tokens": 4615,
+            "input_tokens_details": {
+              "cached_tokens": 4096
+            },
+            "output_tokens": 1597,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6212
+          },
+          "costUpperMicroUsd": 3301
+        },
+        {
+          "ordinal": 8,
+          "unitIdentitySha256": "3e04e9634360d5cbcdca16a258b27938314cb769725047a6245dd72ccaa31e05",
+          "requestSha256": "5eaf407b6e20a83b710a6d5f1ba998fce6dcfb7e516a1adb9210de02448268da",
+          "status": "SETTLED",
+          "responseSha256": "19e40dfde51e3f0b46362055714cc2369971c5f3515bdf02181d639448a17140",
+          "httpStatus": 200,
+          "usage": {
+            "input_tokens": 4363,
+            "input_tokens_details": {
+              "cached_tokens": 3840
+            },
+            "output_tokens": 1392,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5755
+          },
+          "costUpperMicroUsd": 2980
+        },
+        {
+          "ordinal": 9,
+          "unitIdentitySha256": "c1ac7890dcbcc762c78d1500e798fe17630092b9d39cb3ef697157825cde86e4",
+          "requestSha256": "d0ca3689aff30d82d686e76d22aab056c2d7b5eec540659d925063a39ca21690",
+          "status": "SETTLED",
+          "responseSha256": "9030d9f640367524d14c4d336d3654797146cc85a506fb8292ae3d330dff4fae",
+          "httpStatus": 200,
+          "usage": {
+            "input_tokens": 4512,
+            "input_tokens_details": {
+              "cached_tokens": 3840
+            },
+            "output_tokens": 1679,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6191
+          },
+          "costUpperMicroUsd": 3369
+        },
+        {
+          "ordinal": 10,
+          "unitIdentitySha256": "d106a428ee0518496a0e83371b9973a2370f397dcfa572a5a56922bae0494fd3",
+          "requestSha256": "897e085d5833df11fd0c2b4ecbb0fe98c6e12ec6ad37c2dc9c5102161996d481",
+          "status": "SETTLED",
+          "responseSha256": "c8febf8c1a7c77cf223e99e52142c31895a9dbc950c9e40c22b2f782d1dd285e",
+          "httpStatus": 200,
+          "usage": {
+            "input_tokens": 4764,
+            "input_tokens_details": {
+              "cached_tokens": 4096
+            },
+            "output_tokens": 1881,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6645
+          },
+          "costUpperMicroUsd": 3687
+        },
+        {
+          "ordinal": 11,
+          "unitIdentitySha256": "3efe0e22bf07149a0b275e1724d9ed62c889c935e4b10b776f7d43729e6a4f9a",
+          "requestSha256": "f271f26cb40f0d5ee33f37b4fc49130b1e27299daf4954b76baafba2a697cd14",
+          "status": "SETTLED",
+          "responseSha256": "0f011e226cc43b5ab15acde3301e5def50ba3dd459d44582b1edf5906275ddd7",
+          "httpStatus": 200,
+          "usage": {
+            "input_tokens": 4580,
+            "input_tokens_details": {
+              "cached_tokens": 4096
+            },
+            "output_tokens": 795,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 5375
+          },
+          "costUpperMicroUsd": 2328
+        },
+        {
+          "ordinal": 12,
+          "unitIdentitySha256": "614cdecdfa733375006420532b964ba151df2a92f27d5f8854fcea9be3d52df0",
+          "requestSha256": "a8bb5ad5bb00fbf8b0ba986cde801ec97eb4001caec6b2895e2da7aded99f0af",
+          "status": "SETTLED",
+          "responseSha256": "0abf4121714faf1110e3e231122d1487e383ceba46107c79df55015564c800d1",
+          "httpStatus": 200,
+          "usage": {
+            "input_tokens": 4328,
+            "input_tokens_details": {
+              "cached_tokens": 3840
+            },
+            "output_tokens": 526,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 4854
+          },
+          "costUpperMicroUsd": 1930
+        }
+      ],
+      "grantId": "C19-R1-1fe28759-b1d5-412c-abf9-c118fa79f0ad",
+      "committedHead": "ddff187173c5c9e2a7b4a29ca063bea26711dc09",
+      "snapshotCommit": "ce97b325f38897e87a55b63ddaea9470e8ea4156",
+      "hostAuthorizationSha256": "8e889bde0ef5079f80f146882586f314266ee5d76d4f520aee27568a267fcef8",
+      "role": "SCOPED_DEVELOPMENT_HOST_NOT_AUTHORIZATION"
+    },
+    "nextOrdinal": null,
+    "audit": "CONSISTENT",
+    "uncertainty": null,
+    "priceStatus": "CURRENT_AS_RECORDED_NOT_REVERIFIED",
+    "batchEvidence": {
+      "rows": 25,
+      "grantCount": 1,
+      "reserveCount": 12,
+      "settleCount": 12,
+      "units": [
+        {
+          "ordinal": 1,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 2,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 3,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 4,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 5,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 6,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 7,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 8,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 9,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 10,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 11,
+          "reserveCount": 1,
+          "settleCount": 1
+        },
+        {
+          "ordinal": 12,
+          "reserveCount": 1,
+          "settleCount": 1
+        }
+      ]
+    },
+    "localEvidence": {
+      "rawFiles": 12,
+      "receiptFiles": 25,
+      "incompleteStateWrite": false
+    },
+    "dispatchEligibility": "NOT_EVALUATED_READ_ONLY",
+    "lockExists": false,
+    "halt": null,
+    "ledger": {
+      "rows": 996,
+      "sha256": "c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750",
+      "tail": "eafde02d394e0cab472e16288543303f31318b661c13a5a771a4edbc9a7dfac8",
+      "batchRows": 25
+    },
+    "dispatch": "NOT_PERFORMED",
+    "ledgerWrites": 0
+  },
+  "rawAssessmentBoundary": "Frozen parsed/compiled contract score, not independent human raw truth",
+  "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "freeProseAndLeakage": "NOT_ADJUDICATED unless source support is deterministically checked",
+  "humanMetrics": "NOT_OBSERVABLE",
+  "providerActualCharge": "NOT_OBSERVABLE"
+}

@@ -1,0 +1,50 @@
+{
+  "fullOutcome": "FAIL",
+  "groupCount": 39,
+  "passed": 33,
+  "failed": [
+    {
+      "label": "d19-diagnostic",
+      "layer": "historical",
+      "status": 1,
+      "sha256": "c784312df44ff08a4c5be1f7f1d5bfe5657d2bb2d53b1a8665e1333de04d0a67",
+      "log": "d19-diagnostic.log"
+    },
+    {
+      "label": "d9-historical",
+      "layer": "historical",
+      "status": 1,
+      "sha256": "0e18569b2e2662154c025668cecbcf8eadfd5fd0951ad8f14d82f4d09d605c68",
+      "log": "d9-historical.log"
+    },
+    {
+      "label": "rco-5-007",
+      "layer": "historical",
+      "status": 1,
+      "sha256": "add969402da90226b8695ef250eac1322017b193deafb8c1f3b700c082d62094",
+      "log": "rco-5-007.log"
+    },
+    {
+      "label": "c11-history",
+      "layer": "historical",
+      "status": 1,
+      "sha256": "a547720a8656c17c187d5afd0e90c6ecbb84af83ca658cb29424fac6589d368b",
+      "log": "c11-history.log"
+    },
+    {
+      "label": "c11-gateway",
+      "layer": "historical",
+      "status": 1,
+      "sha256": "da8648ad1a2a5b08ea8936ac42644c14590c4e2a136ffcb3f4dbb995b3a917d2",
+      "log": "c11-gateway.log"
+    },
+    {
+      "label": "vitest-d17-history",
+      "layer": "historical",
+      "status": 1,
+      "sha256": "929f9604cc54f966701cf15b496cdc44584a0b8f31f3a5bde8792239bc5a64a4",
+      "log": "vitest-d17-history.log"
+    }
+  ],
+  "oldAssertionsChanged": false
+}

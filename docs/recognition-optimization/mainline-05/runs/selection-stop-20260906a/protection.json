@@ -1,0 +1,49 @@
+{
+  "stage": "RCO-5-MAINLINE-05",
+  "status": "PASS_PROTECTION_AT_SAFETY_STOP_NOT_PRODUCT_PASS",
+  "head": "e9b87e7dc4546e91d7f5559807b83465ba857cb0",
+  "liveRemote": "e9b87e7dc4546e91d7f5559807b83465ba857cb0\trefs/heads/codex/e2-multimodal-recognition-exp",
+  "baseManifest": "../../IMPLEMENTATION_BASELINE.json",
+  "resumeEvidence": "../continue-20260906a/self-check.json",
+  "protectedCount": 863,
+  "planningCount": 4,
+  "references": [
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R2_BASELINE.json",
+      "sha256": "4ebbe389a1093b328942f0920d9f254f40c02a54c7ba158f29fba70b73497ac9"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-04-i1/R2_IMPLEMENTATION_SNAPSHOT.json",
+      "sha256": "6576c593402ddb248bdc0319bde061fb1d31d5dc66d6629b52ad8d22d6def057"
+    }
+  ],
+  "protectedFailures": [],
+  "soleAdditionalException": {
+    "path": "src/experiments/mainline04/semanticComposer.ts",
+    "baselineSha256": "575b39a33f72ee8d4d4fe8d566207a3748a6f4935e21e3c589633e054e20f8c2",
+    "currentSha256": "82db1d2ad42b340789c42ea0dc0ea3aaf1f8f5a6e7373b565eba3f687370d692",
+    "mode": "mainline05-own-assets-1",
+    "otherMainline04Seven": "UNCHANGED"
+  },
+  "logPrefix": {
+    "path": "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+    "bytes": 234733,
+    "sha256": "afb43fbc70f549aeacb79f2bc0d90a26c4d0f725246a6b1445fc033ba805c971"
+  },
+  "logPrefixMatches": true,
+  "existingMainline05EvidenceModified": [],
+  "forbiddenMutations": [],
+  "sourceBinding": "failure.json implementationSnapshot; 25 existing/1 NOT_CREATED",
+  "verification": "只读逐字SHA/原日志前缀/Git差异检查；未运行未完成的新checker",
+  "finalPrestageChecks": {
+    "sourceShaMatched": 25,
+    "missingAsRecorded": 1,
+    "longLogsShaMatched": 5,
+    "unexpectedPaths": 0,
+    "contextLines": 76,
+    "jsonParse": "PASS",
+    "authoredDocumentSensitiveLiteralScan": "PASS_NOT_FULL_SECURITY_SCAN",
+    "diffWhitespace": "PASS",
+    "independentEvidenceWording": "PASS_EVIDENCE_ONLY_NOT_PRODUCT_PASS"
+  }
+}

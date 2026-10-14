@@ -1,0 +1,516 @@
+✔ the only successful path preserves raw response, binds usage and uses the fixed upstream without redirects (68.0578ms)
+✔ credential is not read at gateway initialization or on rejected origins and routes (27.6417ms)
+✔ browser cannot supply a model, endpoint, request body, usage or alternative budget book (23.1507ms)
+✔ missing credentials do not consume an allowance and are never reflected (25.3246ms)
+✔ reserved request cannot be duplicated by a second gateway or service restart (53.3251ms)
+✔ concurrent browser and runner cannot dispatch the same logical request twice (53.9831ms)
+✔ HTTP failure stops dispatch, retains the full reserve and returns only a safe code (45.7657ms)
+✔ redirect stops dispatch, retains the full reserve and returns only a safe code (46.5128ms)
+✔ wrong content type stops dispatch, retains the full reserve and returns only a safe code (46.318ms)
+✔ response size exceeded stops dispatch, retains the full reserve and returns only a safe code (50.7103ms)
+✔ credential echo stops dispatch, retains the full reserve and returns only a safe code (47.3208ms)
+✔ usage missing stops dispatch, retains the full reserve and returns only a safe code (45.7931ms)
+✔ model drift stops dispatch, retains the full reserve and returns only a safe code (46.9902ms)
+✔ timeout aborts once; late completion cannot settle or append a second response (99.1129ms)
+✔ raw-result storage failure cannot release money or silently claim success (39.7485ms)
+✖ safe diagnostic DNS: classified without error text and unknown reserve survives reopening (35.7563ms)
+✖ safe diagnostic connect timeout: classified without error text and unknown reserve survives reopening (34.1609ms)
+✖ safe diagnostic TLS: classified without error text and unknown reserve survives reopening (36.6567ms)
+✖ safe diagnostic connection reset: classified without error text and unknown reserve survives reopening (37.0653ms)
+✖ safe diagnostic unknown code: classified without error text and unknown reserve survives reopening (33.8232ms)
+✖ safe diagnostic HTTP 401: classified without error text and unknown reserve survives reopening (36.2394ms)
+✖ safe diagnostic HTTP 502: classified without error text and unknown reserve survives reopening (32.9185ms)
+✖ safe diagnostic content type: classified without error text and unknown reserve survives reopening (33.9534ms)
+✖ safe diagnostic body timeout: classified without error text and unknown reserve survives reopening (33.448ms)
+✖ safe diagnostic oversize: classified without error text and unknown reserve survives reopening (34.9305ms)
+✖ safe diagnostic UTF8: classified without error text and unknown reserve survives reopening (33.6117ms)
+✖ safe diagnostic JSON: classified without error text and unknown reserve survives reopening (32.935ms)
+✖ safe diagnostic reflection: classified without error text and unknown reserve survives reopening (35.8069ms)
+✖ safe diagnostic raw store: classified without error text and unknown reserve survives reopening (36.2138ms)
+✖ safe diagnostic settlement: classified without error text and unknown reserve survives reopening (33.6879ms)
+✖ diagnostic normal and missing-configuration controls do not alter raw success or consume a missing-key reservation (60.2849ms)
+✖ diagnostic uses descriptors not error getters, and never exports arbitrary error properties (31.926ms)
+✖ local deadline diagnostic remains distinct from transport timeout and late headers cannot rewrite it (62.8542ms)
+✖ uncertainty persistence failure is visible without releasing or retrying the reserved call (31.492ms)
+✔ frozen request object cannot be swapped after gateway creation (30.4427ms)
+✔ unapproved parameters and non-text content fail before any gateway can be created (24.5559ms)
+✔ JSON escaped output value cannot reach recording, response or settlement (61.9905ms)
+✔ JSON escaped object key cannot reach recording, response or settlement (67.7435ms)
+✔ nested model JSON value cannot reach recording, response or settlement (66.7226ms)
+✔ nested model JSON key cannot reach recording, response or settlement (61.9128ms)
+✔ twice nested model JSON cannot reach recording, response or settlement (63.9063ms)
+✔ discarded duplicate JSON property cannot reach recording, response or settlement (61.0984ms)
+✔ normal escaped Chinese and nested JSON retain exact raw bytes and can be recorded and settled (48.6779ms)
+ℹ tests 43
+ℹ suites 0
+ℹ pass 24
+ℹ fail 19
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1991.4255
+
+✖ failing tests:
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic DNS: classified without error text and unknown reserve survives reopening (35.7563ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'CONNECT',
+  -   reason: 'DNS_FAILURE',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: null,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'CONNECT', reason: 'DNS_FAILURE', upstreamHttpStatus: null, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic connect timeout: classified without error text and unknown reserve survives reopening (34.1609ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'CONNECT',
+  -   reason: 'CONNECT_TIMEOUT',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: null,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'CONNECT', reason: 'CONNECT_TIMEOUT', upstreamHttpStatus: null, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic TLS: classified without error text and unknown reserve survives reopening (36.6567ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'CONNECT',
+  -   reason: 'TLS_FAILURE',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: null,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'CONNECT', reason: 'TLS_FAILURE', upstreamHttpStatus: null, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic connection reset: classified without error text and unknown reserve survives reopening (37.0653ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'CONNECT',
+  -   reason: 'CONNECTION_RESET',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: null,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'CONNECT', reason: 'CONNECTION_RESET', upstreamHttpStatus: null, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic unknown code: classified without error text and unknown reserve survives reopening (33.8232ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'CONNECT',
+  -   reason: 'TRANSPORT_UNKNOWN',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: null,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'CONNECT', reason: 'TRANSPORT_UNKNOWN', upstreamHttpStatus: null, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic HTTP 401: classified without error text and unknown reserve survives reopening (36.2394ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'RESPONSE_HEADERS',
+  -   reason: 'UPSTREAM_HTTP_REJECTED',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: 401,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'RESPONSE_HEADERS', reason: 'UPSTREAM_HTTP_REJECTED', upstreamHttpStatus: 401, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic HTTP 502: classified without error text and unknown reserve survives reopening (32.9185ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'RESPONSE_HEADERS',
+  -   reason: 'UPSTREAM_HTTP_REJECTED',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: 502,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'RESPONSE_HEADERS', reason: 'UPSTREAM_HTTP_REJECTED', upstreamHttpStatus: 502, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic content type: classified without error text and unknown reserve survives reopening (33.9534ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'RESPONSE_HEADERS',
+  -   reason: 'UPSTREAM_PROTOCOL_REJECTED',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: 200,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'RESPONSE_HEADERS', reason: 'UPSTREAM_PROTOCOL_REJECTED', upstreamHttpStatus: 200, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic body timeout: classified without error text and unknown reserve survives reopening (33.448ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'RESPONSE_BODY',
+  -   reason: 'RESPONSE_BODY_TIMEOUT',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: 200,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'RESPONSE_BODY', reason: 'RESPONSE_BODY_TIMEOUT', upstreamHttpStatus: 200, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic oversize: classified without error text and unknown reserve survives reopening (34.9305ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'RESPONSE_BODY',
+  -   reason: 'RESPONSE_SIZE_LIMIT',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: 200,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'RESPONSE_BODY', reason: 'RESPONSE_SIZE_LIMIT', upstreamHttpStatus: 200, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic UTF8: classified without error text and unknown reserve survives reopening (33.6117ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'RESPONSE_DECODE',
+  -   reason: 'RESPONSE_DECODE_FAILED',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: 200,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'RESPONSE_DECODE', reason: 'RESPONSE_DECODE_FAILED', upstreamHttpStatus: 200, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic JSON: classified without error text and unknown reserve survives reopening (32.935ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'RESPONSE_JSON',
+  -   reason: 'JSON_INVALID',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: 200,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'RESPONSE_JSON', reason: 'JSON_INVALID', upstreamHttpStatus: 200, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic reflection: classified without error text and unknown reserve survives reopening (35.8069ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'RESPONSE_SAFETY',
+  -   reason: 'CREDENTIAL_REFLECTION_REJECTED',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: 200,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'RESPONSE_SAFETY', reason: 'CREDENTIAL_REFLECTION_REJECTED', upstreamHttpStatus: 200, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic raw store: classified without error text and unknown reserve survives reopening (36.2138ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'RAW_STORAGE',
+  -   reason: 'RAW_STORAGE_FAILED',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: 200,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'RAW_STORAGE', reason: 'RAW_STORAGE_FAILED', upstreamHttpStatus: 200, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:122:3
+✖ safe diagnostic settlement: classified without error text and unknown reserve survives reopening (33.6879ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   localHttpStatus: 502,
+  -   phase: 'SETTLEMENT',
+  -   reason: 'SETTLEMENT_REJECTED',
+  -   requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5',
+  -   reservationAcquired: true,
+  -   uncertaintyRecord: 'PERSISTED',
+  -   unitId: 'A01',
+  -   upstreamHttpStatus: 200,
+  -   version: 'real-input-safe-diagnostic-1'
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:125:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { version: 'real-input-safe-diagnostic-1', unitId: 'A01', requestSha: '1daa26f4a639bcc2790e64307a7ee8eecb9ecd446829f2e52dbefaea910392e5', phase: 'SETTLEMENT', reason: 'SETTLEMENT_REJECTED', upstreamHttpStatus: 200, localHttpStatus: 502, reservationAcquired: true, uncertaintyRecord: 'PERSISTED' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts\real-input-model-gateway.node-test.mjs:136:1
+✖ diagnostic normal and missing-configuration controls do not alter raw success or consume a missing-key reservation (60.2849ms)
+  TypeError: Cannot read properties of undefined (reading 'reason')
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:141:33)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at scripts\real-input-model-gateway.node-test.mjs:146:1
+✖ diagnostic uses descriptors not error getters, and never exports arbitrary error properties (31.926ms)
+  TypeError: Cannot read properties of undefined (reading 'reason')
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:149:51)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at scripts\real-input-model-gateway.node-test.mjs:153:1
+✖ local deadline diagnostic remains distinct from transport timeout and late headers cannot rewrite it (62.8542ms)
+  TypeError: Cannot read properties of undefined (reading 'reason')
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:156:29)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at scripts\real-input-model-gateway.node-test.mjs:162:1
+✖ uncertainty persistence failure is visible without releasing or retrying the reserved call (31.492ms)
+  TypeError: Cannot read properties of undefined (reading 'uncertaintyRecord')
+      at TestContext.<anonymous> (file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/real-input-model-gateway.node-test.mjs:166:29)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)

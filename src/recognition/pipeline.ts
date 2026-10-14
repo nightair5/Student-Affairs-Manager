@@ -1,5 +1,7 @@
 import type { ParsedSuggestion, Project, SourceType, Task, TaskCategory } from '../types'
 import { createSuggestions } from '../lib/parser'
+import { taskActionText } from '../lib/taskActionText'
+import { parseChineseTimeAst } from '../lib/timeSemantics'
 import { RECOGNITION_MODEL_NAME, RECOGNITION_PROMPT_VERSION } from './prompt'
 import type {
   EventSuggestion,
@@ -158,6 +160,16 @@ function eventDescription(evidence: string): string {
   return `${prefix}${action}`.trim().slice(0, 180)
 }
 
+const MAX_TIME_RAW_TEXT_LENGTH = 160
+
+function timePointRawText(evidence: string): string {
+  const normalized = evidence.trim()
+  if (normalized.length <= MAX_TIME_RAW_TEXT_LENGTH) return normalized
+  const headLength = Math.floor((MAX_TIME_RAW_TEXT_LENGTH - 1) / 2)
+  const tailLength = MAX_TIME_RAW_TEXT_LENGTH - headLength - 1
+  return `${normalized.slice(0, headLength)}…${normalized.slice(-tailLength)}`
+}
+
 function preparationAction(evidence: string): { quote: string; object: string; material: string | null } | null {
   const match = evidence.match(/(?:答辩|展示|面试|宣讲|活动|会议)?前(?:请|需要|需|务必)?准备([^，,；。]+)/u)
   if (!match) return null
@@ -169,7 +181,7 @@ function preparationAction(evidence: string): { quote: string; object: string; m
 
 export function buildLocalRecognition(input: RecognitionInput): RecognitionResult {
   const preprocessed = preprocessSource(input.content)
-  const parsed = createSuggestions(preprocessed.normalizedText, input.sourceType, input.sourceTitle, input.referenceTime)
+  const parsed = createSuggestions(preprocessed.normalizedText, input.sourceType, input.sourceTitle, input.referenceTime, input.timezone)
   const category = projectCategory(parsed)
   const title = projectTitle(input, parsed)
   const projectMatch = matchProject(input, title, category)
@@ -183,32 +195,50 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     const timePointId = `time-${index + 1}`
     const task = createTask(item, index, evidenceId, timePointId)
     const isEvent = eventPattern.test(task.title) && !/准备|制作|撰写|完成/u.test(task.title)
+    const timePointType = isEvent ? 'event_start' : /报名/u.test(task.title) ? 'registration_deadline' : 'task_deadline'
+    const timeAst = item.timePoint ?? parseChineseTimeAst(item.evidence, {
+      referenceTime: input.referenceTime,
+      timezone: input.timezone,
+      type: timePointType,
+    })
+    const timeSelected = task.inferenceLevel === 'explicit'
+      && timeAst.normalizedValue !== null
+      && !timeAst.needsConfirmation
     timePoints.push({
       tempId: timePointId,
-      type: isEvent ? 'event_start' : /报名/u.test(task.title) ? 'registration_deadline' : 'task_deadline',
-      rawText: item.evidence,
-      normalizedValue: Number.isNaN(new Date(item.deadline).getTime()) ? null : item.deadline,
-      timezone: input.timezone,
-      isAllDay: false,
-      precision: item.confidence === '低' || /(?:本周|这周|下周|今天|明天|后天)/u.test(item.evidence)
-        ? 'relative'
-        : /(?:\d{1,2}[:：]\d{2}|(?:上午|中午|下午|晚上|凌晨)\s*\d{1,2}(?:点|时))/u.test(item.evidence)
-          ? 'exact'
-          : 'date_only',
-      needsConfirmation: item.confidence === '低'
-        || /(?:本周|这周|下周|今天|明天|后天)/u.test(item.evidence)
-        || !/(?:\d{1,2}[:：]\d{2}|(?:上午|中午|下午|晚上|凌晨)\s*\d{1,2}(?:点|时))/u.test(item.evidence),
+      type: timePointType,
+      rawText: timePointRawText(timeAst.rawText || item.evidence),
+      normalizedValue: timeAst.normalizedValue,
+      timezone: timeAst.timezone,
+      isAllDay: timeAst.isAllDay,
+      precision: timeAst.precision,
+      needsConfirmation: timeAst.needsConfirmation,
       relatedTaskTempIds: isEvent ? [] : [task.tempId],
       relatedMaterialTempIds: [],
       evidenceIds: [evidenceId],
       confidence: task.confidence,
-      selected: task.inferenceLevel === 'explicit'
-        && item.confidence !== '低'
-        && !/(?:本周|这周|下周|今天|明天|后天)/u.test(item.evidence)
-        && /(?:\d{1,2}[:：]\d{2}|(?:上午|中午|下午|晚上|凌晨)\s*\d{1,2}(?:点|时))/u.test(item.evidence),
+      selected: timeSelected,
     })
     if (isEvent) {
-      events.push({ tempId: `event-${index + 1}`, title: task.title, description: eventDescription(item.evidence), startTimePointTempId: timePointId, endTimePointTempId: null, location: null, evidenceIds: [evidenceId], confidence: task.confidence, inferenceLevel: task.inferenceLevel, selected: task.selected })
+      const endTimePointId = timeAst.rangeEndNormalizedValue ? `${timePointId}-end` : null
+      if (endTimePointId) {
+        timePoints.push({
+          tempId: endTimePointId,
+          type: 'event_end',
+          rawText: timePointRawText(timeAst.rawText),
+          normalizedValue: timeAst.rangeEndNormalizedValue,
+          timezone: timeAst.timezone,
+          isAllDay: timeAst.isAllDay,
+          precision: timeAst.precision,
+          needsConfirmation: timeAst.needsConfirmation,
+          relatedTaskTempIds: [],
+          relatedMaterialTempIds: [],
+          evidenceIds: [evidenceId],
+          confidence: task.confidence,
+          selected: timeSelected,
+        })
+      }
+      events.push({ tempId: `event-${index + 1}`, title: task.title, description: eventDescription(item.evidence), startTimePointTempId: timePointId, endTimePointTempId: endTimePointId, location: null, evidenceIds: [evidenceId], confidence: task.confidence, inferenceLevel: task.inferenceLevel, selected: task.selected })
       const preparation = preparationAction(item.evidence)
       if (preparation) {
         const preparationIndex = parsed.length + index
@@ -224,21 +254,26 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
           evidence: preparation.quote,
         }
         const preparationTask = createTask(preparationItem, preparationIndex, preparationEvidenceId, preparationTimePointId)
+        const preparationTime = parseChineseTimeAst(preparation.quote, {
+          referenceTime: input.referenceTime,
+          timezone: input.timezone,
+          type: 'task_deadline',
+        })
         tasks.push(preparationTask)
         timePoints.push({
           tempId: preparationTimePointId,
           type: 'task_deadline',
-          rawText: preparation.quote,
-          normalizedValue: Number.isNaN(new Date(item.deadline).getTime()) ? null : item.deadline,
-          timezone: input.timezone,
-          isAllDay: false,
-          precision: 'exact',
-          needsConfirmation: false,
+          rawText: timePointRawText(preparation.quote),
+          normalizedValue: preparationTime.normalizedValue,
+          timezone: preparationTime.timezone,
+          isAllDay: preparationTime.isAllDay,
+          precision: preparationTime.precision,
+          needsConfirmation: preparationTime.needsConfirmation,
           relatedTaskTempIds: [preparationTask.tempId],
           relatedMaterialTempIds: preparationTask.materialTempIds,
           evidenceIds: [preparationEvidenceId],
           confidence: preparationTask.confidence,
-          selected: true,
+          selected: false,
         })
         if (preparation.material) {
           materials.push({
@@ -422,18 +457,22 @@ export function postProcessRecognition(result: RecognitionResult, sourceText: st
   return result
 }
 
+/**
+ * @deprecated Legacy schema v7 UI bridge. This intentionally remains in
+ * Phase A, but it is lossy and must not become the Workspace v8 commit path.
+ */
 export function recognitionToLegacySuggestions(result: RecognitionResult): ParsedSuggestion[] {
   const points = new Map(result.timePoints.map((point) => [point.tempId, point]))
-  return allTasks(result).filter((task) => task.hierarchyType === 'task').map((task) => {
+  return allTasks(result).map((task) => {
     const point = points.get(task.timePointTempIds[0])
     const materialNames = result.materials.filter((material) => material.selected !== false && material.relatedTaskTempIds.includes(task.tempId)).map((material) => material.name)
     return {
       id: task.tempId,
       title: task.title,
       category: result.projectSuggestion?.category.value ?? '其他',
-      deadline: point?.normalizedValue ?? '1970-01-01T00:00',
+      deadline: point?.normalizedValue ?? '',
       estimatedMinutes: task.estimatedMinutes ?? 30,
-      nextAction: `${task.actionVerb}${task.actionObject}`,
+      nextAction: taskActionText(task.actionVerb, task.actionObject),
       description: task.description,
       priority: task.prioritySuggestion === 'urgent' || task.prioritySuggestion === 'high' ? '高' : task.prioritySuggestion === 'low' ? '低' : '中',
       materials: materialNames,

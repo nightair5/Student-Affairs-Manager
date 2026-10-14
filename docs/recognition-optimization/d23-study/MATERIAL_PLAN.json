@@ -1,0 +1,244 @@
+{
+  "version": "d23-material-plan-1",
+  "materials": [
+    {
+      "id": "C17-D16-S01",
+      "sourceText": "[D16新编匿名Development]\n请于2026年10月19日16:30前提交社团器材盘点表。社团器材盘点表须为PDF格式，文件名为社团编号-经办人；门户提示收件成功即结束。",
+      "sourceSha256": "2bfbae1b2b062526fad9d64f73764d71b74aa852d33925d22c4209452c70f845",
+      "assistedId": "d21-record-02",
+      "manualId": "d13-fixture-manual-d23-s01",
+      "stimulusSha256": "dbba9885dc868b0e65a6586b561af2485801b081d0ff375ef4f025e7128d0a0c",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "single",
+        "exact_time",
+        "material_format"
+      ],
+      "ordinal": 2
+    },
+    {
+      "id": "C17-D16-S02",
+      "sourceText": "[D16新编匿名Development]\n请在10月20日前核对迎新志愿者分组，页面显示核对完成；另于10月22日前上传场地使用承诺函，场地使用承诺函须为PNG，平台显示承诺函已收妥。两项分别办理。",
+      "sourceSha256": "91618a256c8d2164f54ff274636ef5c790e5d3990d99ee7e2520ddc115fa1bdf",
+      "assistedId": "d21-record-03",
+      "manualId": "d13-fixture-manual-d23-s02",
+      "stimulusSha256": "45b6477598761938c10e44f20b5c16d4997b201ed46794c3fad35899b68c7a7d",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "multi",
+        "date_only",
+        "material"
+      ],
+      "ordinal": 3
+    },
+    {
+      "id": "C17-D16-S04",
+      "sourceText": "[D16新编匿名Development]\n列入决赛彩排名单的同学须出席辩论决赛彩排，以完成辩论决赛彩排为准。你的队伍未列入决赛彩排名单，本通知不要求你出席。",
+      "sourceSha256": "9225590c3aa495e23dea327641798bcfae451f83adc430d2a9b122f206e2a29d",
+      "assistedId": "d21-record-07",
+      "manualId": "d13-fixture-manual-d23-s04",
+      "stimulusSha256": "fc0666b26a2956cc476985e7ca1c19304989045153f03bf3e5f9eebecbec9fb5",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "condition_false",
+        "inactive"
+      ],
+      "ordinal": 7
+    },
+    {
+      "id": "C17-D16-S05",
+      "sourceText": "[D16新编匿名Development]\n若安排你担任摄影志愿者，请递交机位安排表，以平台显示安排表已收取为完成。暂定下周二下午办理，摄影岗位安排尚未确定。",
+      "sourceSha256": "504b08c986a35f6ca62513accc7e03dfe37e0eaec916629923b971a238854a22",
+      "assistedId": "d21-record-10",
+      "manualId": "d13-fixture-manual-d23-s05",
+      "stimulusSha256": "378c6e6cec6e22ae44c1070f8c887f0adf6fb8371960e7837fe16903e7df916f",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "condition_unknown",
+        "vague_time"
+      ],
+      "ordinal": 10
+    },
+    {
+      "id": "C17-D16-S06",
+      "sourceText": "[D16新编匿名Development]\n请先填写校友访谈记录表，记录表必填栏均已填写后，再提交校友访谈记录表；校友访谈记录表格式为CSV，以秘书处确认收妥记录表为完成。",
+      "sourceSha256": "56403e58158ef21ca640cd4e3efccf411339e832e9f495dbce908e09c1201b30",
+      "assistedId": "d21-record-11",
+      "manualId": "d13-fixture-manual-d23-s06",
+      "stimulusSha256": "4b3844e396253ccca568a747bc13ba432fbcf940688b7c133417d59b75c62823",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "shared_material",
+        "dependency",
+        "multi"
+      ],
+      "ordinal": 11
+    },
+    {
+      "id": "C17-D16-S07",
+      "sourceText": "[D16新编匿名Development]\n请在月底前后向宣传组提交摄影作品说明稿，以宣传组确认收妥说明稿为完成；确切日期稍后公布。",
+      "sourceSha256": "f0e9fe97d0afebfca848d9ffcc51166ec2f7a7735fe9150d3814607eb116b39d",
+      "assistedId": "d21-record-14",
+      "manualId": "d13-fixture-manual-d23-s07",
+      "stimulusSha256": "7046d52de22285ae09c1a3ca6bef67b12244ff1973bbf104a7456858df2924cd",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "vague_time",
+        "single"
+      ],
+      "ordinal": 14
+    },
+    {
+      "id": "C17-D16-S09",
+      "sourceText": "[D16新编匿名Development]\n校车预约平台将在周三晚停机，已保存行程不受影响。无需删除行程，不要提交说明，也不必向值班员发消息。本通知仅说明停机消息。",
+      "sourceSha256": "51d5c32e81720af258bee0f9627a8fe2a79bc674fd350ba28c8c82075d3abeaf",
+      "assistedId": "d21-record-18",
+      "manualId": "d13-fixture-manual-d23-s09",
+      "stimulusSha256": "2b4e1b2c861af8d7ce243fe2e5a0eddc26a1dd91fb85c45da042ca0c1d28f6bd",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "no_task",
+        "forbidden",
+        "background"
+      ],
+      "ordinal": 18
+    },
+    {
+      "id": "C17-D16-S11",
+      "sourceText": "[D16新编匿名Development]\n原定张贴迎新路线图，并登记线下宣讲教室。现调整为：迎新路线图改为提交数字版，平台显示数字路线图提交成功；线下宣讲教室改为预订线上时段，页面保存线上说明会时段。两项分别替代原要求。",
+      "sourceSha256": "9c1de9a067b3f7f1728e0ab8989925785ec1b949c501142ff093a7baeb64ac8f",
+      "assistedId": "d21-record-22",
+      "manualId": "d13-fixture-manual-d23-s11",
+      "stimulusSha256": "bd0e18d8817c00fda9d5d530d2507075642dfa99ffdcc22db1ee0087eb15a211",
+      "kind": "RECORDED_MODEL",
+      "coverage": [
+        "multi_endpoint_replacement",
+        "historical",
+        "multi"
+      ],
+      "ordinal": 22
+    }
+  ],
+  "slots": [
+    {
+      "slotId": "p1-1",
+      "participantId": "p1",
+      "ordinal": 1,
+      "materialId": "C17-D16-S01",
+      "condition": "assisted"
+    },
+    {
+      "slotId": "p1-2",
+      "participantId": "p1",
+      "ordinal": 2,
+      "materialId": "C17-D16-S06",
+      "condition": "manual"
+    },
+    {
+      "slotId": "p1-3",
+      "participantId": "p1",
+      "ordinal": 3,
+      "materialId": "C17-D16-S04",
+      "condition": "manual"
+    },
+    {
+      "slotId": "p1-4",
+      "participantId": "p1",
+      "ordinal": 4,
+      "materialId": "C17-D16-S09",
+      "condition": "assisted"
+    },
+    {
+      "slotId": "p2-1",
+      "participantId": "p2",
+      "ordinal": 1,
+      "materialId": "C17-D16-S01",
+      "condition": "manual"
+    },
+    {
+      "slotId": "p2-2",
+      "participantId": "p2",
+      "ordinal": 2,
+      "materialId": "C17-D16-S06",
+      "condition": "assisted"
+    },
+    {
+      "slotId": "p2-3",
+      "participantId": "p2",
+      "ordinal": 3,
+      "materialId": "C17-D16-S04",
+      "condition": "assisted"
+    },
+    {
+      "slotId": "p2-4",
+      "participantId": "p2",
+      "ordinal": 4,
+      "materialId": "C17-D16-S09",
+      "condition": "manual"
+    },
+    {
+      "slotId": "p3-1",
+      "participantId": "p3",
+      "ordinal": 1,
+      "materialId": "C17-D16-S02",
+      "condition": "manual"
+    },
+    {
+      "slotId": "p3-2",
+      "participantId": "p3",
+      "ordinal": 2,
+      "materialId": "C17-D16-S07",
+      "condition": "assisted"
+    },
+    {
+      "slotId": "p3-3",
+      "participantId": "p3",
+      "ordinal": 3,
+      "materialId": "C17-D16-S05",
+      "condition": "assisted"
+    },
+    {
+      "slotId": "p3-4",
+      "participantId": "p3",
+      "ordinal": 4,
+      "materialId": "C17-D16-S11",
+      "condition": "manual"
+    },
+    {
+      "slotId": "p4-1",
+      "participantId": "p4",
+      "ordinal": 1,
+      "materialId": "C17-D16-S02",
+      "condition": "assisted"
+    },
+    {
+      "slotId": "p4-2",
+      "participantId": "p4",
+      "ordinal": 2,
+      "materialId": "C17-D16-S07",
+      "condition": "manual"
+    },
+    {
+      "slotId": "p4-3",
+      "participantId": "p4",
+      "ordinal": 3,
+      "materialId": "C17-D16-S05",
+      "condition": "manual"
+    },
+    {
+      "slotId": "p4-4",
+      "participantId": "p4",
+      "ordinal": 4,
+      "materialId": "C17-D16-S11",
+      "condition": "assisted"
+    }
+  ],
+  "measurement": {
+    "version": "d23-semantic-measurement-1",
+    "idleLimitMs": 5000,
+    "maxFields": 2,
+    "maxEditMs": 30000,
+    "completionWindowMs": 600000
+  },
+  "sha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0"
+}

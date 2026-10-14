@@ -1,0 +1,631 @@
+{
+  "version": "channel-polarity-readonly-1",
+  "role": "POST_HOC_ALL_12_NOT_NEW_MODEL_EFFECT",
+  "originalFrozen": "C17 2/6; C19 1/6; MIXED_PROGRESS unchanged",
+  "plannedDenominator": 12,
+  "newModelRequests": 0,
+  "grant": 0,
+  "reserve": 0,
+  "settle": 0,
+  "ledger": {
+    "rows": 996,
+    "sha256": "c58231633b8da1b87e9106f92d0dd457f00e4789e5e5fa03de780fb377dc8750",
+    "tail": "eafde02d394e0cab472e16288543303f31318b661c13a5a771a4edbc9a7dfac8",
+    "batchRows": 25
+  },
+  "cases": [
+    {
+      "ordinal": 1,
+      "sourceId": "C19-DEV-S01",
+      "candidate": "Candidate17",
+      "responseSha256": "05a1b54cc527707cab1ff02bf88587574ea0d9fa6b6124d00dfba7c989f8fcf6",
+      "requestSha256": "dc5d9a7a7c2120f9de03d669deb2b01c99d3c6283a26ca952bf41aecda312d9b",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "modelFactsDiagnosticUnchanged": {
+        "version": "recorded-source-fact-diagnostic-1.0.0",
+        "role": "POST_HOC_OLD_RECORDING_FACT_DIAGNOSIS_NOT_NEW_MODEL_EFFECT",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "completeStatus": "FACT_ERROR",
+        "risks": [
+          {
+            "kind": "EVENT_MISSING",
+            "fact": "pause"
+          },
+          {
+            "kind": "TIME_MISSING_OR_ENDPOINT_WRONG",
+            "fact": "pause-start"
+          }
+        ],
+        "disputes": [],
+        "checks": [],
+        "freeProseAndLeakage": "NOT_ADJUDICATED",
+        "wholeUserOutputCorrect": "NOT_OBSERVABLE"
+      },
+      "firstSuggestionSha256": "5f46304fc909940b48e687484f720c7df16f359f2a5223154bb496825d8c0617",
+      "firstSuggestionSameAsPrevious": true,
+      "channelGrounding": {
+        "version": "material-channel-role-grounding-1.2.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "humanCorrections": [],
+      "wholeUserCorrect": "NOT_OBSERVABLE"
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "C19-DEV-S01",
+      "candidate": "Candidate19",
+      "responseSha256": "3e725f3f2b99787f4124fd0862a6bff877d169835b106424413f3c33ddda2efa",
+      "requestSha256": "04f8c1e817244dfbf83bad3341341e4652cbe3435895ba8e4869705d0cf65aeb",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "modelFactsDiagnosticUnchanged": {
+        "version": "recorded-source-fact-diagnostic-1.0.0",
+        "role": "POST_HOC_OLD_RECORDING_FACT_DIAGNOSIS_NOT_NEW_MODEL_EFFECT",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "completeStatus": "PROVISIONAL_STRUCTURED_PASS",
+        "risks": [],
+        "disputes": [],
+        "checks": [
+          {
+            "fact": "pause",
+            "actualId": "event-0001",
+            "category": "event"
+          },
+          {
+            "fact": "pause-start",
+            "actualId": "time-0001",
+            "category": "time"
+          }
+        ],
+        "freeProseAndLeakage": "NOT_ADJUDICATED",
+        "wholeUserOutputCorrect": "NOT_OBSERVABLE"
+      },
+      "firstSuggestionSha256": "5fd10cf92d839ff48566158c56398891cc2162e2c0587f099c537946bbdb31f4",
+      "firstSuggestionSameAsPrevious": true,
+      "channelGrounding": {
+        "version": "material-channel-role-grounding-1.2.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "humanCorrections": [],
+      "wholeUserCorrect": "NOT_OBSERVABLE"
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "C19-DEV-S02",
+      "candidate": "Candidate19",
+      "responseSha256": "1b04a03763bdfa9069ce8a10fb8f74233552e37a63810a4e3a4f6f30f243b16e",
+      "requestSha256": "38439882e8f8598f8123adc3a7c3be3418e9c190d80ecdc31a5e7665aa307662",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "modelFactsDiagnosticUnchanged": {
+        "version": "recorded-source-fact-diagnostic-1.0.0",
+        "role": "POST_HOC_OLD_RECORDING_FACT_DIAGNOSIS_NOT_NEW_MODEL_EFFECT",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "completeStatus": "PROVISIONAL_STRUCTURED_PASS",
+        "risks": [],
+        "disputes": [],
+        "checks": [
+          {
+            "fact": "briefing",
+            "actualId": "event-0001",
+            "category": "event"
+          },
+          {
+            "fact": "network",
+            "actualId": "event-0002",
+            "category": "event"
+          },
+          {
+            "fact": "briefing-start",
+            "actualId": "time-0001",
+            "category": "time"
+          },
+          {
+            "fact": "briefing-end",
+            "actualId": "time-0002",
+            "category": "time"
+          },
+          {
+            "fact": "network-start",
+            "actualId": "time-0003",
+            "category": "time"
+          },
+          {
+            "fact": "network-end",
+            "actualId": "time-0004",
+            "category": "time"
+          }
+        ],
+        "freeProseAndLeakage": "NOT_ADJUDICATED",
+        "wholeUserOutputCorrect": "NOT_OBSERVABLE"
+      },
+      "firstSuggestionSha256": "8c64b262129fe2d47d0ef731f863c22bc15ce9949cbacd79bc5df870b3b563af",
+      "firstSuggestionSameAsPrevious": true,
+      "channelGrounding": {
+        "version": "material-channel-role-grounding-1.2.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "humanCorrections": [],
+      "wholeUserCorrect": "NOT_OBSERVABLE"
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "C19-DEV-S02",
+      "candidate": "Candidate17",
+      "responseSha256": "9aca34f978b2a9458272a6d0bfdd78248d87fff45a442e4108dee921800fd630",
+      "requestSha256": "2eae8c03fc21485209e479f6986174c06cab1a8ce9b7060f8b38576b9ed761ce",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "modelFactsDiagnosticUnchanged": {
+        "version": "recorded-source-fact-diagnostic-1.0.0",
+        "role": "POST_HOC_OLD_RECORDING_FACT_DIAGNOSIS_NOT_NEW_MODEL_EFFECT",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "completeStatus": "FACT_ERROR",
+        "risks": [
+          {
+            "kind": "TIME_VALUE_TYPE_PRECISION_WRONG",
+            "fact": "network-start",
+            "detail": {
+              "expected": {
+                "key": "network-start",
+                "owner": "network",
+                "endpoint": "start",
+                "type": "event_start",
+                "token": "周五夜间",
+                "value": null,
+                "precision": "vague",
+                "fragments": [
+                  "网络调试从周五夜间开始"
+                ]
+              },
+              "actual": {
+                "tempId": "tp-0003",
+                "type": "planned_start",
+                "rawText": "周五夜间开始",
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "scopeIds": [
+                  "scope-0003-21a69a2584845cb6579c02764f756536fe7a5a3dd6e1eb3b1aac45988fdc8519"
+                ],
+                "confidence": 0.9,
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              }
+            }
+          },
+          {
+            "kind": "TIME_MISSING_OR_ENDPOINT_WRONG",
+            "fact": "network-end"
+          }
+        ],
+        "disputes": [
+          {
+            "kind": "UNRESOLVED_SOURCE_OR_GRAPH",
+            "fact": "source"
+          }
+        ],
+        "checks": [
+          {
+            "fact": "briefing",
+            "actualId": "event-0001",
+            "category": "event"
+          },
+          {
+            "fact": "network",
+            "actualId": "event-0002",
+            "category": "event"
+          },
+          {
+            "fact": "briefing-start",
+            "actualId": "tp-0001",
+            "category": "time"
+          },
+          {
+            "fact": "briefing-end",
+            "actualId": "tp-0002",
+            "category": "time"
+          },
+          {
+            "fact": "network-start",
+            "actualId": "tp-0003",
+            "category": "time"
+          }
+        ],
+        "freeProseAndLeakage": "NOT_ADJUDICATED",
+        "wholeUserOutputCorrect": "NOT_OBSERVABLE"
+      },
+      "firstSuggestionSha256": "ea381c47c4b8d2ff0b1884e013aa8a968f139c08c98954482eea642bc8ba7703",
+      "firstSuggestionSameAsPrevious": true,
+      "channelGrounding": {
+        "version": "material-channel-role-grounding-1.2.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "humanCorrections": [],
+      "wholeUserCorrect": "NOT_OBSERVABLE"
+    },
+    {
+      "ordinal": 5,
+      "sourceId": "C19-DEV-S03",
+      "candidate": "Candidate17",
+      "responseSha256": "d2d9708c9623309d4419fedae2d535ec8fe178c6d9fc518e26ba556c9e5aeb96",
+      "requestSha256": "1e31fbd055888d70388ba7bdec13cfbcc259244e63ef9988c77fe08484e53c4b",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "modelFactsDiagnosticUnchanged": {
+        "version": "recorded-source-fact-diagnostic-1.0.0",
+        "role": "POST_HOC_OLD_RECORDING_FACT_DIAGNOSIS_NOT_NEW_MODEL_EFFECT",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "completeStatus": "PROVISIONAL_STRUCTURED_PASS",
+        "risks": [],
+        "disputes": [],
+        "checks": [
+          {
+            "fact": "fill",
+            "actualId": "task-0001",
+            "category": "task"
+          },
+          {
+            "fact": "submit",
+            "actualId": "task-0002",
+            "category": "task"
+          },
+          {
+            "fact": "collect",
+            "actualId": "task-0003",
+            "category": "task"
+          }
+        ],
+        "freeProseAndLeakage": "NOT_ADJUDICATED",
+        "wholeUserOutputCorrect": "NOT_OBSERVABLE"
+      },
+      "firstSuggestionSha256": "a9a7083a03d5bbc254f5dc09a5b475a5fe5c016aa1bfa1fd5eb406aceab07060",
+      "firstSuggestionSameAsPrevious": true,
+      "channelGrounding": {
+        "version": "material-channel-role-grounding-1.2.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "humanCorrections": [],
+      "wholeUserCorrect": "NOT_OBSERVABLE"
+    },
+    {
+      "ordinal": 6,
+      "sourceId": "C19-DEV-S03",
+      "candidate": "Candidate19",
+      "responseSha256": "fd8f710ef5bb267cdf61fbe91482351f731d6832cc45e7fc6a435555636497db",
+      "requestSha256": "136de31824dfd678197a3ca2624a265ffa649bfd252cfb06d89e409da5fc8bdc",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "modelFactsDiagnosticUnchanged": {
+        "version": "recorded-source-fact-diagnostic-1.0.0",
+        "role": "POST_HOC_OLD_RECORDING_FACT_DIAGNOSIS_NOT_NEW_MODEL_EFFECT",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "completeStatus": "PROVISIONAL_STRUCTURED_PASS",
+        "risks": [],
+        "disputes": [],
+        "checks": [
+          {
+            "fact": "fill",
+            "actualId": "task-0001",
+            "category": "task"
+          },
+          {
+            "fact": "submit",
+            "actualId": "task-0002",
+            "category": "task"
+          },
+          {
+            "fact": "collect",
+            "actualId": "task-0003",
+            "category": "task"
+          }
+        ],
+        "freeProseAndLeakage": "NOT_ADJUDICATED",
+        "wholeUserOutputCorrect": "NOT_OBSERVABLE"
+      },
+      "firstSuggestionSha256": "f005c5c84bd397f0f07b0e845c28431e6bc704b74be499630dedfca2db6ec99d",
+      "firstSuggestionSameAsPrevious": true,
+      "channelGrounding": {
+        "version": "material-channel-role-grounding-1.2.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "humanCorrections": [],
+      "wholeUserCorrect": "NOT_OBSERVABLE"
+    },
+    {
+      "ordinal": 7,
+      "sourceId": "C19-DEV-S04",
+      "candidate": "Candidate19",
+      "responseSha256": "6ae14cd30dd8b18d8608a67f0b4cb38b3cbceb352e93deb441ec2ab26215c760",
+      "requestSha256": "5e0b08fdd4632dc0e2ceb347537f702df199beea6fe26aca32fdd8c294d53fcb",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "modelFactsDiagnosticUnchanged": {
+        "version": "recorded-source-fact-diagnostic-1.0.0",
+        "role": "POST_HOC_OLD_RECORDING_FACT_DIAGNOSIS_NOT_NEW_MODEL_EFFECT",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "completeStatus": "PROVISIONAL_STRUCTURED_PASS",
+        "risks": [],
+        "disputes": [],
+        "checks": [
+          {
+            "fact": "save",
+            "actualId": "task-0002",
+            "category": "task"
+          }
+        ],
+        "freeProseAndLeakage": "NOT_ADJUDICATED",
+        "wholeUserOutputCorrect": "NOT_OBSERVABLE"
+      },
+      "firstSuggestionSha256": "54d08aaaee06303a2899a403cd67b4e8ea32cf2f622e84f9fdf59f86bf74ddb5",
+      "firstSuggestionSameAsPrevious": true,
+      "channelGrounding": {
+        "version": "material-channel-role-grounding-1.2.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "humanCorrections": [],
+      "wholeUserCorrect": "NOT_OBSERVABLE"
+    },
+    {
+      "ordinal": 8,
+      "sourceId": "C19-DEV-S04",
+      "candidate": "Candidate17",
+      "responseSha256": "19e40dfde51e3f0b46362055714cc2369971c5f3515bdf02181d639448a17140",
+      "requestSha256": "5eaf407b6e20a83b710a6d5f1ba998fce6dcfb7e516a1adb9210de02448268da",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "modelFactsDiagnosticUnchanged": {
+        "version": "recorded-source-fact-diagnostic-1.0.0",
+        "role": "POST_HOC_OLD_RECORDING_FACT_DIAGNOSIS_NOT_NEW_MODEL_EFFECT",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "completeStatus": "PROVISIONAL_STRUCTURED_PASS",
+        "risks": [],
+        "disputes": [],
+        "checks": [
+          {
+            "fact": "save",
+            "actualId": "task-0002",
+            "category": "task"
+          }
+        ],
+        "freeProseAndLeakage": "NOT_ADJUDICATED",
+        "wholeUserOutputCorrect": "NOT_OBSERVABLE"
+      },
+      "firstSuggestionSha256": "e4910143624f334e0b1b0a4360bf71e7d069053283efeb2b8db49dd290f11b22",
+      "firstSuggestionSameAsPrevious": true,
+      "channelGrounding": {
+        "version": "material-channel-role-grounding-1.2.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "humanCorrections": [],
+      "wholeUserCorrect": "NOT_OBSERVABLE"
+    },
+    {
+      "ordinal": 9,
+      "sourceId": "C19-DEV-S05",
+      "candidate": "Candidate17",
+      "responseSha256": "9030d9f640367524d14c4d336d3654797146cc85a506fb8292ae3d330dff4fae",
+      "requestSha256": "d0ca3689aff30d82d686e76d22aab056c2d7b5eec540659d925063a39ca21690",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "modelFactsDiagnosticUnchanged": {
+        "version": "recorded-source-fact-diagnostic-1.0.0",
+        "role": "POST_HOC_OLD_RECORDING_FACT_DIAGNOSIS_NOT_NEW_MODEL_EFFECT",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "completeStatus": "PROVISIONAL_STRUCTURED_PASS",
+        "risks": [],
+        "disputes": [],
+        "checks": [
+          {
+            "fact": "upload",
+            "actualId": "task-upload-volunteer-service-statistics",
+            "category": "task"
+          },
+          {
+            "fact": "training",
+            "actualId": "event-training-briefing",
+            "category": "event"
+          },
+          {
+            "fact": "deadline",
+            "actualId": "time-upload-deadline",
+            "category": "time"
+          },
+          {
+            "fact": "training-start",
+            "actualId": "time-training-start",
+            "category": "time"
+          },
+          {
+            "fact": "training-end",
+            "actualId": "time-training-end",
+            "category": "time"
+          }
+        ],
+        "freeProseAndLeakage": "NOT_ADJUDICATED",
+        "wholeUserOutputCorrect": "NOT_OBSERVABLE"
+      },
+      "firstSuggestionSha256": "258c4ca8341aaf8845d2da6988af842c13e4df695425856dd1f1ccfddb9ca3dd",
+      "firstSuggestionSameAsPrevious": true,
+      "channelGrounding": {
+        "version": "material-channel-role-grounding-1.2.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "humanCorrections": [],
+      "wholeUserCorrect": "NOT_OBSERVABLE"
+    },
+    {
+      "ordinal": 10,
+      "sourceId": "C19-DEV-S05",
+      "candidate": "Candidate19",
+      "responseSha256": "c8febf8c1a7c77cf223e99e52142c31895a9dbc950c9e40c22b2f782d1dd285e",
+      "requestSha256": "897e085d5833df11fd0c2b4ecbb0fe98c6e12ec6ad37c2dc9c5102161996d481",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "modelFactsDiagnosticUnchanged": {
+        "version": "recorded-source-fact-diagnostic-1.0.0",
+        "role": "POST_HOC_OLD_RECORDING_FACT_DIAGNOSIS_NOT_NEW_MODEL_EFFECT",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "completeStatus": "UNKNOWN",
+        "risks": [],
+        "disputes": [
+          {
+            "kind": "MATERIAL_CHANNEL_NOT_EXPLICITLY_RESOLVED",
+            "fact": "upload",
+            "detail": "平台"
+          }
+        ],
+        "checks": [
+          {
+            "fact": "upload",
+            "actualId": "task-0001",
+            "category": "task"
+          },
+          {
+            "fact": "training",
+            "actualId": "event-0001",
+            "category": "event"
+          },
+          {
+            "fact": "deadline",
+            "actualId": "time-0001",
+            "category": "time"
+          },
+          {
+            "fact": "training-start",
+            "actualId": "time-0002",
+            "category": "time"
+          },
+          {
+            "fact": "training-end",
+            "actualId": "time-0003",
+            "category": "time"
+          }
+        ],
+        "freeProseAndLeakage": "NOT_ADJUDICATED",
+        "wholeUserOutputCorrect": "NOT_OBSERVABLE"
+      },
+      "firstSuggestionSha256": "28910497c4fad55a394ba8d6515d7b307097545b3c8fc41f072f8349c56e441f",
+      "firstSuggestionSameAsPrevious": true,
+      "channelGrounding": {
+        "version": "material-channel-role-grounding-1.2.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": [
+          {
+            "materialId": "material-0001",
+            "materialName": "志愿服务统计表",
+            "ownerIds": [
+              "task-0001"
+            ],
+            "originalValue": "平台",
+            "displayedValue": null,
+            "status": "RECEIPT_CONTEXT_UNRESOLVED",
+            "evidence": [
+              {
+                "id": "d26-scope-0001-f8c1dd33105d7ca145f1c016eb53a4c9fd3426013405c04c08270feecb6e1331",
+                "quote": "请在2026年11月13日09:25前上传志愿服务统计表。"
+              },
+              {
+                "id": "d26-scope-0002-968aa76242eabbb01b0a7e6bc8e82e27e862e1b0c808e4b6b564fa0100a6f23a",
+                "quote": "统计表须为PDF，"
+              },
+              {
+                "id": "d26-scope-0003-67da33db79eb315fe9cdd478f5f2fe4a2e78b5f5522bc0d11fcf448319ec1601",
+                "quote": "文件名包含小组编号。"
+              },
+              {
+                "id": "d26-scope-0004-8a76a94f59f0525c024f2063720cf624325de02452cc9d2e1c713cfe78d75d8c",
+                "quote": "看到平台显示接收成功才算办结。"
+              }
+            ],
+            "roleChecks": []
+          }
+        ]
+      },
+      "humanCorrections": [],
+      "wholeUserCorrect": "NOT_OBSERVABLE"
+    },
+    {
+      "ordinal": 11,
+      "sourceId": "C19-DEV-S06",
+      "candidate": "Candidate19",
+      "responseSha256": "0f011e226cc43b5ab15acde3301e5def50ba3dd459d44582b1edf5906275ddd7",
+      "requestSha256": "f271f26cb40f0d5ee33f37b4fc49130b1e27299daf4954b76baafba2a697cd14",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "modelFactsDiagnosticUnchanged": {
+        "version": "recorded-source-fact-diagnostic-1.0.0",
+        "role": "POST_HOC_OLD_RECORDING_FACT_DIAGNOSIS_NOT_NEW_MODEL_EFFECT",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "completeStatus": "PROVISIONAL_STRUCTURED_PASS",
+        "risks": [],
+        "disputes": [],
+        "checks": [
+          {
+            "fact": "review",
+            "actualId": "task-0001",
+            "category": "task"
+          }
+        ],
+        "freeProseAndLeakage": "NOT_ADJUDICATED",
+        "wholeUserOutputCorrect": "NOT_OBSERVABLE"
+      },
+      "firstSuggestionSha256": "466026bafbfef7a0f30bbf5f48ffcb0052db1e8752df990f5f41a36ea6443ae1",
+      "firstSuggestionSameAsPrevious": true,
+      "channelGrounding": {
+        "version": "material-channel-role-grounding-1.2.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "humanCorrections": [],
+      "wholeUserCorrect": "NOT_OBSERVABLE"
+    },
+    {
+      "ordinal": 12,
+      "sourceId": "C19-DEV-S06",
+      "candidate": "Candidate17",
+      "responseSha256": "0abf4121714faf1110e3e231122d1487e383ceba46107c79df55015564c800d1",
+      "requestSha256": "a8bb5ad5bb00fbf8b0ba986cde801ec97eb4001caec6b2895e2da7aded99f0af",
+      "referenceTime": "2026-10-03T09:00:00+08:00",
+      "modelFactsDiagnosticUnchanged": {
+        "version": "recorded-source-fact-diagnostic-1.0.0",
+        "role": "POST_HOC_OLD_RECORDING_FACT_DIAGNOSIS_NOT_NEW_MODEL_EFFECT",
+        "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+        "completeStatus": "PROVISIONAL_STRUCTURED_PASS",
+        "risks": [],
+        "disputes": [],
+        "checks": [
+          {
+            "fact": "review",
+            "actualId": "task-1",
+            "category": "task"
+          }
+        ],
+        "freeProseAndLeakage": "NOT_ADJUDICATED",
+        "wholeUserOutputCorrect": "NOT_OBSERVABLE"
+      },
+      "firstSuggestionSha256": "4b9b59d7ff4279f14cffe0323d2a0946e9edaa770a6db8cc14943e2d60c45803",
+      "firstSuggestionSameAsPrevious": true,
+      "channelGrounding": {
+        "version": "material-channel-role-grounding-1.2.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "humanCorrections": [],
+      "wholeUserCorrect": "NOT_OBSERVABLE"
+    }
+  ]
+}

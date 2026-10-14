@@ -1,0 +1,228 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "counts": {
+    "sources": 6,
+    "drafts": 6,
+    "tasks": 3,
+    "projects": 0,
+    "events": 1,
+    "timePoints": 1
+  },
+  "readbackChecks": "PASS",
+  "rawOriginalCount": 6,
+  "trialRecords": [
+    {
+      "draftId": "source:372c315a:draft:1:1",
+      "version": "low-edit-v2-exploratory-1",
+      "role": "ENGINEERING_REPLAY",
+      "correctDisposition": null,
+      "zeroSubstantiveModification": null,
+      "lowModificationCorrectDisposition": null,
+      "committedFields": [],
+      "fieldCount": 0,
+      "structural": false,
+      "activeEditMs": 0,
+      "readMs": 35990,
+      "waitMs": 16,
+      "hiddenMs": 0,
+      "idleMs": 0,
+      "missing": [],
+      "postTerminalEvents": 12,
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:f90bee88:draft:1:1",
+      "version": "low-edit-v2-exploratory-1",
+      "role": "ENGINEERING_REPLAY",
+      "correctDisposition": null,
+      "zeroSubstantiveModification": null,
+      "lowModificationCorrectDisposition": null,
+      "committedFields": [
+        "events.E1.location"
+      ],
+      "fieldCount": 1,
+      "structural": false,
+      "activeEditMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "hiddenMs": null,
+      "idleMs": null,
+      "missing": [
+        "refresh time discontinuity"
+      ],
+      "postTerminalEvents": 0,
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:22a99c1e:draft:1:1",
+      "version": "low-edit-v2-exploratory-1",
+      "role": "ENGINEERING_REPLAY",
+      "correctDisposition": null,
+      "zeroSubstantiveModification": null,
+      "lowModificationCorrectDisposition": null,
+      "committedFields": [],
+      "fieldCount": 0,
+      "structural": false,
+      "activeEditMs": 0,
+      "readMs": 78154,
+      "waitMs": 157,
+      "hiddenMs": 0,
+      "idleMs": 0,
+      "missing": [],
+      "postTerminalEvents": 0,
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:074a9d4a:draft:1:1",
+      "version": "low-edit-v2-exploratory-1",
+      "role": "ENGINEERING_REPLAY",
+      "correctDisposition": null,
+      "zeroSubstantiveModification": null,
+      "lowModificationCorrectDisposition": null,
+      "committedFields": [
+        "display.T1.title"
+      ],
+      "fieldCount": 1,
+      "structural": false,
+      "activeEditMs": 129,
+      "readMs": 189257,
+      "waitMs": 175,
+      "hiddenMs": 0,
+      "idleMs": 0,
+      "missing": [],
+      "postTerminalEvents": 0,
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:65009e6d:draft:1:1",
+      "version": "low-edit-v2-exploratory-1",
+      "role": "ENGINEERING_REPLAY",
+      "correctDisposition": null,
+      "zeroSubstantiveModification": null,
+      "lowModificationCorrectDisposition": null,
+      "committedFields": [
+        "disposition.reject.T2"
+      ],
+      "fieldCount": 1,
+      "structural": true,
+      "activeEditMs": 121,
+      "readMs": 48002,
+      "waitMs": 148,
+      "hiddenMs": 0,
+      "idleMs": 0,
+      "missing": [],
+      "postTerminalEvents": 0,
+      "humanMetrics": "NOT_OBSERVABLE"
+    },
+    {
+      "draftId": "source:ab4a21b5:draft:1:1",
+      "version": "low-edit-v2-exploratory-1",
+      "role": "ENGINEERING_REPLAY",
+      "correctDisposition": null,
+      "zeroSubstantiveModification": null,
+      "lowModificationCorrectDisposition": null,
+      "committedFields": [],
+      "fieldCount": 0,
+      "structural": false,
+      "activeEditMs": null,
+      "readMs": null,
+      "waitMs": null,
+      "hiddenMs": null,
+      "idleMs": null,
+      "missing": [
+        "unclosed interval",
+        "terminal commit/readback"
+      ],
+      "postTerminalEvents": 0,
+      "humanMetrics": "NOT_OBSERVABLE"
+    }
+  ],
+  "modelCalls": 0,
+  "humanMetrics": "NOT_OBSERVABLE",
+  "evidenceFiles": [
+    {
+      "name": "01-no-task-readback.json",
+      "sha256": "1f7dbd94b054465e9afe855fa9d644e4d0bc6d6faf7ad1fb67c8ca73ac04b300"
+    },
+    {
+      "name": "02-event-save-failure.png",
+      "sha256": "1477ec08ed01f76da064a1e16aadc15c8f03bf3af37be84cc2e1f8ea9920c76e"
+    },
+    {
+      "name": "02-event-save-failure.txt",
+      "sha256": "c005814328b06f8b369fa232f3e7c2bb6d051d7c1040426edaec3a10baac2b64"
+    },
+    {
+      "name": "03-event-recovery-readback.json",
+      "sha256": "6a42cb6195f7a1b5991274a65e287078b8a6344fb6c4cbeff97b4aa19f4c5af4"
+    },
+    {
+      "name": "03-event-recovery.png",
+      "sha256": "91d21840bbea91e5aa3b30d960eaf73457093476b4c87e0134616d9ccf055c0a"
+    },
+    {
+      "name": "04-event-refresh.png",
+      "sha256": "07df7f72aa72832dd8327cfd08143db96be6deeea71d3b4756029acf4db0dd2c"
+    },
+    {
+      "name": "04-event-refresh.txt",
+      "sha256": "b6ed77dcddf8b171cf7a9208d9ecd15b692f19492951d9500c2afb821782f3c3"
+    },
+    {
+      "name": "05-revision-blocked.txt",
+      "sha256": "ffb83f977724a49044345ab03ffd727fae6d1c1b09507603115af36a5eea335d"
+    },
+    {
+      "name": "06-partial-confirmation.txt",
+      "sha256": "f75c1dd2fbf31ee715ae8fddf8e03d352d383adb9782d6e692604bf0cbc7526b"
+    },
+    {
+      "name": "06-partial-readback.json",
+      "sha256": "466ae1a819dfed7c6700057b79dd4f61ca8cda34a70e159d336d6e287932a256"
+    },
+    {
+      "name": "07-task-edit-readback.json",
+      "sha256": "cc1eac2c8ead24b7c841e9717d7644a08c62fd48c883848e8241ac51fba16176"
+    },
+    {
+      "name": "08-reject-correction.txt",
+      "sha256": "bb55d94a85319de717d37b4d8af7c91ff93e7540ce95ce552ef11669274c9a1d"
+    },
+    {
+      "name": "08-reject-readback.json",
+      "sha256": "3a22c12147ffcd403e92de673ee30bb78553655c2a54cdb020e10b31bef3ff41"
+    },
+    {
+      "name": "09-d11-reference-block.png",
+      "sha256": "06d0b5196d05a1d6c4738f007d0f5fdef6b15f1209102b2a98d6399bfbe1c655"
+    },
+    {
+      "name": "09-d11-s10-reference-block.txt",
+      "sha256": "b24fcbcc0d6773ca7cf112ba094f942c95b542f118cd3f96768c05283697ab13"
+    },
+    {
+      "name": "10-final-readback.json",
+      "sha256": "f1f58411cd33b75a14236249638de7bfcce51f9e478b719821b17f0e9c8abb17"
+    },
+    {
+      "name": "11-final-event-refresh.png",
+      "sha256": "4dadc6564f2051df6a19e5af981cda2e40082dec281ef493aee5ae6a9c38de4f"
+    },
+    {
+      "name": "11-final-event-refresh.txt",
+      "sha256": "bdfdc2b63264f17b8d6e090ce572f08a44e8f59000fcc9247eec4ffb6e2a0408"
+    },
+    {
+      "name": "BUILD_AT_ACCEPTANCE.json",
+      "sha256": "3c031b11dd5ccd53519bb045360e6b1178c684d17e690507df60a85bbdfa2d90"
+    },
+    {
+      "name": "CONSOLE_LOGS.json",
+      "sha256": "428f1ad132d1f7126f8cdaa8a86d80f46765589abe5d456001effedc58434d0b"
+    },
+    {
+      "name": "FINAL_PREVIEW_BUILD.json",
+      "sha256": "62ff1071e19dc705d3b984a8f5232c11851ebf56a6a2a7354917be7b5ce9c871"
+    }
+  ]
+}

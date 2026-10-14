@@ -1,0 +1,172 @@
+{
+  "sources": [
+    {
+      "sourceId": "FR-01",
+      "sourceText": "请在2026年12月3日15:00前完成实验仪器借用登记。登记时须填写学号和联系电话；校外使用者还须填写接收实验室。登记提交后，请于2026年12月4日10:00到器材室领取借用卡。",
+      "minimumFacts": {
+        "tasks": [
+          "完成实验仪器借用登记",
+          "领取借用卡"
+        ],
+        "requirements": [
+          "登记填写学号和联系电话",
+          "校外使用者填写接收实验室"
+        ],
+        "time": [
+          {
+            "owner": "实验仪器借用登记",
+            "role": "task_deadline",
+            "value": "2026-12-03T15:00"
+          },
+          {
+            "owner": "借用卡",
+            "role": "task_action_time",
+            "value": "2026-12-04T10:00"
+          }
+        ],
+        "materials": [],
+        "events": [],
+        "prerequisite": "领取须等待登记提交，未说明完成状态保持unknown",
+        "location": "器材室"
+      },
+      "sourceVersionId": "FR-01-v1",
+      "sourceSha256": "07c7f62d83a09fe14e2873431c481ec535b191b12c5f235a901054a573835918",
+      "referenceTime": "2026-12-01T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "AUTHOR_ANONYMOUS_DEVELOPMENT_NOT_HOLDOUT",
+      "disputes": []
+    },
+    {
+      "sourceId": "FR-02",
+      "sourceText": "请于2026年12月8日14:30到行政楼B105领取预约单。领取后，请在2026年12月9日17:00前提交实习证明。实习证明须为PDF，文件名为学号-姓名。",
+      "minimumFacts": {
+        "tasks": [
+          "领取预约单",
+          "提交实习证明"
+        ],
+        "requirements": [
+          "PDF",
+          "文件名学号-姓名"
+        ],
+        "time": [
+          {
+            "owner": "预约单",
+            "role": "task_action_time",
+            "value": "2026-12-08T14:30"
+          },
+          {
+            "owner": "实习证明",
+            "role": "submission_deadline",
+            "value": "2026-12-09T17:00"
+          }
+        ],
+        "materials": [
+          {
+            "name": "实习证明",
+            "owner": "提交实习证明",
+            "format": "PDF",
+            "filename": "学号-姓名"
+          }
+        ],
+        "events": [],
+        "prerequisite": "提交等待领取，未说明完成状态unknown",
+        "location": "行政楼B105"
+      },
+      "sourceVersionId": "FR-02-v1",
+      "sourceSha256": "5fe00af3231c71e53c8681caf2d2b1ee1da9fdf06b73eaf2e9151d5f31cbc3c9",
+      "referenceTime": "2026-12-01T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "AUTHOR_ANONYMOUS_DEVELOPMENT_NOT_HOLDOUT",
+      "disputes": []
+    },
+    {
+      "sourceId": "FR-03",
+      "sourceText": "本次写作工作坊将在周六上午举行，结束时刻尚未公布，地点为人文楼A201。有意参加者可在2026年12月10日18:00前通过报名二维码报名写作工作坊。报名时须填写年级；需要借用设备者还须填写设备型号。获得录取后需准备笔记本电脑，是否录取尚未通知。",
+      "minimumFacts": {
+        "tasks": [
+          "可选报名写作工作坊",
+          "录取后准备笔记本电脑"
+        ],
+        "requirements": [
+          "报名填写年级",
+          "需要借用设备者填写设备型号"
+        ],
+        "time": [
+          {
+            "owner": "写作工作坊",
+            "role": "event_start",
+            "raw": "周六上午",
+            "value": null,
+            "precision": "vague"
+          },
+          {
+            "owner": "写作工作坊",
+            "role": "event_end",
+            "raw": "结束时刻尚未公布",
+            "value": null
+          },
+          {
+            "owner": "报名写作工作坊",
+            "role": "registration_deadline",
+            "value": "2026-12-10T18:00"
+          }
+        ],
+        "events": [
+          {
+            "title": "写作工作坊",
+            "location": "人文楼A201"
+          }
+        ],
+        "materials": [
+          {
+            "name": "笔记本电脑",
+            "owner": "准备笔记本电脑"
+          }
+        ],
+        "qualification": "准备设备的录取资格unknown，不当报名完成状态",
+        "channel": "报名二维码"
+      },
+      "sourceVersionId": "FR-03-v1",
+      "sourceSha256": "ba3a175f71031554f0bcae98fc79b0956b76a77eb80abbed0d6033eb407dac0c",
+      "referenceTime": "2026-12-01T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "AUTHOR_ANONYMOUS_DEVELOPMENT_NOT_HOLDOUT",
+      "disputes": []
+    },
+    {
+      "sourceId": "FR-04",
+      "sourceText": "请在2026年12月15日16:00前将课程报告提交至教学邮箱。课程报告须为PDF，文件名为班级-学号；收到确认邮件才算提交完成。",
+      "minimumFacts": {
+        "tasks": [
+          "提交课程报告"
+        ],
+        "time": [
+          {
+            "owner": "课程报告",
+            "role": "submission_deadline",
+            "value": "2026-12-15T16:00"
+          }
+        ],
+        "materials": [
+          {
+            "name": "课程报告",
+            "owner": "提交课程报告",
+            "format": "PDF",
+            "filename": "班级-学号",
+            "channel": "教学邮箱"
+          }
+        ],
+        "requirements": [
+          "收到确认邮件才算提交完成"
+        ],
+        "events": []
+      },
+      "sourceVersionId": "FR-04-v1",
+      "sourceSha256": "8d57bf29fd7aa49cd65aa486ed3e2efd2ff0fdeab65ef75d1f9d097172db94f2",
+      "referenceTime": "2026-12-01T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "role": "AUTHOR_ANONYMOUS_DEVELOPMENT_NOT_HOLDOUT",
+      "disputes": []
+    }
+  ]
+}

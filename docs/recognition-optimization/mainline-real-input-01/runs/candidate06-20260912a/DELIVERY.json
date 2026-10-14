@@ -1,0 +1,62 @@
+{
+  "auditCommit": "116a3d3e86cb427eb9e07d8cf430372d3cbde2f1",
+  "remoteVerified": "116a3d3e86cb427eb9e07d8cf430372d3cbde2f1",
+  "committedPaths": 80,
+  "protected": 944,
+  "staticEvidence": 607,
+  "sourceShaMatch": 55,
+  "ledgerUnchanged": true,
+  "logPrefixUnchanged": true,
+  "normalizedTextMapping": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/BUDGET_GATEWAY_107.log",
+      "workingSha": "df276ecab91f6ab4b32ae7eccb53d5d6ff54ff40d808a7005fe5b9650e354333",
+      "gitSha": "86ad7be62bea46d72627548f632b5826e464ab1c4ea436e74b64ce84afd4645b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/DISPATCH_FIRST_STDERR.log",
+      "workingSha": "68e22ec39f00c4216dd92f8876328146f9988aa5a74e6852d503cf54e96d2e17",
+      "gitSha": "673ced045cb4388dd6b46ebc0065aab4242057a965ccde946e1ccaf673c3bfeb"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/DISPATCH_REMAINING_STDERR.log",
+      "workingSha": "95ced895f42feeeb0050188cf9ed691b0ccaccda892f686e46f775bdde8c28fa",
+      "gitSha": "2e041fecefac1537e2f66b05366e8d4c8ffd36063dcb5d92ed4b92a6af7f69d6"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/ENGINEERING_BUILD.log",
+      "workingSha": "bdceee80e0d48141fd30c4d3b0db0b68149789953a2681bb6f8f83db951fc32a",
+      "gitSha": "88c3cd3ab43632b2730aec4a303a05fde7791e6f2a3374c581bfcd9c3844eb08"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/ENGINEERING_CONTRACT.log",
+      "workingSha": "367b36a78f2412518e477058012f830017574c3c114b73056dbc255786542ffb",
+      "gitSha": "120beffc5056cc51797abb575b3c3a5e8770f5ff587da5d34a8b7842f8cde4a8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/ENGINEERING_LINT.log",
+      "workingSha": "0ef91133e0db6f0a9c7b5715272ded7d851942383b690f0fbedb85a3826fde15",
+      "gitSha": "8684267aad8b4e9c143ecb9b892277d825a9ab0b81db3f513d8c121bebc98c10"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/ENGINEERING_SECURITY.log",
+      "workingSha": "b09d6acbc043592b146073283a2b52da2711620da46aa0109ed04eea5d4c835e",
+      "gitSha": "25015efde941cb63d47a92b0a8b908b3a71e939f4db784a51ef9b4ccc90242b0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/SEND_PREFLIGHT_ATTEMPT_1.log",
+      "workingSha": "478bc80013022b3fe460dcf18007d5834f4489de2728426a7a767af1f492e222",
+      "gitSha": "40109a6072ccabd5554cca0435dda7fd024b3c5e6377d919c5fa62f31217f6ca"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/candidate06-20260912a/SEND_PREFLIGHT_ATTEMPT_2.log",
+      "workingSha": "5e87cf2fef27676d5d5ee113bd2bf63f526f335b797003b1c65f76789a1f419a",
+      "gitSha": "a83ec241aa068f8706cff400b4d0c06551f3b5e4ad3203fdb03f1856801c52d1"
+    }
+  ],
+  "workingStatus": "M scripts/check-mainline-real-input-01.mjs\n M scripts/check-mainline-real-input-01.node-test.mjs\n M scripts/real-input-budget.mjs\n M scripts/real-input-budget.node-test.mjs\n M scripts/real-input-model-gateway.mjs\n M scripts/real-input-model-gateway.node-test.mjs\n M scripts/run-mainline-real-input-01.mjs\n M scripts/serve-mainline-real-input-01.mjs\n M src/experiments/mainline05/semanticCapture.ts\n M src/experiments/mainline05/semanticRepository.ts\n M src/experiments/mainline05/semanticState.ts\n M src/experiments/realInput01/acceptance.test.tsx\n M src/experiments/realInput01/browser.tsx\n M src/experiments/realInput01/modelWire.ts\n M src/experiments/realInput01/runtime.ts\n?? src/experiments/realInput01/candidate05.test.ts\n?? src/experiments/realInput01/candidate05.ts\n?? src/experiments/realInput01/candidate06.test.ts\n?? src/experiments/realInput01/candidate06.ts\n?? src/experiments/realInput01/factAssembly.test.ts\n?? src/experiments/realInput01/factAssembly.ts",
+  "businessDelivery": "NOT_COMMITTED_21_FILES_RETAINED",
+  "browser": "NOT_RUN",
+  "gitWhitespaceCheck": "Original ENGINEERING_LINT.log has one blank line at EOF; retained byte-identical as evidence, not an engineering failure",
+  "note": "Audit-only commit and remote verified; no extra model requests. Text normalization mappings do not waive original working-byte protection."
+}

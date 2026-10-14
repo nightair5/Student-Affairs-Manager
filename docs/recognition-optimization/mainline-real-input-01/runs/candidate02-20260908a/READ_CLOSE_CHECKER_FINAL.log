@@ -1,0 +1,23 @@
+node:internal/test_runner/harness:122
+      throw err;
+      ^
+
+Error: REAL_INPUT_CARRIERS_MANIFEST_REQUIRED_NO_FALLBACK
+    at file:///C:/Users/Winner/student-affairs-multimodal-exp/scripts/check-mainline-real-input-01.node-test.mjs:96:27
+
+Node.js v24.18.0
+✖ scripts\check-mainline-real-input-01.node-test.mjs (84.0034ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 91.8012
+
+✖ failing tests:
+
+test at scripts\check-mainline-real-input-01.node-test.mjs:1:1
+✖ scripts\check-mainline-real-input-01.node-test.mjs (84.0034ms)
+  'test failed'

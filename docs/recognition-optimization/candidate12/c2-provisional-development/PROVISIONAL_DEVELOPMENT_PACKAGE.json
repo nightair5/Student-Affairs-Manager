@@ -1,0 +1,1760 @@
+{
+  "version": "candidate12-provisional-development-package-1.0.0",
+  "status": "PROVISIONAL_MODEL_AUTHORED_DEVELOPMENT_ONLY",
+  "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+  "eligibleForIndependentHoldout": false,
+  "generatedAt": "2026-09-21T12:06:25.356Z",
+  "candidateFreeze": {
+    "commit": "c03368054ff8c357f055658c2d2d39b45bbcb761",
+    "candidateBundleSha": "880488f038cec55763276f525c1847638533fe95d79a64599e9585dc8d92296a"
+  },
+  "authorship": {
+    "authorType": "CODEX_MODEL",
+    "authorId": "codex-c2-provisional-author",
+    "modelAssistanceUsed": true,
+    "independentHumanLabelers": 0,
+    "independentHumanReviewers": 0
+  },
+  "invalidForHumanGateReasons": [
+    "SOURCE_AND_EXPECTED_AUTHORED_BY_CODEX",
+    "NO_INDEPENDENT_HUMAN_LABELER",
+    "NO_INDEPENDENT_HUMAN_REVIEWER",
+    "MODEL_ASSISTANCE_USED",
+    "IMPLEMENTER_VISIBLE_FROM_CREATION"
+  ],
+  "sourceSetSha256": "3cdd90c5a687f5427d6e0839bfb33c1784dd18d19d708bf14f0e266539469c5a",
+  "expectedSetSha256": "c1eeac6d8f54f638d65d382b4308e662157af493d6b0dc826a98b6a56bdd8c8d",
+  "sources": [
+    {
+      "sourceId": "C12-PD01",
+      "sourceVersionId": "C12-PD01-v1",
+      "sourceText": "学院实践中心通知：申请参加实验室安全培训的同学，请于2026年10月8日17:00前在校园事务系统提交《培训报名表》。表格须为PDF，文件名为“年级-编号”。无需提交纸质版。",
+      "sourceSha256": "e1b7f730cd045985cd286937f08fa5d3d2b4913492d35529c625d60e7ffc52b7",
+      "coverageTags": [
+        "single_task",
+        "precise_time",
+        "forbidden_non_task"
+      ],
+      "provenance": {
+        "originType": "CODEX_SYNTHETIC_NOTICE",
+        "acquiredAt": "2026-09-21T12:06:25.356Z",
+        "anonymizationMethod": "Fully synthetic; no real student, contact, account, address, or institution record used.",
+        "personalDataRemoved": true,
+        "seenStatus": "SEEN_DEVELOPMENT_FROM_CREATION"
+      },
+      "reference": {
+        "referenceVersion": "C12-PD01-provisional-r1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "minimalObligations": [
+          {
+            "id": "PD01-T1",
+            "endpointRole": "current",
+            "action": "提交",
+            "object": "培训报名表",
+            "status": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "校园事务系统显示培训报名表提交成功",
+            "dependencyIds": [],
+            "materialIds": [
+              "PD01-M1"
+            ],
+            "timePointIds": [
+              "PD01-TP1"
+            ],
+            "evidence": [
+              "提交《培训报名表》"
+            ]
+          }
+        ],
+        "retainedFacts": [
+          {
+            "id": "PD01-F1",
+            "type": "negative_requirement",
+            "text": "无需提交纸质版",
+            "relatedObligationIds": [
+              "PD01-T1"
+            ]
+          }
+        ],
+        "materials": [
+          {
+            "id": "PD01-M1",
+            "name": "培训报名表",
+            "required": true,
+            "format": [
+              "PDF"
+            ],
+            "naming": [
+              "年级-编号"
+            ],
+            "quantity": null,
+            "channel": "校园事务系统",
+            "relatedObligationIds": [
+              "PD01-T1"
+            ],
+            "evidence": [
+              "表格须为PDF",
+              "文件名为“年级-编号”"
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "id": "PD01-TP1",
+            "rawText": "2026年10月8日17:00前",
+            "type": "deadline",
+            "normalizedValue": "2026-10-08T17:00:00+08:00",
+            "timezone": "Asia/Shanghai",
+            "precision": "exact",
+            "actionable": true,
+            "relatedObligationIds": [
+              "PD01-T1"
+            ],
+            "evidence": [
+              "2026年10月8日17:00前"
+            ]
+          }
+        ],
+        "revisions": [],
+        "composition": {
+          "allowedMerges": [],
+          "requiredSeparations": [],
+          "reasoning": "按动作、对象、条件、时间、完成标准、状态和材料归属保持最小义务。"
+        },
+        "forbiddenInferences": [
+          "不得生成“提交纸质版”任务",
+          "不得把PDF格式或文件名分别生成任务"
+        ],
+        "ambiguities": [],
+        "scorerReference": {
+          "coverage": "complete",
+          "tasks": [
+            {
+              "id": "PD01-T1",
+              "action": "提交",
+              "object": "培训报名表",
+              "status": "active",
+              "actionable": true
+            }
+          ],
+          "checks": [
+            "恰好一个当前任务",
+            "纸质版为禁止项而非任务",
+            "格式和命名附着到报名表材料"
+          ]
+        },
+        "review": {
+          "labelerAStatus": "MODEL_AUTHORED",
+          "reviewerBStatus": "NOT_PERFORMED",
+          "adjudicationStatus": "NOT_APPLICABLE",
+          "disagreementIds": []
+        }
+      },
+      "referenceSha256": "033caaaf62373d9cc13da0c7e99baf02461609cc7cdad0e5d81053bc0b2c8f56"
+    },
+    {
+      "sourceId": "C12-PD02",
+      "sourceVersionId": "C12-PD02-v1",
+      "sourceText": "志愿服务认定通知：请在2026年10月12日前完成服务时长登记，并在10月14日前提交服务总结。两项均需附同一份盖章证明扫描件。证明仅作共同材料，不需另行上交原件。",
+      "sourceSha256": "b8c196f773be571f6bfd24ec9759c8c543ceccc642c5cbf6ddbc3130fe23c072",
+      "coverageTags": [
+        "multi_task",
+        "shared_material",
+        "precise_time"
+      ],
+      "provenance": {
+        "originType": "CODEX_SYNTHETIC_NOTICE",
+        "acquiredAt": "2026-09-21T12:06:25.356Z",
+        "anonymizationMethod": "Fully synthetic; no real student, contact, account, address, or institution record used.",
+        "personalDataRemoved": true,
+        "seenStatus": "SEEN_DEVELOPMENT_FROM_CREATION"
+      },
+      "reference": {
+        "referenceVersion": "C12-PD02-provisional-r1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "minimalObligations": [
+          {
+            "id": "PD02-T1",
+            "endpointRole": "current",
+            "action": "登记",
+            "object": "服务时长",
+            "status": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "完成“登记服务时长”",
+            "dependencyIds": [],
+            "materialIds": [
+              "PD02-M1"
+            ],
+            "timePointIds": [
+              "PD02-TP1"
+            ],
+            "evidence": [
+              "完成服务时长登记"
+            ]
+          },
+          {
+            "id": "PD02-T2",
+            "endpointRole": "current",
+            "action": "提交",
+            "object": "服务总结",
+            "status": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "完成“提交服务总结”",
+            "dependencyIds": [],
+            "materialIds": [
+              "PD02-M1"
+            ],
+            "timePointIds": [
+              "PD02-TP2"
+            ],
+            "evidence": [
+              "提交服务总结"
+            ]
+          }
+        ],
+        "retainedFacts": [
+          {
+            "id": "PD02-F1",
+            "type": "negative_requirement",
+            "text": "不需另行上交原件",
+            "relatedObligationIds": [
+              "PD02-T1",
+              "PD02-T2"
+            ]
+          }
+        ],
+        "materials": [
+          {
+            "id": "PD02-M1",
+            "name": "盖章证明扫描件",
+            "required": true,
+            "format": [
+              "扫描件"
+            ],
+            "naming": [],
+            "quantity": null,
+            "channel": null,
+            "relatedObligationIds": [
+              "PD02-T1",
+              "PD02-T2"
+            ],
+            "evidence": [
+              "两项均需附同一份盖章证明扫描件"
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "id": "PD02-TP1",
+            "rawText": "2026年10月12日前",
+            "type": "deadline",
+            "normalizedValue": "2026-10-12",
+            "timezone": "Asia/Shanghai",
+            "precision": "exact",
+            "actionable": true,
+            "relatedObligationIds": [
+              "PD02-T1"
+            ],
+            "evidence": [
+              "2026年10月12日前"
+            ]
+          },
+          {
+            "id": "PD02-TP2",
+            "rawText": "10月14日前",
+            "type": "deadline",
+            "normalizedValue": "2026-10-14",
+            "timezone": "Asia/Shanghai",
+            "precision": "exact",
+            "actionable": true,
+            "relatedObligationIds": [
+              "PD02-T2"
+            ],
+            "evidence": [
+              "10月14日前"
+            ]
+          }
+        ],
+        "revisions": [],
+        "composition": {
+          "allowedMerges": [],
+          "requiredSeparations": [
+            [
+              "PD02-T1",
+              "PD02-T2"
+            ]
+          ],
+          "reasoning": "按动作、对象、条件、时间、完成标准、状态和材料归属保持最小义务。"
+        },
+        "forbiddenInferences": [
+          "不得把共同证明扫描件单独生成为任务",
+          "不得生成上交原件任务"
+        ],
+        "ambiguities": [],
+        "scorerReference": {
+          "coverage": "complete",
+          "tasks": [
+            {
+              "id": "PD02-T1",
+              "action": "登记",
+              "object": "服务时长",
+              "status": "active",
+              "actionable": true
+            },
+            {
+              "id": "PD02-T2",
+              "action": "提交",
+              "object": "服务总结",
+              "status": "active",
+              "actionable": true
+            }
+          ],
+          "checks": [
+            "两个任务分别保留截止时间",
+            "同一材料关联两个任务且不复制为两个材料"
+          ]
+        },
+        "review": {
+          "labelerAStatus": "MODEL_AUTHORED",
+          "reviewerBStatus": "NOT_PERFORMED",
+          "adjudicationStatus": "NOT_APPLICABLE",
+          "disagreementIds": []
+        }
+      },
+      "referenceSha256": "0210bac6ee0d21b2a78693a8a98faef0515d0dae44451b1de6e49cdc51b18dab"
+    },
+    {
+      "sourceId": "C12-PD03",
+      "sourceVersionId": "C12-PD03-v1",
+      "sourceText": "系统记录显示你的课程申请已通过。请在通过后两个工作日内登录教务平台确认选课结果。无需再次提交课程申请。",
+      "sourceSha256": "36c19c01f302283b18470537ac781b71fbc164de7b9cb7d384508e186a85a2f1",
+      "coverageTags": [
+        "condition_true",
+        "relative_time",
+        "single_task"
+      ],
+      "provenance": {
+        "originType": "CODEX_SYNTHETIC_NOTICE",
+        "acquiredAt": "2026-09-21T12:06:25.356Z",
+        "anonymizationMethod": "Fully synthetic; no real student, contact, account, address, or institution record used.",
+        "personalDataRemoved": true,
+        "seenStatus": "SEEN_DEVELOPMENT_FROM_CREATION"
+      },
+      "reference": {
+        "referenceVersion": "C12-PD03-provisional-r1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "minimalObligations": [
+          {
+            "id": "PD03-T1",
+            "endpointRole": "current",
+            "action": "确认",
+            "object": "选课结果",
+            "status": "active",
+            "actionable": true,
+            "condition": {
+              "value": "true",
+              "text": "课程申请已通过"
+            },
+            "completionStandard": "在教务平台完成选课结果确认",
+            "dependencyIds": [],
+            "materialIds": [],
+            "timePointIds": [
+              "PD03-TP1"
+            ],
+            "evidence": [
+              "确认选课结果"
+            ]
+          }
+        ],
+        "retainedFacts": [
+          {
+            "id": "PD03-F1",
+            "type": "condition_fact",
+            "text": "课程申请已通过",
+            "relatedObligationIds": [
+              "PD03-T1"
+            ]
+          },
+          {
+            "id": "PD03-F2",
+            "type": "negative_requirement",
+            "text": "无需再次提交课程申请",
+            "relatedObligationIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "id": "PD03-TP1",
+            "rawText": "通过后两个工作日内",
+            "type": "deadline",
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "precision": "relative",
+            "actionable": true,
+            "relatedObligationIds": [
+              "PD03-T1"
+            ],
+            "evidence": [
+              "通过后两个工作日内"
+            ]
+          }
+        ],
+        "revisions": [],
+        "composition": {
+          "allowedMerges": [],
+          "requiredSeparations": [],
+          "reasoning": "按动作、对象、条件、时间、完成标准、状态和材料归属保持最小义务。"
+        },
+        "forbiddenInferences": [
+          "不得生成“再次提交课程申请”任务",
+          "不得把相对时间臆算为具体日期"
+        ],
+        "ambiguities": [],
+        "scorerReference": {
+          "coverage": "complete",
+          "tasks": [
+            {
+              "id": "PD03-T1",
+              "action": "确认",
+              "object": "选课结果",
+              "status": "active",
+              "actionable": true
+            }
+          ],
+          "checks": [
+            "条件为true",
+            "只生成确认选课结果任务"
+          ]
+        },
+        "review": {
+          "labelerAStatus": "MODEL_AUTHORED",
+          "reviewerBStatus": "NOT_PERFORMED",
+          "adjudicationStatus": "NOT_APPLICABLE",
+          "disagreementIds": []
+        }
+      },
+      "referenceSha256": "223e85c19ea2bc31a59046542e1a4bdc6971dd3dd702dd46076495212a861ac1"
+    },
+    {
+      "sourceId": "C12-PD04",
+      "sourceVersionId": "C12-PD04-v1",
+      "sourceText": "若补考申请获批，申请人需缴纳补考费。现通知本次补考申请未获批准，因此无需缴费；后续结果仅供查询。",
+      "sourceSha256": "b229d1753efcf08b2dc4c2a11e78e87d07fe4241fdd92a644910acd6cd8a187c",
+      "coverageTags": [
+        "condition_false",
+        "forbidden_non_task",
+        "correct_no_action"
+      ],
+      "provenance": {
+        "originType": "CODEX_SYNTHETIC_NOTICE",
+        "acquiredAt": "2026-09-21T12:06:25.356Z",
+        "anonymizationMethod": "Fully synthetic; no real student, contact, account, address, or institution record used.",
+        "personalDataRemoved": true,
+        "seenStatus": "SEEN_DEVELOPMENT_FROM_CREATION"
+      },
+      "reference": {
+        "referenceVersion": "C12-PD04-provisional-r1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "minimalObligations": [
+          {
+            "id": "PD04-T1",
+            "endpointRole": "conditional",
+            "action": "缴纳",
+            "object": "补考费",
+            "status": "inactive_condition_false",
+            "actionable": false,
+            "condition": {
+              "value": "false",
+              "text": "补考申请获批"
+            },
+            "completionStandard": "完成“缴纳补考费”",
+            "dependencyIds": [],
+            "materialIds": [],
+            "timePointIds": [],
+            "evidence": [
+              "若补考申请获批，申请人需缴纳补考费"
+            ]
+          }
+        ],
+        "retainedFacts": [
+          {
+            "id": "PD04-F1",
+            "type": "condition_fact",
+            "text": "本次补考申请未获批准",
+            "relatedObligationIds": [
+              "PD04-T1"
+            ]
+          },
+          {
+            "id": "PD04-F2",
+            "type": "information",
+            "text": "后续结果仅供查询",
+            "relatedObligationIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "revisions": [],
+        "composition": {
+          "allowedMerges": [],
+          "requiredSeparations": [],
+          "reasoning": "按动作、对象、条件、时间、完成标准、状态和材料归属保持最小义务。"
+        },
+        "forbiddenInferences": [
+          "不得把缴费标为当前可执行",
+          "不得生成“查询后续结果”任务",
+          "不得生成“确认申请是否获批”任务"
+        ],
+        "ambiguities": [],
+        "scorerReference": {
+          "coverage": "complete",
+          "tasks": [
+            {
+              "id": "PD04-T1",
+              "action": "缴纳",
+              "object": "补考费",
+              "status": "inactive_condition_false",
+              "actionable": false
+            }
+          ],
+          "checks": [
+            "语义上保留条件任务但actionable=false",
+            "当前任务数为0"
+          ]
+        },
+        "review": {
+          "labelerAStatus": "MODEL_AUTHORED",
+          "reviewerBStatus": "NOT_PERFORMED",
+          "adjudicationStatus": "NOT_APPLICABLE",
+          "disagreementIds": []
+        }
+      },
+      "referenceSha256": "dca3c4d9702884a7f545bacea7bcd57a9b4eaba6a4bfd6dbaf4fa121988ce573"
+    },
+    {
+      "sourceId": "C12-PD05",
+      "sourceVersionId": "C12-PD05-v1",
+      "sourceText": "如获得学院推荐，请于近期把研究计划和导师意见表一并上传至项目平台。推荐结果将另行通知，目前尚未确定。",
+      "sourceSha256": "1108d0130e7405f49994b15b4353226d1d024fa19f3842c196aeeead3b90da4d",
+      "coverageTags": [
+        "condition_unknown",
+        "vague_time",
+        "shared_material"
+      ],
+      "provenance": {
+        "originType": "CODEX_SYNTHETIC_NOTICE",
+        "acquiredAt": "2026-09-21T12:06:25.356Z",
+        "anonymizationMethod": "Fully synthetic; no real student, contact, account, address, or institution record used.",
+        "personalDataRemoved": true,
+        "seenStatus": "SEEN_DEVELOPMENT_FROM_CREATION"
+      },
+      "reference": {
+        "referenceVersion": "C12-PD05-provisional-r1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "minimalObligations": [
+          {
+            "id": "PD05-T1",
+            "endpointRole": "current",
+            "action": "上传",
+            "object": "研究计划和导师意见表",
+            "status": "pending_condition",
+            "actionable": false,
+            "condition": {
+              "value": "unknown",
+              "text": "获得学院推荐"
+            },
+            "completionStandard": "项目平台显示两份材料上传成功",
+            "dependencyIds": [],
+            "materialIds": [
+              "PD05-M1",
+              "PD05-M2"
+            ],
+            "timePointIds": [
+              "PD05-TP1"
+            ],
+            "evidence": [
+              "把研究计划和导师意见表一并上传至项目平台"
+            ]
+          }
+        ],
+        "retainedFacts": [
+          {
+            "id": "PD05-F1",
+            "type": "condition_fact",
+            "text": "推荐结果目前尚未确定",
+            "relatedObligationIds": [
+              "PD05-T1"
+            ]
+          }
+        ],
+        "materials": [
+          {
+            "id": "PD05-M1",
+            "name": "研究计划",
+            "required": true,
+            "format": [],
+            "naming": [],
+            "quantity": null,
+            "channel": "项目平台",
+            "relatedObligationIds": [
+              "PD05-T1"
+            ],
+            "evidence": []
+          },
+          {
+            "id": "PD05-M2",
+            "name": "导师意见表",
+            "required": true,
+            "format": [],
+            "naming": [],
+            "quantity": null,
+            "channel": "项目平台",
+            "relatedObligationIds": [
+              "PD05-T1"
+            ],
+            "evidence": []
+          }
+        ],
+        "timePoints": [
+          {
+            "id": "PD05-TP1",
+            "rawText": "近期",
+            "type": "deadline",
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "precision": "vague",
+            "actionable": false,
+            "relatedObligationIds": [
+              "PD05-T1"
+            ],
+            "evidence": [
+              "近期"
+            ]
+          }
+        ],
+        "revisions": [],
+        "composition": {
+          "allowedMerges": [
+            [
+              "PD05-M1",
+              "PD05-M2",
+              "同一上传动作的两个材料"
+            ]
+          ],
+          "requiredSeparations": [],
+          "reasoning": "按动作、对象、条件、时间、完成标准、状态和材料归属保持最小义务。"
+        },
+        "forbiddenInferences": [
+          "不得把任务标为当前可执行",
+          "不得生成“确认是否获得推荐”任务",
+          "不得把近期补成具体日期"
+        ],
+        "ambiguities": [],
+        "scorerReference": {
+          "coverage": "complete",
+          "tasks": [
+            {
+              "id": "PD05-T1",
+              "action": "上传",
+              "object": "研究计划和导师意见表",
+              "status": "pending_condition",
+              "actionable": false
+            }
+          ],
+          "checks": [
+            "condition=unknown",
+            "actionable=false",
+            "两份材料同属一个上传任务"
+          ]
+        },
+        "review": {
+          "labelerAStatus": "MODEL_AUTHORED",
+          "reviewerBStatus": "NOT_PERFORMED",
+          "adjudicationStatus": "NOT_APPLICABLE",
+          "disagreementIds": []
+        }
+      },
+      "referenceSha256": "bee5d57d71dda4f842ac83347dfa6f6c62c346506fcf9f2fcb175869f4ab408d"
+    },
+    {
+      "sourceId": "C12-PD06",
+      "sourceVersionId": "C12-PD06-v1",
+      "sourceText": "请核对奖助申请中的银行账号与证件号码，确认页面显示的信息与本人材料一致后点击“完成核对”。本步骤只要求完成核对，不代表审核通过。",
+      "sourceSha256": "49c9c175c99e82ca4cd2d19486529a9d2f41d36afe061ce5ed5d114e97d9b8b9",
+      "coverageTags": [
+        "completion_standard",
+        "single_task",
+        "forbidden_non_task"
+      ],
+      "provenance": {
+        "originType": "CODEX_SYNTHETIC_NOTICE",
+        "acquiredAt": "2026-09-21T12:06:25.356Z",
+        "anonymizationMethod": "Fully synthetic; no real student, contact, account, address, or institution record used.",
+        "personalDataRemoved": true,
+        "seenStatus": "SEEN_DEVELOPMENT_FROM_CREATION"
+      },
+      "reference": {
+        "referenceVersion": "C12-PD06-provisional-r1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "minimalObligations": [
+          {
+            "id": "PD06-T1",
+            "endpointRole": "current",
+            "action": "核对",
+            "object": "奖助申请中的银行账号与证件号码",
+            "status": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "确认页面信息与本人材料一致并点击“完成核对”",
+            "dependencyIds": [],
+            "materialIds": [],
+            "timePointIds": [],
+            "evidence": [
+              "核对奖助申请中的银行账号与证件号码"
+            ]
+          }
+        ],
+        "retainedFacts": [
+          {
+            "id": "PD06-F1",
+            "type": "completion_boundary",
+            "text": "完成核对不代表审核通过",
+            "relatedObligationIds": [
+              "PD06-T1"
+            ]
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "revisions": [],
+        "composition": {
+          "allowedMerges": [],
+          "requiredSeparations": [],
+          "reasoning": "按动作、对象、条件、时间、完成标准、状态和材料归属保持最小义务。"
+        },
+        "forbiddenInferences": [
+          "不得把“审核通过”写成完成标准",
+          "不得生成“取得审核通过”任务"
+        ],
+        "ambiguities": [],
+        "scorerReference": {
+          "coverage": "complete",
+          "tasks": [
+            {
+              "id": "PD06-T1",
+              "action": "核对",
+              "object": "奖助申请中的银行账号与证件号码",
+              "status": "active",
+              "actionable": true
+            }
+          ],
+          "checks": [
+            "完成标准止于点击完成核对",
+            "审核通过仅作为边界事实"
+          ]
+        },
+        "review": {
+          "labelerAStatus": "MODEL_AUTHORED",
+          "reviewerBStatus": "NOT_PERFORMED",
+          "adjudicationStatus": "NOT_APPLICABLE",
+          "disagreementIds": []
+        }
+      },
+      "referenceSha256": "e93c1dba87b8fe790fa234376f5e0e59c2a164e4b7a3e90bdc001b6309266a2c"
+    },
+    {
+      "sourceId": "C12-PD07",
+      "sourceVersionId": "C12-PD07-v1",
+      "sourceText": "先在系统完成毕业去向登记。登记成功后下载确认单，再将该确认单上传至离校办理页面。只有页面显示“已接收”才算完成上传。",
+      "sourceSha256": "da8342a900babe7f33147a940f2b7ead223f63036955672b2490b3c55d37cf9e",
+      "coverageTags": [
+        "dependency",
+        "multi_task",
+        "completion_standard"
+      ],
+      "provenance": {
+        "originType": "CODEX_SYNTHETIC_NOTICE",
+        "acquiredAt": "2026-09-21T12:06:25.356Z",
+        "anonymizationMethod": "Fully synthetic; no real student, contact, account, address, or institution record used.",
+        "personalDataRemoved": true,
+        "seenStatus": "SEEN_DEVELOPMENT_FROM_CREATION"
+      },
+      "reference": {
+        "referenceVersion": "C12-PD07-provisional-r1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "minimalObligations": [
+          {
+            "id": "PD07-T1",
+            "endpointRole": "current",
+            "action": "登记",
+            "object": "毕业去向",
+            "status": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "系统显示毕业去向登记成功",
+            "dependencyIds": [],
+            "materialIds": [],
+            "timePointIds": [],
+            "evidence": [
+              "完成毕业去向登记"
+            ]
+          },
+          {
+            "id": "PD07-T2",
+            "endpointRole": "current",
+            "action": "下载",
+            "object": "毕业去向确认单",
+            "status": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "完成“下载毕业去向确认单”",
+            "dependencyIds": [
+              "PD07-T1"
+            ],
+            "materialIds": [
+              "PD07-M1"
+            ],
+            "timePointIds": [],
+            "evidence": [
+              "登记成功后下载确认单"
+            ]
+          },
+          {
+            "id": "PD07-T3",
+            "endpointRole": "current",
+            "action": "上传",
+            "object": "毕业去向确认单",
+            "status": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "离校办理页面显示“已接收”",
+            "dependencyIds": [
+              "PD07-T2"
+            ],
+            "materialIds": [
+              "PD07-M1"
+            ],
+            "timePointIds": [],
+            "evidence": [
+              "将该确认单上传至离校办理页面"
+            ]
+          }
+        ],
+        "retainedFacts": [],
+        "materials": [
+          {
+            "id": "PD07-M1",
+            "name": "毕业去向确认单",
+            "required": true,
+            "format": [],
+            "naming": [],
+            "quantity": null,
+            "channel": "离校办理页面",
+            "relatedObligationIds": [
+              "PD07-T2",
+              "PD07-T3"
+            ],
+            "evidence": [
+              "确认单"
+            ]
+          }
+        ],
+        "timePoints": [],
+        "revisions": [],
+        "composition": {
+          "allowedMerges": [],
+          "requiredSeparations": [
+            [
+              "PD07-T1",
+              "PD07-T2",
+              "PD07-T3"
+            ]
+          ],
+          "reasoning": "按动作、对象、条件、时间、完成标准、状态和材料归属保持最小义务。"
+        },
+        "forbiddenInferences": [
+          "不得省略下载步骤",
+          "不得把三个有先后关系的动作合并为一个任务"
+        ],
+        "ambiguities": [],
+        "scorerReference": {
+          "coverage": "complete",
+          "tasks": [
+            {
+              "id": "PD07-T1",
+              "action": "登记",
+              "object": "毕业去向",
+              "status": "active",
+              "actionable": true
+            },
+            {
+              "id": "PD07-T2",
+              "action": "下载",
+              "object": "毕业去向确认单",
+              "status": "active",
+              "actionable": true
+            },
+            {
+              "id": "PD07-T3",
+              "action": "上传",
+              "object": "毕业去向确认单",
+              "status": "active",
+              "actionable": true
+            }
+          ],
+          "checks": [
+            "依赖链为登记→下载→上传",
+            "上传完成标准为页面显示已接收"
+          ]
+        },
+        "review": {
+          "labelerAStatus": "MODEL_AUTHORED",
+          "reviewerBStatus": "NOT_PERFORMED",
+          "adjudicationStatus": "NOT_APPLICABLE",
+          "disagreementIds": []
+        }
+      },
+      "referenceSha256": "4553fe6c0cc10e77cdae665caabce7782ff6ab7f0516c76628b230cb61d91b0f"
+    },
+    {
+      "sourceId": "C12-PD08",
+      "sourceVersionId": "C12-PD08-v1",
+      "sourceText": "集中说明会地点为教学楼报告厅，咨询方式见系统公告。本通知仅说明地点与咨询渠道，不要求报名、签到或提交材料。",
+      "sourceSha256": "85d9a2e87ed2c7cea81d189207e7001d0a71906445090a5ab195378976528745",
+      "coverageTags": [
+        "forbidden_non_task",
+        "supporting_fact",
+        "correct_no_action"
+      ],
+      "provenance": {
+        "originType": "CODEX_SYNTHETIC_NOTICE",
+        "acquiredAt": "2026-09-21T12:06:25.356Z",
+        "anonymizationMethod": "Fully synthetic; no real student, contact, account, address, or institution record used.",
+        "personalDataRemoved": true,
+        "seenStatus": "SEEN_DEVELOPMENT_FROM_CREATION"
+      },
+      "reference": {
+        "referenceVersion": "C12-PD08-provisional-r1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "minimalObligations": [],
+        "retainedFacts": [
+          {
+            "id": "PD08-F1",
+            "type": "location",
+            "text": "集中说明会地点为教学楼报告厅",
+            "relatedObligationIds": []
+          },
+          {
+            "id": "PD08-F2",
+            "type": "contact_channel",
+            "text": "咨询方式见系统公告",
+            "relatedObligationIds": []
+          },
+          {
+            "id": "PD08-F3",
+            "type": "negative_requirement",
+            "text": "不要求报名、签到或提交材料",
+            "relatedObligationIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "revisions": [],
+        "composition": {
+          "allowedMerges": [],
+          "requiredSeparations": [],
+          "reasoning": "按动作、对象、条件、时间、完成标准、状态和材料归属保持最小义务。"
+        },
+        "forbiddenInferences": [
+          "不得生成报名任务",
+          "不得生成签到任务",
+          "不得生成提交材料任务",
+          "不得把地点或咨询方式单独生成任务"
+        ],
+        "ambiguities": [],
+        "scorerReference": {
+          "coverage": "complete",
+          "tasks": [],
+          "checks": [
+            "当前任务数为0",
+            "全部scope作为信息或禁止推断承接"
+          ]
+        },
+        "review": {
+          "labelerAStatus": "MODEL_AUTHORED",
+          "reviewerBStatus": "NOT_PERFORMED",
+          "adjudicationStatus": "NOT_APPLICABLE",
+          "disagreementIds": []
+        }
+      },
+      "referenceSha256": "15e84c3ae2eaffbdea6649f1ed8100f553bb8a61d7691ebc135d662806b3fbf7"
+    },
+    {
+      "sourceId": "C12-PD09",
+      "sourceVersionId": "C12-PD09-v1",
+      "sourceText": "原定2026年10月15日前提交社团年审表、10月16日前提交财务汇总表。现将年审表截止调整为10月18日，财务汇总表截止调整为10月20日；其他要求不变。",
+      "sourceSha256": "728f9376432240371f460edbd28590c7c163561dc4df5aacb637298ab454ddee",
+      "coverageTags": [
+        "multi_endpoint_revision",
+        "precise_time",
+        "multi_task"
+      ],
+      "provenance": {
+        "originType": "CODEX_SYNTHETIC_NOTICE",
+        "acquiredAt": "2026-09-21T12:06:25.356Z",
+        "anonymizationMethod": "Fully synthetic; no real student, contact, account, address, or institution record used.",
+        "personalDataRemoved": true,
+        "seenStatus": "SEEN_DEVELOPMENT_FROM_CREATION"
+      },
+      "reference": {
+        "referenceVersion": "C12-PD09-provisional-r1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "minimalObligations": [
+          {
+            "id": "PD09-T1-OLD",
+            "endpointRole": "historical",
+            "action": "提交",
+            "object": "社团年审表",
+            "status": "superseded",
+            "actionable": false,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "完成“提交社团年审表”",
+            "dependencyIds": [],
+            "materialIds": [],
+            "timePointIds": [
+              "PD09-TP1-OLD"
+            ],
+            "evidence": [
+              "原定2026年10月15日前提交社团年审表"
+            ]
+          },
+          {
+            "id": "PD09-T2-OLD",
+            "endpointRole": "historical",
+            "action": "提交",
+            "object": "财务汇总表",
+            "status": "superseded",
+            "actionable": false,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "完成“提交财务汇总表”",
+            "dependencyIds": [],
+            "materialIds": [],
+            "timePointIds": [
+              "PD09-TP2-OLD"
+            ],
+            "evidence": [
+              "10月16日前提交财务汇总表"
+            ]
+          },
+          {
+            "id": "PD09-T1-NEW",
+            "endpointRole": "current",
+            "action": "提交",
+            "object": "社团年审表",
+            "status": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "完成“提交社团年审表”",
+            "dependencyIds": [],
+            "materialIds": [],
+            "timePointIds": [
+              "PD09-TP1-NEW"
+            ],
+            "evidence": [
+              "年审表截止调整为10月18日"
+            ]
+          },
+          {
+            "id": "PD09-T2-NEW",
+            "endpointRole": "current",
+            "action": "提交",
+            "object": "财务汇总表",
+            "status": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "完成“提交财务汇总表”",
+            "dependencyIds": [],
+            "materialIds": [],
+            "timePointIds": [
+              "PD09-TP2-NEW"
+            ],
+            "evidence": [
+              "财务汇总表截止调整为10月20日"
+            ]
+          }
+        ],
+        "retainedFacts": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "id": "PD09-TP1-OLD",
+            "rawText": "2026年10月15日前",
+            "type": "deadline",
+            "normalizedValue": "2026-10-15",
+            "timezone": "Asia/Shanghai",
+            "precision": "exact",
+            "actionable": false,
+            "relatedObligationIds": [
+              "PD09-T1-OLD"
+            ],
+            "evidence": [
+              "2026年10月15日前"
+            ]
+          },
+          {
+            "id": "PD09-TP2-OLD",
+            "rawText": "10月16日前",
+            "type": "deadline",
+            "normalizedValue": "2026-10-16",
+            "timezone": "Asia/Shanghai",
+            "precision": "exact",
+            "actionable": false,
+            "relatedObligationIds": [
+              "PD09-T2-OLD"
+            ],
+            "evidence": [
+              "10月16日前"
+            ]
+          },
+          {
+            "id": "PD09-TP1-NEW",
+            "rawText": "10月18日",
+            "type": "deadline",
+            "normalizedValue": "2026-10-18",
+            "timezone": "Asia/Shanghai",
+            "precision": "exact",
+            "actionable": true,
+            "relatedObligationIds": [
+              "PD09-T1-NEW"
+            ],
+            "evidence": [
+              "10月18日"
+            ]
+          },
+          {
+            "id": "PD09-TP2-NEW",
+            "rawText": "10月20日",
+            "type": "deadline",
+            "normalizedValue": "2026-10-20",
+            "timezone": "Asia/Shanghai",
+            "precision": "exact",
+            "actionable": true,
+            "relatedObligationIds": [
+              "PD09-T2-NEW"
+            ],
+            "evidence": [
+              "10月20日"
+            ]
+          }
+        ],
+        "revisions": [
+          {
+            "id": "PD09-R1",
+            "type": "amends",
+            "fromObligationId": "PD09-T1-NEW",
+            "targetObligationId": "PD09-T1-OLD",
+            "effective": true,
+            "evidence": [
+              "年审表截止调整为10月18日"
+            ]
+          },
+          {
+            "id": "PD09-R2",
+            "type": "amends",
+            "fromObligationId": "PD09-T2-NEW",
+            "targetObligationId": "PD09-T2-OLD",
+            "effective": true,
+            "evidence": [
+              "财务汇总表截止调整为10月20日"
+            ]
+          }
+        ],
+        "composition": {
+          "allowedMerges": [],
+          "requiredSeparations": [
+            [
+              "PD09-T1-OLD",
+              "PD09-T2-OLD"
+            ],
+            [
+              "PD09-T1-NEW",
+              "PD09-T2-NEW"
+            ]
+          ],
+          "reasoning": "按动作、对象、条件、时间、完成标准、状态和材料归属保持最小义务。"
+        },
+        "forbiddenInferences": [
+          "不得把两个旧端点合并",
+          "不得把两个新任务合并",
+          "不得把10月20日赋给年审表"
+        ],
+        "ambiguities": [],
+        "scorerReference": {
+          "coverage": "complete",
+          "tasks": [
+            {
+              "id": "PD09-T1-OLD",
+              "action": "提交",
+              "object": "社团年审表",
+              "status": "superseded",
+              "actionable": false
+            },
+            {
+              "id": "PD09-T2-OLD",
+              "action": "提交",
+              "object": "财务汇总表",
+              "status": "superseded",
+              "actionable": false
+            },
+            {
+              "id": "PD09-T1-NEW",
+              "action": "提交",
+              "object": "社团年审表",
+              "status": "active",
+              "actionable": true
+            },
+            {
+              "id": "PD09-T2-NEW",
+              "action": "提交",
+              "object": "财务汇总表",
+              "status": "active",
+              "actionable": true
+            }
+          ],
+          "checks": [
+            "两个独立修订关系",
+            "新旧端点共四个且对象一一对应"
+          ]
+        },
+        "review": {
+          "labelerAStatus": "MODEL_AUTHORED",
+          "reviewerBStatus": "NOT_PERFORMED",
+          "adjudicationStatus": "NOT_APPLICABLE",
+          "disagreementIds": []
+        }
+      },
+      "referenceSha256": "26649f80a7d5ac3494bb88426907578e2fd37ed501ac2c3114b39d75012c7ea3"
+    },
+    {
+      "sourceId": "C12-PD10",
+      "sourceVersionId": "C12-PD10-v1",
+      "sourceText": "原通知要求线上提交实践报告并现场交纸质签到表，两项均填写同一项目编号。现取消纸质签到表要求；线上实践报告改为2026年10月22日前提交，项目编号规则不变。",
+      "sourceSha256": "b529ee51eb4c63b834d7d662fff49c8567eb6341e50dd44c29326534bba0858a",
+      "coverageTags": [
+        "multi_endpoint_revision",
+        "shared_material",
+        "forbidden_non_task"
+      ],
+      "provenance": {
+        "originType": "CODEX_SYNTHETIC_NOTICE",
+        "acquiredAt": "2026-09-21T12:06:25.356Z",
+        "anonymizationMethod": "Fully synthetic; no real student, contact, account, address, or institution record used.",
+        "personalDataRemoved": true,
+        "seenStatus": "SEEN_DEVELOPMENT_FROM_CREATION"
+      },
+      "reference": {
+        "referenceVersion": "C12-PD10-provisional-r1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "minimalObligations": [
+          {
+            "id": "PD10-T1-OLD",
+            "endpointRole": "historical",
+            "action": "提交",
+            "object": "线上实践报告",
+            "status": "superseded",
+            "actionable": false,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "完成“提交线上实践报告”",
+            "dependencyIds": [],
+            "materialIds": [
+              "PD10-M1"
+            ],
+            "timePointIds": [],
+            "evidence": [
+              "原通知要求线上提交实践报告"
+            ]
+          },
+          {
+            "id": "PD10-T2-OLD",
+            "endpointRole": "historical",
+            "action": "提交",
+            "object": "纸质签到表",
+            "status": "cancelled",
+            "actionable": false,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "完成“提交纸质签到表”",
+            "dependencyIds": [],
+            "materialIds": [
+              "PD10-M2"
+            ],
+            "timePointIds": [],
+            "evidence": [
+              "现场交纸质签到表"
+            ]
+          },
+          {
+            "id": "PD10-T1-NEW",
+            "endpointRole": "current",
+            "action": "提交",
+            "object": "线上实践报告",
+            "status": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "完成“提交线上实践报告”",
+            "dependencyIds": [],
+            "materialIds": [
+              "PD10-M1"
+            ],
+            "timePointIds": [
+              "PD10-TP1"
+            ],
+            "evidence": [
+              "线上实践报告改为2026年10月22日前提交"
+            ]
+          }
+        ],
+        "retainedFacts": [
+          {
+            "id": "PD10-F1",
+            "type": "shared_identifier_rule",
+            "text": "项目编号规则不变",
+            "relatedObligationIds": [
+              "PD10-T1-NEW"
+            ]
+          }
+        ],
+        "materials": [
+          {
+            "id": "PD10-M1",
+            "name": "线上实践报告",
+            "required": true,
+            "format": [],
+            "naming": [
+              "填写同一项目编号"
+            ],
+            "quantity": null,
+            "channel": "线上",
+            "relatedObligationIds": [
+              "PD10-T1-OLD",
+              "PD10-T1-NEW"
+            ],
+            "evidence": []
+          },
+          {
+            "id": "PD10-M2",
+            "name": "纸质签到表",
+            "required": false,
+            "format": [],
+            "naming": [
+              "填写同一项目编号"
+            ],
+            "quantity": null,
+            "channel": "现场",
+            "relatedObligationIds": [
+              "PD10-T2-OLD"
+            ],
+            "evidence": []
+          }
+        ],
+        "timePoints": [
+          {
+            "id": "PD10-TP1",
+            "rawText": "2026年10月22日前",
+            "type": "deadline",
+            "normalizedValue": "2026-10-22",
+            "timezone": "Asia/Shanghai",
+            "precision": "exact",
+            "actionable": true,
+            "relatedObligationIds": [
+              "PD10-T1-NEW"
+            ],
+            "evidence": [
+              "2026年10月22日前"
+            ]
+          }
+        ],
+        "revisions": [
+          {
+            "id": "PD10-R1",
+            "type": "amends",
+            "fromObligationId": "PD10-T1-NEW",
+            "targetObligationId": "PD10-T1-OLD",
+            "effective": true,
+            "evidence": [
+              "线上实践报告改为2026年10月22日前提交"
+            ]
+          },
+          {
+            "id": "PD10-R2",
+            "type": "cancels",
+            "fromObligationId": null,
+            "targetObligationId": "PD10-T2-OLD",
+            "effective": true,
+            "evidence": [
+              "取消纸质签到表要求"
+            ]
+          }
+        ],
+        "composition": {
+          "allowedMerges": [],
+          "requiredSeparations": [
+            [
+              "PD10-T1-OLD",
+              "PD10-T2-OLD"
+            ]
+          ],
+          "reasoning": "按动作、对象、条件、时间、完成标准、状态和材料归属保持最小义务。"
+        },
+        "forbiddenInferences": [
+          "不得把已取消的纸质签到表作为当前任务",
+          "不得把取消关系和截止时间修改合并为一个端点"
+        ],
+        "ambiguities": [],
+        "scorerReference": {
+          "coverage": "complete",
+          "tasks": [
+            {
+              "id": "PD10-T1-OLD",
+              "action": "提交",
+              "object": "线上实践报告",
+              "status": "superseded",
+              "actionable": false
+            },
+            {
+              "id": "PD10-T2-OLD",
+              "action": "提交",
+              "object": "纸质签到表",
+              "status": "cancelled",
+              "actionable": false
+            },
+            {
+              "id": "PD10-T1-NEW",
+              "action": "提交",
+              "object": "线上实践报告",
+              "status": "active",
+              "actionable": true
+            }
+          ],
+          "checks": [
+            "实践报告是替代端点",
+            "纸质签到表只有取消关系且无新端点"
+          ]
+        },
+        "review": {
+          "labelerAStatus": "MODEL_AUTHORED",
+          "reviewerBStatus": "NOT_PERFORMED",
+          "adjudicationStatus": "NOT_APPLICABLE",
+          "disagreementIds": []
+        }
+      },
+      "referenceSha256": "4abbe7682f557bf4d1e09c6543469f5554bae01649244a6210c81a3b80aa0f02"
+    },
+    {
+      "sourceId": "C12-PD11",
+      "sourceVersionId": "C12-PD11-v1",
+      "sourceText": "图书馆假日期间一楼自习区开放时间为8:00—18:00，二楼施工暂不开放。以上为开放信息，不需要预约、签到或提交申请。",
+      "sourceSha256": "87a96648c7f6494bc450ddda7beacc3ccedf522bacbbefbd2dafcf0872e83da5",
+      "coverageTags": [
+        "information_only",
+        "correct_no_action",
+        "forbidden_non_task"
+      ],
+      "provenance": {
+        "originType": "CODEX_SYNTHETIC_NOTICE",
+        "acquiredAt": "2026-09-21T12:06:25.356Z",
+        "anonymizationMethod": "Fully synthetic; no real student, contact, account, address, or institution record used.",
+        "personalDataRemoved": true,
+        "seenStatus": "SEEN_DEVELOPMENT_FROM_CREATION"
+      },
+      "reference": {
+        "referenceVersion": "C12-PD11-provisional-r1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "minimalObligations": [],
+        "retainedFacts": [
+          {
+            "id": "PD11-F1",
+            "type": "opening_hours",
+            "text": "一楼自习区开放时间为8:00—18:00",
+            "relatedObligationIds": []
+          },
+          {
+            "id": "PD11-F2",
+            "type": "closure",
+            "text": "二楼施工暂不开放",
+            "relatedObligationIds": []
+          },
+          {
+            "id": "PD11-F3",
+            "type": "negative_requirement",
+            "text": "不需要预约、签到或提交申请",
+            "relatedObligationIds": []
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "revisions": [],
+        "composition": {
+          "allowedMerges": [],
+          "requiredSeparations": [],
+          "reasoning": "按动作、对象、条件、时间、完成标准、状态和材料归属保持最小义务。"
+        },
+        "forbiddenInferences": [
+          "不得把开放时间识别为用户截止时间",
+          "不得生成预约、签到或申请任务",
+          "不得生成前往图书馆任务"
+        ],
+        "ambiguities": [],
+        "scorerReference": {
+          "coverage": "complete",
+          "tasks": [],
+          "checks": [
+            "当前任务数为0",
+            "8:00—18:00是开放信息"
+          ]
+        },
+        "review": {
+          "labelerAStatus": "MODEL_AUTHORED",
+          "reviewerBStatus": "NOT_PERFORMED",
+          "adjudicationStatus": "NOT_APPLICABLE",
+          "disagreementIds": []
+        }
+      },
+      "referenceSha256": "0f4e286aa930b0cf24793bb207303b08d18b60386e29e153e3c6238dfc9ef95b"
+    },
+    {
+      "sourceId": "C12-PD12",
+      "sourceVersionId": "C12-PD12-v1",
+      "sourceText": "请提交课程免修申请。申请材料包括成绩证明和课程大纲，两份文件合并为一个PDF并命名为“免修申请-编号”。请通过教务平台上传，邮件和纸质材料不受理。截止时间为2026年10月25日中午12:00。",
+      "sourceSha256": "33f42cf96255de818f6c9ecfee3d9c3c9a0bd78e7342d1b52892824aabb66406",
+      "coverageTags": [
+        "cross_sentence_scope",
+        "format_and_channel",
+        "precise_time",
+        "shared_material"
+      ],
+      "provenance": {
+        "originType": "CODEX_SYNTHETIC_NOTICE",
+        "acquiredAt": "2026-09-21T12:06:25.356Z",
+        "anonymizationMethod": "Fully synthetic; no real student, contact, account, address, or institution record used.",
+        "personalDataRemoved": true,
+        "seenStatus": "SEEN_DEVELOPMENT_FROM_CREATION"
+      },
+      "reference": {
+        "referenceVersion": "C12-PD12-provisional-r1",
+        "coverage": "complete",
+        "truthStatus": "PROVISIONAL_MODEL_AUTHORED",
+        "minimalObligations": [
+          {
+            "id": "PD12-T1",
+            "endpointRole": "current",
+            "action": "提交",
+            "object": "课程免修申请",
+            "status": "active",
+            "actionable": true,
+            "condition": {
+              "value": "not_applicable",
+              "text": null
+            },
+            "completionStandard": "教务平台显示课程免修申请上传成功",
+            "dependencyIds": [],
+            "materialIds": [
+              "PD12-M1",
+              "PD12-M2",
+              "PD12-M3"
+            ],
+            "timePointIds": [
+              "PD12-TP1"
+            ],
+            "evidence": [
+              "提交课程免修申请"
+            ]
+          }
+        ],
+        "retainedFacts": [
+          {
+            "id": "PD12-F1",
+            "type": "rejected_channel",
+            "text": "邮件和纸质材料不受理",
+            "relatedObligationIds": [
+              "PD12-T1"
+            ]
+          }
+        ],
+        "materials": [
+          {
+            "id": "PD12-M1",
+            "name": "成绩证明",
+            "required": true,
+            "format": [
+              "与课程大纲合并为一个PDF"
+            ],
+            "naming": [],
+            "quantity": null,
+            "channel": null,
+            "relatedObligationIds": [
+              "PD12-T1"
+            ],
+            "evidence": []
+          },
+          {
+            "id": "PD12-M2",
+            "name": "课程大纲",
+            "required": true,
+            "format": [
+              "与成绩证明合并为一个PDF"
+            ],
+            "naming": [],
+            "quantity": null,
+            "channel": null,
+            "relatedObligationIds": [
+              "PD12-T1"
+            ],
+            "evidence": []
+          },
+          {
+            "id": "PD12-M3",
+            "name": "合并后的免修申请PDF",
+            "required": true,
+            "format": [
+              "PDF"
+            ],
+            "naming": [
+              "免修申请-编号"
+            ],
+            "quantity": 1,
+            "channel": "教务平台",
+            "relatedObligationIds": [
+              "PD12-T1"
+            ],
+            "evidence": []
+          }
+        ],
+        "timePoints": [
+          {
+            "id": "PD12-TP1",
+            "rawText": "2026年10月25日中午12:00",
+            "type": "deadline",
+            "normalizedValue": "2026-10-25T12:00:00+08:00",
+            "timezone": "Asia/Shanghai",
+            "precision": "exact",
+            "actionable": true,
+            "relatedObligationIds": [
+              "PD12-T1"
+            ],
+            "evidence": [
+              "2026年10月25日中午12:00"
+            ]
+          }
+        ],
+        "revisions": [],
+        "composition": {
+          "allowedMerges": [
+            [
+              "PD12-M1",
+              "PD12-M2",
+              "合并为一个提交文件"
+            ]
+          ],
+          "requiredSeparations": [],
+          "reasoning": "按动作、对象、条件、时间、完成标准、状态和材料归属保持最小义务。"
+        },
+        "forbiddenInferences": [
+          "不得生成邮件提交任务",
+          "不得生成纸质提交任务",
+          "不得把格式、命名或渠道单独生成任务"
+        ],
+        "ambiguities": [],
+        "scorerReference": {
+          "coverage": "complete",
+          "tasks": [
+            {
+              "id": "PD12-T1",
+              "action": "提交",
+              "object": "课程免修申请",
+              "status": "active",
+              "actionable": true
+            }
+          ],
+          "checks": [
+            "跨句字段全部归属同一提交任务",
+            "截止时间、材料、格式、命名和渠道均保留"
+          ]
+        },
+        "review": {
+          "labelerAStatus": "MODEL_AUTHORED",
+          "reviewerBStatus": "NOT_PERFORMED",
+          "adjudicationStatus": "NOT_APPLICABLE",
+          "disagreementIds": []
+        }
+      },
+      "referenceSha256": "f17660c79e3752a9f6bda59fd566a26db6bb07f983dec3690ee5d5b463da9813"
+    }
+  ],
+  "operations": {
+    "modelApiCalls": 0,
+    "secretReads": 0,
+    "grants": 0,
+    "reserves": 0,
+    "settlements": 0,
+    "ledgerWrites": 0
+  },
+  "nextUse": "STRUCTURAL_DEVELOPMENT_AND_SEEN_EXCLUSION_ONLY",
+  "packageSha256": "386e145aa6e69709401ddf63739fd2c768376e12c6c035b1e2ef35d7f2256352"
+}

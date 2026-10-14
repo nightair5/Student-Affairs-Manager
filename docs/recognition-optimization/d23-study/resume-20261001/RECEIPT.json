@@ -1,0 +1,124 @@
+{
+  "version": "D23_ENGINEERING_ENTRY_RESUME_1",
+  "date": "2026-10-01",
+  "scope": "USER_REQUESTED_ENGINEERING_ENTRY_ONLY",
+  "userScopeReply": "本轮只恢复工程入口",
+  "status": "D23_ENGINEERING_ENTRY_RESTORED",
+  "origin": "http://127.0.0.1:6730",
+  "instance": "resume1001",
+  "role": "ENGINEERING_REPLAY",
+  "buildGitHead": "8cc0631f9db1bdd363fa6e4cd1b42641ea0bd493",
+  "buildSourceSha256": "e5fc4ff70969d369f5299c245579309ac434c5757672421befc15c830fd192d9",
+  "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+  "materials": 8,
+  "slots": 16,
+  "recordCount": 16,
+  "databases": {
+    "p1": "rco-mainline-01-02-i1-real-input-d23-study-engineering-resume1001-p1",
+    "p2": "rco-mainline-01-02-i1-real-input-d23-study-engineering-resume1001-p2",
+    "p3": "rco-mainline-01-02-i1-real-input-d23-study-engineering-resume1001-p3",
+    "p4": "rco-mainline-01-02-i1-real-input-d23-study-engineering-resume1001-p4"
+  },
+  "modelCalls": 0,
+  "grant": 0,
+  "reserve": 0,
+  "settle": 0,
+  "realParticipants": 0,
+  "realTrials": 0,
+  "newEngineeringTrials": 0,
+  "humanAuthorized": false,
+  "browserChecks": [
+    "ENTRY_AND_BUILD_VISIBLE",
+    "MISSING_REAL_AUTHORIZATION_BLOCKED",
+    "MISSING_OWNER_FREEZE_CONSENT_BLOCKED",
+    "P1_P2_INDEPENDENT_READBACK_ZERO_FACTS",
+    "ALL_FOUR_REPORTS_ZERO_TRIALS"
+  ],
+  "browserReadbacks": [
+    {
+      "identity": "p1",
+      "database": "rco-mainline-01-02-i1-real-input-d23-study-engineering-resume1001-p1",
+      "sourceSha256": "e5fc4ff70969d369f5299c245579309ac434c5757672421befc15c830fd192d9",
+      "role": "ENGINEERING_REPLAY",
+      "registered": 0,
+      "started": 0,
+      "canonicalCounts": {
+        "sources": 0,
+        "sourceVersions": 0,
+        "recognitionRuns": 0,
+        "extractionDrafts": 0,
+        "tasks": 0,
+        "projects": 0,
+        "events": 0,
+        "materials": 0,
+        "timePoints": 0,
+        "evidenceRefs": 0,
+        "historyRecords": 0
+      },
+      "humanMetrics": "NOT_OBSERVABLE",
+      "originalPath": ".data/d23/resume1001/browser-p1-readback.json",
+      "originalSha256": "cfd5a6f5d68b8b17d38ca50d37040308bc9a25939ad0740652d1c37ba5bd205a"
+    },
+    {
+      "identity": "p2",
+      "database": "rco-mainline-01-02-i1-real-input-d23-study-engineering-resume1001-p2",
+      "sourceSha256": "e5fc4ff70969d369f5299c245579309ac434c5757672421befc15c830fd192d9",
+      "role": "ENGINEERING_REPLAY",
+      "registered": 0,
+      "started": 0,
+      "canonicalCounts": {
+        "sources": 0,
+        "sourceVersions": 0,
+        "recognitionRuns": 0,
+        "extractionDrafts": 0,
+        "tasks": 0,
+        "projects": 0,
+        "events": 0,
+        "materials": 0,
+        "timePoints": 0,
+        "evidenceRefs": 0,
+        "historyRecords": 0
+      },
+      "humanMetrics": "NOT_OBSERVABLE",
+      "originalPath": ".data/d23/resume1001/browser-p2-readback.json",
+      "originalSha256": "e5dcac2bee04ae9b2be4dd2beb17fea980c18fca15cfa33e0915187481df0b9d"
+    }
+  ],
+  "aggregate": {
+    "role": "ENGINEERING_REPLAY",
+    "planned": 16,
+    "started": 0,
+    "humanMetrics": "NOT_OBSERVABLE",
+    "originalPath": ".data/d23/resume1001/browser-aggregate.json",
+    "originalSha256": "87e8ed8b9e44741861fd1f6e97104a9e58ed4cab5dfa29fd3459c3f979bb46ae"
+  },
+  "screenshot": {
+    "path": "entry.jpg",
+    "sha256": "b41981431bd0958d8cea1467f10c297b2e88c5d15254e1661943ebf467085285"
+  },
+  "checks": {
+    "targetedTests": "26_PASS_2_FILES",
+    "historyProtected": 84,
+    "historyFrozen": 119,
+    "ledgerRows": 938,
+    "ledgerSha256": "e79aec8bbb1378e37f3941d8ffac9cce7d74bbb8e11d7ceee5c90a88b6c734b9",
+    "d19Diagnostic": "VERIFY_PASS_OLD_OUTPUT_ONLY",
+    "d23Isolation": "VERIFY_PASS",
+    "securityScan": "PASS_3252_FILES",
+    "diffCheck": "PASS",
+    "fullSuite": "NOT_RERUN_NO_PRODUCT_CODE_CHANGE",
+    "previousFullSuite": "11_PASS_4_HISTORICAL_FAIL_UNCHANGED"
+  },
+  "unchanged": [
+    "PRODUCT_CODE",
+    "CANDIDATES",
+    "MEASUREMENT",
+    "MATERIAL_PLAN",
+    "HISTORICAL_BROWSER_DATABASES",
+    "EXPECTED",
+    "RAW",
+    "RESULTS",
+    "FROZEN_COMPONENTS",
+    "AUTHORITY_LEDGER"
+  ]
+}

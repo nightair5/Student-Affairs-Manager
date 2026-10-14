@@ -1,0 +1,33 @@
+{
+  "version": "real-input-reasoning-browser-1",
+  "checkedAt": "2026-09-14T14:41:46+08:00",
+  "officialControl": {
+    "attempts": 1,
+    "elapsedMs": 21438,
+    "apps": [],
+    "browsers": [],
+    "error": "nodeRepl.fetch request failed",
+    "result": "NOT_RUN"
+  },
+  "localPreview": {
+    "origin": "http://127.0.0.1:6632/",
+    "httpStatus": 200,
+    "contentLength": 799,
+    "recognitionPostStatus": 405,
+    "recognitionPostBody": "MODEL_AND_WRITES_DISABLED",
+    "modelCallsEnabled": false
+  },
+  "currentRunEvidence": {
+    "twoJourneys": "NOT_RUN",
+    "refreshReadback": "NOT_RUN",
+    "independentRepositoryRead": "NOT_RUN",
+    "twoActualDownloads": "NOT_RUN",
+    "reason": "官方控制按授权只尝试一次且失败；未把HTTP、工程测试或历史页面操作冒充本轮浏览器验收。"
+  },
+  "reusedEvidence": {
+    "baselineEngineeringReplay": "candidate03存量零调用回放曾证明20条事实正确任务可在工程路径正确保存，分布于16份来源；不是本轮浏览器转化率。",
+    "historicalQ01Q07": "先前同一6632隔离入口完成三项正确任务的确认、刷新、任务中心、日历、详情和独立读库；本轮未重复点击。",
+    "historicalU11Downloads": "先前两个实际下载路径的canonical workspace一致，仅证明当时一项送样登记任务。",
+    "source": "../baseline-conversion-20260914a/AUDIT.md"
+  }
+}

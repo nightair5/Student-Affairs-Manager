@@ -1,0 +1,345 @@
+{
+  "stage": "RCO-5-MAINLINE-03-I1-R3-CLOSE",
+  "status": "FILE_TARGETED_PASS_INDEPENDENT_REVIEW_PASS",
+  "file": {
+    "path": "C:/Users/Winner/Downloads/mainline-02-i1-workspace (7).json",
+    "bytes": 96198,
+    "createdUtc": "2026-09-06T04:20:41.229Z",
+    "modifiedUtc": "2026-09-06T04:20:41.230Z",
+    "fileSha256": "6fddeb86ea9c975e2085d15beb66d640820d4de7863fe7c33f13952aabe1c23e",
+    "wholeObjectSha256": "98fa1768d648bf49c862fdc1433f2630e3c9bed705af68fb67d2ef26e623e75a"
+  },
+  "validation": {
+    "sourcePath": "src/domain/v2/validators/workspaceValidator.ts",
+    "sourceSha256": "eedc119945961612aa09b302fb2acb484c74a6868b409b2fa7f2fa8725e4d580",
+    "valid": true,
+    "issues": [],
+    "memoryBundleOnly": true
+  },
+  "fieldFidelity": {
+    "basis": "original multi 21 fields per task; same 42-field fidelity definition, not semantic accuracy",
+    "passed": 42,
+    "total": 42,
+    "fields": [
+      {
+        "field": "0.actionVerb",
+        "pass": true
+      },
+      {
+        "field": "0.actionObject",
+        "pass": true
+      },
+      {
+        "field": "0.completionCriteria",
+        "pass": true
+      },
+      {
+        "field": "0.title",
+        "pass": true
+      },
+      {
+        "field": "0.description",
+        "pass": true
+      },
+      {
+        "field": "0.time.rawText",
+        "pass": true
+      },
+      {
+        "field": "0.time.normalizedValue",
+        "pass": true
+      },
+      {
+        "field": "0.time.timezone",
+        "pass": true
+      },
+      {
+        "field": "0.time.isAllDay",
+        "pass": true
+      },
+      {
+        "field": "0.time.precision",
+        "pass": true
+      },
+      {
+        "field": "0.time.relatedTaskIds",
+        "pass": true
+      },
+      {
+        "field": "0.time.relatedMaterialIds",
+        "pass": true
+      },
+      {
+        "field": "0.material.name",
+        "pass": true
+      },
+      {
+        "field": "0.material.formatRequirements",
+        "pass": true
+      },
+      {
+        "field": "0.material.namingRequirements",
+        "pass": true
+      },
+      {
+        "field": "0.material.quantity",
+        "pass": true
+      },
+      {
+        "field": "0.material.submissionChannel",
+        "pass": true
+      },
+      {
+        "field": "0.material.relatedTaskIds",
+        "pass": true
+      },
+      {
+        "field": "0.material.deadline",
+        "pass": true
+      },
+      {
+        "field": "0.evidence.sourceVersionId",
+        "pass": true
+      },
+      {
+        "field": "0.evidence.quote",
+        "pass": true
+      },
+      {
+        "field": "1.actionVerb",
+        "pass": true
+      },
+      {
+        "field": "1.actionObject",
+        "pass": true
+      },
+      {
+        "field": "1.completionCriteria",
+        "pass": true
+      },
+      {
+        "field": "1.title",
+        "pass": true
+      },
+      {
+        "field": "1.description",
+        "pass": true
+      },
+      {
+        "field": "1.time.rawText",
+        "pass": true
+      },
+      {
+        "field": "1.time.normalizedValue",
+        "pass": true
+      },
+      {
+        "field": "1.time.timezone",
+        "pass": true
+      },
+      {
+        "field": "1.time.isAllDay",
+        "pass": true
+      },
+      {
+        "field": "1.time.precision",
+        "pass": true
+      },
+      {
+        "field": "1.time.relatedTaskIds",
+        "pass": true
+      },
+      {
+        "field": "1.time.relatedMaterialIds",
+        "pass": true
+      },
+      {
+        "field": "1.material.name",
+        "pass": true
+      },
+      {
+        "field": "1.material.formatRequirements",
+        "pass": true
+      },
+      {
+        "field": "1.material.namingRequirements",
+        "pass": true
+      },
+      {
+        "field": "1.material.quantity",
+        "pass": true
+      },
+      {
+        "field": "1.material.submissionChannel",
+        "pass": true
+      },
+      {
+        "field": "1.material.relatedTaskIds",
+        "pass": true
+      },
+      {
+        "field": "1.material.deadline",
+        "pass": true
+      },
+      {
+        "field": "1.evidence.sourceVersionId",
+        "pass": true
+      },
+      {
+        "field": "1.evidence.quote",
+        "pass": true
+      }
+    ]
+  },
+  "receiptChecks": [
+    {
+      "sourceId": "source:54648e8e",
+      "rawParsedEqualsResponse": true,
+      "rawShaMatches": true,
+      "responseShaMatches": true,
+      "sourceTextUnchanged": true,
+      "originalFiles": [
+        {
+          "path": "docs/recognition-optimization/RCO-5-008-B8_DEVELOPMENT_DATASET.json",
+          "matches": true
+        },
+        {
+          "path": "docs/recognition-optimization/rco-5-008-b8-runs/rco-5-008-b8-m1-20260904a/raw-results.json",
+          "matches": true
+        }
+      ],
+      "kind": "seen-model-candidate",
+      "failedPreserved": true,
+      "seenNotNewModel": true
+    },
+    {
+      "sourceId": "source:3bff55b7",
+      "rawParsedEqualsResponse": true,
+      "rawShaMatches": true,
+      "responseShaMatches": true,
+      "sourceTextUnchanged": true,
+      "originalFiles": [
+        {
+          "path": "src/experiments/mainline01/fixtures.ts",
+          "matches": true
+        }
+      ],
+      "kind": "engineering-service-shaped",
+      "onlyAllowedSourcePositionChanges": true,
+      "validUniqueBinding": true,
+      "embeddedIdentityMatches": true
+    },
+    {
+      "sourceId": "source:89e35f07",
+      "rawParsedEqualsResponse": true,
+      "rawShaMatches": true,
+      "responseShaMatches": true,
+      "sourceTextUnchanged": true,
+      "originalFiles": [
+        {
+          "path": "src/experiments/mainline01/fixtures.ts",
+          "matches": true
+        }
+      ],
+      "kind": "engineering-service-shaped",
+      "onlyAllowedSourcePositionChanges": true,
+      "validUniqueBinding": true,
+      "embeddedIdentityMatches": true
+    },
+    {
+      "sourceId": "source:55cb9071",
+      "rawParsedEqualsResponse": true,
+      "rawShaMatches": true,
+      "responseShaMatches": true,
+      "sourceTextUnchanged": true,
+      "originalFiles": [
+        {
+          "path": "src/experiments/mainline01/fixtures.ts",
+          "matches": true
+        }
+      ],
+      "kind": "engineering-service-shaped",
+      "onlyAllowedSourcePositionChanges": true,
+      "validUniqueBinding": true,
+      "embeddedIdentityMatches": true
+    },
+    {
+      "sourceId": "source:8c45d6df",
+      "rawParsedEqualsResponse": true,
+      "rawShaMatches": true,
+      "responseShaMatches": true,
+      "sourceTextUnchanged": true,
+      "originalFiles": [
+        {
+          "path": "src/experiments/mainline01/fixtures.ts",
+          "matches": true
+        }
+      ],
+      "kind": "engineering-service-shaped",
+      "onlyAllowedSourcePositionChanges": true,
+      "validUniqueBinding": true,
+      "embeddedIdentityMatches": true
+    }
+  ],
+  "noDate": {
+    "taskId": "task:source:55cb9071:draft:1:save",
+    "relatedTimeCount": 0,
+    "totalReminderRecords": 0
+  },
+  "manualDate": {
+    "taskId": "task:source:89e35f07:draft:1:save",
+    "rawText": "2026-09-18",
+    "normalizedValue": "2026-09-18",
+    "timezone": null,
+    "precision": "date_only",
+    "isAllDay": true
+  },
+  "editHistory": [
+    {
+      "id": "confirmation-v2-edit:source:89e35f07:draft:1:57d37f07-f092-4496-9081-2cf3e160eb75",
+      "field": "[\"save\",\"title\"]",
+      "before": "保存活动手册",
+      "after": "保存活动手册（核对版）",
+      "sourceVersionId": "source:89e35f07:version:1"
+    },
+    {
+      "id": "confirmation-v2-edit:source:89e35f07:draft:1:ef4facc4-0736-4496-b2bb-f1825e1daa17",
+      "field": "[\"save\",\"deadline\"]",
+      "before": "",
+      "after": "2026-09-18",
+      "sourceVersionId": "source:89e35f07:version:1"
+    },
+    {
+      "id": "confirmation-v2-edit:source:89e35f07:draft:1:a183463e-309a-4676-ba8c-8ea7d1495fb3",
+      "field": "[\"save\",\"title\"]",
+      "before": "保存活动手册（核对版）",
+      "after": "保存活动手册（跨标签核对版）",
+      "sourceVersionId": "source:89e35f07:version:1"
+    }
+  ],
+  "counts": {
+    "sources": 5,
+    "sourceVersions": 5,
+    "recognitionRuns": 5,
+    "extractionDrafts": 5,
+    "projects": 0,
+    "milestones": 0,
+    "workPackages": 0,
+    "tasks": 6,
+    "materials": 4,
+    "timePoints": 5,
+    "events": 0,
+    "evidenceRefs": 4,
+    "changeProposals": 0,
+    "historyRecords": 18,
+    "reminderRecords": 0,
+    "migrationMetadata": 0
+  },
+  "fileUnchangedAfterRead": true,
+  "modelAccuracy": "本轮未测量",
+  "modelCalls": 0,
+  "modelNetwork": 0,
+  "feesCny": 0,
+  "newBrowserOrDatabaseOperations": 0,
+  "newData": 0
+}

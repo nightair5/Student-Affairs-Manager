@@ -1,0 +1,688 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "humanMetrics": "NOT_OBSERVABLE",
+  "reports": [
+    {
+      "draftId": "source:3ab76585:draft:1",
+      "report": {
+        "version": "ordinary-source-measurement-d26-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semantic": {
+          "version": "d22-semantic-active-input-1",
+          "role": "ENGINEERING_REPLAY",
+          "condition": "assisted",
+          "semanticFields": [],
+          "semanticFieldCount": 0,
+          "storageLeafFields": [],
+          "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+          "correctDisposition": "NOT_ADJUDICATED",
+          "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+          "activeEditMs": 0,
+          "wallMs": 318732,
+          "readMs": 318614,
+          "waitMs": 118,
+          "hiddenMs": 0,
+          "idleMs": 0,
+          "structural": false,
+          "missing": [],
+          "legacyMeasurement32": {
+            "version": "low-edit-v2-exploratory-1",
+            "role": "ENGINEERING_REPLAY",
+            "correctDisposition": null,
+            "zeroSubstantiveModification": null,
+            "lowModificationCorrectDisposition": null,
+            "committedFields": [],
+            "fieldCount": 0,
+            "structural": false,
+            "activeEditMs": 0,
+            "readMs": 318614,
+            "waitMs": 118,
+            "hiddenMs": 0,
+            "idleMs": 0,
+            "missing": [],
+            "postTerminalEvents": 0,
+            "humanMetrics": "NOT_OBSERVABLE"
+          },
+          "humanMetrics": "NOT_OBSERVABLE",
+          "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+        },
+        "linkage": {
+          "version": "d20-review-session-measurement-1",
+          "role": "ENGINEERING_REPLAY",
+          "checkpointStageCount": 0,
+          "unconfirmedFieldKeys": [],
+          "conflictFieldKeys": [],
+          "pageEditIds": [],
+          "verifiedCommitIds": [
+            "source-review:source:3ab76585:draft:1:fnv1a32:824115c7"
+          ],
+          "unverifiedCommitIds": [],
+          "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "correctionCheckpointLinks": [],
+        "inputEpisodeCount": 0,
+        "committedCorrectionFields": [],
+        "countingRule": "连续输入及失败后手动重试保留同一editId；按已提交语义字段去重。回改原值保留编辑成本，只有形成已保存差异才记纠正字段；多次已保存纠正另保留全部提交审计。",
+        "uncommittedEditIds": [],
+        "manualInitialEntry": "NOT_APPLICABLE",
+        "assistedCorrection": {
+          "inputEpisodeCount": 0,
+          "fields": []
+        },
+        "outcomes": {
+          "complete": true,
+          "partial": false,
+          "failureEvents": 1
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "humanTrial": "NOT_RUN",
+        "sourceRole": "ENGINEERING_REPLAY",
+        "correctionGrouping": "date leaf fields share one date episode; event addition is structural; no semantic correctness inferred from saving"
+      }
+    },
+    {
+      "draftId": "source:ff21306f:draft:1",
+      "report": {
+        "version": "ordinary-source-measurement-d26-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semantic": {
+          "version": "d22-semantic-active-input-1",
+          "role": "ENGINEERING_REPLAY",
+          "condition": "assisted",
+          "semanticFields": [],
+          "semanticFieldCount": 0,
+          "storageLeafFields": [],
+          "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+          "correctDisposition": "NOT_ADJUDICATED",
+          "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+          "activeEditMs": null,
+          "wallMs": null,
+          "readMs": null,
+          "waitMs": null,
+          "hiddenMs": null,
+          "idleMs": null,
+          "structural": false,
+          "missing": [
+            "unclosed interval",
+            "terminal commit/readback"
+          ],
+          "legacyMeasurement32": {
+            "version": "low-edit-v2-exploratory-1",
+            "role": "ENGINEERING_REPLAY",
+            "correctDisposition": null,
+            "zeroSubstantiveModification": null,
+            "lowModificationCorrectDisposition": null,
+            "committedFields": [],
+            "fieldCount": 0,
+            "structural": false,
+            "activeEditMs": null,
+            "readMs": null,
+            "waitMs": null,
+            "hiddenMs": null,
+            "idleMs": null,
+            "missing": [
+              "unclosed interval",
+              "terminal commit/readback"
+            ],
+            "postTerminalEvents": 0,
+            "humanMetrics": "NOT_OBSERVABLE"
+          },
+          "humanMetrics": "NOT_OBSERVABLE",
+          "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+        },
+        "linkage": {
+          "version": "d20-review-session-measurement-1",
+          "role": "ENGINEERING_REPLAY",
+          "checkpointStageCount": 0,
+          "unconfirmedFieldKeys": [],
+          "conflictFieldKeys": [],
+          "pageEditIds": [],
+          "verifiedCommitIds": [],
+          "unverifiedCommitIds": [],
+          "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "correctionCheckpointLinks": [],
+        "inputEpisodeCount": 0,
+        "committedCorrectionFields": [],
+        "countingRule": "连续输入及失败后手动重试保留同一editId；按已提交语义字段去重。回改原值保留编辑成本，只有形成已保存差异才记纠正字段；多次已保存纠正另保留全部提交审计。",
+        "uncommittedEditIds": [],
+        "manualInitialEntry": "NOT_APPLICABLE",
+        "assistedCorrection": {
+          "inputEpisodeCount": 0,
+          "fields": []
+        },
+        "outcomes": {
+          "complete": false,
+          "partial": false,
+          "failureEvents": 0
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "humanTrial": "NOT_RUN",
+        "sourceRole": "ENGINEERING_REPLAY",
+        "correctionGrouping": "date leaf fields share one date episode; event addition is structural; no semantic correctness inferred from saving"
+      }
+    },
+    {
+      "draftId": "source:f4bcb778:draft:1",
+      "report": {
+        "version": "ordinary-source-measurement-d26-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semantic": {
+          "version": "d22-semantic-active-input-1",
+          "role": "ENGINEERING_REPLAY",
+          "condition": "assisted",
+          "semanticFields": [],
+          "semanticFieldCount": 0,
+          "storageLeafFields": [],
+          "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+          "correctDisposition": "NOT_ADJUDICATED",
+          "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+          "activeEditMs": null,
+          "wallMs": null,
+          "readMs": null,
+          "waitMs": null,
+          "hiddenMs": null,
+          "idleMs": null,
+          "structural": false,
+          "missing": [
+            "registration",
+            "unclosed interval",
+            "terminal commit/readback"
+          ],
+          "legacyMeasurement32": {
+            "version": "low-edit-v2-exploratory-1",
+            "role": "ENGINEERING_REPLAY",
+            "correctDisposition": null,
+            "zeroSubstantiveModification": null,
+            "lowModificationCorrectDisposition": null,
+            "committedFields": [],
+            "fieldCount": 0,
+            "structural": false,
+            "activeEditMs": null,
+            "readMs": null,
+            "waitMs": null,
+            "hiddenMs": null,
+            "idleMs": null,
+            "missing": [
+              "registration",
+              "unclosed interval",
+              "terminal commit/readback"
+            ],
+            "postTerminalEvents": 0,
+            "humanMetrics": "NOT_OBSERVABLE"
+          },
+          "humanMetrics": "NOT_OBSERVABLE",
+          "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+        },
+        "linkage": {
+          "version": "d20-review-session-measurement-1",
+          "role": "ENGINEERING_REPLAY",
+          "checkpointStageCount": 0,
+          "unconfirmedFieldKeys": [],
+          "conflictFieldKeys": [],
+          "pageEditIds": [],
+          "verifiedCommitIds": [],
+          "unverifiedCommitIds": [],
+          "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "correctionCheckpointLinks": [],
+        "inputEpisodeCount": 0,
+        "committedCorrectionFields": [],
+        "countingRule": "连续输入及失败后手动重试保留同一editId；按已提交语义字段去重。回改原值保留编辑成本，只有形成已保存差异才记纠正字段；多次已保存纠正另保留全部提交审计。",
+        "uncommittedEditIds": [],
+        "manualInitialEntry": "NOT_APPLICABLE",
+        "assistedCorrection": {
+          "inputEpisodeCount": 0,
+          "fields": []
+        },
+        "outcomes": {
+          "complete": false,
+          "partial": false,
+          "failureEvents": 0
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "humanTrial": "NOT_RUN",
+        "sourceRole": "ENGINEERING_REPLAY",
+        "correctionGrouping": "date leaf fields share one date episode; event addition is structural; no semantic correctness inferred from saving"
+      }
+    },
+    {
+      "draftId": "source:7a33d1df:draft:1",
+      "report": {
+        "version": "ordinary-source-measurement-d26-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semantic": {
+          "version": "d22-semantic-active-input-1",
+          "role": "ENGINEERING_REPLAY",
+          "condition": "assisted",
+          "semanticFields": [
+            "task:draft-item:source:7a33d1df:draft:1:task-0001:estimatedMinutes"
+          ],
+          "semanticFieldCount": 1,
+          "storageLeafFields": [
+            "task:draft-item:source:7a33d1df:draft:1:task-0001:facts"
+          ],
+          "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+          "correctDisposition": "NOT_ADJUDICATED",
+          "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+          "activeEditMs": null,
+          "wallMs": null,
+          "readMs": null,
+          "waitMs": null,
+          "hiddenMs": null,
+          "idleMs": null,
+          "structural": false,
+          "missing": [
+            "refresh time discontinuity"
+          ],
+          "legacyMeasurement32": {
+            "version": "low-edit-v2-exploratory-1",
+            "role": "ENGINEERING_REPLAY",
+            "correctDisposition": null,
+            "zeroSubstantiveModification": null,
+            "lowModificationCorrectDisposition": null,
+            "committedFields": [
+              "task:draft-item:source:7a33d1df:draft:1:task-0001:facts"
+            ],
+            "fieldCount": 1,
+            "structural": false,
+            "activeEditMs": null,
+            "readMs": null,
+            "waitMs": null,
+            "hiddenMs": null,
+            "idleMs": null,
+            "missing": [
+              "refresh time discontinuity"
+            ],
+            "postTerminalEvents": 0,
+            "humanMetrics": "NOT_OBSERVABLE"
+          },
+          "humanMetrics": "NOT_OBSERVABLE",
+          "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+        },
+        "linkage": {
+          "version": "d21-review-session-measurement-2",
+          "role": "ENGINEERING_REPLAY",
+          "checkpointStageCount": 1,
+          "unconfirmedFieldKeys": [
+            "task:draft-item:source:7a33d1df:draft:1:task-0001:facts"
+          ],
+          "conflictFieldKeys": [],
+          "pageEditIds": [
+            "6f404fea-cb93-4969-8f93-77734b748ee4"
+          ],
+          "verifiedCommitIds": [
+            "source-review:source:7a33d1df:draft:1:fnv1a32:0a99f37f"
+          ],
+          "unverifiedCommitIds": [],
+          "checkpointToEditId": [
+            {
+              "field": "task:draft-item:source:7a33d1df:draft:1:task-0001:facts",
+              "editId": "6f404fea-cb93-4969-8f93-77734b748ee4",
+              "checkpointHistoryId": "19658fd3-4442-45d2-800c-2d6c9ed4ad9d",
+              "commitId": "source-review:source:7a33d1df:draft:1:fnv1a32:0a99f37f",
+              "readbackVerified": true
+            }
+          ],
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "correctionCheckpointLinks": [
+          {
+            "editId": "6f404fea-cb93-4969-8f93-77734b748ee4",
+            "field": "task:draft-item:source:7a33d1df:draft:1:task-0001:facts",
+            "checkpointOperationId": "19658fd3-4442-45d2-800c-2d6c9ed4ad9d",
+            "checkpointRevision": "b752752e-73d8-4b0d-b04e-cc050fb3f9bf",
+            "commits": [
+              {
+                "commitId": "source-review:source:7a33d1df:draft:1:fnv1a32:0a99f37f",
+                "operationIds": [
+                  "source-review:source:7a33d1df:draft:1:fnv1a32:0a99f37f"
+                ],
+                "readbackIds": [
+                  "e5780986-3e70-4836-8418-8ec0532ae0fc"
+                ]
+              }
+            ]
+          }
+        ],
+        "inputEpisodeCount": 1,
+        "committedCorrectionFields": [
+          "task:draft-item:source:7a33d1df:draft:1:task-0001:estimatedMinutes"
+        ],
+        "countingRule": "连续输入及失败后手动重试保留同一editId；按已提交语义字段去重。回改原值保留编辑成本，只有形成已保存差异才记纠正字段；多次已保存纠正另保留全部提交审计。",
+        "uncommittedEditIds": [],
+        "manualInitialEntry": "NOT_APPLICABLE",
+        "assistedCorrection": {
+          "inputEpisodeCount": 1,
+          "fields": [
+            "task:draft-item:source:7a33d1df:draft:1:task-0001:estimatedMinutes"
+          ]
+        },
+        "outcomes": {
+          "complete": true,
+          "partial": false,
+          "failureEvents": 1
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "humanTrial": "NOT_RUN",
+        "sourceRole": "ENGINEERING_REPLAY",
+        "correctionGrouping": "date leaf fields share one date episode; event addition is structural; no semantic correctness inferred from saving"
+      }
+    },
+    {
+      "draftId": "source:fb2c8e4f:draft:1",
+      "report": {
+        "version": "ordinary-source-measurement-d26-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "semantic": {
+          "version": "d22-semantic-active-input-1",
+          "role": "ENGINEERING_REPLAY",
+          "condition": "assisted",
+          "semanticFields": [],
+          "semanticFieldCount": 0,
+          "storageLeafFields": [],
+          "firstWholeSuggestionCorrect": "NOT_ADJUDICATED",
+          "correctDisposition": "NOT_ADJUDICATED",
+          "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+          "activeEditMs": 0,
+          "wallMs": 14574,
+          "readMs": 14552,
+          "waitMs": 22,
+          "hiddenMs": 0,
+          "idleMs": 0,
+          "structural": false,
+          "missing": [],
+          "legacyMeasurement32": {
+            "version": "low-edit-v2-exploratory-1",
+            "role": "ENGINEERING_REPLAY",
+            "correctDisposition": null,
+            "zeroSubstantiveModification": null,
+            "lowModificationCorrectDisposition": null,
+            "committedFields": [],
+            "fieldCount": 0,
+            "structural": false,
+            "activeEditMs": 0,
+            "readMs": 14552,
+            "waitMs": 22,
+            "hiddenMs": 0,
+            "idleMs": 0,
+            "missing": [],
+            "postTerminalEvents": 0,
+            "humanMetrics": "NOT_OBSERVABLE"
+          },
+          "humanMetrics": "NOT_OBSERVABLE",
+          "timeProgramConversion": "edit_activity pulses only; original editId/commit/readback unchanged"
+        },
+        "linkage": {
+          "version": "d20-review-session-measurement-1",
+          "role": "ENGINEERING_REPLAY",
+          "checkpointStageCount": 0,
+          "unconfirmedFieldKeys": [],
+          "conflictFieldKeys": [],
+          "pageEditIds": [],
+          "verifiedCommitIds": [
+            "source-review:source:fb2c8e4f:draft:1:fnv1a32:1a5fe650"
+          ],
+          "unverifiedCommitIds": [],
+          "checkpointToEditId": "NOT_DIRECTLY_LINKED",
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "correctionCheckpointLinks": [],
+        "inputEpisodeCount": 0,
+        "committedCorrectionFields": [],
+        "countingRule": "连续输入及失败后手动重试保留同一editId；按已提交语义字段去重。回改原值保留编辑成本，只有形成已保存差异才记纠正字段；多次已保存纠正另保留全部提交审计。",
+        "uncommittedEditIds": [],
+        "manualInitialEntry": "NOT_APPLICABLE",
+        "assistedCorrection": {
+          "inputEpisodeCount": 0,
+          "fields": []
+        },
+        "outcomes": {
+          "complete": true,
+          "partial": false,
+          "failureEvents": 0
+        },
+        "humanMetrics": "NOT_OBSERVABLE",
+        "humanTrial": "NOT_RUN",
+        "sourceRole": "ENGINEERING_REPLAY",
+        "correctionGrouping": "date leaf fields share one date episode; event addition is structural; no semantic correctness inferred from saving"
+      }
+    }
+  ],
+  "trace": [
+    {
+      "id": "a1bfa2be-6e28-40d5-9214-4f424182447a",
+      "draftId": "source:fb2c8e4f:draft:1",
+      "atMs": 1791023023368,
+      "kind": "begin"
+    },
+    {
+      "id": "95f1ca63-dd87-49d5-acda-bc4d05b7e96d",
+      "draftId": "source:fb2c8e4f:draft:1",
+      "atMs": 1791023023371,
+      "kind": "read"
+    },
+    {
+      "id": "c8f9f2c2-a925-4f90-9994-f40470754681",
+      "draftId": "source:fb2c8e4f:draft:1",
+      "atMs": 1791023037910,
+      "kind": "wait"
+    },
+    {
+      "id": "e82dca09-0ff3-4f9d-aacc-96ce8757826f",
+      "draftId": "source:fb2c8e4f:draft:1",
+      "atMs": 1791023037930,
+      "kind": "commit",
+      "commitId": "source-review:source:fb2c8e4f:draft:1:fnv1a32:1a5fe650",
+      "disposition": "no_task",
+      "includedEditIds": [],
+      "includedOperationIds": [
+        "source-review:source:fb2c8e4f:draft:1:fnv1a32:1a5fe650"
+      ],
+      "fields": [],
+      "semanticFields": [],
+      "structural": false
+    },
+    {
+      "id": "1da052d0-e67f-4c3f-bf92-089fb00f806c",
+      "draftId": "source:fb2c8e4f:draft:1",
+      "atMs": 1791023037932,
+      "kind": "wait_end"
+    },
+    {
+      "id": "d872198b-30be-4aa5-b074-372a1fb1ab3a",
+      "draftId": "source:fb2c8e4f:draft:1",
+      "atMs": 1791023037934,
+      "kind": "readback",
+      "commitId": "source-review:source:fb2c8e4f:draft:1:fnv1a32:1a5fe650"
+    },
+    {
+      "id": "e217b81f-ca43-41be-9407-ebe0beb3d82f",
+      "draftId": "source:fb2c8e4f:draft:1",
+      "atMs": 1791023037942,
+      "kind": "end",
+      "disposition": "no_task",
+      "commitId": "source-review:source:fb2c8e4f:draft:1:fnv1a32:1a5fe650"
+    },
+    {
+      "id": "d549e154-0bd3-41af-be10-119ccde80e36",
+      "draftId": "source:7a33d1df:draft:1",
+      "atMs": 1791023067140,
+      "kind": "begin"
+    },
+    {
+      "id": "37c0f343-6802-4c4e-81f7-65bbb126224c",
+      "draftId": "source:7a33d1df:draft:1",
+      "atMs": 1791023067143,
+      "kind": "read"
+    },
+    {
+      "id": "b2655b92-fd85-4a26-9008-41baca1a47ab",
+      "draftId": "source:7a33d1df:draft:1",
+      "atMs": 1791023097593,
+      "kind": "edit",
+      "fieldKey": "task:draft-item:source:7a33d1df:draft:1:task-0001:facts",
+      "editId": "6f404fea-cb93-4969-8f93-77734b748ee4"
+    },
+    {
+      "id": "68da73a4-5814-41e1-9906-ce5a57b9004d",
+      "draftId": "source:7a33d1df:draft:1",
+      "atMs": 1791023098648,
+      "kind": "wait"
+    },
+    {
+      "id": "8cb8c940-51e2-4631-a4f3-10b49a150caf",
+      "draftId": "source:7a33d1df:draft:1",
+      "atMs": 1791023098685,
+      "kind": "wait_end"
+    },
+    {
+      "id": "2407fe74-916d-483a-97b8-9087459261a5",
+      "draftId": "source:7a33d1df:draft:1",
+      "atMs": 1791023098691,
+      "kind": "failure",
+      "error": "RECORDED_INJECTED_FORMAL_SAVE_FAILURE"
+    },
+    {
+      "id": "fc20e9a2-51e0-42ef-a84a-761c29050acf",
+      "draftId": "source:7a33d1df:draft:1",
+      "atMs": 1791023135940,
+      "kind": "restore"
+    },
+    {
+      "id": "88a7a093-f2a3-443d-a8eb-b0c1c1892ec0",
+      "draftId": "source:7a33d1df:draft:1",
+      "atMs": 1791023135943,
+      "kind": "read"
+    },
+    {
+      "id": "e9eb09a1-c033-480b-9a1a-20b62b89c0b4",
+      "draftId": "source:7a33d1df:draft:1",
+      "atMs": 1791023136896,
+      "kind": "wait"
+    },
+    {
+      "id": "d4ab3ec1-b64f-4040-ae3c-1d9340facc70",
+      "draftId": "source:7a33d1df:draft:1",
+      "atMs": 1791023136966,
+      "kind": "commit",
+      "commitId": "source-review:source:7a33d1df:draft:1:fnv1a32:0a99f37f",
+      "disposition": "confirmed",
+      "includedEditIds": [
+        "6f404fea-cb93-4969-8f93-77734b748ee4"
+      ],
+      "includedOperationIds": [
+        "source-review:source:7a33d1df:draft:1:fnv1a32:0a99f37f"
+      ],
+      "fields": [
+        "task:draft-item:source:7a33d1df:draft:1:task-0001:facts"
+      ],
+      "semanticFields": [
+        "task:draft-item:source:7a33d1df:draft:1:task-0001:estimatedMinutes"
+      ],
+      "structural": false
+    },
+    {
+      "id": "cc0aff92-2792-43aa-9c98-c4a3552bb297",
+      "draftId": "source:7a33d1df:draft:1",
+      "atMs": 1791023136969,
+      "kind": "wait_end"
+    },
+    {
+      "id": "e5780986-3e70-4836-8418-8ec0532ae0fc",
+      "draftId": "source:7a33d1df:draft:1",
+      "atMs": 1791023136970,
+      "kind": "readback",
+      "commitId": "source-review:source:7a33d1df:draft:1:fnv1a32:0a99f37f"
+    },
+    {
+      "id": "a659a22a-61e3-4f75-9162-bd62e509b5ee",
+      "draftId": "source:7a33d1df:draft:1",
+      "atMs": 1791023136991,
+      "kind": "end",
+      "disposition": "confirmed",
+      "commitId": "source-review:source:7a33d1df:draft:1:fnv1a32:0a99f37f"
+    },
+    {
+      "id": "41564593-6f2d-4d62-a2ce-b758c88afe8b",
+      "draftId": "source:ff21306f:draft:1",
+      "atMs": 1791023292687,
+      "kind": "begin"
+    },
+    {
+      "id": "0afe23e8-0bdc-4117-8c99-cccab7722f87",
+      "draftId": "source:ff21306f:draft:1",
+      "atMs": 1791023292700,
+      "kind": "read"
+    },
+    {
+      "id": "a13b6ad9-111b-429e-912f-3a185228bbfd",
+      "draftId": "source:3ab76585:draft:1",
+      "atMs": 1791023361410,
+      "kind": "begin"
+    },
+    {
+      "id": "11b63695-5c3a-468e-b792-09570d0640fe",
+      "draftId": "source:3ab76585:draft:1",
+      "atMs": 1791023361421,
+      "kind": "read"
+    },
+    {
+      "id": "152cac9d-9d10-4be8-8294-73e0ae25b10c",
+      "draftId": "source:3ab76585:draft:1",
+      "atMs": 1791023596408,
+      "kind": "wait"
+    },
+    {
+      "id": "0d3285f6-7827-46de-aad3-2d57c910d6c6",
+      "draftId": "source:3ab76585:draft:1",
+      "atMs": 1791023596521,
+      "kind": "commit",
+      "commitId": "source-review:source:3ab76585:draft:1:fnv1a32:824115c7",
+      "disposition": "no_task",
+      "includedEditIds": [],
+      "includedOperationIds": [
+        "source-review:source:3ab76585:draft:1:fnv1a32:824115c7"
+      ],
+      "fields": [],
+      "semanticFields": [],
+      "structural": false
+    },
+    {
+      "id": "8d0b07f7-f2f1-46e3-811b-1397d40a6163",
+      "draftId": "source:3ab76585:draft:1",
+      "atMs": 1791023596526,
+      "kind": "wait_end"
+    },
+    {
+      "id": "266aae2e-4feb-4a14-847e-b910397e9bca",
+      "draftId": "source:3ab76585:draft:1",
+      "atMs": 1791023596527,
+      "kind": "failure",
+      "error": "RECORDED_INJECTED_READBACK_FAILURE"
+    },
+    {
+      "id": "42a0e9ab-e0ad-4b4d-a841-183d25225638",
+      "draftId": "source:3ab76585:draft:1",
+      "atMs": 1791023680105,
+      "kind": "readback",
+      "commitId": "source-review:source:3ab76585:draft:1:fnv1a32:824115c7"
+    },
+    {
+      "id": "c28af276-b107-41f0-8454-33e63e95bf98",
+      "draftId": "source:3ab76585:draft:1",
+      "atMs": 1791023680142,
+      "kind": "end",
+      "disposition": "no_task",
+      "commitId": "source-review:source:3ab76585:draft:1:fnv1a32:824115c7"
+    }
+  ]
+}

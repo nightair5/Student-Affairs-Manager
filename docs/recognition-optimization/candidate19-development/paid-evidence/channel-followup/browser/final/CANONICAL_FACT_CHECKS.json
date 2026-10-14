@@ -1,0 +1,1877 @@
+{
+  "role": "ENGINEERING_REPLAY_NOT_SEMANTIC_ADJUDICATION",
+  "database": "rco-mainline-01-02-i1-d27-plan-recorded-channelfinal1004",
+  "sourceCount": 6,
+  "counts": {
+    "tasks": 5,
+    "projects": 0,
+    "events": 4,
+    "timePoints": 8,
+    "materials": 1
+  },
+  "refreshFormalArraysEqual": true,
+  "allCanonicalIdsUnique": true,
+  "evidenceLiteralSameSource": true,
+  "ownersAndEventDirectionsConsistent": true,
+  "dependenciesSameSource": true,
+  "formalFailureAtomic": true,
+  "committedReadbackFailureRecoveryDidNotResubmit": true,
+  "nullTimes": [
+    {
+      "id": "time:source:c3c1334e:draft:1:time-0001",
+      "rawText": "周日晚间",
+      "type": "event_start",
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:c382fc0e:draft:1:time-0003",
+      "rawText": "周五夜间开始",
+      "type": "event_start",
+      "precision": "vague",
+      "needsConfirmation": true
+    },
+    {
+      "id": "time:source:c382fc0e:draft:1:time-0004",
+      "rawText": "恢复时间尚未公布",
+      "type": "event_end",
+      "precision": "vague",
+      "needsConfirmation": true
+    }
+  ],
+  "readbackSha256": "b838fbe9545bc430776cabc9ef70933d3824b0d1cb2d94e9ed7af5918cfa79d5",
+  "refreshSha256": "b838fbe9545bc430776cabc9ef70933d3824b0d1cb2d94e9ed7af5918cfa79d5",
+  "cases": [
+    {
+      "source": "C19-DEV-S06",
+      "sourceVersionId": "source:7ad3faae:version:1",
+      "draftId": "source:7ad3faae:draft:1",
+      "status": "confirmed",
+      "commitId": "source-review:source:7ad3faae:draft:1:fnv1a32:ed6b1af6",
+      "readbackVerifiedAt": "2026-10-04T08:20:33.563Z",
+      "canonical": {
+        "tasks": [
+          {
+            "id": "task:source:7ad3faae:draft:1:task-0001",
+            "projectId": null,
+            "milestoneId": null,
+            "workPackageId": null,
+            "parentTaskId": null,
+            "title": "核对储物柜编号",
+            "description": "请核对储物柜编号。",
+            "nextAction": "核对储物柜编号",
+            "status": "todo",
+            "estimatedMinutes": null,
+            "manualPriority": null,
+            "snoozedUntil": null,
+            "dependencyIds": [],
+            "createdAt": "2026-10-04T08:20:05.868Z",
+            "updatedAt": "2026-10-04T08:20:05.868Z",
+            "version": 1,
+            "legacyData": {
+              "recognitionTempId": "task-0001",
+              "actionVerb": "核对",
+              "actionObject": "储物柜编号",
+              "completionCriteria": [],
+              "inferenceLevel": "explicit",
+              "prioritySuggestion": "medium",
+              "priority": "中",
+              "evidenceIds": [
+                "d26-scope-0001-c848a686b7554635c669da31513d61298ebaf62f11c6873adccbb83301c90707"
+              ],
+              "sourceId": "source:7ad3faae",
+              "category": "其他"
+            }
+          }
+        ],
+        "events": [],
+        "timePoints": [],
+        "materials": []
+      },
+      "firstSuggestion": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "Candidate19 固定录制（非实时调用）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "核对储物柜编号",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，0项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "核对储物柜编号",
+            "description": "请核对储物柜编号。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-0001",
+            "actionVerb": "核对",
+            "actionObject": "储物柜编号",
+            "evidenceIds": [
+              "d26-scope-0001-c848a686b7554635c669da31513d61298ebaf62f11c6873adccbb83301c90707"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-c848a686b7554635c669da31513d61298ebaf62f11c6873adccbb83301c90707",
+            "sourceId": "source:7ad3faae",
+            "quote": "请核对储物柜编号。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-7672c20521a2a3b1b4f93c7ad6fad528c731548b35e12e97a6301da714c5e685",
+            "sourceId": "source:7ad3faae",
+            "quote": "本通知没有截止日期，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-1c2ceecea3b920360175920ff6e6938cde9e7150a12399ea091dc36337fa4ddf",
+            "sourceId": "source:7ad3faae",
+            "quote": "不需要准备附件，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-1ec4db77bcaac5c71758c655c8b7839ab5073d4ae19e7aed752c9133dcd7ef02",
+            "sourceId": "source:7ad3faae",
+            "quote": "也没有活动安排。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "本通知没有截止日期，",
+            "reason": "other"
+          },
+          {
+            "text": "不需要准备附件，",
+            "reason": "other"
+          },
+          {
+            "text": "也没有活动安排。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "channelAudit": {
+        "version": "material-channel-role-grounding-1.0.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "originalChannel": null,
+      "originalResponseSha256": "0f011e226cc43b5ab15acde3301e5def50ba3dd459d44582b1edf5906275ddd7"
+    },
+    {
+      "source": "C19-DEV-S04",
+      "sourceVersionId": "source:bf7161c9:version:1",
+      "draftId": "source:bf7161c9:draft:1",
+      "status": "confirmed",
+      "commitId": "source-review:source:bf7161c9:draft:1:fnv1a32:47ec5e70",
+      "readbackVerifiedAt": "2026-10-04T08:19:45.444Z",
+      "canonical": {
+        "tasks": [
+          {
+            "id": "task:source:bf7161c9:draft:1:task-0002",
+            "projectId": null,
+            "milestoneId": null,
+            "workPackageId": null,
+            "parentTaskId": null,
+            "title": "保存活动联系编号",
+            "description": "另请保存活动联系编号。",
+            "nextAction": "保存活动联系编号",
+            "status": "todo",
+            "estimatedMinutes": null,
+            "manualPriority": null,
+            "snoozedUntil": null,
+            "dependencyIds": [],
+            "createdAt": "2026-10-04T08:19:45.373Z",
+            "updatedAt": "2026-10-04T08:19:45.373Z",
+            "version": 2,
+            "legacyData": {
+              "recognitionTempId": "task-0002",
+              "actionVerb": "保存",
+              "actionObject": "活动联系编号",
+              "completionCriteria": [],
+              "inferenceLevel": "explicit",
+              "prioritySuggestion": "medium",
+              "priority": "中",
+              "evidenceIds": [
+                "d26-scope-0004-c7a31b21333b7c90331d290e0e8e0ef5dc8c71b4003ad5f3b89f4ae033128408"
+              ],
+              "sourceId": "source:bf7161c9",
+              "category": "其他",
+              "v7Record": {
+                "id": "task:source:bf7161c9:draft:1:task-0002",
+                "hierarchyType": "task",
+                "actionVerb": "保存",
+                "actionObject": "活动联系编号",
+                "completionCriteria": [],
+                "evidenceIds": [
+                  "d26-scope-0004-c7a31b21333b7c90331d290e0e8e0ef5dc8c71b4003ad5f3b89f4ae033128408"
+                ],
+                "title": "保存活动联系编号",
+                "category": "其他",
+                "status": "待开始",
+                "deadline": "",
+                "estimatedMinutes": 60,
+                "estimatedMinutesKnown": false,
+                "nextAction": "保存活动联系编号",
+                "description": "另请保存活动联系编号。",
+                "priority": "中",
+                "riskFlags": [
+                  "待确认"
+                ],
+                "materials": [],
+                "dependencies": [],
+                "dependencyIds": [],
+                "reminders": [],
+                "sourceIds": [
+                  "source:bf7161c9"
+                ],
+                "priorityReason": "由当前权威实体计算并允许手动调整",
+                "priorityReasons": [
+                  "由当前权威实体计算并允许手动调整"
+                ],
+                "timePointIds": [
+                  "timepoint-task:source:bf7161c9:draft:1:task-0002-deadline"
+                ],
+                "materialIds": [],
+                "createdAt": "2026-10-04T08:19:45.373Z",
+                "updatedAt": "2026-10-04T08:19:45.373Z",
+                "history": [
+                  {
+                    "id": "history:task:source:bf7161c9:draft:1:task-0002:created",
+                    "field": "created",
+                    "before": "null",
+                    "after": "{\"id\":\"task:source:bf7161c9:draft:1:task-0002\"}",
+                    "changedAt": "2026-10-04T08:19:45.373Z",
+                    "actor": "user",
+                    "entityType": "task",
+                    "entityId": "task:source:bf7161c9:draft:1:task-0002",
+                    "action": "created"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "events": [],
+        "timePoints": [],
+        "materials": []
+      },
+      "firstSuggestion": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "Candidate19 固定录制（非实时调用）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "保存活动联系编号",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，0项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "保存活动联系编号",
+            "description": "另请保存活动联系编号。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-0002",
+            "actionVerb": "保存",
+            "actionObject": "活动联系编号",
+            "evidenceIds": [
+              "d26-scope-0004-c7a31b21333b7c90331d290e0e8e0ef5dc8c71b4003ad5f3b89f4ae033128408"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-d7a9c6916ccb060a441f7b5612fc6ac8ddd53903ebd8a2bfea018d6d7bec4166",
+            "sourceId": "source:bf7161c9",
+            "quote": "本轮展位申请仅限获准社团。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-f202d0964235c3d8e1ec52260f00eca294a2616141f1871f937fad856a139579",
+            "sourceId": "source:bf7161c9",
+            "quote": "你的社团尚未获准，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-b10ea1e90c1cc87cc0e96370232e36a899823673c9c94ea247685eed51ab88aa",
+            "sourceId": "source:bf7161c9",
+            "quote": "不能提交展位申请。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-c7a31b21333b7c90331d290e0e8e0ef5dc8c71b4003ad5f3b89f4ae033128408",
+            "sourceId": "source:bf7161c9",
+            "quote": "另请保存活动联系编号。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "本轮展位申请仅限获准社团。",
+            "reason": "other"
+          },
+          {
+            "text": "你的社团尚未获准，",
+            "reason": "other"
+          },
+          {
+            "text": "不能提交展位申请。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "channelAudit": {
+        "version": "material-channel-role-grounding-1.0.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "originalChannel": null,
+      "originalResponseSha256": "6ae14cd30dd8b18d8608a67f0b4cb38b3cbceb352e93deb441ec2ab26215c760"
+    },
+    {
+      "source": "C19-DEV-S03",
+      "sourceVersionId": "source:6fa9d993:version:1",
+      "draftId": "source:6fa9d993:draft:1",
+      "status": "partially_confirmed",
+      "commitId": "source-review:source:6fa9d993:draft:1:fnv1a32:120d4b2a",
+      "readbackVerifiedAt": "2026-10-04T08:17:35.857Z",
+      "canonical": {
+        "tasks": [
+          {
+            "id": "task:source:6fa9d993:draft:1:task-0001",
+            "projectId": null,
+            "milestoneId": null,
+            "workPackageId": null,
+            "parentTaskId": null,
+            "title": "填写场地使用登记",
+            "description": "先填写场地使用登记。",
+            "nextAction": "填写场地使用登记",
+            "status": "todo",
+            "estimatedMinutes": null,
+            "manualPriority": null,
+            "snoozedUntil": null,
+            "dependencyIds": [],
+            "createdAt": "2026-10-04T08:17:35.785Z",
+            "updatedAt": "2026-10-04T08:17:35.785Z",
+            "version": 3,
+            "legacyData": {
+              "recognitionTempId": "task-0001",
+              "actionVerb": "填写",
+              "actionObject": "场地使用登记",
+              "completionCriteria": [],
+              "inferenceLevel": "explicit",
+              "prioritySuggestion": "medium",
+              "priority": "中",
+              "evidenceIds": [
+                "d26-scope-0001-b58fb1231e63c30052fbd60d78ccd6325ef35c2b61fad3bb20b653e142a766aa"
+              ],
+              "sourceId": "source:6fa9d993",
+              "category": "其他",
+              "v7Record": {
+                "id": "task:source:6fa9d993:draft:1:task-0001",
+                "hierarchyType": "task",
+                "actionVerb": "填写",
+                "actionObject": "场地使用登记",
+                "completionCriteria": [],
+                "evidenceIds": [
+                  "d26-scope-0001-b58fb1231e63c30052fbd60d78ccd6325ef35c2b61fad3bb20b653e142a766aa"
+                ],
+                "title": "填写场地使用登记",
+                "category": "其他",
+                "status": "待开始",
+                "deadline": "",
+                "estimatedMinutes": 60,
+                "estimatedMinutesKnown": false,
+                "nextAction": "填写场地使用登记",
+                "description": "先填写场地使用登记。",
+                "priority": "中",
+                "riskFlags": [
+                  "待确认"
+                ],
+                "materials": [],
+                "dependencies": [],
+                "dependencyIds": [],
+                "reminders": [],
+                "sourceIds": [
+                  "source:6fa9d993"
+                ],
+                "priorityReason": "由当前权威实体计算并允许手动调整",
+                "priorityReasons": [
+                  "由当前权威实体计算并允许手动调整"
+                ],
+                "timePointIds": [
+                  "timepoint-task:source:6fa9d993:draft:1:task-0001-deadline"
+                ],
+                "materialIds": [],
+                "createdAt": "2026-10-04T08:17:35.785Z",
+                "updatedAt": "2026-10-04T08:17:35.785Z",
+                "history": [
+                  {
+                    "id": "history:task:source:6fa9d993:draft:1:task-0001:created",
+                    "field": "created",
+                    "before": "null",
+                    "after": "{\"id\":\"task:source:6fa9d993:draft:1:task-0001\"}",
+                    "changedAt": "2026-10-04T08:17:35.785Z",
+                    "actor": "user",
+                    "entityType": "task",
+                    "entityId": "task:source:6fa9d993:draft:1:task-0001",
+                    "action": "created"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "task:source:6fa9d993:draft:1:task-0002",
+            "projectId": null,
+            "milestoneId": null,
+            "workPackageId": null,
+            "parentTaskId": null,
+            "title": "递交场地使用登记",
+            "description": "填好之后递交场地使用登记。",
+            "nextAction": "递交场地使用登记",
+            "status": "todo",
+            "estimatedMinutes": null,
+            "manualPriority": null,
+            "snoozedUntil": null,
+            "dependencyIds": [
+              "task:source:6fa9d993:draft:1:task-0001"
+            ],
+            "createdAt": "2026-10-04T08:17:35.785Z",
+            "updatedAt": "2026-10-04T08:17:35.785Z",
+            "version": 3,
+            "legacyData": {
+              "recognitionTempId": "task-0002",
+              "actionVerb": "递交",
+              "actionObject": "场地使用登记",
+              "completionCriteria": [],
+              "inferenceLevel": "explicit",
+              "prioritySuggestion": "medium",
+              "priority": "中",
+              "evidenceIds": [
+                "d26-scope-0002-e138b9f6fff7d45c6bab515c608d8c1e6cf6c2a113174b0c10f7b7bebac52124"
+              ],
+              "sourceId": "source:6fa9d993",
+              "category": "其他",
+              "v7Record": {
+                "id": "task:source:6fa9d993:draft:1:task-0002",
+                "hierarchyType": "task",
+                "actionVerb": "递交",
+                "actionObject": "场地使用登记",
+                "completionCriteria": [],
+                "evidenceIds": [
+                  "d26-scope-0002-e138b9f6fff7d45c6bab515c608d8c1e6cf6c2a113174b0c10f7b7bebac52124"
+                ],
+                "title": "递交场地使用登记",
+                "category": "其他",
+                "status": "待开始",
+                "deadline": "",
+                "estimatedMinutes": 60,
+                "estimatedMinutesKnown": false,
+                "nextAction": "递交场地使用登记",
+                "description": "填好之后递交场地使用登记。",
+                "priority": "中",
+                "riskFlags": [
+                  "待确认"
+                ],
+                "materials": [],
+                "dependencies": [],
+                "dependencyIds": [
+                  "task:source:6fa9d993:draft:1:task-0001"
+                ],
+                "reminders": [],
+                "sourceIds": [
+                  "source:6fa9d993"
+                ],
+                "priorityReason": "由当前权威实体计算并允许手动调整",
+                "priorityReasons": [
+                  "由当前权威实体计算并允许手动调整"
+                ],
+                "timePointIds": [
+                  "timepoint-task:source:6fa9d993:draft:1:task-0002-deadline"
+                ],
+                "materialIds": [],
+                "createdAt": "2026-10-04T08:17:35.785Z",
+                "updatedAt": "2026-10-04T08:17:35.785Z",
+                "history": [
+                  {
+                    "id": "history:task:source:6fa9d993:draft:1:task-0002:created",
+                    "field": "created",
+                    "before": "null",
+                    "after": "{\"id\":\"task:source:6fa9d993:draft:1:task-0002\"}",
+                    "changedAt": "2026-10-04T08:17:35.785Z",
+                    "actor": "user",
+                    "entityType": "task",
+                    "entityId": "task:source:6fa9d993:draft:1:task-0002",
+                    "action": "created"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "events": [],
+        "timePoints": [],
+        "materials": []
+      },
+      "firstSuggestion": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "Candidate19 固定录制（非实时调用）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "填写场地使用登记",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "3项任务，0项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "填写场地使用登记",
+            "description": "先填写场地使用登记。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-0001",
+            "actionVerb": "填写",
+            "actionObject": "场地使用登记",
+            "evidenceIds": [
+              "d26-scope-0001-b58fb1231e63c30052fbd60d78ccd6325ef35c2b61fad3bb20b653e142a766aa"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          },
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "递交场地使用登记",
+            "description": "填好之后递交场地使用登记。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [
+              "task-0001"
+            ],
+            "confidence": 0.95,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-0002",
+            "actionVerb": "递交",
+            "actionObject": "场地使用登记",
+            "evidenceIds": [
+              "d26-scope-0002-e138b9f6fff7d45c6bab515c608d8c1e6cf6c2a113174b0c10f7b7bebac52124"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          },
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "领取演示器材",
+            "description": "器材领用资格还未公布，\n符合资格才能领取演示器材。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "confidence": 0.9,
+            "userConfirmationRequired": true,
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "tempId": "task-0003",
+            "actionVerb": "领取",
+            "actionObject": "演示器材",
+            "evidenceIds": [
+              "d26-scope-0003-cafc80bd2f94c5ef32f8a126d3d249495258419958587456c1ab2cf77fc9478e",
+              "d26-scope-0004-408217b5a5b4482c37d42962bad9494c498f60c302edd934d77aefc6bb234cd2"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": false
+          }
+        ],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-b58fb1231e63c30052fbd60d78ccd6325ef35c2b61fad3bb20b653e142a766aa",
+            "sourceId": "source:6fa9d993",
+            "quote": "先填写场地使用登记。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-e138b9f6fff7d45c6bab515c608d8c1e6cf6c2a113174b0c10f7b7bebac52124",
+            "sourceId": "source:6fa9d993",
+            "quote": "填好之后递交场地使用登记。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-cafc80bd2f94c5ef32f8a126d3d249495258419958587456c1ab2cf77fc9478e",
+            "sourceId": "source:6fa9d993",
+            "quote": "器材领用资格还未公布，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-408217b5a5b4482c37d42962bad9494c498f60c302edd934d77aefc6bb234cd2",
+            "sourceId": "source:6fa9d993",
+            "quote": "符合资格才能领取演示器材。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [
+          {
+            "id": "d26-representation-0",
+            "type": "other",
+            "message": "资格尚未确认，不能当成已符合；请保留待核对。",
+            "entityTempIds": [
+              "task-0003"
+            ],
+            "evidenceIds": [],
+            "requiresDecision": true
+          }
+        ],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "器材领用资格还未公布，",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "资格尚未确认，不能当成已符合；请保留待核对。"
+          ]
+        }
+      },
+      "channelAudit": {
+        "version": "material-channel-role-grounding-1.0.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "originalChannel": null,
+      "originalResponseSha256": "fd8f710ef5bb267cdf61fbe91482351f731d6832cc45e7fc6a435555636497db"
+    },
+    {
+      "source": "C19-DEV-S02",
+      "sourceVersionId": "source:c382fc0e:version:1",
+      "draftId": "source:c382fc0e:draft:1",
+      "status": "confirmed",
+      "commitId": "source-review:source:c382fc0e:draft:1:fnv1a32:a79cbe88",
+      "readbackVerifiedAt": "2026-10-04T08:16:51.856Z",
+      "canonical": {
+        "tasks": [],
+        "events": [
+          {
+            "id": "event:source:c382fc0e:draft:1:event-0001",
+            "projectId": null,
+            "title": "开放实验室说明会",
+            "description": "开放实验室说明会2026年11月12日10:10开始，\n11:40结束。",
+            "startTimePointId": "time:source:c382fc0e:draft:1:time-0001",
+            "endTimePointId": "time:source:c382fc0e:draft:1:time-0002",
+            "location": null,
+            "createdAt": "2026-10-04T08:16:51.748Z",
+            "updatedAt": "2026-10-04T08:16:51.748Z",
+            "legacyData": {
+              "recognitionTempId": "event-0001",
+              "evidenceIds": [
+                "d26-scope-0001-715d781d5234d1a4f08cec2987ce58ac9c34320d3df541f2ef124a69e3aae89b",
+                "d26-scope-0002-4a4e9cf4b40656fb653f88450043c1ec1418400b113dd0bd1b6dfe1fa60478f3"
+              ],
+              "inferenceLevel": "explicit"
+            }
+          },
+          {
+            "id": "event:source:c382fc0e:draft:1:event-0002",
+            "projectId": null,
+            "title": "网络调试",
+            "description": "网络调试从周五夜间开始，\n恢复时间尚未公布。",
+            "startTimePointId": "time:source:c382fc0e:draft:1:time-0003",
+            "endTimePointId": "time:source:c382fc0e:draft:1:time-0004",
+            "location": null,
+            "createdAt": "2026-10-04T08:16:51.748Z",
+            "updatedAt": "2026-10-04T08:16:51.748Z",
+            "legacyData": {
+              "recognitionTempId": "event-0002",
+              "evidenceIds": [
+                "d26-scope-0003-c9384b52c69760015bb850e8b862240e70f70c5bcc5eb4cb64cdaca68794e371",
+                "d26-scope-0004-1925df60b90918f384db2ec722c60a1f7459d8c0375681b730f84bfd6772d3fd"
+              ],
+              "inferenceLevel": "explicit"
+            }
+          }
+        ],
+        "timePoints": [
+          {
+            "id": "time:source:c382fc0e:draft:1:time-0001",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": null,
+            "materialId": null,
+            "eventId": "event:source:c382fc0e:draft:1:event-0001",
+            "relatedTaskIds": [],
+            "relatedMaterialIds": [],
+            "type": "event_start",
+            "rawText": "2026年11月12日10:10开始",
+            "normalizedValue": "2026-11-12T10:10",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "createdAt": "2026-10-04T08:16:51.748Z",
+            "updatedAt": "2026-10-04T08:16:51.748Z",
+            "legacyData": {
+              "recognitionTempId": "time-0001",
+              "evidenceIds": [
+                "d26-scope-0001-715d781d5234d1a4f08cec2987ce58ac9c34320d3df541f2ef124a69e3aae89b"
+              ],
+              "confidence": 1
+            }
+          },
+          {
+            "id": "time:source:c382fc0e:draft:1:time-0002",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": null,
+            "materialId": null,
+            "eventId": "event:source:c382fc0e:draft:1:event-0001",
+            "relatedTaskIds": [],
+            "relatedMaterialIds": [],
+            "type": "event_end",
+            "rawText": "11:40结束",
+            "normalizedValue": "2026-11-12T11:40",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "createdAt": "2026-10-04T08:16:51.748Z",
+            "updatedAt": "2026-10-04T08:16:51.748Z",
+            "legacyData": {
+              "recognitionTempId": "time-0002",
+              "evidenceIds": [
+                "d26-scope-0002-4a4e9cf4b40656fb653f88450043c1ec1418400b113dd0bd1b6dfe1fa60478f3"
+              ],
+              "confidence": 1
+            }
+          },
+          {
+            "id": "time:source:c382fc0e:draft:1:time-0003",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": null,
+            "materialId": null,
+            "eventId": "event:source:c382fc0e:draft:1:event-0002",
+            "relatedTaskIds": [],
+            "relatedMaterialIds": [],
+            "type": "event_start",
+            "rawText": "周五夜间开始",
+            "normalizedValue": null,
+            "timezone": null,
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "createdAt": "2026-10-04T08:16:51.748Z",
+            "updatedAt": "2026-10-04T08:16:51.748Z",
+            "legacyData": {
+              "recognitionTempId": "time-0003",
+              "evidenceIds": [
+                "d26-scope-0003-c9384b52c69760015bb850e8b862240e70f70c5bcc5eb4cb64cdaca68794e371"
+              ],
+              "confidence": 1
+            }
+          },
+          {
+            "id": "time:source:c382fc0e:draft:1:time-0004",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": null,
+            "materialId": null,
+            "eventId": "event:source:c382fc0e:draft:1:event-0002",
+            "relatedTaskIds": [],
+            "relatedMaterialIds": [],
+            "type": "event_end",
+            "rawText": "恢复时间尚未公布",
+            "normalizedValue": null,
+            "timezone": null,
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "createdAt": "2026-10-04T08:16:51.748Z",
+            "updatedAt": "2026-10-04T08:16:51.748Z",
+            "legacyData": {
+              "recognitionTempId": "time-0004",
+              "evidenceIds": [
+                "d26-scope-0004-1925df60b90918f384db2ec722c60a1f7459d8c0375681b730f84bfd6772d3fd"
+              ],
+              "confidence": 1
+            }
+          }
+        ],
+        "materials": []
+      },
+      "firstSuggestion": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "Candidate19 固定录制（非实时调用）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "开放实验室说明会",
+          "sourceType": "text",
+          "notificationType": "event_notice",
+          "summary": "0项任务，2项事件。请核对后确认。",
+          "requiresAction": false,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "event_start",
+            "rawText": "2026年11月12日10:10开始",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-12T10:10",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0001-715d781d5234d1a4f08cec2987ce58ac9c34320d3df541f2ef124a69e3aae89b"
+            ]
+          },
+          {
+            "tempId": "time-0002",
+            "type": "event_end",
+            "rawText": "11:40结束",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-12T11:40",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0002-4a4e9cf4b40656fb653f88450043c1ec1418400b113dd0bd1b6dfe1fa60478f3"
+            ]
+          },
+          {
+            "tempId": "time-0003",
+            "type": "event_start",
+            "rawText": "周五夜间开始",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0003-c9384b52c69760015bb850e8b862240e70f70c5bcc5eb4cb64cdaca68794e371"
+            ]
+          },
+          {
+            "tempId": "time-0004",
+            "type": "event_end",
+            "rawText": "恢复时间尚未公布",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0004-1925df60b90918f384db2ec722c60a1f7459d8c0375681b730f84bfd6772d3fd"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "开放实验室说明会",
+            "description": "开放实验室说明会2026年11月12日10:10开始，\n11:40结束。",
+            "startTimePointTempId": "time-0001",
+            "endTimePointTempId": "time-0002",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0001-715d781d5234d1a4f08cec2987ce58ac9c34320d3df541f2ef124a69e3aae89b",
+              "d26-scope-0002-4a4e9cf4b40656fb653f88450043c1ec1418400b113dd0bd1b6dfe1fa60478f3"
+            ],
+            "selected": true
+          },
+          {
+            "tempId": "event-0002",
+            "title": "网络调试",
+            "description": "网络调试从周五夜间开始，\n恢复时间尚未公布。",
+            "startTimePointTempId": "time-0003",
+            "endTimePointTempId": "time-0004",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0003-c9384b52c69760015bb850e8b862240e70f70c5bcc5eb4cb64cdaca68794e371",
+              "d26-scope-0004-1925df60b90918f384db2ec722c60a1f7459d8c0375681b730f84bfd6772d3fd"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-715d781d5234d1a4f08cec2987ce58ac9c34320d3df541f2ef124a69e3aae89b",
+            "sourceId": "source:c382fc0e",
+            "quote": "开放实验室说明会2026年11月12日10:10开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-4a4e9cf4b40656fb653f88450043c1ec1418400b113dd0bd1b6dfe1fa60478f3",
+            "sourceId": "source:c382fc0e",
+            "quote": "11:40结束。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-c9384b52c69760015bb850e8b862240e70f70c5bcc5eb4cb64cdaca68794e371",
+            "sourceId": "source:c382fc0e",
+            "quote": "网络调试从周五夜间开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-1925df60b90918f384db2ec722c60a1f7459d8c0375681b730f84bfd6772d3fd",
+            "sourceId": "source:c382fc0e",
+            "quote": "恢复时间尚未公布。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-c50996dc8b10ab72d6dac6f51af7210354a3fcd9dbe36d7a8631764e77802325",
+            "sourceId": "source:c382fc0e",
+            "quote": "两件事仅供了解，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-a60d9bdc7e2b078c14c7d93a460ae803a085de3c66e0b229df67674a5da96c47",
+            "sourceId": "source:c382fc0e",
+            "quote": "不要求报名。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "两件事仅供了解，",
+            "reason": "other"
+          },
+          {
+            "text": "不要求报名。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "channelAudit": {
+        "version": "material-channel-role-grounding-1.0.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "originalChannel": null,
+      "originalResponseSha256": "1b04a03763bdfa9069ce8a10fb8f74233552e37a63810a4e3a4f6f30f243b16e"
+    },
+    {
+      "source": "C19-DEV-S01",
+      "sourceVersionId": "source:c3c1334e:version:1",
+      "draftId": "source:c3c1334e:draft:1",
+      "status": "confirmed",
+      "commitId": "source-review:source:c3c1334e:draft:1:fnv1a32:34c186e8",
+      "readbackVerifiedAt": "2026-10-04T08:16:16.620Z",
+      "canonical": {
+        "tasks": [],
+        "events": [
+          {
+            "id": "event:source:c3c1334e:draft:1:event-0001",
+            "projectId": null,
+            "title": "校园失物查询网站将在周日晚间暂停查询",
+            "description": "校园失物查询网站将在周日晚间暂停查询。",
+            "startTimePointId": "time:source:c3c1334e:draft:1:time-0001",
+            "endTimePointId": null,
+            "location": null,
+            "createdAt": "2026-10-04T08:16:16.523Z",
+            "updatedAt": "2026-10-04T08:16:16.523Z",
+            "legacyData": {
+              "recognitionTempId": "event-0001",
+              "evidenceIds": [
+                "d26-scope-0001-4f855fa16262bd332344093a80b1e4e45a0d51d9a3e454ba1ff65ec854c7d87e"
+              ],
+              "inferenceLevel": "explicit"
+            }
+          }
+        ],
+        "timePoints": [
+          {
+            "id": "time:source:c3c1334e:draft:1:time-0001",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": null,
+            "materialId": null,
+            "eventId": "event:source:c3c1334e:draft:1:event-0001",
+            "relatedTaskIds": [],
+            "relatedMaterialIds": [],
+            "type": "event_start",
+            "rawText": "周日晚间",
+            "normalizedValue": null,
+            "timezone": null,
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "createdAt": "2026-10-04T08:16:16.523Z",
+            "updatedAt": "2026-10-04T08:16:16.523Z",
+            "legacyData": {
+              "recognitionTempId": "time-0001",
+              "evidenceIds": [
+                "d26-scope-0001-4f855fa16262bd332344093a80b1e4e45a0d51d9a3e454ba1ff65ec854c7d87e"
+              ],
+              "confidence": 0.9
+            }
+          }
+        ],
+        "materials": []
+      },
+      "firstSuggestion": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "Candidate19 固定录制（非实时调用）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "校园失物查询网站将在周日晚间暂停查询",
+          "sourceType": "text",
+          "notificationType": "event_notice",
+          "summary": "0项任务，1项事件。请核对后确认。",
+          "requiresAction": false,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "event_start",
+            "rawText": "周日晚间",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 0.9,
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "evidenceIds": [
+              "d26-scope-0001-4f855fa16262bd332344093a80b1e4e45a0d51d9a3e454ba1ff65ec854c7d87e"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "校园失物查询网站将在周日晚间暂停查询",
+            "description": "校园失物查询网站将在周日晚间暂停查询。",
+            "startTimePointTempId": "time-0001",
+            "endTimePointTempId": null,
+            "location": null,
+            "confidence": 0.95,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0001-4f855fa16262bd332344093a80b1e4e45a0d51d9a3e454ba1ff65ec854c7d87e"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-4f855fa16262bd332344093a80b1e4e45a0d51d9a3e454ba1ff65ec854c7d87e",
+            "sourceId": "source:c3c1334e",
+            "quote": "校园失物查询网站将在周日晚间暂停查询。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-57ef0f8e6d1ab5676f8c2d6cd405ea3289a73a58fa9a17afdb5c3e97ea60434a",
+            "sourceId": "source:c3c1334e",
+            "quote": "此前登记的信息保持不变，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-dc911a3e9cc9893ec07e6b1c4380cb1dda1a32e6f46b9828aa15f0e697200b5e",
+            "sourceId": "source:c3c1334e",
+            "quote": "不需要重新登记，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-6a644de9542109c7b9ec871137cffe4d6f47a31b030641ab1542f79432b9c766",
+            "sourceId": "source:c3c1334e",
+            "quote": "也不要发送补充邮件。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "此前登记的信息保持不变，",
+            "reason": "other"
+          },
+          {
+            "text": "不需要重新登记，",
+            "reason": "other"
+          },
+          {
+            "text": "也不要发送补充邮件。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 0.5,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "channelAudit": {
+        "version": "material-channel-role-grounding-1.0.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": []
+      },
+      "originalChannel": null,
+      "originalResponseSha256": "3e725f3f2b99787f4124fd0862a6bff877d169835b106424413f3c33ddda2efa"
+    },
+    {
+      "source": "C19-DEV-S05",
+      "sourceVersionId": "source:b8842029:version:1",
+      "draftId": "source:b8842029:draft:1",
+      "status": "confirmed",
+      "commitId": "source-review:source:b8842029:draft:1:fnv1a32:0550110b",
+      "readbackVerifiedAt": "2026-10-04T08:15:21.432Z",
+      "canonical": {
+        "tasks": [
+          {
+            "id": "task:source:b8842029:draft:1:task-0001",
+            "projectId": null,
+            "milestoneId": null,
+            "workPackageId": null,
+            "parentTaskId": null,
+            "title": "上传志愿服务统计表",
+            "description": "请在2026年11月13日09:25前上传志愿服务统计表。\n统计表须为PDF，\n文件名包含小组编号。\n看到平台显示接收成功才算办结。",
+            "nextAction": "上传志愿服务统计表",
+            "status": "todo",
+            "estimatedMinutes": null,
+            "manualPriority": null,
+            "snoozedUntil": null,
+            "dependencyIds": [],
+            "createdAt": "2026-10-04T08:15:21.374Z",
+            "updatedAt": "2026-10-04T08:15:21.374Z",
+            "version": 2,
+            "legacyData": {
+              "recognitionTempId": "task-0001",
+              "actionVerb": "上传",
+              "actionObject": "志愿服务统计表",
+              "completionCriteria": [
+                "看到平台显示接收成功才算办结"
+              ],
+              "inferenceLevel": "explicit",
+              "prioritySuggestion": "high",
+              "priority": "高",
+              "evidenceIds": [
+                "d26-scope-0001-6e950ff2e91c9644d71b8b31ffbc5abdcbf3d4e5501790bf96cacbde5a0bcf63",
+                "d26-scope-0002-9033da21d14144dd74400ef00aacc50b26506159772dffb5c601ea710c83ac34",
+                "d26-scope-0003-2574b55e1209c57f8add3297b0cbdbe234f5e63586377a76c2a5114211d3d7d6",
+                "d26-scope-0004-d7cd5288b3df84c16cd792f85ecf625d5c3e335f78bf2335357103cb8cb8c2ec"
+              ],
+              "sourceId": "source:b8842029",
+              "category": "其他",
+              "v7Record": {
+                "id": "task:source:b8842029:draft:1:task-0001",
+                "hierarchyType": "task",
+                "actionVerb": "上传",
+                "actionObject": "志愿服务统计表",
+                "completionCriteria": [
+                  "看到平台显示接收成功才算办结"
+                ],
+                "evidenceIds": [
+                  "d26-scope-0001-6e950ff2e91c9644d71b8b31ffbc5abdcbf3d4e5501790bf96cacbde5a0bcf63",
+                  "d26-scope-0002-9033da21d14144dd74400ef00aacc50b26506159772dffb5c601ea710c83ac34",
+                  "d26-scope-0003-2574b55e1209c57f8add3297b0cbdbe234f5e63586377a76c2a5114211d3d7d6",
+                  "d26-scope-0004-d7cd5288b3df84c16cd792f85ecf625d5c3e335f78bf2335357103cb8cb8c2ec"
+                ],
+                "title": "上传志愿服务统计表",
+                "category": "其他",
+                "status": "待开始",
+                "deadline": "2026-11-13T09:25",
+                "estimatedMinutes": 60,
+                "estimatedMinutesKnown": false,
+                "nextAction": "上传志愿服务统计表",
+                "description": "请在2026年11月13日09:25前上传志愿服务统计表。\n统计表须为PDF，\n文件名包含小组编号。\n看到平台显示接收成功才算办结。",
+                "priority": "高",
+                "riskFlags": [],
+                "materials": [
+                  {
+                    "id": "material:source:b8842029:draft:1:material-0001",
+                    "name": "志愿服务统计表",
+                    "done": false,
+                    "status": "unverified",
+                    "taskId": "task:source:b8842029:draft:1:task-0001",
+                    "sourceId": "source:b8842029"
+                  }
+                ],
+                "dependencies": [],
+                "dependencyIds": [],
+                "reminders": [],
+                "sourceIds": [
+                  "source:b8842029"
+                ],
+                "priorityReason": "由当前权威实体计算并允许手动调整",
+                "priorityReasons": [
+                  "由当前权威实体计算并允许手动调整"
+                ],
+                "timePointIds": [
+                  "time:source:b8842029:draft:1:time-0001"
+                ],
+                "materialIds": [
+                  "material:source:b8842029:draft:1:material-0001"
+                ],
+                "createdAt": "2026-10-04T08:15:21.374Z",
+                "updatedAt": "2026-10-04T08:15:21.374Z",
+                "history": [
+                  {
+                    "id": "history:task:source:b8842029:draft:1:task-0001:created",
+                    "field": "created",
+                    "before": "null",
+                    "after": "{\"id\":\"task:source:b8842029:draft:1:task-0001\"}",
+                    "changedAt": "2026-10-04T08:15:21.374Z",
+                    "actor": "user",
+                    "entityType": "task",
+                    "entityId": "task:source:b8842029:draft:1:task-0001",
+                    "action": "created"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "events": [
+          {
+            "id": "event:source:b8842029:draft:1:event-0001",
+            "projectId": null,
+            "title": "培训说明会",
+            "description": "培训说明会2026年11月14日14:20开始，\n15:35结束。",
+            "startTimePointId": "time:source:b8842029:draft:1:time-0002",
+            "endTimePointId": "time:source:b8842029:draft:1:time-0003",
+            "location": null,
+            "createdAt": "2026-10-04T08:15:21.374Z",
+            "updatedAt": "2026-10-04T08:15:21.374Z",
+            "legacyData": {
+              "recognitionTempId": "event-0001",
+              "evidenceIds": [
+                "d26-scope-0005-260857c75a3e215d1fbca22ecff0c0e7d5797fc4d2af60b890427f18d9288a36",
+                "d26-scope-0006-fbec77fc3798875000da98e9faa38172d4bacfb904636a4511a0557d7041a1b4"
+              ],
+              "inferenceLevel": "explicit"
+            }
+          }
+        ],
+        "timePoints": [
+          {
+            "id": "time:source:b8842029:draft:1:time-0001",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": "task:source:b8842029:draft:1:task-0001",
+            "materialId": "material:source:b8842029:draft:1:material-0001",
+            "eventId": null,
+            "relatedTaskIds": [
+              "task:source:b8842029:draft:1:task-0001"
+            ],
+            "relatedMaterialIds": [
+              "material:source:b8842029:draft:1:material-0001"
+            ],
+            "type": "submission_deadline",
+            "rawText": "2026年11月13日09:25前",
+            "normalizedValue": "2026-11-13T09:25",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "createdAt": "2026-10-04T08:15:21.374Z",
+            "updatedAt": "2026-10-04T08:15:21.374Z",
+            "legacyData": {
+              "recognitionTempId": "time-0001",
+              "evidenceIds": [
+                "d26-scope-0001-6e950ff2e91c9644d71b8b31ffbc5abdcbf3d4e5501790bf96cacbde5a0bcf63"
+              ],
+              "confidence": 1
+            }
+          },
+          {
+            "id": "time:source:b8842029:draft:1:time-0002",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": null,
+            "materialId": null,
+            "eventId": "event:source:b8842029:draft:1:event-0001",
+            "relatedTaskIds": [],
+            "relatedMaterialIds": [],
+            "type": "event_start",
+            "rawText": "2026年11月14日14:20开始",
+            "normalizedValue": "2026-11-14T14:20",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "createdAt": "2026-10-04T08:15:21.374Z",
+            "updatedAt": "2026-10-04T08:15:21.374Z",
+            "legacyData": {
+              "recognitionTempId": "time-0002",
+              "evidenceIds": [
+                "d26-scope-0005-260857c75a3e215d1fbca22ecff0c0e7d5797fc4d2af60b890427f18d9288a36"
+              ],
+              "confidence": 1
+            }
+          },
+          {
+            "id": "time:source:b8842029:draft:1:time-0003",
+            "projectId": null,
+            "milestoneId": null,
+            "taskId": null,
+            "materialId": null,
+            "eventId": "event:source:b8842029:draft:1:event-0001",
+            "relatedTaskIds": [],
+            "relatedMaterialIds": [],
+            "type": "event_end",
+            "rawText": "15:35结束",
+            "normalizedValue": "2026-11-14T15:35",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "createdAt": "2026-10-04T08:15:21.374Z",
+            "updatedAt": "2026-10-04T08:15:21.374Z",
+            "legacyData": {
+              "recognitionTempId": "time-0003",
+              "evidenceIds": [
+                "d26-scope-0006-fbec77fc3798875000da98e9faa38172d4bacfb904636a4511a0557d7041a1b4"
+              ],
+              "confidence": 1
+            }
+          }
+        ],
+        "materials": [
+          {
+            "id": "material:source:b8842029:draft:1:material-0001",
+            "projectId": null,
+            "name": "志愿服务统计表",
+            "required": true,
+            "status": "unverified",
+            "requirements": [],
+            "formatRequirements": [
+              "PDF"
+            ],
+            "namingRequirements": [
+              "文件名包含小组编号"
+            ],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskIds": [
+              "task:source:b8842029:draft:1:task-0001"
+            ],
+            "deadlineTimePointId": "time:source:b8842029:draft:1:time-0001",
+            "createdAt": "2026-10-04T08:15:21.374Z",
+            "updatedAt": "2026-10-04T08:15:21.374Z",
+            "version": 1,
+            "legacyData": {
+              "recognitionTempId": "material-0001",
+              "evidenceIds": [
+                "d26-scope-0001-6e950ff2e91c9644d71b8b31ffbc5abdcbf3d4e5501790bf96cacbde5a0bcf63",
+                "d26-scope-0002-9033da21d14144dd74400ef00aacc50b26506159772dffb5c601ea710c83ac34",
+                "d26-scope-0003-2574b55e1209c57f8add3297b0cbdbe234f5e63586377a76c2a5114211d3d7d6"
+              ],
+              "availabilityVersion": "ordinary-availability-unobserved-1",
+              "availabilityOrigin": "not_observed",
+              "sourceReviewDraftId": "source:b8842029:draft:1"
+            }
+          }
+        ]
+      },
+      "firstSuggestion": {
+        "schemaVersion": "2.0",
+        "promptVersion": "recognition-source-contract-4.0.0",
+        "modelName": "Candidate19 固定录制（非实时调用）",
+        "createdAt": "2026-10-03T09:00:00+08:00",
+        "sourceSummary": {
+          "title": "上传志愿服务统计表",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，1项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "依据来源中已识别的结构化事实，确认后保存。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "未主动建立或匹配项目。"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "上传志愿服务统计表",
+            "description": "请在2026年11月13日09:25前上传志愿服务统计表。\n统计表须为PDF，\n文件名包含小组编号。\n看到平台显示接收成功才算办结。",
+            "completionCriteria": [
+              "看到平台显示接收成功才算办结"
+            ],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "high",
+            "dependencyTempIds": [],
+            "confidence": 1,
+            "userConfirmationRequired": true,
+            "materialTempIds": [
+              "material-0001"
+            ],
+            "timePointTempIds": [
+              "time-0001"
+            ],
+            "tempId": "task-0001",
+            "actionVerb": "上传",
+            "actionObject": "志愿服务统计表",
+            "evidenceIds": [
+              "d26-scope-0001-6e950ff2e91c9644d71b8b31ffbc5abdcbf3d4e5501790bf96cacbde5a0bcf63",
+              "d26-scope-0002-9033da21d14144dd74400ef00aacc50b26506159772dffb5c601ea710c83ac34",
+              "d26-scope-0003-2574b55e1209c57f8add3297b0cbdbe234f5e63586377a76c2a5114211d3d7d6",
+              "d26-scope-0004-d7cd5288b3df84c16cd792f85ecf625d5c3e335f78bf2335357103cb8cb8c2ec"
+            ],
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "materials": [
+          {
+            "tempId": "material-0001",
+            "name": "志愿服务统计表",
+            "required": true,
+            "formatRequirements": [
+              "PDF"
+            ],
+            "namingRequirements": [
+              "文件名包含小组编号"
+            ],
+            "quantity": null,
+            "submissionChannel": null,
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "confidence": 1,
+            "evidenceIds": [
+              "d26-scope-0001-6e950ff2e91c9644d71b8b31ffbc5abdcbf3d4e5501790bf96cacbde5a0bcf63",
+              "d26-scope-0002-9033da21d14144dd74400ef00aacc50b26506159772dffb5c601ea710c83ac34",
+              "d26-scope-0003-2574b55e1209c57f8add3297b0cbdbe234f5e63586377a76c2a5114211d3d7d6"
+            ]
+          }
+        ],
+        "timePoints": [
+          {
+            "tempId": "time-0001",
+            "type": "submission_deadline",
+            "rawText": "2026年11月13日09:25前",
+            "relatedTaskTempIds": [
+              "task-0001"
+            ],
+            "relatedMaterialTempIds": [
+              "material-0001"
+            ],
+            "confidence": 1,
+            "normalizedValue": "2026-11-13T09:25",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0001-6e950ff2e91c9644d71b8b31ffbc5abdcbf3d4e5501790bf96cacbde5a0bcf63"
+            ]
+          },
+          {
+            "tempId": "time-0002",
+            "type": "event_start",
+            "rawText": "2026年11月14日14:20开始",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-14T14:20",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0005-260857c75a3e215d1fbca22ecff0c0e7d5797fc4d2af60b890427f18d9288a36"
+            ]
+          },
+          {
+            "tempId": "time-0003",
+            "type": "event_end",
+            "rawText": "15:35结束",
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "confidence": 1,
+            "normalizedValue": "2026-11-14T15:35",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "evidenceIds": [
+              "d26-scope-0006-fbec77fc3798875000da98e9faa38172d4bacfb904636a4511a0557d7041a1b4"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "tempId": "event-0001",
+            "title": "培训说明会",
+            "description": "培训说明会2026年11月14日14:20开始，\n15:35结束。",
+            "startTimePointTempId": "time-0002",
+            "endTimePointTempId": "time-0003",
+            "location": null,
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "evidenceIds": [
+              "d26-scope-0005-260857c75a3e215d1fbca22ecff0c0e7d5797fc4d2af60b890427f18d9288a36",
+              "d26-scope-0006-fbec77fc3798875000da98e9faa38172d4bacfb904636a4511a0557d7041a1b4"
+            ],
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "d26-scope-0001-6e950ff2e91c9644d71b8b31ffbc5abdcbf3d4e5501790bf96cacbde5a0bcf63",
+            "sourceId": "source:b8842029",
+            "quote": "请在2026年11月13日09:25前上传志愿服务统计表。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0002-9033da21d14144dd74400ef00aacc50b26506159772dffb5c601ea710c83ac34",
+            "sourceId": "source:b8842029",
+            "quote": "统计表须为PDF，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0003-2574b55e1209c57f8add3297b0cbdbe234f5e63586377a76c2a5114211d3d7d6",
+            "sourceId": "source:b8842029",
+            "quote": "文件名包含小组编号。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0004-d7cd5288b3df84c16cd792f85ecf625d5c3e335f78bf2335357103cb8cb8c2ec",
+            "sourceId": "source:b8842029",
+            "quote": "看到平台显示接收成功才算办结。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0005-260857c75a3e215d1fbca22ecff0c0e7d5797fc4d2af60b890427f18d9288a36",
+            "sourceId": "source:b8842029",
+            "quote": "培训说明会2026年11月14日14:20开始，",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          },
+          {
+            "id": "d26-scope-0006-fbec77fc3798875000da98e9faa38172d4bacfb904636a4511a0557d7041a1b4",
+            "sourceId": "source:b8842029",
+            "quote": "15:35结束。",
+            "field": "description",
+            "extractionMethod": "parser",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [
+          {
+            "text": "统计表须为PDF，",
+            "reason": "other"
+          },
+          {
+            "text": "文件名包含小组编号。",
+            "reason": "other"
+          },
+          {
+            "text": "看到平台显示接收成功才算办结。",
+            "reason": "other"
+          }
+        ],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": false,
+          "reviewReasons": []
+        }
+      },
+      "channelAudit": {
+        "version": "material-channel-role-grounding-1.0.0",
+        "role": "PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT",
+        "inferredFacts": 0,
+        "decisions": [
+          {
+            "materialId": "material-0001",
+            "materialName": "志愿服务统计表",
+            "ownerIds": [
+              "task-0001"
+            ],
+            "originalValue": "平台",
+            "displayedValue": null,
+            "status": "RECEIPT_CONTEXT_UNRESOLVED",
+            "evidence": [
+              {
+                "id": "d26-scope-0001-6e950ff2e91c9644d71b8b31ffbc5abdcbf3d4e5501790bf96cacbde5a0bcf63",
+                "quote": "请在2026年11月13日09:25前上传志愿服务统计表。"
+              },
+              {
+                "id": "d26-scope-0002-9033da21d14144dd74400ef00aacc50b26506159772dffb5c601ea710c83ac34",
+                "quote": "统计表须为PDF，"
+              },
+              {
+                "id": "d26-scope-0003-2574b55e1209c57f8add3297b0cbdbe234f5e63586377a76c2a5114211d3d7d6",
+                "quote": "文件名包含小组编号。"
+              },
+              {
+                "id": "d26-scope-0004-d7cd5288b3df84c16cd792f85ecf625d5c3e335f78bf2335357103cb8cb8c2ec",
+                "quote": "看到平台显示接收成功才算办结。"
+              }
+            ]
+          }
+        ]
+      },
+      "originalChannel": "平台",
+      "originalResponseSha256": "c8febf8c1a7c77cf223e99e52142c31895a9dbc950c9e40c22b2f782d1dd285e"
+    }
+  ]
+}

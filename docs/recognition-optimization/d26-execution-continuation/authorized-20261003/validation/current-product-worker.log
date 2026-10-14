@@ -1,0 +1,393 @@
+{
+  requestId: '0e46987f-7830-42af-8291-5795c75fd63e',
+  timestamp: '2026-10-03T10:23:33.185Z',
+  path: '/api/deepseek/status',
+  method: 'GET',
+  status: 200,
+  durationMs: 2,
+  inputLength: 0,
+  outputTokens: 0,
+  errorType: null,
+  client: 'client-9b759fb9'
+}
+{
+  requestId: 'bea6425b-65cc-4754-9880-dbb71d9abdd6',
+  timestamp: '2026-10-03T10:23:33.189Z',
+  path: '/api/deepseek',
+  method: 'POST',
+  status: 200,
+  durationMs: 1,
+  inputLength: 89,
+  outputTokens: 0,
+  errorType: null,
+  client: 'client-379da846'
+}
+{
+  requestId: 'a319ab21-5200-4c94-affa-2a09bff430ea',
+  timestamp: '2026-10-03T10:23:33.190Z',
+  path: '/api/deepseek',
+  method: 'POST',
+  status: 403,
+  durationMs: 0,
+  inputLength: 0,
+  outputTokens: 0,
+  errorType: 'ORIGIN_NOT_ALLOWED',
+  client: 'client-9b759fb9'
+}
+{
+  requestId: 'bfa0bc2e-d977-40c4-9662-9f026ae7683c',
+  timestamp: '2026-10-03T10:23:33.192Z',
+  path: '/api/e2/evaluate',
+  method: 'GET',
+  status: 404,
+  durationMs: 0,
+  inputLength: 0,
+  outputTokens: 0,
+  errorType: 'NOT_FOUND',
+  client: 'client-9b759fb9'
+}
+{
+  requestId: '8970bef5-9559-4358-a503-64b83be786c4',
+  timestamp: '2026-10-03T10:23:33.192Z',
+  path: '/api/unknown',
+  method: 'GET',
+  status: 404,
+  durationMs: 0,
+  inputLength: 0,
+  outputTokens: 0,
+  errorType: 'API_NOT_FOUND',
+  client: 'client-9b759fb9'
+}
+{
+  requestId: '19109710-6268-444b-b8d4-eff71edbdaaa',
+  timestamp: '2026-10-03T10:23:33.208Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 200,
+  durationMs: 15,
+  inputLength: 150,
+  outputTokens: 0,
+  errorType: null,
+  client: 'client-379da846'
+}
+{
+  requestId: '4ba660dd-b53e-4772-aac5-0712a0505f69',
+  timestamp: '2026-10-03T10:23:33.209Z',
+  path: '/api/deepseek/status',
+  method: 'GET',
+  status: 200,
+  durationMs: 0,
+  inputLength: 0,
+  outputTokens: 0,
+  errorType: null,
+  client: 'client-9b759fb9'
+}
+{
+  requestId: 'ade2b0e9-ae22-45e0-8017-a77dde6f34e5',
+  timestamp: '2026-10-03T10:23:33.210Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 200,
+  durationMs: 1,
+  inputLength: 133,
+  outputTokens: 10,
+  errorType: null,
+  client: 'client-379da846'
+}
+{
+  requestId: '4cb21684-18f1-4089-9dd4-56f468710675',
+  timestamp: '2026-10-03T10:23:33.211Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 503,
+  durationMs: 0,
+  inputLength: 120,
+  outputTokens: 0,
+  errorType: 'UPSTREAM_AUTH_FAILED',
+  client: 'client-379da846'
+}
+{
+  requestId: '6ec64262-3b19-41ae-89f8-48e5530c5dcc',
+  timestamp: '2026-10-03T10:23:33.213Z',
+  path: '/api/deepseek/extract-multimodal',
+  method: 'POST',
+  status: 200,
+  durationMs: 1,
+  inputLength: 325,
+  outputTokens: 0,
+  errorType: null,
+  client: 'client-379da846'
+}
+{
+  requestId: 'f068e087-19b9-4d0a-a391-89855df64152',
+  timestamp: '2026-10-03T10:23:33.213Z',
+  path: '/api/deepseek/extract-multimodal',
+  method: 'POST',
+  status: 404,
+  durationMs: 0,
+  inputLength: 340,
+  outputTokens: 0,
+  errorType: 'NOT_FOUND',
+  client: 'client-379da846'
+}
+{
+  requestId: '6c006f22-cc26-4b25-937a-d62aa9597fc0',
+  timestamp: '2026-10-03T10:23:33.214Z',
+  path: '/api/deepseek/extract-multimodal',
+  method: 'POST',
+  status: 200,
+  durationMs: 0,
+  inputLength: 340,
+  outputTokens: 20,
+  errorType: null,
+  client: 'client-379da846'
+}
+{
+  requestId: '7a31b21a-158b-4565-bfe6-32f575a546e5',
+  timestamp: '2026-10-03T10:23:33.216Z',
+  path: '/api/source/fetch',
+  method: 'POST',
+  status: 200,
+  durationMs: 1,
+  inputLength: 45,
+  outputTokens: 0,
+  errorType: null,
+  client: 'client-379da846'
+}
+{
+  requestId: '30bf6f2b-07c2-4dd1-bae3-642e86059d1e',
+  timestamp: '2026-10-03T10:23:33.216Z',
+  path: '/api/source/fetch',
+  method: 'POST',
+  status: 400,
+  durationMs: 0,
+  inputLength: 32,
+  outputTokens: 0,
+  errorType: 'WEB_PRIVATE_ADDRESS_FORBIDDEN',
+  client: 'client-379da846'
+}
+{
+  requestId: 'daebba00-05c9-407a-a782-3308594820a6',
+  timestamp: '2026-10-03T10:23:33.217Z',
+  path: '/api/source/fetch',
+  method: 'POST',
+  status: 200,
+  durationMs: 1,
+  inputLength: 38,
+  outputTokens: 0,
+  errorType: null,
+  client: 'client-379da846'
+}
+{
+  requestId: 'bec1da8f-78c3-43e0-a466-e0c8452548a8',
+  timestamp: '2026-10-03T10:23:33.217Z',
+  path: '/api/source/fetch',
+  method: 'POST',
+  status: 400,
+  durationMs: 0,
+  inputLength: 38,
+  outputTokens: 0,
+  errorType: 'WEB_PRIVATE_ADDRESS_FORBIDDEN',
+  client: 'client-379da846'
+}
+{
+  requestId: '2f61b5d8-7932-4a8c-93ba-fc6f627ec409',
+  timestamp: '2026-10-03T10:23:33.217Z',
+  path: '/api/source/fetch',
+  method: 'POST',
+  status: 400,
+  durationMs: 0,
+  inputLength: 40,
+  outputTokens: 0,
+  errorType: 'WEB_PRIVATE_ADDRESS_FORBIDDEN',
+  client: 'client-379da846'
+}
+{
+  requestId: '18d05796-5085-41e7-9599-271b06574fca',
+  timestamp: '2026-10-03T10:23:33.218Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 400,
+  durationMs: 0,
+  inputLength: 79,
+  outputTokens: 0,
+  errorType: 'DEEPSEEK_LINK_TEXT_REQUIRED',
+  client: 'client-379da846'
+}
+{
+  requestId: '072cc87f-a31e-4932-8909-465b0e3f9e0d',
+  timestamp: '2026-10-03T10:23:33.218Z',
+  path: '/api/deepseek',
+  method: 'GET',
+  status: 405,
+  durationMs: 0,
+  inputLength: 0,
+  outputTokens: 0,
+  errorType: 'METHOD_NOT_ALLOWED',
+  client: 'client-9b759fb9'
+}
+{
+  requestId: 'fb2e9a19-0594-40d3-b333-ebd5d453972b',
+  timestamp: '2026-10-03T10:23:33.219Z',
+  path: '/api/deepseek',
+  method: 'POST',
+  status: 415,
+  durationMs: 0,
+  inputLength: 0,
+  outputTokens: 0,
+  errorType: 'INVALID_CONTENT_TYPE',
+  client: 'client-379da846'
+}
+{
+  requestId: '9b01fac4-7ff4-400d-96a7-52783a4c90d1',
+  timestamp: '2026-10-03T10:23:33.219Z',
+  path: '/api/deepseek',
+  method: 'POST',
+  status: 400,
+  durationMs: 0,
+  inputLength: 111,
+  outputTokens: 0,
+  errorType: 'INVALID_REQUEST',
+  client: 'client-379da846'
+}
+{
+  requestId: '4cc146bb-44d1-4d32-8b88-0e46c61fb276',
+  timestamp: '2026-10-03T10:23:33.220Z',
+  path: '/api/deepseek',
+  method: 'POST',
+  status: 200,
+  durationMs: 1,
+  inputLength: 100,
+  outputTokens: 0,
+  errorType: null,
+  client: 'client-379da846'
+}
+{
+  requestId: '96e0c02f-ae04-41af-90fa-44a4746f247d',
+  timestamp: '2026-10-03T10:23:33.220Z',
+  path: '/api/deepseek',
+  method: 'POST',
+  status: 504,
+  durationMs: 0,
+  inputLength: 89,
+  outputTokens: 0,
+  errorType: 'UPSTREAM_TIMEOUT',
+  client: 'client-379da846'
+}
+{
+  requestId: 'c532e86b-c19f-4b5a-ac9b-4d1405d518fd',
+  timestamp: '2026-10-03T10:23:33.221Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 502,
+  durationMs: 1,
+  inputLength: 137,
+  outputTokens: 0,
+  errorType: 'INVALID_AI_RESPONSE',
+  client: 'client-379da846'
+}
+{
+  requestId: '93cb7a71-c26c-4ee6-afcc-e31ee3a88279',
+  timestamp: '2026-10-03T10:23:33.222Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 502,
+  durationMs: 1,
+  inputLength: 133,
+  outputTokens: 0,
+  errorType: 'INVALID_AI_RESPONSE',
+  client: 'client-379da846'
+}
+{
+  requestId: '07be747f-b50c-47e6-8bfb-93acf43924fa',
+  timestamp: '2026-10-03T10:23:33.222Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 502,
+  durationMs: 0,
+  inputLength: 133,
+  outputTokens: 0,
+  errorType: 'INVALID_AI_RESPONSE',
+  client: 'client-379da846'
+}
+{
+  requestId: '52a656a3-cca6-447b-86dc-7c909aad4c13',
+  timestamp: '2026-10-03T10:23:33.223Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 502,
+  durationMs: 1,
+  inputLength: 133,
+  outputTokens: 0,
+  errorType: 'INVALID_AI_RESPONSE',
+  client: 'client-379da846'
+}
+{
+  requestId: '7236899b-525c-4aef-81a9-dde85d828bf0',
+  timestamp: '2026-10-03T10:23:33.223Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 502,
+  durationMs: 0,
+  inputLength: 140,
+  outputTokens: 0,
+  errorType: 'INVALID_AI_RESPONSE',
+  client: 'client-379da846'
+}
+{
+  requestId: 'c162a815-45fe-4448-95db-3ff819bfb85c',
+  timestamp: '2026-10-03T10:23:33.224Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 502,
+  durationMs: 0,
+  inputLength: 132,
+  outputTokens: 0,
+  errorType: 'INVALID_AI_RESPONSE',
+  client: 'client-379da846'
+}
+{
+  requestId: 'f75bbd9b-44fb-447d-b386-555f5403786a',
+  timestamp: '2026-10-03T10:23:33.225Z',
+  path: '/api/deepseek/extract',
+  method: 'POST',
+  status: 200,
+  durationMs: 1,
+  inputLength: 140,
+  outputTokens: 0,
+  errorType: null,
+  client: 'client-379da846'
+}
+✔ status honestly reports a missing Cloudflare secret (17.5589ms)
+✔ same-origin POST sends only bounded citation summaries to DeepSeek (1.8868ms)
+✔ cross-origin POST is rejected before contacting DeepSeek (0.5319ms)
+✔ non-API routes fall through to static assets (0.3261ms)
+✔ release build denies experimental routes without touching static assets (1.7118ms)
+✔ unknown API routes return JSON 404 without touching static assets (0.4008ms)
+✔ validation requires one to four complete citations (0.134ms)
+✔ structured extraction uses V4 Flash JSON mode and returns bounded suggestions (16.0801ms)
+✔ multimodal Preview status names the vision model without claiming authentication (0.3645ms)
+✔ multimodal Preview text arm uses the same vision model as image arms (0.8997ms)
+✔ upstream failures are classified without relaying upstream response bodies (1.2688ms)
+✔ multimodal extraction requires explicit consent and sends only bounded images with OCR text (1.5131ms)
+✔ image-only evaluation is gated and never sends the hidden OCR reference upstream (1.5194ms)
+✔ public HTTPS pages are converted to inert text before client-side DeepSeek submission (1.2669ms)
+✔ web fetch accepts public hosts and rejects unsafe targets (0.4159ms)
+✔ web fetch follows only bounded redirects whose target is revalidated (0.8893ms)
+✔ web fetch refuses a public-looking hostname that resolves to a private address (0.4079ms)
+✔ link text is accepted for structured extraction but a naked URL is never fetched by DeepSeek (0.234ms)
+✔ structured extraction rejects invalid source payloads before contacting DeepSeek (0.3606ms)
+✔ extraction validation requires local text and a valid reference time (0.1927ms)
+✔ API rejects GET, non-JSON bodies, and unknown request fields (0.8543ms)
+✔ prompt injection remains user data and cannot replace the fixed system prompt (0.4955ms)
+✔ upstream timeout returns a safe code without exposing secrets or stacks (0.4698ms)
+✔ invalid AI schema and impossible dates never create suggestions (0.7158ms)
+✔ Worker fails closed with explicit shared-contract diagnostics instead of silent defaults (4.0528ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 133.5939

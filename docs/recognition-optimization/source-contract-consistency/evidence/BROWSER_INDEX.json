@@ -1,0 +1,163 @@
+{
+  "role": "ENGINEERING_REPLAY",
+  "finalManifest": {
+    "origin": "http://127.0.0.1:6809",
+    "database": "rco-mainline-01-02-i1-d27-plan-recorded-contract1003delivered",
+    "build": "69c7baff71b5 / source 71754888caf9",
+    "role": "ENGINEERING_REPLAY",
+    "mode": "explicit-contract",
+    "actualRecordings": 16,
+    "engineeringFixtures": 5,
+    "files": [
+      {
+        "name": "browser.js",
+        "sha256": "4a9d30d7833bf9fa7458c776cd82e6f12b5eb8f6060a97f43186403d8d8c3d61"
+      },
+      {
+        "name": "browser.css",
+        "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+      }
+    ],
+    "recordingsSha256": "2561cf60a70d0b1625711bdec2bd6bea9ed5b6c807ee109b8a0a30f98e822753",
+    "modelCallsByBrowser": 0
+  },
+  "finalAffectedPathManifest": {
+    "origin": "http://127.0.0.1:6810",
+    "database": "rco-mainline-01-02-i1-d27-plan-recorded-contract1003closing",
+    "build": "69c7baff71b5 / source 71754888caf9",
+    "role": "ENGINEERING_REPLAY",
+    "mode": "explicit-contract",
+    "actualRecordings": 16,
+    "engineeringFixtures": 5,
+    "files": [
+      {
+        "name": "browser.js",
+        "sha256": "d84f9530e9f160e864e8cc90a4850ddf43c800ae9fb748bd58537ba8b0cc1769"
+      },
+      {
+        "name": "browser.css",
+        "sha256": "4f130c46c6675c582e5bfe7cd1735c56926818cc399f9d628903178e9a476922"
+      }
+    ],
+    "recordingsSha256": "2561cf60a70d0b1625711bdec2bd6bea9ed5b6c807ee109b8a0a30f98e822753",
+    "modelCallsByBrowser": 0
+  },
+  "sources": [
+    {
+      "file": "delivered-S04-reject.txt",
+      "localPath": ".data/source-contract-consistency/browser/delivered-S04-reject.txt",
+      "sha256": "1344b292cb0c1de13738489eb4eba652d142ad69d544a52d99fc46d6d3afc913"
+    },
+    {
+      "file": "delivered-S01.txt",
+      "localPath": ".data/source-contract-consistency/browser/delivered-S01.txt",
+      "sha256": "4e85deaeff475f1df26bfea8ca50c10b3d2d494b9875076a8b488111faa01caf"
+    },
+    {
+      "file": "delivered-S02.txt",
+      "localPath": ".data/source-contract-consistency/browser/delivered-S02.txt",
+      "sha256": "49f1354243e74bbc903681a86cffb78cd39af14f4f3481d9236d72eda9819267"
+    },
+    {
+      "file": "delivered-S03-pending.txt",
+      "localPath": ".data/source-contract-consistency/browser/delivered-S03-pending.txt",
+      "sha256": "c610ecc74c6b1f7dca9a63fefea4e641613993edc42a3794125cce4de067ca9a"
+    },
+    {
+      "file": "delivered-formal-failure.txt",
+      "localPath": ".data/source-contract-consistency/browser/delivered-formal-failure.txt",
+      "sha256": "759cd4316d19b59b28a381e54e037caa27f49c058ace969521647fe7f3652fe2"
+    },
+    {
+      "file": "delivered-readback-failure.txt",
+      "localPath": ".data/source-contract-consistency/browser/delivered-readback-failure.txt",
+      "sha256": "a5e280768e50fa045e0d0b92caf5008cd960d65c1442ef687d763c8ab2f0e444"
+    },
+    {
+      "file": "delivered-readback-refresh.txt",
+      "localPath": ".data/source-contract-consistency/browser/delivered-readback-refresh.txt",
+      "sha256": "eb8445d739edf77a865eb89b94f03ff48cb4dd479549f4b032c7af8f23628fc7"
+    },
+    {
+      "file": "delivered-readback-restored.txt",
+      "localPath": ".data/source-contract-consistency/browser/delivered-readback-restored.txt",
+      "sha256": "c55ae357ffa5555b0fcd0031f62e9a53423527d9b13118780432ccd8fd215a7e"
+    },
+    {
+      "file": "final-checkpoint-failure.txt",
+      "localPath": ".data/source-contract-consistency/browser/final-checkpoint-failure.txt",
+      "sha256": "4874509a6df26bf33773b63917d240bbe5103d4f1b83ceeb04f298d99b14f148"
+    },
+    {
+      "file": "final-edit-restored.txt",
+      "localPath": ".data/source-contract-consistency/browser/final-edit-restored.txt",
+      "sha256": "eb3df68f06acabffaa5a76b8aa6fbf9bad57c951fd946e08b5a723141c1a9668"
+    },
+    {
+      "file": "final-edit-draft-saved.txt",
+      "localPath": ".data/source-contract-consistency/browser/final-edit-draft-saved.txt",
+      "sha256": "b4ee657ebf10cfafe95744716192fd6f6353a0adcf2165895502497261933d26"
+    },
+    {
+      "file": "final-dependency.txt",
+      "localPath": ".data/source-contract-consistency/browser/final-dependency.txt",
+      "sha256": "1652b9a03012fa24c142f88ee32da360aa6970933847fda5a65fe410765010fd"
+    },
+    {
+      "file": "final-revision.txt",
+      "localPath": ".data/source-contract-consistency/browser/final-revision.txt",
+      "sha256": "07e2e691f767f04cc83a384a8eb10eb9e8b478368009c527e7aecec4f02b2be7"
+    },
+    {
+      "file": "closing-dependency.txt",
+      "localPath": ".data/source-contract-consistency/browser/closing-dependency.txt",
+      "sha256": "8698c37ddf1b03359ac6ff3658a3afd885bddcfac1ba4aaea29371830be1de83"
+    },
+    {
+      "file": "closing-event-restored.txt",
+      "localPath": ".data/source-contract-consistency/browser/closing-event-restored.txt",
+      "sha256": "766d607ce925590bfcbd00f1f0f707f56162708000bd2d48ed2c4f6a2264c787"
+    },
+    {
+      "file": "closing-event-draft-saved.txt",
+      "localPath": ".data/source-contract-consistency/browser/closing-event-draft-saved.txt",
+      "sha256": "4c1ec319009e35b8939ca8abda6bc9c327ab98ee79b542ff8b63ce321dd5892f"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "delivered-S01.png",
+      "sha256": "7d01fd8fb78fd4f6ec6cdbe5068e10744c55e33f54609ba4123ed0207f14bd9e"
+    },
+    {
+      "file": "delivered-readback-failure.png",
+      "sha256": "d6283f936355696d5016fca049f9581ba4ff77552e5d87cbe92bdc1010c5a3ff"
+    },
+    {
+      "file": "final-dependency.png",
+      "sha256": "c56fe2a82584666975bfcbd8cdb77a30f829999b9e2c296c4655fe5255850d3d"
+    },
+    {
+      "file": "closing-dependency.png",
+      "sha256": "20cd63cb0f9146da27816714c908e0300025167e7a4b8c5d1cb760290df407b4"
+    }
+  ],
+  "console": {
+    "delivered": [],
+    "closing": []
+  },
+  "discardedEvidence": [
+    {
+      "file": "delivery-formal-failure-canonical.json",
+      "reason": "EMPTY_UI_CAPTURE_NOT_EVIDENCE; superseded by delivered-formal-failure-canonical.json"
+    },
+    {
+      "file": "final-S01-readback.json",
+      "reason": "EMPTY_UI_CAPTURE_NOT_EVIDENCE; superseded by delivered-S01-readback.json"
+    }
+  ],
+  "reuse": {
+    "source8cf72172d1c0": "6808 unchanged checkpoint/revision/measurement implementations reused; final waiting wording and event reference-clock paths were additionally retested on identical final source71754888caf9 in isolated6810; final6809 verifies formal/readback recovery",
+    "source998401437919": "6806 process evidence only; final6809 supersedes formal/readback acceptance"
+  }
+}

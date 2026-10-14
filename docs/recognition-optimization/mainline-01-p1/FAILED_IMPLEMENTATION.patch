@@ -1,0 +1,651 @@
+diff --git a/src/components/DraftReviewPanel.tsx b/src/components/DraftReviewPanel.tsx
+index 3da898d..613d7bf 100644
+--- a/src/components/DraftReviewPanel.tsx
++++ b/src/components/DraftReviewPanel.tsx
+@@ -8,0 +9 @@ interface DraftReviewPanelProps {
++  confirmationV2?: { busy: boolean; items: Record<string, { dateLabel: string; blockedReason?: string }> }
+@@ -64 +65 @@ function EvidenceLocator({ recognition, evidenceIds, onFocusEvidence }: {
+-export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask }: DraftReviewPanelProps) {
++export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm, onReject, onConfirmAll, projectWillCreate, projects, onProjectChoice, onKeepExplicit, onMoveTask, onToggleRecognitionEntity, onToggleTaskSelected, onSplitTask, onMergeTask, confirmationV2 }: DraftReviewPanelProps) {
+@@ -101,0 +103 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm,
++      confirmationV2={confirmationV2 ? { ...confirmationV2.items[item.id], busy: confirmationV2.busy } : undefined}
+@@ -185 +187 @@ export function DraftReviewPanel({ draft, source, onClose, onUpdate, onConfirm,
+-        {selectedPending.length > 0 && <button className="primary-button" type="button" onClick={onConfirmAll}><CheckCheck size={17} />加入已选任务（{selectedPending.length}）</button>}
++        {selectedPending.length > 0 && <button className="primary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || selectedPending.some((item) => !confirmationV2.items[item.id] || confirmationV2.items[item.id].blockedReason))} onClick={onConfirmAll}><CheckCheck size={17} />加入已选任务（{selectedPending.length}）</button>}
+@@ -191,0 +194 @@ interface DraftItemReviewProps {
++  confirmationV2?: { dateLabel?: string; blockedReason?: string; busy: boolean }
+@@ -210 +213 @@ interface DraftItemReviewProps {
+-function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask }: DraftItemReviewProps) {
++function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
+@@ -221 +224 @@ function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfi
+-      <div><strong>{suggestion.title}</strong><time><Clock3 size={14} />{deadlineLabel(suggestion.deadline)}</time></div>
++      <div><strong>{suggestion.title}</strong><time><Clock3 size={14} />{confirmationV2 ? confirmationV2.dateLabel ?? '日期状态未加载，暂不能确认' : deadlineLabel(suggestion.deadline)}</time></div>
+@@ -225,0 +229 @@ function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfi
++    {confirmationV2 && <p>隔离确认 V2：本轮支持修改名称和时间，其他编辑尚未接入。首次建议、原文和编辑记录分开保留。{confirmationV2.blockedReason && <strong role="status">需核对（{confirmationV2.blockedReason}）</strong>}</p>}
+@@ -228,5 +232,5 @@ function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfi
+-      <label className="field"><span>分类</span><select value={suggestion.category} onChange={(event) => onUpdate(item.id, { category: event.target.value as TaskCategory })}>{categories.map((category) => <option key={category}>{category}</option>)}</select></label>
+-      <label className="field"><span>截止时间</span><input type="datetime-local" value={suggestion.deadline} onChange={(event) => onUpdate(item.id, { deadline: event.target.value })} /></label>
+-      <label className="field"><span>预计耗时（分钟）</span><input type="number" min="5" step="5" value={suggestion.estimatedMinutes} onChange={(event) => onUpdate(item.id, { estimatedMinutes: Number(event.target.value) })} /></label>
+-      <label className="field span-2"><span>下一步动作</span><input value={suggestion.nextAction} onChange={(event) => onUpdate(item.id, { nextAction: event.target.value })} /></label>
+-      <label className="field span-2"><span>材料（用逗号或顿号分隔）</span><input value={suggestion.materials.join('、')} onChange={(event) => onUpdate(item.id, { materials: event.target.value.split(/[，,、]/).map((value) => value.trim()).filter(Boolean) })} /></label>
++      <label className="field"><span>分类</span><select disabled={Boolean(confirmationV2)} value={suggestion.category} onChange={(event) => onUpdate(item.id, { category: event.target.value as TaskCategory })}>{categories.map((category) => <option key={category}>{category}</option>)}</select></label>
++      <label className="field"><span>截止时间</span><input type={confirmationV2 ? "text" : "datetime-local"} placeholder={confirmationV2 ? "YYYY-MM-DD 或 YYYY-MM-DDTHH:mm" : undefined} value={suggestion.deadline} onChange={(event) => onUpdate(item.id, { deadline: event.target.value })} /></label>
++      <label className="field"><span>预计耗时（分钟）</span><input disabled={Boolean(confirmationV2)} type="number" min="5" step="5" value={suggestion.estimatedMinutes} onChange={(event) => onUpdate(item.id, { estimatedMinutes: Number(event.target.value) })} /></label>
++      <label className="field span-2"><span>下一步动作</span><input disabled={Boolean(confirmationV2)} value={suggestion.nextAction} onChange={(event) => onUpdate(item.id, { nextAction: event.target.value })} /></label>
++      <label className="field span-2"><span>材料（用逗号或顿号分隔）</span><input disabled={Boolean(confirmationV2)} value={suggestion.materials.join('、')} onChange={(event) => onUpdate(item.id, { materials: event.target.value.split(/[，,、]/).map((value) => value.trim()).filter(Boolean) })} /></label>
+@@ -237 +241 @@ function DraftItemReview({ index, item, editing, onToggleEdit, onUpdate, onConfi
+-    <footer className="review-item-actions"><button className="text-button remove" type="button" onClick={() => onReject(item.id)}><Trash2 size={14} />不需要</button><button className="secondary-button" type="button" onClick={() => onConfirm(item.id)}><Check size={15} />加入任务</button></footer>
++    <footer className="review-item-actions"><button className="text-button remove" type="button" onClick={() => onReject(item.id)}><Trash2 size={14} />不需要</button><button className="secondary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || !confirmationV2.dateLabel || Boolean(confirmationV2.blockedReason))} onClick={() => onConfirm(item.id)}><Check size={15} />加入任务</button></footer>
+diff --git a/src/domain/v2/domainCommit.ts b/src/domain/v2/domainCommit.ts
+index 12e5a4d..d792a29 100644
+--- a/src/domain/v2/domainCommit.ts
++++ b/src/domain/v2/domainCommit.ts
+@@ -457,0 +458,14 @@ export function buildDomainCommitPlan(
++): DomainCommitPlan {
++  return buildDomainCommitPlanInternal(workspace, draftId, selection, now, false)
++}
++
++/** Explicit opt-in only. Callers must derive overrides from validated user edit history. */
++export function buildDomainCommitPlanV2(
++  workspace: WorkspaceV8, draftId: string, selection: DomainCommitSelection,
++  now = new Date().toISOString(),
++): DomainCommitPlan {
++  return buildDomainCommitPlanInternal(workspace, draftId, selection, now, true)
++}
++
++function buildDomainCommitPlanInternal(
++  workspace: WorkspaceV8, draftId: string, selection: DomainCommitSelection, now: string, confirmationV2: boolean,
+@@ -522,0 +537,11 @@ export function buildDomainCommitPlan(
++  // An explicit user date with no source time becomes a separate, evidence-free manual point.
++  // The recognition result remains immutable; this is commit-time construction, not a source rewrite.
++  if (confirmationV2) selectedTasks.forEach((task) => {
++    const deadline = selection.taskOverrides?.[task.tempId]?.deadline
++    if (!deadline || result.timePoints.some((point) => point.relatedTaskTempIds.includes(task.tempId))) return
++    timeSuggestions.push({ tempId: `manual-deadline:${task.tempId}`, type: 'task_deadline', rawText: deadline,
++      normalizedValue: deadline, timezone: workspace.settings.defaultTimezone,
++      isAllDay: /^\d{4}-\d{2}-\d{2}$/u.test(deadline), precision: /^\d{4}-\d{2}-\d{2}$/u.test(deadline) ? 'date_only' : 'exact',
++      needsConfirmation: false, relatedTaskTempIds: [task.tempId], relatedMaterialTempIds: [], evidenceIds: [],
++      confidence: 1, selected: true })
++  })
+@@ -609 +634 @@ export function buildDomainCommitPlan(
+-      type: item.type, rawText: hasValidOverride ? overrideDeadline! : item.rawText,
++      type: item.type, rawText: hasValidOverride && !confirmationV2 ? overrideDeadline! : item.rawText,
+@@ -611 +636 @@ export function buildDomainCommitPlan(
+-      timezone: hasValidOverride ? (overrideIsDateOnly ? null : workspace.settings.defaultTimezone) : item.precision === 'exact' ? item.timezone : null,
++      timezone: hasValidOverride ? (overrideIsDateOnly ? null : confirmationV2 && item.precision === 'exact' ? item.timezone : workspace.settings.defaultTimezone) : item.precision === 'exact' ? item.timezone : null,
+@@ -616 +641,3 @@ export function buildDomainCommitPlan(
+-      legacyData: { recognitionTempId: item.tempId, evidenceIds: item.evidenceIds, confidence: item.confidence },
++      legacyData: { recognitionTempId: item.tempId, evidenceIds: item.evidenceIds, confidence: item.confidence,
++        ...(confirmationV2 && item.tempId.startsWith('manual-deadline:') && !result.timePoints.some((point) => point.tempId === item.tempId)
++          ? { extractionMethod: 'manual' } : {}) },
+diff --git a/src/domain/v2/confirmationV2.ts b/src/domain/v2/confirmationV2.ts
+new file mode 100644
+--- /dev/null
++++ b/src/domain/v2/confirmationV2.ts
+@@ -0,0 +1,196 @@
++import { applyDomainCommitPlan, buildDomainCommitPlanV2, type DomainCommitSelection } from './domainCommit'
++import { workspaceSnapshotHash } from './migration'
++import type { CanonicalWorkspaceRepository } from './repository'
++import type { WorkspaceV8 } from './types'
++import { validateWorkspaceV8 } from './validators/workspaceValidator'
++import { isDateOnly, isValidTimeZone, parseBusinessDateTime } from '../../lib/timeSemantics'
++
++export type ConfirmationEditField = 'title' | 'deadline'
++export interface ConfirmationEditV2 {
++  draftId: string; taskTempId: string; revision: string; operationId: string
++  field: ConfirmationEditField; value: string
++}
++export interface ConfirmationIntentV2 { draftId: string; revision: string; taskTempIds: string[] }
++const EDIT_ACTION = 'confirmation_v2_edit'
++const fail = (code: string): never => { throw new Error(`CONFIRMATION_V2_${code}`) }
++function same(a: unknown, b: unknown) { return workspaceSnapshotHash(a) === workspaceSnapshotHash(b) }
++function exactKeys(value: object, keys: string[]) {
++  if (!same(Object.keys(value).sort(), [...keys].sort())) fail('UNSUPPORTED_FIELDS')
++}
++export function confirmationRevisionV2(workspace: WorkspaceV8): string { return workspaceSnapshotHash(workspace) }
++
++function context(workspace: WorkspaceV8, draftId: string) {
++  if (!validateWorkspaceV8(workspace).valid) fail('WORKSPACE_INVALID')
++  const draft = workspace.extractionDrafts.find((item) => item.id === draftId)
++  const result = draft?.result
++  const run = workspace.recognitionRuns.find((item) => item.id === draft?.recognitionRunId)
++  const version = workspace.sourceVersions.find((item) => item.id === run?.sourceVersionId)
++  const source = workspace.sources.find((item) => item.id === version?.sourceId)
++  if (!draft || !result || !run || run.status !== 'succeeded' || !version || !source
++    || !version.rawText || version.contentHash !== workspaceSnapshotHash(version.rawText)
++    || source.currentVersionId !== version.id) return fail('SOURCE_CHAIN_INVALID')
++  for (const entity of [source, version, run, draft]) {
++    const metadata = entity.legacyData?.reviewMetadata
++    if (entity.needsReview || (metadata && typeof metadata === 'object' && !Array.isArray(metadata)
++      && (metadata.partialExtraction || metadata.truncated))) fail('INCOMPLETE_SOURCE')
++  }
++  const tasks = [...result.standaloneTasks, ...result.milestones.flatMap((milestone) =>
++    [...milestone.tasks, ...milestone.workPackages.flatMap((group) => group.tasks)])]
++  const fingerprint = workspaceSnapshotHash({ result, version })
++  const edits = workspace.historyRecords.filter((row) => row.action === EDIT_ACTION && row.entityId === draftId)
++  const values: Record<string, Partial<Record<ConfirmationEditField, string>>> = Object.create(null)
++  const original = (taskId: string, field: ConfirmationEditField): string => {
++    const task = tasks.find((item) => item.tempId === taskId)
++    if (!task) return fail('TASK_MISSING')
++    const points = result.timePoints.filter((point) => point.relatedTaskTempIds.includes(taskId))
++    return field === 'title' ? task.title : points.length === 1 ? points[0].normalizedValue ?? '' : ''
++  }
++  for (const row of edits) {
++    if (row.actor !== 'user' || row.entityType !== 'extraction_draft' || row.sourceVersionId !== version.id
++      || row.reason !== `confirmation-v2:${fingerprint}` || typeof row.after !== 'string') fail('EDIT_HISTORY_INVALID')
++    let key: unknown
++    try { key = JSON.parse(row.fieldName ?? '') } catch { fail('EDIT_HISTORY_INVALID') }
++    if (!Array.isArray(key) || key.length !== 2 || typeof key[0] !== 'string'
++      || (key[1] !== 'title' && key[1] !== 'deadline')) fail('EDIT_HISTORY_INVALID')
++    const [taskId, field] = key as [string, ConfirmationEditField]
++    const current = values[taskId]?.[field] ?? original(taskId, field)
++    if (row.before !== current) fail('EDIT_HISTORY_CHAIN_INVALID')
++    values[taskId] = { ...values[taskId], [field]: row.after as string }
++  }
++  const overrides: DomainCommitSelection['taskOverrides'] = Object.create(null)
++  for (const [taskId, fields] of Object.entries(values)) for (const field of ['title', 'deadline'] as const) {
++    if (fields[field] !== undefined && fields[field] !== original(taskId, field)) {
++      overrides![taskId] = { ...overrides![taskId], [field]: fields[field] }
++    }
++  }
++  return { draft, result, run, version, source, tasks, fingerprint, edits, values, overrides: overrides!, original }
++}
++
++function validDate(value: string, timezone: string) {
++  if (isDateOnly(value)) return true
++  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:\d{2})?$/u.test(value)
++    || !isDateOnly(value.slice(0, 10)) || !isValidTimeZone(timezone)) return false
++  const hour = Number(value.slice(11, 13)), minute = Number(value.slice(14, 16))
++  const second = value[16] === ':' ? Number(value.slice(17, 19)) : 0
++  return hour < 24 && minute < 60 && second < 60 && Boolean(parseBusinessDateTime(value, timezone))
++}
++
++function checkedEvidence(ctx: ReturnType<typeof context>, ids: string[]) {
++  if (!ids.length) fail('EVIDENCE_REQUIRED')
++  for (const id of ids) {
++    const evidence = ctx.result.evidence.find((item) => item.id === id)
++    if (!evidence || evidence.sourceId !== ctx.source.id || !Number.isInteger(evidence.textStart)
++      || !Number.isInteger(evidence.textEnd) || evidence.textStart! < 0 || evidence.textEnd! <= evidence.textStart!
++      || evidence.textEnd! > ctx.version.rawText!.length
++      || ctx.version.rawText!.slice(evidence.textStart!, evidence.textEnd!) !== evidence.quotedText) fail('EVIDENCE_INVALID')
++  }
++}
++
++export function confirmationStateV2(workspace: WorkspaceV8, draftId: string, taskId: string) {
++  const ctx = context(workspace, draftId)
++  const task = ctx.tasks.find((item) => item.tempId === taskId)
++  if (!task) return fail('TASK_MISSING')
++  const points = ctx.result.timePoints.filter((point) => point.relatedTaskTempIds.includes(taskId))
++  const editedDate = ctx.overrides[taskId]?.deadline
++  let blockedReason: string | undefined
++  try {
++    if (!task.actionVerb.trim() || !task.actionObject.trim()) fail('TASK_INCOMPLETE')
++    if (!ctx.result.sourceSummary.requiresAction || task.selected === false) fail('TASK_REQUIRES_REVIEW')
++    checkedEvidence(ctx, task.evidenceIds)
++    for (const id of task.materialTempIds) {
++      if (!ctx.result.materials.some((material) => material.tempId === id && material.relatedTaskTempIds.includes(taskId))) fail('MATERIAL_REFERENCE_INVALID')
++    }
++    for (const id of task.timePointTempIds) {
++      if (!points.some((point) => point.tempId === id)) fail('TIME_REFERENCE_INVALID')
++    }
++    for (const material of ctx.result.materials.filter((item) => item.relatedTaskTempIds.includes(taskId))) {
++      if (material.selected === false) fail('MATERIAL_REQUIRES_REVIEW')
++      checkedEvidence(ctx, material.evidenceIds)
++    }
++    if (ctx.result.conflicts.some((item) => item.requiresDecision && (!item.entityTempIds.length || item.entityTempIds.includes(taskId)))) fail('CONFLICT_REQUIRES_REVIEW')
++    // This contract cannot assign an unscoped deadline ambiguity to a sibling safely.
++    if (ctx.result.ambiguities.some((item) => /deadline|time|date/iu.test(item.field))) fail('TIME_REQUIRES_REVIEW')
++    for (const point of points) {
++      checkedEvidence(ctx, point.evidenceIds)
++      if (point.selected === false || point.needsConfirmation || !['exact', 'date_only'].includes(point.precision)
++        || !point.normalizedValue || !validDate(point.normalizedValue, point.timezone)) fail('TIME_REQUIRES_REVIEW')
++      if (point.precision === 'date_only' && (!isDateOnly(point.normalizedValue!) || !point.isAllDay)) fail('TIME_PRECISION_INVALID')
++      if (point.precision === 'exact' && (isDateOnly(point.normalizedValue!) || point.isAllDay)) fail('TIME_PRECISION_INVALID')
++    }
++    if (editedDate !== undefined && !validDate(editedDate, points[0]?.timezone ?? workspace.settings.defaultTimezone)) fail('USER_DATE_INVALID')
++  } catch (error) { blockedReason = error instanceof Error ? error.message : 'CONFIRMATION_V2_REVIEW_REQUIRED' }
++  const firstDate = points.length === 1 ? points[0].normalizedValue ?? '' : ''
++  const value = editedDate ?? firstDate
++  return {
++    blockedReason, value, edited: editedDate !== undefined,
++    dateLabel: blockedReason ? '待核对：不能按无日期直接确认'
++      : value ? `${value}${isDateOnly(value) ? '（仅日期）' : `（${points[0]?.timezone ?? workspace.settings.defaultTimezone}）`}${editedDate !== undefined ? ' · 用户修改' : ''}`
++        : points.length ? '多个时间节点，请回看原文' : '原文未说明截止时间 · 可无日期确认',
++    originalDate: firstDate,
++  }
++}
++
++export function reviewEditsV2(workspace: WorkspaceV8, draftId: string) {
++  const ctx = context(workspace, draftId)
++  return { revision: confirmationRevisionV2(workspace), overrides: ctx.overrides, history: ctx.edits }
++}
++
++export async function editConfirmationV2(repository: CanonicalWorkspaceRepository, request: ConfirmationEditV2, now = new Date().toISOString()) {
++  exactKeys(request, ['draftId', 'taskTempId', 'revision', 'operationId', 'field', 'value'])
++  if (!['title', 'deadline'].includes(request.field) || typeof request.value !== 'string'
++    || !/^[a-zA-Z0-9-]{1,100}$/u.test(request.operationId)) fail('EDIT_INVALID')
++  return repository.transaction((workspace) => {
++    const ctx = context(workspace, request.draftId)
++    const id = `confirmation-v2-edit:${request.draftId}:${request.operationId}`
++    const existing = workspace.historyRecords.find((row) => row.id === id)
++    const fieldName = JSON.stringify([request.taskTempId, request.field])
++    if (existing) {
++      if (existing.fieldName !== fieldName || existing.after !== request.value) fail('OPERATION_COLLISION')
++      return workspace
++    }
++    if (request.revision !== confirmationRevisionV2(workspace)) fail('STALE')
++    if (ctx.draft.acceptedEntityTempIds.includes(request.taskTempId) || ctx.draft.rejectedEntityTempIds.includes(request.taskTempId)) fail('ALREADY_PROCESSED')
++    const before = ctx.values[request.taskTempId]?.[request.field] ?? ctx.original(request.taskTempId, request.field)
++    if (before === request.value) return workspace
++    if (request.field === 'title' && (!request.value.trim() || request.value.length > 200)) fail('TITLE_INVALID')
++    if (request.field === 'deadline') {
++      const points = ctx.result.timePoints.filter((point) => point.relatedTaskTempIds.includes(request.taskTempId))
++      if (points.length > 1 || points.some((point) => point.relatedTaskTempIds.length > 1)) fail('SHARED_OR_MULTIPLE_TIME_EDIT_BLOCKED')
++      if (request.value === '' ? points.length !== 0 : !validDate(request.value, points[0]?.timezone ?? workspace.settings.defaultTimezone)) fail('USER_DATE_INVALID')
++    }
++    return { ...workspace, updatedAt: now, historyRecords: [...workspace.historyRecords, {
++      id, entityType: 'extraction_draft', entityId: request.draftId, action: EDIT_ACTION, fieldName,
++      before, after: request.value, actor: 'user', reason: `confirmation-v2:${ctx.fingerprint}`,
++      sourceVersionId: ctx.version.id, changedAt: now,
++    }] }
++  })
++}
++
++export async function confirmV2(repository: CanonicalWorkspaceRepository, intent: ConfirmationIntentV2, now = new Date().toISOString()) {
++  exactKeys(intent, ['draftId', 'revision', 'taskTempIds'])
++  if (!Array.isArray(intent.taskTempIds) || !intent.taskTempIds.length
++    || Object.keys(intent.taskTempIds).length !== intent.taskTempIds.length
++    || new Set(intent.taskTempIds).size !== intent.taskTempIds.length
++    || intent.taskTempIds.some((id) => typeof id !== 'string')) fail('SELECTION_INVALID')
++  const operationId = `confirmation-v2:${workspaceSnapshotHash(intent)}`
++  return repository.transaction((workspace) => {
++    const ctx = context(workspace, intent.draftId)
++    if (ctx.draft.commitOperationIds.includes(operationId)) return workspace
++    if (intent.revision !== confirmationRevisionV2(workspace)) fail('STALE')
++    for (const taskId of intent.taskTempIds) {
++      if (ctx.draft.acceptedEntityTempIds.includes(taskId) || ctx.draft.rejectedEntityTempIds.includes(taskId)) fail('ALREADY_PROCESSED')
++      const state = confirmationStateV2(workspace, intent.draftId, taskId)
++      if (state.blockedReason) throw new Error(state.blockedReason)
++    }
++    const materials = ctx.result.materials.filter((item) => item.relatedTaskTempIds.some((id) => intent.taskTempIds.includes(id)))
++    const points = ctx.result.timePoints.filter((item) => item.relatedTaskTempIds.some((id) => intent.taskTempIds.includes(id)))
++    const selection: DomainCommitSelection = {
++      taskTempIds: [...intent.taskTempIds], materialTempIds: materials.map((item) => item.tempId),
++      timePointTempIds: points.map((item) => item.tempId), eventTempIds: [],
++      taskOverrides: Object.fromEntries(intent.taskTempIds.filter((id) => ctx.overrides[id]).map((id) => [id, ctx.overrides[id]])),
++    }
++    const plan = buildDomainCommitPlanV2(workspace, intent.draftId, selection, now)
++    plan.operationId = operationId
++    return applyDomainCommitPlan(workspace, plan, now)
++  })
++}
+diff --git a/src/domain/v2/confirmationV2.test.ts b/src/domain/v2/confirmationV2.test.ts
+new file mode 100644
+--- /dev/null
++++ b/src/domain/v2/confirmationV2.test.ts
+@@ -0,0 +1,163 @@
++import { describe, expect, it } from 'vitest'
++import { confirmationRevisionV2, confirmationStateV2, confirmV2, editConfirmationV2, reviewEditsV2, type ConfirmationEditV2, type ConfirmationIntentV2 } from './confirmationV2'
++import { captureFixture, memoryRepository } from '../../experiments/mainline01/chain'
++import { NOW, type CaseName } from '../../experiments/mainline01/fixtures'
++import type { WorkspaceV8 } from './types'
++
++async function setup(name: CaseName = 'multi') {
++  const repository = memoryRepository()
++  const handle = await captureFixture(repository, name)
++  const workspace = (await repository.load())!
++  const intent = (ids: string[], current = workspace): ConfirmationIntentV2 =>
++    ({ draftId: handle.draftId, revision: confirmationRevisionV2(current), taskTempIds: ids })
++  const edit = (field: 'title' | 'deadline', value: string, current = workspace, taskTempId = 'submit', operationId = 'edit1'): ConfirmationEditV2 =>
++    ({ draftId: handle.draftId, taskTempId, revision: confirmationRevisionV2(current), operationId, field, value })
++  return { repository, handle, workspace, intent, edit }
++}
++describe('explicit confirmation V2', () => {
++  it('no UI projection becomes an override; no commit before confirmation', async () => {
++    const x = await setup()
++    expect(reviewEditsV2(x.workspace, x.handle.draftId).overrides).toEqual({})
++    expect(x.workspace.tasks).toHaveLength(0)
++    const saved = await confirmV2(x.repository, x.intent(['submit', 'print']), NOW)
++    expect(saved.timePoints.map((t) => t.rawText)).toEqual(x.workspace.extractionDrafts[0].result!.timePoints.map((t) => t.rawText))
++    expect(saved.tasks.every((t) => t.estimatedMinutes === null)).toBe(true)
++  })
++  it('real edit survives reopening; original/result/evidence unchanged; edited-back net patch empty', async () => {
++    const x = await setup()
++    const changed = await editConfirmationV2(x.repository, x.edit('title', '我的报名任务'), NOW)
++    expect(changed.tasks).toHaveLength(0)
++    expect((await x.repository.load())!.extractionDrafts).toEqual(x.workspace.extractionDrafts)
++    const restored = await editConfirmationV2(x.repository, x.edit('title', '提交活动报名表', changed, 'submit', 'edit2'), NOW)
++    expect(reviewEditsV2(restored, x.handle.draftId).overrides).toEqual({})
++    expect(reviewEditsV2(restored, x.handle.draftId).history).toHaveLength(2)
++  })
++  it('same value is not an edit; duplicate edit is idempotent', async () => {
++    const x = await setup()
++    expect(await editConfirmationV2(x.repository, x.edit('deadline', '2026-09-10T18:00'), NOW)).toEqual(x.workspace)
++    const request = x.edit('deadline', '2026-09-12T09:00')
++    const changed = await editConfirmationV2(x.repository, request, NOW)
++    expect(await editConfirmationV2(x.repository, request, NOW)).toEqual(changed)
++    await expect(editConfirmationV2(x.repository, { ...request, value: '2026-09-13' }, NOW)).rejects.toThrow('OPERATION_COLLISION')
++  })
++  it('time edit updates normalized value, never original raw text, timezone or evidence', async () => {
++    const x = await setup()
++    const changed = await editConfirmationV2(x.repository, x.edit('deadline', '2026-09-12T09:00'), NOW)
++    const saved = await confirmV2(x.repository, x.intent(['submit'], changed), NOW)
++    expect(saved.timePoints[0]).toMatchObject({ rawText: '2026年9月10日18:00前', normalizedValue: '2026-09-12T09:00', timezone: 'Asia/Shanghai' })
++    expect(saved.historyRecords.some((h) => h.action === 'confirmation_v2_edit' && h.before === '2026-09-10T18:00' && h.after === '2026-09-12T09:00')).toBe(true)
++    expect(saved.sourceVersions).toEqual(x.workspace.sourceVersions)
++    expect(saved.extractionDrafts[0].result).toEqual(x.workspace.extractionDrafts[0].result)
++  })
++  it('undated confirmation creates no fake time', async () => {
++    const x = await setup('no-date')
++    expect(confirmationStateV2(x.workspace, x.handle.draftId, 'save').dateLabel).toContain('可无日期确认')
++    const saved = await confirmV2(x.repository, x.intent(['save']), NOW)
++    expect(saved.tasks).toHaveLength(1); expect(saved.timePoints).toHaveLength(0)
++  })
++  it('user-added date has manual provenance, no counterfeit evidence and no invented clock', async () => {
++    const x = await setup('no-date')
++    const changed = await editConfirmationV2(x.repository, x.edit('deadline', '2026-09-15', x.workspace, 'save'), NOW)
++    const saved = await confirmV2(x.repository, x.intent(['save'], changed), NOW)
++    expect(saved.timePoints[0]).toMatchObject({ rawText: '2026-09-15', normalizedValue: '2026-09-15', precision: 'date_only', timezone: null, isAllDay: true, legacyData: { extractionMethod: 'manual', evidenceIds: [] } })
++    expect(saved.extractionDrafts[0].result!.timePoints).toHaveLength(0)
++  })
++  it.each(['vague', 'condition-false', 'revision'] as const)('%s remains review/blocked, never promoted to undated', async (name) => {
++    const x = await setup(name)
++    const ids = x.workspace.extractionDrafts[0].result!.standaloneTasks.map((t) => t.tempId)
++    await expect(confirmV2(x.repository, x.intent(ids), NOW)).rejects.toThrow('REVIEW')
++    expect((await x.repository.load())!.tasks).toHaveLength(0)
++  })
++  it('true condition preserves description; information creates none; unknown stays explicitly failed', async () => {
++    const x = await setup('condition-true')
++    const saved = await confirmV2(x.repository, x.intent(['conditional']), NOW)
++    expect(saved.tasks[0].description).toBe(x.workspace.sourceVersions[0].rawText)
++    const info = await setup('information')
++    expect(info.workspace.tasks).toHaveLength(0)
++    const unknownRepository = memoryRepository()
++    await expect(captureFixture(unknownRepository, 'condition-unknown')).rejects.toThrow('UNREPRESENTABLE_CONDITION_STATE')
++    const unknown = (await unknownRepository.load())!
++    expect(unknown.extractionDrafts[0].status).toBe('failed')
++    expect(unknown.sources).toHaveLength(1)
++    expect(unknown.tasks).toHaveLength(0)
++  })
++  it('partial + duplicate + stale confirms do not lose or overwrite siblings', async () => {
++    const x = await setup()
++    const intent = x.intent(['submit'])
++    const first = await confirmV2(x.repository, intent, NOW)
++    expect(await confirmV2(x.repository, intent, NOW)).toEqual(first)
++    await expect(confirmV2(x.repository, x.intent(['print']), NOW)).rejects.toThrow('STALE')
++    const second = await confirmV2(x.repository, x.intent(['print'], first), NOW)
++    expect(second.tasks).toHaveLength(2); expect(second.tasks[0]).toEqual(first.tasks[0])
++    await expect(editConfirmationV2(x.repository, x.edit('title', '覆盖', second), NOW)).rejects.toThrow('ALREADY_PROCESSED')
++  })
++  it('valid sibling can confirm while another has malformed time', async () => {
++    const x = await setup()
++    x.workspace.extractionDrafts[0].result!.timePoints[0].selected = false
++    await x.repository.save(x.workspace)
++    const saved = await confirmV2(x.repository, x.intent(['print']), NOW)
++    expect(saved.tasks.map((t) => t.legacyData?.recognitionTempId)).toEqual(['print'])
++  })
++  it('shared time edit is blocked but unedited task confirmation still works', async () => {
++    const x = await setup()
++    const result = x.workspace.extractionDrafts[0].result!
++    result.timePoints = [{ ...result.timePoints[0], relatedTaskTempIds: ['submit', 'print'], relatedMaterialTempIds: ['m0', 'm1'] }]
++    result.standaloneTasks[1].timePointTempIds = ['d0']
++    await x.repository.save(x.workspace)
++    await expect(editConfirmationV2(x.repository, x.edit('deadline', '2026-09-15'), NOW)).rejects.toThrow('SHARED')
++    const saved = await confirmV2(x.repository, x.intent(['print']), NOW)
++    expect(saved.tasks).toHaveLength(1)
++  })
++  it.each(['2026-02-30', '2026-09-10T25:00', '2026-09-10T18:90', 'invalid', ''])('reject invalid user date %s atomically', async (value) => {
++    const x = await setup()
++    await expect(editConfirmationV2(x.repository, x.edit('deadline', value), NOW)).rejects.toThrow('USER_DATE_INVALID')
++    expect(await x.repository.load()).toEqual(x.workspace)
++  })
++  it('date-only and explicit source timezone preserved', async () => {
++    const x = await setup()
++    const result = x.workspace.extractionDrafts[0].result!
++    Object.assign(result.timePoints[0], { normalizedValue: '2026-09-10', precision: 'date_only', isAllDay: true })
++    result.timePoints[1].timezone = 'Asia/Tokyo'
++    await x.repository.save(x.workspace)
++    const saved = await confirmV2(x.repository, x.intent(['submit', 'print']), NOW)
++    expect(saved.timePoints[0]).toMatchObject({ normalizedValue: '2026-09-10', precision: 'date_only', timezone: null })
++    expect(saved.timePoints[1].timezone).toBe('Asia/Tokyo')
++  })
++  const corruptions: Array<[string, (w: WorkspaceV8) => void]> = [
++    ['source body', (w) => { w.sourceVersions[0].rawText += '篡改' }],
++    ['evidence quote', (w) => { w.extractionDrafts[0].result!.evidence[0].quotedText = '伪造' }],
++    ['time reference', (w) => { w.extractionDrafts[0].result!.standaloneTasks[0].timePointTempIds = ['missing'] }],
++    ['material reference', (w) => { w.extractionDrafts[0].result!.standaloneTasks[0].materialTempIds = ['missing'] }],
++    ['partial source', (w) => { w.sourceVersions[0].legacyData = { reviewMetadata: { partialExtraction: true } } }],
++  ]
++  it.each(corruptions)('rejects %s, rollback unchanged', async (_, change) => {
++    const x = await setup()
++    change(x.workspace)
++    // Persist only if the canonical validator permits the malformed recognition input.
++    try { await x.repository.save(x.workspace) } catch { return }
++    const before = await x.repository.load()
++    await expect(confirmV2(x.repository, x.intent(['submit']), NOW)).rejects.toThrow()
++    expect(await x.repository.load()).toEqual(before)
++  })
++  it('does not trust edited=true / extra overrides or sparse and duplicate IDs', async () => {
++    const x = await setup()
++    await expect(confirmV2(x.repository, { ...x.intent(['submit']), taskOverrides: { submit: { title: '伪造' } } } as ConfirmationIntentV2, NOW)).rejects.toThrow('UNSUPPORTED_FIELDS')
++    await expect(editConfirmationV2(x.repository, { ...x.edit('title', '改变'), edited: true } as ConfirmationEditV2, NOW)).rejects.toThrow('UNSUPPORTED_FIELDS')
++    const sparse = new Array<string>(2); sparse[1] = 'submit'
++    await expect(confirmV2(x.repository, x.intent(sparse), NOW)).rejects.toThrow('SELECTION_INVALID')
++    await expect(confirmV2(x.repository, x.intent(['submit', 'submit']), NOW)).rejects.toThrow('SELECTION_INVALID')
++  })
++  it('stale edit and corrupted before/after chain are rejected', async () => {
++    const x = await setup()
++    const changed = await editConfirmationV2(x.repository, x.edit('title', '更名'), NOW)
++    await expect(editConfirmationV2(x.repository, x.edit('title', '过期', x.workspace, 'print', 'edit2'), NOW)).rejects.toThrow('STALE')
++    changed.historyRecords.find((h) => h.action === 'confirmation_v2_edit')!.before = '伪造'
++    await x.repository.save(changed)
++    await expect(confirmV2(x.repository, x.intent(['submit'], changed), NOW)).rejects.toThrow('EDIT_HISTORY_CHAIN')
++  })
++  it('transaction exception does not erase records', async () => {
++    const x = await setup()
++    await expect(x.repository.transaction((w) => { w.extractionDrafts = []; throw new Error('TEST_ABORT') })).rejects.toThrow('TEST_ABORT')
++    expect(await x.repository.load()).toEqual(x.workspace)
++  })
++})
+diff --git a/src/experiments/mainline01p1/confirmationHarness.ts b/src/experiments/mainline01p1/confirmationHarness.ts
+new file mode 100644
+--- /dev/null
++++ b/src/experiments/mainline01p1/confirmationHarness.ts
+@@ -0,0 +1,56 @@
++import { confirmationRevisionV2, confirmationStateV2, confirmV2, reviewEditsV2 } from '../../domain/v2/confirmationV2'
++import type { WorkspaceV8 } from '../../domain/v2/types'
++import { captureFixture, memoryRepository, reviewView } from '../mainline01/chain'
++import { NOW } from '../mainline01/fixtures'
++
++export function reviewV2(workspace: WorkspaceV8, draftId: string) {
++  const view = reviewView(workspace, draftId)
++  const edits = reviewEditsV2(workspace, draftId)
++  const states = Object.fromEntries(view.draft.items.map((item) => [item.id, confirmationStateV2(workspace, draftId, item.suggestion.id)]))
++  return { ...view, revision: edits.revision, states,
++    draft: { ...view.draft, items: view.draft.items.map((item) => ({ ...item,
++      suggestion: { ...item.suggestion, ...edits.overrides[item.suggestion.id], deadline: states[item.id].value },
++    })) } }
++}
++
++// Test-only evaluation: identical 21 fields x 2 tasks to the protected V1 scorer.
++// Comparison values never enter the V2 confirmation decision.
++export async function observeV2Fidelity() {
++  const repository = memoryRepository()
++  const handle = await captureFixture(repository, 'multi')
++  const before = (await repository.load())!
++  const response = before.extractionDrafts[0].result!
++  const view = reviewV2(before, handle.draftId)
++  await confirmV2(repository, { draftId: handle.draftId, revision: confirmationRevisionV2(before),
++    taskTempIds: view.draft.items.filter((item) => item.selected !== false).map((item) => item.suggestion.id) }, NOW)
++  const saved = (await repository.load())!
++  const rows: Array<{ task: string; field: string; equal: boolean; supplied: unknown; stored: unknown }> = []
++  const check = (task: string, field: string, supplied: unknown, stored: unknown) => rows.push({
++    task, field, supplied, stored, equal: JSON.stringify(supplied) === JSON.stringify(stored),
++  })
++  response.standaloneTasks.forEach((input, index) => {
++    const task = saved.tasks.find((item) => item.legacyData?.recognitionTempId === input.tempId)!
++    const time = saved.timePoints.find((item) => item.legacyData?.recognitionTempId === `d${index}`)!
++    const material = saved.materials.find((item) => item.legacyData?.recognitionTempId === `m${index}`)!
++    const inputTime = response.timePoints[index]
++    const inputMaterial = response.materials[index]
++    check(input.tempId, 'action', input.actionVerb, task.legacyData?.actionVerb)
++    check(input.tempId, 'object', input.actionObject, task.legacyData?.actionObject)
++    check(input.tempId, 'title', input.title, task.title)
++    check(input.tempId, 'description', input.description, task.description)
++    check(input.tempId, 'completionCriteria', input.completionCriteria, task.legacyData?.completionCriteria)
++    for (const field of ['rawText', 'normalizedValue', 'timezone', 'isAllDay', 'precision'] as const) check(input.tempId, `time.${field}`, inputTime[field], time[field])
++    check(input.tempId, 'time.task', [task.id], time.relatedTaskIds)
++    check(input.tempId, 'time.material', [material.id], time.relatedMaterialIds)
++    for (const field of ['name', 'formatRequirements', 'namingRequirements', 'quantity', 'submissionChannel'] as const) check(input.tempId, `material.${field}`, inputMaterial[field], material[field])
++    check(input.tempId, 'material.task', [task.id], material.relatedTaskIds)
++    check(input.tempId, 'material.deadline', time.id, material.deadlineTimePointId)
++    check(input.tempId, 'evidence.source', handle.sourceVersionId, saved.evidenceRefs[0].sourceVersionId)
++    check(input.tempId, 'evidence.quote', response.evidence[0].quotedText, saved.evidenceRefs[0].quotedText)
++  })
++  return { path: 'explicit-confirmation-v2',
++    material: 'handcrafted engineering response; not semantic gold',
++    checked: rows.length, equal: rows.filter((row) => row.equal).length,
++    fidelity: rows.filter((row) => row.equal).length / rows.length,
++    complete: rows.every((row) => row.equal), differences: rows.filter((row) => !row.equal), rows }
++}
+diff --git a/src/experiments/mainline01p1/confirmationHarness.test.ts b/src/experiments/mainline01p1/confirmationHarness.test.ts
+new file mode 100644
+--- /dev/null
++++ b/src/experiments/mainline01p1/confirmationHarness.test.ts
+@@ -0,0 +1,12 @@
++import { expect, it } from 'vitest'
++import { observeFidelity } from '../mainline01/fidelity'
++import { observeV2Fidelity } from './confirmationHarness'
++
++it('same 42-field contract: protected V1 remains 40/42, V2 is 42/42', async () => {
++  const old = await observeFidelity(true)
++  const next = await observeV2Fidelity()
++  expect(old.checked).toBe(42); expect(old.equal).toBe(40)
++  expect(next.rows.map((r) => [r.task, r.field])).toEqual(old.rows.map((r) => [r.task, r.field]))
++  expect(next.checked).toBe(42); expect(next.equal).toBe(42)
++  expect(next.differences).toEqual([])
++})
+diff --git a/src/experiments/mainline01p1/browser.tsx b/src/experiments/mainline01p1/browser.tsx
+new file mode 100644
+--- /dev/null
++++ b/src/experiments/mainline01p1/browser.tsx
+@@ -0,0 +1,94 @@
++import { useRef, useState } from 'react'
++import { createRoot } from 'react-dom/client'
++import { DraftReviewPanel } from '../../components/DraftReviewPanel'
++import { CanonicalWorkspaceRepository } from '../../domain/v2/repository'
++import { confirmationRevisionV2, confirmV2, editConfirmationV2, reviewEditsV2, type ConfirmationIntentV2 } from '../../domain/v2/confirmationV2'
++import type { WorkspaceV8 } from '../../domain/v2/types'
++import { captureFixture } from '../mainline01/chain'
++import { IsolatedTestStore } from '../mainline01/isolatedStore'
++import { LABEL, type CaseName } from '../mainline01/fixtures'
++import { reviewV2 } from './confirmationHarness'
++
++const run = new URL(location.href).searchParams.get('run')
++const caseName = new URL(location.href).searchParams.get('case') ?? 'multi'
++if (!run || !/^[a-z0-9-]+$/u.test(run) || !['multi', 'no-date', 'vague'].includes(caseName)) throw new Error('TEST_RUN_REQUIRED')
++const databaseName = `rco-mainline-01-p1-${run}-${caseName}`
++const repository = new CanonicalWorkspaceRepository(new IsolatedTestStore(databaseName))
++
++export function HarnessV2() {
++  const [workspace, setWorkspace] = useState<WorkspaceV8 | null>(null)
++  const [opened, setOpened] = useState(false)
++  const [message, setMessage] = useState('请读取隔离测试库。外部请求已被禁止。')
++  const [busy, setBusy] = useState(false)
++  const lock = useRef(false)
++  const [lastIntent, setLastIntent] = useState<ConfirmationIntentV2 | null>(null)
++  const [checks, setChecks] = useState(0)
++  const [selected, setSelected] = useState<Record<string, boolean>>({})
++  const current = workspace?.extractionDrafts[0]
++  const view = workspace && current ? reviewV2(workspace, current.id) : null
++  const act = async (operation: () => Promise<void>) => {
++    if (lock.current) return
++    lock.current = true; setBusy(true)
++    try { await operation() } catch (error) { setMessage(error instanceof Error ? error.message : '测试失败') }
++    finally { lock.current = false; setBusy(false) }
++  }
++  const read = () => act(async () => {
++    if (!await repository.load()) await captureFixture(repository, caseName as CaseName)
++    setWorkspace((await repository.load())!); setOpened(true)
++    setMessage('已从独立 IndexedDB 读回；不重新识别，不触及用户工作区。')
++  })
++  const confirm = (itemId?: string) => act(async () => {
++    if (!view || !workspace) throw new Error('REVIEW_REQUIRED')
++    const intent = { draftId: view.draft.id, revision: confirmationRevisionV2(workspace),
++      taskTempIds: view.draft.items.filter((item) => item.status === '待确认'
++        && (itemId ? item.id === itemId : selected[item.id] ?? item.selected !== false)).map((item) => item.suggestion.id) }
++    await confirmV2(repository, intent)
++    setLastIntent(intent); setWorkspace((await repository.load())!)
++    setMessage('点击真实面板确认后写入测试库，并已读回。')
++  })
++  const unsupported = () => setMessage('此结构编辑不在隔离 V2 本轮范围；没有更改任何记录。')
++  const snapshot = workspace && current && {
++    databaseName, provider: workspace.recognitionRuns[0].provider, tasks: workspace.tasks,
++    times: workspace.timePoints, materials: workspace.materials, evidence: workspace.evidenceRefs,
++    firstResponse: current.result, edits: reviewEditsV2(workspace, current.id).history,
++    taskCount: workspace.tasks.length, timeCount: workspace.timePoints.length, rollbackChecks: checks,
++  }
++  return <main>
++    <h1>{LABEL} · 隔离确认 V2</h1>
++    <p>只验证产品承接人工响应，不代表模型准确率。未接 App、日历、提醒或正式工作区。</p>
++    <p>测试数据库：{databaseName}</p>
++    <button disabled={busy} onClick={read}>读取 / 重开隔离工程样例</button>
++    <button disabled={busy || !lastIntent} onClick={() => act(async () => {
++      await confirmV2(repository, lastIntent!); setWorkspace((await repository.load())!); setMessage('重复确认已读回。')
++    })}>校验重复确认</button>
++    <button disabled={busy || !workspace} onClick={() => act(async () => {
++      const before = await repository.load()
++      try { await repository.transaction((w) => { w.tasks = []; throw new Error('TEST_ABORT') }) }
++      catch (error) { if (!(error instanceof Error) || error.message !== 'TEST_ABORT') throw error }
++      const after = await repository.load()
++      if (JSON.stringify(before) !== JSON.stringify(after)) throw new Error('ROLLBACK_FAILED')
++      setChecks((n) => n + 1); setMessage('真实 IndexedDB 事务失败，原记录保持完整。')
++    })}>校验失败回滚</button>
++    <p role="status">{message}</p>
++    <pre aria-label="隔离存储读回结果">{JSON.stringify(snapshot, null, 2)}</pre>
++    {opened && view && workspace && <DraftReviewPanel
++      draft={{ ...view.draft, items: view.draft.items.map((item) => ({ ...item, selected: selected[item.id] ?? item.selected })) }}
++      source={view.source} confirmationV2={{ busy, items: view.states }}
++      onClose={() => setOpened(false)} projectWillCreate={false} projects={[]}
++      onUpdate={(itemId, patch) => void act(async () => {
++        const item = view.draft.items.find((candidate) => candidate.id === itemId)!
++        const fields = Object.keys(patch)
++        if (fields.length !== 1 || !['title', 'deadline'].includes(fields[0])) throw new Error('本轮仅支持名称和时间编辑')
++        const field = fields[0] as 'title' | 'deadline'
++        await editConfirmationV2(repository, { draftId: view.draft.id, taskTempId: item.suggestion.id,
++          revision: view.revision, operationId: crypto.randomUUID(), field, value: patch[field]! })
++        setWorkspace((await repository.load())!); setMessage('用户编辑已独立持久化，尚未创建任务；可刷新读回。')
++      })}
++      onConfirm={(id) => void confirm(id)} onConfirmAll={() => void confirm()}
++      onToggleTaskSelected={(id, checked) => setSelected((previous) => ({ ...previous, [id]: checked }))}
++      onReject={unsupported} onProjectChoice={unsupported} onKeepExplicit={unsupported} onMoveTask={unsupported}
++      onToggleRecognitionEntity={unsupported} onSplitTask={unsupported} onMergeTask={unsupported}
++    />}
++  </main>
++}
++createRoot(document.getElementById('root')!).render(<HarnessV2 />)
+diff --git a/scripts/serve-mainline-01-p1.mjs b/scripts/serve-mainline-01-p1.mjs
+new file mode 100644
+--- /dev/null
++++ b/scripts/serve-mainline-01-p1.mjs
+@@ -0,0 +1,20 @@
++import { createServer } from 'node:http'
++import { randomUUID } from 'node:crypto'
++import { build } from 'esbuild'
++
++// In-memory bundle, no Vite/.env/service proxy/cache/static filesystem serving.
++const bundled = await build({ entryPoints: ['src/experiments/mainline01p1/browser.tsx'], bundle: true,
++  write: false, platform: 'browser', format: 'esm', jsx: 'automatic',
++  define: { 'process.env.NODE_ENV': '"test"' } })
++const html = `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>MAINLINE-01-P1 隔离确认 V2</title>
++<style>body{font:16px system-ui;margin:24px;max-width:1100px;color:#162a38}button,input,select{font:inherit;margin:6px;padding:8px}article,section,details{border:1px solid #b8c6cc;padding:12px;margin:8px}pre{font-size:12px;white-space:pre-wrap}small{display:block}label{display:block}.review-item-header{display:flex;gap:8px;align-items:center}.dialog-close{float:right}.sr-only{font-size:12px}.form-grid{display:grid;grid-template-columns:1fr 1fr}mark{background:#ffe39b}</style>
++<div id="root"></div><script type="module" src="/bundle.js"></script></html>`
++const server = createServer((request, response) => {
++  const path = new URL(request.url, 'http://127.0.0.1').pathname
++  response.setHeader('Content-Security-Policy', "default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
++  response.setHeader('Cache-Control', 'no-store')
++  if (request.method !== 'GET' || !['/', '/bundle.js'].includes(path)) { response.writeHead(404); response.end(); return }
++  response.setHeader('Content-Type', path === '/' ? 'text/html; charset=utf-8' : 'text/javascript; charset=utf-8')
++  response.end(path === '/' ? html : bundled.outputFiles[0].contents)
++})
++server.listen(0, '127.0.0.1', () => console.log(`MAINLINE_P1_TEST_URL=http://127.0.0.1:${server.address().port}/?run=${randomUUID()}`))

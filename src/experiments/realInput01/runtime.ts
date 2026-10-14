@@ -1,0 +1,420 @@
+import { createElement, useState } from 'react'
+import type { WorkspaceV8 } from '../../domain/v2/types'
+import { CanonicalWorkspaceRepository, MemoryWorkspaceRecordStore, type WorkspaceRecordStore } from '../../domain/v2/repository'
+import type { CaptureHandle } from '../../domain/v2/capture'
+import type { LocalExtractionResources } from '../../lib/fileExtraction'
+import { indexImmutableScopesV11 } from '../../recognition/scopeIndexV11'
+import { createMainlineRuntime } from '../mainline02/runtime'
+import { SemanticRepository } from '../mainline05/semanticRepository'
+import { completeInputRun, failInputRun } from '../mainline05/semanticCapture'
+import { confirmSemantic, editSemantic, disposeSemantic, enableMaterialReview } from '../mainline05/semanticConfirmation'
+import { semanticView, semanticReview, semanticDates, stateForEntity, timeLabel } from '../mainline05/semanticView'
+import { REAL_STATE_VERSION, stateOfRuntime, effectiveStateFacts, relatedAssets, readingOf, semanticRevision, isCurrentDraft, informationReviewProblem, materialReviewEnabled, exactKeys } from '../mainline05/semanticState'
+import { SemanticFacts } from '../mainline05/SemanticFacts'
+import { InputReview } from './InputReview'
+import { FactCorrectionEditor, RelationCorrection } from './FactCorrectionEditor'
+import { IndependentEventEditor } from './IndependentEventEditor'
+import { makeSendSnapshot, sha256Text } from './inputReceipt'
+import type { ModelExecutor } from './modelClient'
+import type { WireContext } from './modelWire'
+import { buildModelRequest, MODEL_NAME, FLASH41_MODEL_NAME } from './modelWire'
+import { buildCandidate02Request, CANDIDATE02_VERSION } from './candidate02'
+import { buildCandidate03Request, CANDIDATE03_VERSION } from './candidate03'
+import { buildCandidate04Request, CANDIDATE04_VERSION } from './candidate04'
+import { buildFlash41ComparisonRequest, CANDIDATE05_VERSION } from './candidate05'
+import { buildFlash41Candidate06ComparisonRequest, CANDIDATE06_VERSION } from './candidate06'
+import { buildFlash41Candidate07ComparisonRequest, CANDIDATE07_VERSION } from './candidate07'
+import { buildFlash41Candidate09ComparisonRequest, CANDIDATE09_VERSION } from './candidate09'
+import { acquireText } from './inputAcquisition'
+import { pendingDateTaskIds } from '../mainline05/semanticView'
+import { stableJson } from '../mainline04/semanticContract'
+import type { RealInputReading } from '../mainline05/semanticState'
+
+export interface RecordedA02 {
+  version:'recorded-a02-1'; name:string; handle:CaptureHandle; context:WireContext;
+  requestSha:string; responseSha:string; rawHttpText:string
+}
+// Transport/record identities, never semantic answers or scoring dependencies.
+export const recordedA02Identity={name:'rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862',
+  handle:{sourceId:'source:00af0dfa',sourceVersionId:'source:00af0dfa:version:1',recognitionRunId:'source:00af0dfa:run:1:1',draftId:'source:00af0dfa:draft:1:1',duplicate:false},
+  requestSha:'6cbf184da3dbc6d2ab8322b29482a0686fa2657c37ae34f4c8ce84ffae54404a',
+  responseSha:'5e201902469878c85b1e87364e6cd07be58e02bccbe509bbee0c09728457f55e'} as const
+export async function validateRecordedA02(record:RecordedA02) {
+  exactKeys(record,['version','name','handle','context','requestSha','responseSha','rawHttpText'])
+  if(record.version!=='recorded-a02-1'||record.name!==recordedA02Identity.name
+    ||stableJson(record.handle)!==stableJson(recordedA02Identity.handle)||record.requestSha!==recordedA02Identity.requestSha
+    ||record.responseSha!==recordedA02Identity.responseSha||await sha256Text(record.rawHttpText)!==record.responseSha
+    ||await sha256Text((await buildModelRequest(record.context)).serialized)!==record.requestSha)throw Error('REAL_INPUT_RECORDED_IDENTITY')
+}
+/** No executor, network, new Source or rewritten model response. Stage through the
+ * existing capture and validator; publish the result plus material policy in one CAS. */
+export async function replayRecordedA02(repo:SemanticRepository,record:RecordedA02) {
+  record=structuredClone(record);await validateRecordedA02(record)
+  return stageRecordedResponse(repo,record)
+}
+export interface RecordedBatch extends Omit<RecordedA02,'version'> {
+  version:'recorded-batch-1'; unitId:string
+}
+export interface RecordedBatchIdentity {unitId:string;requestSha:string;responseSha:string}
+export interface RecordedPaired04 {
+  version:'recorded-paired04-1'|'recorded-paired05-1'|'recorded-paired06-1'|'recorded-paired07-1'|'recorded-paired09-1'|'recorded-reasoning-none-1'; unitId:string; name:string; operationId:string; title:string;
+  context:WireContext; requestSha:string; responseSha:string; rawHttpText:string
+}
+/** Server-bound paid record, not a model executor. No references or scores enter here. */
+export const HTTPS_PREVIEW_DATABASE = 'rco-mainline-01-02-i1-real-input-https-preview-1'
+export const HTTPS_PREVIEW_EXAMPLES = [
+  {unitId:'Q01-06',label:'体验多任务通知',description:'核对两个任务各自的截止时间和材料。'},
+  {unitId:'Q07-06',label:'体验新旧要求替代',description:'核对旧要求作废及有效的新要求。'},
+  {unitId:'R11-07',label:'核对送样与共享材料',description:'候选07历史回放：检查登记单、样本和密封袋归属；尚未采用该候选。'},
+  {unitId:'R12-07',label:'核对展签与取消要求',description:'保留原回答的取消引用错误，须人工补正，不代表已通过识别。'},
+  {unitId:'U11-09',label:'验证共享材料的两个截止时间',description:'候选09历史回放：共享登记单仍关联两个任务，但每个任务只保留自己的截止时间；候选09未采用。'},
+  {unitId:'V02-09',label:'验证展签制作与安装时间',description:'候选09历史回放：先核对可确认的制作任务，安装任务的时间和前置条件仍须单独处理；候选09未采用。'},
+  {unitId:'L01-A',label:'体验多任务通知',description:'最新可靠基线 · L01-A · deepseek-flash · reasoning=none：核对两项任务、各自截止时间与材料归属。'},
+  {unitId:'L02-A',label:'核对送样与共享材料',description:'最新可靠基线 · L02-A / W11：纠正多余建议、材料归属和未知条件，再确认合法独立任务。'},
+  {unitId:'L04-A',label:'核对展签与前置关系',description:'最新可靠基线 · L04-A / W12：核对无依据依赖；作废旧要求不会成为待办。'},
+] as const
+export async function openHttpsPreviewExample(repo:SemanticRepository,identity:RecordedBatchIdentity,
+  read:(unitId:string)=>Promise<RecordedPaired04>,onReady:(draftId:string)=>Promise<void>) {
+  identity=structuredClone(identity)
+  if(repo.name!==HTTPS_PREVIEW_DATABASE||!HTTPS_PREVIEW_EXAMPLES.some(e=>e.unitId===identity.unitId))throw Error('REAL_INPUT_HTTPS_EXAMPLE_IDENTITY')
+  const record=await read(identity.unitId)
+  const saved=await replayRecordedPaired04(repo,record,identity,true)
+  const draft=saved.extractionDrafts.find(d=>{
+    const receipt=d.legacyData?.realInputRecorded as RecordedBatchIdentity|undefined
+    return receipt?.unitId===identity.unitId&&receipt.requestSha===identity.requestSha&&receipt.responseSha===identity.responseSha
+  })
+  if(!draft)throw Error('REAL_INPUT_HTTPS_EXAMPLE_DRAFT_MISSING')
+  // The real App callback reloads its canonical snapshot and opens its existing
+  // review panel. Loading never selects or confirms a task, nor remounts App.
+  await onReady(draft.id)
+  return draft.id
+}
+export function HttpsPreviewExamples({open,unitIds=['Q01-06','Q07-06']}:{open:(unitId:string)=>Promise<unknown>;unitIds?:string[]}) {
+  const [busy,setBusy]=useState(false),[error,setError]=useState('')
+  const choose=async(unitId:string)=>{
+    if(busy)return
+    setBusy(true);setError('')
+    try{await open(unitId)}catch(error){
+      setError(error instanceof Error&&error.message==='PAIRED_SOURCE_ARM_ALREADY_CHOSEN'
+        ?'同一通知已载入另一条历史回答。为避免重复任务，本次没有覆盖；请从收件箱继续处理已有记录。'
+        :'示例未能打开，已有保存内容未被清空。请再次选择以恢复；若仍失败，请保留现场并联系维护者。')
+    }finally{setBusy(false)}
+  }
+  const examples=HTTPS_PREVIEW_EXAMPLES.filter(e=>unitIds.includes(e.unitId))
+  return createElement('section',{'aria-label':'匿名示例体验'},
+    createElement('h3',null,'选择一份通知，直接开始核对'),
+    createElement('p',null,'以下是匿名通知的历史真实模型回答，不是刚刚识别。不会发送模型请求；只有你主动确认后才保存为任务。'),
+    ...examples.map(e=>createElement('div',{key:e.unitId},
+      createElement('button',{type:'button',disabled:busy,onClick:()=>void choose(e.unitId)},e.label),
+      createElement('p',null,e.description))),
+    createElement('p',null,'已载入的示例会恢复原记录，不会再建一份。'),
+    busy?createElement('p',{role:'status'},'正在打开已记录建议，请稍候……'):null,
+    error?createElement('p',{role:'alert'},error):null)
+}
+export async function replayRecordedPaired04(repo:SemanticRepository,record:RecordedPaired04,identity:RecordedBatchIdentity, httpsPreview = false) {
+  record=structuredClone(record);identity=structuredClone(identity)
+  exactKeys(record,['version','unitId','name','operationId','title','context','requestSha','responseSha','rawHttpText'])
+  exactKeys(identity,['unitId','requestSha','responseSha'])
+  const id=record.unitId.slice(0,3),arm=record.unitId.slice(4)
+  const latestNone=record.version==='recorded-reasoning-none-1',paired09=record.version==='recorded-paired09-1',paired07=record.version==='recorded-paired07-1',newest=record.version==='recorded-paired06-1',next=record.version==='recorded-paired05-1',prefix=latestNone?'reasoning-none':paired09?'paired09':paired07?'paired07':newest?'paired06':next?'paired05':'paired04'
+  // Paired09 deliberately reuses the exact paired08 source/context. Do not
+  // manufacture a new source identity or confirm both arms of the same source.
+  const latestNoneOperation={L01:'paired08-seen-S01',L02:'paired08-seen-S11',L04:'paired08-seen-S12'}[id]
+  const operationId=latestNone?latestNoneOperation:paired09?(id.startsWith('U')?'paired08-seen-S':'paired08-fresh-T')+id.slice(1):prefix+'-source-'+id
+  const built=latestNone?await buildReasoningLow16NoneRequest(record.context)
+    :paired09&&['03','09'].includes(arm)?await buildFlash41Candidate09ComparisonRequest(record.context,arm as '03'|'09')
+    :paired07&&['03','07'].includes(arm)?await buildFlash41Candidate07ComparisonRequest(record.context,arm as '03'|'07')
+    :newest&&['03','06'].includes(arm)?await buildFlash41Candidate06ComparisonRequest(record.context,arm as '03'|'06')
+    :next&&['03','05'].includes(arm)?await buildFlash41ComparisonRequest(record.context,arm as '03'|'05')
+    :await (arm==='03'?buildCandidate03Request:buildCandidate04Request)(record.context)
+  if(!['recorded-paired04-1','recorded-paired05-1','recorded-paired06-1','recorded-paired07-1','recorded-paired09-1','recorded-reasoning-none-1'].includes(record.version)
+    ||!(latestNone?/^L(?:01|02|04)-A$/:paired09?/^(U(0[1-9]|1[0-2])|V0[1-8])-(03|09)$/:paired07?/^R(0[1-9]|1[0-2])-(03|07)$/:newest?/^Q(0[1-9]|1[0-2])-(03|06)$/:next?/^P(0[1-9]|1[0-2])-(03|05)$/:/^N(0[1-9]|1[0-2])-(03|04)$/).test(record.unitId)
+    ||!operationId||record.operationId!==operationId||record.name!==recordedA02Identity.name
+    ||(httpsPreview ? repo.name!==HTTPS_PREVIEW_DATABASE||!HTTPS_PREVIEW_EXAMPLES.some(e=>e.unitId===record.unitId) : repo.name!==record.name)
+    ||repo.profile!=='real-input-01'||record.unitId!==identity.unitId
+    ||record.requestSha!==identity.requestSha||record.responseSha!==identity.responseSha
+    ||await sha256Text(record.rawHttpText)!==identity.responseSha
+    ||await sha256Text(built.serialized)!==identity.requestSha)throw Error('REAL_INPUT_P04_IDENTITY')
+  const before=await repo.load(),receipt={version:record.version,unitId:record.unitId,requestSha:record.requestSha,responseSha:record.responseSha}
+  const existing=before.sources.find(s=>s.legacyData?.captureOperationId===record.operationId)
+  if(existing){
+    const draft=before.extractionDrafts.find(d=>stableJson(d.legacyData?.realInputRecorded??null)===stableJson(receipt))
+    const run=before.recognitionRuns.find(r=>r.id===draft?.recognitionRunId)
+    const storedRaw=(draft?.legacyData?.mainline05 as {rawHttpText?:string}|undefined)?.rawHttpText
+      ??(draft?.legacyData?.mainline05Failure as {response?:unknown}|undefined)?.response
+    if(!draft||run?.sourceVersionId!==existing.currentVersionId
+      ||storedRaw!==record.rawHttpText)throw Error('PAIRED_SOURCE_ARM_ALREADY_CHOSEN')
+    return before
+  }
+  const inputReceipt=await acquireText(prefix+'-'+id,record.context.index.sourceContent)
+  const reading={version:REAL_STATE_VERSION,inputReceipt,sendSnapshot:await makeSendSnapshot(inputReceipt,[1],[1],record.context.referenceTime)}
+  return repo.appendPairedRecordedSource(record.operationId,semanticRevision(before),async memory=>{
+    const source=await memory.saveReading(inputReceipt,record.title,record.operationId,record.context.referenceTime)
+    const actual={index:await indexImmutableScopesV11(source.sourceId,source.sourceVersionId,reading.sendSnapshot.text),
+      referenceTime:record.context.referenceTime,timezone:'Asia/Shanghai'}
+    if(stableJson(actual)!==stableJson(record.context))throw Error('REAL_INPUT_P04_SOURCE')
+    const handle=await memory.beginInputRun(source.sourceId,reading,'live','recorded-'+prefix+'-'+record.unitId,
+      semanticRevision(await memory.load()),record.context.referenceTime,latestNone||arm==='03'?CANDIDATE03_VERSION:paired09?CANDIDATE09_VERSION:paired07?CANDIDATE07_VERSION:newest?CANDIDATE06_VERSION:next?CANDIDATE05_VERSION:CANDIDATE04_VERSION,
+      latestNone||paired09||paired07||newest||next?FLASH41_MODEL_NAME:MODEL_NAME)
+    await memory.transaction(w=>({...w,extractionDrafts:w.extractionDrafts.map(d=>d.id===handle.draftId
+      ?{...d,legacyData:{...d.legacyData,realInputRecorded:receipt}}:d)}))
+    try{await completeInputRun(memory,handle,record.rawHttpText)}catch(error){
+      // Only a bound paired07 semantic-reference rejection can be archived.
+      // Existing completion already persisted the terminal failure in private
+      // memory. Do not repair it, open correction, or make it dispatchable.
+      if(!paired07||!(error instanceof Error)||error.message!=='MAINLINE05_INVALID_ENTITY_REFERENCE')throw error
+      const failed=await memory.load(),draft=failed.extractionDrafts.find(d=>d.id===handle.draftId)
+      if(failed.recognitionRuns.find(r=>r.id===handle.recognitionRunId)?.status!=='failed'||draft?.status!=='failed'
+        ||(draft.legacyData?.mainline05Failure as {response?:unknown}|undefined)?.response!==record.rawHttpText)throw error
+      return
+    }
+    await enableMaterialReview(memory,handle.draftId)
+  })
+}
+async function buildReasoningLow16NoneRequest(context:WireContext){
+  const request=await buildCandidate03Request(context),body={...structuredClone(request.body),model:FLASH41_MODEL_NAME,
+    reasoning:{effort:'none' as const},max_output_tokens:16384}
+  return {body,serialized:JSON.stringify(body)}
+}
+export interface RecordedCandidate02 extends Omit<RecordedBatch,'version'> { version:'recorded-candidate02-1' }
+/** Already-paid response only. New run identity; old source version and response remain intact. */
+export async function replayRecordedCandidate02(repo:SemanticRepository,record:RecordedCandidate02,identity:RecordedBatchIdentity) {
+  record=structuredClone(record);identity=structuredClone(identity)
+  exactKeys(record,['version','unitId','name','handle','context','requestSha','responseSha','rawHttpText'])
+  exactKeys(identity,['unitId','requestSha','responseSha'])
+  if(record.version!=='recorded-candidate02-1'||!/^C0[1-8]$/.test(record.unitId)||record.name!==recordedA02Identity.name
+    ||record.unitId!==identity.unitId||record.requestSha!==identity.requestSha||record.responseSha!==identity.responseSha
+    ||await sha256Text(record.rawHttpText)!==identity.responseSha
+    ||await sha256Text((await buildCandidate02Request(record.context)).serialized)!==identity.requestSha)throw Error('REAL_INPUT_C02_IDENTITY')
+  if(repo.profile!=='real-input-01'||repo.name!==record.name)throw Error('REAL_INPUT_RECORDED_DATABASE')
+  const before=await repo.load(),old=before.extractionDrafts.find(d=>d.id===record.handle.draftId)
+  const oldRun=before.recognitionRuns.find(r=>r.id===old?.recognitionRunId)
+  const pending=old?.legacyData?.realInputPending as unknown as {reading:RealInputReading;execution:string}
+  if(!pending||pending.execution!=='live'||oldRun?.sourceVersionId!==record.handle.sourceVersionId
+    ||pending.reading.sendSnapshot?.text!==record.context.index.sourceContent)throw Error('REAL_INPUT_C02_SOURCE')
+  const handle=await repo.beginInputRun(record.handle.sourceId,pending.reading,'live','recorded-candidate02-'+record.unitId,
+    semanticRevision(before),record.context.referenceTime,CANDIDATE02_VERSION)
+  if(handle.sourceVersionId!==record.handle.sourceVersionId)throw Error('REAL_INPUT_C02_SOURCE_VERSION_CHANGED')
+  return stageRecordedResponse(repo,{...record,handle})
+}
+export interface RecordedCandidate03 extends Omit<RecordedBatch,'version'> { version:'recorded-candidate03-1' }
+/** Already-paid response only. New run identity; old source version and response remain intact. */
+export async function replayRecordedCandidate03(repo:SemanticRepository,record:RecordedCandidate03,identity:RecordedBatchIdentity) {
+  record=structuredClone(record);identity=structuredClone(identity)
+  exactKeys(record,['version','unitId','name','handle','context','requestSha','responseSha','rawHttpText'])
+  exactKeys(identity,['unitId','requestSha','responseSha'])
+  if(record.version!=='recorded-candidate03-1'||!/^D0[1-8]$/.test(record.unitId)||record.name!==recordedA02Identity.name
+    ||record.unitId!==identity.unitId||record.requestSha!==identity.requestSha||record.responseSha!==identity.responseSha
+    ||await sha256Text(record.rawHttpText)!==identity.responseSha
+    ||await sha256Text((await buildCandidate03Request(record.context)).serialized)!==identity.requestSha)throw Error('REAL_INPUT_C03_IDENTITY')
+  if(repo.profile!=='real-input-01'||repo.name!==record.name)throw Error('REAL_INPUT_RECORDED_DATABASE')
+  const before=await repo.load(),old=before.extractionDrafts.find(d=>d.id===record.handle.draftId)
+  const oldRun=before.recognitionRuns.find(r=>r.id===old?.recognitionRunId)
+  const pending=old?.legacyData?.realInputPending as unknown as {reading:RealInputReading;execution:string}
+  if(!pending||pending.execution!=='live'||oldRun?.sourceVersionId!==record.handle.sourceVersionId
+    ||pending.reading.sendSnapshot?.text!==record.context.index.sourceContent)throw Error('REAL_INPUT_C03_SOURCE')
+  const version=before.sourceVersions.find(v=>v.id===record.handle.sourceVersionId)
+  if(!version||version.sourceId!==record.handle.sourceId||oldRun.id!==record.handle.recognitionRunId
+    ||stableJson({index:await indexImmutableScopesV11(version.sourceId,version.id,version.rawText!),
+      referenceTime:pending.reading.sendSnapshot.consentAt,timezone:'Asia/Shanghai'})!==stableJson(record.context))throw Error('REAL_INPUT_C03_SOURCE')
+  return repo.appendRecordedInput({source:record.handle,reading:pending.reading,operationId:'recorded-candidate03-'+record.unitId,
+    requestSha:record.requestSha,responseSha:record.responseSha,rawHttpText:record.rawHttpText,
+    revision:semanticRevision(before),promptVersion:CANDIDATE03_VERSION},async(memory,handle)=>{
+    await completeInputRun(memory,handle,record.rawHttpText)
+    await enableMaterialReview(memory,handle.draftId)
+  })
+}
+/** A settled, server-bound response; not a new prediction or an engineering answer. */
+export async function replayRecordedBatch(repo:SemanticRepository,record:RecordedBatch,identity:RecordedBatchIdentity) {
+  record=structuredClone(record);identity=structuredClone(identity)
+  exactKeys(record,['version','unitId','name','handle','context','requestSha','responseSha','rawHttpText'])
+  exactKeys(identity,['unitId','requestSha','responseSha'])
+  if(record.version!=='recorded-batch-1'||! /^(?:A0[3-8]|B0[1-8])$/.test(record.unitId)
+    ||record.name!==recordedA02Identity.name||record.unitId!==identity.unitId||record.requestSha!==identity.requestSha
+    ||record.responseSha!==identity.responseSha||await sha256Text(record.rawHttpText)!==identity.responseSha
+    ||await sha256Text((await buildModelRequest(record.context)).serialized)!==identity.requestSha)throw Error('REAL_INPUT_BATCH_RECORDED_IDENTITY')
+  return stageRecordedResponse(repo,record)
+}
+async function stageRecordedResponse(repo:SemanticRepository,record:RecordedA02|RecordedBatch|RecordedCandidate02|RecordedCandidate03) {
+  if(repo.profile!=='real-input-01'||repo.name!==record.name)throw Error('REAL_INPUT_RECORDED_DATABASE')
+  const before=await repo.load(),draft=before.extractionDrafts.find(d=>d.id===record.handle.draftId)
+  const pending=draft?.legacyData?.realInputPending as {execution?:string}|undefined
+  if(pending?.execution!=='live')throw Error('REAL_INPUT_RECORDED_PROVENANCE')
+  if(record.version!=='recorded-a02-1'&&draft?.status==='failed'){
+    const failure=draft.legacyData?.mainline05Failure as {response?:unknown}|undefined
+    if(failure?.response!==record.rawHttpText)throw Error('REAL_INPUT_RECORDED_EXISTING_MISMATCH')
+    throw Error('REAL_INPUT_RECORDED_REJECTED_PRESERVED')
+  }
+  if(draft?.legacyData?.mainline05){
+    const state=stateOfRuntime(before,draft.id)
+    if(state.version!==REAL_STATE_VERSION||state.execution!=='live'||state.rawHttpText!==record.rawHttpText||!materialReviewEnabled(state))throw Error('REAL_INPUT_RECORDED_EXISTING_MISMATCH')
+    return before
+  }
+  if(stableJson(await inputRunContext(repo,record.handle))!==stableJson(record.context))throw Error('REAL_INPUT_RECORDED_CONTEXT')
+  const memory=Object.assign(new MemoryWorkspaceRecordStore(),{name:repo.name})
+  await new CanonicalWorkspaceRepository(memory).save(before)
+  const staged=await SemanticRepository.open(repo.name,memory,undefined,'real-input-01')
+  try { await completeInputRun(staged,record.handle,record.rawHttpText) }
+  catch(error){
+    if(record.version==='recorded-a02-1')throw error
+    const failed=await staged.load(),failedDraft=failed.extractionDrafts.find(d=>d.id===record.handle.draftId)
+    const failure=failedDraft?.legacyData?.mainline05Failure as {response?:unknown}|undefined
+    if(failedDraft?.status!=='failed'||failure?.response!==record.rawHttpText)throw error
+    await repo.transaction(w=>{
+      if(semanticRevision(w)!==semanticRevision(before))throw Error('REAL_INPUT_STALE_RELOAD_REQUIRED')
+      return failed
+    })
+    throw Error('REAL_INPUT_RECORDED_REJECTED_PRESERVED',{cause:error})
+  }
+  const next=await enableMaterialReview(staged,record.handle.draftId)
+  return repo.transaction(w=>{
+    if(semanticRevision(w)!==semanticRevision(before))throw Error('REAL_INPUT_STALE_RELOAD_REQUIRED')
+    return next
+  })
+}
+
+/** Resumable zero-dispatch engineering preparation. Reuse the persisted consent
+ * instant and handle; never turn a partial preparation into a retry/new request. */
+export async function prepareInputRun(repo: SemanticRepository, sourceId: string, operationId: string, now = new Date().toISOString()) {
+  const workspace=await repo.load(), source=workspace.sources.find(s=>s.id===sourceId)
+  if(!source)throw Error('REAL_INPUT_PREPARE_SOURCE_MISSING')
+  const receipt=readingOf(source.legacyData?.realInput01).inputReceipt
+  const prior=workspace.extractionDrafts.find(d=>{
+    const pending=d.legacyData?.realInputPending as {operationId?: string}|undefined
+    return pending?.operationId===operationId
+  })
+  if(prior){
+    const pending=prior.legacyData!.realInputPending as unknown as {reading: RealInputReading; execution: string}
+    const run=workspace.recognitionRuns.find(r=>r.id===prior.recognitionRunId)
+    if(!run||pending.execution!=='live'||stableJson(pending.reading.inputReceipt)!==stableJson(receipt))throw Error('REAL_INPUT_PREPARED_INPUT_CHANGED')
+    const handle={sourceId,sourceVersionId:run.sourceVersionId,recognitionRunId:run.id,draftId:prior.id,duplicate:true}
+    return {handle,reading:pending.reading,context:await inputRunContext(repo,handle)}
+  }
+  const pages=receipt.pages.map(p=>p.number), reading={version:REAL_STATE_VERSION,inputReceipt:receipt,
+    sendSnapshot:await makeSendSnapshot(receipt,pages,pages,now)}
+  const handle=await repo.beginInputRun(sourceId,reading,'live',operationId,semanticRevision(workspace),now)
+  return {handle,reading,context:await inputRunContext(repo,handle)}
+}
+
+export function emptyRealInputWorkspace(name: string, now = new Date().toISOString()): WorkspaceV8 {
+  return { schemaVersion: 8, workspace: { id: name, title: '真实输入隔离实验（不是用户工作区）', createdAt: now, updatedAt: now },
+    settings: { defaultTimezone: 'Asia/Shanghai', locale: 'zh-CN' }, sources: [], sourceVersions: [], recognitionRuns: [], extractionDrafts: [],
+    projects: [], milestones: [], workPackages: [], tasks: [], materials: [], timePoints: [], events: [], evidenceRefs: [], changeProposals: [],
+    historyRecords: [], reminderRecords: [], preferences: { onboardingCompletedAt: null }, migrationMetadata: [], savedAt: now }
+}
+
+/** Source and exact send receipt reach the joint repository before any executor.
+ * The executor may be a labelled seen replay or the separately gated gateway.
+ * Neither this entry nor capture retries a network request. */
+export async function sendRealInput(repo: SemanticRepository, request: {
+  sourceId: string; pages: number[]; reviewed: number[]; operationId: string; revision: string;
+}, execution: 'live' | 'seen_engineering_replay', execute: ModelExecutor, now = new Date().toISOString()) {
+  const intent = structuredClone(request), before = await repo.load()
+  if (semanticRevision(before) !== intent.revision) throw Error('REAL_INPUT_STALE_RELOAD_REQUIRED')
+  const source = before.sources.find(s => s.id === intent.sourceId)
+  if (!source) throw Error('REAL_INPUT_SOURCE_MISSING')
+  const inputReceipt = readingOf(source.legacyData?.realInput01).inputReceipt
+  const reading = { version: REAL_STATE_VERSION, inputReceipt,
+    sendSnapshot: await makeSendSnapshot(inputReceipt,intent.pages,intent.reviewed,now) }
+  const handle = await repo.beginInputRun(source.id,reading,execution,intent.operationId,intent.revision,now)
+  if (handle.duplicate) throw Error('REAL_INPUT_ALREADY_PREPARED_NO_RETRY')
+  return dispatchRealInput(repo,handle,execute)
+}
+
+export async function inputRunContext(repo: SemanticRepository, handle: CaptureHandle): Promise<WireContext> {
+  const workspace = await repo.load(), draft = workspace.extractionDrafts.find(d => d.id === handle.draftId)
+  const run = workspace.recognitionRuns.find(r => r.id === handle.recognitionRunId)
+  const version = workspace.sourceVersions.find(v => v.id === handle.sourceVersionId)
+  if (draft?.legacyData?.realInputRecorded) throw Error('REAL_INPUT_RECORDED_NEVER_DISPATCHABLE')
+  if (!draft || !run || !version || draft.recognitionRunId !== run.id || run.sourceVersionId !== version.id
+    || version.sourceId !== handle.sourceId || !['queued','running'].includes(run.status) || !isCurrentDraft(workspace,draft.id)) throw Error('REAL_INPUT_RUN_NOT_DISPATCHABLE')
+  const pending = draft.legacyData?.realInputPending as unknown as { reading: { sendSnapshot: { consentAt: string } } }
+  return { index: await indexImmutableScopesV11(handle.sourceId,handle.sourceVersionId,version.rawText!),
+    referenceTime: pending.reading.sendSnapshot.consentAt, timezone: 'Asia/Shanghai' }
+}
+
+const dispatching = new Set<string>()
+/** Explicitly prepared runs are allowed for manifest binding before first dispatch.
+ * The live gateway's persistent budget is authoritative across tabs/restarts. */
+export async function dispatchRealInput(repo: SemanticRepository, handle: CaptureHandle, execute: ModelExecutor) {
+  const key = repo.name + ':' + handle.recognitionRunId
+  if (dispatching.has(key)) throw Error('REAL_INPUT_RUN_BUSY')
+  dispatching.add(key)
+  try {
+    const context = await inputRunContext(repo,handle)
+    let raw: string
+    try { raw = await execute(context) }
+    catch {
+      await failInputRun(repo,handle)
+      throw Error('模型或工程回放未完成；来源已保留，没有自动重试。')
+    }
+    return await completeInputRun(repo,handle,raw)
+  } finally { dispatching.delete(key) }
+}
+
+export async function createRealInputRuntime(options: {
+  name: string; store: WorkspaceRecordStore & {readonly name: string}; initial?: WorkspaceV8;
+  execution: 'live' | 'seen_engineering_replay'; resources: LocalExtractionResources; execute: ModelExecutor;
+  recordedA02?: true;
+  recordedBatch?: true;
+  httpsPreview?: true;
+  previewExamples?: {identities:readonly RecordedBatchIdentity[];read:(unitId:string)=>Promise<RecordedPaired04>};
+  recordedCandidate02?: true;
+  recordedCandidate03?: true;
+  recordedPaired04?: true;
+    recordedPaired05?: true;
+    recordedPaired06?: true;
+}) {
+  options = { ...options, resources: structuredClone(options.resources) }
+  if(options.previewExamples){
+    const ids=options.previewExamples.identities.map(i=>i.unitId),hasBase=['Q01-06','Q07-06'].every(id=>ids.includes(id)),hasLatest=['L01-A','L02-A','L04-A'].every(id=>ids.includes(id))
+    if(!options.httpsPreview||![2,4,6,9].includes(options.previewExamples.identities.length)||(!hasBase&&!hasLatest)
+      ||options.previewExamples.identities.some(i=>!HTTPS_PREVIEW_EXAMPLES.some(e=>e.unitId===i.unitId))
+      ||new Set(options.previewExamples.identities.map(i=>i.unitId)).size!==options.previewExamples.identities.length)throw Error('REAL_INPUT_HTTPS_EXAMPLES_PROFILE')
+    options={...options,previewExamples:{...options.previewExamples,identities:structuredClone(options.previewExamples.identities)}}
+  }
+  if (!['live','seen_engineering_replay'].includes(options.execution)) throw Error('REAL_INPUT_EXECUTION_PROFILE')
+  if(options.httpsPreview&&(options.name!==HTTPS_PREVIEW_DATABASE||!options.recordedBatch||options.execution!=='live'
+    ||options.recordedA02||options.recordedCandidate02||options.recordedCandidate03||options.recordedPaired04
+    ||options.recordedPaired05||options.recordedPaired06))throw Error('REAL_INPUT_HTTPS_PREVIEW_PROFILE')
+  if(options.recordedA02&&(options.execution!=='live'||options.initial||options.name!==recordedA02Identity.name))throw Error('REAL_INPUT_RECORDED_RUNTIME')
+  if(options.recordedBatch&&!options.httpsPreview&&(options.recordedA02||options.execution!=='live'||options.initial||options.name!==recordedA02Identity.name))throw Error('REAL_INPUT_BATCH_RECORDED_RUNTIME')
+  if(options.recordedCandidate02&&!options.recordedBatch)throw Error('REAL_INPUT_C02_RECORDED_RUNTIME')
+  if(options.recordedCandidate03&&!options.recordedCandidate02)throw Error('REAL_INPUT_C03_RECORDED_RUNTIME')
+  if(options.recordedPaired04&&!options.recordedCandidate03)throw Error('REAL_INPUT_P04_RECORDED_RUNTIME')
+  if(options.recordedPaired05&&!options.recordedPaired04)throw Error('REAL_INPUT_P05_RECORDED_RUNTIME')
+  if(options.recordedPaired06&&!options.recordedPaired05)throw Error('REAL_INPUT_P06_RECORDED_RUNTIME')
+  await SemanticRepository.open(options.name,options.store,options.initial,'real-input-01')
+  return createMainlineRuntime({name:options.name,store:options.store,profile:'real-input-01',
+    recognize:()=>{throw Error('REAL_INPUT_OLD_RECOGNIZER_FORBIDDEN')},
+    semanticDriver:async store=>{
+      const repo=await SemanticRepository.open(options.name,store,undefined,'real-input-01')
+      // One pending example-open operation per runtime; rapid repeated clicks
+      // reuse it instead of racing source writes or closing another draft.
+      let previewOpening:Promise<string>|undefined
+      const facts=(workspace:WorkspaceV8,draftId:string,taskId?:string,onFocus?:(quote:string)=>void)=>
+        createElement(SemanticFacts,{state:stateOfRuntime(workspace,draftId),taskId,onFocus})
+      return {load:()=>repo.load(),view:semanticView,dates:semanticDates,review:semanticReview,edit:i=>editSemantic(repo,i),
+        confirm:i=>confirmSemantic(repo,i),exportJson:()=>repo.exportJson(),capture:async()=>{throw Error('请先在真实输入面板保存并核对本次文字范围。')},
+        recognitionDescription:options.recordedPaired06?'DeepSeek-V4.1-Flash · 03/06已记录回答 · 逐项核对':options.recordedPaired05?'DeepSeek-V4.1-Flash · 03/05已记录回答 · 逐项核对':options.recordedPaired04?'候选03/04配对真实回答 · 逐项人工核对':options.recordedCandidate03?'候选03与历史真实模型回答 · 逐项人工核对':options.recordedCandidate02?'新候选02与历史真实模型回答 · 逐项人工核对':options.recordedBatch?'已记录真实模型批次 · 原回答核对，不再调用模型':options.recordedA02?'A02历史真实模型响应回放 · 本轮零调用':options.execution==='live'?'真实模型建议 · 尚未逐项核对':'已见匿名工程回放 · 非模型预测',
+        realInput:{profile:'real-input-01',networkDescription:options.httpsPreview?'独立匿名回放：直接提供L01-A、L02-A、L04-A最新可靠None回答，并保留旧受控历史回答；模型接口关闭。确认结果只保存在当前入口的当前浏览器，不读取其他试用库。':options.recordedPaired06?'同材料03/06开发回归；仅回放本批已取得并结算的回答，不允许新发送。首次建议和人工纠正分别保留。':options.recordedPaired05?'新模型24次配对已完成，本包累计80次；只回放已取得回答，不再发送。05未替换现有路线。':options.recordedPaired04?'24次配对已完成，本包累计56次；仅本机回放，不再发送。':options.recordedCandidate03?'候选03的8次已完成，本包累计32次；当前仅本机回放，不再发送。':options.recordedCandidate02?'新候选8次已完成，本包累计24次；当前仅本机回放，不再发送。':options.recordedBatch?'本批14次已派发完毕；仅核对已记录响应与本机提取文字，不再发送。':options.recordedA02?'只核对已记录A02响应；禁止新发送，不读取密钥，不访问模型。':options.execution==='live'
+          ?'本机读取；仅在逐次确认且预算允许时发送本次文字，不发送文件或工作区。':'本机读取与已见工程回放，无外部模型调用。',
+          inputPanel:props=>options.httpsPreview&&options.previewExamples?createElement(HttpsPreviewExamples,{unitIds:(()=>{const latest=options.previewExamples!.identities.map(i=>i.unitId).filter(id=>id.startsWith('L'));return latest.length?latest:options.previewExamples!.identities.map(i=>i.unitId)})(),open:async(unitId:string)=>{
+            const examples=options.previewExamples!,identity=examples.identities.find(i=>i.unitId===unitId)
+            if(!identity)throw Error('REAL_INPUT_HTTPS_EXAMPLE_IDENTITY')
+            if(!previewOpening)previewOpening=openHttpsPreviewExample(repo,identity,examples.read,props.onDraftReady).finally(()=>{previewOpening=undefined})
+            return previewOpening
+          }}):options.recordedCandidate02?createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,localOnly:true,
+            send:async()=>{throw Error('REAL_INPUT_NEW_SEND_DISABLED')}}):options.recordedBatch?createElement('p',{role:'status'},'本批已调用完成；请从收件箱核对原回答。没有额外模型请求授权，新发送已关闭。'):options.recordedA02?createElement('p',{role:'status'},'当前只允许A02历史响应核对，已关闭新录入和发送。请从收件箱恢复A02。'):createElement(InputReview,{...props,repo,resources:options.resources,execution:options.execution,
+            send:async(sourceId,pages,reviewed,operationId)=>sendRealInput(repo,{sourceId,pages,reviewed,operationId,revision:semanticRevision(props.workspace)},options.execution,options.execute)}),
+          pendingDateTaskIds,factEditor:props=>createElement(FactCorrectionEditor,{...props,repo}),informationEditor:props=>createElement(IndependentEventEditor,{...props,repo}),draftEditor:props=>createElement(RelationCorrection,{...props,repo})},
+        semantic:{facts,timezone:'Asia/Shanghai',exportName:'mainline-real-input-01-workspace.json',
+          informationReviewProblem:(w,d)=>informationReviewProblem(stateOfRuntime(w,d)),dispose:i=>disposeSemantic(repo,i),
+          taskFacts:(w,id)=>{const state=stateForEntity(w,id);return facts(w,state.draftId,String(w.tasks.find(t=>t.id===id)!.legacyData!.recognitionTempId))},
+          eventFacts:(w,id)=>{const event=w.events.find(e=>e.id===id)!,state=stateForEntity(w,id);return {
+            startLabel:timeLabel(w.timePoints.find(t=>t.id===event.startTimePointId)?.normalizedValue??null,state.context.timezone),
+            endLabel:timeLabel(w.timePoints.find(t=>t.id===event.endTimePointId)?.normalizedValue??null,state.context.timezone),content:facts(w,state.draftId)}},
+          eventCount:(w,d,ids)=>{const facts=effectiveStateFacts(stateOfRuntime(w,d)).facts
+            return !ids.length&&!facts.tasks.length?facts.events.filter(event=>!event.relatedTaskTempIds.length).length:relatedAssets(facts,ids).events.size}}}
+    }})
+}

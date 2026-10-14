@@ -1,0 +1,185 @@
+{
+  "version": "real-notice-fact-role-adjudication-1.0.0",
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "sources": [
+    {
+      "sourceId": "RN-01",
+      "minimumFacts": {
+        "tasks": [
+          "系统申请学位并上传最终版学位论文",
+          "提交纸质版学位申请材料"
+        ],
+        "times": [
+          {
+            "owner": "系统申请学位",
+            "role": "submission_deadline",
+            "raw": "6月10日",
+            "value": "2026-06-10",
+            "precision": "date"
+          },
+          {
+            "owner": "纸质版材料提交",
+            "role": "window",
+            "raw": "6月15-16日（上午9:00-11:30,下午2:30-5:30）",
+            "dates": [
+              "2026-06-15",
+              "2026-06-16"
+            ],
+            "sessions": [
+              [
+                "09:00",
+                "11:30"
+              ],
+              [
+                "14:30",
+                "17:30"
+              ]
+            ]
+          }
+        ],
+        "materials": [
+          {
+            "name": "最终版学位论文",
+            "format": [
+              "word",
+              "pdf"
+            ],
+            "completion": "pdf完成所有签字并含封面、原创性声明、著作权使用声明、答辩委员会名单等全部组成部分"
+          },
+          {
+            "name": "纸质版材料",
+            "destination": "学院A208办公室研究生秘书处"
+          }
+        ],
+        "information": [
+          "学院按程序审核并上报学校"
+        ],
+        "events": [],
+        "qualification": "学位申请人状态未提供，不能个人true"
+      },
+      "disputes": [
+        "6月10日仅日期，不编具体截止时刻；纸质材料的两天分段窗口不能并成连续跨夜营业；排除后续材料清单及涉密例外，本节选不评价整篇通知"
+      ]
+    },
+    {
+      "sourceId": "RN-02",
+      "minimumFacts": {
+        "tasks": [
+          "登录学工系统填报生源地贷款信息并上传回执材料",
+          "指定贷款机构学生提交当前学年回执校验码"
+        ],
+        "times": [
+          {
+            "owner": "回执填报",
+            "role": "window_start",
+            "value": "2026-08-13",
+            "precision": "date"
+          }
+        ],
+        "materials": [
+          {
+            "name": "贷款机构回执材料",
+            "format": [
+              "照片",
+              "截图"
+            ],
+            "criteria": "完整清晰且本学年申请",
+            "destination": "厦门大学学工系统生源地贷款模块2026-2027学年业务期"
+          },
+          {
+            "name": "回执校验码",
+            "criteria": "本学年准确",
+            "condition": "国家开发银行或河北农村信用社办理贷款"
+          }
+        ],
+        "qualification": "已申请办理2026-2027学年贷款；指定机构状态未提供，unknown",
+        "events": [],
+        "information": [
+          "否则无法进行入学确认"
+        ]
+      },
+      "disputes": [
+        "只节选确认方式第1项；未包含新生另行入口、盖章或缴费说明，不能据节选声称全篇覆盖",
+        "本段没有截止，不把8月13日起改截止或个人计划"
+      ]
+    },
+    {
+      "sourceId": "RN-03",
+      "minimumFacts": {
+        "tasks": [
+          "选择礼品及领取地点并提交积分兑换申请",
+          "本人持校园卡领取已申请的礼品"
+        ],
+        "optional": "有意参与且年度转结积分满300分，个人积分未提供，资格unknown",
+        "prerequisite": "领取对应已提交申请；不得猜提交已完成",
+        "times": [
+          {
+            "owner": "线上兑换",
+            "role": "window",
+            "start": "2026-05-09T10:00",
+            "end": "2026-06-30T21:00"
+          },
+          {
+            "owner": "线下兑换领取",
+            "role": "window",
+            "startDate": "2026-05-09",
+            "endDate": "2026-06-30",
+            "daily": [
+              "10:00",
+              "21:00"
+            ],
+            "exclusions": [
+              "周三12:00-18:00",
+              "节假日，未提供具体日历"
+            ]
+          }
+        ],
+        "materials": [
+          {
+            "name": "校园卡",
+            "owner": "本人领取礼品"
+          }
+        ],
+        "destination": [
+          "思明校区总馆三楼期刊/工具书阅览室服务台",
+          "翔安校区德旺图书馆服务台"
+        ],
+        "channel": "我的图书馆积分商城",
+        "information": [
+          "2025年4月24日—2026年4月23日年度转结积分",
+          "积分一次性核销、不拆分不累计不转赠",
+          "不可代领",
+          "数量有限先到先得兑完即止",
+          "6月30日21:00后未兑换积分自动失效",
+          "节假日开放请关注即时通知"
+        ]
+      },
+      "disputes": [
+        "活动/服务窗口与各任务关联允许无损合法表示，不要求虚构单场活动或强迫礼品选择单独拆任务",
+        "持卡是否是准备动作、引用在领取任务或材料可同义，但必须保留本人持卡义务",
+        "实际节假日、剩余礼品和个人积分未知，不补成确定"
+      ]
+    },
+    {
+      "sourceId": "RN-04",
+      "minimumFacts": {
+        "tasks": [],
+        "events": [
+          {
+            "title": "厦门大学信息门户升级维护",
+            "start": "2026-04-14T00:00",
+            "end": "2026-04-14T03:00"
+          }
+        ],
+        "information": [
+          "维护期间信息门户暂时无法访问"
+        ],
+        "materials": []
+      },
+      "disputes": [
+        "只节选维护主段，未包括后续可选访问入口；维护是中心动作，不给学生生成升级维护待办"
+      ]
+    }
+  ],
+  "rule": "Source-first complete minimum obligations. Equivalent closed naming, order and lossless date spans allowed; wrong value/type/owner/relationship, material role, omission or unsupported added obligation fail. Raw facts and frozen common first-display separate. Explicit unknown may be correct. Titles/free prose/leakage unreviewed NOT_ADJUDICATED. Failure/unknown remains the single-arm denominator4; complete source-supported minimum facts and whole prose reported separately. No user correction credited."
+}

@@ -1,0 +1,1724 @@
+{
+  "schemaVersion": 8,
+  "workspace": {
+    "id": "rco-mainline-01-02-i1-d26-ordinary-scenarios01",
+    "title": "MAINLINE-01 人工工程响应（非模型预测）",
+    "createdAt": "2026-09-05T08:00:00.000Z",
+    "updatedAt": "2026-10-02T09:51:29.663Z"
+  },
+  "settings": {
+    "defaultTimezone": "Asia/Shanghai",
+    "locale": "zh-CN"
+  },
+  "sources": [
+    {
+      "id": "source:939bf12e",
+      "workspaceId": "rco-mainline-01-02-i1-d26-ordinary-scenarios01",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "confirmed",
+      "currentVersionId": "source:939bf12e:version:1",
+      "createdAt": "2026-10-02T09:51:29.573Z",
+      "updatedAt": "2026-10-02T09:51:44.586Z",
+      "legacyData": {
+        "contentPreview": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 26,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "265f34a6-0076-4caa-be7e-66cafbba0839"
+      }
+    },
+    {
+      "id": "source:f6821822",
+      "workspaceId": "rco-mainline-01-02-i1-d26-ordinary-scenarios01",
+      "type": "text",
+      "title": "手动粘贴消息",
+      "status": "confirmed",
+      "currentVersionId": "source:f6821822:version:1",
+      "createdAt": "2026-10-02T09:50:41.142Z",
+      "updatedAt": "2026-10-02T09:50:56.789Z",
+      "legacyData": {
+        "contentPreview": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+        "url": null,
+        "originalFileName": null,
+        "mimeType": null,
+        "fileSize": null,
+        "fileHash": null,
+        "parserVersion": "local-rules-v2",
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 60,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        },
+        "captureOperationId": "0d324846-d659-49c0-97be-84e4024ddd0b"
+      }
+    }
+  ],
+  "sourceVersions": [
+    {
+      "id": "source:939bf12e:version:1",
+      "sourceId": "source:939bf12e",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:35e454db",
+      "rawText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-02T09:51:29.573Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 26,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    },
+    {
+      "id": "source:f6821822:version:1",
+      "sourceId": "source:f6821822",
+      "versionNo": 1,
+      "contentHash": "fnv1a32:4a68841c",
+      "rawText": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+      "rawTextRef": null,
+      "createdAt": "2026-10-02T09:50:41.142Z",
+      "legacyData": {
+        "reviewMetadata": {
+          "sourceType": "text",
+          "mimeType": null,
+          "characterCount": 60,
+          "pageCount": null,
+          "extractionMethod": "manual",
+          "ocrConfidence": null,
+          "partialExtraction": null,
+          "qualityFlags": []
+        }
+      }
+    }
+  ],
+  "recognitionRuns": [
+    {
+      "id": "source:939bf12e:run:1",
+      "sourceVersionId": "source:939bf12e:version:1",
+      "provider": "manual",
+      "modelName": "anonymous-offline-engineering-input",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "d26-ordinary-engineering-fake-transport",
+      "status": "succeeded",
+      "startedAt": "2026-10-02T09:51:29.641Z",
+      "completedAt": "2026-10-02T09:51:29.647Z",
+      "durationMs": 6,
+      "tokenUsage": null,
+      "qualityFlags": [
+        "MAINLINE-01 人工工程响应（非模型预测）"
+      ],
+      "errorCode": null,
+      "legacyData": {
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "MAINLINE-01 人工工程响应（非模型预测）",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+            "requiresAction": false,
+            "actionReason": "资料室周末开放，本通知仅供了解，无需行动。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:939bf12e",
+              "textStart": 0,
+              "textEnd": 26,
+              "quote": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+              "quotedText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "source:f6821822:run:1",
+      "sourceVersionId": "source:f6821822:version:1",
+      "provider": "manual",
+      "modelName": "anonymous-offline-engineering-input",
+      "promptVersion": "recognition-2.0.0",
+      "schemaVersion": "2.0",
+      "pipelineVersion": "d26-ordinary-engineering-fake-transport",
+      "status": "succeeded",
+      "startedAt": "2026-10-02T09:50:41.172Z",
+      "completedAt": "2026-10-02T09:50:41.174Z",
+      "durationMs": 2,
+      "tokenUsage": null,
+      "qualityFlags": [
+        "MAINLINE-01 人工工程响应（非模型预测）"
+      ],
+      "errorCode": null,
+      "legacyData": {
+        "originalRecognitionResult": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "MAINLINE-01 人工工程响应（非模型预测）",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+            "requiresAction": true,
+            "actionReason": "请保存活动手册。没有截止日期要求。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "tempId": "save",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存活动手册",
+              "actionVerb": "保存",
+              "actionObject": "活动手册",
+              "description": "保存活动手册",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            }
+          ],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "stop-time",
+              "type": "event_start",
+              "rawText": "周三晚",
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "brief-start",
+              "type": "event_start",
+              "rawText": "2026年10月12日14:00",
+              "normalizedValue": "2026-10-12T14:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "brief-end",
+              "type": "event_end",
+              "rawText": "15:00",
+              "normalizedValue": "2026-10-12T15:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            }
+          ],
+          "events": [
+            {
+              "tempId": "stop",
+              "title": "预约平台将在周三晚停机",
+              "description": "",
+              "location": null,
+              "startTimePointTempId": "stop-time",
+              "endTimePointTempId": null,
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "tempId": "briefing",
+              "title": "资料讲解会",
+              "description": "",
+              "location": "资料室",
+              "startTimePointTempId": "brief-start",
+              "endTimePointTempId": "brief-end",
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:f6821822",
+              "textStart": 0,
+              "textEnd": 60,
+              "quote": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "quotedText": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "extractionDrafts": [
+    {
+      "id": "source:939bf12e:draft:1",
+      "recognitionRunId": "source:939bf12e:run:1",
+      "status": "confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "engineering-mainline-01",
+        "modelName": "D26 匿名工程假传输（非模型成绩）",
+        "createdAt": "2026-09-05T08:00:00.000Z",
+        "sourceSummary": {
+          "title": "通知资料",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "未识别到需要执行的任务或事件；原文已保留，可核对并归档。",
+          "requiresAction": false,
+          "actionReason": "资料室周末开放，本通知仅供了解，无需行动。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [],
+        "materials": [],
+        "timePoints": [],
+        "events": [],
+        "evidence": [
+          {
+            "id": "notice",
+            "sourceId": "source:939bf12e",
+            "textStart": 0,
+            "textEnd": 26,
+            "quote": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+            "quotedText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+            "field": "description",
+            "extractionMethod": "manual",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:939bf12e:draft:1:fnv1a32:637e15e5"
+      ],
+      "acceptedEntityTempIds": [],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-02T09:51:29.573Z",
+      "updatedAt": "2026-10-02T09:51:44.586Z",
+      "legacyData": {
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "通知资料",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "未识别到需要执行的任务或事件；原文已保留，可核对并归档。",
+            "requiresAction": false,
+            "actionReason": "资料室周末开放，本通知仅供了解，无需行动。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [],
+          "materials": [],
+          "timePoints": [],
+          "events": [],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:939bf12e",
+              "textStart": 0,
+              "textEnd": 26,
+              "quote": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+              "quotedText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "MAINLINE-01 人工工程响应（非模型预测）",
+              "description": "资料室已新增一批参考手册。本通知仅供了解，无需行动。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "通知资料",
+              "description": "未识别到需要执行的任务或事件；原文已保留，可核对并归档。"
+            }
+          ],
+          "times": [],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:939bf12e:draft:1",
+          "sourceId": "source:939bf12e",
+          "sourceVersionId": "source:939bf12e:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 26,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-02T09:51:29.573Z",
+          "updatedAt": "2026-10-02T09:51:29.647Z",
+          "schemaVersion": "2.0",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "promptVersion": "engineering-mainline-01",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "engineering-mainline-01",
+            "modelName": "D26 匿名工程假传输（非模型成绩）",
+            "createdAt": "2026-09-05T08:00:00.000Z",
+            "sourceSummary": {
+              "title": "通知资料",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "未识别到需要执行的任务或事件；原文已保留，可核对并归档。",
+              "requiresAction": false,
+              "actionReason": "资料室周末开放，本通知仅供了解，无需行动。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [],
+            "materials": [],
+            "timePoints": [],
+            "events": [],
+            "evidence": [
+              {
+                "id": "notice",
+                "sourceId": "source:939bf12e",
+                "textStart": 0,
+                "textEnd": 26,
+                "quote": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+                "quotedText": "资料室已新增一批参考手册。本通知仅供了解，无需行动。",
+                "field": "description",
+                "extractionMethod": "manual",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": true,
+              "reviewReasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            }
+          },
+          "items": [],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:939bf12e:draft:1",
+          "commitId": "source-review:source:939bf12e:draft:1:fnv1a32:637e15e5",
+          "disposition": "no_task",
+          "entityIds": [],
+          "entityHashes": {},
+          "verifiedAt": "2026-10-02T09:51:44.604Z"
+        }
+      }
+    },
+    {
+      "id": "source:f6821822:draft:1",
+      "recognitionRunId": "source:f6821822:run:1",
+      "status": "confirmed",
+      "result": {
+        "schemaVersion": "2.0",
+        "promptVersion": "engineering-mainline-01",
+        "modelName": "D26 匿名工程假传输（非模型成绩）",
+        "createdAt": "2026-09-05T08:00:00.000Z",
+        "sourceSummary": {
+          "title": "保存活动手册",
+          "sourceType": "text",
+          "notificationType": "uncertain",
+          "summary": "1项任务，2项事件。请核对后确认。",
+          "requiresAction": true,
+          "actionReason": "请保存活动手册。没有截止日期要求。"
+        },
+        "projectMatch": {
+          "decision": "standalone_task",
+          "matchedProjectId": null,
+          "suggestedProjectTitle": null,
+          "confidence": 1,
+          "reasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        },
+        "projectSuggestion": null,
+        "milestones": [],
+        "standaloneTasks": [
+          {
+            "tempId": "save",
+            "parentTempId": null,
+            "hierarchyType": "task",
+            "title": "保存活动手册",
+            "actionVerb": "保存",
+            "actionObject": "活动手册",
+            "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+            "completionCriteria": [],
+            "estimatedMinutes": null,
+            "statusSuggestion": "todo",
+            "prioritySuggestion": "medium",
+            "dependencyTempIds": [],
+            "materialTempIds": [],
+            "timePointTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "userConfirmationRequired": true,
+            "selected": true
+          }
+        ],
+        "materials": [],
+        "timePoints": [
+          {
+            "tempId": "stop-time",
+            "type": "event_start",
+            "rawText": "周三晚",
+            "normalizedValue": null,
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "vague",
+            "needsConfirmation": true,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          },
+          {
+            "tempId": "brief-start",
+            "type": "event_start",
+            "rawText": "2026年10月12日14:00",
+            "normalizedValue": "2026-10-12T14:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          },
+          {
+            "tempId": "brief-end",
+            "type": "event_end",
+            "rawText": "15:00",
+            "normalizedValue": "2026-10-12T15:00",
+            "timezone": "Asia/Shanghai",
+            "isAllDay": false,
+            "precision": "exact",
+            "needsConfirmation": false,
+            "relatedTaskTempIds": [],
+            "relatedMaterialTempIds": [],
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "selected": true
+          }
+        ],
+        "events": [
+          {
+            "tempId": "stop",
+            "title": "预约平台将在周三晚停机",
+            "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+            "location": null,
+            "startTimePointTempId": "stop-time",
+            "endTimePointTempId": null,
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "selected": true
+          },
+          {
+            "tempId": "briefing",
+            "title": "资料讲解会",
+            "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+            "location": "资料室",
+            "startTimePointTempId": "brief-start",
+            "endTimePointTempId": "brief-end",
+            "evidenceIds": [
+              "notice"
+            ],
+            "confidence": 1,
+            "inferenceLevel": "explicit",
+            "selected": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "notice",
+            "sourceId": "source:f6821822",
+            "textStart": 0,
+            "textEnd": 60,
+            "quote": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+            "quotedText": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+            "field": "description",
+            "extractionMethod": "manual",
+            "confidence": 1
+          }
+        ],
+        "conflicts": [],
+        "ambiguities": [],
+        "ignoredContent": [],
+        "quality": {
+          "overallConfidence": 1,
+          "hierarchyConfidence": 1,
+          "dateConfidence": 1,
+          "evidenceCoverage": 1,
+          "duplicateRisk": 0,
+          "overFragmentationRisk": 0,
+          "missingActionRisk": 0,
+          "needsHumanReview": true,
+          "reviewReasons": [
+            "MAINLINE-01 人工工程响应（非模型预测）"
+          ]
+        }
+      },
+      "commitOperationIds": [
+        "source-review:source:f6821822:draft:1:fnv1a32:84f89fad"
+      ],
+      "acceptedEntityTempIds": [
+        "brief-end",
+        "brief-start",
+        "briefing",
+        "save",
+        "stop",
+        "stop-time"
+      ],
+      "rejectedEntityTempIds": [],
+      "createdAt": "2026-10-02T09:50:41.142Z",
+      "updatedAt": "2026-10-02T09:50:56.789Z",
+      "legacyData": {
+        "firstSuggestionDisplayed": {
+          "schemaVersion": "2.0",
+          "promptVersion": "engineering-mainline-01",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "createdAt": "2026-09-05T08:00:00.000Z",
+          "sourceSummary": {
+            "title": "保存活动手册",
+            "sourceType": "text",
+            "notificationType": "uncertain",
+            "summary": "1项任务，2项事件。请核对后确认。",
+            "requiresAction": true,
+            "actionReason": "请保存活动手册。没有截止日期要求。"
+          },
+          "projectMatch": {
+            "decision": "standalone_task",
+            "matchedProjectId": null,
+            "suggestedProjectTitle": null,
+            "confidence": 1,
+            "reasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          },
+          "projectSuggestion": null,
+          "milestones": [],
+          "standaloneTasks": [
+            {
+              "tempId": "save",
+              "parentTempId": null,
+              "hierarchyType": "task",
+              "title": "保存活动手册",
+              "actionVerb": "保存",
+              "actionObject": "活动手册",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "completionCriteria": [],
+              "estimatedMinutes": null,
+              "statusSuggestion": "todo",
+              "prioritySuggestion": "medium",
+              "dependencyTempIds": [],
+              "materialTempIds": [],
+              "timePointTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "userConfirmationRequired": true,
+              "selected": true
+            }
+          ],
+          "materials": [],
+          "timePoints": [
+            {
+              "tempId": "stop-time",
+              "type": "event_start",
+              "rawText": "周三晚",
+              "normalizedValue": null,
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "vague",
+              "needsConfirmation": true,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "brief-start",
+              "type": "event_start",
+              "rawText": "2026年10月12日14:00",
+              "normalizedValue": "2026-10-12T14:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            },
+            {
+              "tempId": "brief-end",
+              "type": "event_end",
+              "rawText": "15:00",
+              "normalizedValue": "2026-10-12T15:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "relatedTaskTempIds": [],
+              "relatedMaterialTempIds": [],
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "selected": true
+            }
+          ],
+          "events": [
+            {
+              "tempId": "stop",
+              "title": "预约平台将在周三晚停机",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "location": null,
+              "startTimePointTempId": "stop-time",
+              "endTimePointTempId": null,
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "selected": true
+            },
+            {
+              "tempId": "briefing",
+              "title": "资料讲解会",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "location": "资料室",
+              "startTimePointTempId": "brief-start",
+              "endTimePointTempId": "brief-end",
+              "evidenceIds": [
+                "notice"
+              ],
+              "confidence": 1,
+              "inferenceLevel": "explicit",
+              "selected": true
+            }
+          ],
+          "evidence": [
+            {
+              "id": "notice",
+              "sourceId": "source:f6821822",
+              "textStart": 0,
+              "textEnd": 60,
+              "quote": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "quotedText": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+              "field": "description",
+              "extractionMethod": "manual",
+              "confidence": 1
+            }
+          ],
+          "conflicts": [],
+          "ambiguities": [],
+          "ignoredContent": [],
+          "quality": {
+            "overallConfidence": 1,
+            "hierarchyConfidence": 1,
+            "dateConfidence": 1,
+            "evidenceCoverage": 1,
+            "duplicateRisk": 0,
+            "overFragmentationRisk": 0,
+            "missingActionRisk": 0,
+            "needsHumanReview": true,
+            "reviewReasons": [
+              "MAINLINE-01 人工工程响应（非模型预测）"
+            ]
+          }
+        },
+        "firstSuggestionAssembly": {
+          "version": "grounded-first-suggestion-1.0.0",
+          "originalProse": [
+            {
+              "entityId": "save",
+              "kind": "task",
+              "title": "保存活动手册",
+              "description": "保存活动手册"
+            },
+            {
+              "entityId": "stop",
+              "kind": "event",
+              "title": "预约平台将在周三晚停机",
+              "description": ""
+            },
+            {
+              "entityId": "briefing",
+              "kind": "event",
+              "title": "资料讲解会",
+              "description": ""
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "MAINLINE-01 人工工程响应（非模型预测）",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。"
+            }
+          ],
+          "generatedProse": [
+            {
+              "entityId": "save",
+              "kind": "task",
+              "title": "保存活动手册",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。"
+            },
+            {
+              "entityId": "stop",
+              "kind": "event",
+              "title": "预约平台将在周三晚停机",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。"
+            },
+            {
+              "entityId": "briefing",
+              "kind": "event",
+              "title": "资料讲解会",
+              "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。"
+            },
+            {
+              "entityId": "source",
+              "kind": "source",
+              "title": "保存活动手册",
+              "description": "1项任务，2项事件。请核对后确认。"
+            }
+          ],
+          "times": [
+            {
+              "entityId": "stop-time",
+              "before": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "after": {
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "周三晚",
+                  "type": "event_start",
+                  "normalizedValue": null,
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "vague",
+                  "needsConfirmation": true,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 3
+                  },
+                  "dateKind": "none",
+                  "timeKind": "none",
+                  "correctionApplied": false,
+                  "issues": [
+                    "time_not_found",
+                    "day_period_without_clock"
+                  ]
+                },
+                "knownDate": null,
+                "dayPeriod": "晚",
+                "certainty": "partial",
+                "sourceContext": "预约平台将在周三晚停机"
+              }
+            },
+            {
+              "entityId": "brief-start",
+              "before": {
+                "normalizedValue": "2026-10-12T14:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-10-12T14:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "2026年10月12日14:00",
+                  "type": "event_start",
+                  "normalizedValue": "2026-10-12T14:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 16
+                  },
+                  "dateKind": "absolute",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-10-12",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "资料讲解会于2026年10月12日14:00开始"
+              }
+            },
+            {
+              "entityId": "brief-end",
+              "before": {
+                "normalizedValue": "2026-10-12T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "after": {
+                "normalizedValue": "2026-10-12T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false
+              },
+              "interpretation": {
+                "version": "source-time-semantics-2.0.0",
+                "point": {
+                  "rawText": "15:00",
+                  "type": "event_end",
+                  "normalizedValue": "2026-10-12T15:00",
+                  "rangeEndNormalizedValue": null,
+                  "timezone": "Asia/Shanghai",
+                  "isAllDay": false,
+                  "precision": "exact",
+                  "needsConfirmation": false,
+                  "evidenceSpan": {
+                    "start": 0,
+                    "end": 5
+                  },
+                  "dateKind": "inherited",
+                  "timeKind": "clock",
+                  "correctionApplied": false,
+                  "issues": []
+                },
+                "knownDate": "2026-10-12",
+                "dayPeriod": null,
+                "certainty": "stated",
+                "sourceContext": "资料讲解会于2026年10月12日14:00开始\n15:00结束"
+              }
+            }
+          ],
+          "unresolved": [],
+          "role": "DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT"
+        },
+        "v7Record": {
+          "id": "source:f6821822:draft:1",
+          "sourceId": "source:f6821822",
+          "sourceVersionId": "source:f6821822:version:1",
+          "sourceReviewMetadata": {
+            "sourceType": "text",
+            "characterCount": 60,
+            "extractionMethod": "manual"
+          },
+          "attemptOrder": 0,
+          "status": "待确认",
+          "workflowStatus": "needs_review",
+          "createdAt": "2026-10-02T09:50:41.142Z",
+          "updatedAt": "2026-10-02T09:50:41.174Z",
+          "schemaVersion": "2.0",
+          "modelName": "D26 匿名工程假传输（非模型成绩）",
+          "promptVersion": "engineering-mainline-01",
+          "recognitionResult": {
+            "schemaVersion": "2.0",
+            "promptVersion": "engineering-mainline-01",
+            "modelName": "D26 匿名工程假传输（非模型成绩）",
+            "createdAt": "2026-09-05T08:00:00.000Z",
+            "sourceSummary": {
+              "title": "保存活动手册",
+              "sourceType": "text",
+              "notificationType": "uncertain",
+              "summary": "1项任务，2项事件。请核对后确认。",
+              "requiresAction": true,
+              "actionReason": "请保存活动手册。没有截止日期要求。"
+            },
+            "projectMatch": {
+              "decision": "standalone_task",
+              "matchedProjectId": null,
+              "suggestedProjectTitle": null,
+              "confidence": 1,
+              "reasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            },
+            "projectSuggestion": null,
+            "milestones": [],
+            "standaloneTasks": [
+              {
+                "tempId": "save",
+                "parentTempId": null,
+                "hierarchyType": "task",
+                "title": "保存活动手册",
+                "actionVerb": "保存",
+                "actionObject": "活动手册",
+                "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+                "completionCriteria": [],
+                "estimatedMinutes": null,
+                "statusSuggestion": "todo",
+                "prioritySuggestion": "medium",
+                "dependencyTempIds": [],
+                "materialTempIds": [],
+                "timePointTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "userConfirmationRequired": true,
+                "selected": true
+              }
+            ],
+            "materials": [],
+            "timePoints": [
+              {
+                "tempId": "stop-time",
+                "type": "event_start",
+                "rawText": "周三晚",
+                "normalizedValue": null,
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "vague",
+                "needsConfirmation": true,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              },
+              {
+                "tempId": "brief-start",
+                "type": "event_start",
+                "rawText": "2026年10月12日14:00",
+                "normalizedValue": "2026-10-12T14:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              },
+              {
+                "tempId": "brief-end",
+                "type": "event_end",
+                "rawText": "15:00",
+                "normalizedValue": "2026-10-12T15:00",
+                "timezone": "Asia/Shanghai",
+                "isAllDay": false,
+                "precision": "exact",
+                "needsConfirmation": false,
+                "relatedTaskTempIds": [],
+                "relatedMaterialTempIds": [],
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "selected": true
+              }
+            ],
+            "events": [
+              {
+                "tempId": "stop",
+                "title": "预约平台将在周三晚停机",
+                "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+                "location": null,
+                "startTimePointTempId": "stop-time",
+                "endTimePointTempId": null,
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "selected": true
+              },
+              {
+                "tempId": "briefing",
+                "title": "资料讲解会",
+                "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+                "location": "资料室",
+                "startTimePointTempId": "brief-start",
+                "endTimePointTempId": "brief-end",
+                "evidenceIds": [
+                  "notice"
+                ],
+                "confidence": 1,
+                "inferenceLevel": "explicit",
+                "selected": true
+              }
+            ],
+            "evidence": [
+              {
+                "id": "notice",
+                "sourceId": "source:f6821822",
+                "textStart": 0,
+                "textEnd": 60,
+                "quote": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+                "quotedText": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+                "field": "description",
+                "extractionMethod": "manual",
+                "confidence": 1
+              }
+            ],
+            "conflicts": [],
+            "ambiguities": [],
+            "ignoredContent": [],
+            "quality": {
+              "overallConfidence": 1,
+              "hierarchyConfidence": 1,
+              "dateConfidence": 1,
+              "evidenceCoverage": 1,
+              "duplicateRisk": 0,
+              "overFragmentationRisk": 0,
+              "missingActionRisk": 0,
+              "needsHumanReview": true,
+              "reviewReasons": [
+                "MAINLINE-01 人工工程响应（非模型预测）"
+              ]
+            }
+          },
+          "items": [
+            {
+              "id": "draft-item:source:f6821822:draft:1:save",
+              "suggestion": {
+                "id": "save",
+                "title": "保存活动手册",
+                "category": "其他",
+                "deadline": "",
+                "estimatedMinutes": 30,
+                "nextAction": "保存活动手册",
+                "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+                "priority": "中",
+                "materials": [],
+                "evidence": "1项任务，2项事件。请核对后确认。",
+                "confidence": "高"
+              },
+              "selected": true,
+              "status": "待确认",
+              "updatedAt": "2026-10-02T09:50:41.174Z",
+              "history": []
+            }
+          ],
+          "modelVersion": "local-rules"
+        },
+        "sourceReviewReadback": {
+          "version": "source-review-d26-1",
+          "draftId": "source:f6821822:draft:1",
+          "commitId": "source-review:source:f6821822:draft:1:fnv1a32:84f89fad",
+          "disposition": "confirmed",
+          "entityIds": [
+            "task:source:f6821822:draft:1:save",
+            "event:source:f6821822:draft:1:stop",
+            "event:source:f6821822:draft:1:briefing",
+            "time:source:f6821822:draft:1:stop-time",
+            "time:source:f6821822:draft:1:brief-start",
+            "time:source:f6821822:draft:1:brief-end"
+          ],
+          "entityHashes": {
+            "task:source:f6821822:draft:1:save": "fnv1a32:62e9ef78",
+            "event:source:f6821822:draft:1:stop": "fnv1a32:8b1d5f87",
+            "event:source:f6821822:draft:1:briefing": "fnv1a32:818e0572",
+            "time:source:f6821822:draft:1:stop-time": "fnv1a32:dc33a4fd",
+            "time:source:f6821822:draft:1:brief-start": "fnv1a32:70166fbb",
+            "time:source:f6821822:draft:1:brief-end": "fnv1a32:f598f063"
+          },
+          "verifiedAt": "2026-10-02T09:50:56.821Z"
+        }
+      }
+    }
+  ],
+  "projects": [],
+  "milestones": [],
+  "workPackages": [],
+  "tasks": [
+    {
+      "id": "task:source:f6821822:draft:1:save",
+      "projectId": null,
+      "milestoneId": null,
+      "workPackageId": null,
+      "parentTaskId": null,
+      "title": "保存活动手册",
+      "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+      "nextAction": "保存活动手册",
+      "status": "todo",
+      "estimatedMinutes": null,
+      "manualPriority": null,
+      "snoozedUntil": null,
+      "dependencyIds": [],
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "updatedAt": "2026-10-02T09:50:56.783Z",
+      "version": 2,
+      "legacyData": {
+        "recognitionTempId": "save",
+        "actionVerb": "保存",
+        "actionObject": "活动手册",
+        "completionCriteria": [],
+        "inferenceLevel": "explicit",
+        "prioritySuggestion": "medium",
+        "priority": "中",
+        "evidenceIds": [
+          "notice"
+        ],
+        "sourceId": "source:f6821822",
+        "category": "其他",
+        "v7Record": {
+          "id": "task:source:f6821822:draft:1:save",
+          "hierarchyType": "task",
+          "actionVerb": "保存",
+          "actionObject": "活动手册",
+          "completionCriteria": [],
+          "evidenceIds": [
+            "notice"
+          ],
+          "title": "保存活动手册",
+          "category": "其他",
+          "status": "待开始",
+          "deadline": "",
+          "estimatedMinutes": 60,
+          "estimatedMinutesKnown": false,
+          "nextAction": "保存活动手册",
+          "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+          "priority": "中",
+          "riskFlags": [
+            "待确认"
+          ],
+          "materials": [],
+          "dependencies": [],
+          "dependencyIds": [],
+          "reminders": [],
+          "sourceIds": [
+            "source:f6821822"
+          ],
+          "priorityReason": "由当前权威实体计算并允许手动调整",
+          "priorityReasons": [
+            "由当前权威实体计算并允许手动调整"
+          ],
+          "timePointIds": [
+            "timepoint-task:source:f6821822:draft:1:save-deadline"
+          ],
+          "materialIds": [],
+          "createdAt": "2026-10-02T09:50:56.783Z",
+          "updatedAt": "2026-10-02T09:50:56.783Z",
+          "history": [
+            {
+              "id": "history:task:source:f6821822:draft:1:save:created",
+              "field": "created",
+              "before": "null",
+              "after": "{\"id\":\"task:source:f6821822:draft:1:save\"}",
+              "changedAt": "2026-10-02T09:50:56.783Z",
+              "actor": "user",
+              "entityType": "task",
+              "entityId": "task:source:f6821822:draft:1:save",
+              "action": "created"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "materials": [],
+  "timePoints": [
+    {
+      "id": "time:source:f6821822:draft:1:stop-time",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:f6821822:draft:1:stop",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "周三晚",
+      "normalizedValue": null,
+      "timezone": null,
+      "isAllDay": false,
+      "precision": "vague",
+      "needsConfirmation": true,
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "updatedAt": "2026-10-02T09:50:56.783Z",
+      "legacyData": {
+        "recognitionTempId": "stop-time",
+        "evidenceIds": [
+          "notice"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:f6821822:draft:1:brief-start",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:f6821822:draft:1:briefing",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_start",
+      "rawText": "2026年10月12日14:00",
+      "normalizedValue": "2026-10-12T14:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "updatedAt": "2026-10-02T09:50:56.783Z",
+      "legacyData": {
+        "recognitionTempId": "brief-start",
+        "evidenceIds": [
+          "notice"
+        ],
+        "confidence": 1
+      }
+    },
+    {
+      "id": "time:source:f6821822:draft:1:brief-end",
+      "projectId": null,
+      "milestoneId": null,
+      "taskId": null,
+      "materialId": null,
+      "eventId": "event:source:f6821822:draft:1:briefing",
+      "relatedTaskIds": [],
+      "relatedMaterialIds": [],
+      "type": "event_end",
+      "rawText": "15:00",
+      "normalizedValue": "2026-10-12T15:00",
+      "timezone": "Asia/Shanghai",
+      "isAllDay": false,
+      "precision": "exact",
+      "needsConfirmation": false,
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "updatedAt": "2026-10-02T09:50:56.783Z",
+      "legacyData": {
+        "recognitionTempId": "brief-end",
+        "evidenceIds": [
+          "notice"
+        ],
+        "confidence": 1
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "event:source:f6821822:draft:1:stop",
+      "projectId": null,
+      "title": "预约平台将在周三晚停机",
+      "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+      "startTimePointId": "time:source:f6821822:draft:1:stop-time",
+      "endTimePointId": null,
+      "location": null,
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "updatedAt": "2026-10-02T09:50:56.783Z",
+      "legacyData": {
+        "recognitionTempId": "stop",
+        "evidenceIds": [
+          "notice"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    },
+    {
+      "id": "event:source:f6821822:draft:1:briefing",
+      "projectId": null,
+      "title": "资料讲解会",
+      "description": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+      "startTimePointId": "time:source:f6821822:draft:1:brief-start",
+      "endTimePointId": "time:source:f6821822:draft:1:brief-end",
+      "location": "资料室",
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "updatedAt": "2026-10-02T09:50:56.783Z",
+      "legacyData": {
+        "recognitionTempId": "briefing",
+        "evidenceIds": [
+          "notice"
+        ],
+        "inferenceLevel": "explicit"
+      }
+    }
+  ],
+  "evidenceRefs": [
+    {
+      "id": "evidence:source:f6821822:draft:1:notice",
+      "sourceVersionId": "source:f6821822:version:1",
+      "page": null,
+      "textStart": 0,
+      "textEnd": 60,
+      "quotedText": "请保存活动手册。资料讲解会于2026年10月12日14:00开始，15:00结束，地点为资料室。预约平台将在周三晚停机。",
+      "bbox": null,
+      "fieldPath": "description",
+      "extractionMethod": "manual",
+      "confidence": 1,
+      "createdAt": "2026-10-02T09:50:56.783Z",
+      "legacyData": {
+        "recognitionEvidenceId": "notice"
+      }
+    }
+  ],
+  "changeProposals": [],
+  "historyRecords": [
+    {
+      "id": "history:task:source:f6821822:draft:1:save:created",
+      "entityType": "task",
+      "entityId": "task:source:f6821822:draft:1:save",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "task:source:f6821822:draft:1:save"
+      },
+      "actor": "user",
+      "reason": "用户确认识别任务",
+      "sourceVersionId": "source:f6821822:version:1",
+      "changedAt": "2026-10-02T09:50:56.783Z"
+    },
+    {
+      "id": "history:time:source:f6821822:draft:1:stop-time:created",
+      "entityType": "time_point",
+      "entityId": "time:source:f6821822:draft:1:stop-time",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:f6821822:draft:1:stop-time"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:f6821822:version:1",
+      "changedAt": "2026-10-02T09:50:56.783Z"
+    },
+    {
+      "id": "history:time:source:f6821822:draft:1:brief-start:created",
+      "entityType": "time_point",
+      "entityId": "time:source:f6821822:draft:1:brief-start",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:f6821822:draft:1:brief-start"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:f6821822:version:1",
+      "changedAt": "2026-10-02T09:50:56.783Z"
+    },
+    {
+      "id": "history:time:source:f6821822:draft:1:brief-end:created",
+      "entityType": "time_point",
+      "entityId": "time:source:f6821822:draft:1:brief-end",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "time:source:f6821822:draft:1:brief-end"
+      },
+      "actor": "user",
+      "reason": "用户确认识别时间节点",
+      "sourceVersionId": "source:f6821822:version:1",
+      "changedAt": "2026-10-02T09:50:56.783Z"
+    },
+    {
+      "id": "history:event:source:f6821822:draft:1:stop:created",
+      "entityType": "event",
+      "entityId": "event:source:f6821822:draft:1:stop",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:f6821822:draft:1:stop"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:f6821822:version:1",
+      "changedAt": "2026-10-02T09:50:56.783Z"
+    },
+    {
+      "id": "history:event:source:f6821822:draft:1:briefing:created",
+      "entityType": "event",
+      "entityId": "event:source:f6821822:draft:1:briefing",
+      "action": "created",
+      "fieldName": null,
+      "before": null,
+      "after": {
+        "id": "event:source:f6821822:draft:1:briefing"
+      },
+      "actor": "user",
+      "reason": "用户确认识别事件",
+      "sourceVersionId": "source:f6821822:version:1",
+      "changedAt": "2026-10-02T09:50:56.783Z"
+    }
+  ],
+  "reminderRecords": [],
+  "preferences": {
+    "onboardingCompletedAt": null,
+    "legacyData": {
+      "courseBlocks": [],
+      "integrations": {
+        "sync": {
+          "endpoint": "http://127.0.0.1:8787"
+        },
+        "webMonitors": [],
+        "connectionIntents": []
+      },
+      "knowledgeSettings": {},
+      "recognitionFeedback": [],
+      "v7MigrationLog": [],
+      "v7LegacyData": {}
+    }
+  },
+  "migrationMetadata": [],
+  "savedAt": "2026-10-02T09:51:44.586Z"
+}

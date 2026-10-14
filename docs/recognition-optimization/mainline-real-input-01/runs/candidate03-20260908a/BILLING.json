@@ -1,0 +1,35 @@
+{
+  "policy": {
+    "version": "real-input-budget-2",
+    "model": "deepseek-v4-flash-vision-exp",
+    "endpoint": "https://api.deepseek.com/responses",
+    "temperature": 0,
+    "reasoningEffort": "none",
+    "inputTokenCeiling": 1048576,
+    "outputTokenCeiling": 8192,
+    "requestByteCeiling": 65536,
+    "inputPriceMicroPerMillion": 3000000,
+    "outputPriceMicroPerMillion": 9000000,
+    "reservationMicroCny": 3300000,
+    "limitMicroCny": 10000000,
+    "maxRequests": 24
+  },
+  "checkedAt": "2026-09-08T13:33:34.012Z",
+  "validUntil": "2026-09-08T14:33:34.012Z",
+  "verified": true,
+  "verification": "Fresh official HTML retrieved and inspected; exact document SHA equal to previous evidence. Peak CNY 3 input/9 output per million; 1048576 input +8192 output <=3300000 micro-CNY. none, temperature0, streamfalse, JSON schema supported. Base policy max24 remains immutable; explicit candidate03 grant permits total32, not generic entry.",
+  "documents": [
+    {
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "path": "C:/Users/Winner/AppData/Local/Temp/c03-public-kBBs7n/0.html",
+      "status": 200,
+      "sha256": "899affbdbc33d0be620d8dea59e86f5036c11b5410b14d060b8d2874c74f38e5"
+    },
+    {
+      "url": "https://api-docs.deepseek.com/api/create-response/",
+      "path": "C:/Users/Winner/AppData/Local/Temp/c03-public-kBBs7n/1.html",
+      "status": 200,
+      "sha256": "633196e46984642a973dbd66d506ae72c9cd3c1db46e24f8d5a16f2ff0e46960"
+    }
+  ]
+}

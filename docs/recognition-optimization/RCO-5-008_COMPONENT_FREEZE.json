@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "rco-5-008-component-freeze-1.0.0",
+  "stage": "RCO-5-008-B7-SEEN-REGRESSION",
+  "status": "LOCAL_FIX_FROZEN_B7_SEEN_REGRESSION_PASS",
+  "frozenAt": "2026-09-04T20:56:44+08:00",
+  "authorizationId": "RCO-5-008",
+  "inputClassification": "SEEN_B7_ZERO_CALL_LOCAL_REGRESSION_NOT_MODEL_REPLICATION",
+  "componentPaths": [
+    "docs/recognition-optimization/RCO-5-008_PLAN.md",
+    "docs/recognition-optimization/RCO-5-008_TRACKER.md",
+    "src/recognition/modelAnchorLocalComposerV2.ts",
+    "src/recognition/taskFormationPolicyP4.ts",
+    "src/recognition/taskFormationEvaluationV2.ts",
+    "src/recognition/taskFormationPolicyP4.test.ts",
+    "src/recognition/taskFormationEvaluationV2.test.ts",
+    "scripts/run-rco-5-008-b7-replay.ts",
+    "scripts/rco-5-008-b7-replay.node-test.mjs",
+    "docs/recognition-optimization/rco-5-008-b7-replay/result.json",
+    "docs/recognition-optimization/rco-5-008-b7-replay/REPORT.md",
+    "docs/recognition-optimization/RCO-5-007-B7_DATA_FREEZE.json",
+    "docs/recognition-optimization/RCO-5-007-B7-M1_RESULT_FREEZE.json"
+  ],
+  "componentSha256": {
+    "docs/recognition-optimization/RCO-5-008_PLAN.md": "c6049fbb47fe3cd2888280f849c62a88d5252612c108c4772084030045908b1f",
+    "docs/recognition-optimization/RCO-5-008_TRACKER.md": "5dac6303fef1bf86543c312750e1dc4ba38f280b0dcad049084c2232172508cb",
+    "src/recognition/modelAnchorLocalComposerV2.ts": "e86112099b137690fa535f32c6ea1f908301ada7a8d544379ffeadee3dcdcdfd",
+    "src/recognition/taskFormationPolicyP4.ts": "d519fe21236dca93a76612e647c827d4b133cc435c2a0a17e9388bd18dd43eaf",
+    "src/recognition/taskFormationEvaluationV2.ts": "e2c8e528f11a1fe7b5a66d3533aa1eb71026fd4f86d02345f8d1b85a80a2d936",
+    "src/recognition/taskFormationPolicyP4.test.ts": "cffa244608e1a7a37c025ae92e615cfb28e365c887a4eb6b0d32af4d30508a11",
+    "src/recognition/taskFormationEvaluationV2.test.ts": "d48ee224329787057d7f75cae667785cb47537081f2d6d54c70861f387fd1c09",
+    "scripts/run-rco-5-008-b7-replay.ts": "6517d94e00c4fc602abb8c5a7d69eb16fe1865b2aa1a0099e153143b4590c8d4",
+    "scripts/rco-5-008-b7-replay.node-test.mjs": "37cc1e1485c79ff255e192bc8046aa9de205939ec4605a7de3d056c1f7a3a59e",
+    "docs/recognition-optimization/rco-5-008-b7-replay/result.json": "43e8c25ef8ef55322b883ef58c4ff47c65865c0134788a387efd2c269e78b010",
+    "docs/recognition-optimization/rco-5-008-b7-replay/REPORT.md": "8f88c0d9d1b91ffba5920617786a36a73a5b7793a766375c0fce8bafad47fd46",
+    "docs/recognition-optimization/RCO-5-007-B7_DATA_FREEZE.json": "10ada6a921831a41b195e6f79b6cfd729ad4a54eac502579aa1693d1bbf48db1",
+    "docs/recognition-optimization/RCO-5-007-B7-M1_RESULT_FREEZE.json": "dc4abac617d9f11b9f2c9b3389ef86b2223669b0a1e44f852e55643a35491f56"
+  },
+  "b7ReplayGate": "PASS",
+  "accounting": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "verifierCalls": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE"
+  },
+  "oldB7DecisionPreserved": "NO_PROMOTION_PAID_REPLICATION_BLOCKED",
+  "nextGate": "CREATE_AND_FREEZE_NEW_B8_WITHOUT_MODEL_CALLS",
+  "stablePath": "UNCHANGED",
+  "rco6": "NOT_STARTED",
+  "deployment": "NOT_RUN"
+}

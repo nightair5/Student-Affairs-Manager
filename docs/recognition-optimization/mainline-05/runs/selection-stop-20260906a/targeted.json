@@ -1,0 +1,113 @@
+{
+  "stage": "RCO-5-MAINLINE-05",
+  "status": "DIRECTED_PASSES_DO_NOT_OVERRIDE_INDEPENDENT_FAILURE",
+  "attempts": [
+    {
+      "name": "reproduction",
+      "passed": 16,
+      "failed": 1,
+      "total": 17,
+      "result": "旧依赖失败原样复现"
+    },
+    {
+      "name": "targeted-01",
+      "passed": 116,
+      "failed": 0,
+      "files": 10,
+      "composition": "MAINLINE05 44 + 原MAINLINE04 72；不与后续重跑相加"
+    },
+    {
+      "name": "type-01",
+      "result": "PASS_AT_THIS_ATTEMPT",
+      "scope": "tsconfig.app.json；不是最终全量工程证据"
+    },
+    {
+      "name": "targeted-02",
+      "passed": 45,
+      "failed": 1,
+      "total": 46,
+      "result": "新SSR测试误用CalendarPage默认导入；核对真实具名接口后修正，非业务反例"
+    },
+    {
+      "name": "targeted-03",
+      "passed": 46,
+      "failed": 0,
+      "files": 6,
+      "result": "最新MAINLINE05定向，未包含随后独立审查发现的S01-S03"
+    }
+  ],
+  "oldV2Fields": {
+    "checked": 42,
+    "equal": 42,
+    "scope": "既有等价V2内存测量，不能替代新语义全字段/关系验收"
+  },
+  "semanticFidelity": {
+    "status": "FAIL",
+    "reason": "S03新增关系/已确认字段变化"
+  },
+  "selection": {
+    "status": "FAIL",
+    "observedCounterexamplesAtLeast": 1,
+    "noIncorrectFormalWriteInS01": true
+  },
+  "rendering": {
+    "realAppSSR": "PASS_DIRECTED",
+    "calendarSSR": "PASS_DIRECTED_TWO_NODE_HOST_TZ",
+    "actualEdgeTimezone": "NOT_RUN",
+    "actualBrowser": "NOT_RUN"
+  },
+  "independentReview": "BLOCKED",
+  "engineering": "NOT_RUN",
+  "logs": [
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-cont-3f6hUW\\reproduction.log",
+      "bytes": 1317,
+      "sha256": "0edb64abfb11eff2ae3b4a1496d2e81059f03d1c84644445c14f54238fb5d5e2",
+      "summary": [
+        "⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯",
+        " FAIL  src/experiments/mainline05/semanticConfirmation.test.ts > MAINLINE05 semantic confirmation business invariants > real task dependencies require the parent to be confirmed or in the same explicit batch",
+        "AssertionError: expected [Function] to throw error including 'DEPENDENCY_CONFIRM_FIRST' but got 'MAINLINE05_ITEM_NOT_CONFIRMABLE'",
+        " Test Files  1 failed (1)",
+        "      Tests  1 failed | 16 passed (17)"
+      ]
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-cont-3f6hUW\\targeted-01.log",
+      "bytes": 49253,
+      "sha256": "5b7277abd3c4a4715000b11b8d7d7b46891ab4544d5e55fe7d218130eb713d5b",
+      "summary": [
+        " Test Files  10 passed (10)",
+        "      Tests  116 passed (116)"
+      ]
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-cont-3f6hUW\\targeted-02.log",
+      "bytes": 3477,
+      "sha256": "cb5cee91008375b927f0bf7700eb89ac3fbb960935932681e723d1281d8fe4dd",
+      "summary": [
+        "⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯",
+        " FAIL  src/experiments/mainline05/mainlineAcceptance.test.tsx > MAINLINE05 existing interface characterization (not missing-module failures) > real calendar keeps undated tasks findable and date-only edits free of artificial clocks in two host timezones",
+        "Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.",
+        " Test Files  1 failed | 5 passed (6)",
+        "      Tests  1 failed | 45 passed (46)"
+      ]
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-cont-3f6hUW\\targeted-03.log",
+      "bytes": 1198,
+      "sha256": "76e6de241ec136f4fa40310489e9eb9f20a5edfd04622859f439e77793029b1d",
+      "summary": [
+        " Test Files  6 passed (6)",
+        "      Tests  46 passed (46)"
+      ]
+    },
+    {
+      "path": "C:\\Users\\Winner\\AppData\\Local\\Temp\\rco-mainline05-cont-3f6hUW\\type-01.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    }
+  ],
+  "logPolicy": "每次attempt保留，不累计重复样本；日志原路径只读，SHA绑定；type日志空白不单独冒充成功回执",
+  "accuracy": "本轮未测量"
+}

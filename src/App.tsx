@@ -1,15 +1,21 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { assertMainlineRuntime, type MainlineRuntime } from './experiments/mainline02/runtime'
+import type { WorkspaceV8 } from './domain/v2/types'
+import { storedPersonalPlans } from './domain/v2/personalPlanD27'
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
+import { EventDetailPanel } from './components/EventDetailPanel'
 import { IntakePanel } from './components/IntakePanel'
 import { OnboardingGuide } from './components/OnboardingGuide'
 import { PageLoadBoundary } from './components/PageLoadBoundary'
 import { Sidebar } from './components/Sidebar'
+import { SourceSupplementPanel } from './components/SourceSupplementPanel'
 import { TaskDetailPanel } from './components/TaskDetailPanel'
+import { WorkspaceRecoveryPanel } from './components/WorkspaceRecoveryPanel'
 import { demoSources, demoTasks } from './data/demo'
 import { InboxPage } from './pages/InboxPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { TasksPage } from './pages/TasksPage'
-import { IndexedDbWorkspaceRepository } from './lib/repository'
+import { IndexedDbWorkspaceRepository, WorkspaceRecoveryRequiredError, WorkspaceViewConflictError } from './lib/repository'
 import {
   getBrowserNotificationPermission,
   requestBrowserNotificationPermission,
@@ -18,25 +24,117 @@ import {
 } from './lib/notifications'
 import { loadWorkspace } from './lib/storage'
 import { updateTaskWithHistory } from './lib/taskUpdates'
-import { findDuplicateSources } from './lib/sourceDuplicates'
-import { createIntakeResult, type IntakeInput } from './lib/intake'
-import { ProxyDeepSeekExtractionService } from './lib/deepseekExtraction'
-import { buildLocalRecognition, recognitionToLegacySuggestions } from './recognition/pipeline'
-import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
+import { canSaveLinkOnly, createIntakeResult, type IntakeInput } from './lib/intake'
+import { MULTIMODAL_PROMPT_VERSION } from './lib/multimodal'
+import { ProxyDeepSeekExtractionService, type DeepSeekExtractionService } from './lib/deepseekExtraction'
+import { buildLocalRecognition } from './recognition/pipeline'
 import {
-  buildConfirmedProjectBatch,
+  nextWorkspaceRecoveryAction,
+  safeWorkspaceRecoveryErrors,
+  workspacePersistenceRevision,
+} from './lib/workspaceRecoveryUi'
+import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
+import { CapturePersistenceService } from './domain/v2/capture'
+import { retryExistingSourceRecognition } from './domain/v2/sourceRetry'
+import { mapSourceWorkflowItem, selectPendingReviewItems } from './lib/sourceWorkflow'
+import { materialStatusFromLegacy } from './lib/domainEntities'
+import { CanonicalWorkspaceRepository, IndexedDbWorkspaceRecordStore, type WorkspaceRecordStore } from './domain/v2/repository'
+import { D20ReviewSessionRepository } from './experiments/candidate16/d20ReviewSession'
+import { buildSourceReviewPlan, commitSourceReview, verifySourceReviewReadback, acknowledgeSourceReadback, sourceReviewProblem, PENDING_SOURCE_READBACK, type SourceReviewReceipt } from './domain/v2/sourceReviewD26'
+import { OrdinarySourceFacts } from './components/OrdinarySourceFacts'
+import { SourceReadinessReview } from './components/SourceReadinessReview'
+import { applySourceReadiness, currentReadinessFlags, type ReadinessInput } from './domain/v2/sourceReadiness'
+import {eventDispositionField,type EventDisposition} from './domain/v2/eventDisposition'
+import { PersonalPlanPanel } from './components/PersonalPlanPanel'
+import { assembleCurrentFirstSuggestion } from './recognition/materialChannelGrounding'
+import { sourceWindowsFromSidecar } from './recognition/sourceWindowGrounding'
+import { workflowMaterialSupportFromSidecar } from './recognition/currentFactRoleProduct'
+import { ordinaryWorkflowMaterialSupportFromSidecar, ordinaryProviderContextFromSidecar } from './recognition/ordinaryProviderSupport'
+import { recognitionModeDescription } from './recognition/recognitionModePresentation'
+import { taskSourceTimeSummary } from './recognition/sourceWindowPresentation'
+import { sourceActionTimesFromSidecar } from './recognition/sourceActionTime'
+import { groundTaskTimeWindows, taskTimeAuthorityFromSidecar } from './recognition/taskTimeAuthorityContract'
+import { indexImmutableScopesV11 } from './recognition/scopeIndexV11'
+import { projectSourceInformation } from './recognition/sourceInformationPreview'
+import {createOrdinaryMeasurement,type OrdinaryMeasurement} from './domain/v2/ordinaryMeasurementD26'
+import {
+  mergeRecognitionTasks,
+  recognitionResultFromManualSuggestion,
+  splitRecognitionTask,
+} from './domain/v2/domainCommit'
+import {
   createManualMilestone,
-  createExtractionDraft,
   createIntegrationState,
   createWorkspaceData,
   syncTaskMilestone,
   updateDraftItem,
 } from './lib/workspace'
-import type { CourseBlock, Event, ExtractionDraft, IntegrationState, KnowledgeSettings, MigrationRecord, PageId, ParsedSuggestion, Project, RecognitionFeedbackRecord, Source, Task, WorkPackage } from './types'
-import type { RecognitionResult } from './recognition/types'
+import type { CourseBlock, Event, ExtractionDraft, IntegrationState, KnowledgeSettings, MaterialItemEntity, MigrationRecord, PageId, ParsedSuggestion, Project, RecognitionFeedbackRecord, Source, Task, WorkPackage, WorkspaceData } from './types'
 
-const workspaceRepository = new IndexedDbWorkspaceRepository()
-const deepSeekExtractionService = new ProxyDeepSeekExtractionService()
+const ordinaryStore = Object.assign(new IndexedDbWorkspaceRecordStore(), {name:'student-affairs-steward'})
+const defaultCanonical = new CanonicalWorkspaceRepository(ordinaryStore)
+const defaultViewRepository = new IndexedDbWorkspaceRepository(defaultCanonical)
+const defaultCapture = new CapturePersistenceService(defaultCanonical)
+const defaultExtraction = new ProxyDeepSeekExtractionService()
+const defaultMeasurement=createOrdinaryMeasurement(ordinaryStore)
+const defaultReviewSession = new D20ReviewSessionRepository(ordinaryStore, defaultMeasurement.changed, defaultMeasurement.activity, true)
+
+/** Replaces transport/provider only; App, capture, review and DomainCommitPlan remain the ordinary product path. */
+export interface OrdinaryAppEnvironment {
+  canonical: CanonicalWorkspaceRepository
+  viewRepository: IndexedDbWorkspaceRepository
+  reader: CanonicalWorkspaceRepository
+  capture: CapturePersistenceService
+  extraction: DeepSeekExtractionService
+  reviewSession: D20ReviewSessionRepository
+  measurement: OrdinaryMeasurement
+  initial: WorkspaceData
+  store: WorkspaceRecordStore & {name:string}
+  label: string
+  semanticSidecar?: (sourceId:string)=>unknown
+  /** Recorded responses use their original inference clock, not the replay date. */
+  recognitionContext?: (sourceText: string) => { referenceTime: string; timezone: string }
+  pipelineVersion?: string
+  recognitionMetadata?: () => { modelName: string; promptVersion: string; candidateVersion: string; build: string; responseRole: string; provider?: 'deepseek' | 'manual' | 'local-rules' }
+}
+
+function captureActionMessage(error: unknown, fallback: string): string {
+  const code = error instanceof Error ? error.message : ''
+  const known: Record<string, string> = {
+    CAPTURE_SOURCE_VERSION_CHANGED: '来源正文已在其他页面更新；请刷新后基于最新版本重试。',
+    CAPTURE_RETRY_ALREADY_RUNNING: '当前版本仍有识别正在进行；请稍后再试，系统不会并发覆盖结果。',
+    CAPTURE_REVISION_UNCHANGED: '文字没有变化；请直接使用“本地规则重试”。',
+    CAPTURE_DUPLICATE_IN_PROGRESS: '该版本仍在处理中，请稍后从收件箱查看。',
+  }
+  return known[code] ?? (code.trim() || fallback)
+}
+
+interface WorkspaceRecoveryState {
+  backupId: string
+  errorCodes: string[]
+  backupExported: boolean
+  confirmationArmed: boolean
+  busy: 'exporting' | 'recovering' | null
+  failureCode: string | null
+}
+
+function persistenceRevisionForView(saved: WorkspaceData): string {
+  const view = createWorkspaceData(
+    saved.tasks,
+    saved.sources,
+    saved.drafts,
+    saved.projects,
+    saved.courseBlocks,
+    saved.integrations,
+    saved.knowledgeSettings,
+    saved.workPackages,
+    saved.events,
+    saved.migrationLog,
+    saved.recognitionFeedback,
+    saved.legacyData,
+  )
+  return workspacePersistenceRevision({ ...view, materialItems: saved.materialItems })
+}
 
 const CalendarPage = lazy(() => import('./pages/CalendarPage').then((module) => ({ default: module.CalendarPage })))
 const LibraryPage = lazy(() => import('./pages/LibraryPage').then((module) => ({ default: module.LibraryPage })))
@@ -46,9 +144,51 @@ const ReportsPage = lazy(() => import('./pages/ReportsPage').then((module) => ({
 const ServicesPage = lazy(() => import('./pages/ServicesPage').then((module) => ({ default: module.ServicesPage })))
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then((module) => ({ default: module.PrivacyPage })))
 
-function App() {
-  const [initialWorkspace] = useState(() => loadWorkspace(demoTasks, demoSources))
+function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordinaryEnvironment?: OrdinaryAppEnvironment } = {}) {
+  const canonicalWorkspaceRepository = ordinaryEnvironment?.canonical ?? defaultCanonical
+  const workspaceRepository = ordinaryEnvironment?.viewRepository ?? defaultViewRepository
+  const capturePersistenceService = ordinaryEnvironment?.capture ?? defaultCapture
+  const deepSeekExtractionService = ordinaryEnvironment?.extraction ?? defaultExtraction
+  const ordinaryReviewSession = ordinaryEnvironment?.reviewSession ?? defaultReviewSession
+  const ordinaryMeasurement = ordinaryEnvironment?.measurement ?? defaultMeasurement
+  const independentReader = ordinaryEnvironment?.reader ?? new CanonicalWorkspaceRepository(ordinaryStore)
+  if (runtime !== undefined) assertMainlineRuntime(runtime)
+  const [boundRuntime] = useState(runtime)
+  if (runtime !== boundRuntime) throw new Error('MAINLINE_RUNTIME_CHANGE_FORBIDDEN')
+  const [initialWorkspace] = useState(() => runtime ? runtime.view(runtime.initial) : ordinaryEnvironment?.initial ?? loadWorkspace(demoTasks, demoSources))
+  const [ordinaryCanonical, setOrdinaryCanonical] = useState<WorkspaceV8 | null>(null)
+  const [ordinaryBusy,setOrdinaryBusy] = useState(false)
+  const [ordinaryFactsDirty,setOrdinaryFactsDirty] = useState(false)
+  const [ordinaryReadinessDirty,setOrdinaryReadinessDirty] = useState(false)
+  const [ordinaryReceipt,setOrdinaryReceipt] = useState<SourceReviewReceipt | null>(null)
+  const [viewConflict,setViewConflict] = useState<WorkspaceViewConflictError | null>(null)
+  const ordinaryCommitLock = useRef(false)
+  useEffect(()=>{
+    if(runtime)return
+    const visibility=()=>{void ordinaryMeasurement.visibility(document.hidden)}
+    const blur=()=>{void ordinaryMeasurement.blur()}
+    document.addEventListener('visibilitychange',visibility);window.addEventListener('blur',blur)
+    return()=>{document.removeEventListener('visibilitychange',visibility);window.removeEventListener('blur',blur)}
+  },[runtime,ordinaryMeasurement])
+  const [isolatedSnapshot, setIsolatedSnapshot] = useState<WorkspaceV8 | null>(runtime?.initial ?? null)
+  const [realInputInitialText, setRealInputInitialText] = useState('')
+  const RealInputPanel = runtime?.realInput?.inputPanel
+  const [isolatedChoices, setIsolatedChoices] = useState<Record<string, Record<string, boolean>>>({})
+  const [isolatedBusy, setIsolatedBusy] = useState(false)
+  const [readbackPending, setReadbackPending] = useState(false)
+  useEffect(() => {
+    const recovery = runtime?.realInput?.readbackRecovery
+    if (!recovery) return
+    let live = true
+    const update = () => { void recovery.pending().then(value => { if (live) setReadbackPending(Boolean(value)) }) }
+    update()
+    const unsubscribe = recovery.subscribe(update)
+    return () => { live = false; unsubscribe() }
+  }, [runtime])
+  const [experimentExport, setExperimentExport] = useState<{ url: string; filename: string } | null>(null)
+  const isolatedLock = useRef(false)
   const [currentPage, setCurrentPage] = useState<PageId>('today')
+  const [inboxView, setInboxView] = useState<'all' | 'needs_review'>('all')
   const [tasks, setTasks] = useState<Task[]>(initialWorkspace.tasks)
   const [sources, setSources] = useState<Source[]>(initialWorkspace.sources)
   const [drafts, setDrafts] = useState<ExtractionDraft[]>([])
@@ -57,85 +197,189 @@ function App() {
   const [integrations, setIntegrations] = useState<IntegrationState>(() => createIntegrationState())
   const [knowledgeSettings, setKnowledgeSettings] = useState<KnowledgeSettings>({})
   const [workPackages, setWorkPackages] = useState<WorkPackage[]>([])
+  const [materialItems, setMaterialItems] = useState<MaterialItemEntity[]>([])
   const [events, setEvents] = useState<Event[]>([])
   const [migrationLog, setMigrationLog] = useState<MigrationRecord[]>([])
   const [recognitionFeedback, setRecognitionFeedback] = useState<RecognitionFeedbackRecord[]>([])
   const [legacyData, setLegacyData] = useState<Record<string, unknown>>({})
   const [workspaceReady, setWorkspaceReady] = useState(false)
   const [storageError, setStorageError] = useState(false)
+  const [workspaceRecovery, setWorkspaceRecovery] = useState<WorkspaceRecoveryState | null>(null)
   const [intakeOpen, setIntakeOpen] = useState(false)
-  const [guideOpen, setGuideOpen] = useState(() => shouldShowOnboarding())
+  const [guideOpen, setGuideOpen] = useState(() => runtime || ordinaryEnvironment ? false : shouldShowOnboarding())
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null)
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null)
+  const [draftSourceSnapshot, setDraftSourceSnapshot] = useState<{ draftId: string; sourceVersionId: string; rawText: string } | null>(null)
+  const [supplementSourceId, setSupplementSourceId] = useState<string | null>(null)
   const [notice, setNotice] = useState<{ text: string; undo?: () => void } | null>(null)
   const [smartExtractionStatus, setSmartExtractionStatus] = useState<'checking' | 'connected' | 'unavailable'>('checking')
   const [notificationPermission, setNotificationPermission] =
-    useState<BrowserNotificationPermission>(() => getBrowserNotificationPermission())
+    useState<BrowserNotificationPermission>(() => runtime || ordinaryEnvironment ? 'unsupported' : getBrowserNotificationPermission())
   const deliveredNotifications = useRef(new Set<string>())
+  const hydrationPromise = useRef<Promise<WorkspaceData> | null>(null)
+  const persistedWorkspaceRevision = useRef<string | null>(null)
+  const pendingWorkspaceRevision = useRef<string | null>(null)
+  useEffect(() => () => {
+    if (experimentExport) URL.revokeObjectURL(experimentExport.url)
+  }, [experimentExport])
   const selectedTask =
     tasks.find((task) => task.id === selectedTaskId) ?? null
+  const selectedEvent = events.find((event) => event.id === selectedEventId) ?? null
+  const selectedEventDrafts = selectedEvent
+    ? drafts.filter((draft) => draft.recognitionResult?.evidence.some((evidence) => selectedEvent.evidenceIds.includes(evidence.id)))
+    : []
+  const selectedEventEvidenceQuotes = selectedEvent
+    ? [...new Set(selectedEventDrafts.flatMap((draft) => draft.recognitionResult?.evidence
+        .filter((evidence) => selectedEvent.evidenceIds.includes(evidence.id))
+        .flatMap((evidence) => evidence.quotedText?.trim() || evidence.quote?.trim() ? [evidence.quotedText?.trim() || evidence.quote!.trim()] : [])
+      ?? []))]
+    : []
+  const selectedEventSourceTitles = [...new Set(selectedEventDrafts.flatMap((draft) => {
+    const source = sources.find((candidate) => candidate.id === draft.sourceId)
+    return source ? [source.title] : []
+  }))]
 
-  const selectedDraft = drafts.find((draft) => draft.id === selectedDraftId) ?? null
-  const pendingReviewCount = drafts.reduce(
-    (count, draft) => count + draft.items.filter((item) => item.status === '待确认').length,
-    0,
-  )
-  const selectedDraftSource = selectedDraft
+  const experimentalReview = useMemo(() => {
+    if (!runtime || !isolatedSnapshot || !selectedDraftId) return null
+    try { return runtime.review(isolatedSnapshot, selectedDraftId, isolatedChoices[selectedDraftId]) } catch { return null }
+  }, [runtime, isolatedSnapshot, selectedDraftId, isolatedChoices])
+  const dateViews = useMemo(() => runtime && isolatedSnapshot ? runtime.dates(isolatedSnapshot) : undefined, [runtime, isolatedSnapshot])
+  const selectedDraft = experimentalReview?.draft ?? drafts.find((draft) => draft.id === selectedDraftId) ?? null
+  const supplementSource = sources.find((source) => source.id === supplementSourceId) ?? null
+  const pendingReviewCount = useMemo(() => selectPendingReviewItems(sources, drafts, ordinaryCanonical ?? isolatedSnapshot ?? undefined)
+    .reduce((count, item) => count + item.counts.pending, 0), [drafts, sources, ordinaryCanonical, isolatedSnapshot])
+  const selectedDraftCurrentSource = selectedDraft
     ? sources.find((source) => source.id === selectedDraft.sourceId) ?? null
     : null
-  const workspace = useMemo(
-    () => createWorkspaceData(tasks, sources, drafts, projects, courseBlocks, integrations, knowledgeSettings, workPackages, events, migrationLog, recognitionFeedback, legacyData),
-    [courseBlocks, drafts, events, integrations, knowledgeSettings, legacyData, migrationLog, projects, recognitionFeedback, sources, tasks, workPackages],
+  const selectedDraftNeedsHistoricalSource = Boolean(
+    selectedDraft?.sourceVersionId
+    && selectedDraftCurrentSource?.currentVersionId
+    && selectedDraft.sourceVersionId !== selectedDraftCurrentSource.currentVersionId,
   )
+  const selectedDraftSourceBeforeReadiness = selectedDraftNeedsHistoricalSource
+    ? selectedDraft && selectedDraftCurrentSource && draftSourceSnapshot?.draftId === selectedDraft.id
+      && draftSourceSnapshot.sourceVersionId === selectedDraft.sourceVersionId
+      ? {
+          ...selectedDraftCurrentSource,
+          content: draftSourceSnapshot.rawText,
+          rawText: draftSourceSnapshot.rawText,
+          contentPreview: draftSourceSnapshot.rawText.slice(0, 240),
+          reviewMetadata: selectedDraft.sourceReviewMetadata,
+        }
+      : null
+    : selectedDraftCurrentSource
+  const selectedDraftSource = !runtime && ordinaryCanonical && selectedDraft && selectedDraftSourceBeforeReadiness
+    ? {...selectedDraftSourceBeforeReadiness,reviewMetadata:{...selectedDraftSourceBeforeReadiness.reviewMetadata,qualityFlags:currentReadinessFlags(ordinaryCanonical,selectedDraft.id,selectedDraftSourceBeforeReadiness.reviewMetadata?.qualityFlags??[])}}
+    : selectedDraftSourceBeforeReadiness
+  const workspace = useMemo(() => ({
+    ...createWorkspaceData(tasks, sources, drafts, projects, courseBlocks, integrations, knowledgeSettings, workPackages, events, migrationLog, recognitionFeedback, legacyData),
+    materialItems,
+  }), [courseBlocks, drafts, events, integrations, knowledgeSettings, legacyData, materialItems, migrationLog, projects, recognitionFeedback, sources, tasks, workPackages])
+
+  const applyWorkspaceView = useCallback((saved: WorkspaceData) => {
+    setTasks(saved.tasks)
+    setSources(saved.sources)
+    setDrafts(saved.drafts)
+    setProjects(saved.projects)
+    setCourseBlocks(saved.courseBlocks)
+    setIntegrations(saved.integrations)
+    setKnowledgeSettings(saved.knowledgeSettings)
+    setWorkPackages(saved.workPackages)
+    setMaterialItems(saved.materialItems)
+    setEvents(saved.events)
+    setMigrationLog(saved.migrationLog)
+    setRecognitionFeedback(saved.recognitionFeedback)
+    setLegacyData(saved.legacyData)
+  }, [])
+
+  const refreshOrdinary = async () => {
+    const saved=await workspaceRepository.load()
+    const canonical=await canonicalWorkspaceRepository.load()
+    if (!saved || !canonical) throw Error('WORKSPACE_V8_READBACK_UNAVAILABLE')
+    persistedWorkspaceRevision.current=persistenceRevisionForView(saved)
+    pendingWorkspaceRevision.current=null
+    applyWorkspaceView(saved); setOrdinaryCanonical(canonical)
+    const pending=canonical.extractionDrafts.map(d=>d.legacyData?.[PENDING_SOURCE_READBACK]).find(Boolean)
+    if(pending&&typeof pending==='object'&&!Array.isArray(pending)&&pending.version==='source-review-d26-1')setOrdinaryReceipt(pending as unknown as SourceReviewReceipt)
+  }
 
   useEffect(() => {
+    if (runtime) return
     let active = true
     void deepSeekExtractionService.status().then((status) => {
       if (active) setSmartExtractionStatus(status.configured ? 'connected' : 'unavailable')
     })
     return () => { active = false }
-  }, [])
+  }, [runtime, deepSeekExtractionService])
 
   useEffect(() => {
     let active = true
-    const hydrate = async () => {
-      try {
-        const saved = await workspaceRepository.load()
-        if (!active) return
-        if (saved) {
-          setTasks(saved.tasks)
-          setSources(saved.sources)
-          setDrafts(saved.drafts)
-          setProjects(saved.projects)
-          setCourseBlocks(saved.courseBlocks)
-          setIntegrations(saved.integrations)
-          setKnowledgeSettings(saved.knowledgeSettings)
-          setWorkPackages(saved.workPackages)
-          setEvents(saved.events)
-          setMigrationLog(saved.migrationLog)
-          setRecognitionFeedback(saved.recognitionFeedback)
-          setLegacyData(saved.legacyData)
-        } else {
-          await workspaceRepository.save(
-            createWorkspaceData(initialWorkspace.tasks, initialWorkspace.sources),
-          )
-        }
-      } catch {
-        if (active) setStorageError(true)
-      } finally {
-        if (active) setWorkspaceReady(true)
-      }
+    if (runtime) {
+      void runtime.load().then(saved => { if (active) { setIsolatedSnapshot(saved); applyWorkspaceView(runtime.view(saved)); setWorkspaceReady(true) } }).catch(() => { if (active) { setStorageError(true); setWorkspaceReady(true) } })
+      return () => { active = false }
     }
-    void hydrate()
+    if (!hydrationPromise.current) {
+      hydrationPromise.current = (async () => {
+        const saved = await workspaceRepository.load()
+        if (saved) return saved
+        const initialized = createWorkspaceData(initialWorkspace.tasks, initialWorkspace.sources)
+        await workspaceRepository.save(initialized)
+        return initialized
+      })()
+    }
+    void hydrationPromise.current.then((saved) => {
+      if (!active) return
+      persistedWorkspaceRevision.current = persistenceRevisionForView(saved)
+      pendingWorkspaceRevision.current = null
+      applyWorkspaceView(saved)
+      void canonicalWorkspaceRepository.load().then(canonical=>{
+        setOrdinaryCanonical(canonical)
+        const pending=canonical?.extractionDrafts.map(d=>d.legacyData?.[PENDING_SOURCE_READBACK]).find(Boolean)
+        if(pending&&typeof pending==='object'&&!Array.isArray(pending)&&pending.version==='source-review-d26-1')setOrdinaryReceipt(pending as unknown as SourceReviewReceipt)
+      })
+      setStorageError(false)
+      setWorkspaceRecovery(null)
+    }).catch((error: unknown) => {
+      if (!active) return
+      if (error instanceof WorkspaceRecoveryRequiredError) {
+        setStorageError(false)
+        setWorkspaceRecovery({
+          backupId: error.backupId,
+          errorCodes: safeWorkspaceRecoveryErrors(error.errors),
+          backupExported: false,
+          confirmationArmed: false,
+          busy: null,
+          failureCode: null,
+        })
+        return
+      }
+      setStorageError(true)
+    }).finally(() => {
+      if (active) setWorkspaceReady(true)
+    })
     return () => {
       active = false
     }
-  }, [initialWorkspace.sources, initialWorkspace.tasks])
+  }, [applyWorkspaceView, initialWorkspace.sources, initialWorkspace.tasks, runtime, canonicalWorkspaceRepository, workspaceRepository])
 
   useEffect(() => {
-    if (!workspaceReady || storageError) return
-    void workspaceRepository.save(workspace).catch(() => setStorageError(true))
-  }, [storageError, workspace, workspaceReady])
+    if (runtime || !workspaceReady || storageError || workspaceRecovery || viewConflict || ordinaryBusy) return
+    const revision = workspacePersistenceRevision(workspace)
+    if (revision === persistedWorkspaceRevision.current || revision === pendingWorkspaceRevision.current) return
+    pendingWorkspaceRevision.current = revision
+    void workspaceRepository.save(workspace).then(() => {
+      persistedWorkspaceRevision.current = revision
+      if (pendingWorkspaceRevision.current === revision) pendingWorkspaceRevision.current = null
+      // Planning consumes canonical facts. Refresh that read-model after ordinary course/status
+      // saves without replacing any still-unsaved React edits with a compatibility projection.
+      return canonicalWorkspaceRepository.load().then(current => { if (current) setOrdinaryCanonical(current) })
+    }).catch((error:unknown) => {
+      if (pendingWorkspaceRevision.current === revision) pendingWorkspaceRevision.current = null
+      if(error instanceof WorkspaceViewConflictError)setViewConflict(error)
+      else setStorageError(true)
+    })
+  }, [storageError, workspace, workspaceReady, workspaceRecovery, runtime, viewConflict, ordinaryBusy, workspaceRepository, canonicalWorkspaceRepository])
 
   useEffect(() => {
     const openIntake = (event: KeyboardEvent) => {
@@ -154,13 +398,14 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (notificationPermission !== 'granted') return
+    if (runtime || ordinaryEnvironment || notificationPermission !== 'granted') return
     return scheduleBrowserNotifications(tasks, deliveredNotifications.current, () => {
       setNotice({ text: '浏览器通知发送失败，请检查网站通知权限。' })
     })
-  }, [notificationPermission, tasks])
+  }, [notificationPermission, tasks, runtime, ordinaryEnvironment])
 
   useEffect(() => {
+    if (runtime) return
     const refreshPermission = () => {
       setNotificationPermission(getBrowserNotificationPermission())
     }
@@ -170,15 +415,93 @@ function App() {
       window.removeEventListener('focus', refreshPermission)
       document.removeEventListener('visibilitychange', refreshPermission)
     }
-  }, [])
+  }, [runtime])
 
+  const rejectExperimentAction = () => { setNotice({ text: '本隔离轮未支持该操作；未写入或发送。草稿仍可稍后核对。' }) }
+  const refreshExperiment = async () => {
+    if (!runtime) return
+    const saved = await runtime.load()
+    const view = runtime.view(saved)
+    setIsolatedSnapshot(saved)
+    applyWorkspaceView(view)
+    persistedWorkspaceRevision.current = persistenceRevisionForView(view)
+    pendingWorkspaceRevision.current = null
+  }
+  const performExperiment = async (action: () => Promise<void>) => {
+    if (!runtime || storageError || !workspaceReady || isolatedLock.current) return
+    isolatedLock.current = true
+    setIsolatedBusy(true)
+    try { await action(); await refreshExperiment() }
+    catch (error) {
+      setNotice({ text: '操作未完成：' + (error instanceof Error ? error.message : '需重新核对') + '。请查看收件箱；没有自动重试。' })
+      try { await refreshExperiment() } catch { setStorageError(true) }
+    } finally { isolatedLock.current = false; setIsolatedBusy(false) }
+  }
+  const confirmExperiment = async (draftIds: string[], itemId?: string) => {
+    if (!runtime || !isolatedSnapshot) return
+    await performExperiment(async () => {
+      let current = isolatedSnapshot
+      if (runtime.semantic) {
+        const outcomes: string[] = []
+        for (const draftId of draftIds) {
+          let label = '草稿 ' + draftId
+          try {
+            const reviewed = runtime.review(current, draftId, isolatedChoices[draftId])
+            label = (current.sources.find(source => source.id === reviewed.draft.sourceId)?.title || '来源') + '（' + draftId + '）'
+            const items = reviewed.draft.items.filter(item => item.status === '待确认' && (itemId ? item.id === itemId : item.selected !== false))
+            if (!items.length) { outcomes.push(label + '：未选择可确认任务，来源仍保留'); continue }
+            if (runtime.realInput?.reviewSession) {
+              const session = await runtime.realInput.reviewSession.load(current,draftId)
+              for (const item of items) {
+                const choice = session.fields[`task:${item.id}:selected`]
+                if (choice?.conflict || choice?.mine === false) throw Error('确认选择已经变化；请重新打开并核对，未覆盖其他标签的选择。')
+              }
+            }
+            current = await runtime.confirm({ draftId, revision: reviewed.revision, taskTempIds: items.map(item => item.suggestion.id) })
+            outcomes.push(label + '：已确认保存 ' + items.length + ' 项，可在任务中心查找')
+          } catch (error) {
+            outcomes.push(label + (error instanceof Error && error.name === 'CommittedReadbackPendingError' ? '：' : '：该草稿未确认：') + (error instanceof Error ? error.message : '需重新核对'))
+            current = await runtime.load()
+          }
+        }
+        setNotice({ text: outcomes.join('；') + '。未确认建议和已保存编辑仍保留。' })
+        return
+      }
+      for (const draftId of draftIds) {
+        const reviewed = runtime.review(current, draftId, isolatedChoices[draftId])
+        const items = reviewed.draft.items.filter(item => item.status === '待确认' && (itemId ? item.id === itemId : item.selected !== false))
+        if (!items.length) continue
+        current = await runtime.confirm({ draftId, revision: reviewed.revision, taskTempIds: items.map(item => item.suggestion.id) })
+        setNotice({ text: '已确认并保存；可在任务中心查找。其他未选建议仍保留。' })
+      }
+    })
+  }
   const handleRequestNotificationPermission = async () => {
+    if (runtime) { rejectExperimentAction(); return 'unsupported' as const }
     const permission = await requestBrowserNotificationPermission()
     setNotificationPermission(permission)
     return permission
   }
 
+  const disposeExperiment = (draftId: string, kind: 'defer' | 'reject' | 'review_info', itemId?: string) => {
+    if (!runtime?.semantic || !isolatedSnapshot || !experimentalReview) return
+    const item = itemId ? experimentalReview.draft.items.find(i => i.id === itemId) : undefined
+    if (itemId && !item) return
+    const semantic = runtime.semantic
+    void performExperiment(async () => {
+      await semantic.dispose({ draftId, kind, taskTempIds: item ? [item.suggestion.id] : [],
+        revision: experimentalReview.revision, operationId: crypto.randomUUID() })
+      if (item) setIsolatedChoices(previous => {
+        const choices = { ...previous[draftId] }; delete choices[item.id]
+        return { ...previous, [draftId]: choices }
+      })
+      setNotice({ text: kind === 'review_info' ? '已标记核对完成，没有创建任务或空项目。'
+        : kind === 'defer' ? '已保存为稍后核对，可从收件箱重新打开。' : '已记录不需要；原文和首次建议仍保留。' })
+    })
+  }
+
   const handleComplete = (taskId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
     if (!task) return
     const nextTask = updateTaskWithHistory(task, { status: '已完成' })
@@ -206,6 +529,7 @@ function App() {
   }
 
   const handleStart = (taskId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
     if (!task || task.status !== '待开始') return
     handleUpdateTask(taskId, { status: '进行中' })
@@ -213,6 +537,7 @@ function App() {
   }
 
   const handleSnooze = (taskId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
     if (!task) return
     const nextMorning = new Date()
@@ -226,6 +551,7 @@ function App() {
   }
 
   const handleTogglePin = (taskId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
     if (!task) return
     const now = new Date()
@@ -238,10 +564,42 @@ function App() {
   }
 
   const handleUpdateTask = (taskId: string, patch: Partial<Task>) => {
+    if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
     if (!task) return
     const nextTask = updateTaskWithHistory(task, patch)
     setTasks((current) => current.map((candidate) => candidate.id === taskId ? nextTask : candidate))
+    if (patch.materials) {
+      setMaterialItems((current) => {
+        const next = [...current]
+        patch.materials!.forEach((material) => {
+          const index = next.findIndex((candidate) => candidate.id === material.id)
+          const updated: MaterialItemEntity = index >= 0
+            ? {
+                ...next[index],
+                name: material.name,
+                status: materialStatusFromLegacy(material.done, material.status),
+                projectId: task.projectId ?? next[index].projectId,
+                taskId,
+                updatedAt: nextTask.updatedAt,
+              }
+            : {
+                id: material.id,
+                projectId: task.projectId,
+                taskId,
+                name: material.name,
+                required: true,
+                status: materialStatusFromLegacy(material.done, material.status),
+                evidenceIds: [],
+                createdAt: nextTask.updatedAt,
+                updatedAt: nextTask.updatedAt,
+              }
+          if (index >= 0) next[index] = updated
+          else next.push(updated)
+        })
+        return next
+      })
+    }
     if (task.projectId) {
       setProjects((current) => current.map((project) => project.id === task.projectId
         ? syncTaskMilestone(project, nextTask)
@@ -249,29 +607,48 @@ function App() {
     }
   }
 
+  const selectDraftForReview = async (draftId: string) => {
+    try {
+      const canonical = await (runtime ? runtime.load() : canonicalWorkspaceRepository.load())
+      const canonicalDraft = canonical?.extractionDrafts.find((candidate) => candidate.id === draftId)
+      const run = canonicalDraft
+        ? canonical?.recognitionRuns.find((candidate) => candidate.id === canonicalDraft.recognitionRunId)
+        : null
+      const version = run
+        ? canonical?.sourceVersions.find((candidate) => candidate.id === run.sourceVersionId)
+        : null
+      setDraftSourceSnapshot(version?.rawText !== null && version?.rawText !== undefined
+        ? { draftId, sourceVersionId: version.id, rawText: version.rawText }
+        : null)
+    } catch {
+      setDraftSourceSnapshot(null)
+    }
+    setSelectedDraftId(draftId)
+    if(!runtime){setOrdinaryFactsDirty(false);await ordinaryMeasurement.begin(draftId)}
+  }
+
   const openDraftReview = (draftId: string, message: string) => {
     setIntakeOpen(false)
+    setInboxView('needs_review')
     setCurrentPage('inbox')
-    setSelectedDraftId(draftId)
+    void selectDraftForReview(draftId)
     setNotice({ text: message })
   }
 
-  const handleCreateDraft = (source: Source, suggestions: ParsedSuggestion[], recognitionResult?: RecognitionResult) => {
-    const duplicateCandidates = findDuplicateSources(source, sources)
-    const nextSource: Source = duplicateCandidates.length
-      ? {
-          ...source,
-          duplicateOfSourceIds: duplicateCandidates.map((candidate) => candidate.sourceId),
-          duplicateReviewStatus: '待核对',
-        }
-      : source
-    const draft = createExtractionDraft(nextSource.id, suggestions, new Date().toISOString(), recognitionResult)
-    setSources((current) => [nextSource, ...current])
-    setDrafts((current) => [draft, ...current])
-    return { draft, source: nextSource, duplicateCount: duplicateCandidates.length }
-  }
-
   const handleIntakeInput = async (input: IntakeInput) => {
+    if (runtime?.realInput) {
+      if (input.sourceType !== 'text' || input.manualSuggestion || input.multimodal || input.url || input.fileName) { rejectExperimentAction(); return }
+      setRealInputInitialText(input.content); setIntakeOpen(true); return
+    }
+    if (runtime) {
+      await performExperiment(async () => {
+        const draftId = await runtime.capture(input)
+        setIntakeOpen(false)
+        setSelectedDraftId(draftId)
+        setNotice({ text: runtime.recognitionDescription ?? '人工工程响应（非模型预测）；请核对后确认。' })
+      })
+      return
+    }
     const localResult = createIntakeResult(input)
     const localRecognition = buildLocalRecognition({
       sourceType: input.sourceType,
@@ -282,41 +659,296 @@ function App() {
       projects,
       tasks,
     })
-    const provisionalSuggestions = input.manualSuggestion
-      ? localResult.suggestions
-      : recognitionToLegacySuggestions(localRecognition)
-    const provisional = handleCreateDraft(localResult.source, provisionalSuggestions, input.manualSuggestion ? undefined : localRecognition)
-    if (input.manualSuggestion) {
-      openDraftReview(provisional.draft.id, '手动任务已保存为待确认草稿；核对后再加入任务中心。')
-      return
+    const draftRecognition = input.manualSuggestion
+      ? recognitionResultFromManualSuggestion(localRecognition, input.manualSuggestion)
+      : localRecognition
+    // An invalid recording is a source-level rejection, not an unavailable
+    // provider. Keep injected offline providers separate from local fallback.
+    const useCloudRecognition = !input.manualSuggestion && (Boolean(ordinaryEnvironment?.extraction.recognize) || smartExtractionStatus === 'connected')
+    const reviewQualityFlags = [...new Set([
+      ...(input.reviewMetadata?.qualityFlags ?? []),
+      ...(input.multimodal
+        ? [`多模态实验：本次显式发送 ${input.multimodal.images.length} 张图片/页面与 OCR 文字；图片未写入工作区`]
+        : []),
+      ...(useCloudRecognition && input.content.length > 24_000
+        ? ['DeepSeek 本次仅接收前 24,000 字，后续正文未进入模型识别']
+        : []),
+    ])]
+    const metadata = input.manualSuggestion ? undefined : ordinaryEnvironment?.recognitionMetadata?.()
+    const sourceClock = ordinaryEnvironment?.recognitionContext?.(input.content)
+    const captureRequest = {
+      operationId: input.operationId ?? crypto.randomUUID(),
+      sourceType: input.sourceType,
+      title: input.sourceTitle ?? input.fileName ?? localResult.source.title,
+      rawText: input.content,
+      provider: ordinaryEnvironment ? metadata?.provider ?? 'manual' as const : input.manualSuggestion
+        ? 'manual' as const
+        : useCloudRecognition
+          ? 'deepseek' as const
+          : 'local-rules' as const,
+      modelName: input.manualSuggestion ? 'manual-entry' : metadata?.modelName ?? (ordinaryEnvironment ? 'anonymous-offline-engineering-input' : useCloudRecognition
+          ? input.multimodal
+            ? 'deepseek-v4-flash-vision-exp'
+            : 'deepseek-v4-flash'
+          : 'local-rules'),
+      promptVersion: input.manualSuggestion ? null : metadata?.promptVersion ?? (input.multimodal ? MULTIMODAL_PROMPT_VERSION : localRecognition.promptVersion),
+      pipelineVersion: ordinaryEnvironment ? ordinaryEnvironment.pipelineVersion ?? 'd26-ordinary-engineering-fake-transport' : useCloudRecognition
+        ? input.multimodal ? 'source-before-multimodal-ai-v1' : 'source-before-ai-v1'
+        : 'source-before-local-rules-v1',
+      sourceLegacyData: {
+        ...(metadata ? { recognitionProvenance: { ...metadata, componentVersion: ordinaryEnvironment?.pipelineVersion ?? null, referenceTime: sourceClock?.referenceTime ?? null, timezone: sourceClock?.timezone ?? null } } : {}),
+        contentPreview: localResult.source.contentPreview,
+        url: input.url ?? null,
+        originalFileName: input.fileName ?? null,
+        mimeType: input.mimeType ?? null,
+        fileSize: input.fileSize ?? null,
+        fileHash: input.fileHash ?? null,
+        parserVersion: localResult.source.parserVersion ?? null,
+        reviewMetadata: {
+          sourceType: input.reviewMetadata?.sourceType ?? input.sourceType,
+          mimeType: input.reviewMetadata?.mimeType ?? null,
+          characterCount: input.reviewMetadata?.characterCount ?? input.content.length,
+          pageCount: input.reviewMetadata?.pageCount ?? null,
+          extractionMethod: input.reviewMetadata?.extractionMethod ?? 'manual',
+          ocrConfidence: input.reviewMetadata?.ocrConfidence ?? null,
+          partialExtraction: input.reviewMetadata?.partialExtraction ?? null,
+          qualityFlags: reviewQualityFlags,
+        },
+      },
+      now: input.now?.toISOString(),
     }
     try {
-      const recognitionResult = await deepSeekExtractionService.recognize(input, { projects, tasks })
-      const suggestions = recognitionToLegacySuggestions(recognitionResult)
-      const aiDraft = {
-        ...createExtractionDraft(provisional.source.id, suggestions, provisional.draft.createdAt, recognitionResult),
-        id: provisional.draft.id,
+      const handle = await capturePersistenceService.beginCapture(captureRequest)
+      if (handle.duplicate) {
+        const stored = await canonicalWorkspaceRepository.load()
+        const existing = stored?.extractionDrafts.find(d => d.id === handle.draftId)
+        if (existing?.result) {
+          const saved = await workspaceRepository.load()
+          if (saved) applyWorkspaceView(saved)
+          setOrdinaryCanonical(stored)
+          openDraftReview(handle.draftId, '已打开这次录入的原草稿；首次建议、修改和确认结果保留，未重复识别。')
+          return
+        }
       }
-      setDrafts((current) => current.map((draft) => draft.id === provisional.draft.id ? aiDraft : draft))
-      setSources((current) => current.map((source) => source.id === provisional.source.id
-        ? { ...source, extractionMethod: 'deepseek-v4-flash' }
-        : source))
-      setSmartExtractionStatus('connected')
+      const providerInput={...input,sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId}
+      const recognitionResult = await capturePersistenceService.recognize(
+        handle,
+        input.manualSuggestion
+          ? async () => draftRecognition
+          : useCloudRecognition
+            ? async () => deepSeekExtractionService.recognize!(providerInput, { projects, tasks })
+            : async () => draftRecognition,
+      )
+      const semanticSidecar=!input.manualSuggestion && useCloudRecognition
+        ? ordinaryEnvironment?.semanticSidecar?.(handle.sourceId) ?? deepSeekExtractionService.semanticSidecar?.(handle.sourceId,handle.sourceVersionId)
+        : undefined
+      const inferenceContext=ordinaryEnvironment?.recognitionContext?.(input.content) ?? ordinaryProviderContextFromSidecar(semanticSidecar) ?? {referenceTime:input.now?.toISOString() ?? recognitionResult.createdAt,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai'}
+      const assembled=assembleCurrentFirstSuggestion(recognitionResult,{sourceText:input.content,...inferenceContext,sourceWindows:sourceWindowsFromSidecar(semanticSidecar),sourceActionTimes:sourceActionTimesFromSidecar(semanticSidecar),workflowMaterialSupport:[...workflowMaterialSupportFromSidecar(semanticSidecar),...ordinaryWorkflowMaterialSupportFromSidecar(semanticSidecar)]})
+      if(taskTimeAuthorityFromSidecar(semanticSidecar)){
+        const grounded=groundTaskTimeWindows(assembled.result,semanticSidecar,{index:await indexImmutableScopesV11(handle.sourceId,handle.sourceVersionId,input.content),...inferenceContext})
+        assembled.result=grounded.result
+      }
+      const sourceInformation=projectSourceInformation(assembled.result,{sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId,text:input.content})
+      await canonicalWorkspaceRepository.transaction(w=>({...w,recognitionRuns:w.recognitionRuns.map(r=>r.id===handle.recognitionRunId?{...r,legacyData:{...r.legacyData,originalRecognitionResult:JSON.parse(JSON.stringify(recognitionResult))}}:r),extractionDrafts:w.extractionDrafts.map(d=>d.id===handle.draftId?{...d,result:assembled.result,legacyData:{...d.legacyData,...(semanticSidecar?{semanticSidecar:JSON.parse(JSON.stringify(semanticSidecar))}:{}),firstSuggestionDisplayed:JSON.parse(JSON.stringify(assembled.result)),firstSourceInformationDisplayed:JSON.parse(JSON.stringify(sourceInformation)),firstSuggestionAssembly:JSON.parse(JSON.stringify(assembled.audit)),materialChannelGrounding:JSON.parse(JSON.stringify(assembled.materialChannelAudit)),sourceWindowGrounding:JSON.parse(JSON.stringify(assembled.sourceWindowGrounding))}}:d)}))
+      const saved = await workspaceRepository.load()
+      if (saved) applyWorkspaceView(saved)
+      setOrdinaryCanonical(await canonicalWorkspaceRepository.load())
+      if (useCloudRecognition) setSmartExtractionStatus('connected')
       openDraftReview(
-        provisional.draft.id,
-        provisional.duplicateCount
-          ? `DeepSeek 已整理；另发现 ${provisional.duplicateCount} 个可能重复来源，请人工核对。`
-          : 'DeepSeek V4 Flash 已生成可编辑建议；请逐项核对后再确认。',
+        handle.draftId,
+        input.manualSuggestion
+          ? '手动录入已先保存来源，再生成待确认草稿；核对后才会创建正式任务。'
+          : ordinaryEnvironment && metadata?.provider !== 'deepseek' ? '匿名工程建议已生成；没有模型请求，核对后走普通正式保存。' : useCloudRecognition
+            ? `${recognitionResult.modelName} 已生成可编辑建议；来源已在请求前安全保存。`
+            : 'DeepSeek 当前未连接；来源已先保存，并由本地规则生成可编辑建议。',
       )
     } catch (error) {
-      setSmartExtractionStatus('unavailable')
       const reason = error instanceof Error ? error.message : 'DeepSeek 智能整理暂时不可用'
-      openDraftReview(
-        provisional.draft.id,
-        provisional.duplicateCount
-          ? `${reason}，已使用本地规则；另发现 ${provisional.duplicateCount} 个可能重复来源。`
-          : `${reason}，已使用本地规则建议，请重点核对。`,
+      if (useCloudRecognition && !ordinaryEnvironment) setSmartExtractionStatus('unavailable')
+      try {
+        const canonical = await canonicalWorkspaceRepository.load()
+        const failedSource = canonical?.sources.find((source) => source.legacyData?.captureOperationId === captureRequest.operationId)
+        if (!failedSource) throw new Error('CAPTURE_SOURCE_NOT_FOUND_AFTER_FAILURE', { cause: error })
+        const saved = await workspaceRepository.load()
+        if (saved) applyWorkspaceView(saved)
+        setIntakeOpen(false)
+        setInboxView('all')
+        setCurrentPage('inbox')
+        setSelectedDraftId(null)
+        setNotice({ text: `${reason}；原始来源已安全保存。可在收件箱重试识别、查看原文或手动整理。` })
+      } catch {
+        const saved = await workspaceRepository.load().catch(() => null)
+        if (saved) applyWorkspaceView(saved)
+        setStorageError(true)
+        setNotice({ text: `${reason}；来源保存状态需要检查，请勿重复关闭页面。` })
+      }
+    }
+  }
+
+  const handleSaveSourceOnly = async (input: IntakeInput) => {
+    if (runtime) { rejectExperimentAction(); return }
+    const title = input.sourceTitle?.trim() ?? ''
+    const url = input.url?.trim() ?? ''
+    if (input.sourceType !== 'link' || !canSaveLinkOnly(url, title)) {
+      throw new Error('请填写标题和有效的公网 HTTPS 链接。')
+    }
+    try {
+      await capturePersistenceService.saveSource({
+        operationId: input.operationId ?? crypto.randomUUID(),
+        sourceType: 'link',
+        title,
+        rawText: '',
+        sourceLegacyData: {
+          contentPreview: '',
+          url,
+          parserVersion: 'source-only-v1',
+          reviewMetadata: {
+            sourceType: 'link',
+            mimeType: null,
+            characterCount: 0,
+            pageCount: null,
+            extractionMethod: 'unknown',
+            ocrConfidence: null,
+            partialExtraction: null,
+            qualityFlags: [],
+          },
+        },
+      })
+      const saved = await workspaceRepository.load()
+      if (saved) applyWorkspaceView(saved)
+      setIntakeOpen(false)
+      setInboxView('all')
+      setCurrentPage('inbox')
+      setNotice({ text: '链接已作为未整理来源保存在本机；尚未读取网页、调用 DeepSeek 或创建任务。' })
+    } catch (error) {
+      const message = error instanceof Error ? error.message : '链接保存失败，请稍后重试。'
+      setNotice({ text: message })
+      throw error
+    }
+  }
+
+  const handleRetrySource = async (sourceId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
+    const canonical = await canonicalWorkspaceRepository.load()
+    const canonicalSource = canonical?.sources.find((candidate) => candidate.id === sourceId)
+    const canonicalVersion = canonicalSource
+      ? canonical?.sourceVersions.find((candidate) => candidate.id === canonicalSource.currentVersionId)
+      : null
+    const source = sources.find((candidate) => candidate.id === sourceId)
+    const content = canonicalVersion?.rawText ?? ''
+    if (!canonicalSource || !canonicalVersion || !source || !content.trim()) {
+      throw new Error('该来源还没有可重新识别的正文，请先使用“手工补充”。')
+    }
+    const localRecognition = buildLocalRecognition({
+      sourceType: canonicalSource.type,
+      sourceTitle: canonicalSource.title,
+      content,
+      referenceTime: new Date(),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai',
+      projects,
+      tasks,
+    })
+    try {
+      const retried = await retryExistingSourceRecognition(
+        capturePersistenceService,
+        sourceId,
+        {
+          provider: 'local-rules',
+          modelName: 'local-rules',
+          promptVersion: localRecognition.promptVersion,
+          pipelineVersion: 'source-retry-local-rules-v1',
+          expectedSourceVersionId: canonicalVersion.id,
+        },
+        async () => localRecognition,
       )
+      const saved = await workspaceRepository.load()
+      if (saved) applyWorkspaceView(saved)
+      openDraftReview(
+        retried.draftId,
+        '已沿用原来源与当前版本进行本地规则重试；没有发送到云端，请核对后再确认。',
+      )
+    } catch (error) {
+      const saved = await workspaceRepository.load().catch(() => null)
+      if (saved) applyWorkspaceView(saved)
+      const message = captureActionMessage(error, '重新识别未完成')
+      setInboxView('all')
+      setCurrentPage('inbox')
+      setNotice({ text: `${message}；原来源和历史版本仍保留。` })
+      throw error
+    }
+  }
+
+  const openManualSupplement = (sourceId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
+    setIntakeOpen(false)
+    setSupplementSourceId(sourceId)
+  }
+
+  const handleManualSupplement = async (sourceId: string, content: string, operationId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
+    const source = sources.find((candidate) => candidate.id === sourceId)
+    if (!source || !content.trim()) throw new Error('来源不存在或补充文字为空。')
+    const currentText = source.rawText ?? source.content ?? ''
+    if (currentText.trim() === content.trim()) throw new Error('文字没有变化；请直接使用“本地规则重试”。')
+    const localRecognition = buildLocalRecognition({
+      sourceType: source.type,
+      sourceTitle: source.title,
+      content,
+      referenceTime: new Date(),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai',
+      projects,
+      tasks,
+    })
+    try {
+      const handle = await capturePersistenceService.beginRevision(sourceId, {
+        operationId,
+        rawText: content,
+        provider: 'local-rules',
+        modelName: 'local-rules',
+        promptVersion: localRecognition.promptVersion,
+        pipelineVersion: 'manual-source-supplement-v1',
+        sourceLegacyData: {
+          reviewMetadata: {
+            sourceType: source.type,
+            mimeType: source.reviewMetadata?.mimeType ?? source.mimeType ?? null,
+            characterCount: content.length,
+            pageCount: null,
+            extractionMethod: 'manual',
+            ocrConfidence: null,
+            partialExtraction: false,
+            qualityFlags: ['正文已由用户手工补充，未重新读取原文件'],
+          },
+        },
+      })
+      let finalHandle = handle
+      if (handle.duplicate) {
+        const canonical = await canonicalWorkspaceRepository.load()
+        const existingDraft = canonical?.extractionDrafts.find((candidate) => candidate.id === handle.draftId)
+        if (existingDraft?.result) {
+          const saved = await workspaceRepository.load()
+          if (saved) applyWorkspaceView(saved)
+          setSupplementSourceId(null)
+          openDraftReview(handle.draftId, '该版本已经保存并形成待确认草稿，未重复创建版本。')
+          return
+        }
+        if (existingDraft?.status !== 'failed') throw new Error('该版本仍在处理中，请稍后从收件箱查看。')
+        finalHandle = await capturePersistenceService.beginRetry(sourceId, {
+          provider: 'local-rules',
+          modelName: 'local-rules',
+          promptVersion: localRecognition.promptVersion,
+          pipelineVersion: 'manual-source-supplement-retry-v1',
+          expectedSourceVersionId: handle.sourceVersionId,
+        })
+      }
+      await capturePersistenceService.recognize(finalHandle, async () => localRecognition)
+      const saved = await workspaceRepository.load()
+      if (saved) applyWorkspaceView(saved)
+      setSupplementSourceId(null)
+      openDraftReview(finalHandle.draftId, '补充文字已作为同一来源的新版本保存，并建立本地规则待确认草稿。')
+    } catch (error) {
+      const saved = await workspaceRepository.load().catch(() => null)
+      if (saved) applyWorkspaceView(saved)
+      throw new Error(captureActionMessage(error, '手工补充未完成；来源和历史版本仍保留。'), { cause: error })
     }
   }
 
@@ -324,15 +956,38 @@ function App() {
     await handleIntakeInput({ sourceType: 'text', content })
   }
 
-  const handleUpdateDraft = (
+  const handleUpdateDraft = async (
     draftId: string,
     itemId: string,
     patch: Partial<ParsedSuggestion>,
     status?: '待确认' | '已确认' | '已拒绝',
   ) => {
-    setDrafts((current) => current.map((draft) =>
-      draft.id === draftId ? updateDraftItem(draft, itemId, patch, status) : draft,
-    ))
+    if (runtime) {
+      if (status || !experimentalReview) { rejectExperimentAction(); return }
+      const entries = Object.entries(patch)
+      const item = experimentalReview.draft.items.find(candidate => candidate.id === itemId)
+      if (!item || entries.length !== 1 || !['title', 'deadline'].includes(entries[0][0]) || typeof entries[0][1] !== 'string') { rejectExperimentAction(); return }
+      const [field, value] = entries[0]
+      return performExperiment(async () => {
+        await runtime.edit({ draftId, taskTempId: item.suggestion.id, revision: experimentalReview.revision,
+          operationId: crypto.randomUUID(), field: field as 'title' | 'deadline', value: value as string })
+        setNotice({ text: '修改已明确保存；尚未创建任务。' })
+      })
+    }
+    const nextDrafts=drafts.map(draft=>draft.id===draftId?updateDraftItem(draft,itemId,patch,status):draft)
+    try {
+      if(ordinaryCanonical&&(status==='已拒绝'||Object.keys(patch).some(k=>!['title','deadline'].includes(k)))){
+        const before=drafts.find(d=>d.id===draftId)?.items.find(i=>i.id===itemId)
+        await ordinaryReviewSession.stage(ordinaryCanonical,draftId,`task:${itemId}:facts`,before?.suggestion??{},nextDrafts.find(d=>d.id===draftId)?.items.find(i=>i.id===itemId)??{},ordinaryReviewSession.writer)
+      }
+      await workspaceRepository.save({...workspace,drafts:nextDrafts})
+      await refreshOrdinary()
+      setNotice({text:'草稿修改已保存；正式事实尚未创建。'})
+    }catch(error){
+      if(error instanceof WorkspaceViewConflictError)setViewConflict(error)
+      setNotice({text:'草稿修改尚未保存；输入保留，请处理冲突或手动重试。'})
+      throw error
+    }
     if (Object.keys(patch).length > 0 || status === '已拒绝') {
       const action = status === '已拒绝' ? 'rejected' : 'modified'
       setRecognitionFeedback((current) => [...current, {
@@ -347,6 +1002,7 @@ function App() {
   }
 
   const handleProjectChoice = (draftId: string, value: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     setDrafts((current) => current.map((draft) => {
       if (draft.id !== draftId || !draft.recognitionResult) return draft
       const existingProjectId = value.startsWith('existing:') ? value.slice('existing:'.length) : null
@@ -373,6 +1029,7 @@ function App() {
   }
 
   const handleKeepExplicit = (draftId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     setDrafts((current) => current.map((draft) => {
       if (draft.id !== draftId || !draft.recognitionResult) return draft
       const recognizedTasks = [
@@ -395,6 +1052,7 @@ function App() {
   }
 
   const handleMoveRecognizedTask = (draftId: string, taskTempId: string, milestoneTempId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     setDrafts((current) => current.map((draft) => {
       if (draft.id !== draftId || !draft.recognitionResult) return draft
       let movedTask = draft.recognitionResult.standaloneTasks.find((task) => task.tempId === taskTempId)
@@ -435,6 +1093,7 @@ function App() {
   }
 
   const handleToggleRecognitionEntity = (draftId: string, kind: 'event' | 'material' | 'timePoint', tempId: string, selected: boolean) => {
+    if (runtime) { rejectExperimentAction(); return }
     setDrafts((current) => current.map((draft) => {
       if (draft.id !== draftId || !draft.recognitionResult) return draft
       const material = kind === 'material' ? draft.recognitionResult.materials.find((item) => item.tempId === tempId) : undefined
@@ -465,7 +1124,22 @@ function App() {
     }))
   }
 
-  const handleToggleDraftItemSelection = (draftId: string, itemId: string, selected: boolean) => {
+  const handleToggleDraftItemSelection = (draftId: string, itemId: string, selected: boolean, justReviewed=false) => {
+    if (runtime) {
+      if (isolatedLock.current || !justReviewed && experimentalReview?.states[itemId]?.blockedReason) return
+      if (runtime.realInput?.reviewSession && isolatedSnapshot) {
+        const session = runtime.realInput.reviewSession
+        void performExperiment(async () => {
+          const key = `task:${itemId}:selected`, prior = (await session.load(isolatedSnapshot, draftId)).fields[key]
+          const stored = await session.stage(isolatedSnapshot, draftId, key, prior?.base ?? false, selected, session.writer, false)
+          if (stored.fields[key].conflict) throw Error('确认选择发生冲突；请重新打开通知并明确选择版本。')
+          setIsolatedChoices(previous => ({ ...previous, [draftId]: { ...previous[draftId], [itemId]: selected } }))
+        })
+        return
+      }
+      setIsolatedChoices(previous => ({ ...previous, [draftId]: { ...previous[draftId], [itemId]: selected } }))
+      return
+    }
     setDrafts((current) => current.map((draft) => draft.id !== draftId ? draft : {
       ...draft,
       items: draft.items.map((item) => item.id === itemId ? { ...item, selected, updatedAt: new Date().toISOString() } : item),
@@ -474,25 +1148,35 @@ function App() {
   }
 
   const handleSplitDraftItem = (draftId: string, itemId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     setDrafts((current) => current.map((draft) => {
       if (draft.id !== draftId) return draft
       const item = draft.items.find((candidate) => candidate.id === itemId)
-      if (!item || item.status !== '待确认') return draft
+      if (!item || item.status !== '待确认' || !draft.recognitionResult) return draft
       const rawParts = item.suggestion.title.split(/(?:并且|并|以及|及|和|、)/u).map((value) => value.trim()).filter(Boolean)
       const parts = rawParts.length >= 2 ? rawParts.slice(0, 2) : [item.suggestion.title, '补充步骤（请编辑）']
       const verb = item.suggestion.title.match(/^(提交|上传|填写|完成|准备|核对|确认|联系|参加|阅读|下载|打印|盖章|签字|回复|领取|整理|撰写|制作|报名)/u)?.[1] ?? '完成'
       const now = new Date().toISOString()
       const firstTitle = parts[0]
       const secondTitle = /^(提交|上传|填写|完成|准备|核对|确认|联系|参加|阅读|下载|打印|盖章|签字|回复|领取|整理|撰写|制作|报名)/u.test(parts[1]) ? parts[1] : `${verb}${parts[1]}`
+      const splitTaskTempId = `${item.suggestion.id.slice(0, 64)}-split-${Date.now().toString(36)}`
+      const recognitionResult = splitRecognitionTask(
+        draft.recognitionResult,
+        item.suggestion.id,
+        splitTaskTempId,
+        secondTitle,
+      )
       const first = updateDraftItem(draft, itemId, { title: firstTitle, nextAction: firstTitle }, undefined, now)
       return {
         ...first,
+        recognitionResult,
         items: [...first.items, {
           ...item,
-          id: `${item.id}-split-${Date.now()}`,
-          suggestion: { ...item.suggestion, id: `${item.suggestion.id}-split-${Date.now()}`, title: secondTitle, nextAction: secondTitle },
+          id: `draft-item:${draft.id}:${splitTaskTempId}`,
+          suggestion: { ...item.suggestion, id: splitTaskTempId, title: secondTitle, nextAction: secondTitle },
+          selected: true,
           updatedAt: now,
-          history: [{ id: `${item.id}-split-history-${Date.now()}`, field: '识别建议', before: item.suggestion.title, after: secondTitle, changedAt: now, actor: 'user', entityType: 'draft', entityId: item.id, action: 'split' }],
+          history: [{ id: `${item.id}-split-history-${splitTaskTempId}`, field: '识别建议', before: item.suggestion.title, after: secondTitle, changedAt: now, actor: 'user', entityType: 'draft', entityId: item.id, action: 'split' }],
         }],
         updatedAt: now,
       }
@@ -502,116 +1186,110 @@ function App() {
   }
 
   const handleMergeDraftItems = (draftId: string, sourceItemId: string, targetItemId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
     setDrafts((current) => current.map((draft) => {
       if (draft.id !== draftId || sourceItemId === targetItemId) return draft
       const sourceItem = draft.items.find((item) => item.id === sourceItemId)
       const targetItem = draft.items.find((item) => item.id === targetItemId)
-      if (!sourceItem || !targetItem || sourceItem.status !== '待确认' || targetItem.status !== '待确认') return draft
+      if (!sourceItem || !targetItem || sourceItem.status !== '待确认' || targetItem.status !== '待确认' || !draft.recognitionResult) return draft
       const now = new Date().toISOString()
+      const recognitionResult = mergeRecognitionTasks(
+        draft.recognitionResult,
+        sourceItem.suggestion.id,
+        targetItem.suggestion.id,
+      )
       const merged = updateDraftItem(draft, targetItemId, {
         description: [targetItem.suggestion.description, sourceItem.suggestion.description].filter(Boolean).join('；'),
         materials: [...new Set([...targetItem.suggestion.materials, ...sourceItem.suggestion.materials])],
         evidence: [targetItem.suggestion.evidence, sourceItem.suggestion.evidence].filter(Boolean).join('；'),
+        evidenceRefs: [...new Map([
+          ...(targetItem.suggestion.evidenceRefs ?? []),
+          ...(sourceItem.suggestion.evidenceRefs ?? []),
+        ].map((item) => [item.id, item])).values()],
       }, undefined, now)
-      return updateDraftItem(merged, sourceItemId, {}, '已拒绝', now)
+      return {
+        ...updateDraftItem(merged, sourceItemId, {}, '已拒绝', now),
+        recognitionResult,
+        updatedAt: now,
+      }
     }))
     setRecognitionFeedback((current) => [...current, { id: `feedback-${Date.now()}-${current.length}`, draftId, originalKind: `task:${sourceItemId}`, correctedKind: `task:${targetItemId}`, action: 'merged', createdAt: new Date().toISOString() }])
     setNotice({ text: '已合并到目标建议；原建议保留为已拒绝记录，可追溯。' })
   }
 
-  const handleConfirmDraftItem = (draftId: string, itemId: string) => {
-    const draft = drafts.find((item) => item.id === draftId)
-    const source = draft ? sources.find((item) => item.id === draft.sourceId) : null
-    const item = draft?.items.find((candidate) => candidate.id === itemId)
-    if (!draft || !source || !item || item.status !== '待确认') return
-    if (Number.isNaN(new Date(item.suggestion.deadline).getTime())) {
-      setNotice({ text: '请先补全并确认该任务的截止时间；模糊日期不会直接进入正式任务。' })
-      return
-    }
-    const unconfirmedTime = draft.recognitionResult?.timePoints.some((point) => point.relatedTaskTempIds.includes(item.suggestion.id) && point.selected === false)
-    if (unconfirmedTime) {
-      setNotice({ text: '该任务仍有模糊或未勾选的时间节点，请在“时间节点”中确认后再加入。' })
-      return
-    }
-    const matchedProjectId = draft.recognitionResult?.projectMatch.decision === 'existing_project'
-      ? draft.recognitionResult.projectMatch.matchedProjectId
-      : null
-    const existingProject = projects.find((candidate) => candidate.id === matchedProjectId)
-      ?? projects.find((candidate) => candidate.sourceIds.includes(source.id))
-    const { tasks: [task], project, workPackages: createdPackages, events: createdEvents } = buildConfirmedProjectBatch([item], source, existingProject, new Date().toISOString(), draft.recognitionResult)
-    setTasks((current) => [task, ...current])
-    setProjects((current) => !project
-      ? current
-      : existingProject
-        ? current.map((candidate) => candidate.id === project.id ? project : candidate)
-        : [project, ...current])
-    setWorkPackages((current) => [...createdPackages.filter((item) => !current.some((candidate) => candidate.id === item.id)), ...current])
-    setEvents((current) => [...createdEvents.filter((item) => !current.some((candidate) => candidate.id === item.id)), ...current])
-    handleUpdateDraft(draftId, itemId, {}, '已确认')
-    setSources((current) => current.map((candidate) =>
-      candidate.id === source.id
-        ? {
-            ...candidate,
-            extractionStatus:
-              draft.items.filter((draftItem) => draftItem.status === '待确认').length <= 1
-                ? '已确认'
-                : '部分确认',
-          }
-        : candidate,
-    ))
-    setNotice({ text: '已创建任务，可在任务中心继续编辑。' })
-    if (draft.items.filter((draftItem) => draftItem.status === '待确认').length <= 1) {
-      setSelectedDraftId(null)
-      setCurrentPage('today')
-    }
+  const retryOrdinaryReadback = async (receipt=ordinaryReceipt) => {
+    if(!receipt)return
+    setOrdinaryBusy(true)
+    try {
+      await verifySourceReviewReadback(independentReader,receipt)
+      await ordinaryMeasurement.readback(receipt)
+      await acknowledgeSourceReadback(canonicalWorkspaceRepository,receipt)
+      setOrdinaryReceipt(null)
+      await refreshOrdinary()
+      if(receipt.disposition!=='partial')await ordinaryMeasurement.finish(receipt.draftId,receipt.disposition==='no_task')
+      setNotice({text:'正式事实已保存，独立读回已验证。'})
+    } catch {setNotice({text:'已提交，读回尚未验证；请手动重新读回，勿重复提交。'})}
+    finally{setOrdinaryBusy(false)}
   }
 
-  const handleConfirmAll = (draftId: string) => {
-    const draft = drafts.find((item) => item.id === draftId)
-    const source = draft ? sources.find((item) => item.id === draft.sourceId) : null
-    if (!draft || !source) return
-    const pending = draft.items.filter((item) => item.status === '待确认' && item.selected !== false)
-    if (!pending.length) return
-    if (pending.some((item) => Number.isNaN(new Date(item.suggestion.deadline).getTime()))) {
-      setNotice({ text: '仍有任务的截止时间未确认，请逐项补全后再全部加入。' })
-      return
-    }
-    const pendingIds = new Set(pending.map((item) => item.suggestion.id))
-    if (draft.recognitionResult?.timePoints.some((point) => point.selected === false && point.relatedTaskTempIds.some((id) => pendingIds.has(id)))) {
-      setNotice({ text: '仍有模糊或未勾选的时间节点，请先逐项确认。' })
-      return
-    }
-    const matchedProjectId = draft.recognitionResult?.projectMatch.decision === 'existing_project'
-      ? draft.recognitionResult.projectMatch.matchedProjectId
-      : null
-    const existingProject = projects.find((candidate) => candidate.id === matchedProjectId)
-      ?? projects.find((candidate) => candidate.sourceIds.includes(source.id))
-    const { tasks: created, project, workPackages: createdPackages, events: createdEvents } = buildConfirmedProjectBatch(pending, source, existingProject, new Date().toISOString(), draft.recognitionResult)
-    setTasks((current) => [...created, ...current])
-    setProjects((current) => !project
-      ? current
-      : existingProject
-        ? current.map((candidate) => candidate.id === project.id ? project : candidate)
-        : [project, ...current])
-    setWorkPackages((current) => [...createdPackages.filter((item) => !current.some((candidate) => candidate.id === item.id)), ...current])
-    setEvents((current) => [...createdEvents.filter((item) => !current.some((candidate) => candidate.id === item.id)), ...current])
-    const confirmedAt = new Date().toISOString()
-    setDrafts((current) => current.map((candidate) => {
-      if (candidate.id !== draftId) return candidate
-      return pending.reduce(
-        (nextDraft, draftItem) => updateDraftItem(nextDraft, draftItem.id, {}, '已确认', confirmedAt),
-        candidate,
-      )
-    }))
-    setSources((current) => current.map((item) => item.id === source.id
-      ? { ...item, extractionStatus: '已确认' }
-      : item))
-    setSelectedDraftId(null)
-    setCurrentPage('today')
-    setNotice({ text: `已创建 ${created.length} 项任务。` })
+  const confirmOrdinary = async (draftId:string,itemId?:string) => {
+    if(ordinaryCommitLock.current||ordinaryReceipt||ordinaryFactsDirty||ordinaryReadinessDirty)return
+    const draft=drafts.find(d=>d.id===draftId)
+    if(!draft?.recognitionResult)return
+    ordinaryCommitLock.current=true;setOrdinaryBusy(true)
+    let receipt:SourceReviewReceipt|null=null,waiting=false
+    try {
+      await ordinaryMeasurement.wait(draftId);waiting=true
+      await workspaceRepository.save(workspace)
+      const canonical=await canonicalWorkspaceRepository.load()
+      if(!canonical)throw Error('WORKSPACE_V8_NOT_INITIALIZED')
+      const plan=buildSourceReviewPlan(canonical,draft,itemId)
+      receipt=await commitSourceReview(canonicalWorkspaceRepository,plan)
+      setOrdinaryReceipt(receipt)
+      const committed=(await canonicalWorkspaceRepository.load())!
+      const session=await ordinaryReviewSession.load(committed,draftId)
+      await ordinaryMeasurement.committed(receipt,session,committed)
+      await verifySourceReviewReadback(independentReader,receipt)
+      await ordinaryMeasurement.waitEnd(draftId);waiting=false
+      await ordinaryMeasurement.readback(receipt)
+      await acknowledgeSourceReadback(canonicalWorkspaceRepository,receipt)
+      setOrdinaryReceipt(null)
+      await refreshOrdinary()
+      if(receipt.disposition!=='partial')await ordinaryMeasurement.finish(draftId,receipt.disposition==='no_task')
+      setNotice({text:`已保存并独立读回：${plan.create.tasks.length} 项任务、${plan.create.events.length} 个事件；不确定时间保持原状。`})
+      if(!itemId&&receipt.disposition!=='partial'){setSelectedDraftId(null);setCurrentPage('today')}
+    }catch(error){
+      if(waiting)await ordinaryMeasurement.waitEnd(draftId)
+      await ordinaryMeasurement.failure(draftId,error instanceof Error?error.message:'UNKNOWN')
+      if(receipt){setNotice({text:'已提交，读回尚未验证；输入和提交记录保留，请重新读回，勿重复提交。'})}
+      else if(error instanceof WorkspaceViewConflictError){setViewConflict(error);setNotice({text:'其他页面修改了相同内容。你的输入保留，请核对差异。'})}
+      else setNotice({text:`正式提交未完成：${error instanceof Error?error.message:'数据库写入失败'}；没有创建半份事实。`})
+    }finally{ordinaryCommitLock.current=false;setOrdinaryBusy(false)}
+  }
+  const handleConfirmDraftItem = async (draftId:string,itemId:string) => {
+    if(runtime){await confirmExperiment([draftId],itemId);return}
+    await confirmOrdinary(draftId,itemId)
+  }
+  const handleConfirmAll = async (draftId:string) => {
+    if(runtime){await confirmExperiment([draftId]);return}
+    await confirmOrdinary(draftId)
+  }
+
+  const handleOrdinaryFacts = async (draftId:string,result:NonNullable<ExtractionDraft['recognitionResult']>,decision?:{eventId:string;before:EventDisposition;after:EventDisposition}) => {
+    const nextDrafts=drafts.map(d=>d.id===draftId?{...d,recognitionResult:result,updatedAt:new Date().toISOString()}:d)
+    const history=decision?[...workspace.historyRecords,{id:crypto.randomUUID(),entityType:'draft' as const,entityId:draftId,action:'updated',field:eventDispositionField(decision.eventId),before:decision.before,after:decision.after,actor:'user' as const,changedAt:new Date().toISOString()}]:workspace.historyRecords
+    await workspaceRepository.save({...workspace,drafts:nextDrafts,historyRecords:history})
+    await refreshOrdinary()
+    setNotice({text:'草稿纠正已保存；原始首次回答不变，尚未正式确认。'})
+  }
+  const handleOrdinaryReadiness = async (draftId:string,input:ReadinessInput) => {
+    await canonicalWorkspaceRepository.transaction(w=>applySourceReadiness(w,draftId,input))
+    await refreshOrdinary()
+    setNotice({text:'本组适用判断已保存，原答和首次建议保留。尚未创建正式任务，前置事项仍须实际完成。'})
   }
 
   const handleArchiveDrafts = (draftIds: string[]) => {
+    if (runtime) { rejectExperimentAction(); return }
     const archivedDrafts = drafts.filter((draft) => draftIds.includes(draft.id))
     const sourceIds = archivedDrafts.map((draft) => draft.sourceId)
     const archivedSources = sources.filter((source) => sourceIds.includes(source.id))
@@ -630,41 +1308,46 @@ function App() {
     })
   }
 
-  const handleImportWorkspace = (serialized: string) => {
-    const imported = workspaceRepository.importJson(serialized)
-    setTasks(imported.tasks)
-    setSources(imported.sources)
-    setDrafts(imported.drafts)
-    setProjects(imported.projects)
-    setCourseBlocks(imported.courseBlocks)
-    setIntegrations(imported.integrations)
-    setKnowledgeSettings(imported.knowledgeSettings)
-    setWorkPackages(imported.workPackages)
-    setEvents(imported.events)
-    setMigrationLog(imported.migrationLog)
-    setRecognitionFeedback(imported.recognitionFeedback)
-    setLegacyData(imported.legacyData)
+  const handleImportWorkspace = async (serialized: string) => {
+    if (runtime) { rejectExperimentAction(); return }
+    setNotice(null) // A previous successful import must not mask a new rejection.
+    const imported = await workspaceRepository.importAndReplace(serialized)
+    persistedWorkspaceRevision.current = persistenceRevisionForView(imported)
+    pendingWorkspaceRevision.current = null
+    applyWorkspaceView(imported)
+    setOrdinaryCanonical(await canonicalWorkspaceRepository.load())
     setNotice({ text: '已导入 JSON 备份。' })
   }
 
-  const handleClearWorkspace = () => {
-    setTasks([])
-    setSources([])
-    setDrafts([])
-    setProjects([])
-    setCourseBlocks([])
-    setIntegrations(createIntegrationState())
-    setKnowledgeSettings({})
-    setWorkPackages([])
-    setEvents([])
-    setMigrationLog([])
-    setRecognitionFeedback([])
-    setLegacyData({})
-    void workspaceRepository.clear()
-    setNotice({ text: '已清空本机工作区。' })
+  const handleExportWorkspace = async () => workspaceRepository.exportCurrentJson()
+
+  const handleClearWorkspace = async () => {
+    if (runtime) { rejectExperimentAction(); return }
+    try {
+      await workspaceRepository.clear()
+      persistedWorkspaceRevision.current = null
+      pendingWorkspaceRevision.current = null
+      setTasks([])
+      setSources([])
+      setDrafts([])
+      setProjects([])
+      setCourseBlocks([])
+      setIntegrations(createIntegrationState())
+      setKnowledgeSettings({})
+      setWorkPackages([])
+      setMaterialItems([])
+      setEvents([])
+      setMigrationLog([])
+      setRecognitionFeedback([])
+      setLegacyData({})
+      setNotice({ text: '已清空本机工作区。' })
+    } catch {
+      setNotice({ text: '清空未完成；本机数据仍保留，请稍后重试。' })
+    }
   }
 
   const handleExportMigrationBackup = async () => {
+    if (runtime) { rejectExperimentAction(); return }
     const serialized = await workspaceRepository.exportLatestMigrationBackup()
     if (!serialized) {
       setNotice({ text: '当前没有可导出的 Schema 迁移前备份。' })
@@ -679,11 +1362,84 @@ function App() {
     setNotice({ text: '已导出迁移前备份；回滚前请先保留当前备份。' })
   }
 
+  const handleExportRecoveryBackup = async () => {
+    if (runtime) { rejectExperimentAction(); return }
+    const recovery = workspaceRecovery
+    if (!recovery || recovery.busy) return
+    setWorkspaceRecovery({ ...recovery, busy: 'exporting', confirmationArmed: false, failureCode: null })
+    try {
+      const serialized = await workspaceRepository.exportMigrationBackup(recovery.backupId)
+      if (!serialized) throw new Error('WORKSPACE_RECOVERY_BACKUP_MISSING')
+      const url = URL.createObjectURL(new Blob([serialized], { type: 'application/json;charset=utf-8' }))
+      const anchor = document.createElement('a')
+      const safeBackupId = recovery.backupId.replace(/[^a-z0-9_-]+/giu, '-').replace(/^-+|-+$/gu, '') || 'migration-backup'
+      anchor.href = url
+      anchor.download = `student-affairs-${safeBackupId}-${new Date().toISOString().slice(0, 10)}.json`
+      anchor.click()
+      URL.revokeObjectURL(url)
+      setWorkspaceRecovery((current) => current?.backupId === recovery.backupId
+        ? { ...current, backupExported: true, confirmationArmed: false, busy: null, failureCode: null }
+        : current)
+    } catch (error) {
+      const failureCode = safeWorkspaceRecoveryErrors(
+        [error instanceof Error ? error.message : ''],
+        'WORKSPACE_BACKUP_EXPORT_FAILED',
+      )[0]
+      setWorkspaceRecovery((current) => current?.backupId === recovery.backupId
+        ? { ...current, backupExported: false, confirmationArmed: false, busy: null, failureCode }
+        : current)
+    }
+  }
+
+  const handleRequestWorkspaceRecovery = async () => {
+    if (runtime) { rejectExperimentAction(); return }
+    const recovery = workspaceRecovery
+    if (!recovery || recovery.busy) return
+    const action = nextWorkspaceRecoveryAction(recovery.backupExported, recovery.confirmationArmed)
+    if (action === 'blocked') return
+    if (action === 'arm') {
+      setWorkspaceRecovery({ ...recovery, confirmationArmed: true, failureCode: null })
+      return
+    }
+
+    setWorkspaceRecovery({ ...recovery, busy: 'recovering', failureCode: null })
+    try {
+      const recovered = await workspaceRepository.recoverMigration(recovery.backupId)
+      persistedWorkspaceRevision.current = persistenceRevisionForView(recovered)
+      pendingWorkspaceRevision.current = null
+      applyWorkspaceView(recovered)
+      setStorageError(false)
+      setWorkspaceRecovery(null)
+      setNotice({ text: '迁移数据已从指定备份恢复并重新校验；自动保存已恢复。' })
+    } catch (error) {
+      const nextBackupId = error instanceof WorkspaceRecoveryRequiredError ? error.backupId : recovery.backupId
+      const errorCodes = error instanceof WorkspaceRecoveryRequiredError
+        ? safeWorkspaceRecoveryErrors(error.errors)
+        : safeWorkspaceRecoveryErrors(
+            [error instanceof Error ? error.message : ''],
+            'WORKSPACE_RECOVERY_FAILED',
+          )
+      setWorkspaceRecovery({
+        backupId: nextBackupId,
+        errorCodes,
+        backupExported: nextBackupId === recovery.backupId && recovery.backupExported,
+        confirmationArmed: false,
+        busy: null,
+        failureCode: errorCodes[0],
+      })
+    }
+  }
+
   const renderPage = () => {
     switch (currentPage) {
       case 'today':
         return (
           <DashboardPage
+            planning={!runtime && ordinaryCanonical ? <PersonalPlanPanel workspace={ordinaryCanonical} repository={canonicalWorkspaceRepository} reader={independentReader} store={ordinaryEnvironment?.store ?? ordinaryStore} onReload={refreshOrdinary}/> : undefined}
+            engineeringInput={Boolean(ordinaryEnvironment)}
+            realInput={runtime?.realInput}
+            dateViews={dateViews}
+            readOnly={Boolean(runtime)}
             tasks={tasks}
             projects={projects}
             pendingReviewCount={pendingReviewCount}
@@ -695,22 +1451,36 @@ function App() {
             onSnoozeTask={handleSnooze}
             onTogglePinTask={handleTogglePin}
             onShowTasks={() => setCurrentPage('tasks')}
-            onShowInbox={() => setCurrentPage('inbox')}
+            onShowInbox={() => {
+              setInboxView('needs_review')
+              setCurrentPage('inbox')
+            }}
             smartExtractionStatus={smartExtractionStatus}
           />
         )
       case 'inbox':
-        return <InboxPage
+        return <>{runtime?.realInput?.draftEditor&&isolatedSnapshot?.extractionDrafts.some(d=>d.status==='failed'&&typeof (d.legacyData?.mainline05Failure as {response?:unknown}|undefined)?.response==='string')&&
+          <section className="page" aria-label="识别失败后的人工纠错"><h2>保留原回答，继续纠错</h2><p>以下回答有结构或关系错误。可对照完整原文修正后确认；不重新识别、不改原失败记录。</p>
+            {isolatedSnapshot.extractionDrafts.filter(d=>d.status==='failed'&&typeof (d.legacyData?.mainline05Failure as {response?:unknown}|undefined)?.response==='string').map(d=><button className="secondary-button" type="button" key={d.id} onClick={()=>void selectDraftForReview(d.id)}>
+              纠错：{sources.find(s=>s.id===drafts.find(view=>view.id===d.id)?.sourceId)?.title??'失败通知'}</button>)}</section>}
+          <InboxPage
+          canonicalWorkspace={ordinaryCanonical??isolatedSnapshot??undefined}
           drafts={drafts}
           sources={sources}
-          onOpenDraft={setSelectedDraftId}
-          onConfirmDrafts={(draftIds) => draftIds.forEach(handleConfirmAll)}
+          view={inboxView}
+          onChangeView={setInboxView}
+          onOpenDraft={(draftId) => { void selectDraftForReview(draftId) }}
+          onConfirmDrafts={(draftIds) => { if (runtime) void confirmExperiment(draftIds); else draftIds.forEach(handleConfirmAll) }}
           onArchiveDrafts={handleArchiveDrafts}
           onOpenManual={() => setIntakeOpen(true)}
-        />
+          onRetrySource={handleRetrySource}
+          onManualSupplementSource={openManualSupplement}
+        /></>
       case 'tasks':
         return (
           <TasksPage
+            dateViews={dateViews}
+            readOnly={Boolean(runtime)}
             tasks={tasks}
             projects={projects}
             onOpenTask={(task) => setSelectedTaskId(task.id)}
@@ -720,15 +1490,22 @@ function App() {
       case 'calendar':
         return (
           <CalendarPage
+            personalPlanTimezone={ordinaryCanonical?.settings.defaultTimezone}
+            personalPlans={!runtime && ordinaryCanonical ? storedPersonalPlans(ordinaryCanonical).filter(p => !['completed', 'cancelled'].includes(ordinaryCanonical.tasks.find(t => t.id === p.taskId)?.status ?? '')) : undefined}
+            pendingDateTaskIds={runtime?.realInput?.pendingDateTaskIds&&isolatedSnapshot?runtime.realInput.pendingDateTaskIds(isolatedSnapshot):undefined}
+            dateViews={dateViews}
+            isolatedTimezone={runtime?.semantic?.timezone}
             tasks={tasks}
+            events={events}
             courseBlocks={courseBlocks}
             onOpenTask={(task) => setSelectedTaskId(task.id)}
+            onOpenEvent={(event) => setSelectedEventId(event.id)}
             onAddCourseBlock={(block) => setCourseBlocks((current) => [...current, block])}
             onRemoveCourseBlock={(blockId) => setCourseBlocks((current) => current.filter((block) => block.id !== blockId))}
           />
         )
       case 'library':
-        return <LibraryPage sources={sources} onMarkIndependent={(sourceId) => {
+        return <LibraryPage canonicalWorkspace={isolatedSnapshot??undefined} sources={sources} drafts={drafts} onOpenIntake={() => setIntakeOpen(true)} onOpenDraft={(draftId) => { void selectDraftForReview(draftId) }} onRetrySource={handleRetrySource} onManualSupplementSource={openManualSupplement} onMarkIndependent={(sourceId) => {
           setSources((current) => current.map((source) => source.id === sourceId
             ? { ...source, duplicateReviewStatus: '保留为独立来源' }
             : source))
@@ -740,7 +1517,8 @@ function App() {
           projects={projects}
           workPackages={workPackages}
           events={events}
-          workspace={workspace}
+          materials={materialItems}
+          onExport={handleExportWorkspace}
           onImport={handleImportWorkspace}
           onClear={handleClearWorkspace}
           onAddMilestone={(projectId, title, dueAt) => setProjects((current) => current.map((project) => project.id === projectId
@@ -754,7 +1532,8 @@ function App() {
                   : milestone),
                 updatedAt: new Date().toISOString(),
               }
-            : project))}
+              : project))}
+          onOpenTask={(task) => setSelectedTaskId(task.id)}
         />
       case 'knowledge':
         return <KnowledgePage
@@ -810,12 +1589,47 @@ function App() {
       <a className="skip-link" href="#main-content">跳到主要内容</a>
       <Sidebar
         currentPage={currentPage}
+        inboxView={inboxView}
         pendingReviewCount={pendingReviewCount}
-        onNavigate={setCurrentPage}
+        onNavigate={(page) => {
+          if (runtime && !['today', 'inbox', 'tasks', 'calendar'].includes(page)) { rejectExperimentAction(); return }
+          if (page === 'inbox') setInboxView('all')
+          setCurrentPage(page)
+        }}
+        onOpenPendingReview={() => {
+          setInboxView('needs_review')
+          setCurrentPage('inbox')
+        }}
         onOpenIntake={() => setIntakeOpen(true)}
-        onOpenGuide={() => setGuideOpen(true)}
+        onOpenGuide={() => runtime ? rejectExperimentAction() : setGuideOpen(true)}
       />
       <div id="main-content" className="content-shell" tabIndex={-1}>
+        {ordinaryEnvironment && <details className="ordinary-engineering-mode"><summary>匿名工程输入 · 普通产品路径 · 不发送模型请求</summary><p>{ordinaryEnvironment.label}；{ordinaryEnvironment.store.name}</p></details>}
+        {viewConflict && <section className="source-review-status" role="alert"><strong>另一页面已修改相同内容，你的输入保留在本页。</strong>
+          {viewConflict.conflicts.map(c=><p key={c.path}>{c.path}：编辑前「{String(c.baseline)}」→最新「{String(c.current)}」；我的输入「{String(c.proposed)}」</p>)}
+          <button type="button" onClick={()=>void refreshOrdinary().then(()=>{setViewConflict(null);setStorageError(false);setNotice({text:'已明确重新载入最新内容；未确认检查点仍可恢复。'})})}>采用最新内容并重新核对</button>
+          <p>请先记下仍需保留的冲突输入；未确认标题和日期检查点保留，不会自动覆盖最新事实。</p>
+        </section>}
+        {ordinaryReceipt && <section className="source-review-status" role="status"><strong>已提交，读回尚未验证。</strong><p>提交记录已保留；恢复只重新读回，不重复创建任务。</p><button type="button" disabled={ordinaryBusy} onClick={()=>void retryOrdinaryReadback()}>重新读回并核验</button></section>}
+        {runtime && <section aria-label="隔离实验状态">
+          <p>{runtime.recognitionDescription ?? '人工工程响应（非模型预测）'} · 独立测试库 · {runtime.realInput?.networkDescription ?? '无模型/通知外发'}</p>
+          {readbackPending && runtime.realInput?.readbackRecovery && <section role="alert" aria-label="提交后读回恢复">
+            <p>已提交，读回尚未验证。已保存内容保留；请重新读回，勿重复提交。</p>
+            <button type="button" disabled={isolatedBusy} onClick={() => void performExperiment(async () => {
+              await runtime.realInput!.readbackRecovery!.retry()
+              setReadbackPending(false)
+              setNotice({ text: '已重新读回并核实保存结果，没有重复提交。' })
+            })}>重新读回已提交结果</button>
+          </section>}
+          <p>仅本轮录入、核对、确认、查询与JSON备份可用；未纳入操作会明确阻断。</p>
+          {runtime.semantic && <p>新语义保存在独立实验格式中，不能导入稳定入口。卡片分类与耗时仍是旧界面的兼容估计，不代表原文；完整原始属性可在详情核对，不会作为修改写回。</p>}
+          <button type="button" disabled={isolatedBusy || !workspaceReady || storageError} onClick={() => void performExperiment(async () => {
+            const json = await runtime.exportJson()
+            const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }))
+            setExperimentExport({ url, filename: runtime.semantic?.exportName ?? 'mainline-02-i1-workspace.json' })
+          })}>准备完整测试库 JSON</button>
+          {experimentExport && <a href={experimentExport.url} download={experimentExport.filename}>下载已准备的完整测试库 JSON</a>}
+        </section>}
         <PageLoadBoundary key={currentPage} onRetry={() => window.location.reload()}>
           <Suspense fallback={<main className="page page-loading" role="status">正在打开页面…</main>}>
             {renderPage()}
@@ -824,29 +1638,85 @@ function App() {
       </div>
 
       {!workspaceReady && <div className="workspace-status" role="status">正在恢复本机工作区…</div>}
-      {storageError && <div className="workspace-status error" role="alert">本机数据库暂不可用；本次更改可能无法在刷新后保留。</div>}
+      {storageError && <div className="workspace-status error" role="alert">本机数据库不可用；当前页面中的更改不会保存。请停止编辑并重新加载后重试。</div>}
       {notice && <div className="app-toast" role="status"><span>{notice.text}</span>{notice.undo && <button type="button" onClick={() => { notice.undo?.(); setNotice(null) }}>撤销</button>}<button type="button" onClick={() => setNotice(null)} aria-label="关闭提示">×</button></div>}
 
-      {intakeOpen && (
+      {workspaceRecovery && <WorkspaceRecoveryPanel
+        backupId={workspaceRecovery.backupId}
+        errorCodes={workspaceRecovery.errorCodes}
+        backupExported={workspaceRecovery.backupExported}
+        confirmationArmed={workspaceRecovery.confirmationArmed}
+        busy={workspaceRecovery.busy}
+        failureCode={workspaceRecovery.failureCode}
+        onExportBackup={() => void handleExportRecoveryBackup()}
+        onRequestRecovery={() => void handleRequestWorkspaceRecovery()}
+        onCancelRecovery={() => setWorkspaceRecovery((current) => current
+          ? { ...current, confirmationArmed: false }
+          : current)}
+      />}
+
+      {!workspaceRecovery && intakeOpen && (
         <IntakePanel
+          engineeringInput={Boolean(ordinaryEnvironment)}
+          realInputPanel={RealInputPanel && isolatedSnapshot ? <RealInputPanel workspace={isolatedSnapshot}
+            initialText={realInputInitialText} onSaved={refreshExperiment}
+            onDraftReady={async id => { await refreshExperiment(); setIntakeOpen(false); setSelectedDraftId(id); setRealInputInitialText('') }} /> : undefined}
+          textOnly={Boolean(runtime)}
           onClose={() => setIntakeOpen(false)}
           onSubmitIntake={handleIntakeInput}
+          onSaveSource={handleSaveSourceOnly}
           smartExtractionStatus={smartExtractionStatus}
         />
       )}
-      {selectedDraft && (
+      {!workspaceRecovery && supplementSource && (
+        <SourceSupplementPanel
+          source={supplementSource}
+          onClose={() => setSupplementSourceId(null)}
+          onSubmit={(content, operationId) => handleManualSupplement(supplementSource.id, content, operationId)}
+        />
+      )}
+      {!workspaceRecovery && selectedDraft && (!runtime || experimentalReview) && (
         <DraftReviewPanel
+          sessionFrame={runtime?.realInput?.sessionFrame}
+          reviewSession={runtime?.realInput?.reviewSession ?? ordinaryReviewSession}
+          reviewWorkspace={isolatedSnapshot ?? ordinaryCanonical ?? undefined}
+          onRestoreTaskSelections={runtime ? choices=>setIsolatedChoices(previous=>({...previous,[selectedDraft.id]:{...previous[selectedDraft.id],...choices}})) : undefined}
+          onFieldInput={runtime?.realInput?.onReviewFieldInput ? (itemId,field)=>runtime.realInput!.onReviewFieldInput!(selectedDraft.id,itemId,field) : undefined}
+          draftCorrection={runtime?.realInput?.draftEditor&&isolatedSnapshot?(onDirty,unsaved)=>runtime.realInput!.draftEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError||unsaved,onDirty,onSaved:refreshExperiment,reviewSession:runtime.realInput?.reviewSession}):undefined}
+          factCorrection={runtime?.realInput && isolatedSnapshot ? (taskId, onDirty, unsaved) => runtime.realInput!.factEditor({
+            workspace: isolatedSnapshot, draftId: selectedDraft.id, taskId, busy: isolatedBusy || storageError || unsaved,
+            onDirty, onSaved: refreshExperiment, reviewSession:runtime.realInput?.reviewSession,
+            onReviewed:runtime.databaseName.includes('d21-review-session-')?()=>{const itemId=selectedDraft.items.find(item=>item.suggestion.id===taskId)?.id??taskId
+              handleToggleDraftItemSelection(selectedDraft.id,itemId,true,true)}:undefined }) : undefined}
+          key={runtime ? selectedDraft.id : undefined}
+          isolatedCapabilities={Boolean(runtime)}
+          recognitionDescription={runtime?.realInput ? runtime.recognitionDescription : undefined}
+          ordinarySourceReview={!runtime ? {pendingEvents:selectedDraftSource ? mapSourceWorkflowItem(selectedDraftSource,[selectedDraft],ordinaryCanonical ?? undefined).counts.pendingEvents : 0,busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),unsaved:ordinaryFactsDirty||ordinaryReadinessDirty,description:recognitionModeDescription(ordinaryCanonical,selectedDraft.id),onConfirm:()=>void handleConfirmAll(selectedDraft.id),facts:<>{ordinaryCanonical&&<SourceReadinessReview workspace={ordinaryCanonical} draftId={selectedDraft.id} session={ordinaryReviewSession} disabled={ordinaryFactsDirty||ordinaryBusy||Boolean(ordinaryReceipt)||Boolean(viewConflict)} onDirty={setOrdinaryReadinessDirty} onApply={input=>handleOrdinaryReadiness(selectedDraft.id,input)} />}<OrdinarySourceFacts draft={selectedDraft} source={selectedDraftSource} workspace={ordinaryCanonical} session={ordinaryReviewSession} onDirty={setOrdinaryFactsDirty} onSave={(result,decision)=>handleOrdinaryFacts(selectedDraft.id,result,decision)} /></>} : undefined}
+          confirmationV2={runtime && experimentalReview ? { busy: isolatedBusy || storageError, items: experimentalReview.states } : !runtime && selectedDraft.recognitionResult ? {busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),items:Object.fromEntries(selectedDraft.items.map(item=>{const r=selectedDraft.recognitionResult!,p=r.timePoints.filter(t=>t.relatedTaskTempIds.includes(item.suggestion.id)),coveragePending=r.conflicts.some(c=>c.requiresDecision&&c.id===`coverage:${item.suggestion.id}:time`);return [item.id,{dateLabel:p.length?taskSourceTimeSummary(r,ordinaryCanonical?.extractionDrafts.find(d=>d.id===selectedDraft.id)?.legacyData?.semanticSidecar,{id:selectedDraft.sourceId,text:selectedDraftSource?.content??selectedDraftSource?.rawText??''},item.suggestion.id):coveragePending?'时间覆盖待核对，不能当成未说明':'原答未提供截止',blockedReason:sourceReviewProblem(r,item.suggestion.id),materialTempIds:r.materials.filter(m=>m.relatedTaskTempIds.includes(item.suggestion.id)).map(m=>m.tempId),timePointTempIds:p.map(t=>t.tempId)}]}))} : undefined}
+          semanticReview={runtime?.semantic && isolatedSnapshot && experimentalReview && isolatedSnapshot.extractionDrafts.find(d=>d.id===selectedDraft.id)?.legacyData?.mainline05 ? {
+            itemFacts: (taskId, onFocus) => runtime.semantic!.facts(isolatedSnapshot, selectedDraft.id, taskId, onFocus),
+            information: runtime.semantic.facts(isolatedSnapshot, selectedDraft.id),
+            informationEditor: runtime.realInput?.informationEditor ? onDirty=>runtime.realInput!.informationEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError,onDirty,onSaved:refreshExperiment,reviewSession:runtime.realInput?.reviewSession}) : undefined,
+            sourceSession: runtime.realInput?.sourceSession,
+            eventReview: runtime.realInput?.sourceSession && runtime.realInput.informationEditor ? onDirty=>runtime.realInput!.informationEditor!({workspace:isolatedSnapshot,draftId:selectedDraft.id,busy:isolatedBusy||storageError,onDirty,onSaved:refreshExperiment,reviewSession:runtime.realInput?.reviewSession}) : undefined,
+            informationReviewProblem: runtime.semantic.informationReviewProblem?.(isolatedSnapshot, selectedDraft.id),
+            eventCount: runtime.semantic.eventCount(isolatedSnapshot, selectedDraft.id, experimentalReview.draft.items.filter(i => i.status === '待确认' && i.selected).map(i => i.suggestion.id)),
+            onDefer: itemId => disposeExperiment(selectedDraft.id, 'defer', itemId),
+            onInformationReviewed: () => disposeExperiment(selectedDraft.id, 'review_info'),
+          } : undefined}
           draft={selectedDraft}
           source={selectedDraftSource}
           onClose={() => setSelectedDraftId(null)}
           onUpdate={(itemId, patch) => handleUpdateDraft(selectedDraft.id, itemId, patch)}
+          onReloadLatest={runtime ? refreshExperiment : refreshOrdinary}
           onConfirm={(itemId) => handleConfirmDraftItem(selectedDraft.id, itemId)}
           onReject={(itemId) => {
-            handleUpdateDraft(selectedDraft.id, itemId, {}, '已拒绝')
-            setNotice({ text: '已拒绝该建议，不会创建任务。', undo: () => handleUpdateDraft(selectedDraft.id, itemId, {}, '待确认') })
+            if (runtime?.semantic) { disposeExperiment(selectedDraft.id, 'reject', itemId); return }
+            if (runtime) { rejectExperimentAction(); return }
+            void handleUpdateDraft(selectedDraft.id, itemId, {}, '已拒绝').then(()=>setNotice({ text: '拒绝已保存，不会创建该任务。', undo: () => {void handleUpdateDraft(selectedDraft.id, itemId, {}, '待确认').catch(()=>undefined)} })).catch(()=>undefined)
           }}
           onConfirmAll={() => handleConfirmAll(selectedDraft.id)}
-          projectWillCreate={selectedDraft.recognitionResult
+          projectWillCreate={runtime?.semantic ? false : selectedDraft.recognitionResult
             ? selectedDraft.recognitionResult.projectMatch.decision === 'new_project'
             : !projects.some((project) => project.sourceIds.includes(selectedDraft.sourceId))}
           projects={projects}
@@ -859,8 +1729,12 @@ function App() {
           onMergeTask={(sourceItemId, targetItemId) => handleMergeDraftItems(selectedDraft.id, sourceItemId, targetItemId)}
         />
       )}
-      {selectedTask && (
+      {!workspaceRecovery && selectedTask && (
         <TaskDetailPanel
+          pendingSave={Boolean(viewConflict)}
+          semanticContent={runtime?.semantic && isolatedSnapshot ? runtime.semantic.taskFacts(isolatedSnapshot, selectedTask.id) : undefined}
+          readOnly={Boolean(runtime)}
+          dateView={dateViews?.[selectedTask.id]}
           key={selectedTask.id}
           task={selectedTask}
           sources={sources}
@@ -871,7 +1745,17 @@ function App() {
           onRequestNotificationPermission={handleRequestNotificationPermission}
         />
       )}
-      {guideOpen && <OnboardingGuide onClose={() => {
+      {!workspaceRecovery && selectedEvent && (
+        <EventDetailPanel
+          isolatedFacts={runtime?.semantic && isolatedSnapshot ? runtime.semantic.eventFacts(isolatedSnapshot, selectedEvent.id) : undefined}
+          event={selectedEvent}
+          project={projects.find((project) => project.id === selectedEvent.projectId)}
+          evidenceQuotes={selectedEventEvidenceQuotes}
+          sourceTitles={selectedEventSourceTitles}
+          onClose={() => setSelectedEventId(null)}
+        />
+      )}
+      {!workspaceRecovery && guideOpen && <OnboardingGuide onClose={() => {
         markOnboardingComplete()
         setGuideOpen(false)
       }} />}

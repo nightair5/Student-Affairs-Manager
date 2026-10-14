@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "rco-5-005-b01-candidate-manifest-1.0.0",
+  "status": "TECHNICAL_PASS_ZERO_MODEL_CALLS",
+  "classification": "contract_and_adversarial_fixture_only",
+  "modelCandidate": "deepseek-v4-flash-vision-exp",
+  "endpointCandidate": "https://api.deepseek.com/responses",
+  "apiStyleCandidate": "responses-v1-json-schema",
+  "temperatureCandidate": 0,
+  "modelCalls": 0,
+  "networkDispatches": 0,
+  "repairCalls": 0,
+  "newDatasetCreated": false,
+  "newDatasetFrozen": false,
+  "paidRunAuthorized": false,
+  "componentSha256": {
+    "scripts/rco-5-005-b01-lib.mjs": "035e6f916139475a60bcf84517422c71f04f06d1c2bf018176b98795aa611a3c",
+    "scripts/rco-5-005-b01.node-test.mjs": "05c334d68fbec7bc00387d89ca8dad9e91354496a043238a27e38ea2864e8089",
+    "scripts/rco-5-005-b01-fresh-adversarial.node-test.mjs": "b4f7aba4dcc6e537eb2b3a239f6064584305abe54bd914ed323292cf12a9b858",
+    "scripts/verify-rco-5-005-b01.mjs": "db1cb9b0b49c167b1a82bf68015e1233ac3423c5744a27e6a697b627127f216c"
+  },
+  "promptSha256": {
+    "facts_first": "71ef1479363524bb927dd2642197e5db60e7c8cf13be50b512f9de0f37f809aa",
+    "proposition_graph": "27fe3b7a0430f8bac417ed3da4871bffc2a64542db2c81d4735ea2c4dd8967a6",
+    "semantic_verifier": "b6a7ac6701a3ed7b953dd9171c6bd8634cf08e80acb8a2509a515b3256b45ce0"
+  },
+  "responseSchemaSha256": {
+    "facts_first": "9d9c9ca039be7cb7215b89b2ee116fa834984014d298bea92d40b1b5ca19fe15",
+    "proposition_graph": "00a40b14dadde65bea5a32d2d38d61586bd745873c55e0df25f4a2b6ffc52b64",
+    "semantic_verifier": "d17cfa2cefcb7e55ad941f055ce0aa34f06930a52ee14d6c0134a84fbb354983"
+  },
+  "targetedContractTests": 28,
+  "freshAdversarialTests": 11,
+  "targetedTotalTests": 39,
+  "decision": "READY_TO_REQUEST_NEW_DATA_FREEZE_AUTHORIZATION_ONLY",
+  "releaseDecision": "NO_PROMOTION_DO_NOT_LAUNCH"
+}

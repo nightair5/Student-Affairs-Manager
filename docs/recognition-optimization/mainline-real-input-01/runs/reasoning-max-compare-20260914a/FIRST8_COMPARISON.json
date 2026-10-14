@@ -1,0 +1,128 @@
+{
+  "version": "reasoning-max-business-comparison-1",
+  "scope": "first8",
+  "label": "8份已见材料开发回归；同一deepseek-flash、candidate03、正文、来源索引、参考时刻、时区与32768输出上限，仅reasoning effort为none或max",
+  "requestedSources": 8,
+  "requestCount": 16,
+  "completedResponses": {
+    "none": 8,
+    "max": 8
+  },
+  "remainingSourcesNotRun": 12,
+  "remainingRequestsNotRun": 24,
+  "strictScoring": {
+    "noneScored": 8,
+    "maxScored": 8,
+    "completeCasesNone": 0,
+    "completeCasesMax": 0,
+    "note": "严格评分保留，但其逐字、粒度和引用差异不直接解释为用户必须做实质修改。"
+  },
+  "businessSummary": {
+    "none": {
+      "noSubstantiveCorrection": 6,
+      "substantiveCorrectionSources": 2,
+      "substantiveErrors": 5,
+      "taskExtra": 1,
+      "materialExtra": 0,
+      "materialOwnership": 1,
+      "timeFalse": 0,
+      "condition": 1,
+      "dependency": 1,
+      "revision": 1
+    },
+    "max": {
+      "noSubstantiveCorrection": 5,
+      "substantiveCorrectionSources": 3,
+      "substantiveErrors": 9,
+      "taskExtra": 3,
+      "materialExtra": 1,
+      "materialOwnership": 3,
+      "timeFalse": 1,
+      "condition": 0,
+      "dependency": 1,
+      "revision": 0,
+      "additionalReviewBurden": [
+        "W02把已经明确可以开始的说明留为unresolved",
+        "X01把同一值班证拆成两份材料并留下两个unresolved来源片段",
+        "W07把两个“现已”另建为需要确认的模糊时间"
+      ]
+    }
+  },
+  "performance": {
+    "none": {
+      "medianWaitingMs": 8660,
+      "p95ObservedMaxMs": 9211,
+      "totalWaitingMs": 65216,
+      "outputTokens": 15224,
+      "reasoningTokens": 0,
+      "costUpperMicroCny": 196400
+    },
+    "max": {
+      "medianWaitingMs": 100154.5,
+      "p95ObservedMaxMs": 125619,
+      "totalWaitingMs": 801103,
+      "outputTokens": 184010,
+      "reasoningTokens": 166267,
+      "costUpperMicroCny": 1547088
+    },
+    "medianWaitingRatioMaxOverNone": 11.57,
+    "costUpperRatioMaxOverNone": 7.88,
+    "providerBilledCny": "NOT_OBSERVABLE"
+  },
+  "cases": [
+    {
+      "source": "W11",
+      "none": "多造“准备两个密封袋”任务；密封袋错连该多余任务；送样前置条件误判为已成立，共3个实质错误。",
+      "max": "只保留填写登记单和提交样本两个任务；密封袋只归属提交样本；前置条件保持unknown，0个实质错误。",
+      "net": "Max减少3个实质错误。"
+    },
+    {
+      "source": "W12",
+      "none": "保存最终展签带无依据依赖；历史业务裁决另记1个取消关系错误。",
+      "max": "仍给保存任务增加无依据依赖，并把已取消的作品源文件额外建成材料；取消类型本身正确。",
+      "net": "没有减少需要纠正的来源，错误种类发生替换。"
+    },
+    {
+      "source": "W02",
+      "none": "任务、近期和另行通知日期均正确。",
+      "max": "语义事实仍正确，但把一条明确说明留为unresolved，增加核对负担。",
+      "net": "无准确性收益，核对负担增加。"
+    },
+    {
+      "source": "X05",
+      "none": "只生成条件unknown的领取任务，工作证作为材料，无日期。",
+      "max": "多造“出示工作证”任务、把工作证错连到该任务，并把否定句中的“领取日期”生成为时间。",
+      "net": "Max新增3个实质错误。"
+    },
+    {
+      "source": "W10",
+      "none": "两个盘点任务、两类材料及截止归属正确。",
+      "max": "多造两条“不要交叉上传”任务，并把照片和收据分别错连到多余任务。",
+      "net": "Max新增4个实质错误。"
+    },
+    {
+      "source": "X01",
+      "none": "两个任务、两种值班证使用方式和截止正确。",
+      "max": "任务和截止正确，但把同一值班证拆成扫描件与原件两份核对对象，并留下两个unresolved片段。",
+      "net": "无实质准确性收益，重复核对负担增加。"
+    },
+    {
+      "source": "W07",
+      "none": "旧寄送要求作废、新PDF要求生效及两个日期正确。",
+      "max": "核心修订正确，但额外建立两个“现已”模糊时间，要求用户再核对。",
+      "net": "无实质准确性收益，时间核对负担增加。"
+    },
+    {
+      "source": "W01",
+      "none": "两个任务、各自截止和材料正确。",
+      "max": "同样正确。",
+      "net": "持平。"
+    }
+  ],
+  "decision": {
+    "status": "STOP_AFTER_FIRST8_AND_KEEP_NONE",
+    "reason": "Max虽修复W11，但整体无需实质纠正来源由6/8降至5/8，实质错误由5增至9，并显著增加等待、费用和额外核对。现有8份已经足以否定全局采用，剩余12份不能改变已观察到的严重正常样例退化，继续付费不符合用户少改的目标。",
+    "adoptMax": false,
+    "automaticRoutingAdded": false
+  }
+}

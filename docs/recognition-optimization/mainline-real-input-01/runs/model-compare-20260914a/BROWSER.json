@@ -1,0 +1,31 @@
+{
+  "version": "model-compare-browser-1",
+  "checkedAt": "2026-09-14T11:21:57.2926684+08:00",
+  "officialControl": {
+    "attempts": 1,
+    "elapsedMs": 23276,
+    "apps": [],
+    "browsers": [],
+    "error": "nodeRepl.fetch request failed",
+    "result": "NOT_RUN"
+  },
+  "localPreview": {
+    "origin": "http://127.0.0.1:6632/",
+    "startedFromCurrentSources": true,
+    "httpStatus": 200,
+    "modelCallsEnabled": false,
+    "rootEnvRead": false
+  },
+  "newInteractiveEvidence": {
+    "twoJourneys": "NOT_RUN",
+    "refreshReadback": "NOT_RUN",
+    "independentRepositoryRead": "NOT_RUN",
+    "twoActualDownloads": "NOT_RUN",
+    "reason": "官方控制一次连接失败；按授权未重试，也未把HTTP或工程回放冒充浏览器操作。"
+  },
+  "reusedEvidence": {
+    "q01Q07": "先前同一6632隔离入口已实际确认三项正确任务，并完成刷新、任务中心、日历、详情和独立读库；本轮未重复点击。",
+    "u11Downloads": "先前两个实际下载入口的JSON已逐对象一致比较，仅证明一项送样登记任务的保存闭环。",
+    "source": "../baseline-conversion-20260914a/AUDIT.md"
+  }
+}

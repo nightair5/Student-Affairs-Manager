@@ -1,0 +1,126 @@
+{
+  "role": "LOCAL_ENGINEERING_EVIDENCE_HASHES",
+  "build": "87eb70021c8f / source b513046c8715",
+  "files": [
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/00-empty.json",
+      "bytes": 804,
+      "sha256": "e04df10724a8de2f7dfde1e3b6cd8948a6f7adb0ec4859a1afcf691256fef0d5"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/01-C19-first.png",
+      "bytes": 63472,
+      "sha256": "9c6790b9246183972609503604879518ade860025d2b06f27f19c91fc1d6f483"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/01-C19-first.txt",
+      "bytes": 10368,
+      "sha256": "ce8e722593fea11b4cf38f359fe6cc06ddaf61edf413b54f4bc5cdc360c35472"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/02-C19-canonical.json",
+      "bytes": 115194,
+      "sha256": "d4b9356506181ed08a885b062cd17191ba80eb590f60a43a153be30712422b86"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/03-Authority-first.png",
+      "bytes": 63569,
+      "sha256": "e19e7cf88921483ae5aff4ada3f301e9142169d7260252dda73fad30d66fb9d2"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/03-Authority-first.txt",
+      "bytes": 124875,
+      "sha256": "a482978c6a6a31d3442e6e704a6dff0b074455eb002cccebb3af605627d63df5"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/04-checkpoint-failure.txt",
+      "bytes": 125098,
+      "sha256": "31d3959b60d4daadcb714535f956bd7921bc622dda6f056821260ced8773d6ca"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/05-refresh-recovery.txt",
+      "bytes": 7297,
+      "sha256": "6bc2eef4965e71ded70ec07292e7051d9ef5758f6f88aae9d4dd7e3112c54f00"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/06-transaction-failure.txt",
+      "bytes": 9697,
+      "sha256": "3e67c184b8eee03d2868e61377fcefc0d2940b3d77d15af3f56e11f87a6843e4"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/07-failed-canonical.json",
+      "bytes": 256359,
+      "sha256": "1e26e3ac31cb12fa1b29c3e8020a6d2b4624a7aebf8a6ac8cfc46792da419b62"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/08-committed-readback-pending.png",
+      "bytes": 70565,
+      "sha256": "e94ee9538c60467ac1abced4c89a5c18ad8a1dbe36be34bf0b970e07007626d1"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/08-committed-readback-pending.txt",
+      "bytes": 266263,
+      "sha256": "5c6ae458f68aece7e018fd08844e11eed257f6f135b20d6ee3d92666cf1d8532"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/09-reread-verified.txt",
+      "bytes": 261405,
+      "sha256": "18d0b29147e7492620fb4e9344f480a38f80d6bd3909d1a58d2d82ece2db292a"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/10-final-canonical.json",
+      "bytes": 264971,
+      "sha256": "0ee19cdf1c18ae739bcbdc37a04f9e927eeda8801fffc25787fd0a8123366c94"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/11-final-measurement.json",
+      "bytes": 14939,
+      "sha256": "deea9501c9158c0048fe856c5d4430f5d295f4baa0cf2a7e759b08ded2c8127d"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/12-console.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": ".data/single-authority/paid-browser/final-6871/13-routes.json",
+      "bytes": 1394,
+      "sha256": "0f59cdc6d133bc3d6b39fe70029b452676a61f78e3d11fc061dae64de209a576"
+    }
+  ],
+  "executionSealedFiles": 16,
+  "sourceOfTruth": "Independent Repository readback, original settled raw and immutable comparison packet; no AUTH/raw/DB export committed.",
+  "validationFiles": [
+    {
+      "path": ".data/authority-history-final-delivery.log",
+      "bytes": 452,
+      "sha256": "0cadd84c5daf062a4837e11a45485f83386538978a96a353ccd0e3184aaee930"
+    },
+    {
+      "path": ".data/authority-security-final-delivery.log",
+      "bytes": 136,
+      "sha256": "a8383d21dbe2702a6555b65686468b22e3fad4fe09e9dbbbeb38a712bdbb06f9"
+    },
+    {
+      "path": ".data/authority-post-lint.log",
+      "bytes": 2553,
+      "sha256": "2f04b28282b207838824b0f50193c4a0893d6d0e935261f3823006e4e0557650"
+    },
+    {
+      "path": ".data/authority-post-security.log",
+      "bytes": 136,
+      "sha256": "e07ff5acbff2ca99933c2c9ca32464e0eb059495d19d027c726db984be043469"
+    },
+    {
+      "path": ".data/candidate11/checks/current-product/Asia-Shanghai/summary.json",
+      "bytes": 2931,
+      "sha256": "b5ea361b18f852bf4f89a2d4007a3a759113b393cae1484737452b6dd9b1d9df"
+    }
+  ],
+  "finalValidation": {
+    "history": "84 protected / 119 frozen / 7 archives preserved; verifier correctly reports append review required; six current batch rows reviewed by independent reader and original 1009-byte-prefix hash verified",
+    "security": "4514 source/build files PASS",
+    "product": "9 independent groups definite exit PASS",
+    "knownHistoricalFailures": 6
+  }
+}

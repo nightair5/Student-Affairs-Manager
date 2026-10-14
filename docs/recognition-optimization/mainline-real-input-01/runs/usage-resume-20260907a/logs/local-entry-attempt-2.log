@@ -1,0 +1,15 @@
+▶ local real App serves exact assets, rejects secret paths and unbound endpoints, and retains normal replay
+  ✔ real App bundle; no upstream sender or emitted engineering answers (54.9392ms)
+  ✔ secret, root traversal and unregistered paths are not a static file server (63.3247ms)
+  ✔ cross-origin, host substitution and wrong session capability reject (17.6731ms)
+  ✔ live endpoint is unavailable in explicit zero-call mode (13.4988ms)
+  ✔ valid known engineering source returns labelled replay, unknown source does not fallback (140.3766ms)
+✔ local real App serves exact assets, rejects secret paths and unbound endpoints, and retains normal replay (945.5347ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1043.647

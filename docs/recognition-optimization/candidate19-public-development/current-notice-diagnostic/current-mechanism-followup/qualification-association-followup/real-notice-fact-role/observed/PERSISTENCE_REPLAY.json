@@ -1,0 +1,220 @@
+{
+  "role": "ENGINEERING_MEMORY_STORE_NOT_BROWSER_OR_HUMAN",
+  "rows": [
+    {
+      "ordinal": 1,
+      "sourceId": "RN-01",
+      "decodeError": null,
+      "engineering": {
+        "role": "ENGINEERING_MEMORY_STORE_NOT_BROWSER",
+        "fieldEdits": 0,
+        "rawPreserved": true,
+        "receipts": [],
+        "blocked": [
+          {
+            "task": "task-upload-thesis",
+            "code": "这项事项的办理渠道引用不完整，渠道暂不采用；请核对该事项，其他有依据的内容可单独保存。"
+          },
+          {
+            "task": "task-submit-paper-materials",
+            "code": "办理窗口的日期或对象依据不一致，请核对；未推测日期或截止。"
+          }
+        ],
+        "canonical": {
+          "tasks": [],
+          "events": [],
+          "materials": [],
+          "timePoints": [],
+          "projects": 0,
+          "draftStatus": "needs_review",
+          "commitIds": []
+        },
+        "plan": {
+          "segments": [],
+          "unscheduled": []
+        }
+      }
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "RN-02",
+      "decodeError": null,
+      "engineering": {
+        "role": "ENGINEERING_MEMORY_STORE_NOT_BROWSER",
+        "fieldEdits": 0,
+        "rawPreserved": true,
+        "receipts": [],
+        "blocked": [
+          {
+            "task": "task-login-xmuxg",
+            "code": "适用状态尚未明确，请在本通知适用性中核对；不会假定资格或前置已完成。"
+          },
+          {
+            "task": "task-select-business-period",
+            "code": "适用状态尚未明确，请在本通知适用性中核对；不会假定资格或前置已完成。"
+          },
+          {
+            "task": "task-fill-info",
+            "code": "适用状态尚未明确，请在本通知适用性中核对；不会假定资格或前置已完成。"
+          },
+          {
+            "task": "task-upload-receipt",
+            "code": "适用状态尚未明确，请在本通知适用性中核对；不会假定资格或前置已完成。"
+          },
+          {
+            "task": "task-submit-verification-code",
+            "code": "适用状态尚未明确，请在本通知适用性中核对；不会假定资格或前置已完成。"
+          }
+        ],
+        "canonical": {
+          "tasks": [],
+          "events": [],
+          "materials": [],
+          "timePoints": [],
+          "projects": 0,
+          "draftStatus": "needs_review",
+          "commitIds": []
+        },
+        "plan": {
+          "segments": [],
+          "unscheduled": []
+        }
+      }
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "RN-03",
+      "decodeError": "ROLE_AUTHORITY_PARTICIPATION_EVIDENCE",
+      "engineering": null
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "RN-04",
+      "decodeError": null,
+      "engineering": {
+        "role": "ENGINEERING_MEMORY_STORE_NOT_BROWSER",
+        "fieldEdits": 0,
+        "rawPreserved": true,
+        "receipts": [
+          {
+            "version": "source-review-d26-1",
+            "draftId": "source:9f957a8d:draft:1",
+            "commitId": "source-review:source:9f957a8d:draft:1:fnv1a32:0ceebc03",
+            "disposition": "no_task",
+            "entityIds": [
+              "event:source:9f957a8d:draft:1:event-0001",
+              "time:source:9f957a8d:draft:1:time-0001",
+              "time:source:9f957a8d:draft:1:time-0002"
+            ],
+            "entityHashes": {
+              "event:source:9f957a8d:draft:1:event-0001": "fnv1a32:a4789c80",
+              "time:source:9f957a8d:draft:1:time-0001": "fnv1a32:fdb62cc8",
+              "time:source:9f957a8d:draft:1:time-0002": "fnv1a32:79f06971"
+            }
+          }
+        ],
+        "blocked": [],
+        "canonical": {
+          "tasks": [],
+          "events": [
+            {
+              "id": "event:source:9f957a8d:draft:1:event-0001",
+              "projectId": null,
+              "title": "厦门大学信息门户升级维护",
+              "description": "信息与网络中心将于2026年4月14日00:00-03:00对厦门大学信息门户（https:\n//i.xmu.edu.cn）进行升级维护。\n维护期间，\n信息门户将暂时无法访问，",
+              "startTimePointId": "time:source:9f957a8d:draft:1:time-0001",
+              "endTimePointId": "time:source:9f957a8d:draft:1:time-0002",
+              "location": null,
+              "createdAt": "2026-10-09T10:51:52.159Z",
+              "updatedAt": "2026-10-09T10:51:52.159Z",
+              "legacyData": {
+                "recognitionTempId": "event-0001",
+                "evidenceIds": [
+                  "d26-scope-0002-d8d611b1c7ea686dfc8d4ceae2e255a138a4e78b257e7abfec4e7cbf34dad0af",
+                  "d26-scope-0003-b365fab6f36f37ce6d9c7ec2bdc59521108b7f96cdcf04169fcd2791e3aa9ce4",
+                  "d26-scope-0004-8a9947912cfd53e918c2da1609c700965ec4badcbea54deea9c3f6b3b06a278f",
+                  "d26-scope-0005-d30236e14a30340341403c2c16b0d3c09e576d5e0efdd5c8723f75d94f5279f5"
+                ],
+                "inferenceLevel": "explicit",
+                "sourceReviewDraftId": "source:9f957a8d:draft:1"
+              }
+            }
+          ],
+          "materials": [],
+          "timePoints": [
+            {
+              "id": "time:source:9f957a8d:draft:1:time-0001",
+              "projectId": null,
+              "milestoneId": null,
+              "taskId": null,
+              "materialId": null,
+              "eventId": "event:source:9f957a8d:draft:1:event-0001",
+              "relatedTaskIds": [],
+              "relatedMaterialIds": [],
+              "type": "event_start",
+              "rawText": "2026年4月14日00:00",
+              "normalizedValue": "2026-04-14T00:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "createdAt": "2026-10-09T10:51:52.159Z",
+              "updatedAt": "2026-10-09T10:51:52.159Z",
+              "legacyData": {
+                "recognitionTempId": "time-0001",
+                "evidenceIds": [
+                  "d26-scope-0002-d8d611b1c7ea686dfc8d4ceae2e255a138a4e78b257e7abfec4e7cbf34dad0af"
+                ],
+                "confidence": 0.95,
+                "sharedEventIds": [
+                  "event:source:9f957a8d:draft:1:event-0001"
+                ]
+              }
+            },
+            {
+              "id": "time:source:9f957a8d:draft:1:time-0002",
+              "projectId": null,
+              "milestoneId": null,
+              "taskId": null,
+              "materialId": null,
+              "eventId": "event:source:9f957a8d:draft:1:event-0001",
+              "relatedTaskIds": [],
+              "relatedMaterialIds": [],
+              "type": "event_end",
+              "rawText": "2026年4月14日03:00",
+              "normalizedValue": "2026-04-14T03:00",
+              "timezone": "Asia/Shanghai",
+              "isAllDay": false,
+              "precision": "exact",
+              "needsConfirmation": false,
+              "createdAt": "2026-10-09T10:51:52.159Z",
+              "updatedAt": "2026-10-09T10:51:52.159Z",
+              "legacyData": {
+                "recognitionTempId": "time-0002",
+                "evidenceIds": [
+                  "d26-scope-0002-d8d611b1c7ea686dfc8d4ceae2e255a138a4e78b257e7abfec4e7cbf34dad0af"
+                ],
+                "confidence": 0.95,
+                "sharedEventIds": [
+                  "event:source:9f957a8d:draft:1:event-0001"
+                ]
+              }
+            }
+          ],
+          "projects": 0,
+          "draftStatus": "confirmed",
+          "commitIds": [
+            "source-review:source:9f957a8d:draft:1:fnv1a32:0ceebc03"
+          ]
+        },
+        "plan": {
+          "segments": [],
+          "unscheduled": []
+        }
+      }
+    }
+  ],
+  "additionalRealRecordingTest": "src/recognition/realNoticeFirstLoss.test.ts asserts ReviewSession non-edit selection, atomic failed event-only transaction/manual retry, readback-only recovery and independent Repository reload; no browser IndexedDB claim",
+  "partialRecoveryRegression": "Unchanged sourceReviewD26 and d20ReviewSession suites passed; previous browser records not copied as new evidence",
+  "personalPlan": "RN01/RN02 have no eligible formal tasks; RN04 is event-only; no invented personal plan. D27 scoped source/plan tests remain unchanged and passed in current-product."
+}

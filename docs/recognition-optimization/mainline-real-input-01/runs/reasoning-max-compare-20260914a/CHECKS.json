@@ -1,0 +1,25 @@
+{
+  "version": "real-input-reasoning-max-checks-1",
+  "generatedAt": "2026-09-14T18:03:54+08:00",
+  "startingHead": "129dd1c53c142f45c069110dae42f21f0888a2f2",
+  "rootEnvReadByTestsOrBuild": false,
+  "newModelRequests": 16,
+  "checks": [
+    {"name": "budget-and-gateway-full", "status": "PASS", "passed": 122, "failed": 0, "durationMs": 799244, "note": "使用新的绝对REAL_INPUT_TEST_TEMP；覆盖全部旧批次、并发、崩溃重开、身份、用量与Max新策略。"},
+    {"name": "reasoning-max-focused", "status": "PASS", "passed": 2, "failed": 0, "durationMs": 111268, "note": "Max预算、网关、32768输出、180秒超时、incomplete用量核销及旧行为边界。"},
+    {"name": "node-syntax", "status": "PASS", "files": 3},
+    {"name": "lint", "status": "PASS", "errors": 0, "existingWarnings": 4},
+    {"name": "typecheck", "status": "PASS"},
+    {"name": "safe-vite-build", "status": "PASS", "envFile": false, "envDir": false, "output": "C:/Users/Winner/AppData/Local/Temp/real-input-max-vite-79c87a6ef840490dbc5c6d2b665230a4", "note": "1693 modules transformed; existing chunk-size warning retained."},
+    {"name": "vitest", "status": "PASS_AFTER_TARGETED_RERUN", "initialPassed": 1381, "initialFailed": 1, "skipped": 1, "rerunPassed": 1, "finalFailed": 0, "note": "唯一U01-09用例首次超过默认5秒；15秒上限定向复跑1.448秒通过。"},
+    {"name": "security-scan-before-delivery-receipt", "status": "PASS", "files": 2258},
+    {"name": "historical-rco-5-007-freeze", "status": "KNOWN_HISTORICAL_FAILURE", "error": "FREEZE_HASH_MISMATCH:package-lock.json", "expectedSha256": "0712a7885770a869293149bab34cfb2d740562694d8bd30980141df9a5d2a0b1", "currentSha256": "330350e448c1cd29c6c7869c7a978142d95ba84aa12658a9c9bcacdcf763bbe3", "note": "package-lock.json无当前diff；旧断言未修改、删除或弱化。"}
+  ],
+  "ledger": {
+    "lines": 546, "lastSequence": 545, "lastHash": "daf721c68c67468ed895b880ae9799cc76824b5d0feeef497627acf0ee0b366e", "sha256": "fcec75c16702ae90fb1749acf3602b49ba1d8be1caf4b27e1703b718b15a3734", "chainVerified": true,
+    "totalAttempts": 266, "statusCounts": {"heldUnknown": 1, "settled": 264, "settledIncomplete": 1}, "cumulativeAuthoritativeUpperMicroCny": 12406195, "providerBilledCny": "NOT_OBSERVABLE"
+  },
+  "overallEngineering": "PASS_WITH_RETAINED_HISTORICAL_FREEZE_FAILURE",
+  "modelComparison": "STOP_AFTER_FIRST8_AND_KEEP_NONE",
+  "browser": "NOT_RUN", "productionDeployment": false
+}

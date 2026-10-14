@@ -1,0 +1,211 @@
+{
+  "version": "real-input-contrastive-result-1",
+  "unitId": "K10-B",
+  "sourceId": "OS10",
+  "arm": "B",
+  "armName": "candidate10-contrastive",
+  "bindingSha": "ac3e13d5f67dc090d0f54bb424161a30c1422a1daf366fd03d4d6c6d877eab6d",
+  "requestSha": "c7312afcb4c6a7ef16425e0e3e6427f1ead136f7cb8484a4eae36926b4f8b4e6",
+  "responseSha": "a763c537c941062cf33573bf60202cc26145f3c94a2fe1b40d6adcab5a5d1f54",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-10",
+  "exampleVersion": "contrastive-evidence-examples-1",
+  "scorerSha": "647dbd204ddcf6083f6a9788395f3098687aff844f90643e31e795e44c3e82bf",
+  "referenceSha": "42b1b69a1c0c5d1575e49cb1f69ee55364404108f69e14534446d5f221840567",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-upload-electronic-survey",
+        "propositionScopeIds": [
+          "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784",
+          "scope-0003-48bfdc08fe8b2e6103e6bd9983b7b0bed7a44a767d1303fc1e45825759678dbf"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "upload",
+        "action": {
+          "scopeId": "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784",
+          "surface": "上传"
+        },
+        "object": {
+          "scopeId": "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784",
+          "surface": "电子调查册"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "上传电子调查册",
+          "description": "现在改为上传电子调查册，不再寄纸质材料。",
+          "completionCriteria": [
+            "电子调查册已上传"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-electronic-survey"
+          ],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-mail-paper-survey-cancelled",
+        "propositionScopeIds": [
+          "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+          "scope-0003-48bfdc08fe8b2e6103e6bd9983b7b0bed7a44a767d1303fc1e45825759678dbf"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "negative",
+          "tense": "past",
+          "status": "cancelled",
+          "validity": "superseded",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "send",
+        "action": {
+          "scopeId": "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+          "surface": "邮寄"
+        },
+        "object": {
+          "scopeId": "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+          "surface": "纸质调查册"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "邮寄纸质调查册",
+          "description": "原定邮寄纸质调查册的要求取消。不再寄纸质材料。",
+          "completionCriteria": [],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "low",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-paper-survey"
+          ],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-electronic-survey",
+        "name": "电子调查册",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "上传",
+        "relatedTaskTempIds": [
+          "task-upload-electronic-survey"
+        ],
+        "scopeIds": [
+          "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784"
+        ],
+        "confidence": 0.9
+      },
+      {
+        "tempId": "material-paper-survey",
+        "name": "纸质调查册",
+        "required": false,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": "邮寄",
+        "relatedTaskTempIds": [
+          "task-mail-paper-survey-cancelled"
+        ],
+        "scopeIds": [
+          "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+          "scope-0003-48bfdc08fe8b2e6103e6bd9983b7b0bed7a44a767d1303fc1e45825759678dbf"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [],
+    "events": [],
+    "revisions": [
+      {
+        "type": "supersedes",
+        "targetDirectiveId": "task-mail-paper-survey-cancelled",
+        "scopeIds": [
+          "scope-0001-5f0edc0a4842d5651aca928226db815f866989c97c29ba2693dd5b6bf4a8ce26",
+          "scope-0002-bfe79d7236a68aecb433a15ef5df6341bd99ce301ebd40eb2d4933fa34cde784",
+          "scope-0003-48bfdc08fe8b2e6103e6bd9983b7b0bed7a44a767d1303fc1e45825759678dbf"
+        ],
+        "fromDirectiveId": "task-upload-electronic-survey",
+        "effective": "true"
+      }
+    ],
+    "conflicts": [],
+    "informationScopeIds": [],
+    "unresolvedScopeIds": [],
+    "sourceId": "opensource-dev-OS10",
+    "sourceVersionId": "opensource-dev-OS10:1",
+    "sourceFingerprint": "sha256:3693893ab38ee782fa0147467c3a67b03332ec354bf2ca8e52ed683460d25787"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 6409,
+  "parseError": null,
+  "totalAttempts": 309,
+  "usage": {
+    "input_tokens": 5100,
+    "input_tokens_details": {
+      "cached_tokens": 4736
+    },
+    "output_tokens": 1331,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 6431
+  },
+  "costUpperMicroCny": 20848,
+  "totalCostUpperMicroCny": 13961947,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12份新编匿名相近结构Development配对；单作者参照；仅固定教学正反例不同；不是盲测或真实用户转化"
+}

@@ -1,0 +1,1656 @@
+{
+  "schemaVersion": "rco-5-008-b7-replay-1.0.0",
+  "authorizationId": "RCO-5-008",
+  "classification": "SEEN_B7_ZERO_CALL_LOCAL_REGRESSION_NOT_MODEL_REPLICATION",
+  "datasetId": "rco-5-007-b7-development-20260904",
+  "inputResultFreeze": "docs/recognition-optimization/RCO-5-007-B7-M1_RESULT_FREEZE.json",
+  "accounting": {
+    "modelCalls": 0,
+    "networkRequests": 0,
+    "verifierCalls": 0,
+    "repairCalls": 0,
+    "retryCalls": 0,
+    "secretAccess": "NONE"
+  },
+  "interpretation": "Replays immutable B7 model output through a new local composer, P4 and evaluator. It measures repair of the known interface failure, not improved model accuracy or unseen generalization.",
+  "anchorMetrics": {
+    "scopeCounts": {
+      "tp": 22,
+      "fp": 0,
+      "fn": 0
+    },
+    "scopePrecision": 1,
+    "scopeRecall": 1,
+    "scopeF1": 1,
+    "actionSurfaceExact": 1,
+    "objectSurfaceExact": 1,
+    "completeAnchorCaseAccuracy": 1
+  },
+  "taskMetrics": {
+    "caseCount": 12,
+    "scoreableCases": 12,
+    "taskPrecision": 1,
+    "taskRecall": 1,
+    "taskF1": 1,
+    "requiresActionAccuracy": 1,
+    "semanticFieldAccuracy": 1,
+    "exactTaskBoundaryAccuracy": 1,
+    "completeTaskCaseAccuracy": 1,
+    "majorCorrectionRate": 0,
+    "safeDefaultRecall": 1,
+    "forbiddenDefaultSelections": 0
+  },
+  "unsafeDefaultFalsePositives": 0,
+  "revisionMetrics": {
+    "relationExactAccuracyByKind": {
+      "cancels": 1,
+      "supersedes": 1,
+      "amends": 1
+    },
+    "oldRequirementInvalidation": 1,
+    "activeReplacementRecall": 1,
+    "unresolvedRevisionExactAccuracy": 1,
+    "staleTaskCount": 0,
+    "selectedStaleTaskCount": 0
+  },
+  "gate": "PASS",
+  "decision": "B7_SEEN_REGRESSION_PASS_ELIGIBLE_TO_FREEZE_NEW_B8",
+  "cases": [
+    {
+      "caseId": "rco-task-b7-01",
+      "coverageTags": [
+        "compound_action",
+        "separate_scopes"
+      ],
+      "modelSelectionStatus": "REUSED_FROZEN_B7_RAW_OUTPUT_NO_MODEL_CALL",
+      "composerWarnings": [],
+      "actionNormalizations": [
+        {
+          "directiveId": "directive-1",
+          "scopeId": "scope-0001-e92fe531262809cb7a13ec0104fb1e3fff34c7cf1d94eebf8a30a4090193761f",
+          "originalSurface": "核对",
+          "canonicalSurface": "核对",
+          "status": "unchanged",
+          "candidates": [
+            "核对"
+          ]
+        },
+        {
+          "directiveId": "directive-2",
+          "scopeId": "scope-0002-3b115866ff5193bf5d96bd510a2affaabbcad075eedd964513c7eae8d30fa30f",
+          "originalSurface": "打印",
+          "canonicalSurface": "打印",
+          "status": "unchanged",
+          "candidates": [
+            "打印"
+          ]
+        }
+      ],
+      "conditionAttachments": [],
+      "contractIssues": [],
+      "anchorScore": {
+        "scope": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "scopePrecision": 1,
+        "scopeRecall": 1,
+        "scopeF1": 1,
+        "actionCorrect": 2,
+        "objectCorrect": 2,
+        "total": 2,
+        "complete": true
+      },
+      "prediction": {
+        "caseId": "rco-task-b7-01",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "请核对实验柜编号，"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": "核对",
+            "object": "实验柜编号",
+            "effect": "local_change",
+            "selected": true
+          },
+          {
+            "id": "task-2",
+            "propositionScopeTexts": [
+              "并打印封条。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "print",
+            "action": "打印",
+            "object": "封条",
+            "effect": "physical_action",
+            "selected": true
+          }
+        ]
+      },
+      "taskScore": {
+        "caseId": "rco-task-b7-01",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 14,
+          "total": 14
+        },
+        "safeDefaults": {
+          "correct": 2,
+          "total": 2
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      },
+      "safetyScore": {
+        "matchedTasks": 2,
+        "expectedTasks": 2,
+        "predictedTasks": 2,
+        "actionSurfaceExact": 1,
+        "objectSurfaceExact": 1,
+        "unsafeDefaultFalsePositives": 0,
+        "unsafeDefaultFalsePositiveRate": null,
+        "unsafeDefaultTaskIds": []
+      },
+      "relationScore": {
+        "expected": [],
+        "actual": [],
+        "exact": true
+      },
+      "expectedUnresolvedScopeTexts": [],
+      "actualUnresolvedScopeTexts": [],
+      "unresolvedExact": true
+    },
+    {
+      "caseId": "rco-task-b7-02",
+      "coverageTags": [
+        "quoted_term",
+        "object_fidelity"
+      ],
+      "modelSelectionStatus": "REUSED_FROZEN_B7_RAW_OUTPUT_NO_MODEL_CALL",
+      "composerWarnings": [],
+      "actionNormalizations": [
+        {
+          "directiveId": "directive-1",
+          "scopeId": "scope-0003-520ce56f577949f9285cb2ede7a4b8c6515e0e3b51eb7bf72e61a18342feb95e",
+          "originalSurface": "请保存",
+          "canonicalSurface": "保存",
+          "status": "normalized",
+          "candidates": [
+            "保存"
+          ]
+        }
+      ],
+      "conditionAttachments": [],
+      "contractIssues": [],
+      "anchorScore": {
+        "scope": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "scopePrecision": 1,
+        "scopeRecall": 1,
+        "scopeF1": 1,
+        "actionCorrect": 1,
+        "objectCorrect": 1,
+        "total": 1,
+        "complete": true
+      },
+      "prediction": {
+        "caseId": "rco-task-b7-02",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "请保存名单校验记录。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": "保存",
+            "object": "名单校验记录",
+            "effect": "local_change",
+            "selected": true
+          }
+        ]
+      },
+      "taskScore": {
+        "caseId": "rco-task-b7-02",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 1,
+          "total": 1
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      },
+      "safetyScore": {
+        "matchedTasks": 1,
+        "expectedTasks": 1,
+        "predictedTasks": 1,
+        "actionSurfaceExact": 1,
+        "objectSurfaceExact": 1,
+        "unsafeDefaultFalsePositives": 0,
+        "unsafeDefaultFalsePositiveRate": null,
+        "unsafeDefaultTaskIds": []
+      },
+      "relationScore": {
+        "expected": [],
+        "actual": [],
+        "exact": true
+      },
+      "expectedUnresolvedScopeTexts": [],
+      "actualUnresolvedScopeTexts": [],
+      "unresolvedExact": true
+    },
+    {
+      "caseId": "rco-task-b7-03",
+      "coverageTags": [
+        "condition_true",
+        "cross_scope"
+      ],
+      "modelSelectionStatus": "REUSED_FROZEN_B7_RAW_OUTPUT_NO_MODEL_CALL",
+      "composerWarnings": [],
+      "actionNormalizations": [
+        {
+          "directiveId": "directive-1",
+          "scopeId": "scope-0002-d2f8fac4e3420dafc4d52cf181d6a279454338afaf40b35fd75bc9de02463362",
+          "originalSurface": "联系",
+          "canonicalSurface": "联系",
+          "status": "unchanged",
+          "candidates": [
+            "联系"
+          ]
+        }
+      ],
+      "conditionAttachments": [
+        {
+          "directiveId": "directive-1",
+          "conditionScopeId": "scope-0001-859c3bd067288c54f3020baf7f6aa870890a0a9e49f551e433ede2975265a0eb",
+          "attachedScopeIds": [
+            "scope-0003-c24297c9e341b9f9ebab76cdb0f34b02996ee3cc1e5612104b886c988f58f0c5"
+          ],
+          "truth": "true",
+          "status": "attached_unique"
+        }
+      ],
+      "contractIssues": [],
+      "anchorScore": {
+        "scope": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "scopePrecision": 1,
+        "scopeRecall": 1,
+        "scopeF1": 1,
+        "actionCorrect": 1,
+        "objectCorrect": 1,
+        "total": 1,
+        "complete": true
+      },
+      "prediction": {
+        "caseId": "rco-task-b7-03",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "若器材标签仍未贴齐，",
+              "请联系仓储员。",
+              "当前器材标签仍未贴齐。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "contact",
+            "action": "联系",
+            "object": "仓储员",
+            "effect": "external_interaction",
+            "selected": false
+          }
+        ]
+      },
+      "taskScore": {
+        "caseId": "rco-task-b7-03",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 0,
+          "total": 0
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      },
+      "safetyScore": {
+        "matchedTasks": 1,
+        "expectedTasks": 1,
+        "predictedTasks": 1,
+        "actionSurfaceExact": 1,
+        "objectSurfaceExact": 1,
+        "unsafeDefaultFalsePositives": 0,
+        "unsafeDefaultFalsePositiveRate": 0,
+        "unsafeDefaultTaskIds": []
+      },
+      "relationScore": {
+        "expected": [],
+        "actual": [],
+        "exact": true
+      },
+      "expectedUnresolvedScopeTexts": [],
+      "actualUnresolvedScopeTexts": [],
+      "unresolvedExact": true
+    },
+    {
+      "caseId": "rco-task-b7-04",
+      "coverageTags": [
+        "condition_false",
+        "requires_action_false"
+      ],
+      "modelSelectionStatus": "REUSED_FROZEN_B7_RAW_OUTPUT_NO_MODEL_CALL",
+      "composerWarnings": [],
+      "actionNormalizations": [
+        {
+          "directiveId": "directive-1",
+          "scopeId": "scope-0002-9e9406a78c4379be169b486f132c3d478badd34a44a489912a3f0255e7e0169b",
+          "originalSurface": "请联系",
+          "canonicalSurface": "联系",
+          "status": "normalized",
+          "candidates": [
+            "联系"
+          ]
+        }
+      ],
+      "conditionAttachments": [
+        {
+          "directiveId": "directive-1",
+          "conditionScopeId": "scope-0001-de7a61458c7e4a8f4d631cb426d93129b8ec43b4647f9d5ca618722dbcfc1f8c",
+          "attachedScopeIds": [
+            "scope-0003-53368332ee65bdba6dfff2809703967cfc8e65a0501bdc5b876f4f4b329370bb"
+          ],
+          "truth": "false",
+          "status": "attached_unique"
+        }
+      ],
+      "contractIssues": [],
+      "anchorScore": {
+        "scope": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "scopePrecision": 1,
+        "scopeRecall": 1,
+        "scopeF1": 1,
+        "actionCorrect": 1,
+        "objectCorrect": 1,
+        "total": 1,
+        "complete": true
+      },
+      "prediction": {
+        "caseId": "rco-task-b7-04",
+        "status": "completed",
+        "requiresAction": false,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "若出现材料缺页，",
+              "请联系装订点。",
+              "当前并未出现材料缺页。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "hypothetical",
+              "polarity": "uncertain",
+              "tense": "future",
+              "status": "unknown",
+              "validity": "uncertain",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "contact",
+            "action": "联系",
+            "object": "装订点",
+            "effect": "external_interaction",
+            "selected": false
+          }
+        ]
+      },
+      "taskScore": {
+        "caseId": "rco-task-b7-04",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 0,
+          "total": 0
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      },
+      "safetyScore": {
+        "matchedTasks": 1,
+        "expectedTasks": 1,
+        "predictedTasks": 1,
+        "actionSurfaceExact": 1,
+        "objectSurfaceExact": 1,
+        "unsafeDefaultFalsePositives": 0,
+        "unsafeDefaultFalsePositiveRate": 0,
+        "unsafeDefaultTaskIds": []
+      },
+      "relationScore": {
+        "expected": [],
+        "actual": [],
+        "exact": true
+      },
+      "expectedUnresolvedScopeTexts": [],
+      "actualUnresolvedScopeTexts": [],
+      "unresolvedExact": true
+    },
+    {
+      "caseId": "rco-task-b7-05",
+      "coverageTags": [
+        "revision",
+        "cancels"
+      ],
+      "modelSelectionStatus": "REUSED_FROZEN_B7_RAW_OUTPUT_NO_MODEL_CALL",
+      "composerWarnings": [],
+      "actionNormalizations": [
+        {
+          "directiveId": "directive-1",
+          "scopeId": "scope-0001-79bc186da225b5bfe10c90f83df1d72af67f9ae74b20579079d00677613230a2",
+          "originalSurface": "须发送",
+          "canonicalSurface": "发送",
+          "status": "normalized",
+          "candidates": [
+            "发送"
+          ]
+        }
+      ],
+      "conditionAttachments": [],
+      "contractIssues": [],
+      "anchorScore": {
+        "scope": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "scopePrecision": 1,
+        "scopeRecall": 1,
+        "scopeF1": 1,
+        "actionCorrect": 1,
+        "objectCorrect": 1,
+        "total": 1,
+        "complete": true
+      },
+      "prediction": {
+        "caseId": "rco-task-b7-05",
+        "status": "completed",
+        "requiresAction": false,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "旧版规定须发送签到照片。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "past",
+              "status": "cancelled",
+              "validity": "superseded",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "send",
+            "action": "发送",
+            "object": "签到照片",
+            "effect": "external_transfer",
+            "selected": false
+          }
+        ]
+      },
+      "taskScore": {
+        "caseId": "rco-task-b7-05",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 0,
+          "total": 0
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      },
+      "safetyScore": {
+        "matchedTasks": 1,
+        "expectedTasks": 1,
+        "predictedTasks": 1,
+        "actionSurfaceExact": 1,
+        "objectSurfaceExact": 1,
+        "unsafeDefaultFalsePositives": 0,
+        "unsafeDefaultFalsePositiveRate": 0,
+        "unsafeDefaultTaskIds": []
+      },
+      "relationScore": {
+        "expected": [
+          {
+            "kind": "cancels",
+            "targetExpectedId": "d-old-send-photo",
+            "replacementExpectedIds": [],
+            "evidenceScopeTexts": [
+              "旧版规定须发送签到照片。",
+              "该规定现已撤销。"
+            ],
+            "resolution": "adjacent_unique_referent",
+            "referentType": "规定"
+          }
+        ],
+        "actual": [
+          {
+            "kind": "cancels",
+            "targetExpectedId": "d-old-send-photo",
+            "replacementExpectedIds": [],
+            "evidenceScopeTexts": [
+              "旧版规定须发送签到照片。",
+              "该规定现已撤销。"
+            ],
+            "resolution": "adjacent_unique_referent",
+            "referentType": "规定"
+          }
+        ],
+        "exact": true
+      },
+      "expectedUnresolvedScopeTexts": [],
+      "actualUnresolvedScopeTexts": [],
+      "unresolvedExact": true
+    },
+    {
+      "caseId": "rco-task-b7-06",
+      "coverageTags": [
+        "revision",
+        "supersedes"
+      ],
+      "modelSelectionStatus": "REUSED_FROZEN_B7_RAW_OUTPUT_NO_MODEL_CALL",
+      "composerWarnings": [],
+      "actionNormalizations": [
+        {
+          "directiveId": "directive-1",
+          "scopeId": "scope-0001-66d9cb26fa20f140f32a7b06b3fa945d206468aa34e839be5adddcb350238884",
+          "originalSurface": "要求上传",
+          "canonicalSurface": "上传",
+          "status": "normalized",
+          "candidates": [
+            "上传"
+          ]
+        },
+        {
+          "directiveId": "directive-2",
+          "scopeId": "scope-0003-8bcf199822b78e05ae95d73cafa92ed4ca699eb6064e0507a2e9fbf09393fc62",
+          "originalSurface": "要求是保存",
+          "canonicalSurface": "保存",
+          "status": "normalized",
+          "candidates": [
+            "保存"
+          ]
+        }
+      ],
+      "conditionAttachments": [],
+      "contractIssues": [],
+      "anchorScore": {
+        "scope": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "scopePrecision": 1,
+        "scopeRecall": 1,
+        "scopeF1": 1,
+        "actionCorrect": 2,
+        "objectCorrect": 2,
+        "total": 2,
+        "complete": true
+      },
+      "prediction": {
+        "caseId": "rco-task-b7-06",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "原先方案要求上传旧版路线图。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "past",
+              "status": "cancelled",
+              "validity": "superseded",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": "上传",
+            "object": "旧版路线图",
+            "effect": "external_transfer",
+            "selected": false
+          },
+          {
+            "id": "task-2",
+            "propositionScopeTexts": [
+              "最新要求是保存新版路线图。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "save",
+            "action": "保存",
+            "object": "新版路线图",
+            "effect": "local_change",
+            "selected": true
+          }
+        ]
+      },
+      "taskScore": {
+        "caseId": "rco-task-b7-06",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 14,
+          "total": 14
+        },
+        "safeDefaults": {
+          "correct": 1,
+          "total": 1
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      },
+      "safetyScore": {
+        "matchedTasks": 2,
+        "expectedTasks": 2,
+        "predictedTasks": 2,
+        "actionSurfaceExact": 1,
+        "objectSurfaceExact": 1,
+        "unsafeDefaultFalsePositives": 0,
+        "unsafeDefaultFalsePositiveRate": 0,
+        "unsafeDefaultTaskIds": []
+      },
+      "relationScore": {
+        "expected": [
+          {
+            "kind": "supersedes",
+            "targetExpectedId": "d-old-upload-route",
+            "replacementExpectedIds": [
+              "d-save-new-route"
+            ],
+            "evidenceScopeTexts": [
+              "原先方案要求上传旧版路线图。",
+              "该方案现已作废。",
+              "最新要求是保存新版路线图。"
+            ],
+            "resolution": "adjacent_unique_referent",
+            "referentType": "方案"
+          }
+        ],
+        "actual": [
+          {
+            "kind": "supersedes",
+            "targetExpectedId": "d-old-upload-route",
+            "replacementExpectedIds": [
+              "d-save-new-route"
+            ],
+            "evidenceScopeTexts": [
+              "原先方案要求上传旧版路线图。",
+              "该方案现已作废。",
+              "最新要求是保存新版路线图。"
+            ],
+            "resolution": "adjacent_unique_referent",
+            "referentType": "方案"
+          }
+        ],
+        "exact": true
+      },
+      "expectedUnresolvedScopeTexts": [],
+      "actualUnresolvedScopeTexts": [],
+      "unresolvedExact": true
+    },
+    {
+      "caseId": "rco-task-b7-07",
+      "coverageTags": [
+        "revision",
+        "amends"
+      ],
+      "modelSelectionStatus": "REUSED_FROZEN_B7_RAW_OUTPUT_NO_MODEL_CALL",
+      "composerWarnings": [],
+      "actionNormalizations": [
+        {
+          "directiveId": "dir-1",
+          "scopeId": "scope-0001-429f6e32432f6842104d3808d298038ce03a579889c5cab538de2a51d80e5485",
+          "originalSurface": "联系",
+          "canonicalSurface": "联系",
+          "status": "unchanged",
+          "candidates": [
+            "联系"
+          ]
+        },
+        {
+          "directiveId": "dir-2",
+          "scopeId": "scope-0002-f1ba3a7ac9a5fd72873cc9e164a6000f5e0826a44dd8e4743c69ef5f7ab6b3c8",
+          "originalSurface": "整理",
+          "canonicalSurface": "整理",
+          "status": "unchanged",
+          "candidates": [
+            "整理"
+          ]
+        }
+      ],
+      "conditionAttachments": [],
+      "contractIssues": [],
+      "anchorScore": {
+        "scope": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "scopePrecision": 1,
+        "scopeRecall": 1,
+        "scopeF1": 1,
+        "actionCorrect": 2,
+        "objectCorrect": 2,
+        "total": 2,
+        "complete": true
+      },
+      "prediction": {
+        "caseId": "rco-task-b7-07",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "原任务要求联系摄影组。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "past",
+              "status": "cancelled",
+              "validity": "superseded",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "contact",
+            "action": "联系",
+            "object": "摄影组",
+            "effect": "external_interaction",
+            "selected": false
+          },
+          {
+            "id": "task-2",
+            "propositionScopeTexts": [
+              "现变更为整理照片目录。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "action": "整理",
+            "object": "照片目录",
+            "effect": "local_change",
+            "selected": true
+          }
+        ]
+      },
+      "taskScore": {
+        "caseId": "rco-task-b7-07",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 14,
+          "total": 14
+        },
+        "safeDefaults": {
+          "correct": 1,
+          "total": 1
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      },
+      "safetyScore": {
+        "matchedTasks": 2,
+        "expectedTasks": 2,
+        "predictedTasks": 2,
+        "actionSurfaceExact": 1,
+        "objectSurfaceExact": 1,
+        "unsafeDefaultFalsePositives": 0,
+        "unsafeDefaultFalsePositiveRate": 0,
+        "unsafeDefaultTaskIds": []
+      },
+      "relationScore": {
+        "expected": [
+          {
+            "kind": "amends",
+            "targetExpectedId": "d-old-contact-photo",
+            "replacementExpectedIds": [
+              "d-prepare-photo-catalog"
+            ],
+            "evidenceScopeTexts": [
+              "原任务要求联系摄影组。",
+              "现变更为整理照片目录。"
+            ],
+            "resolution": "adjacent_unique_referent",
+            "referentType": null
+          }
+        ],
+        "actual": [
+          {
+            "kind": "amends",
+            "targetExpectedId": "d-old-contact-photo",
+            "replacementExpectedIds": [
+              "d-prepare-photo-catalog"
+            ],
+            "evidenceScopeTexts": [
+              "原任务要求联系摄影组。",
+              "现变更为整理照片目录。"
+            ],
+            "resolution": "adjacent_unique_referent",
+            "referentType": null
+          }
+        ],
+        "exact": true
+      },
+      "expectedUnresolvedScopeTexts": [],
+      "actualUnresolvedScopeTexts": [],
+      "unresolvedExact": true
+    },
+    {
+      "caseId": "rco-task-b7-08",
+      "coverageTags": [
+        "revision",
+        "ambiguous"
+      ],
+      "modelSelectionStatus": "REUSED_FROZEN_B7_RAW_OUTPUT_NO_MODEL_CALL",
+      "composerWarnings": [],
+      "actionNormalizations": [
+        {
+          "directiveId": "d1",
+          "scopeId": "scope-0001-691cb05936477561226e5ad6da0c6140ad1227b5b57e0dd974827d4f2f033ed4",
+          "originalSurface": "提交",
+          "canonicalSurface": "提交",
+          "status": "unchanged",
+          "candidates": [
+            "提交"
+          ]
+        },
+        {
+          "directiveId": "d2",
+          "scopeId": "scope-0002-ca358881fa01df64f162342eb950776ebb2c3edec0f0a61722b739c69aba5f46",
+          "originalSurface": "上传",
+          "canonicalSurface": "上传",
+          "status": "unchanged",
+          "candidates": [
+            "上传"
+          ]
+        }
+      ],
+      "conditionAttachments": [],
+      "contractIssues": [],
+      "anchorScore": {
+        "scope": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "scopePrecision": 1,
+        "scopeRecall": 1,
+        "scopeF1": 1,
+        "actionCorrect": 2,
+        "objectCorrect": 2,
+        "total": 2,
+        "complete": true
+      },
+      "prediction": {
+        "caseId": "rco-task-b7-08",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "原要求提交甲表。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": "提交",
+            "object": "甲表",
+            "effect": "external_transfer",
+            "selected": false
+          },
+          {
+            "id": "task-2",
+            "propositionScopeTexts": [
+              "旧要求上传乙表。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "upload",
+            "action": "上传",
+            "object": "乙表",
+            "effect": "external_transfer",
+            "selected": false
+          }
+        ]
+      },
+      "taskScore": {
+        "caseId": "rco-task-b7-08",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 14,
+          "total": 14
+        },
+        "safeDefaults": {
+          "correct": 0,
+          "total": 0
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      },
+      "safetyScore": {
+        "matchedTasks": 2,
+        "expectedTasks": 2,
+        "predictedTasks": 2,
+        "actionSurfaceExact": 1,
+        "objectSurfaceExact": 1,
+        "unsafeDefaultFalsePositives": 0,
+        "unsafeDefaultFalsePositiveRate": 0,
+        "unsafeDefaultTaskIds": []
+      },
+      "relationScore": {
+        "expected": [],
+        "actual": [],
+        "exact": true
+      },
+      "expectedUnresolvedScopeTexts": [
+        "上述要求作废。"
+      ],
+      "actualUnresolvedScopeTexts": [
+        "上述要求作废。"
+      ],
+      "unresolvedExact": true
+    },
+    {
+      "caseId": "rco-task-b7-09",
+      "coverageTags": [
+        "mixed_modality",
+        "safe_default"
+      ],
+      "modelSelectionStatus": "REUSED_FROZEN_B7_RAW_OUTPUT_NO_MODEL_CALL",
+      "composerWarnings": [],
+      "actionNormalizations": [
+        {
+          "directiveId": "dir-1",
+          "scopeId": "scope-0001-3ce2a11c0c6009a1ceab17dc85d986590f5849456233e9c2c4e257a5e7c0afff",
+          "originalSurface": "可自行携带",
+          "canonicalSurface": "携带",
+          "status": "normalized",
+          "candidates": [
+            "携带"
+          ]
+        },
+        {
+          "directiveId": "dir-2",
+          "scopeId": "scope-0002-97530643c7e406f805daeae901f2a226e28c6fcfcd1f0f787762095e64bcb0dd",
+          "originalSurface": "请检查",
+          "canonicalSurface": "检查",
+          "status": "normalized",
+          "candidates": [
+            "检查"
+          ]
+        }
+      ],
+      "conditionAttachments": [],
+      "contractIssues": [],
+      "anchorScore": {
+        "scope": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "scopePrecision": 1,
+        "scopeRecall": 1,
+        "scopeF1": 1,
+        "actionCorrect": 2,
+        "objectCorrect": 2,
+        "total": 2,
+        "complete": true
+      },
+      "prediction": {
+        "caseId": "rco-task-b7-09",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "资料夹可自行携带；"
+            ],
+            "semantics": {
+              "actor": "addressed_group",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "optional"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "carry",
+            "action": "携带",
+            "object": "资料夹",
+            "effect": "physical_action",
+            "selected": false
+          },
+          {
+            "id": "task-2",
+            "propositionScopeTexts": [
+              "但请检查封面编号。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": "检查",
+            "object": "封面编号",
+            "effect": "local_change",
+            "selected": true
+          }
+        ]
+      },
+      "taskScore": {
+        "caseId": "rco-task-b7-09",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 14,
+          "total": 14
+        },
+        "safeDefaults": {
+          "correct": 1,
+          "total": 1
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      },
+      "safetyScore": {
+        "matchedTasks": 2,
+        "expectedTasks": 2,
+        "predictedTasks": 2,
+        "actionSurfaceExact": 1,
+        "objectSurfaceExact": 1,
+        "unsafeDefaultFalsePositives": 0,
+        "unsafeDefaultFalsePositiveRate": 0,
+        "unsafeDefaultTaskIds": []
+      },
+      "relationScore": {
+        "expected": [],
+        "actual": [],
+        "exact": true
+      },
+      "expectedUnresolvedScopeTexts": [],
+      "actualUnresolvedScopeTexts": [],
+      "unresolvedExact": true
+    },
+    {
+      "caseId": "rco-task-b7-10",
+      "coverageTags": [
+        "quoted_instruction",
+        "ignore_scope"
+      ],
+      "modelSelectionStatus": "REUSED_FROZEN_B7_RAW_OUTPUT_NO_MODEL_CALL",
+      "composerWarnings": [],
+      "actionNormalizations": [
+        {
+          "directiveId": "directive-1",
+          "scopeId": "scope-0003-0a1d761ff70fcd53761f0fe78e9fc24f2faaede05e63b19cb886ca194372d613",
+          "originalSurface": "请填写",
+          "canonicalSurface": "填写",
+          "status": "normalized",
+          "candidates": [
+            "填写"
+          ]
+        }
+      ],
+      "conditionAttachments": [],
+      "contractIssues": [],
+      "anchorScore": {
+        "scope": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "scopePrecision": 1,
+        "scopeRecall": 1,
+        "scopeF1": 1,
+        "actionCorrect": 1,
+        "objectCorrect": 1,
+        "total": 1,
+        "complete": true
+      },
+      "prediction": {
+        "caseId": "rco-task-b7-10",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "请填写设备借用备注。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "fill",
+            "action": "填写",
+            "object": "设备借用备注",
+            "effect": "local_change",
+            "selected": true
+          }
+        ]
+      },
+      "taskScore": {
+        "caseId": "rco-task-b7-10",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 1,
+          "total": 1
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      },
+      "safetyScore": {
+        "matchedTasks": 1,
+        "expectedTasks": 1,
+        "predictedTasks": 1,
+        "actionSurfaceExact": 1,
+        "objectSurfaceExact": 1,
+        "unsafeDefaultFalsePositives": 0,
+        "unsafeDefaultFalsePositiveRate": null,
+        "unsafeDefaultTaskIds": []
+      },
+      "relationScore": {
+        "expected": [],
+        "actual": [],
+        "exact": true
+      },
+      "expectedUnresolvedScopeTexts": [],
+      "actualUnresolvedScopeTexts": [],
+      "unresolvedExact": true
+    },
+    {
+      "caseId": "rco-task-b7-11",
+      "coverageTags": [
+        "actor",
+        "addressed_group"
+      ],
+      "modelSelectionStatus": "REUSED_FROZEN_B7_RAW_OUTPUT_NO_MODEL_CALL",
+      "composerWarnings": [],
+      "actionNormalizations": [
+        {
+          "directiveId": "directive-1",
+          "scopeId": "scope-0001-46c1caddc23e64a2fd2f8532f5ff94daf6383feeb174c631656176f676c1da8b",
+          "originalSurface": "整理",
+          "canonicalSurface": "整理",
+          "status": "unchanged",
+          "candidates": [
+            "整理"
+          ]
+        }
+      ],
+      "conditionAttachments": [],
+      "contractIssues": [],
+      "anchorScore": {
+        "scope": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "scopePrecision": 1,
+        "scopeRecall": 1,
+        "scopeF1": 1,
+        "actionCorrect": 1,
+        "objectCorrect": 1,
+        "total": 1,
+        "complete": true
+      },
+      "prediction": {
+        "caseId": "rco-task-b7-11",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "现场协调人员须整理来宾座次表。"
+            ],
+            "semantics": {
+              "actor": "addressed_group",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "prepare",
+            "action": "整理",
+            "object": "来宾座次表",
+            "effect": "local_change",
+            "selected": false
+          }
+        ]
+      },
+      "taskScore": {
+        "caseId": "rco-task-b7-11",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 7,
+          "total": 7
+        },
+        "safeDefaults": {
+          "correct": 0,
+          "total": 0
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      },
+      "safetyScore": {
+        "matchedTasks": 1,
+        "expectedTasks": 1,
+        "predictedTasks": 1,
+        "actionSurfaceExact": 1,
+        "objectSurfaceExact": 1,
+        "unsafeDefaultFalsePositives": 0,
+        "unsafeDefaultFalsePositiveRate": 0,
+        "unsafeDefaultTaskIds": []
+      },
+      "relationScore": {
+        "expected": [],
+        "actual": [],
+        "exact": true
+      },
+      "expectedUnresolvedScopeTexts": [],
+      "actualUnresolvedScopeTexts": [],
+      "unresolvedExact": true
+    },
+    {
+      "caseId": "rco-task-b7-12",
+      "coverageTags": [
+        "event_context",
+        "negative",
+        "safe_default"
+      ],
+      "modelSelectionStatus": "REUSED_FROZEN_B7_RAW_OUTPUT_NO_MODEL_CALL",
+      "composerWarnings": [],
+      "actionNormalizations": [
+        {
+          "directiveId": "directive-1",
+          "scopeId": "scope-0002-b7db853a0a7e4723fc35e30df3b926ac1821207ac8c662b3df11a535711f1a1d",
+          "originalSurface": "不得邮寄",
+          "canonicalSurface": "邮寄",
+          "status": "normalized",
+          "candidates": [
+            "邮寄"
+          ]
+        },
+        {
+          "directiveId": "directive-2",
+          "scopeId": "scope-0003-335541aad890209e72c717716071b8f8d4897bcace41ab0d52447e2c907bb7aa",
+          "originalSurface": "请核对",
+          "canonicalSurface": "核对",
+          "status": "normalized",
+          "candidates": [
+            "核对"
+          ]
+        }
+      ],
+      "conditionAttachments": [],
+      "contractIssues": [],
+      "anchorScore": {
+        "scope": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "scopePrecision": 1,
+        "scopeRecall": 1,
+        "scopeF1": 1,
+        "actionCorrect": 2,
+        "objectCorrect": 2,
+        "total": 2,
+        "complete": true
+      },
+      "prediction": {
+        "caseId": "rco-task-b7-12",
+        "status": "completed",
+        "requiresAction": true,
+        "tasks": [
+          {
+            "id": "task-1",
+            "propositionScopeTexts": [
+              "本次不得邮寄纸质回执。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "negative",
+              "tense": "future",
+              "status": "cancelled",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "submit",
+            "action": "邮寄",
+            "object": "纸质回执",
+            "effect": "external_transfer",
+            "selected": false
+          },
+          {
+            "id": "task-2",
+            "propositionScopeTexts": [
+              "请核对在线回执编号。"
+            ],
+            "semantics": {
+              "actor": "addressee",
+              "speechAct": "directive",
+              "polarity": "affirmative",
+              "tense": "future",
+              "status": "pending",
+              "validity": "active",
+              "modality": "required"
+            },
+            "inferenceLevel": "explicit",
+            "actionType": "review",
+            "action": "核对",
+            "object": "在线回执编号",
+            "effect": "local_change",
+            "selected": true
+          }
+        ]
+      },
+      "taskScore": {
+        "caseId": "rco-task-b7-12",
+        "scoreable": true,
+        "taskCounts": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "taskPrecision": 1,
+        "taskRecall": 1,
+        "taskF1": 1,
+        "requiresActionCorrect": true,
+        "exactTaskBoundary": true,
+        "semanticFields": {
+          "correct": 14,
+          "total": 14
+        },
+        "safeDefaults": {
+          "correct": 1,
+          "total": 1
+        },
+        "forbiddenDefaultSelections": 0,
+        "completeTaskCase": true,
+        "majorCorrection": false
+      },
+      "safetyScore": {
+        "matchedTasks": 2,
+        "expectedTasks": 2,
+        "predictedTasks": 2,
+        "actionSurfaceExact": 1,
+        "objectSurfaceExact": 1,
+        "unsafeDefaultFalsePositives": 0,
+        "unsafeDefaultFalsePositiveRate": 0,
+        "unsafeDefaultTaskIds": []
+      },
+      "relationScore": {
+        "expected": [],
+        "actual": [],
+        "exact": true
+      },
+      "expectedUnresolvedScopeTexts": [],
+      "actualUnresolvedScopeTexts": [],
+      "unresolvedExact": true
+    }
+  ],
+  "stablePath": "UNCHANGED",
+  "rco6": "NOT_STARTED",
+  "deployment": "NOT_RUN"
+}

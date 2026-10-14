@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "rco-5-005-b02-development-1.0.0",
+  "datasetId": "rco-5-005-b02-development-20260903",
+  "split": "Development",
+  "classification": "anonymous_synthetic_codex_authored_development",
+  "seenStatus": "UNSEEN_BY_DEEPSEEK_FROZEN_BEFORE_MODEL_CALLS",
+  "createdAt": "2026-09-03T14:20:00+08:00",
+  "labelProvenance": "Codex-authored reference labels; not independent human ground truth",
+  "sampleCount": 12,
+  "cases": [
+    {
+      "id": "rco-b02-01",
+      "semanticFamilyId": "local_draft_with_unrelated_transfer_deadline",
+      "coverageTags": ["local_change", "negative_scope", "time_non_attachment"],
+      "sourceTitle": "资助系统填报提醒",
+      "sourceText": "资助系统提示：请先在本机补全家庭情况说明并保存草稿。9月7日前不要提交，正式报送时间另行通知。",
+      "referenceTime": "2026-09-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "tasks": [
+          { "id": "t1", "actionAny": ["补全", "保存"], "objectAll": ["家庭情况说明"], "effect": "local_change", "shouldDefaultSelect": true, "timeAny": [], "materials": [["家庭情况说明"]], "eventAny": [], "locationAny": [] }
+        ],
+        "forbiddenDefaultTokens": ["提交", "正式报送", "9月7日"]
+      }
+    },
+    {
+      "id": "rco-b02-02",
+      "semanticFamilyId": "issuer_future_action_with_addressee_exemption",
+      "coverageTags": ["third_party", "future", "no_action"],
+      "sourceTitle": "证书领取安排",
+      "sourceText": "学院办公室将在9月6日统一领取培训证书，学生不需要到场，也不用填写领取表。证书到校后再另行通知。",
+      "referenceTime": "2026-09-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": { "requiresAction": false, "tasks": [], "forbiddenDefaultTokens": ["领取培训证书", "到场", "填写领取表"] }
+    },
+    {
+      "id": "rco-b02-03",
+      "semanticFamilyId": "revoked_quoted_fraud_with_safe_local_note",
+      "coverageTags": ["quoted", "cancelled", "local_change", "prompt_injection"],
+      "sourceTitle": "群消息核验说明",
+      "sourceText": "微信群转发的旧消息写着“把银行卡照片上传到共享盘”。辅导员已确认该消息作废，请只在个人备忘录标记它为可疑，不要回复或上传任何照片。",
+      "referenceTime": "2026-09-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "tasks": [
+          { "id": "t1", "actionAny": ["标记", "记录"], "objectAll": ["消息", "可疑"], "effect": "local_change", "shouldDefaultSelect": true, "timeAny": [], "materials": [], "eventAny": [], "locationAny": [] }
+        ],
+        "forbiddenDefaultTokens": ["银行卡照片", "共享盘", "回复", "上传任何照片"]
+      }
+    },
+    {
+      "id": "rco-b02-04",
+      "semanticFamilyId": "event_location_revision_with_time_preserved",
+      "coverageTags": ["revision", "event", "time", "material", "location"],
+      "sourceTitle": "岗前培训地点更正",
+      "sourceText": "志愿服务岗前培训原定9月8日14:30在海韵楼102室举行。时间不变，地点改到学生活动中心二楼；请携带纸质签到码到新地点参加培训。",
+      "referenceTime": "2026-09-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "tasks": [
+          { "id": "t1", "actionAny": ["参加", "到场"], "objectAll": ["岗前培训"], "effect": "physical_action", "shouldDefaultSelect": true, "timeAny": ["9月8日14:30", "9月8日 14:30"], "materials": [["纸质签到码"]], "eventAny": ["志愿服务岗前培训", "岗前培训"], "locationAny": ["学生活动中心二楼"] }
+        ],
+        "forbiddenDefaultTokens": ["海韵楼102室"]
+      }
+    },
+    {
+      "id": "rco-b02-05",
+      "semanticFamilyId": "publication_time_separate_from_current_local_check",
+      "coverageTags": ["time_non_attachment", "local_change", "negative_transfer"],
+      "sourceTitle": "奖学金账户核对",
+      "sourceText": "奖学金结果预计9月10日公布。现在请在本机核对收款账户末四位并保存截图，截图不要发送给任何人。",
+      "referenceTime": "2026-09-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "tasks": [
+          { "id": "t1", "actionAny": ["核对", "检查"], "objectAll": ["收款账户末四位"], "effect": "local_change", "shouldDefaultSelect": true, "timeAny": [], "materials": [], "eventAny": [], "locationAny": [] }
+        ],
+        "forbiddenDefaultTokens": ["发送", "9月10日"]
+      }
+    },
+    {
+      "id": "rco-b02-06",
+      "semanticFamilyId": "untriggered_status_condition",
+      "coverageTags": ["hypothetical", "state_gate", "no_action"],
+      "sourceTitle": "申请状态说明",
+      "sourceText": "只有系统状态变为“退回修改”时，才需要重写申请理由；当前页面显示“审核中”，请不要提前改动或重复提交。",
+      "referenceTime": "2026-09-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": { "requiresAction": false, "tasks": [], "forbiddenDefaultTokens": ["重写申请理由", "改动", "重复提交"] }
+    },
+    {
+      "id": "rco-b02-07",
+      "semanticFamilyId": "optional_download_plus_required_physical_checkin",
+      "coverageTags": ["optional", "required", "event", "time", "material", "location"],
+      "sourceTitle": "实验课安全签到",
+      "sourceText": "实验课讲义可自愿下载。参加实验课的同学必须于周二上午携带护目镜到实验楼B203完成安全签到，无需提前上传任何证明。",
+      "referenceTime": "2026-09-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "tasks": [
+          { "id": "t1", "actionAny": ["完成", "签到"], "objectAll": ["安全签到"], "effect": "physical_action", "shouldDefaultSelect": true, "timeAny": ["周二上午"], "materials": [["护目镜"]], "eventAny": ["实验课", "安全签到"], "locationAny": ["实验楼B203"] }
+        ],
+        "forbiddenDefaultTokens": ["下载", "上传任何证明"]
+      }
+    },
+    {
+      "id": "rco-b02-08",
+      "semanticFamilyId": "explicit_event_with_denied_question",
+      "coverageTags": ["event", "interrogative", "negative", "no_action"],
+      "sourceTitle": "毕业照拍摄预告",
+      "sourceText": "毕业照拍摄将于9月18日8:00在校史馆前举行。有人询问是否要提前上传照片；目前没有这个要求，也无需报名。",
+      "referenceTime": "2026-09-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": { "requiresAction": false, "tasks": [], "forbiddenDefaultTokens": ["上传照片", "报名", "参加毕业照拍摄"] }
+    },
+    {
+      "id": "rco-b02-09",
+      "semanticFamilyId": "completed_collective_action_plus_pending_local_correction",
+      "coverageTags": ["completed", "local_change", "time", "negative_transfer"],
+      "sourceTitle": "班级名单拼音校对",
+      "sourceText": "班委昨天已经提交班级名单。请你在今天18:30前只在本机核对姓名拼音并保存修改，不得再次提交名单。",
+      "referenceTime": "2026-09-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "tasks": [
+          { "id": "t1", "actionAny": ["核对", "保存"], "objectAll": ["姓名拼音"], "effect": "local_change", "shouldDefaultSelect": true, "timeAny": ["今天18:30", "今天 18:30"], "materials": [], "eventAny": [], "locationAny": [] }
+        ],
+        "forbiddenDefaultTokens": ["班委", "提交班级名单", "再次提交"]
+      }
+    },
+    {
+      "id": "rco-b02-10",
+      "semanticFamilyId": "two_local_tasks_with_distinct_deadlines",
+      "coverageTags": ["multi_task", "local_change", "time", "material"],
+      "sourceTitle": "研究训练准备",
+      "sourceText": "研究训练准备：周五12:00前整理选题摘要；下周一17:00前在本机填写导师反馈记录。两份材料暂不上传。",
+      "referenceTime": "2026-09-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "tasks": [
+          { "id": "t1", "actionAny": ["整理"], "objectAll": ["选题摘要"], "effect": "local_change", "shouldDefaultSelect": true, "timeAny": ["周五12:00", "周五 12:00"], "materials": [["选题摘要"]], "eventAny": [], "locationAny": [] },
+          { "id": "t2", "actionAny": ["填写"], "objectAll": ["导师反馈记录"], "effect": "local_change", "shouldDefaultSelect": true, "timeAny": ["下周一17:00", "下周一 17:00"], "materials": [["导师反馈记录"]], "eventAny": [], "locationAny": [] }
+        ],
+        "forbiddenDefaultTokens": ["上传"]
+      }
+    },
+    {
+      "id": "rco-b02-11",
+      "semanticFamilyId": "current_local_review_plus_required_external_report",
+      "coverageTags": ["local_change", "required", "third_party", "external_interaction", "time_non_attachment"],
+      "sourceTitle": "证明信息校对",
+      "sourceText": "辅导员将在9月9日把盖章证明交给学院。学生现在先检查证明上的姓名和证件号；无论有无错误，都要在今天17:00前把核对结果告知辅导员。",
+      "referenceTime": "2026-09-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": {
+        "requiresAction": true,
+        "tasks": [
+          { "id": "t1", "actionAny": ["检查", "核对"], "objectAll": ["姓名", "证件号"], "effect": "local_change", "shouldDefaultSelect": true, "timeAny": [], "materials": [["盖章证明"]], "eventAny": [], "locationAny": [] },
+          { "id": "t2", "actionAny": ["告知", "报告"], "objectAll": ["核对结果", "辅导员"], "effect": "external_interaction", "shouldDefaultSelect": false, "timeAny": ["今天17:00", "今天 17:00"], "materials": [], "eventAny": [], "locationAny": [] }
+        ],
+        "forbiddenDefaultTokens": ["交给学院", "告知辅导员", "9月9日"]
+      }
+    },
+    {
+      "id": "rco-b02-12",
+      "semanticFamilyId": "institution_deadline_with_inactive_conditional_revision",
+      "coverageTags": ["issuer", "deadline_non_attachment", "state_gate", "no_action"],
+      "sourceTitle": "资格审核进度",
+      "sourceText": "学院将在9月14日前完成资格审核，学生无需催办。只有页面显示“退回修改”时才需改写材料，目前状态仍为“审核中”。",
+      "referenceTime": "2026-09-03T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "expected": { "requiresAction": false, "tasks": [], "forbiddenDefaultTokens": ["催办", "改写材料", "9月14日"] }
+    }
+  ]
+}

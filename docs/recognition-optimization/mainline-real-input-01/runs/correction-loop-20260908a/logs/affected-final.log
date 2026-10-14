@@ -1,0 +1,20 @@
+TEMP C:\Users\Winner\AppData\Local\Temp\real-correction-final-XvkOCS
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+ ✓ src/experiments/realInput01/factCorrections.test.ts (23 tests) 38ms
+ ✓ src/experiments/realInput01/acceptance.test.tsx (21 tests) 26243ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; separate confirmation preserves two different deadlines  2979ms
+   ✓ complex notice correction public API, original model answers remain immutable > B01 event mismatch corrected explicitly; batch confirmation preserves two different deadlines  2825ms
+   ✓ complex notice correction public API, original model answers remain immutable > A08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved  1589ms
+   ✓ complex notice correction public API, original model answers remain immutable > B08 failed raw is retained, missing old task and revision can be explicitly corrected and new task saved  1752ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > batch actual recorded responses retain raw and first suggestions, never default select, preserve A02 and reject identity substitution  13163ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > original A02 real App driver preserves provenance, material observation and explicit edits through independent reload  1339ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > recorded launcher builds real App, serves only bound A02 and rejects unauthorized endpoints without model code  1055ms
+   ✓ real App runtime and public send connection; memory/SSR not browser acceptance > source-first to correct confirmation and independent reload: multi  394ms
+
+ Test Files  2 passed (2)
+      Tests  44 passed (44)
+   Start at  09:53:18
+   Duration  27.85s (transform 783ms, setup 0ms, collect 1.22s, tests 26.28s, environment 0ms, prepare 472ms)
+

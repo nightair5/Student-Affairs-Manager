@@ -1,0 +1,59 @@
+{
+  "version": "obligation-paid-seal-1",
+  "role": "HASHES_ONLY_AUTHORIZATION_AND_PRICE_ORIGINALS_REMAIN_LOCAL",
+  "root": ".data/obligation-authority/execution",
+  "files": [
+    {
+      "path": "AUTHORIZATION.json",
+      "sha256": "142122135370b5bf30c08e0551a93e23a30b0e0f411d4a6842b63fdc5cad5104",
+      "bytes": 2845
+    },
+    {
+      "path": "HALT.json",
+      "sha256": "539618269170323b6f7c2f6893a3dc914759b6d85fb0f895ad8af5d098796f28",
+      "bytes": 816
+    },
+    {
+      "path": "phase-observation-v1/01.jsonl",
+      "sha256": "0b1cb2af9a5f49ad88cdd8497cf9cd1acf7eaa1af88478e9ed7c98540c5bc62b",
+      "bytes": 3175
+    },
+    {
+      "path": "PRICE_EVIDENCE.json",
+      "sha256": "66dee55a7e0854442af4e28f464bf54a708d8bce8838441cfa9675ea8b353f64",
+      "bytes": 2795
+    },
+    {
+      "path": "receipts/000001024.json",
+      "sha256": "8b837ed1396236c635cb22f783dc1d50bc5372d5e35e618e5f452a207bf41557",
+      "bytes": 760
+    },
+    {
+      "path": "receipts/000001025.json",
+      "sha256": "9a6d993da27789b194eba4d60020fcf0e5f0ea0e4ec9f2337fac8e77e466bdbd",
+      "bytes": 569
+    },
+    {
+      "path": "STATE.json",
+      "sha256": "71cf049f0e643ef66a906ed96546de7d036a990c4a7598a1506eb9f41c2eaaeb",
+      "bytes": 2704
+    },
+    {
+      "path": "USER_AUTHORIZATION.txt",
+      "sha256": "8f1a2c6bde6fac897c4854cace21a70d97f45339590e0c35eebd0a7ce5419495",
+      "bytes": 665
+    }
+  ],
+  "ledgerBaseline": {
+    "rows": 1024,
+    "sha256": "25d8dbb4a4a56379ab9f7bc9d66d8023c4a3d4db65cb61d14caa50b14ee87a14",
+    "bytes": 835943,
+    "prefixVerified": true
+  },
+  "ledgerNow": {
+    "rows": 1026,
+    "sha256": "489da37a7b83c2d3d6c00d8f2ef949e6d3fae4f8e9e250e5bac7ca80a84ec278",
+    "tail": "9df85fd703dbbe31c8510ccdf60b00ba84d51215ab07e5b00f8d8fce179912d7",
+    "batchRows": 2
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "batch": "V5-CURRENT-REAL-NOTICE-DEVELOPMENT-R1",
+  "version": "v5-current-real-source-facts-1.0.0",
+  "design": "CURRENT_V5_SINGLE_ARM_FACT_DIAGNOSIS_NOT_CANDIDATE_COMPARISON",
+  "inputMechanismChanged": false,
+  "sourceCount": 4,
+  "requestCount": 4,
+  "candidate": "single-authority-generation-1.0.0",
+  "promptVersion": "recognition-single-authority-1.0.0",
+  "denominator": "All four fixed requests: send/usage/parse/schema failures, incorrect facts, disagreements and unknowns retained",
+  "layers": [
+    "modelFirstFacts",
+    "displayBeforeHuman",
+    "humanFinal"
+  ],
+  "truth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL",
+  "adjudication": "Original source-first seven assertions per excerpt unchanged; explicit reason and outputPointer required per fact/layer. Whole incorrect if any factual error; incomplete, disputed or unadjudicated prose UNKNOWN. Unknown personal status is distinct from missing stated facts. Exact/unknown endpoints, owners, type, materials, destination/completion, titles/descriptions/extras and scope all checked.",
+  "criticalRisks": [
+    "key omission",
+    "unsupported task",
+    "wrong time/value/type/owner",
+    "false personal qualification/completion",
+    "wrong dependency/revision relation"
+  ],
+  "legalRepresentation": "Allow factual equivalence and lossless ordering/naming, never wrong objects or dates. Explicit unannounced null can be correct; no default clock. Do not infer QR destination, old replacement endpoint, interest or enrollment.",
+  "decision": "Report correct/incorrect/UNKNOWN for each source and layer; no paired winner or new-model improvement claim. At most two evidence roots and one later input hypothesis. Do not change references after seeing answers.",
+  "stopping": "Once-send strict ordinal, zero automatic retry/repair/verifier; any send/raw/usage/settlement uncertainty seals and stops later paid units. Old sealed sites remain untouched.",
+  "dispatchAuthorized": false,
+  "extras": {
+    "retry": 0,
+    "repair": 0,
+    "verifier": 0,
+    "extraSamples": 0
+  }
+}

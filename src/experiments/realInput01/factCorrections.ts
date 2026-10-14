@@ -1,0 +1,342 @@
+import { parseSemanticInput, plainJson, stableJson, type SemanticInput, type SemanticMaterial, type SemanticTask, type SemanticTime, type SemanticEvent, type SemanticRevision } from '../mainline04/semanticContract'
+import type { ImmutableScopeIndex, SurfaceReference } from '../../recognition/scopeReferenceContract'
+import type { MaterialStatus } from '../../domain/v2/types'
+
+/** User observation, not a model claim or a source quotation. */
+export interface MaterialDecision { required: boolean; status: MaterialStatus }
+export const materialStatusLabels: Record<MaterialStatus, string> = {unverified:'准备情况尚未核实',missing:'确实缺少',preparing:'正在准备',ready:'已具备',submitted:'已提交',verified:'已核验',not_required:'不作为必备材料'}
+export function validateMaterialDecision(value: unknown): MaterialDecision {
+  const row=plainJson(value) as MaterialDecision
+  if (!row || typeof row!=='object' || Array.isArray(row)) return reject('MATERIAL_DECISION')
+  keys(row,['required','status'])
+  if (typeof row.required!=='boolean' || typeof row.status!=='string' || !Object.hasOwn(materialStatusLabels,row.status)
+    || (row.required && row.status==='not_required')) return reject('MATERIAL_DECISION')
+  return row
+}
+
+export type MaterialEdit = Pick<SemanticMaterial, 'name' | 'quantity' | 'formatRequirements' | 'namingRequirements' | 'submissionChannel' | 'relatedTaskTempIds'>
+export type FactChange = { kind: 'surface'; taskId: string; field: 'action' | 'object'; value: SurfaceReference }
+  | { kind: 'information_scope'; value: 'information' | 'provenance'; scopeIds: string[]; note: string }
+  | { kind: 'material'; materialId: string; value: MaterialEdit }
+  | { kind: 'time'; taskId: string; value: SemanticTime; scopeIds: string[]; note: string }
+  | { kind: 'condition'; taskId: string; value: SemanticTask['condition']; scopeIds: string[]; note: string }
+  | { kind: 'dependency'; taskId: string; value: string[]; scopeIds: string[]; note: string }
+  | { kind: 'event'; taskId: string; value: { coverage: SemanticTask['coverage']['event']; event: SemanticEvent | null }; scopeIds: string[]; note: string }
+  | { kind: 'independent_event'; eventId: string; value: SemanticEvent; scopeIds: string[]; note: string }
+  | { kind: 'independent_time'; timeId: string; value: SemanticTime; scopeIds: string[]; note: string }
+  | { kind: 'revision'; index: number; value: { relation: SemanticRevision; addedTask: SemanticTask | null }; scopeIds: string[]; note: string }
+  | { kind: 'add_task'; value: SemanticTask; scopeIds: string[]; note: string }
+  | { kind: 'add_material'; value: SemanticMaterial; scopeIds: string[]; note: string }
+  | { kind: 'add_independent_event'; value: { event: SemanticEvent; time: SemanticTime | null; endTime?: SemanticTime | null }; scopeIds: string[]; note: string }
+export interface FactCorrection { id: string; at: string; change: FactChange; before: unknown }
+const reject = (code: string): never => { throw Error('REAL_INPUT_CORRECTION_' + code) }
+const same = (a: unknown, b: unknown) => stableJson(a) === stableJson(b)
+function validCalendarValue(value:string){
+  const match=/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?$/.exec(value)
+  if(!match)return false
+  const [,year,month,day,hour,minute]=match,date=new Date(Date.UTC(Number(year),Number(month)-1,Number(day)))
+  return date.getUTCFullYear()===Number(year)&&date.getUTCMonth()+1===Number(month)&&date.getUTCDate()===Number(day)
+    &&(hour===undefined||Number(hour)<24&&Number(minute)<60)
+}
+function keys(value: object, names: string[]) {
+  if (!same(Object.keys(value).sort(), names.sort())) reject('FIELDS')
+}
+export const materialEdit = (item: SemanticMaterial): MaterialEdit => ({ name: item.name, quantity: item.quantity,
+  formatRequirements: [...item.formatRequirements], namingRequirements: [...item.namingRequirements],
+  submissionChannel: item.submissionChannel, relatedTaskTempIds: [...item.relatedTaskTempIds] })
+
+/** Explicit entity edges only. Dependencies carry safety, never ownership of dates. */
+export function factAssets(input: SemanticInput, taskId: string) {
+  const task = input.tasks.find(t => t.id === taskId)
+  if (!task) return reject('TASK_MISSING')
+  const materials = new Set(task.detail.materialTempIds), times = new Set(task.detail.timePointTempIds), events = new Set(task.eventTempIds)
+  let size = -1
+  while (size !== materials.size + times.size + events.size) {
+    size = materials.size + times.size + events.size
+    for (const m of input.materials) if (m.relatedTaskTempIds.includes(taskId)) materials.add(m.tempId)
+    for (const t of input.timePoints) {
+      const hasTaskOwner=t.relatedTaskTempIds.length>0||input.tasks.some(owner=>owner.detail.timePointTempIds.includes(t.tempId))
+      if (times.has(t.tempId) || t.relatedTaskTempIds.includes(taskId)
+        || (!hasTaskOwner&&t.relatedMaterialTempIds.some(id => materials.has(id)))) {
+        times.add(t.tempId); t.relatedMaterialTempIds.forEach(id => materials.add(id))
+      }
+    }
+    for (const e of input.events) if (events.has(e.tempId) || e.relatedTaskTempIds.includes(taskId)
+      || (e.startTimePointTempId && times.has(e.startTimePointTempId)) || (e.endTimePointTempId && times.has(e.endTimePointTempId))) {
+      events.add(e.tempId); if (e.startTimePointTempId) times.add(e.startTimePointTempId); if (e.endTimePointTempId) times.add(e.endTimePointTempId)
+    }
+  }
+  return { materials, times, events }
+}
+function safetyTasks(input: SemanticInput, initial: Set<string>) {
+  const found = new Set(initial)
+  let size = -1
+  while (size !== found.size) {
+    size = found.size
+    for (const task of input.tasks) if (task.detail.dependencyTempIds.some(id => found.has(id))
+      || (task.detail.parentTempId && found.has(task.detail.parentTempId))) found.add(task.id)
+    for (const r of input.revisions) if (found.has(r.targetDirectiveId) || (r.fromDirectiveId && found.has(r.fromDirectiveId))) {
+      found.add(r.targetDirectiveId); if (r.fromDirectiveId) found.add(r.fromDirectiveId)
+    }
+  }
+  return found
+}
+function affected(input: SemanticInput, change: FactChange) {
+  if (change.kind === 'information_scope') return new Set(input.tasks.map(t=>t.id))
+  if (change.kind === 'independent_event' || change.kind === 'independent_time' || change.kind === 'add_independent_event') return new Set<string>()
+  const ids = change.kind === 'material' ? input.tasks.filter(t => factAssets(input, t.id).materials.has(change.materialId)).map(t => t.id)
+    : change.kind === 'add_material' ? change.value.relatedTaskTempIds
+    : change.kind === 'event' ? [change.taskId,...(change.value.event?.relatedTaskTempIds??[]),
+      ...input.tasks.filter(t=>change.value.event&&factAssets(input,t.id).events.has(change.value.event.tempId)).map(t=>t.id)]
+    : change.kind === 'revision' ? [change.value.relation.targetDirectiveId, change.value.relation.fromDirectiveId,
+      input.revisions[change.index]?.targetDirectiveId, input.revisions[change.index]?.fromDirectiveId].filter((id): id is string => Boolean(id))
+    : change.kind === 'add_task' ? [change.value.id] : [change.taskId]
+  return new Set([...safetyTasks(input, new Set(ids))].filter(id => input.tasks.some(t => t.id === id)))
+}
+function reviewEvidence(change: FactChange, index: ImmutableScopeIndex) {
+  if (!('note' in change)) return
+  if (!change.note.trim() || change.note.length > 1000 || !change.scopeIds.length
+    || new Set(change.scopeIds).size !== change.scopeIds.length || change.scopeIds.some(id => !index.scopes.some(s => s.id === id))) reject('REVIEW_EVIDENCE_REQUIRED')
+}
+function addTask(input: SemanticInput, task: SemanticTask, index: ImmutableScopeIndex) {
+  if (!/^user-[a-zA-Z0-9-]{1,90}$/.test(task.id) || [...input.tasks.map(t=>t.id),...input.materials.map(m=>m.tempId),...input.events.map(e=>e.tempId),...input.timePoints.map(t=>t.tempId)].includes(task.id)) reject('NEW_TASK_ID')
+  for (const ref of [task.action,task.object]) {
+    const scope=index.scopes.find(s=>s.id===ref.scopeId)
+    if (!scope || !task.propositionScopeIds.includes(scope.id) || !ref.surface.trim() || !scope.text.includes(ref.surface)) reject('NEW_TASK_SOURCE')
+  }
+  if(task.detail.completionCriteria.some(text=>!task.propositionScopeIds.some(id=>index.scopes.find(s=>s.id===id)?.text.includes(text))))reject('NEW_TASK_COMPLETION_SOURCE')
+  input.tasks.push(plainJson(task))
+}
+function validateDependencies(input: SemanticInput) {
+  const ids = new Set(input.tasks.map(task => task.id)), visiting = new Set<string>(), visited = new Set<string>()
+  const walk = (id: string) => {
+    if (visiting.has(id)) reject('DEPENDENCY_CYCLE')
+    if (visited.has(id)) return
+    visiting.add(id)
+    const task = input.tasks.find(item => item.id === id)!
+    const dependencies = task.detail.dependencyTempIds
+    if (!Array.isArray(dependencies) || new Set(dependencies).size !== dependencies.length
+      || dependencies.some(target => !ids.has(target) || target === id)) reject('DEPENDENCY_REFERENCE')
+    dependencies.forEach(walk)
+    visiting.delete(id); visited.add(id)
+  }
+  input.tasks.forEach(task => walk(task.id))
+}
+function apply(input: SemanticInput, change: FactChange, index: ImmutableScopeIndex) {
+  reviewEvidence(change,index)
+  if (change.kind === 'information_scope') {
+    keys(change,['kind','value','scopeIds','note'])
+    // One fragment, an explicit decision, and an unchanged source. This is never
+    // a blanket "all information" repair or an excuse for a current task.
+    if(change.scopeIds.length!==1||!['information','provenance'].includes(change.value)
+      ||input.tasks.some(t=>t.propositionScopeIds.includes(change.scopeIds[0])))reject('INFORMATION_SCOPE')
+    if(change.value==='provenance'&&!/^\[.*(?:Development|开发|匿名).*\]$/u.test(index.scopes.find(s=>s.id===change.scopeIds[0])!.text))reject('PROVENANCE_SCOPE')
+    input.informationScopeIds=[...new Set([...input.informationScopeIds,...change.scopeIds])]
+    input.unresolvedScopeIds=input.unresolvedScopeIds.filter(id=>!change.scopeIds.includes(id))
+  } else if (change.kind === 'add_independent_event') {
+    keys(change,['kind','value','scopeIds','note']);keys(change.value,change.value.endTime===undefined?['event','time']:['event','time','endTime'])
+    const {event,time,endTime}=change.value, ids=[event.tempId,...(time?[time.tempId]:[]),...(endTime?[endTime.tempId]:[])]
+    if(ids.some(id=>!/^user-[A-Za-z0-9-]{1,90}$/.test(id)||[...input.tasks.map(t=>t.id),...input.materials.map(m=>m.tempId),...input.events.map(e=>e.tempId),...input.timePoints.map(t=>t.tempId)].includes(id))||new Set(ids).size!==ids.length
+      ||event.relatedTaskTempIds.length||!event.title.trim()||!event.scopeIds.length||event.scopeIds.some(id=>!change.scopeIds.includes(id))
+      ||!event.scopeIds.some(id=>index.scopes.find(s=>s.id===id)?.text.includes(event.title))
+      ||event.endTimePointTempId!==(endTime?.tempId??null)||event.startTimePointTempId!==(time?.tempId??null))reject('NEW_INDEPENDENT_EVENT')
+    for(const [point,type] of [[time,'event_start'],[endTime,'event_end']] as const)if(point&&(!same(point.scopeIds,change.scopeIds)||point.type!==type||point.relatedTaskTempIds.length||point.relatedMaterialTempIds.length
+      ||!point.rawText.trim()||point.scopeIds.filter(id=>index.scopes.find(s=>s.id===id)?.text.includes(point.rawText)).length!==1
+      ||(point.normalizedValue===null)!==point.needsConfirmation||(point.normalizedValue!==null&&!validCalendarValue(point.normalizedValue))))reject('NEW_INDEPENDENT_TIME')
+    if(time)input.timePoints.push(plainJson(time))
+    if(endTime)input.timePoints.push(plainJson(endTime))
+    input.events.push(plainJson(event))
+  } else if (change.kind === 'add_material') {
+    keys(change,['kind','value','scopeIds','note'])
+    const material=change.value
+    if(!/^user-[A-Za-z0-9-]{1,90}$/.test(material.tempId)
+      ||[...input.tasks.map(t=>t.id),...input.materials.map(m=>m.tempId),...input.events.map(e=>e.tempId),...input.timePoints.map(t=>t.tempId)].includes(material.tempId)
+      ||!material.name.trim()||!material.scopeIds.length||material.scopeIds.some(id=>!change.scopeIds.includes(id))
+      ||!material.scopeIds.some(id=>index.scopes.find(s=>s.id===id)?.text.includes(material.name))
+      ||!material.relatedTaskTempIds.length||material.relatedTaskTempIds.some(id=>!input.tasks.some(t=>t.id===id)))reject('NEW_MATERIAL_SOURCE')
+    input.materials.push(plainJson(material))
+    for(const task of input.tasks)if(material.relatedTaskTempIds.includes(task.id)){
+      task.detail.materialTempIds.push(material.tempId);task.coverage.material='present'
+    }
+  } else if (change.kind === 'independent_event') {
+    keys(change,['kind','eventId','value','scopeIds','note'])
+    const old=input.events.find(e=>e.tempId===change.eventId),value=change.value
+    if(!old||old.relatedTaskTempIds.length||value.tempId!==old.tempId||value.relatedTaskTempIds.length
+      ||!same(value.scopeIds,old.scopeIds)||!same(change.scopeIds,old.scopeIds)
+      ||!value.title.trim()||value.title.length>200
+      ||(value.startTimePointTempId!==null&&!input.timePoints.some(t=>t.tempId===value.startTimePointTempId&&!t.relatedTaskTempIds.length&&t.type==='event_start'))
+      ||(value.endTimePointTempId!==null&&!input.timePoints.some(t=>t.tempId===value.endTimePointTempId&&!t.relatedTaskTempIds.length&&t.type==='event_end')))reject('INDEPENDENT_EVENT')
+    Object.assign(old!,plainJson(value))
+  } else if (change.kind === 'independent_time') {
+    keys(change,['kind','timeId','value','scopeIds','note'])
+    const old=input.timePoints.find(t=>t.tempId===change.timeId),value=change.value
+    if(!old||old.relatedTaskTempIds.length||old.relatedMaterialTempIds.length
+      ||!input.events.some(e=>!e.relatedTaskTempIds.length&&[e.startTimePointTempId,e.endTimePointTempId].includes(old.tempId))
+      ||value.tempId!==old.tempId||value.relatedTaskTempIds.length||value.relatedMaterialTempIds.length
+      ||!same(value.scopeIds,old.scopeIds)||!same(change.scopeIds,old.scopeIds)
+      ||!['event_start','event_end'].includes(value.type)||!value.rawText.trim()
+      ||input.events.some(e=>e.startTimePointTempId===old.tempId&&value.type!=='event_start'||e.endTimePointTempId===old.tempId&&value.type!=='event_end')
+      ||value.timezone!==old.timezone
+      ||(value.needsConfirmation&&value.normalizedValue!==null)
+      ||(!value.needsConfirmation&&value.normalizedValue===null)
+      ||(value.normalizedValue!==null&&!validCalendarValue(value.normalizedValue)))reject('INDEPENDENT_TIME')
+    Object.assign(old!,plainJson(value))
+  } else if (change.kind === 'surface') {
+    keys(change, ['kind', 'taskId', 'field', 'value']); keys(change.value, ['scopeId', 'surface'])
+    if (!['action', 'object'].includes(change.field)) reject('SURFACE_FIELD')
+    const task = input.tasks.find(t => t.id === change.taskId), scope = index.scopes.find(s => s.id === change.value.scopeId)
+    if (!task || !scope || !task.propositionScopeIds.includes(scope.id) || !change.value.surface.trim()
+      || !scope.text.includes(change.value.surface)) return reject('SURFACE_OUTSIDE_PROPOSITION')
+    task[change.field] = plainJson(change.value)
+  } else if (change.kind === 'material') {
+    keys(change, ['kind', 'materialId', 'value'])
+    keys(change.value, ['name', 'quantity', 'formatRequirements', 'namingRequirements', 'submissionChannel', 'relatedTaskTempIds'])
+    const item = input.materials.find(m => m.tempId === change.materialId)
+    if (!item) return reject('MATERIAL_MISSING')
+    const ids = change.value.relatedTaskTempIds
+    if (!Array.isArray(ids) || new Set(ids).size !== ids.length || ids.some(id => !input.tasks.some(t => t.id === id))) reject('OWNER_INVALID')
+    const previous = new Set(input.tasks.filter(t => factAssets(input, t.id).materials.has(item.tempId)).map(t => t.id))
+    Object.assign(item, plainJson(change.value))
+    // Both directions are updated together, never delete time/event edges to force ownership.
+    for (const task of input.tasks) {
+      task.detail.materialTempIds = task.detail.materialTempIds.filter(id => id !== item.tempId)
+      if (ids.includes(task.id)) task.detail.materialTempIds.push(item.tempId)
+      if (previous.has(task.id) || ids.includes(task.id)) task.coverage.material = factAssets(input, task.id).materials.size ? 'present' : 'not_stated'
+    }
+    for (const task of input.tasks) if (factAssets(input, task.id).materials.has(item.tempId) !== ids.includes(task.id)) reject('OWNER_HAS_OTHER_RELATIONS')
+  } else if (change.kind === 'time') {
+    keys(change,['kind','taskId','value','scopeIds','note'])
+    const task=input.tasks.find(t=>t.id===change.taskId);if(!task)return reject('TASK_MISSING')
+    const time=change.value,assets=factAssets(input,task.id)
+    const allowed=new Set([...task.propositionScopeIds,...input.timePoints.filter(t=>assets.times.has(t.tempId)).flatMap(t=>t.scopeIds)])
+    if(!/^user-[A-Za-z0-9-]{1,90}$/.test(time.tempId)
+      || [...input.tasks.map(t=>t.id),...input.timePoints.map(t=>t.tempId),...input.materials.map(m=>m.tempId),...input.events.map(e=>e.tempId)].includes(time.tempId))reject('NEW_TIME_ID')
+    if(!same(time.relatedTaskTempIds,[task.id])||time.relatedMaterialTempIds.length)reject('TIME_OWNER')
+    if(!time.rawText.trim()||!time.scopeIds.length||!same(time.scopeIds,change.scopeIds)||time.scopeIds.some(id=>!allowed.has(id))
+      ||time.scopeIds.filter(id=>index.scopes.find(s=>s.id===id)?.text.includes(time.rawText)).length!==1)reject('TIME_EVIDENCE')
+    if(input.timePoints.some(t=>assets.times.has(t.tempId)&&t.rawText===time.rawText&&same(t.scopeIds,time.scopeIds)))reject('DUPLICATE_TIME')
+    // Append only: existing time entities and relationships are never deleted to rescue confirmation.
+    input.timePoints.push(plainJson(time));task.detail.timePointTempIds.push(time.tempId);task.coverage.time='present'
+  } else if (change.kind === 'condition') {
+    keys(change,['kind','taskId','value','scopeIds','note'])
+    const task=input.tasks.find(t=>t.id===change.taskId); if(!task)return reject('TASK_MISSING')
+    const c=change.value
+    if (c.value==='not_applicable' ? c.conditionScopeIds.length||c.factScopeIds.length : !c.conditionScopeIds.length
+      || (['true','false'].includes(c.value)&&!c.factScopeIds.length)) reject('CONDITION_EVIDENCE')
+    if ([...c.conditionScopeIds,...c.factScopeIds].some(id=>!change.scopeIds.includes(id))) reject('CONDITION_EVIDENCE')
+    task.condition=plainJson(c)
+  } else if (change.kind === 'dependency') {
+    keys(change,['kind','taskId','value','scopeIds','note'])
+    const task=input.tasks.find(t=>t.id===change.taskId);if(!task)return reject('TASK_MISSING')
+    if(!Array.isArray(change.value)||new Set(change.value).size!==change.value.length
+      ||change.value.some(id=>typeof id!=='string'||!input.tasks.some(t=>t.id===id)||id===task.id))reject('DEPENDENCY_REFERENCE')
+    task.detail.dependencyTempIds=[...change.value]
+    validateDependencies(input)
+  } else if (change.kind === 'event') {
+    keys(change,['kind','taskId','value','scopeIds','note']);keys(change.value,['coverage','event'])
+    const task=input.tasks.find(t=>t.id===change.taskId);if(!task)return reject('TASK_MISSING')
+    const e=change.value.event
+    if (e) {
+      if(change.value.coverage!=='present'||!e.relatedTaskTempIds.includes(task.id)||!e.scopeIds.length
+        ||e.scopeIds.some(id=>!change.scopeIds.includes(id))||!e.title.trim()
+        ||!e.scopeIds.some(id=>index.scopes.find(s=>s.id===id)?.text.includes(e.title)))reject('EVENT_EVIDENCE')
+      const existing=input.events.find(x=>x.tempId===e.tempId)
+      // Attach only; changing a shared event is a different, explicitly reviewed operation.
+      if(existing&&!same(existing,e))reject('EXISTING_EVENT_IMMUTABLE')
+      if(!existing){if(!/^user-[a-zA-Z0-9-]{1,90}$/.test(e.tempId))reject('NEW_EVENT_ID');input.events.push(plainJson(e))}
+      if(!task.eventTempIds.includes(e.tempId))task.eventTempIds.push(e.tempId)
+    } else if(factAssets(input,task.id).events.size)reject('EVENT_RELATION_REMOVAL')
+    task.coverage.event=change.value.coverage
+  } else if (change.kind === 'revision') {
+    keys(change,['kind','index','value','scopeIds','note']);keys(change.value,['relation','addedTask'])
+    if(!Number.isInteger(change.index)||change.index<0||change.index>input.revisions.length)reject('REVISION_INDEX')
+    if(change.value.addedTask){if(change.value.addedTask.propositionScopeIds.some(id=>!change.scopeIds.includes(id)))reject('NEW_TASK_SOURCE');addTask(input,change.value.addedTask,index)}
+    const r=change.value.relation
+    if(!r.scopeIds.length||r.scopeIds.some(id=>!change.scopeIds.includes(id))||!input.tasks.some(t=>t.id===r.targetDirectiveId)
+      ||(r.type==='cancels'?r.fromDirectiveId!==null:!input.tasks.some(t=>t.id===r.fromDirectiveId))||r.targetDirectiveId===r.fromDirectiveId)reject('REVISION_REFERENCE')
+    input.revisions[change.index]=plainJson(r)
+  } else if(change.kind==='add_task') {
+    keys(change,['kind','value','scopeIds','note']);if(change.value.propositionScopeIds.some(id=>!change.scopeIds.includes(id)))reject('NEW_TASK_SOURCE');addTask(input,change.value,index)
+  } else reject('KIND')
+  parseSemanticInput(input)
+}
+export function correctionBefore(input: SemanticInput, change: FactChange) {
+  if(change.kind==='information_scope')return {information:input.informationScopeIds.filter(id=>change.scopeIds.includes(id)),unresolved:input.unresolvedScopeIds.filter(id=>change.scopeIds.includes(id))}
+  if(change.kind==='independent_event')return plainJson(input.events.find(e=>e.tempId===change.eventId)??reject('EVENT_MISSING'))
+  if(change.kind==='independent_time')return plainJson(input.timePoints.find(t=>t.tempId===change.timeId)??reject('TIME_MISSING'))
+  if(change.kind==='add_task'||change.kind==='time'||change.kind==='add_material'||change.kind==='add_independent_event')return null
+  if(change.kind==='revision')return {relation:plainJson(input.revisions[change.index]??null),addedTask:null}
+  if(change.kind==='condition'||change.kind==='event'||change.kind==='dependency'){
+    const task=input.tasks.find(t=>t.id===change.taskId);if(!task)return reject('TASK_MISSING')
+    return change.kind==='condition'?plainJson(task.condition):change.kind==='dependency'?[...task.detail.dependencyTempIds]:{coverage:task.coverage.event,event:null}
+  }
+  if (change.kind === 'surface') {
+    const task = input.tasks.find(t => t.id === change.taskId)
+    if (!task) return reject('TASK_MISSING')
+    return plainJson(task[change.field])
+  }
+  const item = input.materials.find(m => m.tempId === change.materialId)
+  if (!item) return reject('MATERIAL_MISSING')
+  return materialEdit(item)
+}
+
+/** A manual overlay is not source evidence. sourceFacts is the only composer input;
+ * facts is the displayed/saved view. Relations are explicit user edits, kept in deltas. */
+export function effectiveFacts(original: SemanticInput, corrections: readonly FactCorrection[], index: ImmutableScopeIndex) {
+  const input = parseSemanticInput(original), history = plainJson(corrections)
+  if (input.sourceId !== index.sourceId || input.sourceVersionId !== index.sourceVersionId
+    || input.sourceFingerprint !== index.sourceFingerprint) reject('SOURCE_IDENTITY')
+  const seen = new Set<string>(), changedTasks = new Set<string>(), manualMaterials = new Set<string>()
+  let lastAt = -Infinity
+  for (const row of history) {
+    keys(row, ['id', 'at', 'change', 'before'])
+    if (!/^[A-Za-z0-9-]{1,100}$/.test(row.id) || seen.has(row.id)) reject('ID')
+    seen.add(row.id)
+    if (!Number.isFinite(Date.parse(row.at)) || Date.parse(row.at) < lastAt) reject('TIME')
+    lastAt = Date.parse(row.at)
+    const prior = correctionBefore(input, row.change)
+    if (!same(prior, row.before) || same(prior, row.change.value)) reject('CHAIN_OR_NO_CHANGE')
+    affected(input, row.change).forEach(id => changedTasks.add(id))
+    apply(input, row.change, index)
+    affected(input, row.change).forEach(id => changedTasks.add(id))
+    if (row.change.kind === 'material') manualMaterials.add(row.change.materialId)
+  }
+  const facts = parseSemanticInput(input), sourceFacts = plainJson(facts)
+  for (const id of manualMaterials) {
+    const first = original.materials.find(m => m.tempId === id)
+      ?? history.flatMap(({change})=>change.kind==='add_material'&&change.value.tempId===id?[change.value]:[])[0]
+    if(!first)reject('MATERIAL_ORIGIN_MISSING')
+    const current = sourceFacts.materials.find(m => m.tempId === id)!
+    // Do not validate manual literal values as though the model/source supplied them.
+    Object.assign(current, materialEdit(first), { relatedTaskTempIds: [...current.relatedTaskTempIds] })
+  }
+  // User corrections stay in the editable view; the original model facts remain the composer input.
+  for (const row of history) {
+    const change=row.change
+    if(change.kind==='independent_event') {
+      const originalEvent=original.events.find(e=>e.tempId===change.eventId)
+        ?? history.flatMap(({change:creation})=>creation.kind==='add_independent_event'&&creation.value.event.tempId===change.eventId?[creation.value.event]
+          :creation.kind==='event'&&creation.value.event?.tempId===change.eventId?[creation.value.event]:[])[0]
+      if(!originalEvent)reject('EVENT_ORIGIN_MISSING')
+      const target=sourceFacts.events.find(e=>e.tempId===change.eventId)!
+      Object.assign(target,plainJson(originalEvent))
+    } else if(change.kind==='independent_time') {
+      const originalTime=original.timePoints.find(t=>t.tempId===change.timeId)
+        ?? history.flatMap(({change:creation})=>creation.kind==='time'&&creation.value.tempId===change.timeId?[creation.value]
+          :creation.kind==='add_independent_event'?[creation.value.time,creation.value.endTime].filter((t):t is SemanticTime=>Boolean(t&&t.tempId===change.timeId)):[])[0]
+      if(!originalTime)reject('TIME_ORIGIN_MISSING')
+      const target=sourceFacts.timePoints.find(t=>t.tempId===change.timeId)!
+      Object.assign(target,plainJson(originalTime))
+    }
+  }
+  return { facts, sourceFacts, changedTasks: [...changedTasks].sort(), manualMaterials: [...manualMaterials].sort() }
+}
+
+export function appendCorrection(original: SemanticInput, history: readonly FactCorrection[], row: FactCorrection,
+  index: ImmutableScopeIndex, confirmedTaskIds: readonly string[]) {
+  const before = effectiveFacts(original, history, index), next = [...plainJson(history), plainJson(row)]
+  const after = effectiveFacts(original, next, index)
+  const touched = new Set([...affected(before.facts, row.change), ...affected(after.facts, row.change)])
+  if (confirmedTaskIds.some(id => touched.has(id))) reject('CONFIRMED_OR_SHARED_ENTITY')
+  return { corrections: next, ...after, affectedTaskIds: [...touched].sort() }
+}

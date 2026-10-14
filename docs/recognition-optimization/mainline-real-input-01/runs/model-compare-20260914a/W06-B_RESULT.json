@@ -1,0 +1,255 @@
+{
+  "version": "real-input-model-compare-result-1",
+  "unitId": "W06-B",
+  "arm": "B",
+  "cohort": "original12",
+  "previousId": "U06",
+  "bindingSha": "0e053544594dd40c5e99d577a290441ef4c32b44ce36d280cbef44bd87bde7d1",
+  "requestSha": "165ccc00b5603c4fe181751677cc8639a610d02bfc6340c8ae04fee2aab956e7",
+  "responseSha": "0b30c0b1e6710d998379b063185ffc2ababb7d806b70e95979080219501b7477",
+  "requestModel": "deepseek-v4-pro",
+  "returnedModel": "deepseek-v4-pro",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "wireVersion": "real-input-model-wire-1",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "ab7da30fc52a9de9a69a0569caa3ceafdfb4bf73eeda35e4835719aff80f565d",
+  "scoreInput": "candidate03 semantic projection into frozen scorer; gateway-validated provider raw unchanged; parser copy model-neutralized only",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task_borrow_projector",
+        "propositionScopeIds": [
+          "scope-0002-2024ee21574907ca71c5204ce65f5737ecb27fec91f5bd58a17414b461c51985",
+          "scope-0003-8d6c6013392112e3da5bcfb5e54a1b9cd20a83c786c2a14a426db696014ab5e9",
+          "scope-0004-95f9600fa25041e36f6d3997f5f3749b4d0e8c84693bd78f64c81a086a9bc07d"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "collect",
+        "action": {
+          "scopeId": "scope-0003-8d6c6013392112e3da5bcfb5e54a1b9cd20a83c786c2a14a426db696014ab5e9",
+          "surface": "领取"
+        },
+        "object": {
+          "scopeId": "scope-0003-8d6c6013392112e3da5bcfb5e54a1b9cd20a83c786c2a14a426db696014ab5e9",
+          "surface": "投影仪"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "候补同学领取投影仪",
+          "description": "如果设备室确认出现空闲投影仪，请候补同学领取投影仪，领取时出示学生证即可。",
+          "completionCriteria": [
+            "候补同学领取投影仪",
+            "领取时出示学生证"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.95,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "unknown",
+          "conditionScopeIds": [
+            "scope-0002-2024ee21574907ca71c5204ce65f5737ecb27fec91f5bd58a17414b461c51985"
+          ],
+          "factScopeIds": [
+            "scope-0005-92b35fab6c1d75be235ce9f9cd6eac0386c103e8a991a725f7536acd28a0b41f",
+            "scope-0006-61387b639e025448f1ae4d4f1e2c42d08bc6db5e755cebb1fea44da7ba0c30cb"
+          ]
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "mat_student_id",
+        "name": "学生证",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task_borrow_projector"
+        ],
+        "scopeIds": [
+          "scope-0004-95f9600fa25041e36f6d3997f5f3749b4d0e8c84693bd78f64c81a086a9bc07d"
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-4807ca56e7cacd1933228fd3e61807d3826bfd69ed4c0fdeb152db0861647973",
+      "scope-0005-92b35fab6c1d75be235ce9f9cd6eac0386c103e8a991a725f7536acd28a0b41f",
+      "scope-0006-61387b639e025448f1ae4d4f1e2c42d08bc6db5e755cebb1fea44da7ba0c30cb",
+      "scope-0007-1898d000382447486e8143b0690716a4a72b90f2f0905a60856ed92b1f7293c3",
+      "scope-0008-4d3228dcf5788b87a55baa67b2e6d031570f1b88e530ca46f9f9af5dc5d57f24"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:fc8823e0",
+    "sourceVersionId": "source:fc8823e0:version:1",
+    "sourceFingerprint": "sha256:190f62b86dfa5f81373abf458c2f25a92537b08c08bd11a6f95260d9d57dbb2b"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 13076,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "material": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 1,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [
+      {
+        "code": "COVERAGE_MATERIAL",
+        "entityIds": [
+          "task_borrow_projector"
+        ]
+      }
+    ],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 1,
+    "referenceTaskCount": 1
+  },
+  "scoreError": null,
+  "totalAttempts": 220,
+  "usage": {
+    "input_tokens": 4564,
+    "input_tokens_details": {
+      "cached_tokens": 3968
+    },
+    "output_tokens": 1211,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5775
+  },
+  "costUpperMicroCny": 73773,
+  "totalCostUpperMicroCny": 8923869,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；同candidate03、同正文、同参数，仅模型身份不同；40请求不是40份材料"
+}

@@ -1,0 +1,329 @@
+{
+  "status": "A02_REPLAY_LOOP_PASS",
+  "wholePackage": "NOT_COMPLETE",
+  "startHeadAndRemote": "ef76d6e80b230398b30ef2a3b4cc490c96736b84",
+  "scope": "Latest authorization: honest source-description forwarding and completion of original A02 recorded replay loop; no model requests.",
+  "sources": {
+    "count": 42,
+    "snapshot": "LABEL_IMPLEMENTATION_SNAPSHOT.json",
+    "changedThisContinuation": [
+      "src/App.tsx",
+      "src/components/DraftReviewPanel.tsx",
+      "src/experiments/realInput01/acceptance.test.tsx"
+    ],
+    "otherUnchanged": 39,
+    "reviewShaBinding": "PASS",
+    "businessStaging": "ELIGIBLE_FOR_SCOPED_42_FILE_DELIVERY"
+  },
+  "protection": {
+    "count": 945,
+    "sha256": "df68e4eda47f664f9f0fbf218a74687117ac3cc9d2c14f5ee6e9965cd2c28394",
+    "oldEvidence": 160,
+    "continuationEvidence": 7,
+    "recoveryEvidence": 30,
+    "receipts": 5,
+    "ledgerSha256": "ec1edd741242b0446d096cea323a5036c7eb47fd86ee6b98f09a4f519eeebfbd",
+    "status": "PASS",
+    "evidence": "LABEL_FINAL_PROTECTION.log",
+    "workingRawAndGitNormalizedBytes": "DISTINCT"
+  },
+  "logBoundary": {
+    "startBytes": 294441,
+    "startSha256": "31a91b4380dc5d6133649cd905d99d4b4db9d2502e90f92c3b979faf2952036d",
+    "finalBytes": 297254,
+    "finalSha256": "1ed8c18a0590ff531e2dd7a8bc1deac72a0703ba1c2ed6bfdb36832f5d7505f4",
+    "appendOnly": true
+  },
+  "currentContext": {
+    "path": "docs/recognition-optimization/CURRENT_CONTEXT.md",
+    "sha256": "1729d6bba362733b23f1d71e905b1b72d250dbf97397bee6f45bb3002eebd1b8",
+    "lines": 79
+  },
+  "framework": {
+    "envFile": false,
+    "configFile": false,
+    "rootEnvReadAttempts": 0,
+    "fixture": "NONSECRET_POSITIVE_NEGATIVE_PASS",
+    "tempRoot": "C:/Users/Winner/AppData/Local/Temp/a02-source-label-0p1hzA",
+    "scope": "Explicit framework configuration and parent-process read guard, not OS-wide IO trace."
+  },
+  "directed": {
+    "before": {
+      "pass": 14,
+      "fail": 2,
+      "newIntendedFailures": true
+    },
+    "after": {
+      "pass": 66,
+      "fail": 0
+    },
+    "assertionsWeakened": false
+  },
+  "independentReview": {
+    "code": "PASS",
+    "finalEvidence": "NO_BLOCKING_ISSUE_FOR_SCOPED_DELIVERY",
+    "browserRerunByReviewer": false,
+    "evidence": "LABEL_REVIEW.md"
+  },
+  "currentEngineering": {
+    "lint": {
+      "errors": 0,
+      "warnings": 4
+    },
+    "typeApp": "PASS",
+    "typeNode": "PASS",
+    "functional": {
+      "pass": 1233,
+      "skip": 1,
+      "fail": 0,
+      "workers": 2
+    },
+    "contracts": {
+      "pass": 2
+    },
+    "coreNode": {
+      "pass": 62,
+      "fail": 0
+    },
+    "applicableChecker": {
+      "pass": 7,
+      "fail": 0,
+      "includesFiveSubtests": true,
+      "unchangedOriginalAssertions": true
+    },
+    "historicalPaidHeadChecker": {
+      "count": 3,
+      "status": "NOT_RUN_CURRENT",
+      "reason": "Historical authorization/HEAD; not modified, reset or relabelled."
+    },
+    "build": "PASS",
+    "stableIsolationJsFiles": 14,
+    "security": {
+      "scannedFiles": 1226,
+      "findings": 0
+    }
+  },
+  "reusedEngineering": {
+    "status": "PREVIOUS_EVIDENCE_SHA_VERIFIED_NOT_FRESH_RUN",
+    "budgetGateway": {
+      "pass": 83,
+      "fail": 0
+    },
+    "historical": {
+      "exactFiles": 20,
+      "originalTestsPass": 4
+    },
+    "dependencyCompatibility": {
+      "pass": 13
+    },
+    "publicDependencyAudit": {
+      "vulnerabilities": 0
+    },
+    "evidence": [
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/RECOVERY_FULL_AUDIT.log",
+        "sha256": "adfe85a28065db939e399940d72df3e4caa24f4e3b7146e7d8ab5a52ea387c0a",
+        "bytes": 601
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/RECOVERY_FULL_COMPATIBILITY.log",
+        "sha256": "8c60986ac2301843f49c3b1e8932e8875acc511d409ae17289b0080690021733",
+        "bytes": 1307
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/RECOVERY_FULL_HISTORICAL.log",
+        "sha256": "353b2c03cac64f4ac4bcadb7005279d17efb40f2e7eb657ec44eaea8ee418d91",
+        "bytes": 417
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/RECOVERY_FULL_SAFETY_NODE_ATTEMPT2.log",
+        "sha256": "a44ec39050a3160381f31069739744924f6de47c02bdd57bd27e913c5b468759",
+        "bytes": 8242
+      }
+    ],
+    "historicalFailures": "UNCHANGED_INCLUDING_OLD_R2_3_PASS_1_FAIL"
+  },
+  "browser": {
+    "origin": "http://127.0.0.1:6631",
+    "originalDatabase": "rco-mainline-01-02-i1-real-input-d030c507-3f7c-4a2c-a511-8cd5bd534862",
+    "originalDatabasePreserved": true,
+    "sourceDescription": "PASS",
+    "restoredPendingA02": "PASS",
+    "materialRequirementAndAvailability": "USER_EXPLICITLY_REVIEWED_SEPARATELY",
+    "keyByKeySuffix": "-A02",
+    "fillUsed": false,
+    "unsavedBlocksConfirm": true,
+    "explicitSave": "PASS",
+    "activeSelection": "PASS",
+    "automaticSelection": "NOT_ENABLED",
+    "taskConfirmed": 1,
+    "material": 1,
+    "timePoints": 0,
+    "reminders": 0,
+    "actualJobs": 0,
+    "rollback": {
+      "materialSave": "WHOLE_OBJECT_EQUAL",
+      "confirmation": "WHOLE_OBJECT_EQUAL_SAVED_HISTORY_PRESERVED"
+    },
+    "refreshFind": {
+      "home": "PASS",
+      "tasks": "PASS",
+      "detail": "PASS",
+      "calendarNoDateList": "PASS"
+    },
+    "repeatReplay": "WHOLE_OBJECT_UNCHANGED",
+    "sourcePreservation": {
+      "comparisons": 6,
+      "status": "PASS",
+      "firstEvidence": "LABEL_FIRST_COMPARISON.json"
+    },
+    "browserSettingsChanged": false,
+    "notRunThisRound": [
+      "multi-task batch",
+      "cross-tab stale version",
+      "Chinese IME",
+      "all input formats",
+      "real-human editing time"
+    ],
+    "nonblockingGap": "Old task-detail history placeholder not integrated; actual new semantic history visible and exported.",
+    "evidence": "LABEL_BROWSER_RESULT.md"
+  },
+  "download": {
+    "file": "C:/Users/Winner/Downloads/mainline-real-input-01-workspace.json",
+    "bytes": 218242,
+    "sha256": "049459c4d4dd6ac5ac18a3e2966a05cb7bea136cf7bd901a315738379fefa1bf",
+    "objectSha256": "cf3aa420daee3f6c66a2d206440e8f5ef67fff92c5955f8f5aecefcdb1e38770",
+    "repositoryComparisonSource": "Original Edge tab engineering action creates new CanonicalWorkspaceRepository(new IsolatedTestStore(name)).load(); captured as labelFinalRead in the same official CUA REPL after actual UI download; digest observed before this file read.",
+    "workspaceV8": "PASS",
+    "jointValidator": "PASS",
+    "task": 1,
+    "material": 1,
+    "times": 0,
+    "reminders": 0,
+    "rawHttpUnchanged": true,
+    "authority": "live_model_candidate",
+    "operations": [
+      "enable_material_review",
+      "review_material",
+      "edit",
+      "review_task",
+      "confirm"
+    ],
+    "rootEnvReadAttempts": 0
+  },
+  "calls": {
+    "newModel": 0,
+    "newCost": 0,
+    "credentialsRead": 0,
+    "clipboardRead": 0,
+    "ledgerModified": false,
+    "historicalRequests": 2,
+    "a01UnknownReserveMicroyuan": 3300000,
+    "a02SettledUpperMicroyuan": 16392,
+    "a02Grant": "CONSUMED_NO_NEW_GRANT"
+  },
+  "modelRecognitionAccuracy": "本轮未测量",
+  "next": "Request a single precisely bounded continuation for already-prepared A03-A08; no automatic call or new dataset.",
+  "newFiles": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_AFTER.log",
+      "sha256": "a5184b8db7ce5cad38d7cb8aef25b5466f42c05288fd2d20050a32b76e5da9aa",
+      "bytes": 419
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_AUDIT.md",
+      "sha256": "23907e5fedf1147a7ec3a4974c67478973cf8364d2a804a0f1890efbe2b12c6b",
+      "bytes": 7970
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_BASELINE.json",
+      "sha256": "354564cc4d61f16ce01ded33933b350e3ba7d804f4e62c96e7aa185ad0962c2c",
+      "bytes": 730
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_BEFORE.log",
+      "sha256": "c7ba4e9cf1496fc95b29b0146f5fd3bcb88776165b6cb0ca668c8db04925c1d6",
+      "bytes": 7388
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_BROWSER_RESULT.md",
+      "sha256": "60891fec0ba145092f355ab789a499df012c6874eca42bf55d5bf59af67e0bac",
+      "bytes": 7358
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_CORE.log",
+      "sha256": "7a6a4ce651ce7d8dcff90755fc9127f03d363245d1f38c7ce2fadb86264353b1",
+      "bytes": 14405
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_CURRENT_CHECKER.log",
+      "sha256": "18be62c620f0f5779d298c99402c495d95a9090eae4277b771655fff92ebba54",
+      "bytes": 1037
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_DOWNLOAD.json",
+      "sha256": "6b6882c1d28bbe836d7c95f05951a4178ec4b9cded4d5fd8793ed163bfd74ade",
+      "bytes": 868
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_FINAL_PROTECTION.log",
+      "sha256": "c05c1413f542aad84cdb4eabc79933345f560a88f5cfa43dc9b2a5e6e0831d08",
+      "bytes": 631
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_FIRST_COMPARISON.json",
+      "sha256": "05d87655bc5ec746ffe2b7688e7894df263167a83152a10835def118d63e5af7",
+      "bytes": 1080
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_FULL_BUILD.log",
+      "sha256": "6395844eada1ab24ce3677eb5b63b0ca8c38c3ade6989cfba8340f337ba06c7f",
+      "bytes": 2694
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_FULL_FUNCTIONAL.log",
+      "sha256": "1241a21b59156ad264bd1d8bb8fa351f54b916b23d7559078adb4b28127103a4",
+      "bytes": 52205
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_FULL_LINT.log",
+      "sha256": "cccb38ae154eecff9977888bcc43d0ba6e883be1d934d3db03a435c85c0aa88a",
+      "bytes": 1153
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_FULL_TYPE_APP.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_FULL_TYPE_NODE.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_IMPLEMENTATION_SNAPSHOT.json",
+      "sha256": "bc4ecfd53ebf82d7fc0aadee93fbb1e0d45a54cfab4b93a5f862894b5499d3df",
+      "bytes": 7811
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_ISOLATION.log",
+      "sha256": "f00a7e03ba1243883c6799484915b75db2db62936c8a976a0389baccf5ae7b7c",
+      "bytes": 153
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_RECORDED_BUNDLE.json",
+      "sha256": "6c80671208300f50a233ebeba6746e0c113cd365554d3c8004c1e50f12003b5b",
+      "bytes": 564
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_REVIEW.md",
+      "sha256": "9920b5384b82f0a7fbc8ef855f1b8801fc6130f81bb80791e2fe517db0d39863",
+      "bytes": 3010
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/LABEL_SECURITY.log",
+      "sha256": "84b016d15997afeca4da27dfb0d9eea416d3716244b65cd1fc036e1bb2328f6c",
+      "bytes": 104
+    }
+  ]
+}

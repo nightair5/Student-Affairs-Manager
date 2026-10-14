@@ -1,0 +1,184 @@
+{
+  "version": "candidate12-d2-result-1",
+  "unitId": "C12-D1-PD03-A",
+  "sourceId": "C12-PD03",
+  "arm": "A",
+  "ordinal": 5,
+  "bindingSha": "c7a2049a40c0ba6de4de6a8cd69ccfb17db3bbc53dd81d9fbcbf35330f14a92d",
+  "requestSha": "6da1e3ab01e4d75ef6dffeb4fd949803efbe7820572d0aa3f7eba096f5d4702f",
+  "responseSha": "9c1c6fe743457c1a6a16f8e2b7233f238895d98a150190ce4b6a4168fb2eba7e",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "modelMatch": true,
+  "httpStatus": 200,
+  "diagnostic": null,
+  "waitingMs": 3904,
+  "parseError": null,
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-confirm-course-selection",
+        "propositionScopeIds": [
+          "scope-0002-cbbafe0d4fce1790a1b309296d512d844edc439c2587352059659788e3914e74"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "review",
+        "action": {
+          "scopeId": "scope-0002-cbbafe0d4fce1790a1b309296d512d844edc439c2587352059659788e3914e74",
+          "surface": "登录"
+        },
+        "object": {
+          "scopeId": "scope-0002-cbbafe0d4fce1790a1b309296d512d844edc439c2587352059659788e3914e74",
+          "surface": "教务平台"
+        },
+        "effect": "external_interaction",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "登录教务平台确认选课结果",
+          "description": "在课程申请通过后两个工作日内登录教务平台确认选课结果。",
+          "completionCriteria": [
+            "登录教务平台",
+            "确认选课结果"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "high",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [
+            "tp-within-two-workdays"
+          ],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "true",
+          "conditionScopeIds": [
+            "scope-0001-4ac70f912bbddb4ba9384970e71005873e141567875dfc7d50727a2d6177c1a5"
+          ],
+          "factScopeIds": [
+            "scope-0001-4ac70f912bbddb4ba9384970e71005873e141567875dfc7d50727a2d6177c1a5"
+          ]
+        },
+        "coverage": {
+          "time": "present",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task-no-resubmit-application",
+        "propositionScopeIds": [
+          "scope-0003-0f59c78af7b33aa1aef309377e95d7f41eac2aa7fd425ea16baaddab7200e185"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "negative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0003-0f59c78af7b33aa1aef309377e95d7f41eac2aa7fd425ea16baaddab7200e185",
+          "surface": "提交"
+        },
+        "object": {
+          "scopeId": "scope-0003-0f59c78af7b33aa1aef309377e95d7f41eac2aa7fd425ea16baaddab7200e185",
+          "surface": "课程申请"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "无需再次提交课程申请",
+          "description": "课程申请已通过，无需再次提交课程申请。",
+          "completionCriteria": [
+            "不再次提交课程申请"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "low",
+          "dependencyTempIds": [],
+          "materialTempIds": [],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "not_stated",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [],
+    "timePoints": [
+      {
+        "tempId": "tp-within-two-workdays",
+        "type": "task_deadline",
+        "rawText": "通过后两个工作日内",
+        "relatedTaskTempIds": [
+          "task-confirm-course-selection"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-cbbafe0d4fce1790a1b309296d512d844edc439c2587352059659788e3914e74"
+        ],
+        "confidence": 0.9,
+        "normalizedValue": null,
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "vague",
+        "needsConfirmation": true
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-4ac70f912bbddb4ba9384970e71005873e141567875dfc7d50727a2d6177c1a5"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "C12-PD03",
+    "sourceVersionId": "C12-PD03-v1",
+    "sourceFingerprint": "sha256:c68f3559c3c3203047c2434a43c5799215bae513ea1d3b3dae593e9d51ccc09e"
+  },
+  "ledgerStatus": "settled",
+  "usage": {
+    "input_tokens": 4242,
+    "input_tokens_details": {
+      "cached_tokens": 3840
+    },
+    "output_tokens": 1026,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 5268
+  },
+  "costUpperMicroCny": 16692,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticRepair": false,
+  "retryCount": 0
+}

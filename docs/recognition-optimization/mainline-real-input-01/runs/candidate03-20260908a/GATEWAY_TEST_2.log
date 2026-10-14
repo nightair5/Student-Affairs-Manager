@@ -1,0 +1,293 @@
+TAP version 13
+# Subtest: pinned route sends no credentials to proxy and dispatches only after verified TLS, once
+ok 1 - pinned route sends no credentials to proxy and dispatches only after verified TLS, once
+  ---
+  duration_ms: 8.4157
+  type: 'test'
+  ...
+# Subtest: proxy authentication demand and unverified TLS cannot send the API credential or body
+ok 2 - proxy authentication demand and unverified TLS cannot send the API credential or body
+  ---
+  duration_ms: 0.4272
+  type: 'test'
+  ...
+# Subtest: abort and alternative destination fail before opening a proxy connection
+ok 3 - abort and alternative destination fail before opening a proxy connection
+  ---
+  duration_ms: 0.2531
+  type: 'test'
+  ...
+# Subtest: the only successful path preserves raw response, binds usage and uses the fixed upstream without redirects
+ok 4 - the only successful path preserves raw response, binds usage and uses the fixed upstream without redirects
+  ---
+  duration_ms: 56.3397
+  type: 'test'
+  ...
+# Subtest: D unit passes only when present in the exact budget snapshot; original AB gateway rejects it before secret access
+ok 5 - D unit passes only when present in the exact budget snapshot; original AB gateway rejects it before secret access
+  ---
+  duration_ms: 29.3475
+  type: 'test'
+  ...
+# Subtest: credential is not read at gateway initialization or on rejected origins and routes
+ok 6 - credential is not read at gateway initialization or on rejected origins and routes
+  ---
+  duration_ms: 33.6619
+  type: 'test'
+  ...
+# Subtest: browser cannot supply a model, endpoint, request body, usage or alternative budget book
+ok 7 - browser cannot supply a model, endpoint, request body, usage or alternative budget book
+  ---
+  duration_ms: 28.0435
+  type: 'test'
+  ...
+# Subtest: missing credentials do not consume an allowance and are never reflected
+ok 8 - missing credentials do not consume an allowance and are never reflected
+  ---
+  duration_ms: 27.8436
+  type: 'test'
+  ...
+# Subtest: reserved request cannot be duplicated by a second gateway or service restart
+ok 9 - reserved request cannot be duplicated by a second gateway or service restart
+  ---
+  duration_ms: 68.8422
+  type: 'test'
+  ...
+# Subtest: concurrent browser and runner cannot dispatch the same logical request twice
+ok 10 - concurrent browser and runner cannot dispatch the same logical request twice
+  ---
+  duration_ms: 71.013
+  type: 'test'
+  ...
+# Subtest: HTTP failure stops dispatch, retains the full reserve and returns only a safe code
+ok 11 - HTTP failure stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 49.2497
+  type: 'test'
+  ...
+# Subtest: redirect stops dispatch, retains the full reserve and returns only a safe code
+ok 12 - redirect stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 49.6004
+  type: 'test'
+  ...
+# Subtest: wrong content type stops dispatch, retains the full reserve and returns only a safe code
+ok 13 - wrong content type stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 48.6709
+  type: 'test'
+  ...
+# Subtest: response size exceeded stops dispatch, retains the full reserve and returns only a safe code
+ok 14 - response size exceeded stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 53.8975
+  type: 'test'
+  ...
+# Subtest: credential echo stops dispatch, retains the full reserve and returns only a safe code
+ok 15 - credential echo stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 53.7388
+  type: 'test'
+  ...
+# Subtest: usage missing stops dispatch, retains the full reserve and returns only a safe code
+ok 16 - usage missing stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 54.2905
+  type: 'test'
+  ...
+# Subtest: model drift stops dispatch, retains the full reserve and returns only a safe code
+ok 17 - model drift stops dispatch, retains the full reserve and returns only a safe code
+  ---
+  duration_ms: 57.3153
+  type: 'test'
+  ...
+# Subtest: timeout aborts once; late completion cannot settle or append a second response
+ok 18 - timeout aborts once; late completion cannot settle or append a second response
+  ---
+  duration_ms: 106.6552
+  type: 'test'
+  ...
+# Subtest: raw-result storage failure cannot release money or silently claim success
+ok 19 - raw-result storage failure cannot release money or silently claim success
+  ---
+  duration_ms: 41.2174
+  type: 'test'
+  ...
+# Subtest: safe diagnostic DNS: classified without error text and unknown reserve survives reopening
+ok 20 - safe diagnostic DNS: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 60.7091
+  type: 'test'
+  ...
+# Subtest: safe diagnostic connect timeout: classified without error text and unknown reserve survives reopening
+ok 21 - safe diagnostic connect timeout: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 59.1093
+  type: 'test'
+  ...
+# Subtest: safe diagnostic TLS: classified without error text and unknown reserve survives reopening
+ok 22 - safe diagnostic TLS: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 61.3016
+  type: 'test'
+  ...
+# Subtest: safe diagnostic connection reset: classified without error text and unknown reserve survives reopening
+ok 23 - safe diagnostic connection reset: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 63.1273
+  type: 'test'
+  ...
+# Subtest: safe diagnostic unknown code: classified without error text and unknown reserve survives reopening
+ok 24 - safe diagnostic unknown code: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 66.6514
+  type: 'test'
+  ...
+# Subtest: safe diagnostic HTTP 401: classified without error text and unknown reserve survives reopening
+ok 25 - safe diagnostic HTTP 401: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 62.5533
+  type: 'test'
+  ...
+# Subtest: safe diagnostic HTTP 502: classified without error text and unknown reserve survives reopening
+ok 26 - safe diagnostic HTTP 502: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 59.1385
+  type: 'test'
+  ...
+# Subtest: safe diagnostic content type: classified without error text and unknown reserve survives reopening
+ok 27 - safe diagnostic content type: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 54.5383
+  type: 'test'
+  ...
+# Subtest: safe diagnostic body timeout: classified without error text and unknown reserve survives reopening
+ok 28 - safe diagnostic body timeout: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 57.1064
+  type: 'test'
+  ...
+# Subtest: safe diagnostic oversize: classified without error text and unknown reserve survives reopening
+ok 29 - safe diagnostic oversize: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 57.523
+  type: 'test'
+  ...
+# Subtest: safe diagnostic UTF8: classified without error text and unknown reserve survives reopening
+ok 30 - safe diagnostic UTF8: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 62.8712
+  type: 'test'
+  ...
+# Subtest: safe diagnostic JSON: classified without error text and unknown reserve survives reopening
+ok 31 - safe diagnostic JSON: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 59.7123
+  type: 'test'
+  ...
+# Subtest: safe diagnostic reflection: classified without error text and unknown reserve survives reopening
+ok 32 - safe diagnostic reflection: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 61.5482
+  type: 'test'
+  ...
+# Subtest: safe diagnostic raw store: classified without error text and unknown reserve survives reopening
+ok 33 - safe diagnostic raw store: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 66.2513
+  type: 'test'
+  ...
+# Subtest: safe diagnostic settlement: classified without error text and unknown reserve survives reopening
+ok 34 - safe diagnostic settlement: classified without error text and unknown reserve survives reopening
+  ---
+  duration_ms: 60.0778
+  type: 'test'
+  ...
+# Subtest: diagnostic normal and missing-configuration controls do not alter raw success or consume a missing-key reservation
+ok 35 - diagnostic normal and missing-configuration controls do not alter raw success or consume a missing-key reservation
+  ---
+  duration_ms: 60.2432
+  type: 'test'
+  ...
+# Subtest: diagnostic uses descriptors not error getters, and never exports arbitrary error properties
+ok 36 - diagnostic uses descriptors not error getters, and never exports arbitrary error properties
+  ---
+  duration_ms: 32.7
+  type: 'test'
+  ...
+# Subtest: local deadline diagnostic remains distinct from transport timeout and late headers cannot rewrite it
+ok 37 - local deadline diagnostic remains distinct from transport timeout and late headers cannot rewrite it
+  ---
+  duration_ms: 99.6722
+  type: 'test'
+  ...
+# Subtest: uncertainty persistence failure is visible without releasing or retrying the reserved call
+ok 38 - uncertainty persistence failure is visible without releasing or retrying the reserved call
+  ---
+  duration_ms: 36.8872
+  type: 'test'
+  ...
+# Subtest: frozen request object cannot be swapped after gateway creation
+ok 39 - frozen request object cannot be swapped after gateway creation
+  ---
+  duration_ms: 38.3506
+  type: 'test'
+  ...
+# Subtest: unapproved parameters and non-text content fail before any gateway can be created
+ok 40 - unapproved parameters and non-text content fail before any gateway can be created
+  ---
+  duration_ms: 29.0008
+  type: 'test'
+  ...
+# Subtest: JSON escaped output value cannot reach recording, response or settlement
+ok 41 - JSON escaped output value cannot reach recording, response or settlement
+  ---
+  duration_ms: 79.9556
+  type: 'test'
+  ...
+# Subtest: JSON escaped object key cannot reach recording, response or settlement
+ok 42 - JSON escaped object key cannot reach recording, response or settlement
+  ---
+  duration_ms: 78.1387
+  type: 'test'
+  ...
+# Subtest: nested model JSON value cannot reach recording, response or settlement
+ok 43 - nested model JSON value cannot reach recording, response or settlement
+  ---
+  duration_ms: 73.7505
+  type: 'test'
+  ...
+# Subtest: nested model JSON key cannot reach recording, response or settlement
+ok 44 - nested model JSON key cannot reach recording, response or settlement
+  ---
+  duration_ms: 65.5235
+  type: 'test'
+  ...
+# Subtest: twice nested model JSON cannot reach recording, response or settlement
+ok 45 - twice nested model JSON cannot reach recording, response or settlement
+  ---
+  duration_ms: 62.9354
+  type: 'test'
+  ...
+# Subtest: discarded duplicate JSON property cannot reach recording, response or settlement
+ok 46 - discarded duplicate JSON property cannot reach recording, response or settlement
+  ---
+  duration_ms: 64.3383
+  type: 'test'
+  ...
+# Subtest: normal escaped Chinese and nested JSON retain exact raw bytes and can be recorded and settled
+ok 47 - normal escaped Chinese and nested JSON retain exact raw bytes and can be recorded and settled
+  ---
+  duration_ms: 47.047
+  type: 'test'
+  ...
+1..47
+# tests 47
+# suites 0
+# pass 47
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2627.4554
+

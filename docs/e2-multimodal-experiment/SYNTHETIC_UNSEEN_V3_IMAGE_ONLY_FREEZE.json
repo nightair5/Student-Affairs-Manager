@@ -1,0 +1,422 @@
+{
+  "schemaVersion": "multimodal-synthetic-unseen-freeze-1.1.0",
+  "status": "FROZEN_BEFORE_MODEL_CALLS",
+  "frozenAt": "2026-08-31T03:47:04.577Z",
+  "datasetId": "synthetic-unseen-v3",
+  "datasetSha256": "b9fd4de08e19463c558ff7e224379ed894bd1f1ddb0a8e52c59e9d7ab3ec6800",
+  "ocrBundleSha256": "4b3a25479da547c60146009b6ec9600d8eca762c0b14c2ea4c1b0a1e9bf308dc",
+  "sampleCount": 36,
+  "modalityCounts": {
+    "screenshot": 12,
+    "photo": 12,
+    "scan": 12
+  },
+  "scenarioFamilyCounts": {
+    "scenario-01": 3,
+    "scenario-02": 3,
+    "scenario-03": 3,
+    "scenario-04": 3,
+    "scenario-05": 3,
+    "scenario-06": 3,
+    "scenario-07": 3,
+    "scenario-08": 3,
+    "scenario-09": 3,
+    "scenario-10": 3,
+    "scenario-11": 3,
+    "scenario-12": 3
+  },
+  "expectedModel": "deepseek-v4-flash-vision-exp",
+  "provenance": {
+    "materials": "deterministic anonymous synthetic templates generated after the applicable protocol amendment",
+    "groundTruth": "author-written deterministic template facts; not derived from model output",
+    "classification": "synthetic_proxy",
+    "claimBoundary": "preliminary engineering evidence only; not real unseen student material",
+    "groundTruthSentToModel": false
+  },
+  "ocr": {
+    "method": "tesseract.js-7.0.0-chi_sim+eng-local-unverified",
+    "generatedAt": "2026-08-31T03:46:39.942Z",
+    "exactTextHashesControlRun": true
+  },
+  "arms": {
+    "T": {
+      "model": "deepseek-v4-flash-vision-exp",
+      "input": "frozen local OCR text only"
+    },
+    "I": {
+      "model": "deepseek-v4-flash-vision-exp",
+      "input": "original image or selected rendered page plus bounded metadata only",
+      "ocrTextInClientRequest": false,
+      "ocrTextInWorkerPrompt": false,
+      "ocrTextInWorkerNormalization": false,
+      "offlineGroundTruthUsedAfterCallForScoring": true
+    },
+    "IT": {
+      "model": "deepseek-v4-flash-vision-exp",
+      "input": "same original image or rendered page plus the identical frozen OCR text used by T"
+    }
+  },
+  "runRules": {
+    "pairedByCase": true,
+    "inferenceCluster": "scenarioFamilyId; 12 independent template families, each rendered as screenshot/photo/scan",
+    "armOrder": "deterministic hash-balanced permutation",
+    "temperature": 0.1,
+    "evaluatorRetries": 0,
+    "anyRequestFailureInvalidatesArmQualityMetrics": true,
+    "expectedMutationAfterRun": "forbidden",
+    "semanticTuningAfterReveal": "forbidden"
+  },
+  "metrics": {
+    "primary": [
+      "taskMicroF1",
+      "majorCorrectionRate",
+      "completeCaseAccuracy"
+    ],
+    "secondary": [
+      "materialF1",
+      "timePointF1",
+      "eventF1",
+      "requiresActionAccuracy",
+      "forbiddenTaskRate",
+      "evidenceValidity"
+    ],
+    "proxyOnly": [
+      "automatedCorrectionBurdenOperations"
+    ],
+    "notObservableWithoutHumanStudy": [
+      "userModificationTimeSeconds"
+    ],
+    "noActionEmptyTaskF1": "NOT_APPLICABLE"
+  },
+  "promotionBoundary": {
+    "syntheticGate": "IT task F1 must exceed T and I by at least 0.03; IT major correction rate must be at least 0.05 lower than both; clustered paired 95% intervals must not point in the opposite direction; all 108 requests must complete with the frozen model.",
+    "launchGate": "Synthetic results can never authorize launch. Real unseen material, actual human timing, privacy/security, browser A-J and stability must still pass."
+  },
+  "firstModelCallAtAtFreeze": null,
+  "cases": [
+    {
+      "id": "mmu3-01",
+      "scenarioFamilyId": "scenario-01",
+      "modality": "screenshot",
+      "sourceSha256": "bcbc239198f67428e8feb17e031ba1b1b8b0505dfdbda332111a11cc668843cf",
+      "imageSha256": "433be11db7bc19cb8fc15bd0c073fae62929caa1fc8165394ce7016172054d33",
+      "expectedSha256": "b4686956b1b6de4cd88ac6b524d26260e03501e5018d3e0d4f76ce6e3ee92107",
+      "ocrTextSha256": "83a1e17e9183b87c3881e42a3c95fefaa76c6b0447790c155e76665c6f6f3f41"
+    },
+    {
+      "id": "mmu3-02",
+      "scenarioFamilyId": "scenario-02",
+      "modality": "screenshot",
+      "sourceSha256": "661ddb20bb790b4fa0f1a30f2911d6186431fcabb6db6726fd435dec56c7cb43",
+      "imageSha256": "65c395a6ddae6b2cc58dc62853f94c08b6fde4a0fc70710b563f01a5498ec2ce",
+      "expectedSha256": "856690fe21be2bd3db1db90f52fdd6efd90ce7a5839f6b25a90ee26e4acf8616",
+      "ocrTextSha256": "9f737aa97a080996bb75f5f0ae9d22fbb81d923c691f14171668dd93861172eb"
+    },
+    {
+      "id": "mmu3-03",
+      "scenarioFamilyId": "scenario-03",
+      "modality": "screenshot",
+      "sourceSha256": "07811d8203e7ac955ac7f95343d3bd368c1ef4ec4666bc294558e9e4bf9eecc6",
+      "imageSha256": "5da8cb3c4909246ca67de31ccc0c9cb5cfa0e297a321d26e0650a8c885b31604",
+      "expectedSha256": "a280f48de13da690c88a2d11aeb7913fe510c0895bae5d3049c80293eae9e1bb",
+      "ocrTextSha256": "dbeffe40bd07ecfac4d374c5a80ef9a2da9e7b8b5b14d22c3133dffbda612c8c"
+    },
+    {
+      "id": "mmu3-04",
+      "scenarioFamilyId": "scenario-04",
+      "modality": "screenshot",
+      "sourceSha256": "93b1de192031299930432fd5e681f43733f071148b8d1365a89cfe584a779eaa",
+      "imageSha256": "97a705eded92f213dfef7b68106c78766d6e3fe6ebcae1759acbb4baebc857a1",
+      "expectedSha256": "f7da7b2f9c6b27be2457c5c1ab422fb3641cda307ac5e0d7bdae9c6192bfc04c",
+      "ocrTextSha256": "188eebef86bda72c090ef5856e959d8d9828a1ed2bb3a330f7d69071ba5982f8"
+    },
+    {
+      "id": "mmu3-05",
+      "scenarioFamilyId": "scenario-05",
+      "modality": "screenshot",
+      "sourceSha256": "a256a4117cdebaff4b756bd7d1624f652d7d54005d8c97a8fbae05450a5061c2",
+      "imageSha256": "36756936e6a27f22d23a840f172dad7f185bcfda4346a87195c1c1b30c1f592a",
+      "expectedSha256": "aeb6424e6cd4ef4c697919e602d84df8b5de55196290e442573a6de52a15d638",
+      "ocrTextSha256": "8c796131e24377b8cfa1768ef68413b79ce83a07f0564d87c419acab827932ef"
+    },
+    {
+      "id": "mmu3-06",
+      "scenarioFamilyId": "scenario-06",
+      "modality": "screenshot",
+      "sourceSha256": "00b56a2f53034ba207f73cd757422e27de3b4c11c582e2b676c7f92f7e94af5d",
+      "imageSha256": "1f9d8d13bc7043479b323e6f0a0bad25b313dc0ca58838c26d258128841084b0",
+      "expectedSha256": "cef5164483868b512fbab6c933e02c5306f134d1f7d095f64ce565cba3e6aaeb",
+      "ocrTextSha256": "98b02b89318058e621f8317e572116dcf14eff118abdf94bbc4ba463a201d5ad"
+    },
+    {
+      "id": "mmu3-07",
+      "scenarioFamilyId": "scenario-07",
+      "modality": "screenshot",
+      "sourceSha256": "b45627f143867074825695ab2c1ce1f07fa3157479dbfb920e134d3ee07a5706",
+      "imageSha256": "8acbc951da838493b27c54577a7f34f45d51bdc28d4cd05fef15ff443267fcaf",
+      "expectedSha256": "6d4a8c75a82db01b3d794ac578486a1f2603d498899d61f8779724b0d570b712",
+      "ocrTextSha256": "60ea9a96a57f8d38d02749a9ce2ffff43109a40c4855d7a08281b83d0327b454"
+    },
+    {
+      "id": "mmu3-08",
+      "scenarioFamilyId": "scenario-08",
+      "modality": "screenshot",
+      "sourceSha256": "a3e854265e2b4abb27c47656555cc8686e2d48a118ad7bf7f4287523877ac3b2",
+      "imageSha256": "b2afd128bc1bd2ec4d0322562c5f00efa55f845194baf53cc8f8ea8e70423f59",
+      "expectedSha256": "e73d8b89729de44f84ec42c404150c006d2cea629d3d1db09e7b1428343c6d07",
+      "ocrTextSha256": "c4a2fd13d2f4f29a4b95eb139df46e3969e63cb2820cca1b24031d3beded1c7f"
+    },
+    {
+      "id": "mmu3-09",
+      "scenarioFamilyId": "scenario-09",
+      "modality": "screenshot",
+      "sourceSha256": "f5fca666bde9828a4b3f8151b10499af1787a8c6ebc4d896d5028bec520d9559",
+      "imageSha256": "2b6c972b8872ecfb8759ed4a3578bed871d5248cc111d3742483688af644aaf0",
+      "expectedSha256": "00307e2eb11b69c50d58bff9ea7e34840ef9809614021e4dbbd06f0c9a99b253",
+      "ocrTextSha256": "4115956c5cfa6af2e2eed5f025fecb73ffc48957258d001870eb79ae637f329c"
+    },
+    {
+      "id": "mmu3-10",
+      "scenarioFamilyId": "scenario-10",
+      "modality": "screenshot",
+      "sourceSha256": "d82253355a38dad28bf7a5830e2eb2f5a94217e9527dc51493995debed7a45c0",
+      "imageSha256": "0ce7b1c5160c37bdc84b64ebba9ee46a57804096e28b68f61f711ada39cd96b9",
+      "expectedSha256": "8256b2bc1213345f84e814380f07fc74fb5536c1b188923fc8745ee25d276dc0",
+      "ocrTextSha256": "3e64d7afe6753d847447617cdbc5f586718e75a285fd8cfbf506848ca17dfe9c"
+    },
+    {
+      "id": "mmu3-11",
+      "scenarioFamilyId": "scenario-11",
+      "modality": "screenshot",
+      "sourceSha256": "49182324b6a5a8c952c4ff949a819239bb6a1d24172db5a4d73944e6757d3ba5",
+      "imageSha256": "48eaca586d1df1ee5e6006f0cd43eef236bd7546113fa21f5cb6b37ae698513a",
+      "expectedSha256": "f667b1eecf9ad10346446074ee9bd0cd6da86b3f20956723140aa35bb6a83ad9",
+      "ocrTextSha256": "e38a0a7c3f09f291d0867f11695e87b0edd2c7919a4b1052e40233671b896cde"
+    },
+    {
+      "id": "mmu3-12",
+      "scenarioFamilyId": "scenario-12",
+      "modality": "screenshot",
+      "sourceSha256": "ffe048cb082d035791c629e171b3ca9bfd9ffff0abe305ae86204a20c75206f2",
+      "imageSha256": "fd0d00e56daad011736acb44248f0d1cd0f0d0b209b36df9611d452fcc15d82f",
+      "expectedSha256": "ea7ab485e8adae15bb653b5e0e90e742337b47403d0e105b6897330883cfe576",
+      "ocrTextSha256": "063db7ec76c8779d402689a015ddbc7818a7a989f0e52417a502f8c7ee66da6f"
+    },
+    {
+      "id": "mmu3-13",
+      "scenarioFamilyId": "scenario-01",
+      "modality": "photo",
+      "sourceSha256": "945f8804695e348a36eaabdef7555859b43aa43d5450154be3436bca2b1be465",
+      "imageSha256": "e34961a430c862145c2b60045685454ca88340e41617549d89eda8bacfc5b0b6",
+      "expectedSha256": "8ea240fb6b23c4295d07734b648b87955b032a065721d6cc6c1b647952f6a42c",
+      "ocrTextSha256": "c36b2ecacaca95083c60a8ef8d97fb3e13ade612b5c2a885770a63a6a7e1794e"
+    },
+    {
+      "id": "mmu3-14",
+      "scenarioFamilyId": "scenario-02",
+      "modality": "photo",
+      "sourceSha256": "8f0319c79b5e73cca1ef31505a52f8438a3eb53bf04c753cb2077f95e5856265",
+      "imageSha256": "960ce8537c5d1b360804f121bd210a221811f2dffe8fe22145f9228fa583848f",
+      "expectedSha256": "9edbf0b0f87ec57a6390c65d283b35517cee6ad78a18e9a000fa59d59104f732",
+      "ocrTextSha256": "0518c9dec140dabfc1f6dcb2a2cfa792185723876bde159da7f45ddf4df28a13"
+    },
+    {
+      "id": "mmu3-15",
+      "scenarioFamilyId": "scenario-03",
+      "modality": "photo",
+      "sourceSha256": "0c891bfe447daccbcf4296492db2b0c900d3323b6bbcffc2018e714f14fb7a25",
+      "imageSha256": "81d4391ee2450c01659b73cb112d5f092abb5bfbfbb8b038990efd983f0d3b91",
+      "expectedSha256": "846b705c52f459191aaa4681853a166ba2ce61357df3807572e6e5f9f68a1e71",
+      "ocrTextSha256": "5d8c4f33888a8a074649d245366bccc7af7c9a1c72ebf493f8be7f58f4f8760f"
+    },
+    {
+      "id": "mmu3-16",
+      "scenarioFamilyId": "scenario-04",
+      "modality": "photo",
+      "sourceSha256": "5412f3df63c99df2a13d341c47c5f48a0684dac8a0e7605617023afb5a43207b",
+      "imageSha256": "56e3da0797d5c01c0add16822aaee3d4b9ad9e02208182178ff440c3cb529d8c",
+      "expectedSha256": "97302f57c91e42ba895b602f349873f478d8fd6c94c81c2cb5738b0210a4ab06",
+      "ocrTextSha256": "9145628a830b7ac6e6e0922f40c53ee5a17036ec8dedaf134afc012c039f9946"
+    },
+    {
+      "id": "mmu3-17",
+      "scenarioFamilyId": "scenario-05",
+      "modality": "photo",
+      "sourceSha256": "d300b7be1d5f06265092ba5cef7ce54ba1d0037a38cb3534d240489a59a7eb1a",
+      "imageSha256": "362de481f3dac73afaf68c91cbd64a56e059b2c4f817f46744e0ca7676900c70",
+      "expectedSha256": "dd22263df725e0ab6d8651f220d34d6de98a72aa188977f47a947410c82eaa57",
+      "ocrTextSha256": "ce176adf7a872338fda7431919aa655ff0f3e617ea6a5763aaafd9af9584a02d"
+    },
+    {
+      "id": "mmu3-18",
+      "scenarioFamilyId": "scenario-06",
+      "modality": "photo",
+      "sourceSha256": "f23e1822ad5c633fd2c997e813938fa445d983592995f0f2bddef3c75b5466b3",
+      "imageSha256": "34b2e9293ebe7434047895bf41eed45143cb6c3ebc39a213f6148b8f4b1002bf",
+      "expectedSha256": "ed6743313f9ae0ee84fdfac8d48623db81e8fba387f1f7e5802ccd3466a3cdc9",
+      "ocrTextSha256": "f173a702b304f94eeec6d469a660d7c4634e1391ae3aa621154f0187bd829ab2"
+    },
+    {
+      "id": "mmu3-19",
+      "scenarioFamilyId": "scenario-07",
+      "modality": "photo",
+      "sourceSha256": "9bfc783944bcf1e05ca97d3710ef08b1692b4390caad114efa4c18baa7a1d17b",
+      "imageSha256": "b7a83b0669df55ca252e66565cd0438f8d051195a822ef72ac5a34204929b5d6",
+      "expectedSha256": "ef5090eaf28f128f04784c5761120928455a9b34495e9f7f75e5212d28f9288d",
+      "ocrTextSha256": "055012f6cf089d89b3bbb19ce897222e1c3a67dacc476a600b60cfbf4449961f"
+    },
+    {
+      "id": "mmu3-20",
+      "scenarioFamilyId": "scenario-08",
+      "modality": "photo",
+      "sourceSha256": "7da3b5baba75c32365826d25c72145ba498982a3b206863c74f14580d72f802d",
+      "imageSha256": "7fd42eb1cba235b68319b5f672aaf15000b043ac3897d18f32b536d069bab26f",
+      "expectedSha256": "0bd9e700b7e43314333b65c57bfb58d2151e0e0f321eae4faf73ab8669d0e5ff",
+      "ocrTextSha256": "368171f88625d857f5cba83803e208449925e5fd85086e41ea8c784dd3242f31"
+    },
+    {
+      "id": "mmu3-21",
+      "scenarioFamilyId": "scenario-09",
+      "modality": "photo",
+      "sourceSha256": "2158af544c3d02d16272eca2739f254e3e99b9243afb7a3441280ea9f502b033",
+      "imageSha256": "251cebbabc3be7bcf2793e85e6290e97e0e904af0921c8d8843b41faa3ee70a5",
+      "expectedSha256": "6769b3e55f66110f04e8b72e2f7cb1cbda1d1ac03652b3ea2e4956ce7827b864",
+      "ocrTextSha256": "65f4b7a68851baf29866c206b46a93031373b5976beaa19308e3e73f7720abc8"
+    },
+    {
+      "id": "mmu3-22",
+      "scenarioFamilyId": "scenario-10",
+      "modality": "photo",
+      "sourceSha256": "0a22df964289b6fba3e0d7ae1e534e63b264c1824dd3c393fc17eea1c455b7c6",
+      "imageSha256": "bde50a91960e0076b9b5b1aae1ce2ee1f28402132a09b8625e339cce810d0b9f",
+      "expectedSha256": "e872cd46b8235a3ce6181f891a0ecebd575954fc8a7255a6e0ed6b3e6cb0969f",
+      "ocrTextSha256": "050b622f6959b7a75c5967d3a3ad5b77dd6804a3a20670b761e9829c705e537c"
+    },
+    {
+      "id": "mmu3-23",
+      "scenarioFamilyId": "scenario-11",
+      "modality": "photo",
+      "sourceSha256": "b7157f33ea3e87c49af19e2a84191c1d023768e156e38fec9a04f9310878d584",
+      "imageSha256": "5dbd5c19e9bbac50c2a5716c6c79b9fa81bc25b822ac816588fb834711f9d35b",
+      "expectedSha256": "0c50585475f6ae31bb7a413053b6384cab701ae352819dffb67b709189f9c508",
+      "ocrTextSha256": "fca9e16ca6d6aa186a5beac2191579d817eeb3cf8929ee453e951742b6116e0c"
+    },
+    {
+      "id": "mmu3-24",
+      "scenarioFamilyId": "scenario-12",
+      "modality": "photo",
+      "sourceSha256": "06dac9bf60bc31b922cf31d56977740eb03868ee296b17616b78d1dad4af1bdc",
+      "imageSha256": "95ea4723577883d1a954f8e42bc18c235f639187a4e4dbb0b2f33dd63993b98e",
+      "expectedSha256": "184a0a1388058fdace23dc06906638626423b4ee681bb5efcdd9410eed71abfb",
+      "ocrTextSha256": "42adc4a2a0bd5eee456caf8f08b995d500d11d4ef62fbaedf9b430221ef8b8fe"
+    },
+    {
+      "id": "mmu3-25",
+      "scenarioFamilyId": "scenario-01",
+      "modality": "scan",
+      "sourceSha256": "b3f45984fc03e5b11445a24a2e6257c923962c511460bb4088d4353801a47336",
+      "imageSha256": "beab52b6e454555b407b623bd11ad2ee79b0e8669335c776eb7052f11441d523",
+      "expectedSha256": "d3cdc8dbe7bb4de3feafbe0bb141922042b8234f98f63c06f6f9075187a6bb83",
+      "ocrTextSha256": "3dbda08c0ce3f8a7c32c387a720a4ac37af7e37d60bdcaeb364b377ea6a1c04a"
+    },
+    {
+      "id": "mmu3-26",
+      "scenarioFamilyId": "scenario-02",
+      "modality": "scan",
+      "sourceSha256": "375e179e27dad16759b92606435a2b677624a645797e7dcea842e187a69be085",
+      "imageSha256": "5f363f38315de09d00fcc232f95424daec72c844f7d36e9db5a7f467bbe5a626",
+      "expectedSha256": "fd2abfdfd125c6cd0552ea0254b41977cdefb328cab672712f36f5298cb50cb2",
+      "ocrTextSha256": "1009a4abc7481774d9bf994106ceff6563365525e5c6dea5fbd2612efd5af8c0"
+    },
+    {
+      "id": "mmu3-27",
+      "scenarioFamilyId": "scenario-03",
+      "modality": "scan",
+      "sourceSha256": "9f38e6c67d5c577343e92731289c627dee1595a476e02bf20a4248f4e03bd9a6",
+      "imageSha256": "db41b98051cdf67ea2608c87b5b21a541b1908bfb8d3f8c521db1b41ac139b6d",
+      "expectedSha256": "e80062ab87f5f2fa4bc3c9b804c678f3aacc6cec7f66b3a89626c29b1dbce978",
+      "ocrTextSha256": "36c9098e19c3b3a4d258d1ed35d9803f731b544854a9cfde512611c9c591923d"
+    },
+    {
+      "id": "mmu3-28",
+      "scenarioFamilyId": "scenario-04",
+      "modality": "scan",
+      "sourceSha256": "8e282a7016bbca233adeccbae730d8406171522593d4857f88bcc16a0865405a",
+      "imageSha256": "3a21ada0e36b101bbe484407acd846004444137f1b76ce784fb798a8688c9f96",
+      "expectedSha256": "e7fc9216d37c1c70d84c62f46129c115db46e799e46e11a9a68a1f2d8dad3659",
+      "ocrTextSha256": "47cac15a4eee3cfd9a881ca8b8e8d37b58c000f0274b50b1bd98d66f58c2330f"
+    },
+    {
+      "id": "mmu3-29",
+      "scenarioFamilyId": "scenario-05",
+      "modality": "scan",
+      "sourceSha256": "9ca84c38513135b1045b09af06a88c6f8b9ed32c8176543cd203730e9f5ed911",
+      "imageSha256": "9cab31961f49f5c4187fdbbe8b18c2a31dcfe96dc01e5ff950a4ff0ce3b40afd",
+      "expectedSha256": "a8848b42ce58e13b49bdc24ff37ae075d013f9b75ce487949df47666dab6babb",
+      "ocrTextSha256": "8edb811b21d5a637b51dc75b9e4bad52f0231f48072269cf860099a62c0496a1"
+    },
+    {
+      "id": "mmu3-30",
+      "scenarioFamilyId": "scenario-06",
+      "modality": "scan",
+      "sourceSha256": "b8e7a39787ed494ac079e2b140235ebf678325ba769cd93dc08bb8ba782ed830",
+      "imageSha256": "f9a4e87d97b45d60f105d2bc4161c74ce6bbfeabfb462a1cd0ba17526328f56d",
+      "expectedSha256": "73c14d42a70aa6a9b5e09c4d5e73d3b2ed0eadb58b61f6ef1ce517b6fda4a1aa",
+      "ocrTextSha256": "7eaf34e27cdd28ee8497e00312bb48d7142c49baa62a039579451fdd5a008662"
+    },
+    {
+      "id": "mmu3-31",
+      "scenarioFamilyId": "scenario-07",
+      "modality": "scan",
+      "sourceSha256": "b68f08c844cab6f910f7e8f620cbe56858d1c5225685881def80223309236f0f",
+      "imageSha256": "637067045aee63090678de549f5974188adb1f763a673018530bfa58484a6f26",
+      "expectedSha256": "efb4c5e69c16022b2292d09a887c95e73ecbd4716a0fb78c5101e5c6cdf781c1",
+      "ocrTextSha256": "4ceb4d572bc76aad17c6ef00b52f921ce1a7c91123970636c108fb0fd46cddbb"
+    },
+    {
+      "id": "mmu3-32",
+      "scenarioFamilyId": "scenario-08",
+      "modality": "scan",
+      "sourceSha256": "3a231c6c9c3d457a25bb7f5a46a8244d41e6a0f89a7f7b49a29a26d614ac6894",
+      "imageSha256": "a3c9fe13ef338717648e0c9979085a3472b53abf5c444363330916bd3d07fcd7",
+      "expectedSha256": "a0859633a3bfa837b7c19ed92c5e8713eb22bc963dda1c3f3f0ae44a3309871d",
+      "ocrTextSha256": "e45803788bb2d7199028bdb05bee1eaa31126845c1b93b7f2924f5150e01f8b4"
+    },
+    {
+      "id": "mmu3-33",
+      "scenarioFamilyId": "scenario-09",
+      "modality": "scan",
+      "sourceSha256": "a6c54dd69f7861ee3c019eb5753c5fd5ffcb8a99cce93b0e48a8f638d96ca775",
+      "imageSha256": "edd2bef5f2830681cbfff58ed9ac8d267eec15f3be2378183ef1d8f9184aedaf",
+      "expectedSha256": "fc4bc68d95c324a29fb5124615b205fe3c49a6e99a5ab66449ccf8f280782ed5",
+      "ocrTextSha256": "bc923906910a208878a62b54263bd5aa8f8ba2f49f40a0c975d2e8106d70e228"
+    },
+    {
+      "id": "mmu3-34",
+      "scenarioFamilyId": "scenario-10",
+      "modality": "scan",
+      "sourceSha256": "5cd4e241df253bf49e67f6911baa436aba2baa250e456f20e603ee1de3a07eb7",
+      "imageSha256": "3883eab96daf18af29f1171790d9ad1d657576f1c5175ad21d4ffbccd62ba204",
+      "expectedSha256": "1c19b38f3d9f8e60729885d4e2e66096f1a9895170345db42309674f4c9cceab",
+      "ocrTextSha256": "af2888de5c1fc3b3987abd8980c2cfca2261f210caf6faf880746458b1ddccf9"
+    },
+    {
+      "id": "mmu3-35",
+      "scenarioFamilyId": "scenario-11",
+      "modality": "scan",
+      "sourceSha256": "465eda5bcf92488fecab302c7e71aa6a272a780d4c37c0918ee60ec640c88566",
+      "imageSha256": "123ed77136a34052ac12f7946c4b71f8cb21b1f087905d1ff7708304aa5ca401",
+      "expectedSha256": "60d737cfd37ecc35d760fa6346c844a3575f3dec2c1a96fa454f881390c2bfce",
+      "ocrTextSha256": "dc4f0286ad6a4486a2fe90c2ac782da741aeae1ed58788bb911e244a6dc9b71b"
+    },
+    {
+      "id": "mmu3-36",
+      "scenarioFamilyId": "scenario-12",
+      "modality": "scan",
+      "sourceSha256": "2577f205ecb6a98833319caac36a76a89a028fb7a8dc57fa4878e4d21b22dc73",
+      "imageSha256": "9ff63bbd71d77f2d71d149483883815a3f42fc94ef8c11ff83796da71db3953f",
+      "expectedSha256": "5272c691af0248463002a8b027904f7b8208ac867010ad6c813be6afa757a4e3",
+      "ocrTextSha256": "d18a506c7c4b7e653d1efbdd40b39f9b7499c0399774a134a0b541f2ccf430ec"
+    }
+  ]
+}

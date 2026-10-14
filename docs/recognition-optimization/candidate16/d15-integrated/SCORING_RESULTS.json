@@ -1,0 +1,5694 @@
+{
+  "version": "candidate16-d15-development-results-1",
+  "role": "FULLY_SEEN_SYNTHETIC_DEVELOPMENT_SINGLE_AUTHOR_PROVISIONAL",
+  "scorer": "recognition-semantic-scoring-7.0.0",
+  "originalD11Decision": "REJECT_CANDIDATE15_DEVELOPMENT",
+  "originalDecisionChanged": false,
+  "model": "deepseek-flash",
+  "planned": 24,
+  "sent": 24,
+  "settled": 24,
+  "uncertain": 0,
+  "authorizedHead": "98c685adec37d9e5a7656a6eb9355a490c72dd82",
+  "grantId": "D15-2026-09-28-e5de932a-9a3b-41a4-ae1d-fca50c287d06",
+  "hardLimitMicroUsd": 7800000,
+  "preflightWorstMicroUsd": 7785696,
+  "ledger": {
+    "rows": 889,
+    "sha256": "01d6670af09175475fcdfa5aec3594d2751cfd3b03050743fb79a04a578ad4c9",
+    "batchRows": 49
+  },
+  "rawCount": 24,
+  "usage": {
+    "inputTokens": 106266,
+    "outputTokens": 25919,
+    "cachedInputTokens": 92928
+  },
+  "costUpperMicroUsd": 62990,
+  "providerActualUsd": "NOT_OBSERVABLE",
+  "humanReview": {
+    "titlesAndDescriptions": "NOT_ADJUDICATED",
+    "teachingExampleLeakage": "NOT_ADJUDICATED"
+  },
+  "humanMetrics": {
+    "firstWholeSuggestionCorrect": "NOT_OBSERVABLE",
+    "correctDisposition": "NOT_OBSERVABLE",
+    "lowModificationCorrectDisposition": "NOT_OBSERVABLE",
+    "activeModificationTime": "NOT_OBSERVABLE"
+  },
+  "arms": {
+    "Candidate03": {
+      "denominator": 12,
+      "transportFailed": 0,
+      "parseFailed": 0,
+      "schemaFailed": 0,
+      "referenceFailed": 0,
+      "scored": 12,
+      "unscored": 0,
+      "wholeCorrect": 2,
+      "taskPresence": {
+        "tp": 16,
+        "fp": 6,
+        "fn": 2
+      },
+      "currentTaskRisk": {
+        "fn": 0,
+        "unsupportedActionable": 0
+      },
+      "severity": {
+        "severe": 9,
+        "major": 29,
+        "forbidden": 0,
+        "keyMajor": 23
+      }
+    },
+    "Candidate16": {
+      "denominator": 12,
+      "transportFailed": 0,
+      "parseFailed": 0,
+      "schemaFailed": 0,
+      "referenceFailed": 1,
+      "scored": 11,
+      "unscored": 1,
+      "wholeCorrect": 3,
+      "taskPresence": {
+        "tp": 15,
+        "fp": 0,
+        "fn": 0
+      },
+      "currentTaskRisk": {
+        "fn": 0,
+        "unsupportedActionable": 0
+      },
+      "severity": {
+        "severe": 7,
+        "major": 24,
+        "forbidden": 0,
+        "keyMajor": 20
+      }
+    }
+  },
+  "pairwise": [
+    {
+      "sourceId": "C13-D5R1-S01",
+      "candidate03Complete": false,
+      "candidate16Complete": false,
+      "wholeOutcome": "tie",
+      "candidate03": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 0,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "fieldErrors": []
+      },
+      "candidate16": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 0,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "fieldErrors": []
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S02",
+      "candidate03Complete": true,
+      "candidate16Complete": false,
+      "wholeOutcome": "Candidate03_win",
+      "candidate03": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 0,
+          "major": 0,
+          "forbidden": 0,
+          "keyMajor": 0
+        },
+        "fieldErrors": []
+      },
+      "candidate16": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 1,
+          "major": 3,
+          "forbidden": 0,
+          "keyMajor": 3
+        },
+        "fieldErrors": [
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "materialDetails",
+            "pass": false
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "times",
+            "pass": false
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S03",
+      "candidate03Complete": false,
+      "candidate16Complete": false,
+      "wholeOutcome": "tie",
+      "candidate03": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 0,
+          "major": 2,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-claim-access-card",
+            "field": "conditionScopes",
+            "pass": false,
+            "missing": [
+              [
+                "scope-0003-67ebdc3ebc3a7e63e076ac8448c2017d7476ab631769670f7ddf7fa1fb37d38f"
+              ]
+            ],
+            "unrelated": [
+              "scope-0002-05eb30c12e022b359b22704ae90f14e4b3313fe90c85f628fc4f13ab8df9d674"
+            ],
+            "contradictory": []
+          }
+        ]
+      },
+      "candidate16": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 0,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "fieldErrors": []
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S04",
+      "candidate03Complete": false,
+      "candidate16Complete": true,
+      "wholeOutcome": "Candidate16_win",
+      "candidate03": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 0,
+          "expected": 1,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 0,
+          "major": 0,
+          "forbidden": 0,
+          "keyMajor": 0
+        },
+        "fieldErrors": []
+      },
+      "candidate16": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "expected": 0,
+          "actual": 0
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 0,
+          "major": 0,
+          "forbidden": 0,
+          "keyMajor": 0
+        },
+        "fieldErrors": []
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S05",
+      "candidate03Complete": false,
+      "candidate16Complete": false,
+      "wholeOutcome": "tie",
+      "candidate03": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 1,
+          "major": 4,
+          "forbidden": 0,
+          "keyMajor": 3
+        },
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-submit-outline",
+            "field": "conditionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0006-ff2b489e786e649cd778f8c55ce080d36d2255a679d0c265881c6158b2603ed6"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T1",
+            "actualId": "task-submit-outline",
+            "field": "materials",
+            "pass": false
+          },
+          {
+            "expectedId": "T1",
+            "actualId": "task-submit-outline",
+            "field": "materialDetails",
+            "pass": false
+          },
+          {
+            "expectedId": "T1",
+            "actualId": "task-submit-outline",
+            "field": "times",
+            "pass": false
+          }
+        ]
+      },
+      "candidate16": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 1,
+          "major": 2,
+          "forbidden": 0,
+          "keyMajor": 2
+        },
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "field": "materialDetails",
+            "pass": false
+          },
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "field": "times",
+            "pass": false
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S06",
+      "candidate03Complete": false,
+      "candidate16Complete": false,
+      "wholeOutcome": "tie",
+      "candidate03": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 2,
+          "major": 6,
+          "forbidden": 0,
+          "keyMajor": 5
+        },
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-fill-roster",
+            "field": "materialDetails",
+            "pass": false
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-submit-roster",
+            "field": "condition",
+            "pass": false,
+            "expected": "not_applicable",
+            "actual": "unknown"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-submit-roster",
+            "field": "actionability",
+            "pass": false,
+            "expected": "actionable",
+            "actual": "needs_confirmation"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-submit-roster",
+            "field": "conditionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0003-aeb3dd061f05b9bf3013f5a045a88f07eab7e795c88292fc555e61364fc4d914"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-submit-roster",
+            "field": "materialDetails",
+            "pass": false
+          }
+        ]
+      },
+      "candidate16": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 1,
+          "major": 6,
+          "forbidden": 0,
+          "keyMajor": 4
+        },
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "field": "materialDetails",
+            "pass": false
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "condition",
+            "pass": false,
+            "expected": "not_applicable",
+            "actual": "true"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "conditionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0003-aeb3dd061f05b9bf3013f5a045a88f07eab7e795c88292fc555e61364fc4d914"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "factScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0003-aeb3dd061f05b9bf3013f5a045a88f07eab7e795c88292fc555e61364fc4d914"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "materialDetails",
+            "pass": false
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S07",
+      "candidate03Complete": false,
+      "candidate16Complete": true,
+      "wholeOutcome": "Candidate16_win",
+      "candidate03": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 0,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "fieldErrors": []
+      },
+      "candidate16": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 0,
+          "major": 0,
+          "forbidden": 0,
+          "keyMajor": 0
+        },
+        "fieldErrors": []
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S08",
+      "candidate03Complete": false,
+      "candidate16Complete": false,
+      "wholeOutcome": "tie",
+      "candidate03": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 2,
+          "major": 6,
+          "forbidden": 0,
+          "keyMajor": 5
+        },
+        "fieldErrors": [
+          {
+            "expectedId": "T2",
+            "actualId": "task-upload-travel-reimbursement-declaration",
+            "field": "condition",
+            "pass": false,
+            "expected": "not_applicable",
+            "actual": "unknown"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-upload-travel-reimbursement-declaration",
+            "field": "actionability",
+            "pass": false,
+            "expected": "actionable",
+            "actual": "needs_confirmation"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-upload-travel-reimbursement-declaration",
+            "field": "conditionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0003-e6a6e5495b8004ef150e60a2d034bd11c2a03e662c7549e82530ceacd1106fb9"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-upload-travel-reimbursement-declaration",
+            "field": "materials",
+            "pass": false
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-upload-travel-reimbursement-declaration",
+            "field": "materialDetails",
+            "pass": false
+          }
+        ]
+      },
+      "candidate16": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 1,
+          "major": 4,
+          "forbidden": 0,
+          "keyMajor": 2
+        },
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "field": "completionStandards",
+            "pass": false
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "condition",
+            "pass": false,
+            "expected": "not_applicable",
+            "actual": "true"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "conditionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0003-e6a6e5495b8004ef150e60a2d034bd11c2a03e662c7549e82530ceacd1106fb9"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "factScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0003-e6a6e5495b8004ef150e60a2d034bd11c2a03e662c7549e82530ceacd1106fb9"
+            ],
+            "contradictory": []
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S09",
+      "candidate03Complete": false,
+      "candidate16Complete": false,
+      "wholeOutcome": "tie",
+      "candidate03": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 0,
+          "expected": 0,
+          "actual": 3
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 0,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "fieldErrors": []
+      },
+      "candidate16": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "expected": 0,
+          "actual": 0
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 0,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "fieldErrors": []
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S10",
+      "candidate03Complete": false,
+      "candidate16Complete": false,
+      "wholeOutcome": "incomparable",
+      "candidate03": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 2,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 1,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "fieldErrors": []
+      },
+      "candidate16": {
+        "status": "REFERENCE_LINK_FAILURE",
+        "fieldErrors": []
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S11",
+      "candidate03Complete": false,
+      "candidate16Complete": false,
+      "wholeOutcome": "tie",
+      "candidate03": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "expected": 4,
+          "actual": 4
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 3,
+          "major": 7,
+          "forbidden": 0,
+          "keyMajor": 5
+        },
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-print-poster-original",
+            "field": "currentness",
+            "pass": false,
+            "expected": "superseded",
+            "actual": "cancelled"
+          },
+          {
+            "expectedId": "T1",
+            "actualId": "task-print-poster-original",
+            "field": "propositionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0009-9e0ea5545d97e3d62293ecbbcb5063777c7b658d5c34c17ba2e4b765a727c314"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-register-venue-original",
+            "field": "currentness",
+            "pass": false,
+            "expected": "superseded",
+            "actual": "cancelled"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-register-venue-original",
+            "field": "propositionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0009-9e0ea5545d97e3d62293ecbbcb5063777c7b658d5c34c17ba2e4b765a727c314"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T3",
+            "actualId": "task-upload-poster-electronic",
+            "field": "materials",
+            "pass": false
+          },
+          {
+            "expectedId": "T3",
+            "actualId": "task-upload-poster-electronic",
+            "field": "materialDetails",
+            "pass": false
+          }
+        ]
+      },
+      "candidate16": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "expected": 4,
+          "actual": 4
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 3,
+          "major": 6,
+          "forbidden": 0,
+          "keyMajor": 6
+        },
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-old-print-poster",
+            "field": "currentness",
+            "pass": false,
+            "expected": "superseded",
+            "actual": "cancelled"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-old-register-venue",
+            "field": "currentness",
+            "pass": false,
+            "expected": "superseded",
+            "actual": "cancelled"
+          },
+          {
+            "expectedId": "T3",
+            "actualId": "task-new-upload-poster",
+            "field": "materials",
+            "pass": false
+          },
+          {
+            "expectedId": "T3",
+            "actualId": "task-new-upload-poster",
+            "field": "materialDetails",
+            "pass": false
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "C13-D5R1-S12",
+      "candidate03Complete": true,
+      "candidate16Complete": true,
+      "wholeOutcome": "tie",
+      "candidate03": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 0,
+          "major": 0,
+          "forbidden": 0,
+          "keyMajor": 0
+        },
+        "fieldErrors": []
+      },
+      "candidate16": {
+        "status": "SCORED",
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "severity": {
+          "severe": 0,
+          "major": 0,
+          "forbidden": 0,
+          "keyMajor": 0
+        },
+        "fieldErrors": []
+      }
+    }
+  ],
+  "decision": "NEEDS_TARGETED_FIXES",
+  "cases": [
+    {
+      "ordinal": 1,
+      "sourceId": "C13-D5R1-S01",
+      "arm": "A",
+      "candidate": "Candidate03",
+      "requestSha256": "08c71233ccfa45af30f82aa77728183d86c991553a2a7ba4c73f9962a8cd4f19",
+      "responseSha256": "6731d24e5dadfc997179cd0201b612a9ae7f8e88d54fd271df68e703879d9eef",
+      "rawFileSha256": "6793aa077a9df50247eec6bb19656e6c4f781d0e18cc34e9336445519f011a53",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 1,
+        "severity": {
+          "severe": 0,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": false,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-archive-ethics",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4384,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 1023,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5407
+      },
+      "costUpperMicroUsd": 2543,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 1,
+        "materials": 1,
+        "timePoints": 1,
+        "events": 1,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 2,
+      "sourceId": "C13-D5R1-S01",
+      "arm": "B",
+      "candidate": "Candidate16",
+      "requestSha256": "3add251dfcf0fe1d106ef7920dd3d7fb4c117a15ede1160e59adbdd66c6951a2",
+      "responseSha256": "bb0c67a95e887bac13471d2f591ac76475ac97b126ca27ed2b982baab8f805a6",
+      "rawFileSha256": "38bfc91f2cc08277afa682b79fca23aaad5412d9396eab29f7ce17b61de6b2ca",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 1,
+        "severity": {
+          "severe": 0,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": false,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-archive-ethics",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4409,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 948,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5357
+      },
+      "costUpperMicroUsd": 2461,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 1,
+        "materials": 1,
+        "timePoints": 1,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 3,
+      "sourceId": "C13-D5R1-S02",
+      "arm": "B",
+      "candidate": "Candidate16",
+      "requestSha256": "f97ac5013ddf101f3465258789d5ce4a0681c635d96ac31509c71add4c83903b",
+      "responseSha256": "0bd3a6682dc62e0f42c6c654a04dd0d57b08f02778354c52b9200f6a4e8292bf",
+      "rawFileSha256": "1bd176351f0fb7731065971c53bf670db5b84a8f695524ea3a001b6d2efdfc9a",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 1,
+        "severity": {
+          "severe": 1,
+          "major": 3,
+          "forbidden": 0,
+          "keyMajor": 3
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": false,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": false
+              },
+              "times": {
+                "pass": false
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "materialDetails",
+            "pass": false
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "times",
+            "pass": false
+          }
+        ],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4520,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1405,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5925
+      },
+      "costUpperMicroUsd": 3042,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 2,
+        "materials": 1,
+        "timePoints": 2,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 4,
+      "sourceId": "C13-D5R1-S02",
+      "arm": "A",
+      "candidate": "Candidate03",
+      "requestSha256": "c0a2dcfa9b93e22a38b62e349db7eda6b1bb6eea7b58534dac8d3fef7091266a",
+      "responseSha256": "d9c703bd34ba472e32e681fba905480c9d8a1cf15a340638290622c51d1e3de8",
+      "rawFileSha256": "06a6389d7b0e8073b22c9d1b832038babdafe83dd3ac42bad12d28ac8eb21dbd",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": true,
+        "taskPresence": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 2,
+        "severity": {
+          "severe": 0,
+          "major": 0,
+          "forbidden": 0,
+          "keyMajor": 0
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": true,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-confirm-team-info",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-upload-guardian-consent",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4495,
+        "input_tokens_details": {
+          "cached_tokens": 4352
+        },
+        "output_tokens": 1441,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5936
+      },
+      "costUpperMicroUsd": 3078,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 2,
+        "materials": 1,
+        "timePoints": 2,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 5,
+      "sourceId": "C13-D5R1-S03",
+      "arm": "A",
+      "candidate": "Candidate03",
+      "requestSha256": "4aaf3648a9d42d55638f3ebfa5778509f3673f094b89f0ecf0630bcca8478419",
+      "responseSha256": "9d314f2a64345b5c76ea557cd8bcc6abe21b824b6cbf8ff371b46a420c576a67",
+      "rawFileSha256": "59f74ee820b12fbf50277d5a4c23681dd2e3ae11750e55962d4f891653748c63",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 0,
+        "severity": {
+          "severe": 0,
+          "major": 2,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": false,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-claim-access-card",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "true",
+                "actual": "true"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": false,
+                "missing": [
+                  [
+                    "scope-0003-67ebdc3ebc3a7e63e076ac8448c2017d7476ab631769670f7ddf7fa1fb37d38f"
+                  ]
+                ],
+                "unrelated": [
+                  "scope-0002-05eb30c12e022b359b22704ae90f14e4b3313fe90c85f628fc4f13ab8df9d674"
+                ],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-claim-access-card",
+            "field": "conditionScopes",
+            "pass": false,
+            "missing": [
+              [
+                "scope-0003-67ebdc3ebc3a7e63e076ac8448c2017d7476ab631769670f7ddf7fa1fb37d38f"
+              ]
+            ],
+            "unrelated": [
+              "scope-0002-05eb30c12e022b359b22704ae90f14e4b3313fe90c85f628fc4f13ab8df9d674"
+            ],
+            "contradictory": []
+          }
+        ],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4322,
+        "input_tokens_details": {
+          "cached_tokens": 4096
+        },
+        "output_tokens": 771,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5093
+      },
+      "costUpperMicroUsd": 2222,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 1,
+        "materials": 0,
+        "timePoints": 1,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 6,
+      "sourceId": "C13-D5R1-S03",
+      "arm": "B",
+      "candidate": "Candidate16",
+      "requestSha256": "f3a7ae54eb094da9df51a8bd5863a4e7f4e8bbe771c163d2a1e013a2ce176441",
+      "responseSha256": "4cc1cfcbd818722392af3b285db812356aadcd089dfda768dca867d28656810c",
+      "rawFileSha256": "1abd017119392705b4f7fa7920776e3165104e6a590cf3dfcf96162449dfa168",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 1,
+        "severity": {
+          "severe": 0,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": false,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "true",
+                "actual": "true"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4347,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 948,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5295
+      },
+      "costUpperMicroUsd": 2442,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 1,
+        "materials": 0,
+        "timePoints": 1,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 7,
+      "sourceId": "C13-D5R1-S04",
+      "arm": "B",
+      "candidate": "Candidate16",
+      "requestSha256": "26865b648f3399e91127f990d0d093a389968de93e9679d100df3a6d5eea6bf1",
+      "responseSha256": "b54454e3dba89adac4cda86635d4a5b15b306323a668b7fd46a3b537277b77fb",
+      "rawFileSha256": "5ddfde7a79e62094c6fa5049c74a5fd8bf552aef28bed8427345e73edd7cd22a",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": true,
+        "taskPresence": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "expected": 0,
+          "actual": 0
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 0,
+        "severity": {
+          "severe": 0,
+          "major": 0,
+          "forbidden": 0,
+          "keyMajor": 0
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": true,
+          "checks": [
+            {
+              "id": "info0",
+              "pass": true
+            },
+            {
+              "id": "info1",
+              "pass": true
+            },
+            {
+              "id": "info2",
+              "pass": true
+            },
+            {
+              "id": "info3",
+              "pass": true
+            },
+            {
+              "id": "info4",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [],
+        "fieldErrors": [],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4396,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 270,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4666
+      },
+      "costUpperMicroUsd": 1643,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 0,
+        "materials": 0,
+        "timePoints": 0,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 8,
+      "sourceId": "C13-D5R1-S04",
+      "arm": "A",
+      "candidate": "Candidate03",
+      "requestSha256": "154c9b036decc72b3e4291ca1ac7a8e50913c656878f97bfcd9ddb4b55d9d6ac",
+      "responseSha256": "6200cbf3c1891413d139189b149bc8086075a3067d5eb8c1702c4fd362162579",
+      "rawFileSha256": "47dc079ebb052ca5e3d216c9602fe98f246c6f41822fe160736648402bc0ef96",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 0,
+          "expected": 1,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 1,
+        "severity": {
+          "severe": 0,
+          "major": 0,
+          "forbidden": 0,
+          "keyMajor": 0
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": true,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-attend-review-presentation",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "false",
+                "actual": "false"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "not_actionable",
+                "actual": "not_actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4371,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 1039,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5410
+      },
+      "costUpperMicroUsd": 2559,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 2,
+        "materials": 0,
+        "timePoints": 0,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 9,
+      "sourceId": "C13-D5R1-S05",
+      "arm": "A",
+      "candidate": "Candidate03",
+      "requestSha256": "e5a3d779ae48ddf708dc6ce9b201fc7c430d42c90952fdc7668b862d44d2ef8c",
+      "responseSha256": "69bae9090f3788db189a1b4356128f5138c10f9c805711920855b67fad0f884b",
+      "rawFileSha256": "29e604ce481fbd45438cb084055765c21d0bfe7520c7bac06f9366fa8aff8738",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 0,
+        "severity": {
+          "severe": 1,
+          "major": 4,
+          "forbidden": 0,
+          "keyMajor": 3
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": true,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-submit-outline",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "unknown",
+                "actual": "unknown"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "needs_confirmation",
+                "actual": "needs_confirmation"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": false,
+                "missing": [],
+                "unrelated": [
+                  "scope-0006-ff2b489e786e649cd778f8c55ce080d36d2255a679d0c265881c6158b2603ed6"
+                ],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": false
+              },
+              "materialDetails": {
+                "pass": false
+              },
+              "times": {
+                "pass": false
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-submit-outline",
+            "field": "conditionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0006-ff2b489e786e649cd778f8c55ce080d36d2255a679d0c265881c6158b2603ed6"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T1",
+            "actualId": "task-submit-outline",
+            "field": "materials",
+            "pass": false
+          },
+          {
+            "expectedId": "T1",
+            "actualId": "task-submit-outline",
+            "field": "materialDetails",
+            "pass": false
+          },
+          {
+            "expectedId": "T1",
+            "actualId": "task-submit-outline",
+            "field": "times",
+            "pass": false
+          }
+        ],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4411,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 1026,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5437
+      },
+      "costUpperMicroUsd": 2555,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 1,
+        "materials": 1,
+        "timePoints": 1,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 10,
+      "sourceId": "C13-D5R1-S05",
+      "arm": "B",
+      "candidate": "Candidate16",
+      "requestSha256": "7999b372aafa001b2515eec7f05ad16d4a43c448f87b7a35ca07c6edf833e8fe",
+      "responseSha256": "3c984075f9c6bac6bd50377ec36531bc36a807a4c16ab7b574710b2ae269d844",
+      "rawFileSha256": "b2a45c2f57d1c7cd9da97ee7996f0bca14ed6575e03b5e7988e051e847ad688f",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 0,
+        "severity": {
+          "severe": 1,
+          "major": 2,
+          "forbidden": 0,
+          "keyMajor": 2
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": true,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "unknown",
+                "actual": "unknown"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "needs_confirmation",
+                "actual": "needs_confirmation"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": false
+              },
+              "times": {
+                "pass": false
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "field": "materialDetails",
+            "pass": false
+          },
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "field": "times",
+            "pass": false
+          }
+        ],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4436,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 920,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5356
+      },
+      "costUpperMicroUsd": 2435,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 1,
+        "materials": 1,
+        "timePoints": 1,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 11,
+      "sourceId": "C13-D5R1-S06",
+      "arm": "B",
+      "candidate": "Candidate16",
+      "requestSha256": "3874c581083d9aad6da5b251a55eb70588b12c8d723e3ef5fe10d77ce82bd348",
+      "responseSha256": "5409ad1a553d0cb8e63a79489173ad9ae087ce897dc2cae93295ef8d94183c6a",
+      "rawFileSha256": "bb76c72f83c3f5f141ce6c40a4fec3c4dc8e454abe104a568102f7c44f919984",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 0,
+        "severity": {
+          "severe": 1,
+          "major": 6,
+          "forbidden": 0,
+          "keyMajor": 4
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": false,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": false
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": false,
+                "expected": "not_applicable",
+                "actual": "true"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": false,
+                "missing": [],
+                "unrelated": [
+                  "scope-0003-aeb3dd061f05b9bf3013f5a045a88f07eab7e795c88292fc555e61364fc4d914"
+                ],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": false,
+                "missing": [],
+                "unrelated": [
+                  "scope-0003-aeb3dd061f05b9bf3013f5a045a88f07eab7e795c88292fc555e61364fc4d914"
+                ],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": false
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "field": "materialDetails",
+            "pass": false
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "condition",
+            "pass": false,
+            "expected": "not_applicable",
+            "actual": "true"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "conditionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0003-aeb3dd061f05b9bf3013f5a045a88f07eab7e795c88292fc555e61364fc4d914"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "factScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0003-aeb3dd061f05b9bf3013f5a045a88f07eab7e795c88292fc555e61364fc4d914"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "materialDetails",
+            "pass": false
+          }
+        ],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4449,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1289,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5738
+      },
+      "costUpperMicroUsd": 2882,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 2,
+        "materials": 1,
+        "timePoints": 0,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 12,
+      "sourceId": "C13-D5R1-S06",
+      "arm": "A",
+      "candidate": "Candidate03",
+      "requestSha256": "9f604ac913452dcbc598161464af5904ae7e225204be2a4a77842f1f65f8a60a",
+      "responseSha256": "6da2456faa498cbd165c3c9bb8384d40d3a621efe8ff66ab021c1d9542ef4337",
+      "rawFileSha256": "cba3ba1eca5e072ff3e1692c2689ed3a6acee7cc4e500bc5996d13440f1ac2bb",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 0,
+        "severity": {
+          "severe": 2,
+          "major": 6,
+          "forbidden": 0,
+          "keyMajor": 5
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": false,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-fill-roster",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": false
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-submit-roster",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": false,
+                "expected": "not_applicable",
+                "actual": "unknown"
+              },
+              "actionability": {
+                "pass": false,
+                "expected": "actionable",
+                "actual": "needs_confirmation"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": false,
+                "missing": [],
+                "unrelated": [
+                  "scope-0003-aeb3dd061f05b9bf3013f5a045a88f07eab7e795c88292fc555e61364fc4d914"
+                ],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": false
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-fill-roster",
+            "field": "materialDetails",
+            "pass": false
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-submit-roster",
+            "field": "condition",
+            "pass": false,
+            "expected": "not_applicable",
+            "actual": "unknown"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-submit-roster",
+            "field": "actionability",
+            "pass": false,
+            "expected": "actionable",
+            "actual": "needs_confirmation"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-submit-roster",
+            "field": "conditionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0003-aeb3dd061f05b9bf3013f5a045a88f07eab7e795c88292fc555e61364fc4d914"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-submit-roster",
+            "field": "materialDetails",
+            "pass": false
+          }
+        ],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4424,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 1383,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5807
+      },
+      "costUpperMicroUsd": 2987,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 2,
+        "materials": 1,
+        "timePoints": 0,
+        "events": 1,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 13,
+      "sourceId": "C13-D5R1-S07",
+      "arm": "A",
+      "candidate": "Candidate03",
+      "requestSha256": "e3f0969bba1742997b42b683652883cbaec6ade5343ca576452783d74d4a1279",
+      "responseSha256": "e5ddeb5d79a3255123bf8d7b281426c5dc4e04945d53705db0f91a4ca63593d2",
+      "rawFileSha256": "fbd953a7bedd8d07b6dab8095e57dcaaebdbb8450cf07a2a583df9256e49569a",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 1,
+        "severity": {
+          "severe": 0,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": false,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            },
+            {
+              "id": "date-not-announced",
+              "pass": false
+            }
+          ],
+          "extraEntities": 1
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-deliver-poster-draft",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4314,
+        "input_tokens_details": {
+          "cached_tokens": 4096
+        },
+        "output_tokens": 778,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5092
+      },
+      "costUpperMicroUsd": 2228,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 1,
+        "materials": 0,
+        "timePoints": 2,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 14,
+      "sourceId": "C13-D5R1-S07",
+      "arm": "B",
+      "candidate": "Candidate16",
+      "requestSha256": "a01e5a72eba86040bf60ca8e36c096b469dbda9c005c16b12c3b45555362ecbd",
+      "responseSha256": "fc7eaa42e47f277ae5e9af159f37b2f6f4c98e40f2e5180b0e9b15c40b2987b9",
+      "rawFileSha256": "47843053c893dab8437fa43b9f464aea0e40a2107c64146926cf8d89421241a0",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": true,
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 1,
+        "severity": {
+          "severe": 0,
+          "major": 0,
+          "forbidden": 0,
+          "keyMajor": 0
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": true,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            },
+            {
+              "id": "date-not-announced",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4339,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 668,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5007
+      },
+      "costUpperMicroUsd": 2104,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 1,
+        "materials": 0,
+        "timePoints": 1,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 15,
+      "sourceId": "C13-D5R1-S08",
+      "arm": "B",
+      "candidate": "Candidate16",
+      "requestSha256": "9383c386137301f00d08de1c6a2556a5ae476c93fdaa255d1a63bf36b2af436e",
+      "responseSha256": "bcceb3aeeea18e29e4190227c43b407a2354f4330ece0d3bddf5dc4fe57bcc30",
+      "rawFileSha256": "f03e4fd41321808f309c449294cc8362eed1448d04dc5283f8e0373e5022e852",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 0,
+        "severity": {
+          "severe": 1,
+          "major": 4,
+          "forbidden": 0,
+          "keyMajor": 2
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": true,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": false
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": false,
+                "expected": "not_applicable",
+                "actual": "true"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": false,
+                "missing": [],
+                "unrelated": [
+                  "scope-0003-e6a6e5495b8004ef150e60a2d034bd11c2a03e662c7549e82530ceacd1106fb9"
+                ],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": false,
+                "missing": [],
+                "unrelated": [
+                  "scope-0003-e6a6e5495b8004ef150e60a2d034bd11c2a03e662c7549e82530ceacd1106fb9"
+                ],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "field": "completionStandards",
+            "pass": false
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "condition",
+            "pass": false,
+            "expected": "not_applicable",
+            "actual": "true"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "conditionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0003-e6a6e5495b8004ef150e60a2d034bd11c2a03e662c7549e82530ceacd1106fb9"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-2",
+            "field": "factScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0003-e6a6e5495b8004ef150e60a2d034bd11c2a03e662c7549e82530ceacd1106fb9"
+            ],
+            "contradictory": []
+          }
+        ],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4440,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 1114,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5554
+      },
+      "costUpperMicroUsd": 2669,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 2,
+        "materials": 1,
+        "timePoints": 0,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 16,
+      "sourceId": "C13-D5R1-S08",
+      "arm": "A",
+      "candidate": "Candidate03",
+      "requestSha256": "5c4ef3d0a8eb1135cd3fa72cbb2c410091483aa300147f8ae4cef4248b9f61ee",
+      "responseSha256": "299f3ac42519c04c7657f4b0a2b76729077f5d38c1d6ceea1e0f860c413bda40",
+      "rawFileSha256": "955b384f4c0ceb247ce91201d439e5bbcc7cae7b801f2a77ab0c82489d2510b4",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 1,
+        "severity": {
+          "severe": 2,
+          "major": 6,
+          "forbidden": 0,
+          "keyMajor": 5
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": false,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-verify-bank-card",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-upload-travel-reimbursement-declaration",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": false,
+                "expected": "not_applicable",
+                "actual": "unknown"
+              },
+              "actionability": {
+                "pass": false,
+                "expected": "actionable",
+                "actual": "needs_confirmation"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": false,
+                "missing": [],
+                "unrelated": [
+                  "scope-0003-e6a6e5495b8004ef150e60a2d034bd11c2a03e662c7549e82530ceacd1106fb9"
+                ],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": false
+              },
+              "materialDetails": {
+                "pass": false
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [
+          {
+            "expectedId": "T2",
+            "actualId": "task-upload-travel-reimbursement-declaration",
+            "field": "condition",
+            "pass": false,
+            "expected": "not_applicable",
+            "actual": "unknown"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-upload-travel-reimbursement-declaration",
+            "field": "actionability",
+            "pass": false,
+            "expected": "actionable",
+            "actual": "needs_confirmation"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-upload-travel-reimbursement-declaration",
+            "field": "conditionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0003-e6a6e5495b8004ef150e60a2d034bd11c2a03e662c7549e82530ceacd1106fb9"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-upload-travel-reimbursement-declaration",
+            "field": "materials",
+            "pass": false
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-upload-travel-reimbursement-declaration",
+            "field": "materialDetails",
+            "pass": false
+          }
+        ],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4415,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 1295,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5710
+      },
+      "costUpperMicroUsd": 2879,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 2,
+        "materials": 1,
+        "timePoints": 0,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 17,
+      "sourceId": "C13-D5R1-S09",
+      "arm": "A",
+      "candidate": "Candidate03",
+      "requestSha256": "0fceaf92a47463369c64b16f6d4b567c59cc3901cbb4d7f878a7b82b89176765",
+      "responseSha256": "0812d43bc5a2f4fc0e7ad3e3e67c51129ad74981c2309ca64509e7e74b654e12",
+      "rawFileSha256": "b946d056abdba25854216f505c2ae0ec38ddbba3fcb6a8af69818f6adf45e504",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 0,
+          "expected": 0,
+          "actual": 3
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 0,
+        "severity": {
+          "severe": 0,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": false,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            },
+            {
+              "id": "E1",
+              "pass": false
+            },
+            {
+              "id": "P1",
+              "pass": true
+            },
+            {
+              "id": "I1",
+              "pass": true
+            },
+            {
+              "id": "I2",
+              "pass": false
+            },
+            {
+              "id": "I3",
+              "pass": false
+            },
+            {
+              "id": "I4",
+              "pass": false
+            },
+            {
+              "id": "I5",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [],
+        "fieldErrors": [],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4466,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 1470,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5936
+      },
+      "costUpperMicroUsd": 3104,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 3,
+        "materials": 0,
+        "timePoints": 1,
+        "events": 1,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 18,
+      "sourceId": "C13-D5R1-S09",
+      "arm": "B",
+      "candidate": "Candidate16",
+      "requestSha256": "370368abc9197086f9e9d5d469923d852a605e0fbfc237368055bfa368265a01",
+      "responseSha256": "998071b9800d7b5e1cc554018455473b7ccec9a538ee22f01eacca811fcc982d",
+      "rawFileSha256": "b569230f9fba3502c28671f29df8e6df601eab2b36981d54fbfb6863ac667b92",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "expected": 0,
+          "actual": 0
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 0,
+        "severity": {
+          "severe": 0,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": false,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            },
+            {
+              "id": "E1",
+              "pass": false
+            },
+            {
+              "id": "P1",
+              "pass": true
+            },
+            {
+              "id": "I1",
+              "pass": true
+            },
+            {
+              "id": "I2",
+              "pass": true
+            },
+            {
+              "id": "I3",
+              "pass": true
+            },
+            {
+              "id": "I4",
+              "pass": true
+            },
+            {
+              "id": "I5",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [],
+        "fieldErrors": [],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4491,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 558,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5049
+      },
+      "costUpperMicroUsd": 2017,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 0,
+        "materials": 0,
+        "timePoints": 1,
+        "events": 1,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 19,
+      "sourceId": "C13-D5R1-S10",
+      "arm": "B",
+      "candidate": "Candidate16",
+      "requestSha256": "abaef4c5a900747f10931ce15db689f21d0a1b365dff0a63d768194b3cfaf023",
+      "responseSha256": "1a648fc2368af737eedb42f89a013013393cfe6f5be4108f4bd17e5ec1a6525c",
+      "rawFileSha256": "d7114cbeb07da18694e97ae0daba81b4996e6d6ed303724d3084ef58a592f0b8",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": false,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "REFERENCE_LINK_FAILURE",
+        "complete": false
+      },
+      "usage": {
+        "input_tokens": 4458,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 387,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4845
+      },
+      "costUpperMicroUsd": 1802,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 0,
+        "materials": 0,
+        "timePoints": 0,
+        "events": 0,
+        "revisions": 2
+      }
+    },
+    {
+      "ordinal": 20,
+      "sourceId": "C13-D5R1-S10",
+      "arm": "A",
+      "candidate": "Candidate03",
+      "requestSha256": "d7875a3306e9d63317b1126ea77ba501d1a0e1d7639ea81b482a20a80f384760",
+      "responseSha256": "c7301b10c47cf4592c7dc22a93c442d8ff22f7d71a58d9148baaa8a3449e0606",
+      "rawFileSha256": "7643dc950bc696f8b21a2bc4c64774542494e70039cfe6aad3fda355dfbf05e1",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 2,
+          "expected": 2,
+          "actual": 2
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 0,
+        "severity": {
+          "severe": 1,
+          "major": 1,
+          "forbidden": 0,
+          "keyMajor": 1
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": false,
+        "auxiliary": {
+          "pass": true,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            },
+            {
+              "id": "I1",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": null,
+            "fields": null
+          },
+          {
+            "expectedId": "T2",
+            "actualId": null,
+            "fields": null
+          }
+        ],
+        "fieldErrors": [],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4433,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 1290,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5723
+      },
+      "costUpperMicroUsd": 2878,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 2,
+        "materials": 0,
+        "timePoints": 0,
+        "events": 0,
+        "revisions": 2
+      }
+    },
+    {
+      "ordinal": 21,
+      "sourceId": "C13-D5R1-S11",
+      "arm": "A",
+      "candidate": "Candidate03",
+      "requestSha256": "476dab5c2738431d7a2610886722bbc50f4d2aafbeabf80ae4988c6c2bf0cd60",
+      "responseSha256": "7edf9d1af53690c99886f14e3aa61e276bb7ce1d24614ed8115f5f15e1a2b422",
+      "rawFileSha256": "b003cc86addc98c60ebf1d787067da40267b45d119f42d135486d6c82bed386c",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "expected": 4,
+          "actual": 4
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 1,
+        "severity": {
+          "severe": 3,
+          "major": 7,
+          "forbidden": 0,
+          "keyMajor": 5
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": false,
+        "auxiliary": {
+          "pass": true,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            },
+            {
+              "id": "I1",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-print-poster-original",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": false,
+                "expected": "superseded",
+                "actual": "cancelled"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "not_actionable",
+                "actual": "not_actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": false,
+                "missing": [],
+                "unrelated": [
+                  "scope-0009-9e0ea5545d97e3d62293ecbbcb5063777c7b658d5c34c17ba2e4b765a727c314"
+                ],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-register-venue-original",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": false,
+                "expected": "superseded",
+                "actual": "cancelled"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "not_actionable",
+                "actual": "not_actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": false,
+                "missing": [],
+                "unrelated": [
+                  "scope-0009-9e0ea5545d97e3d62293ecbbcb5063777c7b658d5c34c17ba2e4b765a727c314"
+                ],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          },
+          {
+            "expectedId": "T3",
+            "actualId": "task-upload-poster-electronic",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": false
+              },
+              "materialDetails": {
+                "pass": false
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          },
+          {
+            "expectedId": "T4",
+            "actualId": "task-book-online-slot",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-print-poster-original",
+            "field": "currentness",
+            "pass": false,
+            "expected": "superseded",
+            "actual": "cancelled"
+          },
+          {
+            "expectedId": "T1",
+            "actualId": "task-print-poster-original",
+            "field": "propositionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0009-9e0ea5545d97e3d62293ecbbcb5063777c7b658d5c34c17ba2e4b765a727c314"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-register-venue-original",
+            "field": "currentness",
+            "pass": false,
+            "expected": "superseded",
+            "actual": "cancelled"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-register-venue-original",
+            "field": "propositionScopes",
+            "pass": false,
+            "missing": [],
+            "unrelated": [
+              "scope-0009-9e0ea5545d97e3d62293ecbbcb5063777c7b658d5c34c17ba2e4b765a727c314"
+            ],
+            "contradictory": []
+          },
+          {
+            "expectedId": "T3",
+            "actualId": "task-upload-poster-electronic",
+            "field": "materials",
+            "pass": false
+          },
+          {
+            "expectedId": "T3",
+            "actualId": "task-upload-poster-electronic",
+            "field": "materialDetails",
+            "pass": false
+          }
+        ],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4589,
+        "input_tokens_details": {
+          "cached_tokens": 4352
+        },
+        "output_tokens": 2328,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6917
+      },
+      "costUpperMicroUsd": 4171,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 4,
+        "materials": 1,
+        "timePoints": 0,
+        "events": 0,
+        "revisions": 2
+      }
+    },
+    {
+      "ordinal": 22,
+      "sourceId": "C13-D5R1-S11",
+      "arm": "B",
+      "candidate": "Candidate16",
+      "requestSha256": "fd8a706049eebffc4534ef7cd805ca54fa46482a09c755b928e9180d5462fb4c",
+      "responseSha256": "59ff99c996daf583e6905c34da6ce748753ad20a65249b729951134af7538ee3",
+      "rawFileSha256": "4b2b4e5fe0e9ed9ad442f0f97ca5005c6721b6a5db057d7a20b1cb4cf3998f48",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": false,
+        "taskPresence": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "expected": 4,
+          "actual": 4
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 1,
+        "severity": {
+          "severe": 3,
+          "major": 6,
+          "forbidden": 0,
+          "keyMajor": 6
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": false,
+        "auxiliary": {
+          "pass": false,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            },
+            {
+              "id": "I1",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-old-print-poster",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": false,
+                "expected": "superseded",
+                "actual": "cancelled"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "not_actionable",
+                "actual": "not_actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-old-register-venue",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": false,
+                "expected": "superseded",
+                "actual": "cancelled"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "not_actionable",
+                "actual": "not_actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          },
+          {
+            "expectedId": "T3",
+            "actualId": "task-new-upload-poster",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": false
+              },
+              "materialDetails": {
+                "pass": false
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          },
+          {
+            "expectedId": "T4",
+            "actualId": "task-new-book-online-slot",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-old-print-poster",
+            "field": "currentness",
+            "pass": false,
+            "expected": "superseded",
+            "actual": "cancelled"
+          },
+          {
+            "expectedId": "T2",
+            "actualId": "task-old-register-venue",
+            "field": "currentness",
+            "pass": false,
+            "expected": "superseded",
+            "actual": "cancelled"
+          },
+          {
+            "expectedId": "T3",
+            "actualId": "task-new-upload-poster",
+            "field": "materials",
+            "pass": false
+          },
+          {
+            "expectedId": "T3",
+            "actualId": "task-new-upload-poster",
+            "field": "materialDetails",
+            "pass": false
+          }
+        ],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4614,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 2358,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6972
+      },
+      "costUpperMicroUsd": 4214,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 4,
+        "materials": 1,
+        "timePoints": 0,
+        "events": 0,
+        "revisions": 2
+      }
+    },
+    {
+      "ordinal": 23,
+      "sourceId": "C13-D5R1-S12",
+      "arm": "B",
+      "candidate": "Candidate16",
+      "requestSha256": "b1a7ffc12b8aebc46867b72ef1d1a183bb0a63a378d84d942b2197ffbb1d7ed6",
+      "responseSha256": "c3b47d1a4fc024f56b41151d9eea56a7f4b8b3f245106aee5b7c7bf3e003498b",
+      "rawFileSha256": "648e6ab4f618686a361f65a14f5aa5716a09784e89a37e5f4bd0162c1cf4f908",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": true,
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 1,
+        "severity": {
+          "severe": 0,
+          "major": 0,
+          "forbidden": 0,
+          "keyMajor": 0
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": true,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            },
+            {
+              "id": "I1",
+              "pass": true
+            },
+            {
+              "id": "I2",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-1",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4384,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 604,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4988
+      },
+      "costUpperMicroUsd": 2040,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 1,
+        "materials": 0,
+        "timePoints": 0,
+        "events": 0,
+        "revisions": 0
+      }
+    },
+    {
+      "ordinal": 24,
+      "sourceId": "C13-D5R1-S12",
+      "arm": "A",
+      "candidate": "Candidate03",
+      "requestSha256": "82d5c34f692c893d700ba9e12b6c4285a4daf5f148a00b2a3c246efe00d475c1",
+      "responseSha256": "b12193559b03dcc7a1573f15a9bfc37e95b9d35f2b3c6aebbe3ac6044050af34",
+      "rawFileSha256": "2fffdba759a56b18d7d2040f56c6afbb0ab3d7da4cc28e0f74a0719fd63f6a1d",
+      "transport": "HTTP_200",
+      "modelStatus": "completed",
+      "parseValid": true,
+      "schemaValid": true,
+      "referenceValid": true,
+      "parseOrAdapterError": null,
+      "score": {
+        "version": "recognition-semantic-scoring-7.0.0",
+        "status": "SCORED",
+        "complete": true,
+        "taskPresence": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "expected": 1,
+          "actual": 1
+        },
+        "currentTaskRisk": {
+          "fn": 0,
+          "unsupportedActionable": 0
+        },
+        "fullyCorrectTasks": 1,
+        "severity": {
+          "severe": 0,
+          "major": 0,
+          "forbidden": 0,
+          "keyMajor": 0
+        },
+        "forbiddenTaskIds": [],
+        "relationsPass": true,
+        "auxiliary": {
+          "pass": true,
+          "checks": [
+            {
+              "id": "SYNTHETIC_SOURCE_MARKER",
+              "pass": true
+            },
+            {
+              "id": "I1",
+              "pass": true
+            },
+            {
+              "id": "I2",
+              "pass": true
+            }
+          ],
+          "extraEntities": 0
+        },
+        "matches": [
+          {
+            "expectedId": "T1",
+            "actualId": "task-review-member-materials",
+            "fields": {
+              "action": {
+                "pass": true
+              },
+              "object": {
+                "pass": true
+              },
+              "actor": {
+                "pass": true,
+                "expected": "addressee",
+                "actual": "addressee"
+              },
+              "speechAct": {
+                "pass": true,
+                "expected": "directive",
+                "actual": "directive"
+              },
+              "currentness": {
+                "pass": true,
+                "expected": "current",
+                "actual": "current"
+              },
+              "condition": {
+                "pass": true,
+                "expected": "not_applicable",
+                "actual": "not_applicable"
+              },
+              "actionability": {
+                "pass": true,
+                "expected": "actionable",
+                "actual": "actionable"
+              },
+              "confirmation": {
+                "pass": true,
+                "expected": true,
+                "actual": true
+              },
+              "modality": {
+                "pass": true
+              },
+              "propositionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "conditionScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "factScopes": {
+                "pass": true,
+                "missing": [],
+                "unrelated": [],
+                "contradictory": []
+              },
+              "materials": {
+                "pass": true
+              },
+              "materialDetails": {
+                "pass": true
+              },
+              "times": {
+                "pass": true
+              },
+              "completionStandards": {
+                "pass": true
+              },
+              "dependencies": {
+                "pass": true
+              },
+              "hierarchy": {
+                "pass": true
+              }
+            }
+          }
+        ],
+        "fieldErrors": [],
+        "referenceCompleteness": "complete",
+        "referenceTruth": "SINGLE_AUTHOR_MODEL_ASSISTED_PROVISIONAL"
+      },
+      "usage": {
+        "input_tokens": 4359,
+        "input_tokens_details": {
+          "cached_tokens": 4224
+        },
+        "output_tokens": 606,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4965
+      },
+      "costUpperMicroUsd": 2035,
+      "determinate": true,
+      "firstOutputSummary": {
+        "tasks": 1,
+        "materials": 0,
+        "timePoints": 0,
+        "events": 0,
+        "revisions": 0
+      }
+    }
+  ]
+}

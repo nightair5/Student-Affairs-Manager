@@ -1,0 +1,39 @@
+{
+  "status": "BLOCKED_SCOPE",
+  "kind": "frozen-component responsibility outside approved exceptions",
+  "normal": {
+    "submit": {
+      "ownTime": "d0",
+      "defaultSelected": true,
+      "issues": []
+    },
+    "print": {
+      "ownTime": "d1",
+      "defaultSelected": true,
+      "issues": []
+    }
+  },
+  "dependencyVariation": {
+    "unchangedSourceAndTimes": true,
+    "onlyAddedRelation": "print dependencyTempIds = ['submit']",
+    "submit": {
+      "requiresAction": "true",
+      "defaultSelected": true,
+      "issues": []
+    },
+    "print": {
+      "requiresAction": "true",
+      "defaultSelected": false,
+      "issues": [
+        "MULTIPLE_DEADLINES"
+      ]
+    }
+  },
+  "testPreserved": true,
+  "firstNotRewritten": true,
+  "confirmationNotBypassed": true,
+  "additionalAllowedFileRequested": "src/experiments/mainline04/semanticComposer.ts",
+  "engineering": "NOT_RUN",
+  "browser": "NOT_RUN",
+  "paidModels": 0
+}

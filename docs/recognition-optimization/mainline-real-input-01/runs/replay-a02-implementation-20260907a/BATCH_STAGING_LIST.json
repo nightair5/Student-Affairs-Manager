@@ -1,0 +1,523 @@
+{
+  "parent": "ae78dfef255eb5344868d1b4319e486537ac6681",
+  "allowedSourcePaths": [
+    "src/App.tsx",
+    "src/components/IntakePanel.tsx",
+    "src/components/DraftReviewPanel.tsx",
+    "src/lib/fileExtraction.ts",
+    "src/experiments/mainline02/runtime.ts",
+    "src/experiments/mainline04/semanticComposer.ts",
+    "src/experiments/mainline05/semanticState.ts",
+    "src/experiments/mainline05/semanticRepository.ts",
+    "src/experiments/mainline05/semanticCapture.ts",
+    "src/experiments/mainline05/semanticConfirmation.ts",
+    "src/experiments/mainline05/semanticView.ts",
+    "src/experiments/mainline05/runtime.ts",
+    "src/experiments/mainline05/SemanticFacts.tsx",
+    "src/experiments/realInput01/inputReceipt.ts",
+    "src/experiments/realInput01/inputAcquisition.ts",
+    "src/experiments/realInput01/modelWire.ts",
+    "src/experiments/realInput01/modelClient.ts",
+    "src/experiments/realInput01/modelPolicy.ts",
+    "src/experiments/realInput01/factCorrections.ts",
+    "src/experiments/realInput01/runtime.ts",
+    "src/experiments/realInput01/browser.tsx",
+    "src/experiments/realInput01/InputReview.tsx",
+    "src/experiments/realInput01/FactCorrectionEditor.tsx",
+    "src/experiments/realInput01/seenInputs.ts",
+    "src/experiments/realInput01/evaluation.ts",
+    "src/experiments/realInput01/inputReceipt.test.ts",
+    "src/experiments/realInput01/modelWire.test.ts",
+    "src/experiments/realInput01/modelPolicy.test.ts",
+    "src/experiments/realInput01/factCorrections.test.ts",
+    "src/experiments/realInput01/runtime.test.ts",
+    "src/experiments/realInput01/acceptance.test.tsx",
+    "src/experiments/realInput01/extraction.test.ts",
+    "scripts/serve-mainline-real-input-01.mjs",
+    "scripts/real-input-model-gateway.mjs",
+    "scripts/real-input-budget.mjs",
+    "scripts/check-mainline-real-input-01.mjs",
+    "scripts/real-input-model-gateway.node-test.mjs",
+    "scripts/check-mainline-real-input-01.node-test.mjs",
+    "scripts/run-mainline-real-input-01.mjs",
+    "scripts/real-input-budget.node-test.mjs",
+    "scripts/render-mainline-real-input-01-fixtures.mjs",
+    "src/pages/DashboardPage.tsx"
+  ],
+  "changedSourcePaths": [
+    "scripts/check-mainline-real-input-01.mjs",
+    "scripts/check-mainline-real-input-01.node-test.mjs",
+    "scripts/real-input-budget.mjs",
+    "scripts/real-input-budget.node-test.mjs",
+    "scripts/run-mainline-real-input-01.mjs",
+    "scripts/serve-mainline-real-input-01.mjs",
+    "src/experiments/realInput01/acceptance.test.tsx",
+    "src/experiments/realInput01/browser.tsx",
+    "src/experiments/realInput01/runtime.ts"
+  ],
+  "reportPaths": [
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A04_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A04_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A05_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A05_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A06_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A06_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A07_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A07_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE_2.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE_3.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE_4.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE_MATRIX.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_AFFECTED_FINAL.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_AUDIT.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_AUTHORIZATION.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B01_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B01_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B02_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B02_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B04_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B04_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B05_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B05_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B06_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B06_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B07_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B07_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BASELINE.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BILLING.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BROWSER_DOWNLOAD.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_AFTER.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_BEFORE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_BEFORE_BOUND.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_BEFORE_READY.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_FINAL.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_CHECKS.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ENGINEERING_ATTEMPT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ENV.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FINAL_PROTECTION.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_BUILD.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_CORE_NODE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_FUNCTIONAL.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_LINT.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_SCHEMA.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_SECURITY.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_TIME.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_TYPE_APP.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_TYPE_NODE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_GATE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_IMPLEMENTATION_SNAPSHOT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_LINT_FIX.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_MULTIMODAL_NODE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_QUALITY.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_RCO_NODE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_REVIEW.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_REVIEW_FINAL.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_SCORER_CLOSURE.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_TYPE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_STAGING_LIST.json"
+  ],
+  "appendAndContextPaths": [
+    "docs/recognition-optimization/CURRENT_CONTEXT.md",
+    "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl"
+  ],
+  "exactStagePaths": [
+    "src/App.tsx",
+    "src/components/IntakePanel.tsx",
+    "src/components/DraftReviewPanel.tsx",
+    "src/lib/fileExtraction.ts",
+    "src/experiments/mainline02/runtime.ts",
+    "src/experiments/mainline04/semanticComposer.ts",
+    "src/experiments/mainline05/semanticState.ts",
+    "src/experiments/mainline05/semanticRepository.ts",
+    "src/experiments/mainline05/semanticCapture.ts",
+    "src/experiments/mainline05/semanticConfirmation.ts",
+    "src/experiments/mainline05/semanticView.ts",
+    "src/experiments/mainline05/runtime.ts",
+    "src/experiments/mainline05/SemanticFacts.tsx",
+    "src/experiments/realInput01/inputReceipt.ts",
+    "src/experiments/realInput01/inputAcquisition.ts",
+    "src/experiments/realInput01/modelWire.ts",
+    "src/experiments/realInput01/modelClient.ts",
+    "src/experiments/realInput01/modelPolicy.ts",
+    "src/experiments/realInput01/factCorrections.ts",
+    "src/experiments/realInput01/runtime.ts",
+    "src/experiments/realInput01/browser.tsx",
+    "src/experiments/realInput01/InputReview.tsx",
+    "src/experiments/realInput01/FactCorrectionEditor.tsx",
+    "src/experiments/realInput01/seenInputs.ts",
+    "src/experiments/realInput01/evaluation.ts",
+    "src/experiments/realInput01/inputReceipt.test.ts",
+    "src/experiments/realInput01/modelWire.test.ts",
+    "src/experiments/realInput01/modelPolicy.test.ts",
+    "src/experiments/realInput01/factCorrections.test.ts",
+    "src/experiments/realInput01/runtime.test.ts",
+    "src/experiments/realInput01/acceptance.test.tsx",
+    "src/experiments/realInput01/extraction.test.ts",
+    "scripts/serve-mainline-real-input-01.mjs",
+    "scripts/real-input-model-gateway.mjs",
+    "scripts/real-input-budget.mjs",
+    "scripts/check-mainline-real-input-01.mjs",
+    "scripts/real-input-model-gateway.node-test.mjs",
+    "scripts/check-mainline-real-input-01.node-test.mjs",
+    "scripts/run-mainline-real-input-01.mjs",
+    "scripts/real-input-budget.node-test.mjs",
+    "scripts/render-mainline-real-input-01-fixtures.mjs",
+    "src/pages/DashboardPage.tsx",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A04_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A04_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A05_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A05_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A06_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A06_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A07_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A07_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE_2.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE_3.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE_4.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE_MATRIX.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_AFFECTED_FINAL.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_AUDIT.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_AUTHORIZATION.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B01_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B01_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B02_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B02_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B03_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B03_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B04_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B04_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B05_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B05_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B06_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B06_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B07_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B07_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B08_RAW.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B08_RESULT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BASELINE.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BILLING.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BROWSER_DOWNLOAD.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_AFTER.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_BEFORE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_BEFORE_BOUND.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_BEFORE_READY.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_FINAL.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_CHECKS.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ENGINEERING_ATTEMPT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ENV.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FINAL_PROTECTION.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_BUILD.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_CORE_NODE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_FUNCTIONAL.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_LINT.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_SCHEMA.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_SECURITY.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_TIME.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_TYPE_APP.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_TYPE_NODE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_GATE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_IMPLEMENTATION_SNAPSHOT.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_LINT_FIX.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_MULTIMODAL_NODE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_QUALITY.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_RCO_NODE.log",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_REVIEW.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_REVIEW_FINAL.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_SCORER_CLOSURE.json",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_TYPE.log",
+    "docs/recognition-optimization/CURRENT_CONTEXT.md",
+    "docs/recognition-optimization/OPTIMIZATION_LOG.md",
+    "docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/CALL_LEDGER.jsonl",
+    "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_STAGING_LIST.json"
+  ],
+  "evidenceFinalHashes": [
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A03_RAW.jsonl",
+      "sha256": "6f15f4fe8f5ab8984f71d0d0429e888b7b8a6b9fa2bceecd4afd8f73c1e0768e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A03_RESULT.json",
+      "sha256": "b292f1632def4ec38966dbbc4aa8df9678c63a8f9e554f17d3655bf32dfc8e40"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A04_RAW.jsonl",
+      "sha256": "ec06ee75588edad071de583519d44157660c282050c8d4e5cf257cca072ca8db"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A04_RESULT.json",
+      "sha256": "6fa68bb3abfd55b8b56e046188882f20aba83d8d77cf57393425dbb0e1bf9e6c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A05_RAW.jsonl",
+      "sha256": "efce12aa1fb14b2f323f668daa6b50310976889ff00fcfb477c723c0389e7e42"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A05_RESULT.json",
+      "sha256": "763ab9d969cdc008b03939e074218eb7bc3d0fccd4acac882d26fb7ad461358e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A06_RAW.jsonl",
+      "sha256": "f610829a6be2fef8293b31b448fb7c8837c49caeef5bc4b7e015c13ed6d13c17"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A06_RESULT.json",
+      "sha256": "0359517640af01c93d2f32e44b016eb7faf2007fb4c51acd3f53df44a5d08174"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A07_RAW.jsonl",
+      "sha256": "23be16f49fa6522efd535d456308c027e9c5559f53a6e5df634705be044a506a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A07_RESULT.json",
+      "sha256": "7f86f4b5aff32c3f952bd890b6d5efd788592ba35eefa9a6b43fe5cd123c768a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A08_RAW.jsonl",
+      "sha256": "6f8c38f9b924ee01c7fbf3a88f344913b74b091688aa8a7c3e35d5d4463563b3"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_A08_RESULT.json",
+      "sha256": "c5e1fd6b5193bf32bbd8e3c681f9c41fd918fc8a4b61c840338826c09379f63b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE.log",
+      "sha256": "58ca2c6304f29ebb7a20b40bb4c65f077c7a43d5d2b63311feef557c72b754c8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE_2.log",
+      "sha256": "aad02ec82f3e4ca6160827a7eb658149c7694dcda5639bf58ef1466cd7d07fdd"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE_3.log",
+      "sha256": "9078e52a3fcfe293e5e9108f22aef136b43870ca6fa85f3cf43293c1d52ea4a8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE_4.log",
+      "sha256": "36437da3a5cf9220908d2c86f9ae704a66aa920015d74b2cf8bc4dc897489820"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ACCEPTANCE_MATRIX.md",
+      "sha256": "4dbd8f47e549149bbed52f39662bab4b1bcdda3b8b32273584adf53132815067"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_AFFECTED_FINAL.log",
+      "sha256": "c6f3c28795766a26300e28fd669a2449ee3389e94e30c85db9924ee7f8461d8b"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_AUDIT.md",
+      "sha256": "f56f349add59da45992ed8cfdd487eeac133d3f384487fadd38ae6c70b935ff2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_AUTHORIZATION.json",
+      "sha256": "0e0ff4276ec966d80fb7fda8a43964bba349e2286de516d12437b139161aed7a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B01_RAW.jsonl",
+      "sha256": "5e5102a15bb6da46379bc7aac8c4d4207601983cdcbc0a4f91b5bdc793594858"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B01_RESULT.json",
+      "sha256": "e8be3b991495aa2bebd416af5c479e6bf36445ac80744a7abca37d7e2661e6a0"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B02_RAW.jsonl",
+      "sha256": "f9d78bacd184fafab1363788df7619eecbc35a8f0dc33fc881395b944afb3b4a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B02_RESULT.json",
+      "sha256": "aab4e6baa5ad7bc1e3db97422f1aaf55dde1aa3d650ac10131903a26e2385dce"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B03_RAW.jsonl",
+      "sha256": "465a46680e2193c2fda891ce56f1f557543e17bd9c8b51894fecf4bd2b720c7c"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B03_RESULT.json",
+      "sha256": "8902f199fd4f705188d6b5de7e05a4cbfe7f5e61efda9a1ff37a923884bbbb29"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B04_RAW.jsonl",
+      "sha256": "7a20c401c6c34c71bbbb3c32d0cc6c35b84cacf380f79f003226250f68aa8b98"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B04_RESULT.json",
+      "sha256": "ae21c900433a530771ecfba143ad2cf5def77d9d7af6f3363993fcfe5f6105a4"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B05_RAW.jsonl",
+      "sha256": "d98b667958e3da503aa7aa445649589fe533a8a559bcd3bd6a99cf886433b248"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B05_RESULT.json",
+      "sha256": "cc26deef1d78509c316535bdb133dcc05b39fed959f0801e76607a213ffd6d14"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B06_RAW.jsonl",
+      "sha256": "9009741238ddb18ab529ff23e726215f91af244deed0e84930d31f66f8a26a67"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B06_RESULT.json",
+      "sha256": "b6a4e31af59869e9f7c03247c5d900069fdd7d942ef0520048b172d64b6ce418"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B07_RAW.jsonl",
+      "sha256": "9370f9bdb9a9b7b8356d30a7484d140848150b50d6490b792b961d4243cf71e3"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B07_RESULT.json",
+      "sha256": "2f5204e333566e178a325eb085c1927b1de5677ff7ad30f58026f0feaa45c0e2"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B08_RAW.jsonl",
+      "sha256": "aa52f9949386eff44b0e3237198b53d547566970afdc88eee8ba01fc6672a0db"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_B08_RESULT.json",
+      "sha256": "817eb89e7a1601066954341e387eea9d769c7c00e6b01e6579bb9687bf2cde91"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BASELINE.json",
+      "sha256": "bcb2d32a56f90c068e6d9ddf8f61e98b5cae5f39646b445e79894fcae4bd0d8e"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BILLING.json",
+      "sha256": "f20963648852d115b4f71164a183c5aff9ecdeb0476e2d998dd32f5019529db5"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BROWSER_DOWNLOAD.json",
+      "sha256": "fcc3e77e01e66307e4249b45f348e877091285ceb187a6075af0ed0cd9c88553"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_AFTER.log",
+      "sha256": "9f970bcb1158caf5a5b84ceb669a85e5a528728623941410eb19768f613852a1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_BEFORE.log",
+      "sha256": "61a44bb44fb9f771cbe23d081da32b16e2a56e2c2bdbae5a969ebb84303536d7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_BEFORE_BOUND.log",
+      "sha256": "8bf6d7be57006004736ac616ed70213b9b7fdd7c2092f2b715dcf44bb9eee392"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_BEFORE_READY.log",
+      "sha256": "9f34ff539838ae03776a8e6b1f52a6f98b0f43779f717c88499759caf3ccef2d"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_BUDGET_FINAL.log",
+      "sha256": "fde2713a6a573b9f561aa3f38c565a719031546dcec8aec757593f3d1a8c2be1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_CHECKS.json",
+      "sha256": "4eadafcfd109609155375cebd5281398f5b5dc8a7a35e1716d415c2d6d5292f5"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ENGINEERING_ATTEMPT.json",
+      "sha256": "b9e903cf85f6685abad7e439d0e0c06c24268fde99973979a525da747fc73f44"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_ENV.log",
+      "sha256": "217fbce3f79535e27395155a4a7121643452a8869711a6875b22e3b00f9739f1"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FINAL_PROTECTION.json",
+      "sha256": "32d22360869c15970931ab7f9ae0a8b480cf9f92ee59a42fa812825f22dd505f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_BUILD.log",
+      "sha256": "740c29485e5477cf21a3443dfec51cb6a1430c2d8d07d14435a56250fe3d1093"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_CORE_NODE.log",
+      "sha256": "5196dd651e909c32a441fe39301c88b011d63d44daf4b0d4d46cdc6023c33e9a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_FUNCTIONAL.log",
+      "sha256": "cb315b14b8fba4f269b57f465a633614784406abcc4a5ae1e0e1609fdabcf411"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_LINT.log",
+      "sha256": "62b9aae05a99da94ca5997ccead2cd3db95a57f12731a2fb495a2705f7d9bb85"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_SCHEMA.log",
+      "sha256": "ce0ae1b382cde06a1e63919a31340da2d1c90873c0f97ab059e0bdb92e37db47"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_SECURITY.log",
+      "sha256": "07c77ab103e8e3ad881aed50ea941bc4bcb2831be73e05e83971c258dd28b05a"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_TIME.log",
+      "sha256": "28498056a5fc7d975a3a38ce5c128afb0c926f8f1091e901d723a767656e008f"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_TYPE_APP.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_FULL_TYPE_NODE.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_GATE.log",
+      "sha256": "cb214469c0de213212a2f16be09400be7e59106586b7f98c403977b604de2b28"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_IMPLEMENTATION_SNAPSHOT.json",
+      "sha256": "ae8cb314236be1efc7a1a32a379f571be340a45a4c584a571a4f74f50ef7cd31"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_LINT_FIX.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_MULTIMODAL_NODE.log",
+      "sha256": "af0b3982316795f6eef306de51ae7515d02a90f9157858dad844d8929110bfec"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_QUALITY.json",
+      "sha256": "0b5ce1fc22160c8100b6bcf61cefd0f829ec36e9d0c66b23f07562bf426449e7"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_RCO_NODE.log",
+      "sha256": "1601b8d78fb3be3ec8ec904e6b9fce973cbbbe4676a76568cbb6c16a66825fe8"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_REVIEW.json",
+      "sha256": "d0999ebba0a8852d1806c7c419f0ca57f84c40afb0c55291380de5b3b3976a64"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_REVIEW_FINAL.md",
+      "sha256": "000fd41fe0e7d9db9a6cfcd93805e2d3531c436da0e11fe23ac9dfa96fe4a6fb"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_SCORER_CLOSURE.json",
+      "sha256": "997dd35cf07563d35e5cbffc160cec738401281d11ba5b1db7e2ff11095abbff"
+    },
+    {
+      "path": "docs/recognition-optimization/mainline-real-input-01/runs/replay-a02-implementation-20260907a/BATCH_TYPE.log",
+      "sha256": "9393cd35dc4627be69e160771f4840c1c74ed7c4d107504a989a1ec949791eb6"
+    }
+  ],
+  "commitSubject": "feat(app): integrate bounded real-input batch and recorded review",
+  "wholePackage": "NOT_COMPLETE",
+  "modelQuality": "NOT_ACCEPTED",
+  "codeReview": "PASS",
+  "deliveryStatus": "READY_TO_COMMIT_AFTER_EXACT_STAGE_CHECK"
+}

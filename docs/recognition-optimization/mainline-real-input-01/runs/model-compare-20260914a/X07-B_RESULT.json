@@ -1,0 +1,366 @@
+{
+  "version": "real-input-model-compare-result-1",
+  "unitId": "X07-B",
+  "arm": "B",
+  "cohort": "later8",
+  "previousId": "V07",
+  "bindingSha": "0e053544594dd40c5e99d577a290441ef4c32b44ce36d280cbef44bd87bde7d1",
+  "requestSha": "abd0d1d102634bc7c4f4f7093b469e382583e707208d190979e0f957a738ae13",
+  "responseSha": "ba5aba764b59c045ea66e0e165c952e6bde3458bbb49d77eeb4edea798808cbd",
+  "requestModel": "deepseek-v4-pro",
+  "returnedModel": "deepseek-v4-pro",
+  "modelMatch": true,
+  "candidateVersion": "real-input-source-semantics-3",
+  "wireVersion": "real-input-model-wire-1",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "ab7da30fc52a9de9a69a0569caa3ceafdfb4bf73eeda35e4835719aff80f565d",
+  "scoreInput": "candidate03 semantic projection into frozen scorer; gateway-validated provider raw unchanged; parser copy model-neutralized only",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task_archive_interview_recording",
+        "propositionScopeIds": [
+          "scope-0002-87004ba2c2e787a4932572ddaefe588ddc469cd2d9858ed564b54d36c1e9d598",
+          "scope-0003-cf8027f86eabf58460d86aa492fe76636bf95d20288287772d375339992ad8f1",
+          "scope-0006-8f2f5942c9e427043023760802481f6e662b9b1d637bb99d22f2a96981a348f4"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0002-87004ba2c2e787a4932572ddaefe588ddc469cd2d9858ed564b54d36c1e9d598",
+          "surface": "归档"
+        },
+        "object": {
+          "scopeId": "scope-0002-87004ba2c2e787a4932572ddaefe588ddc469cd2d9858ed564b54d36c1e9d598",
+          "surface": "采访录音"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "归档采访录音",
+          "description": "影像员于2026年10月14日11:00前归档采访录音，录音保持WAV格式并附授权编号。",
+          "completionCriteria": [
+            "采访录音已归档",
+            "录音保持WAV格式",
+            "附授权编号"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material_interview_recording"
+          ],
+          "timePointTempIds": [
+            "time_recording_archive_deadline"
+          ],
+          "confidence": 1,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      },
+      {
+        "id": "task_archive_interview_minutes",
+        "propositionScopeIds": [
+          "scope-0004-81ac7760c7861fbb6b25e6c0ed39c3e5b0e5aff5508b91ddabe5ee7c3334df55",
+          "scope-0005-d4efe0133d36243512a719306e42f93a07062474816a70fdda0966e7bc9c0f22",
+          "scope-0007-c3e52d32c476ba030783681cf265cc6485a39bbee663ddcf56400dc88d0d4ac3"
+        ],
+        "semantics": {
+          "actor": "addressed_group",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "submit",
+        "action": {
+          "scopeId": "scope-0004-81ac7760c7861fbb6b25e6c0ed39c3e5b0e5aff5508b91ddabe5ee7c3334df55",
+          "surface": "归档"
+        },
+        "object": {
+          "scopeId": "scope-0004-81ac7760c7861fbb6b25e6c0ed39c3e5b0e5aff5508b91ddabe5ee7c3334df55",
+          "surface": "访谈纪要"
+        },
+        "effect": "external_transfer",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "归档访谈纪要",
+          "description": "文字员于2026年10月15日17:00前归档访谈纪要，纪要使用DOCX并附校对人姓名。",
+          "completionCriteria": [
+            "访谈纪要已归档",
+            "纪要使用DOCX",
+            "附校对人姓名"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material_interview_minutes"
+          ],
+          "timePointTempIds": [
+            "time_minutes_archive_deadline"
+          ],
+          "confidence": 1,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "not_applicable",
+          "conditionScopeIds": [],
+          "factScopeIds": []
+        },
+        "coverage": {
+          "time": "present",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material_interview_recording",
+        "name": "采访录音",
+        "required": true,
+        "formatRequirements": [
+          "WAV格式"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task_archive_interview_recording"
+        ],
+        "scopeIds": [
+          "scope-0002-87004ba2c2e787a4932572ddaefe588ddc469cd2d9858ed564b54d36c1e9d598",
+          "scope-0003-cf8027f86eabf58460d86aa492fe76636bf95d20288287772d375339992ad8f1"
+        ],
+        "confidence": 1
+      },
+      {
+        "tempId": "material_interview_minutes",
+        "name": "访谈纪要",
+        "required": true,
+        "formatRequirements": [
+          "DOCX"
+        ],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task_archive_interview_minutes"
+        ],
+        "scopeIds": [
+          "scope-0004-81ac7760c7861fbb6b25e6c0ed39c3e5b0e5aff5508b91ddabe5ee7c3334df55",
+          "scope-0005-d4efe0133d36243512a719306e42f93a07062474816a70fdda0966e7bc9c0f22"
+        ],
+        "confidence": 1
+      }
+    ],
+    "timePoints": [
+      {
+        "tempId": "time_recording_archive_deadline",
+        "type": "task_deadline",
+        "rawText": "2026年10月14日11:00前",
+        "relatedTaskTempIds": [
+          "task_archive_interview_recording"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0002-87004ba2c2e787a4932572ddaefe588ddc469cd2d9858ed564b54d36c1e9d598"
+        ],
+        "confidence": 1,
+        "normalizedValue": "2026-10-14T11:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      },
+      {
+        "tempId": "time_minutes_archive_deadline",
+        "type": "task_deadline",
+        "rawText": "2026年10月15日17:00前",
+        "relatedTaskTempIds": [
+          "task_archive_interview_minutes"
+        ],
+        "relatedMaterialTempIds": [],
+        "scopeIds": [
+          "scope-0004-81ac7760c7861fbb6b25e6c0ed39c3e5b0e5aff5508b91ddabe5ee7c3334df55"
+        ],
+        "confidence": 1,
+        "normalizedValue": "2026-10-15T17:00",
+        "timezone": "Asia/Shanghai",
+        "isAllDay": false,
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-ed423b8628d86897886076942795138a70740742e54c4786afbb1c75fa71ec21",
+      "scope-0008-cd4c73e96f1d6d3edcda3f2c1f6f75398c2ce2ba995db7193895e7bf8f2834ee"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:15eb1ae5",
+    "sourceVersionId": "source:15eb1ae5:version:1",
+    "sourceFingerprint": "sha256:2b685ccfa29da9500a92eab6ce509895366ce13cb62b26423fe2fe6bbacdd8de"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 19711,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "material": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 2,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 6,
+        "reference": 6,
+        "correct": 4,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666
+      },
+      "semantic": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 0,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 4,
+        "reference": 4,
+        "correct": 3,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.75,
+        "recall": 0.75
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 2,
+    "referenceTaskCount": 2
+  },
+  "scoreError": null,
+  "totalAttempts": 245,
+  "usage": {
+    "input_tokens": 4581,
+    "input_tokens_details": {
+      "cached_tokens": 3968
+    },
+    "output_tokens": 2080,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 6661
+  },
+  "costUpperMicroCny": 97389,
+  "totalCostUpperMicroCny": 10458151,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "20份已见材料开发回归；同candidate03、同正文、同参数，仅模型身份不同；40请求不是40份材料"
+}

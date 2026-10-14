@@ -1,0 +1,140 @@
+{
+  "file": "C:\\Users\\Winner\\.codex\\worktrees\\student-affairs-candidate11\\比赛\\.data\\candidate19\\product-diagnostic\\REPORT.json",
+  "summary": {
+    "Candidate17": {
+      "denominator": 6,
+      "decoded": 6,
+      "rejected": 0,
+      "independentWholeCorrect": "NOT_OBSERVABLE"
+    },
+    "Candidate19": {
+      "denominator": 6,
+      "decoded": 6,
+      "rejected": 0,
+      "independentWholeCorrect": "NOT_OBSERVABLE"
+    }
+  },
+  "cases": [
+    {
+      "ordinal": 1,
+      "accepted": true,
+      "taskCount": 0,
+      "eventCount": 0,
+      "risks": [
+        "EVENT_MISSING",
+        "INDEPENDENT_TIME_WRONG"
+      ]
+    },
+    {
+      "ordinal": 2,
+      "accepted": true,
+      "taskCount": 0,
+      "eventCount": 1,
+      "risks": []
+    },
+    {
+      "ordinal": 3,
+      "accepted": true,
+      "taskCount": 0,
+      "eventCount": 2,
+      "risks": [
+        "EVENT_TIME_OR_LOCATION_WRONG",
+        "INDEPENDENT_TIME_WRONG",
+        "INDEPENDENT_TIME_WRONG",
+        "EVENT_TIME_OR_LOCATION_WRONG",
+        "INDEPENDENT_TIME_WRONG",
+        "UNSUPPORTED_INDEPENDENT_ENTITY"
+      ]
+    },
+    {
+      "ordinal": 4,
+      "accepted": true,
+      "taskCount": 0,
+      "eventCount": 2,
+      "risks": [
+        "EVENT_TIME_OR_LOCATION_WRONG",
+        "INDEPENDENT_TIME_WRONG",
+        "INDEPENDENT_TIME_WRONG",
+        "EVENT_TIME_OR_LOCATION_WRONG",
+        "INDEPENDENT_TIME_WRONG",
+        "INDEPENDENT_TIME_WRONG",
+        "UNSUPPORTED_INDEPENDENT_ENTITY"
+      ]
+    },
+    {
+      "ordinal": 5,
+      "accepted": true,
+      "taskCount": 3,
+      "eventCount": 0,
+      "risks": []
+    },
+    {
+      "ordinal": 6,
+      "accepted": true,
+      "taskCount": 3,
+      "eventCount": 0,
+      "risks": []
+    },
+    {
+      "ordinal": 7,
+      "accepted": true,
+      "taskCount": 2,
+      "eventCount": 0,
+      "risks": [
+        "TASK_PRESENCE",
+        "INDEPENDENT_INFORMATION_MISSING"
+      ]
+    },
+    {
+      "ordinal": 8,
+      "accepted": true,
+      "taskCount": 2,
+      "eventCount": 0,
+      "risks": [
+        "TASK_FIELD_WRONG",
+        "TASK_PRESENCE",
+        "INDEPENDENT_INFORMATION_MISSING"
+      ]
+    },
+    {
+      "ordinal": 9,
+      "accepted": true,
+      "taskCount": 1,
+      "eventCount": 1,
+      "risks": [
+        "EVENT_TIME_OR_LOCATION_WRONG",
+        "INDEPENDENT_TIME_WRONG",
+        "INDEPENDENT_TIME_WRONG",
+        "UNSUPPORTED_INDEPENDENT_ENTITY",
+        "SOURCE_MATERIAL_FIELD_WRONG"
+      ]
+    },
+    {
+      "ordinal": 10,
+      "accepted": true,
+      "taskCount": 1,
+      "eventCount": 1,
+      "risks": [
+        "EVENT_TIME_OR_LOCATION_WRONG",
+        "INDEPENDENT_TIME_WRONG",
+        "INDEPENDENT_TIME_WRONG",
+        "UNSUPPORTED_INDEPENDENT_ENTITY",
+        "SOURCE_MATERIAL_FIELD_WRONG"
+      ]
+    },
+    {
+      "ordinal": 11,
+      "accepted": true,
+      "taskCount": 1,
+      "eventCount": 0,
+      "risks": []
+    },
+    {
+      "ordinal": 12,
+      "accepted": true,
+      "taskCount": 1,
+      "eventCount": 0,
+      "risks": []
+    }
+  ]
+}

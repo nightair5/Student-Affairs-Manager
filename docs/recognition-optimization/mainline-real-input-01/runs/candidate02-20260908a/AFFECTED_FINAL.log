@@ -1,0 +1,57 @@
+
+ RUN  v3.2.7 C:/Users/Winner/student-affairs-multimodal-exp
+
+··········x·······················
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/experiments/realInput01/acceptance.test.tsx > candidate02 paid records replay without a model request > the candidate02 launcher exposes local carriers but keeps all upstream sending disabled
+AssertionError: 
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'src/experiments/mainline01/fixtures.ts'
++ ]
+- []
+
+    at file:///C:/Users/Winner/student-affairs-multimodal-exp/[eval1]:6:54
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [ 'src/experiments/mainline01/fixtures.ts' ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ [eval1]:6:54
+ ❯ src/experiments/realInput01/acceptance.test.tsx:47:103
+     45|       console.log('candidate02 launcher: eight local carriers, zero up…
+     46|     `],{encoding:'utf8',timeout:60000,maxBuffer:1024*1024})
+     47|     expect(result.error?.message??'').toBe('');expect(result.status,re…
+       |                                                                                                       ^
+     48|   },65000)
+     49|   it.each(['C05','C08'])('%s creates a separately identified run and c…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 33 passed (34)
+   Start at  13:57:02
+   Duration  40.22s (transform 929ms, setup 0ms, collect 1.53s, tests 38.44s, environment 0ms, prepare 560ms)
+

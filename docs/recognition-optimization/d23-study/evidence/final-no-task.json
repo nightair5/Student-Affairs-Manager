@@ -1,0 +1,743 @@
+{
+  "format": "D23_BROWSER_WITNESS_SUMMARY_1",
+  "originalSha256": "10a890be1b3148a21c46a8fd04c8e2c2f36d612f6c2d132e0b97e9ba8a388e3c",
+  "originalLocalPath": ".data/d23/browser-originals/final-no-task.json",
+  "build": "c510c44b38f1 / source e83bc83d3a51",
+  "database": "rco-mainline-01-02-i1-real-input-d23-study-engineering-final01-p1",
+  "role": "ENGINEERING_REPLAY",
+  "humanMetrics": "NOT_OBSERVABLE",
+  "registry": {
+    "version": "d23-study-protocol-1",
+    "role": "ENGINEERING_REPLAY",
+    "database": "rco-mainline-01-02-i1-real-input-d23-study-engineering-final01-p1",
+    "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+    "revision": 17,
+    "owner": {
+      "ref": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+      "acceptedAt": "2026-09-30T09:36:20.686Z"
+    },
+    "freeze": {
+      "ownerRef": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+      "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+      "at": "2026-09-30T09:36:21.130Z",
+      "obligations": {
+        "C17-D16-S01": "工程模拟仅验接线；原文义务待真实负责人核准，不是人工真值。",
+        "C17-D16-S02": "工程模拟仅验接线；原文义务待真实负责人核准，不是人工真值。",
+        "C17-D16-S04": "工程模拟仅验接线；原文义务待真实负责人核准，不是人工真值。",
+        "C17-D16-S05": "工程模拟仅验接线；原文义务待真实负责人核准，不是人工真值。",
+        "C17-D16-S06": "工程模拟仅验接线；原文义务待真实负责人核准，不是人工真值。",
+        "C17-D16-S07": "工程模拟仅验接线；原文义务待真实负责人核准，不是人工真值。",
+        "C17-D16-S09": "工程模拟仅验接线；原文义务待真实负责人核准，不是人工真值。",
+        "C17-D16-S11": "工程模拟仅验接线；原文义务待真实负责人核准，不是人工真值。"
+      }
+    },
+    "participants": [
+      {
+        "id": "p1",
+        "consentRef": "ENGINEERING_SIMULATED_CONSENT_ONLY",
+        "scopeRef": "ENGINEERING_SIMULATION_ONLY",
+        "acceptedAt": "2026-09-30T09:36:21.700Z",
+        "role": "ENGINEERING_REPLAY"
+      }
+    ],
+    "trials": [
+      {
+        "id": "a21a6c96-93a4-479e-a6f8-058535c1d41f",
+        "participantId": "p1",
+        "slotId": "p1-1",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "assisted",
+        "materialId": "C17-D16-S01",
+        "sourceSha256": "2bfbae1b2b062526fad9d64f73764d71b74aa852d33925d22c4209452c70f845",
+        "stimulusSha256": "dbba9885dc868b0e65a6586b561af2485801b081d0ff375ef4f025e7128d0a0c",
+        "recordId": "d21-record-02",
+        "scopeRef": "ENGINEERING_SIMULATION_ONLY",
+        "consentRef": "ENGINEERING_SIMULATED_CONSENT_ONLY",
+        "ownerRef": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+        "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+        "status": "candidate_complete",
+        "events": [
+          {
+            "id": "e8751bc0-3d62-471d-b4fb-b33a8e65462b",
+            "kind": "source_visible",
+            "atMs": 1790760982519
+          },
+          {
+            "id": "632863bf-a471-4ba6-bbac-172713d7dbe1",
+            "kind": "start",
+            "atMs": 1790760982519
+          },
+          {
+            "id": "85177b73-b197-4019-843a-97d12222094b",
+            "kind": "load_wait",
+            "atMs": 1790760991174
+          },
+          {
+            "id": "817408bd-60b1-4652-824a-e411f6b00656",
+            "kind": "draft_open",
+            "atMs": 1790760991295
+          },
+          {
+            "id": "1666d5f2-b8b9-4a5e-9907-25b2dcde8922",
+            "kind": "load_end",
+            "atMs": 1790760991414
+          },
+          {
+            "id": "b82c86bc-1b77-4a5a-8977-0bee5557854b",
+            "kind": "pause",
+            "atMs": 1790761003714
+          },
+          {
+            "id": "40375dc0-4620-49bb-b8f1-3db1fedf68fa",
+            "kind": "resume",
+            "atMs": 1790761003991
+          },
+          {
+            "id": "c258a1d6-ddad-4bf5-909a-8c819ec21829",
+            "kind": "candidate_complete",
+            "atMs": 1790761077590
+          }
+        ],
+        "adjudications": [],
+        "draftId": "source:e348b50a:draft:1:1"
+      },
+      {
+        "id": "313fe4b0-0d9f-4a0d-9b67-b6495bc217cb",
+        "participantId": "p1",
+        "slotId": "p1-2",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "manual",
+        "materialId": "C17-D16-S06",
+        "sourceSha256": "56403e58158ef21ca640cd4e3efccf411339e832e9f495dbce908e09c1201b30",
+        "stimulusSha256": null,
+        "recordId": "d13-fixture-manual-d23-s06",
+        "scopeRef": "ENGINEERING_SIMULATION_ONLY",
+        "consentRef": "ENGINEERING_SIMULATED_CONSENT_ONLY",
+        "ownerRef": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+        "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+        "status": "exited",
+        "events": [
+          {
+            "id": "1cba2278-93a6-4f25-9a2d-26bc0965000c",
+            "kind": "source_visible",
+            "atMs": 1790762231119
+          },
+          {
+            "id": "e072f561-bd99-4139-971c-f297e2c89259",
+            "kind": "start",
+            "atMs": 1790762231119
+          },
+          {
+            "id": "aecd37a2-e387-4c40-aef3-faacebb7eb16",
+            "kind": "exit",
+            "atMs": 1790762231383
+          }
+        ],
+        "adjudications": []
+      },
+      {
+        "id": "052ad807-97c1-4e0c-8f10-6c8871183dfd",
+        "participantId": "p1",
+        "slotId": "p1-3",
+        "role": "ENGINEERING_REPLAY",
+        "condition": "manual",
+        "materialId": "C17-D16-S04",
+        "sourceSha256": "9225590c3aa495e23dea327641798bcfae451f83adc430d2a9b122f206e2a29d",
+        "stimulusSha256": null,
+        "recordId": "d13-fixture-manual-d23-s04",
+        "scopeRef": "ENGINEERING_SIMULATION_ONLY",
+        "consentRef": "ENGINEERING_SIMULATED_CONSENT_ONLY",
+        "ownerRef": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+        "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+        "status": "candidate_complete",
+        "events": [
+          {
+            "id": "5ae9d0d8-b1b4-43a5-8283-73543bc256a7",
+            "kind": "source_visible",
+            "atMs": 1790762231654
+          },
+          {
+            "id": "4cff2896-58e3-4594-b0fc-5e02e45212e6",
+            "kind": "start",
+            "atMs": 1790762231654
+          },
+          {
+            "id": "b442391a-a73f-4541-953a-6fb3c535253a",
+            "kind": "load_wait",
+            "atMs": 1790762232315
+          },
+          {
+            "id": "1cad7b12-b35c-4b4b-b6c0-e5dff670ad9e",
+            "kind": "draft_open",
+            "atMs": 1790762232586
+          },
+          {
+            "id": "06b3d00b-b446-4af2-9ec7-11ee008efab1",
+            "kind": "load_end",
+            "atMs": 1790762232655
+          },
+          {
+            "id": "5ab674e9-f000-46f7-9cbd-4ab6a0a79f73",
+            "kind": "candidate_complete",
+            "atMs": 1790762258998
+          }
+        ],
+        "adjudications": [],
+        "draftId": "source:85a8e769:draft:1:1"
+      }
+    ],
+    "activeTrialId": "052ad807-97c1-4e0c-8f10-6c8871183dfd"
+  },
+  "pendingReadback": null,
+  "canonicalCounts": {
+    "sources": 2,
+    "sourceVersions": 2,
+    "recognitionRuns": 2,
+    "extractionDrafts": 2,
+    "tasks": 1,
+    "projects": 0,
+    "events": 0,
+    "timePoints": 1,
+    "materials": 1,
+    "evidenceRefs": 5,
+    "historyRecords": 6
+  },
+  "canonicalFacts": {
+    "tasks": [
+      {
+        "id": "mainline05:task:source:e348b50a:draft:1:1:task-0001",
+        "title": "提交社团器材盘点表",
+        "status": "todo"
+      }
+    ],
+    "events": [],
+    "timePoints": [
+      {
+        "id": "mainline05:time:source:e348b50a:draft:1:1:time-0001",
+        "taskId": "mainline05:task:source:e348b50a:draft:1:1:task-0001",
+        "eventId": null,
+        "type": "submission_deadline",
+        "rawText": "2026年10月19日16:30前",
+        "normalizedValue": "2026-10-19T16:30",
+        "precision": "exact",
+        "needsConfirmation": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "mainline05:material:source:e348b50a:draft:1:1:material-0001",
+        "name": "社团器材盘点表",
+        "required": true,
+        "status": "unverified"
+      }
+    ]
+  },
+  "report": {
+    "version": "d23-semantic-measurement-1",
+    "role": "ENGINEERING_REPLAY",
+    "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+    "planned": 16,
+    "registered": 1,
+    "started": 3,
+    "rows": [
+      {
+        "trial": {
+          "id": "a21a6c96-93a4-479e-a6f8-058535c1d41f",
+          "participantId": "p1",
+          "slotId": "p1-1",
+          "role": "ENGINEERING_REPLAY",
+          "condition": "assisted",
+          "materialId": "C17-D16-S01",
+          "sourceSha256": "2bfbae1b2b062526fad9d64f73764d71b74aa852d33925d22c4209452c70f845",
+          "stimulusSha256": "dbba9885dc868b0e65a6586b561af2485801b081d0ff375ef4f025e7128d0a0c",
+          "recordId": "d21-record-02",
+          "scopeRef": "ENGINEERING_SIMULATION_ONLY",
+          "consentRef": "ENGINEERING_SIMULATED_CONSENT_ONLY",
+          "ownerRef": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+          "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+          "status": "candidate_complete",
+          "events": [
+            {
+              "id": "e8751bc0-3d62-471d-b4fb-b33a8e65462b",
+              "kind": "source_visible",
+              "atMs": 1790760982519
+            },
+            {
+              "id": "632863bf-a471-4ba6-bbac-172713d7dbe1",
+              "kind": "start",
+              "atMs": 1790760982519
+            },
+            {
+              "id": "85177b73-b197-4019-843a-97d12222094b",
+              "kind": "load_wait",
+              "atMs": 1790760991174
+            },
+            {
+              "id": "817408bd-60b1-4652-824a-e411f6b00656",
+              "kind": "draft_open",
+              "atMs": 1790760991295
+            },
+            {
+              "id": "1666d5f2-b8b9-4a5e-9907-25b2dcde8922",
+              "kind": "load_end",
+              "atMs": 1790760991414
+            },
+            {
+              "id": "b82c86bc-1b77-4a5a-8977-0bee5557854b",
+              "kind": "pause",
+              "atMs": 1790761003714
+            },
+            {
+              "id": "40375dc0-4620-49bb-b8f1-3db1fedf68fa",
+              "kind": "resume",
+              "atMs": 1790761003991
+            },
+            {
+              "id": "c258a1d6-ddad-4bf5-909a-8c819ec21829",
+              "kind": "candidate_complete",
+              "atMs": 1790761077590
+            }
+          ],
+          "adjudications": [],
+          "draftId": "source:e348b50a:draft:1:1"
+        },
+        "evidenceError": null,
+        "outcome": "unadjudicated",
+        "complete": true,
+        "first": "NOT_ADJUDICATED",
+        "correctDisposition": false,
+        "lowEdit": false,
+        "zeroSubstantive": false,
+        "timing": {
+          "version": "d23-semantic-measurement-1",
+          "observed": {
+            "readingMs": 94317,
+            "activeEditMs": 159,
+            "idleMs": 0,
+            "waitMs": 318,
+            "hiddenMs": 0,
+            "pauseMs": 277
+          },
+          "missing": [],
+          "wallMs": 95071,
+          "completeActiveEditMs": 159,
+          "costMeaning": "OBSERVED_UI_ACTIVITY_ONLY",
+          "cognitiveEffort": "NOT_OBSERVABLE"
+        },
+        "failureEvents": [
+          {
+            "id": "4127c318-4b64-4b9e-a29b-09f5fa8494b7",
+            "draftId": "source:e348b50a:draft:1:1",
+            "atMs": 1790761048547,
+            "kind": "failure",
+            "error": "D13_INJECTED_ATOMIC_FAILURE"
+          },
+          {
+            "id": "22a3e414-6642-44e2-9996-77d5b8f3bbaf",
+            "draftId": "source:e348b50a:draft:1:1",
+            "atMs": 1790761076752,
+            "kind": "failure",
+            "error": "D22_INJECTED_READBACK_FAILURE"
+          }
+        ],
+        "legacyMeasurement32": {
+          "version": "low-edit-v2-exploratory-1",
+          "role": "ENGINEERING_REPLAY",
+          "correctDisposition": null,
+          "zeroSubstantiveModification": null,
+          "lowModificationCorrectDisposition": null,
+          "committedFields": [],
+          "fieldCount": 0,
+          "structural": false,
+          "activeEditMs": 159,
+          "readMs": 86059,
+          "waitMs": 78,
+          "hiddenMs": 0,
+          "idleMs": 0,
+          "missing": [],
+          "postTerminalEvents": 0,
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "evidence": {
+          "sha256": "53718e143ac55ce7d2894256afa136a3ef56f07e95e30b740c2dd717e3625d76",
+          "currentSha256": "6f13e9622706b521fecc94ef5880da6174f0ea85c8e7e0730adedb2a1c75e3c6",
+          "commitIds": [
+            "5b635ee2-d760-4881-976c-ed9f36846c85",
+            "b36aee98-9919-41ba-a434-b7eafd0e4e85",
+            "55da1458-bf72-4fcd-9397-db7685648cdd"
+          ],
+          "canonical": {
+            "tasks": [
+              {
+                "id": "mainline05:task:source:e348b50a:draft:1:1:task-0001",
+                "title": "提交社团器材盘点表",
+                "status": "todo"
+              }
+            ],
+            "materials": [
+              {
+                "id": "mainline05:material:source:e348b50a:draft:1:1:material-0001",
+                "name": "社团器材盘点表",
+                "required": true,
+                "status": "unverified"
+              }
+            ],
+            "timePoints": [
+              {
+                "id": "mainline05:time:source:e348b50a:draft:1:1:time-0001",
+                "taskId": "mainline05:task:source:e348b50a:draft:1:1:task-0001",
+                "eventId": null,
+                "type": "submission_deadline",
+                "rawText": "2026年10月19日16:30前",
+                "normalizedValue": "2026-10-19T16:30",
+                "precision": "exact",
+                "needsConfirmation": false
+              }
+            ],
+            "events": [],
+            "evidenceRefs": [
+              {
+                "id": "mainline05:evidence:source:e348b50a:draft:1:1:scope-0001-f4b0440ef59d24f826e362c1459af4b1aa39f17e278f87a376dc6ed77f5d22ae",
+                "sourceVersionId": "source:e348b50a:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:e348b50a:draft:1:1:scope-0002-c17deed2d7f2b9e2060d3ffe242e2861e58a86146328d46932a93dc8b102b1b5",
+                "sourceVersionId": "source:e348b50a:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:e348b50a:draft:1:1:scope-0003-f666d0afb1a2f8736957e063506ffb09307b56e559328a8b75fe7b8000ac8c4a",
+                "sourceVersionId": "source:e348b50a:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:e348b50a:draft:1:1:scope-0004-1c2dc0ddeb8ed692f1ec49c24c68e161532e3b7b1733a2e1151ec808c5b924a0",
+                "sourceVersionId": "source:e348b50a:version:1",
+                "extractionMethod": "manual"
+              },
+              {
+                "id": "mainline05:evidence:source:e348b50a:draft:1:1:scope-0005-0d379e878568286e42966f75db0545abaf3997dab0116dfd5fa7bb7465806096",
+                "sourceVersionId": "source:e348b50a:version:1",
+                "extractionMethod": "manual"
+              }
+            ],
+            "historyRecords": [
+              {
+                "id": "mainline05:history:source:e348b50a:draft:1:1:material-review-mode-1",
+                "action": "mainline05_enable_material_review",
+                "sourceVersionId": "source:e348b50a:version:1"
+              },
+              {
+                "id": "mainline05:history:source:e348b50a:draft:1:1:5b635ee2-d760-4881-976c-ed9f36846c85",
+                "action": "mainline05_review_material",
+                "sourceVersionId": "source:e348b50a:version:1"
+              },
+              {
+                "id": "mainline05:history:source:e348b50a:draft:1:1:b36aee98-9919-41ba-a434-b7eafd0e4e85",
+                "action": "mainline05_review_task",
+                "sourceVersionId": "source:e348b50a:version:1"
+              },
+              {
+                "id": "mainline05:history:source:e348b50a:draft:1:1:55da1458-bf72-4fcd-9397-db7685648cdd",
+                "action": "mainline05_confirm",
+                "sourceVersionId": "source:e348b50a:version:1"
+              }
+            ]
+          },
+          "links": [
+            {
+              "editId": "24b23581-2e50-44e6-839f-45aef205d957",
+              "field": "task:task-0001:material-review:material-0001",
+              "checkpoint": [
+                {
+                  "id": "8984a549-3a14-40b7-90ae-40724b9a5b22",
+                  "at": "2026-09-30T09:37:04.677Z",
+                  "kind": "stage",
+                  "field": "task:task-0001:facts",
+                  "writer": "ac798ef7-e1a4-4fc7-b557-2cdf8095f5fc",
+                  "editId": "24b23581-2e50-44e6-839f-45aef205d957",
+                  "checkpointRevision": "f7de7db1-22ba-44f2-90c8-009fcfc59c6b"
+                },
+                {
+                  "id": "617ce924-4351-4309-b26d-b66834126c11",
+                  "at": "2026-09-30T09:37:04.683Z",
+                  "kind": "stage",
+                  "field": "task:task-0001:facts",
+                  "writer": "ac798ef7-e1a4-4fc7-b557-2cdf8095f5fc",
+                  "editId": "24b23581-2e50-44e6-839f-45aef205d957",
+                  "checkpointRevision": "5f2f79e2-1812-4f57-b184-022156eac410"
+                },
+                {
+                  "id": "57381133-e3a8-4651-a1f4-9c32055405dd",
+                  "at": "2026-09-30T09:37:04.862Z",
+                  "kind": "clear",
+                  "field": "task:task-0001:facts",
+                  "writer": "ac798ef7-e1a4-4fc7-b557-2cdf8095f5fc",
+                  "editId": "24b23581-2e50-44e6-839f-45aef205d957"
+                }
+              ],
+              "commitIds": [
+                "5b635ee2-d760-4881-976c-ed9f36846c85"
+              ]
+            }
+          ],
+          "semanticFields": [],
+          "structural": false,
+          "unlinkedEditIds": [],
+          "fullReadback": true
+        }
+      },
+      {
+        "trial": {
+          "id": "313fe4b0-0d9f-4a0d-9b67-b6495bc217cb",
+          "participantId": "p1",
+          "slotId": "p1-2",
+          "role": "ENGINEERING_REPLAY",
+          "condition": "manual",
+          "materialId": "C17-D16-S06",
+          "sourceSha256": "56403e58158ef21ca640cd4e3efccf411339e832e9f495dbce908e09c1201b30",
+          "stimulusSha256": null,
+          "recordId": "d13-fixture-manual-d23-s06",
+          "scopeRef": "ENGINEERING_SIMULATION_ONLY",
+          "consentRef": "ENGINEERING_SIMULATED_CONSENT_ONLY",
+          "ownerRef": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+          "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+          "status": "exited",
+          "events": [
+            {
+              "id": "1cba2278-93a6-4f25-9a2d-26bc0965000c",
+              "kind": "source_visible",
+              "atMs": 1790762231119
+            },
+            {
+              "id": "e072f561-bd99-4139-971c-f297e2c89259",
+              "kind": "start",
+              "atMs": 1790762231119
+            },
+            {
+              "id": "aecd37a2-e387-4c40-aef3-faacebb7eb16",
+              "kind": "exit",
+              "atMs": 1790762231383
+            }
+          ],
+          "adjudications": []
+        },
+        "evidenceError": null,
+        "outcome": "unadjudicated",
+        "complete": false,
+        "first": "NOT_APPLICABLE",
+        "correctDisposition": false,
+        "lowEdit": "NOT_APPLICABLE",
+        "zeroSubstantive": "NOT_APPLICABLE",
+        "timing": {
+          "version": "d23-semantic-measurement-1",
+          "observed": {
+            "readingMs": 264,
+            "activeEditMs": 0,
+            "idleMs": 0,
+            "waitMs": 0,
+            "hiddenMs": 0,
+            "pauseMs": 0
+          },
+          "missing": [],
+          "wallMs": 264,
+          "completeActiveEditMs": 0,
+          "costMeaning": "OBSERVED_UI_ACTIVITY_ONLY",
+          "cognitiveEffort": "NOT_OBSERVABLE"
+        },
+        "failureEvents": [],
+        "legacyMeasurement32": {
+          "version": "low-edit-v2-exploratory-1",
+          "role": "ENGINEERING_REPLAY",
+          "correctDisposition": null,
+          "zeroSubstantiveModification": null,
+          "lowModificationCorrectDisposition": null,
+          "committedFields": [],
+          "fieldCount": 0,
+          "structural": false,
+          "activeEditMs": null,
+          "readMs": null,
+          "waitMs": null,
+          "hiddenMs": null,
+          "idleMs": null,
+          "missing": [
+            "registration",
+            "unclosed interval",
+            "terminal commit/readback"
+          ],
+          "postTerminalEvents": 0,
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "evidence": null
+      },
+      {
+        "trial": {
+          "id": "052ad807-97c1-4e0c-8f10-6c8871183dfd",
+          "participantId": "p1",
+          "slotId": "p1-3",
+          "role": "ENGINEERING_REPLAY",
+          "condition": "manual",
+          "materialId": "C17-D16-S04",
+          "sourceSha256": "9225590c3aa495e23dea327641798bcfae451f83adc430d2a9b122f206e2a29d",
+          "stimulusSha256": null,
+          "recordId": "d13-fixture-manual-d23-s04",
+          "scopeRef": "ENGINEERING_SIMULATION_ONLY",
+          "consentRef": "ENGINEERING_SIMULATED_CONSENT_ONLY",
+          "ownerRef": "ENGINEERING_OWNER_NOT_A_REAL_PERSON",
+          "planSha256": "2f2d39da1c9b75d22726cafa2c648f7ec4d83d79ed2d8e422893e77f42e9a4a0",
+          "status": "candidate_complete",
+          "events": [
+            {
+              "id": "5ae9d0d8-b1b4-43a5-8283-73543bc256a7",
+              "kind": "source_visible",
+              "atMs": 1790762231654
+            },
+            {
+              "id": "4cff2896-58e3-4594-b0fc-5e02e45212e6",
+              "kind": "start",
+              "atMs": 1790762231654
+            },
+            {
+              "id": "b442391a-a73f-4541-953a-6fb3c535253a",
+              "kind": "load_wait",
+              "atMs": 1790762232315
+            },
+            {
+              "id": "1cad7b12-b35c-4b4b-b6c0-e5dff670ad9e",
+              "kind": "draft_open",
+              "atMs": 1790762232586
+            },
+            {
+              "id": "06b3d00b-b446-4af2-9ec7-11ee008efab1",
+              "kind": "load_end",
+              "atMs": 1790762232655
+            },
+            {
+              "id": "5ab674e9-f000-46f7-9cbd-4ab6a0a79f73",
+              "kind": "candidate_complete",
+              "atMs": 1790762258998
+            }
+          ],
+          "adjudications": [],
+          "draftId": "source:85a8e769:draft:1:1"
+        },
+        "evidenceError": null,
+        "outcome": "unadjudicated",
+        "complete": true,
+        "first": "NOT_APPLICABLE",
+        "correctDisposition": false,
+        "lowEdit": "NOT_APPLICABLE",
+        "zeroSubstantive": "NOT_APPLICABLE",
+        "timing": {
+          "version": "d23-semantic-measurement-1",
+          "observed": {
+            "readingMs": 26991,
+            "activeEditMs": 0,
+            "idleMs": 0,
+            "waitMs": 353,
+            "hiddenMs": 0,
+            "pauseMs": 0
+          },
+          "missing": [],
+          "wallMs": 27344,
+          "completeActiveEditMs": 0,
+          "costMeaning": "OBSERVED_UI_ACTIVITY_ONLY",
+          "cognitiveEffort": "NOT_OBSERVABLE"
+        },
+        "failureEvents": [],
+        "legacyMeasurement32": {
+          "version": "low-edit-v2-exploratory-1",
+          "role": "ENGINEERING_REPLAY",
+          "correctDisposition": null,
+          "zeroSubstantiveModification": null,
+          "lowModificationCorrectDisposition": null,
+          "committedFields": [],
+          "fieldCount": 0,
+          "structural": false,
+          "activeEditMs": 0,
+          "readMs": 26405,
+          "waitMs": 13,
+          "hiddenMs": 0,
+          "idleMs": 0,
+          "missing": [],
+          "postTerminalEvents": 0,
+          "humanMetrics": "NOT_OBSERVABLE"
+        },
+        "evidence": {
+          "sha256": "9345efe5921dd010e7a55739276452551023e3196352a6c5f9dd26dce09ea861",
+          "currentSha256": "6f13e9622706b521fecc94ef5880da6174f0ea85c8e7e0730adedb2a1c75e3c6",
+          "commitIds": [
+            "3db8bca5-7c5e-4e7c-810e-bc28c1e861ba"
+          ],
+          "canonical": {
+            "tasks": [],
+            "materials": [],
+            "timePoints": [],
+            "events": [],
+            "evidenceRefs": [],
+            "historyRecords": [
+              {
+                "id": "mainline05:history:source:85a8e769:draft:1:1:material-review-mode-1",
+                "action": "mainline05_enable_material_review",
+                "sourceVersionId": "source:85a8e769:version:1"
+              },
+              {
+                "id": "mainline05:history:source:85a8e769:draft:1:1:3db8bca5-7c5e-4e7c-810e-bc28c1e861ba",
+                "action": "mainline05_review_info",
+                "sourceVersionId": "source:85a8e769:version:1"
+              }
+            ]
+          },
+          "links": [],
+          "semanticFields": [],
+          "structural": false,
+          "unlinkedEditIds": [],
+          "fullReadback": true
+        }
+      }
+    ],
+    "groups": [
+      {
+        "condition": "manual",
+        "started": 2,
+        "complete": 1,
+        "partial": 0,
+        "exited": 1,
+        "timeout": 0,
+        "observedFailureN": 0,
+        "unresolvedFailureN": 0,
+        "unadjudicated": 2,
+        "firstSuggestion": "NOT_APPLICABLE",
+        "correctDisposition": "NOT_OBSERVABLE",
+        "lowEdit": "NOT_APPLICABLE",
+        "observedActiveEditMedianMs": 0,
+        "completeActiveEditMedianMs": 0,
+        "completeTimeN": 2,
+        "missingTimeN": 0,
+        "humanActiveEditTime": "NOT_OBSERVABLE"
+      },
+      {
+        "condition": "assisted",
+        "started": 1,
+        "complete": 1,
+        "partial": 0,
+        "exited": 0,
+        "timeout": 0,
+        "observedFailureN": 1,
+        "unresolvedFailureN": 0,
+        "unadjudicated": 1,
+        "firstSuggestion": "NOT_OBSERVABLE",
+        "correctDisposition": "NOT_OBSERVABLE",
+        "lowEdit": "NOT_OBSERVABLE",
+        "observedActiveEditMedianMs": 159,
+        "completeActiveEditMedianMs": 159,
+        "completeTimeN": 1,
+        "missingTimeN": 0,
+        "humanActiveEditTime": "NOT_OBSERVABLE"
+      }
+    ],
+    "realHumanMetrics": "NOT_OBSERVABLE",
+    "modelCalls": 0
+  }
+}

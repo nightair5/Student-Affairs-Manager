@@ -1,0 +1,117 @@
+{
+  "version": "candidate14-d7-freeze-manifest-1.5.0",
+  "status": "FROZEN_PRE_DATA",
+  "freezeParentHead": "fcb5b91278c69490c8faaaa0a489711cc5d65e5a",
+  "branch": "codex/e2-candidate11-blind-eval",
+  "candidateVersion": "real-input-source-semantics-14",
+  "promptVersion": "recognition-prompt-candidate14-1.0.0",
+  "referenceVersion": "candidate14-reference-contract-5.5.0",
+  "scorerVersion": "candidate14-scoring-5.5.0",
+  "commonAdapterVersion": "candidate14-common-adapter-1.0.0",
+  "timePolicyVersion": "candidate14-time-policy-1.1.0",
+  "measurementVersion": "candidate14-product-metrics-2.4.0",
+  "noTaskDispositionVersion": "candidate14-no-task-disposition-1.4.0",
+  "components": [
+    {
+      "path": "src/experiments/realInput01/candidate14.ts",
+      "bytes": 3652,
+      "sha256": "7b28d2c3837a67e5a3d3781e8c90b88cb612cd90c9f74b5ff029c5dab243cd93"
+    },
+    {
+      "path": "src/experiments/candidate14/commonAdapter.ts",
+      "bytes": 1111,
+      "sha256": "6e3c1745c9358207fe714d1bf4f1ee25d0dcf3185b8ce8748343d31f7307d427"
+    },
+    {
+      "path": "src/experiments/candidate14/timePolicy.ts",
+      "bytes": 1548,
+      "sha256": "a72b93ab463fbbf523d16433cee7910d2c2fb54a7ebd70d0d7e34e4f0e3a87c2"
+    },
+    {
+      "path": "src/experiments/candidate14/noTaskDisposition.ts",
+      "bytes": 13663,
+      "sha256": "924bbb8224e34316bb72dd7e0bb94c4cb1950b0a3102181b8b5a4537d8192dc0"
+    },
+    {
+      "path": "src/experiments/candidate14/measurement.ts",
+      "bytes": 12377,
+      "sha256": "8ba67888d077b2dc7e1c857a1924c29108cfc8e5e776f66788a442a780c39f20"
+    },
+    {
+      "path": "scripts/candidate14-reference-contract.mjs",
+      "bytes": 9760,
+      "sha256": "c7f1d8e2ccd13c60978e50dd3fa1c2270f31ccc4f8baaff2659d8bb6c53d616a"
+    },
+    {
+      "path": "scripts/score-candidate14-contract-v5.mjs",
+      "bytes": 12716,
+      "sha256": "e3bcdf42da7f6c0246b669bd2428fe16576c16bc892aace3a7adbcf0f8ac757d"
+    },
+    {
+      "path": "scripts/analyze-candidate14-d7-offline.mjs",
+      "bytes": 7396,
+      "sha256": "75e3b030a002ec12026d9088f6576cd693989ce8449d0b38e584d2f1c1f885dc"
+    },
+    {
+      "path": "scripts/prepare-candidate14-d7-development.mjs",
+      "bytes": 22676,
+      "sha256": "e58e4f2e9e101a3fd9fa93f2f3525dbb0335a45d3a9e5c3c169ebeb556fb3e37"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate14/d7-freeze/CANDIDATE14_SPEC.md",
+      "bytes": 1071,
+      "sha256": "5261ef71333d5f308e598201d389723dbdc3de19ec86a9cdb6ec5c5958938b48"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate14/d7-freeze/REFERENCE_AND_SCORING_CONTRACT.md",
+      "bytes": 2005,
+      "sha256": "887f6bbb9859c690958216e45fe279c0a91bd49dbe9468116b97ee9fa150137e"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate14/d7-freeze/PRODUCT_MEASUREMENT_CONTRACT.md",
+      "bytes": 2087,
+      "sha256": "e0e606ccc8a065225657882d5b27d5d8fca8009891037e20aec0d3ef2593eb33"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate14/d7-freeze/CHECKLIST_REGRESSION_MATRIX.json",
+      "bytes": 2139,
+      "sha256": "921365be5d6b1c3089a28e6eaf3c5a60766c3d1febd56e7a559811caad1f2f45"
+    },
+    {
+      "path": "docs/recognition-optimization/candidate14/d7-freeze/DEVELOPMENT_PROMOTION_GATE.md",
+      "bytes": 1034,
+      "sha256": "a100baab35c50455155681289e8290b14662ae0bd8e054a278295f12a9d35cde"
+    }
+  ],
+  "aggregateSha256": "603802b1d165b6e46645de5fda971977565b2e24a0c385f7b97e0fd94e27f0f7",
+  "protectedFiles": 84,
+  "ledger": {
+    "path": "C:\\Users\\Winner\\student-affairs-multimodal-exp\\docs\\recognition-optimization\\mainline-real-input-01\\runs\\usage-resume-20260907a\\CALL_LEDGER.jsonl",
+    "rows": 791,
+    "bytes": 694807,
+    "sha256": "efb46f116db9c550ba53624c5d710164c6143ba9cc30c57ab2b7515c059f4d6a",
+    "mode": "READ_ONLY"
+  },
+  "constraints": {
+    "modelCalls": 0,
+    "dispatchAuthorized": false,
+    "grantCreated": false,
+    "ledgerWritten": false,
+    "secretsRead": false,
+    "newDependencies": 0,
+    "schemaMigration": false,
+    "defaultCandidateChanged": false
+  },
+  "teachingLeak": {
+    "status": "NOT_APPLICABLE_NO_TEACHING_EXAMPLES",
+    "count": null
+  },
+  "developmentDataStatus": "NOT_CREATED_UNTIL_FREEZE_COMMIT_PUSHED",
+  "historical": {
+    "d6Decision": "REJECT_CANDIDATE13_DEVELOPMENT",
+    "revisedAccuracy": null,
+    "oldLocksModified": false,
+    "knownVerifierFailure": "D3_AUTHORITY_LEDGER_DRIFT_ON_LEGITIMATE_791_ROW_LEDGER",
+    "invalidatedR4ManifestSha256": "00cf591998b6396ca4bbbbca61b4a0594cdb88f86b8879f02391bdea350a8866"
+  }
+}

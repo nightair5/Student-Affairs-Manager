@@ -1,9 +1,12 @@
+import type { TaskDateViews } from '../experiments/mainline02/taskDateView'
 import { CheckCircle2, Filter, ListTodo, Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { TaskCard } from '../components/TaskCard'
 import type { Project, Task, TaskCategory, TaskStatus } from '../types'
 
 interface TasksPageProps {
+  dateViews?: TaskDateViews
+  readOnly?: boolean
   tasks: Task[]
   projects: Project[]
   onOpenTask: (task: Task) => void
@@ -13,6 +16,7 @@ interface TasksPageProps {
 type FilterValue = '全部' | TaskCategory | TaskStatus
 
 export function TasksPage({
+  dateViews, readOnly,
   tasks,
   projects,
   onOpenTask,
@@ -83,7 +87,7 @@ export function TasksPage({
       {filteredTasks.length ? (
         <div className="task-list-grid">
           {filteredTasks.map((task) => (
-            <TaskCard
+            <TaskCard dateView={dateViews?.[task.id]} readOnly={readOnly}
               key={task.id}
               task={task}
               allTasks={tasks}

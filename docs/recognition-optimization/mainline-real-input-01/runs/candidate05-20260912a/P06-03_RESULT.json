@@ -1,0 +1,233 @@
+{
+  "unitId": "P06-03",
+  "arm": "03",
+  "bindingSha": "72e07981d334cb79d94585459d55e48aa0f53ac3e1feddb347ab8850f9c0bcd4",
+  "requestSha": "dd7dea73ecfc4319603428b0cb6cf9f10af8a146d694b124d0acbf7f2d95dd38",
+  "responseSha": "2576f9b076044438b3d0e080b8fce3a1d272ae539b90793d1ed6f545315760d7",
+  "requestModel": "deepseek-flash",
+  "returnedModel": "deepseek-flash",
+  "scorerSha": "ad76149f8a88cb4adda6dca78b210daaa4f3c800d17582767911e8ace2658e1d",
+  "scorerBundleSha": "782c89b4f865d83c9a2051d9e2a6df3776b7231ad49aec87008b5c14f4e09f21",
+  "referenceSha": "f79e6bc9427ddeb80cfcdf5668800a85f93c8bffb7c5987b8166c031b0052326",
+  "scoreInput": "explicit semantic projection into byte-identical historical scorer; raw response unmodified",
+  "assembled": {
+    "schemaVersion": "mainline04-task-semantics-1",
+    "tasks": [
+      {
+        "id": "task-pickup-projector",
+        "propositionScopeIds": [
+          "scope-0002-1decf329add3e20aa6510fe2440244d0683a15c1bd7df22c136fa56122872d0c",
+          "scope-0003-4a166b98f9221b3bd5348d3acdfee3c83daf4471fa06dc70adb19c3301a19323",
+          "scope-0004-b584314092b746347cf16155307a1c9f6a29493e627a8bf5ef29aa3e3d98d8c9"
+        ],
+        "semantics": {
+          "actor": "addressee",
+          "speechAct": "directive",
+          "polarity": "affirmative",
+          "tense": "future",
+          "status": "pending",
+          "validity": "active",
+          "modality": "required"
+        },
+        "inferenceLevel": "explicit",
+        "actionType": "collect",
+        "action": {
+          "scopeId": "scope-0003-4a166b98f9221b3bd5348d3acdfee3c83daf4471fa06dc70adb19c3301a19323",
+          "surface": "领取"
+        },
+        "object": {
+          "scopeId": "scope-0003-4a166b98f9221b3bd5348d3acdfee3c83daf4471fa06dc70adb19c3301a19323",
+          "surface": "投影仪"
+        },
+        "effect": "physical_action",
+        "detail": {
+          "parentTempId": null,
+          "hierarchyType": "task",
+          "title": "领取投影仪",
+          "description": "候补同学在设备室确认出现空闲投影仪时领取投影仪，领取时出示学生证。",
+          "completionCriteria": [
+            "领取投影仪",
+            "领取时出示学生证"
+          ],
+          "estimatedMinutes": null,
+          "statusSuggestion": "todo",
+          "prioritySuggestion": "medium",
+          "dependencyTempIds": [],
+          "materialTempIds": [
+            "material-student-id"
+          ],
+          "timePointTempIds": [],
+          "confidence": 0.9,
+          "userConfirmationRequired": true
+        },
+        "condition": {
+          "value": "unknown",
+          "conditionScopeIds": [
+            "scope-0002-1decf329add3e20aa6510fe2440244d0683a15c1bd7df22c136fa56122872d0c"
+          ],
+          "factScopeIds": [
+            "scope-0005-30ff7f32f74844d905746e0a61709fa1345d72a71b8215a0fbe153c82da8ad75",
+            "scope-0006-d928f3627e5d3a6becf204144d582ed9d3046b3fd3b0faa69b20ee22cb0acb8a"
+          ]
+        },
+        "coverage": {
+          "time": "not_stated",
+          "material": "present",
+          "event": "not_stated"
+        },
+        "eventTempIds": []
+      }
+    ],
+    "materials": [
+      {
+        "tempId": "material-student-id",
+        "name": "学生证",
+        "required": true,
+        "formatRequirements": [],
+        "namingRequirements": [],
+        "quantity": null,
+        "submissionChannel": null,
+        "relatedTaskTempIds": [
+          "task-pickup-projector"
+        ],
+        "scopeIds": [
+          "scope-0004-b584314092b746347cf16155307a1c9f6a29493e627a8bf5ef29aa3e3d98d8c9"
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "timePoints": [],
+    "events": [],
+    "revisions": [],
+    "conflicts": [],
+    "informationScopeIds": [
+      "scope-0001-69e9b6745d09a370718b79b92e9e531732bd62966f7655f57b77dbe098bae1bb",
+      "scope-0005-30ff7f32f74844d905746e0a61709fa1345d72a71b8215a0fbe153c82da8ad75",
+      "scope-0006-d928f3627e5d3a6becf204144d582ed9d3046b3fd3b0faa69b20ee22cb0acb8a",
+      "scope-0007-9919349a09c4b4f57e017c75fc2becd6040cd5ae0f5281fa9dda2575f4f08a8f",
+      "scope-0008-a646f45c234a96b5b718502b05734b74ae758029af716f0ce7f6c3c0cdabefcf"
+    ],
+    "unresolvedScopeIds": [],
+    "sourceId": "source:03206342",
+    "sourceVersionId": "source:03206342:version:1",
+    "sourceFingerprint": "sha256:b5964d421c1338a404820ce386c5ca24c12430bb55b762ca33c0b2110d19f492"
+  },
+  "http": 200,
+  "diagnostic": null,
+  "waitingMs": 4821,
+  "score": {
+    "scorerVersion": "real-input-seen-fact-diagnostic-2",
+    "label": "已见人工工程参考的精确诊断，不是未见或商业准确率",
+    "metrics": {
+      "task": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "requiresAction": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "time": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "material": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "event": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "condition": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 1,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "revision": {
+        "predicted": 0,
+        "reference": 0,
+        "correct": 0,
+        "falsePositive": 0,
+        "falseNegative": 0,
+        "precision": null,
+        "recall": null
+      },
+      "evidence": {
+        "predicted": 2,
+        "reference": 2,
+        "correct": 1,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.5,
+        "recall": 0.5
+      },
+      "semantic": {
+        "predicted": 1,
+        "reference": 1,
+        "correct": 0,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "coverage": {
+        "predicted": 3,
+        "reference": 3,
+        "correct": 2,
+        "falsePositive": 1,
+        "falseNegative": 1,
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666
+      }
+    },
+    "matchingAmbiguities": [],
+    "metricStatus": "EXACT_REFERENCE_DIAGNOSTIC",
+    "schemaParsed": true,
+    "issues": [],
+    "completeCase": false,
+    "majorCorrectionRequired": true,
+    "forbidden": 0,
+    "automaticSelection": "NOT_ENABLED",
+    "humanActiveEditTime": "NOT_RUN",
+    "candidateTaskCount": 1,
+    "referenceTaskCount": 1
+  },
+  "scoreError": null,
+  "totalAttempts": 67,
+  "costUpperMicroCny": 16966,
+  "totalCostUpperMicroCny": 4772375,
+  "stopDispatch": false,
+  "providerBilledCny": "NOT_OBSERVABLE",
+  "automaticSelection": "NOT_ENABLED",
+  "qualityClaim": "12新合成通知首次开发配对验证，非独立盲测；24请求不是24独立通知"
+}

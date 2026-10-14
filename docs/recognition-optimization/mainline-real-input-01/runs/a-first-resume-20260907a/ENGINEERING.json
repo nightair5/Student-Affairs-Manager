@@ -1,0 +1,74 @@
+{
+  "status": "NOT_COMPLETE",
+  "rawLogFormatting": "Two original Vitest logs have final blank lines; exact raw evidence preserved. Full staged diff --check reports these; handwritten docs-only check PASS. Not a full engineering gate.",
+  "attempts": [
+    {
+      "name": "preflight-read-only-1",
+      "status": "SCRIPT_ERROR",
+      "reason": "oldFiles is count not array; no writes; subsequent Git-baseline enumeration verified all946"
+    },
+    {
+      "name": "preflight-read-only-2",
+      "status": "PASS",
+      "protected": 946,
+      "sourcesPresent": 34,
+      "missing": 7
+    },
+    {
+      "name": "homepage-reproduction-attempt-1",
+      "passed": 7,
+      "failed": 1
+    },
+    {
+      "name": "homepage-repair-attempt-1",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "name": "send-safety-existing-attempt-1",
+      "passed": 52,
+      "failed": 0
+    },
+    {
+      "name": "new-duplicate-usage-counterexample",
+      "status": "FAIL_SAFETY_INVARIANT",
+      "normalControl": 1,
+      "counterexample": 1
+    }
+  ],
+  "fullGate": "NOT_RUN_NEW_BUDGET_STOP",
+  "browser": "NOT_RUN",
+  "old95": "prior SHA-based historical evidence; not rerun or counted as new",
+  "old42": "prior V242/42 preserved; not new wire fidelity",
+  "finalAuditChecks": {
+    "status": "PASS_SCOPE_ONLY",
+    "unchangedReadOnly": 945,
+    "explicitExceptions": [
+      "src/pages/DashboardPage.tsx"
+    ],
+    "protectedChangesOutsideAuthority": 0,
+    "sourceSnapshot": "35/35 present SHA matched;7 absent",
+    "priorEvidenceAndLogPrefixes": "MATCH",
+    "unexpectedUserChanges": 0,
+    "contextLines": 68,
+    "sensitiveDocumentMatches": 0,
+    "documentReview": "PASS_SCOPE_ONLY",
+    "logs": [
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/a-first-resume-20260907a/logs/homepage-repair-attempt-1.log",
+        "bytes": 273,
+        "sha256": "8960b4bbee9e323e95d1dac2fd0e8651910afa2836671ef44641e4ed91159554"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/a-first-resume-20260907a/logs/homepage-reproduction-attempt-1.log",
+        "bytes": 4287,
+        "sha256": "373a6e6ac598323902d7465e9d6fd8313a614da6dbf4ff3da27973312f2953fc"
+      },
+      {
+        "path": "docs/recognition-optimization/mainline-real-input-01/runs/a-first-resume-20260907a/logs/send-safety-existing-attempt-1.log",
+        "bytes": 4845,
+        "sha256": "a46937f4c127b9b39544fa02e09d14add6612e45f82a675e9772b4701b81a896"
+      }
+    ]
+  }
+}
