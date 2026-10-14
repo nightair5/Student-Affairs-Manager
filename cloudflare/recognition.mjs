@@ -44,7 +44,10 @@ function normalizeTask(value, index, evidenceIds) {
     .replace(/^(?:各位同学|同学们|请大家|大家|请|务必|记得|麻烦|需要|要求)[:：，,、\s]*/u, '')
     .replace(/(?:请知悉|谢谢配合|谢谢|一下|哦|哈|呀|啦|！|!)+$/gu, '')
     .trim()
-  const actionVerb = ACTION_VERBS.find((verb) => title.includes(verb)) || text(value.actionVerb, 20)
+  // A verb inside “提交回执” or “报名表” is part of the object.
+  const declaredVerb = text(value.actionVerb, 20)
+  const actionVerb = (declaredVerb && title.startsWith(declaredVerb) ? declaredVerb : '')
+    || ACTION_VERBS.find((verb) => title.startsWith(verb)) || declaredVerb
   if (actionVerb && !title.startsWith(actionVerb)) title = title.slice(title.indexOf(actionVerb))
   const actionObject = text(value.actionObject, 80) || (actionVerb ? title.slice(actionVerb.length).trim() : title)
   if (!title) return null
@@ -69,7 +72,7 @@ function normalizeTask(value, index, evidenceIds) {
     confidence: number01(value.confidence),
     inferenceLevel: actionVerb && actionObject && referencedEvidence.length ? inferenceLevel : 'optional_suggestion',
     userConfirmationRequired: true,
-    selected: actionVerb && actionObject && referencedEvidence.length && inferenceLevel === 'explicit',
+    selected: value.selected !== false && actionVerb && actionObject && referencedEvidence.length && inferenceLevel === 'explicit',
   }
 }
 

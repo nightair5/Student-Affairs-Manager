@@ -2,13 +2,14 @@
 // This Development diagnostic is provisional, not independent human truth or a Holdout.
 import {recognitionSystemPrompt,applyDeterministicTimeAst,normalizeRecognitionResult,RECOGNITION_PROMPT_VERSION} from '../cloudflare/recognition.mjs'
 import {validateRecognitionResult} from '../cloudflare/recognition-contract.generated.mjs'
+import {parseRecognitionJson} from '../cloudflare/recognition-json.mjs'
 import {build} from 'esbuild'
 export const EVALUATION_VERSION='product-development-facts-1.0.0'
 export const PARAMETERS={temperature:.1,maxOutputTokens:6000}
 export function buildProductRequest(s,{productContract=false}={}){return {model:'deepseek-flash',temperature:PARAMETERS.temperature,reasoning:{effort:'none'},stream:false,max_output_tokens:PARAMETERS.maxOutputTokens,input:[{role:'system',content:[{type:'input_text',text:recognitionSystemPrompt({productContract})}]},{role:'user',content:[{type:'input_text',text:`参考时间：${s.referenceTime}\n时区：${s.timezone}\n来源类型：text\n来源标题：${s.id}\n来源正文：\n${s.text}`}]}]}}
 let api
 export async function productApi(){if(!api){const r=await build({stdin:{contents:"export {bindOrdinaryProviderSupport,ordinaryWorkflowMaterialSupportFromSidecar} from './src/recognition/ordinaryProviderSupport';export {assembleCurrentFirstSuggestion} from './src/recognition/materialChannelGrounding';export {parseRecognitionResult} from './src/recognition/schema';",resolveDir:process.cwd()},bundle:true,write:false,platform:'node',format:'esm',logLevel:'silent'});api=await import('data:text/javascript;base64,'+Buffer.from(r.outputFiles[0].text).toString('base64'))}return api}
-export function modelJson(raw){const e=JSON.parse(raw);const text=e.output?.flatMap(o=>o.content??[]).filter(c=>c.type==='output_text').map(c=>c.text).join('');if(!text)throw Error('MODEL_WIRE_NO_OUTPUT');return JSON.parse(text)}
+export function modelJson(raw){const e=JSON.parse(raw);const text=e.output?.flatMap(o=>o.content??[]).filter(c=>c.type==='output_text').map(c=>c.text).join('');if(!text)throw Error('MODEL_WIRE_NO_OUTPUT');return parseRecognitionJson(text)}
 export async function productFirst(raw,s){
  const upstream=modelJson(raw),candidate=applyDeterministicTimeAst({...upstream,promptVersion:RECOGNITION_PROMPT_VERSION,modelName:'deepseek-v4-flash',createdAt:s.referenceTime},s.referenceTime,s.timezone)
  const validation=validateRecognitionResult(candidate,{sourceContent:s.text});if(!validation.valid)return {upstream,validation,result:null,failureLayer:validation.failureCategory==='schema'?'SCHEMA':'MODEL_WIRE'}

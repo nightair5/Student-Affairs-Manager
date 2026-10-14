@@ -1,4 +1,4 @@
-export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.1.0'
+export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.2.0'
 const escape=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')
 /** Closed grammatical equivalence, not a bag of words across source clauses. */
 export function supportedCoordinatedObject(value:string,action:string,quotes:string[]):boolean {
@@ -21,8 +21,8 @@ export function supportedEventDescriptor(value:string,quotes:string[]):boolean {
 /** An entity followed by an explicit operation is a closed display name.
  * Stitch only uniquely located, contiguous cited spans (including a URL split
  * at its colon), never unrelated words or different owners. */
-export function supportedEventOperation(value:string,quotes:string[],sourceText:string):boolean {
-  const title=/^(.+?)(升级维护|停机维护|升级检修)$/u.exec(value)
+export function supportedEventOperation(value:string,quotes:string[],sourceText:string,allowTimedOperationNames=false):boolean {
+  const title=/^(.+?)(升级维护|停机维护|升级检修|停机)$/u.exec(value)
   if(!title)return false
   const [,entity,operation]=title
   const spans=[...new Set(quotes)].flatMap(quote=>{
@@ -38,6 +38,12 @@ export function supportedEventOperation(value:string,quotes:string[],sourceText:
     for(const m of text.matchAll(verb)){
       const prefix=text.slice(0,m.index).split(/[，。；\n]/u).at(-1)??''
       if(/若|如果|假如|取消|不再|不会|不|勿|不得|未计划/u.test(prefix))return false
+      found=true
+    }
+    const timed=new RegExp(`${escape(entity)}((?:将|在|于|进行|\\d|年|月|日|周|星期|本|次|晚|上|午|下|早|凌晨|时|点|分|秒|到|至|[一二三四五六七八九十零〇]|[（()）:：—–\\-\\s]){0,64})${escape(operation)}(?:[，。；]|$)`,'gu')
+    for(const m of allowTimedOperationNames?text.matchAll(timed):[]){
+      const prefix=text.slice(0,m.index).split(/[，。；\n]/u).at(-1)??''
+      if(/若|如果|假如|取消|不|未|勿/u.test(prefix))return false
       found=true
     }
   }

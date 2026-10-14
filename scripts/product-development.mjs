@@ -13,6 +13,7 @@ import {assertPackageBudget} from './autonomous-package-budget.mjs'
 import {AUTHORITATIVE_LEDGER,inspectTransportResponse,safeCode} from './d26-execution-host.mjs'
 import {validateChain} from './candidate13-d6-budget.mjs'
 import {buildProductRequest,PARAMETERS,EVALUATION_VERSION,productFirst,modelJson,reviewFacts} from './product-dev-evaluation.mjs'
+import {PRODUCT_REVIEW_VERSION,PRODUCT_REVIEW_RULES} from './product-dev-review.mjs'
 export const ROOT=resolve('.data/autonomous-product-20261013'),DATASET='src/recognition/fixtures/product-dev-v1/notifications.json'
 export const sha=v=>createHash('sha256').update(v).digest('hex')
 const check=(ok,code)=>{if(!ok)throw Error('PRODUCT_DEV_'+code)},read=p=>JSON.parse(readFileSync(p)),json=v=>JSON.stringify(v,null,2)+'\n',git=a=>execFileSync('git',a,{encoding:'utf8',maxBuffer:32*1024*1024}).trim()
@@ -38,13 +39,13 @@ export async function freezeRound(round){
  const files=[...new Set([...Object.keys(graph.metafile.inputs),'scripts/real-input-model-gateway.mjs','scripts/d25-ledger-append.ps1'])].sort(),components=files.map(path=>({path,sha256:sha(readFileSync(path)),gitSha256:sha(execFileSync('git',['show',snapshot+':'+path],{maxBuffer:32*1024*1024}))}))
  for(let start=0;start<rows.length;start+=18){
   const batch=`PRODUCT-DEVELOPMENT-20261014-R${round}-B${Math.floor(start/18)+1}`,units=rows.slice(start,start+18).map((s,i)=>{
-   const body=buildProductRequest(s,{productContract:round>=2}),identity={batch,ordinal:i+1,sourceId:s.id,sourceSha256:s.sourceSha256,referenceSha256:refSha,round,requestSha256:sha(JSON.stringify(body)),model:'deepseek-flash',promptVersion:body.input[0].content[0].text.match(/promptVersion=([^，]+)/u)?.[1],referenceTime:s.referenceTime,timezone:s.timezone,evaluation:EVALUATION_VERSION}
+   const body=buildProductRequest(s,{productContract:round>=2}),identity={batch,ordinal:i+1,sourceId:s.id,sourceSha256:s.sourceSha256,referenceSha256:refSha,round,requestSha256:sha(JSON.stringify(body)),model:'deepseek-flash',promptVersion:body.input[0].content[0].text.match(/promptVersion=([^，]+)/u)?.[1],referenceTime:s.referenceTime,timezone:s.timezone,evaluation:EVALUATION_VERSION,secondaryReview:PRODUCT_REVIEW_VERSION,reviewRulesSha256:sha(JSON.stringify(PRODUCT_REVIEW_RULES))}
    return {...identity,unitIdentitySha256:sha(JSON.stringify(identity)),body,status:'NOT_RUN',dispatchAuthorized:false}
   }),identities=json({batch,units}),manifest=json({batch,count:units.length,snapshot,sourceSha256:sha(readFileSync(DATASET)),referenceSha256:refSha,components,parameters:PARAMETERS,evaluation:EVALUATION_VERSION})
   const root=join(dir,batch);mkdirSync(root);writeFileSync(join(root,'IDENTITIES.json'),identities,{flag:'wx'});writeFileSync(join(root,'MANIFEST.json'),manifest,{flag:'wx'});writeFileSync(join(root,'SOURCES.json'),json(rows.slice(start,start+18)),{flag:'wx'})
   all.push({batch,count:units.length,executionRoot:`round-${round}/${batch}`,hardLimitMicroUsd:units.length*Math.ceil(1048576*.3+8192*1.2)})
  }
- pack.batches.push(...all);writeFileSync(join(ROOT,'PACKAGE.json'),json(pack));writeFileSync(join(dir,'ROUND.json'),json({round,count:rows.length,scope:'Development',referenceStatus:'provisional / model-assisted',snapshot,batches:all,selection:'All 36 source-first fixed entries; no output-based selection',severe:['forbidden/cancelled action as executable task','invented deadline','source loss','confirmed-data overwrite'],conclusions:'Complete/partial/wrong/unknown remain whole denominator; no superiority claim from decode or persistence.'}),{flag:'wx'});return all
+ pack.batches.push(...all);writeFileSync(join(ROOT,'PACKAGE.json'),json(pack));writeFileSync(join(dir,'ROUND.json'),json({round,count:rows.length,scope:'Development',referenceStatus:'provisional / model-assisted',snapshot,batches:all,secondaryReview:PRODUCT_REVIEW_RULES,selection:'All 36 source-first fixed entries; no output-based selection',severe:['forbidden/cancelled action as executable task','invented deadline','source loss','confirmed-data overwrite'],conclusions:'Complete/partial/wrong/unknown remain whole denominator; no superiority claim from decode or persistence.'}),{flag:'wx'});return all
 }
 function verifyPacket(root){
  const manifest=read(join(root,'MANIFEST.json')),units=read(join(root,'IDENTITIES.json')).units

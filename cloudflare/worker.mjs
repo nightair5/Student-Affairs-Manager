@@ -13,6 +13,7 @@ import {
   validateRecognitionResult,
 } from './recognition-contract.generated.mjs'
 import { isValidTimeZone } from './chinese-time-ast.generated.mjs'
+import {parseRecognitionJson} from './recognition-json.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -842,7 +843,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     const content = safeText(payload?.choices?.[0]?.message?.content, 30_000)
     let parsed
     try {
-      parsed = JSON.parse(content)
+      parsed = parseRecognitionJson(content)
     } catch {
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 未返回有效的任务结构。', 502, context.requestId)
