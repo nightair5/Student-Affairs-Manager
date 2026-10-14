@@ -1,0 +1,392 @@
+[
+  {
+    "id": "R2-RES-01",
+    "scene": "材料提交",
+    "style": "长公文",
+    "text": "关于本学期实践项目结项的补充说明\n一、提交范围：已完成实践的项目组。\n二、材料要求：结项报告须为PDF，文件名使用项目编号。\n三、办理方式：请于2026年11月16日17:00前将结项报告上传至项目结项系统。以系统显示“已接收”作为提交完成标准。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "结项报告",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "material": "结项报告",
+          "channel": "项目结项系统",
+          "deadline": "2026-11-16T17:00",
+          "precision": "exact",
+          "criteria": "已接收"
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ],
+      "naming": [
+        "项目编号"
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-10",
+    "scene": "模糊待定时间",
+    "style": "未公布时间",
+    "text": "有关课程交流活动的预告：交流活动暂定周五下午，地点和结束时刻均尚未公布。本次无报名、无提交任务，请留意后续通知，但不创建“留意通知”待办。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "交流活动",
+          "startUnknown": true,
+          "endUnknown": true
+        }
+      ],
+      "information": [
+        "未公布"
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-03",
+    "scene": "材料提交",
+    "style": "表格转文字",
+    "text": "事务窗口（表格复制）\n事项 | 对象 | 办理窗口 | 地点\n领取 | 实习证明 | 2026年11月17日09:00—11:00 | 教务大厅\n补充：窗口开始不是截止；无需提前提交材料。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "实习证明",
+          "verbs": [
+            "领取"
+          ],
+          "window": "2026-11-17T09:00/11:00"
+        }
+      ],
+      "events": [],
+      "materialCount": 0
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-11",
+    "scene": "报名",
+    "style": "尾部补充",
+    "text": "创新工作坊申请事项\n申请者需要提交报名表，使用报名工作台。\n说明：入选后需要自行准备电脑，个人入选结果未知。\n最后补充：报名表截止2026年11月26日17:00，工作坊于2026年11月28日14:00—16:00在实验楼103进行。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名表",
+          "verbs": [
+            "提交"
+          ],
+          "material": "报名表",
+          "channel": "报名工作台",
+          "deadline": "2026-11-26T17:00",
+          "precision": "exact"
+        },
+        {
+          "object": "电脑",
+          "verbs": [
+            "准备"
+          ],
+          "condition": "入选",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [
+        {
+          "object": "工作坊",
+          "start": "2026-11-28T14:00",
+          "end": "2026-11-28T16:00",
+          "location": "实验楼103"
+        }
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-07",
+    "scene": "共享材料",
+    "style": "附件边界",
+    "text": "两个班的实践登记：请向一班收件箱和二班收件箱分别提交同一份实践记录表，两个提交都以2026年11月23日17:00为截止。记录表格式见未附上的群文件，不猜格式。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "实践记录表",
+          "verbs": [
+            "提交"
+          ],
+          "material": "实践记录表",
+          "channel": "一班收件箱",
+          "deadline": "2026-11-23T17:00",
+          "precision": "exact"
+        },
+        {
+          "object": "实践记录表",
+          "verbs": [
+            "提交"
+          ],
+          "material": "实践记录表",
+          "channel": "二班收件箱",
+          "deadline": "2026-11-23T17:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "实践记录表"
+      ],
+      "sharedMaterial": true
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-09",
+    "scene": "条件资格",
+    "style": "资格条款",
+    "text": "仅通过面试的同学需提交住宿确认单，个人面试结果尚未在本通知中给出。符合条件者请于2026年11月25日18:00前将住宿确认单上传住宿系统。未通过者不提交。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "住宿确认单",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "住宿确认单",
+          "channel": "住宿系统",
+          "deadline": "2026-11-25T18:00",
+          "precision": "exact",
+          "condition": "通过",
+          "unknownEligibility": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-05",
+    "scene": "修订取消",
+    "style": "前后补充",
+    "text": "原通知：议题提纲在2026年11月19日12:00前提交。\n补充通知（以此为准）：上述截止作废，改为2026年11月21日15:00前，将议题提纲上传讨论系统。其他要求不变。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "议题提纲",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "议题提纲",
+          "channel": "讨论系统",
+          "deadline": "2026-11-21T15:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "obsoleteDates": [
+        "2026-11-19"
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-12",
+    "scene": "材料提交",
+    "style": "双渠道表格",
+    "text": "提交清单\n电子版：成果摘要，PDF，2026年11月27日16:00前上传成果平台。\n纸质版：签字承诺函，2026年11月27日09:30—11:30交到学生服务窗口。\n成果平台回执不能代替纸质递交，两项独立。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "成果摘要",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "material": "成果摘要",
+          "channel": "成果平台",
+          "deadline": "2026-11-27T16:00",
+          "precision": "exact"
+        },
+        {
+          "object": "承诺函",
+          "verbs": [
+            "交",
+            "递交",
+            "提交"
+          ],
+          "material": "承诺函",
+          "channel": "学生服务窗口",
+          "window": "2026-11-27T09:30/11:30"
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-04",
+    "scene": "作业提交",
+    "style": "英文混排",
+    "text": "Course notice / 作业说明\n请提交 Research Summary（研究摘要），PDF only。截止为2026年11月20日16:30，提交到课程门户。Do not email the teacher（不要通过邮件重复提交）。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "研究摘要",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "研究摘要",
+          "channel": "课程门户",
+          "deadline": "2026-11-20T16:30",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ],
+      "forbidden": [
+        {
+          "object": "邮件",
+          "verbs": [
+            "提交",
+            "发送"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-06",
+    "scene": "会议活动",
+    "style": "多条不相关",
+    "text": "【通知甲】图书馆说明会于2026年11月22日10:00—11:00在南楼201举行，无须报名。\n【通知乙】请于2026年11月21日20:00前将英语读书笔记上传英语课程平台。两条通知彼此独立。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "英语读书笔记",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "material": "英语读书笔记",
+          "channel": "英语课程平台",
+          "deadline": "2026-11-21T20:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "说明会",
+          "start": "2026-11-22T10:00",
+          "end": "2026-11-22T11:00",
+          "location": "南楼201"
+        }
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-08",
+    "scene": "纯信息",
+    "style": "取消说明",
+    "text": "学院服务说明\n原定2026年11月24日09:00开始的志愿报名已取消，请勿报名，也无需提交申请。此次仅告知取消，不安排任何待办。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ]
+        },
+        {
+          "object": "申请",
+          "verbs": [
+            "提交"
+          ]
+        }
+      ],
+      "information": [
+        "取消"
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-02",
+    "scene": "条件资格",
+    "style": "编号条款",
+    "text": "新生实验培训安排\n1. 未完成安全培训者，须先完成安全培训。\n1.1 培训完成后才可提交实验申请。\n1.2 实验申请通过实验申请系统提交，截止为2026年11月18日18:00。\n2. 不要将“培训完成后”理解为本人已完成培训。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "安全培训",
+          "verbs": [
+            "完成"
+          ]
+        },
+        {
+          "object": "实验申请",
+          "verbs": [
+            "提交"
+          ],
+          "material": "实验申请",
+          "channel": "实验申请系统",
+          "deadline": "2026-11-18T18:00",
+          "precision": "exact",
+          "predecessor": "安全培训"
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  }
+]

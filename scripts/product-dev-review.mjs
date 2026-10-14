@@ -3,7 +3,8 @@ import {readFileSync,writeFileSync,existsSync} from 'node:fs'
 import {join,resolve} from 'node:path'
 import {pathToFileURL} from 'node:url'
 import {productFirst,modelJson,reviewFacts} from './product-dev-evaluation.mjs'
-export const PRODUCT_REVIEW_VERSION='product-development-review-2.0.0'
+import {sourceTimeSafety} from './product-dev-severity.mjs'
+export const PRODUCT_REVIEW_VERSION='product-development-review-3.0.0'
 export const PRODUCT_REVIEW_RULES={version:PRODUCT_REVIEW_VERSION,reference:'Original source-authored notifications.json unchanged',beforeOutput:'Frozen before round 3 outputs; rounds 1/2 are explicitly post-hoc diagnostics',sourceRisk:'Required entity unresolved in the common assembler cannot receive a whole complete label',forbidden:'Match the actual action object or title, never an unrelated prohibition mentioned only in task description/criteria',failureLayer:'Raw complete but first loses time => TIME_NORMALIZATION; raw complete but first loses other facts => SEMANTIC_COMPOSER',unknown:'Explicitly unpublished time/unknown eligibility can be correct; genuine source support disputes remain denominator',freeProse:'NOT_INDEPENDENTLY_ADJUDICATED'}
 const contains=(a,b)=>String(a??'').replace(/\s/gu,'').includes(b)
 export function sourceObjectSafety(r,s){
@@ -21,7 +22,7 @@ export function sourceObjectSafety(r,s){
 export function applyProductReview(base,result,s,audit,rawGrade){
  const out=structuredClone(base),oldFalseSevere=out.severe.filter(e=>e.code==='FORBIDDEN_ACTION_AS_TASK')
  out.severe=out.severe.filter(e=>e.code!=='FORBIDDEN_ACTION_AS_TASK');out.issues=out.issues.filter(i=>i.code!=='FORBIDDEN_ACTION_AS_TASK')
- const actual=sourceObjectSafety(result,s);out.severe.push(...actual);out.issues.push(...actual.map(x=>({failure_layer:'MODEL_SEMANTIC',code:x.code,detail:x})))
+ const actual=[...sourceObjectSafety(result,s),...sourceTimeSafety(result,s)];out.severe.push(...actual.filter(x=>!out.severe.some(p=>p.code===x.code&&p.time===x.time&&p.task===x.task)));out.issues.push(...actual.map(x=>({failure_layer:'MODEL_SEMANTIC',code:x.code,detail:x})))
  const unresolved=audit?.unresolved??[]
  if(actual.length)out.status='错'
  else if(out.status==='错'&&oldFalseSevere.length&&out.severe.length===0){out.status=out.issues.length?(out.matched>0?'部分':'未知'):'完整'}
