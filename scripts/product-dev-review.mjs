@@ -4,7 +4,7 @@ import {join,resolve} from 'node:path'
 import {pathToFileURL} from 'node:url'
 import {productFirst,modelJson,reviewFacts} from './product-dev-evaluation.mjs'
 import {sourceTimeSafety} from './product-dev-severity.mjs'
-export const PRODUCT_REVIEW_VERSION='product-development-review-3.0.0'
+export const PRODUCT_REVIEW_VERSION='product-development-review-4.0.0'
 export const PRODUCT_REVIEW_RULES={version:PRODUCT_REVIEW_VERSION,reference:'Original source-authored notifications.json unchanged',beforeOutput:'Frozen before round 3 outputs; rounds 1/2 are explicitly post-hoc diagnostics',sourceRisk:'Required entity unresolved in the common assembler cannot receive a whole complete label',forbidden:'Match the actual action object or title, never an unrelated prohibition mentioned only in task description/criteria',failureLayer:'Raw complete but first loses time => TIME_NORMALIZATION; raw complete but first loses other facts => SEMANTIC_COMPOSER',unknown:'Explicitly unpublished time/unknown eligibility can be correct; genuine source support disputes remain denominator',freeProse:'NOT_INDEPENDENTLY_ADJUDICATED'}
 const contains=(a,b)=>String(a??'').replace(/\s/gu,'').includes(b)
 export function sourceObjectSafety(r,s){
@@ -21,6 +21,17 @@ export function sourceObjectSafety(r,s){
 }
 export function applyProductReview(base,result,s,audit,rawGrade){
  const out=structuredClone(base),oldFalseSevere=out.severe.filter(e=>e.code==='FORBIDDEN_ACTION_AS_TASK')
+ // Explicitly unknown clock time may retain a correct, source-stated date.
+ // This is a versioned interpretation of unknown, not a guessed event start.
+ const allowed=out.issues.filter(i=>i.code==='GUESSED_UNPUBLISHED_EVENT_TIME').filter(i=>{
+  const e=(result?.events??[]).find(e=>contains([e.title,e.description].join(' '),i.detail.expected.object)),p=(result?.timePoints??[]).find(p=>p.tempId===e?.[i.detail.role==='start'?'startTimePointTempId':'endTimePointTempId'])
+  if(!p||!/^\d{4}-\d{2}-\d{2}$/u.test(p.normalizedValue??'')||p.needsConfirmation!==true||p.precision!=='vague'||!s.text.includes(p.rawText))return false
+  const [year,month,day]=p.normalizedValue.split('-').map(Number),literal=new RegExp(`(?:${year}年)?0?${month}月0?${day}日`,'u')
+  if(literal.test(p.rawText))return true
+  if(/明天|明日/u.test(p.rawText)){const date=new Intl.DateTimeFormat('sv-SE',{timeZone:s.timezone??'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(s.referenceTime));const next=new Date(date+'T12:00:00Z');next.setUTCDate(next.getUTCDate()+1);return next.toISOString().slice(0,10)===p.normalizedValue}
+  return false
+ })
+ if(allowed.length){out.issues=out.issues.filter(i=>!allowed.includes(i));out.matched+=allowed.length;out.knownDateUnknownClock=allowed.length;if(!out.issues.length&&!out.severe.length)out.status='完整'}
  out.severe=out.severe.filter(e=>e.code!=='FORBIDDEN_ACTION_AS_TASK');out.issues=out.issues.filter(i=>i.code!=='FORBIDDEN_ACTION_AS_TASK')
  const actual=[...sourceObjectSafety(result,s),...sourceTimeSafety(result,s)];out.severe.push(...actual.filter(x=>!out.severe.some(p=>p.code===x.code&&p.time===x.time&&p.task===x.task)));out.issues.push(...actual.map(x=>({failure_layer:'MODEL_SEMANTIC',code:x.code,detail:x})))
  const unresolved=audit?.unresolved??[]

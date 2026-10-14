@@ -4,7 +4,7 @@ import { groundSourceWindows } from './sourceWindowGrounding'
 import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sourceActionTime'
 import { verifyWorkflowChannelEvidence, type WorkflowMaterialSupport } from './workflowChannelSupport'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.4.1'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.4.2'
 export const WORKFLOW_MATERIAL_CHANNEL_VERSION = 'material-declared-workflow-channel-1.0.0'
 export interface MaterialChannelDecision {
   materialId: string
@@ -12,7 +12,7 @@ export interface MaterialChannelDecision {
   ownerIds: string[]
   originalValue: string
   displayedValue: string | null
-  status: 'EXPLICIT_CHANNEL' | 'EXPLICIT_WORKFLOW_CHANNEL' | 'RECEIPT_CONTEXT_UNRESOLVED' | 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
+  status: 'EXPLICIT_CHANNEL' | 'EXPLICIT_OWNER_CHANNELS' | 'EXPLICIT_WORKFLOW_CHANNEL' | 'RECEIPT_CONTEXT_UNRESOLVED' | 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
   evidence: Array<{ id: string; quote: string }>
   roleChecks: Array<{ quote: string; object: string; polarity: 'AFFIRMATIVE' | 'NEGATED_OR_UNCERTAIN'; roleText: string; polarityText: string; unrelatedQualifier: string | null }>
   workflowProof?: WorkflowMaterialSupport
@@ -49,6 +49,7 @@ function destinationRole(clause: string, object: string, channel: string, siblin
   }
   const c = escaped(label)
   const action = '(?:提交|上传|递交|发送|交付|送交|交)'
+  const statedTime='(?:(?:当日|同日|当天)|(?:(?:\\d{4}年)?\\d{1,2}月\\d{1,2}日))?(?:\\d{1,2}:[0-5]\\d)(?:[-—–]\\d{1,2}:[0-5]\\d)?(?:前)?'
   // Only a closed object/destination or a separate post-submission action can follow.
   // An object suffix ("清单照片") or destination suffix never counts as the same role.
   const end = '(?:$|[、：:（(]|(?:并|且|后)(?:保留|保存|等待|查看|核对|确认))'
@@ -62,6 +63,8 @@ function destinationRole(clause: string, object: string, channel: string, siblin
   const plainList = enumeration?.[1].replace(/[（(][^（）()]{1,40}[）)]/gu, '')
   const listed = plainList && new RegExp(`(?:^|及|和|与|、)${o}(?:$|及|和|与|、)`, 'u').test(plainList) ? enumeration : null
   const matched = [
+    new RegExp(`${o}(?:请|须|需|应)?(?:于|在)${statedTime}(?:到|至)${c}${action}${end}`,'u'),
+    new RegExp(`${o}(?:请|须|需|应)?(?:于|在)${statedTime}${action}(?:到|至|给)${c}${end}`,'u'),
     new RegExp(`${action}${o}(?:至|到|给)${c}${end}`, 'u'),
     new RegExp(`${o}(?:请|须|需|应)?${action}(?:至|到|给)${c}${end}`, 'u'),
     new RegExp(`(?:把|将)${o}${action}(?:至|到|给)${c}${end}`, 'u'),
@@ -106,6 +109,13 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     }))
     const contradictory = roleChecks.some(c => c.polarity === 'NEGATED_OR_UNCERTAIN')
     const direct = owners.length > 0 && !contradictory && roleChecks.some(c => c.polarity === 'AFFIRMATIVE')
+    const parts=originalValue.split(/[；;]/u).map(s=>s.trim()).filter(Boolean)
+    const ownerRoles=parts.length>1&&parts.length===owners.length?parts.map(part=>({part,owners:owners.filter(owner=>{
+      const own=evidence.filter(e=>owner.evidenceIds.includes(e.id)),declaredObjects=[material.name,owner.actionObject,...material.formatRequirements.filter(f=>own.some(e=>e.quote.includes(f)))]
+      const checks=citedClauses(own,sourceText).flatMap(q=>declaredObjects.flatMap(o=>{const c=destinationRole(q,o,part,siblings);return c?[c]:[]}))
+      return checks.some(c=>c.polarity==='AFFIRMATIVE')&&!checks.some(c=>c.polarity==='NEGATED_OR_UNCERTAIN')
+    }).map(t=>t.tempId)})):[]
+    const ownerSpecific=!contradictory&&ownerRoles.length===parts.length&&parts.length>1&&new Set(parts).size===parts.length&&ownerRoles.every(r=>r.owners.length===1)&&new Set(ownerRoles.flatMap(r=>r.owners)).size===owners.length
     const workflowProof = !contradictory && workflowSupport.find(p => {
       if (p.materialId !== material.tempId || p.channel !== originalValue || p.ownerTaskIds.length !== 1
         || !p.objectSurface.includes(material.name)) return false
@@ -122,9 +132,9 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     }) || undefined
     const receipt = !contradictory && clauses.some(c => c.includes(originalValue) && /显示|提示|回执|接收成功|收到成功/u.test(c))
       && owners.some(t => t.completionCriteria.some(c => c.includes(originalValue) && /显示|提示|回执|接收成功|收到成功/u.test(c) && evidence.some(e=>e.quote.includes(c))))
-    const status = direct ? 'EXPLICIT_CHANNEL' : workflowProof ? 'EXPLICIT_WORKFLOW_CHANNEL' : receipt ? 'RECEIPT_CONTEXT_UNRESOLVED' : 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
-    audit.decisions.push({ materialId: material.tempId, materialName: material.name, ownerIds: material.relatedTaskTempIds, originalValue, displayedValue: direct || workflowProof ? originalValue : null, status, evidence, roleChecks, ...(workflowProof ? { workflowProof } : {}) })
-    if (direct || workflowProof) continue
+    const status = direct ? 'EXPLICIT_CHANNEL' : ownerSpecific?'EXPLICIT_OWNER_CHANNELS': workflowProof ? 'EXPLICIT_WORKFLOW_CHANNEL' : receipt ? 'RECEIPT_CONTEXT_UNRESOLVED' : 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
+    audit.decisions.push({ materialId: material.tempId, materialName: material.name, ownerIds: material.relatedTaskTempIds, originalValue, displayedValue: direct || ownerSpecific || workflowProof ? originalValue : null, status, evidence, roleChecks, ...(workflowProof ? { workflowProof } : {}) })
+    if (direct || ownerSpecific || workflowProof) continue
     // null here means unconfirmed destination, not "the source states no channel".
     material.submissionChannel = null
     const message = receipt ? `${material.name}的提交渠道原文未明确；“${originalValue}”仅出现在办结回执中，保留推测，不作为确定渠道。`

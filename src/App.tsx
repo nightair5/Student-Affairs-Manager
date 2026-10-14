@@ -1439,6 +1439,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           <DashboardPage
             planning={!runtime && ordinaryCanonical ? <PersonalPlanPanel workspace={ordinaryCanonical} repository={canonicalWorkspaceRepository} reader={independentReader} store={ordinaryEnvironment?.store ?? ordinaryStore} onReload={refreshOrdinary}/> : undefined}
             engineeringInput={Boolean(ordinaryEnvironment)}
+            engineeringInputLabel={ordinaryEnvironment?.recognitionMetadata?.().responseRole==='RECORDED_MODEL_ENGINEERING_REPLAY'?'真实回答固定回放 · 不新增模型请求':undefined}
             realInput={runtime?.realInput}
             dateViews={dateViews}
             readOnly={Boolean(runtime)}
@@ -1606,7 +1607,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         onOpenGuide={() => runtime ? rejectExperimentAction() : setGuideOpen(true)}
       />
       <div id="main-content" className="content-shell" tabIndex={-1}>
-        {ordinaryEnvironment && <details className="ordinary-engineering-mode"><summary>匿名工程输入 · 普通产品路径 · 不发送模型请求</summary><p>{ordinaryEnvironment.label}；{ordinaryEnvironment.store.name}</p></details>}
+        {ordinaryEnvironment && <details className="ordinary-engineering-mode"><summary>{ordinaryEnvironment.recognitionMetadata?.().responseRole==='RECORDED_MODEL_ENGINEERING_REPLAY'?'真实回答固定回放 · 普通产品路径 · 不新增模型请求':'匿名工程输入 · 普通产品路径 · 不发送模型请求'}</summary><p>{ordinaryEnvironment.label}；{ordinaryEnvironment.store.name}</p></details>}
         {viewConflict && <section className="source-review-status" role="alert"><strong>另一页面已修改相同内容，你的输入保留在本页。</strong>
           {viewConflict.conflicts.map(c=><p key={c.path}>{c.path}：编辑前「{String(c.baseline)}」→最新「{String(c.current)}」；我的输入「{String(c.proposed)}」</p>)}
           <button type="button" onClick={()=>void refreshOrdinary().then(()=>{setViewConflict(null);setStorageError(false);setNotice({text:'已明确重新载入最新内容；未确认检查点仍可恢复。'})})}>采用最新内容并重新核对</button>

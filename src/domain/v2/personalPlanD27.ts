@@ -178,7 +178,7 @@ function sourceWindowBounds(w:WorkspaceV8,t:Task,zone:string):SourceBounds {
     // Both known projections use the same declaration structure. A version
     // label alone never establishes valid bounds: all pairs and citations are
     // independently checked below; future versions require explicit review.
-    if(!metadata||metadata.version!=='source-window-declarations-1.0.0'||!['task-time-authority-projection-1.0.0','task-time-authority-projection-1.0.1'].includes(String(metadata.auditVersion))
+    if(!metadata||metadata.version!=='source-window-declarations-1.0.0'||!['task-time-authority-projection-1.0.0','task-time-authority-projection-1.0.1','ordinary-cited-window-projection-1.0.0'].includes(String(metadata.auditVersion))
       ||metadata.ownerTaskId!==t.id||metadata.ownerTempId!==t.legacyData?.recognitionTempId||metadata.sourceId!==t.legacyData?.sourceId
       ||!draft||!draft.acceptedEntityTempIds.includes(String(metadata.ownerTempId))||w.recognitionRuns.find(run=>run.id===draft.recognitionRunId)?.sourceVersionId!==metadata.sourceVersionId
       ||!version||typeof version.rawText!=='string'||version.sourceId!==metadata.sourceId||!Array.isArray(metadata.windows)||!metadata.windows.length||metadata.windows.length>4)return invalid

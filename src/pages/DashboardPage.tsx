@@ -8,6 +8,7 @@ import type { Project, Task } from '../types'
 interface DashboardPageProps {
   planning?: ReactNode
   engineeringInput?: boolean
+  engineeringInputLabel?: string
   realInput?: { networkDescription: string }
   dateViews?: TaskDateViews
   readOnly?: boolean
@@ -35,6 +36,7 @@ function todayLabel(): string {
 export function DashboardPage({
   planning,
   engineeringInput,
+  engineeringInputLabel,
   dateViews, readOnly, realInput,
   tasks,
   projects,
@@ -84,7 +86,7 @@ export function DashboardPage({
           <span className="quick-capture-icon"><ClipboardPaste size={20} /></span>
           <div><strong>收到新通知？直接粘贴</strong><small>{realInput ? '先核对输入文字，再决定本次发送范围。' : '日期、事项和材料会先拆成待确认建议。'}</small></div>
           <span className={`ai-assist-status ${smartExtractionStatus}`}>
-            {engineeringInput ? '匿名工程输入 · 模型派发关闭' : realInput ? '真实输入隔离实验 · 发送前核对' : dateViews ? '人工工程响应 · 不调用模型' : smartExtractionStatus === 'connected' ? 'DeepSeek 已配置 · 调用时验证' : smartExtractionStatus === 'checking' ? '正在检查智能服务' : 'DeepSeek 未配置 · 本地规则可用'}
+            {engineeringInput ? engineeringInputLabel??'匿名工程输入 · 模型派发关闭' : realInput ? '真实输入隔离实验 · 发送前核对' : dateViews ? '人工工程响应 · 不调用模型' : smartExtractionStatus === 'connected' ? 'DeepSeek 已配置 · 调用时验证' : smartExtractionStatus === 'checking' ? '正在检查智能服务' : 'DeepSeek 未配置 · 本地规则可用'}
           </span>
         </div>
         <textarea value={quickText} onChange={(event) => setQuickText(event.target.value)} rows={3} placeholder="粘贴老师消息、群通知或网页正文……" aria-label="快速粘贴通知" />
@@ -94,7 +96,7 @@ export function DashboardPage({
             {isParsing ? (realInput ? '正在打开输入核对…' : dateViews ? '正在保存工程草稿…' : '正在智能整理…') : <><Plus size={16} />{realInput ? '先核对输入文字' : dateViews ? '生成工程建议' : '智能拆分任务'}</>}
           </button>
         </div>
-        <small className="cloud-send-disclosure">{engineeringInput ? '本入口只接受列出的匿名工程通知，不外发、不调用模型；编辑、确认和保存使用普通产品路径。' : realInput ? `此按钮只打开输入核对，不立即发送。${realInput.networkDescription} 建议须经用户确认，仅保存到隔离测试库。` : dateViews ? '只接受旧匿名工程通知，在独立本机测试库保存；不发送文字、不调用模型，也不回退本地识别。请核对后确认。' : '点击整理只发送当前粘贴文字，不附带已有项目或任务；已配置服务调用时验证，结果仅为待确认建议。服务未配置时不发送，使用本地规则。'}</small>
+        <small className="cloud-send-disclosure">{engineeringInput ? '本入口只接受当前列出的输入，回放已有建议，不新增模型请求；编辑、确认和保存使用普通产品路径。' : realInput ? `此按钮只打开输入核对，不立即发送。${realInput.networkDescription} 建议须经用户确认，仅保存到隔离测试库。` : dateViews ? '只接受旧匿名工程通知，在独立本机测试库保存；不发送文字、不调用模型，也不回退本地识别。请核对后确认。' : '点击整理只发送当前粘贴文字，不附带已有项目或任务；已配置服务调用时验证，结果仅为待确认建议。服务未配置时不发送，使用本地规则。'}</small>
       </form>
 
       {pendingReviewCount > 0 && <button className="pending-review-banner" type="button" onClick={onShowInbox}>

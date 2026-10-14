@@ -1,6 +1,6 @@
 import { addDateOnlyDays, parseChineseTimeAst, type ChineseTimeAst, type ChineseTimeAstOptions } from './timeSemantics'
 
-export const D26_TIME_VERSION = 'source-time-semantics-2.1.0'
+export const D26_TIME_VERSION = 'source-time-semantics-2.2.0'
 export interface D26TimeInterpretation {
   version: typeof D26_TIME_VERSION
   point: ChineseTimeAst
@@ -8,7 +8,7 @@ export interface D26TimeInterpretation {
   dayPeriod: string | null
   certainty: 'stated' | 'tentative' | 'unannounced' | 'partial'
   sourceContext: string
-  conversions: Array<'END_OF_DAY_24_00'>
+  conversions: Array<'END_OF_DAY_24_00'|'PARENTHESIZED_EXPLICIT_DATE'>
 }
 
 /** New common layer; the old parser and its frozen callers are left intact. */
@@ -16,6 +16,14 @@ export function interpretTimeD26(rawText: string, options: ChineseTimeAstOptions
   const context = options.sourceContext ?? rawText
   let point = parseChineseTimeAst(rawText, options)
   const conversions: D26TimeInterpretation['conversions'] = []
+  const parenthesized=/^(?:本)?(?:周|星期)([一二三四五六日天])[（(](\d{1,2}月\d{1,2}日)[）)](.*)$/u.exec(rawText)
+  if(parenthesized){
+    const literal=parenthesized[2]+parenthesized[3],parsed=parseChineseTimeAst(literal,options)
+    if(parsed.normalizedValue&&!parsed.needsConfirmation){
+      const weekday=new Intl.DateTimeFormat('zh-CN',{timeZone:options.timezone??'Asia/Shanghai',weekday:'short'}).format(new Date(parsed.normalizedValue.slice(0,10)+'T12:00:00+08:00')).at(-1)
+      if(weekday===parenthesized[1]||(weekday==='日'&&parenthesized[1]==='天')){point={...parsed,rawText,evidenceSpan:{start:0,end:rawText.length}};conversions.push('PARENTHESIZED_EXPLICIT_DATE')}
+    }
+  }
   // 24:00 denotes the end of the stated calendar day. Only a single literal
   // endpoint qualifies; malformed clocks, ranges and period-qualified clocks
   // retain the old parser's uncertainty. Never change the preserved raw quote.

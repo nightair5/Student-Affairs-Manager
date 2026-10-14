@@ -1,0 +1,10 @@
+import {describe,it,expect} from 'vitest'
+import {ordinaryWorkflowFixture} from './ordinaryProviderSupport.fixture'
+import {assembleCurrentFirstSuggestion} from './materialChannelGrounding'
+import {interpretTimeD26} from '../lib/timeSemanticsD26'
+function event(source:string,raw:string){const r=ordinaryWorkflowFixture(source);r.standaloneTasks=[];r.materials=[];r.evidence=[{id:'E',sourceId:'pending-source',quote:source,field:'event'}];r.timePoints=(['event_start','event_end'] as const).map((type,i)=>({tempId:'P'+i,type,rawText:raw,normalizedValue:null,timezone:'Asia/Shanghai',isAllDay:false,precision:'vague' as const,needsConfirmation:true,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:['E'],confidence:1}));r.events=[{tempId:'EV',title:'说明会',description:'',startTimePointTempId:'P0',endTimePointTempId:'P1',location:null,evidenceIds:['E'],confidence:1,inferenceLevel:'explicit'}];return r}
+describe('same-owner literal clocks and source day contexts',()=>{
+ it('month/day clock range retains different literal start and end',()=>{const source='说明会11月6日19:00—20:30。',r=event(source,'11月6日19:00—20:30'),f=assembleCurrentFirstSuggestion(r,{sourceText:source,referenceTime:'2026-10-14T08:00:00+08:00',timezone:'Asia/Shanghai'});expect(f.result.timePoints.map(p=>p.normalizedValue)).toEqual(['2026-11-06T19:00','2026-11-06T20:30'])})
+ it('parenthesized calendar day with consistent weekday remains stated; conflicting weekday is not silently corrected',()=>{const o={type:'event_start' as const,referenceTime:'2021-11-16T08:00:00+08:00',timezone:'Asia/Shanghai'};expect(interpretTimeD26('本周三（11月17日）晚上11点',o).point.normalizedValue).toBe('2021-11-17T23:00');expect(interpretTimeD26('本周四（11月17日）晚上11点',o).point.needsConfirmation).toBe(true)})
+ it('a wrong object or uncited range cannot reuse a separate event date',()=>{const source='说明会11月6日19:00—20:30。',r=event(source,'11月7日19:00—20:30');expect(assembleCurrentFirstSuggestion(r,{sourceText:source,referenceTime:'2026-10-14T08:00:00+08:00',timezone:'Asia/Shanghai'}).result.timePoints.every(p=>p.normalizedValue===null)).toBe(true)})
+})

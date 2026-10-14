@@ -118,6 +118,13 @@ export function buildSourceReviewPlan(workspace: WorkspaceV8, view: DraftView, i
       ownerTaskId:task.id,ownerTempId:String(ownerTempId),sourceId:source.id,sourceVersionId:version.id,draftId:draft.id,windows:mapped}}
   }
   const assembly=draft.legacyData?.firstSuggestionAssembly
+  const citedWindows=assembly&&typeof assembly==='object'&&!Array.isArray(assembly)&&assembly.citedSourceWindows&&typeof assembly.citedSourceWindows==='object'&&!Array.isArray(assembly.citedSourceWindows)?assembly.citedSourceWindows:null
+  if(citedWindows?.version==='ordinary-cited-window-projection-1.0.0'&&Array.isArray(citedWindows.decisions))for(const task of plan.create.tasks){
+    const rows=citedWindows.decisions.filter(row=>row&&typeof row==='object'&&!Array.isArray(row)&&row.ownerTempId===task.legacyData?.recognitionTempId)
+    if(!rows.length||rows.some(row=>!row||typeof row!=='object'||Array.isArray(row)))continue
+    const mapped=rows.flatMap(row=>{if(!row||typeof row!=='object'||Array.isArray(row))return [];const a=plan.create.timePoints.find(p=>p.legacyData?.recognitionTempId===row.startPointId),b=plan.create.timePoints.find(p=>p.legacyData?.recognitionTempId===row.endPointId);if(!a||!b||!Array.isArray(row.evidenceIds))return [];a.legacyData={...a.legacyData,sourceTimeRole:'window_start'};b.legacyData={...b.legacyData,sourceTimeRole:'window_end'};return [{windowId:String(row.startPointId),state:'RESOLVED_DISCRETE',rawText:row.rawText,scopeIds:row.evidenceIds.map(id=>'recognition-evidence:'+String(id)),pointIds:[a.id,b.id],intervals:[{intervalId:String(row.startPointId)+'-pair',date:row.date,start:row.start,end:row.end,precision:'exact',sessionIndex:0,startPointId:a.id,endPointId:b.id}]}]})
+    task.legacyData={...task.legacyData,sourceWindowDeclarations:{version:'source-window-declarations-1.0.0',auditVersion:citedWindows.version,ownerTaskId:task.id,ownerTempId:String(task.legacyData?.recognitionTempId),sourceId:source.id,sourceVersionId:version.id,draftId:draft.id,windows:mapped}}
+  }
   const appointments=assembly&&typeof assembly==='object'&&!Array.isArray(assembly)&&assembly.sourceActionTimes&&typeof assembly.sourceActionTimes==='object'&&!Array.isArray(assembly.sourceActionTimes)&&Array.isArray(assembly.sourceActionTimes.decisions)?assembly.sourceActionTimes.decisions:[]
   for(const p of plan.create.timePoints){const row=appointments.find(v=>v&&typeof v==='object'&&!Array.isArray(v)&&v.id===p.legacyData?.recognitionTempId);if(row&&typeof row==='object'&&!Array.isArray(row)&&row.role==='task_action_time'&&p.type==='event_start')p.legacyData={...p.legacyData,sourceTimeRole:'task_action_time',sourceActionTimeAudit:row}}
   for(const material of plan.create.materials){
