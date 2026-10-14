@@ -80,7 +80,9 @@ npx vitest run src/domain/v2/migration.test.ts src/domain/v2/runtimeMigration.te
 7. 先下载指定迁移备份，再执行二次确认恢复。
 8. 恢复后再次刷新，确认 v8 可读且无重复实体。
 
-当前状态：`NOT RUN`。现已能唯一确认权威 Preview 与持久化 Edge 工作区，并已从受测仓库夹具冻结匿名 v7 输入 `C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-v7-migration-fixture.json`（4,044 bytes；1 Source / 1 Task / 1 Project / 1 Material / 1 Event；SHA-256 `0F2DE94687AEF985AAA349AA39FAF9ED3E121273B4FCA45B6773BB2596FE045F`；无 Secret-like 字段或 base64 文件本体）。但公开 UI 的 JSON Import 只接受 Workspace v8，无法用它把 v7 写成当前记录；浏览器运行时又不暴露可审计的 IndexedDB 注入能力。完整演练还包含清空并重写匿名 QA 工作区，需动作时明确确认并使用受支持的同源迁移夹具入口。不得用单元测试、现有 v8 导出或 IAB 的无 IndexedDB 页面替代该浏览器演练。
+当前状态：`PASS`。2026-08-30 在 RC.4 Preview 的全新隔离 Edge 152.0.4191.53 context 中，先通过真实 UI 下载 32,874-byte schema v8 JSON，应用内双确认清空后导入；canonical 在导入后与刷新后均逐值一致，非法 JSON 导入也未改变当前 Workspace。随后将匿名 v7 夹具 `C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-v7-migration-fixture.json`（4,044 bytes；1 Source / 1 Task / 1 Project / 1 Material / 1 Event；SHA-256 `0F2DE94687AEF985AAA349AA39FAF9ED3E121273B4FCA45B6773BB2596FE045F`）写入同源测试 context 的当前记录，真实运行时迁移到 v8；`backup:v7_to_v8_canonical_domain_001:fnv1a32:8791e514` 的下载内容与原 v7 snapshot 逐值一致。故意制造 dangling Project 引用后，应用进入只读恢复面板；“先导出指定备份 → 准备恢复 → 确认从备份恢复 → 再次刷新”完整通过，损坏值未保留。全程使用匿名数据，付费模型调用为 0。
+
+RC.4 证据文件：`C:\Users\Winner\AppData\Local\Temp\student-affairs-r9\r9-j-rc4-workspace-export.json`、`r9-j-rc4-v7-migration-backup.json`、`r9-j-rc4-v7-recovery-backup.json` 与 `r9-j-rc4-recovered.png`。公开 JSON Import 仍只接受 v8；v7 注入仅是隔离同源工程演练入口，不是面向用户的新导入承诺。
 
 ## 5. 部署级回滚
 
@@ -99,7 +101,7 @@ Preview 出现 P0/P1 时：
 4. 对受影响浏览器先导出当前 JSON 和迁移备份，再验证回退版本能否读取。
 5. 修复必须独立提交、完整重跑工程门禁和受影响浏览器场景，再生成新的 RC。
 
-Production 默认不在本任务部署。若未来获得独立明确批准，回滚锚点仍为带注释标签 `v1-production-baseline` 和精确提交 `7a0af21e881dd97ee5c2247e0666a033ff53ae7e`；不得移动该标签。
+用户已于 2026-08-31 独立明确批准提前部署 Production 并接受稳定期重新计时。当前 Production 为 Deployment `b353533d-53d1-4f4f-a9eb-d62cdc028051` / Version `d245a1dc-73a7-42fe-a088-ae0b0ddc3678`；旧 Deployment `bc1719b0-2fcf-4f26-b8d1-fc3261588300` / Version `3b6d6ba2-e21f-495c-80e4-c4bac62366be` 与带注释标签 `v1-production-baseline` / 精确提交 `7a0af21e881dd97ee5c2247e0666a033ff53ae7e` 保留为回滚锚点，不得移动标签。
 
 ## 6. 当前证据状态
 
@@ -110,8 +112,9 @@ Production 默认不在本任务部署。若未来获得独立明确批准，回
 | Workspace v8 semantic round-trip | PASS |
 | repository import/export 与 recovery facade | PASS |
 | UTC 与 Asia/Shanghai 完整测试 | PASS |
-| Preview 浏览器迁移演练 | NOT RUN |
-| Cloudflare Preview Version 回退演练 | NOT RUN |
-| Production 回滚 | NOT AUTHORIZED / NOT RUN |
+| Preview 浏览器迁移演练 | PASS；RC.4 隔离 Edge，v7→v8、备份、故障与二次确认恢复均通过 |
+| Cloudflare Preview Version 回退演练 | PASS；RC.4 `1d6dc48e…` → RC.3 `e6da1443…` → RC.4，首页/status 均 200；最终 Deployment `8bad8cc4…` |
+| Production RC.4 部署 | PASS；首页/status/六条实验路径与本地制品身份初检通过 |
+| Production 回滚 | READY / NOT RUN；旧 Deployment、Version 与 Git tag 已精确记录，未实际切换流量 |
 
-只有 Preview 浏览器迁移演练与 Version 回退演练也通过后，最终报告才可以写 `Rollback rehearsal PASS`。
+Preview 浏览器迁移与 Version 回退两项均已由 RC.4 真实证据关闭，因此当前可判定 `Rollback rehearsal PASS`。Production 已部署且旧锚点可定位，但 Production 实际回滚仍为 `NOT RUN`；不得用 Preview 演练冒充 Production 回滚。
