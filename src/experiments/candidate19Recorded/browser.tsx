@@ -37,7 +37,8 @@ import { SOURCE_WINDOW_GROUNDING_VERSION } from '../../recognition/sourceWindowG
 import {FACT_ROLE_VERSION,FACT_ROLE_PROMPT,FACT_ROLE_CANDIDATE,decodeFactRoleRecording} from '../../recognition/factRoleContract'
 import { CURRENT_FACT_ROLE_PRODUCT_VERSION, decodeCurrentFactRoleRecording } from '../../recognition/currentFactRoleProduct'
 import { TASK_TIME_AUTHORITY_VERSION, TASK_TIME_AUTHORITY_PROMPT, TASK_TIME_AUTHORITY_CANDIDATE, TASK_TIME_AUTHORITY_PROJECTION, decodeTaskTimeAuthorityRecording } from '../../recognition/taskTimeAuthorityContract'
-import { ORDINARY_PROVIDER_SUPPORT_VERSION } from '../../recognition/ordinaryProviderSupport'
+import { ORDINARY_PROVIDER_SUPPORT_VERSION, bindOrdinaryProviderSupport } from '../../recognition/ordinaryProviderSupport'
+import {parseRecognitionResult} from '../../recognition/schema'
 import { ProxyDeepSeekExtractionService } from '../../lib/deepseekExtraction'
 import { SOURCE_ACTION_TIME_VERSION } from '../../recognition/sourceActionTime'
 import { COMPOUND_NAME_SUPPORT_VERSION } from '../../recognition/compoundNameSupport'
@@ -55,7 +56,7 @@ import '../d26/diagnostics.css'
 declare const __C19_RECORDED_CONFIG__: { database: string; build: string; origin: string; explicitContract?: boolean; currentSupportProjection?: boolean; fixtureCount?: number; batchLabel?: string; initialOrdinal?: number }
 const config = __C19_RECORDED_CONFIG__
 if (location.origin !== config.origin || !/^rco-mainline-01-02-i1-d27-plan-recorded-[a-z0-9-]+$/.test(config.database)) throw Error('RECORDED_ISOLATION_REQUIRED')
-interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18' | 'Candidate19' | 'SingleAuthority' | 'ObligationAuthority' | 'RoleAuthority' | 'TaskRequirements' | 'FactRoleAuthority' | 'TaskTimeAuthority' | 'EngineeringFixture'; generationContract?:string;sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string | null; frozenOutcome: string }
+interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18' | 'Candidate19' | 'SingleAuthority' | 'ObligationAuthority' | 'RoleAuthority' | 'TaskRequirements' | 'FactRoleAuthority' | 'TaskTimeAuthority' | 'EngineeringFixture' | 'ProductRecognition'; generationContract?:string; promptVersion?:string;serverNormalizedResult?:unknown;sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string | null; frozenOutcome: string }
 const recordings: Recording[] = await fetch('/recordings.json').then(r => { if (!r.ok) throw Error('RECORDINGS_UNAVAILABLE'); return r.json() })
 let selected = recordings.findIndex(r => r.ordinal === (config.initialOrdinal ?? 2)), failCommit = false, failRead = false, failCheckpoint = false
 if (selected < 0) throw Error('RECORDED_INITIAL_SOURCE_REQUIRED')
@@ -74,6 +75,7 @@ const baseContractVersion = TASK_REQUIREMENTS_PROJECTION_VERSION + ' / ' + ROLE_
 const contractVersion = baseContractVersion + ' / ' + FACT_ROLE_VERSION + ' / ' + SOURCE_ACTION_TIME_VERSION + ' / ' + COMPOUND_NAME_SUPPORT_VERSION + (config.currentSupportProjection ? ' / ' + CURRENT_FACT_ROLE_PRODUCT_VERSION : '') + (recordings.some(r=>r.generationContract===TASK_TIME_AUTHORITY_VERSION) ? ' / ' + TASK_TIME_AUTHORITY_PROJECTION : '') + (recordings.some(r=>r.generationContract==='ordinary-proxy-boundary-engineering-1') ? ' / ' + ORDINARY_PROVIDER_SUPPORT_VERSION : '')
 const recordingMetadata = () => {
   const r = recordings[selected], engineering = r.candidate === 'EngineeringFixture'
+  if(r.candidate==='ProductRecognition')return {modelName:'deepseek-flash 固定真实录制（非实时）',promptVersion:r.promptVersion??'PRODUCT_RECORDING_VERSION_MISSING',candidateVersion:'ordinary-product-generation-contract',build:config.build,responseRole:'RECORDED_MODEL_ENGINEERING_REPLAY'}
   return { modelName: engineering ? '匿名契约工程夹具（非模型输出）' : `${r.candidate} 固定录制`,
     promptVersion: r.generationContract===TASK_TIME_AUTHORITY_VERSION?TASK_TIME_AUTHORITY_PROMPT:r.generationContract===FACT_ROLE_VERSION?FACT_ROLE_PROMPT:r.generationContract===TASK_REQUIREMENTS_VERSION?TASK_REQUIREMENTS_PROMPT:r.generationContract===ROLE_AUTHORITY_VERSION?ROLE_PROMPT_VERSION:r.generationContract===OBLIGATION_AUTHORITY_VERSION?OBLIGATION_PROMPT_VERSION:r.generationContract===SINGLE_AUTHORITY_VERSION?SINGLE_AUTHORITY_PROMPT_VERSION:engineering ? 'ENGINEERING_FIXTURE_NOT_GENERATED' : r.candidate === 'Candidate17' ? CANDIDATE17_PROMPT_VERSION : r.candidate === 'Candidate18' ? CANDIDATE18_PROMPT_VERSION : CANDIDATE19_PROMPT_VERSION,
     candidateVersion:r.generationContract===TASK_TIME_AUTHORITY_VERSION?TASK_TIME_AUTHORITY_CANDIDATE:r.generationContract===FACT_ROLE_VERSION?FACT_ROLE_CANDIDATE:r.generationContract===TASK_REQUIREMENTS_VERSION?TASK_REQUIREMENTS_CANDIDATE:r.generationContract===ROLE_AUTHORITY_VERSION?ROLE_CANDIDATE_VERSION:r.generationContract===OBLIGATION_AUTHORITY_VERSION?OBLIGATION_CANDIDATE_VERSION:r.generationContract===SINGLE_AUTHORITY_VERSION?SINGLE_AUTHORITY_CANDIDATE_VERSION: engineering ? 'ENGINEERING_FIXTURE_NOT_CANDIDATE' : r.candidate === 'Candidate17' ? CANDIDATE17_VERSION : r.candidate === 'Candidate18' ? CANDIDATE18_VERSION : CANDIDATE19_VERSION,
@@ -89,6 +91,12 @@ const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new Ind
     const provenance = { role: record.candidate === 'EngineeringFixture' ? 'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT' : 'RECORDED_MODEL_ENGINEERING_REPLAY', ...record, projectionVersion: contractVersion }
     await canonical.transaction(w => ({ ...w, recognitionRuns: w.recognitionRuns.map(r => r.sourceVersionId === input.sourceVersionId ? { ...r, modelName: recordingMetadata().modelName, legacyData: { ...r.legacyData, recordedResponse: JSON.parse(JSON.stringify(provenance)) as JsonValue } } : r) }))
     try {
+      if(record.candidate==='ProductRecognition'){
+        if(record.serverNormalizedResult===null||record.serverNormalizedResult===undefined)throw Error('本份原回答未通过服务端契约；保留原答和来源，不猜补事实。')
+        const bound=bindOrdinaryProviderSupport(parseRecognitionResult(record.serverNormalizedResult),{sourceId:input.sourceId,sourceVersionId:input.sourceVersionId,sourceText:input.content,referenceTime:record.referenceTime,timezone:record.timezone},JSON.stringify({result:record.serverNormalizedResult}))
+        sidecars.set(input.sourceId,{...bound.sidecar,recordedProvenance:provenance})
+        return bound.result
+      }
       if(record.generationContract==='ordinary-proxy-boundary-engineering-1'){
         const proxy=new ProxyDeepSeekExtractionService('/engineering-proxy')
         const result=await proxy.recognize({...input,now:new Date(record.referenceTime)},{projects:[],tasks:[]})
