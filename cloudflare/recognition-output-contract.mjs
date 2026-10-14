@@ -1,0 +1,25 @@
+// Executable generation contract. Persistence remains RecognitionResult 2.0 / Workspace v8.
+// The model receives the same closed field names and enums checked by the product.
+export const PRODUCT_CONTRACT_PROMPT_VERSION='recognition-product-contract-1.0.0'
+const string={type:'string'},nullable={type:['string','null']},boolean={type:'boolean'},number={type:'number'},confidence={type:'number',minimum:0,maximum:1}
+const array=items=>({type:'array',items}),strings=array(string),enumeration=(...values)=>({type:'string',enum:values})
+const object=properties=>({type:'object',additionalProperties:false,required:Object.keys(properties),properties})
+const inference=enumeration('explicit','strong_inference','optional_suggestion')
+const field=object({value:string,evidenceIds:strings,confidence,inferenceLevel:inference})
+const task=object({tempId:string,parentTempId:nullable,hierarchyType:enumeration('task','subtask'),title:string,actionVerb:string,actionObject:string,description:string,completionCriteria:strings,estimatedMinutes:{type:['number','null'],minimum:5,maximum:10080},statusSuggestion:{const:'todo'},prioritySuggestion:enumeration('low','medium','high','urgent'),dependencyTempIds:strings,materialTempIds:strings,timePointTempIds:strings,evidenceIds:strings,confidence,inferenceLevel:inference,userConfirmationRequired:{const:true},selected:boolean})
+const material=object({tempId:string,name:string,required:boolean,formatRequirements:strings,namingRequirements:strings,quantity:{type:['number','null']},submissionChannel:nullable,relatedTaskTempIds:strings,evidenceIds:strings,confidence,selected:boolean})
+const time=object({tempId:string,type:enumeration('registration_deadline','submission_deadline','task_deadline','event_start','event_end','result_announcement','planned_start'),rawText:string,normalizedValue:nullable,timezone:string,isAllDay:boolean,precision:enumeration('exact','date_only','relative','vague'),needsConfirmation:boolean,relatedTaskTempIds:strings,relatedMaterialTempIds:strings,evidenceIds:strings,confidence,selected:boolean})
+const event=object({tempId:string,title:string,description:string,startTimePointTempId:nullable,endTimePointTempId:nullable,location:nullable,relatedTaskTempIds:strings,evidenceIds:strings,confidence,inferenceLevel:inference,selected:boolean})
+const work=object({tempId:string,title:string,objective:string,order:number,evidenceIds:strings,tasks:array(task)})
+export const recognitionOutputSchema=object({
+ schemaVersion:{const:'2.0'},promptVersion:{const:PRODUCT_CONTRACT_PROMPT_VERSION},modelName:{const:'deepseek-v4-flash'},createdAt:string,
+ sourceSummary:object({title:string,sourceType:{const:'text'},notificationType:enumeration('new_project','project_addendum','project_correction','course_assignment','teacher_task','event_notice','meeting_notice','material_submission','registration_notice','result_notice','information_only','uncertain'),summary:string,requiresAction:boolean,actionReason:string}),
+ projectMatch:object({decision:enumeration('new_project','existing_project','standalone_task','uncertain'),matchedProjectId:nullable,suggestedProjectTitle:nullable,confidence,reasons:strings}),
+ projectSuggestion:{anyOf:[{type:'null'},object({title:field,category:{...field,properties:{...field.properties,value:enumeration('比赛','保研','课程','老师任务','其他')}},objective:field,description:field})]},
+ milestones:array(object({tempId:string,title:string,objective:string,order:number,evidenceIds:strings,workPackages:array(work),tasks:array(task)})),standaloneTasks:array(task),materials:array(material),timePoints:array(time),events:array(event),
+ evidence:array(object({id:string,sourceId:{const:'pending-source'},quote:string,field:enumeration('title','deadline','materials','description','project','milestone','event','requirement'),extractionMethod:{const:'ai'},confidence})),
+ conflicts:array(object({id:string,type:enumeration('deadline','project_match','duplicate','hierarchy','other'),message:string,entityTempIds:strings,evidenceIds:strings,requiresDecision:boolean})),
+ ambiguities:array(object({id:string,field:string,message:string,options:strings,evidenceIds:strings})),ignoredContent:array(object({text:string,reason:enumeration('background','contact','address','policy','format_requirement','other')})),
+ quality:object({overallConfidence:confidence,hierarchyConfidence:confidence,dateConfidence:confidence,evidenceCoverage:confidence,duplicateRisk:confidence,overFragmentationRisk:confidence,missingActionRisk:confidence,needsHumanReview:boolean,reviewReasons:strings})
+})
+export function productGenerationContract(){return `\n这是完整输出契约，字段名、类型、枚举与产品校验一致。数组即使为空也返回 []，nullable 未说明字段返回 null，不写字符串“未知”。不得添加未定义字段，completionCriteria 必须为字符串数组。evidence.field 使用枚举，不能写字段路径。任务 hierarchyType 只为 task/subtask，时间 type 不存在 deadline 泛称，precision 不存在 minute。createdAt 使用请求参考时间。\n${JSON.stringify(recognitionOutputSchema)}\n实体ID必须唯一。材料 relatedTaskTempIds 与任务 materialTempIds、时间 relatedTaskTempIds 与任务 timePointTempIds 对应实际同对象引用，事件起止引用真实时间ID。禁止根据材料名称、截止或背景额外制造任务；原文已经取消/明确不适用的动作保留说明，不作为新可执行任务。资格未知保留条件原文和未确认状态；前置未完成保留实际义务与前置关系，不写已完成。仅回执提到平台不能当作明确渠道。所有值和引用仍需要真实原文支持；契约合规不等于语义正确。`}
