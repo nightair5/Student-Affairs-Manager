@@ -15,6 +15,12 @@ async function setup(kind:'no-date'|'multi'|'information',text=notices[kind]){
   return {store,repo,capture,handle,viewRepo,view,draft:view.drafts[0]}
 }
 describe('D26 ordinary source review through real capture/repository/DomainCommitPlan',()=>{
+  it('a direct per-item acceptance expresses intent without changing the original optional suggestion',async()=>{
+    const x=await setup('no-date');x.draft.items[0].selected=false;const original=structuredClone(x.draft.recognitionResult)
+    const plan=buildSourceReviewPlan((await x.repo.load())!,x.draft,x.draft.items[0].id)
+    expect(plan.create.tasks).toHaveLength(1);expect(x.draft.items[0].selected).toBe(false);expect(x.draft.recognitionResult).toEqual(original)
+    const receipt=await commitSourceReview(x.repo,plan);expect((await verifySourceReviewReadback(new CanonicalWorkspaceRepository(x.store),receipt)).tasks).toHaveLength(1)
+  })
   it('accepts a genuine no-deadline obligation without inventing a time or project',async()=>{
     const x=await setup('no-date'),plan=buildSourceReviewPlan((await x.repo.load())!,x.draft)
     expect(plan.create.tasks).toHaveLength(1);expect(plan.create.timePoints).toHaveLength(0)
