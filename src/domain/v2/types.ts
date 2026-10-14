@@ -6,7 +6,7 @@ export type LegacyData = Record<string, JsonValue>
 
 export type EntityStatus = 'active' | 'completed' | 'archived'
 export type TaskStatus = 'todo' | 'in_progress' | 'completed' | 'cancelled'
-export type MaterialStatus = 'missing' | 'preparing' | 'ready' | 'submitted' | 'verified' | 'not_required'
+export type MaterialStatus = import('../../lib/materialStatusCompatibility').CompatibleMaterialStatus
 export type TaskCategory = '比赛' | '保研' | '课程' | '老师任务' | '其他'
 export type TimePrecision = 'exact' | 'date_only' | 'relative' | 'vague'
 export type TimePointType =

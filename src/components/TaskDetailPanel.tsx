@@ -383,6 +383,7 @@ export function TaskDetailPanel({
                           event.target.value as MaterialStatus,
                         )}
                       >
+                        {!materialStatusOptions.some(option=>option.value===material.status)&&material.status&&<option value={material.status} disabled>未知（原状态已保留）</option>}
                         {materialStatusOptions.map((option) => (
                           <option key={option.value} value={option.value}>{option.label}</option>
                         ))}

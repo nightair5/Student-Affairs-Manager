@@ -1,4 +1,5 @@
 import { isRecognitionResult } from '../../../recognition/schema'
+import {isCompatibleMaterialStatus} from '../../../lib/materialStatusCompatibility'
 import type { ValidationIssue } from './issues'
 
 type UnknownRecord = Record<string, unknown>
@@ -427,7 +428,7 @@ function validateMaterial(value: UnknownRecord, path: string, issues: Validation
   nullableStringField(value, 'projectId', path, issues)
   stringField(value, 'name', path, issues)
   booleanField(value, 'required', path, issues)
-  enumField(value, 'status', new Set(['missing', 'preparing', 'ready', 'submitted', 'verified', 'not_required']), path, issues)
+  if(!isCompatibleMaterialStatus(value.status)) issue(issues,'INVALID_ENUM',`${path}.status`,'材料状态必须是有界的状态名称')
   stringArrayField(value, 'requirements', path, issues)
   stringArrayField(value, 'formatRequirements', path, issues)
   stringArrayField(value, 'namingRequirements', path, issues)

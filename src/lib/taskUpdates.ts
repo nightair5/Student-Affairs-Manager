@@ -53,7 +53,7 @@ function displayValue(
       not_required: '不需要',
     } as const
     return materials
-      .map((item) => `${statusLabels[materialStatusFromLegacy(item.done, item.status)]}：${item.name}`)
+      .map((item) => `${statusLabels[materialStatusFromLegacy(item.done, item.status) as keyof typeof statusLabels]??'未知（原状态已保留）'}：${item.name}`)
       .join('；')
   }
 

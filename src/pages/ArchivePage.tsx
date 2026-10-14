@@ -50,7 +50,7 @@ function ProjectCard({ project, tasks, workPackages, events, materials, onAddMil
     .map((material) => [material.id, material])).values()]
   const materialCount = canonicalMaterialSummary?.total ?? projectedMaterials.length
   const missingMaterialCount = canonicalMaterialSummary?.missing
-    ?? projectedMaterials.filter((material) => !material.done && (!material.status || material.status === 'missing' || material.status === 'preparing')).length
+    ?? projectedMaterials.filter((material) => !material.done && !['ready','submitted','verified','not_required'].includes(material.status??'missing')).length
   const latestUpdatedAt = [
     project.updatedAt,
     ...projectTasks.map((task) => task.updatedAt),
