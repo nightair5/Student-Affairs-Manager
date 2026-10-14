@@ -7,6 +7,8 @@ const digest=v=>createHash('sha256').update(v).digest('hex')
 const check=(ok,code)=>{if(!ok)throw Error('D26_EXEC_'+code)}
 export function createScopedEngine(scope,{diagnostics}={}){
 check(scope&&/^[A-Z0-9-]+$/.test(scope.batch)&&Number.isInteger(scope.count)&&scope.count>0&&scope.count<=24,'SCOPED_BATCH')
+const parameters=scope.parameters??{temperature:0,maxOutputTokens:MAX_OUTPUT_TOKENS}
+check(Number.isFinite(parameters.temperature)&&parameters.temperature>=0&&parameters.temperature<=2&&Number.isSafeInteger(parameters.maxOutputTokens)&&parameters.maxOutputTokens>0&&parameters.maxOutputTokens<=MAX_OUTPUT_TOKENS,'SCOPED_PARAMETERS')
 function newState(units, binding) {
   return { version: 'scoped-execution-state-2', batch: scope.batch, model: 'deepseek-flash', ...binding, authorized: false,
     units: units.map(unit => ({ ordinal: unit.ordinal, unitIdentitySha256: unit.unitIdentitySha256, requestSha256: unit.requestSha256, status: 'NOT_SENT' })) }
@@ -37,7 +39,7 @@ async function runOne({ state, auth, units, binding, ledger, transport, persist,
     const stop=async error=>{try{await diagnostics?.record({ordinal,unitIdentitySha256:unit.unitIdentitySha256,requestSha256:unit.requestSha256,
       phase:'STOP_UNCERTAIN',failedPhase:phase,code:classifyPhaseError(error)})}catch{/* Preserve the original safety stop even when observation fails. */}}
     check(digest(JSON.stringify(unit.body)) === unit.requestSha256 && unit.body.model === 'deepseek-flash'
-      && unit.body.temperature === 0 && unit.body.reasoning?.effort === 'none' && unit.body.max_output_tokens === MAX_OUTPUT_TOKENS
+      && unit.body.temperature === parameters.temperature && unit.body.reasoning?.effort === 'none' && unit.body.max_output_tokens === parameters.maxOutputTokens
       && unit.body.stream === false, 'REQUEST_OR_PARAMETERS_DRIFT')
     check(ledger && transport && persist && rawStore && typeof preflight === 'function', 'ADAPTER_REQUIRED')
     await preflight({ state, auth, unit, ordinal })
