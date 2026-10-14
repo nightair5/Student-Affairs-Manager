@@ -502,9 +502,9 @@ export function TaskDetailPanel({
               </label>
             )}
             <div className="phone-export-card">
-              <div><strong>手机日历与待办</strong><small>生成标准 ICS，由你在手机系统中确认导入；网页不会静默修改原生闹钟。</small></div>
+              <div><strong>手机日历与待办</strong><small>生成标准 ICS，由你在手机系统中确认导入；网页不会静默修改原生闹钟。{task.plannedStart ? '个人安排按已保存时长导出，原截止另列；只附你已设置的提醒。' : ''}</small></div>
               <div className="phone-export-actions">
-                <button className="secondary-button" type="button" onClick={() => void exportToPhone('calendar')}><CalendarPlus size={16} />日历提醒</button>
+                <button className="secondary-button" type="button" onClick={() => void exportToPhone('calendar')}><CalendarPlus size={16} />{task.plannedStart ? '导出个人安排' : '日历提醒'}</button>
                 <button className="secondary-button" type="button" onClick={() => void exportToPhone('todo')}><ListTodo size={16} />手机待办</button>
               </div>
               {calendarFeedback && <p role="status">{calendarFeedback}</p>}
