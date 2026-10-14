@@ -4,7 +4,15 @@ import {readFileSync} from 'node:fs'
 import {createHash} from 'node:crypto'
 import {createScopedEngine} from './scoped-execution-core.mjs'
 import {workerRequest} from './mature-product.mjs'
+import {PRODUCT_CONTRACT_PROMPT_VERSION,productGenerationContract,productGenerationSchema} from '../cloudflare/recognition-output-contract.mjs'
+import {productGenerationContract as stableContract,recognitionOutputSchema as stableSchema} from '../cloudflare/recognition-product-contract-v1-1.mjs'
+import {productGenerationContract as selectedContract,recognitionOutputSchema as selectedSchema} from '../cloudflare/recognition-product-contract-v1-2.mjs'
 const sha=b=>createHash('sha256').update(b).digest('hex')
+test('selected product generation uses v1.2 while explicit prior contract remains byte-equivalent',()=>{
+ assert.equal(PRODUCT_CONTRACT_PROMPT_VERSION,'recognition-product-contract-1.2.0');assert.equal(productGenerationContract(),selectedContract());assert.equal(productGenerationSchema(),selectedSchema);
+ assert.equal(productGenerationContract('recognition-product-contract-1.1.0'),stableContract());assert.equal(productGenerationSchema('recognition-product-contract-1.1.0'),stableSchema);
+ assert.throws(()=>productGenerationContract('unknown'),/UNSUPPORTED/)
+})
 test('48 development and 12 reserved retain all original36 and disjoint seeded source-first references',()=>{
  const root='src/recognition/fixtures/',old=JSON.parse(readFileSync(root+'product-dev-v1/notifications.json')),dev=JSON.parse(readFileSync(root+'product-dev-v2/notifications.json')),reserved=JSON.parse(readFileSync(root+'product-dev-v2/reserved/notifications.json')),m=JSON.parse(readFileSync(root+'product-dev-v2/MANIFEST.json'));
  assert.equal(dev.length,48);assert.equal(reserved.length,12);assert.equal(m.seed,20261014);assert.equal(sha(readFileSync(root+'product-dev-v1/notifications.json')),m.originalBytesSha256);
