@@ -119,14 +119,22 @@ export function buildTodoIcs(tasks: Task[], generatedAt = new Date(), options: C
 export async function shareOrDownloadIcs(fileName: string, content: string): Promise<'shared' | 'downloaded'> {
   const file = new File([content], fileName, { type: 'text/calendar;charset=utf-8' })
   if (navigator.share && navigator.canShare?.({ files: [file] })) {
-    await navigator.share({ files: [file], title: '学生事务提醒' })
-    return 'shared'
+    try {
+      await navigator.share({ files: [file], title: '学生事务提醒' })
+      return 'shared'
+    } catch (error) {
+      // An explicit cancellation stays cancelled. Unsupported sharing falls
+      // back to the reversible file handoff, never to a calendar write.
+      if (error instanceof Error && error.name === 'AbortError') throw error
+    }
   }
   const url = URL.createObjectURL(file)
   const anchor = document.createElement('a')
   anchor.href = url
   anchor.download = fileName
+  document.body.append(anchor)
   anchor.click()
-  URL.revokeObjectURL(url)
+  anchor.remove()
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
   return 'downloaded'
 }
