@@ -119,7 +119,7 @@ export function applyDeterministicTimeAst(raw, referenceTime, timezone = 'Asia/S
         isAllDay: ast.isAllDay,
         precision: ast.precision,
         needsConfirmation: ast.needsConfirmation,
-        selected: Array.isArray(item.evidenceIds)
+        selected: item.selected !== false && Array.isArray(item.evidenceIds)
           && item.evidenceIds.length > 0
           && ast.normalizedValue !== null
           && !ast.needsConfirmation,
@@ -182,7 +182,9 @@ export function normalizeRecognitionResult(
     })
     const normalizedValue = ast.normalizedValue
     const linkedEvidence = strings(item.evidenceIds).filter((id) => evidenceIds.has(id))
-    return [{ tempId: text(item.tempId, 100, `time-${index + 1}`), type: item.type, rawText: ast.rawText, normalizedValue, timezone: ast.timezone, isAllDay: ast.isAllDay, precision: ast.precision, needsConfirmation: ast.needsConfirmation, relatedTaskTempIds: strings(item.relatedTaskTempIds), relatedMaterialTempIds: strings(item.relatedMaterialTempIds), evidenceIds: linkedEvidence, confidence: number01(item.confidence), selected: linkedEvidence.length > 0 && normalizedValue !== null && !ast.needsConfirmation }]
+    const id=text(item.tempId,100,`time-${index+1}`),literal=text(item.rawText,300),owned=strings(item.relatedTaskTempIds).length>0||strings(item.relatedMaterialTempIds).length>0||allTasks().some(t=>t.timePointTempIds.includes(id))||(raw.events??[]).some(e=>e.startTimePointTempId===id||e.endTimePointTempId===id)
+    const oldContext=item.selected===false&&!owned&&literal&&sourceContent.split(literal).length===2&&linkedEvidence.some(id=>{const q=evidence.find(e=>e.id===id)?.quote??'';return sourceContent.includes(q)&&q.includes('截止由'+literal+'改为')&&/旧截止(?:时间)?作废/u.test(q)})
+    return [{ tempId:id, type: item.type, rawText: ast.rawText, normalizedValue, timezone: ast.timezone, isAllDay: ast.isAllDay, precision: ast.precision, needsConfirmation: ast.needsConfirmation, relatedTaskTempIds: strings(item.relatedTaskTempIds), relatedMaterialTempIds: strings(item.relatedMaterialTempIds), evidenceIds: linkedEvidence, confidence: number01(item.confidence), selected: !oldContext&&linkedEvidence.length > 0 && normalizedValue !== null && !ast.needsConfirmation }]
   })
   const events = (Array.isArray(raw.events) ? raw.events : []).slice(0, 30).flatMap((item, index) => {
     if (!item || typeof item !== 'object' || Array.isArray(item) || !text(item.title, 100)) return []
