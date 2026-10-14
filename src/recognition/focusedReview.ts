@@ -150,7 +150,7 @@ export function assessFocusedReview(
     'task_deadline',
   ].includes(point.type))
   const flags = [...new Set([
-    ...(metadata.qualityFlags ?? []),
+    ...(metadata.qualityFlags ?? []).filter(flag=>!(result.projectMatch.decision==='standalone_task'&&/项目归属|项目匹配|项目关联/u.test(flag))),
     ...(metadata.partialExtraction ? ['文档仅部分提取'] : []),
     ...result.quality.reviewReasons.map((item) => item.trim()).filter(Boolean),
   ])]

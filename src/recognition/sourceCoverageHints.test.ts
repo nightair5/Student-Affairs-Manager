@@ -2,6 +2,7 @@ import {describe,it,expect} from 'vitest'
 import {ordinaryWorkflowFixture} from './ordinaryProviderSupport.fixture'
 import {sourceCoverageHints} from './sourceCoverageHints'
 describe('missing-source disclosure without invented facts or extra confirmation',()=>{
+ it('makes a missing notice event and quantity-prefixed preparation visible without creating facts',()=>{const r=ordinaryWorkflowFixture(),before=structuredClone(r);expect(sourceCoverageHints('平台将在周三晚停机。参加讨论前请准备一页议题提纲。',r).map(h=>h.kind)).toEqual(['unrepresented_event','unrepresented_action']);expect(r).toEqual(before);expect(sourceCoverageHints('平台不会停机。无需准备一页议题提纲。',r)).toEqual([])})
  it('a clock range quoted only by a deadline is not a represented operating window',()=>{
   const r=ordinaryWorkflowFixture();r.timePoints=[{tempId:'P',type:'submission_deadline',rawText:'2026年11月4日09:00—11:00',normalizedValue:'2026-11-04T09:00',timezone:'Asia/Shanghai',isAllDay:false,precision:'exact',needsConfirmation:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:[],confidence:.9}];const before=structuredClone(r);expect(sourceCoverageHints('纸质件请于2026年11月4日09:00—11:00到教务窗口递交。',r)[0].kind).toBe('unrepresented_time_range');expect(r).toEqual(before)
  })
