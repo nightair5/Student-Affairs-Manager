@@ -32,3 +32,10 @@ test('one JSON-only fenced container is lossless; mixed prose and multiple conta
  assert.throws(()=>parseRecognitionJson('[{}]'))
  const invalid=structuredClone(r);delete invalid.materials[0].formatRequirements;assert.equal(validateRecognitionResult(parseRecognitionJson('```json\n'+JSON.stringify(invalid)+'\n```')).valid,false)
 })
+test('an explicitly void, unselected ownerless old cutoff is never reactivated; owned or ambiguous dates remain visible',()=>{
+ const source='报告截止由2026年10月23日改为2026年10月26日17:00，旧截止作废。',x=structuredClone(r);x.evidence[0].quote=source;x.timePoints=[{...x.timePoints[0],tempId:'OLD',rawText:'2026年10月23日',relatedTaskTempIds:[],relatedMaterialTempIds:[],selected:false}];x.standaloneTasks[0].timePointTempIds=[];x.events=[]
+ assert.equal(normalizeRecognitionResult(x,source,x.createdAt).timePoints[0].selected,false)
+ const owned=structuredClone(x);owned.standaloneTasks[0].timePointTempIds=['OLD'];assert.equal(normalizeRecognitionResult(owned,source,owned.createdAt).timePoints[0].selected,true)
+ const ambiguous=normalizeRecognitionResult(x,source+'另一份报告截止2026年10月23日。',x.createdAt);assert.equal(ambiguous.timePoints.length,1);assert.equal(ambiguous.timePoints[0].rawText,'2026年10月23日');assert.equal(ambiguous.timePoints[0].selected,true)
+ const uncertain=structuredClone(x),changed=source.replace('旧截止作废','需要核对旧截止');uncertain.evidence[0].quote=changed;assert.equal(normalizeRecognitionResult(uncertain,changed,x.createdAt).timePoints[0].selected,true)
+})

@@ -1,15 +1,22 @@
-# 当前交接：共同义务、窗口摘要与误警告已收口
-
-ROOT C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛；branch codex/e2-candidate11-blind-eval。工程9ce7bf9已立即普通推送，最终文档HEAD以Git为准。[唯一结果](candidate19-public-development/RESULTS.md) · [证据](p1-first-pass-convergence/DISPLAY_RESULTS_20261013.json)。两个untracked handover/计划与15审计资产保持。
-
-目标：第一次完整准确、少补事实。support1.6.0接已有行动的共同要求；first1.6.1接真实连续逐字依据；window-summary1.0.0压重复八起止，详情可展开。多材料/事件本身中性，真实缺依据/冲突/资格/坏关系保留；收件箱和弹层按运行来源统一标签。默认模型/Prompt/输入/v8/保存链未改。
-
-六身份原批2SETTLED/0UNCERTAIN/4NOT_SENT、各臂3。原答0/0/3与1/0/2；冻结首次均0/1/2；当前公共首次仍0/1/2、1/0/2。FactRole恢复2任务2材料3时间/渠道，电子可部分接受，纸质仍局部阻断；TaskTime8误警告消失，完整数不变。EVIDENCE_INCOMPLETE_NO_WINNER；旧4官方1/1/2和8首次逐份保持，不称新模型提升。
-
-唯一6944，新隔离DB/固定录制+工程控制、实时关闭；source61bb12ffd97b与工程commit一致。零事实编辑一次接受2任务2材料9原时间、刷新独立读回。6943完成部分、逐事件拒绝、坏关系局部、三真实故障/手动恢复及窗口安排；后续仅模式/显示守卫变，复用边界明确，原截止不改。四真人NOT_OBSERVABLE。
-
-本轮调用/grant/reserve/settle0、费用0；1096链SHA b5bc4857959794e01156f28c04c2d66b7abdcf53725c9bb9252f514caf13ff08及前缀/478资产/15时间现场保持，84/119/7通过。旧锁不恢复；本包结束不自动续16/$6。
-
-34当前组/20新定向及相邻、lint(8旧warning)/typecheck/build/security通过；1 OCR live跳过、chunk保留。历史9组3PASS6旧FAIL复用；audit仅引用2026-10-13开发2C6H1M/production0，CI未观察。
-
-未完：FactRole纸质窗口结构；首页已知窗口/无deadline兼容风险。下一最多先修首页投影，再据生成假设判断新输出必要性。release旧库VERIFY_BEFORE_MERGE；不自动真人/Holdout/default替换/集成/部署，不冒称发布就绪。
+# 当前产品主线（2026-10-14）
+目标：真实学生长期使用；首次建议更准、数据可靠，不以参赛为目标。
+开发：codex/e2-candidate11-blind-eval；从930fe48接续，最新功能提交以git log为准。
+集成：integration/product-v3；已带入开发线与release独有10个文档提交，未动MVP/release。
+36份Development，九场景各4份；32匿名作者、4已见官方节选，参照provisional。
+三轮真实全量共108次，全部确定结算，0不确定/重试。
+原v2首次从0/0/36/0到22/10/2/2（完整/部分/错/未知），旧成绩保留。
+事后v3：同第三轮raw原答28/6/0/2，当前首次23/10/1/2，活跃严重错误0。
+这是开发集与后验程序诊断，不是总体准确率、独立真值或第四轮生成提高。
+普通Worker默认完整生成契约1.1；未上线，历史候选字节保持。
+已修契约、动作截错、JSON外壳、活动起止、“随后”同日归属、作废旧时间重激活。
+已实测无事实编辑接受、部分事件拒绝、事务恢复、已提交只重读、个人安排。
+发布合成v8同库前向读/编辑/刷新、备份清空后JSON恢复与ICS下载已验。
+兼容仅本合成样本；旧release不能直接读unverified，回退需升级前备份。
+当前内部入口：http://127.0.0.1:6955/，36份真实固定录制，无实时调用，不能输入任意通知。
+6944及旧用户库未动；handover、next phase plan和15审计资产未提交。
+内部保守结算US$0.239362，实扣不可观察；原1096前缀保持，账本1318行。
+开发39当前组通过；六旧历史失败单列；集成最终检查见summary及交付，不预填PASS。
+未完：剩余报名/共享材料/时间缺口、参照争议、完整新浏览器矩阵、真人长期稳定性。
+Preview/Production未部署，未招募/使用私密材料/声明Holdout。
+证据：P1_INTEGRATION_READINESS.md及本机.data/autonomous-product-20261013。
+下一步：收口剩余来源关系与时间；负责人决定试用与匿名真实材料收集方式。
