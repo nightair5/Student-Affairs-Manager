@@ -20,7 +20,7 @@ function assertHostAuthorization(auth, engine, units, binding, now = Date.now())
   check(Number.isSafeInteger(auth.ledgerBaselineRows) && auth.ledgerBaselineRows > 0
     && Number.isSafeInteger(auth.ledgerBaselineBytes) && auth.ledgerBaselineBytes > 0
     && /^[a-f0-9]{64}$/u.test(auth.ledgerBaselineSha256), 'LEDGER_AUTH_BINDING')
-  check(auth.pricing.model === 'deepseek-flash' && auth.pricing.endpoint === 'https://api.deepseek.com/responses'
+  check(auth.pricing.model === 'deepseek-flash' && auth.pricing.endpoint === (scope.parameters?.transportRoute==='worker-chat-completions-1'?'https://api.deepseek.com/chat/completions':'https://api.deepseek.com/responses')
     && auth.pricing.maxOutputTokens === 8192 && auth.pricing.tokenBoundMethod === 'FULL_OFFICIAL_CONTEXT_UPPER_BOUND'
     && auth.pricing.reasoningMetering === 'INCLUDED_IN_OUTPUT_TOKENS'
     && auth.pricing.additionalChargeUpperMicroUsd === 0

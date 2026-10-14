@@ -1,0 +1,1515 @@
+[
+  {
+    "id": "DEV-01",
+    "scene": "作业提交",
+    "text": "请于2026年10月22日18:00前通过课程平台上传统计课程报告，格式为PDF，文件名为课程报告_班级。平台显示接收成功即完成提交。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "统计课程报告",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "material": "统计课程报告",
+          "channel": "课程平台",
+          "deadline": "2026-10-22T18:00",
+          "precision": "exact",
+          "criteria": "接收成功"
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ],
+      "naming": [
+        "课程报告_班级"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-02",
+    "scene": "作业提交",
+    "text": "阅读课本第三章，并在2026年10月25日提交阅读笔记。笔记为纯文本，在课程平台提交。阅读与提交是两项要求。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "第三章",
+          "verbs": [
+            "阅读"
+          ]
+        },
+        {
+          "object": "阅读笔记",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "阅读笔记",
+          "channel": "课程平台",
+          "deadline": "2026-10-25",
+          "precision": "date_only"
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-03",
+    "scene": "作业提交",
+    "text": "摄影作业需要提交3张照片和一份拍摄说明，二者合并为一个压缩包。请于2026年10月26日20:30把压缩包提交至课堂空间，不要求打印。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "压缩包",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "压缩包",
+          "channel": "课堂空间",
+          "deadline": "2026-10-26T20:30",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "criteria": [
+        "照片",
+        "拍摄说明"
+      ],
+      "forbidden": [
+        {
+          "object": "打印",
+          "verbs": [
+            "打印"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-04",
+    "scene": "作业提交",
+    "text": "小组须先完成问卷设计，再开展试访。问卷设计于2026年10月24日提交，试访记录于2026年10月28日提交；两份材料都交到教学平台。当前设计尚未完成。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "问卷设计",
+          "verbs": [
+            "完成",
+            "提交"
+          ],
+          "material": "问卷设计",
+          "deadline": "2026-10-24",
+          "precision": "date_only"
+        },
+        {
+          "object": "试访",
+          "verbs": [
+            "开展",
+            "完成",
+            "提交"
+          ],
+          "material": "试访记录",
+          "deadline": "2026-10-28",
+          "precision": "date_only",
+          "predecessor": "问卷设计"
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-05",
+    "scene": "报名",
+    "text": "有意参加校园写作赛的同学，可于2026年10月27日16:00前向报名系统提交报名表。是否参赛由本人决定，当前未提供个人意愿。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名表",
+          "verbs": [
+            "提交",
+            "填写",
+            "报名"
+          ],
+          "material": "报名表",
+          "channel": "报名系统",
+          "deadline": "2026-10-27T16:00",
+          "precision": "exact",
+          "condition": "有意参加"
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-06",
+    "scene": "报名",
+    "text": "新生讲解员选拔报名：请填写申请表，并于2026年10月29日交至学生中心C101。面试安排将另行通知。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "申请表",
+          "verbs": [
+            "填写",
+            "提交"
+          ],
+          "material": "申请表",
+          "channel": "学生中心C101",
+          "deadline": "2026-10-29",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "unknownTime": "另行通知"
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-07",
+    "scene": "报名",
+    "text": "电影赏析活动报名只需在报名页面点选场次，不用上传附件。报名于2026年10月21日12:00截止；活动于2026年10月23日19:00开始，20:30结束，地点为学生活动室。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "场次",
+          "verbs": [
+            "点选",
+            "选择",
+            "报名"
+          ],
+          "deadline": "2026-10-21T12:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "电影赏析",
+          "start": "2026-10-23T19:00",
+          "end": "2026-10-23T20:30",
+          "location": "学生活动室"
+        }
+      ],
+      "materialCount": 0,
+      "forbidden": [
+        {
+          "object": "附件",
+          "verbs": [
+            "上传",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-08",
+    "scene": "报名",
+    "text": "志愿服务报名已经结束，不接受补报。已报名同学请于2026年10月30日09:00到校园北门集合，09:15出发。没有要求再次填写报名表。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "集合",
+          "start": "2026-10-30T09:00",
+          "location": "校园北门"
+        },
+        {
+          "object": "出发",
+          "start": "2026-10-30T09:15"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "填写",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-09",
+    "scene": "材料提交",
+    "text": "助学金申请材料包括申请表和成绩单。请把这两份材料于2026年10月31日17:00提交至资助系统，文件格式均为PDF。提交后请保留系统回执，无需打印回执。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "申请",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "deadline": "2026-10-31T17:00",
+          "precision": "exact"
+        },
+        {
+          "object": "回执",
+          "verbs": [
+            "保留",
+            "保存"
+          ]
+        }
+      ],
+      "events": [],
+      "materials": [
+        "申请表",
+        "成绩单"
+      ],
+      "formats": [
+        "PDF"
+      ],
+      "forbidden": [
+        {
+          "object": "回执",
+          "verbs": [
+            "打印"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-10",
+    "scene": "材料提交",
+    "text": "请将研究计划提交到若水学院材料站，截止为2026年11月2日。材料站只是接收渠道，不需要办理平台注册；研究计划不设页数限制。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "研究计划",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "研究计划",
+          "channel": "若水学院材料站",
+          "deadline": "2026-11-02",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "注册",
+          "verbs": [
+            "注册",
+            "办理"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-11",
+    "scene": "材料提交",
+    "text": "请上传实习总结PDF，文件命名为实习总结_学院。看到平台回执“收到成功”即为办结，本通知未指定上传渠道。截止为2026年11月3日18:00。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "实习总结",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "material": "实习总结",
+          "deadline": "2026-11-03T18:00",
+          "precision": "exact",
+          "criteria": "收到成功",
+          "channelUnknown": true
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ],
+      "naming": [
+        "实习总结_学院"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-12",
+    "scene": "材料提交",
+    "text": "项目申请需要提交申请书。纸质件请于2026年11月4日09:00—11:00到教务窗口递交，电子件于当日16:00前提交至项目平台。两种形式均须提交。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "纸质",
+          "verbs": [
+            "递交",
+            "提交"
+          ],
+          "material": "申请书",
+          "window": "2026-11-04T09:00/11:00"
+        },
+        {
+          "object": "电子",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "申请书",
+          "channel": "项目平台",
+          "deadline": "2026-11-04T16:00",
+          "precision": "exact"
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-13",
+    "scene": "会议活动",
+    "text": "实验安全说明会定于2026年10月20日14:00至15:20在实验楼201举行。请到场参加，无需报名，也无需提交任何材料。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "实验安全说明会",
+          "start": "2026-10-20T14:00",
+          "end": "2026-10-20T15:20",
+          "location": "实验楼201"
+        }
+      ],
+      "materialCount": 0,
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-14",
+    "scene": "会议活动",
+    "text": "班级讨论于2026年10月21日18:30开始，结束时间尚未公布，地点为学习室A。参加讨论前请准备一页议题提纲，不需要提交提纲。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "议题提纲",
+          "verbs": [
+            "准备",
+            "撰写"
+          ],
+          "material": "议题提纲"
+        }
+      ],
+      "events": [
+        {
+          "object": "讨论",
+          "start": "2026-10-21T18:30",
+          "endUnknown": true,
+          "location": "学习室A"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "提纲",
+          "verbs": [
+            "提交",
+            "上传"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-15",
+    "scene": "会议活动",
+    "text": "社团分享于2026年10月24日10:00—11:00在东区报告厅举行。随后11:20—12:00在同一地点开展作品展示；这是两个独立环节，不是待办截止。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "分享",
+          "start": "2026-10-24T10:00",
+          "end": "2026-10-24T11:00",
+          "location": "东区报告厅"
+        },
+        {
+          "object": "作品展示",
+          "start": "2026-10-24T11:20",
+          "end": "2026-10-24T12:00",
+          "location": "东区报告厅"
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-16",
+    "scene": "会议活动",
+    "text": "活动信息\n时间：2026年10月12日12:30—14:00\n地点：海韵园办公楼A栋302室\n报名：扫描下方二维码报名，听众报名截止为2026年10月11日中午12:00。主办方提供50份免费午餐，按报名順序先到先得；听众总人数不限。",
+    "referenceTime": "2026-09-29T09:00:00+08:00",
+    "sourceType": "PUBLIC_EXCERPT_REFORMATTED",
+    "url": "https://ssa.xmu.edu.cn/info/1166/32512.htm",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "扫描"
+          ],
+          "deadline": "2026-10-11T12:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "活动",
+          "start": "2026-10-12T12:30",
+          "end": "2026-10-12T14:00",
+          "location": "海韵园办公楼A栋302室"
+        }
+      ],
+      "information": [
+        "免费午餐",
+        "总人数不限"
+      ]
+    },
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-17",
+    "scene": "修订取消",
+    "text": "原定2026年10月22日的答疑会取消，不需到场，也不要重新报名。本通知没有安排新的答疑会。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "答疑",
+          "verbs": [
+            "参加",
+            "到场"
+          ]
+        },
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ]
+        }
+      ],
+      "information": [
+        "取消"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-18",
+    "scene": "修订取消",
+    "text": "课程报告提交截止由2026年10月23日改为2026年10月26日17:00，旧截止作废。请通过课程平台提交课程报告，其他要求不变。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "课程报告",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "课程报告",
+          "channel": "课程平台",
+          "deadline": "2026-10-26T17:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "obsoleteDates": [
+        "2026-10-23"
+      ],
+      "information": [
+        "旧截止作废"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-19",
+    "scene": "修订取消",
+    "text": "撤回上次的照片提交要求，无需提交照片。健康登记表仍需于2026年10月28日提交至登记站。不得把照片添加为登记表附件。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "健康登记表",
+          "verbs": [
+            "提交",
+            "填写"
+          ],
+          "material": "健康登记表",
+          "channel": "登记站",
+          "deadline": "2026-10-28",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "照片",
+          "verbs": [
+            "提交",
+            "添加",
+            "上传"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-20",
+    "scene": "修订取消",
+    "text": "由于设备维护，明日的录音培训延期，新的时间尚未确定。已经报名的同学不需要重新报名，报名记录保留。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "录音培训",
+          "startUnknown": true
+        }
+      ],
+      "information": [
+        "延期",
+        "报名记录保留"
+      ],
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-21",
+    "scene": "条件资格",
+    "text": "只有审核通过的同学才须提交住宿申请表，截止为2026年11月6日。审核未通过者请勿提交；当前没有提供你的审核结果。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "住宿申请表",
+          "verbs": [
+            "提交"
+          ],
+          "material": "住宿申请表",
+          "deadline": "2026-11-06",
+          "precision": "date_only",
+          "condition": "审核通过",
+          "unknownEligibility": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-22",
+    "scene": "条件资格",
+    "text": "已完成基础培训者可报名实验室值班，报名截止为2026年11月7日12:00。你尚未完成基础培训，培训完成后再报名，不代表现在可以开始报名。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "培训",
+          "verbs": [
+            "完成",
+            "参加"
+          ]
+        },
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ],
+          "deadline": "2026-11-07T12:00",
+          "precision": "exact",
+          "predecessor": "培训",
+          "waiting": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-23",
+    "scene": "条件资格",
+    "text": "本次证书领取仅适用于名单内同学。你不在本次名单，无需去服务中心领取，也不用提交说明。通知仅供了解。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "证书",
+          "verbs": [
+            "领取"
+          ]
+        },
+        {
+          "object": "说明",
+          "verbs": [
+            "提交"
+          ]
+        }
+      ],
+      "information": [
+        "不在本次名单"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-24",
+    "scene": "条件资格",
+    "text": "招生对象为在读本科生、研究生及青年研究人员；活动免费。线上讲座时间为2026年7月6日至10日，被录取的正式学员可听课互动，各学员需自行准备终端设备。通过下方二维码报名，报名截止为2026年6月30日17:00。学习结束后可获得结业证书。",
+    "referenceTime": "2026-06-23T09:00:00+08:00",
+    "sourceType": "PUBLIC_EXCERPT_REFORMATTED",
+    "url": "https://sbd.xmu.edu.cn/info/1057/12910.htm",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "扫描"
+          ],
+          "deadline": "2026-06-30T17:00",
+          "precision": "exact"
+        },
+        {
+          "object": "终端设备",
+          "verbs": [
+            "准备"
+          ],
+          "condition": "学员"
+        }
+      ],
+      "events": [
+        {
+          "object": "讲座",
+          "start": "2026-07-06",
+          "end": "2026-07-10"
+        }
+      ],
+      "information": [
+        "免费",
+        "结业证书"
+      ]
+    },
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-25",
+    "scene": "共享材料",
+    "text": "请在2026年11月9日17:00前向课程平台提交调研报告，并在2026年11月11日12:00前向展示平台提交同一份调研报告。两个提交动作都必须完成，报告只制作一份，格式PDF。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "调研报告",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "channel": "课程平台",
+          "deadline": "2026-11-09T17:00",
+          "precision": "exact"
+        },
+        {
+          "object": "调研报告",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "channel": "展示平台",
+          "deadline": "2026-11-11T12:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "调研报告"
+      ],
+      "sharedMaterial": true,
+      "formats": [
+        "PDF"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-26",
+    "scene": "共享材料",
+    "text": "课程论文和实践总结都需提交成绩单复印件。课程论文于2026年11月10日提交，实践总结于2026年11月12日提交，均交至教学站。成绩单是共享附件，不是第三项任务。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "课程论文",
+          "verbs": [
+            "提交"
+          ],
+          "material": "课程论文",
+          "deadline": "2026-11-10",
+          "precision": "date_only"
+        },
+        {
+          "object": "实践总结",
+          "verbs": [
+            "提交"
+          ],
+          "material": "实践总结",
+          "deadline": "2026-11-12",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "成绩单"
+      ],
+      "sharedMaterial": true
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-27",
+    "scene": "共享材料",
+    "text": "请准备项目说明PDF，然后分别向评审站和备案站提交项目说明。评审提交于2026年11月13日截止，备案提交于2026年11月15日截止。两次提交共享项目说明，准备不能被误当成两份材料。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "项目说明",
+          "verbs": [
+            "准备",
+            "制作"
+          ]
+        },
+        {
+          "object": "项目说明",
+          "verbs": [
+            "提交"
+          ],
+          "channel": "评审站",
+          "deadline": "2026-11-13",
+          "precision": "date_only"
+        },
+        {
+          "object": "项目说明",
+          "verbs": [
+            "提交"
+          ],
+          "channel": "备案站",
+          "deadline": "2026-11-15",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "项目说明"
+      ],
+      "sharedMaterial": true,
+      "formats": [
+        "PDF"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-28",
+    "scene": "共享材料",
+    "text": "报名表和承诺书请在2026年11月16日18:00前一起提交至服务平台；同一提交要求，不必拆成两个重复待办。承诺书需本人签字，报名表保持原表格式。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名表",
+          "verbs": [
+            "提交"
+          ],
+          "deadline": "2026-11-16T18:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "报名表",
+        "承诺书"
+      ],
+      "criteria": [
+        "签字",
+        "原表格式"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-29",
+    "scene": "模糊待定时间",
+    "text": "校车预约平台将在周三晚停机，已保存行程不受影响。无需删除行程，不要提交说明，也不必向值班员发消息。本通知仅说明停机消息。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "停机",
+          "startUnknown": true,
+          "rawStart": "周三晚"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "行程",
+          "verbs": [
+            "删除"
+          ]
+        },
+        {
+          "object": "说明",
+          "verbs": [
+            "提交"
+          ]
+        },
+        {
+          "object": "消息",
+          "verbs": [
+            "发",
+            "发送"
+          ]
+        }
+      ],
+      "information": [
+        "已保存行程不受影响"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-30",
+    "scene": "模糊待定时间",
+    "text": "请提交实验记录，截止时间尚未公布。提交入口为实验系统，不要自行按下周一设定截止，后续通知会给出时间。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "实验记录",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "实验记录",
+          "channel": "实验系统",
+          "deadlineUnknown": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-31",
+    "scene": "模糊待定时间",
+    "text": "研读交流安排在下周某天下午，具体日期、开始时刻和结束时刻均未定，地点为资料室。无需报名，先保留活动信息。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "研读交流",
+          "startUnknown": true,
+          "endUnknown": true,
+          "location": "资料室"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-32",
+    "scene": "模糊待定时间",
+    "text": "2026级大陆本科新生须在8月13—27日登录迎新系统完成网上预注册。系统开放时间与入学须知略有不同，以本通知为准；请在指定时间内激活账号和登录，其他时段会显示账号密码错误。",
+    "referenceTime": "2026-07-24T09:00:00+08:00",
+    "sourceType": "PUBLIC_EXCERPT_REFORMATTED",
+    "url": "https://welcome.xmu.edu.cn/info/1150/1453.htm",
+    "reference": {
+      "tasks": [
+        {
+          "object": "预注册",
+          "verbs": [
+            "完成"
+          ]
+        },
+        {
+          "object": "账号",
+          "verbs": [
+            "激活"
+          ]
+        },
+        {
+          "object": "系统",
+          "verbs": [
+            "登录"
+          ]
+        }
+      ],
+      "events": [],
+      "window": "2026-08-13/2026-08-27",
+      "condition": "大陆本科新生"
+    },
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-33",
+    "scene": "纯信息",
+    "text": "图书馆检索页面已更换主题色，借阅规则和账号信息均无变化。仅作说明，没有要提交的材料或要办理的事项。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "materialCount": 0,
+      "information": [
+        "无变化"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-34",
+    "scene": "纯信息",
+    "text": "学校统一身份认证服务将在本周三（11月17日）晚上11点到次日1点停机维护，预计2小时，完成后正常恢复。请事先安排好工作，避开该时间段。",
+    "referenceTime": "2021-11-16T09:00:00+08:00",
+    "sourceType": "PUBLIC_EXCERPT_REFORMATTED",
+    "url": "https://inc.xmu.edu.cn/inc2024/info/1031/1124.htm",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "停机维护",
+          "start": "2021-11-17T23:00",
+          "end": "2021-11-18T01:00"
+        }
+      ],
+      "information": [
+        "正常恢复"
+      ]
+    },
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-35",
+    "scene": "纯信息",
+    "text": "教学楼门禁升级已经完成，原有通行卡继续有效。无需重新申请，不用下载新的客户端，也不要交旧卡。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "information": [
+        "继续有效"
+      ],
+      "forbidden": [
+        {
+          "object": "申请",
+          "verbs": [
+            "申请"
+          ]
+        },
+        {
+          "object": "客户端",
+          "verbs": [
+            "下载"
+          ]
+        },
+        {
+          "object": "卡",
+          "verbs": [
+            "交",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-36",
+    "scene": "纯信息",
+    "text": "本学期优秀作业将用于教学展示，展示不影响课程成绩。通知没有征集新作品，已有作业不用重复上传。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "information": [
+        "不影响课程成绩"
+      ],
+      "forbidden": [
+        {
+          "object": "作业",
+          "verbs": [
+            "上传",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "GROUP-17",
+    "scene": "模糊待定时间",
+    "text": "【老师补充】设计作品要交，截止另行通知，不是月底截止。格式同上，但上条没一起贴过来；提交位置见附件，附件内容未提供。请保留作品待办，不要猜格式或位置。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "设计作品",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "deadlineUnknown": true,
+          "channelUnknown": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-03",
+    "scene": "材料提交",
+    "text": "【转发】奖学金材料：申请表、成绩单各一份，申请表PDF；请在2026年11月5日17:00前交到学工窗口。窗口显示“材料接收成功”才算交齐。详细政策见附件，附件正文没贴。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "材料",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "学工窗口",
+          "deadline": "2026-11-05T17:00",
+          "precision": "exact",
+          "criteria": "材料接收成功"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "申请表",
+        "成绩单"
+      ],
+      "formats": [
+        "PDF"
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-07",
+    "scene": "共享材料",
+    "text": "两条一起：①11月12日12:00前给课程平台提交调研报告；②11月13日18:00前给展示平台提交同一份调研报告。年份都是2026。报告只做一份PDF，不是两份。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "调研报告",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "课程平台",
+          "deadline": "2026-11-12T12:00",
+          "precision": "exact"
+        },
+        {
+          "object": "调研报告",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "展示平台",
+          "deadline": "2026-11-13T18:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "调研报告"
+      ],
+      "formats": [
+        "PDF"
+      ],
+      "sharedMaterial": true
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-09",
+    "scene": "纯信息",
+    "text": "转发：图书馆系统2026年11月14日22:00至11月15日01:00停机。已借图书不受影响，不需要续借或提交说明。这条只是消息。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "停机",
+          "start": "2026-11-14T22:00",
+          "end": "2026-11-15T01:00"
+        }
+      ],
+      "information": [
+        "不受影响"
+      ],
+      "forbidden": [
+        {
+          "object": "图书",
+          "verbs": [
+            "续借"
+          ]
+        },
+        {
+          "object": "说明",
+          "verbs": [
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-13",
+    "scene": "会议活动",
+    "text": "【讲座】\n2026年11月20日\n09:30—11:00\n海棠楼报告厅\n历史讲座照片日期2024年5月1日仅是配图说明，与本次时间无关。不用报名。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "讲座",
+          "start": "2026-11-20T09:30",
+          "end": "2026-11-20T11:00",
+          "location": "海棠楼报告厅"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-12",
+    "scene": "材料提交",
+    "text": "交资料啦：2026年11月18日中午12:00前上传实习证明PDF，交至实习入口。命名“班级_学号”。其他材料见群文件，本消息没有列出，别猜。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "实习证明",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "material": "实习证明",
+          "channel": "实习入口",
+          "deadline": "2026-11-18T12:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ],
+      "naming": [
+        "班级_学号"
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-11",
+    "scene": "报名",
+    "text": "上条转发：2026年11月17日17:00截止报名辩论赛，使用学生竞赛平台。下条补充：答辩活动2026年11月19日10:00—12:00在南楼。大家别把报名截止当答辩开始。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ],
+          "deadline": "2026-11-17T17:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "答辩",
+          "start": "2026-11-19T10:00",
+          "end": "2026-11-19T12:00",
+          "location": "南楼"
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-14",
+    "scene": "修订取消",
+    "text": "老师临时说：2026年11月21日的排练取消。请不要到排练厅。资料提交没取消，仍在2026年11月22日16:00前交排练说明至课程平台；不要提交照片。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "排练说明",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "课程平台",
+          "deadline": "2026-11-22T16:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "排练",
+          "verbs": [
+            "参加",
+            "到场"
+          ]
+        },
+        {
+          "object": "照片",
+          "verbs": [
+            "提交",
+            "交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-08",
+    "scene": "模糊待定时间",
+    "text": "群通知：明天下午可能安排参观，具体几点、几点结束和地点都还没公布。等补充通知，暂不用报名。年份按本消息时间。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "参观",
+          "startUnknown": true,
+          "endUnknown": true
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-20",
+    "scene": "材料提交",
+    "text": "认证办理时间：2026年11月30日09:00—11:00、14:00—16:00。请带学生证去认证窗口完成认证。不是16:00提交截止；窗口结束后不能办理。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "认证",
+          "verbs": [
+            "完成",
+            "办理"
+          ],
+          "material": "学生证",
+          "channel": "认证窗口"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "学生证"
+      ],
+      "window": "2026-11-30/2026-11-30"
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-05",
+    "scene": "修订取消",
+    "text": "老师：之前说11月8日交论文，这个旧截止取消了，改2026年11月10日20:00，还是交论文到课程平台。不要交旧版封面，也不用解释。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "论文",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "课程平台",
+          "deadline": "2026-11-10T20:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "obsoleteDates": [
+        "2026-11-08"
+      ],
+      "forbidden": [
+        {
+          "object": "旧版封面",
+          "verbs": [
+            "提交",
+            "交"
+          ]
+        },
+        {
+          "object": "解释",
+          "verbs": [
+            "提交",
+            "写"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-02",
+    "scene": "报名",
+    "text": "老师刚发：想参加摄影交流的同学在2026年11月4日18:00前报名，入口是摄影登记页。交流会11月6日19:00—20:30，北楼201。😄今晚不用去。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ],
+          "deadline": "2026-11-04T18:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "摄影交流",
+          "start": "2026-11-06T19:00",
+          "end": "2026-11-06T20:30",
+          "location": "北楼201"
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  }
+]

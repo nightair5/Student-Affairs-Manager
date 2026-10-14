@@ -8,6 +8,7 @@ const check=(ok,code)=>{if(!ok)throw Error('D26_EXEC_'+code)}
 export function createScopedEngine(scope,{diagnostics}={}){
 check(scope&&/^[A-Z0-9-]+$/.test(scope.batch)&&Number.isInteger(scope.count)&&scope.count>0&&scope.count<=24,'SCOPED_BATCH')
 const parameters=scope.parameters??{temperature:0,maxOutputTokens:MAX_OUTPUT_TOKENS}
+const workerChat=parameters.transportRoute==='worker-chat-completions-1'
 check(Number.isFinite(parameters.temperature)&&parameters.temperature>=0&&parameters.temperature<=2&&Number.isSafeInteger(parameters.maxOutputTokens)&&parameters.maxOutputTokens>0&&parameters.maxOutputTokens<=MAX_OUTPUT_TOKENS,'SCOPED_PARAMETERS')
 function newState(units, binding) {
   return { version: 'scoped-execution-state-2', batch: scope.batch, model: 'deepseek-flash', ...binding, authorized: false,
@@ -21,7 +22,7 @@ function assertAuthorization(state, auth, units, binding) {
     && state.manifestSha256 === binding.manifestSha256 && state.identitiesSha256 === binding.identitiesSha256
     && Number.isSafeInteger(auth.hardLimitMicroUsd) && auth.hardLimitMicroUsd > 0
     && typeof auth.grantId === 'string' && auth.grantId.length > 0 && /^[a-f0-9]{40}$/u.test(auth.committedHead), 'AUTHORIZATION_REQUIRED')
-  check(auth.endpoint === 'https://api.deepseek.com/responses' && auth.retry === 0 && auth.repair === 0 && auth.verifier === 0, 'ROUTE_OR_EXTRA_CALLS')
+  check(auth.endpoint === (workerChat?'https://api.deepseek.com/chat/completions':'https://api.deepseek.com/responses') && auth.retry === 0 && auth.repair === 0 && auth.verifier === 0, 'ROUTE_OR_EXTRA_CALLS')
   check(auth.units?.length === scope.count && auth.requestSha256s?.length === scope.count && state.units.every((row, index) => row.ordinal === index + 1
     && row.unitIdentitySha256 === units[index].unitIdentitySha256 && row.requestSha256 === units[index].requestSha256
     && auth.units[index] === row.unitIdentitySha256 && auth.requestSha256s[index] === row.requestSha256), 'IDENTITY_DRIFT')
@@ -38,9 +39,10 @@ async function runOne({ state, auth, units, binding, ledger, transport, persist,
     const mark=async next=>{phase=next;await diagnostics?.record({ordinal,unitIdentitySha256:unit.unitIdentitySha256,requestSha256:unit.requestSha256,phase})}
     const stop=async error=>{try{await diagnostics?.record({ordinal,unitIdentitySha256:unit.unitIdentitySha256,requestSha256:unit.requestSha256,
       phase:'STOP_UNCERTAIN',failedPhase:phase,code:classifyPhaseError(error)})}catch{/* Preserve the original safety stop even when observation fails. */}}
-    check(digest(JSON.stringify(unit.body)) === unit.requestSha256 && unit.body.model === 'deepseek-flash'
-      && unit.body.temperature === parameters.temperature && unit.body.reasoning?.effort === 'none' && unit.body.max_output_tokens === parameters.maxOutputTokens
-      && unit.body.stream === false, 'REQUEST_OR_PARAMETERS_DRIFT')
+    check(digest(JSON.stringify(unit.body)) === unit.requestSha256 && unit.body.temperature === parameters.temperature
+      && (workerChat
+        ? unit.body.model==='deepseek-v4-flash' && unit.body.thinking?.type==='disabled' && unit.body.max_tokens===parameters.maxOutputTokens && unit.body.response_format?.type==='json_object' && Array.isArray(unit.body.messages)
+        : unit.body.model==='deepseek-flash' && unit.body.reasoning?.effort==='none' && unit.body.max_output_tokens===parameters.maxOutputTokens && unit.body.stream===false), 'REQUEST_OR_PARAMETERS_DRIFT')
     check(ledger && transport && persist && rawStore && typeof preflight === 'function', 'ADAPTER_REQUIRED')
     await preflight({ state, auth, unit, ordinal })
     validatePriceScope(auth.pricing)
@@ -65,7 +67,9 @@ async function runOne({ state, auth, units, binding, ledger, transport, persist,
         requestId: response.requestId ?? null, contentType: response.contentType ?? null, rawHttpText: response.text, responseSha256: digest(response.text), receivedAt: new Date().toISOString() }
       await mark('RAW_WRITE_ENTER');await rawStore.writeOnce(raw);await mark('RAW_WRITE_COMPLETED')
       row.status = 'RAW_SAVED'; row.responseSha256 = raw.responseSha256;await mark('RAW_STATE_WRITE_ENTER');await persist(state);await mark('RAW_STATE_WRITE_COMPLETED')
-      const usage = rawUsage(response.text), costUpperMicroUsd = usage === 'NOT_OBSERVABLE' ? upper
+      const chatUsage=workerChat?JSON.parse(response.text).usage:null
+      const usage = workerChat && Number.isSafeInteger(chatUsage?.prompt_tokens) && chatUsage.prompt_tokens>=0 && Number.isSafeInteger(chatUsage?.completion_tokens) && chatUsage.completion_tokens>=0
+        ? {...chatUsage,input_tokens:chatUsage.prompt_tokens,output_tokens:chatUsage.completion_tokens,usageBoundary:'NATIVE_CHAT_COMPLETIONS'} : rawUsage(response.text), costUpperMicroUsd = usage === 'NOT_OBSERVABLE' ? upper
         : conservativeUpperMicroUsd(usage.input_tokens, usage.output_tokens, auth.pricing)
       await mark('SETTLE_ENTER');await ledger.settle({ batch: scope.batch, grantId: auth.grantId, ordinal, responseSha256: raw.responseSha256, httpStatus: response.status,
         usage, costUpperMicroUsd, providerActualUsd: 'NOT_OBSERVABLE' })

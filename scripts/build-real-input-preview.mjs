@@ -6,6 +6,7 @@ import {createHash} from 'node:crypto'
 import {fileURLToPath} from 'node:url'
 import {createServer} from 'node:http'
 import previewWorker from '../cloudflare/real-input-preview.mjs'
+import {readFrozenGitBytes} from './read-frozen-git-bytes.mjs'
 
 const hash=x=>createHash('sha256').update(x).digest('hex')
 const check=(ok,code)=>{if(!ok)throw Error('HTTPS_PREVIEW_'+code)}
@@ -38,7 +39,7 @@ const pinnedNone={
 }
 export async function buildPreview(origin='https://student-affairs-real-input-preview.nightsdell.workers.dev', {localOnly=false}={}){
   check(localOnly ? origin==='http://127.0.0.1:6632' : origin==='https://student-affairs-real-input-preview.nightsdell.workers.dev','ORIGIN')
-  const read=n=>{const b=readFileSync(join(sourceRoot,D,n));check(hash(b)===pinned[n],'HISTORY_CHANGED');return JSON.parse(b)}
+  const read=n=>{const b=readFrozenGitBytes(sourceRoot,D+n,pinned[n]);check(hash(b)===pinned[n],'HISTORY_CHANGED');return JSON.parse(b)}
   const binding=read('BINDING.json')
   const records=['Q01-06','Q07-06'].map(unitId=>{
     const raw=read(unitId+'_RAW.jsonl'),item=binding.items.find(i=>i.id===unitId.slice(0,3)),unit=binding.units.find(u=>u.unitId===unitId)
@@ -47,7 +48,7 @@ export async function buildPreview(origin='https://student-affairs-real-input-pr
     return {version:'recorded-paired06-1',unitId,name:historicalName,operationId:item.operationId,title:item.title,
       context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText}
   })
-  const read07=n=>{const b=readFileSync(join(sourceRoot,R,n));check(hash(b)===pinned07[n],'PAIRED07_HISTORY_CHANGED');return JSON.parse(b)}
+  const read07=n=>{const b=readFrozenGitBytes(sourceRoot,R+n,pinned07[n]);check(hash(b)===pinned07[n],'PAIRED07_HISTORY_CHANGED');return JSON.parse(b)}
   const binding07=read07('BINDING_FINAL.json')
   for(const unitId of ['R11-07','R12-07']){
     const raw=read07(unitId+'_RAW.jsonl'),item=binding07.items.find(i=>i.id===unitId.slice(0,3)),unit=binding07.units.find(u=>u.unitId===unitId)
@@ -56,7 +57,7 @@ export async function buildPreview(origin='https://student-affairs-real-input-pr
     records.push({version:'recorded-paired07-1',unitId,name:historicalName,operationId:item.operationId,title:item.title,
       context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText})
   }
-  const read09=n=>{const b=readFileSync(join(sourceRoot,N,n));check(hash(b)===pinned09[n],'PAIRED09_HISTORY_CHANGED');return JSON.parse(b)}
+  const read09=n=>{const b=readFrozenGitBytes(sourceRoot,N+n,pinned09[n]);check(hash(b)===pinned09[n],'PAIRED09_HISTORY_CHANGED');return JSON.parse(b)}
   const binding09=read09('BINDING_FINAL.json')
   for(const unitId of ['U11-09','V02-09']){
     const raw=read09(unitId+'_RAW.jsonl'),item=binding09.items.find(i=>i.id===unitId.slice(0,3)),unit=binding09.units.find(u=>u.unitId===unitId)
@@ -65,7 +66,7 @@ export async function buildPreview(origin='https://student-affairs-real-input-pr
     records.push({version:'recorded-paired09-1',unitId,name:historicalName,operationId:item.operationId,title:item.title,
       context:item.context,requestSha:raw.requestSha,responseSha:raw.responseSha,rawHttpText:raw.rawHttpText})
   }
-  const readNone=n=>{const b=readFileSync(join(sourceRoot,L,n));check(hash(b)===pinnedNone[n],'LATEST_NONE_HISTORY_CHANGED');return JSON.parse(b)}
+  const readNone=n=>{const b=readFrozenGitBytes(sourceRoot,L+n,pinnedNone[n]);check(hash(b)===pinnedNone[n],'LATEST_NONE_HISTORY_CHANGED');return JSON.parse(b)}
   const bindingNone=readNone('BINDING_FINAL.json')
   for(const unitId of ['L01-A','L02-A','L04-A']){
     const raw=readNone(unitId+'_RAW.jsonl'),item=bindingNone.items.find(i=>i.id===unitId.slice(0,3)),unit=bindingNone.units.find(u=>u.unitId===unitId)
