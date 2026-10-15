@@ -18,6 +18,7 @@ import {
 import { isValidTimeZone } from './chinese-time-ast.generated.mjs'
 import {parseRecognitionJson} from './recognition-json.mjs'
 import {projectDanglingAnnotationEvidence} from './recognition-annotation-projection.mjs'
+import {projectLiteralSourceEvidence} from './recognition-literal-evidence.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -859,7 +860,9 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       selectedModel,
       selectedPromptVersion ?? RECOGNITION_PROMPT_VERSION,
     )
-    const deterministicCandidate = applyDeterministicTimeAst(candidate, referenceTime, timezone)
+    const literalProjection=selectedPromptVersion?.startsWith('recognition-product-contract-')
+      ?projectLiteralSourceEvidence(candidate,sourceContent):{result:candidate,audit:null}
+    const deterministicCandidate = applyDeterministicTimeAst(literalProjection.result, referenceTime, timezone)
     const annotationProjection=selectedPromptVersion?.startsWith('recognition-product-contract-')?projectDanglingAnnotationEvidence(deterministicCandidate):{result:deterministicCandidate,audit:null}
     const candidateValidation = validateRecognitionResult(annotationProjection.result, { sourceContent })
     if (!candidateValidation.valid) return invalidRecognitionResponse(context, candidateValidation)
@@ -890,6 +893,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
           return [{pointId:point.tempId,rawText:point.rawText,sourceContext:support.context,evidenceIds:support.evidenceIds,original:{normalizedValue:original.normalizedValue,selected:original.selected},normalizedInput:{normalizedValue:normalizedInput.normalizedValue,selected:normalizedInput.selected},after:{normalizedValue:point.normalizedValue,selected:point.selected},rule:support.rule}]
         })},
         ...(annotationProjection.audit?.decisions.length?{annotationProjection:annotationProjection.audit}:{}),
+        ...(literalProjection.audit?.decisions.length?{literalEvidenceProjection:literalProjection.audit}:{}),
         tokenUsage: Number.isFinite(payload?.usage?.prompt_tokens) && Number.isFinite(payload?.usage?.completion_tokens)
           ? {
               input: payload.usage.prompt_tokens,

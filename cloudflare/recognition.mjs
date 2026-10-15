@@ -246,18 +246,17 @@ export function normalizeRecognitionResult(
   })
   let standaloneTasks = normalizeTasks(raw.standaloneTasks, 20)
   const allTasks = () => [...standaloneTasks, ...milestones.flatMap((milestone) => [...milestone.tasks, ...milestone.workPackages.flatMap((workPackage) => workPackage.tasks)])]
-  const seen = new Set()
-  const duplicates = new Set()
+  // Declared IDs, not a verb/object/time tuple, identify distinct obligations.
+  // Two deliveries may share a material and deadline but have different targets.
+  // The validator rejects duplicate IDs; possible semantic duplicates remain
+  // visible for user review instead of deleting an entity behind graph edges.
+  const seen = new Set(), duplicates = new Set()
   for (const task of allTasks()) {
-    const key = `${task.actionVerb}|${task.actionObject}|${task.timePointTempIds.join(',')}`.toLowerCase()
+    const key = JSON.stringify([task.actionVerb,task.actionObject,task.description,
+      task.completionCriteria,task.timePointTempIds,task.materialTempIds,task.dependencyTempIds])
     if (seen.has(key)) duplicates.add(task.tempId)
     else seen.add(key)
   }
-  standaloneTasks = standaloneTasks.filter((task) => !duplicates.has(task.tempId))
-  milestones.forEach((milestone) => {
-    milestone.tasks = milestone.tasks.filter((task) => !duplicates.has(task.tempId))
-    milestone.workPackages.forEach((workPackage) => { workPackage.tasks = workPackage.tasks.filter((task) => !duplicates.has(task.tempId)) })
-  })
   const materials = (Array.isArray(raw.materials) ? raw.materials : []).slice(0, 60).flatMap((item, index) => {
     if (!item || typeof item !== 'object' || Array.isArray(item) || !text(item.name, 100)) return []
     return [{ tempId: text(item.tempId, 100, `material-${index + 1}`), name: text(item.name, 100), required: item.required !== false, formatRequirements: strings(item.formatRequirements, 10), namingRequirements: strings(item.namingRequirements, 10), quantity: Number.isFinite(item.quantity) ? Math.max(1, Math.min(100, Math.round(item.quantity))) : null, submissionChannel: text(item.submissionChannel, 100) || null, relatedTaskTempIds: strings(item.relatedTaskTempIds), evidenceIds: strings(item.evidenceIds).filter((id) => evidenceIds.has(id)), confidence: number01(item.confidence), selected: strings(item.evidenceIds).some((id) => evidenceIds.has(id)) }]
@@ -297,6 +296,6 @@ export function normalizeRecognitionResult(
     projectSuggestion: raw.projectSuggestion && typeof raw.projectSuggestion === 'object' ? { title: field(raw.projectSuggestion.title, '待确认项目'), category: field(raw.projectSuggestion.category, '其他', true), objective: field(raw.projectSuggestion.objective, ''), description: field(raw.projectSuggestion.description, '') } : null,
     milestones, standaloneTasks, materials, timePoints, events, evidence,
     conflicts: Array.isArray(raw.conflicts) ? raw.conflicts.slice(0, 30) : [], ambiguities: Array.isArray(raw.ambiguities) ? raw.ambiguities.slice(0, 30) : [], ignoredContent: Array.isArray(raw.ignoredContent) ? raw.ignoredContent.slice(0, 30) : [],
-    quality: { overallConfidence: number01(qualityRaw.overallConfidence), hierarchyConfidence: number01(qualityRaw.hierarchyConfidence), dateConfidence: number01(qualityRaw.dateConfidence), evidenceCoverage: number01(qualityRaw.evidenceCoverage), duplicateRisk: Math.max(number01(qualityRaw.duplicateRisk, 0), duplicates.size / Math.max(1, taskCount)), overFragmentationRisk: overFragmented ? 1 : number01(qualityRaw.overFragmentationRisk, 0), missingActionRisk: number01(qualityRaw.missingActionRisk, 0), needsHumanReview: Boolean(qualityRaw.needsHumanReview) || overFragmented || decision === 'uncertain', reviewReasons: [...new Set([...strings(qualityRaw.reviewReasons, 20), ...(duplicates.size ? ['存在重复任务，已从默认结果中合并'] : []), ...(overFragmented ? ['任务数量超过安全阈值，可能拆分过细'] : []), ...(decision === 'uncertain' ? ['项目归属不确定'] : [])])] },
+    quality: { overallConfidence: number01(qualityRaw.overallConfidence), hierarchyConfidence: number01(qualityRaw.hierarchyConfidence), dateConfidence: number01(qualityRaw.dateConfidence), evidenceCoverage: number01(qualityRaw.evidenceCoverage), duplicateRisk: Math.max(number01(qualityRaw.duplicateRisk, 0), duplicates.size / Math.max(1, taskCount)), overFragmentationRisk: overFragmented ? 1 : number01(qualityRaw.overFragmentationRisk, 0), missingActionRisk: number01(qualityRaw.missingActionRisk, 0), needsHumanReview: Boolean(qualityRaw.needsHumanReview) || overFragmented || decision === 'uncertain', reviewReasons: [...new Set([...strings(qualityRaw.reviewReasons, 20), ...(duplicates.size ? ['存在可能重复的事项，已保留供核对'] : []), ...(overFragmented ? ['任务数量超过安全阈值，可能拆分过细'] : []), ...(decision === 'uncertain' ? ['项目归属不确定'] : [])])] },
   }
 }

@@ -33,13 +33,19 @@ export function assertModelGatewayConfigured(readSecret=()=>process.env.DEEPSEEK
  * Dependency injection is for zero-network tests; the paid runner uses defaults.
  * No credential is written until a verified end-to-end TLS socket is established. */
 export function createPinnedProxyFetch({proxyRequest=httpRequest,secureConnect=tlsConnect,
-  upstreamRequest=httpsRequest,Agent=HttpsAgent,endpoint=BILLING_POLICY.endpoint}={}) {
+  upstreamRequest=httpsRequest,Agent=HttpsAgent,endpoint=BILLING_POLICY.endpoint,
+  requestByteCeiling=BILLING_POLICY.requestByteCeiling}={}) {
   check(endpoint===BILLING_POLICY.endpoint||endpoint==='https://api.deepseek.com/chat/completions','PINNED_ROUTE')
+  // The legacy Responses ceiling remains unchanged. A current Worker request
+  // includes its frozen schema as well as up to 24,000 source characters.
+  // Opt-in size support does not alter endpoint, TLS, once-send or billing rules.
+  check(Number.isSafeInteger(requestByteCeiling)&&requestByteCeiling>0
+    &&requestByteCeiling<=(endpoint==='https://api.deepseek.com/chat/completions'?262144:BILLING_POLICY.requestByteCeiling),'PINNED_REQUEST_BOUND')
   let consumed=false
   return async(url,options)=>{
     check(!consumed,'PINNED_ROUTE_CONSUMED');consumed=true
     check(url===endpoint&&options?.method==='POST'&&options.redirect==='manual'
-      &&typeof options.body==='string'&&Buffer.byteLength(options.body)<=BILLING_POLICY.requestByteCeiling,'PINNED_ROUTE')
+      &&typeof options.body==='string'&&Buffer.byteLength(options.body)<=requestByteCeiling,'PINNED_ROUTE')
     exact(options.headers,['Authorization','Content-Type'])
     check(options.headers['Content-Type']==='application/json'
       &&/^Bearer [^\s\r\n]{16,512}$/.test(options.headers.Authorization)&&options.signal,'PINNED_HEADERS')

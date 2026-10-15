@@ -101,7 +101,7 @@ export function withTransportBoundaryDiagnostics(options,journal){
 /** Observe exact Node API boundaries through the existing pinned route's
  * dependency injection. POST API/end entry is NOT receipt or delivery proof.
  * Merely importing/creating this function reads no credential and sends nothing. */
-export function createBoundaryPinnedProxyFetch(observation,{proxyRequest=httpRequest,secureConnect=tlsConnect,upstreamRequest=httpsRequest,Agent=HttpsAgent,endpoint}={}){
+export function createBoundaryPinnedProxyFetch(observation,{proxyRequest=httpRequest,secureConnect=tlsConnect,upstreamRequest=httpsRequest,Agent=HttpsAgent,endpoint,requestByteCeiling}={}){
  check(typeof observation?.boundarySync==='function','OBSERVER_REQUIRED')
  const mark=observation.boundarySync
  // Node event callbacks are outside the Promise executor. Fail observation
@@ -115,7 +115,7 @@ export function createBoundaryPinnedProxyFetch(observation,{proxyRequest=httpReq
   }
   return emitter
  }
- return createPinnedProxyFetch({Agent,...(endpoint?{endpoint}:{}),
+ return createPinnedProxyFetch({Agent,...(endpoint?{endpoint}:{}),...(requestByteCeiling===undefined?{}:{requestByteCeiling}),
   proxyRequest(...args){mark('PROXY_CONNECT_API_ENTER');return guardOnce(proxyRequest(...args),'connect')},
   secureConnect(...args){mark('TLS_API_ENTER');return guardOnce(secureConnect(...args),'secureConnect')},
   upstreamRequest(...args){

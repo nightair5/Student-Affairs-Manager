@@ -35,6 +35,7 @@ async function carrierTests(label,paths,pattern) {
 }
 async function product() {
   layer='current-product'
+  nodeTests([['worker-literal-evidence','cloudflare/recognition-literal-evidence.node-test.mjs']])
   run('timezone',['-e','const zone=Intl.DateTimeFormat().resolvedOptions().timeZone;console.log(JSON.stringify({requested:process.env.TZ,resolved:zone,offset:new Date("2026-01-15T00:00:00Z").getTimezoneOffset()}));if(!process.env.TZ)process.exit(1)'])
   run('contract',['scripts/generate-recognition-contract.mjs','--check'])
   run('time-contract',['scripts/generate-time-ast.mjs','--check'])
@@ -43,6 +44,7 @@ async function product() {
 }
 async function safety() {
   layer='current-safety'
+  nodeTests([['product-worker-payload','scripts/product-worker-payload.node-test.mjs']])
   const groups=testFileGroups(process.cwd())
   // Frozen private-record cases are scheduled in historical(), not discarded.
   vitest('vitest-safety',groups.safety)

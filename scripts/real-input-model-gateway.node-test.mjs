@@ -13,10 +13,11 @@ import { BILLING_POLICY,FLASH41_POLICY,FLASH41_PAIRED06_POLICY,MODEL_COMPARE_POL
 
 const ORIGIN='http://127.0.0.1:6637',CAP='a'.repeat(64),NOW='2026-09-07T00:00:00.000Z'
 const FAKE_SECRET='NOT_A_REAL_CREDENTIAL_FOR_ENGINEERING'
-function pinnedTransport({proxyStatus=200,authorized=true}={}) {
+function pinnedTransport({proxyStatus=200,authorized=true,...routeOptions}={}) {
   const observed={connects:[],tls:[],requests:[],bodies:[]}
   const socket=()=>Object.assign(new EventEmitter(),{destroy(){}})
   const fetchImpl=createPinnedProxyFetch({
+    ...routeOptions,
     proxyRequest(options){observed.connects.push(options);const req=socket()
       req.end=()=>queueMicrotask(()=>req.emit('connect',{statusCode:proxyStatus},socket(),Buffer.alloc(0)));return req},
     secureConnect(options){observed.tls.push(options);const s=Object.assign(socket(),{authorized})
@@ -57,6 +58,18 @@ test('abort and alternative destination fail before opening a proxy connection',
   assert.equal(s.observed.connects.length,0)
   const other=pinnedTransport();await assert.rejects(()=>other.fetchImpl('https://other.invalid/responses',other.options()),/PINNED_ROUTE/)
   assert.equal(other.observed.connects.length,0)
+})
+
+test('large current Worker payload opts into a bounded Chat ceiling; legacy defaults still stop before CONNECT',async()=>{
+  const body=JSON.stringify({model:'deepseek-v4-flash',messages:[{role:'user',content:'字'.repeat(25000)}]})
+  assert.ok(Buffer.byteLength(body)>BILLING_POLICY.requestByteCeiling)
+  const legacy=pinnedTransport();await assert.rejects(()=>legacy.fetchImpl(BILLING_POLICY.endpoint,{...legacy.options(),body}),/PINNED_ROUTE/)
+  assert.equal(legacy.observed.connects.length,0)
+  const endpoint='https://api.deepseek.com/chat/completions',current=pinnedTransport({endpoint,requestByteCeiling:262144})
+  await (await current.fetchImpl(endpoint,{...current.options(),body})).text();assert.equal(current.observed.bodies[0],body)
+  await assert.rejects(()=>current.fetchImpl(endpoint,{...current.options(),body}),/CONSUMED/)
+  assert.throws(()=>pinnedTransport({requestByteCeiling:262144}),/PINNED_REQUEST_BOUND/)
+  assert.throws(()=>pinnedTransport({endpoint,requestByteCeiling:262145}),/PINNED_REQUEST_BOUND/)
 })
 // Diagnostic fixtures are transport-only, with fake credentials and no live network.
 const transportFailure=code=>()=>{throw new TypeError(FAKE_SECRET,{cause:Object.assign(new Error(FAKE_SECRET),{code})})}
