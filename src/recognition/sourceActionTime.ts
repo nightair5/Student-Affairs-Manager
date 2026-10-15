@@ -1,7 +1,7 @@
 import type { RecognitionResult } from './types'
 import { taskActionText } from '../lib/taskActionText'
 
-export const SOURCE_ACTION_TIME_VERSION = 'source-action-time-role-1.0.3'
+export const SOURCE_ACTION_TIME_VERSION = 'source-action-time-role-1.0.4'
 export interface SourceActionTimeDeclaration { id: string; owners: Array<{ kind: 'task'; entityId: string }> }
 export interface SourceActionTimeDecision { id: string; ownerIds: string[]; beforeType: string; role: 'task_action_time'; reason: 'EXPLICIT_GENERATION_ROLE' | 'CITED_ACTION_AT_TIME'; quotes: string[] }
 const escaped = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')
@@ -14,9 +14,9 @@ export function groundSourceActionTimes(input: RecognitionResult, sourceText: st
   for (const p of result.timePoints) {
     // A cited calendar interval is not a scalar cutoff. With one model point,
     // keep the real interval and local risk; never fabricate its missing pair.
-    if (p.type.endsWith('_deadline') && /^(?:\d{4}年)?\d{1,2}月\d{1,2}日?\s*[-—–至到]\s*(?:(?:\d{4}年)?\d{1,2}月)?\d{1,2}日$/u.test(p.rawText)) {
+    if (p.type.endsWith('_deadline') && /^(?:\d{4}年)?\d{1,2}月\d{1,2}日?[-—–至到](?:(?:\d{4}年)?\d{1,2}月)?\d{1,2}日$/u.test(p.rawText.replace(/\s+/gu,''))) {
       const cited=result.evidence.filter(e=>p.evidenceIds.includes(e.id)&&e.quote&&sourceText.includes(e.quote)&&e.quote.includes(p.rawText)).map(e=>e.quote!)
-      const window=cited.some(q=>q.split(/[。；\n]/u).some(clause=>clause.includes(p.rawText)&&/在|期间|窗口|开放/u.test(clause)&&!/截止|截至|最迟|不晚于|之前|以前/u.test(clause)))
+      const window=cited.some(q=>q.split(/[。；]/u).some(clause=>clause.includes(p.rawText)&&/在|期间|窗口|开放|(?:学生)?注册选课[：:]|(?:报名|办理)时间[：:]/u.test(clause.replace(/\s+/gu,''))&&!/截止|截至|最迟|不晚于|之前|以前/u.test(clause)))
       if(window){
         const ids=[p.tempId,...p.relatedTaskTempIds,...p.relatedMaterialTempIds]
         rejectedDeadlineRoles.push({id:p.tempId,ownerIds:ids.slice(1),rawText:p.rawText,beforeValue:p.normalizedValue,reason:'CITED_WINDOW_IS_NOT_A_SCALAR_DEADLINE'})
