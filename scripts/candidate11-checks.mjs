@@ -1,5 +1,6 @@
 import {spawnSync} from 'node:child_process'
 import {mkdirSync,writeFileSync,existsSync,readFileSync} from 'node:fs'
+import {realpath} from 'node:fs/promises'
 import {resolve} from 'node:path'
 import {tmpdir} from 'node:os'
 import {randomUUID} from 'node:crypto'
@@ -10,6 +11,10 @@ const phase=process.argv[2]
 if(!CHECK_PHASES.includes(phase)||process.argv.length!==3)throw Error('C11_CHECK_PHASE')
 assertNoEnvironmentFiles(process.cwd())
 const env=checkEnvironment(process.env)
+// Hosted TEMP may be a junction. Keep every offline child on the same real
+// temporary root, without changing the renderer/executor containment checks.
+const temporaryRoot=await realpath(tmpdir())
+for(const key of Object.keys(env))if(['TEMP','TMP','TMPDIR'].includes(key.toUpperCase()))env[key]=temporaryRoot
 for(const key of Object.keys(process.env))if(!Object.hasOwn(env,key))delete process.env[key]
 Object.assign(process.env,env)
 const dir=resolve('.data/candidate11/checks',phase,env.TZ.replaceAll('/','-'));mkdirSync(dir,{recursive:true})
@@ -28,7 +33,7 @@ async function carrierTests(label,paths,pattern) {
   if(carrierManifest)return vitest(label,paths,{REAL_INPUT_CARRIERS_MANIFEST:carrierManifest},pattern)
   await prepareCarriers(async()=>{
     const {renderEngineeringCarriers}=await import('./render-mainline-real-input-01-fixtures.mjs')
-    const output=resolve(tmpdir(),'c11-engineering-carriers-'+randomUUID())
+    const output=resolve(temporaryRoot,'c11-engineering-carriers-'+randomUUID())
     await renderEngineeringCarriers(output)
     return resolve(output,'carriers.json')
   },manifest=>{carrierManifest=manifest;return vitest(label,paths,{REAL_INPUT_CARRIERS_MANIFEST:manifest},pattern)},row=>record({...row,label:row.label==='vitest-carriers'?label:row.label}))
