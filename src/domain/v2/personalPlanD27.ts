@@ -6,7 +6,7 @@ import {interpretTimeD26} from '../../lib/timeSemanticsD26'
 import {sourceReadinessValue,unresolvedSourceReadiness} from './sourceReadiness'
 
 export const PLAN_VERSION = 'personal-plan-d27-1' as const
-export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.3.0' as const
+export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.3.1' as const
 export const PLAN_RECEIPT = 'personalPlanD27Receipt'
 export const PLAN_UNDO = 'personalPlanD27Undo'
 export type DurationOrigin = 'user' | 'recorded_estimate' | 'product_estimate'
@@ -184,7 +184,7 @@ function sourceWindowBounds(w:WorkspaceV8,t:Task,zone:string):SourceBounds {
     // Both known projections use the same declaration structure. A version
     // label alone never establishes valid bounds: all pairs and citations are
     // independently checked below; future versions require explicit review.
-    if(!metadata||metadata.version!=='source-window-declarations-1.0.0'||!['task-time-authority-projection-1.0.0','task-time-authority-projection-1.0.1','ordinary-cited-window-projection-1.0.0'].includes(String(metadata.auditVersion))
+    if(!metadata||metadata.version!=='source-window-declarations-1.0.0'||!['task-time-authority-projection-1.0.0','task-time-authority-projection-1.0.1','ordinary-cited-window-projection-1.0.0','ordinary-cited-window-projection-1.0.1'].includes(String(metadata.auditVersion))
       ||metadata.ownerTaskId!==t.id||metadata.ownerTempId!==t.legacyData?.recognitionTempId||metadata.sourceId!==t.legacyData?.sourceId
       ||!draft||!draft.acceptedEntityTempIds.includes(String(metadata.ownerTempId))||w.recognitionRuns.find(run=>run.id===draft.recognitionRunId)?.sourceVersionId!==metadata.sourceVersionId
       ||!version||typeof version.rawText!=='string'||version.sourceId!==metadata.sourceId||!Array.isArray(metadata.windows)||!metadata.windows.length||metadata.windows.length>4)return invalid

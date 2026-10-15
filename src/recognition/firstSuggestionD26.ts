@@ -12,11 +12,11 @@ import { supportedCoordinatedObject, supportedEventDescriptor, supportedEventOpe
 import {retainCurrentDeadlineFacts,type SourceCurrentFactAudit} from './sourceCurrentFacts'
 import {completeDeclaredEventNameSupport,type DeclaredEventNameAudit} from './declaredEventNameSupport'
 import {completeCitedOwnerSupport,type CitedOwnerDecision} from './citedOwnerSupport'
-import {completeCitedSourceWindows} from './citedSourceWindow'
+import {completeCitedSourceWindows,CITED_SOURCE_WINDOW_VERSION} from './citedSourceWindow'
 import {addDateOnlyDays} from '../lib/timeSemantics'
 import {nativeQualificationReviews} from './nativeQualificationReview'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.18.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.19.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -39,7 +39,7 @@ export interface D26FirstSuggestionAudit {
 type TimeFields = Pick<TimePointSuggestionV2, 'normalizedValue' | 'timezone' | 'isAllDay' | 'precision' | 'needsConfirmation'>
 const fields = (point: TimeFields): TimeFields => ({ normalizedValue: point.normalizedValue, timezone: point.timezone,
   isAllDay: point.isAllDay, precision: point.precision, needsConfirmation: point.needsConfirmation })
-const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], sourceCurrentness:[], declaredEventNameSupport:[], citedOwnerSupport:[],citedSourceWindows:{version:'ordinary-cited-window-projection-1.0.0',inferredFacts:0,decisions:[]}, projectDisplayDefault:null,nativePreconditionReview:[],nativeQualificationReview:[], activityRoles:{reusedNameEvidence:[],suppressedLocationTasks:[],invalidEnds:[]}, actionFields: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
+const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], sourceCurrentness:[], declaredEventNameSupport:[], citedOwnerSupport:[],citedSourceWindows:{version:CITED_SOURCE_WINDOW_VERSION,inferredFacts:0,decisions:[]}, projectDisplayDefault:null,nativePreconditionReview:[],nativeQualificationReview:[], activityRoles:{reusedNameEvidence:[],suppressedLocationTasks:[],invalidEnds:[]}, actionFields: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
 const supported = (value: string, quotes: string[]) => Boolean(value.trim()) && quotes.some(quote => quote.includes(value))
 function supportedAdjacent(value: string, quotes: string[], sourceText: string) {
   if (supported(value, quotes)) return true
@@ -202,7 +202,8 @@ function citedSameDayDate(point:AnchorPoint,quotes:(id:string)=>string[],source:
  if(!/(?:当日|同日|当天)\d{1,2}:[0-5]\d(?:前)?/u.test(point.rawText)||[...point.rawText.matchAll(/\d{1,2}:[0-5]\d/gu)].length!==1||/[。；\n]|取消|作废|如果|若/u.test(point.rawText))return undefined
  const all=unique(quotes(point.tempId).filter(q=>q.includes(point.rawText))),rows=all.filter(q=>!all.some(other=>other.length>q.length&&other.includes(q)));if(rows.length!==1)return undefined
  const at=source.indexOf(rows[0]);if(at<0||source.indexOf(rows[0],at+1)>=0)return undefined
- const preceding=source.slice(0,at).split(/[。\n]/u).at(-1)??''
+ const pointAt=rows[0].indexOf(point.rawText)
+ const preceding=source.slice(0,at+pointAt).split(/[。\n]/u).at(-1)??''
  const dates=[...preceding.matchAll(/\d{4}年\d{1,2}月\d{1,2}日/gu)]
  if(dates.length!==1||/次日|另日|取消|作废|若|如果/u.test(preceding))return undefined
  const parsed=interpretTimeD26(dates[0][0],{type:point.type,referenceTime,timezone})

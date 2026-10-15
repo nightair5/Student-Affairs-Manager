@@ -4,6 +4,7 @@ import { assembleCurrentFirstSuggestion } from './materialChannelGrounding'
 import { parseRecognitionResult } from './schema'
 import { supportedEventOperation } from './compoundNameSupport'
 import { parseChineseTimeAst } from '../lib/timeSemantics'
+import { completeCitedSourceWindows } from './citedSourceWindow'
 
 const referenceTime = '2027-02-01T09:00:00+08:00'
 const timezone = 'Asia/Shanghai'
@@ -46,5 +47,20 @@ describe('literal public notice closure, without discovering missing facts', () 
     const first = assembleCurrentFirstSuggestion(parseRecognitionResult(r), { sourceText: source, referenceTime, timezone })
     expect(first.result.timePoints).toHaveLength(1)
     expect(first.result.events[0].endTimePointTempId).toBeNull()
+  })
+  it('separates an existing paper window from a different electronic deadline in the same cited sentence', () => {
+    const source = '纸质申请件请于2027年3月4日09:00—11:00到学工窗口递交，电子申请件于当日16:00前提交至登记系统。'
+    const r = ordinaryWorkflowFixture(source), a=r.standaloneTasks[0]
+    Object.assign(a,{tempId:'A',actionVerb:'递交',actionObject:'纸质申请件',evidenceIds:['Q'],materialTempIds:[],timePointTempIds:['P']})
+    r.standaloneTasks.push({...structuredClone(a),tempId:'B',actionVerb:'提交',actionObject:'电子申请件',timePointTempIds:['D']})
+    r.materials=[];r.evidence=[{id:'Q',sourceId:'pending-source',quote:source,field:'deadline'}]
+    r.timePoints=[{tempId:'P',type:'submission_deadline',rawText:'2027年3月4日09:00—11:00',normalizedValue:null,timezone,isAllDay:false,precision:'vague',needsConfirmation:true,relatedTaskTempIds:['A'],relatedMaterialTempIds:[],evidenceIds:['Q'],confidence:.9},
+      {tempId:'D',type:'submission_deadline',rawText:'当日16:00前',normalizedValue:null,timezone,isAllDay:false,precision:'vague',needsConfirmation:true,relatedTaskTempIds:['B'],relatedMaterialTempIds:[],evidenceIds:['Q'],confidence:.9}]
+    const first=assembleCurrentFirstSuggestion(parseRecognitionResult(r),{sourceText:source,referenceTime,timezone})
+    expect(first.audit.citedSourceWindows.decisions).toHaveLength(1)
+    expect(first.result.timePoints.filter(p=>p.relatedTaskTempIds.includes('A')).map(p=>[p.type,p.normalizedValue])).toEqual([['event_start','2027-03-04T09:00'],['event_end','2027-03-04T11:00']])
+    expect(first.result.timePoints.find(p=>p.tempId==='D')?.normalizedValue).toBe('2027-03-04T16:00')
+    const conditional=structuredClone(r);conditional.evidence[0].quote='若审核通过，'+source
+    expect(completeCitedSourceWindows(conditional,'若审核通过，'+source,referenceTime,timezone).decisions).toHaveLength(0)
   })
 })
