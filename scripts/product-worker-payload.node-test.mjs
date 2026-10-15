@@ -17,13 +17,17 @@ test('oversized, unbounded, other-route and non-integer requests cannot start a 
  const p=createPinnedProxyFetch({endpoint,proxyRequest,requestByteCeiling:262144});await assert.rejects(()=>p(endpoint,options('x'.repeat(262145))),/PINNED_ROUTE/);assert.equal(connects,0)
 })
 test('file evaluation builds the exact ordinary Worker payload rather than relabeling it as pasted text',async()=>{
- const s={id:'FILE-CONTROL',sourceTitle:'anonymous.txt',sourceType:'file',text:'请于2027年3月8日18:00前提交匿名报告。',referenceTime:'2027-03-01T00:00:00+08:00',timezone:'Asia/Shanghai'},expected=workerRequest(s);let observed=null
+ const s={id:'FILE-CONTROL',inputSourceTitle:'anonymous.txt',inputSourceType:'file',sourceType:'anonymous_authored',text:'请于2027年3月8日18:00前提交匿名报告。',referenceTime:'2027-03-01T00:00:00+08:00',timezone:'Asia/Shanghai'},expected=workerRequest(s);let observed=null
  const w=createWorker({fetcher:async(url,init)=>{assert.equal(url,endpoint);observed=JSON.parse(init.body);return new Response('{}',{headers:{'content-type':'application/json'}})}})
  await w.fetch(new Request('http://127.0.0.1:7180/api/deepseek/extract',{method:'POST',headers:{origin:'http://127.0.0.1:7180','content-type':'application/json'},body:JSON.stringify(expected.workerBody)}),{DEEPSEEK_API_KEY:'server-only-test-key',ALLOWED_ORIGINS:'http://127.0.0.1:7180'})
  assert.deepEqual(observed,expected.body);assert.match(observed.messages[1].content,/来源类型：file\n来源标题：anonymous.txt/u)
  let sends=0;const invalid=createWorker({fetcher:async()=>{sends++;throw Error('NO_SEND')}})
  const rejected=await invalid.fetch(new Request('http://127.0.0.1:7180/api/deepseek/extract',{method:'POST',headers:{origin:'http://127.0.0.1:7180','content-type':'application/json'},body:JSON.stringify({...expected.workerBody,sourceType:'unrecognized'})}),{DEEPSEEK_API_KEY:'SYNTHETIC_OFFLINE_NO_CREDENTIAL',ALLOWED_ORIGINS:'http://127.0.0.1:7180'})
  assert.equal(rejected.status,400);assert.equal(sends,0)
+})
+test('dataset provenance never overrides the ordinary pasted-input type or frozen title',()=>{
+ const request=workerRequest({id:'ANONYMOUS-CONTROL',sourceType:'anonymous_authored',sourceTitle:'provenance-only heading',text:'请提交匿名报告。',referenceTime:'2027-03-01T00:00:00+08:00',timezone:'Asia/Shanghai'})
+ assert.equal(request.workerBody.sourceType,'text');assert.equal(request.workerBody.sourceTitle,'ANONYMOUS-CONTROL');assert.match(request.body.messages[1].content,/来源类型：text\n来源标题：ANONYMOUS-CONTROL/u)
 })
 test('experimental entity-support guidance preserves the 2.0 shape and cannot silently fall back to the default input',async()=>{
  const old=structuredClone(productGenerationSchema('recognition-product-contract-1.5.0')),next=structuredClone(productGenerationSchema('recognition-product-contract-1.6.0'))
