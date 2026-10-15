@@ -1,10 +1,12 @@
 import type { CanonicalWorkspaceRepository } from './repository'
 import type { HistoryRecord, JsonValue, Task, TimePoint, WorkspaceV8 } from './types'
 import { addDateOnlyDays, instantToWallClock, isDateOnly, parseBusinessDateTime, wallClockToInstant } from '../../lib/timeSemantics'
+import {citedTaskDateRange} from '../../../cloudflare/cited-event-sequence.mjs'
+import {interpretTimeD26} from '../../lib/timeSemanticsD26'
 import {sourceReadinessValue,unresolvedSourceReadiness} from './sourceReadiness'
 
 export const PLAN_VERSION = 'personal-plan-d27-1' as const
-export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.2.1' as const
+export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.3.0' as const
 export const PLAN_RECEIPT = 'personalPlanD27Receipt'
 export const PLAN_UNDO = 'personalPlanD27Undo'
 export type DurationOrigin = 'user' | 'recorded_estimate' | 'product_estimate'
@@ -116,6 +118,7 @@ export function planBaseline(w: WorkspaceV8): string {
     sourceWindowEvidence:sorted(w.evidenceRefs.filter(ref=>w.timePoints.some(p=>Array.isArray(p.legacyData?.evidenceIds)&&p.legacyData.evidenceIds.includes(ref.legacyData?.recognitionEvidenceId??null)))).map(ref=>({id:ref.id,sourceVersionId:ref.sourceVersionId,quotedText:ref.quotedText,textStart:ref.textStart,textEnd:ref.textEnd,recognitionEvidenceId:ref.legacyData?.recognitionEvidenceId??null})),
     events: sorted(w.events).map(e => ({ id: e.id, startTimePointId: e.startTimePointId, endTimePointId: e.endTimePointId })),
     sourceVersions: sorted(w.sources.filter(s => sourceIds.has(s.id))).map(s => ({ id: s.id, current: s.currentVersionId, version: w.sourceVersions.find(v => v.id === s.currentVersionId) })),
+    nativeWindowDrafts:sorted(w.extractionDrafts.filter(d=>w.recognitionRuns.some(r=>r.id===d.recognitionRunId&&w.sourceVersions.some(v=>v.id===r.sourceVersionId&&sourceIds.has(v.sourceId))))).map(d=>({id:d.id,acceptedEntityTempIds:[...d.acceptedEntityTempIds].sort(),result:d.result?{tasks:[...d.result.standaloneTasks,...d.result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(wp=>wp.tasks)])].map(t=>({tempId:t.tempId,timePointTempIds:t.timePointTempIds,evidenceIds:t.evidenceIds})),timePoints:d.result.timePoints.map(p=>({tempId:p.tempId,type:p.type,rawText:p.rawText,relatedTaskTempIds:p.relatedTaskTempIds,evidenceIds:p.evidenceIds})),evidence:d.result.evidence.map(e=>({id:e.id,quote:e.quote}))}:null})),
     courses: w.preferences.legacyData?.courseBlocks ?? [],
   })
 }
@@ -220,7 +223,26 @@ function sourceWindowBounds(w:WorkspaceV8,t:Task,zone:string):SourceBounds {
     if(pointIds.size!==points.length||points.some(point=>!pointIds.has(point.id)))return invalid
     return {start:Math.min(...intervals.map(i=>i.start)),end:Math.max(...intervals.map(i=>i.end)),intervals:intervals.sort((a,b)=>a.start-b.start||a.end-b.end),invalid:false,present:true}
   }
-  if(!points.length)return {start:-Infinity,end:Infinity,intervals:[{start:-Infinity,end:Infinity}],invalid:false,present:false}
+  if(!points.length){
+    // Native ordinary results may already declare both ends of one shared
+    // task window without the semantic sidecar. Validate the stored graph and
+    // citations; absence of the sidecar must not schedule outside that window.
+    const native=w.timePoints.filter(p=>p.relatedTaskIds.includes(t.id)&&p.eventId===null&&['event_start','event_end'].includes(p.type)&&/月\d{1,2}日?\s*[-—–至到]/u.test(p.rawText))
+    if(!native.length)return {start:-Infinity,end:Infinity,intervals:[{start:-Infinity,end:Infinity}],invalid:false,present:false}
+    const starts=native.filter(p=>p.type==='event_start'),ends=native.filter(p=>p.type==='event_end')
+    const source=w.sources.find(s=>s.id===t.legacyData?.sourceId),version=w.sourceVersions.find(v=>v.id===source?.currentVersionId)
+    const draft=w.extractionDrafts.find(d=>d.acceptedEntityTempIds.includes(String(t.legacyData?.recognitionTempId))&&w.recognitionRuns.find(r=>r.id===d.recognitionRunId)?.sourceVersionId===version?.id)
+    const raw=draft?.result,rawTasks=raw?[...raw.standaloneTasks,...raw.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(wp=>wp.tasks)])]:[]
+    if(starts.length!==1||ends.length!==1||!raw||!version?.rawText)return invalid
+    const start=starts[0],end=ends[0],a=sourceWindowMs(start,zone,false),b=sourceWindowMs(end,zone,true)
+    if(a===undefined||b===undefined||b<=a||start.rawText!==end.rawText||start.precision!=='date_only'||end.precision!=='date_only'||start.materialId||end.materialId||start.relatedMaterialIds.length||end.relatedMaterialIds.length||start.timezone!==end.timezone||JSON.stringify([...start.relatedTaskIds].sort())!==JSON.stringify([...end.relatedTaskIds].sort()))return invalid
+    for(const point of [start,end]){
+      const original=raw.timePoints.find(p=>p.tempId===point.legacyData?.recognitionTempId),proof=original&&citedTaskDateRange(original,rawTasks,raw.timePoints,raw.evidence,version.rawText)
+      const expected=proof&&interpretTimeD26(proof.endpoint,{type:point.type,referenceTime:start.normalizedValue+'T12:00:00+08:00',timezone:point.timezone??zone}).point
+      if(!proof||!expected?.normalizedValue||expected.needsConfirmation||expected.normalizedValue!==point.normalizedValue||!sourceWindowEvidence(w,point,version.id,point.rawText,version.rawText))return invalid
+    }
+    return {start:a,end:b,intervals:[{start:a,end:b}],invalid:false,present:true}
+  }
   // Legacy single bounds stay supported. Multiple unpaired points remain a
   // local unknown rather than acquiring a guessed pairing from array order.
   const starts=points.filter(p=>p.legacyData?.sourceTimeRole==='window_start').map(p=>sourceWindowMs(p,zone,false)),ends=points.filter(p=>p.legacyData?.sourceTimeRole==='window_end').map(p=>sourceWindowMs(p,zone,true))

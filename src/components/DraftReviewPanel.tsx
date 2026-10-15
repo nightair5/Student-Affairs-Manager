@@ -6,13 +6,13 @@ import type { InferenceLevel } from '../types'
 import { assessFocusedReview } from '../recognition/focusedReview'
 import {sourceCoverageHints} from '../recognition/sourceCoverageHints'
 import {selectionFromDraftItems} from '../domain/v2/domainCommit'
-import { timePointDisplayLabel, timePointDisplayValue } from '../recognition/recognitionModePresentation'
+import { timePointDisplayLabel, timePointDisplayValue, recognitionOptionDisplay } from '../recognition/recognitionModePresentation'
 import type { ComponentType, ReactNode } from 'react'
 import type { WorkspaceV8 } from '../domain/v2/types'
 import type { D20ReviewSessionRepository, ReviewSession } from '../experiments/candidate16/d20ReviewSession'
 
 interface DraftReviewPanelProps {
-  ordinarySourceReview?:{busy:boolean;unsaved:boolean;pendingEvents?:number;facts:ReactNode;onConfirm:()=>void;description?:string}
+  ordinarySourceReview?:{problem?:string;busy:boolean;unsaved:boolean;pendingEvents?:number;facts:ReactNode;onConfirm:()=>void;description?:string}
   sessionFrame?:ComponentType<{children:ReactNode;onClose?:()=>void}>
   onRestoreTaskSelections?: (choices:Record<string,boolean>)=>void
   onReloadLatest?: () => Promise<void>
@@ -336,7 +336,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
             </div>
             {focusedReview.qualityFlags.length > 0 && <div className="focused-quality-flags"><strong>质量标记</strong><ul>{focusedReview.qualityFlags.map((flag) => <li key={flag}>{flag}</li>)}</ul></div>}
           </details>}
-          {recognition.ambiguities.length > 0 && <div className="recognition-ambiguities"><strong>待澄清 {recognition.ambiguities.length} 项</strong>{recognition.ambiguities.map((ambiguity) => <article key={ambiguity.id}><p>{ambiguity.message}</p>{ambiguity.options.length > 0 && <small>可能值：{ambiguity.options.join(' / ')}</small>}<EvidenceLocator recognition={recognition} evidenceIds={ambiguity.evidenceIds} onFocusEvidence={setActiveEvidence} /></article>)}</div>}
+          {recognition.ambiguities.length > 0 && <div className="recognition-ambiguities"><strong>待澄清 {recognition.ambiguities.length} 项</strong>{recognition.ambiguities.map((ambiguity) => <article key={ambiguity.id}><p>{ambiguity.message}</p>{ambiguity.options.length > 0 && <small>可能值：{ambiguity.options.map(recognitionOptionDisplay).join(' / ')}</small>}<EvidenceLocator recognition={recognition} evidenceIds={ambiguity.evidenceIds} onFocusEvidence={setActiveEvidence} /></article>)}</div>}
           {recognition.conflicts.length > 0 && <div className="recognition-conflicts"><strong>发现 {recognition.conflicts.length} 项冲突</strong>{recognition.conflicts.map((conflict) => <article key={conflict.id}><p>{conflict.message}</p><EvidenceLocator recognition={recognition} evidenceIds={conflict.evidenceIds} onFocusEvidence={setActiveEvidence} /></article>)}</div>}
         </section>}
         <details className="source-details" open><summary><FileText size={16} />原始通知与定位依据</summary><p>{evidenceIndex >= 0 ? <>{sourceText.slice(0, evidenceIndex)}<mark>{activeEvidence}</mark>{sourceText.slice(evidenceIndex + activeEvidence.length)}</> : sourceText}</p>{activeEvidence && evidenceIndex < 0 && <small>这条依据来自解析结果，但无法在当前保存的原文中精确定位，请人工核对。</small>}</details>
@@ -376,7 +376,8 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
           {recognition && <span>{confirmationV2 && !ordinarySourceReview ? 0 : recognition.events.filter((item) => item.selected !== false).length} 个事件</span>}
           {semanticReview && <span>{semanticReview.eventCount} 个任务关联事件{semanticReview.sourceSession?'；上方独立事件也随本次确认保存':'（随本次确认保存）'}</span>}
         </div>}
-        {ordinarySourceReview && !selectedPending.length && (!pending.length || Boolean(recognition?.events.length)) && draft.workflowStatus !== 'confirmed' && <button className="primary-button" type="button" disabled={ordinarySourceReview.busy||ordinarySourceReview.unsaved} onClick={ordinarySourceReview.onConfirm}>{pending.length?'仅保存独立事件；任务仍待核对':recognition?.events.length?'确认信息并保存独立事件':'标记信息已核对（不创建任务）'}</button>}
+        {ordinarySourceReview && !selectedPending.length && (!pending.length || Boolean(recognition?.events.length)) && draft.workflowStatus !== 'confirmed' && <button className="primary-button" type="button" disabled={ordinarySourceReview.busy||ordinarySourceReview.unsaved||Boolean(ordinarySourceReview.problem)} onClick={ordinarySourceReview.onConfirm}>{pending.length?'仅保存独立事件；任务仍待核对':recognition?.events.length?'确认信息并保存独立事件':'标记信息已核对（不创建任务）'}</button>}
+        {ordinarySourceReview?.problem&&!selectedPending.length&&<p role="status">{ordinarySourceReview.problem}</p>}
         <button className="secondary-button" type="button" onClick={onClose}>{pending.length ? '稍后再处理' : '完成'}</button>
         {selectedPending.length > 0 && <button className="primary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || eventDirty || Boolean(reviewSession&&(checkpointStatus==='loading'||checkpointStatus==='saving'||checkpointStatus==='failed')) || selectedPending.some((item) => !confirmationV2.items[item.id] || confirmationV2.items[item.id].blockedReason || hasUnsaved(item) || itemCheckpointUnsafe(item)))} onClick={onConfirmAll}><CheckCheck size={17} />{ordinarySourceReview?'一次接受本通知':semanticReview?.sourceSession?'确认本通知已选任务及独立事件':'加入已选任务'}（{selectedPending.length}）</button>}
       </footer>

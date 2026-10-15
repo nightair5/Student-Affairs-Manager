@@ -34,3 +34,8 @@ export function timePointDisplayValue(normalizedValue:string|null,rawText:string
   const match=normalizedValue?.match(/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?$/u)
   return match?`${match[1]}年${Number(match[2])}月${Number(match[3])}日${match[4]?` ${match[4]}:${match[5]}`:''}`:rawText
 }
+
+/** A model-proposed option remains an option; only its exact ISO literal is rendered. */
+export function recognitionOptionDisplay(value:string):string {
+  return value.replace(/\b\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2})?\b/gu,literal=>timePointDisplayValue(literal,literal))
+}

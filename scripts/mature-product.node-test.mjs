@@ -6,10 +6,10 @@ import {createScopedEngine} from './scoped-execution-core.mjs'
 import {workerRequest} from './mature-product.mjs'
 import {PRODUCT_CONTRACT_PROMPT_VERSION,productGenerationContract,productGenerationSchema} from '../cloudflare/recognition-output-contract.mjs'
 import {productGenerationContract as stableContract,recognitionOutputSchema as stableSchema} from '../cloudflare/recognition-product-contract-v1-1.mjs'
-import {productGenerationContract as selectedContract,recognitionOutputSchema as selectedSchema} from '../cloudflare/recognition-product-contract-v1-2.mjs'
+import {productGenerationContract as selectedContract,recognitionOutputSchema as selectedSchema} from '../cloudflare/recognition-product-contract-v1-5.mjs'
 const sha=b=>createHash('sha256').update(b).digest('hex')
-test('selected product generation uses v1.2 while explicit prior contract remains byte-equivalent',()=>{
- assert.equal(PRODUCT_CONTRACT_PROMPT_VERSION,'recognition-product-contract-1.2.0');assert.equal(productGenerationContract(),selectedContract());assert.equal(productGenerationSchema(),selectedSchema);
+test('selected product generation uses v1.5 while explicit prior contract remains byte-equivalent',()=>{
+ assert.equal(PRODUCT_CONTRACT_PROMPT_VERSION,'recognition-product-contract-1.5.0');assert.equal(productGenerationContract(),selectedContract());assert.equal(productGenerationSchema(),selectedSchema);
  assert.equal(productGenerationContract('recognition-product-contract-1.1.0'),stableContract());assert.equal(productGenerationSchema('recognition-product-contract-1.1.0'),stableSchema);
  assert.throws(()=>productGenerationContract('unknown'),/UNSUPPORTED/)
 })

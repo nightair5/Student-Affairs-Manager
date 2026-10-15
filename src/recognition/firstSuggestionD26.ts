@@ -1,4 +1,6 @@
-import {citedEventSequence} from '../../cloudflare/cited-event-sequence.mjs'
+import {groundActivityRoles} from './activityRoles'
+import {nativePreconditionIssues} from './nativePrecondition'
+import {citedEventSequence,citedSplitEventRange,citedTaskDateRange} from '../../cloudflare/cited-event-sequence.mjs'
 import { interpretTimeD26, type D26TimeInterpretation } from '../lib/timeSemanticsD26'
 import { adaptModelWire, type WireContext } from '../experiments/realInput01/modelWire'
 import type { SemanticInput } from '../experiments/mainline04/semanticContract'
@@ -14,7 +16,7 @@ import {completeCitedSourceWindows} from './citedSourceWindow'
 import {addDateOnlyDays} from '../lib/timeSemantics'
 import {nativeQualificationReviews} from './nativeQualificationReview'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.16.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.17.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -27,15 +29,17 @@ export interface D26FirstSuggestionAudit {
   citedOwnerSupport:CitedOwnerDecision[]
   citedSourceWindows:ReturnType<typeof completeCitedSourceWindows>
   projectDisplayDefault: {before:string;after:string;reason:string}|null
+  nativePreconditionReview:ReturnType<typeof nativePreconditionIssues>
   nativeQualificationReview:ReturnType<typeof nativeQualificationReviews>
+  activityRoles:ReturnType<typeof groundActivityRoles>
   actionFields: Array<{entityId:string; before:string; after:string; status:'CITED_VERB_PROJECTION'|'LOCAL_UNRESOLVED_ACTION'; quotes:string[]}>
-  rangeSupport: Array<{entityId:string; quote:string; literalRange:string; expanded:string; rule:'CITED_SAME_EVENT_RANGE_ENDPOINT'|'CITED_SAME_EVENT_CLOCK_RANGE'|'CITED_ADJACENT_SAME_DAY_EVENT'|'CITED_NEXT_DAY_DURATION_CONSENSUS'}>
+  rangeSupport: Array<{entityId:string; quote:string; literalRange:string; expanded:string; rule:'CITED_SAME_EVENT_RANGE_ENDPOINT'|'CITED_SAME_EVENT_CLOCK_RANGE'|'CITED_ADJACENT_SAME_DAY_EVENT'|'CITED_NEXT_DAY_DURATION_CONSENSUS'|'CITED_SHARED_TASK_RANGE_ENDPOINT'}>
   role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT'
 }
 type TimeFields = Pick<TimePointSuggestionV2, 'normalizedValue' | 'timezone' | 'isAllDay' | 'precision' | 'needsConfirmation'>
 const fields = (point: TimeFields): TimeFields => ({ normalizedValue: point.normalizedValue, timezone: point.timezone,
   isAllDay: point.isAllDay, precision: point.precision, needsConfirmation: point.needsConfirmation })
-const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], sourceCurrentness:[], declaredEventNameSupport:[], citedOwnerSupport:[],citedSourceWindows:{version:'ordinary-cited-window-projection-1.0.0',inferredFacts:0,decisions:[]}, projectDisplayDefault:null,nativeQualificationReview:[], actionFields: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
+const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], sourceCurrentness:[], declaredEventNameSupport:[], citedOwnerSupport:[],citedSourceWindows:{version:'ordinary-cited-window-projection-1.0.0',inferredFacts:0,decisions:[]}, projectDisplayDefault:null,nativePreconditionReview:[],nativeQualificationReview:[], activityRoles:{reusedNameEvidence:[],suppressedLocationTasks:[],invalidEnds:[]}, actionFields: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
 const supported = (value: string, quotes: string[]) => Boolean(value.trim()) && quotes.some(quote => quote.includes(value))
 function supportedAdjacent(value: string, quotes: string[], sourceText: string) {
   if (supported(value, quotes)) return true
@@ -94,10 +98,10 @@ function prose(audit: D26FirstSuggestionAudit, original: ProseRecord, title: str
   audit.generatedProse.push({ ...original, title, description })
   return { title, description }
 }
-function time<T extends TimeFields & { tempId: string; rawText: string; type: TimePointSuggestionV2['type'] }>(point: T, quotes: string[], referenceTime: string, timezone: string, audit: D26FirstSuggestionAudit, inheritedDate?: string, anchorContext = '', rangeQuotes: string[] = [], anchorMinutes?:number) {
+function time<T extends TimeFields & { tempId: string; rawText: string; type: TimePointSuggestionV2['type'] }>(point: T, quotes: string[], referenceTime: string, timezone: string, audit: D26FirstSuggestionAudit, inheritedDate?: string, anchorContext = '', rangeQuotes: string[] = [], anchorMinutes?:number, proof?:NonNullable<ReturnType<typeof citedSplitEventRange>>) {
   const before = fields(point)
   const fullRange=/(?:\d{4}年)?\d{1,2}月\d{1,2}日?\s*(?:[-—–至到]\s*(?:\d{4}年)?(?:\d{1,2}月)?\d{1,2}日|\d{1,2}:[0-5]\d\s*[-—–至到]\s*\d{1,2}:[0-5]\d|\d{1,2}:[0-5]\d(?:开始|开场)[，,、；;\s]*\d{1,2}:[0-5]\d(?:结束|散场|闭幕))/u.test(point.rawText)
-  const range = supported(point.rawText, quotes)&&!fullRange?null:rangeEndpointSupport(point.rawText, point.type, rangeQuotes, referenceTime, timezone)
+  const range = proof?{quote:proof.context,literalRange:point.rawText,expanded:proof.endpoint,rule:proof.rule==='EXISTING_SHARED_TASK_DATE_RANGE'?'CITED_SHARED_TASK_RANGE_ENDPOINT' as const:'CITED_SAME_EVENT_RANGE_ENDPOINT' as const}:supported(point.rawText, quotes)&&!fullRange?null:rangeEndpointSupport(point.rawText, point.type, rangeQuotes, referenceTime, timezone)
   if (!supported(point.rawText, quotes) && !range) {
     audit.unresolved.push({ entityId: point.tempId, reason: 'TIME_SOURCE_SUPPORT_MISSING' })
     Object.assign(point, { normalizedValue: null, isAllDay: false, precision: 'vague', needsConfirmation: true })
@@ -255,6 +259,7 @@ export function adaptModelWireD26(input: unknown, context: WireContext) {
 export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string }) {
   const result = structuredClone(input), audit = auditRecord()
   audit.sourceCurrentness=retainCurrentDeadlineFacts(result,context.sourceText)
+  audit.activityRoles=groundActivityRoles(result,context.sourceText,'names')
   audit.declaredEventNameSupport=completeDeclaredEventNameSupport(result,context.sourceText)
   audit.citedOwnerSupport=completeCitedOwnerSupport(result,context.sourceText)
   audit.citedSourceWindows=completeCitedSourceWindows(result,context.sourceText,context.referenceTime,context.timezone)
@@ -283,7 +288,8 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   }
   const eventQuotes = (id: string) => quote(result.events.find(e => e.tempId === id)?.evidenceIds ?? [])
   for (const point of result.timePoints) {
-    const heading = citedEventDate(point, result.events, pointQuotes, eventQuotes, context.sourceText, context.referenceTime, context.timezone)
+    const split=citedTaskDateRange(point,[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])],result.timePoints,result.evidence,context.sourceText)??citedSplitEventRange(point,result.events,result.timePoints,result.evidence,context.sourceText)
+    const heading = split?undefined:citedEventDate(point, result.events, pointQuotes, eventQuotes, context.sourceText, context.referenceTime, context.timezone)
     const sequence = sequentialEventDate(point,result.events,result.timePoints,result.evidence,context.sourceText,context.referenceTime,context.timezone)
     const sameDay=citedSameDayDate(point,pointQuotes,context.sourceText,context.referenceTime,context.timezone)
     const anchor = heading ?? eventAnchor(point.tempId, result.events, result.timePoints, pointQuotes, eventQuotes, context.sourceText, context.referenceTime, context.timezone) ?? sequence ?? sameDay
@@ -292,7 +298,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     const owners = result.events.filter(e => e.startTimePointTempId === point.tempId || e.endTimePointTempId === point.tempId)
     const window=audit.citedSourceWindows.decisions.find(w=>[w.startPointId,w.endPointId].includes(point.tempId))
     const rangeQuotes = window?quote(window.evidenceIds):owners.length === 1 ? unique([...pointQuotes(point.tempId).filter(q => eventQuotes(owners[0].tempId).includes(q)),...(/^次日/u.test(point.rawText)?contiguousEventQuotes(eventQuotes(owners[0].tempId),context.sourceText):[])]) : []
-    time(point, pointQuotes(point.tempId), context.referenceTime, context.timezone, audit, anchor?.date, anchor?.context, rangeQuotes,'startMinutes' in (anchor??{})?(anchor as {startMinutes?:number}).startMinutes:undefined)
+    time(point, pointQuotes(point.tempId), context.referenceTime, context.timezone, audit, anchor?.date, anchor?.context, rangeQuotes,'startMinutes' in (anchor??{})?(anchor as {startMinutes?:number}).startMinutes:undefined,split??undefined)
   }
   const tasks: TaskSuggestionV2[] = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
   for (const task of tasks) {
@@ -301,13 +307,23 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     const original = { entityId: task.tempId, kind: 'task' as const, title: task.title, description: task.description }
     Object.assign(task, prose(audit, original, grounded ? supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)?task.actionVerb:taskActionText(task.actionVerb, task.actionObject) : '待核对事项',
       grounded ? unique(quotes).join('\n') : '动作或对象缺少对应来源依据，请核对。'))
-    if (!grounded) { task.selected = false; audit.unresolved.push({ entityId: task.tempId, reason: 'ACTION_OBJECT_SOURCE_SUPPORT_MISSING' }) }
+    if (!grounded) {
+      task.selected = false; audit.unresolved.push({ entityId: task.tempId, reason: 'ACTION_OBJECT_SOURCE_SUPPORT_MISSING' })
+      const id='source-action-evidence:'+task.tempId
+      result.conflicts=result.conflicts.filter(c=>c.id!==id)
+      if(!audit.actionFields.some(row=>row.entityId===task.tempId&&row.status==='LOCAL_UNRESOLVED_ACTION'))result.conflicts.push({id,type:'other',message:'这项动作或对象的原文关联不完整，暂不能直接保存；请查看它的原文依据。其他依据完整的事项可以单独确认。',entityTempIds:[task.tempId],evidenceIds:task.evidenceIds,requiresDecision:true})
+    }
   }
   for (const event of result.events) {
     const quotes = quote(event.evidenceIds), grounded = supportedAdjacent(event.title, quotes, context.sourceText)||supportedEventDescriptor(event.title,quotes)||supportedEventOperation(event.title,quotes,context.sourceText,true)
     const original = { entityId: event.tempId, kind: 'event' as const, title: event.title, description: event.description }
     Object.assign(event, prose(audit, original, grounded ? event.title : '待核对事件', grounded ? unique(quotes).join('\n') : '事件内容缺少对应来源依据，请核对。'))
-    if (!grounded) { event.selected = false; audit.unresolved.push({ entityId: event.tempId, reason: 'EVENT_SOURCE_SUPPORT_MISSING' }) }
+    if (!grounded) {
+      event.selected = false; audit.unresolved.push({ entityId: event.tempId, reason: 'EVENT_SOURCE_SUPPORT_MISSING' })
+      const id='source-event-evidence:'+event.tempId
+      result.conflicts=result.conflicts.filter(c=>c.id!==id)
+      result.conflicts.push({id,type:'other',message:'这个活动的内容或原文关联不完整，暂不能直接保存；请查看活动的原文依据。其他依据完整的事项可以单独确认。',entityTempIds:[event.tempId],evidenceIds:event.evidenceIds,requiresDecision:true})
+    }
   }
   const title = tasks.length ? tasks[0].title : result.events[0]?.title ?? '通知资料'
   const summary = tasks.length || result.events.length ? `${tasks.length}项任务，${result.events.length}项事件。请核对后确认。` : '未识别到需要执行的任务或事件；原文已保留，可核对并归档。'
@@ -318,6 +334,9 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     result.quality.needsHumanReview = true
     result.quality.reviewReasons = unique([...result.quality.reviewReasons, '部分首次摘要缺少完整来源依据，请核对标记事项。'])
   }
+  audit.activityRoles.invalidEnds=groundActivityRoles(result,context.sourceText,'ends').invalidEnds
+  audit.nativePreconditionReview=nativePreconditionIssues(result,context.sourceText)
+  for(const risk of audit.nativePreconditionReview){const id='native-precondition:'+risk.taskId;result.conflicts=result.conflicts.filter(c=>c.id!==id);result.conflicts.push({id,type:'other',message:risk.reason,entityTempIds:[risk.taskId],evidenceIds:risk.evidenceIds,requiresDecision:true});result.quality.needsHumanReview=true}
   audit.nativeQualificationReview=nativeQualificationReviews(result,context.sourceText)
   return { result, audit }
 }

@@ -1,4 +1,4 @@
-import {citedEventSequence} from './cited-event-sequence.mjs'
+import {citedEventSequence,citedSplitEventRange,citedTaskDateRange} from './cited-event-sequence.mjs'
 import { parseChineseTimeAst } from './chinese-time-ast.generated.mjs'
 import {productGenerationContract,PRODUCT_CONTRACT_PROMPT_VERSION} from './recognition-output-contract.mjs'
 
@@ -9,7 +9,7 @@ export const MULTIMODAL_RECOGNITION_MODEL_NAME = 'deepseek-v4-flash-vision-exp'
 export const MULTIMODAL_RECOGNITION_PROMPT_VERSION = 'recognition-multimodal-exp-1.0.0'
 export const IMAGE_ONLY_EVALUATION_PROMPT_VERSION = 'recognition-multimodal-image-only-eval-1.1.0'
 export const VISION_TEXT_EVALUATION_PROMPT_VERSION = 'recognition-vision-text-eval-1.0.0'
-export const SOURCE_SAME_DAY_CONTEXT_VERSION='cited-same-day-normalization-1.2.0'
+export const SOURCE_SAME_DAY_CONTEXT_VERSION='cited-same-day-normalization-1.4.0'
 
 /** An existing same-day clock may inherit one unambiguous adjacent source date.
  * No model date, unrelated paragraph, missing evidence or duplicate occurrence
@@ -29,6 +29,9 @@ export function citedSameDayContext(point,evidence,sourceContent){
 }
 
 export function citedTimeContext(point,raw,evidence,sourceContent,options={}){
+  const taskWindow=citedTaskDateRange(point,[...(raw.standaloneTasks??[]),...(raw.milestones??[]).flatMap(m=>[...(m.tasks??[]),...(m.workPackages??[]).flatMap(w=>w.tasks??[])])],raw.timePoints??[],evidence,sourceContent);if(taskWindow)return taskWindow
+  const split=citedSplitEventRange(point,raw.events??[],raw.timePoints??[],evidence,sourceContent)
+  if(split)return split
   const sequence=citedEventSequence(point,raw.events??[],raw.timePoints??[],evidence,sourceContent)
   if(sequence)return sequence
   const sameDay=citedSameDayContext(point,evidence,sourceContent)

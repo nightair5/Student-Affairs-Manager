@@ -43,7 +43,7 @@ test('actual Worker keeps a cited same-day deadline selected through both normal
   assert.equal(r.status,200,JSON.stringify(r.body));const p=r.body.result.timePoints[0]
   assert.equal(p.normalizedValue,`2027-03-${String(day).padStart(2,'0')}T16:00`);assert.equal(p.rawText,'当日16:00前');assert.equal(p.selected,true);assert.equal(p.needsConfirmation,false)
   const audit=r.body.execution.timeContextProjection
-  assert.equal(audit.version,'cited-same-day-normalization-1.2.0');assert.equal(audit.decisions[0].original.normalizedValue,'2029-01-01T16:00');assert.equal(audit.decisions[0].normalizedInput.selected,false);assert.equal(audit.decisions[0].after.selected,true)
+  assert.equal(audit.version,'cited-same-day-normalization-1.4.0');assert.equal(audit.decisions[0].original.normalizedValue,'2029-01-01T16:00');assert.equal(audit.decisions[0].normalizedInput.selected,false);assert.equal(audit.decisions[0].after.selected,true)
  }
 })
 test('no date, multiple dates, another paragraph, cancelled context and repeated evidence stay unresolved',async()=>{
@@ -85,4 +85,16 @@ test('actual Worker uses the same closed sequence for both existing endpoint rol
  const a='2027年4月9日14:00—15:10研讨会，在南门书屋',b='15:20—16:00同地有交流',source=a+'；'+b+'。'
  const r=await run(source,raw=>{eventResponse(raw);const ev=raw.events[0],p=raw.timePoints[0],e=raw.evidence[0];raw.events=[{...ev,tempId:'A',title:'研讨会',startTimePointTempId:'AS',endTimePointTempId:'AE',evidenceIds:['QA']},{...ev,tempId:'B',title:'交流',startTimePointTempId:'BS',endTimePointTempId:'BE',evidenceIds:['QB']}];raw.timePoints=['AS','AE','BS','BE'].map((tempId,i)=>({...p,tempId,type:i%2?'event_end':'event_start',rawText:i<2?a:b,evidenceIds:[i<2?'QA':'QB'],selected:true}));raw.evidence=[{...e,id:'QA',quote:a,quotedText:a},{...e,id:'QB',quote:b,quotedText:b}]})
  assert.equal(r.status,200,JSON.stringify(r.body));assert.deepEqual(r.body.result.timePoints.slice(2).map(p=>[p.normalizedValue,p.selected]),[['2027-04-09T15:20',true],['2027-04-09T16:00',true]])
+})
+
+test('actual Worker retains selected endpoints when a date heading and clock range were only joined by whitespace',async()=>{
+ const d='2027年6月11日',c='09:30—11:00',source='【讲座】\n'+d+'\n'+c+'\n海棠楼\n历史照片日期2024年5月1日'
+ const r=await run(source,raw=>{eventResponse(raw);raw.events[0].title='讲座';raw.events[0].evidenceIds=['H','D','C'];raw.timePoints.forEach(p=>{p.rawText=d+' '+c;p.evidenceIds=['D','C']});const e=raw.evidence[0];raw.evidence=[{...e,id:'H',quote:'【讲座】',quotedText:'【讲座】'},{...e,id:'D',quote:d,quotedText:d},{...e,id:'C',quote:c,quotedText:c}]})
+ assert.equal(r.status,200,JSON.stringify(r.body));assert.deepEqual(r.body.result.timePoints.map(p=>[p.normalizedValue,p.selected]),[['2027-06-11T09:30',true],['2027-06-11T11:00',true]])
+})
+
+test('actual Worker preserves a date range shared by two existing task owners without making a cutoff',async()=>{
+ const source='同学须在4月12—26日登录选课系统和激活账户。';const r=await run(source,raw=>{
+ const t=raw.standaloneTasks[0];raw.standaloneTasks=[{...t,tempId:'A',actionVerb:'登录',actionObject:'选课系统',timePointTempIds:['S','E'],evidenceIds:['Q']},{...t,tempId:'B',actionVerb:'激活',actionObject:'账户',timePointTempIds:['S','E'],evidenceIds:['Q']}];raw.events=[];raw.materials=[];raw.evidence=[{...raw.evidence[0],id:'Q',quote:source,quotedText:source}];raw.timePoints=['S','E'].map((tempId,i)=>({...raw.timePoints[0],tempId,type:i?'event_end':'event_start',rawText:'4月12—26日',evidenceIds:['Q'],relatedTaskTempIds:['A','B'],relatedMaterialTempIds:[]}))
+ });assert.equal(r.status,200,JSON.stringify(r.body));assert.deepEqual(r.body.result.timePoints.map(p=>p.normalizedValue),['2027-04-12','2027-04-26']);assert.ok(r.body.result.timePoints.every(p=>p.selected));assert.equal(r.body.result.timePoints.some(p=>p.type.endsWith('deadline')),false)
 })

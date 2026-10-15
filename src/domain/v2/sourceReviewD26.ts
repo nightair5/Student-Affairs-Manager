@@ -1,3 +1,4 @@
+import {nativePreconditionIssues} from '../../recognition/nativePrecondition'
 import type { ExtractionDraft as DraftView } from '../../types'
 import type { RecognitionResult } from '../../recognition/types'
 import { applyDomainCommitPlan, buildDomainCommitPlanV2, selectionFromDraftItems, type DomainCommitPlan } from './domainCommit'
@@ -15,9 +16,11 @@ const tasksOf = (r: RecognitionResult) => [...r.standaloneTasks, ...r.milestones
 const revisionOf = (d: WorkspaceV8['extractionDrafts'][number]) => workspaceSnapshotHash({recognitionRunId:d.recognitionRunId,result:d.result,acceptedEntityTempIds:[...d.acceptedEntityTempIds].sort(),rejectedEntityTempIds:[...d.rejectedEntityTempIds].sort()})
 
 /** Selected facts only: an unknown time is preserved, never promoted to an appointment. */
-export function sourceReviewProblem(result: RecognitionResult, taskId?: string): string | undefined {
+export function sourceReviewProblem(result: RecognitionResult, taskId?: string, sourceText?:string): string | undefined {
   const tasks = tasksOf(result), task = tasks.find(t => t.tempId === taskId)
   const ids = new Set(task ? [task.tempId, ...task.materialTempIds, ...task.timePointTempIds] : result.events.flatMap(e => [e.tempId, e.startTimePointTempId, e.endTimePointTempId].filter((id): id is string => Boolean(id))))
+  const prerequisite=taskId&&sourceText?nativePreconditionIssues(result,sourceText).find(r=>r.taskId===taskId):undefined
+  if(prerequisite)return prerequisite.reason
   const conflict = result.conflicts.find(c => c.requiresDecision && (!c.entityTempIds.length || c.entityTempIds.some(id => ids.has(id))))
   if (conflict) return conflict.message
   if (task && (!task.actionVerb.trim() || !task.actionObject.trim())) return '动作或对象缺失，请依据原文核对。'
@@ -43,6 +46,16 @@ export function sourceEventProblem(result:RecognitionResult,eventId:string):stri
   return undefined
 }
 
+/** Mirror the existing event-only commit gate before the click, while keeping
+ * independent valid events available for a partial confirmation. */
+export function sourceInformationReviewProblem(result:RecognitionResult):string|undefined {
+ const global=result.conflicts.find(c=>c.requiresDecision&&!c.entityTempIds.length)
+ if(global)return global.message
+ const selected=result.events.filter(e=>e.selected!==false)
+ const problems=selected.map(e=>sourceEventProblem(result,e.tempId))
+ return selected.length&&problems.every(Boolean)?problems[0]:undefined
+}
+
 /** The ordinary compiler uses the existing DomainCommitPlan, including event-only and zero-date sources. */
 export function buildSourceReviewPlan(workspace: WorkspaceV8, view: DraftView, itemId?: string, now = new Date().toISOString()): DomainCommitPlan {
   const draft = workspace.extractionDrafts.find(d => d.id === view.id)
@@ -63,7 +76,7 @@ export function buildSourceReviewPlan(workspace: WorkspaceV8, view: DraftView, i
   selection.rejectedTempIds = [...view.items.filter(i => i.status === '已拒绝').map(i => i.suggestion.id),...rejectedEvents]
   for (const id of selection.taskTempIds) {
     if(unresolvedSourceReadiness(workspace,draft.id,id))throw Error('适用状态尚未明确，请在本通知适用性中核对；不会假定资格或前置已完成。')
-    const problem = sourceReviewProblem(draft.result, id)
+    const problem = sourceReviewProblem(draft.result, id,version.rawText??'')
     if (problem) throw Error(problem)
   }
   const eventProblems=draft.result.events.filter(e=>e.selected!==false).map(e=>sourceEventProblem(draft.result!,e.tempId)).filter(Boolean)

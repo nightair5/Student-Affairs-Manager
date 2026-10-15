@@ -11,3 +11,25 @@ test('cross paragraph, foreign owner, scalar wrong role, multiple dates and reve
  const aa=a+'，另日2027年5月1日',s=aa+'；'+b;assert.equal(citedEventSequence(points[2],events,points,[{id:'QA',quote:aa},evidence[1]],s),null)
  const bb='14:20—14:00同地有交流';assert.equal(citedEventSequence({...points[2],rawText:bb},events,points,[evidence[0],{id:'QB',quote:bb}],a+'；'+bb),null)
 })
+
+import {citedSplitEventRange} from './cited-event-sequence.mjs'
+test('date and clock on adjacent cited lines are a lossless existing range, not a historical photo date',()=>{
+ const d='2027年6月11日',c='09:30—11:00',e=[{id:'D',quote:d},{id:'C',quote:c},{id:'H',quote:'历史照片日期2024年5月1日'}],p=[{tempId:'S',type:'event_start',rawText:d+' '+c,evidenceIds:['D','C']},{tempId:'E',type:'event_end',rawText:d+' '+c,evidenceIds:['D','C']}],v=[{tempId:'V',startTimePointTempId:'S',endTimePointTempId:'E',evidenceIds:['D','C','H']}],source=d+'\n'+c+'\n历史照片日期2024年5月1日'
+ assert.equal(citedSplitEventRange(p[1],v,p,e,source).endpoint,'2027年6月11日11:00')
+ for(const broken of [d+'\n另一个通知\n'+c,source.replace(d,'2028年6月11日')])assert.equal(citedSplitEventRange(p[1],v,p,e,broken),null)
+ assert.equal(citedSplitEventRange(p[1],[{...v[0],evidenceIds:['C']}],p,e,source),null)
+ assert.equal(citedSplitEventRange(p[1],v,[p[0]],e,source),null)
+})
+
+import {citedTaskDateRange} from './cited-event-sequence.mjs'
+test('a shared task date window requires a closed reciprocal pair, literal citation, and matching owners',()=>{
+ const source='同学须在4月12—26日登录选课系统和激活账户。',tasks=['A','B'].map(tempId=>({tempId,timePointTempIds:['S','E'],evidenceIds:['Q']})),points=['S','E'].map((tempId,i)=>({tempId,type:i?'event_end':'event_start',rawText:'4月12—26日',evidenceIds:['Q'],relatedTaskTempIds:['A','B']})),ev=[{id:'Q',quote:source}];
+ assert.equal(citedTaskDateRange(points[1],tasks,points,ev,source).endpoint,'4月26日');
+ assert.equal(citedTaskDateRange(points[1],tasks,points.slice(1),ev,source),null);
+ assert.equal(citedTaskDateRange({...points[1],type:'task_deadline'},tasks,points,ev,source),null);
+ assert.equal(citedTaskDateRange(points[1],[tasks[0]],points,ev,source),null);
+ assert.equal(citedTaskDateRange(points[1],tasks,[points[0],{...points[1],relatedTaskTempIds:['A']}],ev,source),null);
+ assert.equal(citedTaskDateRange(points[1],tasks,points,ev,'另一个来源'),null);
+ const conditional='如果'+source;assert.equal(citedTaskDateRange(points[1],tasks,points,[{id:'Q',quote:conditional}],conditional),null);
+ const backwards=source.replace('12—26','26—12'),pp=points.map(p=>({...p,rawText:'4月26—12日'}));assert.equal(citedTaskDateRange(pp[1],tasks,pp,[{id:'Q',quote:backwards}],backwards),null)
+})
