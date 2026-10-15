@@ -19,6 +19,7 @@ import { isValidTimeZone } from './chinese-time-ast.generated.mjs'
 import {parseRecognitionJson} from './recognition-json.mjs'
 import {projectDanglingAnnotationEvidence} from './recognition-annotation-projection.mjs'
 import {projectLiteralSourceEvidence} from './recognition-literal-evidence.mjs'
+import {projectCitedClockRanges} from './cited-clock-range.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -801,7 +802,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   const selectedModel = extractionModel(env)
   const selectedPromptVersion = selectedModel === DEEPSEEK_MULTIMODAL_MODEL
     ? VISION_TEXT_EVALUATION_PROMPT_VERSION
-    : ['recognition-product-contract-1.2.0',PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0','recognition-product-contract-1.5.0','recognition-product-contract-1.6.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
+    : ['recognition-product-contract-1.2.0',PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0','recognition-product-contract-1.5.0','recognition-product-contract-1.6.0','recognition-product-contract-1.7.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
   const systemPrompt = recognitionSystemPrompt({
     modelName: selectedModel,
     productContract: selectedModel !== DEEPSEEK_MULTIMODAL_MODEL,
@@ -862,7 +863,8 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     )
     const literalProjection=selectedPromptVersion?.startsWith('recognition-product-contract-')
       ?projectLiteralSourceEvidence(candidate,sourceContent):{result:candidate,audit:null}
-    const deterministicCandidate = applyDeterministicTimeAst(literalProjection.result, referenceTime, timezone)
+    const clockRangeProjection=projectCitedClockRanges(literalProjection.result,sourceContent,referenceTime,timezone)
+    const deterministicCandidate = applyDeterministicTimeAst(literalProjection.result, referenceTime, timezone, sourceContent)
     const annotationProjection=selectedPromptVersion?.startsWith('recognition-product-contract-')?projectDanglingAnnotationEvidence(deterministicCandidate):{result:deterministicCandidate,audit:null}
     const candidateValidation = validateRecognitionResult(annotationProjection.result, { sourceContent })
     if (!candidateValidation.valid) return invalidRecognitionResponse(context, candidateValidation)
@@ -886,6 +888,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       evaluationArm: selectedModel === DEEPSEEK_MULTIMODAL_MODEL ? 'T' : undefined,
       result,
       execution: {
+        ...(clockRangeProjection.audit.decisions.length?{citedClockRangeProjection:clockRangeProjection.audit}:{}),
         timeContextProjection:{version:SOURCE_SAME_DAY_CONTEXT_VERSION,inferredFacts:0,decisions:result.timePoints.flatMap(point=>{
           const support=citedTimeContext(point,result,result.evidence,sourceContent,{referenceTime,timezone})
           if(!support||!point.normalizedValue||point.needsConfirmation)return []

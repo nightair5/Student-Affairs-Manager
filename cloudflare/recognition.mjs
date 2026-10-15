@@ -1,6 +1,7 @@
 import {citedEventSequence,citedSplitEventRange,citedTaskDateRange} from './cited-event-sequence.mjs'
+import {projectCitedClockRanges} from './cited-clock-range.mjs'
 import { parseChineseTimeAst } from './chinese-time-ast.generated.mjs'
-import {productGenerationContract,PRODUCT_CONTRACT_PROMPT_VERSION} from './recognition-output-contract.mjs'
+import {productGenerationContract,productGenerationUsesSingleSchema,PRODUCT_CONTRACT_PROMPT_VERSION} from './recognition-output-contract.mjs'
 
 export const RECOGNITION_PROMPT_VERSION = 'recognition-2.0.0'
 export const RECOGNITION_SCHEMA_VERSION = '2.0'
@@ -176,7 +177,7 @@ ${imageOnlyEvaluation
 
 不同交付物、截止时间、操作方式、阶段或依赖可以拆分；同一动作说明、格式、联系人和背景不得拆分。参加活动建 event，准备活动产出才建 task。不得虚构日期、材料、渠道或负责人。模糊日期、项目不确定、新旧通知冲突必须人工确认。不得覆盖旧任务、静默合并项目或创建正式数据。
 
-${productContract&&generationVersion==='recognition-product-contract-1.5.0'?'只输出一个严格JSON对象。字段、枚举、顺序和是否nullable均由下方唯一Schema定义；依据数组属于这个对象，不单独输出或在对象结束后追加。每个字段按Schema生成，最后才闭合整个对象。\n\n':`只输出严格 JSON 对象，顶层字段必须为：schemaVersion,promptVersion,modelName,createdAt,sourceSummary,projectMatch,projectSuggestion,milestones,standaloneTasks,materials,timePoints,events,evidence,conflicts,ambiguities,ignoredContent,quality。
+${productContract&&productGenerationUsesSingleSchema(generationVersion)?'只输出一个严格JSON对象。字段、枚举、顺序和是否nullable均由下方唯一Schema定义；依据数组属于这个对象，不单独输出或在对象结束后追加。每个字段按Schema生成，最后才闭合整个对象。\n\n':`只输出严格 JSON 对象，顶层字段必须为：schemaVersion,promptVersion,modelName,createdAt,sourceSummary,projectMatch,projectSuggestion,milestones,standaloneTasks,materials,timePoints,events,evidence,conflicts,ambiguities,ignoredContent,quality。
 
 projectMatch.decision 只能是 new_project|existing_project|standalone_task|uncertain。任务字段：tempId,parentTempId,hierarchyType,title,actionVerb,actionObject,description,completionCriteria,estimatedMinutes,statusSuggestion,prioritySuggestion,dependencyTempIds,materialTempIds,timePointTempIds,evidenceIds,confidence,inferenceLevel,userConfirmationRequired。inferenceLevel 只能 explicit|strong_inference|optional_suggestion，默认仅 explicit 可选中。
 
@@ -185,12 +186,14 @@ evidence 每项必须包含 id,sourceId="pending-source",quotedText,quote,field,
 `}软限制：最多10阶段、每阶段8工作包、每工作包12任务、每任务8子任务；超过20任务或40子任务时 quality.needsHumanReview=true、overFragmentationRisk=1，且不要默认选择。纯信息通知 requiresAction=false，不得强行创建任务。${productContract?productGenerationContract(generationVersion):''}`
 }
 
-export function applyDeterministicTimeAst(raw, referenceTime, timezone = 'Asia/Shanghai') {
+export function applyDeterministicTimeAst(raw, referenceTime, timezone = 'Asia/Shanghai', sourceContent) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw) || !Array.isArray(raw.timePoints)) return raw
+  const ranges=sourceContent===undefined?{result:raw,audit:{decisions:[]}}:projectCitedClockRanges(raw,sourceContent,referenceTime,timezone)
   return {
-    ...raw,
-    timePoints: raw.timePoints.map((item) => {
+    ...ranges.result,
+    timePoints: ranges.result.timePoints.map((item) => {
       if (!item || typeof item !== 'object' || Array.isArray(item) || !TIME_POINT_TYPES.has(item.type) || typeof item.rawText !== 'string') return item
+      if(ranges.audit.decisions.some(d=>d.pointId===item.tempId))return item
       let endpoint=item.rawText
       const owners=(raw.events??[]).filter(e=>e.startTimePointTempId===item.tempId||e.endTimePointTempId===item.tempId)
       const sharedQuotes=owners.length===1?(raw.evidence??[]).filter(e=>item.evidenceIds?.includes(e.id)&&owners[0].evidenceIds?.includes(e.id)).map(e=>e.quote??e.quotedText):[]
@@ -227,6 +230,8 @@ export function normalizeRecognitionResult(
   timezone = 'Asia/Shanghai',
 ) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw) || raw.schemaVersion !== '2.0') return null
+  const ranges=projectCitedClockRanges(raw,sourceContent,nowIso,timezone)
+  raw=ranges.result
   const rawEvidence = Array.isArray(raw.evidence) ? raw.evidence : []
   const evidence = rawEvidence.slice(0, 120).flatMap((item, index) => {
     if (!item || typeof item !== 'object' || Array.isArray(item)) return []
@@ -269,11 +274,13 @@ export function normalizeRecognitionResult(
       timezone,
       type: item.type,
     })
-    const normalizedValue = ast.normalizedValue
+    const roleRange=ranges.audit.decisions.find(d=>d.pointId===item.tempId)
+    const effective=roleRange?item:ast
+    const normalizedValue = effective.normalizedValue
     const linkedEvidence = strings(item.evidenceIds).filter((id) => evidenceIds.has(id))
     const id=text(item.tempId,100,`time-${index+1}`),contextLiteral=text(item.rawText,300),owned=strings(item.relatedTaskTempIds).length>0||strings(item.relatedMaterialTempIds).length>0||allTasks().some(t=>t.timePointTempIds.includes(id))||(raw.events??[]).some(e=>e.startTimePointTempId===id||e.endTimePointTempId===id)
     const oldContext=item.selected===false&&!owned&&contextLiteral&&sourceContent.split(contextLiteral).length===2&&linkedEvidence.some(id=>{const q=evidence.find(e=>e.id===id)?.quote??'';return sourceContent.includes(q)&&q.includes('截止由'+contextLiteral+'改为')&&/旧截止(?:时间)?作废/u.test(q)})
-    return [{ tempId:id, type: item.type, rawText: literal, normalizedValue, timezone: ast.timezone, isAllDay: ast.isAllDay, precision: ast.precision, needsConfirmation: ast.needsConfirmation, relatedTaskTempIds: strings(item.relatedTaskTempIds), relatedMaterialTempIds: strings(item.relatedMaterialTempIds), evidenceIds: linkedEvidence, confidence: number01(item.confidence), selected: !oldContext&&linkedEvidence.length > 0 && normalizedValue !== null && !ast.needsConfirmation }]
+    return [{ tempId:id, type: item.type, rawText: literal, normalizedValue, timezone: effective.timezone??timezone, isAllDay: effective.isAllDay, precision: effective.precision, needsConfirmation: effective.needsConfirmation, relatedTaskTempIds: strings(item.relatedTaskTempIds), relatedMaterialTempIds: strings(item.relatedMaterialTempIds), evidenceIds: linkedEvidence, confidence: number01(item.confidence), selected: (!roleRange||item.selected!==false)&&!oldContext&&linkedEvidence.length > 0 && normalizedValue !== null && !effective.needsConfirmation }]
   })
   const events = (Array.isArray(raw.events) ? raw.events : []).slice(0, 30).flatMap((item, index) => {
     if (!item || typeof item !== 'object' || Array.isArray(item) || !text(item.title, 100)) return []

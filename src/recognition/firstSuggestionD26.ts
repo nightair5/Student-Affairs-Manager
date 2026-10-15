@@ -15,14 +15,16 @@ import {completeCitedOwnerSupport,type CitedOwnerDecision} from './citedOwnerSup
 import {completeCitedSourceWindows,CITED_SOURCE_WINDOW_VERSION} from './citedSourceWindow'
 import {addDateOnlyDays} from '../lib/timeSemantics'
 import {nativeQualificationReviews} from './nativeQualificationReview'
+import {projectCitedClockRanges,type CitedClockRangeDecision} from '../../cloudflare/cited-clock-range.mjs'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.21.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.22.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
   originalProse: ProseRecord[]
   generatedProse: ProseRecord[]
   times: Array<{ entityId: string; before: TimeFields; after: TimeFields; interpretation: D26TimeInterpretation }>
+  citedClockRanges?:CitedClockRangeDecision[]
   unresolved: Array<{ entityId: string; reason: string }>
   sourceCurrentness: SourceCurrentFactAudit[]
   declaredEventNameSupport: DeclaredEventNameAudit[]
@@ -273,6 +275,9 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   audit.declaredEventNameSupport=completeDeclaredEventNameSupport(result,context.sourceText)
   audit.citedOwnerSupport=completeCitedOwnerSupport(result,context.sourceText)
   audit.citedSourceWindows=completeCitedSourceWindows(result,context.sourceText,context.referenceTime,context.timezone)
+  const clockRanges=projectCitedClockRanges(result,context.sourceText,context.referenceTime,context.timezone)
+  Object.assign(result,clockRanges.result)
+  audit.citedClockRanges=clockRanges.audit.decisions
   const genericApplication=/(?:项目|课题)(?:申请|申报)/u.test(context.sourceText)&&!/项目名称|课题名称|项目编号|课题编号|里程碑|分阶段|[“「『]/u.test(context.sourceText)
   // A proposed project name is only an option. It does not require creating a
   // project for an otherwise standalone notice, and remains available to edit.
@@ -298,6 +303,8 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   }
   const eventQuotes = (id: string) => quote(result.events.find(e => e.tempId === id)?.evidenceIds ?? [])
   for (const point of result.timePoints) {
+    const clockRange=audit.citedClockRanges.find(d=>d.pointId===point.tempId)
+    if(clockRange){if(clockRange.blocked)audit.unresolved.push({entityId:point.tempId,reason:clockRange.reason});continue}
     const split=citedTaskDateRange(point,[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])],result.timePoints,result.evidence,context.sourceText)??citedSplitEventRange(point,result.events,result.timePoints,result.evidence,context.sourceText)
     const heading = split?undefined:citedEventDate(point, result.events, pointQuotes, eventQuotes, context.sourceText, context.referenceTime, context.timezone)
     const sequence = sequentialEventDate(point,result.events,result.timePoints,result.evidence,context.sourceText,context.referenceTime,context.timezone)
