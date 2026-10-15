@@ -43,7 +43,7 @@ test('actual Worker keeps a cited same-day deadline selected through both normal
   assert.equal(r.status,200,JSON.stringify(r.body));const p=r.body.result.timePoints[0]
   assert.equal(p.normalizedValue,`2027-03-${String(day).padStart(2,'0')}T16:00`);assert.equal(p.rawText,'当日16:00前');assert.equal(p.selected,true);assert.equal(p.needsConfirmation,false)
   const audit=r.body.execution.timeContextProjection
-  assert.equal(audit.version,'cited-same-day-normalization-1.1.0');assert.equal(audit.decisions[0].original.normalizedValue,'2029-01-01T16:00');assert.equal(audit.decisions[0].normalizedInput.selected,false);assert.equal(audit.decisions[0].after.selected,true)
+  assert.equal(audit.version,'cited-same-day-normalization-1.2.0');assert.equal(audit.decisions[0].original.normalizedValue,'2029-01-01T16:00');assert.equal(audit.decisions[0].normalizedInput.selected,false);assert.equal(audit.decisions[0].after.selected,true)
  }
 })
 test('no date, multiple dates, another paragraph, cancelled context and repeated evidence stay unresolved',async()=>{
@@ -80,4 +80,9 @@ test('a foreign/shared owner, an uncited start, a backwards clock and an interve
   const r=await run(source,raw=>{eventResponse(raw);if(kind==='shared')raw.events.push({...raw.events[0],tempId:'OTHER'});if(kind==='uncited')raw.events[0].evidenceIds=['QE'];if(kind==='backwards'){raw.timePoints[0].rawText='2027年3月8日21:00';raw.evidence[0].quote='说明会于2027年3月8日21:00开始';raw.evidence[0].quotedText=raw.evidence[0].quote}})
   assert.equal(r.status,200,JSON.stringify(r.body));assert.equal(r.body.result.timePoints[1].normalizedValue,null);assert.equal(r.body.result.timePoints[1].selected,false)
  }
+})
+test('actual Worker uses the same closed sequence for both existing endpoint roles',async()=>{
+ const a='2027年4月9日14:00—15:10研讨会，在南门书屋',b='15:20—16:00同地有交流',source=a+'；'+b+'。'
+ const r=await run(source,raw=>{eventResponse(raw);const ev=raw.events[0],p=raw.timePoints[0],e=raw.evidence[0];raw.events=[{...ev,tempId:'A',title:'研讨会',startTimePointTempId:'AS',endTimePointTempId:'AE',evidenceIds:['QA']},{...ev,tempId:'B',title:'交流',startTimePointTempId:'BS',endTimePointTempId:'BE',evidenceIds:['QB']}];raw.timePoints=['AS','AE','BS','BE'].map((tempId,i)=>({...p,tempId,type:i%2?'event_end':'event_start',rawText:i<2?a:b,evidenceIds:[i<2?'QA':'QB'],selected:true}));raw.evidence=[{...e,id:'QA',quote:a,quotedText:a},{...e,id:'QB',quote:b,quotedText:b}]})
+ assert.equal(r.status,200,JSON.stringify(r.body));assert.deepEqual(r.body.result.timePoints.slice(2).map(p=>[p.normalizedValue,p.selected]),[['2027-04-09T15:20',true],['2027-04-09T16:00',true]])
 })

@@ -800,7 +800,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   const selectedModel = extractionModel(env)
   const selectedPromptVersion = selectedModel === DEEPSEEK_MULTIMODAL_MODEL
     ? VISION_TEXT_EVALUATION_PROMPT_VERSION
-    : [PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
+    : [PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0','recognition-product-contract-1.5.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
   const systemPrompt = recognitionSystemPrompt({
     modelName: selectedModel,
     productContract: selectedModel !== DEEPSEEK_MULTIMODAL_MODEL,

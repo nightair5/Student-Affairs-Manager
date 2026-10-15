@@ -1,7 +1,7 @@
 import type { RecognitionResult } from './types'
 import { taskActionText } from '../lib/taskActionText'
 
-export const SOURCE_ACTION_TIME_VERSION = 'source-action-time-role-1.0.2'
+export const SOURCE_ACTION_TIME_VERSION = 'source-action-time-role-1.0.3'
 export interface SourceActionTimeDeclaration { id: string; owners: Array<{ kind: 'task'; entityId: string }> }
 export interface SourceActionTimeDecision { id: string; ownerIds: string[]; beforeType: string; role: 'task_action_time'; reason: 'EXPLICIT_GENERATION_ROLE' | 'CITED_ACTION_AT_TIME'; quotes: string[] }
 const escaped = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')
@@ -9,9 +9,25 @@ const escaped = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')
 /** A source appointment is neither a deadline nor a personal plan. Reuse the
  * v8 start-point representation and retain its distinct role in the audit. */
 export function groundSourceActionTimes(input: RecognitionResult, sourceText: string, declarations: SourceActionTimeDeclaration[] = []) {
-  const result = structuredClone(input), decisions: SourceActionTimeDecision[] = []
+  const result = structuredClone(input), decisions: SourceActionTimeDecision[] = [], rejectedDeadlineRoles: Array<{id:string;ownerIds:string[];rawText:string;beforeValue:string|null;reason:string}> = []
   const tasks = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
   for (const p of result.timePoints) {
+    // A cited calendar interval is not a scalar cutoff. With one model point,
+    // keep the real interval and local risk; never fabricate its missing pair.
+    if (p.type.endsWith('_deadline') && /^(?:\d{4}年)?\d{1,2}月\d{1,2}日?\s*[-—–至到]\s*(?:(?:\d{4}年)?\d{1,2}月)?\d{1,2}日$/u.test(p.rawText)) {
+      const cited=result.evidence.filter(e=>p.evidenceIds.includes(e.id)&&e.quote&&sourceText.includes(e.quote)&&e.quote.includes(p.rawText)).map(e=>e.quote!)
+      const window=cited.some(q=>q.split(/[。；\n]/u).some(clause=>clause.includes(p.rawText)&&/在|期间|窗口|开放/u.test(clause)&&!/截止|截至|最迟|不晚于|之前|以前/u.test(clause)))
+      if(window){
+        const ids=[p.tempId,...p.relatedTaskTempIds,...p.relatedMaterialTempIds]
+        rejectedDeadlineRoles.push({id:p.tempId,ownerIds:ids.slice(1),rawText:p.rawText,beforeValue:p.normalizedValue,reason:'CITED_WINDOW_IS_NOT_A_SCALAR_DEADLINE'})
+        Object.assign(p,{normalizedValue:null,precision:'vague' as const,isAllDay:false,needsConfirmation:true,selected:false})
+        result.quality.needsHumanReview=true
+        const id='source-window-cutoff-role:'+p.tempId
+        result.conflicts=result.conflicts.filter(c=>c.id!==id)
+        result.conflicts.push({id,type:'other',message:'原答把办理日期区间放成了截止；原文窗口已保留，尚未形成完整起止，不能作为确定截止或安排。',entityTempIds:ids,evidenceIds:p.evidenceIds,requiresDecision:true})
+        continue
+      }
+    }
     const declaration = declarations.find(d => d.id === p.tempId)
     if(!declaration&&/(?:\d{1,2}:[0-5]\d)\s*[-—–至到]\s*\d{1,2}:[0-5]\d/u.test(p.rawText))continue
     if (!declaration && !['task_deadline','submission_deadline','registration_deadline','event_start'].includes(p.type)) continue
@@ -34,7 +50,7 @@ export function groundSourceActionTimes(input: RecognitionResult, sourceText: st
     decisions.push({id:p.tempId,ownerIds:owners.map(t=>t.tempId),beforeType:p.type,role:'task_action_time',reason:declaration?'EXPLICIT_GENERATION_ROLE':'CITED_ACTION_AT_TIME',quotes:quotes.map(q=>q.text)})
     p.type='event_start'
   }
-  return {result,audit:{version:SOURCE_ACTION_TIME_VERSION,operation:'SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN',inferredFacts:0,decisions}}
+  return {result,audit:{version:SOURCE_ACTION_TIME_VERSION,operation:'SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN',inferredFacts:0,decisions,rejectedDeadlineRoles}}
 }
 
 export function sourceActionTimesFromSidecar(sidecar: unknown): SourceActionTimeDeclaration[] {

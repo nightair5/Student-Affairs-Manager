@@ -1,3 +1,4 @@
+import {citedEventSequence} from './cited-event-sequence.mjs'
 import { parseChineseTimeAst } from './chinese-time-ast.generated.mjs'
 import {productGenerationContract,PRODUCT_CONTRACT_PROMPT_VERSION} from './recognition-output-contract.mjs'
 
@@ -8,7 +9,7 @@ export const MULTIMODAL_RECOGNITION_MODEL_NAME = 'deepseek-v4-flash-vision-exp'
 export const MULTIMODAL_RECOGNITION_PROMPT_VERSION = 'recognition-multimodal-exp-1.0.0'
 export const IMAGE_ONLY_EVALUATION_PROMPT_VERSION = 'recognition-multimodal-image-only-eval-1.1.0'
 export const VISION_TEXT_EVALUATION_PROMPT_VERSION = 'recognition-vision-text-eval-1.0.0'
-export const SOURCE_SAME_DAY_CONTEXT_VERSION='cited-same-day-normalization-1.1.0'
+export const SOURCE_SAME_DAY_CONTEXT_VERSION='cited-same-day-normalization-1.2.0'
 
 /** An existing same-day clock may inherit one unambiguous adjacent source date.
  * No model date, unrelated paragraph, missing evidence or duplicate occurrence
@@ -28,6 +29,8 @@ export function citedSameDayContext(point,evidence,sourceContent){
 }
 
 export function citedTimeContext(point,raw,evidence,sourceContent,options={}){
+  const sequence=citedEventSequence(point,raw.events??[],raw.timePoints??[],evidence,sourceContent)
+  if(sequence)return sequence
   const sameDay=citedSameDayContext(point,evidence,sourceContent)
   if(sameDay)return {...sameDay,rule:'UNIQUE_ADJACENT_SOURCE_SAME_DAY_DATE'}
   // Both existing endpoints can cite the same complete labelled range. The
@@ -170,13 +173,13 @@ ${imageOnlyEvaluation
 
 不同交付物、截止时间、操作方式、阶段或依赖可以拆分；同一动作说明、格式、联系人和背景不得拆分。参加活动建 event，准备活动产出才建 task。不得虚构日期、材料、渠道或负责人。模糊日期、项目不确定、新旧通知冲突必须人工确认。不得覆盖旧任务、静默合并项目或创建正式数据。
 
-只输出严格 JSON 对象，顶层字段必须为：schemaVersion,promptVersion,modelName,createdAt,sourceSummary,projectMatch,projectSuggestion,milestones,standaloneTasks,materials,timePoints,events,evidence,conflicts,ambiguities,ignoredContent,quality。
+${productContract&&generationVersion==='recognition-product-contract-1.5.0'?'只输出一个严格JSON对象。字段、枚举、顺序和是否nullable均由下方唯一Schema定义；依据数组属于这个对象，不单独输出或在对象结束后追加。每个字段按Schema生成，最后才闭合整个对象。\n\n':`只输出严格 JSON 对象，顶层字段必须为：schemaVersion,promptVersion,modelName,createdAt,sourceSummary,projectMatch,projectSuggestion,milestones,standaloneTasks,materials,timePoints,events,evidence,conflicts,ambiguities,ignoredContent,quality。
 
 projectMatch.decision 只能是 new_project|existing_project|standalone_task|uncertain。任务字段：tempId,parentTempId,hierarchyType,title,actionVerb,actionObject,description,completionCriteria,estimatedMinutes,statusSuggestion,prioritySuggestion,dependencyTempIds,materialTempIds,timePointTempIds,evidenceIds,confidence,inferenceLevel,userConfirmationRequired。inferenceLevel 只能 explicit|strong_inference|optional_suggestion，默认仅 explicit 可选中。
 
 evidence 每项必须包含 id,sourceId="pending-source",quotedText,quote,field,extractionMethod="ai",confidence；quotedText 必须逐字来自原文。timePoints 每项包含 tempId,type,rawText,normalizedValue,timezone,isAllDay,precision,needsConfirmation,relatedTaskTempIds,relatedMaterialTempIds,evidenceIds,confidence。events、materials、milestones/workPackages 必须按 RecognitionResult 2.0 字段返回。
 
-软限制：最多10阶段、每阶段8工作包、每工作包12任务、每任务8子任务；超过20任务或40子任务时 quality.needsHumanReview=true、overFragmentationRisk=1，且不要默认选择。纯信息通知 requiresAction=false，不得强行创建任务。${productContract?productGenerationContract(generationVersion):''}`
+`}软限制：最多10阶段、每阶段8工作包、每工作包12任务、每任务8子任务；超过20任务或40子任务时 quality.needsHumanReview=true、overFragmentationRisk=1，且不要默认选择。纯信息通知 requiresAction=false，不得强行创建任务。${productContract?productGenerationContract(generationVersion):''}`
 }
 
 export function applyDeterministicTimeAst(raw, referenceTime, timezone = 'Asia/Shanghai') {

@@ -12,7 +12,7 @@ import {createWorker} from './worker.mjs'
 import {recognitionSystemPrompt} from './recognition.mjs'
 
 test('actual Worker honors every explicit product experiment and safely falls back on an unsupported version',async()=>{
- for(const version of ['recognition-product-contract-1.2.0','recognition-product-contract-1.3.0','recognition-product-contract-1.4.0','unsupported']){
+ for(const version of ['recognition-product-contract-1.2.0','recognition-product-contract-1.3.0','recognition-product-contract-1.4.0','recognition-product-contract-1.5.0','unsupported']){
   const chosen=version==='unsupported'?'recognition-product-contract-1.2.0':version,source={content:'器材室将在周四晚关闭。',sourceTitle:'匿名范围',sourceType:'text',referenceTime:'2027-03-01T09:00:00+08:00',timezone:'Asia/Shanghai'};let actual
   const worker=createWorker({fetcher:async(url,init)=>{assert.equal(url,'https://api.deepseek.com/chat/completions');actual=JSON.parse(init.body);return Response.json({choices:[{message:{content:'{}'}}],usage:{prompt_tokens:10,completion_tokens:10,total_tokens:20}})}})
   await worker.fetch(new Request('http://127.0.0.1:7160/api/deepseek/extract',{method:'POST',headers:{origin:'http://127.0.0.1:7160','content-type':'application/json'},body:JSON.stringify(source)}),{DEEPSEEK_API_KEY:'server-only-test-key-offline-no-secret',ALLOWED_ORIGINS:'http://127.0.0.1:7160',DEEPSEEK_PRODUCT_CONTRACT_VERSION:version})

@@ -1,3 +1,4 @@
+import {citedEventSequence} from '../../cloudflare/cited-event-sequence.mjs'
 import { interpretTimeD26, type D26TimeInterpretation } from '../lib/timeSemanticsD26'
 import { adaptModelWire, type WireContext } from '../experiments/realInput01/modelWire'
 import type { SemanticInput } from '../experiments/mainline04/semanticContract'
@@ -13,7 +14,7 @@ import {completeCitedSourceWindows} from './citedSourceWindow'
 import {addDateOnlyDays} from '../lib/timeSemantics'
 import {nativeQualificationReviews} from './nativeQualificationReview'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.15.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.16.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -144,8 +145,8 @@ function time<T extends TimeFields & { tempId: string; rawText: string; type: Ti
   audit.times.push({ entityId: point.tempId, before, after: fields(point), interpretation })
 }
 
-type EventAnchorOwner = { tempId: string; startTimePointTempId: string | null; endTimePointTempId: string | null }
-type AnchorPoint = { tempId: string; rawText: string; type: TimePointSuggestionV2['type'] }
+type EventAnchorOwner = { evidenceIds?: string[]; tempId: string; startTimePointTempId: string | null; endTimePointTempId: string | null }
+type AnchorPoint = { evidenceIds?: string[]; tempId: string; rawText: string; type: TimePointSuggestionV2['type'] }
 function citedEventDate(point: AnchorPoint, events: EventAnchorOwner[], quotes: (id: string) => string[], eventQuotes: (id: string) => string[], sourceText: string, referenceTime: string, timezone: string) {
   if (!['event_start', 'event_end'].includes(point.type)) return undefined
   // A date heading is usable only when the model already cites it for this
@@ -197,24 +198,11 @@ function citedSameDayDate(point:AnchorPoint,quotes:(id:string)=>string[],source:
 
 /** Existing endpoint + explicit same-day/sequence connector + immediately
  * preceding cited event. No scan of unrelated registration dates or new owner. */
-function sequentialEventDate(point: AnchorPoint, events: EventAnchorOwner[], points: AnchorPoint[], quotes: (id: string) => string[], eventQuotes: (id: string) => string[], sourceText: string, referenceTime: string, timezone: string) {
-  if(!['event_start','event_end'].includes(point.type)||!/^\d{1,2}:[0-5]\d(?:\s*[-—–]\s*\d{1,2}:[0-5]\d)?$/u.test(point.rawText))return undefined
-  const owners=events.filter(e=>e.startTimePointTempId===point.tempId||e.endTimePointTempId===point.tempId)
-  if(owners.length!==1)return undefined
-  const current=owners[0],rows=quotes(point.tempId).filter(q=>(/^(?:随后|同日|当天)\s*\d{1,2}:[0-5]\d/u.test(q)||/^\d{1,2}:[0-5]\d\s*[-—–]\s*\d{1,2}:[0-5]\d同地/u.test(q))&&eventQuotes(current.tempId).includes(q)&&q.includes(point.rawText))
-  if(rows.length!==1)return undefined
-  const q=rows[0],at=sourceText.indexOf(q)
-  if(at<0||sourceText.indexOf(q,at+1)>=0||/次日|明日|翌日|另行|待定|取消|延期/u.test(q))return undefined
-  const preceding=events.filter(e=>e!==current).flatMap(e=>eventQuotes(e.tempId).filter(p=>{
-    const pos=sourceText.indexOf(p);return pos>=0&&sourceText.indexOf(p,pos+1)<0&&pos+p.length<=at&&/^[。；;\s]*$/u.test(sourceText.slice(pos+p.length,at))
-  }).map(p=>({event:e,quote:p})))
-  if(preceding.length!==1)return undefined
-  const previous=preceding[0],start=points.find(p=>p.tempId===previous.event.startTimePointTempId),end=points.find(p=>p.tempId===previous.event.endTimePointTempId)
-  if(!start||!end||!quotes(start.tempId).includes(previous.quote)||!quotes(end.tempId).includes(previous.quote)||/取消|延期|若|如果|假如/u.test(previous.quote))return undefined
-  const dates=[...previous.quote.matchAll(/\d{4}年\d{1,2}月\d{1,2}日/gu)],clocks=[...previous.quote.matchAll(/(\d{1,2}):([0-5]\d)/gu)],now=/^(?:(?:随后|同日|当天)\s*)?(\d{1,2}):([0-5]\d)/u.exec(q)
-  if(dates.length!==1||clocks.length!==2||!now||+now[1]>23||+now[1]*60+ +now[2]<+clocks[1][1]*60+ +clocks[1][2])return undefined
-  const date=interpretTimeD26(dates[0][0],{type:point.type,referenceTime,timezone})
-  return date.knownDate&&!date.point.needsConfirmation?{date:date.knownDate,context:previous.quote+'\n'+q,blocked:false}:undefined
+function sequentialEventDate(point:AnchorPoint,events:EventAnchorOwner[],points:AnchorPoint[],evidence:RecognitionResult['evidence'],sourceText:string,referenceTime:string,timezone:string){
+ const sequence=citedEventSequence(point,events,points,evidence,sourceText)
+ if(!sequence)return undefined
+ const date=interpretTimeD26(sequence.dateLiteral,{type:point.type,referenceTime,timezone})
+ return date.knownDate&&!date.point.needsConfirmation?{date:date.knownDate,context:sequence.context,blocked:false}:undefined
 }
 
 /** Consume schema-validated semantic facts, preserve original prose, do not infer missing facts or fix graph edges. */
@@ -296,7 +284,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   const eventQuotes = (id: string) => quote(result.events.find(e => e.tempId === id)?.evidenceIds ?? [])
   for (const point of result.timePoints) {
     const heading = citedEventDate(point, result.events, pointQuotes, eventQuotes, context.sourceText, context.referenceTime, context.timezone)
-    const sequence = sequentialEventDate(point,result.events,result.timePoints,pointQuotes,eventQuotes,context.sourceText,context.referenceTime,context.timezone)
+    const sequence = sequentialEventDate(point,result.events,result.timePoints,result.evidence,context.sourceText,context.referenceTime,context.timezone)
     const sameDay=citedSameDayDate(point,pointQuotes,context.sourceText,context.referenceTime,context.timezone)
     const anchor = heading ?? eventAnchor(point.tempId, result.events, result.timePoints, pointQuotes, eventQuotes, context.sourceText, context.referenceTime, context.timezone) ?? sequence ?? sameDay
     if(sequence)audit.rangeSupport.push({entityId:point.tempId,quote:sequence.context,literalRange:point.rawText,expanded:sequence.date+'T'+point.rawText,rule:'CITED_ADJACENT_SAME_DAY_EVENT'})
