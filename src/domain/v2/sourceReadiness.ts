@@ -1,17 +1,32 @@
 import type { WorkspaceV8, JsonValue } from './types'
 import { workspaceSnapshotHash } from './migration'
+import {nativeQualificationReviews} from '../../recognition/nativeQualificationReview'
+import type {RecognitionResult} from '../../recognition/types'
+import {isRecognitionResult} from '../../recognition/schema'
 
 export const SOURCE_READINESS_VERSION = 'source-readiness-review-1.0.0' as const
 export type ReadinessChoice = 'no_extra_condition' | 'meets_stated_condition'
-export interface ReadinessGroup { id:string; taskIds:string[]; titles:string[]; ruleQuotes:string[]; unresolvedEvidence:boolean; resolved:boolean }
+export interface ReadinessGroup { id:string; taskIds:string[]; titles:string[]; ruleQuotes:string[]; unresolvedEvidence:boolean; resolved:boolean; blockedReason?:string }
 export interface ReadinessInput { groupId:string; choice:ReadinessChoice; expectedResult:string; operationId:string }
 const record=(v:unknown):Record<string,unknown>|undefined=>v&&typeof v==='object'&&!Array.isArray(v)?v as Record<string,unknown>:undefined
 const strings=(v:unknown):string[]=>Array.isArray(v)&&v.every(s=>typeof s==='string')?v:[]
-function sourceState(w:WorkspaceV8,draftId:string){
+const ruleIds=(condition:Record<string,unknown>|undefined)=>strings(condition?.conditionScopeIds??condition?.nativeRuleEvidenceIds)
+const factIds=(condition:Record<string,unknown>|undefined)=>strings(condition?.factScopeIds??condition?.nativeFactEvidenceIds)
+const tasksOf=(r:RecognitionResult)=>[...r.standaloneTasks,...r.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
+function sourceState(w:WorkspaceV8,draftId:string,allowHistoricalSource=false){
  const draft=w.extractionDrafts.find(d=>d.id===draftId),run=w.recognitionRuns.find(r=>r.id===draft?.recognitionRunId),version=w.sourceVersions.find(v=>v.id===run?.sourceVersionId),source=w.sources.find(s=>s.id===version?.sourceId)
- if(!draft?.result||!version||source?.currentVersionId!==version.id)throw Error('SOURCE_READINESS_SOURCE_CHANGED')
- const sidecar=record(draft.legacyData?.semanticSidecar),semantic=record(sidecar?.firstSemantic)
- return {draft,version,sidecar,semantic}
+ if(!draft?.result||!version||!source||!allowHistoricalSource&&source.currentVersionId!==version.id)throw Error('SOURCE_READINESS_SOURCE_CHANGED')
+ const sidecar=record(draft.legacyData?.semanticSidecar)
+ // The native result has evidence IDs, not semantic scope IDs. Keep that
+ // distinction in the review snapshot; never manufacture a model firstSemantic.
+ const reviewBase=record(draft.legacyData?.nativeQualificationReviewBase),first=draft.legacyData?.firstSuggestionDisplayed
+ const base=isRecognitionResult(first)?first:reviewBase?.sourceVersionId===version.id&&isRecognitionResult(reviewBase.result)?reviewBase.result:draft.result
+ const native=record(sidecar?.firstSemantic)?[]:nativeQualificationReviews(base,version.rawText??'').filter(n=>{
+  const original=tasksOf(base).find(t=>t.tempId===n.taskId),current=tasksOf(draft.result!).find(t=>t.tempId===n.taskId)
+  return current?.actionObject===original?.actionObject&&n.ruleEvidenceIds.every(id=>current?.evidenceIds.includes(id))
+ })
+ const semantic=record(sidecar?.firstSemantic)??(native.length?{role:'PROGRAM_NATIVE_QUALIFICATION_REVIEW',tasks:native.map(n=>({id:n.taskId,condition:{value:'unknown',nativeRuleEvidenceIds:n.ruleEvidenceIds,nativeFactEvidenceIds:n.factEvidenceIds,nativeProjection:n},semantics:{modality:n.required?'required':'optional'}}))}:undefined)
+ return {draft,version,sidecar,semantic,native}
 }
 /** A review view, never evidence that an unknown condition is true/absent. */
 export function sourceReadinessGroups(w:WorkspaceV8,draftId:string):ReadinessGroup[]{
@@ -19,11 +34,13 @@ export function sourceReadinessGroups(w:WorkspaceV8,draftId:string):ReadinessGro
  const scopeMap=new Map((Array.isArray(sidecar?.sourceScopeEvidence)?sidecar.sourceScopeEvidence:[]).map(record).filter((r):r is Record<string,unknown>=>Boolean(r)).map(r=>[r.scopeId,r.evidenceId]))
  for(const row of (Array.isArray(semantic?.tasks)?semantic.tasks:[]).map(record)){
   const condition=record(row?.condition),id=typeof row?.id==='string'?row.id:''
-  const task=draft.result!.standaloneTasks.find(t=>t.tempId===id)
-  if(!task||condition?.value!=='unknown'||draft.acceptedEntityTempIds.includes(id)||draft.rejectedEntityTempIds.includes(id))continue
-  const rules=strings(condition.conditionScopeIds),facts=strings(condition.factScopeIds),key=workspaceSnapshotHash({rules:[...rules].sort(),facts:[...facts].sort(),value:'unknown'})
-  const quotes=rules.flatMap(scope=>{const e=draft.result!.evidence.find(e=>e.id===scopeMap.get(scope));return e?[e.quote]:[]})
-  const existing=groups.get(key)??{id:key,taskIds:[],titles:[],ruleQuotes:[...new Set(quotes)],unresolvedEvidence:quotes.length!==rules.length||!rules.length&&facts.length>0,resolved:false}
+  const task=tasksOf(draft.result!).find(t=>t.tempId===id)
+  if(!task||condition?.value!=='unknown'||draft.acceptedEntityTempIds.includes(id)&&!condition.nativeProjection||draft.rejectedEntityTempIds.includes(id))continue
+  const native=record(condition.nativeProjection)
+  const rules=ruleIds(condition),facts=factIds(condition),key=workspaceSnapshotHash({rules:[...rules].sort(),facts:[...facts].sort(),value:'unknown',...(native?{nativeProjection:{version:native.version,ambiguityId:native.ambiguityId,ambiguityMessage:native.ambiguityMessage,blockedReason:native.blockedReason}}:{})})
+  const quotes=rules.flatMap(scope=>{const e=draft.result!.evidence.find(e=>e.id===(condition.nativeProjection?scope:scopeMap.get(scope)));return e?[e.quote]:[]})
+  const blockedReason=record(condition.nativeProjection)?.blockedReason
+  const existing=groups.get(key)??{id:key,taskIds:[],titles:[],ruleQuotes:[...new Set(quotes)],unresolvedEvidence:quotes.length!==rules.length||!rules.length&&facts.length>0||typeof blockedReason==='string',resolved:false,...(typeof blockedReason==='string'?{blockedReason}:{})}
   existing.taskIds.push(id);existing.titles.push(task.title);groups.set(key,existing)
  }
  for(const group of groups.values())group.resolved=group.taskIds.every(id=>sourceReadinessValue(w,draftId,id)!==undefined)
@@ -37,23 +54,35 @@ export function sourceReadinessValue(w:WorkspaceV8,draftId:string,taskId:string)
  const entries=Array.isArray(draft.legacyData?.sourceReadiness)?draft.legacyData.sourceReadiness:[]
  const entry=[...entries].reverse().map(record).find(e=>e?.version===SOURCE_READINESS_VERSION&&e.sourceVersionId===version.id&&strings(e.taskIds).includes(taskId)&&e.actor==='user'&&e.conditionSnapshot===JSON.stringify(condition)&&typeof e.operationId==='string'&&w.historyRecords.some(h=>h.id===e.operationId&&h.actor==='user'&&h.action==='user_condition_judgement'&&h.entityId===draftId&&h.sourceVersionId===version.id&&h.fieldName==='source-readiness:'+e.groupId&&record(h.after)?.choice===e.choice&&strings(record(h.after)?.taskIds).includes(taskId)))
  if(condition?.value!=='unknown'||!entry)return undefined
- return entry.choice==='no_extra_condition'&&strings(condition.conditionScopeIds).length===0&&strings(condition.factScopeIds).length===0?'not_applicable':entry.choice==='meets_stated_condition'&&strings(condition.conditionScopeIds).length>0?'true':undefined
+ return entry.choice==='no_extra_condition'&&ruleIds(condition).length===0&&factIds(condition).length===0?'not_applicable':entry.choice==='meets_stated_condition'&&ruleIds(condition).length>0?'true':undefined
  } catch { return undefined }
 }
-export function unresolvedSourceReadiness(w:WorkspaceV8,draftId:string,taskId:string):boolean {
- const {semantic}=sourceState(w,draftId),row=(Array.isArray(semantic?.tasks)?semantic.tasks:[]).map(record).find(t=>t?.id===taskId)
+export function unresolvedSourceReadiness(w:WorkspaceV8,draftId:string,taskId:string,allowHistoricalSource=false):boolean {
+ const {semantic}=sourceState(w,draftId,allowHistoricalSource),row=(Array.isArray(semantic?.tasks)?semantic.tasks:[]).map(record).find(t=>t?.id===taskId)
  return record(row?.condition)?.value==='unknown'&&sourceReadinessValue(w,draftId,taskId)===undefined
+}
+export function sourceReadinessProblem(w:WorkspaceV8|null,draftId:string,taskId:string):string|undefined {
+ if(!w)return undefined
+ try{return unresolvedSourceReadiness(w,draftId,taskId)?'个人资格尚未确认。请先在“本通知适用性”中按实际情况判断，或稍后处理；不会据此安排为可执行事项。':undefined}
+ catch{return '当前来源版本暂不可核对，请重新打开通知后再接受。'}
 }
 /** Current UI view only. The original run/source quality flags remain intact. */
 export function currentReadinessFlags(w:WorkspaceV8,draftId:string,flags:string[]):string[]{
  const draft=w.extractionDrafts.find(d=>d.id===draftId),sidecar=record(draft?.legacyData?.semanticSidecar)
  const gaps=Array.isArray(sidecar?.representationGaps)?sidecar.representationGaps.map(record):[]
  const resolved=new Set(gaps.flatMap(g=>g?.kind==='condition'&&typeof g.reason==='string'&&strings(g.entityIds).length>0&&strings(g.entityIds).every(id=>sourceReadinessValue(w,draftId,id)!==undefined)&&!draft?.result?.conflicts.some(c=>c.requiresDecision&&c.message===g.reason)?[g.reason]:[]))
- return flags.filter(flag=>!resolved.has(flag))
+ let native:{reviewReasons:string[]}
+ try{native=nativeResolution(w,draftId)}catch{return flags}
+ return flags.filter(flag=>!resolved.has(flag)&&!native.reviewReasons.includes(flag))
+}
+function nativeResolution(w:WorkspaceV8,draftId:string):{ambiguityIds:string[];reviewReasons:string[]}{
+ const {native}=sourceState(w,draftId)
+ const allResolved=native.length>0&&native.every(n=>sourceReadinessValue(w,draftId,n.taskId)==='true')
+ return {ambiguityIds:[...new Set(native.map(n=>n.ambiguityId))].filter(id=>native.filter(n=>n.ambiguityId===id).every(n=>sourceReadinessValue(w,draftId,n.taskId)==='true')),reviewReasons:allResolved?[...new Set(native.flatMap(n=>n.qualificationReviewReasons))]:[]}
 }
 /** Draft-only atomic user judgement; formal entities still use DomainCommitPlan. */
 export function applySourceReadiness(w:WorkspaceV8,draftId:string,input:ReadinessInput,now=new Date().toISOString()):WorkspaceV8 {
- const {draft,version,sidecar,semantic}=sourceState(w,draftId)
+ const {draft,version,sidecar,semantic,native}=sourceState(w,draftId)
  const previous=w.historyRecords.find(h=>h.id===input.operationId)
  if(previous){if(previous.action!=='user_condition_judgement'||previous.entityId!==draftId||previous.sourceVersionId!==version.id||previous.fieldName!=='source-readiness:'+input.groupId||record(previous.after)?.choice!==input.choice)throw Error('SOURCE_READINESS_OPERATION_CHANGED');return w}
  if(workspaceSnapshotHash(draft.result)!==input.expectedResult)throw Error('SOURCE_READINESS_DRAFT_CHANGED')
@@ -74,10 +103,27 @@ export function applySourceReadiness(w:WorkspaceV8,draftId:string,input:Readines
  const remainingReasons=result.quality.reviewReasons.filter(reason=>!resolvedMessages.has(reason)||result.conflicts.some(c=>c.requiresDecision&&c.message===reason))
  const displayAudit=record(sidecar?.displayAudit)
  result.quality={...result.quality,reviewReasons:remainingReasons,needsHumanReview:result.quality.needsHumanReview&&(remainingReasons.length>0||result.conflicts.some(c=>c.requiresDecision)||Array.isArray(displayAudit?.unresolved)&&displayAudit.unresolved.length>0||resolvedMessages.size===0)}
- for(const task of result.standaloneTasks.filter(t=>taskIds.has(t.tempId))){
+ for(const task of tasksOf(result).filter(t=>taskIds.has(t.tempId))){
   const row=(Array.isArray(semantic?.tasks)?semantic.tasks:[]).map(record).find(r=>r?.id===task.tempId),semantics=record(row?.semantics),affected=new Set([task.tempId,...task.materialTempIds,...task.timePointTempIds])
   task.selected=semantics?.modality==='required'&&!result.conflicts.some(c=>c.requiresDecision&&(!c.entityTempIds.length||c.entityTempIds.some(id=>affected.has(id))))
  }
  const entries=group.taskIds.map(id=>{const row=(Array.isArray(semantic?.tasks)?semantic.tasks:[]).map(record).find(t=>t?.id===id);return {version:SOURCE_READINESS_VERSION,groupId:group.id,taskIds:[id],choice:input.choice,actor:'user',sourceVersionId:version.id,conditionSnapshot:JSON.stringify(record(row?.condition)),operationId:input.operationId,createdAt:now}})
- return {...w,extractionDrafts:w.extractionDrafts.map(d=>d.id===draftId?{...d,result,updatedAt:now,legacyData:{...d.legacyData,sourceReadiness:[...(Array.isArray(d.legacyData?.sourceReadiness)?d.legacyData.sourceReadiness:[]),...entries]}}:d),historyRecords:[...w.historyRecords,{id:input.operationId,entityType:'extraction_draft',entityId:draftId,action:'user_condition_judgement',fieldName:'source-readiness:'+group.id,before:'unknown',after:{choice:input.choice,taskIds:group.taskIds} as JsonValue,actor:'user',reason:'用户后续适用判断；不修改原模型回答或首次展示，不声明前置已完成。',sourceVersionId:version.id,changedAt:now}]}
+ // Ordinary drafts can already have a compatibility selection checkpoint.
+ // Reflect this explicit judgement there too, so its old `false` cannot hide
+ // the newly eligible required item. Preserve the original first display and
+ // every unrelated user field/selection.
+ const resultTasks=new Map(tasksOf(result).map(t=>[t.tempId,t]))
+ const selectItems=(items:JsonValue|undefined)=>Array.isArray(items)?items.map(item=>{
+  const row=record(item),id=record(row?.suggestion)?.id
+  return typeof id==='string'&&taskIds.has(id)&&!draft.acceptedEntityTempIds.includes(id)&&!draft.rejectedEntityTempIds.includes(id)
+   ?{...row,selected:resultTasks.get(id)?.selected===true,updatedAt:now} as JsonValue:item
+ }):undefined
+ const legacyItems=selectItems(draft.legacyData?.items),legacyRecord=record(draft.legacyData?.v7Record)
+ const viewItems=selectItems(legacyRecord?.items as JsonValue|undefined)
+ const next:WorkspaceV8={...w,extractionDrafts:w.extractionDrafts.map(d=>d.id===draftId?{...d,result,updatedAt:now,legacyData:{...d.legacyData,...(legacyItems?{items:legacyItems}:{}),...(viewItems?{v7Record:{...legacyRecord,items:viewItems} as JsonValue}:{}),...(native.length&&!isRecognitionResult(d.legacyData?.firstSuggestionDisplayed)&&!d.legacyData?.nativeQualificationReviewBase?{nativeQualificationReviewBase:{role:'POSTHOC_REVIEW_BASE_NOT_MODEL_FIRST',sourceVersionId:version.id,result:JSON.parse(JSON.stringify(draft.result)) as JsonValue}}:{}),sourceReadiness:[...(Array.isArray(d.legacyData?.sourceReadiness)?d.legacyData.sourceReadiness:[]),...entries]}}:d),historyRecords:[...w.historyRecords,{id:input.operationId,entityType:'extraction_draft',entityId:draftId,action:'user_condition_judgement',fieldName:'source-readiness:'+group.id,before:'unknown',after:{choice:input.choice,taskIds:group.taskIds} as JsonValue,actor:'user',reason:'用户后续适用判断；不修改原模型回答或首次展示，不声明前置已完成。',sourceVersionId:version.id,changedAt:now}]}
+ const resolved=nativeResolution(next,draftId)
+ result.ambiguities=result.ambiguities.filter(a=>!resolved.ambiguityIds.includes(a.id))
+ result.quality.reviewReasons=result.quality.reviewReasons.filter(r=>!resolved.reviewReasons.includes(r))
+ if(!result.ambiguities.length&&!result.conflicts.some(c=>c.requiresDecision)&&!result.quality.reviewReasons.length&&result.quality.missingActionRisk<.3)result.quality.needsHumanReview=false
+ return next
 }

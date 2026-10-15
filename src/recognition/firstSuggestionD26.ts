@@ -11,8 +11,9 @@ import {completeDeclaredEventNameSupport,type DeclaredEventNameAudit} from './de
 import {completeCitedOwnerSupport,type CitedOwnerDecision} from './citedOwnerSupport'
 import {completeCitedSourceWindows} from './citedSourceWindow'
 import {addDateOnlyDays} from '../lib/timeSemantics'
+import {nativeQualificationReviews} from './nativeQualificationReview'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.13.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.14.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -25,6 +26,7 @@ export interface D26FirstSuggestionAudit {
   citedOwnerSupport:CitedOwnerDecision[]
   citedSourceWindows:ReturnType<typeof completeCitedSourceWindows>
   projectDisplayDefault: {before:string;after:string;reason:string}|null
+  nativeQualificationReview:ReturnType<typeof nativeQualificationReviews>
   actionFields: Array<{entityId:string; before:string; after:string; status:'CITED_VERB_PROJECTION'|'LOCAL_UNRESOLVED_ACTION'; quotes:string[]}>
   rangeSupport: Array<{entityId:string; quote:string; literalRange:string; expanded:string; rule:'CITED_SAME_EVENT_RANGE_ENDPOINT'|'CITED_SAME_EVENT_CLOCK_RANGE'|'CITED_ADJACENT_SAME_DAY_EVENT'|'CITED_NEXT_DAY_DURATION_CONSENSUS'}>
   role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT'
@@ -32,7 +34,7 @@ export interface D26FirstSuggestionAudit {
 type TimeFields = Pick<TimePointSuggestionV2, 'normalizedValue' | 'timezone' | 'isAllDay' | 'precision' | 'needsConfirmation'>
 const fields = (point: TimeFields): TimeFields => ({ normalizedValue: point.normalizedValue, timezone: point.timezone,
   isAllDay: point.isAllDay, precision: point.precision, needsConfirmation: point.needsConfirmation })
-const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], sourceCurrentness:[], declaredEventNameSupport:[], citedOwnerSupport:[],citedSourceWindows:{version:'ordinary-cited-window-projection-1.0.0',inferredFacts:0,decisions:[]}, projectDisplayDefault:null, actionFields: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
+const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], sourceCurrentness:[], declaredEventNameSupport:[], citedOwnerSupport:[],citedSourceWindows:{version:'ordinary-cited-window-projection-1.0.0',inferredFacts:0,decisions:[]}, projectDisplayDefault:null,nativeQualificationReview:[], actionFields: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
 const supported = (value: string, quotes: string[]) => Boolean(value.trim()) && quotes.some(quote => quote.includes(value))
 function supportedAdjacent(value: string, quotes: string[], sourceText: string) {
   if (supported(value, quotes)) return true
@@ -320,6 +322,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     result.quality.needsHumanReview = true
     result.quality.reviewReasons = unique([...result.quality.reviewReasons, '部分首次摘要缺少完整来源依据，请核对标记事项。'])
   }
+  audit.nativeQualificationReview=nativeQualificationReviews(result,context.sourceText)
   return { result, audit }
 }
 

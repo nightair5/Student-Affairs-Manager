@@ -10,6 +10,7 @@ import {
   Play,
 } from 'lucide-react'
 import type { Task } from '../types'
+import { timePointDisplayValue } from '../recognition/recognitionModePresentation'
 import {
   formatDuration,
   formatDeadlineDistance,
@@ -20,7 +21,7 @@ import {
 function deadlineParts(value: string): { date: string; time: string; weekday: string } {
   const deadline = new Date(value)
   if (!Number.isFinite(deadline.getTime())) return { date: '时间待确认', time: '待补充', weekday: '未排期' }
-  if (/^\d{4}-\d{2}-\d{2}$/u.test(value)) return { date: value, time: '仅日期，原文未说明时刻', weekday: '' }
+  if (/^\d{4}-\d{2}-\d{2}$/u.test(value)) return { date: timePointDisplayValue(value, value), time: '仅日期，原文未说明时刻', weekday: '' }
   return {
     date: new Intl.DateTimeFormat('zh-CN', { month: 'long', day: 'numeric' }).format(deadline),
     time: new Intl.DateTimeFormat('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false }).format(deadline),
