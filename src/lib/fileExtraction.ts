@@ -99,7 +99,9 @@ function hasMojibake(text: string): boolean {
   const suspiciousCount = (text.match(/(?:锟斤拷|烫烫烫|屯屯屯|Ã.|Â.|鈥[\u0080-\uFFFF]?)/gu) ?? []).length
   const controlCount = [...text].filter((character) => {
     const code = character.charCodeAt(0)
-    return code < 32 && character !== '\n' && character !== '\t'
+    // CRLF and old-style CR are ordinary text line endings. They are normalized
+    // after decoding, and must not make a valid Windows file look corrupted.
+    return code < 32 && character !== '\n' && character !== '\r' && character !== '\t'
   }).length
   return replacementCount > 0 || suspiciousCount > 1 || controlCount > Math.max(2, text.length * 0.002)
 }
@@ -354,7 +356,14 @@ async function extractPdfText(file: File, options: FileExtractionOptions): Promi
     options.onProgress?.({ phase: 'reading', progress: 0, message: '正在本机逐页读取 PDF……' })
     const pdfjs = await import('pdfjs-dist')
     pdfjs.GlobalWorkerOptions.workerSrc = localProfile(options) ? localResources(options).pdfWorkerPath : new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString()
-    const loading = pdfjs.getDocument({ data: new Uint8Array(await file.arrayBuffer()), ...(localProfile(options) ? { isEvalSupported: false, useSystemFonts: true } : {}) })
+    // CID Chinese fonts commonly refer to Adobe CMaps instead of embedding a
+    // Unicode mapping. Serve the already-installed PDF.js maps locally; never
+    // fetch a font or mapping URL supplied by the document or a public CDN.
+    const cMapUrl = localProfile(options)
+      ? new URL('cmaps/', localResources(options).pdfWorkerPath).href
+      : new URL('/pdf-cmaps/', globalThis.location?.href ?? 'http://localhost/').href
+    const loading = pdfjs.getDocument({ data: new Uint8Array(await file.arrayBuffer()), cMapUrl, cMapPacked: true,
+      ...(localProfile(options) ? { isEvalSupported: false, useSystemFonts: true } : {}) })
     if (localProfile(options)) options.signal?.addEventListener('abort', () => { void loading.destroy().catch(() => undefined) }, { once: true })
     document = await loading.promise
     active(options)

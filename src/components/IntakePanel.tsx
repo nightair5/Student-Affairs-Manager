@@ -332,7 +332,7 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
       <section ref={panelRef} className="intake-panel" role="dialog" aria-modal="true" aria-labelledby={titleId} onPaste={realInputPanel ? undefined : handlePaste}>
         <header className="intake-header">
           <div>
-            <span className="eyebrow">E2-MM 独立 Preview · 第 1 步</span>
+            <span className="eyebrow">新事务 · 第 1 步</span>
             <h2 id={titleId}>把通知原样放进来</h2>
             <p>不用先整理。下一步会让你核对拆分结果。</p>
           </div>

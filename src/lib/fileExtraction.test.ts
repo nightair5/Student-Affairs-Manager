@@ -105,6 +105,27 @@ describe('classifyFile', () => {
 })
 
 describe('text decoding and structure', () => {
+  it('requests packed local CMaps for Chinese text-layer PDF fonts', async () => {
+    mockPdf(['停网维护通知，10月23日18:00开始。'])
+    const result = await extractFileContent(new File(['%PDF-1.7 synthetic'], 'notice.pdf', { type: 'application/pdf' }))
+    expect(result.status).toBe('ready')
+    expect(getDocument).toHaveBeenCalledWith(expect.objectContaining({ cMapUrl: 'http://localhost/pdf-cmaps/', cMapPacked: true }))
+  })
+
+  it('reads UTF-8 Windows CRLF and CR paragraphs without confusing them with broken encoding', async () => {
+    for (const ending of ['\r\n', '\r']) {
+      const original = ['关于停网的通知', '10月23日18:00—20:00校园网维护。', '已保存文件不受影响。', '无需重新提交。'].join(ending)
+      const decoded = decodeTextBytes(new TextEncoder().encode(original))
+      expect(decoded).toEqual({ text: original, encoding: 'utf-8' })
+      const result = await extractFileContent(new File([original], 'notice.txt', { type: 'text/plain' }))
+      expect(result).toMatchObject({ status: 'ready', text: original.replace(/\r\n|\r/gu, '\n') })
+    }
+  })
+
+  it('still rejects binary control characters rather than treating every bad file as text', () => {
+    expect(() => decodeTextBytes(new TextEncoder().encode('通知\u0001\u0002\u0003\u0004正文'))).toThrow('TEXT_ENCODING_UNCERTAIN')
+  })
+
   it('distinguishes UTF-8 BOM and GB18030 bytes', () => {
     expect(decodeTextBytes(new Uint8Array([0xef, 0xbb, 0xbf, 0xe4, 0xb8, 0xad]))).toEqual({ text: '中', encoding: 'utf-8-bom' })
     expect(decodeTextBytes(new Uint8Array([0xd6, 0xd0, 0xce, 0xc4]))).toEqual({ text: '中文', encoding: 'gb18030' })
