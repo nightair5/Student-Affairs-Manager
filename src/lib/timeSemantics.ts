@@ -322,7 +322,10 @@ function clockCandidates(text: string): ClockCandidate[] {
     const rawHour = parseChineseInteger(match[2])
     const minute = match[5] ? 30 : parseChineseInteger(match[3] ?? match[4] ?? '0')
     const converted = convertClockHour(rawHour, match[1])
-    const usesTwentyFourHourNotation = match[0].includes(':')
+    // 18时 and 十八点 have only one valid hour; unlike an unqualified
+    // 6点 they cannot mean either morning or evening.
+    const usesTwentyFourHourNotation = match[0].includes(':') || rawHour === 0 || rawHour > 12
+    const compatibleExplicitPm = rawHour > 12 && ['下午', '傍晚', '晚上', '夜间', '夜里', '晚'].includes(match[1] ?? '')
     return {
       index: match.index ?? 0,
       end: (match.index ?? 0) + match[0].length,
@@ -331,7 +334,7 @@ function clockCandidates(text: string): ClockCandidate[] {
       dayOffset: converted.dayOffset,
       period: match[1],
       ambiguous: !match[1] && !usesTwentyFourHourNotation,
-      valid: rawHour >= 0 && rawHour <= (match[1] ? 12 : 23) && converted.hour <= 23 && minute >= 0 && minute <= 59,
+      valid: rawHour >= 0 && rawHour <= 23 && (!match[1] || rawHour <= 12 || compatibleExplicitPm) && converted.hour <= 23 && minute >= 0 && minute <= 59,
     }
   })
 }

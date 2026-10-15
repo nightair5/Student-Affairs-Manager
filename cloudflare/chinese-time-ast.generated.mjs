@@ -1,5 +1,5 @@
 // GENERATED from src/lib/timeSemantics.ts; do not edit.
-// source-sha256: 5360883752447640136f22c1599ccf2f0412eaed66a2b573310f1aab00f13fed
+// source-sha256: be282db472a4c9fd5a8f6c1db3c63cf03232ef2135d24163a261b80eb5d95664
 export const DEFAULT_WORKSPACE_TIMEZONE = 'Asia/Shanghai';
 const DATE_ONLY_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/u;
 const LOCAL_DATE_TIME_PATTERN = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.\d{1,3})?)?$/u;
@@ -253,7 +253,10 @@ function clockCandidates(text) {
         const rawHour = parseChineseInteger(match[2]);
         const minute = match[5] ? 30 : parseChineseInteger(match[3] ?? match[4] ?? '0');
         const converted = convertClockHour(rawHour, match[1]);
-        const usesTwentyFourHourNotation = match[0].includes(':');
+        // 18时 and 十八点 have only one valid hour; unlike an unqualified
+        // 6点 they cannot mean either morning or evening.
+        const usesTwentyFourHourNotation = match[0].includes(':') || rawHour === 0 || rawHour > 12;
+        const compatibleExplicitPm = rawHour > 12 && ['下午', '傍晚', '晚上', '夜间', '夜里', '晚'].includes(match[1] ?? '');
         return {
             index: match.index ?? 0,
             end: (match.index ?? 0) + match[0].length,
@@ -262,7 +265,7 @@ function clockCandidates(text) {
             dayOffset: converted.dayOffset,
             period: match[1],
             ambiguous: !match[1] && !usesTwentyFourHourNotation,
-            valid: rawHour >= 0 && rawHour <= (match[1] ? 12 : 23) && converted.hour <= 23 && minute >= 0 && minute <= 59,
+            valid: rawHour >= 0 && rawHour <= 23 && (!match[1] || rawHour <= 12 || compatibleExplicitPm) && converted.hour <= 23 && minute >= 0 && minute <= 59,
         };
     });
 }

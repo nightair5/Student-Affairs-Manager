@@ -1,4 +1,4 @@
-export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.2.0'
+export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.3.0'
 const escape=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')
 /** Closed grammatical equivalence, not a bag of words across source clauses. */
 export function supportedCoordinatedObject(value:string,action:string,quotes:string[]):boolean {
@@ -22,7 +22,7 @@ export function supportedEventDescriptor(value:string,quotes:string[]):boolean {
  * Stitch only uniquely located, contiguous cited spans (including a URL split
  * at its colon), never unrelated words or different owners. */
 export function supportedEventOperation(value:string,quotes:string[],sourceText:string,allowTimedOperationNames=false):boolean {
-  const title=/^(.+?)(升级维护|停机维护|升级检修|停机)$/u.exec(value)
+  const title=/^(.+?)(升级维护|停机维护|升级检修|停机|维护)$/u.exec(value)
   if(!title)return false
   const [,entity,operation]=title
   const spans=[...new Set(quotes)].flatMap(quote=>{

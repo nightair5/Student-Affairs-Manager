@@ -16,7 +16,7 @@ import {completeCitedSourceWindows} from './citedSourceWindow'
 import {addDateOnlyDays} from '../lib/timeSemantics'
 import {nativeQualificationReviews} from './nativeQualificationReview'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.17.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.18.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -145,6 +145,15 @@ function time<T extends TimeFields & { tempId: string; rawText: string; type: Ti
   }
   const interpretation = interpretTimeD26(verifiedNext??nextDayLiteral??composed ?? range?.expanded ?? point.rawText, { type: point.type, referenceTime, timezone, inheritedDate,
     sourceContext: [anchorContext, range?.quote, ...quotes.filter(quote => quote.includes(point.rawText)).map(quote => timeClause(point.rawText, quote))].filter(Boolean).join('\n') })
+  // The AST keeps both endpoints of a literal range. Select its end only for
+  // an already-declared end attached to the same unique existing event. Never
+  // create a missing endpoint or borrow a range from a different owner.
+  if (point.type === 'event_end' && rangeQuotes.filter(q => q.includes(point.rawText)).length === 1
+    && !interpretation.point.needsConfirmation && interpretation.point.normalizedValue
+    && interpretation.point.rangeEndNormalizedValue && interpretation.point.rangeEndNormalizedValue > interpretation.point.normalizedValue) {
+    interpretation.point.normalizedValue = interpretation.point.rangeEndNormalizedValue
+    audit.rangeSupport.push({entityId:point.tempId,quote:rangeQuotes.find(q=>q.includes(point.rawText))!,literalRange:point.rawText,expanded:interpretation.point.normalizedValue,rule:'CITED_SAME_EVENT_CLOCK_RANGE'})
+  }
   Object.assign(point, fields(interpretation.point))
   audit.times.push({ entityId: point.tempId, before, after: fields(point), interpretation })
 }
