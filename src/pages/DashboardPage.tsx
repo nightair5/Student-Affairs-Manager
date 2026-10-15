@@ -61,14 +61,14 @@ export function DashboardPage({
 
   const submitQuickCapture = async (event: FormEvent) => {
     event.preventDefault()
-    if (!quickText.trim()) return
+    if (isParsing || !quickText.trim()) return
     const submittedText = quickText
     const content = realInput ? submittedText : submittedText.trim()
     setQuickError('')
     setIsParsing(true)
     try {
       await onQuickCapture(content)
-      // Do not erase text typed while the previous capture was in flight.
+      // Clear only the successfully submitted original; failed captures retain it.
       setQuickText(current => current === submittedText ? '' : current)
     } catch (error) {
       setQuickError(error instanceof Error ? error.message : '原文尚未保存，输入已保留；请保留此页或复制文字后重试。')
@@ -95,10 +95,11 @@ export function DashboardPage({
             {engineeringInput ? engineeringInputLabel??'匿名工程输入 · 模型派发关闭' : realInput ? '真实输入隔离实验 · 发送前核对' : dateViews ? '人工工程响应 · 不调用模型' : smartExtractionStatus === 'connected' ? 'DeepSeek 已配置 · 调用时验证' : smartExtractionStatus === 'checking' ? '正在检查智能服务' : 'DeepSeek 未配置 · 本地规则可用'}
           </span>
         </div>
-        <textarea value={quickText} onChange={(event) => { setQuickText(event.target.value); setQuickError('') }} rows={3} placeholder="粘贴老师消息、群通知或网页正文……" aria-label="快速粘贴通知" aria-describedby={quickError ? 'quick-capture-error' : undefined} />
+        <textarea value={quickText} readOnly={isParsing} onChange={(event) => { setQuickText(event.target.value); setQuickError('') }} rows={3} placeholder="粘贴老师消息、群通知或网页正文……" aria-label="快速粘贴通知" aria-describedby={quickError ? 'quick-capture-error' : undefined} />
+        {isParsing && <p role="status">正在保存和整理这份原文；完成后可继续放入下一份。</p>}
         {quickError && <p id="quick-capture-error" role="alert">{quickError}</p>}
         <div className="quick-capture-actions">
-          <button className="text-button" type="button" onClick={onOpenIntake}><Upload size={15} />{realInput ? '打开文字、图片或文件录入' : dateViews ? '打开统一文字录入' : '上传文件或链接'}</button>
+          <button className="text-button" type="button" onClick={onOpenIntake} disabled={isParsing}><Upload size={15} />{realInput ? '打开文字、图片或文件录入' : dateViews ? '打开统一文字录入' : '上传文件或链接'}</button>
           <button className="primary-button" type="submit" disabled={!quickText.trim() || isParsing}>
             {isParsing ? (realInput ? '正在打开输入核对…' : dateViews ? '正在保存工程草稿…' : '正在智能整理…') : <><Plus size={16} />{realInput ? '先核对输入文字' : dateViews ? '生成工程建议' : '智能拆分任务'}</>}
           </button>
