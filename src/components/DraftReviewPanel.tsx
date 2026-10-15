@@ -12,7 +12,7 @@ import type { WorkspaceV8 } from '../domain/v2/types'
 import type { D20ReviewSessionRepository, ReviewSession } from '../experiments/candidate16/d20ReviewSession'
 
 interface DraftReviewPanelProps {
-  ordinarySourceReview?:{problem?:string;busy:boolean;unsaved:boolean;pendingEvents?:number;facts:ReactNode;onConfirm:()=>void;description?:string}
+  ordinarySourceReview?:{readbackRecovery?:{busy:boolean;onRetry:()=>void};problem?:string;busy:boolean;unsaved:boolean;pendingEvents?:number;facts:ReactNode;onConfirm:()=>void;description?:string}
   sessionFrame?:ComponentType<{children:ReactNode;onClose?:()=>void}>
   onRestoreTaskSelections?: (choices:Record<string,boolean>)=>void
   onReloadLatest?: () => Promise<void>
@@ -277,6 +277,8 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
       </header>
       <SessionFrame {...(sessionFrame?{onClose}:{})}>
       <div className="detail-body review-body">
+        {ordinarySourceReview?.readbackRecovery&&<section className="source-review-status" role="status"><strong>内容已经保存，读取结果还没核对完成。</strong><p>不用再次确认；重新读取已保存的内容，不会重复创建任务。</p><button type="button" disabled={ordinarySourceReview.readbackRecovery.busy} onClick={ordinarySourceReview.readbackRecovery.onRetry}>重新读取已保存内容</button></section>}
+
         {reviewSession&&<section aria-label="未确认编辑检查点" role="status"><strong>{Object.keys(sessionRecord?.fields??{}).length?'恢复的未确认草稿':'本来源核对会话'}</strong>
           <p>{checkpointStatus==='saving'?'正在保存未确认编辑…':checkpointStatus==='saved'?'未确认编辑检查点已保存；尚未正式确认。':checkpointStatus==='failed'?'检查点写入失败；当前输入仅在本页，刷新可能丢失。':checkpointStatus==='conflict'?'另一个标签修改了同一字段，请处理冲突。':'编辑在确认前不会创建任务。'}</p>
           {foreignCheckpoint&&<button type="button" onClick={()=>{if(reviewWorkspace&&sessionRecord)void reviewSession.recover(reviewWorkspace,draft.id,writer,Object.fromEntries(Object.entries(sessionRecord.fields).filter(([key,value])=>/^task:.+:(title|deadline|selected)$/.test(key)&&value.writer!==writer).map(([key,value])=>[key,value.revision]))).then(record=>{setSessionRecord(record);setCheckpointStatus('ready')}).catch(error=>{setCheckpointStatus('failed');setCheckpointError(String(error))})}}>接管未确认标题、日期或选择</button>}

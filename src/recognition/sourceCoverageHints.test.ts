@@ -35,4 +35,16 @@ describe('missing-source disclosure without invented facts or extra confirmation
  it('a real missing activation/preparation is visible; prohibition and an already represented action are not',()=>{
   const r=ordinaryWorkflowFixture();expect(sourceCoverageHints('请激活教学账号。各学员需自行准备终端设备。',r).map(x=>x.kind)).toEqual(['unrepresented_action','unrepresented_action']);expect(sourceCoverageHints('无需准备终端设备。不必激活教学账号。',r)).toEqual([]);r.standaloneTasks[0].actionVerb='激活';r.standaloneTasks[0].actionObject='教学账号';expect(sourceCoverageHints('请激活教学账号。',r)).toEqual([])
  })
+ it('uses existing canonical attachment ownership rather than an omitted duplicated task index, without inventing a third action',()=>{
+  const r=ordinaryWorkflowFixture(),t=r.standaloneTasks[0];r.milestones=[];r.standaloneTasks=[{...t,tempId:'A',actionVerb:'提交',actionObject:'实验总结',materialTempIds:[],completionCriteria:['审核证明随实验总结提交']}];r.materials=[{...r.materials[0],tempId:'M',name:'审核证明',relatedTaskTempIds:['A']}];const source='实验总结须提交审核证明。审核证明是随附材料，不是另外一项提交动作。',before=structuredClone(r);
+  expect(sourceCoverageHints(source,r)).toEqual([]);expect(r).toEqual(before);
+  const foreign=structuredClone(r);foreign.materials[0].relatedTaskTempIds=['OTHER'];expect(sourceCoverageHints(source,foreign).some(h=>h.kind==='unrepresented_action')).toBe(true);
+  const suffix=structuredClone(r);suffix.materials[0].name='审核证明照片';expect(sourceCoverageHints(source,suffix).some(h=>h.kind==='unrepresented_action')).toBe(true);
+  r.materials=[];expect(sourceCoverageHints(source,r).some(h=>h.kind==='unrepresented_action')).toBe(true)
+ })
+ it('retaining an existing named todo is not a second action, while retaining a real receipt or a missing todo remains visible',()=>{
+  const r=ordinaryWorkflowFixture();r.milestones=[];r.standaloneTasks=[{...r.standaloneTasks[0],actionVerb:'提交',actionObject:'封面作品'}];const text='请保留封面作品待办。格式同上，上条未提供。',before=structuredClone(r);expect(sourceCoverageHints(text,r).map(h=>h.kind)).toEqual(['unread_reference']);expect(r).toEqual(before);
+  expect(sourceCoverageHints('请保留原始回执。',r).map(h=>h.kind)).toEqual(['unrepresented_action']);r.standaloneTasks=[];expect(sourceCoverageHints(text,r).some(h=>h.kind==='unrepresented_action')).toBe(true)
+ })
+
 })

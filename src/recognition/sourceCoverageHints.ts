@@ -1,5 +1,5 @@
 import type {RecognitionResult} from './types'
-export const SOURCE_COVERAGE_HINT_VERSION='source-coverage-hints-1.5.0'
+export const SOURCE_COVERAGE_HINT_VERSION='source-coverage-hints-1.6.0'
 export interface SourceCoverageHint {kind:'unread_reference'|'unrepresented_time_range'|'unrepresented_action'|'unrepresented_event'|'unresolved_time_role';title:string;detail:string;quote:string}
 function clockValue(p:RecognitionResult['timePoints'][number]){
  if(!p.normalizedValue)return null
@@ -51,7 +51,11 @@ export function sourceCoverageHints(source:string,result:RecognitionResult):Sour
    const object=m[2].split(/并|然后|之后|后再|方可|才可|，|、/u)[0].replace(/^[一二三四五六七八九十\d]+(?:份|张|页|个)/u,''),verb=m[1];if(!object||/无需|不用|不必|请勿|不要|禁止/u.test(m[0]))continue
    const alternatives=verb==='保留'||verb==='保存'?['保留','保存']:['提交','上传','递交'].includes(verb)?['提交','上传','递交','交']:[verb]
    const members=object.split(/和|及|与|、/u).map(o=>o.replace(/^[一二三四五六七八九十\d]+(?:份|张|页|个)/u,''))
-   const represented=tasks.some(t=>alternatives.some(v=>t.actionVerb===v)&&(t.actionObject.includes(object)||members.every(o=>result.materials.some(m=>t.materialTempIds.includes(m.tempId)&&m.relatedTaskTempIds.includes(t.tempId)&&m.name.includes(o)))))
+   // Ordinary views and canonical materialization already use the material's
+   // declared owners. An omitted duplicated task index must not turn an exact
+   // existing attachment into an invented third task. No missing entity is added.
+   const keptTodo=['保留','保存'].includes(verb)&&object.endsWith('待办')&&tasks.some(t=>t.actionObject.endsWith(object.slice(0,-2)))
+   const represented=keptTodo||tasks.some(t=>alternatives.some(v=>t.actionVerb===v)&&(t.actionObject.includes(object)||members.every(o=>result.materials.some(m=>(t.materialTempIds.includes(m.tempId)||m.name===o)&&m.relatedTaskTempIds.includes(t.tempId)&&m.name.includes(o)))))
    if(!represented)hints.push({kind:'unrepresented_action',title:'这条要求尚无对应行动',detail:'原文这条明示要求尚未找到对应行动建议；请查看原文。它不会自动变成新任务，也不妨碍接受其他正确事项。',quote:clause})
   }
  }
