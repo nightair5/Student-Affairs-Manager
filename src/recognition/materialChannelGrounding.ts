@@ -5,7 +5,7 @@ import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sou
 import { verifyWorkflowChannelEvidence, type WorkflowMaterialSupport } from './workflowChannelSupport'
 import {citedDeliveryContexts,type CitedDeliveryContext} from './citedDeliveryContext'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.6.0'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.7.0'
 export const WORKFLOW_MATERIAL_CHANNEL_VERSION = 'material-declared-workflow-channel-1.0.0'
 export interface MaterialChannelDecision {
   materialId: string
@@ -38,7 +38,9 @@ function citedClauses(evidence: Array<{quote:string}>, sourceText: string) {
 /** Role evidence, not token overlap: a receipt is not an instruction to send there. */
 function destinationRole(clause: string, object: string, channel: string, siblingObjects: string[] = []) {
   let text = compact(clause)
-  const o = escaped(compact(object))
+  // A literal repeated-material determiner does not change the stated object.
+  // It cannot replace a missing object name or borrow another material.
+  const o = '(?:同一份)?' + escaped(compact(object))
   // A label and its URL may be displayed together even when the original URL
   // follows the registration object. Both literal values must occur in this
   // same clause; never accept a URL borrowed from another item or paragraph.
