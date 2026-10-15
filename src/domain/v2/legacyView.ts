@@ -24,7 +24,7 @@ import { isDateOnly, parseBusinessDateTime } from '../../lib/timeSemantics'
 import { createIntegrationState } from '../../lib/workspace'
 import { workspaceSnapshotHash } from './migration'
 import type { JsonValue, LegacyData, WorkspaceV8 } from './types'
-import {sourceWindowDisplayLabel} from './sourceWindowDisplay'
+import {sourceWindowDisplayLabel,sourceWindowLastEnd} from './sourceWindowDisplay'
 
 // Provenance belongs to the in-memory projection, never to exported user data.
 // The copy is taken before callers edit the projection.
@@ -286,6 +286,9 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     const legacy = v7Record<LegacyTask>(item.legacyData)
     const sourceIds = sourceIdsForTask(item)
     const deadline = taskDeadline(workspace, item.id)
+    const windowLabel=sourceWindowDisplayLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)
+    const windowEnd=sourceWindowLastEnd(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)
+    const hasSeparateDeadline=workspace.timePoints.some(point=>(point.taskId===item.id||point.relatedTaskIds.includes(item.id))&&!['event_start','event_end','planned_start'].includes(point.type))
     const personalPlan = workspace.timePoints.find((point) => point.type === 'planned_start' && point.relatedTaskIds.includes(item.id))
     const personalPlanData = personalPlan?.legacyData?.personalPlanD27
     const plannedMinutes = personalPlanData && typeof personalPlanData === 'object' && !Array.isArray(personalPlanData) && typeof personalPlanData.minutes === 'number' ? personalPlanData.minutes : undefined
@@ -308,11 +311,12 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       estimatedMinutes: item.estimatedMinutes ?? 60,
       estimatedMinutesKnown: item.estimatedMinutes !== null,
       sourceDeadlineLabel: sourceDeadlineLabel(workspace, item.id),
-      sourceWindowLabel: sourceWindowDisplayLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions),
+      sourceWindowLabel: windowLabel,
+      sourceWindowEnd: windowEnd,
       nextAction: item.nextAction ?? item.title,
       description: item.description ?? '',
       priority: legacyPriority(item.legacyData?.priority ?? item.legacyData?.prioritySuggestion ?? legacy.priority),
-      riskFlags: legacy.riskFlags ?? (deadline ? [] : ['待确认']),
+      riskFlags: legacy.riskFlags ?? (deadline || windowEnd&&!hasSeparateDeadline&&!item.needsReview ? [] : ['待确认']),
       materials: taskMaterials(workspace, item.id, sourceIds[0]),
       dependencies: legacy.dependencies ?? [],
       dependencyIds: item.dependencyIds,

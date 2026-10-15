@@ -56,7 +56,14 @@ export function calculateTaskPriority(
   const hoursLeft = (deadline - now.getTime()) / hour
   let score = priorityWeight[task.priority]
 
-  if (!Number.isFinite(deadline) && dateViews?.[task.id]?.noDeadlineProven) {
+  const windowEnd=new Date(task.sourceWindowEnd??'').getTime()
+  if (!Number.isFinite(deadline)&&task.sourceWindowLabel&&Number.isFinite(windowEnd)&&!task.sourceDeadlineLabel&&!task.riskFlags.includes('待确认')&&dateViews?.[task.id]?.kind!=='review') {
+    const windowHours=(windowEnd-now.getTime())/hour
+    if(windowHours<0){score+=80;risks.add('待确认');reasons.push('原文办理时段已过，请核对补办方式')}
+    else if(windowHours<=24){score+=70;risks.add('紧急');reasons.push('原文办理时段将在24小时内结束')}
+    else if(windowHours<=72){score+=45;reasons.push('原文办理时段将在3天内结束')}
+    else reasons.push('按原文办理时段安排，未另设截止')
+  } else if (!Number.isFinite(deadline) && dateViews?.[task.id]?.noDeadlineProven) {
     reasons.push('原文未说明截止时间，不自动排期')
   } else if (!Number.isFinite(deadline)) {
     score += 65
@@ -116,7 +123,7 @@ export function calculateTaskPriority(
     score += 8
     reasons.push('已经开始，优先收尾')
   }
-  if (task.priority === '高') reasons.push('你设为高优先级')
+  if (task.priority === '高') reasons.push('高优先级')
   if (typeof task.manualPriority === 'number' && Number.isFinite(task.manualPriority)) {
     score += Math.max(-100, Math.min(100, task.manualPriority))
     reasons.push('包含你的手动排序调整')

@@ -110,6 +110,8 @@ export interface Task {
   sourceDeadlineLabel?: string
   /** Read-only display of an existing, source-verified operating window. */
   sourceWindowLabel?: string
+  /** Read-only UTC endpoint of an already-saved source window; never a deadline. */
+  sourceWindowEnd?: string
   nextAction: string
   description: string
   priority: Priority
