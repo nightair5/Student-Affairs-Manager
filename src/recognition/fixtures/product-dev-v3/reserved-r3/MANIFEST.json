@@ -3,8 +3,8 @@
   "seed": 202610153,
   "role": "AUTHOR_ANONYMOUS_DEVELOPMENT_RESERVED_NOT_INDEPENDENT_HOLDOUT",
   "count": 12,
-  "seen": false,
-  "modelRun": "NOT_RUN_THIS_PACKAGE",
+  "seen": true,
+  "modelRun": "OBSERVED_IN_MATURITY_R5_BEFORE_CODE_CHANGE",
   "sourceFirst": true,
   "sha256": "4cb9786aaedabaeb92212497977d316f5023e905cc5b9a853e0e80e0279ccdf2",
   "ids": [
@@ -20,5 +20,10 @@
     "RES3-10",
     "RES3-11",
     "RES3-12"
-  ]
+  ],
+  "observedAt": "2026-10-15T11:16:43.602Z",
+  "batch": "MATURE-R5-20261015-R0-B1",
+  "snapshot": "c4f52943ada9b7642607ec488c223aafa033919b",
+  "result": ".data/autonomous-mature-r5-20261015/RESERVED_R3_FROZEN_V51.json",
+  "noTuningThisRound": true
 }

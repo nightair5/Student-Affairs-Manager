@@ -1,0 +1,5008 @@
+[
+  {
+    "id": "DEV-01",
+    "scene": "作业提交",
+    "text": "请于2026年10月22日18:00前通过课程平台上传统计课程报告，格式为PDF，文件名为课程报告_班级。平台显示接收成功即完成提交。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "统计课程报告",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "material": "统计课程报告",
+          "channel": "课程平台",
+          "deadline": "2026-10-22T18:00",
+          "precision": "exact",
+          "criteria": "接收成功"
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ],
+      "naming": [
+        "课程报告_班级"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-02",
+    "scene": "作业提交",
+    "text": "阅读课本第三章，并在2026年10月25日提交阅读笔记。笔记为纯文本，在课程平台提交。阅读与提交是两项要求。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "第三章",
+          "verbs": [
+            "阅读"
+          ]
+        },
+        {
+          "object": "阅读笔记",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "阅读笔记",
+          "channel": "课程平台",
+          "deadline": "2026-10-25",
+          "precision": "date_only"
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-03",
+    "scene": "作业提交",
+    "text": "摄影作业需要提交3张照片和一份拍摄说明，二者合并为一个压缩包。请于2026年10月26日20:30把压缩包提交至课堂空间，不要求打印。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "压缩包",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "压缩包",
+          "channel": "课堂空间",
+          "deadline": "2026-10-26T20:30",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "criteria": [
+        "照片",
+        "拍摄说明"
+      ],
+      "forbidden": [
+        {
+          "object": "打印",
+          "verbs": [
+            "打印"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-04",
+    "scene": "作业提交",
+    "text": "小组须先完成问卷设计，再开展试访。问卷设计于2026年10月24日提交，试访记录于2026年10月28日提交；两份材料都交到教学平台。当前设计尚未完成。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "问卷设计",
+          "verbs": [
+            "完成",
+            "提交"
+          ],
+          "material": "问卷设计",
+          "deadline": "2026-10-24",
+          "precision": "date_only"
+        },
+        {
+          "object": "试访",
+          "verbs": [
+            "开展",
+            "完成",
+            "提交"
+          ],
+          "material": "试访记录",
+          "deadline": "2026-10-28",
+          "precision": "date_only",
+          "predecessor": "问卷设计"
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-05",
+    "scene": "报名",
+    "text": "有意参加校园写作赛的同学，可于2026年10月27日16:00前向报名系统提交报名表。是否参赛由本人决定，当前未提供个人意愿。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名表",
+          "verbs": [
+            "提交",
+            "填写",
+            "报名"
+          ],
+          "material": "报名表",
+          "channel": "报名系统",
+          "deadline": "2026-10-27T16:00",
+          "precision": "exact",
+          "condition": "有意参加"
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-06",
+    "scene": "报名",
+    "text": "新生讲解员选拔报名：请填写申请表，并于2026年10月29日交至学生中心C101。面试安排将另行通知。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "申请表",
+          "verbs": [
+            "填写",
+            "提交"
+          ],
+          "material": "申请表",
+          "channel": "学生中心C101",
+          "deadline": "2026-10-29",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "unknownTime": "另行通知"
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-07",
+    "scene": "报名",
+    "text": "电影赏析活动报名只需在报名页面点选场次，不用上传附件。报名于2026年10月21日12:00截止；活动于2026年10月23日19:00开始，20:30结束，地点为学生活动室。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "场次",
+          "verbs": [
+            "点选",
+            "选择",
+            "报名"
+          ],
+          "deadline": "2026-10-21T12:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "电影赏析",
+          "start": "2026-10-23T19:00",
+          "end": "2026-10-23T20:30",
+          "location": "学生活动室"
+        }
+      ],
+      "materialCount": 0,
+      "forbidden": [
+        {
+          "object": "附件",
+          "verbs": [
+            "上传",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-08",
+    "scene": "报名",
+    "text": "志愿服务报名已经结束，不接受补报。已报名同学请于2026年10月30日09:00到校园北门集合，09:15出发。没有要求再次填写报名表。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "集合",
+          "start": "2026-10-30T09:00",
+          "location": "校园北门"
+        },
+        {
+          "object": "出发",
+          "start": "2026-10-30T09:15"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "填写",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-09",
+    "scene": "材料提交",
+    "text": "助学金申请材料包括申请表和成绩单。请把这两份材料于2026年10月31日17:00提交至资助系统，文件格式均为PDF。提交后请保留系统回执，无需打印回执。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "申请",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "deadline": "2026-10-31T17:00",
+          "precision": "exact"
+        },
+        {
+          "object": "回执",
+          "verbs": [
+            "保留",
+            "保存"
+          ]
+        }
+      ],
+      "events": [],
+      "materials": [
+        "申请表",
+        "成绩单"
+      ],
+      "formats": [
+        "PDF"
+      ],
+      "forbidden": [
+        {
+          "object": "回执",
+          "verbs": [
+            "打印"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-10",
+    "scene": "材料提交",
+    "text": "请将研究计划提交到若水学院材料站，截止为2026年11月2日。材料站只是接收渠道，不需要办理平台注册；研究计划不设页数限制。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "研究计划",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "研究计划",
+          "channel": "若水学院材料站",
+          "deadline": "2026-11-02",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "注册",
+          "verbs": [
+            "注册",
+            "办理"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-11",
+    "scene": "材料提交",
+    "text": "请上传实习总结PDF，文件命名为实习总结_学院。看到平台回执“收到成功”即为办结，本通知未指定上传渠道。截止为2026年11月3日18:00。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "实习总结",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "material": "实习总结",
+          "deadline": "2026-11-03T18:00",
+          "precision": "exact",
+          "criteria": "收到成功",
+          "channelUnknown": true
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ],
+      "naming": [
+        "实习总结_学院"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-12",
+    "scene": "材料提交",
+    "text": "项目申请需要提交申请书。纸质件请于2026年11月4日09:00—11:00到教务窗口递交，电子件于当日16:00前提交至项目平台。两种形式均须提交。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "纸质",
+          "verbs": [
+            "递交",
+            "提交"
+          ],
+          "material": "申请书",
+          "window": "2026-11-04T09:00/11:00"
+        },
+        {
+          "object": "电子",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "申请书",
+          "channel": "项目平台",
+          "deadline": "2026-11-04T16:00",
+          "precision": "exact"
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-13",
+    "scene": "会议活动",
+    "text": "实验安全说明会定于2026年10月20日14:00至15:20在实验楼201举行。请到场参加，无需报名，也无需提交任何材料。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "实验安全说明会",
+          "start": "2026-10-20T14:00",
+          "end": "2026-10-20T15:20",
+          "location": "实验楼201"
+        }
+      ],
+      "materialCount": 0,
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-14",
+    "scene": "会议活动",
+    "text": "班级讨论于2026年10月21日18:30开始，结束时间尚未公布，地点为学习室A。参加讨论前请准备一页议题提纲，不需要提交提纲。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "议题提纲",
+          "verbs": [
+            "准备",
+            "撰写"
+          ],
+          "material": "议题提纲"
+        }
+      ],
+      "events": [
+        {
+          "object": "讨论",
+          "start": "2026-10-21T18:30",
+          "endUnknown": true,
+          "location": "学习室A"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "提纲",
+          "verbs": [
+            "提交",
+            "上传"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-15",
+    "scene": "会议活动",
+    "text": "社团分享于2026年10月24日10:00—11:00在东区报告厅举行。随后11:20—12:00在同一地点开展作品展示；这是两个独立环节，不是待办截止。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "分享",
+          "start": "2026-10-24T10:00",
+          "end": "2026-10-24T11:00",
+          "location": "东区报告厅"
+        },
+        {
+          "object": "作品展示",
+          "start": "2026-10-24T11:20",
+          "end": "2026-10-24T12:00",
+          "location": "东区报告厅"
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-16",
+    "scene": "会议活动",
+    "text": "活动信息\n时间：2026年10月12日12:30—14:00\n地点：海韵园办公楼A栋302室\n报名：扫描下方二维码报名，听众报名截止为2026年10月11日中午12:00。主办方提供50份免费午餐，按报名順序先到先得；听众总人数不限。",
+    "referenceTime": "2026-09-29T09:00:00+08:00",
+    "sourceType": "PUBLIC_EXCERPT_REFORMATTED",
+    "url": "https://ssa.xmu.edu.cn/info/1166/32512.htm",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "扫描"
+          ],
+          "deadline": "2026-10-11T12:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "活动",
+          "start": "2026-10-12T12:30",
+          "end": "2026-10-12T14:00",
+          "location": "海韵园办公楼A栋302室"
+        }
+      ],
+      "information": [
+        "免费午餐",
+        "总人数不限"
+      ]
+    },
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-17",
+    "scene": "修订取消",
+    "text": "原定2026年10月22日的答疑会取消，不需到场，也不要重新报名。本通知没有安排新的答疑会。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "答疑",
+          "verbs": [
+            "参加",
+            "到场"
+          ]
+        },
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ]
+        }
+      ],
+      "information": [
+        "取消"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-18",
+    "scene": "修订取消",
+    "text": "课程报告提交截止由2026年10月23日改为2026年10月26日17:00，旧截止作废。请通过课程平台提交课程报告，其他要求不变。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "课程报告",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "课程报告",
+          "channel": "课程平台",
+          "deadline": "2026-10-26T17:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "obsoleteDates": [
+        "2026-10-23"
+      ],
+      "information": [
+        "旧截止作废"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-19",
+    "scene": "修订取消",
+    "text": "撤回上次的照片提交要求，无需提交照片。健康登记表仍需于2026年10月28日提交至登记站。不得把照片添加为登记表附件。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "健康登记表",
+          "verbs": [
+            "提交",
+            "填写"
+          ],
+          "material": "健康登记表",
+          "channel": "登记站",
+          "deadline": "2026-10-28",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "照片",
+          "verbs": [
+            "提交",
+            "添加",
+            "上传"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-20",
+    "scene": "修订取消",
+    "text": "由于设备维护，明日的录音培训延期，新的时间尚未确定。已经报名的同学不需要重新报名，报名记录保留。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "录音培训",
+          "startUnknown": true
+        }
+      ],
+      "information": [
+        "延期",
+        "报名记录保留"
+      ],
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-21",
+    "scene": "条件资格",
+    "text": "只有审核通过的同学才须提交住宿申请表，截止为2026年11月6日。审核未通过者请勿提交；当前没有提供你的审核结果。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "住宿申请表",
+          "verbs": [
+            "提交"
+          ],
+          "material": "住宿申请表",
+          "deadline": "2026-11-06",
+          "precision": "date_only",
+          "condition": "审核通过",
+          "unknownEligibility": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-22",
+    "scene": "条件资格",
+    "text": "已完成基础培训者可报名实验室值班，报名截止为2026年11月7日12:00。你尚未完成基础培训，培训完成后再报名，不代表现在可以开始报名。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "培训",
+          "verbs": [
+            "完成",
+            "参加"
+          ]
+        },
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ],
+          "deadline": "2026-11-07T12:00",
+          "precision": "exact",
+          "predecessor": "培训",
+          "waiting": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-23",
+    "scene": "条件资格",
+    "text": "本次证书领取仅适用于名单内同学。你不在本次名单，无需去服务中心领取，也不用提交说明。通知仅供了解。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "证书",
+          "verbs": [
+            "领取"
+          ]
+        },
+        {
+          "object": "说明",
+          "verbs": [
+            "提交"
+          ]
+        }
+      ],
+      "information": [
+        "不在本次名单"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-24",
+    "scene": "条件资格",
+    "text": "招生对象为在读本科生、研究生及青年研究人员；活动免费。线上讲座时间为2026年7月6日至10日，被录取的正式学员可听课互动，各学员需自行准备终端设备。通过下方二维码报名，报名截止为2026年6月30日17:00。学习结束后可获得结业证书。",
+    "referenceTime": "2026-06-23T09:00:00+08:00",
+    "sourceType": "PUBLIC_EXCERPT_REFORMATTED",
+    "url": "https://sbd.xmu.edu.cn/info/1057/12910.htm",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "扫描"
+          ],
+          "deadline": "2026-06-30T17:00",
+          "precision": "exact"
+        },
+        {
+          "object": "终端设备",
+          "verbs": [
+            "准备"
+          ],
+          "condition": "学员"
+        }
+      ],
+      "events": [
+        {
+          "object": "讲座",
+          "start": "2026-07-06",
+          "end": "2026-07-10"
+        }
+      ],
+      "information": [
+        "免费",
+        "结业证书"
+      ]
+    },
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-25",
+    "scene": "共享材料",
+    "text": "请在2026年11月9日17:00前向课程平台提交调研报告，并在2026年11月11日12:00前向展示平台提交同一份调研报告。两个提交动作都必须完成，报告只制作一份，格式PDF。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "调研报告",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "channel": "课程平台",
+          "deadline": "2026-11-09T17:00",
+          "precision": "exact"
+        },
+        {
+          "object": "调研报告",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "channel": "展示平台",
+          "deadline": "2026-11-11T12:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "调研报告"
+      ],
+      "sharedMaterial": true,
+      "formats": [
+        "PDF"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-26",
+    "scene": "共享材料",
+    "text": "课程论文和实践总结都需提交成绩单复印件。课程论文于2026年11月10日提交，实践总结于2026年11月12日提交，均交至教学站。成绩单是共享附件，不是第三项任务。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "课程论文",
+          "verbs": [
+            "提交"
+          ],
+          "material": "课程论文",
+          "deadline": "2026-11-10",
+          "precision": "date_only"
+        },
+        {
+          "object": "实践总结",
+          "verbs": [
+            "提交"
+          ],
+          "material": "实践总结",
+          "deadline": "2026-11-12",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "成绩单"
+      ],
+      "sharedMaterial": true
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-27",
+    "scene": "共享材料",
+    "text": "请准备项目说明PDF，然后分别向评审站和备案站提交项目说明。评审提交于2026年11月13日截止，备案提交于2026年11月15日截止。两次提交共享项目说明，准备不能被误当成两份材料。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "项目说明",
+          "verbs": [
+            "准备",
+            "制作"
+          ]
+        },
+        {
+          "object": "项目说明",
+          "verbs": [
+            "提交"
+          ],
+          "channel": "评审站",
+          "deadline": "2026-11-13",
+          "precision": "date_only"
+        },
+        {
+          "object": "项目说明",
+          "verbs": [
+            "提交"
+          ],
+          "channel": "备案站",
+          "deadline": "2026-11-15",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "项目说明"
+      ],
+      "sharedMaterial": true,
+      "formats": [
+        "PDF"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-28",
+    "scene": "共享材料",
+    "text": "报名表和承诺书请在2026年11月16日18:00前一起提交至服务平台；同一提交要求，不必拆成两个重复待办。承诺书需本人签字，报名表保持原表格式。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名表",
+          "verbs": [
+            "提交"
+          ],
+          "deadline": "2026-11-16T18:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "报名表",
+        "承诺书"
+      ],
+      "criteria": [
+        "签字",
+        "原表格式"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-29",
+    "scene": "模糊待定时间",
+    "text": "校车预约平台将在周三晚停机，已保存行程不受影响。无需删除行程，不要提交说明，也不必向值班员发消息。本通知仅说明停机消息。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "停机",
+          "startUnknown": true,
+          "rawStart": "周三晚"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "行程",
+          "verbs": [
+            "删除"
+          ]
+        },
+        {
+          "object": "说明",
+          "verbs": [
+            "提交"
+          ]
+        },
+        {
+          "object": "消息",
+          "verbs": [
+            "发",
+            "发送"
+          ]
+        }
+      ],
+      "information": [
+        "已保存行程不受影响"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-30",
+    "scene": "模糊待定时间",
+    "text": "请提交实验记录，截止时间尚未公布。提交入口为实验系统，不要自行按下周一设定截止，后续通知会给出时间。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "实验记录",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "实验记录",
+          "channel": "实验系统",
+          "deadlineUnknown": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-31",
+    "scene": "模糊待定时间",
+    "text": "研读交流安排在下周某天下午，具体日期、开始时刻和结束时刻均未定，地点为资料室。无需报名，先保留活动信息。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "研读交流",
+          "startUnknown": true,
+          "endUnknown": true,
+          "location": "资料室"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-32",
+    "scene": "模糊待定时间",
+    "text": "2026级大陆本科新生须在8月13—27日登录迎新系统完成网上预注册。系统开放时间与入学须知略有不同，以本通知为准；请在指定时间内激活账号和登录，其他时段会显示账号密码错误。",
+    "referenceTime": "2026-07-24T09:00:00+08:00",
+    "sourceType": "PUBLIC_EXCERPT_REFORMATTED",
+    "url": "https://welcome.xmu.edu.cn/info/1150/1453.htm",
+    "reference": {
+      "tasks": [
+        {
+          "object": "预注册",
+          "verbs": [
+            "完成"
+          ]
+        },
+        {
+          "object": "账号",
+          "verbs": [
+            "激活"
+          ]
+        },
+        {
+          "object": "系统",
+          "verbs": [
+            "登录"
+          ]
+        }
+      ],
+      "events": [],
+      "window": "2026-08-13/2026-08-27",
+      "condition": "大陆本科新生"
+    },
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-33",
+    "scene": "纯信息",
+    "text": "图书馆检索页面已更换主题色，借阅规则和账号信息均无变化。仅作说明，没有要提交的材料或要办理的事项。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "materialCount": 0,
+      "information": [
+        "无变化"
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-34",
+    "scene": "纯信息",
+    "text": "学校统一身份认证服务将在本周三（11月17日）晚上11点到次日1点停机维护，预计2小时，完成后正常恢复。请事先安排好工作，避开该时间段。",
+    "referenceTime": "2021-11-16T09:00:00+08:00",
+    "sourceType": "PUBLIC_EXCERPT_REFORMATTED",
+    "url": "https://inc.xmu.edu.cn/inc2024/info/1031/1124.htm",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "停机维护",
+          "start": "2021-11-17T23:00",
+          "end": "2021-11-18T01:00"
+        }
+      ],
+      "information": [
+        "正常恢复"
+      ]
+    },
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-35",
+    "scene": "纯信息",
+    "text": "教学楼门禁升级已经完成，原有通行卡继续有效。无需重新申请，不用下载新的客户端，也不要交旧卡。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "information": [
+        "继续有效"
+      ],
+      "forbidden": [
+        {
+          "object": "申请",
+          "verbs": [
+            "申请"
+          ]
+        },
+        {
+          "object": "客户端",
+          "verbs": [
+            "下载"
+          ]
+        },
+        {
+          "object": "卡",
+          "verbs": [
+            "交",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "DEV-36",
+    "scene": "纯信息",
+    "text": "本学期优秀作业将用于教学展示，展示不影响课程成绩。通知没有征集新作品，已有作业不用重复上传。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "information": [
+        "不影响课程成绩"
+      ],
+      "forbidden": [
+        {
+          "object": "作业",
+          "verbs": [
+            "上传",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T08:30:00+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  {
+    "id": "GROUP-17",
+    "scene": "模糊待定时间",
+    "text": "【老师补充】设计作品要交，截止另行通知，不是月底截止。格式同上，但上条没一起贴过来；提交位置见附件，附件内容未提供。请保留作品待办，不要猜格式或位置。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "设计作品",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "deadlineUnknown": true,
+          "channelUnknown": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-03",
+    "scene": "材料提交",
+    "text": "【转发】奖学金材料：申请表、成绩单各一份，申请表PDF；请在2026年11月5日17:00前交到学工窗口。窗口显示“材料接收成功”才算交齐。详细政策见附件，附件正文没贴。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "材料",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "学工窗口",
+          "deadline": "2026-11-05T17:00",
+          "precision": "exact",
+          "criteria": "材料接收成功"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "申请表",
+        "成绩单"
+      ],
+      "formats": [
+        "PDF"
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-07",
+    "scene": "共享材料",
+    "text": "两条一起：①11月12日12:00前给课程平台提交调研报告；②11月13日18:00前给展示平台提交同一份调研报告。年份都是2026。报告只做一份PDF，不是两份。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "调研报告",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "课程平台",
+          "deadline": "2026-11-12T12:00",
+          "precision": "exact"
+        },
+        {
+          "object": "调研报告",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "展示平台",
+          "deadline": "2026-11-13T18:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "调研报告"
+      ],
+      "formats": [
+        "PDF"
+      ],
+      "sharedMaterial": true
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-09",
+    "scene": "纯信息",
+    "text": "转发：图书馆系统2026年11月14日22:00至11月15日01:00停机。已借图书不受影响，不需要续借或提交说明。这条只是消息。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "停机",
+          "start": "2026-11-14T22:00",
+          "end": "2026-11-15T01:00"
+        }
+      ],
+      "information": [
+        "不受影响"
+      ],
+      "forbidden": [
+        {
+          "object": "图书",
+          "verbs": [
+            "续借"
+          ]
+        },
+        {
+          "object": "说明",
+          "verbs": [
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-13",
+    "scene": "会议活动",
+    "text": "【讲座】\n2026年11月20日\n09:30—11:00\n海棠楼报告厅\n历史讲座照片日期2024年5月1日仅是配图说明，与本次时间无关。不用报名。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "讲座",
+          "start": "2026-11-20T09:30",
+          "end": "2026-11-20T11:00",
+          "location": "海棠楼报告厅"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-12",
+    "scene": "材料提交",
+    "text": "交资料啦：2026年11月18日中午12:00前上传实习证明PDF，交至实习入口。命名“班级_学号”。其他材料见群文件，本消息没有列出，别猜。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "实习证明",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "material": "实习证明",
+          "channel": "实习入口",
+          "deadline": "2026-11-18T12:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ],
+      "naming": [
+        "班级_学号"
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-11",
+    "scene": "报名",
+    "text": "上条转发：2026年11月17日17:00截止报名辩论赛，使用学生竞赛平台。下条补充：答辩活动2026年11月19日10:00—12:00在南楼。大家别把报名截止当答辩开始。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ],
+          "deadline": "2026-11-17T17:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "答辩",
+          "start": "2026-11-19T10:00",
+          "end": "2026-11-19T12:00",
+          "location": "南楼"
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-14",
+    "scene": "修订取消",
+    "text": "老师临时说：2026年11月21日的排练取消。请不要到排练厅。资料提交没取消，仍在2026年11月22日16:00前交排练说明至课程平台；不要提交照片。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "排练说明",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "课程平台",
+          "deadline": "2026-11-22T16:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "排练",
+          "verbs": [
+            "参加",
+            "到场"
+          ]
+        },
+        {
+          "object": "照片",
+          "verbs": [
+            "提交",
+            "交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-08",
+    "scene": "模糊待定时间",
+    "text": "群通知：明天下午可能安排参观，具体几点、几点结束和地点都还没公布。等补充通知，暂不用报名。年份按本消息时间。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "参观",
+          "startUnknown": true,
+          "endUnknown": true
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-20",
+    "scene": "材料提交",
+    "text": "认证办理时间：2026年11月30日09:00—11:00、14:00—16:00。请带学生证去认证窗口完成认证。不是16:00提交截止；窗口结束后不能办理。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "认证",
+          "verbs": [
+            "完成",
+            "办理"
+          ],
+          "material": "学生证",
+          "channel": "认证窗口"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "学生证"
+      ],
+      "window": "2026-11-30/2026-11-30"
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-05",
+    "scene": "修订取消",
+    "text": "老师：之前说11月8日交论文，这个旧截止取消了，改2026年11月10日20:00，还是交论文到课程平台。不要交旧版封面，也不用解释。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "论文",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "课程平台",
+          "deadline": "2026-11-10T20:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "obsoleteDates": [
+        "2026-11-08"
+      ],
+      "forbidden": [
+        {
+          "object": "旧版封面",
+          "verbs": [
+            "提交",
+            "交"
+          ]
+        },
+        {
+          "object": "解释",
+          "verbs": [
+            "提交",
+            "写"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-02",
+    "scene": "报名",
+    "text": "老师刚发：想参加摄影交流的同学在2026年11月4日18:00前报名，入口是摄影登记页。交流会11月6日19:00—20:30，北楼201。😄今晚不用去。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ],
+          "deadline": "2026-11-04T18:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "摄影交流",
+          "start": "2026-11-06T19:00",
+          "end": "2026-11-06T20:30",
+          "location": "北楼201"
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-15",
+    "scene": "条件资格",
+    "text": "先完成安全课程，再申请实验室钥匙。当前你还没完成安全课程。申请截止2026年11月23日17:00，向实验室系统提交申请表。完成课程后才可以申请，不代表已经完成。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "安全课程",
+          "verbs": [
+            "完成",
+            "参加"
+          ]
+        },
+        {
+          "object": "申请表",
+          "verbs": [
+            "提交",
+            "申请"
+          ],
+          "material": "申请表",
+          "channel": "实验室系统",
+          "deadline": "2026-11-23T17:00",
+          "precision": "exact",
+          "predecessor": "安全课程",
+          "waiting": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-16",
+    "scene": "共享材料",
+    "text": "通知A：课程论文2026年11月24日截止，交教学站。通知B：实践总结2026年11月26日截止，也交教学站。两项都附同一份成绩单复印件，各自正文分别准备。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "课程论文",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "deadline": "2026-11-24",
+          "precision": "date_only"
+        },
+        {
+          "object": "实践总结",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "deadline": "2026-11-26",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "成绩单"
+      ],
+      "sharedMaterial": true
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-21",
+    "scene": "条件资格",
+    "text": "群消息：本次补交说明只面向缺交者。你已交齐，不用补交，也不必回复“收到”。原定答疑2026年12月1日19:00—20:00照常，地点线上会议室。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "答疑",
+          "start": "2026-12-01T19:00",
+          "end": "2026-12-01T20:00",
+          "location": "线上会议室"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "说明",
+          "verbs": [
+            "提交",
+            "补交"
+          ]
+        },
+        {
+          "object": "收到",
+          "verbs": [
+            "回复"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-19",
+    "scene": "作业提交",
+    "text": "三条一块儿粘：\n1. 请在2026年11月28日17:00前提交演讲稿到教学平台。\n2. 2026年11月29日09:00—10:00演讲展示，北楼大厅。\n3. 晚饭吃什么？只是闲聊。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "演讲稿",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "channel": "教学平台",
+          "deadline": "2026-11-28T17:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "演讲展示",
+          "start": "2026-11-29T09:00",
+          "end": "2026-11-29T10:00",
+          "location": "北楼大厅"
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-23",
+    "scene": "报名",
+    "text": "老师口语：想参加冬季工作坊的，先在2026年12月3日18:00前到选课页报名；录取名单后面会发。2026年12月5日14:00—16:00开工作坊，录取后才去，地点还没定。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ],
+          "deadline": "2026-12-03T18:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "工作坊",
+          "start": "2026-12-05T14:00",
+          "end": "2026-12-05T16:00"
+        }
+      ],
+      "information": [
+        "录取"
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-18",
+    "scene": "纯信息",
+    "text": "同学问：要不要打印？管理员回复：不用。这条通知只说明2026年11月27日18:00—20:00宿舍网络检修，不用报修，不用发登记表。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "网络检修",
+          "start": "2026-11-27T18:00",
+          "end": "2026-11-27T20:00"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "登记表",
+          "verbs": [
+            "提交",
+            "发"
+          ]
+        },
+        {
+          "object": "报修",
+          "verbs": [
+            "报修",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-24",
+    "scene": "模糊待定时间",
+    "text": "【转发】设备检查暂定2026年12月6日下午，准确开始和结束另行通知。设备检查只是集中检修消息，没有要求同学自行检查，也无需提交检查单。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "设备检查",
+          "startUnknown": true,
+          "endUnknown": true
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "检查单",
+          "verbs": [
+            "提交",
+            "交"
+          ]
+        },
+        {
+          "object": "设备",
+          "verbs": [
+            "检查"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-10",
+    "scene": "作业提交",
+    "text": "OCR文本，保留错字：\n请同学们提文课程小结\n格式 PDF\n2026年11月16日 18:00前上传课程平台\n“提文”明显有错字，具体动作以“上传”为准。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "课程小结",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "material": "课程小结",
+          "channel": "课程平台",
+          "deadline": "2026-11-16T18:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-22",
+    "scene": "修订取消",
+    "text": "【更正】不再交个人照片，改为在2026年12月2日12:00前交电子签名至登记平台。旧照片要求已经撤销，不是两个任务。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "电子签名",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "登记平台",
+          "deadline": "2026-12-02T12:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "照片",
+          "verbs": [
+            "提交",
+            "交"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-04",
+    "scene": "会议活动",
+    "text": "这条只告知活动，不要求回复或报名。2026年11月7日14:00—15:10读书会，在东门书屋；15:20—16:00同地有答疑。\n谁有充电线？这是闲聊。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "读书会",
+          "start": "2026-11-07T14:00",
+          "end": "2026-11-07T15:10",
+          "location": "东门书屋"
+        },
+        {
+          "object": "答疑",
+          "start": "2026-11-07T15:20",
+          "end": "2026-11-07T16:00",
+          "location": "东门书屋"
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-01",
+    "scene": "作业提交",
+    "text": "转发两次的通知👇\n【课程组】请交实验报告，PDF，命名为班级-学号。发到实验课程平台。\n补充：2026年11月3日23:00截止。\n闲聊：今天食堂人好多。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "实验报告",
+          "verbs": [
+            "提交",
+            "上传",
+            "交"
+          ],
+          "material": "实验报告",
+          "channel": "实验课程平台",
+          "deadline": "2026-11-03T23:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ],
+      "naming": [
+        "班级-学号"
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "GROUP-06",
+    "scene": "条件资格",
+    "text": "通知转给大家：仅录取同学需要准备耳机并参加线上培训。培训2026年11月11日09:00—11:00。你的录取结果尚未给出，未录取者无需参加；不需要现在打电话问。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "耳机",
+          "verbs": [
+            "准备"
+          ],
+          "condition": "录取",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [
+        {
+          "object": "培训",
+          "start": "2026-11-11T09:00",
+          "end": "2026-11-11T11:00"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "电话",
+          "verbs": [
+            "打",
+            "联系"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-10-14T14:53:38+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "AUTHOR_ANONYMOUS_GROUP_MESSAGE",
+    "referenceAuthor": "Codex source-first single-author / model-assisted / provisional",
+    "referenceWrittenAt": "2026-10-14T07:08:00Z"
+  },
+  {
+    "id": "R2-RES-01",
+    "scene": "材料提交",
+    "style": "长公文",
+    "text": "关于本学期实践项目结项的补充说明\n一、提交范围：已完成实践的项目组。\n二、材料要求：结项报告须为PDF，文件名使用项目编号。\n三、办理方式：请于2026年11月16日17:00前将结项报告上传至项目结项系统。以系统显示“已接收”作为提交完成标准。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "结项报告",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "material": "结项报告",
+          "channel": "项目结项系统",
+          "deadline": "2026-11-16T17:00",
+          "precision": "exact",
+          "criteria": "已接收"
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ],
+      "naming": [
+        "项目编号"
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-10",
+    "scene": "模糊待定时间",
+    "style": "未公布时间",
+    "text": "有关课程交流活动的预告：交流活动暂定周五下午，地点和结束时刻均尚未公布。本次无报名、无提交任务，请留意后续通知，但不创建“留意通知”待办。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "交流活动",
+          "startUnknown": true,
+          "endUnknown": true
+        }
+      ],
+      "information": [
+        "未公布"
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-03",
+    "scene": "材料提交",
+    "style": "表格转文字",
+    "text": "事务窗口（表格复制）\n事项 | 对象 | 办理窗口 | 地点\n领取 | 实习证明 | 2026年11月17日09:00—11:00 | 教务大厅\n补充：窗口开始不是截止；无需提前提交材料。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "实习证明",
+          "verbs": [
+            "领取"
+          ],
+          "window": "2026-11-17T09:00/11:00"
+        }
+      ],
+      "events": [],
+      "materialCount": 0
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-11",
+    "scene": "报名",
+    "style": "尾部补充",
+    "text": "创新工作坊申请事项\n申请者需要提交报名表，使用报名工作台。\n说明：入选后需要自行准备电脑，个人入选结果未知。\n最后补充：报名表截止2026年11月26日17:00，工作坊于2026年11月28日14:00—16:00在实验楼103进行。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名表",
+          "verbs": [
+            "提交"
+          ],
+          "material": "报名表",
+          "channel": "报名工作台",
+          "deadline": "2026-11-26T17:00",
+          "precision": "exact"
+        },
+        {
+          "object": "电脑",
+          "verbs": [
+            "准备"
+          ],
+          "condition": "入选",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [
+        {
+          "object": "工作坊",
+          "start": "2026-11-28T14:00",
+          "end": "2026-11-28T16:00",
+          "location": "实验楼103"
+        }
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-07",
+    "scene": "共享材料",
+    "style": "附件边界",
+    "text": "两个班的实践登记：请向一班收件箱和二班收件箱分别提交同一份实践记录表，两个提交都以2026年11月23日17:00为截止。记录表格式见未附上的群文件，不猜格式。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "实践记录表",
+          "verbs": [
+            "提交"
+          ],
+          "material": "实践记录表",
+          "channel": "一班收件箱",
+          "deadline": "2026-11-23T17:00",
+          "precision": "exact"
+        },
+        {
+          "object": "实践记录表",
+          "verbs": [
+            "提交"
+          ],
+          "material": "实践记录表",
+          "channel": "二班收件箱",
+          "deadline": "2026-11-23T17:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "实践记录表"
+      ],
+      "sharedMaterial": true
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-09",
+    "scene": "条件资格",
+    "style": "资格条款",
+    "text": "仅通过面试的同学需提交住宿确认单，个人面试结果尚未在本通知中给出。符合条件者请于2026年11月25日18:00前将住宿确认单上传住宿系统。未通过者不提交。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "住宿确认单",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "住宿确认单",
+          "channel": "住宿系统",
+          "deadline": "2026-11-25T18:00",
+          "precision": "exact",
+          "condition": "通过",
+          "unknownEligibility": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-05",
+    "scene": "修订取消",
+    "style": "前后补充",
+    "text": "原通知：议题提纲在2026年11月19日12:00前提交。\n补充通知（以此为准）：上述截止作废，改为2026年11月21日15:00前，将议题提纲上传讨论系统。其他要求不变。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "议题提纲",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "议题提纲",
+          "channel": "讨论系统",
+          "deadline": "2026-11-21T15:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "obsoleteDates": [
+        "2026-11-19"
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-12",
+    "scene": "材料提交",
+    "style": "双渠道表格",
+    "text": "提交清单\n电子版：成果摘要，PDF，2026年11月27日16:00前上传成果平台。\n纸质版：签字承诺函，2026年11月27日09:30—11:30交到学生服务窗口。\n成果平台回执不能代替纸质递交，两项独立。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "成果摘要",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "material": "成果摘要",
+          "channel": "成果平台",
+          "deadline": "2026-11-27T16:00",
+          "precision": "exact"
+        },
+        {
+          "object": "承诺函",
+          "verbs": [
+            "交",
+            "递交",
+            "提交"
+          ],
+          "material": "承诺函",
+          "channel": "学生服务窗口",
+          "window": "2026-11-27T09:30/11:30"
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-04",
+    "scene": "作业提交",
+    "style": "英文混排",
+    "text": "Course notice / 作业说明\n请提交 Research Summary（研究摘要），PDF only。截止为2026年11月20日16:30，提交到课程门户。Do not email the teacher（不要通过邮件重复提交）。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "研究摘要",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "研究摘要",
+          "channel": "课程门户",
+          "deadline": "2026-11-20T16:30",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "formats": [
+        "PDF"
+      ],
+      "forbidden": [
+        {
+          "object": "邮件",
+          "verbs": [
+            "提交",
+            "发送"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-06",
+    "scene": "会议活动",
+    "style": "多条不相关",
+    "text": "【通知甲】图书馆说明会于2026年11月22日10:00—11:00在南楼201举行，无须报名。\n【通知乙】请于2026年11月21日20:00前将英语读书笔记上传英语课程平台。两条通知彼此独立。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "英语读书笔记",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "material": "英语读书笔记",
+          "channel": "英语课程平台",
+          "deadline": "2026-11-21T20:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "说明会",
+          "start": "2026-11-22T10:00",
+          "end": "2026-11-22T11:00",
+          "location": "南楼201"
+        }
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-08",
+    "scene": "纯信息",
+    "style": "取消说明",
+    "text": "学院服务说明\n原定2026年11月24日09:00开始的志愿报名已取消，请勿报名，也无需提交申请。此次仅告知取消，不安排任何待办。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ]
+        },
+        {
+          "object": "申请",
+          "verbs": [
+            "提交"
+          ]
+        }
+      ],
+      "information": [
+        "取消"
+      ]
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "R2-RES-02",
+    "scene": "条件资格",
+    "style": "编号条款",
+    "text": "新生实验培训安排\n1. 未完成安全培训者，须先完成安全培训。\n1.1 培训完成后才可提交实验申请。\n1.2 实验申请通过实验申请系统提交，截止为2026年11月18日18:00。\n2. 不要将“培训完成后”理解为本人已完成培训。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "安全培训",
+          "verbs": [
+            "完成"
+          ]
+        },
+        {
+          "object": "实验申请",
+          "verbs": [
+            "提交"
+          ],
+          "material": "实验申请",
+          "channel": "实验申请系统",
+          "deadline": "2026-11-18T18:00",
+          "precision": "exact",
+          "predecessor": "安全培训"
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-11-09T08:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "sourceType": "ANONYMOUS_AUTHOR_DEVELOPMENT",
+    "referenceAuthor": "Codex / single-author / provisional; authored from source before outputs"
+  },
+  {
+    "id": "PUB-01",
+    "title": "关于校园网自助服务系统维护的通知",
+    "url": "https://its.dlut.edu.cn/info/1011/346767.htm",
+    "publishedDate": "2025-09-18",
+    "fetchedAt": "2026-10-15T11:25:50.245903+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "crawl4ai",
+    "text": "|  关于校园网自助服务系统维护的通知  |  \n| --- |  \n|  2025-09-18 (点击： 405)  |  \n|   |  \n|  校园网用户： 网信中心计划于2025年9月18日23：00至9月19日02：00，对校园网自助服务系统进行维护。 维护期间，用户上网服务将不受影响，但校园网自助服务系统将暂停服务，用户无法查询相关信息，无法充值网费。 维护结束后，如有任何问题，请发送邮件至[邮箱1]进行咨询。   \n  \n网络与信息化中心 2025年9月18日",
+    "referenceTime": "2025-09-18T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "2f8605ea0d4cee467aca91ddb41edb475733f543431eef5e420d702ba0f48f46",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "纯信息无任务",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "自助服务系统",
+          "start": "2025-09-18T23:00",
+          "end": "2025-09-19T02:00"
+        }
+      ],
+      "information": [
+        "不受影响"
+      ]
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.443Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "自助服务系统",
+            "start": "2025-09-18T23:00",
+            "end": "2025-09-19T02:00"
+          }
+        ],
+        "information": [
+          "不受影响"
+        ]
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "19ba7c187d1252f07efc83a8f30ecdfd15a4e80aa8d98b0dbb5a74c600f20b93"
+    }
+  },
+  {
+    "id": "PUB-05",
+    "title": "关于校园网暂停服务通知",
+    "url": "https://xxh.jlau.edu.cn/info/1012/1724.htm",
+    "publishedDate": "2025-02-15",
+    "fetchedAt": "2026-10-15T11:25:56.891375+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "关于校园网暂停服务通知\n发布时间：2025/02/15 19:18    浏览次数：\n2025年2月16日（星期日）18时至22时，学校将对综合教学楼进行电路维护，受其影响学校中心机房可能断电。届时学校业务系统、校园网服务将停止运行。望提前做好准备。\n信息化中心\n2025-02-15",
+    "referenceTime": "2025-02-15T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "2a16580739deb9fd9f6c9e86a5e5975a70f15fac6da96f052f3117113081fcbd",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "纯信息无任务",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "校园网",
+          "start": "2025-02-16T18:00",
+          "end": "2025-02-16T22:00"
+        }
+      ]
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "校园网",
+            "start": "2025-02-16T18:00",
+            "end": "2025-02-16T22:00"
+          }
+        ]
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "88709d41c181246d869694e3e8efce695fad5ffbda08d8331a850d166ff72fb9"
+    }
+  },
+  {
+    "id": "PUB-07",
+    "title": "关于17、18、19日凌晨暂停校园网服务的通知",
+    "url": "https://www.neau.edu.cn/info/1039/29973.htm",
+    "publishedDate": "2025-05-16",
+    "fetchedAt": "2026-10-15T11:26:21.282850+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "关于17、18、19日凌晨暂停校园网服务的通知\n发布日期：2025-05-16\n发布机构：宣传部\n责任编辑：[已去标识]\n阅读次数：\n全校师生：\n由于学校新建宿舍建设需要，5月17日至5月19日，每日凌晨0点至5点，校园网主干光缆断网割接，届时校园网暂停服务。\n因断网带来不便，尽请谅解。\n现代教育技术中心\n2025年5月16日",
+    "referenceTime": "2025-05-16T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "f43990a3afa34ee31adec4022b2876f2fa64ea5a89ffc587528bf89ab22db015",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "多日独立事件",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "校园网",
+          "start": "2025-05-17T00:00",
+          "end": "2025-05-17T05:00"
+        },
+        {
+          "object": "校园网",
+          "start": "2025-05-18T00:00",
+          "end": "2025-05-18T05:00"
+        },
+        {
+          "object": "校园网",
+          "start": "2025-05-19T00:00",
+          "end": "2025-05-19T05:00"
+        }
+      ]
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "校园网",
+            "start": "2025-05-17T00:00",
+            "end": "2025-05-17T05:00"
+          },
+          {
+            "object": "校园网",
+            "start": "2025-05-18T00:00",
+            "end": "2025-05-18T05:00"
+          },
+          {
+            "object": "校园网",
+            "start": "2025-05-19T00:00",
+            "end": "2025-05-19T05:00"
+          }
+        ]
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "e72a05c3aa3fe7e2c183abaf9de866eb3963554a5948c835efb1302715457141"
+    }
+  },
+  {
+    "id": "PUB-08",
+    "title": "关于2026届毕业研究生学位材料提交的通知",
+    "url": "https://yjsy.cpu.edu.cn/ab/58/c6313a240472/pagem.htm",
+    "publishedDate": "2026-05-28",
+    "fetchedAt": "2026-10-15T11:26:41.652842+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "crawl4ai",
+    "text": "关于2026届毕业研究生学位材料提交的通知\n发布者：[已去标识]\n各学院、研究生导师、研究生辅导员和应届毕业研究生：\n研究生完成毕业答辩后需尽快将答辩信息录入系统，提交成功后在指定时间内交学位材料，具体安排如下：\n  \n  \n| 收材料日期  | 收材料地点  | 学院收取时间  | 与学位办交接时间  |  \n| --- | --- | --- | --- |  \n| 6月3日周三  | 各学院自行安排  | 9:30-15:30  | 15:30-17:00  |  \n| 6月4日周四  | 各学院自行安排  | 9:30-15:00  | 15:00-16:00  |  \n  \n\n注：所有留学生请在6月4日上午10-12点递交学位材料。6月3-4日提交材料不符要求被打回的，请在当天15：00-15：30重新提交。\n为避免聚集，鼓励各课题组或班级派代表前来办理，学位材料一旦交纳，不接受退还。学位论文电子版终稿需在提交纸质材料前上传“培养与学位”系统。\n为研究生就业助力，有录用通知的学生凭期刊版面费缴费证明亦可领取学位证书，交材料时主动找辅导员登记。\n  \n\n递交材料明细：\n应交齐的材料包括（所有材料要求双面打印，签名、盖章、照片等不要遗漏）：\n★材料明细表（见研究生院网站下载专区。博士需自备档案袋，将明细表贴在档案袋上；硕士的明细表放在材料的首页，无需档案袋。所有上交材料按照明细表目录排序）\n★学位申请书、论文评阅书/盲审评阅书（申请书左侧对齐装订，至少订2颗订书钉）\n注：学位申请书含学位申请人签名、指导教师签名、系（教研室、研究室）主任签名（仅博士）、学院负责人签名、学院公章、答辩记录人签名、答辩委员签名，全部完成后方可提交\n★答辩表决票、成绩单原件（表决票左上角订1颗订书钉，或腾讯会议、钉钉等视频软件投票结果截图）\n★开题报告和中期考核表（提交学院发放的原件或系统打印件，此两项如有问题请和培养办联系，电话[联系或记录编号]）\n★发表的文章（交文章的复印件。如文章为录用，则交录用通知和杂志接受的样本，样本需导师签字；用专利申请答辩的交专利公开文件的复印件，注有公开日期和公开号）\n★论文实验记录本（可以交复印件，特殊情况不能上交者在研究生院下载专区里下载《关于不能提交实验记录本的证明》，填写完整、导师签字后盖学院公章）\n★专业学位硕士提交《专业实践总结报告》1份（从系统打印，如有问题请和培养办联系，电话[联系或记录编号]）\n★学位论文，**博士 3份（商学院和马院的学生交2份）**，**硕士 2份（商学院和马院的学生交1份）。**学位论文中“原创性声明”和“版权使用授权书”需作者本人及导师亲笔签名\n请注意：本年度博士生的博士学位论文自评表需通过系统在线填写，务必确保所填写内容真实准确。在自评表中，应详细阐述申请毕业的学术成果与答辩论文之间的紧密相关性。自评表填写完毕后，需提交至导师处进行审核确认，以确保信息的真实性与准确性。经研究生院最终审核通过自评表信息后，博士生方可通过系统填写答辩结果录入，以完成相关流程。\n材料注意事项：\n★学位申请材料**不得伪造导师签字，不得代其签名** ，评阅和答辩专家组成要按照相关规定严格执行，否则答辩无效；\n★交1本学位论文到江宁校区图书馆五楼第二现刊阅览室，并在图书馆网页上传学位论文的全文和摘要（详细要求请查看图书馆网上通知）；\n★将《学位申请书》上的“答辩决议”复印，以备填写校学工处发的《毕业生登记表》之用；\n★将论文评阅书复印，保管好复印件，以备日后考博、读博士后或者找工作用；将一份学位申请书交辅导员存放到毕业生的人事档案。",
+    "referenceTime": "2026-05-28T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "9b82ead882c646929967ea307e2e298660201fd4cd8fa59eb49823e662aab9ed",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "材料提交",
+    "reference": {
+      "tasks": [
+        {
+          "object": "答辩",
+          "verbs": [
+            "录入",
+            "填写",
+            "提交"
+          ],
+          "channel": "系统"
+        },
+        {
+          "object": "论文",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "channel": "培养与学位系统"
+        },
+        {
+          "object": "学位材料",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "deadlineUnknown": true,
+          "material": "学位申请书",
+          "channel": "学院"
+        },
+        {
+          "object": "论文",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "图书馆"
+        },
+        {
+          "object": "学位申请书",
+          "verbs": [
+            "交",
+            "提交"
+          ],
+          "channel": "辅导员"
+        },
+        {
+          "object": "自评表",
+          "verbs": [
+            "填写",
+            "提交"
+          ],
+          "condition": "博士",
+          "predecessor": "导师"
+        },
+        {
+          "object": "答辩决议",
+          "verbs": [
+            "复印"
+          ]
+        },
+        {
+          "object": "论文评阅书",
+          "verbs": [
+            "复印",
+            "保管"
+          ]
+        }
+      ],
+      "events": [],
+      "materials": [
+        "材料明细表",
+        "学位申请书",
+        "论文评阅书",
+        "答辩表决票",
+        "成绩单",
+        "开题报告",
+        "中期考核表",
+        "实验记录本"
+      ],
+      "criteria": [
+        "签名",
+        "双面"
+      ],
+      "window": "2026-06-03/2026-06-04",
+      "forbidden": [
+        {
+          "object": "导师签字",
+          "verbs": [
+            "伪造",
+            "代签"
+          ]
+        }
+      ]
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "答辩",
+            "verbs": [
+              "录入",
+              "填写",
+              "提交"
+            ],
+            "channel": "系统"
+          },
+          {
+            "object": "论文",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "channel": "培养与学位系统"
+          },
+          {
+            "object": "学位材料",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadlineUnknown": true,
+            "material": "学位申请书",
+            "channel": "学院"
+          },
+          {
+            "object": "论文",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "图书馆"
+          },
+          {
+            "object": "学位申请书",
+            "verbs": [
+              "交",
+              "提交"
+            ],
+            "channel": "辅导员"
+          },
+          {
+            "object": "自评表",
+            "verbs": [
+              "填写",
+              "提交"
+            ],
+            "condition": "博士",
+            "predecessor": "导师"
+          },
+          {
+            "object": "答辩决议",
+            "verbs": [
+              "复印"
+            ]
+          },
+          {
+            "object": "论文评阅书",
+            "verbs": [
+              "复印",
+              "保管"
+            ]
+          }
+        ],
+        "events": [],
+        "materials": [
+          "材料明细表",
+          "学位申请书",
+          "论文评阅书",
+          "答辩表决票",
+          "成绩单",
+          "开题报告",
+          "中期考核表",
+          "实验记录本"
+        ],
+        "criteria": [
+          "签名",
+          "双面"
+        ],
+        "window": "2026-06-03/2026-06-04",
+        "forbidden": [
+          {
+            "object": "导师签字",
+            "verbs": [
+              "伪造",
+              "代签"
+            ]
+          }
+        ]
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "10b365fb2168e218c1a0df53e21736a2182ab79e7dab5bc9ab358024e939d855"
+    }
+  },
+  {
+    "id": "PUB-09",
+    "title": "关于做好2025年上半年学位授予工作的通知",
+    "url": "https://yan.sicau.edu.cn/info/1035/11555.htm",
+    "publishedDate": "2025-05-14",
+    "fetchedAt": "2026-10-15T11:26:43.353334+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "关于做好2025年上半年学位授予工作的通知\n2025年05月14日 16:15\n阅读量：\n各培养单位：\n根据《学位评定委员会章程》、《学位授予实施细则》和《进一步提升研究生学位论文质量管理办法》等相关规定，现就学位授予相关工作做如下要求，请严格执行：\n一、研究生学位申请（\n5\n月\n18\n日前）\n满足授位条件的研究生本人\n须严格按照答辩委员会专家意见及《研究生学位论文写作规范》（见下载专区）修改学位论文\n，并按要求提交以下材料（见附件\n1\n）至各培养单位：\n1\n、纸质版材料\n（\n1\n）学位论文终稿提交审查表；\n（\n2\n）学位论文终稿（仅博士须提交纸质版，声明页导师、学生均须签名确认）；\n（\n3\n）学位申请表；\n（\n4\n）满足授位要求的创新性成果证明（\n仅打印文章首页或体现作者排序的页面\n）；\n（\n5\n）创新性成果与学位论文研究内容一致性对比情况登记表（见附件）；\n（\n6\n）培养单位要求的其他相关材料。\n2\n、电子版材料\n（\n1\n）学位论文终稿上传研究生管理系统且\n导师审核通过\n（\n声明页须签名确认\n）\n（\n2\n）博士学位申请人简况表；\n（\n3\n）博士学位论文摘要；\n（\n4\n）博士个人简介\nPPT\n；\n（\n5\n）满足授位要求的创新性成果证明（\n全部存入一个文件夹，文件夹按照\n“\n培养单位代码\n_\n学号\n_\n姓名\n”\n格式命名，如\n“414_B[联系或记录编号]_\n[姓名]\n”\n，其中\n学术论文要求提供发表版全文\n）；\n3\n、系统填报\n1\n）\n登录研究生管理系统\n填报学位上报信息\n2\n）\n登录创新成果采集系统：\nhttp://yzb.sicau.edu.cn/pydc/caslogin.aspx\n录入申请学位创新性成果信息。\n二、培养单位审查（\n5\n月\n21\n日前）\n培养单位受理学位申请后，完成如下材料审查：\n1\n、申请人提交材料是否齐全；\n2\n、学位论文终稿（电子版、纸质版）是否符合学校论文格式规范及复写率要求，学生本人及导师是否在声明页签名，并按要求提交，导师须在研究生管理系统确认论文定稿；\n三、培养单位学位评定分委员会审议（\n5\n月\n22\n日前）\n学位评定分委员会须严格按照《学位评定委员会章程》相关要求召开全体委员会议审查硕士、博士学位申请材料。具体审查流程包括：\n1\n、审查申请人政治思想表现是否达到授位要求；\n2\n、学位论文与学科或专业学位类别（领域）的契合度；\n3\n、审查申请人学位论文答辩情况及答辩委员会专家意见及学位论文修改情况；\n4\n、\n严格审查学位论文终稿质量是否达到学位授予要求；\n5\n、\n有创新成果要求的学科或专业学位类别（领域）需在创新成果采集系统系统判定学位申请人是否达到规定的授位条件，链接为：\n（\nhttp://yzb.sicau.edu.cn/pydc/caslogin.aspx\n）\n；\n6\n、学位评定分委员会无记名投票表决；\n7\n、根据审核情况及投票结果做出相应决议；\n8\n、\n会议的表决票、表决统计结果等材料经主席签字后存档备查；\n9\n、会议决议及相关材料（见附件\n2\n）报校学位评定委员会审议。\n说明：\n1\n、对学位申请资料不齐全、不满足授位条件或经查实申请材料存在学术不端、弄虚作假等情况的，一概不予受理；\n2\n、培养单位学位评定分委员会召开时间须至少提前\n1-2\n个工作日报研究生院备案，研究生院将随机安排督查列席。\n3\n、培养单位学位评定分委员会结束后，需及时按附件\n2\n要求提交材料至研究生院。\n四、校学位评定委员会办公室复审（\n6\n月\n5\n日前）\n校学位评定委员会办公室对申请人材料进行复核，复核不通过的申请人材料可直接驳回。\n确定最终博士、硕士建议授位上会名单。\n五、附件：\n1\n、\n申请人提交材料清单及附件.zip\n2\n、\n培养单位提交材料清单及附件.zip\n研究生院\n2025\n年\n5\n月\n14\n日\n附件【\n申请人提交材料清单及附件.zip\n】已下载\n次\n附件【\n培养单位提交材料清单及附件.zip\n】已下载\n次",
+    "referenceTime": "2025-05-14T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "665c2794fcc32e66438a4c0e57cf5264aac64028d12ed9435c978a7b44398ebe",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "材料提交",
+    "reference": {
+      "tasks": [
+        {
+          "object": "论文",
+          "verbs": [
+            "修改",
+            "完善"
+          ],
+          "deadline": "2025-05-18",
+          "precision": "date_only"
+        },
+        {
+          "object": "材料",
+          "verbs": [
+            "提交",
+            "报送"
+          ],
+          "material": "终稿审查表",
+          "deadline": "2025-05-18",
+          "precision": "date_only"
+        },
+        {
+          "object": "论文",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "channel": "系统"
+        },
+        {
+          "object": "学位",
+          "verbs": [
+            "填写",
+            "填报"
+          ],
+          "channel": "系统"
+        },
+        {
+          "object": "创新性成果",
+          "verbs": [
+            "录入",
+            "填报"
+          ],
+          "deadline": "2025-05-18",
+          "precision": "date_only",
+          "channel": "创新成果采集系统"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "终稿审查表",
+        "一致性登记表"
+      ],
+      "criteria": [
+        "导师"
+      ],
+      "referenceCaveat": "培养单位组织流程不应全部变成学生个人任务；依据学生义务逐项复核。",
+      "naming": [
+        "培养单位代码_学号_姓名"
+      ]
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "论文",
+            "verbs": [
+              "修改",
+              "完善"
+            ],
+            "deadline": "2025-05-18",
+            "precision": "date_only"
+          },
+          {
+            "object": "材料",
+            "verbs": [
+              "提交",
+              "报送"
+            ],
+            "material": "终稿审查表",
+            "deadline": "2025-05-18",
+            "precision": "date_only"
+          },
+          {
+            "object": "论文",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "channel": "系统"
+          },
+          {
+            "object": "学位",
+            "verbs": [
+              "填写",
+              "填报"
+            ],
+            "channel": "系统"
+          },
+          {
+            "object": "创新性成果",
+            "verbs": [
+              "录入",
+              "填报"
+            ],
+            "deadline": "2025-05-18",
+            "precision": "date_only",
+            "channel": "创新成果采集系统"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "终稿审查表",
+          "一致性登记表"
+        ],
+        "criteria": [
+          "导师"
+        ],
+        "referenceCaveat": "培养单位组织流程不应全部变成学生个人任务；依据学生义务逐项复核。",
+        "naming": [
+          "培养单位代码_学号_姓名"
+        ]
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "db59fa291623306398123de9a92c8f0811a440cbd018564a0a94dc0f5fd0ffe6"
+    }
+  },
+  {
+    "id": "PUB-10",
+    "title": "关于2025年硕士研究生党团组织关系转移、人事档案调取、户籍迁移、上传材料、上报接收录取通知书通讯地址的通知",
+    "url": "https://gs.sit.edu.cn/info/1271/3341.htm",
+    "publishedDate": "2025-05-26",
+    "fetchedAt": "2026-10-15T11:26:48.788627+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "关于2025年拟录取硕士研究生上传材料、上报接收录取通知书通讯地址的通知\n1\n、上传材料\n2025年拟录取研究生可登陆上海应用技术大学招生系统（网址\nhttps://yjs.sit.edu.cn\n），“硕士统考”模块中“个人材料提交”栏目，按系统提示提交材料（首次登录需注册）。详细步骤可参考\n（上海应用技术大学）研究生招生管系统考生使用说明.pdf\n。\n2\n、上报接收录取通知书通讯地址\n2025年拟录取的硕士研究生，请在6月2日前登录上海应用技术大学招生系统“硕士统考”模块中“\n通讯地址上报及调档函下载\n”栏目，上报接收录取通知书通讯地址，上报期间可进行多次修改再提交。\n注：\n调档函电子版也可在“通讯地址上报及调档函下载”栏目中下载，\n入学通知书和纸质版调档函将通过EMS一并邮寄，具体寄出时间请关注研究生院网站招生栏目通知。\n上海应用技术大学研究生院\n2025.5.26",
+    "referenceTime": "2025-05-26T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "2565b01556c6615d9e335181de7791fb5d1e82d204d2f2f78ce888959cc48394",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "材料提交",
+    "reference": {
+      "tasks": [
+        {
+          "object": "材料",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "channel": "研究生招生系统",
+          "deadlineUnknown": true
+        },
+        {
+          "object": "通讯地址",
+          "verbs": [
+            "上报",
+            "填报",
+            "填写",
+            "提交"
+          ],
+          "channel": "研究生招生系统",
+          "deadline": "2025-06-02",
+          "precision": "date_only"
+        }
+      ],
+      "events": []
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "材料",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "channel": "研究生招生系统",
+            "deadlineUnknown": true
+          },
+          {
+            "object": "通讯地址",
+            "verbs": [
+              "上报",
+              "填报",
+              "填写",
+              "提交"
+            ],
+            "channel": "研究生招生系统",
+            "deadline": "2025-06-02",
+            "precision": "date_only"
+          }
+        ],
+        "events": []
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "dc4a8ac1c7dd4abd4d53702e78f95d65389b65ad66e8a020959aa3ffd5bcbd97"
+    }
+  },
+  {
+    "id": "PUB-11",
+    "title": "关于开展2025年普通招考博士研究生报考信息确认工作的通知",
+    "url": "https://grs.lnu.edu.cn/info/12168/71724.htm",
+    "publishedDate": "2025-02-21",
+    "fetchedAt": "2026-10-15T11:26:49.785674+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "关于开展2025年普通招考博士研究生报考信息确认工作的通知\n2025-02-21 17:00\n各位考生：\n根据教育部、省级教育招生考试管理部门的工作安排和要求现对学校\n202\n5\n年普通招考博士研究生（不含各类专项计划、法律专业博士）报考信息网上确认工作通知如下：\n一\n、报考信息确认\n1.时间安排\n202\n5\n年\n2\n月\n2\n4日\n10\n时（预计开通时间）至\n202\n5\n年\n2\n月\n2\n7日15时（逾期不予受理），已在“研招网”完成网上报名准备参加我校博士初试考试的考生，请登录辽宁大学博士研究生招生管理系统（以下简称“博士管理系统”），按要求完成报考信息确认和提交审核材料工作。同期，学校安排专人进行审核。逾期将不再受理考生确认申请。\n2.系统操作\n考生凭本人居民身份证号码、姓名拼音（拼音字母均为小写）登录\n[凭证说明已移除，不作为可执行操作]\n部分考生存在多条报名数据，相关考生只能在\n“博士管理系统”中选择其中一条报名数据（对应报名号）进行确认，确认后其他报名信息自动失效。\n“博士管理系统”网址：http://lnu.zssystem.cn/\n二\n、提交材料\n以下材料中居民身份证、《教育部学籍在线验证报告\n》《\n教育部学历证书电子注册备案表\n》《\n中国高等教育学位在线验证报告》等须在有效期内。\n材料（\n1）网上报名信息简表、专家推荐书、报考类别确认书（请按如下顺序合并成1个PDF文件后上传）\n①“研招网”下载的《博士学位研究生网上报名信息简表》。其中“考生所在单位人事部门意见”，应届硕士毕业生由所在单位研究生院（部、处）出具意见并加盖公章，其他考生由档案所在单位档案管理（人事管理）部门出具意见并加盖公章。\n②两名教授或相当专业技术职称（正高级）专家出具的专家推荐书。推荐人应为与所报考学科相关专业领域的专家，推荐书封面需加盖推荐人工作单位人事部门公章。\n③《报考类别确认书》（请见附件）。请考生下载附件打印输出后按要求手写相关信息并扫描上传。无打印设备的考生可全篇手写后扫描上传。\n考生所选\n择的\n报考类别须与本人《博士学位研究生网上报名信息简表》第\n5页“考生所在单位人事部门意见”中注明的报考类别一致。\n材料（\n2）硕士阶段成绩单、硕士学位论文全部评议书的复印件（应届硕士毕业生提交硕士论文开题报告）（请按如下顺序合并成1个PDF文件后上传）\n①硕士阶段的学习成绩单，可以是考生硕士研究生培养单位研究生院（部、处）出具的成绩单原件\n，\n也\n可以\n是考生人事档案中成绩单的复印件\n，\n但复印件须加盖材料出具单位档案管理部门或人事部门公章。\n②硕士学位论文评议书复印件，须加盖材料出具单位档案管理部门或人事部门公章。\n材料（\n3）前置学历、学位相关材料（请按如下顺序合并成1个PDF文件后上传）\n①硕士学历（学籍）、学位材料，考生需提供下列材料之一：\n应届硕士毕业生提交硕士层次《教育部学籍在线验证报告》一份，学生证一份；\n已获硕士毕业证书及学位证书的考生提交硕士层次《教育部学历证书电子注册备案表》或《中国高等教育学历认证报告》一份，《中国高等教育学位在线验证报告》或《中国高等教育学位认证报告》一份；\n仅获硕士学位证书的考生，提交《中国高等教育学位在线验证报告》或《中国高等教育学位认证报告》一份\n在域外获得研究生学位（学历）的考生，提交教育部留学服务中心出具的《国（境）外学历学位认证书》一份。\n②本科学历材料，考生需提供下列材料之一：\n提交本人本科层次《教育部学历证书电子注册备案表》或《中国高等教育学历认证报告》一份；\n无本科学习经历的考生提交专科层次《教育部学历证书电子注册备案表》或《中国高等教育学历认证报告》一份；\n在域外获得学士学位（学历）的考生，提交教育部留学服务中心出具的《国（境）外学历学位认证书》一份。\n材料（\n4）居民身份证（含双面信息）、思想政治素质和品德考核表（请按如下顺序合并成1个PDF文件后上传）\n①居民身份证（双面）扫描件一份（有曾用名的考生，须提供《居民户口簿》本人页或考生本人户籍属地公安机关出具的《户籍证明》；有\n居民身份证号码\n变更的考生，须提供属地公安机关出具的《居民\n/公民身份号码变更证明》）。\n②思想政治素质和品德考核表，应届毕业生由所在学院分党委或党总支出具意见并加盖印章，未就业考生由本人档案所在单位出具意见并加盖印章，已就业考生由本人档案或工作所在单位的人事或政工部门出具意见并加盖印章。\n此外，以定向身份报考法学博士的\n高校专职教师\n需分页上传本人高校教师资格证，并提供由所在单位校人事部门出具的本人在岗专职教师身份证明。相关材料需附于材料（\n4）上传。\n考生进行报考信息确认和审核材料上传的同时，学校将安排专人及时对考生上传材料进行形式审核，考生需及时关注\n“博士管理系统”中的形式审核结果，按要求配合学校尽快完成确认和材料审核工作。考生如不能按时提交以上材料或所提交材料不符合要求将影响参加初试、复试、（拟）录取或被取消复试、（拟）录取资格，相关后果由考生本人承担。\n三\n、其他\n考生务必保证所上传材料的真实、有效，对于伪造、编造材料的考生，一经发现即取消其初试、复试、（拟）录取资格或学籍。\n学校各培养单位对考生报考信息的实质性审核工作，将在报考信息确认工作结束后进行，考生可通过\n“博士管理系统”查询最终审核结果。\n成功完成网上报名、网上确认且最终审核结论为通过的考生方可参加初试考试。\n考生可致电研究生招生办公室进行博士招生咨询，联系电话\n[电话]。\n附件：\n报考类别确认书\n辽宁大学研究生院\n202\n5\n年\n2月\n21\n日\n打印\n收藏",
+    "referenceTime": "2025-02-21T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "e921bd8a661acfea45654d9f3d037de7413e4aafb9f5c108d3157c170bfa0023",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "报名",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报考信息",
+          "verbs": [
+            "确认",
+            "提交"
+          ],
+          "deadline": "2025-02-27T15:00",
+          "precision": "exact",
+          "channel": "系统",
+          "material": "报考材料"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "报名信息简表",
+        "专家推荐书",
+        "报考类别确认书",
+        "成绩单",
+        "学历"
+      ],
+      "formats": [
+        "PDF"
+      ],
+      "criteria": [
+        "合并",
+        "公章"
+      ],
+      "window": "2025-02-24T10:00/2025-02-27T15:00"
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "报考信息",
+            "verbs": [
+              "确认",
+              "提交"
+            ],
+            "deadline": "2025-02-27T15:00",
+            "precision": "exact",
+            "channel": "系统",
+            "material": "报考材料"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "报名信息简表",
+          "专家推荐书",
+          "报考类别确认书",
+          "成绩单",
+          "学历"
+        ],
+        "formats": [
+          "PDF"
+        ],
+        "criteria": [
+          "合并",
+          "公章"
+        ],
+        "window": "2025-02-24T10:00/2025-02-27T15:00"
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "d9edc85b12115a3047159eb94cd515e3da6142fc46443750b982ce969a32df23"
+    }
+  },
+  {
+    "id": "PUB-12",
+    "title": "材料科学与化学工程学院2025年研究生复试二次调剂通知",
+    "url": "https://heucec.hrbeu.edu.cn/2025/0410/c2037a336593/page.htm",
+    "publishedDate": "2025-04-10",
+    "fetchedAt": "2026-10-15T11:26:50.901499+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "材料科学与化学工程学院2025年研究生复试二次调剂通知\n发布者：\n发布时间：2025-04-10\n浏览次数：\n6073\n一、学院\n校际\n调剂条件\n（一）\n材料科学与工程\n专业\n优秀普通全日制应届本科生或普通全日制本科毕业生，符合《\n2025年全国硕士研究生招生工作管理规定》中调剂的基本要求，且同时满足初试科目为数学一或数学二\n；\n英语一或英语二\n，\n拟调剂我院的专业与考生第一志愿报考专业应相同或相近，应在同一学科门类范围内\n，\n且同时满足\n初试总成绩\n不低于\n280\n分；\n（二\n）\n材料与化工\n专业\n优秀普通全日制应届本科生或普通全日制本科毕业生，符合《\n2025年全国硕士研究生招生工作管理规定》中调剂的基本要求，且同时满足初试科目为数学一或数学二\n；\n英语一或英语二、俄语、日语\n，\n拟调剂我院的专业与考生第一志愿报考专业应相同或相近，应在同一学科门类范围内\n，\n且同时满足\n初试总成绩\n不低于\n260\n分\n。\n二、本系各专业调剂名额及系统开通、关闭时间\n专业代码\n专业名称\n学习方式\n调剂\n名额\n系统开\n通时间\n系统关\n闭时间\n080500\n材料科学与工程\n全日制\n1（含052名额1）\n202\n5\n年\n4月\n10\n日\n15\n:\n3\n0\n202\n5\n年\n4\n月\n11\n日\n09\n:00\n085600\n材料与化工\n全日制\n48（含010名额27；含052名额21）\n202\n5\n年\n4月\n10\n日\n15\n:\n3\n0\n202\n5\n年\n4\n月\n11\n日\n09\n:00\n备注：具体请参见我校研究生招生网（\nyzb.hrbeu.edu.cn\n）和本学院网页上公布的调剂信息。\n随时更新。\n三、调剂程序：\n（一）调剂生登录国家系统报名。分专业截止时间见上表。\n（二）报名结束后，学院确定复试名单，公示。\n（三）学院对考生进行调剂复试。\n复试时间：4月12日7:30\n复试地点：网络远程复试，具体以微信群通知为准。\n（四）复试结束后，学院确定调剂待录取名单，报学校研招办审核后，学院公示。\n（五）学院向审核合格的待录取考生发送待录取通知，\n调剂生在\n4\n小\n时内确认接收待录取，超过时间者认为主动放弃待录取资格。\n四、复试\n复试采用研招网\n“招生远程面试系统”为软件平台，采取“双机位”的模式进行面试。主机位建议使用电脑登录，摆放于考生正面；副机位从考生侧后方拍摄，可使用电脑或手机登录。使用“腾讯会议”软件定为备用面试系统，请考生提前做好两套面试系统的测试，如有困难，及时向我院反映（请不具备远程面试条件的考生于\n4\n月\n11\n日\n14:30\n前联系学院，逾期未联系将视为具备参加网络远程复试条件）。\n请具备复试资格的考生提前下载《招生远程面试系统考生操作手册》，学习并熟悉面试系统使用方法，并参与学院安排的测试环节\n（预计于\n4\n月\n11\n日\n1\n4\n:00\n-18:00\n进行\n系统测试\n）\n。并提前熟悉测试\n“腾讯会议”备用软件平台。\n（一）\n资格审查\n复试前考生需在远程招生系统中签订《诚信复试承诺书》，并填写《哈尔滨工程大学复试资格审查合格单》，保证提交材料真实和复试过程诚信。学院将对所有参加复试的考生进行资格审查，严格做到\n“两识别、四比对”（即人脸、人证两识别；报考库、学籍学历库、人口信息库、考生考试诚信档案库四比对），四库信息需一致。\n资格审查通过研招网\n“招生远程面试系统”为软件平台进行审查，\n资格审查提交材料发送到邮箱[邮箱1]。提交时间\n4\n月\n11\n日\n1\n5\n:00\n-18:00\n，未上传材料或材料不全的考生视为审查不合格。\n复试前必须对考生进行资格审查，资格审查不合格者不予复试。审查条件以我校\n202\n5\n年硕士研究生招生简章为准，所有参加复试的考生，除须审查准考证、有效身份证、考试费\n缴费单\n、\n复试资格审查单（所填内容要求完整、需张贴照片）\n外，按考生类别须分别审查：\n（\n1）非应届考生：\n1.学历证书；\n2.学位证书；\n3.《教育部学历证书电子注册备案表》或《中国高等教育学历认证报告》；\n4.在校历年学习成绩单（须加盖教务或人事部门公章）。\n（\n2）应届本科生：\n1.学生证；\n2.《教育部学籍在线验证报告》；\n3.本科阶段已学习课程成绩单（须加盖教务部门公章）。\n考生须根据所属类别将上述相应材料扫描版（\njpg/pdf格式，要求\n清晰\n）及报考院系所需其他佐证材料，通过\n研招网\n“招生远程面试系统”\n提交，复印件于新生报到时提交至院系复查\n，\n政审表录取后另行通知提交\n。若发现考生不符合报考条件，一经发现，立即取消其复试、拟录取、录取资格。\n（二）复试时间\n复试\n时间：\n4月\n12\n日\n7\n:\n3\n0开始\n（三）复试内容\n网络远程方式复试分为线上专业综合考核和线上面试两部分，线上面试分为外语\n测试部分和综合面试部分，\n复试总成绩满分\n350分。\n1.线上专业综合考核\n线上专业综合考核为专业知识测试，采用综合性、开放性的能力型试题。\n2.线上面试\n线上面试主要考核考生的思想品德、外语的掌握和应用能力、对本专业基础知识的掌握理解程度、创新精神、专业素质和实践能力等。可结合考生本科成绩单、毕业论文、科研成果、专家推荐信等材料，加强对考生既往学业、一贯表现、科研能力、综合素质、专业志趣等情况的全面考查。\n学术学位面试重点考核考生的学术素养、对学科知识掌握与运用情况、科研创新能力。专业学位面试重点考核考生的专业基础、实践能力和职业素养。校企联合培养项目的复试应结合企业实际需求对考生进行全面综合考察。\n（四）\n复试成绩计算方法\n复试总成绩满分\n350分=线上专业综合考核（满分150分）+综合面试成绩（满分100分）+外语测试成绩（满分100分）\n（五）录取规则\n考生的总成绩计算公式为：总成绩\n=(初试总成绩÷5)×\n5\n0%+(复试总成绩÷3.5)×\n5\n0%\n总成绩保留\n2位小数。按总成绩在专业排名，由高到低依次录取。\n（六）缴费\n参加复试考核的考生须登录哈尔滨工程大学缴纳平台（网址：\nhttp://pay.hrbeu.edu.cn/payment/），选择“2025年硕士研究生复试考试费”缴费项目，缴纳考试费100元。本校学生直接用学号登录，非本校学生用身份证号注册后登录。\n（七）体检\n新生报到时由校医院进行体检。体检标准参照教育部、原卫生部、中国残联印发的《普通高等学校招生体检工作指导意见》（教学〔\n2003〕3号）、《教育部办公厅卫生部办公厅关于普通高等学校招生学生入学身体检查取消乙肝项目检测有关问题的通知》（教学厅〔2010〕2号）文件执行。体检不合格者按相关规定处理。\n（八）其他说明\n1.复试是国家研究生招生考试的一部分，复试内容属于国家机密级事项。复试过程中禁止录音、录像和录屏、禁止使用AI技术作弊等任何作弊行为，在学校复试工作结束前禁止对外透露或传播复试试题内容等，一经查实即按照《国家教育考试违规处理办法》《普通高等学校招生违规行为处理暂行办法》等规定严肃处理，取消录取资格，并记入《考生考试诚信档案》。\n2.复试期间，校外考生可凭本人准考证、身份证，通过人脸识别方式进入校园。\n3.身份证如果丢失，需由户口所在地派出所出具证明，证明张贴本人照片并骑缝加盖公章。\n4.学生证如果丢失，需开具学信网学籍在线认证报告。\n5.缴费后因各种原因不能参加复试者，已支付的复试费不退。\n6.考生可登录中国高等教育学生信息网（网址：https://www.chsi.com.cn/）,按要求进行学历或学籍认证。报名期间学历校验未通过考生须提交教育部出具的学历认证报告。复试期间未按相关规定时间提交报告的考生视为资格审查不合格。如考生提供虚假材料，任何时候一经发现将取消其录取资格。\n7.拟录取名单公示后，由拟录取学院对考生调档并政审，未提供政审材料者不发放录取通知书。政审不合格者，按有关规定取消录取资格。\n8.确有经费报销需要的考生可领取复试费发票，领取发票的时间及方式另行通知。\n9.\n根据教育部文件及学院相关规定，对存在下列情况之一的考生不予拟录取：\n（\n1）未按规定时间参加复试的考生视为弃权，不予拟录取。\n（\n2）复试总成绩低于210分，不予拟录取；线上专业综合考核低于90分，不予拟录取；外语测试成绩小于60分，不予拟录取；综合面试成绩小于60分，不予拟录取；\n（\n3）思想政治素质和道德品质考核不合格者不予拟录取；\n（\n4）未通过或未完成学历（学籍）审核的考生不予拟录取；\n（\n5\n）应届本科毕业生及自学考试和网络教育应届本科毕业考生，入学时（\n9月1日前）未取得国家承认的本科毕业证书者，录取资格无效。\n（\n九\n）\n网络\n远程\n复试要求\n复试是研究生招生考试重要组成部分，属于国家级考试，按照研究生招生考试相关保密管理规定，任何人员和机构（学校授权除外）不得对复试过程录音、录像、拍照、截屏或者网络直播，不得传播试题等复试内容，否则将依据相关规定追究相关人员责任。\n（\n1）复试环境要求\n考生自行选择复试场所，要求环境相对安静、独立，光线明亮；复试期间视频背景必须是真实环境，复试全程只允许考生一人在面试房间，禁止他人进出；复试场所不能有任何复试相关参考资料，若有违反，视同作弊；不允许使用虚拟背景、更换视频背景；不允许采用任何方式变声、更改人像；考生复试时需面向墙面（间隔不超过\n1米）；复试采用双机位模式，一台设备从正面拍摄，另一台设备从考生侧后方拍摄（能够全程拍摄考生本人和电脑屏幕）。考生复试前需向考官360度旋转摄像头，展示周围环境，考官认可后方可开始面试。\n复试过程中，连接登录复试系统的设备不允许再运行其他网页或软件，设备须处于免打扰状态，保证复试过程不受其他因素干扰或打断，不得与外界有任何音视频交互，复试房间其他电子设备必须关闭。建议手机采用飞行模式。\n（\n2）设备与网络要求\n笔记本电脑\n1台（或台式机\n+外接摄像头和麦克风\n，建议\n尽量使用笔记本电脑\n）\n，预装\nWindows7以上\n操作系统（\n支持Mac\n）；\n1-2部智能手机（\n版本不能过于陈旧\n，手机电量充足）；\n网络环境\n稳定，笔记本电脑应接入有线网络；\n建议考生准备\n2部手机，1部手机用于突发情况下的复试备用。\n考生提前下载好复试所需软件客户端（包括备用软件，我院备用软件为腾讯会议），学习并掌握软件的具体操作流程，提前进行测试是否能正常使用。\n（\n3）复试纪律\n1）考生应按规定时间和相关要求登录指定网络平台参加网络远程复试，保证如实、准确提交各项材料。如弄虚作假，本人承担由此造成的一切后果。\n2）自觉服从考试组织管理部门的统一安排，接受复试老师的管理、监督和检查，不得扰乱网络远程复试工作秩序。\n3）所有考生须认真阅读教育部《202\n5\n年全国硕士研究生招生工作管理规定》、《关于做好\n202\n5\n年全国硕士研究生复试工作的通知》、《国家教育考试违规处理办法》、《中华人民共和国刑法修正案（九）》、《普通高等学校招生违规行为处理暂行办法》以及哈尔滨工程大学和报考院系发布的相关招考信息，诚信复试。\n4）严禁考生弄虚作假及替考作弊等行为，一经查实将按照相关规定严肃处理，情节严重的移交有关部门调查处理。\n5）考生需将五官清楚显露，不化浓妆，不得使用美颜及滤镜，不得故意遮蔽面部、耳朵等部位，复试期间不得戴帽子、墨镜、口罩、饰品等，不得中途离开座位，不做与复试无关动作。\n6）考生音频视频必须全程开启，面试时全程正面免冠注视摄像头，视线不得离开，保证头肩部及双手出现在视频画面中。\n7）复试期间不得以任何方式查阅资料，院系有特殊规定者，以院系规定为准。\n8）复试过程中禁止录音、录像和录屏，禁止将相关信息泄露或公布，违者按违纪处理。\n（十）咨询电话，监督和举报电话\n咨询电话：\n[电话]\n调剂咨询\nQQ群：\n[编号]\n监督、举报电话、\n邮箱\n：\n[电话]\n[邮箱1]\n材料科学与化学工程学院\n2025年4月10日\n0-哈尔滨工程大学复试资格审查合格单（含诚信复试承诺书）.docx\n2-定向就业协议书.doc\n3-保留入学资格申请表.docx\n12-哈尔滨工程大学2025年硕士研究生复试政审表.docx\n审核：[已去标识]",
+    "referenceTime": "2025-04-10T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "77b88629ab956e2b3c9d661a353ae311e5015eae40170b86ee3f422e021056d3",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "资格条件",
+    "reference": {
+      "tasks": [
+        {
+          "object": "调剂",
+          "verbs": [
+            "报名",
+            "申请",
+            "填报"
+          ],
+          "deadline": "2025-04-11T09:00",
+          "precision": "exact",
+          "channel": "国家系统",
+          "unknownEligibility": true
+        },
+        {
+          "object": "待录取",
+          "verbs": [
+            "确认",
+            "接收"
+          ],
+          "condition": "待录取",
+          "deadlineUnknown": true
+        },
+        {
+          "object": "系统",
+          "verbs": [
+            "测试",
+            "下载",
+            "熟悉"
+          ],
+          "condition": "复试资格"
+        },
+        {
+          "object": "资格审查",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "material": "资格审查",
+          "channel": "[邮箱1]",
+          "window": "2025-04-11T15:00/2025-04-11T18:00"
+        },
+        {
+          "object": "考试费",
+          "verbs": [
+            "缴纳",
+            "缴费",
+            "支付"
+          ],
+          "channel": "缴纳平台"
+        },
+        {
+          "object": "设备",
+          "verbs": [
+            "准备"
+          ],
+          "condition": "复试"
+        }
+      ],
+      "events": [
+        {
+          "object": "复试",
+          "start": "2025-04-12T07:30",
+          "endUnknown": true
+        },
+        {
+          "object": "测试",
+          "start": "2025-04-11T14:00",
+          "end": "2025-04-11T18:00"
+        }
+      ],
+      "materials": [
+        "准考证",
+        "身份证",
+        "缴费单",
+        "资格审查合格单",
+        "成绩单"
+      ],
+      "formats": [
+        "jpg",
+        "pdf"
+      ],
+      "criteria": [
+        "4小时",
+        "100元",
+        "双机位"
+      ],
+      "forbidden": [
+        {
+          "object": "复试",
+          "verbs": [
+            "录音",
+            "录像",
+            "录屏",
+            "传播"
+          ]
+        }
+      ],
+      "referenceCaveat": "四小时相对期限和预计测试窗口必须保留原精度；详细资格分支人工复核，不能据自动完整宣称全篇无遗漏。"
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "调剂",
+            "verbs": [
+              "报名",
+              "申请",
+              "填报"
+            ],
+            "deadline": "2025-04-11T09:00",
+            "precision": "exact",
+            "channel": "国家系统",
+            "unknownEligibility": true
+          },
+          {
+            "object": "待录取",
+            "verbs": [
+              "确认",
+              "接收"
+            ],
+            "condition": "待录取",
+            "deadlineUnknown": true
+          },
+          {
+            "object": "系统",
+            "verbs": [
+              "测试",
+              "下载",
+              "熟悉"
+            ],
+            "condition": "复试资格"
+          },
+          {
+            "object": "资格审查",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "资格审查",
+            "channel": "[邮箱1]",
+            "window": "2025-04-11T15:00/2025-04-11T18:00"
+          },
+          {
+            "object": "考试费",
+            "verbs": [
+              "缴纳",
+              "缴费",
+              "支付"
+            ],
+            "channel": "缴纳平台"
+          },
+          {
+            "object": "设备",
+            "verbs": [
+              "准备"
+            ],
+            "condition": "复试"
+          }
+        ],
+        "events": [
+          {
+            "object": "复试",
+            "start": "2025-04-12T07:30",
+            "endUnknown": true
+          },
+          {
+            "object": "测试",
+            "start": "2025-04-11T14:00",
+            "end": "2025-04-11T18:00"
+          }
+        ],
+        "materials": [
+          "准考证",
+          "身份证",
+          "缴费单",
+          "资格审查合格单",
+          "成绩单"
+        ],
+        "formats": [
+          "jpg",
+          "pdf"
+        ],
+        "criteria": [
+          "4小时",
+          "100元",
+          "双机位"
+        ],
+        "forbidden": [
+          {
+            "object": "复试",
+            "verbs": [
+              "录音",
+              "录像",
+              "录屏",
+              "传播"
+            ]
+          }
+        ],
+        "referenceCaveat": "四小时相对期限和预计测试窗口必须保留原精度；详细资格分支人工复核，不能据自动完整宣称全篇无遗漏。"
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "b5036df87ab7c6c27a97beca9e7e8c506ce548d5844197bada4f83a2db062a58"
+    }
+  },
+  {
+    "id": "PUB-13",
+    "title": "关于做好2025年第2批答辩与硕士学位申请相关工作的通知",
+    "url": "https://ge.sues.edu.cn/4c/b2/c19711a281778/page.htm",
+    "publishedDate": "2025-04-17",
+    "fetchedAt": "2026-10-15T11:26:51.682581+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "关于做好2025年第2批答辩与硕士学位申请相关工作的通知\n作者：[已去标识]\n发布时间：2025-04-17\n浏览次数：\n3449\n各研究生培养学院：\n我校\n2025\n年第\n2\n批硕士答辩与硕士学位申请相关工作即将启动，现将答辩与学位申请工作流程和提交材料要求通知如下，请各学院严格按照时间节点组织开展相关工作。\n一、\n2025\n年第\n2\n批答辩与学位申请工作流程及时间节点\n项目\n时间\n内容\n主要完成人员\n论文盲审与评阅\n2025.3.24-2025.3.28\n2025.4.25-2025.4.30\n加：\n2025.5.6-2025.5.7\n组织论文送盲审、评阅\n硕士点学院\n导师\n研究生\n研究生院\n答辩\n2025.5.27\n（第\n15\n周周二）前\n（学院分委会自定，\n2.5\n年、\n3\n年学制的开题满一年，\n2\n年学制的开题满半年方可申请\n）\n组织安排答辩\n硕士点学院\n导师\n研究生\n学院学位评定分委员会审核并提交学位申请材料\n2025.5.30\n（第\n15\n周周五）前\n（\n逾期不加入此次学位讨论\n）\n1.\n审核研究生学位申请材料并表决\n2.\n提交学位申请材料（含研究生答辩后定稿论文、学位论文阶段评分汇总表、学院学位表决汇总表、成果汇总表、学位申请表等）\n学院学位评定分委会\n硕士点学院\n导师\n研究生\n授学位前查重及其他审查汇总\n2025.6.6\n（第\n16\n周周五）前\n研究生院审查学位申请材料，并汇总相关数据，不合格者不上校委会讨论\n研究生院\n校学位委员会审议\n2025.6.17-2025.6.18\n校学位委员会讨论是否授予学位\n校学位委员会\n研究生院\n二、相关材料\n请硕士点学院按照的《上海工程技术大学硕士研究生学位论文答辩及学位申请工作细则》沪工程研〔\n2025\n〕\n5\n号文件认真组织安排答辩工作，并按时上报学位申请汇总材料。需提交的材料清单如下。\n1.\n答辩及分委会讨论工作安排\n请\n于\n5\n月\n7\n日（第\n12\n周周三）前交研究生院备案\n，包括时间、地点、人员，经分管院长签字、学院盖章后提交纸质版\n1\n份。\n2.\n答辩申请表及公告\n研究生登录信息系统，\n在“学位\n-\n答辩申请”菜单中完整地填写答辩申请相关信息，交研究生秘书及主管院长审核。\n答辩公告要写清每位研究生的具体答辩时间。学院要确保答辩时间，每位研究生须答辩不少于\n30\n分钟（含报告、答辩和评议）。答辩公告时间\n3\n天以上，由学院负责网上公示。若答辩公告需要更改，则顺延答辩时间，确保答辩前准确公告达\n3\n天。学院应提前\n3\n天将审核通过的答辩公告交至研究生院备案，电子版\n（附件\n3\n）\n发至研究生院[联系老师]\n，然后领取学位申请表，填表说明详见附件\n17\n，每生限一份，务必认真填写。\n为确保答辩工作质量，答辩委员会组成专家需至少5人。专业学位研究生的论文评阅及答辩委员会，均应有\n1\n名企业专家参与（应为副高及以上职称）。\n研究生院将按照公告时间到答辩现场进行巡查。若发现提前结束答辩，则该时段前的答辩视为无效。\n3.\n研究生\n答辩及学位申请材料（按下列顺序排好放入资料袋中，\n2025\n年\n5\n月\n30\n日前收齐，\n由学院负责存档\n）\n学位申请表\n1\n份\n学位论文评阅意见书\n1\n套\n答辩记录\n1\n份\n答辩评分表及表决票（须有学院盖章）\n1\n套\n答辩决议书（须答辩委员会主席签字）\n1\n份\n盲审异议、评阅争议、答辩争议、答辩修改情况说明、学位授予建议争议等相关材料\n1\n套\n最终版学位论文电子文档（\nWORD\n及\nPDF\n格式）\n1\n份\n4.\n学院学位评定分委员会材料（\n2025\n年\n5\n月\n30\n日前）\n（\n1\n）答辩后定稿论文。\nPDF\n版要求内含已手写签名的论文原创性声明及版权使用授权书，封面需填写评阅及答辩委员会专家名单、职称。论文电子文件命名方式为\n“学号\n-\n姓名\n-\n学位论文名”\n。\n学院将\n研究生导师审核通过的学位论文定稿\n完整的\nPDF\n电子版\n、签字的查重承诺书\nPDF\n扫描件（附件\n9\n）、检测论文清单电子版（附件\n10\n）\n压缩打包发至\n研究生院\n。同时，学生在系统中上传已签名的定稿论文、查重承诺书、原创授权书。查重结果按相关文件处理。\n（\n2\n）研究生发表成果汇总表\n（附件\n8\n）。要求详见成果审核通知\nhttps://ge.sues.edu.cn/42/43/c19711a279107/page.htm\n。（纸质版、电子版）\n（\n3\n）学院硕士学位论文阶段评分汇总表\n（附件\n11\n）（纸质版、电子版）。\n（\n4\n）学院学位评定分委员会授予硕士学位表决汇总表\n（附件\n13\n）（纸质版、电子版）。\n（\n5\n）学位申请表\n（纸质版）。\n以上材料需在\n5\n月\n30\n日前提交至研究生院[联系老师]，逾期不加入此次学位讨论。\n三、信息系统填报及审核要求\n请申请学位的研究生、导师和学院按照操作手册在信息系统中完成学位论文答辩、学位审核和学位上报信息等内容的填写和审核，主要流程和完成时间节点参考如下。\n1.\n填写学位论文信息（研究生填写、导师审核）\n信息系统菜单为：学位―提交学位论文（研究生端）和学位\n-\n确认学生论文（导师端）。学位论文题目、关键词等内容务必填写正确。\n5\n月\n23\n日前完成。\n2.\n提交答辩申请（研究生填写、导师审核、学院审核）\n信息系统菜单为：学位\n-\n答辩申请（研究生端）、学位\n-\n答辩申请（导师端）、学位\n-\n答辩管理\n-\n答辩申请（学院端）。答辩申请信息务必填写完整，下载答辩申请表\n,\n交研究生秘书及主管院长审核\n。\n5\n月\n27\n日前完成。\n3.\n答辩结果录入和判定（学院填写和审核）\n信息系统菜单为：学位\n-\n答辩管理\n-\n答辩结果录入\n/\n答辩结果判定。学院先录入答辩结果，再判定答辩是否通过。\n5\n月\n27\n日前完成。\n4.\n学位成果提交和审核（研究生填写、学院审核）\n信息系统菜单为：科研\n-\n科研成果录入（研究生端）和科研\n-\n科研成果审核（学院端），详见成果审核通知。\n5\n月\n27\n日前完成。\n5.\n学院学位评定分委员会审核（学院审核）\n信息系统菜单为：学位\n-\n学位审核\n-\n学院审核\n/\n学科审核。研究生所在学院先完成学院\n学位评定分委员会表决结果录入与审核，再由学科所在学院完成\n学科\n学位评定分委员表决结果录入与审核。\n5\n月\n30\n日前完成。\n6.\n学位上报信息录入（研究生填写）\n信息系统菜单为：学位―申请状态查询\n-\n学位上报信息录入。各位研究生务必认真准确填写，除\n不能修改区域\n之外，其他信息不能为空，否则影响学位信息在教育部的注册，影响就业单位审核。打印一份签字后交学院。\n6\n月\n6\n日前完成\n。\n四、学位申请审查要求\n研究生应按要求认真整理好本人材料，按时提交给学院。学院需严格审核，确保研究生学位申请材料实质和形式皆符合要求。\n实质要求：研究生须满足以下学位申请条件。\n（\n1\n）拥护中国共产党的领导，拥护社会主义制度，遵守宪法和法律，遵守学术道德和学术规范；\n（\n2\n）在本学科或者专业领域掌握坚实的基础理论和系统的专门知识；\n（\n3\n）学术学位申请人应当具有从事学术研究工作的能力，专业学位申请人应当具有承担专业实践工作的能力；\n（\n4\n）修完研究生培养计划中的全部环节，达到规定的学分和学位课平均绩点至少\n2.6\n的要求，成绩合格；\n（\n5\n）达到硕士研究生学位申请要求的发表学术成果的要求；\n（\n6\n）通过硕士学位论文盲审、评阅及答辩，答辩委员会建议授予学位。\n形式要求：\n（\n1\n）研究生\n答辩材料袋应按封面目录提交完整材料；\n（\n2\n）学位申请表应按填表说明填写完整，各项责任人（单位）完成签字盖章；\n（\n3\n）学位申请表后所附的成果证明应与表内所填成果完全一致；\n（\n4\n）答辩评分表及表决票须有学院盖章，且数量须与答辩委员人数一致；\n（\n5\n）答辩\n决议草稿\n及\n决议书\n须有\n答辩委员会主席签字\n。\n研究生院事后将对授予学位研究生的学位申请材料进行抽查。请各学院严肃对待，如查到不符合要求者，将取消已授予的学位，并计入年终目标责任考核工作。\n研究生院\n2025\n年\n4\n月\n17\n日\n附件(打包下载）：\n2025 届答辩文件及表格.zip",
+    "referenceTime": "2025-04-17T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "33db2b276c678f6184082d2139029ab42677fea29bffb3464abcd85b61796933",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "材料提交",
+    "reference": {
+      "tasks": [
+        {
+          "object": "论文信息",
+          "verbs": [
+            "填报",
+            "填写",
+            "录入"
+          ],
+          "deadline": "2025-05-23",
+          "precision": "date_only",
+          "channel": "系统"
+        },
+        {
+          "object": "答辩申请",
+          "verbs": [
+            "提交",
+            "填报",
+            "申请"
+          ],
+          "deadline": "2025-05-27",
+          "precision": "date_only",
+          "channel": "系统"
+        },
+        {
+          "object": "科研成果",
+          "verbs": [
+            "录入",
+            "填报",
+            "提交"
+          ],
+          "deadline": "2025-05-27",
+          "precision": "date_only"
+        },
+        {
+          "object": "学位上报信息",
+          "verbs": [
+            "填报",
+            "填写",
+            "提交"
+          ],
+          "deadline": "2025-06-06",
+          "precision": "date_only"
+        },
+        {
+          "object": "学位申请材料",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "material": "硕士学位申请表",
+          "deadline": "2025-05-30",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "硕士学位申请表"
+      ],
+      "referenceCaveat": "5月30日学生材料须交齐与学院汇总角色需区分，学院备案不能变成学生任务。"
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "论文信息",
+            "verbs": [
+              "填报",
+              "填写",
+              "录入"
+            ],
+            "deadline": "2025-05-23",
+            "precision": "date_only",
+            "channel": "系统"
+          },
+          {
+            "object": "答辩申请",
+            "verbs": [
+              "提交",
+              "填报",
+              "申请"
+            ],
+            "deadline": "2025-05-27",
+            "precision": "date_only",
+            "channel": "系统"
+          },
+          {
+            "object": "科研成果",
+            "verbs": [
+              "录入",
+              "填报",
+              "提交"
+            ],
+            "deadline": "2025-05-27",
+            "precision": "date_only"
+          },
+          {
+            "object": "学位上报信息",
+            "verbs": [
+              "填报",
+              "填写",
+              "提交"
+            ],
+            "deadline": "2025-06-06",
+            "precision": "date_only"
+          },
+          {
+            "object": "学位申请材料",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "material": "硕士学位申请表",
+            "deadline": "2025-05-30",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "硕士学位申请表"
+        ],
+        "referenceCaveat": "5月30日学生材料须交齐与学院汇总角色需区分，学院备案不能变成学生任务。"
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "471c5680d0e7baf7d2455c03695349701b4c3b0b054348acd116fd506265a8a7"
+    }
+  },
+  {
+    "id": "PUB-14",
+    "title": "中国传媒大学关于2025年硕士研究生招生提交报考材料的通知",
+    "url": "https://yz.cuc.edu.cn/2025/0219/c8543a251151/page.htm",
+    "publishedDate": "2025-02-19",
+    "fetchedAt": "2026-10-15T11:26:52.661040+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "中国传媒大学关于2025年硕士研究生招生提交报考材料的通知\n发布时间：2025-02-19\n浏览次数：\n41486\n根据\n《中国传媒大学\n2025\n年攻读硕士学位研究生招生简章》\n，为加强对考生既往学业及一贯表现的考查，我校继续将材料评议环节纳入硕士研究生招生复试选拔流程。复试选拔流程包括材料评议和复试考核两个环节，材料评议环节要求考生按照代表作、贡献度和主观评价等方面提交能证明自身学业水平、科研创新能力、专业实践能力及综合素质等方面的报考材料。\n材料评议成绩将作为考生进入复试考核的重要依据，请务必按时提交，具体要求如下：\n一、提交人员\n参加我校\n2025\n年全国硕士研究生招生考试（初试）的全体考生。\n二、提交方式和提交时间\n1.\n提交方式\n报考材料须通过我校“研究生招生管理系统”提交，不可通过其他途径提交。\n“研究生招生管理系统”网址：\nhttps://yzbm.cuc.edu.cn/10033/user/login/login\n。\n2.\n提交时间\n2025\n年\n2\n月\n20\n日上午\n10:00\n至\n2025\n年\n3\n月\n5\n日晚上\n20:00\n三、提交材料内容\n报考材料清单（以下清单若与研究生招生管理系统要求有出入，则以研究生招生管理系统要求为准。所有材料均须提供证明，请在研究生招生管理系统内上传）如下：\n1.\n基本信息\n（\n1\n）有效居民身份证\n（\n2\n）学籍学历证明\n（\n3\n）本科阶段课程成绩单（须加盖本科就读院校教务部门公章）\n（\n4\n）本科毕业论文或毕业作品（应届本科毕业生可提交开题报告或作品说明等）\n（\n5\n）硕士阶段科研设想或专业实践计划\n（\n6\n）外国语水平考试证书\n（\n7\n）计算机水平考试证书\n（\n8\n）思想政治品德考核表\n（\n9\n）诚信考试承诺书\n2.\n代表作\n近\n3\n年内取得的代表性科研成果（最多提交\n3\n项能反映本人最高学术水平的代表性成果，包括学术论文、学术著作、高水平教材、文艺新闻出版作品、已授权的国家发明专利或国际专利，以及其他具有较大学术和社会影响的高水平科研、创作成果等，须按重要程度排序）。\n注：\n除上述要求外，我校部分专业（方向）对代表作提交有特殊要求，详见附件\n1\n：《部分专业（方向）代表作提交要求》。报考此类专业（方向）的考生须按要求提交。\n3.\n贡献度\n（\n1\n）各类获奖证书（包括学科竞赛获奖、文学艺术创作获奖等）\n（\n2\n）主持或参与的科研项目\n（\n3\n）各类科研、创作或学科竞赛获奖，如成果或项目为多人共同完成，须注明排名顺序\n（\n4\n）社会服务、实习实践、志愿活动等（包括参军入伍服兵役、国际组织实习、支教等，须注明时间、地区及岗位）\n（\n5\n）担任学生干部情况（任期须满一年）\n（\n6\n）德智体美劳荣誉获奖（包括三好学生、优秀学生干部、优秀党员、优秀团员以及各类文体比赛获奖等）\n（\n7\n）其他能证明自身社会贡献度方面的材料\n4.\n主观评价\n个人陈述（含报考原因、自我评价等内容）。\n5.\n其他\n其他能证明自身学习能力、科研创新能力、专业实践能力以及综合素质等的电子版材料。\n另外，以同等学力身份报考的考生还须提供满足报考条件所需的证明材料。\n报考“少数民族高层次骨干人才计划”的考生还须提交《报考\n2025\n年少数民族高层次骨干人才计划硕士研究生考生登记表》。\n报考退役大学生士兵专项计划的考生还须提交本人的《入伍批准书》（即男性\n/\n女性公民应征入伍批准书）和《退出现役证》。\n四、材料评议成绩查询\n我校将根据考生提交的报考材料，对其进行全面考查并给出材料评议成绩。材料评议成绩查询等相关信息详见中传研招网（\nhttp://yz.cuc.edu.cn\n）届时发布的通知。\n五、温馨提醒\n1.\n部分材料需要加盖本科就读院校公章，请提前协调以便正常开具。\n2.\n考生提交的所有材料必须由本人亲自完成，确保真实性，如存在弄虚作假等情况，后果由考生自行承担。\n附件：\n1.\n部分专业（方向）代表作提交要求\n2.\n诚信考试承诺书\n3.\n个人陈述\n4.\n硕士阶段科研设想或专业实践计划\n5.\n思想政治品德考核表\n中国传媒大学招生处©2022版权所有\n京ICP备[联系或记录编号]号\n京公网安备[编号]号\n咨询电话：[电话] (工作日9:00-11:30,14:00-16:30)；\n电子邮箱：[邮箱1]",
+    "referenceTime": "2025-02-19T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "af666f9a5a3fb09948a5ffe1a9a5c0b72edfa62ae61eb36cdaa332ca5f5c096f",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "材料提交",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报考材料",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "channel": "系统",
+          "deadline": "2025-03-05T20:00",
+          "precision": "exact",
+          "material": "报考材料"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "身份证",
+        "学历",
+        "成绩单",
+        "论文",
+        "科研设想",
+        "外语",
+        "计算机",
+        "思想政治品德",
+        "承诺书"
+      ],
+      "window": "2025-02-20T10:00/2025-03-05T20:00",
+      "criteria": [
+        "公章",
+        "3项"
+      ]
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "报考材料",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "channel": "系统",
+            "deadline": "2025-03-05T20:00",
+            "precision": "exact",
+            "material": "报考材料"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "身份证",
+          "学历",
+          "成绩单",
+          "论文",
+          "科研设想",
+          "外语",
+          "计算机",
+          "思想政治品德",
+          "承诺书"
+        ],
+        "window": "2025-02-20T10:00/2025-03-05T20:00",
+        "criteria": [
+          "公章",
+          "3项"
+        ]
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "403680eb4dbdedab60ab054dd8175d14b287cb3f543b8e7802f5f909eb272c9a"
+    }
+  },
+  {
+    "id": "PUB-16",
+    "title": "有关2025-2026学年本科生申请截止日期变更的通知",
+    "url": "https://www.cup.edu.cn/overseas/cn/tzgg/zstz/df5b145a9fb643d6908af9b56d48519b.htm",
+    "publishedDate": "2025-06-04",
+    "fetchedAt": "2026-10-15T11:27:18.743980+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "有关2025-2026学年本科生申请截止日期变更的通知\n2025.06.04\n点击:\n根据最新工作安排，本科项目申请的截止时间将变更为\n北京时间2025年6月8日（23:59）\n。请各位本科项目申请人在截止日期前通过申请系统进行报名，初审被退回的申请人，请及时补充相关材料，逾期提交将不予受理。本科生最后一批面试将于\n北京时间2025年6月11日—2025年6月12日\n进行，面试相关通知后续将通过网站以及邮件发布，请注意查看我校网站发布的官方通知。\n国际教育学院\n招生办公室\n2025年6月4日\n招生办公室\nTel: +8610-[联系或记录编号]\nFax: +8610-[联系或记录编号]\n[邮箱1]\n教学事务办公室\nTel: +8610-[联系或记录编号]\nFax: +8610-[联系或记录编号]\n[邮箱2]",
+    "referenceTime": "2025-06-04T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "0c869d3bfafe08286dcb5f5b726dab101cc59542427cbc80ae89bdd443ade2a4",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "修订延期",
+    "reference": {
+      "tasks": [
+        {
+          "object": "本科生申请",
+          "verbs": [
+            "提交",
+            "申请",
+            "补充"
+          ],
+          "deadline": "2025-06-08T23:59",
+          "precision": "exact",
+          "channel": "系统"
+        }
+      ],
+      "events": [
+        {
+          "object": "面试",
+          "start": "2025-06-11",
+          "end": "2025-06-12"
+        }
+      ],
+      "criteria": [
+        "补充"
+      ]
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "本科生申请",
+            "verbs": [
+              "提交",
+              "申请",
+              "补充"
+            ],
+            "deadline": "2025-06-08T23:59",
+            "precision": "exact",
+            "channel": "系统"
+          }
+        ],
+        "events": [
+          {
+            "object": "面试",
+            "start": "2025-06-11",
+            "end": "2025-06-12"
+          }
+        ],
+        "criteria": [
+          "补充"
+        ]
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "faa522122c41fd8352906dd25983d4ca35f16ba69ba597009d19c39e2abb8e14"
+    }
+  },
+  {
+    "id": "PUB-18",
+    "title": "25年暑期境外交流项目（第二批）报名通知",
+    "url": "https://www.jiaoliu.ecnu.edu.cn/58/9b/c11184a678043/page.htm",
+    "publishedDate": "2025-03-14",
+    "fetchedAt": "2026-10-15T11:27:28.202979+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "crawl4ai",
+    "text": "25年暑期境外交流项目（第二批）报名通知\n |  \n| --- |  \n|   \n |   \n |   \n |  **作者： 信息来源：  本科生交流网 发布日期：  2025-03-14 ** ** 浏览次数：  7121 **  |  \n| --- |  \n|  本通知持续更新， 新增香港中文大学、澳门科技大学、日本福冈女学院大学、英国金斯顿大学项目。   \n各学部、院（系），各位同学： 根据我校与英国伦敦大学学院、伯明翰大学、丹麦奥胡斯大学、日本明治大学、香港中文大学等高校的合作关系，相关高校面向全球合作高校学生开设了2025年暑期交流项目。报名现已启动，具体信息如下：   \n**一、申请人基本条件** 1. 我校全日制大一-大三本科生，年满18周岁，身心健康，品学兼优； 2. 学业成绩、选派专业要求参见各项目具体信息； 3. 语言要求：外语听说读写熟练，申请时已具有有效且符合外校要求的语言成绩； 4. 申请者应已了解参与交流项目可能出现的对学业的影响，建议同学们提前做好学业规划，2025年暑期为6月28日-9月6日（6月30日-7月25日为我校本科暑期短学期）。如有意向申请保研夏令营或需要参加本专业暑期课程、野外实习的同学还请留意项目时间； 5. 建议确有交流需求的同学，在做好对于公共健康、安全充分评估的前提下，选择适合自己的交流项目，学校将做好学生交流的学业指导与服务。具体派出交流时间以届时当地入境部门及高校的最新政策为准。   \n**二、申请流程** 1. 公共数据库申请：各项目报名截止日期前，通过电脑（火狐、谷歌浏览器）登录选课系统，进入-“课程管理”—“跨校交流报名”），窗口切换至2024-2025学年第二学期，须上传有效的语言证书，如未获得纸质成绩单的请上传查分界面截图，报名成功后系统界面显示“已报名”字样。此为所有项目必须完成的申请流程，操作详见附件1：[图片未读取]跨校交流报名模块使用指南.pdf *外方网申：部分项目涉及校内系统报名后在外方规定的网页进行网申/给外方发送邮件材料，详见“项目信息”，未经过我校、外方申请的为无效申请，还请留意。 2. 校内审核推荐：**在跨校交流报名模块中，需经所在院系、本科生院审核通过后方能进入缴费等后续程序** ，具体录取结果以外方通知为准，部分项目为择优或先到先得录取。在支付费用前，应确认能按照项目要求修读课程、不取消或中途退出项目，届时费用政策以外方规定为准。**涉及签证（注）、机票的，请在确认录取后，再行发生费用。** 3. 资助申报：符合《华东师范大学优秀本科生赴境外交流学习资助与管理办法》所列申请条件的同学在录取线下派出项目后，可于6月上旬提交资助申请，获批结果以本网站公示为准，详见文件及今年5月底本网站发布的通知。院系自设资助的，请关注院系通知。 4. 出境申报：录取学生须在出发前10天，在“本科出国（境）及赴台流程”提交出国（境）申请；并在回国后7日内在平台进行回国（境）确认。 5. 学分认定：对于涉及成绩、学分认定的项目（已在项目信息中明确），我校承认学生在对方学校取得的成绩和学分，学生回校后按照我校《本科生成绩及学分认定管理细则》，申请认定学分，具体认定结果以校内审核为准。如项目由线下改为线上的，其学分认定规则由我校另行通知学生本人。 **注：** *每位同学最多可申请第一批、第二批所有项目中时间不冲突的2个项目（第一志愿优先，）；在申请日期截止系统关闭前，如需调整申请可在系统中取消报名，系统关闭后，对于已经录取的项目，原则上不可退出。 *尚无护照/通行证的同学，可在各省市规定的出入境窗口办理（在沪的请在“随申办”预约）。根据上海市的最新政策，原则上不需提供在读证明；本人提交办理时，如遇特殊情况的由相关部门联系我校核查。因各地的办证要求不一，具体以出入境受理窗口为准，建议提前联系咨询。 交流资助、成绩及学分认定相关政策详见：http://www.jiaoliu.ecnu.edu.cn/11193/list.htm   \n**三、项目信息** （一）【线下】英国伦敦大学学院（UCL）暑期学校 1. 时间：第一期：2025年6月30日-7月18日；第二期：7月21日-8月8日。 2. 项目内容：包括课程学习、当地活动，共开放数十个课程模块（module）。学生每期可在以下领域中任选一个模块学习：脑科学、计算机科学、文化、文学与艺术、经济、商务与管理、教育与研究、工程、学术英语、语言学、地理与环境、健康、历史与哲学、法学、医学、政治学与国际关系、科学与数学。项目结束后将获得UCL官方成绩单和修读证书，一期课程可根据我校交流学分认定政策，申请认定我校4学分。课程大纲见https://www.ucl.ac.uk/prospective-students/summer-school/modules-search。 社交、文化活动见 https://www.ucl.ac.uk/prospective-students/summer-school/social-and-cultural-programme。 3. 语言、学业要求：GPA 3.3/百分制85；大二大三如修读Level 1的模块，或大三修读Level2的模块，GPA 3.0/百分制80可申请；多数模块要求托福总分92-96及以上，读写24，听说20-22/雅思总分6.5-7且有小分要求/提供PTE/CAE成绩/Duolingo 125 (Comprehension, Literacy, Conversation score of 115, Production score of 120)。各Level对应的语言要求不同，参见https://www.ucl.ac.uk/prospective-students/summer-school/entry-requirements）。 **如未取得上述语言达标成绩，须通过UCL的语言测试** ，线上测试时间：北京时间4月2日15:00-17:00左右读写、几天后听说两部分，请提前预留时间。 4. 项目费用：学费：2,565英镑/期，4,455英镑两期（此为面向我校减免10%后的价格，并免收申请费60英镑）。住宿：https://www.ucl.ac.uk/prospective-students/summer-school/accommodation（56-80英镑/晚，供参考）。国际旅费、签证费、在英期间医疗保险、项目外的其他费用（如生活费、自行出行交通费）需自理。 5. 申请截止： **3月27日前** ，在公共数据库跨校交流模块报名，获得我校审核通过后在UCL官网https://resources.clie.ucl.ac.uk/application-form/public/register?courseID=515提交申请。 其他详情，参见https://www.ucl.ac.uk/prospective-students/summer-school/ 6. **宣讲会信息：** 3月26日周三18:00（北京时间），请通过： https://ucl.zoom.us/meeting/register/tJItde2orDksGtX-z2_VYHlg2_6uJe8gsPZc#/registration预约宣讲会。   \n（二）【线下】丹麦奥胡斯大学暑期学校 1. 时间：2025年7月2日-7月18日/7月23日-8月8日 （少数课程授课时间超出此范围）。 2. 项目内容：丹麦奥胡斯大学是一所国际知名的研究型大学，全球百强名校，是丹麦历史悠久、规模最大的综合性大学。该校开设近40门全英语授课优质课程，涵盖商科、人文社科、自然科学、生物医药、工科、STEM等领域，由奥胡斯在职教师并邀请国际客座教师授课，并安排了丰富多彩的校园活动。本科生仅能选择本科层面的课程，完成课程并通过考核后，学生将会获得该校正式学分（可按照5:3申请认定为我校学分）。课程大纲点击：https://international.au.dk/education/admissions/summeruniversity/course。 3. 项目费用：各门课程的学费不同（744-2205欧），请参照课程简介页“Non-EU feeEUR*”表述学费价格。住宿、活动、用餐等当地费用预计1000欧元。住宿可通过学校住宿申请页面提交申请（https://international.au.dk/education/admissions/summeruniversity/housing）。以上不含国际旅费、当地保险费、个人消费，费用详情参见：https://international.au.dk/education/admissions/summeruniversity/feesandlivingexpences/。 项目详情见：https://international.au.dk/education/admissions/summeruniversity/welcome-to-au-summer-university和附件2。 4. 申请截止：**3月17日前** ，在公共数据库跨校交流版块报名，经学校审核通过后，3月18日前登录https://international.au.dk/education/admissions/summeruniversity/how-to-apply提交申请。两个流程均完成方为有效报名。 附件2：[图片未读取]AU_Summer_University_Folder.pdf   \n（三）【线下】西班牙内布里哈大学暑期学校 1. 时间：2025年7月1日-7月11日/7月1日-7月28日/7月7日-7月18日 2. 项目内容： 项目1：Summer School（西班牙语语言文化），学生利用夏季课程可以了解欧洲大学教学体系、拥有欧洲大学学习经历，学习最实用的语言-西班牙语，接触欧洲文化以及增强国际视野。同时内布里哈大学会组织一些文化活动。不需要西语基础。授予学分，可根据我校交流学分认定政策，申请按照5:3认定我校学分（整个暑期项目至多认定我校4学分）。 项目2：Future leader（商科），西班牙语课程为A1 级，适合初学者，主要是以商科实践为主（非实习），其内容是课程+访问参观+制作商业计划书。附往期冬令营信息供参考：https://mp.weixin.qq.com/s/GNbt3ppZl3OBJ8dzFDxAGA。有最低开营人数要求，未到达最低开营人数，内布里哈可能取消活动。 3. 语言要求：申请修读西语课程的学生，在进入课程前需要测试；零基础不用测试，直接入读A1班级。申请修读英语课程的学生，无证书要求，但需自我评估达到全英语课堂的学习要求。 4. 项目费用：学费按项目不同类型663欧元/707欧元/1415欧元不等，涵盖了课程费、当地管理服务费。国际旅费、签证费、保险费、食宿费、课堂外的文化活动等需自理。 5. 申请截止：**4月6日前** ，在公共数据库跨校交流版块报名，经院系、本科生院审核通过后，由国际处通知后续流程。 附件3：[图片未读取]短期项目-25夏-西班牙内布里哈大学 2项.zip   \n（四）【线下】日本明治大学暑期日语文化项目 1. 时间：2025年7月28日-8月8日。 2. 名额：根据日语能力分班，初级班（N4左右）、中级班（N3-N2），少于12人不开班。 3. 项目内容：由明治大学日本语教育中心开设，通过学习日语、与明治大学日本学生的交流和日本文化体验，提高学生的日语能力和加深对日本社会文化的理解。日语授课，根据学生的日语实际水平分2个班：初级和中级。项目包括日语课（100分钟x13次）、项目活动（100分钟x8次）、日本文化讲座（100分钟x3次）等、学生交流（明大学生参与）。对符合标准的项目参加者，颁发结业证书。 4. 项目费用：90,000日元（包括学费、教材费、参观、体验活动参加费用）；费用中不包括：住宿费、日本国内交通费、伙食费、海外旅行保险费、签证费等出国相关费用等。住宿由学生自行安排（没有学生宿舍），如有需求，明大可以推荐酒店。协议合作大学学生如需要明大提供办理签证所需材料的，须入住明大推荐的酒店。 如符合JASSO申请条件的同学在录取后可以自主联系明大申请JASSO奖学金（每年资助名额有限，获批额度约为80,000日元）。 项目详情见：https://www.meiji.ac.jp/cip/english/programs/mjlp/summer.html 5. 申请截止：**3月19日前** ，在公共数据库跨校交流版块报名，同时登录明治大学官网（见附件3）完成日方网申（各班名额有限，报满后即不再接收，**请有意申请者在我校报名同时即完成日方网申** ）。经我校在公共数据库审核通过后，在日方官网缴费，网申系统3月25日关闭。注：报名参加并录取的学生需按照明大要求参加所有课程和行程，提交作业。 附件4：[图片未读取]日本明治大学暑期项目简章.pdf   \n（五）【线下】美国加州大学河滨分校暑期课程项目 1. 时间：2025年7月7日-8月22日间的1-4周，各课程方向时间不同。 2. 项目内容：暑期课程项目通过人工智能、生物工程、传媒、创新创业、英语教学、可持续交通、管理类等高影响力课程，在短短1至4周内快速提升学生的学习素养与能力。 除课程外，项目安排了丰富的课堂内外的考察、校园活动。经考核合格，学生获得的学分可根据我校的交流学分认定政策，申请按照3：2认定为我校学分。 3. 语言要求：证书非申请必需要求，建议学生自评英语听说读写能力达到TOEFL iBT 74/ IELTS 5.5/ Duolingo 90再申请。 4. 项目费用：项目费1500-3700美金不等，含课程、实地考察、申请费、学生服务费和当地医疗保险。食宿费（每日100-150美金）、机票、签证、个人消费另自理。 5. 学校简介：加州大学河滨分校（University of California, Riverside，简称UCR）位于美国加利福尼亚州的河滨市（Riverside），加州大学系统十所分校之一，是美国著名的综合性公立大学，美国大学协会AAU成员。生物学、化学、地球科学、物理、政治学、社会学、计算机科学和工程学是其优势学科，学校共有2位教员获得诺贝尔奖。 6. 申请截止：**3****月25日前** ，在公共数据库跨校交流版块报名，经学校审核通过后，3月31日前登录https://extension.ucr.edu/internationaleducationprograms/programpages/short-termprograms提交申请。两个流程均完成方为有效报名。 项目详情见： https://extension.ucr.edu/internationaleducationprograms/programpages/short-termprograms   \n（六）【线下】英国伯明翰大学国际暑期学校 1. 时间：2025年7月20日-8月9日 2. 项目内容：英国伯明翰大学是一所国际知名的研究型大学，全球百强名校。今年，该校暑期开设生物医学与人口健康、英国文化遗产、电影与媒体、经济学四个主题的课程，并安排了丰富的校内外活动。完成课程并通过考核后，学生将会获得该校正式学分（可按照4:1申请认定为我校学分） 3. 语言与学业要求：英语满足任一即可：雅思5.5且小分5.5/托福72且听读18、说20、写17/PTE 59且小分59/CET 4 530/CET 6 500/英语专四60。学业成绩优良，申请经济学课程需要当前为经济相关专业，申请生物医学主题需有一定的先修课程经历，其他主题对专业不限。 https://www.birmingham.ac.uk/international/birmingham-international-summer-school/entry-requirements 4. 项目费用：3100英镑（早鸟价，3月29日前完成英方网申）/ 3500英镑（常规价格），包括学费、项目内的考察和活动、住宿。以上不含国际旅费、当地保险费、餐费、个人消费，费用详情参见：https://www.birmingham.ac.uk/international/birmingham-international-summer-school/dates-and-fees。 项目详情见：https://www.birmingham.ac.uk/international/birmingham-international-summer-school/programmes和附件5。 5. 申请截止：**3月25日前（早鸟价）/4月13日（常规价）** ，在公共数据库跨校交流版块报名，经学校审核通过后登录https://www.birmingham.ac.uk/international/birmingham-international-summer-school/how-to-apply提交申请。两个流程均完成方为有效报名。 **6.****宣讲会信息** 伯明翰大学设置了线上项目宣讲（live drop-in Zoom sessions），通道是如下链接，一般在周一和周三。 https://www.birmingham.ac.uk/international/birmingham-international-summer-school/contact-us 附件5：[图片未读取]25夏-英国伯明翰大学 University of Birmingham BISS Summer School 2025.pdf   \n（七）【线下】日本神奈川大学暑期日本语言与文化短期项目 1. 时间：2025年7月7日-7月18日 （日语入门-初级）/7月21日-8月1日（日语初级-初中级）。 2. 项目内容：由神奈川大学国际中心开设，为世界各国学生提供短期密集型语言课程。以日语学习为重点，旨在通过参加与日本相关的课程、实地考察的机会，提高日语水平，加深对日本传统文化和当代日本各个方面的理解，提供与神奈川大学学生互动的机会。项目结束且通过考核后，将获得由神奈川大学颁发的学习证明。详见附件6和https://www.kanagawa-u.ac.jp/international/welcome/japaneseprogram/ 3. 语言要求：日语初学者、N3以下日语水平，可以用英语听课。 4. 项目费用：1期约97,110日元、2期约178,600日元（包括报名费、项目费、海外保险费用），不包括国际旅费、餐费、住宿费、交通费等。 5. 申请截止：**3月27日前** ，在公共数据库-跨校交流版块完成报名，经学校审核获得提名后，由国际处老师通知后续申请流程，最终录取以神奈川大学通知为准。以上两个方向每班40人。 附件6：[图片未读取]神奈川大学项目简章.rar   \n（八）【线下】福冈女学院大学短期日语研修项目 1. 时间：2025年6月30日-7月18日 2. 项目内容： 日语课程：10天，1天3节课，每节课60分钟+测试； 日本文化体验活动； 与福冈女学院大学的学生交流。 完成全部课程，可获得证书，不作为交流学分认定。 名额：初级班 15人（如果报名者不满10人将不开班）。*参加项目需事先学习平假名和片假名。 3. 项目费用：150,000日元/人（含税），包括学费、项目内安排的活动、住宿费。参加项目期间需购买海外旅行保险；国际旅费、在日期间交通费、伙食费等自理。 4. 申请截止：**5月8日前** ，在公共数据库-跨校交流版块完成报名，经我校国际处统一提名后，完成对方高校网申和材料提交。 附件7：[图片未读取]FJGU Summer Short-term Japanese Course 2025.zip   \n（九）【线下】英国金斯顿大学暑期学校 1. 项目日期：2025年7月2日-8月2日 2. 项目信息：课程围绕英国文化与社会为主题。课程内容丰富，学术教学与相关实地考察兼顾，包括： British Culture and Society – Group A Live Theatre – Group A Creative Writing – Group B Harry Potter and the Order of Popular British Icons – Group B 教学大纲和考察活动：https://www.kingston.ac.uk/study/short-course/summer-school-classes。通过考核者，将获得外方出具的成绩单，可申请认定为我校3学分/门。 3. 学业及语言要求：GPA 2.75。IELTS 6.0或IBTOEFL 76且小分18或PTE 59。 4. 项目费用：£3,570/一门课，或£4,075/两门课，包括：学费、当地项目行程内交通、考察、住宿、校园设施使用。以上不含：签证、餐费等，均为自理。申请两门课的同学可自行通过金斯顿官网申请奖学金。 本项目详情，见https://www.elte.hu/en/summer-university **5. 宣讲会：** 时间：2025年4月1日21:00（北京时间），在线登记： https://forms.office.com/pages/responsepage.aspx?id=nALvyc8YFkCG05PPjpT_lGS0l1BshndLoq4faehKTDRUMUZJVlZPOFI1SlpTTzM1NzVDQTFPU1hFMy4u&route=shorturl 项目咨询：[邮箱1] 6.申请截止：**4月20日前** ，在公共数据库-跨校交流版块完成报名，同时在https://summerschool.kingston.ac.uk/完成对方高校网申和材料提交。两个流程均完成方为有效申请。   \n（十）【线下】香港中文大学-内地高校暑期学院 1. 时间：2025年7月20日-8月9日 2. 名额：8名（港中文具有录取的最终决定权） 学业成绩优良（GPA 2.7以上），英语听说读写流利（有雅思托福等成绩尤佳），具有所选课程的基础知识。 3. 项目内容：该项目为香港中文大学面向内地和澳门的所有合作伙伴院校开设，采用上午授课与下午小组活动相结合的方式，学生将有机会与中大及其他院校学子深入交流，体验中大及香港文化。共设置25门课，涵盖专业及通识教育领域（商科、环境、工程、人工智能、材料、生物、计算机、文学、旅游、人文、自然等），学生可选择修读一门2学分或3学分课程。 顺利完成项目全程且考核合格者，将获得香港中文大学出具的成绩单，可申请按照1:1认定为我校学分。**为提高录取成功率，建议学生填报多个志愿课程。** 4. 项目费用：2学分课程：港币11,200元/人（含校内住宿）；或港币6,200元/人（不含住宿）。 3学分课程：港币14,300元/人（含校内住宿）；或港币9,300元/人（不含住宿）。 机票、保险、餐费等为自理。 5. 申请截止：**4月20日前** ，在公共数据库跨校交流版块报名。获得学校推荐后，由港澳台办公室通知后续申请手续。 附件8：[图片未读取]课程教学大纲.zip   \n（十一）【线下】澳门科技大学研究生院暑期研学项目 1. 时间：2025年7月13日-19日 2. 项目内容：澳门科技大学研究生院推出暑期短期研学项目，设置了多样的教学方式，包括专业讲座、案例分析、小组讨论、校园工作坊、与本校生面对面交流分享、实地参访以及结业总结汇报。设有三大类研学课程： 数智融合商业分析与管理课程； 人工智能与工程应用课程； 视觉审美与艺术创意课程； 为增加学生对澳门历史文化和风土人情的理解，让学生深度体验澳门高校的校园生活，项目安排了丰富的文化和社交活动：参访澳门科技大学国家重点实验室、澳门历史文化遗产参观、参访澳门各类博物馆等。 项目结束后，根据学员的出勤率、课堂表现和结业汇报的完成情况，澳门科技大学将出具结业证书与成绩单，学生可根据学校学分认定细则申请认定为我校1学分。 3. 项目费用：9,690元人民币，含当地培训费、住宿费、交通费。内地往返澳门的交通、餐费、签注等另自理。 4. 申请截止：**5月15日前** ，在公共数据库-跨校交流版块完成报名，同时在https://mtdc.must.edu.mo/article/id-14966.html完成对方高校网申和材料提交。两个流程均完成方为有效申请。因可能涉及团组多人报名优惠，请全校报名截止后再行缴费。 附件9：[图片未读取]澳门科技大学研究生院2025年暑假研学项目简章.zip",
+    "referenceTime": "2025-03-14T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "7a608b71006483746d35f8ffa3dd1a5009e83079712ec7b8522e756b982bd701",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "多项目报名",
+    "reference": {
+      "tasks": [
+        {
+          "object": "跨校交流",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "channel": "公共数据库",
+          "material": "语言证书",
+          "unknownEligibility": true
+        },
+        {
+          "object": "出国",
+          "verbs": [
+            "申报",
+            "申请",
+            "提交"
+          ],
+          "channel": "本科出国",
+          "condition": "录取",
+          "deadlineUnknown": true
+        },
+        {
+          "object": "回国",
+          "verbs": [
+            "确认"
+          ],
+          "deadlineUnknown": true,
+          "condition": "回国"
+        },
+        {
+          "object": "学分",
+          "verbs": [
+            "认定",
+            "申请"
+          ],
+          "condition": "学分"
+        },
+        {
+          "object": "UCL",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "deadline": "2025-03-27",
+          "precision": "date_only",
+          "channel": "公共数据库"
+        },
+        {
+          "object": "奥胡斯",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "deadline": "2025-03-17",
+          "precision": "date_only",
+          "channel": "公共数据库"
+        },
+        {
+          "object": "内布里哈",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "deadline": "2025-04-06",
+          "precision": "date_only",
+          "channel": "公共数据库"
+        },
+        {
+          "object": "明治",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "deadline": "2025-03-19",
+          "precision": "date_only",
+          "channel": "公共数据库"
+        },
+        {
+          "object": "河滨",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "deadline": "2025-03-25",
+          "precision": "date_only",
+          "channel": "公共数据库"
+        },
+        {
+          "object": "伯明翰",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "deadline": "2025-04-13",
+          "precision": "date_only",
+          "channel": "公共数据库"
+        },
+        {
+          "object": "神奈川",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "deadline": "2025-03-27",
+          "precision": "date_only",
+          "channel": "公共数据库"
+        },
+        {
+          "object": "福冈",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "deadline": "2025-05-08",
+          "precision": "date_only",
+          "channel": "公共数据库"
+        },
+        {
+          "object": "金斯顿",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "deadline": "2025-04-20",
+          "precision": "date_only",
+          "channel": "公共数据库"
+        },
+        {
+          "object": "香港中文",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "deadline": "2025-04-20",
+          "precision": "date_only",
+          "channel": "公共数据库"
+        },
+        {
+          "object": "澳门科技",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "deadline": "2025-05-15",
+          "precision": "date_only",
+          "channel": "公共数据库"
+        }
+      ],
+      "events": [
+        {
+          "object": "宣讲会",
+          "start": "2025-03-26T18:00",
+          "endUnknown": true
+        },
+        {
+          "object": "宣讲会",
+          "start": "2025-04-01T21:00",
+          "endUnknown": true
+        }
+      ],
+      "criteria": [
+        "出发前10天",
+        "回国后7日"
+      ],
+      "referenceCaveat": "全页11个项目各有独立截止及外方网申，不得用总括报名掩盖项目级遗漏；另存逐项目义务作人工核对。"
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "跨校交流",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "channel": "公共数据库",
+            "material": "语言证书",
+            "unknownEligibility": true
+          },
+          {
+            "object": "出国",
+            "verbs": [
+              "申报",
+              "申请",
+              "提交"
+            ],
+            "channel": "本科出国",
+            "condition": "录取",
+            "deadlineUnknown": true
+          },
+          {
+            "object": "回国",
+            "verbs": [
+              "确认"
+            ],
+            "deadlineUnknown": true,
+            "condition": "回国"
+          },
+          {
+            "object": "学分",
+            "verbs": [
+              "认定",
+              "申请"
+            ],
+            "condition": "学分"
+          },
+          {
+            "object": "UCL",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-03-27",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "奥胡斯",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-03-17",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "内布里哈",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-04-06",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "明治",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-03-19",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "河滨",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-03-25",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "伯明翰",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-04-13",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "神奈川",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-03-27",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "福冈",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-05-08",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "金斯顿",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-04-20",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "香港中文",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-04-20",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "澳门科技",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-05-15",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          }
+        ],
+        "events": [
+          {
+            "object": "宣讲会",
+            "start": "2025-03-26T18:00",
+            "endUnknown": true
+          },
+          {
+            "object": "宣讲会",
+            "start": "2025-04-01T21:00",
+            "endUnknown": true
+          }
+        ],
+        "criteria": [
+          "出发前10天",
+          "回国后7日"
+        ],
+        "referenceCaveat": "全页11个项目各有独立截止及外方网申，不得用总括报名掩盖项目级遗漏；另存逐项目义务作人工核对。"
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "8fb21ca3c4042fd75ee772a0d5b96a085af600409c6375f756df89003cc1c3c9"
+    }
+  },
+  {
+    "id": "PUB-22",
+    "title": "关于举办2026年度学术科技节学术讲座之实验室前沿技术科普系列讲座的通知",
+    "url": "https://www.neusoft.edu.cn/html/984/2026-05-09/content-7922.html",
+    "publishedDate": "2026-05-09",
+    "fetchedAt": "2026-10-15T11:27:51.958379+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "关于举办2026年度学术科技节学术讲座之实验室前沿技术科普系列讲座的通知\n2026-05-09\n作者：[已去标识]\n操作>>\nQQ好友\n贴吧\n豆瓣\n为持续推进校园学术文化建设，激发同学们对前沿科技的探索热情，助力同学们了解实验室前沿技术发展动态、近距离接触实验室先进设备，实验实训中心计划在2026年5月举办 2026年度学术科技节学术讲座板块之实验室前沿技术科普系列讲座。\n现将相关事项通知如下：\n1. 讲座安排\n序号\n学术讲座主题\n日期\n地点\n主讲教师\n1\n脑机接口：开启生命的更多可能性\n5月12日\n13:30—14:30\nA2-207\n[人员]\n2\n小身体、大智慧——小型具身机器人探秘与体验\n5月19日\n13:30—14:30\nA2-110b\n[人员]\n3\n当机械臂学会“按摩”：智能理疗机器人之数字孪生\n5月26日\n13:30—14:30\nA2-115\n[人员]\n2. 参与对象\n全校师生。\n3. 相关要求\n‌（1）准时签到‌：请参会师生提前10分钟到场完成签到，确保讲座准时开始。\n‌（2）遵守秩序‌：自觉维护会场纪律，保持环境整洁，禁止携带食品饮料入内。\n‌（3）静音通讯‌：讲座期间请将手机调至静音或震动模式，避免干扰现场交流。\n‌（4）积极参与‌：鼓励提问与互动，现场设有设备体验环节，欢迎亲身操作、深入交流。",
+    "referenceTime": "2026-05-09T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "f2c63ee83b05c5bb9969f419399677e5cedfdb0894d11f582696939e21148b80",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "讲座会议",
+    "reference": {
+      "tasks": [
+        {
+          "object": "签到",
+          "verbs": [
+            "完成",
+            "签到",
+            "入场"
+          ],
+          "condition": "参会",
+          "deadlineUnknown": true
+        },
+        {
+          "object": "手机",
+          "verbs": [
+            "静音",
+            "调至"
+          ],
+          "condition": "讲座"
+        }
+      ],
+      "events": [
+        {
+          "object": "脑机接口",
+          "start": "2026-05-12T13:30",
+          "end": "2026-05-12T14:30",
+          "location": "A2-207"
+        },
+        {
+          "object": "机器人",
+          "start": "2026-05-19T13:30",
+          "end": "2026-05-19T14:30",
+          "location": "A2-110b"
+        },
+        {
+          "object": "机械臂",
+          "start": "2026-05-26T13:30",
+          "end": "2026-05-26T14:30",
+          "location": "A2-115"
+        }
+      ],
+      "criteria": [
+        "提前10分钟"
+      ],
+      "forbidden": [
+        {
+          "object": "食品饮料",
+          "verbs": [
+            "携带"
+          ]
+        }
+      ]
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "签到",
+            "verbs": [
+              "完成",
+              "签到",
+              "入场"
+            ],
+            "condition": "参会",
+            "deadlineUnknown": true
+          },
+          {
+            "object": "手机",
+            "verbs": [
+              "静音",
+              "调至"
+            ],
+            "condition": "讲座"
+          }
+        ],
+        "events": [
+          {
+            "object": "脑机接口",
+            "start": "2026-05-12T13:30",
+            "end": "2026-05-12T14:30",
+            "location": "A2-207"
+          },
+          {
+            "object": "机器人",
+            "start": "2026-05-19T13:30",
+            "end": "2026-05-19T14:30",
+            "location": "A2-110b"
+          },
+          {
+            "object": "机械臂",
+            "start": "2026-05-26T13:30",
+            "end": "2026-05-26T14:30",
+            "location": "A2-115"
+          }
+        ],
+        "criteria": [
+          "提前10分钟"
+        ],
+        "forbidden": [
+          {
+            "object": "食品饮料",
+            "verbs": [
+              "携带"
+            ]
+          }
+        ]
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "2904657423126dd3716e1110337987419709dbacba5cab493035c3c1e2b604d5"
+    }
+  },
+  {
+    "id": "PUB-23",
+    "title": "图书馆2026年春季学期信息素养讲座预约通知",
+    "url": "https://lib.yangtzeu.edu.cn/info/1081/5430.htm",
+    "publishedDate": "2026-04-30",
+    "fetchedAt": "2026-10-15T11:27:53.828146+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "图书馆2026年春季学期信息素养讲座预约通知\n时间：2026-04-30\n点击量：\n全体师生：\n为深入落实学校\n2026年“双一流”建设核心任务，践行图书馆“资源提质、服务增效、技术赋能”工作思路，助力科研成果提质增量、人才自主培养质量提升，图书馆特组织开展2026年春季学期\n信息素养讲座。本次讲座聚焦各类核心数据库实操、\nAI技术在科研中的应用及学术写作投稿技巧，\n欢迎广大读者积极参与预约：\n一、讲座安排\n主题\n内容\n时间\n地点\n预约码\n从“不敢写”到“顺利投”：英文论文写作入门精讲\n第一部分：掌握英文论文的“通用公式”\n1. IMRaD结构：国际公认的论文叙事逻辑\n2. “零件”精讲：各部分写作核心要点\n第二部分：导航投稿全流程\n1. 解密期刊：投稿选择与同行评审\n2. 从容应对：如何撰写回复信\n5月13日\n下午\n2:30\n武汉校区\n图书馆二楼报告厅\nWeb of Science与AI新功能助力全方位科研探索\n讲师\n[人员]\n1.我校最新的Web of Science发文概况\n2.SCIE的核心价值与全新AI检索功能\n3.深度挖掘资源，助力选题规划——充分利用主题分析与引文网络\n4. Web of Science助力识别学术期刊的真实性及选择更高影响力投稿目标\n5月14日\n下午\n2:30\n西校区\n农科大楼一楼七里湖报告厅\n探索\nACS数据库学术资源，助力科研写作与投稿\n1. ACS数据库平台功能和文献检索\n2.英语期刊科技论文写作要点\n3.ACS期刊投稿流程和注意事项\n4.ACS期刊审稿流程和同行评审知识\n5.AI工具用于科学交流的实践规范指南\n5月21日\n下午\n2:30\n东校区\n图书馆一楼电子阅览室\n研学AI，深度阅读与高效创作\n[人员]\n1.初识知网研学\n2. 核心功能实战演练\n高效选题与文献搜集\n深度阅读与知识管理\n高效写作与规范发表\n3. 科研诚信与学术规范\n5月21日\n下午\n2:30\n西校区\n农科大楼一楼七里湖报告厅\n决胜\n2027：考研英语高分规划与破局之道\n[人员]\n中南民族大学外国语言学硕士，考研英语主讲人，\n8年教学经验，年度优秀老师\n1.颠覆认知：考研英语，不是考“英语”而是考“套路”\n2.数据震撼：用事实告诉你，你正面临一场怎样的战争\n3.干货轰炸：老师亲授“破局”高分技巧（现场演示）\n4.科学规划：考前的全程复习指导\n5月28日\n下午\n2:30\n武汉校区\n图书馆二楼报告厅\n《Science》视角下的学术写作逻辑与语言艺术\n[人员]，\niGroup资深培训师\n1.结合Science平台资源，学习构建引人入胜的论文引言，快速理解研究的原创性与重要性。\n2.分析Science论文中精美图表的设计思路，学习通过简洁的文字引导读者理解图表信息。\n3.结合Science投稿要求，撰写一封清晰生动的投稿信和摘要，突出自身研究成果。\n5月29日\n20:00-21:00\n腾讯会议号\n783-438-250\nAI时代多层次数据的获取与应用\n讲师\n[人员]\n1.数值型数据基础认知\n2.AI时代实证研究的基本路径\n3.高质量文章与数据产品的关联\n6月11日\n下午\n2:30\n东校区\n图书馆一楼电子阅览室\n二、注意事项\n1.\n本次讲座预约截止时间为讲座开场时间前一周，预约满2\n0\n人开场，未及时参与预约的读者同样欢迎参与培训。\n2.\n每场均设有交流答疑时间，在科研学习过程中有相关疑问的同学，欢迎现场讨论。\n本次系列讲座是图书馆落实信息素养教育升级、推进资源活化利用的重要举措，旨在助力学校“双一流”建设和人才培养工作，切实提升师生科研与学习效能，欢迎全体师生积极参与！\n长江大学图书馆\n2026年4月29日",
+    "referenceTime": "2026-04-30T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "8735388b7fe268aa6497b78f20fd003602e85d3a03408573b533089751d168e3",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "多场讲座",
+    "reference": {
+      "tasks": [
+        {
+          "object": "讲座",
+          "verbs": [
+            "预约",
+            "报名"
+          ],
+          "deadlineUnknown": true,
+          "condition": "参与"
+        }
+      ],
+      "events": [
+        {
+          "object": "英文论文",
+          "start": "2026-05-13T14:30",
+          "endUnknown": true,
+          "location": "武汉校区"
+        },
+        {
+          "object": "Web of Science",
+          "start": "2026-05-14T14:30",
+          "endUnknown": true,
+          "location": "西校区"
+        },
+        {
+          "object": "ACS",
+          "start": "2026-05-21T14:30",
+          "endUnknown": true,
+          "location": "东校区"
+        },
+        {
+          "object": "研学AI",
+          "start": "2026-05-21T14:30",
+          "endUnknown": true,
+          "location": "西校区"
+        },
+        {
+          "object": "考研英语",
+          "start": "2026-05-28T14:30",
+          "endUnknown": true,
+          "location": "武汉校区"
+        },
+        {
+          "object": "Science",
+          "start": "2026-05-29T20:00",
+          "end": "2026-05-29T21:00"
+        },
+        {
+          "object": "数据",
+          "start": "2026-06-11T14:30",
+          "endUnknown": true,
+          "location": "东校区"
+        }
+      ],
+      "criteria": [
+        "前一周",
+        "20人"
+      ],
+      "referenceCaveat": "预约码为空不得补造；未预约仍可参加。逐场预约截止应可逆对应开场前一周，不能统一一个日期。"
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "讲座",
+            "verbs": [
+              "预约",
+              "报名"
+            ],
+            "deadlineUnknown": true,
+            "condition": "参与"
+          }
+        ],
+        "events": [
+          {
+            "object": "英文论文",
+            "start": "2026-05-13T14:30",
+            "endUnknown": true,
+            "location": "武汉校区"
+          },
+          {
+            "object": "Web of Science",
+            "start": "2026-05-14T14:30",
+            "endUnknown": true,
+            "location": "西校区"
+          },
+          {
+            "object": "ACS",
+            "start": "2026-05-21T14:30",
+            "endUnknown": true,
+            "location": "东校区"
+          },
+          {
+            "object": "研学AI",
+            "start": "2026-05-21T14:30",
+            "endUnknown": true,
+            "location": "西校区"
+          },
+          {
+            "object": "考研英语",
+            "start": "2026-05-28T14:30",
+            "endUnknown": true,
+            "location": "武汉校区"
+          },
+          {
+            "object": "Science",
+            "start": "2026-05-29T20:00",
+            "end": "2026-05-29T21:00"
+          },
+          {
+            "object": "数据",
+            "start": "2026-06-11T14:30",
+            "endUnknown": true,
+            "location": "东校区"
+          }
+        ],
+        "criteria": [
+          "前一周",
+          "20人"
+        ],
+        "referenceCaveat": "预约码为空不得补造；未预约仍可参加。逐场预约截止应可逆对应开场前一周，不能统一一个日期。"
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "948d6b63772429a447d9e899f1efc9da4b0bf1278e6a5713e531a4ffd7f228e0"
+    }
+  },
+  {
+    "id": "PUB-26",
+    "title": "关于2026年上半年线上课程学习和在线作业环节的通知",
+    "url": "https://sjcj.sdjzu.edu.cn/info/1049/4953.htm",
+    "publishedDate": "2026-03-06",
+    "fetchedAt": "2026-10-15T11:28:02.349282+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "关于2026年上半年线上课程学习和在线作业环节的通知\n2026年03月06日 14:22 [作者] 点击：[\n]\n各教学点、202\n2\n-202\n5\n级全体\n学\n生：\n2026年上半年教学计划已全部开启，线上课程教学资源已开启，学习截止时间2026年8月29日。线上学习成绩占课程总评成绩的10%，请务必认真对待。\n2026年上半年各门课程的“在线作业”环节已同步开启，截止时间2026年8月29日。在线作业占各门课程总评成绩的20%，请务必重视。\n课程学习和在线作业具体操作方式，请见附件《课程学习和在线作业环节演示.pptx》。\n2026级新生的课程学习、作业相关安排请及时关注官网通知。\n如有疑问请咨询各教学点或拨打教学工作部电话：[电话]或发送邮件[邮箱1]咨询。\n继续教育学院\n2026年3月6日\n审稿：[已去标识]\n编审：[已去标识]\n终审：[已去标识]\n附件【\n课程学习和在线作业环节演示.pptx\n】已下载\n次",
+    "referenceTime": "2026-03-06T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "af47d8f710631b011c31a0be701ecb9ea9426b9d5268b91d866caaa8329fa04a",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "课程作业",
+    "reference": {
+      "tasks": [
+        {
+          "object": "线上课程",
+          "verbs": [
+            "学习",
+            "完成"
+          ],
+          "deadline": "2026-08-29",
+          "precision": "date_only"
+        },
+        {
+          "object": "在线作业",
+          "verbs": [
+            "完成",
+            "提交"
+          ],
+          "deadline": "2026-08-29",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "information": [
+        "2026级"
+      ]
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "线上课程",
+            "verbs": [
+              "学习",
+              "完成"
+            ],
+            "deadline": "2026-08-29",
+            "precision": "date_only"
+          },
+          {
+            "object": "在线作业",
+            "verbs": [
+              "完成",
+              "提交"
+            ],
+            "deadline": "2026-08-29",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "information": [
+          "2026级"
+        ]
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "0479bab2ad9b7eec512c9092496df2e9cc2767a374f7da49ae74de46784d5ce7"
+    }
+  },
+  {
+    "id": "PUB-28",
+    "title": "关于开展高层次国际化人才培养创新实践项目2026-2027学年全球治理、交叉学科系列课程的通知",
+    "url": "https://gjc.cpu.edu.cn/b7/eb/c320a243691/page.htm",
+    "publishedDate": "2026-09-08",
+    "fetchedAt": "2026-10-15T11:28:11.910837+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "关于开展高层次国际化人才培养创新实践项目2026-2027学年全球治理、交叉学科系列课程的通知\n发布者：[已去标识]\n发布时间：2026-09-08\n浏览次数：\n10\n为深入贯彻落实党的二十大\n和\n二十届历次全会\n及\n全国教育大会精神，落实《教育强国建设规划纲要（\n2024—2035\n年）》\n，\n中共中央办公厅、国务院办公厅\n《关于加强和改进中外人文交流工作的若干意见》等文件精神\n，助力高校拓展学生国际视野、提升全球胜任力与创新能力，搭建学科交叉融合平台，教育部中外人文交流中心\n在“高层次国际化人才培养创新实践项目”（以下简称高层次项目）框架内，于\n202\n6-2027\n学\n年继续开设全球治理\n系列课程和交叉学科系列\n课程。我校为项目院校，现将有关事项通知如下。\n一、课程简介\n两系列课程聚焦高层次国际化人才核心素养，邀请国内外知名院校教授和专家授课。\n全球治理系列课程旨在提升学生参与全球治理的综合素养，助力高校培养政治立场坚定、专业素养过硬、跨文化沟通能力突出、国际胜任力强的国际组织后备人才。交叉学科系列课程旨在帮助学生建立兼具深度与广度的知识体系，助力高校培养具有扎实专业基础、学科交叉融合能力、批判性思维、创新意识的拔尖创新后备人才。\n2026-2027\n学年，全球治理系列课程将继续开设涵盖\nSTEM\n、人文社科、商科、国际化求职四类共\n65\n门课程，每门课\n32\n课时（课程清单详见附件\n1\n）；交叉学科系列课程将继续开设人工智能、大数据、数字经济、能源安全等交叉融合课程共\n36\n门，每门课\n32\n课时（课程清单详见附件\n2\n）。\n二、课程特色和优势\n1.\n专业的高层次国际化人才培养平台：汇聚国内外知名院校师资，打造适合我国学生的系列课程，让学生足不出户就可以获得优质教育资源。\n2.\n内容设计科学实用：全球治理系列课程将联合国可持续发展目标、全球治理议题及联合国价值观与行为框架的价值理念与行为能力标准融入教学。交叉学科系列课程以教师提出问题并引导学生、学生自主思考解决方案、并在实操中检验可行性的模式，进行全方位的学习和互动。\n3.\n师资力量雄厚且配备合理：在邀请国内外知名大学教授和专家主讲的基础上，辅以助教查漏补缺，帮助学生更好地理解和掌握所学内容，培养和提高相关能力。\n4.\n课程质量经实践检验，广受认可：两类课程已开设多年，全国近\n200\n所学校超\n67,000\n人次学生参与，多所学校已将课程纳入教学培养计划。\n三、课程形式和考核\n两系列\n课程\n均\n采取录播学习与直播互动相结合的线上教学模式。课程\n总成绩\n包括\n：\n基础分\n100\n分（\n考勤\n20\n分\n+\n期中\n考试\n40\n分\n+\n期末\n考试\n40\n分），附加分\n10\n分（根据大作业、科研报告成绩核算）\n。\n课程总成绩\n达到\n60\n分\n为合格。\n四、参加对象和成果收获\n（一）参加对象\n课程面向有意愿提升专业素养、全球胜任力与学术研究能力的学生。自愿报名，报名条件如下：\n（\n1\n）具有良好的思想品德和人文素养，无违法违纪记录；\n（\n2\n）具有较好的国际视野、跨文化沟通能力、综合素质和学习能力；\n（\n3\n）选择参与英文为教学语言的课程，需具备良好的英语听说能力，首次报名的学生需参加由项目服务单位组织的线上语言测试；\n（\n4\n）建议成绩达到\nGPA 3.0\n（百分制\n80\n分）；\n（\n5\n）具有较强的组织纪律性，良好的团队意识与协作能力。\n（二）成果收获\n每学年内完成\n任一系列内\n2\n门课程学习并成绩合格的学生，将获得教育部中外人文交流中心颁发的电子课程证书。课程学习情况每学年统计，不跨学年统计。\n五、报名流程及时间\n（一）报名流程说明\n1.\n学生注册选课：有意向参与学习的学生，关注官方公众号“高层次国际化人才培养加油站”，依据相关推文指引\n完成系统注册\n、语言测试\n和选课\n。已参加过课程学习的老生\n无需参加语言测试\n。\n2.\n学校审核名单：学校对本校学生注册、选课进行审核。高层次项目将根据学校审核意见，通过“高层次国际化人才培养加油站”公众号，向学生发送审核结果。\n3.\n课前准备：审核通过的学生可在高层次国际化人才培养加油站（高层次项目官网，网址：\nstu.chitp.harbourmooc.com\n）查看课表、教学安排，下载配套课件、阅读材料。\n（二）\n2026\n年秋季学期课程报名及上课时间\n1.\n学生注册选课：\n2026\n年\n9\n月\n1\n日—\n10\n月\n14\n日\n2.\n学校审核名单：\n2026\n年\n10\n月\n15\n日—\n10\n月\n22\n日\n3.\n审核结果公示推送：\n2026\n年\n10\n月\n23\n日\n4.\n正式开课：\n2026\n年\n10\n月\n25\n日\n5.\n教学结束：\n2026\n年\n11\n月\n29\n日\n6.\n期末考试和附加作业\n/\n报告提交截止：\n2026\n年\n11\n月\n30\n日\n7.\n成绩公布：\n2026\n年\n12\n月\n18\n日\n（三）\n2027\n年春季学期课程报名及上课时间\n1.\n学生注册选课：\n2027\n年\n3\n月\n1\n日—\n3\n月\n31\n日\n2.\n高校审核名单：\n2027\n年\n4\n月\n1\n日—\n4\n月\n8\n日\n3.\n审核结果公示推送：\n2027\n年\n4\n月\n9\n日\n4.\n正式开课：\n2027\n年\n4\n月\n11\n日\n5.\n教学结束：\n2027\n年\n5\n月\n23\n日\n6.\n期末考试和附加作业\n/\n报告提交截止：\n2027\n年\n5\n月\n24\n日\n7.\n成绩公布：\n2027\n年\n6\n月\n11\n日\n六、费用说明\n根据项目实施方案，我校每学期享有全球治理系列课程和交叉学科系列课程课位各\n50\n个。\n由于免费名额有限，学校将按报名顺序，在符合条件的学生中分别录取各系列课程前\n50\n位报名者，额满即止。请有意向的同学尽早完成报名。未获免费课位的同学，可选择自费修读，费用为每课位\n600\n元。\n七、咨询及联系方式\n[联系方式已去标识]\n附件\n：\n1.\n高层次国际化人才培养创新实践项目\n2026-2027\n学年全球治理系列课程清单\n2.\n高层次国际化人才培养创新实践项目\n2026-2027\n学年交叉学科系列课程清单\n附\n件\n1\n高层次国际化人才培养创新实践项目\n2026-2027\n学年全球治理系列课程清单\n学期\n序号\n课程名称（中文）\n课程名称（英文）\n任课\n教师\n课程语言\n秋季学期\n1\n国际危机与冲突管理\nInternational Crisis and Conflict Management\n外交学院教授\n中文\n2\n全球视角中的法律规范与社会现实\nGlobal Perspectives on Law\n剑桥大学助理教授\n英文\n3\n大语言模型：基础、实践与挑战\nLarge language Models: Fundamental Theories, Practices, and Challenges\n上海交通大学副教授\n中文\n4\n粮食安全与农业可持续发展\nFood Security and Sustainable Agricultural Development\n昆士兰大学教授\n英文\n5\n跨文化沟通技巧与实战指导\nCross-cultural Communication\n中国人民大学副教授\n中文\n6\n基于联合国报告的全球可持续发展导论\nIntroduction to Global Development Based on the UN Report\n康奈尔大学教授\n和莱斯大学教授\n英文\n7\n全球化下的国际关系和国际政治：理解当代世界秩序\nInternational Relations and Global Politics: Understanding the Contemporary World Order\n圣安德鲁斯大学教授\n英文\n8\n新兴生物技术发展与全球治理\nEmerging Biotechnology Development and Global Governance\n四川大学教授和研究员\n中文\n9\n社会发展与政策变化：应对气候困境和突围之道\nClimate Change and Ecosystems: Drivers, Impacts, and Pathway Forward\n伦敦国王学院讲师\n英文\n10\n中美关系与国际关系变革\nThe Reform of Sino-US and International Relations\n上海交通大学教授\n中文\n11\n联合国公文阅读与写作\nReading and Writing of UN Official Documents\n上海交通大学教授\n中文\n12\n财富掌握\n101\n：大学生投资管理导论\nFrom Theory to Practice: Investment Strategies and Portfolio Management\n纽约大学客座助理教授\n和纽约大学副教授\n英文\n13\n国际经济视角分析“一带一路”与可持续发展\nThe Belt and Road Initiative Based on Sustainable Development\n中国人民大学教授\n中文\n14\n跨文化艺术创意灵感挖掘\nWhat is Creativity: A Cross-cultural Perspective\n哥伦比亚大学客座教授\n英文\n15\n职场中的性别研究：领导力提升与发展策略\nGender Studies in Workplace: Strategies for Leadership Development\n澳大利亚国立大学客座研究员\n英文\n16\n国际组织竞聘指导及职业生涯职业规划\nInternational Organizations Competition Guidance and Career Planning\n中国人民警察大学副教授\n中文\n17\nPython\n快速入门：高效提升工作和研究效率\nPython101:The Golden Gig to improve work and research efficiency\n中山大学副教授\n中文\n18\n现代项目管理：方法、工具与实战\nModern Project Management: Methodologies, Tools, and Practical Applications\n香港大学讲师\n中文\n19\n数据科学与大数据分析\nData Science and Big Data Analysis\n北京理工大学副教授\n中文\n20\n逻辑与批判性思维\nLogic and Critical Thinking\n同济大学副教授\n中文\n21\n从浅滩到深水：海洋生物与人类的和谐共生\nFrom Shallows to the Depths: Co-existence of Marine Life and Human Being\n华东师范大学教授\n中文\n22\n可持续发展与社会心理健康\nSustainable Development and Psychological Health\n西安交通大学副教授\n中文\n23\n大国博弈、地缘政治与主权导论\nIntroduction to Great Power Rivalry, Geopolitics, and Sovereignty\n墨尔本大学研究员\n英文\n24\n互联网\n+\n大厂实践：从实验室学术到小米、腾讯、百度的工业合作\nInternet+ in Practice: From Academic Research to Industry Collaborations with Xiaomi, Tecent, and Baidu\n清华大学副教授\n中文\n25\n香颂与咖啡：法语世界初体验\nCafé and Chanson: An Introductory Journey into the French World\n北京外国语大学讲师\n中文\n26\n全球合作模式中的创新与创业\nInnovation and Entrepreneurship in Global Context\n香港城市大学讲席教授\n英文\n27\n外交风云：国际关系演变\n150\n年\nInternational Diplomacy: 150 Years of Vicissitude\n剑桥大学教授\n和香港大学副教授\n英文\n28\n转型中的城市——能源可持续性和城市适应战略\nCities in Transition: Strategies for Energy Sustainability and Urban Adaptation\n悉尼大学讲师\n英文\n29\n音乐康复治疗与情绪管理\nMusic Therapy and Emotion Management\n墨尔本大学教授\n英文\n30\n报告和论文撰写中常用的研究方法与数据处理\nResearch Methods and Data Processing Methods in Report and Paper Writing\n约翰霍普金斯大学客座教授\n英文\n31\n结构化面试技巧及实战指导\nStructured Interview Skills and Practical Guidance\n南加利福尼亚大学教授\n英文\n32\n可持续发展目标与国际教育发展\nSustainable Development Goals and International Education Development\n乔治华盛顿大学教授\n英文\n33\n品牌战略：如何与目标受众建立共鸣\nBrand Strategy:\nBuilding and Developing Strong Brands\n帝国理工学院研究员\n英文\n春季学期\n34\n基于联合国报告的全球可持续发展导论\nIntroduction to Global Development Based on the UN Report\n康奈尔大学教授\n和莱斯大学教授\n英文\n35\nPython\n快速入门：高效提升工作和研究效率\nPython101: The Golden Gig to improve work and research efficiency\n中山大学副教授\n中文\n36\n大国博弈、地缘政治与主权导论\nIntroduction to Great Power Rivalry, Geopolitics, and Sovereignty\n墨尔本大学研究员\n英文\n37\n音乐康复治疗与情绪管理\nMusic Therapy and Emotion Management\n墨尔本大学教授\n英文\n38\n中美关系与国际关系变革\nThe Reform of Sino-US and International Relations\n上海交通大学教授\n中文\n39\n跨文化沟通技巧与实战指导\nCross-cultural Communication\n中国人民大学副教授\n中文\n40\n财富掌握\n101\n：大学生投资管理导论\nFrom Theory to Practice: Investment Strategies and Portfolio Management\n纽约大学客座助理教授\n和纽约大学副教授\n英文\n41\n国际危机与冲突管理\nInternational Crisis and Conflict Management\n外交学院教授\n中文\n42\n可持续发展与社会心理健康\nSustainable Development and Psychological Health\n西安交通大学教授\n中文\n43\n大语言模型：基础、实践与挑战\nLarge language Models: Fundamental Theories, Practices, and Challenges\n上海交通大学副教授\n中文\n44\n报告和论文撰写中常用的研究方法与数据处理\nResearch Methods and Data Processing Methods in Report and Paper Writing\n约翰霍普金斯大学客座教授\n英文\n45\n结构化面试技巧及实战指导\nStructured Interview Skills and Practical Guidance\n南加利福尼亚大学教授\n英文\n46\n职场中的性别研究：领导力提升与发展策略\nGender Studies in Workplace: Strategies for Leadership Development\n澳大利亚国立大学客座研究员\n英文\n47\n数据科学与大数据分析\nData Science and Big Data Analysis\n北京理工大学副教授\n中文\n48\n品牌战略：如何与目标受众建立共鸣\nBrand Strategy:\nBuilding and Developing Strong Brands\n帝国理工学院研究员\n英文\n49\n逻辑与批判性思维\nLogic and Critical Thinking\n同济大学副教授\n中文\n50\n电影的艺术：可持续发展目标下的影视艺术与文化内涵\nThe Art of Film: Film and Television Art and Cultural Connotation under Sustainable Development Goals\n西安交通大学副教授\n中文\n51\n[凭证说明已移除，不作为可执行操作]\nThe Health Code on Your Table: Unveiling the Secrets of Nutrition and Food Safety\n中国农业大学副教授\n中文\n52\n国际组织竞聘指导及职业生涯规划\nInternational Organizations Competition Guidance and Career Planning\n中国人民警察大学副教授\n中文\n53\n粮食安全与农业可持续发展\nFood Security and Sustainable Agricultural Development\n昆士兰大学教授\n英文\n54\n全球视角中的法律规范与社会现实\nGlobal Perspectives on Law\n剑桥大学助理教授\n英文\n55\n光影\nVS\n色彩：中西美术中的文明互鉴\nLuminance vs. Colour-When East Meets West in Arts\n四川大学教授\n中文\n56\n在线市场的数字营销策略\nDigital Marketing & Strategies for the Online Marketplace\n伦敦大学学院讲师\n英文\n57\n经济的时空旅行：从工业革命到绿色经济\nA Voyage through Economic Development: From the Industrial Revolution to Green Economy\n苏黎世联邦理工学院荣休教授\n英文\n58\n全球化下的国际关系和国际政治：理解当代世界秩序\nInternational Relations or Global Politics: Understanding the Contemporary World Order\n圣安德鲁斯大学教授\n英文\n59\n智慧物流与供应链\nSmart Logistics and Supply Chain\n四川大学教授\n中文\n60\n国际组织职员发展：理论与实务\nStaff Development in International Organizations: Theory and Practice\n北京外国语大学副教授\n中文\n61\n数学与人文社科的对话：洞察复杂世界\nThe Interwoven Mathematics, Humanitiesand Social Sciences: Insight into a Complex World\n中国人民大学教授\n中文\n62\n国际组织媒体运营方案制定\nMedia Operation Plans for International Organizations\n香港城市大学访问学者\n中文\n63\n互联网\n+\n大厂实践：从实验室学术研究到小米、腾讯、百度的工业合作\nInternet+ in Practice: From Academic Research to Industry Collaborations with Xiaomi, Tencent, and Baidu\n清华大学副教授\n中文\n64\n下一个“我”：当人体遇见仿生科技\nThe Next\"Me\": When the Human Body Meets Bionic Technology\n帝国理工学院教授\n英文\n65\n香颂与咖啡：法语世界初体验\nCafé and Chanson: An Introductory Journey into the French World\n北京外国语大学讲师\n中文\n附\n件\n2\n高层次国际化人才培养创新实践项目\n2026-2027\n学年交叉学科系列课程清单\n学期\n序号\n课程名称（中文）\n课程名称（英文）\n任课教师\n课程语言\n秋季学期\n1\n从“芯”脏到“智”脑，打造你的无人机\nFrom Hardware to Coding: Crafting and Programming Your Own Drone\n哈尔滨工业大学副教授\n中文\n2\n数据科学与商业分析\nData Science and Business Analytics\n弗吉尼亚大学副教授\n英文\n3\n基于社会学习、公平与发展的教育心理学\nEducational Psychology Based on Studies, Equality and Development\n伦敦大学学院副教授\n英文\n4\n人工智能伦理、安全及法律治理\nArtificial Intelligence Ethics, Safety and Legal Governance\n北京大学教授\n中文\n5\n基于心理学与管理学的企业人际行为研究\nResearch on Corporate Interpersonal Behavior Based on Psychology and Management\n南加州大学副教授\n英文\n6\n音乐治疗在不同年龄段的影响与应用\nThe Influence and Application of Music Therapy in Different Age Groups\n墨尔本大学教授\n英文\n7\n创新实践与领导力\nInnovation Practice and Entrepreneurship\n香港中文大学教授\n英文\n8\n全球化背景下的国家安全\nNational Security in the Context of Globalization\n中国人民警察大学教授\n中文\n9\n人工智能与数据科学在商业决策中的应用\nApplications of Artificial Intelligence and Data Science in Business Decision Making\n加州大学河滨分校讲师\n英文\n10\n性别平等与媒体艺术\nGender Equality and Digital Arts\n加州大学伯克利分校教授\n和约翰霍普金斯大学副教授\n英文\n11\n人工智能如何赋能教育数字化转型\nArtificial Intelligence in Education\n加州大学洛杉矶分校讲师\n英文\n12\n能源经济管理与可持续发展\nManagement of Energy Systems for Sustainable Development\n爱丁堡大学教授\n英文\n13\n数字经济与整合营销\nDigital Economy and Integrated Marketing\n莱斯大学教授\n英文\n14\n人类发展中的文化记忆与创意设计\nAnthropology of Creative Practices\n哥伦比亚大学客座教授\n英文\n15\n人工智能在公共卫生领域的应用\nApplication of Artificial Intelligence in Public Health\n加州大学洛杉矶分校客座副教授\n英文\n16\n以游戏为例：概率与统计的应用与探索\nExploration and Application: Probability and Statistical Theory in Games\n苏黎世联邦理工大学客座教授\n英文\n17\n碳金融：市场机制、政策工具和投资机遇\nCarbon Finance: Markets, Mechanisms, and Policy\n爱丁堡大学教授\n英文\n18\n[凭证说明已移除，不作为可执行操作]\nNature’s Code in Motion: How Living Systems Inspire the Robots of Tomorrow\n南安普顿大学讲师\n英文\n春季学期\n19\n从“芯”脏到“智”脑，打造你的无人机\nFrom Hardware to Coding: Crafting and Programming Your Own Drone\n哈尔滨工业大学副教授\n中文\n20\n数据科学与商业分析\nData Science and Business Analytics\n弗吉尼亚大学副教授\n英文\n21\n基于社会学习、公平与发展的教育心理学\nEducational Psychology Based on Studies, Equality and Development\n伦敦大学学院副教授\n英文\n22\n人工智能伦理、安全及法律治理\nArtificial Intelligence Ethics, Safety and Legal Governance\n北京大学教授\n中文\n23\n基于心理学与管理学的企业人际行为研究\nResearch on Corporate Interpersonal Behavior Based on Psychology and Management\n南加利福尼亚大学副教授\n英文\n24\n音乐治疗在不同年龄段的影响与应用\nThe Influence and Application of Music Therapy in Different Age Groups\n墨尔本大学教授\n英文\n25\n创新实践与领导力\nInnovation Practice and Entrepreneurship\n香港中文大学教授\n英文\n26\n全球化背景下的国家安全\nNational Security in the Context of Globalization\n中国人民警察大学教授\n中文\n27\n人工智能与数据科学在商业决策中的应用\nApplications of Artificial Intelligence and Data Science in Business Decision Making\n加州大学河滨分校讲师\n英文\n28\n性别平等与媒体艺术\nGender Equality and Digital Arts\n加州大学伯克利分校教授\n和约翰霍普金斯大学副教授\n英文\n29\n金融市场与法律监管的机遇与挑战\nThe Role of International Capital Markets: Opportunities and Challenges\n哥伦比亚大学讲师\n英文\n30\n人工智能与云计算\nArtificial Intelligence and Cloud Computing\n麦吉尔大学副教授\n英文\n31\n自然语言处理与网络舆情\nNatural Language Processing and Public Opinion Monitoring\n俄亥俄州立大学讲师\n英文\n32\n现代农业与生物质能源研究\nResearch on Agriculture and Bioenergy\n昆士兰大学教授\n英文\n33\n人工智能与计算机视觉在自动驾驶中的应用\nArtificial Intelligence and Computer Vision with Application to Autonomous Driving\n澳大利亚国立大学讲师\n英文\n34\n博弈论分析与实践：以全球环境问题为例\nGame Theory and the Environment: Theories and Applications\n伦敦大学学院副教授\n英文\n35\n全球信息技术时代下的人际关系与传播\nRelationships and Interpersonal Communication in a Global Information Technology Era\n维克森林大学教授\n英文\n36\n赛场之外：体育营销实战与未来行业趋势\nBeyond the Arena: Sports Marketing in Practice and Future Industry Trends\n巴黎萨克雷大学教授\n英文\n26秋-课程海报.zip",
+    "referenceTime": "2026-09-08T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "a45544d5d0e8e6231666e9f4b606ecc021854b12726e02072dbc11fb822a7d44",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "长公文课程",
+    "reference": {
+      "tasks": [
+        {
+          "object": "课程",
+          "verbs": [
+            "注册",
+            "选课",
+            "报名"
+          ],
+          "deadline": "2026-10-14",
+          "precision": "date_only",
+          "condition": "自愿"
+        },
+        {
+          "object": "语言测试",
+          "verbs": [
+            "参加",
+            "完成"
+          ],
+          "condition": "首次报名"
+        },
+        {
+          "object": "课表",
+          "verbs": [
+            "查看",
+            "下载"
+          ],
+          "condition": "审核通过"
+        },
+        {
+          "object": "期末考试",
+          "verbs": [
+            "参加",
+            "完成"
+          ],
+          "deadline": "2026-11-30",
+          "precision": "date_only"
+        },
+        {
+          "object": "作业",
+          "verbs": [
+            "提交",
+            "完成"
+          ],
+          "deadline": "2026-11-30",
+          "precision": "date_only"
+        },
+        {
+          "object": "课程",
+          "verbs": [
+            "报名",
+            "选课"
+          ],
+          "deadline": "2027-03-31",
+          "precision": "date_only"
+        },
+        {
+          "object": "期末考试",
+          "verbs": [
+            "参加",
+            "完成"
+          ],
+          "deadline": "2027-05-24",
+          "precision": "date_only"
+        },
+        {
+          "object": "报告",
+          "verbs": [
+            "提交",
+            "完成"
+          ],
+          "deadline": "2027-05-24",
+          "precision": "date_only"
+        }
+      ],
+      "events": [
+        {
+          "object": "课程",
+          "start": "2026-10-25",
+          "end": "2026-11-29"
+        },
+        {
+          "object": "课程",
+          "start": "2027-04-11",
+          "end": "2027-05-23"
+        }
+      ],
+      "criteria": [
+        "60",
+        "2门",
+        "50"
+      ],
+      "referenceCaveat": "课程清单是可选课程，不能把全部65+36课程建成强制任务；学校审核和成绩公布是信息节点。"
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "课程",
+            "verbs": [
+              "注册",
+              "选课",
+              "报名"
+            ],
+            "deadline": "2026-10-14",
+            "precision": "date_only",
+            "condition": "自愿"
+          },
+          {
+            "object": "语言测试",
+            "verbs": [
+              "参加",
+              "完成"
+            ],
+            "condition": "首次报名"
+          },
+          {
+            "object": "课表",
+            "verbs": [
+              "查看",
+              "下载"
+            ],
+            "condition": "审核通过"
+          },
+          {
+            "object": "期末考试",
+            "verbs": [
+              "参加",
+              "完成"
+            ],
+            "deadline": "2026-11-30",
+            "precision": "date_only"
+          },
+          {
+            "object": "作业",
+            "verbs": [
+              "提交",
+              "完成"
+            ],
+            "deadline": "2026-11-30",
+            "precision": "date_only"
+          },
+          {
+            "object": "课程",
+            "verbs": [
+              "报名",
+              "选课"
+            ],
+            "deadline": "2027-03-31",
+            "precision": "date_only"
+          },
+          {
+            "object": "期末考试",
+            "verbs": [
+              "参加",
+              "完成"
+            ],
+            "deadline": "2027-05-24",
+            "precision": "date_only"
+          },
+          {
+            "object": "报告",
+            "verbs": [
+              "提交",
+              "完成"
+            ],
+            "deadline": "2027-05-24",
+            "precision": "date_only"
+          }
+        ],
+        "events": [
+          {
+            "object": "课程",
+            "start": "2026-10-25",
+            "end": "2026-11-29"
+          },
+          {
+            "object": "课程",
+            "start": "2027-04-11",
+            "end": "2027-05-23"
+          }
+        ],
+        "criteria": [
+          "60",
+          "2门",
+          "50"
+        ],
+        "referenceCaveat": "课程清单是可选课程，不能把全部65+36课程建成强制任务；学校审核和成绩公布是信息节点。"
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "410dab8f52d6281c4d709648c69a43a3183693418b5b1169cd19fc9d16bf3728"
+    }
+  },
+  {
+    "id": "PUB-33",
+    "title": "香港中文大学（深圳）2025年广东、浙江、上海、山东、福建及江苏综合评价报名通知",
+    "url": "https://admissions.cuhk.edu.cn/node/2146",
+    "publishedDate": "2025-01-24",
+    "fetchedAt": "2026-10-15T11:28:20.979864+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "香港中文大学（深圳）2025年广东、浙江、上海、山东、福建及江苏综合评价报名通知\n2025-01-24\n通知公告\n经学校招生委员会决定，现启动广东、浙江、上海、山东、福建、江苏综合评价网上报名工作，具体通知如下：\n一、招生省（直辖市）\n香港中文大学（深圳）2025年在广东、浙江、上海、山东、福建及江苏6省（直辖市）开展综合评价招生工作。\n二、报名条件\n（一）具有2025年普通高等学校招生全国统一考试报名资格的优秀高中毕业生（含往届生）；\n（二）由于香港中文大学（深圳）课程以英文授课为主，非英语语种考生请慎重报考；\n（三）学业水平要求：\n省市\n2025年学业水平要求\n广东\n高中学业水平合格性考试6门科目（历史、地理、思想政治、物理、化学、生物学）成绩均须合格；同时，学生本人3门选择性考试科目对应的学业水平合格性考试等级须达到BBB或ABC、AAC及以上（或新高考改革前的往届生学业水平考试学科等级须达到BBB或ABC、AAC及以上）\n浙江\n10门学业水平考试科目（不含体育与健康、音乐、美术、综合实践活动和劳动）成绩均须合格（其中，新高考改革前的往届生不含自选综合，信息技术和通用技术取等第高者计为技术成绩）；同时综合素质评价须达到B等（新高考改革前的往届生P等）及以上\n上海\n10门学业水平合格性考试科目 [不含体育与健康、通用技术、艺术（或音乐、美术）] 成绩均须合格\n山东\n11门学业水平合格考试科目 [不含体育与健康、艺术（或音乐、美术）] 成绩均须合格（或新高考改革前的往届生学业水平考试等级须达到8A2C及以上）\n福建\n11门学业水平合格性考试科目 [不含体育与健康、艺术（或音乐、美术）] 成绩均须合格（或学业水平考试改革前的往届生4门普通高中学生学业基础会考成绩均须合格）\n江苏\n7门学业水平合格性考试科目 [不含语文、数学、外语、体育与健康、通用技术、艺术（音乐、美术）、理科实验] 成绩均须合格（或新高考改革前的往届生学业水平必修科目均须合格，或达到等级C及以上）\n三、报名程序\n（一）网上报名：凡符合报名条件的考生即日起可登录学校招生官网“本科招生网上申请平台-综合评价招生报名系统”（\nhttps://ugapply.cuhk.edu.cn\n）进行注册，按系统要求准确、完整地填写报名信息，并上传相关证明材料扫描件，确认报名；\n（二）报名截止时间：2025年5月8日17:00；\n（三）报名材料：\n1. 高中学业水平考试成绩证明：教育考试院颁发的成绩单原件扫描件、教育考试院官网查询截图、盖有中学或教务处公章的成绩单扫描件（3项材料任1即可，此项适用于广东、浙江、山东、福建、江苏）；\n2. 高中成绩单：包含高一高二年级4次期末考试成绩、高三年级3至4次校级/市级/省级统一考试成绩，包括各科得分、总分、年级排名及年级人数等，须加盖中学或教务处公章；\n3. 个人身份证扫描件；\n4. 其他可反映个人优秀综合素质的证明材料（非必要）。\n学生在上传报名材料扫描件时须确保电子文件清晰可读，无需邮寄纸质材料。必要时，学校有权向考生索取书面材料作为审核依据，请考生留好备份。如有造假或不实信息，一经查实将取消报名资格；已经获得考试资格的，将取消认定；已经入学的，按教育部相关规定处理。\n通过材料审核，即有资格参加测试的考生需通过“本科招生网上申请平台-综合评价招生报名系统”在线缴纳评核费，入学测试评核费为人民币300元/生。评核费缴纳后不予退还；逾期未缴者视为自动放弃。\n四、2025年本科招生专业\n2025年香港中文大学（深圳）各学院拟设立的本科专业包括（最终以教育部批复为准）：\n（一）经管学院：市场营销、国际商务、经济学、金融学、会计学、大数据管理与应用（拟新增）。\n（二）理工学院：数学与应用数学、新能源科学与工程、化学、材料科学与工程、电子与计算机工程、物理学。\n（三）人文社科学院：应用心理学、翻译、英语、城市管理、国际组织与全球治理。\n（四）数据科学学院：统计学、计算机科学与技术、数据科学与大数据技术。\n（五）医学院：临床医学、生物信息学、生物医学工程、药学、生物科学。\n临床医学专业学制六年，第一二学年将学习大学核心课程、临床前学科知识及其临床应用；在第三到六学年学习临床学科知识和技能、见习和实习，并对医学科学研究进行系统学习和实践。医学人文及伦理课程贯穿整个学习过程。通过全面扎实的训练，培养具备专业医学知识与临床技能、兼具国际视野和人文情怀的世界一流医学创新人才。\n（六）\n人工智能学院：人工智能（拟新增）。\n（七）数据科学学院、经管学院与理工学院联合培养本科招生专业：金融工程。\n五、招生专业方案\n（一）经济管理试验班：大一结束时学生可在经管学院的所有专业内（大数据管理与应用专业除外）选定主修专业；\n（二）人文科学试验班：大一结束时学生可在人文社科学院的所有专业内选定主修专业；\n（三）理科试验班：学生在大一选课前可在经管学院、理工学院、人文社科学院、数据科学学院、医学院（含临床医学专业）、人工智能学院\n及金融工程专业中，根据个人兴趣和特长自主选定所属学院，大一结束时在所属学院内选定主修专业。以下三类情况除外：\n·\n选择就读金融工程专业的学生在大一选课前需直接选定；\n·\n选择就读临床医学专业的学生在大一选课前需直接选定；\n·\n有意向申请香港中文大学与香港中文大学（深圳）“跨学科数据分析+X双主修项目”或“航天科学与地球信息学+X双主修项目”的学生在志愿填报期间或大一选课前提交申请，并参加学校组织的考核，考核通过后方可入读。学生在深港两地校园轮换上课和实习，各修读两年。\n填报的试验班大类\n包含学院/专业\n选科要求\n3+3省市\n3+1+2省市\n经济管理试验班\n经管学院（大数据管理与应用专业除外）\n不限\n历史/物理+任2门\n人文科学试验班\n人文社科学院\n不限\n历史/物理+任2门\n理科试验班\n经管学院、理工学院、人文社科学院、数据科学学院、医学院、人工智能学院、金融工程（专业）\n物理+化学+任1门\n物理+化学+任1门\n注意：鉴于我校实行大类招生模式，生源地省级教育考试院所编印的《2025年普通高等学校招生专业和计划》中香港中文大学（深圳）理科试验班所列招生专业名称，仅为方便考生填报志愿。录取至理科试验班的考生实际可选择的专业包括理科试验班下所含学院的所有招生专业（详见上表及第四部分“2025年本科招生专业”）。\n六、入学测试安排\n入学测试包括初试、复试。具体入学测试时间、形式、要求等相关安排将另行通知。\n七、收费标准\n（一）学费：人民币十四万元/生•学年；\n（二）住宿费：人民币二千四百元/生•学年。\n八、奖助学金\n为鼓励优秀学生来香港中文大学（深圳）攻读本科学士学位，学校设立了完备的奖（助）学金体系。面向高考成绩优异的学生设立新生入学奖学金，面向具有学科特长的学生设立新生学科特长奖学金，面向具有运动特长的学生设立新生运动特长奖学金，对于家庭贫困的学生设立新生入学助学金，对于入学后在校成绩优异的学生颁发学业奖学金。各项奖助学金实施办法将陆续公布，可详见我校招生官网。\n九、招生咨询\n如有疑问，可发邮件至[邮箱1]，或致电（0755）[联系或记录编号]进行咨询。\n十、附则\n选拔程序、时间安排、录取办法、最终专业招生方案等详细内容，以2025年综合评价招生简章为准。\n香港中文大学（深圳）\n招生办公室\n2025年1月24日\n2.47 MB\n2025年香港中文大学（深圳）综合评价招生报名系统操作指引",
+    "referenceTime": "2025-01-24T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "4b55a62d22de991b5de85a98e386005c9d3733e790cca1d009d95678c222fbeb",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "资格条件",
+    "reference": {
+      "tasks": [
+        {
+          "object": "综合评价",
+          "verbs": [
+            "报名",
+            "申请",
+            "注册"
+          ],
+          "deadline": "2025-05-08T17:00",
+          "precision": "exact",
+          "channel": "综合评价招生报名系统",
+          "unknownEligibility": true
+        },
+        {
+          "object": "评核费",
+          "verbs": [
+            "缴纳",
+            "支付",
+            "缴费"
+          ],
+          "condition": "材料审核",
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "入学测试",
+          "startUnknown": true,
+          "endUnknown": true
+        }
+      ],
+      "materials": [
+        "学业水平考试成绩证明",
+        "高中成绩单",
+        "身份证"
+      ],
+      "criteria": [
+        "300",
+        "公章"
+      ],
+      "forbidden": [
+        {
+          "object": "纸质材料",
+          "verbs": [
+            "邮寄"
+          ]
+        }
+      ]
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "综合评价",
+            "verbs": [
+              "报名",
+              "申请",
+              "注册"
+            ],
+            "deadline": "2025-05-08T17:00",
+            "precision": "exact",
+            "channel": "综合评价招生报名系统",
+            "unknownEligibility": true
+          },
+          {
+            "object": "评核费",
+            "verbs": [
+              "缴纳",
+              "支付",
+              "缴费"
+            ],
+            "condition": "材料审核",
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "入学测试",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "materials": [
+          "学业水平考试成绩证明",
+          "高中成绩单",
+          "身份证"
+        ],
+        "criteria": [
+          "300",
+          "公章"
+        ],
+        "forbidden": [
+          {
+            "object": "纸质材料",
+            "verbs": [
+              "邮寄"
+            ]
+          }
+        ]
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "5519ee0c372f53b9799e11ff00787d887ba3680e12d08a6c93f23346bd3d7d26"
+    }
+  },
+  {
+    "id": "PUB-34",
+    "title": "关于汕头大学“山海名师讲坛”第八场讲座延期举行的通知",
+    "url": "https://xtw.stu.edu.cn/info/1048/32901.htm",
+    "publishedDate": "2025-09-23",
+    "fetchedAt": "2026-10-15T11:28:21.916412+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "关于汕头大学“山海名师讲坛”第八场讲座延期举行的通知\n信息来源：\n发布日期：2025-09-23\n全体师生：\n根据学校防风防汛应急预案，当前二级应急响应措施已生效，学校进入紧急防风状态，全校停课。\n原定于9月23日下午15:00举办的汕头大学“山海名师讲坛”第八期讲座延期举行。讲座时间及地点调整另行通知。\n请大家在此期间做好防风防汛防御工作，注意人身与财产安全。\n共青团汕头大学委员会\n汕头大学研究生会\n2025年9月23日",
+    "referenceTime": "2025-09-23T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "1fa74e8bcb58a23b445f26b63fadc824ca3e608d280cf915d5b9fe042dd74bf9",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "修订取消",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "山海名师讲坛",
+          "startUnknown": true,
+          "endUnknown": true
+        }
+      ],
+      "obsoleteDates": [
+        "2025-09-23"
+      ],
+      "information": [
+        "延期",
+        "停课"
+      ],
+      "referenceCaveat": "防风注意安全属于信息；原定15:00不能作为新的活动或任务截止。"
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "山海名师讲坛",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "obsoleteDates": [
+          "2025-09-23"
+        ],
+        "information": [
+          "延期",
+          "停课"
+        ],
+        "referenceCaveat": "防风注意安全属于信息；原定15:00不能作为新的活动或任务截止。"
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "35c8166c891482addd5fd860b6be4d91cb5eb19de3e1287b95a35a65b2cc606d"
+    }
+  },
+  {
+    "id": "PUB-35",
+    "title": "关于调整汕头大学“山海名师讲坛”第八场讲座时间地点的通知",
+    "url": "https://xtw.stu.edu.cn/info/1048/32911.htm",
+    "publishedDate": "2025-09-24",
+    "fetchedAt": "2026-10-15T11:28:23.166886+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "关于调整汕头大学“山海名师讲坛”第八场讲座时间地点的通知\n信息来源：\n发布日期：2025-09-24\n全体师生：\n因受台风天气影响，为保障大家的出行安全与活动体验，原定于9月22日下午15:00举办的汕头大学“山海名师讲坛”第八期讲座相关安排调整如下：\n一、讲座主题\n漫谈大学问\n二、活动时间\n2025年9月25日（周四）上午10:00 – 12:00\n三、活动地点\n汕头大学东海岸校区E栋教学楼102教室\n四、活动内容\n1.主讲人：[已去标识]\n2.主讲人简介：[已去标识]\n五、参与方式：\n1．参加讲座的同学请在9月24日晚上21:00前登录“到梦空间”APP搜索汕头大学“山海名师讲坛”第八期重新报名，并扫码签到即可获得第二课堂学习时长。未能在规定时间报名活动的同学将无法获得活动学时。\n2．参加讲座的师生需提前15分钟签到入场，现场扫码签到。\n因活动调整给师生们带来不便，敬请谅解。\n共青团汕头大学委员会\n汕头大学研究生会\n2025年9月24日",
+    "referenceTime": "2025-09-24T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "dc6a324fe8002f1e9bb653693d8c4bcd203c4515077fcb0ad25fb97d31dc1257",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "修订延期",
+    "reference": {
+      "tasks": [
+        {
+          "object": "山海名师讲坛",
+          "verbs": [
+            "重新报名",
+            "报名"
+          ],
+          "deadline": "2025-09-24T21:00",
+          "precision": "exact",
+          "channel": "到梦空间"
+        },
+        {
+          "object": "签到",
+          "verbs": [
+            "签到",
+            "入场"
+          ],
+          "condition": "参加",
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "山海名师讲坛",
+          "start": "2025-09-25T10:00",
+          "end": "2025-09-25T12:00",
+          "location": "东海岸校区E栋教学楼102"
+        }
+      ],
+      "obsoleteDates": [
+        "2025-09-22"
+      ],
+      "criteria": [
+        "提前15分钟"
+      ]
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "山海名师讲坛",
+            "verbs": [
+              "重新报名",
+              "报名"
+            ],
+            "deadline": "2025-09-24T21:00",
+            "precision": "exact",
+            "channel": "到梦空间"
+          },
+          {
+            "object": "签到",
+            "verbs": [
+              "签到",
+              "入场"
+            ],
+            "condition": "参加",
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "山海名师讲坛",
+            "start": "2025-09-25T10:00",
+            "end": "2025-09-25T12:00",
+            "location": "东海岸校区E栋教学楼102"
+          }
+        ],
+        "obsoleteDates": [
+          "2025-09-22"
+        ],
+        "criteria": [
+          "提前15分钟"
+        ]
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "d40f81975b0074f5a915ba8132243bf738ff4ac527af9312428dab919946fe2e"
+    }
+  },
+  {
+    "id": "PUB-36",
+    "title": "关于举办2025年汕头大学“新程跃动，青春绽FUN”社团嘉年华的通知",
+    "url": "https://xtw.stu.edu.cn/info/1048/32931.htm",
+    "publishedDate": "2025-09-25",
+    "fetchedAt": "2026-10-15T11:28:27.992734+00:00",
+    "sourceType": "official-public-deidentified",
+    "selectedBackend": "scrapling",
+    "text": "关于举办2025年汕头大学“新程跃动，青春绽FUN”社团嘉年华的通知\n信息来源：\n发布日期：2025-09-25\n全校师生：\n为了丰富同学们的课余生活，繁荣校园文化，展现汕头大学学生社团的风采，校团委、汕头大学学生社团管理服务中心举办2025年汕头大学“新程跃动，青春绽FUN”社团嘉年华活动，现将该活动的具体事项通知如下：\n一、活动主题\n新程跃动，青春绽FUN\n二、活动时间\n2025年9月27日\n三、活动对象\n汕头大学全校师生\n四、活动流程\n（一）社团之旅\n1.活动时间：9月27日14:00-17:30；\n2.活动地点：东海岸校区E座教学楼前；\n3.活动形式：学生社团通过展位进行社团宣传与招新咨询，汕大师生可以通过社团展位集章兑奖，了解学生社团的信息。\n（二）社团之夜\n1.活动时间：9月27日19:00-21:35；\n2.活动地点：汕头大学东海岸校区 B综合楼110；\n3.活动形式：学生社团通过舞台表演展示社团风采。\n五、其他事项\n1.参与集章活动需先到社团中心大本营处领取集章卡；\n2.本次演出活动采取门票兑换模式，观众可通过转发推文集赞并到社团中心大本营处领取前排席位门票，获得更佳欣赏位，具体规则请关注“汕头大学学生社团管理服务中心”微信公众号相关推文；\n3.请参与者遵从现场工作人员指引有序参与活动；\n4.更多活动详情可扫码进群咨询或关注“汕头大学学生社团管理服务中心”微信公众号获取。\n欢迎广大师生踊跃参与！\n共青团汕头大学委员会\n汕头大学学生社团管理服务中心\n2025年9月25日",
+    "referenceTime": "2025-09-25T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "sourceSha256": "f108d9aab518c3730e09ae43332c5cca16d45c353fdbd26ef29b1d7b476f236e",
+    "curation": {
+      "headingVerified": true,
+      "navigationRemoved": true,
+      "unreadImagesAndAttachmentsNotReconstructed": true,
+      "phoneNamesEmailRedacted": true,
+      "redactionPreservesDistinctEmailIdentity": true,
+      "publicationTimeNotGuessed": true,
+      "referenceAuthoredBeforeOutput": true
+    },
+    "scene": "多活动",
+    "reference": {
+      "tasks": [
+        {
+          "object": "集章卡",
+          "verbs": [
+            "领取"
+          ],
+          "channel": "社团中心大本营",
+          "condition": "参与集章"
+        },
+        {
+          "object": "门票",
+          "verbs": [
+            "领取",
+            "兑换"
+          ],
+          "condition": "前排",
+          "channel": "社团中心大本营"
+        }
+      ],
+      "events": [
+        {
+          "object": "社团之旅",
+          "start": "2025-09-27T14:00",
+          "end": "2025-09-27T17:30",
+          "location": "东海岸校区E座教学楼前"
+        },
+        {
+          "object": "社团之夜",
+          "start": "2025-09-27T19:00",
+          "end": "2025-09-27T21:35",
+          "location": "B综合楼110"
+        }
+      ],
+      "criteria": [
+        "转发",
+        "集赞"
+      ]
+    },
+    "referenceMetadata": {
+      "author": "Codex",
+      "status": "single-author/model-assisted/provisional",
+      "method": "manual source reading; no tested adapter or output used",
+      "authoredAt": "2026-10-15T11:32:47.444Z",
+      "fullSemanticTruthIndependentlyAdjudicated": false,
+      "minimumObligations": {
+        "tasks": [
+          {
+            "object": "集章卡",
+            "verbs": [
+              "领取"
+            ],
+            "channel": "社团中心大本营",
+            "condition": "参与集章"
+          },
+          {
+            "object": "门票",
+            "verbs": [
+              "领取",
+              "兑换"
+            ],
+            "condition": "前排",
+            "channel": "社团中心大本营"
+          }
+        ],
+        "events": [
+          {
+            "object": "社团之旅",
+            "start": "2025-09-27T14:00",
+            "end": "2025-09-27T17:30",
+            "location": "东海岸校区E座教学楼前"
+          },
+          {
+            "object": "社团之夜",
+            "start": "2025-09-27T19:00",
+            "end": "2025-09-27T21:35",
+            "location": "B综合楼110"
+          }
+        ],
+        "criteria": [
+          "转发",
+          "集赞"
+        ]
+      },
+      "titleAndFreeDescription": "NOT_ADJUDICATED",
+      "referenceSha256": "31d97815723b0da1f797c3ee7d3364ea9f7ee6c68759793fa63b550802e7e143"
+    }
+  }
+]
