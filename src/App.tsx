@@ -753,6 +753,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       const saved = await workspaceRepository.load()
       if (saved) applyWorkspaceView(saved)
       setOrdinaryCanonical(await canonicalWorkspaceRepository.load())
+      setStorageError(false)
       if (useCloudRecognition) setSmartExtractionStatus('connected')
       openDraftReview(
         handle.draftId,
@@ -775,12 +776,16 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         setInboxView('all')
         setCurrentPage('inbox')
         setSelectedDraftId(null)
+        setStorageError(false)
         setNotice({ text: `${reason}；原始来源已安全保存。可在收件箱重试识别、查看原文或手动整理。` })
       } catch {
         const saved = await workspaceRepository.load().catch(() => null)
         if (saved) applyWorkspaceView(saved)
         setStorageError(true)
         setNotice({ text: `${reason}；来源保存状态需要检查，请勿重复关闭页面。` })
+        // A fulfilled capture promise tells the intake UI it can clear input.
+        // No durable Source means failure must reach that UI instead.
+        throw new Error(`${reason}；原文尚未保存，输入已保留。请保留此页或复制原文后手动重试。`, { cause: error })
       }
     }
   }
