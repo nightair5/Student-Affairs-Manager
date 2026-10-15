@@ -5,7 +5,7 @@ import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sou
 import { verifyWorkflowChannelEvidence, type WorkflowMaterialSupport } from './workflowChannelSupport'
 import {citedDeliveryContexts,type CitedDeliveryContext} from './citedDeliveryContext'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.7.0'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.8.0'
 export const WORKFLOW_MATERIAL_CHANNEL_VERSION = 'material-declared-workflow-channel-1.0.0'
 export interface MaterialChannelDecision {
   materialId: string
@@ -63,7 +63,7 @@ function destinationRole(clause: string, object: string, channel: string, siblin
   const members = [...new Set([object, ...siblingObjects].map(compact))].sort((a, b) => b.length - a.length)
   const member = `(?:${members.map(escaped).join('|')})(?:[（(][^（）()]{1,40}[）)])?`
   const list = `${member}(?:(?:及|和|与|、)${member})+`
-  const enumeration = new RegExp(`(?:把|将)?(${list})(?:请|须|需|应)?(?:(?:于|在)${statedTime})?(?:一起|一并|统一)?${action}(?:至|到|给)${c}${end}`, 'u').exec(text)
+  const enumeration = new RegExp(`(?:把|将)?(${list})(?:请|须|需|应)?(?:(?:于|在)${statedTime})?(?:一起|一并|统一|均)?${action}(?:至|到|给)${c}${end}`, 'u').exec(text)
   const plainList = enumeration?.[1].replace(/[（(][^（）()]{1,40}[）)]/gu, '')
   const listed = plainList && new RegExp(`(?:^|及|和|与|、)${o}(?:$|及|和|与|、)`, 'u').test(plainList) ? enumeration : null
   const matched = [

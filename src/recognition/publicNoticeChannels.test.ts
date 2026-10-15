@@ -24,6 +24,10 @@ describe('actual public notice excerpts: closed material enumerations', () => {
   })
   it.each([
     ['将学生申请材料及学院回执扫描版（须加盖公章）和Excel汇总表发送至陌生收件站', true],
+    ['学生申请材料及学院回执扫描版和Excel汇总表均交至陌生收件站', true],
+    ['学生申请材料及学院回执扫描版和Excel汇总表等均交至陌生收件站', false],
+    ['请勿将学生申请材料及学院回执扫描版和Excel汇总表均交至陌生收件站', false],
+    ['学生申请材料及陌生附件均交至陌生收件站', false],
     ['请勿将学生申请材料及学院回执扫描版和Excel汇总表发送至陌生收件站', false],
     ['若将学生申请材料及学院回执扫描版和Excel汇总表发送至陌生收件站', false],
     ['将学生申请材料照片及学院回执扫描版和Excel汇总表发送至陌生收件站', false],

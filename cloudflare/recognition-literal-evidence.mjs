@@ -1,6 +1,12 @@
 // Index existing model citations back to an unambiguous literal source span.
 // This is program evidence, not a changed model answer or a new business fact.
-export const LITERAL_EVIDENCE_PROJECTION_VERSION='literal-source-citation-projection-1.0.0'
+export const LITERAL_EVIDENCE_PROJECTION_VERSION='literal-source-citation-projection-1.1.0'
+function citationLayout(text,source){
+  // A doubly escaped layout break is a wire representation issue only when
+  // the source does not itself contain literal backslash layout syntax. Do
+  // not JSON-parse citations or decode numbers, punctuation or Unicode escapes.
+  return /\\[nrt]/u.test(source)?text:text.replace(/\\r\\n|\\n|\\r|\\t/gu,token=>token==='\\t'?'\t':'\n')
+}
 function indexed(text){
   const formatting=new Set()
   for(const m of text.matchAll(/\*\*(?=\S)([\s\S]*?\S)\*\*/gu)){
@@ -27,14 +33,14 @@ export function projectLiteralSourceEvidence(input,source){
   for(const e of result.evidence){
     const before=e.quotedText||e.quote
     if(typeof before!=='string'||!before||source.includes(before))continue
-    if(e.quote&&e.quotedText&&indexed(e.quote).value!==indexed(e.quotedText).value)continue
-    const needle=indexed(before).value;if(!needle)continue
+    if(e.quote&&e.quotedText&&indexed(citationLayout(e.quote,source)).value!==indexed(citationLayout(e.quotedText,source)).value)continue
+    const layout=citationLayout(before,source),needle=indexed(layout).value;if(!needle)continue
     const at=sourceIndex.value.indexOf(needle)
     if(at<0||sourceIndex.value.indexOf(needle,at+1)>=0)continue
     const start=sourceIndex.positions[at],end=sourceIndex.positions[at+needle.length-1]+1,literal=source.slice(start,end)
     if(literal.length>500||indexed(literal).value!==needle)continue
     e.quote=literal;e.quotedText=literal
-    audit.decisions.push({evidenceId:e.id,before,after:literal,start,end,rule:'UNIQUE_ORDERED_LITERAL_LAYOUT_EQUIVALENCE'})
+    audit.decisions.push({evidenceId:e.id,before,after:literal,start,end,rule:layout===before?'UNIQUE_ORDERED_LITERAL_LAYOUT_EQUIVALENCE':'UNIQUE_ORDERED_LITERAL_LAYOUT_ESCAPE_EQUIVALENCE'})
   }
   return{result,audit}
 }
