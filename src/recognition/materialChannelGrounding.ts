@@ -3,8 +3,9 @@ import { assembleRecognitionFirstSuggestionD26 } from './firstSuggestionD26'
 import { groundSourceWindows } from './sourceWindowGrounding'
 import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sourceActionTime'
 import { verifyWorkflowChannelEvidence, type WorkflowMaterialSupport } from './workflowChannelSupport'
+import {citedDeliveryContexts,type CitedDeliveryContext} from './citedDeliveryContext'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.4.2'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.5.0'
 export const WORKFLOW_MATERIAL_CHANNEL_VERSION = 'material-declared-workflow-channel-1.0.0'
 export interface MaterialChannelDecision {
   materialId: string
@@ -16,6 +17,7 @@ export interface MaterialChannelDecision {
   evidence: Array<{ id: string; quote: string }>
   roleChecks: Array<{ quote: string; object: string; polarity: 'AFFIRMATIVE' | 'NEGATED_OR_UNCERTAIN'; roleText: string; polarityText: string; unrelatedQualifier: string | null }>
   workflowProof?: WorkflowMaterialSupport
+  citedContextProof?: CitedDeliveryContext
 }
 export interface MaterialChannelAudit {
   version: typeof MATERIAL_CHANNEL_GROUNDING_VERSION | typeof WORKFLOW_MATERIAL_CHANNEL_VERSION
@@ -108,7 +110,8 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
       return check ? [{ quote, object, ...check }] : []
     }))
     const contradictory = roleChecks.some(c => c.polarity === 'NEGATED_OR_UNCERTAIN')
-    const direct = owners.length > 0 && !contradictory && roleChecks.some(c => c.polarity === 'AFFIRMATIVE')
+    const citedContextProof=!contradictory?citedDeliveryContexts(result,sourceText).find(p=>p.materialIds.includes(material.tempId)&&p.channel===originalValue):undefined
+    const direct = owners.length > 0 && !contradictory && (roleChecks.some(c => c.polarity === 'AFFIRMATIVE')||!!citedContextProof)
     const parts=originalValue.split(/[；;]/u).map(s=>s.trim()).filter(Boolean)
     const ownerRoles=parts.length>1&&parts.length===owners.length?parts.map(part=>({part,owners:owners.filter(owner=>{
       const own=evidence.filter(e=>owner.evidenceIds.includes(e.id)),declaredObjects=[material.name,owner.actionObject,...material.formatRequirements.filter(f=>own.some(e=>e.quote.includes(f)))]
@@ -133,7 +136,7 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     const receipt = !contradictory && clauses.some(c => c.includes(originalValue) && /显示|提示|回执|接收成功|收到成功/u.test(c))
       && owners.some(t => t.completionCriteria.some(c => c.includes(originalValue) && /显示|提示|回执|接收成功|收到成功/u.test(c) && evidence.some(e=>e.quote.includes(c))))
     const status = direct ? 'EXPLICIT_CHANNEL' : ownerSpecific?'EXPLICIT_OWNER_CHANNELS': workflowProof ? 'EXPLICIT_WORKFLOW_CHANNEL' : receipt ? 'RECEIPT_CONTEXT_UNRESOLVED' : 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
-    audit.decisions.push({ materialId: material.tempId, materialName: material.name, ownerIds: material.relatedTaskTempIds, originalValue, displayedValue: direct || ownerSpecific || workflowProof ? originalValue : null, status, evidence, roleChecks, ...(workflowProof ? { workflowProof } : {}) })
+    audit.decisions.push({ materialId: material.tempId, materialName: material.name, ownerIds: material.relatedTaskTempIds, originalValue, displayedValue: direct || ownerSpecific || workflowProof ? originalValue : null, status, evidence, roleChecks, ...(workflowProof ? { workflowProof } : {}),...(citedContextProof?{citedContextProof}:{}) })
     if (direct || ownerSpecific || workflowProof) continue
     // null here means unconfirmed destination, not "the source states no channel".
     material.submissionChannel = null

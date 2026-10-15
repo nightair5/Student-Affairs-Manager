@@ -15,6 +15,7 @@ import {
 } from './recognition-contract.generated.mjs'
 import { isValidTimeZone } from './chinese-time-ast.generated.mjs'
 import {parseRecognitionJson} from './recognition-json.mjs'
+import {projectDanglingAnnotationEvidence} from './recognition-annotation-projection.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -857,10 +858,11 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       selectedPromptVersion ?? RECOGNITION_PROMPT_VERSION,
     )
     const deterministicCandidate = applyDeterministicTimeAst(candidate, referenceTime, timezone)
-    const candidateValidation = validateRecognitionResult(deterministicCandidate, { sourceContent })
+    const annotationProjection=selectedPromptVersion?.startsWith('recognition-product-contract-')?projectDanglingAnnotationEvidence(deterministicCandidate):{result:deterministicCandidate,audit:null}
+    const candidateValidation = validateRecognitionResult(annotationProjection.result, { sourceContent })
     if (!candidateValidation.valid) return invalidRecognitionResponse(context, candidateValidation)
     const result = normalizeRecognitionResult(
-      deterministicCandidate,
+      annotationProjection.result,
       sourceContent,
       referenceTime,
       selectedModel,
@@ -879,6 +881,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       evaluationArm: selectedModel === DEEPSEEK_MULTIMODAL_MODEL ? 'T' : undefined,
       result,
       execution: {
+        ...(annotationProjection.audit?.decisions.length?{annotationProjection:annotationProjection.audit}:{}),
         tokenUsage: Number.isFinite(payload?.usage?.prompt_tokens) && Number.isFinite(payload?.usage?.completion_tokens)
           ? {
               input: payload.usage.prompt_tokens,

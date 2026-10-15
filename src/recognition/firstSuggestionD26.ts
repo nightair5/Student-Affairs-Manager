@@ -12,7 +12,7 @@ import {completeCitedOwnerSupport,type CitedOwnerDecision} from './citedOwnerSup
 import {completeCitedSourceWindows} from './citedSourceWindow'
 import {addDateOnlyDays} from '../lib/timeSemantics'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.10.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.11.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION

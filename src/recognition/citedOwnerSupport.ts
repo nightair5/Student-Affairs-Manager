@@ -1,11 +1,12 @@
 import type {RecognitionResult} from './types'
-export const CITED_OWNER_SUPPORT_VERSION='cited-owner-support-1.0.0'
+import {citedDeliveryContexts} from './citedDeliveryContext'
+export const CITED_OWNER_SUPPORT_VERSION='cited-owner-support-1.1.0'
 export interface CitedOwnerDecision {entityId:string;field:'actionVerb'|'actionObject'|'rawText';before:string;after:string;reusedEvidenceIds:string[];rule:'CITED_ACTION_ALIAS'|'DECLARED_REGISTRATION_OBJECT'|'DECLARED_OWNER_TIME_QUOTE'}
 const escape=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')
 /** Reindex existing facts along existing bidirectional owners. No missing entity,
  * time, owner, channel or action is discovered from an unrelated source clause. */
 export function completeCitedOwnerSupport(result:RecognitionResult,source:string):CitedOwnerDecision[]{
- const changes:CitedOwnerDecision[]=[],tasks=[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
+ const changes:CitedOwnerDecision[]=[],tasks=[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])],contexts=citedDeliveryContexts(result,source)
  const valid=(ids:string[])=>result.evidence.filter(e=>ids.includes(e.id)&&source.includes(e.quote))
  for(const task of tasks){
   const own=valid(task.evidenceIds)
@@ -15,6 +16,8 @@ export function completeCitedOwnerSupport(result:RecognitionResult,source:string
    if(action&&events.length===1){const proof=valid(events[0].evidenceIds).filter(e=>e.quote.includes(task.actionObject));if(proof.length){task.evidenceIds=[...new Set([...task.evidenceIds,...proof.map(e=>e.id)])];changes.push({entityId:task.tempId,field:'actionObject',before:task.actionObject,after:task.actionObject,reusedEvidenceIds:proof.map(e=>e.id),rule:'DECLARED_REGISTRATION_OBJECT'})}}
   }
   if(task.actionVerb==='提交'&&!valid(task.evidenceIds).some(e=>e.quote.includes('提交'))){
+   const context=contexts.find(c=>c.ownerId===task.tempId)
+   if(context){const before=task.actionVerb;task.actionVerb=context.verb;task.evidenceIds=[...new Set([...task.evidenceIds,...context.evidenceIds])];changes.push({entityId:task.tempId,field:'actionVerb',before,after:task.actionVerb,reusedEvidenceIds:context.evidenceIds,rule:'CITED_ACTION_ALIAS'});continue}
    const candidates=valid(task.evidenceIds).flatMap(e=>e.quote.split(/[。；\n]/u).flatMap(clause=>{
     const direct=new RegExp('(上交|递交|交)(?:一份|一张)?'+escape(task.actionObject),'u').exec(clause)
     const ellipsis=e.quote.includes(task.actionObject)?/(?:，|前)(?:也)?(上交|递交|交)(?:到|至|给)?[^，。；]{1,24}$/u.exec(clause):null
