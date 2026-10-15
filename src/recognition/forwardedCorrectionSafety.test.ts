@@ -2,6 +2,7 @@ import {describe,it,expect} from 'vitest'
 import {ordinaryWorkflowFixture} from './ordinaryProviderSupport.fixture'
 import {assembleCurrentFirstSuggestion} from './materialChannelGrounding'
 import {parseRecognitionResult} from './schema'
+import {supportedEventOperation} from './compoundNameSupport'
 
 const clock={referenceTime:'2026-10-15T09:00:00+08:00',timezone:'Asia/Shanghai'}
 function correction(){
@@ -13,6 +14,12 @@ function correction(){
  return{r,source,a,b}
 }
 describe('forwarded correction and wrapped window safety',()=>{
+ it('a model-declared service suspension can use its literal same-object stopping-operation citation',()=>{
+  const source='届时学校业务系统、科研平台服务将停止运行。'
+  expect(supportedEventOperation('科研平台暂停服务',[source],source)).toBe(true)
+  for(const text of ['如果停电，科研平台服务将停止运行。','科研平台服务不会停止运行。','其他平台服务将停止运行。','科研平台服务将停止运行的通知取消。'])expect(supportedEventOperation('科研平台暂停服务',[text],text)).toBe(false)
+  expect(supportedEventOperation('科研平台暂停服务',[],source)).toBe(false)
+ })
  it('keeps a separately cited explicit adjacent same-object replacement, never reactivating its old endpoint',()=>{
   const {r,source}=correction(),original=structuredClone(r),out=assembleCurrentFirstSuggestion(r,{sourceText:source,...clock})
   expect(out.result.timePoints.map(p=>p.tempId)).toEqual(['NEW']);expect(out.audit.sourceCurrentness[0]).toMatchObject({entityId:'OLD',replacementId:'NEW'})

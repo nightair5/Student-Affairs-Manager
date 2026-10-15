@@ -16,7 +16,7 @@ import {completeCitedSourceWindows,CITED_SOURCE_WINDOW_VERSION} from './citedSou
 import {addDateOnlyDays} from '../lib/timeSemantics'
 import {nativeQualificationReviews} from './nativeQualificationReview'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.20.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.21.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION

@@ -1,4 +1,4 @@
-export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.3.0'
+export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.4.0'
 const escape=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')
 /** Closed grammatical equivalence, not a bag of words across source clauses. */
 export function supportedCoordinatedObject(value:string,action:string,quotes:string[]):boolean {
@@ -22,6 +22,12 @@ export function supportedEventDescriptor(value:string,quotes:string[]):boolean {
  * Stitch only uniquely located, contiguous cited spans (including a URL split
  * at its colon), never unrelated words or different owners. */
 export function supportedEventOperation(value:string,quotes:string[],sourceText:string,allowTimedOperationNames=false):boolean {
+  const service=/^(.+?)暂停服务$/u.exec(value)
+  if(service){
+    const pattern=new RegExp(`(?:^|[、，。；\\s])${escape(service[1])}服务(?:将)?停止运行(?:[。；！!]|$)`,'gu')
+    return quotes.some(q=>q&&sourceText.includes(q)&&sourceText.indexOf(q)===sourceText.lastIndexOf(q)
+      &&[...q.matchAll(pattern)].some(m=>!/若|如果|假如|取消|不再|不会|不得|不|未/u.test(q.slice(0,m.index).split(/[。；\n]/u).at(-1)??'')))
+  }
   const title=/^(.+?)(升级维护|停机维护|升级检修|停机|维护)$/u.exec(value)
   if(!title)return false
   const [,entity,operation]=title
