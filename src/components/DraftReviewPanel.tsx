@@ -5,6 +5,7 @@ import type { DraftItem, ExtractionDraft, Project, Source, TaskCategory } from '
 import type { InferenceLevel } from '../types'
 import { assessFocusedReview } from '../recognition/focusedReview'
 import {sourceCoverageHints} from '../recognition/sourceCoverageHints'
+import {selectionFromDraftItems} from '../domain/v2/domainCommit'
 import { timePointDisplayLabel, timePointDisplayValue } from '../recognition/recognitionModePresentation'
 import type { ComponentType, ReactNode } from 'react'
 import type { WorkspaceV8 } from '../domain/v2/types'
@@ -187,6 +188,8 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
   const sourceText = source?.content ?? source?.rawText ?? source?.contentPreview ?? '原文暂不可用'
   const evidenceIndex = activeEvidence ? sourceText.indexOf(activeEvidence) : -1
   const recognition = draft.recognitionResult
+  const ordinarySelection=ordinarySourceReview&&recognition?selectionFromDraftItems(recognition,draft.items):null
+  const excludedSourceTimes=ordinarySelection&&recognition?recognition.timePoints.filter(p=>p.selected===false&&p.relatedTaskTempIds.some(id=>ordinarySelection.taskTempIds.includes(id))).length:0
   const coverageHints=recognition?sourceCoverageHints(sourceText,recognition):[]
   const focusedReview = recognition ? assessFocusedReview(recognition, {
     ...(source?.reviewMetadata ?? {}),
@@ -367,8 +370,9 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
           <strong>{ordinarySourceReview ? '本次选择内容；已保存项不重复创建' : '本次将创建'}</strong>
           <span>{projectWillCreate ? 1 : 0} 个项目</span>
           <span>{selectedPending.length} 个任务</span>
-          <span>{ordinarySourceReview ? recognition?.timePoints.length ?? 0 : confirmationV2 ? new Set(selectedPending.flatMap((item) => confirmationV2.items[item.id]?.timePointTempIds ?? [])).size : recognition?.timePoints.filter((item) => item.selected !== false).length ?? pending.length} 个时间节点</span>
-          <span>{confirmationV2 ? new Set(selectedPending.flatMap((item) => confirmationV2.items[item.id]?.materialTempIds ?? [])).size : pendingMaterials} 项材料</span>
+          <span>{ordinarySelection ? ordinarySelection.timePointTempIds.length : confirmationV2 ? new Set(selectedPending.flatMap((item) => confirmationV2.items[item.id]?.timePointTempIds ?? [])).size : recognition?.timePoints.filter((item) => item.selected !== false).length ?? pending.length} 个时间节点</span>
+          <span>{ordinarySelection ? ordinarySelection.materialTempIds.length : confirmationV2 ? new Set(selectedPending.flatMap((item) => confirmationV2.items[item.id]?.materialTempIds ?? [])).size : pendingMaterials} 项材料</span>
+          {excludedSourceTimes>0&&<p>{excludedSourceTimes}个原文时间未选入，不会随此次接受保存；可展开“时间节点和依据”查看或调整。</p>}
           {recognition && <span>{confirmationV2 && !ordinarySourceReview ? 0 : recognition.events.filter((item) => item.selected !== false).length} 个事件</span>}
           {semanticReview && <span>{semanticReview.eventCount} 个任务关联事件{semanticReview.sourceSession?'；上方独立事件也随本次确认保存':'（随本次确认保存）'}</span>}
         </div>}

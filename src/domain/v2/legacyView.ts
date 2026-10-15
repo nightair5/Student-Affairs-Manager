@@ -24,6 +24,7 @@ import { isDateOnly, parseBusinessDateTime } from '../../lib/timeSemantics'
 import { createIntegrationState } from '../../lib/workspace'
 import { workspaceSnapshotHash } from './migration'
 import type { JsonValue, LegacyData, WorkspaceV8 } from './types'
+import {sourceWindowDisplayLabel} from './sourceWindowDisplay'
 
 // Provenance belongs to the in-memory projection, never to exported user data.
 // The copy is taken before callers edit the projection.
@@ -307,6 +308,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       estimatedMinutes: item.estimatedMinutes ?? 60,
       estimatedMinutesKnown: item.estimatedMinutes !== null,
       sourceDeadlineLabel: sourceDeadlineLabel(workspace, item.id),
+      sourceWindowLabel: sourceWindowDisplayLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions),
       nextAction: item.nextAction ?? item.title,
       description: item.description ?? '',
       priority: legacyPriority(item.legacyData?.priority ?? item.legacyData?.prioritySuggestion ?? legacy.priority),

@@ -92,6 +92,7 @@ export function TaskCard({
       </div>
 
       <p className="priority-reason">排序理由：{priority.reasons.slice(0, 2).join('；')}</p>
+      {task.sourceWindowLabel&&<p className="task-source-window">原文办理时段：<strong>{task.sourceWindowLabel}</strong>（与截止、个人计划分开）</p>}
       {task.plannedStart && <p>我的计划：{Number.isFinite(Date.parse(task.plannedStart)) ? new Intl.DateTimeFormat('zh-CN', {month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(task.plannedStart)) : '待核对'}（原文截止另列）</p>}
 
       <div className="next-action">

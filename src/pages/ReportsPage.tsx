@@ -1,6 +1,6 @@
 import { CalendarPlus, CheckCircle2, Download, FileSpreadsheet, LoaderCircle, Sparkles } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
-import { buildCalendarIcs, buildTodoIcs, shareOrDownloadIcs } from '../lib/calendarExport'
+import { buildCalendarIcs, buildTodoIcs, shareOrDownloadIcs, SOURCE_PRESERVING_CALENDAR_EXPORT } from '../lib/calendarExport'
 import { ProxyDeepSeekService } from '../lib/deepseek'
 import { buildActivityReport, buildReportContext, downloadReportFile, type ReportPeriod } from '../lib/reports'
 import type { Project, Task } from '../types'
@@ -72,9 +72,10 @@ export function ReportsPage({ tasks, projects }: ReportsPageProps) {
       const openTasks = tasks.filter((task) => task.status !== '已完成')
       const result = await shareOrDownloadIcs(
         `学生事务-${kind === 'calendar' ? '日历提醒' : '待办'}-${dateSlug}.ics`,
-        kind === 'calendar' ? buildCalendarIcs(openTasks) : buildTodoIcs(openTasks),
+        kind === 'calendar' ? buildCalendarIcs(openTasks,new Date(),SOURCE_PRESERVING_CALENDAR_EXPORT) : buildTodoIcs(openTasks,new Date(),SOURCE_PRESERVING_CALENDAR_EXPORT),
       )
-      setMessage(result === 'shared' ? '已打开手机系统分享，请选择日历或待办应用。' : '已下载 ICS，请在手机日历或待办应用中导入。')
+      const undated=openTasks.filter(t=>!t.deadline&&(kind==='todo'||!t.plannedStart)).length
+      setMessage((result === 'shared' ? '已打开手机系统分享，请选择日历或待办应用。' : '已下载 ICS，请在手机日历或待办应用中导入。')+(undated?` ${undated}项保留为无日期待办，未编日期；目标应用需支持待办。`:''))
     } catch (cause) {
       if (cause instanceof DOMException && cause.name === 'AbortError') return
       setMessage('系统分享或下载失败，请检查浏览器的下载权限。')

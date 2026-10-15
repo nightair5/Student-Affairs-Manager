@@ -35,7 +35,7 @@ import type {
   TaskStatus,
 } from '../types'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
-import { buildCalendarIcs, buildTodoIcs, shareOrDownloadIcs } from '../lib/calendarExport'
+import { buildCalendarIcs, buildTodoIcs, shareOrDownloadIcs, SOURCE_PRESERVING_CALENDAR_EXPORT } from '../lib/calendarExport'
 
 const materialStatusOptions: Array<{ value: MaterialStatus; label: string }> = [
   { value: 'missing', label: '缺失' },
@@ -188,9 +188,9 @@ export function TaskDetailPanel({
     try {
       const result = await shareOrDownloadIcs(
         `${task.title.replace(/[\\/:*?"<>|]/gu, '-')}-${kind === 'calendar' ? '日历提醒' : '待办'}.ics`,
-        kind === 'calendar' ? buildCalendarIcs([task]) : buildTodoIcs([task]),
+        kind === 'calendar' ? buildCalendarIcs([task],new Date(),SOURCE_PRESERVING_CALENDAR_EXPORT) : buildTodoIcs([task],new Date(),SOURCE_PRESERVING_CALENDAR_EXPORT),
       )
-      setCalendarFeedback(result === 'shared' ? '已打开系统分享，请选择日历或待办应用。' : '已下载 ICS 文件，请在手机日历或待办应用中导入。')
+      setCalendarFeedback((result === 'shared' ? '已打开系统分享，请选择日历或待办应用。' : '已下载 ICS 文件，请在手机日历或待办应用中导入。')+(!task.deadline&&!task.plannedStart?' 本项保留为无日期待办，未生成日程或提醒；目标应用需支持待办。':''))
     } catch (cause) {
       if (cause instanceof DOMException && cause.name === 'AbortError') return
       setCalendarFeedback('系统分享或下载失败，请检查浏览器下载权限。')
@@ -354,7 +354,8 @@ export function TaskDetailPanel({
               <Clock3 size={18} />
               <span>
                 <small>截止时间</small>
-                <strong>{dateView?.label ?? task.sourceDeadlineLabel ?? formatDeadline(task.deadline)}</strong>
+                <strong>{dateView?.label ?? task.sourceDeadlineLabel ?? (task.deadline ? formatDeadline(task.deadline) : '原文未提供确定截止')}</strong>
+                {task.sourceWindowLabel&&<small>原文办理时段：{task.sourceWindowLabel}（不改为截止）</small>}
                 {task.plannedStart && <small>我的计划：{formatDeadline(task.plannedStart)}（不改变原文截止）</small>}
               </span>
             </div>
@@ -502,7 +503,7 @@ export function TaskDetailPanel({
               </label>
             )}
             <div className="phone-export-card">
-              <div><strong>手机日历与待办</strong><small>生成标准 ICS，由你在手机系统中确认导入；网页不会静默修改原生闹钟。{task.plannedStart ? '个人安排按已保存时长导出，原截止另列；只附你已设置的提醒。' : ''}</small></div>
+              <div><strong>手机日历与待办</strong><small>生成标准 ICS，由你在手机系统中确认导入；网页不会静默修改原生闹钟。{task.plannedStart ? '个人安排按已保存时长导出，原截止另列；只附你已设置的提醒。' : task.deadline ? '日历中显示原文截止标记，不自动编排工作时段；有具体时刻时默认提前1小时提醒，导入时可改，仅日期不补时刻。' : '时间未定时只导出无日期待办；目标应用需支持待办。'}</small></div>
               <div className="phone-export-actions">
                 <button className="secondary-button" type="button" onClick={() => void exportToPhone('calendar')}><CalendarPlus size={16} />{task.plannedStart ? '导出个人安排' : '日历提醒'}</button>
                 <button className="secondary-button" type="button" onClick={() => void exportToPhone('todo')}><ListTodo size={16} />手机待办</button>

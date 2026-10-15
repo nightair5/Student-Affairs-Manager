@@ -1,6 +1,7 @@
 import type { TaskDateViews } from '../experiments/mainline02/taskDateView'
 import type { MaterialItemEntity, RiskFlag, Task } from '../types'
 import { isMaterialSatisfied, materialStatusFromLegacy } from './domainEntities'
+import { isDateOnly } from './timeSemantics'
 
 const hour = 60 * 60 * 1000
 
@@ -216,6 +217,10 @@ export function formatDuration(minutes: number): string {
 }
 
 export function formatDeadline(deadline: string): string {
+  if(isDateOnly(deadline)){
+    const [year,month,day]=deadline.split('-')
+    return `${year}年${Number(month)}月${Number(day)}日（仅日期，原文未说明时刻）`
+  }
   const value = new Date(deadline)
   if (Number.isNaN(value.getTime())) return '时间待确认'
   return new Intl.DateTimeFormat('zh-CN', {

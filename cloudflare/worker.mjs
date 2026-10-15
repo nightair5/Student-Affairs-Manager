@@ -6,6 +6,8 @@ import {
   VISION_TEXT_EVALUATION_PROMPT_VERSION,
   applyDeterministicTimeAst,
   normalizeRecognitionResult,
+  citedTimeContext,
+  SOURCE_SAME_DAY_CONTEXT_VERSION,
   recognitionSystemPrompt,
 } from './recognition.mjs'
 import {PRODUCT_CONTRACT_PROMPT_VERSION,PRODUCT_GENERATION_EXPERIMENT_VERSION} from './recognition-output-contract.mjs'
@@ -881,6 +883,12 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       evaluationArm: selectedModel === DEEPSEEK_MULTIMODAL_MODEL ? 'T' : undefined,
       result,
       execution: {
+        timeContextProjection:{version:SOURCE_SAME_DAY_CONTEXT_VERSION,inferredFacts:0,decisions:result.timePoints.flatMap(point=>{
+          const support=citedTimeContext(point,result,result.evidence,sourceContent)
+          if(!support||!point.normalizedValue||point.needsConfirmation)return []
+          const original=candidate.timePoints.find(p=>p.tempId===point.tempId),normalizedInput=deterministicCandidate.timePoints.find(p=>p.tempId===point.tempId)
+          return [{pointId:point.tempId,rawText:point.rawText,sourceContext:support.context,evidenceIds:support.evidenceIds,original:{normalizedValue:original.normalizedValue,selected:original.selected},normalizedInput:{normalizedValue:normalizedInput.normalizedValue,selected:normalizedInput.selected},after:{normalizedValue:point.normalizedValue,selected:point.selected},rule:support.rule}]
+        })},
         ...(annotationProjection.audit?.decisions.length?{annotationProjection:annotationProjection.audit}:{}),
         tokenUsage: Number.isFinite(payload?.usage?.prompt_tokens) && Number.isFinite(payload?.usage?.completion_tokens)
           ? {

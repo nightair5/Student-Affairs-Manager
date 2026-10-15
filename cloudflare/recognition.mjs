@@ -8,6 +8,42 @@ export const MULTIMODAL_RECOGNITION_MODEL_NAME = 'deepseek-v4-flash-vision-exp'
 export const MULTIMODAL_RECOGNITION_PROMPT_VERSION = 'recognition-multimodal-exp-1.0.0'
 export const IMAGE_ONLY_EVALUATION_PROMPT_VERSION = 'recognition-multimodal-image-only-eval-1.1.0'
 export const VISION_TEXT_EVALUATION_PROMPT_VERSION = 'recognition-vision-text-eval-1.0.0'
+export const SOURCE_SAME_DAY_CONTEXT_VERSION='cited-same-day-normalization-1.0.0'
+
+/** An existing same-day clock may inherit one unambiguous adjacent source date.
+ * No model date, unrelated paragraph, missing evidence or duplicate occurrence
+ * can supply the anchor. Keep the original literal in the returned result. */
+export function citedSameDayContext(point,evidence,sourceContent){
+  if(!/^(?:当日|同日|当天)\d{1,2}:[0-5]\d(?:前)?$/u.test(point?.rawText??''))return null
+  const all=[...new Set((evidence??[]).filter(e=>point.evidenceIds?.includes(e.id)&&typeof e.quote==='string'&&sourceContent.includes(e.quote)&&e.quote.includes(point.rawText)).map(e=>e.quote))]
+  const quotes=all.filter(q=>!all.some(other=>other.length>q.length&&other.includes(q)))
+  if(quotes.length!==1)return null
+  const quote=quotes[0],at=sourceContent.indexOf(quote),within=quote.indexOf(point.rawText)
+  if(at<0||sourceContent.indexOf(quote,at+1)>=0||quote.indexOf(point.rawText,within+1)>=0)return null
+  const before=(sourceContent.slice(0,at)+quote.slice(0,within)).split(/[。\n]/u).at(-1)??''
+  const dates=[...before.matchAll(/\d{4}年\d{1,2}月\d{1,2}日/gu)]
+  if(dates.length!==1||/次日|另日|取消|作废|若|如果/u.test(before))return null
+  return {endpoint:point.rawText.replace(/^(?:当日|同日|当天)/u,dates[0][0]),context:before+point.rawText,quote,evidenceIds:(evidence??[]).filter(e=>point.evidenceIds?.includes(e.id)&&e.quote===quote).map(e=>e.id)}
+}
+
+export function citedTimeContext(point,raw,evidence,sourceContent){
+  const sameDay=citedSameDayContext(point,evidence,sourceContent)
+  if(sameDay)return {...sameDay,rule:'UNIQUE_ADJACENT_SOURCE_SAME_DAY_DATE'}
+  const clock=/^(\d{1,2}):([0-5]\d)(?:结束|散场|闭幕)?$/u.exec(point?.rawText??'')
+  if(point?.type!=='event_end'||!clock||+clock[1]>23)return null
+  const owners=(raw.events??[]).filter(e=>e.endTimePointTempId===point.tempId)
+  if(owners.length!==1)return null
+  const owner=owners[0],start=(raw.timePoints??[]).find(p=>p.tempId===owner.startTimePointTempId)
+  if(!start||start.type!=='event_start'||start.tempId===point.tempId)return null
+  const ownQuotes=p=>[...new Set(evidence.filter(e=>p.evidenceIds?.includes(e.id)&&owner.evidenceIds?.includes(e.id)&&typeof e.quote==='string'&&e.quote.includes(p.rawText)&&sourceContent.includes(e.quote)).map(e=>e.quote))]
+  const starts=ownQuotes(start),ends=ownQuotes(point)
+  if(starts.length!==1||ends.length!==1)return null
+  const a=sourceContent.indexOf(starts[0]),b=sourceContent.indexOf(ends[0]),dates=[...start.rawText.matchAll(/(\d{4}年\d{1,2}月\d{1,2}日)\s*(\d{1,2}):([0-5]\d)/gu)],date=dates[0]
+  if(dates.length!==1||[...start.rawText.matchAll(/\d{1,2}:[0-5]\d/gu)].length!==1||+date[2]>23||+clock[1]*60+ +clock[2]<+date[2]*60+ +date[3]||a<0||b<0||sourceContent.indexOf(starts[0],a+1)>=0||sourceContent.indexOf(ends[0],b+1)>=0)return null
+  const startAt=a+starts[0].indexOf(start.rawText),endAt=b+ends[0].indexOf(point.rawText),gap=sourceContent.slice(startAt+start.rawText.length,endAt)
+  if(endAt<startAt+start.rawText.length||!/^(?:开始|开场)?[，,；;\s]*(?:至|到)?\s*$/u.test(gap)||/次日|翌日|取消|若|如果/u.test(starts[0]+ends[0]))return null
+  return {endpoint:date[1]+point.rawText,context:sourceContent.slice(startAt,endAt+point.rawText.length),evidenceIds:[...new Set([...start.evidenceIds,...point.evidenceIds].filter(id=>owner.evidenceIds.includes(id)))],rule:'EXISTING_EVENT_ADJACENT_START_DATE'}
+}
 
 const ACTION_VERBS = ['提交', '上传', '填写', '完成', '准备', '核对', '确认', '联系', '参加', '阅读', '下载', '打印', '盖章', '签字', '回复', '领取', '整理', '撰写', '制作', '报名']
 const CATEGORIES = new Set(['比赛', '保研', '课程', '老师任务', '其他'])
@@ -185,16 +221,17 @@ export function normalizeRecognitionResult(
   })
   const timePoints = (Array.isArray(raw.timePoints) ? raw.timePoints : []).slice(0, 60).flatMap((item, index) => {
     if (!item || typeof item !== 'object' || Array.isArray(item) || !TIME_POINT_TYPES.has(item.type)) return []
-    const ast = parseChineseTimeAst(text(item.rawText, 160), {
+    const literal=text(item.rawText,160),timeContext=citedTimeContext({...item,rawText:literal},raw,evidence,sourceContent)
+    const ast = parseChineseTimeAst(timeContext?.endpoint??literal, {
       referenceTime: nowIso,
       timezone,
       type: item.type,
     })
     const normalizedValue = ast.normalizedValue
     const linkedEvidence = strings(item.evidenceIds).filter((id) => evidenceIds.has(id))
-    const id=text(item.tempId,100,`time-${index+1}`),literal=text(item.rawText,300),owned=strings(item.relatedTaskTempIds).length>0||strings(item.relatedMaterialTempIds).length>0||allTasks().some(t=>t.timePointTempIds.includes(id))||(raw.events??[]).some(e=>e.startTimePointTempId===id||e.endTimePointTempId===id)
-    const oldContext=item.selected===false&&!owned&&literal&&sourceContent.split(literal).length===2&&linkedEvidence.some(id=>{const q=evidence.find(e=>e.id===id)?.quote??'';return sourceContent.includes(q)&&q.includes('截止由'+literal+'改为')&&/旧截止(?:时间)?作废/u.test(q)})
-    return [{ tempId:id, type: item.type, rawText: ast.rawText, normalizedValue, timezone: ast.timezone, isAllDay: ast.isAllDay, precision: ast.precision, needsConfirmation: ast.needsConfirmation, relatedTaskTempIds: strings(item.relatedTaskTempIds), relatedMaterialTempIds: strings(item.relatedMaterialTempIds), evidenceIds: linkedEvidence, confidence: number01(item.confidence), selected: !oldContext&&linkedEvidence.length > 0 && normalizedValue !== null && !ast.needsConfirmation }]
+    const id=text(item.tempId,100,`time-${index+1}`),contextLiteral=text(item.rawText,300),owned=strings(item.relatedTaskTempIds).length>0||strings(item.relatedMaterialTempIds).length>0||allTasks().some(t=>t.timePointTempIds.includes(id))||(raw.events??[]).some(e=>e.startTimePointTempId===id||e.endTimePointTempId===id)
+    const oldContext=item.selected===false&&!owned&&contextLiteral&&sourceContent.split(contextLiteral).length===2&&linkedEvidence.some(id=>{const q=evidence.find(e=>e.id===id)?.quote??'';return sourceContent.includes(q)&&q.includes('截止由'+contextLiteral+'改为')&&/旧截止(?:时间)?作废/u.test(q)})
+    return [{ tempId:id, type: item.type, rawText: literal, normalizedValue, timezone: ast.timezone, isAllDay: ast.isAllDay, precision: ast.precision, needsConfirmation: ast.needsConfirmation, relatedTaskTempIds: strings(item.relatedTaskTempIds), relatedMaterialTempIds: strings(item.relatedMaterialTempIds), evidenceIds: linkedEvidence, confidence: number01(item.confidence), selected: !oldContext&&linkedEvidence.length > 0 && normalizedValue !== null && !ast.needsConfirmation }]
   })
   const events = (Array.isArray(raw.events) ? raw.events : []).slice(0, 30).flatMap((item, index) => {
     if (!item || typeof item !== 'object' || Array.isArray(item) || !text(item.title, 100)) return []

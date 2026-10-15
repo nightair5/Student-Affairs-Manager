@@ -39,7 +39,7 @@ async function product() {
   run('contract',['scripts/generate-recognition-contract.mjs','--check'])
   run('time-contract',['scripts/generate-time-ast.mjs','--check'])
   vitest('vitest-product',testFileGroups(process.cwd()).product)
-  nodeTests([['server','server/server-tests.mjs'],['worker','cloudflare/worker-tests.mjs'],['worker-d26','cloudflare/worker-d26-tests.mjs'],['worker-owned-range','cloudflare/recognition-owner-time.node-test.mjs'],['worker-local-annotation','cloudflare/recognition-annotation-projection.node-test.mjs'],['functions','functions/functions-tests.mjs'],['time-parity','scripts/time-ast-parity.node-test.mjs']])
+    nodeTests([['server','server/server-tests.mjs'],['worker','cloudflare/worker-tests.mjs'],['worker-d26','cloudflare/worker-d26-tests.mjs'],['worker-owned-range','cloudflare/recognition-owner-time.node-test.mjs'],['worker-local-annotation','cloudflare/recognition-annotation-projection.node-test.mjs'],['worker-same-day-context','cloudflare/recognition-same-day.node-test.mjs'],['functions','functions/functions-tests.mjs'],['time-parity','scripts/time-ast-parity.node-test.mjs']])
 }
 async function safety() {
   layer='current-safety'

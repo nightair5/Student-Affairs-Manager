@@ -108,6 +108,8 @@ export interface Task {
   estimatedMinutes: number
   estimatedMinutesKnown?: boolean
   sourceDeadlineLabel?: string
+  /** Read-only display of an existing, source-verified operating window. */
+  sourceWindowLabel?: string
   nextAction: string
   description: string
   priority: Priority
