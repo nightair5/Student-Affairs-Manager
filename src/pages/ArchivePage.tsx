@@ -128,7 +128,7 @@ function ProjectCard({ project, tasks, workPackages, events, materials, onAddMil
 export function ArchivePage({ tasks, projects, workPackages, events, materials, onExport, onImport, onClear, onAddMilestone, onToggleMilestone, onOpenTask }: ArchivePageProps) {
   return <main className="page">
     <header className="page-header"><div><span className="eyebrow">项目执行与依据</span><h1>项目</h1><p>先看下一步、材料与最近更新；展开后再查看阶段、任务、事件和来源脉络。</p></div><div className="header-stat"><Trophy size={20} /><span><strong>{projects.length}</strong> 个已创建项目</span></div></header>
-    {projects.length ? <div className="archive-grid">{projects.map((project) => <ProjectCard key={project.id} project={project} tasks={tasks} workPackages={workPackages} events={events} materials={materials} onAddMilestone={onAddMilestone} onToggleMilestone={onToggleMilestone} onOpenTask={onOpenTask} />)}</div> : <div className="empty-state"><Archive size={34} /><h2>还没有项目</h2><p>确认一份通知中的任意事项后，会自动建立可追溯项目。</p></div>}
+    {projects.length ? <div className="archive-grid">{projects.map((project) => <ProjectCard key={project.id} project={project} tasks={tasks} workPackages={workPackages} events={events} materials={materials} onAddMilestone={onAddMilestone} onToggleMilestone={onToggleMilestone} onOpenTask={onOpenTask} />)}</div> : <div className="empty-state"><Archive size={34} /><h2>还没有项目</h2><p>普通通知可以作为独立事项保存。需要分阶段推进时，再为相关事项建立项目。</p></div>}
     <WorkspaceControls onExport={onExport} onImport={onImport} onClear={onClear} />
   </main>
 }

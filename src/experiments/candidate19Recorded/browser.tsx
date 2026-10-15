@@ -91,7 +91,7 @@ const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new Ind
     const provenance = { role: record.candidate === 'EngineeringFixture' ? 'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT' : 'RECORDED_MODEL_ENGINEERING_REPLAY', ...record, projectionVersion: contractVersion }
     await canonical.transaction(w => ({ ...w, recognitionRuns: w.recognitionRuns.map(r => r.sourceVersionId === input.sourceVersionId ? { ...r, modelName: recordingMetadata().modelName, legacyData: { ...r.legacyData, recordedResponse: JSON.parse(JSON.stringify(provenance)) as JsonValue } } : r) }))
     try {
-      if(record.candidate==='ProductRecognition'){
+      if(record.candidate==='ProductRecognition'||(record.candidate==='EngineeringFixture'&&record.generationContract==='ordinary-product-schema-engineering-1')){
         if(record.serverNormalizedResult===null||record.serverNormalizedResult===undefined)throw Error('本份原回答未通过服务端契约；保留原答和来源，不猜补事实。')
         const bound=bindOrdinaryProviderSupport(parseRecognitionResult(record.serverNormalizedResult),{sourceId:input.sourceId,sourceVersionId:input.sourceVersionId,sourceText:input.content,referenceTime:record.referenceTime,timezone:record.timezone},JSON.stringify({result:record.serverNormalizedResult}))
         sidecars.set(input.sourceId,{...bound.sidecar,recordedProvenance:provenance})

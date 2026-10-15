@@ -1,0 +1,489 @@
+[
+  {
+    "id": "RES3-01",
+    "scene": "修订取消",
+    "text": "社团群消息：大家先别做旧版报名表啦，那次迎新比赛取消了。现在只收活动海报，2026年11月18日20:00前把PDF海报发到社团投稿箱；投稿箱显示收稿成功才算完成。原来那张报名二维码不用扫。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "海报",
+          "verbs": [
+            "发",
+            "发送",
+            "提交"
+          ],
+          "channel": "社团投稿箱",
+          "deadline": "2026-11-18T20:00",
+          "precision": "exact",
+          "criteria": "收稿成功"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "海报"
+      ],
+      "formats": [
+        "PDF"
+      ],
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "填写",
+            "报名",
+            "扫描"
+          ]
+        }
+      ]
+    },
+    "sourceType": "AUTHOR_ANONYMOUS_CLUB_MESSAGE",
+    "referenceTime": "2026-10-15T08:28:16+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthor": "Codex source-first / single-author / provisional / model-assisted",
+    "referenceWrittenAt": "2026-10-15T00:40:48.635Z"
+  },
+  {
+    "id": "RES3-02",
+    "scene": "修订取消",
+    "text": "辅导员语音转文字：嗯，补充一下，实践总结最迟交的时间改成2026年12月2日18点。原来的11月29号截止作废，别再按那个时间排。总结还是交到学院系统，收到电子回执就好了，不需要把回执再发给我。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "实践总结",
+          "verbs": [
+            "交",
+            "提交"
+          ],
+          "channel": "学院系统",
+          "deadline": "2026-12-02T18:00",
+          "precision": "exact",
+          "criteria": "电子回执"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "实践总结"
+      ],
+      "obsoleteDates": [
+        "2026-11-29"
+      ],
+      "forbidden": [
+        {
+          "object": "回执",
+          "verbs": [
+            "发",
+            "发送",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "sourceType": "AUTHOR_ANONYMOUS_VOICE_TRANSCRIPT",
+    "referenceTime": "2026-10-15T08:28:16+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthor": "Codex source-first / single-author / provisional / model-assisted",
+    "referenceWrittenAt": "2026-10-15T00:40:48.636Z"
+  },
+  {
+    "id": "RES3-03",
+    "scene": "报名",
+    "text": "摄影营可以自愿报名。请在2026年11月20日16:00前通过校园报名页提交报名表，报名页地址写在链接说明里，链接和二维码本体未提供。营期与地点见二维码说明，本次没有读到。不要根据去年的地点订车。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名表",
+          "verbs": [
+            "提交",
+            "报名"
+          ],
+          "channel": "校园报名页",
+          "deadline": "2026-11-20T16:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "报名表"
+      ],
+      "information": [
+        "未提供"
+      ]
+    },
+    "sourceType": "AUTHOR_ANONYMOUS_LINK_QR_NOTICE",
+    "referenceTime": "2026-10-15T08:28:16+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthor": "Codex source-first / single-author / provisional / model-assisted",
+    "referenceWrittenAt": "2026-10-15T00:40:48.636Z"
+  },
+  {
+    "id": "RES3-04",
+    "scene": "会议活动",
+    "text": "读书社系列活动：第一场2026年11月30日19:00—20:00，在南楼201；第二场2026年12月7日19:00—20:30，在南楼202。两场都可直接到场，不需要报名或提交材料。第一场叫小说讨论，第二场叫散文讨论，请勿把第二场日期照抄成11月30日。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "小说讨论",
+          "start": "2026-11-30T19:00",
+          "end": "2026-11-30T20:00",
+          "location": "南楼201"
+        },
+        {
+          "object": "散文讨论",
+          "start": "2026-12-07T19:00",
+          "end": "2026-12-07T20:30",
+          "location": "南楼202"
+        }
+      ],
+      "materialCount": 0,
+      "forbidden": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "sourceType": "AUTHOR_ANONYMOUS_CROSS_MONTH_SERIES",
+    "referenceTime": "2026-10-15T08:28:16+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthor": "Codex source-first / single-author / provisional / model-assisted",
+    "referenceWrittenAt": "2026-10-15T00:40:48.636Z"
+  },
+  {
+    "id": "RES3-05",
+    "scene": "作业提交",
+    "text": "Design class reminder / 设计课提醒：请上传设计说明。Deadline: 2026年12月3日23:00 (China time)。Upload to 课程平台，格式 PDF，文件名 design_note_班级。The workshop starts 2026年12月4日09:30，end time not announced，地点创作室B。Workshop start is not the submission deadline. 平台提示提交成功即可。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "设计说明",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "channel": "课程平台",
+          "deadline": "2026-12-03T23:00",
+          "precision": "exact",
+          "criteria": "提交成功"
+        }
+      ],
+      "events": [
+        {
+          "object": "workshop",
+          "start": "2026-12-04T09:30",
+          "endUnknown": true,
+          "location": "创作室B"
+        }
+      ],
+      "materials": [
+        "设计说明"
+      ],
+      "formats": [
+        "PDF"
+      ],
+      "naming": [
+        "design_note_班级"
+      ]
+    },
+    "sourceType": "AUTHOR_ANONYMOUS_BILINGUAL_NOTICE",
+    "referenceTime": "2026-10-15T08:28:16+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthor": "Codex source-first / single-author / provisional / model-assisted",
+    "referenceWrittenAt": "2026-10-15T00:40:48.636Z"
+  },
+  {
+    "id": "RES3-06",
+    "scene": "材料提交",
+    "text": "【同学转发老师的新说明】下面旧消息里的截止不要看了：旧消息“12月5日交证明”已经作废。当前要求：2026年12月8日09:00—11:00到综合窗口递交学习证明原件。这是窗口开放时段，没有另设截止。证明照片不必上传。原件检查后退回。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "学习证明",
+          "verbs": [
+            "递交",
+            "提交",
+            "交"
+          ],
+          "channel": "综合窗口",
+          "deadlineUnknown": true,
+          "window": "2026-12-08T09:00/11:00"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "学习证明"
+      ],
+      "obsoleteDates": [
+        "2026-12-05"
+      ],
+      "forbidden": [
+        {
+          "object": "证明照片",
+          "verbs": [
+            "上传",
+            "提交"
+          ]
+        }
+      ]
+    },
+    "sourceType": "AUTHOR_ANONYMOUS_FORWARD_NEST",
+    "referenceTime": "2026-10-15T08:28:16+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthor": "Codex source-first / single-author / provisional / model-assisted",
+    "referenceWrittenAt": "2026-10-15T00:40:48.636Z"
+  },
+  {
+    "id": "RES3-07",
+    "scene": "共享材料",
+    "text": "两项一起说：课程结项材料需要实验报告，电子版2026年12月9日18:00前交课程平台；奖学金审核也需要这份实验报告，纸质版2026年12月10日16:00前交教务窗口。只是一份报告的两种版本，不要新建第三项“实验报告”待办。两处接收成功各算该项完成。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "课程结项材料",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "课程平台",
+          "deadline": "2026-12-09T18:00",
+          "precision": "exact",
+          "material": "实验报告"
+        },
+        {
+          "object": "奖学金审核",
+          "verbs": [
+            "提交",
+            "交"
+          ],
+          "channel": "教务窗口",
+          "deadline": "2026-12-10T16:00",
+          "precision": "exact",
+          "material": "实验报告"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "实验报告"
+      ],
+      "sharedMaterial": true
+    },
+    "sourceType": "AUTHOR_ANONYMOUS_MULTICHANNEL_MESSAGE",
+    "referenceTime": "2026-10-15T08:28:16+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthor": "Codex source-first / single-author / provisional / model-assisted",
+    "referenceWrittenAt": "2026-10-15T00:40:48.636Z"
+  },
+  {
+    "id": "RES3-08",
+    "scene": "模糊待定时间",
+    "text": "群文件图片转文字（日期有错字）：请准备终端设备；培训写着“2026年l2月l日，晚间”，其中两个l是OCR错字，原图没有提供，日期不能确认。培训地点云教室，具体开始和结束时刻未公布。无需现在提交设备照片。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "终端设备",
+          "verbs": [
+            "准备"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "培训",
+          "startUnknown": true,
+          "endUnknown": true,
+          "location": "云教室"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "设备照片",
+          "verbs": [
+            "提交",
+            "上传"
+          ]
+        }
+      ]
+    },
+    "sourceType": "AUTHOR_ANONYMOUS_OCR_TRANSCRIPT",
+    "referenceTime": "2026-10-15T08:28:16+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthor": "Codex source-first / single-author / provisional / model-assisted",
+    "referenceWrittenAt": "2026-10-15T00:40:48.636Z"
+  },
+  {
+    "id": "RES3-09",
+    "scene": "条件资格",
+    "text": "通知转发：仅已通过选拔的同学须准备讨论提纲，并参加线上说明会。你的选拔结果还没出来，不能默认已通过。说明会2026年12月11日20:00—21:00，不需要提交提纲。没通过的同学不用参加，不需要再打电话确认。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "讨论提纲",
+          "verbs": [
+            "准备"
+          ],
+          "condition": "通过选拔",
+          "unknownEligibility": true,
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "说明会",
+          "start": "2026-12-11T20:00",
+          "end": "2026-12-11T21:00"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "提纲",
+          "verbs": [
+            "提交",
+            "上传"
+          ]
+        },
+        {
+          "object": "电话",
+          "verbs": [
+            "打",
+            "联系"
+          ]
+        }
+      ]
+    },
+    "sourceType": "AUTHOR_ANONYMOUS_CONDITIONAL_FORWARD",
+    "referenceTime": "2026-10-15T08:28:16+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthor": "Codex source-first / single-author / provisional / model-assisted",
+    "referenceWrittenAt": "2026-10-15T00:40:48.636Z"
+  },
+  {
+    "id": "RES3-10",
+    "scene": "作业提交",
+    "text": "把三条不相干消息一起贴了：①统计课：2026年12月12日18:00前上传统计作业到课程平台。②社团：2026年12月13日10:00图书角举行换书会，结束时间待定，直接到场。③失物群：谁的水杯？本条只是闲聊，不需要建任务。统计作业只接受PDF。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "统计作业",
+          "verbs": [
+            "上传",
+            "提交"
+          ],
+          "channel": "课程平台",
+          "deadline": "2026-12-12T18:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "换书会",
+          "start": "2026-12-13T10:00",
+          "endUnknown": true,
+          "location": "图书角"
+        }
+      ],
+      "materials": [
+        "统计作业"
+      ],
+      "formats": [
+        "PDF"
+      ],
+      "forbidden": [
+        {
+          "object": "水杯",
+          "verbs": [
+            "寻找",
+            "认领"
+          ]
+        }
+      ]
+    },
+    "sourceType": "AUTHOR_ANONYMOUS_MIXED_THREADS",
+    "referenceTime": "2026-10-15T08:28:16+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthor": "Codex source-first / single-author / provisional / model-assisted",
+    "referenceWrittenAt": "2026-10-15T00:40:48.636Z"
+  },
+  {
+    "id": "RES3-11",
+    "scene": "条件资格",
+    "text": "新生办理说明：先填写住宿意向表，填写时间未设截止。填完后再到住宿系统提交意向表，系统提示提交成功才算办结。现在本人还未填写；因此不能把前置状态写成已完成，也不能把提交义务删掉。仅新生适用，本人是否新生尚不确定。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "住宿意向表",
+          "verbs": [
+            "填写"
+          ],
+          "condition": "新生",
+          "unknownEligibility": true,
+          "deadlineUnknown": true
+        },
+        {
+          "object": "意向表",
+          "verbs": [
+            "提交"
+          ],
+          "predecessor": "住宿意向表",
+          "channel": "住宿系统",
+          "criteria": "提交成功",
+          "condition": "新生",
+          "unknownEligibility": true,
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [],
+      "materials": [
+        "意向表"
+      ]
+    },
+    "sourceType": "AUTHOR_ANONYMOUS_SPOKEN_PREREQUISITE",
+    "referenceTime": "2026-10-15T08:28:16+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthor": "Codex source-first / single-author / provisional / model-assisted",
+    "referenceWrittenAt": "2026-10-15T00:40:48.636Z"
+  },
+  {
+    "id": "RES3-12",
+    "scene": "纯信息",
+    "text": "值班群友情提醒：假期服务窗口的具体值班日期和时刻下月另行公布。今天没有新办理要求，也不用预约、删行程或交说明。这段仅说明后续会有通知，不是现在要参加的活动。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "materialCount": 0,
+      "information": [
+        "另行公布"
+      ],
+      "forbidden": [
+        {
+          "object": "预约",
+          "verbs": [
+            "预约",
+            "办理"
+          ]
+        },
+        {
+          "object": "行程",
+          "verbs": [
+            "删除"
+          ]
+        },
+        {
+          "object": "说明",
+          "verbs": [
+            "提交",
+            "交"
+          ]
+        }
+      ]
+    },
+    "sourceType": "AUTHOR_ANONYMOUS_INFORMATION_CHAT",
+    "referenceTime": "2026-10-15T08:28:16+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthor": "Codex source-first / single-author / provisional / model-assisted",
+    "referenceWrittenAt": "2026-10-15T00:40:48.636Z"
+  }
+]

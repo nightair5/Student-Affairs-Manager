@@ -1263,7 +1263,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       await ordinaryMeasurement.failure(draftId,error instanceof Error?error.message:'UNKNOWN')
       if(receipt){setNotice({text:'已提交，读回尚未验证；输入和提交记录保留，请重新读回，勿重复提交。'})}
       else if(error instanceof WorkspaceViewConflictError){setViewConflict(error);setNotice({text:'其他页面修改了相同内容。你的输入保留，请核对差异。'})}
-      else setNotice({text:`正式提交未完成：${error instanceof Error?error.message:'数据库写入失败'}；没有创建半份事实。`})
+      else if(error instanceof Error&&error.message==='DOMAIN_COMMIT_PROJECT_DECISION_REQUIRED')setNotice({text:'请先在“选择项目归属”中选“作为独立事项”，或选择要关联的项目，再接受本通知。当前尚未创建正式事项。'})
+      else setNotice({text:'暂时未能保存。本通知和建议仍在，没有留下半份事项；请手动重试接受，或先关闭稍后处理。'})
     }finally{ordinaryCommitLock.current=false;setOrdinaryBusy(false)}
   }
   const handleConfirmDraftItem = async (draftId:string,itemId:string) => {

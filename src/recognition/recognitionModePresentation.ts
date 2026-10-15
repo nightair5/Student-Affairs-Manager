@@ -28,3 +28,9 @@ export function timePointDisplayLabel(type: string): string {
   }
   return names[type] ?? '时间说明'
 }
+
+/** Display the stored local value without timezone conversion or guessed clock. */
+export function timePointDisplayValue(normalizedValue:string|null,rawText:string):string {
+  const match=normalizedValue?.match(/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?$/u)
+  return match?`${match[1]}年${Number(match[2])}月${Number(match[3])}日${match[4]?` ${match[4]}:${match[5]}`:''}`:rawText
+}
