@@ -1,6 +1,6 @@
 import { addDateOnlyDays, parseChineseTimeAst, type ChineseTimeAst, type ChineseTimeAstOptions } from './timeSemantics'
 
-export const D26_TIME_VERSION = 'source-time-semantics-2.2.0'
+export const D26_TIME_VERSION = 'source-time-semantics-2.3.0'
 export interface D26TimeInterpretation {
   version: typeof D26_TIME_VERSION
   point: ChineseTimeAst
@@ -40,7 +40,10 @@ export function interpretTimeD26(rawText: string, options: ChineseTimeAstOptions
     }
   }
   // Context must be the cited time clause, never the entire unrelated notice.
-  const tentative = /暂定|拟定|预计|可能|尚未确定|待确定/u.test(context)
+  // A duration estimate does not make a separately explicit start provisional.
+  // "预计2小时后开始" and genuinely estimated starts still remain tentative.
+  const timeStatusContext=context.replace(/预计\d+(?:\.\d+)?小时(?=[，,。；;\s]|$)/gu,'')
+  const tentative = /暂定|拟定|预计|可能|尚未确定|待确定/u.test(timeStatusContext)
   const unannounced = /(?:时间|日期|时刻).{0,6}(?:未公布|尚未公布|待公布|另行通知)|(?:未公布|尚未公布|另行通知).{0,6}(?:时间|日期|时刻)/u.test(rawText)
     || /^(?:尚未公布|未公布|待公布|另行通知)$/u.test(rawText.trim())
   const dayPeriod = rawText.match(/凌晨|清晨|早晨|早上|上午|中午|下午|傍晚|晚上|夜间|夜里|晚/u)?.[0] ?? null

@@ -2,6 +2,10 @@ import {describe,it,expect} from 'vitest'
 import {ordinaryWorkflowFixture} from './ordinaryProviderSupport.fixture'
 import {sourceCoverageHints} from './sourceCoverageHints'
 describe('missing-source disclosure without invented facts or extra confirmation',()=>{
+ it('a shared complete range does not make its correctly resolved end look like the earlier start',()=>{
+  const r=ordinaryWorkflowFixture(),source='活动于2027年3月8日19:00开始，20:30结束。';r.standaloneTasks=[];r.materials=[];r.events=[{tempId:'EV',title:'活动',description:source,startTimePointTempId:'S',endTimePointTempId:'E',location:null,evidenceIds:[],confidence:1,inferenceLevel:'explicit'}];r.timePoints=['S','E'].map((tempId,i)=>({tempId,type:i?'event_end':'event_start',rawText:source.slice(0,-1),normalizedValue:i?'2027-03-08T20:30':'2027-03-08T19:00',timezone:'Asia/Shanghai',isAllDay:false,precision:'exact',needsConfirmation:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:[],confidence:1}));const before=structuredClone(r);expect(sourceCoverageHints(source,r)).toEqual([]);expect(r).toEqual(before)
+  r.timePoints[1].normalizedValue='2027-03-08T11:00:00Z';expect(sourceCoverageHints(source,r).map(h=>h.kind)).toEqual(['unresolved_time_role']);r.timePoints[1].normalizedValue='2027-03-08T12:30:00Z';expect(sourceCoverageHints(source,r)).toEqual([])
+ })
  it('does not borrow a signup cutoff to turn a completed-course qualifier into a missing event',()=>{
   const r=ordinaryWorkflowFixture(),before=structuredClone(r)
   expect(sourceCoverageHints('已完成基础培训者可报名实验室值班，报名截止为2027年3月7日12:00。你尚未完成基础培训，培训完成后再报名。',r)).toEqual([])

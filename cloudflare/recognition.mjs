@@ -8,13 +8,14 @@ export const MULTIMODAL_RECOGNITION_MODEL_NAME = 'deepseek-v4-flash-vision-exp'
 export const MULTIMODAL_RECOGNITION_PROMPT_VERSION = 'recognition-multimodal-exp-1.0.0'
 export const IMAGE_ONLY_EVALUATION_PROMPT_VERSION = 'recognition-multimodal-image-only-eval-1.1.0'
 export const VISION_TEXT_EVALUATION_PROMPT_VERSION = 'recognition-vision-text-eval-1.0.0'
-export const SOURCE_SAME_DAY_CONTEXT_VERSION='cited-same-day-normalization-1.0.0'
+export const SOURCE_SAME_DAY_CONTEXT_VERSION='cited-same-day-normalization-1.1.0'
 
 /** An existing same-day clock may inherit one unambiguous adjacent source date.
  * No model date, unrelated paragraph, missing evidence or duplicate occurrence
  * can supply the anchor. Keep the original literal in the returned result. */
 export function citedSameDayContext(point,evidence,sourceContent){
-  if(!/^(?:当日|同日|当天)\d{1,2}:[0-5]\d(?:前)?$/u.test(point?.rawText??''))return null
+  const literal=point?.rawText??'',clock=/(?:当日|同日|当天)(\d{1,2}:[0-5]\d)(前)?/u.exec(literal)
+  if(!clock||[...literal.matchAll(/\d{1,2}:[0-5]\d/gu)].length!==1||/[。；\n]|取消|作废|如果|若/u.test(literal))return null
   const all=[...new Set((evidence??[]).filter(e=>point.evidenceIds?.includes(e.id)&&typeof e.quote==='string'&&sourceContent.includes(e.quote)&&e.quote.includes(point.rawText)).map(e=>e.quote))]
   const quotes=all.filter(q=>!all.some(other=>other.length>q.length&&other.includes(q)))
   if(quotes.length!==1)return null
@@ -23,12 +24,48 @@ export function citedSameDayContext(point,evidence,sourceContent){
   const before=(sourceContent.slice(0,at)+quote.slice(0,within)).split(/[。\n]/u).at(-1)??''
   const dates=[...before.matchAll(/\d{4}年\d{1,2}月\d{1,2}日/gu)]
   if(dates.length!==1||/次日|另日|取消|作废|若|如果/u.test(before))return null
-  return {endpoint:point.rawText.replace(/^(?:当日|同日|当天)/u,dates[0][0]),context:before+point.rawText,quote,evidenceIds:(evidence??[]).filter(e=>point.evidenceIds?.includes(e.id)&&e.quote===quote).map(e=>e.id)}
+  return {endpoint:dates[0][0]+clock[1]+(clock[2]??''),context:before+point.rawText,quote,evidenceIds:(evidence??[]).filter(e=>point.evidenceIds?.includes(e.id)&&e.quote===quote).map(e=>e.id)}
 }
 
-export function citedTimeContext(point,raw,evidence,sourceContent){
+export function citedTimeContext(point,raw,evidence,sourceContent,options={}){
   const sameDay=citedSameDayContext(point,evidence,sourceContent)
   if(sameDay)return {...sameDay,rule:'UNIQUE_ADJACENT_SOURCE_SAME_DAY_DATE'}
+  // Both existing endpoints can cite the same complete labelled range. The
+  // role, not the first clock encountered, chooses its existing value.
+  const labelled=/^(?:活动于|活动时间[为：:]?)?(\d{4}年\d{1,2}月\d{1,2}日)\s*(\d{1,2}:[0-5]\d)(?:开始|开场)[，,、；;\s]*(\d{1,2}:[0-5]\d)(?:结束|散场|闭幕)$/u.exec(point?.rawText??'')
+  if(labelled&&['event_start','event_end'].includes(point.type)){
+    const owners=(raw.events??[]).filter(e=>e[point.type==='event_start'?'startTimePointTempId':'endTimePointTempId']===point.tempId)
+    const owner=owners.length===1?owners[0]:null,start=(raw.timePoints??[]).find(p=>p.tempId===owner?.startTimePointTempId),end=(raw.timePoints??[]).find(p=>p.tempId===owner?.endTimePointTempId)
+    const shared=evidence.filter(e=>point.evidenceIds?.includes(e.id)&&owner?.evidenceIds?.includes(e.id)&&typeof e.quote==='string'&&e.quote.includes(point.rawText)&&sourceContent.includes(e.quote))
+    const quotes=[...new Set(shared.map(e=>e.quote))],clock=v=>{const[h,m]=v.split(':').map(Number);return h<24?h*60+m:null}
+    const a=clock(labelled[2]),b=clock(labelled[3]),at=sourceContent.indexOf(point.rawText)
+    if(owner&&start?.type==='event_start'&&end?.type==='event_end'&&start.tempId!==end.tempId&&start.rawText===point.rawText&&end.rawText===point.rawText&&quotes.length===1&&start.evidenceIds?.some(id=>shared.some(e=>e.id===id))&&end.evidenceIds?.some(id=>shared.some(e=>e.id===id))&&a!==null&&b!==null&&b>a&&at>=0&&sourceContent.indexOf(point.rawText,at+1)<0&&!/取消|延期|如果|若/u.test(quotes[0]))return {endpoint:labelled[1]+(point.type==='event_start'?labelled[2]:labelled[3]),context:point.rawText,evidenceIds:shared.map(e=>e.id),rule:'EXISTING_SHARED_LABELLED_EVENT_ENDPOINT'}
+  }
+  const parenthetical=/^(?:本)?(?:周|星期)[一二三四五六日天][（(](\d{1,2}月\d{1,2}日)[）)](.*)$/u.exec(point?.rawText??'')
+  if(point?.type==='event_start'&&parenthetical){
+    const owners=(raw.events??[]).filter(e=>e.startTimePointTempId===point.tempId),owner=owners.length===1?owners[0]:null
+    const qs=evidence.filter(e=>owner?.evidenceIds?.includes(e.id)&&point.evidenceIds?.includes(e.id)&&typeof e.quote==='string'&&sourceContent.includes(e.quote)&&e.quote.includes(point.rawText))
+    const at=sourceContent.indexOf(point.rawText)
+    if(owner&&qs.length===1&&at>=0&&sourceContent.indexOf(point.rawText,at+1)<0&&!/取消|作废|如果|若/u.test(qs[0].quote))return {endpoint:parenthetical[1]+parenthetical[2],context:qs[0].quote,evidenceIds:qs.map(e=>e.id),rule:'EXISTING_CITED_PARENTHESIZED_DATE'}
+  }
+  const next=/^次日(\d{1,2})点(?:([0-5]?\d)分|(半))?$/u.exec(point?.rawText??'')
+  if(point?.type==='event_end'&&next&&options.referenceTime){
+    const owners=(raw.events??[]).filter(e=>e.endTimePointTempId===point.tempId),owner=owners.length===1?owners[0]:null,start=(raw.timePoints??[]).find(p=>p.tempId===owner?.startTimePointTempId)
+    if(owner&&start?.type==='event_start'&&+next[1]>=1&&+next[1]<=12){
+      const valid=evidence.filter(e=>owner.evidenceIds?.includes(e.id)&&typeof e.quote==='string'&&sourceContent.includes(e.quote)&&sourceContent.indexOf(e.quote)===sourceContent.lastIndexOf(e.quote))
+      const startSupported=valid.some(e=>start.evidenceIds?.includes(e.id)&&e.quote.includes(start.rawText)),endSupported=valid.some(e=>point.evidenceIds?.includes(e.id)&&e.quote.includes(point.rawText))
+      const spans=valid.map(e=>({a:sourceContent.indexOf(e.quote),b:sourceContent.indexOf(e.quote)+e.quote.length,id:e.id})).sort((a,b)=>a.a-b.a),runs=[]
+      for(const span of spans){const last=runs.at(-1);if(last&&span.a<=last.b||last&&/^[，,\s]*$/u.test(sourceContent.slice(last.b,span.a))){last.b=Math.max(last.b,span.b);last.ids.push(span.id)}else runs.push({...span,ids:[span.id]})}
+      const candidates=runs.filter(run=>sourceContent.slice(run.a,run.b).includes(start?.rawText)&&sourceContent.slice(run.a,run.b).includes(point.rawText))
+      const run=candidates.length===1?candidates[0]:null,context=run?sourceContent.slice(run.a,run.b):''
+      const startLiteral=start.rawText.replace(/^(?:本)?(?:周|星期)[一二三四五六日天][（(](\d{1,2}月\d{1,2}日)[）)]/u,'$1'),ast=parseChineseTimeAst(startLiteral,{type:'event_start',referenceTime:options.referenceTime,timezone:options.timezone??'Asia/Shanghai'})
+      const clock=/T(\d{2}):([0-5]\d)$/u.exec(ast.normalizedValue??''),at=context.indexOf(point.rawText),suffix=at>=0?context.slice(at+point.rawText.length):'',duration=/^(?:停机维护|停机|维护|培训|会议|活动|结束)?[，,\s]*(?:预计|持续)?(\d+(?:\.\d+)?)小时(?:[，,。\s]|$)/u.exec(suffix)
+      if(startSupported&&endSupported&&run&&clock&&!ast.needsConfirmation&&duration&&+duration[1]>0&&+duration[1]<=24&&!/取消|作废|如果|若/u.test(context)&&context.indexOf(start.rawText)<at){
+        const minute=next[3]?30:+(next[2]??0),matches=[+next[1]%12,+next[1]%12+12].filter(h=>1440+h*60+minute-(+clock[1]*60+ +clock[2])===+duration[1]*60)
+        if(matches.length===1){const d=new Date(ast.normalizedValue.slice(0,10)+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+1);const date=d.toISOString().slice(0,10).replace(/(\d{4})-(\d{2})-(\d{2})/u,'$1年$2月$3日');return {endpoint:date+String(matches[0]).padStart(2,'0')+':'+String(minute).padStart(2,'0'),context,evidenceIds:run.ids,rule:'EXISTING_EVENT_NEXT_DAY_DURATION_CONSENSUS'}}
+      }
+    }
+  }
   const clock=/^(\d{1,2}):([0-5]\d)(?:结束|散场|闭幕)?$/u.exec(point?.rawText??'')
   if(point?.type!=='event_end'||!clock||+clock[1]>23)return null
   const owners=(raw.events??[]).filter(e=>e.endTimePointTempId===point.tempId)
@@ -221,7 +258,7 @@ export function normalizeRecognitionResult(
   })
   const timePoints = (Array.isArray(raw.timePoints) ? raw.timePoints : []).slice(0, 60).flatMap((item, index) => {
     if (!item || typeof item !== 'object' || Array.isArray(item) || !TIME_POINT_TYPES.has(item.type)) return []
-    const literal=text(item.rawText,160),timeContext=citedTimeContext({...item,rawText:literal},raw,evidence,sourceContent)
+    const literal=text(item.rawText,160),timeContext=citedTimeContext({...item,rawText:literal},raw,evidence,sourceContent,{referenceTime:nowIso,timezone})
     const ast = parseChineseTimeAst(timeContext?.endpoint??literal, {
       referenceTime: nowIso,
       timezone,

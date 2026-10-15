@@ -884,7 +884,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       result,
       execution: {
         timeContextProjection:{version:SOURCE_SAME_DAY_CONTEXT_VERSION,inferredFacts:0,decisions:result.timePoints.flatMap(point=>{
-          const support=citedTimeContext(point,result,result.evidence,sourceContent)
+          const support=citedTimeContext(point,result,result.evidence,sourceContent,{referenceTime,timezone})
           if(!support||!point.normalizedValue||point.needsConfirmation)return []
           const original=candidate.timePoints.find(p=>p.tempId===point.tempId),normalizedInput=deterministicCandidate.timePoints.find(p=>p.tempId===point.tempId)
           return [{pointId:point.tempId,rawText:point.rawText,sourceContext:support.context,evidenceIds:support.evidenceIds,original:{normalizedValue:original.normalizedValue,selected:original.selected},normalizedInput:{normalizedValue:normalizedInput.normalizedValue,selected:normalizedInput.selected},after:{normalizedValue:point.normalizedValue,selected:point.selected},rule:support.rule}]

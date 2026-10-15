@@ -1349,9 +1349,15 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
 
   const handleExportMigrationBackup = async () => {
     if (runtime) { rejectExperimentAction(); return }
-    const serialized = await workspaceRepository.exportLatestMigrationBackup()
+    let serialized: string | null
+    try {
+      serialized = await workspaceRepository.exportLatestMigrationBackup()
+    } catch {
+      setNotice({ text: '升级前备份暂时无法读取，当前数据未改动。请先导出当前数据，并保留原备份后重试。' })
+      return
+    }
     if (!serialized) {
-      setNotice({ text: '当前没有升级前备份；全新工作区无需升级备份。你仍可在项目档案导出当前数据。' })
+      setNotice({ text: '当前没有已生成的升级前备份。涉及升级的首次写入会先另存快照；现在可在项目档案导出当前数据。' })
       return
     }
     const url = URL.createObjectURL(new Blob([serialized], { type: 'application/json;charset=utf-8' }))

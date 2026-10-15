@@ -8,9 +8,19 @@ import type { TimePointSuggestionV2 } from './types'
 export function rangeEndpointSupport(rawText: string, type: TimePointSuggestionV2['type'], quotes: string[], referenceTime: string, timezone: string) {
   if (!['event_start', 'event_end'].includes(type)) return null
   const cited=[...new Set(quotes)].filter(q=>q.includes(rawText))
+  const labelled=/^(?:活动于|活动时间[为：:]?)?(\d{4}年\d{1,2}月\d{1,2}日)\s*(\d{1,2}:[0-5]\d)(?:开始|开场)[，,、；;\s]*(\d{1,2}:[0-5]\d)(?:结束|散场|闭幕)$/u.exec(rawText)
+  if(cited.length===1&&labelled&&!/取消|延期|如果|若/u.test(cited[0])){
+    const a=interpretTimeD26(labelled[1]+labelled[2],{type:'event_start',referenceTime,timezone}).point
+    const b=interpretTimeD26(labelled[1]+labelled[3],{type:'event_end',referenceTime,timezone}).point
+    if(!a.needsConfirmation&&!b.needsConfirmation&&a.normalizedValue&&b.normalizedValue&&b.normalizedValue>a.normalizedValue)return {quote:cited[0],literalRange:rawText,expanded:labelled[1]+(type==='event_start'?labelled[2]:labelled[3]),rule:'CITED_SAME_EVENT_RANGE_ENDPOINT' as const}
+  }
   if(cited.length===1){
-    const dates=[...rawText.matchAll(/(\d{4})年(\d{1,2})月(\d{1,2})日\s*[-—–至到]\s*(?:(\d{4})年)?(?:(\d{1,2})月)?(\d{1,2})日/gu)]
-    if(dates.length===1){const m=dates[0],left=`${m[1]}年${m[2]}月${m[3]}日`,right=`${m[4]??m[1]}年${m[5]??m[2]}月${m[6]}日`,a=interpretTimeD26(left,{type:'event_start',referenceTime,timezone}).point,b=interpretTimeD26(right,{type:'event_end',referenceTime,timezone}).point;if(a.normalizedValue&&b.normalizedValue&&!a.needsConfirmation&&!b.needsConfirmation&&b.normalizedValue>=a.normalizedValue)return {quote:cited[0],literalRange:m[0],expanded:type==='event_start'?left:right,rule:'CITED_SAME_EVENT_RANGE_ENDPOINT' as const}}
+    const dates=/\d\s*[:：]\s*\d|\d点/u.test(rawText)?[]:[...rawText.matchAll(/(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日?\s*[-—–至到]\s*(?:(\d{4})年)?(?:(\d{1,2})月)?(\d{1,2})日/gu)]
+    if(dates.length===1){
+      const m=dates[0],left=`${m[1]?m[1]+'年':''}${m[2]}月${m[3]}日`,a=interpretTimeD26(left,{type:'event_start',referenceTime,timezone}).point
+      const year=m[4]??a.normalizedValue?.slice(0,4),right=year?`${year}年${m[5]??m[2]}月${m[6]}日`:null,b=right?interpretTimeD26(right,{type:'event_end',referenceTime,timezone}).point:null
+      if(a.normalizedValue&&b?.normalizedValue&&right&&!a.needsConfirmation&&!b.needsConfirmation&&b.normalizedValue>=a.normalizedValue)return {quote:cited[0],literalRange:m[0],expanded:type==='event_start'?left:right,rule:'CITED_SAME_EVENT_RANGE_ENDPOINT' as const}
+    }
   }
   if (/^\d{4}年\d{1,2}月\d{1,2}日\d{1,2}:[0-5]\d$/u.test(rawText)) {
     const clocks=[...new Set(quotes)].flatMap(quote=>[...quote.matchAll(/(?<!\d)(\d{4})年(\d{1,2})月(\d{1,2})日(\d{1,2}):([0-5]\d)\s*[-—–至到]\s*(\d{1,2}):([0-5]\d)(?!\d)/gu)].map(m=>({quote,m})))

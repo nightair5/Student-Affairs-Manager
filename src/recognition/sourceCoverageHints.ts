@@ -1,6 +1,14 @@
 import type {RecognitionResult} from './types'
-export const SOURCE_COVERAGE_HINT_VERSION='source-coverage-hints-1.4.0'
+export const SOURCE_COVERAGE_HINT_VERSION='source-coverage-hints-1.5.0'
 export interface SourceCoverageHint {kind:'unread_reference'|'unrepresented_time_range'|'unrepresented_action'|'unrepresented_event'|'unresolved_time_role';title:string;detail:string;quote:string}
+function clockValue(p:RecognitionResult['timePoints'][number]){
+ if(!p.normalizedValue)return null
+ if(/(?:Z|[+-]\d{2}:\d{2})$/u.test(p.normalizedValue)){
+  const date=new Date(p.normalizedValue);if(!Number.isFinite(date.getTime()))return null
+  try{return new Intl.DateTimeFormat('en-GB',{timeZone:p.timezone,hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(date)}catch{return null}
+ }
+ return /T(\d{2}:[0-5]\d)/u.exec(p.normalizedValue)?.[1]??null
+}
 /** UI disclosure only. Source snippets are not inferred entities or Expected.
  * It neither repairs a model answer nor blocks unrelated valid confirmations.
  */
@@ -23,7 +31,7 @@ export function sourceCoverageHints(source:string,result:RecognitionResult):Sour
   const activityTimeText=clause.replace(/(?:报名|申请|提交|交件)?截止(?:时间)?(?:为|是|至|到|：|:)?[^，。；\n]*/gu,'')
   const hasTime=/\d{1,2}:[0-5]\d|\d{1,2}月\d{1,2}日|周[一二三四五六日天].*(?:晚|上午|下午)|明天|明日/u.test(activityTimeText)
   for(const match of clause.matchAll(/(\d{1,2}:[0-5]\d)\s*(出发|开始|开场)/gu)){
-   const ends=result.events.flatMap(e=>result.timePoints.filter(p=>p.tempId===e.endTimePointTempId&&p.type==='event_end'&&[p.rawText,p.normalizedValue].join(' ').includes(match[1])))
+   const ends=result.events.flatMap(e=>result.timePoints.filter(p=>p.tempId===e.endTimePointTempId&&p.type==='event_end'&&(clockValue(p)===match[1]||!p.normalizedValue&&[...p.rawText.matchAll(/\d{1,2}:[0-5]\d/gu)].length===1&&p.rawText.includes(match[1]))))
    if(ends.length&&!/结束|散场|闭幕/u.test(clause.slice(Math.max(0,match.index-8),match.index+match[0].length)))hints.push({kind:'unresolved_time_role',title:'活动时刻的用途还需核对',detail:'原文把这个时刻写作出发或开始，当前却放在结束位置。先查看这段原文；不会自动补建另一个活动。',quote:clause})
   }
   if(hasTime&&eventWords.some(word=>!result.events.some(e=>[e.title,e.description].join(' ').includes(word)))&&!/不(?:会|再)?停机|不出发|取消/u.test(clause))hints.push({kind:'unrepresented_event',title:'这段活动说明尚无对应事件',detail:'原文提到了活动及时间，当前事件列表还没有对应说明。先保留原文，不自动补建事件；可先接受其他明确事项。',quote:clause})

@@ -13,7 +13,7 @@ import {completeCitedSourceWindows} from './citedSourceWindow'
 import {addDateOnlyDays} from '../lib/timeSemantics'
 import {nativeQualificationReviews} from './nativeQualificationReview'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.14.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.15.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -49,6 +49,12 @@ function supportedAdjacent(value: string, quotes: string[], sourceText: string) 
   return covered >= start + value.length
 }
 const unique = (values: string[]) => [...new Set(values)]
+function contiguousEventQuotes(quotes:string[],source:string){
+ const spans=unique(quotes).flatMap(q=>{const start=source.indexOf(q);return q&&start>=0&&source.indexOf(q,start+1)<0?[{start,end:start+q.length}]:[]}).sort((a,b)=>a.start-b.start)
+ const runs:Array<{start:number;end:number}>=[]
+ for(const span of spans){const last=runs.at(-1);if(last&&(span.start<=last.end||/^[，,\s]*$/u.test(source.slice(last.end,span.start))))last.end=Math.max(last.end,span.end);else runs.push({...span})}
+ return runs.map(r=>source.slice(r.start,r.end))
+}
 /** Wire action.surface is a citation, while the ordinary actionVerb is at most
  * 20 characters. Project only a verb in that same grounded grammatical action;
  * never truncate source text, guess an action or discard the other tasks. */
@@ -89,7 +95,7 @@ function prose(audit: D26FirstSuggestionAudit, original: ProseRecord, title: str
 }
 function time<T extends TimeFields & { tempId: string; rawText: string; type: TimePointSuggestionV2['type'] }>(point: T, quotes: string[], referenceTime: string, timezone: string, audit: D26FirstSuggestionAudit, inheritedDate?: string, anchorContext = '', rangeQuotes: string[] = [], anchorMinutes?:number) {
   const before = fields(point)
-  const fullRange=/(?:\d{4}年)?\d{1,2}月\d{1,2}日\s*(?:[-—–至到]\s*(?:\d{4}年)?(?:\d{1,2}月)?\d{1,2}日|\d{1,2}:[0-5]\d\s*[-—–至到]\s*\d{1,2}:[0-5]\d)/u.test(point.rawText)
+  const fullRange=/(?:\d{4}年)?\d{1,2}月\d{1,2}日?\s*(?:[-—–至到]\s*(?:\d{4}年)?(?:\d{1,2}月)?\d{1,2}日|\d{1,2}:[0-5]\d\s*[-—–至到]\s*\d{1,2}:[0-5]\d|\d{1,2}:[0-5]\d(?:开始|开场)[，,、；;\s]*\d{1,2}:[0-5]\d(?:结束|散场|闭幕))/u.test(point.rawText)
   const range = supported(point.rawText, quotes)&&!fullRange?null:rangeEndpointSupport(point.rawText, point.type, rangeQuotes, referenceTime, timezone)
   if (!supported(point.rawText, quotes) && !range) {
     audit.unresolved.push({ entityId: point.tempId, reason: 'TIME_SOURCE_SUPPORT_MISSING' })
@@ -100,7 +106,7 @@ function time<T extends TimeFields & { tempId: string; rawText: string; type: Ti
   // Bare clock ranges resemble dates to the legacy parser. Use a clock
   // endpoint only when the same event and endpoint explicitly cite the unique
   // adjacent calendar heading already checked by citedEventDate.
-  const clocks = /^(\d{1,2}):([0-5]\d)\s*[-—–]\s*(\d{1,2}):([0-5]\d)$/u.exec(point.rawText)
+  const clocks = /^(\d{1,2}):([0-5]\d)\s*[-—–]\s*(\d{1,2}):([0-5]\d)(?:同地(?:有)?[^\d。；\n]{1,20})?$/u.exec(point.rawText)
   const heading = /^\d{4}年\d{1,2}月\d{1,2}日(?:[（(](?:周|星期)[一二三四五六日天][）)])?\s*$/u.test(anchorContext)
   const validClocks = clocks && +clocks[1] <= 23 && +clocks[3] <= 23 && +clocks[3] * 60 + +clocks[4] > +clocks[1] * 60 + +clocks[2]
   const literalRanges = ['event_start','event_end'].includes(point.type) ? unique(rangeQuotes).filter(q=>q.includes(point.rawText)).flatMap(q=>[...point.rawText.matchAll(/(?<!\d)((?:\d{4}年)?\d{1,2}月\d{1,2}日)\s*(\d{1,2}):([0-5]\d)\s*[-—–至到]\s*(\d{1,2}):([0-5]\d)(?!\d)/gu)].map(m=>({q,m}))) : []
@@ -113,7 +119,9 @@ function time<T extends TimeFields & { tempId: string; rawText: string; type: Ti
   }
   const expanded = closed ? closed.m[1]+(point.type==='event_start'?closed.m[2]+':'+closed.m[3]:closed.m[4]+':'+closed.m[5]) : null
   if(expanded&&closed)audit.rangeSupport.push({entityId:point.tempId,quote:closed.q,literalRange:closed.m[0],expanded,rule:'CITED_SAME_EVENT_CLOCK_RANGE'})
-  const composed = expanded ?? (inheritedDate && (heading||Boolean(anchorContext)) && validClocks && ['event_start','event_end'].includes(point.type)
+  const sameDayClock=inheritedDate&&/(?:当日|同日|当天)(\d{1,2}:[0-5]\d)(?:前)?/u.exec(point.rawText)
+  const sameDayEndpoint=sameDayClock&&[...point.rawText.matchAll(/\d{1,2}:[0-5]\d/gu)].length===1?inheritedDate!.replace(/(\d{4})-(\d{2})-(\d{2})/u,'$1年$2月$3日')+sameDayClock[1]:null
+  const composed = expanded ?? sameDayEndpoint ?? (inheritedDate && (heading||Boolean(anchorContext)) && validClocks && ['event_start','event_end'].includes(point.type)
     ? inheritedDate.replace(/(\d{4})-(\d{2})-(\d{2})/u,'$1年$2月$3日') + ' ' + (point.type === 'event_start' ? clocks[1]+':'+clocks[2] : clocks[3]+':'+clocks[4]) : null
   )
   if (composed) audit.rangeSupport.push({entityId:point.tempId,quote:anchorContext+'\n'+point.rawText,literalRange:point.rawText,expanded:composed,rule:'CITED_SAME_EVENT_CLOCK_RANGE'})
@@ -177,7 +185,7 @@ function eventAnchor(pointId: string, events: EventAnchorOwner[], points: Anchor
 }
 
 function citedSameDayDate(point:AnchorPoint,quotes:(id:string)=>string[],source:string,referenceTime:string,timezone:string){
- if(!/^(?:当日|同日|当天)\d{1,2}:[0-5]\d(?:前)?$/u.test(point.rawText))return undefined
+ if(!/(?:当日|同日|当天)\d{1,2}:[0-5]\d(?:前)?/u.test(point.rawText)||[...point.rawText.matchAll(/\d{1,2}:[0-5]\d/gu)].length!==1||/[。；\n]|取消|作废|如果|若/u.test(point.rawText))return undefined
  const all=unique(quotes(point.tempId).filter(q=>q.includes(point.rawText))),rows=all.filter(q=>!all.some(other=>other.length>q.length&&other.includes(q)));if(rows.length!==1)return undefined
  const at=source.indexOf(rows[0]);if(at<0||source.indexOf(rows[0],at+1)>=0)return undefined
  const preceding=source.slice(0,at).split(/[。\n]/u).at(-1)??''
@@ -295,7 +303,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     if (heading?.blocked) audit.unresolved.push({ entityId: point.tempId, reason: 'EVENT_DATE_HEADING_NOT_UNAMBIGUOUS' })
     const owners = result.events.filter(e => e.startTimePointTempId === point.tempId || e.endTimePointTempId === point.tempId)
     const window=audit.citedSourceWindows.decisions.find(w=>[w.startPointId,w.endPointId].includes(point.tempId))
-    const rangeQuotes = window?quote(window.evidenceIds):owners.length === 1 ? pointQuotes(point.tempId).filter(q => eventQuotes(owners[0].tempId).includes(q)) : []
+    const rangeQuotes = window?quote(window.evidenceIds):owners.length === 1 ? unique([...pointQuotes(point.tempId).filter(q => eventQuotes(owners[0].tempId).includes(q)),...(/^次日/u.test(point.rawText)?contiguousEventQuotes(eventQuotes(owners[0].tempId),context.sourceText):[])]) : []
     time(point, pointQuotes(point.tempId), context.referenceTime, context.timezone, audit, anchor?.date, anchor?.context, rangeQuotes,'startMinutes' in (anchor??{})?(anchor as {startMinutes?:number}).startMinutes:undefined)
   }
   const tasks: TaskSuggestionV2[] = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
