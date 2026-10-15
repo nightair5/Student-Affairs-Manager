@@ -5,7 +5,7 @@ import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sou
 import { verifyWorkflowChannelEvidence, type WorkflowMaterialSupport } from './workflowChannelSupport'
 import {citedDeliveryContexts,type CitedDeliveryContext} from './citedDeliveryContext'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.8.0'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.9.0'
 export const WORKFLOW_MATERIAL_CHANNEL_VERSION = 'material-declared-workflow-channel-1.0.0'
 export interface MaterialChannelDecision {
   materialId: string
@@ -18,6 +18,7 @@ export interface MaterialChannelDecision {
   roleChecks: Array<{ quote: string; object: string; polarity: 'AFFIRMATIVE' | 'NEGATED_OR_UNCERTAIN'; roleText: string; polarityText: string; unrelatedQualifier: string | null }>
   workflowProof?: WorkflowMaterialSupport
   citedContextProof?: CitedDeliveryContext
+  ownerChannels?: Array<{ownerId:string;channel:string}>
 }
 export interface MaterialChannelAudit {
   version: typeof MATERIAL_CHANNEL_GROUNDING_VERSION | typeof WORKFLOW_MATERIAL_CHANNEL_VERSION
@@ -116,7 +117,10 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     const direct = owners.length > 0 && !contradictory && (roleChecks.some(c => c.polarity === 'AFFIRMATIVE')||!!citedContextProof)
     const parts=originalValue.split(/[；;]/u).map(s=>s.trim()).filter(Boolean)
     const ownerRoles=parts.length>1&&parts.length===owners.length?parts.map(part=>({part,owners:owners.filter(owner=>{
-      const own=evidence.filter(e=>owner.evidenceIds.includes(e.id)),declaredObjects=[material.name,owner.actionObject,...material.formatRequirements.filter(f=>own.some(e=>e.quote.includes(f)))]
+      // A shared citation may contain both paper and electronic instructions.
+      // Its sibling format is not another name for this owner. Require the
+      // format in the object, or a citation unique to that owner, is required.
+      const own=evidence.filter(e=>owner.evidenceIds.includes(e.id)),declaredObjects=[material.name,owner.actionObject,...material.formatRequirements.filter(f=>own.some(e=>e.quote.includes(f))&&(compact(owner.actionObject).includes(compact(f))||owners.filter(t=>evidence.some(e=>t.evidenceIds.includes(e.id)&&e.quote.includes(f))).length===1))]
       const checks=citedClauses(own,sourceText).flatMap(q=>declaredObjects.flatMap(o=>{const c=destinationRole(q,o,part,siblings);return c?[c]:[]}))
       return checks.some(c=>c.polarity==='AFFIRMATIVE')&&!checks.some(c=>c.polarity==='NEGATED_OR_UNCERTAIN')
     }).map(t=>t.tempId)})):[]
@@ -138,7 +142,7 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     const receipt = !contradictory && clauses.some(c => c.includes(originalValue) && /显示|提示|回执|接收成功|收到成功/u.test(c))
       && owners.some(t => t.completionCriteria.some(c => c.includes(originalValue) && /显示|提示|回执|接收成功|收到成功/u.test(c) && evidence.some(e=>e.quote.includes(c))))
     const status = direct ? 'EXPLICIT_CHANNEL' : ownerSpecific?'EXPLICIT_OWNER_CHANNELS': workflowProof ? 'EXPLICIT_WORKFLOW_CHANNEL' : receipt ? 'RECEIPT_CONTEXT_UNRESOLVED' : 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
-    audit.decisions.push({ materialId: material.tempId, materialName: material.name, ownerIds: material.relatedTaskTempIds, originalValue, displayedValue: direct || ownerSpecific || workflowProof ? originalValue : null, status, evidence, roleChecks, ...(workflowProof ? { workflowProof } : {}),...(citedContextProof?{citedContextProof}:{}) })
+    audit.decisions.push({ materialId: material.tempId, materialName: material.name, ownerIds: material.relatedTaskTempIds, originalValue, displayedValue: direct || ownerSpecific || workflowProof ? originalValue : null, status, evidence, roleChecks, ...(workflowProof ? { workflowProof } : {}),...(citedContextProof?{citedContextProof}:{}),...(ownerSpecific?{ownerChannels:ownerRoles.map(r=>({ownerId:r.owners[0],channel:r.part}))}:{}) })
     if (direct || ownerSpecific || workflowProof) continue
     // null here means unconfirmed destination, not "the source states no channel".
     material.submissionChannel = null
