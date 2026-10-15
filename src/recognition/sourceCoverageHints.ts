@@ -1,5 +1,5 @@
 import type {RecognitionResult} from './types'
-export const SOURCE_COVERAGE_HINT_VERSION='source-coverage-hints-1.3.0'
+export const SOURCE_COVERAGE_HINT_VERSION='source-coverage-hints-1.4.0'
 export interface SourceCoverageHint {kind:'unread_reference'|'unrepresented_time_range'|'unrepresented_action'|'unrepresented_event'|'unresolved_time_role';title:string;detail:string;quote:string}
 /** UI disclosure only. Source snippets are not inferred entities or Expected.
  * It neither repairs a model answer nor blocks unrelated valid confirmations.
@@ -12,8 +12,16 @@ export function sourceCoverageHints(source:string,result:RecognitionResult):Sour
   for(const m of clause.matchAll(/(?<!\d)(\d{1,2}:[0-5]\d)\s*[-—–至到]\s*(\d{1,2}:[0-5]\d)(?!\d)/gu)){
    if(!points.some(p=>p.includes(m[1]))||!points.some(p=>p.includes(m[2])))hints.push({kind:'unrepresented_time_range',title:'这段时间尚未完整整理',detail:'原文有明确起止文字，方案中尚未找到完整对应。不会把它猜成截止或个人安排；其他有依据的事项仍可接受。',quote:clause})
   }
-  const eventWords=[...clause.matchAll(/停机(?:维护)?|出发|答疑|讲座|培训|读书会|说明会|班级讨论/gu)].map(m=>m[0])
-  const hasTime=/\d{1,2}:[0-5]\d|\d{1,2}月\d{1,2}日|周[一二三四五六日天].*(?:晚|上午|下午)|明天|明日/u.test(clause)
+  const eventWords=[...clause.matchAll(/停机(?:维护)?|出发|答疑|讲座|培训|读书会|说明会|班级讨论/gu)].filter(m=>{
+   const before=clause.slice(0,m.index),after=clause.slice(m.index+m[0].length)
+   // A completed-course qualifier is not a newly scheduled activity. This
+   // excludes only that mention; a later, genuinely dated activity survives.
+   return !(/(?:已完成|完成过|参加过|已通过)[^，、；。]{0,12}$/u.test(before)&&/^(?:者|的同学|的学生)/u.test(after))
+  }).map(m=>m[0])
+  // A registration/submission cutoff does not provide an activity start. Keep
+  // independent dated activity clauses instead of borrowing the cutoff clock.
+  const activityTimeText=clause.replace(/(?:报名|申请|提交|交件)?截止(?:时间)?(?:为|是|至|到|：|:)?[^，。；\n]*/gu,'')
+  const hasTime=/\d{1,2}:[0-5]\d|\d{1,2}月\d{1,2}日|周[一二三四五六日天].*(?:晚|上午|下午)|明天|明日/u.test(activityTimeText)
   for(const match of clause.matchAll(/(\d{1,2}:[0-5]\d)\s*(出发|开始|开场)/gu)){
    const ends=result.events.flatMap(e=>result.timePoints.filter(p=>p.tempId===e.endTimePointTempId&&p.type==='event_end'&&[p.rawText,p.normalizedValue].join(' ').includes(match[1])))
    if(ends.length&&!/结束|散场|闭幕/u.test(clause.slice(Math.max(0,match.index-8),match.index+match[0].length)))hints.push({kind:'unresolved_time_role',title:'活动时刻的用途还需核对',detail:'原文把这个时刻写作出发或开始，当前却放在结束位置。先查看这段原文；不会自动补建另一个活动。',quote:clause})
