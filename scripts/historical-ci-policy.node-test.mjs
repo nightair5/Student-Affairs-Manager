@@ -18,3 +18,11 @@ test('missing signature, unlisted group, new missing prerequisite and new origin
   assert.equal(classifyHistorical({results:[{...row,outcome:'NOT_AVAILABLE'}]},policy,options).outcome,'FAIL')
   assert.equal(classifyHistorical({results:[{...row,label:'historical-originals'}]},policy,{...options,originalsUnchanged:()=>false}).outcome,'FAIL')
 })
+
+test('authorized lock upgrade signature is allowed only for its exact audited bytes',()=>{
+  const bound={groups:{old:{...policy.groups.old,errorAlternatives:[['OLD_HASH'],['FREEZE_HASH_MISMATCH:package-lock.json']],fileSha256:{'package-lock.json':'audited-sha'}}}}
+  const readLog=()=>"not ok 1 - old assertion\nerror: 'FREEZE_HASH_MISMATCH:package-lock.json'"
+  assert.equal(classifyHistorical({results:[row]},bound,{...options,readLog,filesMatch:files=>files['package-lock.json']==='audited-sha'}).outcome,'PASS_WITH_RECORDED_HISTORY')
+  assert.equal(classifyHistorical({results:[row]},bound,{...options,readLog,filesMatch:()=>false}).outcome,'FAIL')
+  assert.equal(classifyHistorical({results:[row]},bound,{...options,readLog}).outcome,'FAIL')
+})
