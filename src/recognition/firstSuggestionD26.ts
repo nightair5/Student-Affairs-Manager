@@ -17,7 +17,7 @@ import {addDateOnlyDays} from '../lib/timeSemantics'
 import {nativeQualificationReviews} from './nativeQualificationReview'
 import {projectCitedClockRanges,type CitedClockRangeDecision} from '../../cloudflare/cited-clock-range.mjs'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.22.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.23.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -34,7 +34,7 @@ export interface D26FirstSuggestionAudit {
   nativePreconditionReview:ReturnType<typeof nativePreconditionIssues>
   nativeQualificationReview:ReturnType<typeof nativeQualificationReviews>
   activityRoles:ReturnType<typeof groundActivityRoles>
-  actionFields: Array<{entityId:string; before:string; after:string; status:'CITED_VERB_PROJECTION'|'LOCAL_UNRESOLVED_ACTION'; quotes:string[]}>
+  actionFields: Array<{entityId:string; before:string; after:string; status:'CITED_VERB_PROJECTION'|'LOCAL_UNRESOLVED_ACTION'|'EXISTING_COURSE_COMPLETION_SUPPORT'; quotes:string[]}>
   rangeSupport: Array<{entityId:string; quote:string; literalRange:string; expanded:string; rule:'CITED_SAME_EVENT_RANGE_ENDPOINT'|'CITED_SAME_EVENT_CLOCK_RANGE'|'CITED_ADJACENT_SAME_DAY_EVENT'|'CITED_NEXT_DAY_DURATION_CONSENSUS'|'CITED_SHARED_TASK_RANGE_ENDPOINT'}>
   role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT'
 }
@@ -56,6 +56,22 @@ function supportedAdjacent(value: string, quotes: string[], sourceText: string) 
   return covered >= start + value.length
 }
 const unique = (values: string[]) => [...new Set(values)]
+/** A model's existing completion action may express a course requirement,
+ * rather than quote a literal verb. Require the same cited course/assignment,
+ * an open teaching component, an assessment obligation and its owned deadline.
+ * This validates an existing action; it never creates a task or a time. */
+function supportedCourseCompletion(task:TaskSuggestionV2,quotes:string[],points:TimePointSuggestionV2[]) {
+  if(task.actionVerb!=='完成'||!['课程学习','线上课程学习','在线课程学习','在线作业','线上作业'].includes(task.actionObject))return false
+  const course=task.actionObject.endsWith('课程学习'),object=course?'课程学习':task.actionObject
+  const relevant=quotes.filter(q=>course?/课程|学习/u.test(q):q.includes(object))
+  if(relevant.some(q=>/不要|不得|请勿|无需|不必|禁止|取消|作废|尚未|如果|例如|另行通知/u.test(q)))return false
+  if(!quotes.some(q=>q.includes(object)))return false
+  const opened=relevant.some(q=>course?/(?:线上|在线)课程(?:教学)?资源已(?:全部|同步)?(?:开启|开放)/u.test(q):/作业[”"]?(?:环节)?已(?:全部|同步)?(?:开启|开放)/u.test(q))
+  const assessment=relevant.some(q=>/(?:成绩|作业)占(?:各门)?课程总评成绩的\d+(?:\.\d+)?%[，,](?:请)?务必/u.test(q))
+  const deadline=points.some(p=>task.timePointTempIds.includes(p.tempId)&&p.relatedTaskTempIds.includes(task.tempId)&&p.type.endsWith('_deadline')
+    &&!p.needsConfirmation&&!!p.normalizedValue&&relevant.some(q=>q.includes(p.rawText)&&q.includes('截止时间')))
+  return opened&&assessment&&deadline
+}
 function contiguousEventQuotes(quotes:string[],source:string){
  const spans=unique(quotes).flatMap(q=>{const start=source.indexOf(q);return q&&start>=0&&source.indexOf(q,start+1)<0?[{start,end:start+q.length}]:[]}).sort((a,b)=>a.start-b.start)
  const runs:Array<{start:number;end:number}>=[]
@@ -320,7 +336,8 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   const tasks: TaskSuggestionV2[] = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
   for (const task of tasks) {
     boundActionField(task,quote(task.evidenceIds),context.sourceText,audit)
-    const quotes = quote(task.evidenceIds), grounded = supportedAdjacent(task.actionVerb, quotes,context.sourceText) && (supportedAdjacent(task.actionObject, quotes,context.sourceText)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes))
+    const quotes = quote(task.evidenceIds),completion=supportedCourseCompletion(task,quotes,result.timePoints),grounded = completion||supportedAdjacent(task.actionVerb, quotes,context.sourceText) && (supportedAdjacent(task.actionObject, quotes,context.sourceText)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes))
+    if(completion)audit.actionFields.push({entityId:task.tempId,before:task.actionVerb,after:task.actionVerb,status:'EXISTING_COURSE_COMPLETION_SUPPORT',quotes})
     const original = { entityId: task.tempId, kind: 'task' as const, title: task.title, description: task.description }
     Object.assign(task, prose(audit, original, grounded ? supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)?task.actionVerb:taskActionText(task.actionVerb, task.actionObject) : '待核对事项',
       grounded ? unique(quotes).join('\n') : '动作或对象缺少对应来源依据，请核对。'))

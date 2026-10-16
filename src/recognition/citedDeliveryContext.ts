@@ -1,10 +1,13 @@
 import type {RecognitionResult} from './types'
-export const CITED_DELIVERY_CONTEXT_VERSION='cited-delivery-context-1.1.0'
+export const CITED_DELIVERY_CONTEXT_VERSION='cited-delivery-context-1.2.0'
 export interface CitedDeliveryContext {ownerId:string;materialIds:string[];channel:string;verb:string;evidenceIds:string[];quote:string;rule:'CLOSED_CITED_TOPIC_DELIVERY'|'CLOSED_CITED_DELIVERY_LABEL'}
 const escaped=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')
 const delivery=/^(提交|递交|送交|上交|上传|发送|交|发)$/u
 const negative=/请勿|不要|不得|无需|不必|禁止|取消|不再|如果|除非|尚未|只有|仅限|若/u
-const clockAndDate=/(?:\d{4}年)?\d{1,2}月\d{1,2}日|\d{4}-\d{2}-\d{2}|\d{1,2}:[0-5]\d|[一二三四五六七八九十\d]+(?:份|张|页|个)/gu
+// Consume the separator only inside an explicit pair of clock values. Leaving
+// it behind made a fully cited delivery window look like an unknown argument.
+// Unexplained words, another object and dangling separators still fail closed.
+const clockAndDate=/(?:\d{4}年)?\d{1,2}月\d{1,2}日|\d{4}-\d{2}-\d{2}|\d{1,2}:[0-5]\d(?:[—–-]\d{1,2}:[0-5]\d)?|[一二三四五六七八九十\d]+(?:份|张|页|个)/gu
 /** Resolve omitted arguments inside a closed, cited delivery context only.
  * Entities, values and bidirectional ownership already exist. Lexical content
  * between the object and role must reduce to those attributes and grammar. */

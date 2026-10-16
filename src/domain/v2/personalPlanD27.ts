@@ -3,10 +3,11 @@ import type { HistoryRecord, JsonValue, Task, TimePoint, WorkspaceV8 } from './t
 import { addDateOnlyDays, instantToWallClock, isDateOnly, parseBusinessDateTime, wallClockToInstant } from '../../lib/timeSemantics'
 import {citedTaskDateRange} from '../../../cloudflare/cited-event-sequence.mjs'
 import {interpretTimeD26} from '../../lib/timeSemanticsD26'
+import {projectCitedClockRanges} from '../../../cloudflare/cited-clock-range.mjs'
 import {sourceReadinessValue,unresolvedSourceReadiness} from './sourceReadiness'
 
 export const PLAN_VERSION = 'personal-plan-d27-1' as const
-export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.3.1' as const
+export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.3.2' as const
 export const PLAN_RECEIPT = 'personalPlanD27Receipt'
 export const PLAN_UNDO = 'personalPlanD27Undo'
 export type DurationOrigin = 'user' | 'recorded_estimate' | 'product_estimate'
@@ -227,7 +228,8 @@ function sourceWindowBounds(w:WorkspaceV8,t:Task,zone:string):SourceBounds {
     // Native ordinary results may already declare both ends of one shared
     // task window without the semantic sidecar. Validate the stored graph and
     // citations; absence of the sidecar must not schedule outside that window.
-    const native=w.timePoints.filter(p=>p.relatedTaskIds.includes(t.id)&&p.eventId===null&&['event_start','event_end'].includes(p.type)&&/月\d{1,2}日?\s*[-—–至到]/u.test(p.rawText))
+    const native=w.timePoints.filter(p=>p.relatedTaskIds.includes(t.id)&&p.eventId===null&&['event_start','event_end'].includes(p.type)
+      &&(/月\d{1,2}日?\s*[-—–至到]/u.test(p.rawText)||/\d{1,2}:[0-5]\d\s*[-—–至到]/u.test(p.rawText)))
     if(!native.length)return {start:-Infinity,end:Infinity,intervals:[{start:-Infinity,end:Infinity}],invalid:false,present:false}
     const starts=native.filter(p=>p.type==='event_start'),ends=native.filter(p=>p.type==='event_end')
     const source=w.sources.find(s=>s.id===t.legacyData?.sourceId),version=w.sourceVersions.find(v=>v.id===source?.currentVersionId)
@@ -235,6 +237,20 @@ function sourceWindowBounds(w:WorkspaceV8,t:Task,zone:string):SourceBounds {
     const raw=draft?.result,rawTasks=raw?[...raw.standaloneTasks,...raw.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(wp=>wp.tasks)])]:[]
     if(starts.length!==1||ends.length!==1||!raw||!version?.rawText)return invalid
     const start=starts[0],end=ends[0],a=sourceWindowMs(start,zone,false),b=sourceWindowMs(end,zone,true)
+    if(start.precision==='exact'&&end.precision==='exact'){
+      if(a===undefined||b===undefined||b<=a||start.rawText!==end.rawText||start.timezone!==end.timezone
+        ||JSON.stringify([...start.relatedTaskIds].sort())!==JSON.stringify([...end.relatedTaskIds].sort()))return invalid
+      const projection=projectCitedClockRanges(raw,version.rawText,raw.createdAt,zone)
+      for(const point of [start,end]){
+        const decision=projection.audit.decisions.find(d=>d.pointId===point.legacyData?.recognitionTempId)
+        if(!decision||decision.blocked||!decision.ownerIds.includes(String(t.legacyData?.recognitionTempId))
+          ||decision.after.normalizedValue!==point.normalizedValue||!sourceWindowEvidence(w,point,version.id,point.rawText,version.rawText))return invalid
+        // Related materials may repeat the same task-owned window; they may
+        // not supply a window from a different action or a foreign source.
+        if(point.relatedMaterialIds.some(id=>!w.materials.some(m=>m.id===id&&m.relatedTaskIds.includes(t.id))))return invalid
+      }
+      return {start:a,end:b,intervals:[{start:a,end:b}],invalid:false,present:true}
+    }
     if(a===undefined||b===undefined||b<=a||start.rawText!==end.rawText||start.precision!=='date_only'||end.precision!=='date_only'||start.materialId||end.materialId||start.relatedMaterialIds.length||end.relatedMaterialIds.length||start.timezone!==end.timezone||JSON.stringify([...start.relatedTaskIds].sort())!==JSON.stringify([...end.relatedTaskIds].sort()))return invalid
     for(const point of [start,end]){
       const original=raw.timePoints.find(p=>p.tempId===point.legacyData?.recognitionTempId),proof=original&&citedTaskDateRange(original,rawTasks,raw.timePoints,raw.evidence,version.rawText)

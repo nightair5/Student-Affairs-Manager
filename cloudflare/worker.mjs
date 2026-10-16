@@ -20,6 +20,7 @@ import {parseRecognitionJson} from './recognition-json.mjs'
 import {projectDanglingAnnotationEvidence} from './recognition-annotation-projection.mjs'
 import {projectLiteralSourceEvidence} from './recognition-literal-evidence.mjs'
 import {projectCitedClockRanges} from './cited-clock-range.mjs'
+import {previewAccess} from './preview-access.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -1101,6 +1102,8 @@ export function createWorker({
   resolveHostname = resolvePublicHostname,
   isRateLimited = createRateLimiter(),
   acquireConcurrency = createConcurrencyLimiter(),
+  previewLoginLimited = createRateLimiter({windowMs:15 * 60_000,maxRequests:5}),
+  previewNow = Date.now,
 } = {}) {
   return {
     async fetch(request, env) {
@@ -1115,8 +1118,10 @@ export function createWorker({
         errorType: null,
         client: anonymousClientId(clientKey(request)),
       }
-      let response
-      if (EXPERIMENTAL_ROUTE.test(url.pathname)
+      let response = await previewAccess(request,env,{isLimited:previewLoginLimited,now:previewNow})
+      if (response) {
+        context.errorType = response.status >= 400 ? 'PREVIEW_ACCESS_REQUIRED' : null
+      } else if (EXPERIMENTAL_ROUTE.test(url.pathname)
         || EXPERIMENTAL_ROUTE.test(url.pathname.replace(/^\/api(?=\/)/u, ''))) {
         context.errorType = 'NOT_FOUND'
         response = failure('NOT_FOUND', '该路径在发布版中不可用。', 404, context.requestId)
@@ -1173,6 +1178,11 @@ export function createWorker({
         response = await env.ASSETS.fetch(request)
       }
       if (url.pathname.startsWith('/api/')) logRequest(context, response)
+      if (env.PREVIEW_ACCESS_REQUIRED === 'true') {
+        response = new Response(response.body,response)
+        response.headers.set('cache-control','private, no-store')
+        response.headers.append('vary','Cookie')
+      }
       return responseWithSecurityHeaders(response, context.requestId, request, env.ALLOWED_ORIGINS)
     },
   }

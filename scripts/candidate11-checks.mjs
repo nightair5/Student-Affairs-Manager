@@ -40,6 +40,7 @@ async function carrierTests(label,paths,pattern) {
 }
 async function product() {
   layer='current-product'
+  nodeTests([['preview-access','cloudflare/preview-access.node-test.mjs']])
   nodeTests([['worker-literal-evidence','cloudflare/recognition-literal-evidence.node-test.mjs']])
   nodeTests([['cited-clock-range','cloudflare/cited-clock-range.node-test.mjs']])
   run('timezone',['-e','const zone=Intl.DateTimeFormat().resolvedOptions().timeZone;console.log(JSON.stringify({requested:process.env.TZ,resolved:zone,offset:new Date("2026-01-15T00:00:00Z").getTimezoneOffset()}));if(!process.env.TZ)process.exit(1)'])
@@ -51,6 +52,7 @@ async function product() {
 async function safety() {
   layer='current-safety'
   nodeTests([['product-worker-payload','scripts/product-worker-payload.node-test.mjs']])
+  nodeTests([['historical-ci-policy','scripts/historical-ci-policy.node-test.mjs']])
   nodeTests([['product-generation-isolated-schema','cloudflare/recognition-product-contract-v1-7.node-test.mjs'],['integration-ci-trigger','scripts/ci-integration-trigger.node-test.mjs']])
   const groups=testFileGroups(process.cwd())
   // Frozen private-record cases are scheduled in historical(), not discarded.
@@ -89,7 +91,7 @@ async function historical() {
     if(missing.length)record({label,status:null,outcome:'NOT_AVAILABLE',reason:'HISTORICAL_PRIVATE_ORIGINALS_MISSING',missing})
     return missing.length===0
   }
-  for(const [label,file,required] of entries)if(available(label,required))run(label,['--test',file])
+  for(const [label,file,required] of entries)if(available(label,required))run(label,['--test','--test-reporter=tap',file])
   const groups=testFileGroups(process.cwd())
   if(available('vitest-d17-history',d17Required))vitest('vitest-d17-history',groups.historical)
   const statePath='docs/recognition-optimization/mainline-real-input-01/runs/usage-resume-20260907a/STATE.json'

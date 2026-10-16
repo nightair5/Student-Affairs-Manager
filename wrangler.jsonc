@@ -38,20 +38,14 @@
       "name": "student-affairs-manager-preview",
       "workers_dev": true,
       "routes": [],
+      "vars": {
+        "PREVIEW_ACCESS_REQUIRED": "true"
+      },
       "assets": {
         "directory": "./dist",
         "binding": "ASSETS",
         "not_found_handling": "single-page-application",
-        "run_worker_first": [
-          "/api/*",
-          "/benchmark*",
-          "/e2*",
-          "/fact-ledger*",
-          "/factledger*",
-          "/selection*",
-          "/blind*",
-          "/research-preview*"
-        ]
+        "run_worker_first": true
       },
       "observability": {
         "enabled": true,
