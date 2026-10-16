@@ -89,3 +89,6 @@ docs/recognition-optimization/candidate19-public-development/paid-evidence/** -t
 # The v2 manifest froze the original v1 bytes as CRLF. Keep that checkout on
 # every host; do not rewrite its Git blob or the historical SHA assertion.
 src/recognition/fixtures/product-dev-v1/notifications.json text eol=crlf
+
+# The active tool lock is generated text; use the same checked-out bytes in CI.
+package-lock.json text eol=lf

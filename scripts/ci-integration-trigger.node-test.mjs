@@ -9,7 +9,10 @@ test('ordinary pushes on the current integration mainline trigger the existing C
   assert.ok(branches.includes('integration/product-v3'))
   assert.ok(branches.includes('release/**'))
   assert.match(workflow,/run: npm run test:product/u)
-  assert.match(workflow,/run: npm run test:safety/u)
+  assert.match(workflow,/run: node scripts\/current-safety-ci\.mjs/u)
+  const safetyRunner=readFileSync(new URL('./current-safety-ci.mjs',import.meta.url),'utf8')
+  assert.match(safetyRunner,/spawnSync\(process\.execPath,\['scripts\/candidate11-checks\.mjs','current-safety'\]/u)
+  assert.match(workflow,/os: \[ubuntu-latest, windows-latest\]/u)
   assert.equal(/run:.*(?:wrangler deploy|cloudflare:deploy)/u.test(workflow),false)
 })
 

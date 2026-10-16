@@ -53,6 +53,7 @@ async function safety() {
   layer='current-safety'
   nodeTests([['product-worker-payload','scripts/product-worker-payload.node-test.mjs']])
   nodeTests([['historical-ci-policy','scripts/historical-ci-policy.node-test.mjs']])
+  nodeTests([['current-safety-ci-policy','scripts/current-safety-ci.node-test.mjs']])
   nodeTests([['product-generation-isolated-schema','cloudflare/recognition-product-contract-v1-7.node-test.mjs'],['integration-ci-trigger','scripts/ci-integration-trigger.node-test.mjs']])
   const groups=testFileGroups(process.cwd())
   // Frozen private-record cases are scheduled in historical(), not discarded.

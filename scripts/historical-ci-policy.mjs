@@ -45,7 +45,7 @@ if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).hr
   const summary=JSON.parse(readFileSync(path,'utf8'))
   const canonical=bytes=>bytes.toString('utf8').replace(/\r\n/gu,'\n')
   const report=classifyHistorical(summary,policy,{readLog:path=>readFileSync(path,'utf8'),filesMatch:files=>Object.entries(files).every(([path,expected])=>{
-    try{return createHash('sha256').update(readFileSync(path)).digest('hex')===expected}catch{return false}
+    try{return createHash('sha256').update(canonical(readFileSync(path))).digest('hex')===expected}catch{return false}
   }),originalsUnchanged:path=>{
     const report=JSON.parse(readFileSync(path,'utf8')),failed=report.results.filter(row=>row.outcome==='FAIL')
     return failed.length>0&&failed.every(row=>{
