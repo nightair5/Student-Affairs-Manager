@@ -166,5 +166,7 @@ export function assembleCurrentFirstSuggestion(input: RecognitionResult, context
   const channels = groundMaterialChannels(first.result, context.sourceText, context.workflowMaterialSupport)
   const windows = groundSourceWindows(channels.result, context.sourceWindows ?? [], context)
   const appointments=groundSourceActionTimes(windows.result,context.sourceText,context.sourceActionTimes)
+  const reasons=[...new Set(appointments.result.quality.reviewReasons)]
+  if(reasons.length>20)appointments.result.quality.reviewReasons=[...reasons.slice(0,19),`另有${reasons.length-19}项待核对说明，请展开事项、材料及冲突明细查看。`]
   return { ...first, audit:{...first.audit,sourceActionTimes:appointments.audit},result: appointments.result, materialChannelAudit: channels.audit, sourceWindowGrounding: windows.audit }
 }

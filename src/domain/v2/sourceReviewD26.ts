@@ -8,6 +8,7 @@ import type { WorkspaceV8 } from './types'
 import {eventDisposition} from './eventDisposition'
 import {unresolvedSourceReadiness} from './sourceReadiness'
 import { taskTimeAuthorityFromSidecar } from '../../recognition/taskTimeAuthorityContract'
+import {hasLocalIsolationPending} from '../../../cloudflare/recognition-local-isolation.mjs'
 
 export const SOURCE_REVIEW_VERSION = 'source-review-d26-1'
 export const PENDING_SOURCE_READBACK = 'source-review:pending-readback'
@@ -49,6 +50,7 @@ export function sourceEventProblem(result:RecognitionResult,eventId:string):stri
 /** Mirror the existing event-only commit gate before the click, while keeping
  * independent valid events available for a partial confirmation. */
 export function sourceInformationReviewProblem(result:RecognitionResult):string|undefined {
+ if(hasLocalIsolationPending(result)&&!result.events.some(e=>e.selected!==false))return '还有模型项需要依据原文核对，不能标记整份无任务；可先保存有依据的正确事项。'
  const global=result.conflicts.find(c=>c.requiresDecision&&!c.entityTempIds.length)
  if(global)return global.message
  const selected=result.events.filter(e=>e.selected!==false)
@@ -166,7 +168,7 @@ export async function commitSourceReview(repository: CanonicalWorkspaceRepositor
     const handled=new Set([...stored.acceptedEntityTempIds,...stored.rejectedEntityTempIds])
     // Unchecked means deferred, not rejected. Only an actual accepted/rejected
     // identity closes the source; otherwise refresh must retain its review entry.
-    const complete=tasksOf(stored.result!).every(t=>handled.has(t.tempId))&&stored.result!.events.every(e=>handled.has(e.tempId))
+    const complete=!hasLocalIsolationPending(stored.result!)&&tasksOf(stored.result!).every(t=>handled.has(t.tempId))&&stored.result!.events.every(e=>handled.has(e.tempId))
     receipt.disposition=complete?(tasksOf(stored.result!).some(t=>stored.acceptedEntityTempIds.includes(t.tempId))?'confirmed':'no_task'):'partial'
     const status=complete?'confirmed' as const:'partially_confirmed' as const
     return {...next,sources:next.sources.map(s=>s.id===plan.sourceId?{...s,status}:s),extractionDrafts:next.extractionDrafts.map(d=>d.id===plan.draftId?{...d,status,legacyData:{...d.legacyData,[PENDING_SOURCE_READBACK]:{...receipt}}}:d)}

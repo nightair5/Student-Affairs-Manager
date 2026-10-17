@@ -4,6 +4,9 @@
   "main": "./cloudflare/worker.mjs",
   "compatibility_date": "2026-08-02",
   "workers_dev": true,
+  "vars": {
+    "DEEPSEEK_EXTRACTION_MAX_TOKENS": "16384"
+  },
   "routes": [
     {
       "pattern": "student-affairs.site",
@@ -39,6 +42,7 @@
       "workers_dev": true,
       "routes": [],
       "vars": {
+        "DEEPSEEK_EXTRACTION_MAX_TOKENS": "16384",
         "PREVIEW_ACCESS_REQUIRED": "true"
       },
       "assets": {

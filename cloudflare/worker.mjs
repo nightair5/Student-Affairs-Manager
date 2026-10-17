@@ -20,6 +20,8 @@ import {parseRecognitionJson} from './recognition-json.mjs'
 import {projectDanglingAnnotationEvidence} from './recognition-annotation-projection.mjs'
 import {projectLiteralSourceEvidence} from './recognition-literal-evidence.mjs'
 import {projectCitedClockRanges} from './cited-clock-range.mjs'
+import {isolateRecognitionItems,retainUnanchoredWeekTimes} from './recognition-local-isolation.mjs'
+import {decodeRecognitionOutput} from './recognition-output-recovery.mjs'
 import {previewAccess} from './preview-access.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
@@ -32,7 +34,8 @@ const MAX_MULTIMODAL_IMAGE_BYTES = 8 * 1024 * 1024
 const MAX_MULTIMODAL_TOTAL_IMAGE_BYTES = 10 * 1024 * 1024
 const MAX_MULTIMODAL_IMAGES = 4
 const MAX_KNOWLEDGE_TOKENS = 2_000
-const MAX_EXTRACTION_TOKENS = 6_000
+export const MAX_EXTRACTION_TOKENS = 16_384
+const MAX_MULTIMODAL_EXTRACTION_TOKENS = 6_000
 const MAX_WEB_RESPONSE_BYTES = 512 * 1024
 const MAX_WEB_REDIRECTS = 3
 const UPSTREAM_TIMEOUT_MS = 45_000
@@ -826,7 +829,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
         model: selectedModel,
         thinking: { type: 'disabled' },
         temperature: 0.1,
-        max_tokens: MAX_EXTRACTION_TOKENS,
+        max_tokens: Math.min(MAX_EXTRACTION_TOKENS,Math.max(1,Number(env.DEEPSEEK_EXTRACTION_MAX_TOKENS)||6_000)),
         response_format: { type: 'json_object' },
         messages: [
           { role: 'system', content: systemPrompt },
@@ -848,11 +851,10 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     context.outputTokens = Number.isFinite(payload?.usage?.completion_tokens)
       ? payload.usage.completion_tokens
       : 0
-    const content = safeText(payload?.choices?.[0]?.message?.content, 30_000)
-    let parsed
-    try {
-      parsed = parseRecognitionJson(content)
-    } catch {
+    const content = payload?.choices?.[0]?.message?.content
+    const decoded=decodeRecognitionOutput(content,{finishReason:payload?.choices?.[0]?.finish_reason})
+    const parsed=decoded.value
+    if(!parsed){
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 未返回有效的任务结构。', 502, context.requestId)
     }
@@ -867,10 +869,11 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     const clockRangeProjection=projectCitedClockRanges(literalProjection.result,sourceContent,referenceTime,timezone)
     const deterministicCandidate = applyDeterministicTimeAst(literalProjection.result, referenceTime, timezone, sourceContent)
     const annotationProjection=selectedPromptVersion?.startsWith('recognition-product-contract-')?projectDanglingAnnotationEvidence(deterministicCandidate):{result:deterministicCandidate,audit:null}
-    const candidateValidation = validateRecognitionResult(annotationProjection.result, { sourceContent })
+    const localIsolation=isolateRecognitionItems(annotationProjection.result,sourceContent,{sourceId:'pending-source'})
+    const candidateValidation = validateRecognitionResult(localIsolation.result??annotationProjection.result, { sourceContent })
     if (!candidateValidation.valid) return invalidRecognitionResponse(context, candidateValidation)
     const result = normalizeRecognitionResult(
-      annotationProjection.result,
+      localIsolation.result??annotationProjection.result,
       sourceContent,
       referenceTime,
       selectedModel,
@@ -882,6 +885,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 没有返回有效的 RecognitionResult 2.0。', 502, context.requestId)
     }
+    retainUnanchoredWeekTimes(result)
     const resultValidation = validateRecognitionResult(result, { sourceContent })
     if (!resultValidation.valid) return invalidRecognitionResponse(context, resultValidation)
     return success({
@@ -889,6 +893,8 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       evaluationArm: selectedModel === DEEPSEEK_MULTIMODAL_MODEL ? 'T' : undefined,
       result,
       execution: {
+        ...(decoded.audit.partial?{outputRecovery:decoded.audit}:{}),
+        ...(localIsolation.audit.quarantined.length||localIsolation.audit.structure.length||localIsolation.audit.relations.length?{localIsolation:localIsolation.audit}:{}),
         ...(clockRangeProjection.audit.decisions.length?{citedClockRangeProjection:clockRangeProjection.audit}:{}),
         timeContextProjection:{version:SOURCE_SAME_DAY_CONTEXT_VERSION,inferredFacts:0,decisions:result.timePoints.flatMap(point=>{
           const support=citedTimeContext(point,result,result.evidence,sourceContent,{referenceTime,timezone})
@@ -1000,7 +1006,7 @@ async function extractMultimodalTasks(request, env, fetcher, isRateLimited, acqu
         model: DEEPSEEK_MULTIMODAL_MODEL,
         thinking: { type: 'disabled' },
         temperature: 0.1,
-        max_tokens: MAX_EXTRACTION_TOKENS,
+        max_tokens: MAX_MULTIMODAL_EXTRACTION_TOKENS,
         response_format: { type: 'json_object' },
         messages: [
           { role: 'system', content: systemPrompt },

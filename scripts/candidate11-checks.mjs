@@ -43,6 +43,7 @@ async function product() {
   nodeTests([['preview-access','cloudflare/preview-access.node-test.mjs']])
   nodeTests([['worker-literal-evidence','cloudflare/recognition-literal-evidence.node-test.mjs']])
   nodeTests([['cited-clock-range','cloudflare/cited-clock-range.node-test.mjs']])
+  nodeTests([['worker-local-item-isolation','cloudflare/recognition-local-isolation.node-test.mjs'],['worker-closed-prefix-recovery','cloudflare/recognition-output-recovery.node-test.mjs']])
   run('timezone',['-e','const zone=Intl.DateTimeFormat().resolvedOptions().timeZone;console.log(JSON.stringify({requested:process.env.TZ,resolved:zone,offset:new Date("2026-01-15T00:00:00Z").getTimezoneOffset()}));if(!process.env.TZ)process.exit(1)'])
   run('contract',['scripts/generate-recognition-contract.mjs','--check'])
   run('time-contract',['scripts/generate-time-ast.mjs','--check'])
@@ -52,6 +53,7 @@ async function product() {
 async function safety() {
   layer='current-safety'
   nodeTests([['product-worker-payload','scripts/product-worker-payload.node-test.mjs']])
+  nodeTests([['product-v51-wrapped-date-bug','scripts/product-dev-review-v51-wrapped-date.node-test.mjs']])
   nodeTests([['historical-ci-policy','scripts/historical-ci-policy.node-test.mjs']])
   nodeTests([['current-safety-ci-policy','scripts/current-safety-ci.node-test.mjs']])
   nodeTests([['product-generation-isolated-schema','cloudflare/recognition-product-contract-v1-7.node-test.mjs'],['integration-ci-trigger','scripts/ci-integration-trigger.node-test.mjs']])

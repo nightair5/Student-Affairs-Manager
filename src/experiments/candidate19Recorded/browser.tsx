@@ -56,7 +56,7 @@ import '../d26/diagnostics.css'
 declare const __C19_RECORDED_CONFIG__: { database: string; build: string; origin: string; explicitContract?: boolean; currentSupportProjection?: boolean; fixtureCount?: number; batchLabel?: string; initialOrdinal?: number }
 const config = __C19_RECORDED_CONFIG__
 if (location.origin !== config.origin || !/^rco-mainline-01-02-i1-d27-plan-recorded-[a-z0-9-]+$/.test(config.database)) throw Error('RECORDED_ISOLATION_REQUIRED')
-interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18' | 'Candidate19' | 'SingleAuthority' | 'ObligationAuthority' | 'RoleAuthority' | 'TaskRequirements' | 'FactRoleAuthority' | 'TaskTimeAuthority' | 'EngineeringFixture' | 'ProductRecognition'; generationContract?:string; promptVersion?:string;serverNormalizedResult?:unknown;serverTimeContextAudit?:unknown;sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string | null; frozenOutcome: string }
+interface Recording { ordinal: number; sourceId: string; sourceVersionId: string; candidate: 'Candidate17' | 'Candidate18' | 'Candidate19' | 'SingleAuthority' | 'ObligationAuthority' | 'RoleAuthority' | 'TaskRequirements' | 'FactRoleAuthority' | 'TaskTimeAuthority' | 'EngineeringFixture' | 'ProductRecognition'; generationContract?:string; promptVersion?:string;serverNormalizedResult?:unknown;serverTimeContextAudit?:unknown;serverOriginalProxyResponse?:string;sourceText: string; referenceTime: string; timezone: string; rawHttpText: string; responseSha256: string; requestSha256: string | null; frozenOutcome: string }
 const recordings: Recording[] = await fetch('/recordings.json').then(r => { if (!r.ok) throw Error('RECORDINGS_UNAVAILABLE'); return r.json() })
 let selected = recordings.findIndex(r => r.ordinal === (config.initialOrdinal ?? 2)), failCommit = false, failRead = false, failCheckpoint = false
 if (selected < 0) throw Error('RECORDED_INITIAL_SOURCE_REQUIRED')
@@ -93,7 +93,7 @@ const environment: OrdinaryAppEnvironment = { canonical, viewRepository: new Ind
     try {
       if(record.candidate==='ProductRecognition'||(record.candidate==='EngineeringFixture'&&record.generationContract==='ordinary-product-schema-engineering-1')){
         if(record.serverNormalizedResult===null||record.serverNormalizedResult===undefined)throw Error('本份原回答未通过服务端契约；保留原答和来源，不猜补事实。')
-        const bound=bindOrdinaryProviderSupport(parseRecognitionResult(record.serverNormalizedResult),{sourceId:input.sourceId,sourceVersionId:input.sourceVersionId,sourceText:input.content,referenceTime:record.referenceTime,timezone:record.timezone},JSON.stringify({result:record.serverNormalizedResult,...(record.serverTimeContextAudit?{execution:{timeContextProjection:record.serverTimeContextAudit}}:{})}))
+        const bound=bindOrdinaryProviderSupport(parseRecognitionResult(record.serverNormalizedResult),{sourceId:input.sourceId,sourceVersionId:input.sourceVersionId,sourceText:input.content,referenceTime:record.referenceTime,timezone:record.timezone},record.serverOriginalProxyResponse??JSON.stringify({result:record.serverNormalizedResult,...(record.serverTimeContextAudit?{execution:{timeContextProjection:record.serverTimeContextAudit}}:{})}))
         sidecars.set(input.sourceId,{...bound.sidecar,recordedProvenance:provenance})
         return bound.result
       }

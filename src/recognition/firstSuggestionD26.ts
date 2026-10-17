@@ -17,8 +17,9 @@ import {completeCitedSourceWindows,CITED_SOURCE_WINDOW_VERSION} from './citedSou
 import {addDateOnlyDays} from '../lib/timeSemantics'
 import {nativeQualificationReviews} from './nativeQualificationReview'
 import {projectCitedClockRanges,type CitedClockRangeDecision} from '../../cloudflare/cited-clock-range.mjs'
+import {isolateRecognitionItems,unanchoredAcademicWeek,LOCAL_ISOLATION_NOTE_PREFIX,type LocalIsolationAudit} from '../../cloudflare/recognition-local-isolation.mjs'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.24.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.25.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -27,6 +28,7 @@ export interface D26FirstSuggestionAudit {
   times: Array<{ entityId: string; before: TimeFields; after: TimeFields; interpretation: D26TimeInterpretation }>
   citedClockRanges?:CitedClockRangeDecision[]
   declaredSourceInformation?:ReturnType<typeof retainDeclaredSourceInformation>
+  localIsolation?:LocalIsolationAudit
   unresolved: Array<{ entityId: string; reason: string }>
   sourceCurrentness: SourceCurrentFactAudit[]
   declaredEventNameSupport: DeclaredEventNameAudit[]
@@ -120,6 +122,11 @@ function prose(audit: D26FirstSuggestionAudit, original: ProseRecord, title: str
 }
 function time<T extends TimeFields & { tempId: string; rawText: string; type: TimePointSuggestionV2['type'] }>(point: T, quotes: string[], referenceTime: string, timezone: string, audit: D26FirstSuggestionAudit, inheritedDate?: string, anchorContext = '', rangeQuotes: string[] = [], anchorMinutes?:number, proof?:NonNullable<ReturnType<typeof citedSplitEventRange>>) {
   const before = fields(point)
+  if(unanchoredAcademicWeek(point.rawText)){
+    Object.assign(point,{normalizedValue:null,isAllDay:false,precision:'vague',needsConfirmation:true,selected:false})
+    audit.times.push({entityId:point.tempId,before,after:fields(point),interpretation:interpretTimeD26('待公布',{referenceTime,timezone,type:point.type})})
+    return
+  }
   const fullRange=/(?:\d{4}年)?\d{1,2}月\d{1,2}日?\s*(?:[-—–至到]\s*(?:\d{4}年)?(?:\d{1,2}月)?\d{1,2}日|\d{1,2}:[0-5]\d\s*[-—–至到]\s*\d{1,2}:[0-5]\d|\d{1,2}:[0-5]\d(?:开始|开场)[，,、；;\s]*\d{1,2}:[0-5]\d(?:结束|散场|闭幕))/u.test(point.rawText)
   const range = proof?{quote:proof.context,literalRange:point.rawText,expanded:proof.endpoint,rule:proof.rule==='EXISTING_SHARED_TASK_DATE_RANGE'?'CITED_SHARED_TASK_RANGE_ENDPOINT' as const:'CITED_SAME_EVENT_RANGE_ENDPOINT' as const}:supported(point.rawText, quotes)&&!fullRange?null:rangeEndpointSupport(point.rawText, point.type, rangeQuotes, referenceTime, timezone)
   if (!supported(point.rawText, quotes) && !range) {
@@ -287,7 +294,14 @@ export function adaptModelWireD26(input: unknown, context: WireContext) {
 
 /** Same time/display policy for the ordinary RecognitionResult. No experimental runtime or storage dependency. */
 export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string }) {
-  const result = structuredClone(input), audit = auditRecord()
+  // Machine product-wire items share the Worker's isolation rule. Manual and
+  // legacy semantic views keep their existing field-level source/verb checks;
+  // they are not untrusted raw model containers to silently rewrite here.
+  const isolated=input.promptVersion.startsWith('recognition-product-contract-')?isolateRecognitionItems(input,context.sourceText,{allowNoUsableSubset:true}):{result:input,audit:{version:'recognition-local-isolation-1.0.0' as const,inferredFacts:0 as const,quarantined:[],structure:[],relations:[]},rootFailure:false}
+  if(!isolated.result)throw Error('RECOGNITION_ROOT_INVALID')
+  const result = structuredClone(isolated.result), audit = auditRecord()
+  if(isolated.audit.quarantined.length||isolated.audit.structure.length||isolated.audit.relations.length)audit.localIsolation=isolated.audit
+  for(const note of result.ambiguities.filter(a=>a.id.startsWith(LOCAL_ISOLATION_NOTE_PREFIX)))audit.unresolved.push({entityId:note.id,reason:note.field==='source_coverage'?'MODEL_OUTPUT_INCOMPLETE':'MODEL_ITEM_QUARANTINED_PENDING_SOURCE_REVIEW'})
   audit.declaredSourceInformation=retainDeclaredSourceInformation(result,context.sourceText)
   audit.sourceCurrentness=retainCurrentDeadlineFacts(result,context.sourceText)
   audit.activityRoles=groundActivityRoles(result,context.sourceText,'names')

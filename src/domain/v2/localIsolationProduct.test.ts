@@ -1,0 +1,23 @@
+import {describe,it,expect} from 'vitest'
+import {ordinaryWorkflowFixture,ordinaryWorkflowText} from '../../recognition/ordinaryProviderSupport.fixture'
+import {bindOrdinaryProviderSupport,ordinaryWorkflowMaterialSupportFromSidecar} from '../../recognition/ordinaryProviderSupport'
+import {isolateRecognitionItems,hasLocalIsolationPending} from '../../../cloudflare/recognition-local-isolation.mjs'
+import {assembleCurrentFirstSuggestion} from '../../recognition/materialChannelGrounding'
+import {CanonicalWorkspaceRepository,MemoryWorkspaceRecordStore} from './repository'
+import {CapturePersistenceService} from './capture'
+import {IndexedDbWorkspaceRepository} from '../../lib/repository'
+import {emptyWorkspace} from '../../experiments/mainline01/fixtures'
+import {buildSourceReviewPlan,commitSourceReview,verifySourceReviewReadback} from './sourceReviewD26'
+import {buildDomainCommitPlanV2} from './domainCommit'
+
+async function setup(){
+ const store=new MemoryWorkspaceRecordStore(),repo=new CanonicalWorkspaceRepository(store);await repo.initialize(emptyWorkspace());const capture=new CapturePersistenceService(repo),h=await capture.beginCapture({operationId:crypto.randomUUID(),sourceType:'text',rawText:ordinaryWorkflowText,title:'匿名局部引用检查',provider:'manual',modelName:'ENGINEERING_FIXTURE_NOT_MODEL_OUTPUT',promptVersion:'local-test',pipelineVersion:'local-test'})
+ const raw=ordinaryWorkflowFixture();raw.standaloneTasks.push({...structuredClone(raw.standaloneTasks[0]),tempId:'false-task',title:'缴纳额外费用',actionVerb:'缴纳',actionObject:'额外费用',materialTempIds:[],evidenceIds:['false-evidence']});raw.evidence.push({id:'false-evidence',sourceId:'pending-source',quote:'请缴纳额外费用。',field:'description'})
+ const original=structuredClone(raw),isolated=isolateRecognitionItems(raw,ordinaryWorkflowText,{sourceId:'pending-source'});expect(raw).toEqual(original);expect(isolated.result).not.toBeNull();const bound=bindOrdinaryProviderSupport(isolated.result!,{sourceId:h.sourceId,sourceVersionId:h.sourceVersionId,sourceText:ordinaryWorkflowText,referenceTime:'2027-03-01T08:00:00+08:00',timezone:'Asia/Shanghai'},JSON.stringify({result:isolated.result,execution:{localIsolation:isolated.audit}}));const result=assembleCurrentFirstSuggestion(bound.result,{sourceText:ordinaryWorkflowText,referenceTime:'2027-03-01T08:00:00+08:00',timezone:'Asia/Shanghai',workflowMaterialSupport:ordinaryWorkflowMaterialSupportFromSidecar(bound.sidecar)}).result;await capture.recognize(h,async()=>result)
+ const view=(await new IndexedDbWorkspaceRepository(repo).load())!;return {store,repo,h,view,draft:view.drafts.find(d=>d.id===h.draftId)!,isolated}
+}
+describe('ordinary local isolation through the original capture and DomainCommitPlan',()=>{
+ it('accepts only the cited task, retains the quarantine note and leaves the source partially confirmed after independent readback',async()=>{const x=await setup();expect(x.draft.items).toHaveLength(1);const plan=buildSourceReviewPlan((await x.repo.load())!,x.draft),receipt=await commitSourceReview(x.repo,plan),saved=await verifySourceReviewReadback(new CanonicalWorkspaceRepository(x.store),receipt);expect(saved.tasks).toHaveLength(1);expect(saved.tasks[0].title).toContain('回执');expect(saved.tasks.some(t=>t.title.includes('费用'))).toBe(false);expect(saved.sources[0].status).toBe('partially_confirmed');expect(receipt.disposition).toBe('partial');expect(hasLocalIsolationPending(saved.extractionDrafts[0].result!)).toBe(true);expect(x.isolated.audit.quarantined.some(q=>q.id==='false-task')).toBe(true)})
+ it('a forged explicit selection cannot accept the quarantined primary entity',async()=>{const x=await setup(),current=(await x.repo.load())!;expect(()=>buildDomainCommitPlanV2(current,x.h.draftId,{taskTempIds:['false-task'],materialTempIds:[],timePointTempIds:[],eventTempIds:[]})).toThrow();expect((await x.repo.load())!.tasks).toHaveLength(0)})
+ it('an actual failed atomic transaction leaves no canonical half-copy; manual retry and duplicate commit stay idempotent',async()=>{const x=await setup(),plan=buildSourceReviewPlan((await x.repo.load())!,x.draft),transaction=x.store.transaction.bind(x.store);let fail=true;x.store.transaction=async(key,mutate)=>{if(fail){fail=false;throw Error('INJECTED_TRANSACTION_FAILURE')}return transaction(key,mutate)};await expect(commitSourceReview(x.repo,plan)).rejects.toThrow('INJECTED_TRANSACTION_FAILURE');expect((await x.repo.load())!.tasks).toHaveLength(0);await commitSourceReview(x.repo,plan);await commitSourceReview(x.repo,plan);const saved=(await x.repo.load())!;expect(saved.tasks).toHaveLength(1);expect(saved.sources[0].status).toBe('partially_confirmed')})
+})
