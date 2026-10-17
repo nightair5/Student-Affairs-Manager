@@ -10,7 +10,7 @@
 | 数据安全 | 本轮真实事务失败没有半份正式数据，重试后读回一致；旧库未用，工作区仍为v8。preview仍缺口令Secret，未部署。 |
 
 全部数字是开发者可见、单作者/模型辅助暂定参照的诊断，不是学生总体正确率；严重标记与真实事实审查分列。真人指标不可观察。
-第1—4轮全文归档，旧Git历史仍保留：[历史记录](archive/2026-10-15-before-maturity-r5.md)。本轮本机证据：.data/autonomous-mature-r5-20261015/SCORECARD.json、FINAL_EVIDENCE.json。
+第1—4轮全文归档，旧Git历史仍保留：[历史记录](archive/2026-10-15-before-maturity-r5.md)。第5轮本机证据：.data/autonomous-mature-r5-20261015/SCORECARD.json、FINAL_EVIDENCE.json；当前第6轮入口为下节及.data/quality-r6-20261017/QUALITY_SUMMARY.json。
 
 ## 质量第6轮：公开通知实测与两处程序收口（2026-10-18）
 
