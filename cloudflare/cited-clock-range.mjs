@@ -1,6 +1,33 @@
 import {parseChineseTimeAst} from './chinese-time-ast.generated.mjs'
-export const CITED_CLOCK_RANGE_VERSION='cited-clock-range-role-1.0.0'
+export const CITED_CLOCK_RANGE_VERSION='cited-clock-range-role-1.1.0'
 const unique=values=>[...new Set(values)]
+
+/** A whole cited sentence may contain both Chinese-hour endpoints. Resolve
+ * only the two endpoints already declared by one event, never an omitted end
+ * or a date belonging to another event. Later uncertain effects do not change
+ * the explicitly scheduled interval itself. */
+function sentenceHourRange(point,input,source,referenceTime,timezone){
+  if(!['event_start','event_end'].includes(point.type))return null
+  const text=point.rawText,matches=[...text.matchAll(/((?:\d{4}年)?\d{1,2}月\d{1,2}日)(?:[（(](?:星期|周)[一二三四五六日天][）)])?\s*(\d{1,2})时(?:(\d{1,2})分)?\s*[—–至到-]\s*(\d{1,2})时(?:(\d{1,2})分)?/gu)]
+  if(matches.length!==1)return null
+  const m=matches[0],outside=text.slice(0,m.index)+text.slice(m.index+m[0].length)
+  // Bare hour intervals already use the proven ordinary endpoint path. Keep
+  // its selection policy intact; this repair handles the enclosing sentence.
+  if(text.trim()===m[0])return null
+  if(/\d{1,2}(?:月|日|时|点|:[0-5]\d)/u.test(outside))return null
+  const owners=(input.events??[]).filter(e=>e.startTimePointTempId===point.tempId||e.endTimePointTempId===point.tempId),owner=owners.length===1?owners[0]:null
+  const start=(input.timePoints??[]).find(p=>p.tempId===owner?.startTimePointTempId),end=(input.timePoints??[]).find(p=>p.tempId===owner?.endTimePointTempId)
+  const cited=(input.evidence??[]).filter(e=>typeof e.quote==='string'&&source.includes(e.quote)&&e.quote.includes(text)&&point.evidenceIds?.includes(e.id)&&owner?.evidenceIds?.includes(e.id))
+  const quotes=unique(cited.map(e=>e.quote)),both=start?.type==='event_start'&&end?.type==='event_end'&&start.tempId!==end.tempId&&start.rawText===text&&end.rawText===text
+    &&[start,end].every(p=>cited.some(e=>p.evidenceIds?.includes(e.id))&&(input.events??[]).filter(e=>e.startTimePointTempId===p.tempId||e.endTimePointTempId===p.tempId).length===1)
+  const clock=(h,minute)=>`${h.padStart(2,'0')}:${(minute??'0').padStart(2,'0')}`
+  const left=m[1]+clock(m[2],m[3]),right=m[1]+clock(m[4],m[5]),a=parseChineseTimeAst(left,{referenceTime,timezone,type:'event_start'}),b=parseChineseTimeAst(right,{referenceTime,timezone,type:'event_end'})
+  let reason=!both||quotes.length!==1||source.indexOf(text)!==source.lastIndexOf(text)?'RANGE_OWNER_NOT_CLOSED':/取消|作废|如果|假如|若|暂定|待定|另行通知/u.test(quotes[0])||/可能|预计/u.test(text.slice(0,m.index))?'RANGE_NOT_UNCONDITIONALLY_CURRENT':null
+  if(!a.normalizedValue||!b.normalizedValue||a.needsConfirmation||b.needsConfirmation||b.normalizedValue<=a.normalizedValue)reason='RANGE_ENDPOINTS_NOT_UNAMBIGUOUS'
+  const ast=point.type==='event_end'?b:a
+  const next=reason?{...point,normalizedValue:null,precision:'vague',isAllDay:false,needsConfirmation:true,selected:false}:{...point,normalizedValue:ast.normalizedValue,timezone:ast.timezone,precision:ast.precision,isAllDay:ast.isAllDay,needsConfirmation:false,selected:point.selected!==false}
+  return {next,decision:{pointId:point.tempId,rawText:text,role:point.type,ownerIds:owner?[owner.tempId]:[],evidenceIds:cited.map(e=>e.id),quote:quotes[0]??text,before:{normalizedValue:point.normalizedValue??null,needsConfirmation:Boolean(point.needsConfirmation),selected:point.selected!==false},after:{normalizedValue:next.normalizedValue,needsConfirmation:next.needsConfirmation,selected:next.selected},endpoint:reason?null:point.type==='event_end'?right:left,reason:reason??'EXISTING_CITED_SENTENCE_HOUR_ENDPOINT',blocked:Boolean(reason)}}
+}
 
 /** Select a side of one literal clock interval only for an existing, cited
  * owner and a declared start/end role. An interval is never a scalar cutoff.
@@ -11,6 +38,8 @@ export function projectCitedClockRanges(input,source,referenceTime,timezone='Asi
   const tasks=[...(input.standaloneTasks??[]),...(input.milestones??[]).flatMap(m=>[...(m.tasks??[]),...(m.workPackages??[]).flatMap(w=>w.tasks??[])])]
   const timePoints=input.timePoints.map(point=>{
     if(!point||typeof point.rawText!=='string'||!['event_start','event_end','registration_deadline','submission_deadline','task_deadline'].includes(point.type))return point
+    const sentence=sentenceHourRange(point,input,source,referenceTime,timezone)
+    if(sentence){decisions.push(sentence.decision);return sentence.next}
     const literal=point.rawText.replace(/\s+/gu,'')
     const match=/^((?:(\d{4})年)?(\d{1,2})月\d{1,2}日)(\d{1,2}:[0-5]\d)[—–至到-]((?:(\d{4})年)?(?:(\d{1,2})月)?\d{1,2}日)?(\d{1,2}:[0-5]\d)$/u.exec(literal)
     if(!match)return point

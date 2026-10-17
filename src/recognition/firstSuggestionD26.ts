@@ -1,4 +1,5 @@
 import {groundActivityRoles} from './activityRoles'
+import {retainDeclaredSourceInformation} from './sourceInformationPreview'
 import {nativePreconditionIssues} from './nativePrecondition'
 import {citedEventSequence,citedSplitEventRange,citedTaskDateRange} from '../../cloudflare/cited-event-sequence.mjs'
 import { interpretTimeD26, type D26TimeInterpretation } from '../lib/timeSemanticsD26'
@@ -17,7 +18,7 @@ import {addDateOnlyDays} from '../lib/timeSemantics'
 import {nativeQualificationReviews} from './nativeQualificationReview'
 import {projectCitedClockRanges,type CitedClockRangeDecision} from '../../cloudflare/cited-clock-range.mjs'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.23.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.24.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -25,6 +26,7 @@ export interface D26FirstSuggestionAudit {
   generatedProse: ProseRecord[]
   times: Array<{ entityId: string; before: TimeFields; after: TimeFields; interpretation: D26TimeInterpretation }>
   citedClockRanges?:CitedClockRangeDecision[]
+  declaredSourceInformation?:ReturnType<typeof retainDeclaredSourceInformation>
   unresolved: Array<{ entityId: string; reason: string }>
   sourceCurrentness: SourceCurrentFactAudit[]
   declaredEventNameSupport: DeclaredEventNameAudit[]
@@ -286,6 +288,7 @@ export function adaptModelWireD26(input: unknown, context: WireContext) {
 /** Same time/display policy for the ordinary RecognitionResult. No experimental runtime or storage dependency. */
 export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string }) {
   const result = structuredClone(input), audit = auditRecord()
+  audit.declaredSourceInformation=retainDeclaredSourceInformation(result,context.sourceText)
   audit.sourceCurrentness=retainCurrentDeadlineFacts(result,context.sourceText)
   audit.activityRoles=groundActivityRoles(result,context.sourceText,'names')
   audit.declaredEventNameSupport=completeDeclaredEventNameSupport(result,context.sourceText)

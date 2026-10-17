@@ -48,3 +48,36 @@ test('already-working single-day event values and selection are outside the repa
   const out=projectCitedClockRanges(raw,source,reference,timezone)
   assert.equal(out.result,raw);assert.deepEqual(out.audit.decisions,[])
 })
+
+test('already-working bare Chinese-hour intervals keep their original selection path',()=>{
+  const {raw}=fixture(),literal='2027年4月16日（星期日）18时至22时',source=literal+'，维护期间机房可能断电。'
+  raw.evidence[0].quote=source;raw.timePoints.forEach(p=>{p.rawText=literal;p.selected=false})
+  const out=projectCitedClockRanges(raw,source,reference,timezone)
+  assert.equal(out.result,raw);assert.deepEqual(out.audit.decisions,[])
+})
+
+test('Chinese-hour interval inside one cited sentence selects its own end, not the first clock',()=>{
+  for(const [day,a,b] of [[16,18,22],[21,7,9]]){
+    const {raw}=fixture(),source=`2027年4月${day}日（星期日）${a}时至${b}时，学校将进行供电维护，受其影响机房可能断电。`
+    raw.evidence[0].quote=source;raw.timePoints.forEach(p=>{p.rawText=source});raw.timePoints[1].normalizedValue=`2027-04-${day}T${b}:00`
+    const before=structuredClone(raw),out=normalizeRecognitionResult(applyDeterministicTimeAst(raw,reference,timezone,source),source,reference,undefined,undefined,true,timezone)
+    assert.deepEqual(out.timePoints.map(p=>p.normalizedValue),[`2027-04-${day}T${String(a).padStart(2,'0')}:00`,`2027-04-${day}T${String(b).padStart(2,'0')}:00`])
+    assert.ok(out.timePoints.every(p=>p.selected&&!p.needsConfirmation));assert.deepEqual(raw,before)
+  }
+})
+
+test('whole-sentence hours cannot invent a missing end or borrow shared, foreign, conditional or backwards evidence',()=>{
+  for(const kind of ['missing','shared','foreign','conditional','backwards','uncited']){
+    const {raw}=fixture();let source='2027年4月16日18时至22时进行维护。'
+    if(kind==='conditional')source='若审批通过，'+source
+    if(kind==='backwards')source=source.replace('22时','17时')
+    raw.evidence[0].quote=source;raw.timePoints.forEach(p=>{p.rawText=source})
+    if(kind==='missing'){raw.timePoints.pop();raw.events[0].endTimePointTempId=null}
+    if(kind==='shared')raw.events.push({...raw.events[0],tempId:'OTHER'})
+    if(kind==='foreign')raw.events[0].evidenceIds=[]
+    if(kind==='uncited')raw.timePoints[1].evidenceIds=[]
+    const out=projectCitedClockRanges(raw,source,reference,timezone)
+    assert.ok(out.result.timePoints.every(p=>p.normalizedValue===null&&!p.selected),kind)
+    assert.equal(out.result.timePoints.length,raw.timePoints.length)
+  }
+})

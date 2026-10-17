@@ -1,7 +1,25 @@
 import type { RecognitionResult } from './types'
 import type { WorkspaceV8 } from '../domain/v2/types'
 
-export const SOURCE_INFORMATION_PREVIEW_VERSION = 'source-information-preview-1.0.0'
+export const SOURCE_INFORMATION_PREVIEW_VERSION = 'source-information-preview-1.1.0'
+/** Keep a requirement already cited by a model annotation visible as a source
+ * note. No new entity/owner is assigned and no annotation opinion is promoted
+ * to a fact: only the existing verbatim source evidence is displayed. */
+export function retainDeclaredSourceInformation(result: RecognitionResult, sourceText: string) {
+  const entities=[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)]),...result.events,...result.materials,...result.timePoints]
+  const used=new Set(entities.flatMap(e=>e.evidenceIds)),declared=new Set(result.ambiguities.flatMap(a=>a.evidenceIds))
+  const decisions:Array<{text:string;evidenceIds:string[];rule:'EXISTING_UNASSIGNED_REQUIREMENT_EVIDENCE'}>=[]
+  for(const evidence of result.evidence){
+    const text=evidence.quote?.trim()
+    if(evidence.field!=='requirement'||!declared.has(evidence.id)||used.has(evidence.id)||!text||!sourceText.includes(text)
+      ||sourceText.indexOf(text)!==sourceText.lastIndexOf(text)||result.ignoredContent.some(i=>i.text===text))continue
+    // An entity citing the same literal under another ID already displays it.
+    if(result.evidence.some(e=>used.has(e.id)&&e.quote.includes(text)))continue
+    result.ignoredContent.push({text,reason:'other'})
+    decisions.push({text,evidenceIds:[evidence.id],rule:'EXISTING_UNASSIGNED_REQUIREMENT_EVIDENCE'})
+  }
+  return {version:SOURCE_INFORMATION_PREVIEW_VERSION,inferredFacts:0 as const,decisions}
+}
 export interface SourceInformationPreview {
   version: typeof SOURCE_INFORMATION_PREVIEW_VERSION
   sourceId: string
