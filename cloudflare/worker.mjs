@@ -869,7 +869,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     const clockRangeProjection=projectCitedClockRanges(literalProjection.result,sourceContent,referenceTime,timezone)
     const deterministicCandidate = applyDeterministicTimeAst(literalProjection.result, referenceTime, timezone, sourceContent)
     const annotationProjection=selectedPromptVersion?.startsWith('recognition-product-contract-')?projectDanglingAnnotationEvidence(deterministicCandidate):{result:deterministicCandidate,audit:null}
-    const localIsolation=isolateRecognitionItems(annotationProjection.result,sourceContent,{sourceId:'pending-source'})
+    const localIsolation=isolateRecognitionItems(annotationProjection.result,sourceContent,{sourceId:'pending-source',allowNoUsableSubset:env.RECOGNITION_LOCAL_ISOLATION_VERSION==='1.0.0'})
     const candidateValidation = validateRecognitionResult(localIsolation.result??annotationProjection.result, { sourceContent })
     if (!candidateValidation.valid) return invalidRecognitionResponse(context, candidateValidation)
     const result = normalizeRecognitionResult(

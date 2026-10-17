@@ -21,7 +21,7 @@ function assertHostAuthorization(auth, engine, units, binding, now = Date.now())
     && Number.isSafeInteger(auth.ledgerBaselineBytes) && auth.ledgerBaselineBytes > 0
     && /^[a-f0-9]{64}$/u.test(auth.ledgerBaselineSha256), 'LEDGER_AUTH_BINDING')
   check(auth.pricing.model === 'deepseek-flash' && auth.pricing.endpoint === (scope.parameters?.transportRoute==='worker-chat-completions-1'?'https://api.deepseek.com/chat/completions':'https://api.deepseek.com/responses')
-    && auth.pricing.maxOutputTokens === 8192 && auth.pricing.tokenBoundMethod === 'FULL_OFFICIAL_CONTEXT_UPPER_BOUND'
+    && auth.pricing.maxOutputTokens === (engine.budgetOutputTokens??8192) && auth.pricing.tokenBoundMethod === 'FULL_OFFICIAL_CONTEXT_UPPER_BOUND'
     && auth.pricing.reasoningMetering === 'INCLUDED_IN_OUTPUT_TOKENS'
     && auth.pricing.additionalChargeUpperMicroUsd === 0
     && /^[a-f0-9]{64}$/u.test(auth.priceEvidenceSha256), 'BUDGET_UNRESOLVED_PRICE_RULES')
@@ -85,7 +85,7 @@ function createHost({ root, ledgerPath, engine, packageRead, gitCheck, append, t
     check(grant.head === auth.committedHead && grant.snapshotCommit === SNAPSHOT && grant.authorizationSha256 === authSha256
       && grant.manifestSha256 === binding.manifestSha256 && grant.identitiesSha256 === binding.identitiesSha256
       && grant.hardLimitMicroUsd === auth.hardLimitMicroUsd, 'GRANT_LEDGER_DRIFT')
-    const upper = engine.conservativeUpperMicroUsd(auth.pricing.maxInputTokens, 8192, auth.pricing)
+    const upper = engine.conservativeUpperMicroUsd(auth.pricing.maxInputTokens, engine.budgetOutputTokens??8192, auth.pricing)
     for (let index = 0; index < settled; index++) {
       const unit = units[index], row = state.units[index], reserve = later[1 + 2 * index]?.event, settle = later[2 + 2 * index]?.event
       const raw = read(join(rawPath, String(index + 1).padStart(2, '0') + '.json'))

@@ -9,9 +9,17 @@ export function createScopedEngine(scope,{diagnostics}={}){
 check(scope&&/^[A-Z0-9-]+$/.test(scope.batch)&&Number.isInteger(scope.count)&&scope.count>0&&scope.count<=24,'SCOPED_BATCH')
 const parameters=scope.parameters??{temperature:0,maxOutputTokens:MAX_OUTPUT_TOKENS}
 const workerChat=parameters.transportRoute==='worker-chat-completions-1'
+// New Worker requests explicitly bind their larger output budget. Frozen
+// Responses and 6000-token Worker packets retain the original 8192 reserve.
+const budgetOutputTokens=workerChat?Math.max(MAX_OUTPUT_TOKENS,parameters.maxOutputTokens):MAX_OUTPUT_TOKENS
+const scopedUpper=(input,output,pricing)=>{
+ if(budgetOutputTokens===MAX_OUTPUT_TOKENS)return conservativeUpperMicroUsd(input,output,pricing)
+ check(pricing.maxOutputTokens===budgetOutputTokens&&Number.isSafeInteger(input)&&input>=0&&input<=pricing.maxInputTokens&&Number.isSafeInteger(output)&&output>=0&&output<=budgetOutputTokens,'TOKEN_BOUND')
+ const cost=Math.ceil(input*pricing.peakInputUsdPerMillion+output*pricing.peakOutputUsdPerMillion);check(Number.isSafeInteger(cost)&&cost>=0,'COST_OVERFLOW');return cost
+}
 const observedUsage=text=>{if(!workerChat)return rawUsage(text);try{const u=JSON.parse(text).usage;if(Number.isSafeInteger(u?.prompt_tokens)&&u.prompt_tokens>=0&&Number.isSafeInteger(u?.completion_tokens)&&u.completion_tokens>=0)return {...u,input_tokens:u.prompt_tokens,output_tokens:u.completion_tokens,usageBoundary:'NATIVE_CHAT_COMPLETIONS'}}catch{/* Original bytes remain authoritative; absent usage is unknown. */}return 'NOT_OBSERVABLE'}
-const auditMetadata=(raw,row,settle,pricing)=>{if(!workerChat)return auditUnitMetadata(raw,row,settle,pricing);const usage=observedUsage(raw.rawHttpText),cost=usage==='NOT_OBSERVABLE'?conservativeUpperMicroUsd(pricing.maxInputTokens,MAX_OUTPUT_TOKENS,pricing):conservativeUpperMicroUsd(usage.input_tokens,usage.output_tokens,pricing);check(raw.httpStatus===row.httpStatus&&row.httpStatus===settle.httpStatus&&JSON.stringify(usage)===JSON.stringify(row.usage)&&JSON.stringify(usage)===JSON.stringify(settle.usage)&&cost===row.costUpperMicroUsd&&cost===settle.costUpperMicroUsd,'RAW_STATE_SETTLEMENT_METADATA_DRIFT');return {usage,costUpperMicroUsd:cost}}
-check(Number.isFinite(parameters.temperature)&&parameters.temperature>=0&&parameters.temperature<=2&&Number.isSafeInteger(parameters.maxOutputTokens)&&parameters.maxOutputTokens>0&&parameters.maxOutputTokens<=MAX_OUTPUT_TOKENS,'SCOPED_PARAMETERS')
+const auditMetadata=(raw,row,settle,pricing)=>{if(!workerChat)return auditUnitMetadata(raw,row,settle,pricing);const usage=observedUsage(raw.rawHttpText),cost=usage==='NOT_OBSERVABLE'?scopedUpper(pricing.maxInputTokens,budgetOutputTokens,pricing):scopedUpper(usage.input_tokens,usage.output_tokens,pricing);check(raw.httpStatus===row.httpStatus&&row.httpStatus===settle.httpStatus&&JSON.stringify(usage)===JSON.stringify(row.usage)&&JSON.stringify(usage)===JSON.stringify(settle.usage)&&cost===row.costUpperMicroUsd&&cost===settle.costUpperMicroUsd,'RAW_STATE_SETTLEMENT_METADATA_DRIFT');return {usage,costUpperMicroUsd:cost}}
+check(Number.isFinite(parameters.temperature)&&parameters.temperature>=0&&parameters.temperature<=2&&Number.isSafeInteger(parameters.maxOutputTokens)&&parameters.maxOutputTokens>0&&parameters.maxOutputTokens<=(workerChat?16384:MAX_OUTPUT_TOKENS),'SCOPED_PARAMETERS')
 function newState(units, binding) {
   return { version: 'scoped-execution-state-2', batch: scope.batch, model: 'deepseek-flash', ...binding, authorized: false,
     units: units.map(unit => ({ ordinal: unit.ordinal, unitIdentitySha256: unit.unitIdentitySha256, requestSha256: unit.requestSha256, status: 'NOT_SENT' })) }
@@ -29,7 +37,7 @@ function assertAuthorization(state, auth, units, binding) {
     && row.unitIdentitySha256 === units[index].unitIdentitySha256 && row.requestSha256 === units[index].requestSha256
     && auth.units[index] === row.unitIdentitySha256 && auth.requestSha256s[index] === row.requestSha256), 'IDENTITY_DRIFT')
   validatePriceScope(auth.pricing)
-  check(scope.count * conservativeUpperMicroUsd(auth.pricing.maxInputTokens, MAX_OUTPUT_TOKENS, auth.pricing) <= auth.hardLimitMicroUsd, 'BUDGET_UNRESOLVED')
+  check(scope.count * scopedUpper(auth.pricing.maxInputTokens, budgetOutputTokens, auth.pricing) <= auth.hardLimitMicroUsd, 'BUDGET_UNRESOLVED')
 }
 async function runOne({ state, auth, units, binding, ledger, transport, persist, rawStore, lock, preflight }) {
   check(typeof lock === 'function', 'CROSS_PROCESS_LOCK_REQUIRED')
@@ -48,7 +56,7 @@ async function runOne({ state, auth, units, binding, ledger, transport, persist,
     check(ledger && transport && persist && rawStore && typeof preflight === 'function', 'ADAPTER_REQUIRED')
     await preflight({ state, auth, unit, ordinal })
     validatePriceScope(auth.pricing)
-    const upper = conservativeUpperMicroUsd(auth.pricing.maxInputTokens, MAX_OUTPUT_TOKENS, auth.pricing)
+    const upper = scopedUpper(auth.pricing.maxInputTokens, budgetOutputTokens, auth.pricing)
     check(state.units.reduce((sum, entry) => sum + (entry.status === 'SETTLED' ? entry.costUpperMicroUsd : 0), 0) + upper <= auth.hardLimitMicroUsd, 'BUDGET_EXCEEDED')
     try {
       await mark('RESERVE_ENTER')
@@ -70,7 +78,7 @@ async function runOne({ state, auth, units, binding, ledger, transport, persist,
       await mark('RAW_WRITE_ENTER');await rawStore.writeOnce(raw);await mark('RAW_WRITE_COMPLETED')
       row.status = 'RAW_SAVED'; row.responseSha256 = raw.responseSha256;await mark('RAW_STATE_WRITE_ENTER');await persist(state);await mark('RAW_STATE_WRITE_COMPLETED')
       const usage = observedUsage(response.text), costUpperMicroUsd = usage === 'NOT_OBSERVABLE' ? upper
-        : conservativeUpperMicroUsd(usage.input_tokens, usage.output_tokens, auth.pricing)
+        : scopedUpper(usage.input_tokens, usage.output_tokens, auth.pricing)
       await mark('SETTLE_ENTER');await ledger.settle({ batch: scope.batch, grantId: auth.grantId, ordinal, responseSha256: raw.responseSha256, httpStatus: response.status,
         usage, costUpperMicroUsd, providerActualUsd: 'NOT_OBSERVABLE' })
       await mark('SETTLE_COMPLETED');row.status = 'SETTLED'; row.httpStatus = response.status; row.usage = usage; row.costUpperMicroUsd = costUpperMicroUsd
@@ -84,5 +92,5 @@ async function runOne({ state, auth, units, binding, ledger, transport, persist,
     }
   })
 }
-return {newState,assertAuthorization,runOne,fileLock,atomicStateWriter,rawWriter,validatePriceScope,conservativeUpperMicroUsd,rawUsage:observedUsage,nextOrdinal,auditUnitMetadata:auditMetadata}
+return {newState,assertAuthorization,runOne,fileLock,atomicStateWriter,rawWriter,validatePriceScope,conservativeUpperMicroUsd:scopedUpper,budgetOutputTokens,rawUsage:observedUsage,nextOrdinal,auditUnitMetadata:auditMetadata}
 }

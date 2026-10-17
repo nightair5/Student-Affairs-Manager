@@ -5,14 +5,15 @@ export const PRODUCT_REVIEW_V51_VERSION='product-development-review-5.1.0'
 export function reviewV51(result,source,options={}){
  const out=reviewV5(result,source,options)
  if(!result)return {...out,reviewVersion:PRODUCT_REVIEW_V51_VERSION}
- // Fix only the v4 month-presence heuristic on line-wrapped calendar dates.
+ // Fix only the v4 month-presence heuristic on line-wrapped calendar dates
+ // and literal 24:00 month-end rollover, which already denotes next midnight.
  // A complete cited literal date must equal the value; role, owner, obsolete
  // date and invalid-source checks remain unchanged. Old score files stay put.
  const wrappedDateSupported=id=>{
   const p=result.timePoints?.find(t=>t.tempId===id);if(!p?.normalizedValue)return false
   const date=String(p.normalizedValue).slice(0,10),literal=String(p.rawText??'').replace(/\s/gu,'')
   const supported=p.evidenceIds?.some(eid=>{const e=result.evidence?.find(e=>e.id===eid),q=e?.quote??e?.quotedText;return typeof q==='string'&&source.text.includes(q)&&q.includes(p.rawText)})
-  return supported&&[...literal.matchAll(/(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日/gu)].some(m=>{const y=m[1]??date.slice(0,4);return `${y}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`===date})
+  return supported&&[...literal.matchAll(/(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日/gu)].some(m=>{const y=m[1]??date.slice(0,4),day=`${y}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;if(day===date)return true;if(!/24[:：]00/u.test(literal)||!String(p.normalizedValue).startsWith(date+'T00:00'))return false;const ms=Date.parse(day+'T00:00:00Z');return Number.isFinite(ms)&&new Date(ms+86400000).toISOString().slice(0,10)===date})
  }
  const falseMonthFlags=out.severe.filter(s=>s.code==='UNSUPPORTED_DEADLINE'&&wrappedDateSupported(s.time))
  if(falseMonthFlags.length){out.severe=out.severe.filter(s=>!falseMonthFlags.includes(s));out.issues=out.issues.filter(i=>!(i.code==='UNSUPPORTED_DEADLINE'&&wrappedDateSupported(i.detail?.tempId??i.detail?.time)));if(!out.severe.length)out.status=!out.issues.length?'完整':out.issues.every(i=>i.failure_layer==='REFERENCE')?'未知':out.matched>0?'部分':'错';out.scorerBugFix={code:'WRAPPED_LITERAL_MONTH_FALSE_FLAG',removed:falseMonthFlags}}

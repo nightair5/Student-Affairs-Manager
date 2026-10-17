@@ -5,6 +5,7 @@
   "compatibility_date": "2026-08-02",
   "workers_dev": true,
   "vars": {
+    "RECOGNITION_LOCAL_ISOLATION_VERSION": "1.0.0",
     "DEEPSEEK_EXTRACTION_MAX_TOKENS": "16384"
   },
   "routes": [
@@ -42,6 +43,7 @@
       "workers_dev": true,
       "routes": [],
       "vars": {
+        "RECOGNITION_LOCAL_ISOLATION_VERSION": "1.0.0",
         "DEEPSEEK_EXTRACTION_MAX_TOKENS": "16384",
         "PREVIEW_ACCESS_REQUIRED": "true"
       },
