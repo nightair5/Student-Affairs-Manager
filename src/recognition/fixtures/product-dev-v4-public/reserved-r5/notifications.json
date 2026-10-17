@@ -1,0 +1,1231 @@
+[
+  {
+    "id": "R5-PUB-02",
+    "title": "配电计量表更换停电期间校园网服务受影响通知",
+    "scene": "跨日表格与备份义务",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://www5.zzu.edu.cn/net/info/1022/2756.htm",
+    "publishedDate": "2026-08-26",
+    "referenceTime": "2026-08-26T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:21:42.319574+00:00",
+    "text": "全校各单位、全体师生：\n接后勤保障部通知，学校将于\n2026\n年\n8\n月\n28\n日\n—8\n月\n31\n日在主校区、北校区部分配电室开展配电设备计量表更换作业，作业期间涉及区域将实施分时停电。受停电影响，相关区域校园有线网络、\nZZU‑WLAN\n无线网络将同步中断，现将停电时段、范围及网络受影响情况通知如下：\n一、\n主校区停电及网络受影响安排\n停电时间\n影响区域\n网络影响说明\n8\n月\n28\n日\n21:30\n—\n8\n月\n29\n日\n01:00\n材料科学与工程学院实验楼、化学与分子工程学院实验楼、物理实验楼、化工实验楼（化工红楼）、物理工程学院实验楼\n校园网中断约\n3.5\n小时\n8\n月\n29\n日\n01:30\n—\n06:00\n工科园全部\n工科园区域网络中断约\n1.5\n小时，恢复时间以来电实际时间为准\n8\n月\n29\n日\n01:30\n—\n06:00\n协同创新中心、信息工程学院科技楼、力学与工程科学学院楼、电气与信息工程学院\n1\n区\n2\n区\n3\n区、柳园\n5\n号楼、化学与分子工程学院办公楼\n校园网中断约\n4.5\n小时\n8\n月\n29\n日\n22:30\n—\n8\n月\n30\n日\n04:00\n松园全部区域、公共卫生学院\nB\n座、校医院、基础医学院\nB\n座、基础医学院\nC\n座\n校园网中断约\n5.5\n小时\n二、\n北校区停电及网络受影响安排\n停电时间\n影响区域\n网络影响说明\n8\n月\n30\n日\n21:30\n—\n8\n月\n31\n日\n04:00\n北校区校内所有区域、北校区家属区\n校园网中断约\n7\n小时\n三、有关提醒\n1.\n校园网园区核心机房虽配置后备电源，但本次停电持续时间较长，后备电源续航无法覆盖完整停电周期，上述受影响区域内校园有线网络、\nZZU‑WLAN\n无线网络将随供电中断后暂停服务。\n2.\n请各单位、全体师生提前调整工作学习安排，及时保存、备份重要文档和业务数据，规避断电造成的数据丢失风险。\n3.\n停电计划以后勤保障部现场实际作业情况为准，若停电时间变动，网络服务恢复时间将随供电恢复同步变化，提前供电恢复不再另行通知。",
+    "sourceSha256": "bb81b6be91990a70df96167e639b52c34eb805ec109081d4043650c28121452a",
+    "reference": {
+      "tasks": [
+        {
+          "object": "重要文档",
+          "verbs": [
+            "保存",
+            "备份"
+          ],
+          "deadlineUnknown": true
+        },
+        {
+          "object": "业务数据",
+          "verbs": [
+            "保存",
+            "备份"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "停电",
+          "start": "2026-08-28T21:30",
+          "end": "2026-08-29T01:00"
+        },
+        {
+          "object": "停电",
+          "start": "2026-08-29T01:30",
+          "end": "2026-08-29T06:00"
+        },
+        {
+          "object": "停电",
+          "start": "2026-08-29T22:30",
+          "end": "2026-08-30T04:00"
+        },
+        {
+          "object": "停电",
+          "start": "2026-08-30T21:30",
+          "end": "2026-08-31T04:00"
+        }
+      ],
+      "information": [
+        "恢复时间以来电实际时间为准",
+        "若停电时间变动"
+      ]
+    },
+    "referenceSha256": "6650dd130a0b4ea45d33fdff6b83953cb8d9dff19c42ea43599dba0ea605d122",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.036Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "表格是停电计划窗口；工科园网络中断约1.5小时，不可把全部停电窗口直接等同其网络精确结束。01:30窗口有两组地点，地点和网络影响不得丢；相同停电窗口可合并但不能合并两种网络时长。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 415,
+          "end": 1273
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.674Z"
+  },
+  {
+    "id": "R5-PUB-06",
+    "title": "南京大学校赛报名时间延期通知",
+    "scene": "延期与条件性更新",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://jw.nju.edu.cn/b6/59/c26263a833113/page.htm",
+    "publishedDate": "2026-05-19",
+    "referenceTime": "2026-05-19T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:22:13.162793+00:00",
+    "text": "各参赛团队：\n为充分调动参赛积极性，给予各团队更充足时间打磨优化参赛材料，提升项目质量，经研究，决定对校赛报名截止时间予以延期，现将有关事项通知如下：\n一、\n报名截止时间调整为\n5月25日24时。\n二、\n已报名团队须登录校赛系统（\nhttps://zgnjxscontestc.woczx.com\n）更新材料时请先删除原提交记录，重新完整提交材料，切勿重复申报。\n三、\n参赛资格、赛道要求、材料规范等其他事项，仍按原校赛通知执行。",
+    "sourceSha256": "b24161042a49cbf991e9f11eabec0370e7f0bbf1e35b10ec07ad65d9050a70fa",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "申报",
+            "提交"
+          ],
+          "deadline": "2026-05-26T00:00",
+          "precision": "exact",
+          "optional": true
+        },
+        {
+          "object": "材料",
+          "verbs": [
+            "更新",
+            "提交"
+          ],
+          "condition": "已报名团队更新材料时",
+          "channel": "校赛系统"
+        }
+      ],
+      "events": [],
+      "information": [
+        "仍按原校赛通知执行"
+      ],
+      "criteria": [
+        "重新完整提交",
+        "切勿重复申报"
+      ]
+    },
+    "referenceSha256": "931d78fa2038801215a83c83550eabd172f365749d4d989c4bb0f26268e0275c",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.037Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "5月25日24时等于26日00:00；未给原截止，不能编造旧日期。先删除原提交记录仅限已报名团队更新材料的前置步骤；不能当成全员删记录任务，也不能自动执行。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 167,
+          "end": 383
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  },
+  {
+    "id": "R5-PUB-04",
+    "title": "东校园临时停电通知",
+    "scene": "多窗口与准备动作",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://www.cup.edu.cn/jjc/tzgg/0e337e22cea14114b2714a156b669e0e.htm",
+    "publishedDate": "2026-07-16",
+    "referenceTime": "2026-07-16T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:21:47.015720+00:00",
+    "text": "各位师生：\n因东校园双碳大厦施工，需要进行高压电缆切改，东校园将分时段临时停电：\n7月17日 5:00-6:00、13:00-14:00\n7月18日 5:00-6:00\n请大家提前保存电脑、实验室所有数据文件，关停精密仪器、用电设备，避免断电造成资料丢失、设备损坏。停电期间电梯、网络、门禁等配套设施临时停用，请注意出行安全。\n基建处\n后勤管理处\n2026年7月16日",
+    "sourceSha256": "c6e8d6b3e951d1094f39d41ec81779916211c78d672bc76698ef31a695b8ed98",
+    "reference": {
+      "tasks": [
+        {
+          "object": "数据文件",
+          "verbs": [
+            "保存"
+          ],
+          "deadlineUnknown": true
+        },
+        {
+          "object": "精密仪器",
+          "verbs": [
+            "关停"
+          ],
+          "deadlineUnknown": true
+        },
+        {
+          "object": "用电设备",
+          "verbs": [
+            "关停"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "停电",
+          "start": "2026-07-17T05:00",
+          "end": "2026-07-17T06:00"
+        },
+        {
+          "object": "停电",
+          "start": "2026-07-17T13:00",
+          "end": "2026-07-17T14:00"
+        },
+        {
+          "object": "停电",
+          "start": "2026-07-18T05:00",
+          "end": "2026-07-18T06:00"
+        }
+      ]
+    },
+    "referenceSha256": "068851c28323c8a9b906116abc1967dcf74f1ce86e1777dcdb2ca86f09d788a4",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.037Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "施工楼宇是原因；停电影响区域是东校园。准备动作未给独立数值截止，不把停电开始写成原文deadline。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 259,
+          "end": 444
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  },
+  {
+    "id": "R5-PUB-12",
+    "title": "线上选修课学习与结课考试通知（起止及前置节选）",
+    "scene": "课程前置与考试窗口",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://jw.cdu.edu.cn/info/1043/12319.htm",
+    "publishedDate": "2026-05-19",
+    "referenceTime": "2026-05-19T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:22:31.004182+00:00",
+    "text": "一、结课时间：\n2026年5月24日23:59\n。所有课程的学习任务务必于\n第11周周天（5月24日23:59）\n前完成，5月24日23:59以后的学习不计入成绩。请各位同学务必在考试前完成全部课程视频学习及章节作业测试。\n二、考试时间：\n2026年5月25日00:00—5月31日23:59\n。请各位同学在规定时间内完成考试，\n此课程没有补考\n。\n三、考试方式：线上考试，登录课程相应学习平台，具体考试方式请查看智慧树和超星尔雅学习平台通知。\n四、成绩构成\n1.智慧树在线课程：课程成绩=学习进度40分+章节测试10分+期末考试50分（综合成绩满60分才合格）。\n未在规定时间进行课程确认和在线学习的学生将以零分记成绩\n，\n课程规定确认和在线学习时间为考试前一天\n。\n2.尔雅通识课网络课程（非四史课程）：\n结课前完成任务点90%才能参加考试\n，课程成绩=视频30%+测验20%+互动提问讨论10%（10次）+考试40%。\n3.四史课程：在规定时间内完成学习和考试，课程成绩=视频30%+测验20%+考试50%。",
+    "sourceSha256": "59543118c100023335782000514c6d34a21a67767116a6a646480ca4e6afd32a",
+    "reference": {
+      "tasks": [
+        {
+          "object": "课程视频学习",
+          "verbs": [
+            "完成"
+          ],
+          "deadline": "2026-05-24T23:59",
+          "precision": "exact"
+        },
+        {
+          "object": "章节作业测试",
+          "verbs": [
+            "完成"
+          ],
+          "deadline": "2026-05-24T23:59",
+          "precision": "exact"
+        },
+        {
+          "object": "考试",
+          "verbs": [
+            "完成",
+            "参加"
+          ],
+          "channel": "课程相应学习平台",
+          "deadlineUnknown": true,
+          "predecessor": "课程",
+          "condition": "尔雅非四史完成任务点90%才能参加考试"
+        }
+      ],
+      "events": [],
+      "window": "2026-05-25/2026-05-31",
+      "information": [
+        "没有补考"
+      ],
+      "criteria": [
+        "90%",
+        "考试前一天"
+      ]
+    },
+    "referenceSha256": "cd844504aa8b176d584dde5c5559c987b3d633f8decb60cbbe59fa880218fd7d",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.038Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "学习截止与考试办理窗口分开，考试窗口两端不是额外原文deadline。课程确认和在线学习前置要保留；未声明用户已达90%。不同平台成绩比例不能混用。",
+      "v5.1自动窗口项只检查日期；准确时刻及前置需按manualTimeFacts人工核对，不以自动完整代替这项检查。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 610,
+          "end": 1068
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "manualTimeFacts": [
+      {
+        "role": "execution_window_start",
+        "value": "2026-05-25T00:00",
+        "owner": "完成考试"
+      },
+      {
+        "role": "execution_window_end",
+        "value": "2026-05-31T23:59",
+        "owner": "完成考试"
+      }
+    ],
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  },
+  {
+    "id": "R5-PUB-07",
+    "title": "2025年东南大学校庆研究生学术报告会通知（学生提交节选）",
+    "scene": "分角色提交与命名",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://ins.seu.edu.cn/2025/0221/c26759a519179/page.htm",
+    "publishedDate": "2025-02-21",
+    "referenceTime": "2025-02-21T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:22:15.779343+00:00",
+    "text": "本院截止时间为\n4月11日，请同学们准时提交论文电子档（以“学号+姓名”命名）,硕士同学发给各班班长，博士生发给[收件同学]同学（[邮箱1]）。",
+    "sourceSha256": "1288bc31cd7ecb539f1e0f389ff17abac415f9aefc1c1c92739d533794693cd0",
+    "reference": {
+      "tasks": [
+        {
+          "object": "论文",
+          "verbs": [
+            "提交",
+            "发给"
+          ],
+          "deadline": "2025-04-11",
+          "precision": "date_only",
+          "channel": "各班班长",
+          "condition": "硕士"
+        },
+        {
+          "object": "论文",
+          "verbs": [
+            "提交",
+            "发给"
+          ],
+          "deadline": "2025-04-11",
+          "precision": "date_only",
+          "channel": "[收件同学]",
+          "condition": "博士"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "论文"
+      ],
+      "criteria": [
+        "学号+姓名"
+      ]
+    },
+    "referenceSha256": "6f00f08efc923a4b58065e5b27aef283c6f99a0f4ae3ddcd636badb3ed4a44bd",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.037Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "仅学生交院部分；未节选的4月30日是院系上报截止，不能借给学生。两种身份任选适用，不应默认同时提交给两处。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 594,
+          "end": 679
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [
+        {
+          "kind": "name",
+          "placeholder": "[收件同学]"
+        }
+      ],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  },
+  {
+    "id": "R5-PUB-11",
+    "title": "2025届本科毕业论文存档（提交渠道与数量节选）",
+    "scene": "共享材料数量与指定办理日",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://www.pharm.sdu.edu.cn/bkjy/info/1011/2025.htm",
+    "publishedDate": "2025-05-21",
+    "referenceTime": "2025-05-21T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:22:28.592364+00:00",
+    "text": "电子版文档请\n以“学院\n_\n专业\n_\n学号\n_\n姓名”方式命名，请各班级学委于\n6\n月\n10\n日，提交至邮箱：\n[邮箱1]\n。\n纸质文档：\n电子文档检查无误后，可装订纸质文档，论文装订顺序为：封面（使用学院统一下发的）-成绩评定表-中文摘要（含关键词）-英文摘要（含关键词）-目录-正文-参考文献-致谢-附录-译文中文-译文原文-封底。\n特别提示，由于档案馆归档要求，成绩评定表需单独提交，所以成绩评定表需要2份纸质版材料，1份装订到论文中，1份单独提交。\n纸质版文档提交时间为6月13日，由各班级学委负责收齐统一提交。",
+    "sourceSha256": "24cae2c183d34ddf9798792b0e9f6190b60dfd12d21b1686d107e2ccca2f64d0",
+    "reference": {
+      "tasks": [
+        {
+          "object": "电子版文档",
+          "verbs": [
+            "提交"
+          ],
+          "channel": "[邮箱1]",
+          "condition": "班级学委"
+        },
+        {
+          "object": "纸质文档",
+          "verbs": [
+            "装订",
+            "提交"
+          ],
+          "condition": "电子文档检查无误后"
+        },
+        {
+          "object": "成绩评定表",
+          "verbs": [
+            "提交"
+          ],
+          "condition": "单独提交一份"
+        },
+        {
+          "object": "纸质版文档",
+          "verbs": [
+            "收齐",
+            "提交"
+          ],
+          "condition": "班级学委"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "电子版文档",
+        "纸质文档",
+        "成绩评定表"
+      ],
+      "criteria": [
+        "学院",
+        "专业",
+        "学号",
+        "姓名",
+        "2份",
+        "1份单独提交"
+      ],
+      "information": [
+        "6月13日"
+      ]
+    },
+    "referenceSha256": "c1c8808622b2efa5bb06f248564e33782fa07b1853acbcbf7d0f1747b49861e5",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.038Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "6月10日与6月13日是指定提交日，无“前”，按现行规则不机械当截止。成绩评定表共2份，一份装订一份单交；装订顺序需要保留，不为每个标题生成任务。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 885,
+          "end": 1162
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "manualTimeFacts": [
+      {
+        "role": "appointed_processing_day",
+        "value": "2025-06-10",
+        "owner": "电子版文档提交"
+      },
+      {
+        "role": "appointed_processing_day",
+        "value": "2025-06-13",
+        "owner": "纸质版文档提交"
+      }
+    ],
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  },
+  {
+    "id": "R5-PUB-10",
+    "title": "秋季补考课程考试安排查询通知",
+    "scene": "查询与未提供的具体考点",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://jwc.seu.edu.cn/2026/0302/c67907a556802/page.htm",
+    "publishedDate": "2026-03-03",
+    "referenceTime": "2026-03-03T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:22:25.619871+00:00",
+    "text": "各位同学：\n2025-2026学年秋季学期课程的补考将于3月7日-3月10日进行，考试安排已发布，请相关同学在系统里查询考试安排，做好考试准备。\n1、考试安排查询方式：登录网上办事大厅（\ni.seu.edu.cn\n），搜索应用“我的考试安排”，点击左上角的学期，切换到“2025-2026学年秋季学期”，查询秋季学期课程补考安排。\n2、部分课程的补考包括笔试和上机考试两部分，上机考试安排详见附件，请相关同学按附件中的时间参加机考。\n3、以论文、报告、大作业等形式完成考核的课程，请相关同学主动联系开课学院或任课老师了解补考要求，按时完成作业。\n特别提醒：请各位同学携带照片清晰的一卡通、学生证或身份证等有效身份证件参加考试。\n如对考试安排有疑问，请及时与各校区教务科（办）或所在学院教务老师联系反馈。",
+    "sourceSha256": "071161e2ad65875baad1fbf974d4df76207ba3ca814f946798b6e641b55b73ba",
+    "reference": {
+      "tasks": [
+        {
+          "object": "考试安排",
+          "verbs": [
+            "查询"
+          ],
+          "channel": "网上办事大厅",
+          "deadlineUnknown": true
+        },
+        {
+          "object": "补考要求",
+          "verbs": [
+            "联系",
+            "了解"
+          ],
+          "condition": "论文报告大作业形式课程"
+        },
+        {
+          "object": "作业",
+          "verbs": [
+            "完成"
+          ],
+          "deadlineUnknown": true,
+          "condition": "论文报告大作业形式课程"
+        },
+        {
+          "object": "有效身份证件",
+          "verbs": [
+            "携带",
+            "准备"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "补考",
+          "start": "2026-03-07",
+          "end": "2026-03-10"
+        }
+      ],
+      "materials": [
+        "有效身份证件"
+      ],
+      "information": [
+        "上机考试安排详见附件"
+      ]
+    },
+    "referenceSha256": "cb59dd3e49147f95bc8b8646dde00d7421ce3826106c41073665ff3299531c51",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.038Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "范围是总体补考日，不是每人连续参加4天；具体个人考时地点未读取附件，必须未知。证件是一卡通/学生证/身份证任一有效证件，不强制三份。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 514,
+          "end": 866
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  },
+  {
+    "id": "R5-PUB-16",
+    "title": "硕士论文答辩会后工作（查重上传节选）",
+    "scene": "答辩后上传与导师前置",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://lingnan.sysu.edu.cn/lnpm/article/533",
+    "publishedDate": "2025-05-22",
+    "referenceTime": "2025-05-22T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:25:03.213859+00:00",
+    "text": "各位同学：\n通过了硕士论文答辩的同学，请认真仔细完成最后一步的工作！\n一、5月26日（周一）12：00前提交资料\n1、用于答辩后查重的【论文终稿电子版】\n要求：\n（1）经导师确认的论文终稿\n（2）除绿色封皮外的论文全文（扉页→后记/致谢），不需要匿名\n（3）论文的文件名为 学号+姓名\n（4）论文格式为PDF格式。\n（5）登陆云存储平台上传。（请定稿后上传1次，切不可反复上传）\n学硕上传地址：[上传地址1]\n文件夹名：2025年上半年硕士论文答辩查重（学硕）\n专硕上传地址：\n[上传地址2]\n文件夹名：2025年上半年硕士论文查重（专硕）\n（查重结果会在1天内反馈到企业微信群。反馈后，轻度论文可以装订提交，中度，重度论文结果会通过邮件反馈导师及本人，导师审核同意修改后方可装订提交）",
+    "sourceSha256": "e6f7c3940b5f5472ae59fdc59b9bf55ce38da6eadf10a3ee496f1436c58c4047",
+    "reference": {
+      "tasks": [
+        {
+          "object": "论文终稿电子版",
+          "verbs": [
+            "提交",
+            "上传"
+          ],
+          "deadline": "2025-05-26T12:00",
+          "precision": "exact",
+          "channel": "云存储平台",
+          "predecessor": "导师",
+          "condition": "已通过硕士论文答辩"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "论文终稿电子版"
+      ],
+      "criteria": [
+        "PDF",
+        "学号+姓名",
+        "不需要匿名",
+        "上传1次"
+      ],
+      "information": [
+        "1天内",
+        "导师审核同意修改后方可装订提交"
+      ]
+    },
+    "referenceSha256": "f7d018a90a6cf0712a5d39255cd5cc23ed90fc4a8dc853dbd754d64612b955d2",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.039Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "仅查重上传一节，不包含未节选的纸质材料第二截止。学硕/专硕上传地址分开保留占位符，不打开分享链接或企业微信。后续装订前置不冒充已完成。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 323,
+          "end": 779
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  },
+  {
+    "id": "R5-PUB-09",
+    "title": "春季学期形势与政策课程结课通知（要求与提交节选）",
+    "scene": "课程与排除资格",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://icb.cau.edu.cn/art/2026/6/22/art_48444_1119322.html",
+    "publishedDate": "2026-06-22",
+    "referenceTime": "2026-06-22T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:22:22.920458+00:00",
+    "text": "各位同学：\n根据教育部、学校相关文件要求，结合学院“形势与政策”课程教学工作安排，请各位同学按要求提交本学期“形势与政策”结课作业。\n一、需要提交作业的同学\n本学期在国际学院注册的2023-2025级所有同学（不包括休学、参加联合培养、赴海外学校交流同学）。\n二、作业形式\n学生自选9个题目的中的任意1个撰写一篇论文。\n\n三、写作要求\n1．论文需紧扣主题，理论联系实际，立意新颖、观点明确，立场坚定、客观分析，学理性突出\n2．结构严谨、逻辑清晰、语言流畅。\n3．内容充实具体，论据充分。\n4．论文格式规范，应包含论文标题、摘要、关键词、正文、参考文献等基本要素。\n5．独立思考、独立完成，严禁抄袭、严禁雷同。\n6．字数控制在2500字至3500字之间。\n四、评分标准\n1．格式正确，20分。\n2．立意新颖、内容贴切，20分。\n3．结构逻辑清楚，使用本学科学术术语，20分。\n4．详略得当、表述规范，20分。\n5．论点正确、论据充分、论证有力，20分。\n五、成绩提交时间及提交方式\n请各位同学按照“学号-姓名-班级”格式将自己Word版作业命名。\n由各班班长/团支书收齐本班作业，北京时间2026年6月28日18：00前，整理打包后发送至[邮箱1]，不需要提交纸质版本。班级负责人在发送邮件时，务必备注好班级名称，另附一份本班全体学生名单（并将已提交和未提交学生标注清楚，见附件）。\n注意：\n1.作业以Word文件形式提交，提交图片或PDF均计0分。\n2.严禁抄袭，如有雷同，计0分，并记入个人诚信档案。\n3.课程论文封面见附件。",
+    "sourceSha256": "76a012507715534d86f559cc796a9ec88e7cb6271cf7144edd34818a050f69f3",
+    "reference": {
+      "tasks": [
+        {
+          "object": "论文",
+          "verbs": [
+            "撰写",
+            "完成"
+          ],
+          "condition": "国际学院注册2023-2025级且非休学或联合培养或海外交流"
+        },
+        {
+          "object": "作业",
+          "verbs": [
+            "提交",
+            "收齐",
+            "发送"
+          ],
+          "deadline": "2026-06-28T18:00",
+          "precision": "exact",
+          "channel": "[邮箱1]",
+          "condition": "班长或团支书汇总发送"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "作业",
+        "全体学生名单"
+      ],
+      "criteria": [
+        "Word",
+        "学号-姓名-班级",
+        "2500",
+        "3500",
+        "不需要提交纸质版本"
+      ]
+    },
+    "referenceSha256": "7debcdc9faf847f8c3fa687145f43d89acd1c744b12e1e713466f53e0d232160",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.038Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "学生交班级的单独截止未说明，6月28日18:00是负责人打包发送截止。二选九题的具体选题列表未节选，不猜题目。PDF/图片不合格是材料格式限制，不是独立任务。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 372,
+          "end": 532
+        },
+        {
+          "start": 1269,
+          "end": 1785
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  },
+  {
+    "id": "R5-PUB-15",
+    "title": "润心大讲堂第一讲（安排与参加须知节选）",
+    "scene": "参加意愿与条件性取消",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://design.sztu.edu.cn/info/1027/1053.htm",
+    "publishedDate": "2025-03-21",
+    "referenceTime": "2025-03-21T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:22:40.099583+00:00",
+    "text": "一、\n时间：\n2025年3月25日（周二）15:00\n二、\n地点：\n深圳技术大学\nC5公共教学楼106\n三、参加人员：\n（一）校领导；\n（二）各基层党组织主要负责同志；\n（三）马克思主义学院（人文社科学院）全体教师；\n（四）各学院辅导员；\n（五）感兴趣的师生。\n感兴趣的师生\n，\n请扫描以下二维码报名\n提示：\n若报名后因特殊情况无法参加，请\n再次扫码点击\n“\n取消报名\n”。\n讲座结束后，学生按指引签到，可获得第二课堂学分\n。\n\n六、相关要求：\n请提前\n15\n分钟到场入座，报告期间请遵守会场秩序，手机调至静音或震动状态。",
+    "sourceSha256": "b329a8b87ad3bf1b0bfab220accabd0f6043d564fc69cce76c1a3f95e253ce21",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "扫描"
+          ],
+          "channel": "二维码",
+          "optional": true,
+          "deadlineUnknown": true
+        },
+        {
+          "object": "取消报名",
+          "verbs": [
+            "取消",
+            "点击"
+          ],
+          "condition": "已报名但特殊情况无法参加",
+          "deadlineUnknown": true
+        },
+        {
+          "object": "签到",
+          "verbs": [
+            "签到"
+          ],
+          "condition": "讲座结束后学生按指引"
+        }
+      ],
+      "events": [
+        {
+          "object": "讲座",
+          "start": "2025-03-25T15:00",
+          "endUnknown": true
+        }
+      ],
+      "criteria": [
+        "提前",
+        "15",
+        "静音"
+      ]
+    },
+    "referenceSha256": "39f8d63f27d290debf414a2c2587716f56edec9845b83aadcfcc82dc4e89a8e7",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.039Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "节选未包含专名主标题，允许用原文“讲座”，不反推专名；保留兴趣选择，不把有条件取消当整场讲座取消。结束未说明，签到在结束后，不编结束时刻。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 1019,
+          "end": 1233
+        },
+        {
+          "start": 1755,
+          "end": 1802
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  },
+  {
+    "id": "R5-PUB-08",
+    "title": "2025-2026学院本科生综合测评通知",
+    "scene": "条件材料与多角色截止",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://spxy.cau.edu.cn/art/2026/8/4/art_51299_1124541.html",
+    "publishedDate": "2026-08-04",
+    "referenceTime": "2026-08-04T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:22:18.691035+00:00",
+    "text": "全体\n本科生：\n学院坚持静态考查与动态测量相结合、班级考评与学院考评相结合的原则，对学生在校期间的综合素质进行全面、科学的评价。请各班级严格按照《\n202\n5\n-202\n6\n学年食品科学与营养工程学院学生综合素质评价实施办法》（以下简称细则）要求，成立班级综合测评小组，班主任为组长，小组成员由班级班委、团支部委员组成。综合测评必须坚持实事求是的原则，凡弄虚作假者，取消其在该年度各种评奖资格，其综合测评成绩以班级最后一名计。各班要高度重视，成绩确定后将不予更改。\n【个人提交材料】\n1.\n电子版附件\n2\n《学生综合素质评价鉴定表》，命名为\n“\n姓名\n+\n班级\n+\n学生综合素质评价鉴定表\n”\n；\n2.\n所有加分项均需提供电子版\n+\n纸质版加分证明材料，电子版材料命名为\n“\n姓名\n+\n班级\n+\n证明材料名称\n”\n。\n（\n*\n若附件\n0\n：\n《\n2025-2026\n年综合素质测评加分公示（部分）》中已\n展示出\n公示\n分数\n，则无需提供证明材料\n；\n若附件\n0\n中没有公示的内容，则需要自行提供证明材料，如获奖证书照片、学校学院等相关网站公示文件截图等。）\n【班级提交材料】\n请各班班长汇总并检查附件\n1\n《\n2025-2026\n学年班级民主打分评优表》、附件\n2\n《学生综合素质评价鉴定表》、附件\n3\n《\n2025-2026\n学年综合测评总表》，将班级材料打包命名为：\nXX\n班综合测评材料，\n请各\n班\n班长汇总\n附件\n1\n、\n2\n、\n3\n以及证明材料，将班级材料打包命名为：\nXX\n班综合测评材料\n。\n2023\n级\n于\n202\n6\n年\n8\n月\n14\n日前提交\n，\n2024\n级和\n2025\n级\n于\n202\n6\n年\n9\n月\n10\n日前提交\n。\n所有年级均提交至邮箱：\n[邮箱1]\n。\n所有纸质版材料由学院各年级辅导员与各班班长审核完毕后提交，提交时间另行通知。",
+    "sourceSha256": "18128168a3214603b061c53735fad0f4a6b693a60489c53d496a2f6afc8a4354",
+    "reference": {
+      "tasks": [
+        {
+          "object": "学生综合素质评价鉴定表",
+          "verbs": [
+            "提交",
+            "填写"
+          ],
+          "deadlineUnknown": true
+        },
+        {
+          "object": "证明材料",
+          "verbs": [
+            "提供",
+            "提交"
+          ],
+          "deadlineUnknown": true,
+          "condition": "未在附件0公示的加分项"
+        },
+        {
+          "object": "班级材料",
+          "verbs": [
+            "汇总",
+            "提交",
+            "打包"
+          ],
+          "deadline": "2026-08-14",
+          "precision": "date_only",
+          "condition": "2023级班长",
+          "channel": "[邮箱1]"
+        },
+        {
+          "object": "班级材料",
+          "verbs": [
+            "汇总",
+            "提交",
+            "打包"
+          ],
+          "deadline": "2026-09-10",
+          "precision": "date_only",
+          "condition": "2024级和2025级班长",
+          "channel": "[邮箱1]"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "学生综合素质评价鉴定表",
+        "加分证明材料"
+      ],
+      "criteria": [
+        "姓名",
+        "班级",
+        "证明材料名称"
+      ],
+      "information": [
+        "提交时间另行通知"
+      ]
+    },
+    "referenceSha256": "5ff14057150e90c1d55c0a776a45e2b3f0762146cc90e4f39545476b8066427b",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.037Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "个人提交没有独立截止，不把班级截止默认为所有个人截止。已公示加分项明确免证明材料；纸质提交要审核后另行通知，不猜具体日期。附件未读，不能判用户加分项是否已公示。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 168,
+          "end": 961
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  },
+  {
+    "id": "R5-PUB-14",
+    "title": "第八届多语种接力同传赛延期报名通知",
+    "scene": "旧截止失效与阶段安排",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://geti.shisu.edu.cn/1f/cf/c13646a204751/page.htm",
+    "publishedDate": "2026-03-05",
+    "referenceTime": "2026-03-05T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:22:37.022837+00:00",
+    "text": "为方便相关院校开学后组织报名，经大赛组委会研究决定，本次大赛报名截止时间从\n3\n月\n8\n日延期至\n3\n月\n15\n日\n24: 00\n。初赛定于\n3\n月第\n4\n周线上举行，\n4\n月\n16\n日前公布决赛参赛名单，\n5\n月\n16\n日在广西民族大学举行决赛。特此通知。\n上海外国语大学、广西民族大学\n多语种接力同传赛组委会\n报名方式\n请于2026年3月15日24:00前扫描以下二维码，填写报名回执。",
+    "sourceSha256": "a515cc7632ac7d612f89edc1716ad0513d972591a59b0236eb6b332a49f2d3b5",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名回执",
+          "verbs": [
+            "填写",
+            "报名",
+            "提交"
+          ],
+          "deadline": "2026-03-16T00:00",
+          "precision": "exact",
+          "channel": "二维码",
+          "optional": true
+        }
+      ],
+      "events": [
+        {
+          "object": "初赛",
+          "startUnknown": true
+        },
+        {
+          "object": "决赛",
+          "start": "2026-05-16",
+          "endUnknown": true
+        }
+      ],
+      "information": [
+        "4",
+        "16",
+        "广西民族大学"
+      ],
+      "obsoleteDates": [
+        "2026-03-08"
+      ]
+    },
+    "referenceSha256": "a3e3958c9fb24b9b246812be3859f1404e2b7a722c7fdad47f11a4b5e2f5d129",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.039Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "3月15日24:00等于16日00:00；3月8日旧截止失效。初赛第4周具体日未说明；4月16日前是名单公布节点，不是报名截止。二维码图像未读不猜链接。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 139,
+          "end": 335
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  },
+  {
+    "id": "R5-PUB-03",
+    "title": "校园网出口设备维护通告(2026.7.22-7.23)",
+    "scene": "跨午夜纯信息",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://eoffice.ecnu.edu.cn/c2/84/c8131a770692/page.htm",
+    "publishedDate": "2026-07-20",
+    "referenceTime": "2026-07-20T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:21:44.747938+00:00",
+    "text": "为保障校园网的稳定运行，信息化治理办公室拟于\n2026年7月22日20:00至7月23日6:00对连接互联网的设备进行维护，期间从校内访问互联网、从校外访问校内网站将不定时中断。\n由此带来的不便，敬请谅解。如有疑问或重要业务需求，请与信息化治理办公室联系，联系方式：电话\n[联系电话]、邮箱[邮箱1]、企业微信（通讯录-员工服务-信息化服务小助手）。\n信息化治理办公室\n2026年7月20日",
+    "sourceSha256": "85ba71326f76ec0b18ba6d4150c36099b935d256bfef998861b2eb57eeb6d654",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "设备",
+          "start": "2026-07-22T20:00",
+          "end": "2026-07-23T06:00"
+        }
+      ],
+      "information": [
+        "不定时中断"
+      ]
+    },
+    "referenceSha256": "9ffef40d19261c7f5886aecff5fb8924aa74079c83aed654511e33ea6b02ec29",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.037Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "窗口描述设备维护，不证明全程断网。联系渠道属于有疑问时的条件说明，不默认给所有人创建联系任务。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 317,
+          "end": 529
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  },
+  {
+    "id": "R5-PUB-01",
+    "title": "关于暂停校园网络服务的通知",
+    "scene": "多时段信息与恢复前置",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://xjzx.shou.edu.cn/2026/0917/c12941a355472/page.htm",
+    "publishedDate": "2026-09-17",
+    "referenceTime": "2026-09-17T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:21:39.606254+00:00",
+    "text": "各位师生：\n因学校校园网络核心设备更新调整，将暂停全校网络及信息系统应用服务，具体安排如下：\n2026\n年\n9\n月\n19\n日（周六）\n00:00-3:00\n暂停全校网络及信息系统应用服务；\n2026\n年\n9\n月\n19\n日（周六）\n5:00-7:00\n暂停行政楼区域校园网络服务，期间会逐步恢复。\n网络设备调整后，首次使用校园网络需要重新认证。若有问题请拨打\n[联系电话]\n联系。\n请提前安排好与停服业务相关的工作，尽量减少影响。给您带来不便，敬请谅解。\n感谢您的理解与支持！\n现代信息与教育技术中心\n2026\n年\n9\n月\n17\n日",
+    "sourceSha256": "49fe39cda294f397268d1b5efe517b6d79d5e6f4d8862d5569fdbdd4101feced",
+    "reference": {
+      "tasks": [
+        {
+          "object": "校园网络",
+          "verbs": [
+            "认证",
+            "重新认证"
+          ],
+          "deadlineUnknown": true,
+          "condition": "设备调整后首次使用"
+        }
+      ],
+      "events": [
+        {
+          "object": "网络",
+          "start": "2026-09-19T00:00",
+          "end": "2026-09-19T03:00"
+        },
+        {
+          "object": "行政楼",
+          "start": "2026-09-19T05:00",
+          "end": "2026-09-19T07:00"
+        }
+      ],
+      "information": [
+        "逐步恢复"
+      ]
+    },
+    "referenceSha256": "6b7d211a681f634204e99ade331c8a7419b00ea8b7c1b3a871b85f86c2549cc2",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.036Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "请提前安排工作为泛化提醒，不另建泛化待办；重新认证是恢复后有条件的动作。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 262,
+          "end": 530
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  },
+  {
+    "id": "R5-PUB-13",
+    "title": "南开历史学院五四论文征稿（双渠道及禁止限制节选）",
+    "scene": "双渠道与禁止限制",
+    "sourceType": "official-public-deidentified-excerpt",
+    "url": "https://history.nankai.edu.cn/2025/0123/c16079a562065/page.htm",
+    "publishedDate": "2025-01-23",
+    "referenceTime": "2025-01-23T00:00:00+08:00",
+    "referenceTimePrecision": "date_only",
+    "timezone": "Asia/Shanghai",
+    "fetchedAt": "2026-10-17T16:22:33.994998+00:00",
+    "text": "各位同学：\n一年一度的“五四论文”征稿活动已经开始，欢迎同学们踊跃参加。\n具体要求如下：\n征稿范围：\n南开大学历史学院在校本科生。\n论文内容：\n历史学专业论文。\n评奖办法：\n邀请院内资深教授成立评审团进行评选。\n奖励办法：\n根据参赛作品数量设定一、二、三等奖若干，授予奖状。\n截稿时间：\n2025\n年\n5\n月\n9\n日\n交稿方式：\n纸质版论文及查重材料提交到历史学院\n227\n[接收人]老师处，电子版论文及查重材料统一发送到\n[邮箱1]\n。\n交稿要求：\n论文撰写遵循学术道德，恪守学术规范，不使用\nAI\n工具生成论文，论文完成后进行查重并提交查重记录。论文格式正确，电子版为\nword\n格式，电子文档以“学院\n-\n专业\n-\n年级\n-\n姓名\n-\n学号”命名，纸质版需要在首页注明学院、专业、年级、学号、姓名、联系电话、指导教师。",
+    "sourceSha256": "6d07f2e27e1c71ad61c9e2e2acc1e89579490eeaadff4982f4908bdd4471c34e",
+    "reference": {
+      "tasks": [
+        {
+          "object": "论文",
+          "verbs": [
+            "撰写",
+            "完成"
+          ],
+          "optional": true
+        },
+        {
+          "object": "查重",
+          "verbs": [
+            "进行",
+            "完成"
+          ],
+          "optional": true
+        },
+        {
+          "object": "纸质版论文",
+          "verbs": [
+            "提交"
+          ],
+          "deadline": "2025-05-09",
+          "precision": "date_only",
+          "channel": "历史学院",
+          "optional": true
+        },
+        {
+          "object": "电子版论文",
+          "verbs": [
+            "发送",
+            "提交"
+          ],
+          "deadline": "2025-05-09",
+          "precision": "date_only",
+          "channel": "[邮箱1]",
+          "optional": true
+        }
+      ],
+      "events": [],
+      "materials": [
+        "论文",
+        "查重材料"
+      ],
+      "criteria": [
+        "word",
+        "学院",
+        "专业",
+        "年级",
+        "姓名",
+        "学号"
+      ],
+      "forbidden": [
+        {
+          "object": "AI工具",
+          "verbs": [
+            "使用"
+          ]
+        }
+      ],
+      "information": [
+        "历史学院在校本科生"
+      ]
+    },
+    "referenceSha256": "67711a04d6ad97dc9ee4d6dbeb25a3ced5386fa81c4b3c960c245fc3a90cac29",
+    "referenceAuthoredAt": "2026-10-17T16:27:41.039Z",
+    "referenceAuthor": "Codex",
+    "referenceStatus": "single-author/model-assisted/provisional",
+    "manualReviewNotes": [
+      "投稿是自愿参加；禁止AI生成论文是格式/诚信限制，不是取消投稿。纸质与电子都需查重材料；两渠道不能混。具体联系人替换占位符，原文未读取附件不补排版细节。"
+    ],
+    "curation": {
+      "excerptBoundary": "Only the explicitly listed source spans; original line breaks retained, adjacent excerpt blocks joined by one blank line. No image/attachment/QR reconstruction.",
+      "segments": [
+        {
+          "start": 353,
+          "end": 732
+        }
+      ],
+      "selectedBackend": "scrapling",
+      "navigationExcluded": true,
+      "namesPhonesEmailsRedacted": true,
+      "distinctChannelPlaceholdersPreserved": true,
+      "redactions": [
+        {
+          "kind": "name",
+          "placeholder": "[接收人]"
+        }
+      ],
+      "sourceDateVerifiedInAcquiredPage": true,
+      "qrImagesAndAttachments": "NOT_READ",
+      "businessModelOutput": "NOT_RUN"
+    },
+    "referenceReviewedBeforeOutputAt": "2026-10-17T16:30:40.676Z"
+  }
+]
