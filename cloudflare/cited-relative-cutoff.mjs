@@ -1,13 +1,21 @@
 import{parseChineseTimeAst}from'./chinese-time-ast.generated.mjs'
 import{projectLiteralSourceEvidence}from'./recognition-literal-evidence.mjs'
 import{sourceSegments}from'./recognition-source-segments.mjs'
-export const RELATIVE_CUTOFF_VERSION='cited-relative-cutoff-1.0.1'
+export const RELATIVE_CUTOFF_VERSION='cited-relative-cutoff-1.0.2'
 const compact=s=>String(s??'').replace(/\s/gu,'')
 function sourceSpan(e,source){
  const q=e?.quote??e?.quotedText;if(typeof q!=='string'||!q)return null
  if(Number.isInteger(e.textStart)||Number.isInteger(e.textEnd))return Number.isInteger(e.textStart)&&Number.isInteger(e.textEnd)&&source.slice(e.textStart,e.textEnd)===q?{start:e.textStart,end:e.textEnd,quote:q}:null
  const segment=e.segmentId?sourceSegments(source).find(s=>s.id===e.segmentId):{start:0,text:source};if(!segment)return null
  const at=segment.text.indexOf(q);return at>=0&&segment.text.indexOf(q,at+1)<0?{start:segment.start+at,end:segment.start+at+q.length,quote:q}:null
+}
+/** A model's unresolved formula is not an absolute date literal. Preserve its
+ * pending proposal when an existing typed anchor cannot prove the arithmetic;
+ * never reinterpret the cited event date as the cutoff or create an anchor. */
+export function unprovenRelativeCutoff(point,result,evidence,source,context={}){
+ if(point?.precision!=='relative'||point.needsConfirmation!==true||typeof source!=='string'||!/(?:registration|submission|task)_deadline$/u.test(point.type??''))return false
+ const formula=(evidence??[]).filter(e=>point.evidenceIds?.includes(e.id)).some(e=>{const span=sourceSpan(e,source);if(!span)return false;const q=compact(span.quote),m=/(?:预约|报名)(?:的)?截止(?:时间)?(?:为|是|[:：])?(?:讲座|活动|培训|报告会)?(?:开场|开始)(?:时间)?前(?:一|1)周/u.exec(q);return m&&!/不|非|取消|作废/u.test(q.slice(Math.max(0,m.index-6),m.index))})
+ return formula&&!citedRelativeCutoff(point,result,evidence,source,context)
 }
 /** Only a declared cutoff formula plus one existing, cited event anchor can
  * derive a date. This never invents a missing time point, event or owner. */

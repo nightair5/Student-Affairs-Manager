@@ -2,7 +2,7 @@ import {groundActivityRoles} from './activityRoles'
 import {retainDeclaredSourceInformation} from './sourceInformationPreview'
 import {nativePreconditionIssues} from './nativePrecondition'
 import {citedEventSequence,citedSplitEventRange,citedTaskDateRange} from '../../cloudflare/cited-event-sequence.mjs'
-import {citedRelativeCutoff} from '../../cloudflare/cited-relative-cutoff.mjs'
+import {citedRelativeCutoff,unprovenRelativeCutoff} from '../../cloudflare/cited-relative-cutoff.mjs'
 import { interpretTimeD26, type D26TimeInterpretation } from '../lib/timeSemanticsD26'
 import { adaptModelWire, type WireContext } from '../experiments/realInput01/modelWire'
 import type { SemanticInput } from '../experiments/mainline04/semanticContract'
@@ -20,7 +20,7 @@ import {nativeQualificationReviews} from './nativeQualificationReview'
 import {projectCitedClockRanges,type CitedClockRangeDecision} from '../../cloudflare/cited-clock-range.mjs'
 import {isolateRecognitionItems,unanchoredAcademicWeek,LOCAL_ISOLATION_NOTE_PREFIX,LOCAL_ISOLATION_VERSION,type LocalIsolationAudit} from '../../cloudflare/recognition-local-isolation.mjs'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.26.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.26.1'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -337,6 +337,11 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   }
   const eventQuotes = (id: string) => quote(result.events.find(e => e.tempId === id)?.evidenceIds ?? [])
   for (const point of result.timePoints) {
+    if(unprovenRelativeCutoff(point,result,result.evidence,context.sourceText,context)){
+      point.selected=false
+      audit.unresolved.push({entityId:point.tempId,reason:'RELATIVE_CUTOFF_TYPED_ANCHOR_UNRESOLVED'})
+      continue
+    }
     const clockRange=audit.citedClockRanges.find(d=>d.pointId===point.tempId)
     if(clockRange){if(clockRange.blocked)audit.unresolved.push({entityId:point.tempId,reason:clockRange.reason});continue}
     const split=citedRelativeCutoff(point,result,result.evidence,context.sourceText,context)??citedTaskDateRange(point,[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])],result.timePoints,result.evidence,context.sourceText)??citedSplitEventRange(point,result.events,result.timePoints,result.evidence,context.sourceText)
