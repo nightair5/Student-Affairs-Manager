@@ -1,0 +1,3 @@
+import type{RecognitionResult,TimePointSuggestionV2}from'../src/recognition/types'
+export const RELATIVE_CUTOFF_VERSION:'cited-relative-cutoff-1.0.0'
+export function citedRelativeCutoff(point:Pick<TimePointSuggestionV2,'tempId'|'type'|'rawText'|'evidenceIds'>,result:RecognitionResult,evidence:RecognitionResult['evidence'],source:string,context?:{referenceTime?:string;timezone?:string}):null|{dateLiteral:string;endpoint:string;expectedLocal:string;context:string;evidenceIds:string[];anchorEventId:string;anchorPointId:string;rule:'EXPLICIT_ONE_WEEK_BEFORE_UNIQUE_CITED_EVENT_START';version:typeof RELATIVE_CUTOFF_VERSION}

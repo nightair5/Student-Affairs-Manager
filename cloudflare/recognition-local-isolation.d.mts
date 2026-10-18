@@ -1,5 +1,5 @@
 import type { RecognitionResult } from '../src/recognition/types'
-export const LOCAL_ISOLATION_VERSION:'recognition-local-isolation-1.0.0'
+export const LOCAL_ISOLATION_VERSION:'recognition-local-isolation-1.1.0'
 export const LOCAL_ISOLATION_NOTE_PREFIX:string
 export interface LocalIsolationAudit {version:typeof LOCAL_ISOLATION_VERSION;inferredFacts:0;quarantined:Array<{kind:string;path:string;id:string|null;reason:string;original:unknown}>;structure:Array<{path:string;original:unknown}>;relations:Array<{ownerId:string;field:string;original:unknown}>}
 export function hasLocalIsolationPending(result:RecognitionResult):boolean

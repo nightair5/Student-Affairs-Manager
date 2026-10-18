@@ -1,0 +1,13 @@
+{
+  "version": "owner-default-reference-6.0.1",
+  "author": "Codex / single-author / model-assisted / provisional",
+  "basis": "Quality R8 owner R3 applied to author-source references before any 1.8 output. No dates, objects, forbidden actions or relationships are changed. The old standalone preparation obligation remains a cited requirement with its condition.",
+  "parent": "references-v6.json",
+  "rows": [
+    {"id":"DEV-14","removeTaskIndices":[0],"requirements":[{"tokens":["议题提纲","一页"],"rule":"R3","reason":"参加讨论前的准备材料，无独立交付或单独截止；禁止提交提纲仍保留"}]},
+    {"id":"DEV-24","removeTaskIndices":[1],"requirements":[{"tokens":["终端设备"],"condition":"学员","rule":"R3_R5","reason":"被录取学员的设备要求，不是另一交付"}]},
+    {"id":"DEV-27","removeTaskIndices":[0],"requirements":[{"tokens":["项目说明","PDF"],"rule":"R3","reason":"共享材料准备要求；评审与备案各自截止、渠道、两次交付和共享材料关系全部保留"}]},
+    {"id":"GROUP-06","removeTaskIndices":[0],"requirements":[{"tokens":["耳机"],"condition":"录取","unknownEligibility":true,"rule":"R3_R5","reason":"仅录取者的设备要求，资格未定仍不能预选参与"}]},
+    {"id":"R2-RES-11","removeTaskIndices":[1],"requirements":[{"tokens":["电脑"],"condition":"入选","unknownEligibility":true,"rule":"R3_R5","reason":"入选者的设备要求，入选未定；报名交付及工作坊活动仍必需"}]}
+  ]
+}

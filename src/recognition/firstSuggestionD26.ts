@@ -2,6 +2,7 @@ import {groundActivityRoles} from './activityRoles'
 import {retainDeclaredSourceInformation} from './sourceInformationPreview'
 import {nativePreconditionIssues} from './nativePrecondition'
 import {citedEventSequence,citedSplitEventRange,citedTaskDateRange} from '../../cloudflare/cited-event-sequence.mjs'
+import {citedRelativeCutoff} from '../../cloudflare/cited-relative-cutoff.mjs'
 import { interpretTimeD26, type D26TimeInterpretation } from '../lib/timeSemanticsD26'
 import { adaptModelWire, type WireContext } from '../experiments/realInput01/modelWire'
 import type { SemanticInput } from '../experiments/mainline04/semanticContract'
@@ -17,9 +18,9 @@ import {completeCitedSourceWindows,CITED_SOURCE_WINDOW_VERSION} from './citedSou
 import {addDateOnlyDays} from '../lib/timeSemantics'
 import {nativeQualificationReviews} from './nativeQualificationReview'
 import {projectCitedClockRanges,type CitedClockRangeDecision} from '../../cloudflare/cited-clock-range.mjs'
-import {isolateRecognitionItems,unanchoredAcademicWeek,LOCAL_ISOLATION_NOTE_PREFIX,type LocalIsolationAudit} from '../../cloudflare/recognition-local-isolation.mjs'
+import {isolateRecognitionItems,unanchoredAcademicWeek,LOCAL_ISOLATION_NOTE_PREFIX,LOCAL_ISOLATION_VERSION,type LocalIsolationAudit} from '../../cloudflare/recognition-local-isolation.mjs'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.25.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.26.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -39,7 +40,7 @@ export interface D26FirstSuggestionAudit {
   nativeQualificationReview:ReturnType<typeof nativeQualificationReviews>
   activityRoles:ReturnType<typeof groundActivityRoles>
   actionFields: Array<{entityId:string; before:string; after:string; status:'CITED_VERB_PROJECTION'|'LOCAL_UNRESOLVED_ACTION'|'EXISTING_COURSE_COMPLETION_SUPPORT'; quotes:string[]}>
-  rangeSupport: Array<{entityId:string; quote:string; literalRange:string; expanded:string; rule:'CITED_SAME_EVENT_RANGE_ENDPOINT'|'CITED_SAME_EVENT_CLOCK_RANGE'|'CITED_ADJACENT_SAME_DAY_EVENT'|'CITED_NEXT_DAY_DURATION_CONSENSUS'|'CITED_SHARED_TASK_RANGE_ENDPOINT'}>
+  rangeSupport: Array<{entityId:string; quote:string; literalRange:string; expanded:string; rule:'CITED_SAME_EVENT_RANGE_ENDPOINT'|'CITED_SAME_EVENT_CLOCK_RANGE'|'CITED_ADJACENT_SAME_DAY_EVENT'|'CITED_NEXT_DAY_DURATION_CONSENSUS'|'CITED_SHARED_TASK_RANGE_ENDPOINT'|'CITED_RELATIVE_CUTOFF'}>
   role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT'
 }
 type TimeFields = Pick<TimePointSuggestionV2, 'normalizedValue' | 'timezone' | 'isAllDay' | 'precision' | 'needsConfirmation'>
@@ -128,7 +129,7 @@ function time<T extends TimeFields & { tempId: string; rawText: string; type: Ti
     return
   }
   const fullRange=/(?:\d{4}年)?\d{1,2}月\d{1,2}日?\s*(?:[-—–至到]\s*(?:\d{4}年)?(?:\d{1,2}月)?\d{1,2}日|\d{1,2}:[0-5]\d\s*[-—–至到]\s*\d{1,2}:[0-5]\d|\d{1,2}:[0-5]\d(?:开始|开场)[，,、；;\s]*\d{1,2}:[0-5]\d(?:结束|散场|闭幕))/u.test(point.rawText)
-  const range = proof?{quote:proof.context,literalRange:point.rawText,expanded:proof.endpoint,rule:proof.rule==='EXISTING_SHARED_TASK_DATE_RANGE'?'CITED_SHARED_TASK_RANGE_ENDPOINT' as const:'CITED_SAME_EVENT_RANGE_ENDPOINT' as const}:supported(point.rawText, quotes)&&!fullRange?null:rangeEndpointSupport(point.rawText, point.type, rangeQuotes, referenceTime, timezone)
+  const range = proof?{quote:proof.context,literalRange:point.rawText,expanded:proof.endpoint,rule:proof.rule==='EXPLICIT_ONE_WEEK_BEFORE_UNIQUE_CITED_EVENT_START'?'CITED_RELATIVE_CUTOFF' as const:proof.rule==='EXISTING_SHARED_TASK_DATE_RANGE'?'CITED_SHARED_TASK_RANGE_ENDPOINT' as const:'CITED_SAME_EVENT_RANGE_ENDPOINT' as const}:supported(point.rawText, quotes)&&!fullRange?null:rangeEndpointSupport(point.rawText, point.type, rangeQuotes, referenceTime, timezone)
   if (!supported(point.rawText, quotes) && !range) {
     audit.unresolved.push({ entityId: point.tempId, reason: 'TIME_SOURCE_SUPPORT_MISSING' })
     Object.assign(point, { normalizedValue: null, isAllDay: false, precision: 'vague', needsConfirmation: true })
@@ -297,7 +298,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   // Machine product-wire items share the Worker's isolation rule. Manual and
   // legacy semantic views keep their existing field-level source/verb checks;
   // they are not untrusted raw model containers to silently rewrite here.
-  const isolated=input.promptVersion.startsWith('recognition-product-contract-')?isolateRecognitionItems(input,context.sourceText,{allowNoUsableSubset:true}):{result:input,audit:{version:'recognition-local-isolation-1.0.0' as const,inferredFacts:0 as const,quarantined:[],structure:[],relations:[]},rootFailure:false}
+  const isolated=input.promptVersion.startsWith('recognition-product-contract-')?isolateRecognitionItems(input,context.sourceText,{allowNoUsableSubset:true}):{result:input,audit:{version:LOCAL_ISOLATION_VERSION,inferredFacts:0 as const,quarantined:[],structure:[],relations:[]},rootFailure:false}
   if(!isolated.result)throw Error('RECOGNITION_ROOT_INVALID')
   const result = structuredClone(isolated.result), audit = auditRecord()
   if(isolated.audit.quarantined.length||isolated.audit.structure.length||isolated.audit.relations.length)audit.localIsolation=isolated.audit
@@ -338,7 +339,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   for (const point of result.timePoints) {
     const clockRange=audit.citedClockRanges.find(d=>d.pointId===point.tempId)
     if(clockRange){if(clockRange.blocked)audit.unresolved.push({entityId:point.tempId,reason:clockRange.reason});continue}
-    const split=citedTaskDateRange(point,[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])],result.timePoints,result.evidence,context.sourceText)??citedSplitEventRange(point,result.events,result.timePoints,result.evidence,context.sourceText)
+    const split=citedRelativeCutoff(point,result,result.evidence,context.sourceText,context)??citedTaskDateRange(point,[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])],result.timePoints,result.evidence,context.sourceText)??citedSplitEventRange(point,result.events,result.timePoints,result.evidence,context.sourceText)
     const heading = split?undefined:citedEventDate(point, result.events, pointQuotes, eventQuotes, context.sourceText, context.referenceTime, context.timezone)
     const sequence = sequentialEventDate(point,result.events,result.timePoints,result.evidence,context.sourceText,context.referenceTime,context.timezone)
     const sameDay=citedSameDayDate(point,pointQuotes,context.sourceText,context.referenceTime,context.timezone)

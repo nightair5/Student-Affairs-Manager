@@ -1,6 +1,7 @@
 // Owner-provisional task granularity defaults. Historical references and v5.1
 // remain intact and must be reported alongside this explicit policy change.
 import {reviewV51} from './product-dev-review-v5-1.mjs'
+import {usesSourceSegments,projectSegmentEvidence} from '../cloudflare/recognition-source-segments.mjs'
 export const PRODUCT_REVIEW_V6_VERSION='product-development-review-6.0.0'
 export const OWNER_DEFAULTS_V6={author:'Product owner, explicit Quality R8 message; reference interpretation by Codex / model-assisted / provisional',R1:'One registration delivery; split only independent deadline, place or dependency',R2:'Reading/following is reference unless a timed subsequent action is required',R3:'Material production/signature/eligibility is a requirement unless separately delivered or timed',R4:'One object and delivery; return-for-correction is conditional information',R5:'Attend/test/publicize only for an explicitly required current role; otherwise optional or pending',safety:'No equivalence for wrong value, object, source, owner, cancellation or time role'}
 const compact=v=>String(v??'').replace(/\s/gu,'')
@@ -11,11 +12,15 @@ export function reviewV6(result,source,{referenceV6=null,...options}={}){
  const next={...source,reference:referenceV6?.reference??source.reference},out=reviewV51(result,next,options),equivalence=[]
  if(!result)return {...out,reviewVersion:PRODUCT_REVIEW_V6_VERSION,referenceRevision:referenceV6?.version??'V6_POLICY_UNCHANGED_MINIMUM',equivalence}
  const tasks=tasksOf(result)
+ if(options.observationLayer==='MODEL_RAW'&&usesSourceSegments(options.generationVersion??result.promptVersion)){
+  const checked=projectSegmentEvidence(result,source.text)
+  if(checked.audit.rejected.length)out.issues.push({failure_layer:'MODEL_WIRE',code:'INVALID_SEGMENT_EVIDENCE',detail:checked.audit.rejected.map(r=>({id:r.evidenceId,reason:r.reason}))})
+ }
  // The source-authored minimum may keep a requirement in a description or
  // material field. It is not required to be duplicated as an executable task.
  for(const req of referenceV6?.preservedRequirements??[]){
-  const fields=[...tasks.map(t=>({entity:t,text:[t.title,t.actionObject,t.description,...(t.completionCriteria??[])].join('\n')})),...(result.materials??[]).map(m=>({entity:m,text:[m.name,...(m.formatRequirements??[]),...(m.namingRequirements??[])].join('\n')})),...(result.ignoredContent??[]).filter(i=>i&&typeof i==='object').map(i=>({entity:i,text:JSON.stringify(i)}))]
-  const ok=fields.some(({entity,text})=>req.tokens.every(token=>has(text,token))&&quotes(entity,result,source))
+  const fields=[...tasks.map(t=>({entity:t,text:[t.title,t.actionObject,t.description,...(t.completionCriteria??[])].join('\n')})),...(result.materials??[]).map(m=>({entity:m,text:[m.name,...(m.formatRequirements??[]),...(m.namingRequirements??[])].join('\n')})),...(result.events??[]).map(e=>({entity:e,text:[e.title,e.description].join('\n')}))]
+  const ok=fields.some(({entity,text})=>req.tokens.every(token=>has(text,token))&&(!req.condition||has(text,req.condition))&&(!req.unknownEligibility||entity.selected!==true)&&quotes(entity,result,source))
   out.required++;if(ok)out.matched++;else out.issues.push({failure_layer:'MODEL_SEMANTIC',code:'MISSING_V6_RETAINED_REQUIREMENT',detail:req})
  }
  out.issues=out.issues.filter(i=>{

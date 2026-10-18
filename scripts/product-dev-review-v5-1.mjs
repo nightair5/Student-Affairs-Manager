@@ -1,10 +1,25 @@
 // Corrections discovered during current Development inspection. v5.0 and v4
 // remain reproducible; report all three rather than overwriting prior scores.
 import {reviewV5} from './product-dev-review-v5.mjs'
+import {projectLiteralSourceEvidence} from '../cloudflare/recognition-literal-evidence.mjs'
+import {citedRelativeCutoff} from '../cloudflare/cited-relative-cutoff.mjs'
 export const PRODUCT_REVIEW_V51_VERSION='product-development-review-5.1.0'
 export function reviewV51(result,source,options={}){
  const out=reviewV5(result,source,options)
  if(!result)return {...out,reviewVersion:PRODUCT_REVIEW_V51_VERSION}
+ // Severity bug fix, not a change to the literal wire contract: a uniquely
+ // reversible citation-format mismatch is still a wire issue, but does not
+ // demonstrate loss of its original source. Keep the issue and partial grade.
+ const projected=projectLiteralSourceEvidence(result,source.text),validLiteral=id=>{const e=projected.result.evidence?.find(e=>e.id===id);return typeof e?.quote==='string'&&e.quote.length>0&&source.text.includes(e.quote)}
+ const entities=[...(result.standaloneTasks??[]),...(result.milestones??[]).flatMap(m=>[...m.tasks??[],...(m.workPackages??[]).flatMap(w=>w.tasks??[])]),...result.materials??[],...result.timePoints??[],...result.events??[],...result.milestones??[],...(result.milestones??[]).flatMap(m=>m.workPackages??[])]
+ const recoveredSourceFlags=out.severe.filter(s=>s.code==='SOURCE_EVIDENCE_LOSS'&&entities.some(e=>e.tempId===s.entity&&e.evidenceIds?.length&&e.evidenceIds.every(validLiteral)))
+ if(recoveredSourceFlags.length){out.severe=out.severe.filter(s=>!recoveredSourceFlags.includes(s));out.scorerSeverityAudit={code:'RECOVERABLE_LITERAL_FORMAT_IS_NOT_LOST_SOURCE',removed:recoveredSourceFlags,wireIssuesRetained:true}}
+ // A source-authored relative formula is not an invented date. Keep an
+ // incomplete older reference visibly disputed; wrong arithmetic still fails.
+ const local=v=>/[Zz]|[+-]\d\d:\d\d$/u.test(v??'')?new Intl.DateTimeFormat('sv-SE',{timeZone:source.timezone??'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(v)).replace(' ','T'):String(v??'').slice(0,16)
+ const verifiedRelative=new Set((projected.result.timePoints??[]).filter(p=>{const c=citedRelativeCutoff(p,projected.result,projected.result.evidence,source.text,{referenceTime:source.referenceTime,timezone:source.timezone});return c&&local(p.normalizedValue)===c.expectedLocal}).map(p=>p.tempId))
+ const relativeFlags=out.severe.filter(s=>s.code==='INVENTED_DEADLINE'&&verifiedRelative.has(s.time))
+ if(relativeFlags.length){out.severe=out.severe.filter(s=>!relativeFlags.includes(s));out.issues=out.issues.filter(i=>{if(i.code!=='INVENTED_DEADLINE')return true;if(verifiedRelative.has(i.detail?.time))return false;const owners=entities.filter(t=>t.actionObject&&String(t.actionObject).includes(String(i.detail)));return !owners.some(t=>{const ps=(result.timePoints??[]).filter(p=>/deadline/u.test(p.type)&&(p.relatedTaskTempIds?.includes(t.tempId)||t.timePointTempIds?.includes(p.tempId)));return ps.length&&ps.every(p=>verifiedRelative.has(p.tempId))})});out.issues.push({failure_layer:'REFERENCE',code:'REFERENCE_OMITS_EXPLICIT_RELATIVE_CUTOFF',detail:[...verifiedRelative]});out.relativeDeadlineScorerBugFix={removed:relativeFlags,referenceDisputePreserved:true}}
  // Fix only the v4 month-presence heuristic on line-wrapped calendar dates
  // and literal 24:00 month-end rollover, which already denotes next midnight.
  // A complete cited literal date must equal the value; role, owner, obsolete
@@ -42,6 +57,7 @@ export function reviewV51(result,source,options={}){
   }
  }
  if(out.severe.length)out.status='错'
+ else out.status=!out.issues.length?'完整':out.issues.every(i=>i.failure_layer==='REFERENCE')?'未知':out.matched>0?'部分':'错'
  // Resolving a duplicate-material representation must never hide another
  // unresolved primary source/owner gate in the ordinary assembler.
  if(out.status==='完整'&&options.audit?.unresolved?.length){out.status='未知';out.issues.push({failure_layer:'SEMANTIC_COMPOSER',code:'UNRESOLVED_SOURCE_SUPPORT_NOT_WHOLE_COMPLETE',detail:options.audit.unresolved})}

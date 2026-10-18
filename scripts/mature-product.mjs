@@ -9,6 +9,7 @@ import {createServer} from 'node:http'
 import {pathToFileURL} from 'node:url'
 import {build} from 'esbuild'
 import {recognitionSystemPrompt} from '../cloudflare/recognition.mjs'
+import {recognitionSourceBody} from '../cloudflare/recognition-source-segments.mjs'
 import {PRODUCT_CONTRACT_PROMPT_VERSION} from '../cloudflare/recognition-output-contract.mjs'
 import {parseRecognitionJson} from '../cloudflare/recognition-json.mjs'
 import {MAX_EXTRACTION_TOKENS} from '../cloudflare/worker.mjs'
@@ -32,7 +33,7 @@ const PARAMETERS={temperature:.1,maxOutputTokens:REQUEST_EXTRACTION_TOKENS,trans
 export const MATURE_WORKER_REQUEST_BYTE_CEILING=262144
 export const sha=v=>createHash('sha256').update(v).digest('hex')
 const read=p=>JSON.parse(readFileSync(p)),json=v=>JSON.stringify(v,null,2)+'\n',check=(ok,c)=>{if(!ok)throw Error('MATURE_'+c)},git=a=>execFileSync('git',a,{encoding:'utf8',maxBuffer:32*1024*1024}).trim()
-export function workerRequest(s){const b={content:s.text,sourceTitle:s.inputSourceTitle??s.id,referenceTime:s.referenceTime,timezone:s.timezone??'Asia/Shanghai',sourceType:s.inputSourceType??'text'};return {workerBody:b,body:{model:'deepseek-v4-flash',thinking:{type:'disabled'},temperature:.1,max_tokens:REQUEST_EXTRACTION_TOKENS,response_format:{type:'json_object'},messages:[{role:'system',content:recognitionSystemPrompt({modelName:'deepseek-v4-flash',productContract:true,promptVersion:ACTIVE_GENERATION_VERSION})},{role:'user',content:`参考时间：${b.referenceTime}\n时区：${b.timezone}\n来源类型：${b.sourceType}\n来源标题：${b.sourceTitle || '未提供'}\n来源正文：\n${s.text}`}]}}}
+export function workerRequest(s){const b={content:s.text,sourceTitle:s.inputSourceTitle??s.id,referenceTime:s.referenceTime,timezone:s.timezone??'Asia/Shanghai',sourceType:s.inputSourceType??'text'};return {workerBody:b,body:{model:'deepseek-v4-flash',thinking:{type:'disabled'},temperature:.1,max_tokens:REQUEST_EXTRACTION_TOKENS,response_format:{type:'json_object'},messages:[{role:'system',content:recognitionSystemPrompt({modelName:'deepseek-v4-flash',productContract:true,promptVersion:ACTIVE_GENERATION_VERSION})},{role:'user',content:`参考时间：${b.referenceTime}\n时区：${b.timezone}\n来源类型：${b.sourceType}\n来源标题：${b.sourceTitle || '未提供'}\n来源正文：\n${recognitionSourceBody(s.text,ACTIVE_GENERATION_VERSION)}`}]}}}
 export function initialize(){
  check(!existsSync(join(ROOT,'PACKAGE.json')),'PACKAGE_EXISTS');const bytes=readFileSync(AUTHORITATIVE_LEDGER),chain=validateChain(bytes),assetRoot='C:/Users/Winner/.codex/worktrees/student-affairs-candidate11/比赛';
  const assets=['CODEX_DESKTOP_HANDOVER.md','CODEX_NEXT_PHASE_PLAN.md'].map(path=>({path:join(assetRoot,path),sha256:sha(readFileSync(join(assetRoot,path)))}));

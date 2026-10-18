@@ -19,6 +19,7 @@ import { isValidTimeZone } from './chinese-time-ast.generated.mjs'
 import {parseRecognitionJson} from './recognition-json.mjs'
 import {projectDanglingAnnotationEvidence} from './recognition-annotation-projection.mjs'
 import {projectLiteralSourceEvidence} from './recognition-literal-evidence.mjs'
+import {recognitionSourceBody,usesSourceSegments,projectSegmentEvidence} from './recognition-source-segments.mjs'
 import {projectCitedClockRanges} from './cited-clock-range.mjs'
 import {isolateRecognitionItems,retainUnanchoredWeekTimes} from './recognition-local-isolation.mjs'
 import {decodeRecognitionOutput} from './recognition-output-recovery.mjs'
@@ -799,20 +800,22 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     return failure(validationError, '来源正文或参考时间无效。', 400, context.requestId)
   }
 
-  const sourceContent = safeText(body.content, 24_000)
   const sourceTitle = safeText(body.sourceTitle, 160)
   const referenceTime = safeText(body.referenceTime, 80)
   const timezone = safeText(body.timezone, 80) || 'Asia/Shanghai'
   const selectedModel = extractionModel(env)
   const selectedPromptVersion = selectedModel === DEEPSEEK_MULTIMODAL_MODEL
     ? VISION_TEXT_EVALUATION_PROMPT_VERSION
-    : ['recognition-product-contract-1.2.0',PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0','recognition-product-contract-1.5.0','recognition-product-contract-1.6.0','recognition-product-contract-1.7.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
+    : ['recognition-product-contract-1.2.0',PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0','recognition-product-contract-1.5.0','recognition-product-contract-1.6.0','recognition-product-contract-1.7.0','recognition-product-contract-1.8.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
+  // Segment offsets address the exact captured source, including leading and
+  // trailing layout. Older request versions retain their original trim rule.
+  const sourceContent = usesSourceSegments(selectedPromptVersion)?body.content:safeText(body.content,24_000)
   const systemPrompt = recognitionSystemPrompt({
     modelName: selectedModel,
     productContract: selectedModel !== DEEPSEEK_MULTIMODAL_MODEL,
     ...(selectedPromptVersion ? { promptVersion: selectedPromptVersion } : {}),
   })
-  const userText = extractionUserText(body, sourceContent, sourceTitle, referenceTime, timezone)
+  const userText = extractionUserText(body, recognitionSourceBody(sourceContent,selectedPromptVersion), sourceTitle, referenceTime, timezone)
   const release = acquireConcurrency(clientKey(request))
   if (!release) {
     context.errorType = 'RATE_LIMITED'
@@ -864,8 +867,9 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       selectedModel,
       selectedPromptVersion ?? RECOGNITION_PROMPT_VERSION,
     )
+    const segmentProjection=usesSourceSegments(selectedPromptVersion)?projectSegmentEvidence(candidate,sourceContent):{result:candidate,audit:null}
     const literalProjection=selectedPromptVersion?.startsWith('recognition-product-contract-')
-      ?projectLiteralSourceEvidence(candidate,sourceContent):{result:candidate,audit:null}
+      ?projectLiteralSourceEvidence(segmentProjection.result,sourceContent):{result:segmentProjection.result,audit:null}
     const clockRangeProjection=projectCitedClockRanges(literalProjection.result,sourceContent,referenceTime,timezone)
     const deterministicCandidate = applyDeterministicTimeAst(literalProjection.result, referenceTime, timezone, sourceContent)
     const annotationProjection=selectedPromptVersion?.startsWith('recognition-product-contract-')?projectDanglingAnnotationEvidence(deterministicCandidate):{result:deterministicCandidate,audit:null}
@@ -894,6 +898,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       result,
       execution: {
         ...(decoded.audit.partial?{outputRecovery:decoded.audit}:{}),
+        ...(segmentProjection.audit?{segmentEvidence:segmentProjection.audit}:{}),
         ...(localIsolation.audit.quarantined.length||localIsolation.audit.structure.length||localIsolation.audit.relations.length?{localIsolation:localIsolation.audit}:{}),
         ...(clockRangeProjection.audit.decisions.length?{citedClockRangeProjection:clockRangeProjection.audit}:{}),
         timeContextProjection:{version:SOURCE_SAME_DAY_CONTEXT_VERSION,inferredFacts:0,decisions:result.timePoints.flatMap(point=>{

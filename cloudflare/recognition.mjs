@@ -1,5 +1,6 @@
 import {citedEventSequence,citedSplitEventRange,citedTaskDateRange} from './cited-event-sequence.mjs'
 import {projectCitedClockRanges} from './cited-clock-range.mjs'
+import {citedRelativeCutoff} from './cited-relative-cutoff.mjs'
 import { parseChineseTimeAst } from './chinese-time-ast.generated.mjs'
 import {productGenerationContract,productGenerationUsesSingleSchema,PRODUCT_CONTRACT_PROMPT_VERSION} from './recognition-output-contract.mjs'
 
@@ -30,6 +31,7 @@ export function citedSameDayContext(point,evidence,sourceContent){
 }
 
 export function citedTimeContext(point,raw,evidence,sourceContent,options={}){
+  const relative=citedRelativeCutoff(point,raw,evidence,sourceContent,options);if(relative)return relative
   const taskWindow=citedTaskDateRange(point,[...(raw.standaloneTasks??[]),...(raw.milestones??[]).flatMap(m=>[...(m.tasks??[]),...(m.workPackages??[]).flatMap(w=>w.tasks??[])])],raw.timePoints??[],evidence,sourceContent);if(taskWindow)return taskWindow
   const split=citedSplitEventRange(point,raw.events??[],raw.timePoints??[],evidence,sourceContent)
   if(split)return split
@@ -194,7 +196,7 @@ export function applyDeterministicTimeAst(raw, referenceTime, timezone = 'Asia/S
     timePoints: ranges.result.timePoints.map((item) => {
       if (!item || typeof item !== 'object' || Array.isArray(item) || !TIME_POINT_TYPES.has(item.type) || typeof item.rawText !== 'string') return item
       if(ranges.audit.decisions.some(d=>d.pointId===item.tempId))return item
-      let endpoint=item.rawText
+      let endpoint=citedRelativeCutoff(item,raw,raw.evidence,sourceContent,{referenceTime,timezone})?.endpoint??item.rawText
       const owners=(raw.events??[]).filter(e=>e.startTimePointTempId===item.tempId||e.endTimePointTempId===item.tempId)
       const sharedQuotes=owners.length===1?(raw.evidence??[]).filter(e=>item.evidenceIds?.includes(e.id)&&owners[0].evidenceIds?.includes(e.id)).map(e=>e.quote??e.quotedText):[]
       if(['event_start','event_end'].includes(item.type)&&sharedQuotes.some(q=>typeof q==='string'&&q.includes(item.rawText))){
@@ -237,7 +239,8 @@ export function normalizeRecognitionResult(
     if (!item || typeof item !== 'object' || Array.isArray(item)) return []
     const quote = text(item.quotedText || item.quote, 500)
     if (!quote || (verifyEvidenceAgainstSource && !sourceContent.includes(quote))) return []
-    return [{ id: text(item.id, 100, `evidence-${index + 1}`), sourceId: 'pending-source', quote, quotedText: quote, field: ['title', 'deadline', 'materials', 'description', 'project', 'milestone', 'event', 'requirement'].includes(item.field) ? item.field : 'description', extractionMethod: 'ai', confidence: number01(item.confidence, 0.8) }]
+    const span=Number.isInteger(item.textStart)&&Number.isInteger(item.textEnd)&&item.textStart>=0&&item.textEnd>item.textStart&&sourceContent.slice(item.textStart,item.textEnd)===quote?{textStart:item.textStart,textEnd:item.textEnd}:{}
+    return [{ id: text(item.id, 100, `evidence-${index + 1}`), sourceId: 'pending-source', quote, quotedText: quote,...span, field: ['title', 'deadline', 'materials', 'description', 'project', 'milestone', 'event', 'requirement'].includes(item.field) ? item.field : 'description', extractionMethod: 'ai', confidence: number01(item.confidence, 0.8) }]
   })
   const evidenceIds = new Set(evidence.map((item) => item.id))
   const normalizeTasks = (items, limit = 20) => Array.isArray(items) ? items.slice(0, limit).map((item, index) => normalizeTask(item, index, evidenceIds)).filter(Boolean) : []
