@@ -1,6 +1,6 @@
 import{projectLiteralSourceEvidence}from'./recognition-literal-evidence.mjs'
 export const SOURCE_SEGMENT_VERSION='numbered-source-evidence-1.0.0'
-export const usesSourceSegments=version=>version==='recognition-product-contract-1.8.0'
+export const usesSourceSegments=version=>['recognition-product-contract-1.8.0','recognition-product-contract-1.9.0'].includes(version)
 /** Segments are an index into the unchanged original, never business entities. */
 export function sourceSegments(source,max=420){
  const rows=[];let start=0

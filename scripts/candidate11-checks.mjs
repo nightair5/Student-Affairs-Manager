@@ -57,8 +57,10 @@ async function safety() {
   layer='current-safety'
   nodeTests([['product-worker-payload','scripts/product-worker-payload.node-test.mjs']])
   nodeTests([['product-segmented-worker-payload','scripts/segmented-worker-payload.node-test.mjs']])
+  nodeTests([['product-facts-first-worker-payload','scripts/facts-first-worker-payload.node-test.mjs']])
   nodeTests([['product-v51-wrapped-date-bug','scripts/product-dev-review-v51-wrapped-date.node-test.mjs']])
   nodeTests([['product-v6-owner-defaults','scripts/product-dev-review-v6.node-test.mjs']])
+  nodeTests([['product-event-reference-matching','scripts/product-dev-event-matching.node-test.mjs']])
   nodeTests([['product-source-severity-audit','scripts/product-dev-severity-literal.node-test.mjs']])
   nodeTests([['historical-ci-policy','scripts/historical-ci-policy.node-test.mjs']])
   nodeTests([['current-safety-ci-policy','scripts/current-safety-ci.node-test.mjs']])

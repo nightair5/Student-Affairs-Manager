@@ -7,6 +7,21 @@ export const PRODUCT_REVIEW_V51_VERSION='product-development-review-5.1.0'
 export function reviewV51(result,source,options={}){
  const out=reviewV5(result,source,options)
  if(!result)return {...out,reviewVersion:PRODUCT_REVIEW_V51_VERSION}
+ // Fix a determined matching bug, not the reference: several events may
+ // share an object name. A complete one-to-one endpoint match must be used
+ // before the old first-title lookup can call a correct endpoint wrong.
+ const expectedEvents=source.reference.events??[],events=result.events??[],points=result.timePoints??[]
+ const stamp=v=>{if(!v)return null;if(!/[Zz]|[+-]\d\d:\d\d$/u.test(v))return String(v).slice(0,16);return new Intl.DateTimeFormat('sv-SE',{timeZone:source.timezone??'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(v)).replace(' ','T')}
+ const contains=(a,b)=>!!b&&String(a??'').replace(/\s/gu,'').includes(String(b).replace(/\s/gu,''))
+ const compatible=(e,x)=>contains(e.title+' '+(e.description??''),x.object)&&(!x.location||contains(e.location,x.location))&&['start','end'].every(role=>{const p=points.find(p=>p.tempId===e[role+'TimePointTempId']);return(!x[role]||!!p&&p.type==='event_'+role&&(x[role].length===10?stamp(p.normalizedValue)?.slice(0,10):stamp(p.normalizedValue))===x[role])&&(!x[role+'Unknown']||!p||p.normalizedValue===null)})
+ const allocation=new Map(),assign=(index,seen)=>{for(let n=0;n<events.length;n++){if(seen.has(n)||!compatible(events[n],expectedEvents[index]))continue;seen.add(n);if(!allocation.has(n)||assign(allocation.get(n),seen)){allocation.set(n,index);return true}}return false}
+ if(expectedEvents.length>1&&expectedEvents.every((_,i)=>assign(i,new Set()))){
+  const removed=out.issues.filter(i=>['MISSING_EVENT','EVENT_TIME_ROLE_OR_VALUE','MISSING_EVENT_LOCATION'].includes(i.code))
+  if(removed.length){for(const i of removed){out.matched++;if(i.code==='MISSING_EVENT'){const x=i.detail,more=['start','end'].filter(role=>x[role]||x[role+'Unknown']).length+(x.location?1:0);out.required+=more;out.matched+=more}}
+   out.issues=out.issues.filter(i=>!removed.includes(i)&&i.code!=='EXTRA_EVENT_REQUIRES_ADJUDICATION');for(let n=0;n<events.length;n++)if(!allocation.has(n))out.issues.push({failure_layer:'REFERENCE',code:'EXTRA_EVENT_REQUIRES_ADJUDICATION',detail:events[n].title})
+   out.scorerEventMatchingBugFix={code:'ONE_TO_ONE_SAME_OBJECT_ENDPOINT_MATCH',removed,assignment:[...allocation].map(([actual,expected])=>({eventId:events[actual].tempId,expected}))}
+  }
+ }
  // Severity bug fix, not a change to the literal wire contract: a uniquely
  // reversible citation-format mismatch is still a wire issue, but does not
  // demonstrate loss of its original source. Keep the issue and partial grade.
