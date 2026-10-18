@@ -1,6 +1,6 @@
 import {validateRecognitionResult} from './recognition-contract.generated.mjs'
 
-export const LOCAL_ISOLATION_VERSION='recognition-local-isolation-1.0.0'
+export const LOCAL_ISOLATION_VERSION='recognition-local-isolation-1.1.0'
 export const LOCAL_ISOLATION_NOTE_PREFIX='local-isolation:'
 const record=v=>v&&typeof v==='object'&&!Array.isArray(v)
 const array=v=>Array.isArray(v)?v:[]
@@ -20,7 +20,7 @@ export function isolateRecognitionItems(input,sourceText,{sourceId,structural=tr
   const entry={kind,path,id:typeof value?.tempId==='string'?value.tempId:null,reason,original:structuredClone(value)};audit.quarantined.push(entry)
   if(entry.id)removed.add(entry.id)
   const label=String(value?.title??value?.name??value?.rawText??'模型返回的事项').slice(0,130)
-  notes.push({id:LOCAL_ISOLATION_NOTE_PREFIX+notes.length,field:'source_reference',message:`“${label}”：${reason==='INVALID_SOURCE'?'这一项在原文中找不到可靠依据':'这一项的结构不完整'}，未作为可直接接受的事实；请核对原文。`,options:['保留待核对','依据原文补录或拒绝'],evidenceIds:[]})
+  notes.push({id:LOCAL_ISOLATION_NOTE_PREFIX+notes.length,field:'source_reference',message:`“${label}”：${reason==='INVALID_SOURCE'?'这一项在原文中找不到可靠依据':reason==='COLLECTION_CAPACITY'?'模型返回事项超过单组支持数量，原值已保留待核对':'这一项的结构不完整'}，未作为可直接接受的事实；请核对原文。`,options:['保留待核对','依据原文补录或拒绝'],evidenceIds:[]})
  }
  const evidenceCounts=new Map();for(const e of result.evidence)evidenceCounts.set(e?.id,(evidenceCounts.get(e?.id)??0)+1)
  const validEvidence=result.evidence.filter(e=>record(e)&&typeof e.id==='string'&&evidenceCounts.get(e.id)===1&&typeof(e.quote??e.quotedText)==='string'&&(e.quote??e.quotedText).trim()&&sourceText.includes(e.quote??e.quotedText)&&(!sourceId||e.sourceId===sourceId))
@@ -53,6 +53,12 @@ export function isolateRecognitionItems(input,sourceText,{sourceId,structural=tr
   m.workPackages=m.workPackages.flatMap((w,j)=>{if(!record(w)){note('workPackage',`milestones[${i}].workPackages[${j}]`,w,'INVALID_ITEM_STRUCTURE');return []}missingArray(w,'tasks',`milestones[${i}].workPackages[${j}]`);w.tasks=w.tasks.filter((t,k)=>kept('task',t,`milestones[${i}].workPackages[${j}].tasks[${k}]`));if(!kept('workPackage',w,`milestones[${i}].workPackages[${j}]`)){result.standaloneTasks.push(...w.tasks);return []}return [w]})
   if(!kept('milestone',m,`milestones[${i}]`)){result.standaloneTasks.push(...m.tasks,...m.workPackages.flatMap(w=>w.tasks));return []}return [m]
  })
+ // More individually valid tasks must not make the whole parseable source
+ // disappear. Retain the overflow verbatim as pending items, never fabricate
+ // a milestone to bypass the wire limit or silently discard the extra work.
+ const capTasks=(items,path)=>items.filter((t,i)=>{if(i<20)return true;note('task',`${path}[${i}]`,t,'COLLECTION_CAPACITY');return false})
+ result.standaloneTasks=capTasks(result.standaloneTasks,'standaloneTasks')
+ for(const m of result.milestones){m.tasks=capTasks(m.tasks,'milestones.'+m.tempId+'.tasks');for(const w of m.workPackages)w.tasks=capTasks(w.tasks,'workPackages.'+w.tempId+'.tasks')}
  const tasks=tasksOf(result),taskIds=new Set(tasks.map(t=>t.tempId)),materialIds=new Set(result.materials.map(m=>m.tempId)),pointIds=new Set(result.timePoints.map(p=>p.tempId)),entityIds=new Set([...taskIds,...materialIds,...pointIds,...result.events.map(e=>e.tempId),...result.milestones.flatMap(m=>[m.tempId,...m.workPackages.map(w=>w.tempId)])])
  const references=(owner,key,allowed,needsOwner)=>{const missing=owner[key].filter(id=>!allowed.has(id));if(!missing.length)return;audit.relations.push({ownerId:owner.tempId,field:key,original:structuredClone(owner[key]),quarantinedTargets:missing});owner[key]=owner[key].filter(id=>allowed.has(id));if(needsOwner===true||(needsOwner==='unknown'&&missing.some(id=>!removed.has(id))))blocked.add(owner.tempId)}
  for(const t of tasks){references(t,'dependencyTempIds',taskIds,true);references(t,'materialTempIds',materialIds,true);references(t,'timePointTempIds',pointIds,true);if(t.parentTempId&&!taskIds.has(t.parentTempId)){audit.relations.push({ownerId:t.tempId,field:'parentTempId',original:t.parentTempId});t.parentTempId=null;blocked.add(t.tempId)}}

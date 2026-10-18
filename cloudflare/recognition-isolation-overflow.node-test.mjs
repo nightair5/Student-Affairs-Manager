@@ -1,0 +1,8 @@
+import test from'node:test';import assert from'node:assert/strict';import{normalizeRecognitionResult}from'./recognition.mjs';import{isolateRecognitionItems,hasLocalIsolationPending}from'./recognition-local-isolation.mjs';import{validateRecognitionResult}from'./recognition-contract.generated.mjs'
+test('valid source-backed overflow stays visible in pending audit rather than destroying unrelated tasks',()=>{
+ const source='请提交报告。',base=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:'通知',sourceType:'text',notificationType:'teacher_task',summary:source,requiresAction:true},projectMatch:{decision:'standalone_task'},standaloneTasks:[{tempId:'A',title:'提交报告',actionVerb:'提交',actionObject:'报告',evidenceIds:['E']}],evidence:[{id:'E',quote:source,field:'description'}]},source,'2027-01-01T08:00:00+08:00'),input=structuredClone(base)
+ input.standaloneTasks=Array.from({length:23},(_,i)=>({...structuredClone(base.standaloneTasks[0]),tempId:'T'+i}))
+ const before=structuredClone(input),p=isolateRecognitionItems(input,source,{sourceId:'pending-source',allowNoUsableSubset:true})
+ assert.equal(p.result.standaloneTasks.length,20);assert.equal(p.audit.quarantined.filter(q=>q.reason==='COLLECTION_CAPACITY').length,3);assert.deepEqual(p.audit.quarantined.map(q=>q.original),input.standaloneTasks.slice(20));assert(hasLocalIsolationPending(p.result));assert(p.result.ambiguities.every(a=>a.message.includes('超过单组支持数量')));assert.equal(validateRecognitionResult(p.result,{sourceContent:source}).valid,true);assert.deepEqual(input,before)
+ const dup=structuredClone(input);dup.standaloneTasks[22].tempId='T0';assert.equal(isolateRecognitionItems(dup,source).rootFailure,true)
+})

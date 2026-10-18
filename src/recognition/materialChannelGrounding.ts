@@ -5,7 +5,7 @@ import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sou
 import { verifyWorkflowChannelEvidence, type WorkflowMaterialSupport } from './workflowChannelSupport'
 import {citedDeliveryContexts,type CitedDeliveryContext} from './citedDeliveryContext'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.9.0'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.10.0'
 export const WORKFLOW_MATERIAL_CHANNEL_VERSION = 'material-declared-workflow-channel-1.0.0'
 export interface MaterialChannelDecision {
   materialId: string
@@ -151,8 +151,17 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     if (!receipt) {
       result.quality.needsHumanReview = true
       result.quality.reviewReasons.push(message)
-      result.conflicts.push({ id: 'material-channel:' + material.tempId, type: 'other', message,
-        entityTempIds: [material.tempId, ...material.relatedTaskTempIds], evidenceIds: evidence.map(e => e.id), requiresDecision: true })
+      // Diagnostics obey the same bounded wire contract as model conflicts.
+      // Every affected owner and every proof remains represented; an oversized
+      // shared-material diagnostic must not discard the entire source.
+      const entities = [...new Set([material.tempId, ...material.relatedTaskTempIds])]
+      const proofs = [...new Set(evidence.map(e => e.id))]
+      const chunks = Math.max(1, Math.ceil(entities.length / 30), Math.ceil(proofs.length / 20))
+      for (let part = 0; part < chunks; part++) result.conflicts.push({
+        id: 'material-channel:' + material.tempId + (chunks > 1 ? ':' + (part + 1) : ''), type: 'other', message,
+        entityTempIds: entities.slice(part * 30, (part + 1) * 30),
+        evidenceIds: proofs.slice(part * 20, (part + 1) * 20), requiresDecision: true,
+      })
       owners.forEach(t => { t.selected = false })
     }
   }

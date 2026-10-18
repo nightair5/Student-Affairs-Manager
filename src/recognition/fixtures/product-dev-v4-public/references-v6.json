@@ -1,0 +1,4289 @@
+{
+  "version": "owner-default-reference-6.0.0",
+  "createdAt": "2026-10-18T12:38:19.211Z",
+  "basis": "Explicit owner Quality R8 R1-R5 before new outputs; no new factual values",
+  "rows": [
+    {
+      "id": "DEV-01",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "43257139858878f307860e7ec572bb32c322eec323ab9be4e12abc79765c5c9b",
+      "previousReferenceSha256": "804ba8c5aee16d8152d5d18d9af97a090f4b5e9f4de4dae0ed6eea2fb431788c",
+      "reference": {
+        "tasks": [
+          {
+            "object": "统计课程报告",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "统计课程报告",
+            "channel": "课程平台",
+            "deadline": "2026-10-22T18:00",
+            "precision": "exact",
+            "criteria": "接收成功"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ],
+        "naming": [
+          "课程报告_班级"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-02",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "7defa583271292a94dc46a98b5683507e5c2e63ab4b3af67823ffd29fdbc6224",
+      "previousReferenceSha256": "b8ef2ac11f50d015faa1236b758be558b0dd59e964a5520a483460bcb803d1da",
+      "reference": {
+        "tasks": [
+          {
+            "object": "第三章",
+            "verbs": [
+              "阅读"
+            ]
+          },
+          {
+            "object": "阅读笔记",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "阅读笔记",
+            "channel": "课程平台",
+            "deadline": "2026-10-25",
+            "precision": "date_only"
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-03",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "f2ccf4ef5795528409cabb420be8cde6544a06a962acfc8b7891a888c9bb38d5",
+      "previousReferenceSha256": "d598ab19e9b946030a1d097d90d034e268fdb7f0dd52d5a1b4a199cb81882406",
+      "reference": {
+        "tasks": [
+          {
+            "object": "压缩包",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "压缩包",
+            "channel": "课堂空间",
+            "deadline": "2026-10-26T20:30",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "criteria": [
+          "照片",
+          "拍摄说明"
+        ],
+        "forbidden": [
+          {
+            "object": "打印",
+            "verbs": [
+              "打印"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-04",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "9342aed40429a40eaf6ec4c8aa84f08debf0eaebbf2176dee9ea920f1d8f8a95",
+      "previousReferenceSha256": "14789edbde43c89deda989a194f38d8f0990d6d2efb965f4dba6900f1c0de7c4",
+      "reference": {
+        "tasks": [
+          {
+            "object": "问卷设计",
+            "verbs": [
+              "完成",
+              "提交"
+            ],
+            "material": "问卷设计",
+            "deadline": "2026-10-24",
+            "precision": "date_only"
+          },
+          {
+            "object": "试访",
+            "verbs": [
+              "开展",
+              "完成",
+              "提交"
+            ],
+            "material": "试访记录",
+            "deadline": "2026-10-28",
+            "precision": "date_only",
+            "predecessor": "问卷设计"
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-05",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "3be8506066e06f0b4a8a9d0964bb6df6b16eba196a88db9d19b82c6f398e2b86",
+      "previousReferenceSha256": "821fdaaa2bbfe8b1cbf9050b218fa467f5d37f76fa24a0530350fa3149cdefca",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名表",
+            "verbs": [
+              "提交",
+              "填写",
+              "报名"
+            ],
+            "material": "报名表",
+            "channel": "报名系统",
+            "deadline": "2026-10-27T16:00",
+            "precision": "exact",
+            "condition": "有意参加"
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-06",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "6f45fd954664dc9a9f14a3db1de64aea1a4ae3e4ab45cea60270585079fc50e9",
+      "previousReferenceSha256": "583502d458ea8be203ab7429557cfc04f50fdc967c7e3ed1dc37ed7a35dbb0d5",
+      "reference": {
+        "tasks": [
+          {
+            "object": "申请表",
+            "verbs": [
+              "填写",
+              "提交"
+            ],
+            "material": "申请表",
+            "channel": "学生中心C101",
+            "deadline": "2026-10-29",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "unknownTime": "另行通知"
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-07",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "5d8b972e5d6a7065428f7986d7948ae55df270956fce1b07c94a2abc2bf8a8cb",
+      "previousReferenceSha256": "6bb676ddfae2f7d11dfde1086b7b573a1e5f88a8713c2c87026f6d4ac3b1caf4",
+      "reference": {
+        "tasks": [
+          {
+            "object": "场次",
+            "verbs": [
+              "点选",
+              "选择",
+              "报名"
+            ],
+            "deadline": "2026-10-21T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "电影赏析",
+            "start": "2026-10-23T19:00",
+            "end": "2026-10-23T20:30",
+            "location": "学生活动室"
+          }
+        ],
+        "materialCount": 0,
+        "forbidden": [
+          {
+            "object": "附件",
+            "verbs": [
+              "上传",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-08",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "431582be9ad32c0484d0d74dfd4174d009fc386d97ee859d1eb9741ed722df66",
+      "previousReferenceSha256": "14188ef4ccb8e8c992d8d549f245b48db070ab3149a40092e81b3c000f93aeec",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "集合",
+            "start": "2026-10-30T09:00",
+            "location": "校园北门"
+          },
+          {
+            "object": "出发",
+            "start": "2026-10-30T09:15"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "填写",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-09",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "39c432940a82a02ee2a7ae95e84bb4eddc07dd2f2930b87fd04cec162718eecd",
+      "previousReferenceSha256": "78d0826b7db3eceba3d206ede750286f886e0a3f9f8f01c234a1944a3fa430b4",
+      "reference": {
+        "tasks": [
+          {
+            "object": "申请",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-10-31T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "回执",
+            "verbs": [
+              "保留",
+              "保存"
+            ]
+          }
+        ],
+        "events": [],
+        "materials": [
+          "申请表",
+          "成绩单"
+        ],
+        "formats": [
+          "PDF"
+        ],
+        "forbidden": [
+          {
+            "object": "回执",
+            "verbs": [
+              "打印"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-10",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "e2b1aad67c957c06f8f0e75cd7a2a1375d26c18fa3ff0c1c1d2479f280e20a9f",
+      "previousReferenceSha256": "a746e7b589ab7b544285914218caced04ecc139d06856d0f92333f0387b2a577",
+      "reference": {
+        "tasks": [
+          {
+            "object": "研究计划",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "研究计划",
+            "channel": "若水学院材料站",
+            "deadline": "2026-11-02",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "注册",
+            "verbs": [
+              "注册",
+              "办理"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-11",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "147922e52817b09b703618e24317c8c4bf96c14a15cdf2ef738d1b3686cebc85",
+      "previousReferenceSha256": "830387adaab316c35790783f49e2e6b33da1d10c4a8b719050ae703b6f5df675",
+      "reference": {
+        "tasks": [
+          {
+            "object": "实习总结",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "实习总结",
+            "deadline": "2026-11-03T18:00",
+            "precision": "exact",
+            "criteria": "收到成功",
+            "channelUnknown": true
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ],
+        "naming": [
+          "实习总结_学院"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-12",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "981f9017b71e01f3d27ab5f9ac0a42ae9e7112f732336b59dcee4aaf5d8bfbf4",
+      "previousReferenceSha256": "32ef4f08cf7344cbf650d63fd0d0bf3d1b7c0e516e89dfad6ccaeda5fcece9ae",
+      "reference": {
+        "tasks": [
+          {
+            "object": "纸质",
+            "verbs": [
+              "递交",
+              "提交"
+            ],
+            "material": "申请书",
+            "window": "2026-11-04T09:00/11:00"
+          },
+          {
+            "object": "电子",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "申请书",
+            "channel": "项目平台",
+            "deadline": "2026-11-04T16:00",
+            "precision": "exact"
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-13",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "597080220643f003d2cfe761a7a86a3ebfac4cbf4f523368345927ef1823139e",
+      "previousReferenceSha256": "3ac10ab8d1183754cb4f37bd60aeacec2f7809f717a14ef170b85bf8c02edfd9",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "实验安全说明会",
+            "start": "2026-10-20T14:00",
+            "end": "2026-10-20T15:20",
+            "location": "实验楼201"
+          }
+        ],
+        "materialCount": 0,
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-14",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "4b5bde9df9ad0d53c9090a4c52b2b7f7ad028c1104f632bf9474130a6700510d",
+      "previousReferenceSha256": "354d77546588344253d5c15ccb855bee57ca35ab50b42cd08e132ec5dc6930f5",
+      "reference": {
+        "tasks": [
+          {
+            "object": "议题提纲",
+            "verbs": [
+              "准备",
+              "撰写"
+            ],
+            "material": "议题提纲"
+          }
+        ],
+        "events": [
+          {
+            "object": "讨论",
+            "start": "2026-10-21T18:30",
+            "endUnknown": true,
+            "location": "学习室A"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "提纲",
+            "verbs": [
+              "提交",
+              "上传"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-15",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "3c6efd0da107c5203136042d6f13af82d4636e40dbd80d4acbf21b03255970e7",
+      "previousReferenceSha256": "15cb9a04aa9b270cc4030455c6d4a9f9e774025bdb6300092ae593ba071e731b",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "分享",
+            "start": "2026-10-24T10:00",
+            "end": "2026-10-24T11:00",
+            "location": "东区报告厅"
+          },
+          {
+            "object": "作品展示",
+            "start": "2026-10-24T11:20",
+            "end": "2026-10-24T12:00",
+            "location": "东区报告厅"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-16",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "a62cfbed497ebd94374ee04a3bd018e4541b294a6e235f5bfe0e3ea7a1958be4",
+      "previousReferenceSha256": "84678b46d42fd5ffd4f8cf9443fac632cc737bf01eed17e27b5cf9fcac37b253",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "扫描"
+            ],
+            "deadline": "2026-10-11T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "活动",
+            "start": "2026-10-12T12:30",
+            "end": "2026-10-12T14:00",
+            "location": "海韵园办公楼A栋302室"
+          }
+        ],
+        "information": [
+          "免费午餐",
+          "总人数不限"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-17",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "caa76edf4240d1abeda38068c1026fe521151681072c56d2f6a6dd5d7656ef69",
+      "previousReferenceSha256": "fbceef51296b62ba254fea63a3a93c7ec7f85a4c2b4d78886ddc198338e59d01",
+      "reference": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "答疑",
+            "verbs": [
+              "参加",
+              "到场"
+            ]
+          },
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ],
+        "information": [
+          "取消"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-18",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "a4e5f0c7c38033ef81f1d4427af56a2626703fc23bf4fbbfd48ac2a49783d470",
+      "previousReferenceSha256": "fe60e064a14c94da686f80805887f97869a1a253cf1246dfa2dc0061433069cb",
+      "reference": {
+        "tasks": [
+          {
+            "object": "课程报告",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "课程报告",
+            "channel": "课程平台",
+            "deadline": "2026-10-26T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "obsoleteDates": [
+          "2026-10-23"
+        ],
+        "information": [
+          "旧截止作废"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-19",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "1407f878ffec6791d470b73da0ede6f4ca080d753d8995423dbf39b3a14ff446",
+      "previousReferenceSha256": "be4bbc5bda481dab379bee2701170afe6e853ff9d543ec65fdc993d791ed84b5",
+      "reference": {
+        "tasks": [
+          {
+            "object": "健康登记表",
+            "verbs": [
+              "提交",
+              "填写"
+            ],
+            "material": "健康登记表",
+            "channel": "登记站",
+            "deadline": "2026-10-28",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "照片",
+            "verbs": [
+              "提交",
+              "添加",
+              "上传"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-20",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "d5757b09aed8ba376c9b9ddc7b9716b30f505b031a2dc1ece98f0a2dac0e5968",
+      "previousReferenceSha256": "fc8462f9075692f5bf87799ea730b177ec391d87c695b15711b34c08b1438968",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "录音培训",
+            "startUnknown": true
+          }
+        ],
+        "information": [
+          "延期",
+          "报名记录保留"
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-21",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "f7d6b77ecd8c780918baafe464eebc76d80d4b25a934a713d1e589b8bb9d0f07",
+      "previousReferenceSha256": "5888f7aa1430cd9069839f75b58746f5902eef7e6651c23af0686f3a6c74d7c9",
+      "reference": {
+        "tasks": [
+          {
+            "object": "住宿申请表",
+            "verbs": [
+              "提交"
+            ],
+            "material": "住宿申请表",
+            "deadline": "2026-11-06",
+            "precision": "date_only",
+            "condition": "审核通过",
+            "unknownEligibility": true
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-22",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "5f3a5516b32c52c0ba5cd988b45f4cf56ed8e7f9bf1eb592e363dcbe14a0eab1",
+      "previousReferenceSha256": "baaabd0b10ea02de0c5818e9b4ac5b74643d0b4b8980b082dd770d0c4a28a1b2",
+      "reference": {
+        "tasks": [
+          {
+            "object": "培训",
+            "verbs": [
+              "完成",
+              "参加"
+            ]
+          },
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-11-07T12:00",
+            "precision": "exact",
+            "predecessor": "培训",
+            "waiting": true
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-23",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "71f68bdabd6ae25997dc425b2231e96705cbcb5f213b96724a828380f9fdf39c",
+      "previousReferenceSha256": "6a6c4098fa0ac16fedea5aa99fe55d75a2c26ebeaf284abe6353864f9e64399c",
+      "reference": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取"
+            ]
+          },
+          {
+            "object": "说明",
+            "verbs": [
+              "提交"
+            ]
+          }
+        ],
+        "information": [
+          "不在本次名单"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-24",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "f378d8a055c8ec07beef3baa6ce08ed932adc7a601ac0467e6d115089518360e",
+      "previousReferenceSha256": "3ba551368e3ddb60d4fa3647f4b859e1753e63d81092a2f68babdf3d2141640b",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "扫描"
+            ],
+            "deadline": "2026-06-30T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "终端设备",
+            "verbs": [
+              "准备"
+            ],
+            "condition": "学员"
+          }
+        ],
+        "events": [
+          {
+            "object": "讲座",
+            "start": "2026-07-06",
+            "end": "2026-07-10"
+          }
+        ],
+        "information": [
+          "免费",
+          "结业证书"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-25",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "8b41c04ffc93ce7a9a5306b7da1356eed685f6e7013f70010472850471b42f6c",
+      "previousReferenceSha256": "736fa46c3e65f41513859f0ca8e2aa45116f4cbd42dd0453cfa223f64a500e94",
+      "reference": {
+        "tasks": [
+          {
+            "object": "调研报告",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "channel": "课程平台",
+            "deadline": "2026-11-09T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "调研报告",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "channel": "展示平台",
+            "deadline": "2026-11-11T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "调研报告"
+        ],
+        "sharedMaterial": true,
+        "formats": [
+          "PDF"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-26",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "1f58b0889c3894216af43898a0034ba3177c548681c881411c731cd0ffda6da3",
+      "previousReferenceSha256": "42d964a0599f690a31efcede6e4db248781603315691f43ad53cb067b4318a51",
+      "reference": {
+        "tasks": [
+          {
+            "object": "课程论文",
+            "verbs": [
+              "提交"
+            ],
+            "material": "课程论文",
+            "deadline": "2026-11-10",
+            "precision": "date_only"
+          },
+          {
+            "object": "实践总结",
+            "verbs": [
+              "提交"
+            ],
+            "material": "实践总结",
+            "deadline": "2026-11-12",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "成绩单"
+        ],
+        "sharedMaterial": true
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-27",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "7c51ba813c5cab9b956d98cbf64bdc0a6c1d6e9c9636a740bac76df45bb87c78",
+      "previousReferenceSha256": "18ad03ec08739e27c47410775642eedc45cf32665a97c209be8b049fbdb9379b",
+      "reference": {
+        "tasks": [
+          {
+            "object": "项目说明",
+            "verbs": [
+              "准备",
+              "制作"
+            ]
+          },
+          {
+            "object": "项目说明",
+            "verbs": [
+              "提交"
+            ],
+            "channel": "评审站",
+            "deadline": "2026-11-13",
+            "precision": "date_only"
+          },
+          {
+            "object": "项目说明",
+            "verbs": [
+              "提交"
+            ],
+            "channel": "备案站",
+            "deadline": "2026-11-15",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "项目说明"
+        ],
+        "sharedMaterial": true,
+        "formats": [
+          "PDF"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-28",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "04c84eaaa20d7367eef05a1497a6c59a2fa249846667a9aa792457e5dcb3ef22",
+      "previousReferenceSha256": "d217c71cd9141658c86e058bddb3739691fca0d23e0ccd361650a61b8b600e6e",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名表",
+            "verbs": [
+              "提交"
+            ],
+            "deadline": "2026-11-16T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "报名表",
+          "承诺书"
+        ],
+        "criteria": [
+          "签字",
+          "原表格式"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-29",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "fb7cafb7ab686647f691596e8d561eb80b756c179f544c9351659e8a2465c2b2",
+      "previousReferenceSha256": "0bf80272ec69c087b2035f0567bb3b11c920d77064ec02be2e72f177595b1ac4",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停机",
+            "startUnknown": true,
+            "rawStart": "周三晚"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "行程",
+            "verbs": [
+              "删除"
+            ]
+          },
+          {
+            "object": "说明",
+            "verbs": [
+              "提交"
+            ]
+          },
+          {
+            "object": "消息",
+            "verbs": [
+              "发",
+              "发送"
+            ]
+          }
+        ],
+        "information": [
+          "已保存行程不受影响"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-30",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "90c66b2adb1088fe39d43fe7ac0a5b530b0ffdffadbb39060aeda6da15c60cad",
+      "previousReferenceSha256": "883f34ad5b4f1a646c175e154b1a05f8c88eef479caaca52ce3d9230168809ae",
+      "reference": {
+        "tasks": [
+          {
+            "object": "实验记录",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "实验记录",
+            "channel": "实验系统",
+            "deadlineUnknown": true
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-31",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "45ee4fa674322baba86902f2d9c9cc57433d5f231e2f1011dc7a3c21a2bd1218",
+      "previousReferenceSha256": "52cca351383b20f77883560933b13569312596a27cdb26f90812f87d77ad1e24",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "研读交流",
+            "startUnknown": true,
+            "endUnknown": true,
+            "location": "资料室"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-32",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "b35791f3ca9c6a96a5bde3df0a89f92b0f8be4a2adad49fc1d150e27717804d7",
+      "previousReferenceSha256": "c339b4a02d0b9cf29d2df691b851d944cf8103050963c3c77188db0d539a4c97",
+      "reference": {
+        "tasks": [
+          {
+            "object": "预注册",
+            "verbs": [
+              "完成"
+            ]
+          },
+          {
+            "object": "账号",
+            "verbs": [
+              "激活"
+            ]
+          },
+          {
+            "object": "系统",
+            "verbs": [
+              "登录"
+            ]
+          }
+        ],
+        "events": [],
+        "window": "2026-08-13/2026-08-27",
+        "condition": "大陆本科新生"
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-33",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "7d304dd958cb7e30ff640997229012599b56a4884503c3b492a9ec0012f67ac6",
+      "previousReferenceSha256": "eff5ffd7a40510b094d9aa715352c72dc8bfc9e793432e800cc9ab91046fbb30",
+      "reference": {
+        "tasks": [],
+        "events": [],
+        "materialCount": 0,
+        "information": [
+          "无变化"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-34",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "ce01adfc2b8d2cafd24ace7524064aea394a2b2fcb4b453003f4a681313a3e47",
+      "previousReferenceSha256": "6ffdf0b3a1a55b19783cc19337a963f1d78ddd53f60a065150e08c93cab21b71",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停机维护",
+            "start": "2021-11-17T23:00",
+            "end": "2021-11-18T01:00"
+          }
+        ],
+        "information": [
+          "正常恢复"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-35",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "d8f8f14ee9caef6d53ec0425b156fc0d224488a9071a163a16e8e2b973abbd1b",
+      "previousReferenceSha256": "758f93dc0359724ffd8b71885fb1ba6e1573808bafef6774c5fc7a0d588c0eb2",
+      "reference": {
+        "tasks": [],
+        "events": [],
+        "information": [
+          "继续有效"
+        ],
+        "forbidden": [
+          {
+            "object": "申请",
+            "verbs": [
+              "申请"
+            ]
+          },
+          {
+            "object": "客户端",
+            "verbs": [
+              "下载"
+            ]
+          },
+          {
+            "object": "卡",
+            "verbs": [
+              "交",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "DEV-36",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "358be9163f0c30a882f4df839a94910a9aae29a31c0ea11b225f947dacc25294",
+      "previousReferenceSha256": "df6b82fe40eaa5063aa464d12dcc2dff5d72e3bf89763617b4ed992e13ad791d",
+      "reference": {
+        "tasks": [],
+        "events": [],
+        "information": [
+          "不影响课程成绩"
+        ],
+        "forbidden": [
+          {
+            "object": "作业",
+            "verbs": [
+              "上传",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-17",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "f45c1656b4a121d8d8b163c09c352ce40e879ffa2fdb10820ae15f1ef89bc68c",
+      "previousReferenceSha256": "6bf171a29e358c2eb7bcd05568997946035355678f431853ccbe485675fda8ba",
+      "reference": {
+        "tasks": [
+          {
+            "object": "设计作品",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadlineUnknown": true,
+            "channelUnknown": true
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-03",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "3ffc31c305e26cb4a96420a0026f52011d4eac09e158d81b8fe8fd1bfd982b72",
+      "previousReferenceSha256": "d7220bcd54725f1b58d45aa2acd28cbe85f50449c32ea4d38ebebcf22fe37248",
+      "reference": {
+        "tasks": [
+          {
+            "object": "材料",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "学工窗口",
+            "deadline": "2026-11-05T17:00",
+            "precision": "exact",
+            "criteria": "材料接收成功"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "申请表",
+          "成绩单"
+        ],
+        "formats": [
+          "PDF"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-07",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "c7e0b656a50f9b84cd5b26e6c66d5714b56ae4927a1e289fed228138856177cb",
+      "previousReferenceSha256": "46e9932757696816250dea0b13b1dfa85e2678e4a9c2237bd171f80f2e19e4d4",
+      "reference": {
+        "tasks": [
+          {
+            "object": "调研报告",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "课程平台",
+            "deadline": "2026-11-12T12:00",
+            "precision": "exact"
+          },
+          {
+            "object": "调研报告",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "展示平台",
+            "deadline": "2026-11-13T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "调研报告"
+        ],
+        "formats": [
+          "PDF"
+        ],
+        "sharedMaterial": true
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-09",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "1bbc63995d28e9b970a5480761d658dd489bfa1f40a486ac7b5f61137320719d",
+      "previousReferenceSha256": "662c903c019a96e81e2df0244be81eb81e1c03af1a869a66251eca583cfa732e",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停机",
+            "start": "2026-11-14T22:00",
+            "end": "2026-11-15T01:00"
+          }
+        ],
+        "information": [
+          "不受影响"
+        ],
+        "forbidden": [
+          {
+            "object": "图书",
+            "verbs": [
+              "续借"
+            ]
+          },
+          {
+            "object": "说明",
+            "verbs": [
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-13",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "6e241d9e15079007b249c93afcc1fa06045aeebebf5112c657153487fd262232",
+      "previousReferenceSha256": "ccd07613d25c16da87ebf4cb1f68de40011ad7051fcefc4760ec5d271ecc6b60",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "讲座",
+            "start": "2026-11-20T09:30",
+            "end": "2026-11-20T11:00",
+            "location": "海棠楼报告厅"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-12",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "f35a724e23c2dcfd77efa28b91a80f41492827265ed18080d95e7d13de0918ef",
+      "previousReferenceSha256": "fba2619f3511d04fcef7df14b400835c5d36c1bcb11b9531764e64cca0ee3fdd",
+      "reference": {
+        "tasks": [
+          {
+            "object": "实习证明",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "实习证明",
+            "channel": "实习入口",
+            "deadline": "2026-11-18T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ],
+        "naming": [
+          "班级_学号"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-11",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "e93040f5fc99eaaa98d51b149b5d0881e990d225605a395ddc66fb2283b5f342",
+      "previousReferenceSha256": "4468ce3227944f5c530c5e0a63c3313ee1aade00da674d95480d3e2043588c6f",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-11-17T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "答辩",
+            "start": "2026-11-19T10:00",
+            "end": "2026-11-19T12:00",
+            "location": "南楼"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-14",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "3d4943ef9aa797917545587af2ac762d7eaa8a8606bf8d95fde47aa44a2c3e40",
+      "previousReferenceSha256": "9905aea05572d81b43c08c42ea4ade9a1e763743b0c4f0ee28dc477be80cc288",
+      "reference": {
+        "tasks": [
+          {
+            "object": "排练说明",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "课程平台",
+            "deadline": "2026-11-22T16:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "排练",
+            "verbs": [
+              "参加",
+              "到场"
+            ]
+          },
+          {
+            "object": "照片",
+            "verbs": [
+              "提交",
+              "交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-08",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "ed396ca380538ff4b7095a9b65676525e827eef79ecab8fdb4604c40e6226525",
+      "previousReferenceSha256": "afc958854eb80200dfd62be14b5f1a5f1d14e0e1a4d9bde9cc7fc97473258df3",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "参观",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-20",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "3a3e567cd6c53cfea395891bebc26128c10bb5331e04e64c4b3489dce8241c00",
+      "previousReferenceSha256": "8cdfe13f6fe2443710dc35ce0781826176bfb98fd9d275fe800be29894825058",
+      "reference": {
+        "tasks": [
+          {
+            "object": "认证",
+            "verbs": [
+              "完成",
+              "办理"
+            ],
+            "material": "学生证",
+            "channel": "认证窗口"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "学生证"
+        ],
+        "window": "2026-11-30/2026-11-30"
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-05",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "348a639ab4eb0ee43173e128070a399476353c696f3c365be144f821db701767",
+      "previousReferenceSha256": "f4ec14be515676fee70538092cdc18a902a8aad250c51726101a9054a9d8cf67",
+      "reference": {
+        "tasks": [
+          {
+            "object": "论文",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "课程平台",
+            "deadline": "2026-11-10T20:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "obsoleteDates": [
+          "2026-11-08"
+        ],
+        "forbidden": [
+          {
+            "object": "旧版封面",
+            "verbs": [
+              "提交",
+              "交"
+            ]
+          },
+          {
+            "object": "解释",
+            "verbs": [
+              "提交",
+              "写"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-02",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "3ed60597277b0eea8492fd1a0573e8307e9416925e5792317d96a37a453458d1",
+      "previousReferenceSha256": "482f5e8e969634622fe8ef4e6b7291694110a798ac839f5e3bb1328cb1dce677",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-11-04T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "摄影交流",
+            "start": "2026-11-06T19:00",
+            "end": "2026-11-06T20:30",
+            "location": "北楼201"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-15",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "59f4ae7d3d9cfc2418fd67437419e986e528e6c03e902f8894bbe854a440c9c4",
+      "previousReferenceSha256": "60de27b7ac92cca402fd4adbd9930773dd063994b65f9fa4b103a61065ecf4d5",
+      "reference": {
+        "tasks": [
+          {
+            "object": "安全课程",
+            "verbs": [
+              "完成",
+              "参加"
+            ]
+          },
+          {
+            "object": "申请表",
+            "verbs": [
+              "提交",
+              "申请"
+            ],
+            "material": "申请表",
+            "channel": "实验室系统",
+            "deadline": "2026-11-23T17:00",
+            "precision": "exact",
+            "predecessor": "安全课程",
+            "waiting": true
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-16",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "029baa0b4d40d3f60af4827fd7bcf032ea0bcc906b72813f4a766b421a6ab502",
+      "previousReferenceSha256": "296f5771f67687199553c92fdb7fdca1ea63da034ffa27636a5cd372074dedd4",
+      "reference": {
+        "tasks": [
+          {
+            "object": "课程论文",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadline": "2026-11-24",
+            "precision": "date_only"
+          },
+          {
+            "object": "实践总结",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadline": "2026-11-26",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "成绩单"
+        ],
+        "sharedMaterial": true
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-21",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "7b8d476b7b24d903e3e6c73c08599fe1a46140e0c4f88b2a1f8cb36b68f2e972",
+      "previousReferenceSha256": "61a3764f060f3c4677ac1cec388db0e0aca47dab81f27f55b1623ddc422a385a",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "答疑",
+            "start": "2026-12-01T19:00",
+            "end": "2026-12-01T20:00",
+            "location": "线上会议室"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "说明",
+            "verbs": [
+              "提交",
+              "补交"
+            ]
+          },
+          {
+            "object": "收到",
+            "verbs": [
+              "回复"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-19",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "21c0ba1aae4dbc212ecda097669c1c83fea83fed239dbabe1f0d0cd8957fd0f4",
+      "previousReferenceSha256": "854500f6e7d03ed1d384b6be025b6d4347c06120c73cfe2f5d1779a164a928c6",
+      "reference": {
+        "tasks": [
+          {
+            "object": "演讲稿",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "channel": "教学平台",
+            "deadline": "2026-11-28T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "演讲展示",
+            "start": "2026-11-29T09:00",
+            "end": "2026-11-29T10:00",
+            "location": "北楼大厅"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-23",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "5f1be558d890e922c9166c6969938d59a0d5627002fbcb8125df4d8e033b0aac",
+      "previousReferenceSha256": "ff768069774637b502b9215e14e7341197b5549abf67ea7f3f964c4f45537416",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-12-03T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "工作坊",
+            "start": "2026-12-05T14:00",
+            "end": "2026-12-05T16:00"
+          }
+        ],
+        "information": [
+          "录取"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-18",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "8b7875310e5f4026c9cb22ac2440edc3a905b2c728c1e988ada9ef18853a37c2",
+      "previousReferenceSha256": "c2aae636c8685be3296b00cd4ba42f676ae0566f866ca72352874b334fc19db6",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "网络检修",
+            "start": "2026-11-27T18:00",
+            "end": "2026-11-27T20:00"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "登记表",
+            "verbs": [
+              "提交",
+              "发"
+            ]
+          },
+          {
+            "object": "报修",
+            "verbs": [
+              "报修",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-24",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "6df3ed0772812a87626331948de5e9a84e6a518d17c5109fe5bea279a62c09b9",
+      "previousReferenceSha256": "97d2e0ed4da7fd6fcb367e71301028d274561e0e907c80b0f852f65b36bc1c44",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "设备检查",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "检查单",
+            "verbs": [
+              "提交",
+              "交"
+            ]
+          },
+          {
+            "object": "设备",
+            "verbs": [
+              "检查"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-10",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "0dcd1ed7d669f3f83928bdfef189099a9c2a4160cb24a161fef98d78ec209630",
+      "previousReferenceSha256": "c5a9b366bc4bcaf6a4ca093c44f8720877101d4bfceea7fa8345ffd3c2d4067a",
+      "reference": {
+        "tasks": [
+          {
+            "object": "课程小结",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "课程小结",
+            "channel": "课程平台",
+            "deadline": "2026-11-16T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-22",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "d6434460e7113e1a9e93cf4b333fc93d19038acb0e8d7ba7c25f12965d6066aa",
+      "previousReferenceSha256": "05ccf1d86e11ec2afe646dfef62cdf1c7b25bc2b934ec2aa42ec813127a6a88f",
+      "reference": {
+        "tasks": [
+          {
+            "object": "电子签名",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "登记平台",
+            "deadline": "2026-12-02T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "照片",
+            "verbs": [
+              "提交",
+              "交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-04",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "f430436ecea5f57273cf2093e4df9b735aad6c32f490c35c2df15d2690463438",
+      "previousReferenceSha256": "6cf1c3b9198e0b5d795014cc219eaee0a2e92a84962b64ae0626f75c3d964ae7",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "读书会",
+            "start": "2026-11-07T14:00",
+            "end": "2026-11-07T15:10",
+            "location": "东门书屋"
+          },
+          {
+            "object": "答疑",
+            "start": "2026-11-07T15:20",
+            "end": "2026-11-07T16:00",
+            "location": "东门书屋"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-01",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "cfe795d919f7b8357156926a7a2346ceb65eff48ea6d32ed1bb0815f1ae79597",
+      "previousReferenceSha256": "dceeccf95130610d264c70c67bccbb81fbff4ce993e321f37c3d1de885ccfa70",
+      "reference": {
+        "tasks": [
+          {
+            "object": "实验报告",
+            "verbs": [
+              "提交",
+              "上传",
+              "交"
+            ],
+            "material": "实验报告",
+            "channel": "实验课程平台",
+            "deadline": "2026-11-03T23:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ],
+        "naming": [
+          "班级-学号"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "GROUP-06",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "f807cd3d667fc7c77ca20c85c943767a648a1a58ed3fe31560852aeb7f38f0f1",
+      "previousReferenceSha256": "96ab4ebefa2b3bfc7b5a5e4c529561e5477e09bec72ea4477f431baa52f71853",
+      "reference": {
+        "tasks": [
+          {
+            "object": "耳机",
+            "verbs": [
+              "准备"
+            ],
+            "condition": "录取",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "培训",
+            "start": "2026-11-11T09:00",
+            "end": "2026-11-11T11:00"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "电话",
+            "verbs": [
+              "打",
+              "联系"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "R2-RES-01",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "501cfe1d6953deea837094fb47f9315b124753829b9287846b071ad8c2163e0f",
+      "previousReferenceSha256": "7d914539ca1e0ecd3d66c44fc3220f6a98fcb11a1872805ad45c48aa190cebc4",
+      "reference": {
+        "tasks": [
+          {
+            "object": "结项报告",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "结项报告",
+            "channel": "项目结项系统",
+            "deadline": "2026-11-16T17:00",
+            "precision": "exact",
+            "criteria": "已接收"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ],
+        "naming": [
+          "项目编号"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "R2-RES-10",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "0d401e6bfa449491eb4655692f33b0e1702fc24c2ee23ef070d17e90fb209e3b",
+      "previousReferenceSha256": "baac3b148e6169e75dce99d86999fe30cf724970ee8184133111bdcea33ce37a",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "交流活动",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "information": [
+          "未公布"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "R2-RES-03",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "b5fcb2712982ffbc8e075e8bee99b62e9c0c1850d7c1650f35d84d4e4cab5332",
+      "previousReferenceSha256": "b11705cc9efa5ce7db5b6e87cbd72cd0328f6d7e7f92e00d8fec343ca6f5e408",
+      "reference": {
+        "tasks": [
+          {
+            "object": "实习证明",
+            "verbs": [
+              "领取"
+            ],
+            "window": "2026-11-17T09:00/11:00"
+          }
+        ],
+        "events": [],
+        "materialCount": 0
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "R2-RES-11",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "9fad5929653e769db38581dc72e73a6d12cd153ef091437a960be37bc0d3692c",
+      "previousReferenceSha256": "e8939faa8a9ebd51173a832d70d124b8aa545626e9968b98db6097cacf324b3e",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名表",
+            "verbs": [
+              "提交"
+            ],
+            "material": "报名表",
+            "channel": "报名工作台",
+            "deadline": "2026-11-26T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "电脑",
+            "verbs": [
+              "准备"
+            ],
+            "condition": "入选",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "工作坊",
+            "start": "2026-11-28T14:00",
+            "end": "2026-11-28T16:00",
+            "location": "实验楼103"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "R2-RES-07",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "3e8efb17d22bd4fd680b46b8904b820b019b389ed7fa16ea2b524d0571facdee",
+      "previousReferenceSha256": "dddfa1c664a58fc198785b774a1ba87ee2f122530a7ebe7519c89d3106ed4ff4",
+      "reference": {
+        "tasks": [
+          {
+            "object": "实践记录表",
+            "verbs": [
+              "提交"
+            ],
+            "material": "实践记录表",
+            "channel": "一班收件箱",
+            "deadline": "2026-11-23T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "实践记录表",
+            "verbs": [
+              "提交"
+            ],
+            "material": "实践记录表",
+            "channel": "二班收件箱",
+            "deadline": "2026-11-23T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "实践记录表"
+        ],
+        "sharedMaterial": true
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "R2-RES-09",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "0aa8336e10407a2bf1f33f3e7276fbf23744765e84a1cd63d0bc00cf1e642378",
+      "previousReferenceSha256": "5ecd435f22d3517d16a5046dc0bf126d57325a94c83763eae884e8f5db3db6a6",
+      "reference": {
+        "tasks": [
+          {
+            "object": "住宿确认单",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "住宿确认单",
+            "channel": "住宿系统",
+            "deadline": "2026-11-25T18:00",
+            "precision": "exact",
+            "condition": "通过",
+            "unknownEligibility": true
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "R2-RES-05",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "85720c3652317bb7a7c2d0aef09d50b91aea8c700ed3b6e5a5ad2ee62800dcb0",
+      "previousReferenceSha256": "8c5a6291377dfe5ba8fb240ed66bb1b03920e2fe75a3001bc78958634bff6bf2",
+      "reference": {
+        "tasks": [
+          {
+            "object": "议题提纲",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "议题提纲",
+            "channel": "讨论系统",
+            "deadline": "2026-11-21T15:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "obsoleteDates": [
+          "2026-11-19"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "R2-RES-12",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "b6bdaba73a89165381a4419289194082fb8ed4d334ab9fdd6f4b13e5f9408716",
+      "previousReferenceSha256": "8db01b3df0ab2a4e2464c8daf802ec4178515bcb9e3754e8c68c2351dd50c003",
+      "reference": {
+        "tasks": [
+          {
+            "object": "成果摘要",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "成果摘要",
+            "channel": "成果平台",
+            "deadline": "2026-11-27T16:00",
+            "precision": "exact"
+          },
+          {
+            "object": "承诺函",
+            "verbs": [
+              "交",
+              "递交",
+              "提交"
+            ],
+            "material": "承诺函",
+            "channel": "学生服务窗口",
+            "window": "2026-11-27T09:30/11:30"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "R2-RES-04",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "1d0cb125316f36b11f6388eb11f15e2ce13c5a775ffa2a886e2c9fcb586f4ec6",
+      "previousReferenceSha256": "58794f3c04b72c68183569d61f95110d5e8f4f879066fc5717213f6d047063a6",
+      "reference": {
+        "tasks": [
+          {
+            "object": "研究摘要",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "研究摘要",
+            "channel": "课程门户",
+            "deadline": "2026-11-20T16:30",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ],
+        "forbidden": [
+          {
+            "object": "邮件",
+            "verbs": [
+              "提交",
+              "发送"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "R2-RES-06",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "5310988549243e4f1ae3e51196301d0d143fa983cc3b8aee79edb6767178fe03",
+      "previousReferenceSha256": "dd63b9fe412a0a2064e0fcdf46c9661b66b973cbc2655d516f976907463e37a4",
+      "reference": {
+        "tasks": [
+          {
+            "object": "英语读书笔记",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "英语读书笔记",
+            "channel": "英语课程平台",
+            "deadline": "2026-11-21T20:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "说明会",
+            "start": "2026-11-22T10:00",
+            "end": "2026-11-22T11:00",
+            "location": "南楼201"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "R2-RES-08",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "3beb725cf295f385839203137cc33a6795248e29d604e8b35b02f6be787d9557",
+      "previousReferenceSha256": "aadca85cbce788a651cc01296eb8e4019f060e4b1188fe0a79d09b4905007627",
+      "reference": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          },
+          {
+            "object": "申请",
+            "verbs": [
+              "提交"
+            ]
+          }
+        ],
+        "information": [
+          "取消"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "R2-RES-02",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "c287c9fb06af319ab440a8e111247857354dea3fd65c61e3925fc0e49f2422b8",
+      "previousReferenceSha256": "6e98e8f3d88f934fc4fab125c70027f31b9ae0f50f82a7857b7ac010d8188ff5",
+      "reference": {
+        "tasks": [
+          {
+            "object": "安全培训",
+            "verbs": [
+              "完成"
+            ]
+          },
+          {
+            "object": "实验申请",
+            "verbs": [
+              "提交"
+            ],
+            "material": "实验申请",
+            "channel": "实验申请系统",
+            "deadline": "2026-11-18T18:00",
+            "precision": "exact",
+            "predecessor": "安全培训"
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-01",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "2f8605ea0d4cee467aca91ddb41edb475733f543431eef5e420d702ba0f48f46",
+      "previousReferenceSha256": "19ba7c187d1252f07efc83a8f30ecdfd15a4e80aa8d98b0dbb5a74c600f20b93",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "自助服务系统",
+            "start": "2025-09-18T23:00",
+            "end": "2025-09-19T02:00"
+          }
+        ],
+        "information": [
+          "不受影响"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-02",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "2ebe35d7c3c77030b237fded011ab84823120e9d97714102dc41e4ab6a640933",
+      "previousReferenceSha256": "63bf9f4b0d1c2561ea195c8e9271c0b7455550bde3da9565d7f5fbed3d2a7077",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "网络",
+            "start": "2025-10-31T19:00",
+            "end": "2025-11-01T00:00"
+          },
+          {
+            "object": "网络",
+            "start": "2025-11-01T13:45",
+            "end": "2025-11-02T00:00"
+          }
+        ],
+        "information": [
+          "升级"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-05",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "2a16580739deb9fd9f6c9e86a5e5975a70f15fac6da96f052f3117113081fcbd",
+      "previousReferenceSha256": "88709d41c181246d869694e3e8efce695fad5ffbda08d8331a850d166ff72fb9",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "校园网",
+            "start": "2025-02-16T18:00",
+            "end": "2025-02-16T22:00"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-06",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "77f7f096c2eca1537114d2aa6b531ccb7b8626d68139dce3d8fed67967a8ee31",
+      "previousReferenceSha256": "4ae360c4c47324f7383cc936dca88323bce2597a43bb1e6cf3b8f9527c2d114d",
+      "reference": {
+        "tasks": [
+          {
+            "object": "停服",
+            "verbs": [
+              "转告",
+              "告知"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "校园网",
+            "start": "2025-07-11T00:00",
+            "end": "2025-07-11T03:00"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-07",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "f43990a3afa34ee31adec4022b2876f2fa64ea5a89ffc587528bf89ab22db015",
+      "previousReferenceSha256": "e72a05c3aa3fe7e2c183abaf9de866eb3963554a5948c835efb1302715457141",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "校园网",
+            "start": "2025-05-17T00:00",
+            "end": "2025-05-17T05:00"
+          },
+          {
+            "object": "校园网",
+            "start": "2025-05-18T00:00",
+            "end": "2025-05-18T05:00"
+          },
+          {
+            "object": "校园网",
+            "start": "2025-05-19T00:00",
+            "end": "2025-05-19T05:00"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-08",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "9b82ead882c646929967ea307e2e298660201fd4cd8fa59eb49823e662aab9ed",
+      "previousReferenceSha256": "10b365fb2168e218c1a0df53e21736a2182ab79e7dab5bc9ab358024e939d855",
+      "reference": {
+        "tasks": [
+          {
+            "object": "答辩",
+            "verbs": [
+              "录入",
+              "填写",
+              "提交"
+            ],
+            "channel": "系统"
+          },
+          {
+            "object": "论文",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "channel": "培养与学位系统"
+          },
+          {
+            "object": "学位材料",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadlineUnknown": true,
+            "material": "学位申请书",
+            "channel": "学院"
+          },
+          {
+            "object": "论文",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "图书馆"
+          },
+          {
+            "object": "学位申请书",
+            "verbs": [
+              "交",
+              "提交"
+            ],
+            "channel": "辅导员"
+          },
+          {
+            "object": "自评表",
+            "verbs": [
+              "填写",
+              "提交"
+            ],
+            "condition": "博士",
+            "predecessor": "导师"
+          },
+          {
+            "object": "答辩决议",
+            "verbs": [
+              "复印"
+            ]
+          },
+          {
+            "object": "论文评阅书",
+            "verbs": [
+              "复印",
+              "保管"
+            ]
+          }
+        ],
+        "events": [],
+        "materials": [
+          "材料明细表",
+          "学位申请书",
+          "论文评阅书",
+          "答辩表决票",
+          "成绩单",
+          "开题报告",
+          "中期考核表",
+          "实验记录本"
+        ],
+        "criteria": [
+          "签名",
+          "双面"
+        ],
+        "window": "2026-06-03/2026-06-04",
+        "forbidden": [
+          {
+            "object": "导师签字",
+            "verbs": [
+              "伪造",
+              "代签"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-09",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "665c2794fcc32e66438a4c0e57cf5264aac64028d12ed9435c978a7b44398ebe",
+      "previousReferenceSha256": "db59fa291623306398123de9a92c8f0811a440cbd018564a0a94dc0f5fd0ffe6",
+      "reference": {
+        "tasks": [
+          {
+            "object": "论文",
+            "verbs": [
+              "修改",
+              "完善"
+            ],
+            "deadline": "2025-05-18",
+            "precision": "date_only"
+          },
+          {
+            "object": "材料",
+            "verbs": [
+              "提交",
+              "报送"
+            ],
+            "material": "终稿审查表",
+            "deadline": "2025-05-18",
+            "precision": "date_only"
+          },
+          {
+            "object": "论文",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "channel": "系统"
+          },
+          {
+            "object": "学位",
+            "verbs": [
+              "填写",
+              "填报"
+            ],
+            "channel": "系统"
+          },
+          {
+            "object": "创新性成果",
+            "verbs": [
+              "录入",
+              "填报"
+            ],
+            "deadline": "2025-05-18",
+            "precision": "date_only",
+            "channel": "创新成果采集系统"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "终稿审查表",
+          "一致性登记表"
+        ],
+        "criteria": [
+          "导师"
+        ],
+        "referenceCaveat": "培养单位组织流程不应全部变成学生个人任务；依据学生义务逐项复核。",
+        "naming": [
+          "培养单位代码_学号_姓名"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-10",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "2565b01556c6615d9e335181de7791fb5d1e82d204d2f2f78ce888959cc48394",
+      "previousReferenceSha256": "dc4a8ac1c7dd4abd4d53702e78f95d65389b65ad66e8a020959aa3ffd5bcbd97",
+      "reference": {
+        "tasks": [
+          {
+            "object": "材料",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "channel": "研究生招生系统",
+            "deadlineUnknown": true
+          },
+          {
+            "object": "通讯地址",
+            "verbs": [
+              "上报",
+              "填报",
+              "填写",
+              "提交"
+            ],
+            "channel": "研究生招生系统",
+            "deadline": "2025-06-02",
+            "precision": "date_only"
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-11",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "e921bd8a661acfea45654d9f3d037de7413e4aafb9f5c108d3157c170bfa0023",
+      "previousReferenceSha256": "d9edc85b12115a3047159eb94cd515e3da6142fc46443750b982ce969a32df23",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报考信息",
+            "verbs": [
+              "确认",
+              "提交"
+            ],
+            "deadline": "2025-02-27T15:00",
+            "precision": "exact",
+            "channel": "系统",
+            "material": "报考材料"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "报名信息简表",
+          "专家推荐书",
+          "报考类别确认书",
+          "成绩单",
+          "学历"
+        ],
+        "formats": [
+          "PDF"
+        ],
+        "criteria": [
+          "合并",
+          "公章"
+        ],
+        "window": "2025-02-24T10:00/2025-02-27T15:00"
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-12",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "77b88629ab956e2b3c9d661a353ae311e5015eae40170b86ee3f422e021056d3",
+      "previousReferenceSha256": "b5036df87ab7c6c27a97beca9e7e8c506ce548d5844197bada4f83a2db062a58",
+      "reference": {
+        "tasks": [
+          {
+            "object": "调剂",
+            "verbs": [
+              "报名",
+              "申请",
+              "填报"
+            ],
+            "deadline": "2025-04-11T09:00",
+            "precision": "exact",
+            "channel": "国家系统",
+            "unknownEligibility": true
+          },
+          {
+            "object": "待录取",
+            "verbs": [
+              "确认",
+              "接收"
+            ],
+            "condition": "待录取",
+            "deadlineUnknown": true
+          },
+          {
+            "object": "系统",
+            "verbs": [
+              "测试",
+              "下载",
+              "熟悉"
+            ],
+            "condition": "复试资格"
+          },
+          {
+            "object": "资格审查",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "资格审查",
+            "channel": "[邮箱1]",
+            "window": "2025-04-11T15:00/2025-04-11T18:00"
+          },
+          {
+            "object": "考试费",
+            "verbs": [
+              "缴纳",
+              "缴费",
+              "支付"
+            ],
+            "channel": "缴纳平台"
+          }
+        ],
+        "events": [
+          {
+            "object": "复试",
+            "start": "2025-04-12T07:30",
+            "endUnknown": true
+          },
+          {
+            "object": "测试",
+            "start": "2025-04-11T14:00",
+            "end": "2025-04-11T18:00"
+          }
+        ],
+        "materials": [
+          "准考证",
+          "身份证",
+          "缴费单",
+          "资格审查合格单",
+          "成绩单"
+        ],
+        "formats": [
+          "jpg",
+          "pdf"
+        ],
+        "criteria": [
+          "4小时",
+          "100元",
+          "双机位"
+        ],
+        "forbidden": [
+          {
+            "object": "复试",
+            "verbs": [
+              "录音",
+              "录像",
+              "录屏",
+              "传播"
+            ]
+          }
+        ],
+        "referenceCaveat": "四小时相对期限和预计测试窗口必须保留原精度；详细资格分支人工复核，不能据自动完整宣称全篇无遗漏。"
+      },
+      "preservedRequirements": [
+        {
+          "tokens": [
+            "设备"
+          ],
+          "rule": "R3",
+          "reason": "设备准备无独立办理单位或截止，仍须保留准备要求；双机位等原参照要求不变"
+        }
+      ],
+      "removedTaskInterpretations": [
+        {
+          "previous": {
+            "object": "设备",
+            "verbs": [
+              "准备"
+            ],
+            "condition": "复试"
+          },
+          "basis": "R3 设备准备无独立办理单位或截止，仍须保留准备要求；双机位等原参照要求不变"
+        }
+      ],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-13",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "33db2b276c678f6184082d2139029ab42677fea29bffb3464abcd85b61796933",
+      "previousReferenceSha256": "471c5680d0e7baf7d2455c03695349701b4c3b0b054348acd116fd506265a8a7",
+      "reference": {
+        "tasks": [
+          {
+            "object": "论文信息",
+            "verbs": [
+              "填报",
+              "填写",
+              "录入"
+            ],
+            "deadline": "2025-05-23",
+            "precision": "date_only",
+            "channel": "系统"
+          },
+          {
+            "object": "答辩申请",
+            "verbs": [
+              "提交",
+              "填报",
+              "申请"
+            ],
+            "deadline": "2025-05-27",
+            "precision": "date_only",
+            "channel": "系统"
+          },
+          {
+            "object": "科研成果",
+            "verbs": [
+              "录入",
+              "填报",
+              "提交"
+            ],
+            "deadline": "2025-05-27",
+            "precision": "date_only"
+          },
+          {
+            "object": "学位上报信息",
+            "verbs": [
+              "填报",
+              "填写",
+              "提交"
+            ],
+            "deadline": "2025-06-06",
+            "precision": "date_only"
+          },
+          {
+            "object": "学位申请材料",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "material": "硕士学位申请表",
+            "deadline": "2025-05-30",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "硕士学位申请表"
+        ],
+        "referenceCaveat": "5月30日学生材料须交齐与学院汇总角色需区分，学院备案不能变成学生任务。"
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-14",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "af666f9a5a3fb09948a5ffe1a9a5c0b72edfa62ae61eb36cdaa332ca5f5c096f",
+      "previousReferenceSha256": "403680eb4dbdedab60ab054dd8175d14b287cb3f543b8e7802f5f909eb272c9a",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报考材料",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "channel": "系统",
+            "deadline": "2025-03-05T20:00",
+            "precision": "exact",
+            "material": "报考材料"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "身份证",
+          "学历",
+          "成绩单",
+          "论文",
+          "科研设想",
+          "外语",
+          "计算机",
+          "思想政治品德",
+          "承诺书"
+        ],
+        "window": "2025-02-20T10:00/2025-03-05T20:00",
+        "criteria": [
+          "公章",
+          "3项"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-15",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "91129998ed297b799a210c51e9b519769c1dddded5e8087e5d04a6bc64ebb016",
+      "previousReferenceSha256": "7e53ab70d349e7b505aa9723c2cb667e4a3389f64a45b43976454f126df3ecc2",
+      "reference": {
+        "tasks": [
+          {
+            "object": "资格审查",
+            "verbs": [
+              "申请",
+              "提交"
+            ],
+            "deadline": "2026-10-15",
+            "precision": "date_only",
+            "condition": "尚未通过"
+          },
+          {
+            "object": "论文",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-10-20",
+            "precision": "date_only"
+          },
+          {
+            "object": "答辩信息",
+            "verbs": [
+              "填报",
+              "填写",
+              "提交"
+            ],
+            "deadline": "2026-12-01",
+            "precision": "date_only"
+          },
+          {
+            "object": "学位申请材料",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadline": "2026-12-01",
+            "precision": "date_only",
+            "channel": "研究生科"
+          }
+        ],
+        "events": [
+          {
+            "object": "答辩",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "criteria": [
+          "20%",
+          "导师"
+        ],
+        "referenceCaveat": "11月30日是预计完成答辩，不是原文已定个人截止。"
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-16",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "0c869d3bfafe08286dcb5f5b726dab101cc59542427cbc80ae89bdd443ade2a4",
+      "previousReferenceSha256": "faa522122c41fd8352906dd25983d4ca35f16ba69ba597009d19c39e2abb8e14",
+      "reference": {
+        "tasks": [
+          {
+            "object": "本科生申请",
+            "verbs": [
+              "提交",
+              "申请",
+              "补充"
+            ],
+            "deadline": "2025-06-08T23:59",
+            "precision": "exact",
+            "channel": "系统"
+          }
+        ],
+        "events": [
+          {
+            "object": "面试",
+            "start": "2025-06-11",
+            "end": "2025-06-12"
+          }
+        ],
+        "criteria": [
+          "补充"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-17",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "2351e26117068de5a113f5c5a1878f0e57f3effad843c8192470d4a970416cf1",
+      "previousReferenceSha256": "40ed292351ca1e93d7b7c9ca5a844fa4c178977b7be00c21ce2e040c4fa829e5",
+      "reference": {
+        "tasks": [
+          {
+            "object": "转专业申请",
+            "verbs": [
+              "提交",
+              "报名",
+              "申请"
+            ],
+            "deadline": "2026-03-20T16:00",
+            "precision": "exact",
+            "channel": "网上办事大厅",
+            "unknownEligibility": true
+          },
+          {
+            "object": "纸质申请",
+            "verbs": [
+              "递交",
+              "提交"
+            ],
+            "deadline": "2026-03-20T16:00",
+            "precision": "exact",
+            "channel": "九龙湖教五101",
+            "condition": "外语类保送生"
+          }
+        ],
+        "events": [],
+        "window": "2026-03-17T10:00/2026-03-20T16:00",
+        "criteria": [
+          "一个志愿",
+          "资格"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-18",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "7a608b71006483746d35f8ffa3dd1a5009e83079712ec7b8522e756b982bd701",
+      "previousReferenceSha256": "8fb21ca3c4042fd75ee772a0d5b96a085af600409c6375f756df89003cc1c3c9",
+      "reference": {
+        "tasks": [
+          {
+            "object": "跨校交流",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "channel": "公共数据库",
+            "material": "语言证书",
+            "unknownEligibility": true
+          },
+          {
+            "object": "出国",
+            "verbs": [
+              "申报",
+              "申请",
+              "提交"
+            ],
+            "channel": "本科出国",
+            "condition": "录取",
+            "deadlineUnknown": true
+          },
+          {
+            "object": "回国",
+            "verbs": [
+              "确认"
+            ],
+            "deadlineUnknown": true,
+            "condition": "回国"
+          },
+          {
+            "object": "学分",
+            "verbs": [
+              "认定",
+              "申请"
+            ],
+            "condition": "学分"
+          },
+          {
+            "object": "UCL",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-03-27",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "奥胡斯",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-03-17",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "内布里哈",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-04-06",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "明治",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-03-19",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "河滨",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-03-25",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "伯明翰",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-04-13",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "神奈川",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-03-27",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "福冈",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-05-08",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "金斯顿",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-04-20",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "香港中文",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-04-20",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          },
+          {
+            "object": "澳门科技",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-05-15",
+            "precision": "date_only",
+            "channel": "公共数据库"
+          }
+        ],
+        "events": [
+          {
+            "object": "宣讲会",
+            "start": "2025-03-26T18:00",
+            "endUnknown": true
+          },
+          {
+            "object": "宣讲会",
+            "start": "2025-04-01T21:00",
+            "endUnknown": true
+          }
+        ],
+        "criteria": [
+          "出发前10天",
+          "回国后7日"
+        ],
+        "referenceCaveat": "全页11个项目各有独立截止及外方网申，不得用总括报名掩盖项目级遗漏；另存逐项目义务作人工核对。"
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-19",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "e11683b40ed1f6dd5ed41790e36394ac1eff22696be8a7f785acc45e738b4220",
+      "previousReferenceSha256": "3089aef27e21e2a0cfb13d779a48f874119f98f839fb539db190d4022eddfd03",
+      "reference": {
+        "tasks": [
+          {
+            "object": "理论课程",
+            "verbs": [
+              "选课",
+              "学习",
+              "完成"
+            ],
+            "channel": "教务系统"
+          },
+          {
+            "object": "劳动成果",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "channel": "劳动教育课程平台",
+            "deadlineUnknown": true
+          },
+          {
+            "object": "劳动教育实践课程",
+            "verbs": [
+              "选修",
+              "选课"
+            ],
+            "channel": "labor.seu.edu.cn",
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "criteria": [
+          "26",
+          "3",
+          "一周"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-20",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "88b69170fef5cf1e54d83b2ea27f9b299fe13de12391153ed4236e6bd4104935",
+      "previousReferenceSha256": "379d4de8401f83bc4dc3dc224dde0e5d0bcad040b3f250096e8b47957cc3bf35",
+      "reference": {
+        "tasks": [
+          {
+            "object": "网上作业",
+            "verbs": [
+              "完成",
+              "作答",
+              "提交"
+            ],
+            "channel": "学习平台",
+            "deadlineUnknown": true
+          },
+          {
+            "object": "视频课件",
+            "verbs": [
+              "学习",
+              "观看",
+              "完成"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "criteria": [
+          "五个工作日",
+          "两套",
+          "四套"
+        ],
+        "referenceCaveat": "期末考试结束日未给出，不能算出具体截止。"
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-22",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "f2c63ee83b05c5bb9969f419399677e5cedfdb0894d11f582696939e21148b80",
+      "previousReferenceSha256": "2904657423126dd3716e1110337987419709dbacba5cab493035c3c1e2b604d5",
+      "reference": {
+        "tasks": [
+          {
+            "object": "签到",
+            "verbs": [
+              "完成",
+              "签到",
+              "入场"
+            ],
+            "condition": "参会",
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "脑机接口",
+            "start": "2026-05-12T13:30",
+            "end": "2026-05-12T14:30",
+            "location": "A2-207"
+          },
+          {
+            "object": "机器人",
+            "start": "2026-05-19T13:30",
+            "end": "2026-05-19T14:30",
+            "location": "A2-110b"
+          },
+          {
+            "object": "机械臂",
+            "start": "2026-05-26T13:30",
+            "end": "2026-05-26T14:30",
+            "location": "A2-115"
+          }
+        ],
+        "criteria": [
+          "提前10分钟"
+        ],
+        "forbidden": [
+          {
+            "object": "食品饮料",
+            "verbs": [
+              "携带"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [
+        {
+          "tokens": [
+            "手机",
+            "静音"
+          ],
+          "rule": "R3",
+          "reason": "参会期间设备状态为参与要求，签到义务和活动时间均保留"
+        }
+      ],
+      "removedTaskInterpretations": [
+        {
+          "previous": {
+            "object": "手机",
+            "verbs": [
+              "静音",
+              "调至"
+            ],
+            "condition": "讲座"
+          },
+          "basis": "R3 参会期间设备状态为参与要求，签到义务和活动时间均保留"
+        }
+      ],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-23",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "8735388b7fe268aa6497b78f20fd003602e85d3a03408573b533089751d168e3",
+      "previousReferenceSha256": "948d6b63772429a447d9e899f1efc9da4b0bf1278e6a5713e531a4ffd7f228e0",
+      "reference": {
+        "tasks": [
+          {
+            "object": "讲座",
+            "verbs": [
+              "预约",
+              "报名"
+            ],
+            "deadlineUnknown": true,
+            "condition": "参与"
+          }
+        ],
+        "events": [
+          {
+            "object": "英文论文",
+            "start": "2026-05-13T14:30",
+            "endUnknown": true,
+            "location": "武汉校区"
+          },
+          {
+            "object": "Web of Science",
+            "start": "2026-05-14T14:30",
+            "endUnknown": true,
+            "location": "西校区"
+          },
+          {
+            "object": "ACS",
+            "start": "2026-05-21T14:30",
+            "endUnknown": true,
+            "location": "东校区"
+          },
+          {
+            "object": "研学AI",
+            "start": "2026-05-21T14:30",
+            "endUnknown": true,
+            "location": "西校区"
+          },
+          {
+            "object": "考研英语",
+            "start": "2026-05-28T14:30",
+            "endUnknown": true,
+            "location": "武汉校区"
+          },
+          {
+            "object": "Science",
+            "start": "2026-05-29T20:00",
+            "end": "2026-05-29T21:00"
+          },
+          {
+            "object": "数据",
+            "start": "2026-06-11T14:30",
+            "endUnknown": true,
+            "location": "东校区"
+          }
+        ],
+        "criteria": [
+          "前一周",
+          "20人"
+        ],
+        "referenceCaveat": "预约码为空不得补造；未预约仍可参加。逐场预约截止应可逆对应开场前一周，不能统一一个日期。"
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-25",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "9d8355156422dd865836dd0dbecfc91149a23067dbd71d206e319b0171b95d0c",
+      "previousReferenceSha256": "19e76386673fea3b15d038892275fddfe6d0a12ca984160a10fe7449fafe0cb1",
+      "reference": {
+        "tasks": [
+          {
+            "object": "志愿服务",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-10-01T00:00",
+            "precision": "exact",
+            "channel": "思政实践课程平台",
+            "material": "志愿服务证明"
+          },
+          {
+            "object": "个人感想",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-10-01T00:00",
+            "precision": "exact",
+            "channel": "思政实践课程平台"
+          },
+          {
+            "object": "课程论文",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-10-01T00:00",
+            "precision": "exact",
+            "channel": "思政实践课程平台"
+          },
+          {
+            "object": "团队实践报告",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-09-23T00:00",
+            "precision": "exact",
+            "channel": "思政实践课程平台"
+          },
+          {
+            "object": "个人心得体会",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-09-23T00:00",
+            "precision": "exact",
+            "channel": "思政实践课程平台"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "志愿服务证明",
+          "个人感想",
+          "课程论文",
+          "团队实践报告",
+          "个人心得体会"
+        ],
+        "formats": [
+          "Word",
+          "jpg"
+        ],
+        "criteria": [
+          "400",
+          "2000",
+          "5000",
+          "1500",
+          "10M"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-26",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "af47d8f710631b011c31a0be701ecb9ea9426b9d5268b91d866caaa8329fa04a",
+      "previousReferenceSha256": "0479bab2ad9b7eec512c9092496df2e9cc2767a374f7da49ae74de46784d5ce7",
+      "reference": {
+        "tasks": [
+          {
+            "object": "线上课程",
+            "verbs": [
+              "学习",
+              "完成"
+            ],
+            "deadline": "2026-08-29",
+            "precision": "date_only"
+          },
+          {
+            "object": "在线作业",
+            "verbs": [
+              "完成",
+              "提交"
+            ],
+            "deadline": "2026-08-29",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "information": [
+          "2026级"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-27",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "b9658031a3cec40216566e2c8a1b56ac2d10ec530f292de9835e83ce810d100b",
+      "previousReferenceSha256": "6ca67a03bb4a84efb9391bbeee589aa54fb2f3a9eb723876cb084a17deacf879",
+      "reference": {
+        "tasks": [
+          {
+            "object": "视频",
+            "verbs": [
+              "学习",
+              "完成"
+            ],
+            "deadlineUnknown": true
+          },
+          {
+            "object": "作业",
+            "verbs": [
+              "完成",
+              "提交"
+            ],
+            "deadline": "2026-10-11T23:55",
+            "precision": "exact"
+          },
+          {
+            "object": "实验项目",
+            "verbs": [
+              "预约",
+              "选课"
+            ],
+            "channel": "实践教务系统"
+          },
+          {
+            "object": "班级群",
+            "verbs": [
+              "加入",
+              "加群"
+            ],
+            "channel": "量子密信"
+          },
+          {
+            "object": "实验报告",
+            "verbs": [
+              "预习",
+              "完成",
+              "提交"
+            ],
+            "material": "实验报告"
+          },
+          {
+            "object": "签到",
+            "verbs": [
+              "签到",
+              "入座"
+            ],
+            "deadlineUnknown": true
+          },
+          {
+            "object": "实验室安全考试",
+            "verbs": [
+              "通过",
+              "参加",
+              "完成"
+            ],
+            "predecessor": "通过"
+          }
+        ],
+        "events": [],
+        "criteria": [
+          "15",
+          "周六",
+          "星期天",
+          "两周",
+          "5-10分钟"
+        ],
+        "forbidden": [
+          {
+            "object": "实验",
+            "verbs": [
+              "未预约进入"
+            ]
+          }
+        ],
+        "referenceCaveat": "周次缺校历时保留相对窗口；不得猜开学日期。固定课表确认点不是所有任务截止。"
+      },
+      "preservedRequirements": [
+        {
+          "tokens": [
+            "课表"
+          ],
+          "rule": "R2",
+          "reason": "查询课表无独立具体时刻，保留参考信息，不重复建待办"
+        }
+      ],
+      "removedTaskInterpretations": [
+        {
+          "previous": {
+            "object": "课表",
+            "verbs": [
+              "查看",
+              "查询"
+            ],
+            "deadlineUnknown": true
+          },
+          "basis": "R2 查询课表无独立具体时刻，保留参考信息，不重复建待办"
+        }
+      ],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-28",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "a45544d5d0e8e6231666e9f4b606ecc021854b12726e02072dbc11fb822a7d44",
+      "previousReferenceSha256": "410dab8f52d6281c4d709648c69a43a3183693418b5b1169cd19fc9d16bf3728",
+      "reference": {
+        "tasks": [
+          {
+            "object": "课程",
+            "verbs": [
+              "注册",
+              "选课",
+              "报名"
+            ],
+            "deadline": "2026-10-14",
+            "precision": "date_only",
+            "condition": "自愿"
+          },
+          {
+            "object": "语言测试",
+            "verbs": [
+              "参加",
+              "完成"
+            ],
+            "condition": "首次报名"
+          },
+          {
+            "object": "期末考试",
+            "verbs": [
+              "参加",
+              "完成"
+            ],
+            "deadline": "2026-11-30",
+            "precision": "date_only"
+          },
+          {
+            "object": "作业",
+            "verbs": [
+              "提交",
+              "完成"
+            ],
+            "deadline": "2026-11-30",
+            "precision": "date_only"
+          },
+          {
+            "object": "课程",
+            "verbs": [
+              "报名",
+              "选课"
+            ],
+            "deadline": "2027-03-31",
+            "precision": "date_only"
+          },
+          {
+            "object": "期末考试",
+            "verbs": [
+              "参加",
+              "完成"
+            ],
+            "deadline": "2027-05-24",
+            "precision": "date_only"
+          },
+          {
+            "object": "报告",
+            "verbs": [
+              "提交",
+              "完成"
+            ],
+            "deadline": "2027-05-24",
+            "precision": "date_only"
+          }
+        ],
+        "events": [
+          {
+            "object": "课程",
+            "start": "2026-10-25",
+            "end": "2026-11-29"
+          },
+          {
+            "object": "课程",
+            "start": "2027-04-11",
+            "end": "2027-05-23"
+          }
+        ],
+        "criteria": [
+          "60",
+          "2门",
+          "50"
+        ],
+        "referenceCaveat": "课程清单是可选课程，不能把全部65+36课程建成强制任务；学校审核和成绩公布是信息节点。"
+      },
+      "preservedRequirements": [
+        {
+          "tokens": [
+            "课表"
+          ],
+          "rule": "R2",
+          "reason": "审核后查看课表为参考步骤；考试、作业和两期日期完整保留"
+        }
+      ],
+      "removedTaskInterpretations": [
+        {
+          "previous": {
+            "object": "课表",
+            "verbs": [
+              "查看",
+              "下载"
+            ],
+            "condition": "审核通过"
+          },
+          "basis": "R2 审核后查看课表为参考步骤；考试、作业和两期日期完整保留"
+        }
+      ],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-30",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "59df2ac21c6454841a4369392f6fdc29d54718647bc7a1205806c867e8e7620c",
+      "previousReferenceSha256": "19fc35e64a1276e5f2b007403c0197cc7fa5732fbb687204581be89df7b54a49",
+      "reference": {
+        "tasks": [
+          {
+            "object": "开题",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-04-23T16:00",
+            "precision": "exact",
+            "channel": "wj.sjtu.edu.cn",
+            "material": "导师",
+            "unknownEligibility": true
+          },
+          {
+            "object": "开题材料",
+            "verbs": [
+              "准备",
+              "提交"
+            ],
+            "deadlineUnknown": true,
+            "material": "开题报告"
+          }
+        ],
+        "events": [
+          {
+            "object": "开题",
+            "start": "2025-05-12",
+            "end": "2025-05-25"
+          }
+        ],
+        "materials": [
+          "开题报告",
+          "二次开题申请表",
+          "PPT"
+        ],
+        "criteria": [
+          "导师同意",
+          "15分钟"
+        ],
+        "window": "2025-04-11T09:00/2025-04-23T16:00"
+      },
+      "preservedRequirements": [
+        {
+          "tokens": [
+            "邮件"
+          ],
+          "rule": "R2",
+          "reason": "开题后的关注邮件为参考提醒，无独立具体时间"
+        }
+      ],
+      "removedTaskInterpretations": [
+        {
+          "previous": {
+            "object": "邮件",
+            "verbs": [
+              "关注",
+              "查看"
+            ],
+            "condition": "开题报告后"
+          },
+          "basis": "R2 开题后的关注邮件为参考提醒，无独立具体时间"
+        }
+      ],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-33",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "4b55a62d22de991b5de85a98e386005c9d3733e790cca1d009d95678c222fbeb",
+      "previousReferenceSha256": "5519ee0c372f53b9799e11ff00787d887ba3680e12d08a6c93f23346bd3d7d26",
+      "reference": {
+        "tasks": [
+          {
+            "object": "综合评价",
+            "verbs": [
+              "报名",
+              "申请",
+              "注册"
+            ],
+            "deadline": "2025-05-08T17:00",
+            "precision": "exact",
+            "channel": "综合评价招生报名系统",
+            "unknownEligibility": true
+          },
+          {
+            "object": "评核费",
+            "verbs": [
+              "缴纳",
+              "支付",
+              "缴费"
+            ],
+            "condition": "材料审核",
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "入学测试",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "materials": [
+          "学业水平考试成绩证明",
+          "高中成绩单",
+          "身份证"
+        ],
+        "criteria": [
+          "300",
+          "公章"
+        ],
+        "forbidden": [
+          {
+            "object": "纸质材料",
+            "verbs": [
+              "邮寄"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-34",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "1fa74e8bcb58a23b445f26b63fadc824ca3e608d280cf915d5b9fe042dd74bf9",
+      "previousReferenceSha256": "35c8166c891482addd5fd860b6be4d91cb5eb19de3e1287b95a35a65b2cc606d",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "山海名师讲坛",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "obsoleteDates": [
+          "2025-09-23"
+        ],
+        "information": [
+          "延期",
+          "停课"
+        ],
+        "referenceCaveat": "防风注意安全属于信息；原定15:00不能作为新的活动或任务截止。"
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-35",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "dc6a324fe8002f1e9bb653693d8c4bcd203c4515077fcb0ad25fb97d31dc1257",
+      "previousReferenceSha256": "d40f81975b0074f5a915ba8132243bf738ff4ac527af9312428dab919946fe2e",
+      "reference": {
+        "tasks": [
+          {
+            "object": "山海名师讲坛",
+            "verbs": [
+              "重新报名",
+              "报名"
+            ],
+            "deadline": "2025-09-24T21:00",
+            "precision": "exact",
+            "channel": "到梦空间"
+          },
+          {
+            "object": "签到",
+            "verbs": [
+              "签到",
+              "入场"
+            ],
+            "condition": "参加",
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "山海名师讲坛",
+            "start": "2025-09-25T10:00",
+            "end": "2025-09-25T12:00",
+            "location": "东海岸校区E栋教学楼102"
+          }
+        ],
+        "obsoleteDates": [
+          "2025-09-22"
+        ],
+        "criteria": [
+          "提前15分钟"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-36",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "f108d9aab518c3730e09ae43332c5cca16d45c353fdbd26ef29b1d7b476f236e",
+      "previousReferenceSha256": "31d97815723b0da1f797c3ee7d3364ea9f7ee6c68759793fa63b550802e7e143",
+      "reference": {
+        "tasks": [
+          {
+            "object": "集章卡",
+            "verbs": [
+              "领取"
+            ],
+            "channel": "社团中心大本营",
+            "condition": "参与集章"
+          },
+          {
+            "object": "门票",
+            "verbs": [
+              "领取",
+              "兑换"
+            ],
+            "condition": "前排",
+            "channel": "社团中心大本营"
+          }
+        ],
+        "events": [
+          {
+            "object": "社团之旅",
+            "start": "2025-09-27T14:00",
+            "end": "2025-09-27T17:30",
+            "location": "东海岸校区E座教学楼前"
+          },
+          {
+            "object": "社团之夜",
+            "start": "2025-09-27T19:00",
+            "end": "2025-09-27T21:35",
+            "location": "B综合楼110"
+          }
+        ],
+        "criteria": [
+          "转发",
+          "集赞"
+        ]
+      },
+      "preservedRequirements": [],
+      "removedTaskInterpretations": [],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    },
+    {
+      "id": "PUB-37",
+      "version": "owner-default-reference-6.0.0",
+      "author": "Codex / model-assisted / single-author / provisional",
+      "sourceSha256": "e8a2e32d0f64d4ecfd6d29dc5255057dde26ce4efbb913c0e97813f89bcea310",
+      "previousReferenceSha256": "2ad74e4a3c9d7dc36d49b5f17dd84c067e4914482ae2c19ea5b612d46ff8aad8",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名表",
+            "verbs": [
+              "填写",
+              "发送",
+              "提交"
+            ],
+            "deadline": "2025-05-08",
+            "precision": "date_only",
+            "channel": "[邮箱1]",
+            "material": "报名表",
+            "unknownEligibility": true
+          },
+          {
+            "object": "校内报名",
+            "verbs": [
+              "报名",
+              "提交",
+              "填报"
+            ],
+            "deadline": "2025-05-08",
+            "precision": "date_only",
+            "channel": "网上办事大厅"
+          },
+          {
+            "object": "护照",
+            "verbs": [
+              "办理",
+              "确认",
+              "检查"
+            ],
+            "deadline": "2025-05-08",
+            "precision": "date_only",
+            "condition": "没有护照"
+          },
+          {
+            "object": "项目费用",
+            "verbs": [
+              "缴纳",
+              "支付"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "匈牙利",
+            "start": "2025-07-14",
+            "end": "2025-08-12",
+            "location": "布达佩斯"
+          }
+        ],
+        "materials": [
+          "报名表",
+          "护照"
+        ],
+        "criteria": [
+          "12个月",
+          "不能叠加"
+        ],
+        "referenceCaveat": "课程起止暂定；最终安排另行通知，不得标确切已定。"
+      },
+      "preservedRequirements": [
+        {
+          "tokens": [
+            "报名表",
+            "家长"
+          ],
+          "rule": "R1_R3_R4",
+          "reason": "同一报名表同一邮箱同一截止下的打印签字扫描为交付步骤；护照异地办理、校内报名、费用与活动保留"
+        }
+      ],
+      "removedTaskInterpretations": [
+        {
+          "previous": {
+            "object": "报名表",
+            "verbs": [
+              "打印",
+              "签字",
+              "扫描",
+              "发送"
+            ],
+            "deadline": "2025-05-08",
+            "precision": "date_only",
+            "channel": "[邮箱1]",
+            "criteria": "家长"
+          },
+          "basis": "R1_R3_R4 同一报名表同一邮箱同一截止下的打印签字扫描为交付步骤；护照异地办理、校内报名、费用与活动保留"
+        }
+      ],
+      "criticalFields": "Original deadlines, owners, forbidden and obsolete dates unchanged; removed standalone step remains a cited requirement"
+    }
+  ]
+}
