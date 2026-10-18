@@ -33,11 +33,16 @@ export function createWorkspaceData(
   migrationLog: MigrationRecord[] = [],
   recognitionFeedback: RecognitionFeedbackRecord[] = [],
   legacyData: Record<string, unknown> = {},
+  options: { preserveEditableViews?: boolean } = {},
 ): WorkspaceData {
   const entities = materializeWorkspaceEntities(tasks, sources, drafts, projects)
   return {
     schemaVersion: 7,
     ...entities,
+    // Ordinary v8 has already projected these editable views. Synthesizing
+    // fallback IDs again turns a read into a task edit and breaks pending
+    // readback receipts. Legacy-only callers retain their former projection.
+    ...(options.preserveEditableViews ? { tasks, sources, drafts, projects } : {}),
     courseBlocks,
     integrations,
     knowledgeSettings,

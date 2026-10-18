@@ -132,6 +132,7 @@ function persistenceRevisionForView(saved: WorkspaceData): string {
     saved.migrationLog,
     saved.recognitionFeedback,
     saved.legacyData,
+    { preserveEditableViews: true },
   )
   return workspacePersistenceRevision({ ...view, materialItems: saved.materialItems })
 }
@@ -273,9 +274,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     ? {...selectedDraftSourceBeforeReadiness,reviewMetadata:{...selectedDraftSourceBeforeReadiness.reviewMetadata,qualityFlags:currentReadinessFlags(ordinaryCanonical,selectedDraft.id,selectedDraftSourceBeforeReadiness.reviewMetadata?.qualityFlags??[])}}
     : selectedDraftSourceBeforeReadiness
   const workspace = useMemo(() => ({
-    ...createWorkspaceData(tasks, sources, drafts, projects, courseBlocks, integrations, knowledgeSettings, workPackages, events, migrationLog, recognitionFeedback, legacyData),
+    ...createWorkspaceData(tasks, sources, drafts, projects, courseBlocks, integrations, knowledgeSettings, workPackages, events, migrationLog, recognitionFeedback, legacyData, { preserveEditableViews: !runtime }),
     materialItems,
-  }), [courseBlocks, drafts, events, integrations, knowledgeSettings, legacyData, materialItems, migrationLog, projects, recognitionFeedback, sources, tasks, workPackages])
+  }), [courseBlocks, drafts, events, integrations, knowledgeSettings, legacyData, materialItems, migrationLog, projects, recognitionFeedback, sources, tasks, workPackages, runtime])
 
   const applyWorkspaceView = useCallback((saved: WorkspaceData) => {
     setTasks(saved.tasks)
@@ -759,6 +760,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         handle.draftId,
         input.manualSuggestion
           ? '手动录入已先保存来源，再生成待确认草稿；核对后才会创建正式任务。'
+          : ordinaryEnvironment && metadata?.responseRole === 'RECORDED_MODEL_ENGINEERING_REPLAY' ? '真实模型回答已回放；本次没有新模型请求，核对后走普通正式保存。'
           : ordinaryEnvironment && metadata?.provider !== 'deepseek' ? '匿名工程建议已生成；没有模型请求，核对后走普通正式保存。' : useCloudRecognition
             ? `${recognitionResult.modelName} 已生成可编辑建议；来源已在请求前安全保存。`
             : 'DeepSeek 当前未连接；来源已先保存，并由本地规则生成可编辑建议。',

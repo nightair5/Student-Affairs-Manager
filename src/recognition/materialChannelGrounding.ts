@@ -5,7 +5,7 @@ import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sou
 import { verifyWorkflowChannelEvidence, type WorkflowMaterialSupport } from './workflowChannelSupport'
 import {citedDeliveryContexts,type CitedDeliveryContext} from './citedDeliveryContext'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.10.0'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.10.1'
 export const WORKFLOW_MATERIAL_CHANNEL_VERSION = 'material-declared-workflow-channel-1.0.0'
 export interface MaterialChannelDecision {
   materialId: string
@@ -159,8 +159,10 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
       const chunks = Math.max(1, Math.ceil(entities.length / 30), Math.ceil(proofs.length / 20))
       for (let part = 0; part < chunks; part++) result.conflicts.push({
         id: 'material-channel:' + material.tempId + (chunks > 1 ? ':' + (part + 1) : ''), type: 'other', message,
-        entityTempIds: entities.slice(part * 30, (part + 1) * 30),
-        evidenceIds: proofs.slice(part * 20, (part + 1) * 20), requiresDecision: true,
+        // Evidence and owner chunks can have different counts. Repeat their
+        // last nonempty scope; an empty owner list means a GLOBAL conflict.
+        entityTempIds: entities.slice(Math.min(part, Math.ceil(entities.length / 30) - 1) * 30, (Math.min(part, Math.ceil(entities.length / 30) - 1) + 1) * 30),
+        evidenceIds: proofs.slice(Math.min(part, Math.max(0, Math.ceil(proofs.length / 20) - 1)) * 20, (Math.min(part, Math.max(0, Math.ceil(proofs.length / 20) - 1)) + 1) * 20), requiresDecision: true,
       })
       owners.forEach(t => { t.selected = false })
     }

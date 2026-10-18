@@ -1,0 +1,739 @@
+{
+  "createdAt": "2026-10-18T14:39:04.440Z",
+  "role": "SOURCE_FIRST_OWNER_DEFAULTS_BEFORE_RESERVED_OUTPUTS",
+  "version": "owner-provisional-v6-reserved-r5-1",
+  "rows": [
+    {
+      "id": "R5-PUB-02",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "bb81b6be91990a70df96167e639b52c34eb805ec109081d4043650c28121452a",
+      "reference": {
+        "tasks": [
+          {
+            "object": "重要文档",
+            "verbs": [
+              "保存",
+              "备份"
+            ],
+            "deadlineUnknown": true
+          },
+          {
+            "object": "业务数据",
+            "verbs": [
+              "保存",
+              "备份"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-08-28T21:30",
+            "end": "2026-08-29T01:00"
+          },
+          {
+            "object": "停电",
+            "start": "2026-08-29T01:30",
+            "end": "2026-08-29T06:00"
+          },
+          {
+            "object": "停电",
+            "start": "2026-08-29T22:30",
+            "end": "2026-08-30T04:00"
+          },
+          {
+            "object": "停电",
+            "start": "2026-08-30T21:30",
+            "end": "2026-08-31T04:00"
+          }
+        ],
+        "information": [
+          "恢复时间以来电实际时间为准",
+          "若停电时间变动"
+        ]
+      },
+      "preservedRequirements": [],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-06",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "b24161042a49cbf991e9f11eabec0370e7f0bbf1e35b10ec07ad65d9050a70fa",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "申报",
+              "提交"
+            ],
+            "deadline": "2026-05-26T00:00",
+            "precision": "exact",
+            "optional": true
+          },
+          {
+            "object": "材料",
+            "verbs": [
+              "更新",
+              "提交"
+            ],
+            "condition": "已报名团队更新材料时",
+            "channel": "校赛系统"
+          }
+        ],
+        "events": [],
+        "information": [
+          "仍按原校赛通知执行"
+        ],
+        "criteria": [
+          "重新完整提交",
+          "切勿重复申报"
+        ]
+      },
+      "preservedRequirements": [],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-04",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "c6e8d6b3e951d1094f39d41ec81779916211c78d672bc76698ef31a695b8ed98",
+      "reference": {
+        "tasks": [
+          {
+            "object": "数据文件",
+            "verbs": [
+              "保存"
+            ],
+            "deadlineUnknown": true
+          },
+          {
+            "object": "精密仪器",
+            "verbs": [
+              "关停"
+            ],
+            "deadlineUnknown": true
+          },
+          {
+            "object": "用电设备",
+            "verbs": [
+              "关停"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-07-17T05:00",
+            "end": "2026-07-17T06:00"
+          },
+          {
+            "object": "停电",
+            "start": "2026-07-17T13:00",
+            "end": "2026-07-17T14:00"
+          },
+          {
+            "object": "停电",
+            "start": "2026-07-18T05:00",
+            "end": "2026-07-18T06:00"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-12",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "59543118c100023335782000514c6d34a21a67767116a6a646480ca4e6afd32a",
+      "reference": {
+        "tasks": [
+          {
+            "object": "课程视频学习",
+            "verbs": [
+              "完成"
+            ],
+            "deadline": "2026-05-24T23:59",
+            "precision": "exact"
+          },
+          {
+            "object": "章节作业测试",
+            "verbs": [
+              "完成"
+            ],
+            "deadline": "2026-05-24T23:59",
+            "precision": "exact"
+          },
+          {
+            "object": "考试",
+            "verbs": [
+              "完成",
+              "参加"
+            ],
+            "channel": "课程相应学习平台",
+            "deadlineUnknown": true,
+            "predecessor": "课程",
+            "condition": "尔雅非四史完成任务点90%才能参加考试"
+          }
+        ],
+        "events": [],
+        "window": "2026-05-25/2026-05-31",
+        "information": [
+          "没有补考"
+        ],
+        "criteria": [
+          "90%",
+          "考试前一天"
+        ]
+      },
+      "preservedRequirements": [],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-07",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "1288bc31cd7ecb539f1e0f389ff17abac415f9aefc1c1c92739d533794693cd0",
+      "reference": {
+        "tasks": [
+          {
+            "object": "论文",
+            "verbs": [
+              "提交",
+              "发给"
+            ],
+            "deadline": "2025-04-11",
+            "precision": "date_only",
+            "channel": "各班班长",
+            "condition": "硕士"
+          },
+          {
+            "object": "论文",
+            "verbs": [
+              "提交",
+              "发给"
+            ],
+            "deadline": "2025-04-11",
+            "precision": "date_only",
+            "channel": "[收件同学]",
+            "condition": "博士"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "论文"
+        ],
+        "criteria": [
+          "学号+姓名"
+        ]
+      },
+      "preservedRequirements": [],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-11",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "24cae2c183d34ddf9798792b0e9f6190b60dfd12d21b1686d107e2ccca2f64d0",
+      "reference": {
+        "tasks": [
+          {
+            "object": "电子版文档",
+            "verbs": [
+              "提交"
+            ],
+            "channel": "[邮箱1]",
+            "condition": "班级学委"
+          },
+          {
+            "object": "纸质文档",
+            "verbs": [
+              "装订",
+              "提交"
+            ],
+            "condition": "电子文档检查无误后"
+          },
+          {
+            "object": "成绩评定表",
+            "verbs": [
+              "提交"
+            ],
+            "condition": "单独提交一份"
+          },
+          {
+            "object": "纸质版文档",
+            "verbs": [
+              "收齐",
+              "提交"
+            ],
+            "condition": "班级学委"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "电子版文档",
+          "纸质文档",
+          "成绩评定表"
+        ],
+        "criteria": [
+          "学院",
+          "专业",
+          "学号",
+          "姓名",
+          "2份",
+          "1份单独提交"
+        ],
+        "information": [
+          "6月13日"
+        ]
+      },
+      "preservedRequirements": [],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-10",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "071161e2ad65875baad1fbf974d4df76207ba3ca814f946798b6e641b55b73ba",
+      "reference": {
+        "tasks": [
+          {
+            "object": "考试安排",
+            "verbs": [
+              "查询"
+            ],
+            "channel": "网上办事大厅",
+            "deadlineUnknown": true
+          },
+          {
+            "object": "补考要求",
+            "verbs": [
+              "联系",
+              "了解"
+            ],
+            "condition": "论文报告大作业形式课程"
+          },
+          {
+            "object": "作业",
+            "verbs": [
+              "完成"
+            ],
+            "deadlineUnknown": true,
+            "condition": "论文报告大作业形式课程"
+          }
+        ],
+        "events": [
+          {
+            "object": "补考",
+            "start": "2026-03-07",
+            "end": "2026-03-10"
+          }
+        ],
+        "materials": [
+          "有效身份证件"
+        ],
+        "information": [
+          "上机考试安排详见附件"
+        ]
+      },
+      "preservedRequirements": [
+        {
+          "tokens": [
+            "有效身份证件"
+          ],
+          "rule": "R3_CARRYING_IS_REQUIREMENT_WITH_NO_SEPARATE_DELIVERY"
+        }
+      ],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-16",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "e6f7c3940b5f5472ae59fdc59b9bf55ce38da6eadf10a3ee496f1436c58c4047",
+      "reference": {
+        "tasks": [
+          {
+            "object": "论文终稿电子版",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2025-05-26T12:00",
+            "precision": "exact",
+            "channel": "云存储平台",
+            "predecessor": "导师",
+            "condition": "已通过硕士论文答辩"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "论文终稿电子版"
+        ],
+        "criteria": [
+          "PDF",
+          "学号+姓名",
+          "不需要匿名",
+          "上传1次"
+        ],
+        "information": [
+          "1天内",
+          "导师审核同意修改后方可装订提交"
+        ]
+      },
+      "preservedRequirements": [],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-09",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "76a012507715534d86f559cc796a9ec88e7cb6271cf7144edd34818a050f69f3",
+      "reference": {
+        "tasks": [
+          {
+            "object": "论文",
+            "verbs": [
+              "撰写",
+              "完成"
+            ],
+            "condition": "国际学院注册2023-2025级且非休学或联合培养或海外交流"
+          },
+          {
+            "object": "作业",
+            "verbs": [
+              "提交",
+              "收齐",
+              "发送"
+            ],
+            "deadline": "2026-06-28T18:00",
+            "precision": "exact",
+            "channel": "[邮箱1]",
+            "condition": "班长或团支书汇总发送"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "作业",
+          "全体学生名单"
+        ],
+        "criteria": [
+          "Word",
+          "学号-姓名-班级",
+          "2500",
+          "3500",
+          "不需要提交纸质版本"
+        ]
+      },
+      "preservedRequirements": [],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-15",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "b329a8b87ad3bf1b0bfab220accabd0f6043d564fc69cce76c1a3f95e253ce21",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "扫描"
+            ],
+            "channel": "二维码",
+            "optional": true,
+            "deadlineUnknown": true
+          },
+          {
+            "object": "取消报名",
+            "verbs": [
+              "取消",
+              "点击"
+            ],
+            "condition": "已报名但特殊情况无法参加",
+            "deadlineUnknown": true
+          },
+          {
+            "object": "签到",
+            "verbs": [
+              "签到"
+            ],
+            "condition": "讲座结束后学生按指引"
+          }
+        ],
+        "events": [
+          {
+            "object": "讲座",
+            "start": "2025-03-25T15:00",
+            "endUnknown": true
+          }
+        ],
+        "criteria": [
+          "提前",
+          "15",
+          "静音"
+        ]
+      },
+      "preservedRequirements": [],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-08",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "18128168a3214603b061c53735fad0f4a6b693a60489c53d496a2f6afc8a4354",
+      "reference": {
+        "tasks": [
+          {
+            "object": "学生综合素质评价鉴定表",
+            "verbs": [
+              "提交",
+              "填写"
+            ],
+            "deadlineUnknown": true
+          },
+          {
+            "object": "证明材料",
+            "verbs": [
+              "提供",
+              "提交"
+            ],
+            "deadlineUnknown": true,
+            "condition": "未在附件0公示的加分项"
+          },
+          {
+            "object": "班级材料",
+            "verbs": [
+              "汇总",
+              "提交",
+              "打包"
+            ],
+            "deadline": "2026-08-14",
+            "precision": "date_only",
+            "condition": "2023级班长",
+            "channel": "[邮箱1]"
+          },
+          {
+            "object": "班级材料",
+            "verbs": [
+              "汇总",
+              "提交",
+              "打包"
+            ],
+            "deadline": "2026-09-10",
+            "precision": "date_only",
+            "condition": "2024级和2025级班长",
+            "channel": "[邮箱1]"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "学生综合素质评价鉴定表",
+          "加分证明材料"
+        ],
+        "criteria": [
+          "姓名",
+          "班级",
+          "证明材料名称"
+        ],
+        "information": [
+          "提交时间另行通知"
+        ]
+      },
+      "preservedRequirements": [],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-14",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "a515cc7632ac7d612f89edc1716ad0513d972591a59b0236eb6b332a49f2d3b5",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名回执",
+            "verbs": [
+              "填写",
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-03-16T00:00",
+            "precision": "exact",
+            "channel": "二维码",
+            "optional": true
+          }
+        ],
+        "events": [
+          {
+            "object": "初赛",
+            "startUnknown": true
+          },
+          {
+            "object": "决赛",
+            "start": "2026-05-16",
+            "endUnknown": true
+          }
+        ],
+        "information": [
+          "4",
+          "16",
+          "广西民族大学"
+        ],
+        "obsoleteDates": [
+          "2026-03-08"
+        ]
+      },
+      "preservedRequirements": [],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-03",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "85ba71326f76ec0b18ba6d4150c36099b935d256bfef998861b2eb57eeb6d654",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "设备",
+            "start": "2026-07-22T20:00",
+            "end": "2026-07-23T06:00"
+          }
+        ],
+        "information": [
+          "不定时中断"
+        ]
+      },
+      "preservedRequirements": [],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-01",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "49fe39cda294f397268d1b5efe517b6d79d5e6f4d8862d5569fdbdd4101feced",
+      "reference": {
+        "tasks": [
+          {
+            "object": "校园网络",
+            "verbs": [
+              "认证",
+              "重新认证"
+            ],
+            "deadlineUnknown": true,
+            "condition": "设备调整后首次使用"
+          }
+        ],
+        "events": [
+          {
+            "object": "网络",
+            "start": "2026-09-19T00:00",
+            "end": "2026-09-19T03:00"
+          },
+          {
+            "object": "行政楼",
+            "start": "2026-09-19T05:00",
+            "end": "2026-09-19T07:00"
+          }
+        ],
+        "information": [
+          "逐步恢复"
+        ]
+      },
+      "preservedRequirements": [],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    },
+    {
+      "id": "R5-PUB-13",
+      "version": "owner-provisional-v6-reserved-r5-1",
+      "sourceSha256": "6d07f2e27e1c71ad61c9e2e2acc1e89579490eeaadff4982f4908bdd4471c34e",
+      "reference": {
+        "tasks": [
+          {
+            "object": "纸质版论文",
+            "verbs": [
+              "提交"
+            ],
+            "deadline": "2025-05-09",
+            "precision": "date_only",
+            "channel": "历史学院",
+            "optional": true
+          },
+          {
+            "object": "电子版论文",
+            "verbs": [
+              "发送",
+              "提交"
+            ],
+            "deadline": "2025-05-09",
+            "precision": "date_only",
+            "channel": "[邮箱1]",
+            "optional": true
+          }
+        ],
+        "events": [],
+        "materials": [
+          "论文",
+          "查重材料"
+        ],
+        "criteria": [
+          "word",
+          "学院",
+          "专业",
+          "年级",
+          "姓名",
+          "学号"
+        ],
+        "forbidden": [
+          {
+            "object": "AI工具",
+            "verbs": [
+              "使用"
+            ]
+          }
+        ],
+        "information": [
+          "历史学院在校本科生"
+        ]
+      },
+      "preservedRequirements": [
+        {
+          "tokens": [
+            "论文"
+          ],
+          "rule": "R3_CREATION_RETAINED_WITH_DELIVERY"
+        },
+        {
+          "tokens": [
+            "查重"
+          ],
+          "rule": "R3_PREPARATION_RETAINED_WITH_DELIVERY"
+        }
+      ],
+      "author": "Codex / model-assisted source interpretation of product-owner R1-R5",
+      "status": "single-author / provisional",
+      "beforeAnyOutput": true
+    }
+  ]
+}
