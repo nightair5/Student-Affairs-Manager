@@ -21,3 +21,8 @@ it('ordinary first assembly retains an unresolved relative proposal and never in
  const first=assembleCurrentFirstSuggestion(r,context),point=first.result.timePoints.find(p=>p.tempId==='D')!
  expect(point.normalizedValue).toBe('2026-05-06T14:30');expect(point.precision).toBe('relative');expect(point.needsConfirmation).toBe(true);expect(point.selected).toBe(false);expect(first.result.timePoints).toHaveLength(1);expect(first.result.events[0].startTimePointTempId).toBeNull();expect(first.audit.unresolved.some(r=>r.reason==='RELATIVE_CUTOFF_TYPED_ANCHOR_UNRESOLVED')).toBe(true);expect(()=>parseRecognitionResult(first.result)).not.toThrow()
 })
+it('ordinary assembly never reactivates an explicitly cancelled, unowned historical cutoff',async()=>{
+ const {r,context}=await scenario(),quote='之前说11月8日交论文，这个旧截止取消了';context.sourceText+='\n'+quote+'。';r.evidence.push({id:'OLD-E',sourceId:'same',quote,field:'deadline'});r.timePoints.push({...r.timePoints[0],tempId:'OLD',type:'submission_deadline',rawText:quote,normalizedValue:null,precision:'date_only',needsConfirmation:true,selected:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:['OLD-E']})
+ const first=assembleCurrentFirstSuggestion(r,context),old=first.result.timePoints.find(p=>p.tempId==='OLD')!
+ expect(old.normalizedValue).toBeNull();expect(old.selected).toBe(false);expect(old.needsConfirmation).toBe(true);expect(first.audit.retiredDeadlineContexts?.some(r=>r.entityId==='OLD')).toBe(true);expect(first.audit.unresolved.some(r=>r.entityId==='OLD')).toBe(false);expect(()=>parseRecognitionResult(first.result)).not.toThrow()
+})

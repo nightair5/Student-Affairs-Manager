@@ -1,6 +1,7 @@
 import {citedEventSequence,citedSplitEventRange,citedTaskDateRange} from './cited-event-sequence.mjs'
 import {projectCitedClockRanges} from './cited-clock-range.mjs'
 import {citedRelativeCutoff,unprovenRelativeCutoff} from './cited-relative-cutoff.mjs'
+import {retiredDeadlineContext} from './retired-deadline-context.mjs'
 import { parseChineseTimeAst } from './chinese-time-ast.generated.mjs'
 import {productGenerationContract,productGenerationUsesSingleSchema,PRODUCT_CONTRACT_PROMPT_VERSION} from './recognition-output-contract.mjs'
 
@@ -196,6 +197,7 @@ export function applyDeterministicTimeAst(raw, referenceTime, timezone = 'Asia/S
     timePoints: ranges.result.timePoints.map((item) => {
       if (!item || typeof item !== 'object' || Array.isArray(item) || !TIME_POINT_TYPES.has(item.type) || typeof item.rawText !== 'string') return item
       if(ranges.audit.decisions.some(d=>d.pointId===item.tempId))return item
+      if(retiredDeadlineContext(item,raw,raw.evidence,sourceContent))return {...item,needsConfirmation:true,selected:false}
       if(unprovenRelativeCutoff(item,raw,raw.evidence,sourceContent,{referenceTime,timezone}))return {...item,selected:false}
       let endpoint=citedRelativeCutoff(item,raw,raw.evidence,sourceContent,{referenceTime,timezone})?.endpoint??item.rawText
       const owners=(raw.events??[]).filter(e=>e.startTimePointTempId===item.tempId||e.endTimePointTempId===item.tempId)
@@ -280,7 +282,8 @@ export function normalizeRecognitionResult(
     })
     const roleRange=ranges.audit.decisions.find(d=>d.pointId===item.tempId)
     const relativePending=unprovenRelativeCutoff(item,raw,evidence,sourceContent,{referenceTime:nowIso,timezone})
-    const effective=roleRange||relativePending?item:ast
+    const retired=retiredDeadlineContext(item,raw,evidence,sourceContent)
+    const effective=roleRange||relativePending||retired?item:ast
     const normalizedValue = effective.normalizedValue
     const linkedEvidence = strings(item.evidenceIds).filter((id) => evidenceIds.has(id))
     const id=text(item.tempId,100,`time-${index+1}`),contextLiteral=text(item.rawText,300),owned=strings(item.relatedTaskTempIds).length>0||strings(item.relatedMaterialTempIds).length>0||allTasks().some(t=>t.timePointTempIds.includes(id))||(raw.events??[]).some(e=>e.startTimePointTempId===id||e.endTimePointTempId===id)

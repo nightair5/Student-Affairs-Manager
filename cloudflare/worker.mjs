@@ -23,6 +23,7 @@ import {recognitionSourceBody,usesSourceSegments,projectSegmentEvidence} from '.
 import {projectCitedClockRanges} from './cited-clock-range.mjs'
 import {isolateRecognitionItems,retainUnanchoredWeekTimes} from './recognition-local-isolation.mjs'
 import {decodeRecognitionOutput} from './recognition-output-recovery.mjs'
+import {bindProductEnvelope} from './recognition-product-envelope.mjs'
 import {previewAccess} from './preview-access.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
@@ -861,8 +862,9 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 未返回有效的任务结构。', 502, context.requestId)
     }
+    const envelope=bindProductEnvelope(parsed,{promptVersion:selectedPromptVersion,schemaVersion:'2.0'})
     const candidate = recognitionCandidate(
-      parsed,
+      envelope.result,
       referenceTime,
       selectedModel,
       selectedPromptVersion ?? RECOGNITION_PROMPT_VERSION,
@@ -897,6 +899,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       evaluationArm: selectedModel === DEEPSEEK_MULTIMODAL_MODEL ? 'T' : undefined,
       result,
       execution: {
+        ...(envelope.audit.decisions.length?{hostEnvelopeProjection:envelope.audit}:{}),
         ...(decoded.audit.partial?{outputRecovery:decoded.audit}:{}),
         ...(segmentProjection.audit?{segmentEvidence:segmentProjection.audit}:{}),
         ...(localIsolation.audit.quarantined.length||localIsolation.audit.structure.length||localIsolation.audit.relations.length?{localIsolation:localIsolation.audit}:{}),
