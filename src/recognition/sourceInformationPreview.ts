@@ -1,7 +1,7 @@
 import type { RecognitionResult } from './types'
 import type { WorkspaceV8 } from '../domain/v2/types'
 
-export const SOURCE_INFORMATION_PREVIEW_VERSION = 'source-information-preview-1.2.0'
+export const SOURCE_INFORMATION_PREVIEW_VERSION = 'source-information-preview-1.2.1'
 /** Keep a requirement already cited by a model annotation visible as a source
  * note. No new entity/owner is assigned and no annotation opinion is promoted
  * to a fact: only the existing verbatim source evidence is displayed. */
@@ -14,7 +14,7 @@ export function retainDeclaredSourceInformation(result: RecognitionResult, sourc
   // the full original sentence, including conditions/negation; assign no task,
   // material, event or owner and never claim the requirement is fulfilled.
   for(const info of result.ignoredContent){
-    if(info.reason!=='background'||!/^(?:需|须|应)(?:自备|准备|携带|提供|带上)/u.test(info.text.trim()))continue
+    if(!['background','policy'].includes(info.reason)||!/(?:^|[，,。；]\s*)(?:需|须|应)(?:自备|准备|携带|提供|带上)/u.test(info.text.trim()))continue
     const own=result.evidence.filter(e=>e.field==='requirement'&&!used.has(e.id)&&e.quote.includes(info.text)&&sourceText.includes(e.quote)&&sourceText.indexOf(e.quote)===sourceText.lastIndexOf(e.quote))
     if(own.length!==1)continue
     const beforeText=info.text,beforeReason=info.reason;info.text=own[0].quote.trim();info.reason='other';decisions.push({text:info.text,evidenceIds:[own[0].id],rule:'EXISTING_IGNORED_REQUIREMENT_EVIDENCE',beforeText,beforeReason})

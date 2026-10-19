@@ -16,6 +16,13 @@ async function informationFixture() {
 }
 
 describe('source information visible without inventing entity ownership', () => {
+  it('preserves an existing policy-tagged equipment requirement with its full condition, never an unsupported policy or a guessed owner',()=>{
+    const text='活动免费，需自备量角器。',source='请提交图纸。'+text,r=ordinaryWorkflowFixture(source);r.evidence.push({id:'TOOLS',sourceId:'pending-source',quote:text,field:'requirement'});r.ignoredContent=[{text,reason:'policy'}]
+    const first=assembleCurrentFirstSuggestion(r,{sourceText:source,referenceTime:'2027-04-01T09:00:00+08:00',timezone:'Asia/Shanghai'});expect(first.result.ignoredContent).toContainEqual({text,reason:'other'});expect(first.result.materials).toHaveLength(r.materials.length);expect(first.result.standaloneTasks).toHaveLength(r.standaloneTasks.length)
+    for(const quote of ['活动免费，无需自备量角器。','活动免费，如需另行申请请等通知。']){const n=structuredClone(r);n.ignoredContent=[{text:quote,reason:'policy'}];n.evidence.at(-1)!.quote=quote;expect(retainDeclaredSourceInformation(n,'请提交图纸。'+quote).decisions).toEqual([])}
+    const unproved=structuredClone(r);unproved.evidence.pop();expect(retainDeclaredSourceInformation(unproved,source).decisions).toEqual([])
+    const conditional=structuredClone(r);const full='若报名获批，需自备量角器。';conditional.ignoredContent=[{text:full,reason:'policy'}];conditional.evidence.at(-1)!.quote=full;retainDeclaredSourceInformation(conditional,full);expect(conditional.ignoredContent).toContainEqual({text:full,reason:'other'});expect(conditional.materials).toHaveLength(r.materials.length)
+  })
   it('a model-declared equipment requirement is visible as a literal source note, with no fabricated owner or new entity',()=>{
     const note='活动免费，需自备绘图板等工具。',source='请提交画稿。'+note,r=ordinaryWorkflowFixture(source);r.evidence.push({id:'INFO',sourceId:'pending-source',quote:note,field:'requirement'});r.ignoredContent=[{text:'需自备绘图板等工具',reason:'background'}]
     const before=structuredClone(r),first=assembleCurrentFirstSuggestion(r,{sourceText:source,referenceTime:'2027-04-01T09:00:00+08:00',timezone:'Asia/Shanghai'})
