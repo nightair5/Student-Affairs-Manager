@@ -4,6 +4,32 @@ import {projectCitedClockRanges} from './cited-clock-range.mjs'
 import {applyDeterministicTimeAst,normalizeRecognitionResult} from './recognition.mjs'
 import {validateRecognitionResult} from './recognition-contract.generated.mjs'
 const reference='2027-04-01T09:00:00+08:00',timezone='Asia/Shanghai'
+
+test('width and an afternoon shared by two declared event endpoints survive both Worker stages',()=>{
+ for(const [literal,a,b]of[['2027年4月16日14：30-16：30','14:30','16:30'],['2027年4月16日下午1:00-3:00','13:00','15:00']]){
+  const {raw}=fixture(),source='讲座时间：'+literal+'。';raw.evidence[0].quote=source
+  raw.timePoints.forEach(p=>{p.rawText=literal;p.normalizedValue='2027-04-16T'+(p.type==='event_start'?a:b)})
+  const before=structuredClone(raw),out=normalizeRecognitionResult(applyDeterministicTimeAst(raw,reference,timezone,source),source,reference,undefined,undefined,true,timezone)
+  assert.deepEqual(out.timePoints.map(p=>p.normalizedValue),['2027-04-16T'+a,'2027-04-16T'+b]);assert.ok(out.timePoints.every(p=>!p.needsConfirmation));assert.deepEqual(raw,before)
+ }
+})
+
+test('a typed single-day clock range cannot acquire a different owner or become a current cancelled event',()=>{
+ for(const kind of['owner','cancelled']){
+  const {raw}=fixture(),literal='2027年4月16日下午1:00-3:00',source=(kind==='cancelled'?'取消本次讲座，原时间：':'讲座时间：')+literal+'。'
+  raw.evidence[0].quote=source;raw.timePoints.forEach(p=>{p.rawText=literal})
+  if(kind==='owner')raw.events[0].evidenceIds=[]
+  const out=projectCitedClockRanges(raw,source,reference,timezone);assert.ok(out.result.timePoints.every(p=>p.normalizedValue===null&&!p.selected));assert.ok(out.audit.decisions.every(d=>d.blocked))
+ }
+})
+test('a working task-owned handling window keeps its values, selection and conflict-free path',()=>{
+ const {raw}=fixture(),literal='2027年4月16日09:00—11:00',source='领取资料办理时间：'+literal+'。'
+ raw.evidence[0].quote=source;raw.events=[]
+ raw.standaloneTasks=[{tempId:'T',actionVerb:'领取',actionObject:'资料',evidenceIds:['Q'],timePointTempIds:['S','E']}]
+ raw.timePoints.forEach(p=>{p.rawText=literal;p.relatedTaskTempIds=['T'];p.normalizedValue='2027-04-16T'+(p.type==='event_start'?'09:00':'11:00')})
+ const before=structuredClone(raw),out=projectCitedClockRanges(raw,source,reference,timezone)
+ assert.deepEqual(out.result,before);assert.deepEqual(raw,before);assert.ok(out.audit.decisions.every(d=>!d.blocked))
+})
 function fixture(){const rawText='2027年4月9日09:00—4月12日16:00',source='答疑活动时间：'+rawText+'。',evidence=[{id:'Q',quote:source,field:'event'}],point={rawText,timezone,isAllDay:false,precision:'exact',needsConfirmation:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:['Q'],confidence:1,selected:true};return {source,raw:{schemaVersion:'2.0',evidence,standaloneTasks:[],materials:[],timePoints:[{...point,tempId:'S',type:'event_start',normalizedValue:'2027-04-09T09:00'},{...point,tempId:'E',type:'event_end',normalizedValue:'2027-04-12T16:00'}],events:[{tempId:'EV',title:'答疑活动',startTimePointTempId:'S',endTimePointTempId:'E',evidenceIds:['Q']}],conflicts:[]}}}
 test('a correct cross-date end survives both actual Worker normalization stages; no source or input changes',()=>{
   const {source,raw}=fixture(),original=structuredClone(raw)

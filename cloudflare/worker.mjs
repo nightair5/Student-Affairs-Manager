@@ -19,6 +19,7 @@ import { isValidTimeZone } from './chinese-time-ast.generated.mjs'
 import {parseRecognitionJson} from './recognition-json.mjs'
 import {projectDanglingAnnotationEvidence} from './recognition-annotation-projection.mjs'
 import {projectLiteralSourceEvidence} from './recognition-literal-evidence.mjs'
+import {projectCitedTimeLiterals} from './cited-time-literal.mjs'
 import {recognitionSourceBody,usesSourceSegments,projectSegmentEvidence} from './recognition-source-segments.mjs'
 import {projectCitedClockRanges} from './cited-clock-range.mjs'
 import {isolateRecognitionItems,retainUnanchoredWeekTimes} from './recognition-local-isolation.mjs'
@@ -872,8 +873,9 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     const segmentProjection=usesSourceSegments(selectedPromptVersion)?projectSegmentEvidence(candidate,sourceContent):{result:candidate,audit:null}
     const literalProjection=selectedPromptVersion?.startsWith('recognition-product-contract-')
       ?projectLiteralSourceEvidence(segmentProjection.result,sourceContent):{result:segmentProjection.result,audit:null}
-    const clockRangeProjection=projectCitedClockRanges(literalProjection.result,sourceContent,referenceTime,timezone)
-    const deterministicCandidate = applyDeterministicTimeAst(literalProjection.result, referenceTime, timezone, sourceContent)
+    const timeLiteralProjection=projectCitedTimeLiterals(literalProjection.result,sourceContent)
+    const clockRangeProjection=projectCitedClockRanges(timeLiteralProjection.result,sourceContent,referenceTime,timezone)
+    const deterministicCandidate = applyDeterministicTimeAst(timeLiteralProjection.result, referenceTime, timezone, sourceContent)
     const annotationProjection=selectedPromptVersion?.startsWith('recognition-product-contract-')?projectDanglingAnnotationEvidence(deterministicCandidate):{result:deterministicCandidate,audit:null}
     const localIsolation=isolateRecognitionItems(annotationProjection.result,sourceContent,{sourceId:'pending-source',allowNoUsableSubset:env.RECOGNITION_LOCAL_ISOLATION_VERSION==='1.0.0'})
     const candidateValidation = validateRecognitionResult(localIsolation.result??annotationProjection.result, { sourceContent })
@@ -912,6 +914,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
         })},
         ...(annotationProjection.audit?.decisions.length?{annotationProjection:annotationProjection.audit}:{}),
         ...(literalProjection.audit?.decisions.length?{literalEvidenceProjection:literalProjection.audit}:{}),
+        ...(timeLiteralProjection.audit.decisions.length?{timeLiteralProjection:timeLiteralProjection.audit}:{}),
         tokenUsage: Number.isFinite(payload?.usage?.prompt_tokens) && Number.isFinite(payload?.usage?.completion_tokens)
           ? {
               input: payload.usage.prompt_tokens,

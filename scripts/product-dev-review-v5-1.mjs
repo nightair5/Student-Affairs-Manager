@@ -1,7 +1,7 @@
 // Corrections discovered during current Development inspection. v5.0 and v4
 // remain reproducible; report all three rather than overwriting prior scores.
 import {reviewV5} from './product-dev-review-v5.mjs'
-import {projectLiteralSourceEvidence} from '../cloudflare/recognition-literal-evidence.mjs'
+import {projectLiteralSourceEvidence,resolveLiteralSourceSpan} from '../cloudflare/recognition-literal-evidence.mjs'
 import {citedRelativeCutoff} from '../cloudflare/cited-relative-cutoff.mjs'
 export const PRODUCT_REVIEW_V51_VERSION='product-development-review-5.1.0'
 export function reviewV51(result,source,options={}){
@@ -42,7 +42,7 @@ export function reviewV51(result,source,options={}){
  const wrappedDateSupported=id=>{
   const p=result.timePoints?.find(t=>t.tempId===id);if(!p?.normalizedValue)return false
   const date=String(p.normalizedValue).slice(0,10),literal=String(p.rawText??'').replace(/\s/gu,'')
-  const supported=p.evidenceIds?.some(eid=>{const e=result.evidence?.find(e=>e.id===eid),q=e?.quote??e?.quotedText;return typeof q==='string'&&source.text.includes(q)&&q.includes(p.rawText)})
+  const supported=p.evidenceIds?.some(eid=>{const e=projected.result.evidence?.find(e=>e.id===eid),q=e?.quote??e?.quotedText;return typeof q==='string'&&source.text.includes(q)&&!!resolveLiteralSourceSpan(p.rawText,q)})
   return supported&&[...literal.matchAll(/(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日/gu)].some(m=>{const y=m[1]??date.slice(0,4),day=`${y}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;if(day===date)return true;if(!/24[:：]00/u.test(literal)||!String(p.normalizedValue).startsWith(date+'T00:00'))return false;const ms=Date.parse(day+'T00:00:00Z');return Number.isFinite(ms)&&new Date(ms+86400000).toISOString().slice(0,10)===date})
  }
  const falseMonthFlags=out.severe.filter(s=>s.code==='UNSUPPORTED_DEADLINE'&&wrappedDateSupported(s.time))

@@ -7,6 +7,25 @@ import {
   zonedLocalDateTimeToInstant,
 } from './timeSemantics'
 
+describe('clock ranges do not introduce calendar dates', () => {
+  const options = { referenceTime: '2027-09-02T08:00:00+08:00', timezone: 'Asia/Shanghai', type: 'event_start' as const }
+  it.each([
+    ['2027年9月4日14：30-16：30', '2027-09-04T14:30', '2027-09-04T16:30'],
+    ['9月4日下午1:00-3:00', '2027-09-04T13:00', '2027-09-04T15:00'],
+    ['9月4日下午1点至3点', '2027-09-04T13:00', '2027-09-04T15:00'],
+    ['9月4日上午9:00-12:00', '2027-09-04T09:00', '2027-09-04T12:00'],
+    ['9月4日晚上11:00-次日1:00', '2027-09-04T23:00', '2027-09-05T01:00'],
+  ])('keeps both literal clock endpoints: %s', (text, start, end) => {
+    expect(parseChineseTimeAst(text, options)).toMatchObject({ normalizedValue: start, rangeEndNormalizedValue: end, needsConfirmation: false })
+  })
+  it('keeps wrong dates and unresolved period changes blocked', () => {
+    expect(parseChineseTimeAst('2027/2/30 14:30-16:30', options).normalizedValue).toBeNull()
+    expect(parseChineseTimeAst('9月4日14:30、9月5日16:30', options).normalizedValue).toBeNull()
+    expect(parseChineseTimeAst('9月4日晚上11:00-1:00', options).needsConfirmation).toBe(true)
+    expect(parseChineseTimeAst('9/4 14:30', options).normalizedValue).toBe('2027-09-04T14:30')
+  })
+})
+
 describe('explicit student-affairs time semantics', () => {
   it('keeps date-only values as calendar dates instead of UTC instants', () => {
     expect(isDateOnly('2026-08-10')).toBe(true)

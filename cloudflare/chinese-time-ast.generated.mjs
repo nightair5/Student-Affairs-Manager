@@ -1,5 +1,5 @@
 // GENERATED from src/lib/timeSemantics.ts; do not edit.
-// source-sha256: be282db472a4c9fd5a8f6c1db3c63cf03232ef2135d24163a261b80eb5d95664
+// source-sha256: 18be92700a514c9198a78a10152bd1e8b19f632147dbf0d9bfe651b37c54daf5
 export const DEFAULT_WORKSPACE_TIMEZONE = 'Asia/Shanghai';
 const DATE_ONLY_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/u;
 const LOCAL_DATE_TIME_PATTERN = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.\d{1,3})?)?$/u;
@@ -128,6 +128,7 @@ const CORRECTION_PATTERN = /(?:现(?:更正|调整|修改)?为|更正为|改为|
 function normalizeOcrTimeText(value) {
     return value
         .normalize('NFKC')
+        .replace(/((?:\d{4}[-/])?\d{1,2}[-/]\d{1,2})\s+(?=\d{1,2}:)/gu, '$1T')
         .replace(/(?<=[0-9])\s+(?=[0-9])/gu, '')
         .replace(/\s*([年月日号点时分:])\s*/gu, '$1');
 }
@@ -199,7 +200,9 @@ function absoluteDateCandidates(text, reference) {
         const year = match[1] ? parseChineseInteger(match[1]) : inferredYear(month, reference);
         results.push({ year, month, day, index: match.index ?? 0, end: (match.index ?? 0) + match[0].length, kind: 'absolute' });
     }
-    const numericPattern = /(?:(\d{4})[-/]\s*)?(\d{1,2})[-/]\s*(\d{1,2})(?!\d)/gu;
+    // The minutes and next hour in 14:30-16:30 are a clock range, not a
+    // second month/day pair. Keep real numeric dates and invalid-date checks.
+    const numericPattern = /(?<![\d:])(?:(\d{4})[-/]\s*)?(\d{1,2})[-/]\s*(\d{1,2})(?![\d:])/gu;
     for (const match of text.matchAll(numericPattern)) {
         if (results.some((item) => (match.index ?? 0) >= item.index && (match.index ?? 0) < item.end))
             continue;
@@ -353,12 +356,24 @@ export function parseChineseTimeAst(rawText, options) {
     const startDate = addCalendarDays(baseDate, firstClock.dayOffset);
     const normalizedValue = formatLocalDateTime(startDate, firstClock.hour, firstClock.minute);
     let rangeEndNormalizedValue = null;
-    const secondClock = clocks[1];
+    let secondClock = clocks[1];
     const clockSeparator = secondClock ? parseText.slice(firstClock.end, secondClock.index) : '';
     const isClockRange = Boolean(secondClock && /(?:至|到|[-–—]|次日|翌日)/u.test(clockSeparator));
     if (secondClock && !isClockRange)
         return vagueTimeAst(rawText, options.type, timezone, ['conflicting_clocks']);
     if (secondClock && isClockRange) {
+        // A single stated period covers both endpoints of 下午1:00-3:00.
+        // A new date, explicit second period or next-day connector starts a new
+        // scope. An inherited period that reverses the range remains ambiguous.
+        if (!secondClock.period && firstClock.period && !dates[1]
+            && !/次日|翌日/u.test(clockSeparator) && secondClock.hour > 0 && secondClock.hour <= 12) {
+            const inherited = secondClock.hour === 12 && ['清晨', '早晨', '早上', '上午'].includes(firstClock.period)
+                ? { hour: 12, dayOffset: 0 } : convertClockHour(secondClock.hour, firstClock.period);
+            if (inherited.hour * 60 + secondClock.minute <= firstClock.hour * 60 + firstClock.minute) {
+                return vagueTimeAst(rawText, options.type, timezone, ['ambiguous_range_day_period']);
+            }
+            secondClock = { ...secondClock, ...inherited, period: firstClock.period, ambiguous: false };
+        }
         if (!secondClock.valid || secondClock.ambiguous)
             return vagueTimeAst(rawText, options.type, timezone, ['invalid_or_ambiguous_range_end']);
         let endDate = dates[1] && dates[1].index <= secondClock.index ? dates[1] : baseDate;

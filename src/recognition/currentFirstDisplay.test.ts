@@ -19,6 +19,26 @@ import { buildSourceReviewPlan, commitSourceReview, verifySourceReviewReadback }
 import { emptyWorkspace } from '../experiments/mainline01/fixtures'
 import { rebindRecordedScopes } from './recordedProjectionD26'
 import { buildSourceWorkflowItems } from '../lib/sourceWorkflow'
+import { supportedEventDescriptor, supportedEventOperation } from './compoundNameSupport'
+
+describe('source-backed display labels retain their exact identity and operation', () => {
+  it('accepts an omitted linking particle for the same quoted topic and event type', () => {
+    const quotes = ['开展“海洋与城市”的主题讲座。']
+    expect(supportedEventDescriptor('“海洋与城市”主题讲座', quotes)).toBe(true)
+    expect(supportedEventDescriptor('“海洋与城市”主题讲座', ['开展“海洋与城市”\n的主题讲座。'])).toBe(true)
+    expect(supportedEventDescriptor('“海洋与乡村”主题讲座', quotes)).toBe(false)
+    expect(supportedEventDescriptor('“海洋与城市”主题培训', quotes)).toBe(false)
+  })
+  it('keeps a stated service operation across its own date, without borrowing a different object or negation', () => {
+    const source = '“图书查询”功能于8月12日暂停服务，预计8月15日恢复。'
+    expect(supportedEventOperation('“图书查询”功能暂停服务', [source], source, true)).toBe(true)
+    expect(supportedEventOperation('“座位预约”功能暂停服务', [source], source, true)).toBe(false)
+    const negative = '“图书查询”功能于8月12日不暂停服务。'
+    expect(supportedEventOperation('“图书查询”功能暂停服务', [negative], negative, true)).toBe(false)
+    const conditional = '若审批通过，“图书查询”功能于8月12日暂停服务。'
+    expect(supportedEventOperation('“图书查询”功能暂停服务', [conditional], conditional, true)).toBe(false)
+  })
+})
 
 const dir = 'docs/recognition-optimization/p1-first-pass-convergence/'
 const observed = (number: 1 | 2) => JSON.parse(readFileSync(dir + (number === 1 ? 'TIME_CONTEXT_OBSERVED_01.json' : 'TIME_CHANNEL_OBSERVED_02.json'), 'utf8')) as {

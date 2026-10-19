@@ -44,6 +44,15 @@ function indexed(text){
   }
   return{value,positions,ends}
 }
+// Reuse the same typography rules for a field inside its own cited span.
+// The caller receives original source bytes, never a rewritten quotation.
+export function resolveLiteralSourceSpan(text,source){
+  if(typeof text!=='string'||!text||typeof source!=='string')return null
+  const needle=indexed(text).value,index=indexed(source);if(!needle)return null
+  const at=index.value.indexOf(needle);if(at<0||index.value.indexOf(needle,at+1)>=0)return null
+  const start=index.positions[at],end=index.ends[at+needle.length-1],literal=source.slice(start,end)
+  return literal.length<=500&&indexed(literal).value===needle?{literal,start,end}:null
+}
 export function projectLiteralSourceEvidence(input,source){
   const result=structuredClone(input),audit={version:LITERAL_EVIDENCE_PROJECTION_VERSION,role:'PROGRAM_LITERAL_SPAN_INDEX_NOT_MODEL_OUTPUT',inferredFacts:0,decisions:[]}
   if(!result||!Array.isArray(result.evidence)||typeof source!=='string')return{result,audit}

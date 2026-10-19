@@ -198,6 +198,7 @@ const CORRECTION_PATTERN = /(?:现(?:更正|调整|修改)?为|更正为|改为|
 function normalizeOcrTimeText(value: string): string {
   return value
     .normalize('NFKC')
+    .replace(/((?:\d{4}[-/])?\d{1,2}[-/]\d{1,2})\s+(?=\d{1,2}:)/gu, '$1T')
     .replace(/(?<=[0-9])\s+(?=[0-9])/gu, '')
     .replace(/\s*([年月日号点时分:])\s*/gu, '$1')
 }
@@ -272,7 +273,9 @@ function absoluteDateCandidates(text: string, reference: CalendarDate): DateCand
     const year = match[1] ? parseChineseInteger(match[1]) : inferredYear(month, reference)
     results.push({ year, month, day, index: match.index ?? 0, end: (match.index ?? 0) + match[0].length, kind: 'absolute' })
   }
-  const numericPattern = /(?:(\d{4})[-/]\s*)?(\d{1,2})[-/]\s*(\d{1,2})(?!\d)/gu
+  // The minutes and next hour in 14:30-16:30 are a clock range, not a
+  // second month/day pair. Keep real numeric dates and invalid-date checks.
+  const numericPattern = /(?<![\d:])(?:(\d{4})[-/]\s*)?(\d{1,2})[-/]\s*(\d{1,2})(?![\d:])/gu
   for (const match of text.matchAll(numericPattern)) {
     if (results.some((item) => (match.index ?? 0) >= item.index && (match.index ?? 0) < item.end)) continue
     const month = Number(match[2])
@@ -423,11 +426,23 @@ export function parseChineseTimeAst(rawText: string, options: ChineseTimeAstOpti
   const startDate = addCalendarDays(baseDate, firstClock.dayOffset)
   const normalizedValue = formatLocalDateTime(startDate, firstClock.hour, firstClock.minute)
   let rangeEndNormalizedValue: string | null = null
-  const secondClock = clocks[1]
+  let secondClock = clocks[1]
   const clockSeparator = secondClock ? parseText.slice(firstClock.end, secondClock.index) : ''
   const isClockRange = Boolean(secondClock && /(?:至|到|[-–—]|次日|翌日)/u.test(clockSeparator))
   if (secondClock && !isClockRange) return vagueTimeAst(rawText, options.type, timezone, ['conflicting_clocks'])
   if (secondClock && isClockRange) {
+    // A single stated period covers both endpoints of 下午1:00-3:00.
+    // A new date, explicit second period or next-day connector starts a new
+    // scope. An inherited period that reverses the range remains ambiguous.
+    if (!secondClock.period && firstClock.period && !dates[1]
+      && !/次日|翌日/u.test(clockSeparator) && secondClock.hour > 0 && secondClock.hour <= 12) {
+      const inherited = secondClock.hour === 12 && ['清晨', '早晨', '早上', '上午'].includes(firstClock.period)
+        ? { hour: 12, dayOffset: 0 } : convertClockHour(secondClock.hour, firstClock.period)
+      if (inherited.hour * 60 + secondClock.minute <= firstClock.hour * 60 + firstClock.minute) {
+        return vagueTimeAst(rawText, options.type, timezone, ['ambiguous_range_day_period'])
+      }
+      secondClock = { ...secondClock, ...inherited, period: firstClock.period, ambiguous: false }
+    }
     if (!secondClock.valid || secondClock.ambiguous) return vagueTimeAst(rawText, options.type, timezone, ['invalid_or_ambiguous_range_end'])
     let endDate: CalendarDate = dates[1] && dates[1].index <= secondClock.index ? dates[1] : baseDate
     const secondsStart = firstClock.hour * 60 + firstClock.minute

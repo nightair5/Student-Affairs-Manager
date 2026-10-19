@@ -1,4 +1,4 @@
-export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.4.0'
+export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.5.0'
 const escape=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')
 /** Closed grammatical equivalence, not a bag of words across source clauses. */
 export function supportedCoordinatedObject(value:string,action:string,quotes:string[]):boolean {
@@ -11,6 +11,10 @@ export function supportedCoordinatedObject(value:string,action:string,quotes:str
 /** "活动" may be a generic noun after a literal named activity. It cannot
  * replace a missing identity, bind another owner, or manufacture a second event. */
 export function supportedEventDescriptor(value:string,quotes:string[]):boolean {
+  // Omitting the linking particle does not change a quoted topic or event
+  // type. The complete named topic and the same type must occur together.
+  const named=/^((?:“[^“”\n]{1,100}”|《[^《》\n]{1,100}》))(主题(?:讲座|报告|研讨会))$/u.exec(value)
+  if(named&&quotes.some(q=>new RegExp(escape(named[1])+'\\s*的\\s*'+escape(named[2]),'u').test(q)))return true
   if(!value.endsWith('活动'))return false
   const name=value.slice(0,-2)
   if(!name||!/(?:学校|工作坊|讲座|培训|研讨会)$/u.test(name))return false
@@ -25,10 +29,11 @@ export function supportedEventOperation(value:string,quotes:string[],sourceText:
   const service=/^(.+?)暂停服务$/u.exec(value)
   if(service){
     const pattern=new RegExp(`(?:^|[、，。；\\s])${escape(service[1])}服务(?:将)?停止运行(?:[。；！!]|$)`,'gu')
-    return quotes.some(q=>q&&sourceText.includes(q)&&sourceText.indexOf(q)===sourceText.lastIndexOf(q)
+    if(quotes.some(q=>q&&sourceText.includes(q)&&sourceText.indexOf(q)===sourceText.lastIndexOf(q)
       &&[...q.matchAll(pattern)].some(m=>!/若|如果|假如|取消|不再|不会|不得|不|未/u.test(q.slice(0,m.index).split(/[。；\n]/u).at(-1)??'')))
+    )return true
   }
-  const title=/^(.+?)(升级维护|停机维护|升级检修|停机|维护)$/u.exec(value)
+  const title=/^(.+?)(暂停服务|升级维护|停机维护|升级检修|停机|维护)$/u.exec(value)
   if(!title)return false
   const [,entity,operation]=title
   const spans=[...new Set(quotes)].flatMap(quote=>{
@@ -50,6 +55,8 @@ export function supportedEventOperation(value:string,quotes:string[],sourceText:
     for(const m of allowTimedOperationNames?text.matchAll(timed):[]){
       const prefix=text.slice(0,m.index).split(/[，。；\n]/u).at(-1)??''
       if(/若|如果|假如|取消|不|未|勿/u.test(prefix))return false
+      const sentenceLead=text.slice(0,m.index).split(/[。；\n]/u).at(-1)??''
+      if(operation==='暂停服务'&&/(?:若|如果|假如)[^。；\n]{0,40}[，,]\s*$/u.test(sentenceLead))return false
       found=true
     }
   }

@@ -1,6 +1,6 @@
 import { addDateOnlyDays, parseChineseTimeAst, type ChineseTimeAst, type ChineseTimeAstOptions } from './timeSemantics'
 
-export const D26_TIME_VERSION = 'source-time-semantics-2.3.0'
+export const D26_TIME_VERSION = 'source-time-semantics-2.4.0'
 export interface D26TimeInterpretation {
   version: typeof D26_TIME_VERSION
   point: ChineseTimeAst

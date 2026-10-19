@@ -19,9 +19,11 @@ import {completeCitedSourceWindows,CITED_SOURCE_WINDOW_VERSION} from './citedSou
 import {addDateOnlyDays} from '../lib/timeSemantics'
 import {nativeQualificationReviews} from './nativeQualificationReview'
 import {projectCitedClockRanges,type CitedClockRangeDecision} from '../../cloudflare/cited-clock-range.mjs'
+import {projectCitedTimeLiterals,type CitedTimeLiteralAudit} from '../../cloudflare/cited-time-literal.mjs'
+import {resolveLiteralSourceSpan} from '../../cloudflare/recognition-literal-evidence.mjs'
 import {isolateRecognitionItems,unanchoredAcademicWeek,LOCAL_ISOLATION_NOTE_PREFIX,LOCAL_ISOLATION_VERSION,type LocalIsolationAudit} from '../../cloudflare/recognition-local-isolation.mjs'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.26.2'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.27.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -29,6 +31,7 @@ export interface D26FirstSuggestionAudit {
   generatedProse: ProseRecord[]
   times: Array<{ entityId: string; before: TimeFields; after: TimeFields; interpretation: D26TimeInterpretation }>
   citedClockRanges?:CitedClockRangeDecision[]
+  citedTimeLiterals?:CitedTimeLiteralAudit
   declaredSourceInformation?:ReturnType<typeof retainDeclaredSourceInformation>
   localIsolation?:LocalIsolationAudit
   retiredDeadlineContexts?:Array<{entityId:string;rule:'EXPLICIT_UNOWNED_RETIRED_CONTEXT_NOT_CURRENT_DEADLINE';evidenceIds:string[]}>
@@ -50,17 +53,20 @@ const fields = (point: TimeFields): TimeFields => ({ normalizedValue: point.norm
   isAllDay: point.isAllDay, precision: point.precision, needsConfirmation: point.needsConfirmation })
 const auditRecord = (): D26FirstSuggestionAudit => ({ version: D26_FIRST_SUGGESTION_VERSION, originalProse: [], generatedProse: [], times: [], unresolved: [], sourceCurrentness:[], declaredEventNameSupport:[], citedOwnerSupport:[],citedSourceWindows:{version:CITED_SOURCE_WINDOW_VERSION,inferredFacts:0,decisions:[]}, projectDisplayDefault:null,nativePreconditionReview:[],nativeQualificationReview:[], activityRoles:{reusedNameEvidence:[],suppressedLocationTasks:[],invalidEnds:[]}, actionFields: [], rangeSupport: [], role: 'DETERMINISTIC_PRODUCT_ASSEMBLY_NOT_MODEL_OUTPUT' })
 const supported = (value: string, quotes: string[]) => Boolean(value.trim()) && quotes.some(quote => quote.includes(value))
-function supportedAdjacent(value: string, quotes: string[], sourceText: string) {
+function supportedAdjacent(value: string, quotes: string[], sourceText: string, allowTypography = false) {
   if (supported(value, quotes)) return true
-  const start = sourceText.indexOf(value)
-  if (!value.trim() || start < 0 || sourceText.indexOf(value, start + 1) >= 0) return false
+  const at = sourceText.indexOf(value)
+  const literal = allowTypography ? resolveLiteralSourceSpan(value, sourceText)
+    : at >= 0 && sourceText.indexOf(value, at + 1) < 0 ? { start: at, end: at + value.length } : null
+  if (!value.trim() || !literal) return false
+  const start = literal.start
   const spans = unique(quotes).flatMap(quote => {
     const at = sourceText.indexOf(quote)
     return at >= 0 && sourceText.indexOf(quote, at + 1) < 0 ? [{start:at,end:at+quote.length}] : []
   }).sort((a,b)=>a.start-b.start)
   let covered = start
   for (const span of spans) if (span.start <= covered && span.end > covered) covered = span.end
-  return covered >= start + value.length
+  return covered >= literal.end
 }
 const unique = (values: string[]) => [...new Set(values)]
 /** A model's existing completion action may express a course requirement,
@@ -300,9 +306,11 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   // Machine product-wire items share the Worker's isolation rule. Manual and
   // legacy semantic views keep their existing field-level source/verb checks;
   // they are not untrusted raw model containers to silently rewrite here.
-  const isolated=input.promptVersion.startsWith('recognition-product-contract-')?isolateRecognitionItems(input,context.sourceText,{allowNoUsableSubset:true}):{result:input,audit:{version:LOCAL_ISOLATION_VERSION,inferredFacts:0 as const,quarantined:[],structure:[],relations:[]},rootFailure:false}
+  const timeLiterals=projectCitedTimeLiterals(input,context.sourceText)
+  const isolated=input.promptVersion.startsWith('recognition-product-contract-')?isolateRecognitionItems(timeLiterals.result,context.sourceText,{allowNoUsableSubset:true}):{result:timeLiterals.result,audit:{version:LOCAL_ISOLATION_VERSION,inferredFacts:0 as const,quarantined:[],structure:[],relations:[]},rootFailure:false}
   if(!isolated.result)throw Error('RECOGNITION_ROOT_INVALID')
   const result = structuredClone(isolated.result), audit = auditRecord()
+  if(timeLiterals.audit.decisions.length)audit.citedTimeLiterals=timeLiterals.audit
   if(isolated.audit.quarantined.length||isolated.audit.structure.length||isolated.audit.relations.length)audit.localIsolation=isolated.audit
   for(const note of result.ambiguities.filter(a=>a.id.startsWith(LOCAL_ISOLATION_NOTE_PREFIX)))audit.unresolved.push({entityId:note.id,reason:note.field==='source_coverage'?'MODEL_OUTPUT_INCOMPLETE':'MODEL_ITEM_QUARANTINED_PENDING_SOURCE_REVIEW'})
   audit.declaredSourceInformation=retainDeclaredSourceInformation(result,context.sourceText)
@@ -367,7 +375,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   const tasks: TaskSuggestionV2[] = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
   for (const task of tasks) {
     boundActionField(task,quote(task.evidenceIds),context.sourceText,audit)
-    const quotes = quote(task.evidenceIds),completion=supportedCourseCompletion(task,quotes,result.timePoints),grounded = completion||supportedAdjacent(task.actionVerb, quotes,context.sourceText) && (supportedAdjacent(task.actionObject, quotes,context.sourceText)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes))
+    const quotes = quote(task.evidenceIds),completion=supportedCourseCompletion(task,quotes,result.timePoints),grounded = completion||supportedAdjacent(task.actionVerb, quotes,context.sourceText) && (supportedAdjacent(task.actionObject, quotes,context.sourceText,true)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)||supportedEventDescriptor(task.actionObject,quotes))
     if(completion)audit.actionFields.push({entityId:task.tempId,before:task.actionVerb,after:task.actionVerb,status:'EXISTING_COURSE_COMPLETION_SUPPORT',quotes})
     const original = { entityId: task.tempId, kind: 'task' as const, title: task.title, description: task.description }
     Object.assign(task, prose(audit, original, grounded ? supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)?task.actionVerb:taskActionText(task.actionVerb, task.actionObject) : '待核对事项',
@@ -380,7 +388,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     }
   }
   for (const event of result.events) {
-    const quotes = quote(event.evidenceIds), grounded = supportedAdjacent(event.title, quotes, context.sourceText)||supportedEventDescriptor(event.title,quotes)||supportedEventOperation(event.title,quotes,context.sourceText,true)
+    const quotes = quote(event.evidenceIds), grounded = supportedAdjacent(event.title, quotes, context.sourceText,true)||supportedEventDescriptor(event.title,quotes)||supportedEventOperation(event.title,quotes,context.sourceText,true)
     const original = { entityId: event.tempId, kind: 'event' as const, title: event.title, description: event.description }
     Object.assign(event, prose(audit, original, grounded ? event.title : '待核对事件', grounded ? unique(quotes).join('\n') : '事件内容缺少对应来源依据，请核对。'))
     if (!grounded) {
