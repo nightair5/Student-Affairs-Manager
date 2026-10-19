@@ -18,6 +18,8 @@ import type { CourseBlock, Event, Task } from '../types'
 import type { PlanSegment } from '../domain/v2/personalPlanD27'
 
 interface CalendarPageProps {
+  /** Canonical v8 retains date precision; bare legacy task views do not. */
+  preserveDateOnlyPrecision?: boolean
   personalPlans?: readonly PlanSegment[]
   personalPlanTimezone?: string
   pendingDateTaskIds?: readonly string[]
@@ -56,9 +58,9 @@ function itemTime(value: string): string {
     .format(new Date(value))
 }
 
-export function CalendarPage({ personalPlans, personalPlanTimezone = 'Asia/Shanghai', pendingDateTaskIds, isolatedTimezone, dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
+export function CalendarPage({ preserveDateOnlyPrecision = false, personalPlans, personalPlanTimezone = 'Asia/Shanghai', pendingDateTaskIds, isolatedTimezone, dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
   const [today] = useState(() => isolatedTimezone ? instantToWallClock(new Date(), isolatedTimezone) : new Date())
-  const displayTime = (value: string) => isolatedTimezone ? isDateOnly(value) ? '仅日期' : value.slice(11, 16) + '（' + isolatedTimezone + '）' : itemTime(value)
+  const displayTime = (value: string) => isDateOnly(value) ? '仅日期' : isolatedTimezone ? value.slice(11, 16) + '（' + isolatedTimezone + '）' : itemTime(value)
   const [viewDate, setViewDate] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1))
   const [selectedDateKey, setSelectedDateKey] = useState(() => localDateKey(today))
   const [agendaMode, setAgendaMode] = useState<'selected' | 'upcoming'>('upcoming')
@@ -178,7 +180,7 @@ export function CalendarPage({ personalPlans, personalPlanTimezone = 'Asia/Shang
                 cell.isToday && 'today',
               ].filter(Boolean).join(' ')
               const accessibleSummary = summary
-                ? `${summary.total} 项，最早 ${summary.timeLabel}，${summary.headline}`
+                ? `${summary.total} 项，${summary.timeLabel==='仅日期'?'仅日期，具体时刻未说明':'最早 '+summary.timeLabel}，${summary.headline}`
                 : '无事项'
               return <button key={cell.dateKey} className={className} type="button" onClick={() => { setSelectedDateKey(cell.dateKey); setAgendaMode('selected') }} aria-pressed={selected} aria-current={cell.isToday ? 'date' : undefined} aria-label={`${dayLabel(cell.dateKey)}，${accessibleSummary}`}>
                 <span className="calendar-date"><strong>{cell.day}</strong>{cell.isToday && <em>今天</em>}</span>
@@ -205,7 +207,7 @@ export function CalendarPage({ personalPlans, personalPlanTimezone = 'Asia/Shang
           {agendaItems.length
             ? <div className="calendar-agenda-list">{agendaItems.map((item) => item.kind === 'task'
                 ? <button className="agenda-item" key={`task:${item.id}`} type="button" onClick={() => onOpenTask(item.task)}>
-                    <span className="agenda-time">{dateViews && isDateOnly(item.at) ? '仅日期' : displayTime(item.at)}</span>
+                    <span className="agenda-time">{isDateOnly(item.at) && !dateViews && !preserveDateOnlyPrecision ? itemTime(item.at) : displayTime(item.at)}</span>
                     <span className="agenda-copy"><strong>{item.title}</strong><small><Clock3 size={13} />任务 · 预计 {formatDuration(item.task.estimatedMinutes)} · {item.task.status}</small></span>
                   </button>
                 : onOpenEvent

@@ -7,7 +7,7 @@ import type {D20ReviewSessionRepository,ReviewField} from '../experiments/candid
 type Props={workspace:WorkspaceV8;draftId:string;session:D20ReviewSessionRepository;disabled:boolean;onDirty:(dirty:boolean)=>void;onApply:(input:ReadinessInput)=>Promise<void>}
 type Pending={key:string;input:ReadinessInput;field:ReviewField|null}
 const keyFor=(groupId:string)=>`task:readiness-${groupId}:facts`
-function inputValue(v:unknown):ReadinessInput|null {if(!v||typeof v!=='object')return null;const x=v as Partial<ReadinessInput>;return typeof x.groupId==='string'&&typeof x.expectedResult==='string'&&typeof x.operationId==='string'&&(x.choice==='no_extra_condition'||x.choice==='meets_stated_condition')?x as ReadinessInput:null}
+function inputValue(v:unknown):ReadinessInput|null {if(!v||typeof v!=='object')return null;const x=v as Partial<ReadinessInput>;return typeof x.groupId==='string'&&typeof x.expectedResult==='string'&&typeof x.operationId==='string'&&(x.choice==='no_extra_condition'||x.choice==='meets_stated_condition'||x.choice==='does_not_meet_condition')?x as ReadinessInput:null}
 
 /** One explicit user judgement per shared condition; no invented qualification. */
 export function SourceReadinessReview({workspace,draftId,session,disabled,onDirty,onApply}:Props){
@@ -33,7 +33,11 @@ export function SourceReadinessReview({workspace,draftId,session,disabled,onDirt
  return <section aria-label="本通知适用性"><h3>本通知适用性</h3><p>同一条件只判断一次，应用到下列事项。只记录你的明确判断；原始识别结果保留。</p>
   {groups.map(group=><article className="recognition-entity-row" key={group.id}><div><strong>{group.titles.join('、')}</strong>
    {group.ruleQuotes.length?<><p>{group.resolved?'原文适用条件（已记录你的判断）：':'原文适用条件；尚未判断你是否符合：'}</p>{group.ruleQuotes.map(q=><blockquote key={q}>{q}</blockquote>)}</>:<p>原答没有给出适用条件依据，不能据此认定你资格不足，也不能自动认定没有条件。</p>}
-   {group.resolved?<p>本组已按你的明确判断处理，不重复核对。</p>:group.unresolvedEvidence?<p>{group.blockedReason??'条件引用不完整，保留待核对；不会替你猜资格。'}</p>:<button type="button" disabled={disabled||busy||Boolean(pending)} onClick={()=>void apply({key:keyFor(group.id),field:null,input:{groupId:group.id,choice:group.ruleQuotes.length?'meets_stated_condition':'no_extra_condition',expectedResult:workspaceSnapshotHash(workspace.extractionDrafts.find(d=>d.id===draftId)!.result),operationId:crypto.randomUUID()}})}>{group.ruleQuotes.length?'我符合上述适用条件':'我已核对：本通知没有额外适用条件'}</button>}
+   {group.resolved&&<p>{group.value==='false'?'你已说明当前不适用，保留说明，不加入可执行待办。':'本组已按你的明确判断处理，不重复核对。'}</p>}
+   {group.hasConfirmedTask?<p>事项已确认。如实际情况变化，请到任务中心处理事项状态；不会重复创建。</p>:group.unresolvedEvidence?<p>{group.blockedReason??'条件引用不完整，保留待核对；不会替你猜资格。'}</p>:<>
+    <button type="button" disabled={disabled||busy||Boolean(pending)} onClick={()=>void apply({key:keyFor(group.id),field:null,input:{groupId:group.id,choice:group.ruleQuotes.length?'meets_stated_condition':'no_extra_condition',expectedResult:workspaceSnapshotHash(workspace.extractionDrafts.find(d=>d.id===draftId)!.result),operationId:crypto.randomUUID()}})}>{group.alternativeTaskIds?.length?'我已错过正常窗口，且尚未领取':group.ruleQuotes.length?'我符合上述适用条件':'我已核对：本通知没有额外适用条件'}</button>
+    {group.ruleQuotes.length>0&&<button type="button" disabled={disabled||busy||Boolean(pending)} onClick={()=>void apply({key:keyFor(group.id),field:null,input:{groupId:group.id,choice:'does_not_meet_condition',expectedResult:workspaceSnapshotHash(workspace.extractionDrafts.find(d=>d.id===draftId)!.result),operationId:crypto.randomUUID()}})}>本项目前不适用</button>}
+   </>}
   </div></article>)}
   {pending&&<div role="alert"><p>{pending.field?'未完成的适用判断检查点已保留。':'判断仍在本页，检查点未保存；请手动重试。'}</p>
    {pending.field?.conflict?(<>{(['latest','incoming'] as const).map(choice=><button type="button" key={choice} disabled={busy||disabled} onClick={()=>void session.resolve(workspace,draftId,pending.key,choice,session.writer,pending.field!.revision).then(r=>{const f=r.fields[pending.key],input=inputValue(f.mine);if(input)setPending({key:pending.key,input,field:f})}).catch(e=>setStatus(String(e)))}>采用{choice==='latest'?'最新判断':'我的判断'}</button>)}</>):<button type="button" disabled={busy||disabled} onClick={()=>void recover()}>恢复并保存适用判断</button>}

@@ -2,6 +2,7 @@ import type { RecognitionResult } from './types'
 import { taskTimeAuthorityFromSidecar } from './taskTimeAuthorityContract'
 import { sourceWindowsFromSidecar } from './sourceWindowGrounding'
 import { timePointDisplayLabel } from './recognitionModePresentation'
+import {existingHandlingWindows} from './handlingWindowSupport'
 
 export const SOURCE_WINDOW_PRESENTATION_VERSION = 'source-window-summary-1.0.0'
 export interface SourceWindowSummary {
@@ -95,6 +96,12 @@ export function summarizeSourceWindows(result: RecognitionResult, sidecar: unkno
 export function taskSourceTimeSummary(result: RecognitionResult, sidecar: unknown, source: {id: string; text: string}, taskId: string): string {
   const windows = summarizeSourceWindows(result, sidecar, source).filter(w => w.ownerTaskIds.includes(taskId))
   const used = new Set(windows.flatMap(w => w.pointIds))
+  const anchor=result.timePoints.find(p=>p.relatedTaskTempIds.includes(taskId)&&p.type==='event_start'&&p.normalizedValue&&!p.needsConfirmation)
+  const existing=anchor?.normalizedValue?existingHandlingWindows(result,source.text,anchor.normalizedValue.slice(0,10)+'T12:00:00+08:00',anchor.timezone??'Asia/Shanghai').rows.find(row=>row.taskId===taskId):undefined
+  if(existing&&!existing.pointIds.some(id=>used.has(id))){
+    existing.pointIds.forEach(id=>used.add(id))
+    windows.push({id:existing.pointIds[0],ownerTitle:'',ownerTaskIds:[taskId],rawText:existing.rawText,pointIds:[...existing.pointIds],summary:day(existing.start.slice(0,10))+'—'+day(existing.end.slice(0,10))+(existing.kind==='DATE_ONLY_PERIOD'?'（具体时刻未说明）':`，${existing.dayStart}—${existing.dayEnd}${existing.kind==='DAILY_CLOCKS'?'（每日）':'（开放日期待核对）'}`)})
+  }
   const times = result.timePoints.filter(p => p.relatedTaskTempIds.includes(taskId) && !used.has(p.tempId))
     .map(p => timePointDisplayLabel(p.type) + '：' + (p.normalizedValue && /^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2})?$/u.test(p.normalizedValue) && !p.needsConfirmation
       ? day(p.normalizedValue.slice(0,10)) + (p.normalizedValue.includes('T') ? ' ' + p.normalizedValue.slice(11) : '')

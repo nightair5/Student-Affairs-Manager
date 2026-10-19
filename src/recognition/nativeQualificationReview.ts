@@ -1,9 +1,13 @@
 import type {RecognitionResult} from './types'
+import {citedConditionalObligations} from './nativeConditionalObligation'
 
-export const NATIVE_QUALIFICATION_REVIEW_VERSION='native-cited-qualification-1.0.0' as const
+export const NATIVE_QUALIFICATION_REVIEW_VERSION='native-cited-qualification-1.1.0' as const
 export interface NativeQualificationReview {
- version:typeof NATIVE_QUALIFICATION_REVIEW_VERSION
- role:'PROGRAM_REVIEW_OF_EXISTING_MODEL_AMBIGUITY'
+ version:typeof NATIVE_QUALIFICATION_REVIEW_VERSION|'native-cited-qualification-1.0.0'
+ role:'PROGRAM_REVIEW_OF_EXISTING_MODEL_AMBIGUITY'|'PROGRAM_REVIEW_OF_CITED_CONDITIONAL_OBLIGATION'
+ conditionKind?:'alternative_window'|'conditional_obligation'
+ alternativeTaskId?:string
+ sourceConditionValue?:'true'|'false'|'unknown'
  taskId:string
  ambiguityId:string
  ruleEvidenceIds:string[]
@@ -32,8 +36,11 @@ export function nativeQualificationReviews(result:RecognitionResult,sourceText:s
    if(!rules.length)continue
    const contradicted=evidence.some(e=>/(?:你|本人|个人|我)/u.test(e.quote)&&qualification.test(e.quote)&&/(?:未通过|未被录取|未录取|未入选|不符合|不具备|不在名单)/u.test(e.quote)&&!unknown.test(e.quote))
    const qualificationReviewReasons=result.quality.reviewReasons.filter(r=>qualification.test(r)&&unknown.test(r)&&!/(?:材料|渠道|时间|截止|地点|冲突|依据|格式|版本|附件|关系|项目|前置|依赖|遗漏|不完整)/u.test(r))
-   rows.push({version:NATIVE_QUALIFICATION_REVIEW_VERSION,role:'PROGRAM_REVIEW_OF_EXISTING_MODEL_AMBIGUITY',taskId:task.tempId,ambiguityId:ambiguity.id,ambiguityMessage:ambiguity.message,ruleEvidenceIds:rules.map(e=>e.id),factEvidenceIds:facts.map(e=>e.id),ruleQuotes:rules.map(e=>e.quote),factQuotes:facts.map(e=>e.quote),required:rules.some(e=>/(?:须|必须|应当|需要|才需)/u.test(e.quote)),blockedReason:contradicted?'原文已说明个人未满足条件，不能用一次勾选覆盖；请保留待核对，或依据新事实纠正来源。':null,qualificationReviewReasons})
+   // Keep the legacy review snapshot byte-compatible so an already-attested
+   // qualification does not become unknown merely because this module grows.
+   rows.push({version:'native-cited-qualification-1.0.0',role:'PROGRAM_REVIEW_OF_EXISTING_MODEL_AMBIGUITY',taskId:task.tempId,ambiguityId:ambiguity.id,ambiguityMessage:ambiguity.message,ruleEvidenceIds:rules.map(e=>e.id),factEvidenceIds:facts.map(e=>e.id),ruleQuotes:rules.map(e=>e.quote),factQuotes:facts.map(e=>e.quote),required:rules.some(e=>/(?:须|必须|应当|需要|才需)/u.test(e.quote)),blockedReason:contradicted?'原文已说明个人未满足条件，不能用一次勾选覆盖；请保留待核对，或依据新事实纠正来源。':null,qualificationReviewReasons})
   }
  }
+ for(const row of citedConditionalObligations(result,sourceText))if(!rows.some(r=>r.taskId===row.taskId))rows.push({version:NATIVE_QUALIFICATION_REVIEW_VERSION,role:'PROGRAM_REVIEW_OF_CITED_CONDITIONAL_OBLIGATION',conditionKind:row.kind,sourceConditionValue:row.sourceConditionValue,...(row.alternativeTaskId?{alternativeTaskId:row.alternativeTaskId}:{}),taskId:row.taskId,ambiguityId:'program-cited-condition:'+row.taskId,ambiguityMessage:row.sourceConditionValue==='true'?'原文已明确本人满足该条件，保留其真实依据。':row.sourceConditionValue==='false'?'原文已明确本人不满足该条件；保留说明，不作为当前可执行事项。':'原文存在适用条件，尚未提供本人的当前状态；保留义务及依据，不假定已成立。',ruleEvidenceIds:row.ruleEvidenceIds,factEvidenceIds:row.factEvidenceIds,ruleQuotes:row.ruleQuotes,factQuotes:row.factQuotes,required:row.required,blockedReason:row.blockedReason,qualificationReviewReasons:[]})
  return rows
 }

@@ -6,9 +6,10 @@ import { workspaceSnapshotHash } from './migration'
 import type { CanonicalWorkspaceRepository } from './repository'
 import type { WorkspaceV8 } from './types'
 import {eventDisposition} from './eventDisposition'
-import {unresolvedSourceReadiness} from './sourceReadiness'
+import {unresolvedSourceReadiness,sourceReadinessProblem} from './sourceReadiness'
 import { taskTimeAuthorityFromSidecar } from '../../recognition/taskTimeAuthorityContract'
 import {hasLocalIsolationPending} from '../../../cloudflare/recognition-local-isolation.mjs'
+import {existingHandlingWindows,HANDLING_WINDOW_SUPPORT_VERSION} from '../../recognition/handlingWindowSupport'
 
 export const SOURCE_REVIEW_VERSION = 'source-review-d26-1'
 export const PENDING_SOURCE_READBACK = 'source-review:pending-readback'
@@ -78,6 +79,8 @@ export function buildSourceReviewPlan(workspace: WorkspaceV8, view: DraftView, i
   selection.rejectedTempIds = [...view.items.filter(i => i.status === '已拒绝').map(i => i.suggestion.id),...rejectedEvents]
   for (const id of selection.taskTempIds) {
     if(unresolvedSourceReadiness(workspace,draft.id,id))throw Error('适用状态尚未明确，请在本通知适用性中核对；不会假定资格或前置已完成。')
+    const applicability=sourceReadinessProblem(workspace,draft.id,id)
+    if(applicability)throw Error(applicability)
     const problem = sourceReviewProblem(draft.result, id,version.rawText??'')
     if (problem) throw Error(problem)
   }
@@ -133,6 +136,13 @@ export function buildSourceReviewPlan(workspace: WorkspaceV8, view: DraftView, i
       ownerTaskId:task.id,ownerTempId:String(ownerTempId),sourceId:source.id,sourceVersionId:version.id,draftId:draft.id,windows:mapped}}
   }
   const assembly=draft.legacyData?.firstSuggestionAssembly
+  const handling=assembly&&typeof assembly==='object'&&!Array.isArray(assembly)&&assembly.existingHandlingWindows&&typeof assembly.existingHandlingWindows==='object'&&!Array.isArray(assembly.existingHandlingWindows)?assembly.existingHandlingWindows:null
+  if(handling?.version===HANDLING_WINDOW_SUPPORT_VERSION&&Array.isArray(handling.rows))for(const task of plan.create.tasks){
+    const declared=handling.rows.find(row=>row&&typeof row==='object'&&!Array.isArray(row)&&row.taskId===task.legacyData?.recognitionTempId)
+    if(!declared||typeof declared!=='object'||Array.isArray(declared)||typeof declared.referenceTime!=='string'||typeof declared.timezone!=='string')continue
+    const row=existingHandlingWindows(draft.result,version.rawText??'',declared.referenceTime,declared.timezone).rows.find(r=>r.taskId===task.legacyData?.recognitionTempId)
+    if(row)task.legacyData={...task.legacyData,existingHandlingWindow:{version:HANDLING_WINDOW_SUPPORT_VERSION,draftId:draft.id,sourceVersionId:version.id,referenceTime:row.referenceTime,timezone:row.timezone,rowHash:workspaceSnapshotHash(row)}}
+  }
   const citedWindows=assembly&&typeof assembly==='object'&&!Array.isArray(assembly)&&assembly.citedSourceWindows&&typeof assembly.citedSourceWindows==='object'&&!Array.isArray(assembly.citedSourceWindows)?assembly.citedSourceWindows:null
   if(citedWindows&&['ordinary-cited-window-projection-1.0.0','ordinary-cited-window-projection-1.0.1'].includes(String(citedWindows.version))&&Array.isArray(citedWindows.decisions))for(const task of plan.create.tasks){
     const rows=citedWindows.decisions.filter(row=>row&&typeof row==='object'&&!Array.isArray(row)&&row.ownerTempId===task.legacyData?.recognitionTempId)

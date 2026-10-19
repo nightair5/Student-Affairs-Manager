@@ -5,7 +5,7 @@ import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sou
 import { verifyWorkflowChannelEvidence, type WorkflowMaterialSupport } from './workflowChannelSupport'
 import {citedDeliveryContexts,type CitedDeliveryContext} from './citedDeliveryContext'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.11.1'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.12.0'
 export const WORKFLOW_MATERIAL_CHANNEL_VERSION = 'material-declared-workflow-channel-1.0.0'
 export interface MaterialChannelDecision {
   materialId: string
@@ -66,6 +66,12 @@ function destinationRole(clause: string, object: string, channel: string, siblin
   // Only a closed object/destination or a separate post-submission action can follow.
   // An object suffix ("清单照片") or destination suffix never counts as the same role.
   const end = '(?:$|[、：:（(]|(?:并|且|后)(?:保留|保存|等待|查看|核对|确认))'
+  // A closed download-location parenthesis annotates where the same form is
+  // obtained. It does not replace the following explicit submission address.
+  // Other parenthetical conditions are never stripped or treated as permission.
+  const downloadNote='[（(][^（）()，。；]{1,80}(?:常用下载|表格下载|下载专区)[）)]'
+  const downloadMatch=new RegExp(`${action}${o}(${downloadNote})(?:至|到|给)${c}(?:办理)?$`,'u').exec(text)
+  const annotatedDelivery=downloadMatch&&!/仅限|只有|须|需审核|未通过|不得|禁止|取消|如果|若|例如/u.test(downloadMatch[1])?downloadMatch:null
   // A shared destination may follow a closed enumeration, as in an actual
   // exchange notice. Each member must be an already-declared material of this
   // same task; a substring, foreign object or open-ended list is not evidence.
@@ -86,7 +92,7 @@ function destinationRole(clause: string, object: string, channel: string, siblin
     new RegExp(`${o}(?:的)?(?:提交渠道|提交地址|接收邮箱|提交入口)(?:为|是|：|:)${c}${end}`, 'u'),
     new RegExp(`(?:通过|经由|在)${c}(?:完成|进行)${o}(?:登记|填报|注册)${end}`, 'u'),
     new RegExp(`(?:通过|经由|在)${c}(?:登记|填报|注册)${o}${end}`, 'u'),
-  ].map(pattern => pattern.exec(text)).find(match => match !== null) ?? listed ?? steppedRole
+  ].map(pattern => pattern.exec(text)).find(match => match !== null) ?? listed ?? steppedRole ?? annotatedDelivery
   if (!matched) return null
   // Literal object/destination names are values, not grammatical conditions (e.g. 若水).
   // Only an explicit separate receipt-printing note may be excluded. Other trailing

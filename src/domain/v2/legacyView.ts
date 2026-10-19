@@ -25,6 +25,8 @@ import { createIntegrationState } from '../../lib/workspace'
 import { workspaceSnapshotHash } from './migration'
 import type { JsonValue, LegacyData, WorkspaceV8 } from './types'
 import {sourceWindowDisplayLabel,sourceWindowLastEnd} from './sourceWindowDisplay'
+import {canonicalHandlingWindow} from './handlingWindow'
+import {handlingWindowLabel} from '../../recognition/handlingWindowSupport'
 
 // Provenance belongs to the in-memory projection, never to exported user data.
 // The copy is taken before callers edit the projection.
@@ -286,8 +288,9 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     const legacy = v7Record<LegacyTask>(item.legacyData)
     const sourceIds = sourceIdsForTask(item)
     const deadline = taskDeadline(workspace, item.id)
-    const windowLabel=sourceWindowDisplayLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)
-    const windowEnd=sourceWindowLastEnd(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)
+    const handling=canonicalHandlingWindow(workspace,item)?.row
+    const windowLabel=sourceWindowDisplayLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)??(handling?handlingWindowLabel(handling):undefined)
+    const windowEnd=sourceWindowLastEnd(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)??(handling?.kind!=='OPEN_DAYS_UNSTATED'?handling?.end:undefined)
     const hasSeparateDeadline=workspace.timePoints.some(point=>(point.taskId===item.id||point.relatedTaskIds.includes(item.id))&&!['event_start','event_end','planned_start'].includes(point.type))
     const personalPlan = workspace.timePoints.find((point) => point.type === 'planned_start' && point.relatedTaskIds.includes(item.id))
     const personalPlanData = personalPlan?.legacyData?.personalPlanD27

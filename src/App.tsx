@@ -1508,6 +1508,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       case 'calendar':
         return (
           <CalendarPage
+            preserveDateOnlyPrecision={Boolean(ordinaryCanonical)}
             personalPlanTimezone={ordinaryCanonical?.settings.defaultTimezone}
             personalPlans={!runtime && ordinaryCanonical ? storedPersonalPlans(ordinaryCanonical).filter(p => !['completed', 'cancelled'].includes(ordinaryCanonical.tasks.find(t => t.id === p.taskId)?.status ?? '')) : undefined}
             pendingDateTaskIds={runtime?.realInput?.pendingDateTaskIds&&isolatedSnapshot?runtime.realInput.pendingDateTaskIds(isolatedSnapshot):undefined}

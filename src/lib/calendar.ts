@@ -1,5 +1,5 @@
 import type { Event, Task } from '../types'
-import { DEFAULT_WORKSPACE_TIMEZONE } from './timeSemantics'
+import { DEFAULT_WORKSPACE_TIMEZONE,isDateOnly } from './timeSemantics'
 
 export interface MonthCell {
   date: Date
@@ -44,6 +44,7 @@ function workspacePart(parts: Intl.DateTimeFormatPart[], type: Intl.DateTimeForm
 }
 
 function workspaceTimeLabel(value: string): string {
+  if(isDateOnly(value))return '仅日期'
   const localMatch = value.match(/^\d{4}-\d{2}-\d{2}T(\d{2}):(\d{2})/)
   if (localMatch && !EXPLICIT_TIMEZONE_PATTERN.test(value)) {
     return `${localMatch[1]}:${localMatch[2]}`
@@ -166,7 +167,8 @@ export function summarizeCalendarDay(tasks: Task[], events: Event[]): DaySummary
   ].sort((a, b) => new Date(a.at).getTime() - new Date(b.at).getTime())
   const fallback = sorted.map((task) => ({ title: task.title, at: task.deadline }))
   const focus = activeItems.length ? activeItems : fallback
-  const timeLabel = workspaceTimeLabel(focus[0].at)
+  const timed=focus.filter(item=>!isDateOnly(item.at)),hasDateOnly=focus.some(item=>isDateOnly(item.at))
+  const timeLabel = timed.length?(hasDateOnly?'含仅日期事项；':'')+workspaceTimeLabel(timed[0].at):'仅日期'
   const riskCount = activeTasks.filter((task) => task.riskFlags.length > 0).length
     + events.filter((event) => event.needsConfirmation).length
   const active = activeItems.length

@@ -5,9 +5,10 @@ import {citedTaskDateRange} from '../../../cloudflare/cited-event-sequence.mjs'
 import {interpretTimeD26} from '../../lib/timeSemanticsD26'
 import {projectCitedClockRanges} from '../../../cloudflare/cited-clock-range.mjs'
 import {sourceReadinessValue,unresolvedSourceReadiness} from './sourceReadiness'
+import {canonicalHandlingWindow,canonicalHandlingEvent} from './handlingWindow'
 
 export const PLAN_VERSION = 'personal-plan-d27-1' as const
-export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.3.3' as const
+export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.4.0' as const
 export const PLAN_RECEIPT = 'personalPlanD27Receipt'
 export const PLAN_UNDO = 'personalPlanD27Undo'
 export type DurationOrigin = 'user' | 'recorded_estimate' | 'product_estimate'
@@ -102,6 +103,7 @@ function taskGaps(w: WorkspaceV8, t: Task): string[] {
   // Already-confirmed native drafts may predate the eligibility review guard.
   // Do not schedule them as unconditional work merely because they were saved.
   if(draft&&!condition){try{if(unresolvedSourceReadiness(w,draft.id,String(temp),true))codes.push('QUALIFICATION_UNKNOWN')}catch{codes.push('RELATION_NEEDS_REVIEW')}}
+  if(draft&&sourceReadinessValue(w,draft.id,String(temp))==='false')codes.push('NOT_APPLICABLE')
   if (condition?.value === 'false') codes.push('NOT_APPLICABLE')
   if (semantics && (semantics.status !== 'pending' || semantics.validity !== 'active' || semantics.polarity !== 'affirmative')) codes.push('NOT_CURRENT_ACTION')
   if (Array.isArray(sidecar?.representationGaps) && sidecar.representationGaps.map(record).some(g => Array.isArray(g?.entityIds) && g.entityIds.includes(temp) && ['revision', 'lifecycle', 'unresolved_scope'].includes(String(g.kind)))) codes.push('RELATION_NEEDS_REVIEW')
@@ -114,10 +116,10 @@ export function planBaseline(w: WorkspaceV8): string {
   const sourceIds = new Set(w.tasks.map(t => t.legacyData?.sourceId).filter(v => typeof v === 'string'))
   for (const id of relevantVersions) { const v = w.sourceVersions.find(v => v.id === id); if (v) sourceIds.add(v.sourceId) }
   return JSON.stringify({ workspaceId: w.workspace.id, timezone: w.settings.defaultTimezone, sourceWindowProgram: SOURCE_WINDOW_PLAN_VERSION,
-    tasks: sorted(w.tasks).map(t => ({ id: t.id, title: t.title, status: t.status, estimatedMinutes: t.estimatedMinutes, manualPriority: t.manualPriority, snoozedUntil: t.snoozedUntil, dependencyIds: [...t.dependencyIds].sort(), sourceId: t.legacyData?.sourceId ?? null, actionVerb:t.legacyData?.actionVerb??null, sourceWindowDeclarations:t.legacyData?.sourceWindowDeclarations??null, gaps: taskGaps(w, t) })),
+    tasks: sorted(w.tasks).map(t => ({ id: t.id, title: t.title, status: t.status, estimatedMinutes: t.estimatedMinutes, manualPriority: t.manualPriority, snoozedUntil: t.snoozedUntil, dependencyIds: [...t.dependencyIds].sort(), sourceId: t.legacyData?.sourceId ?? null, actionVerb:t.legacyData?.actionVerb??null, sourceWindowDeclarations:t.legacyData?.sourceWindowDeclarations??null, existingHandlingWindow:t.legacyData?.existingHandlingWindow??null, verifiedHandlingWindow:canonicalHandlingWindow(w,t),gaps: taskGaps(w, t) })),
     times: sorted(w.timePoints).map(p => ({ id: p.id, type: p.type, taskId: p.taskId, eventId: p.eventId, relatedTaskIds: [...p.relatedTaskIds].sort(), relatedMaterialIds:[...p.relatedMaterialIds].sort(), materialId:p.materialId, rawText:p.rawText, normalizedValue: p.normalizedValue, timezone: p.timezone, precision: p.precision, needsConfirmation: p.needsConfirmation, sourceTimeRole:p.legacyData?.sourceTimeRole??null, evidenceIds:p.legacyData?.evidenceIds??null, metadata: p.legacyData?.personalPlanD27 ?? null })),
     sourceWindowEvidence:sorted(w.evidenceRefs.filter(ref=>w.timePoints.some(p=>Array.isArray(p.legacyData?.evidenceIds)&&p.legacyData.evidenceIds.includes(ref.legacyData?.recognitionEvidenceId??null)))).map(ref=>({id:ref.id,sourceVersionId:ref.sourceVersionId,quotedText:ref.quotedText,textStart:ref.textStart,textEnd:ref.textEnd,recognitionEvidenceId:ref.legacyData?.recognitionEvidenceId??null})),
-    events: sorted(w.events).map(e => ({ id: e.id, startTimePointId: e.startTimePointId, endTimePointId: e.endTimePointId })),
+    events: sorted(w.events).map(e => ({ id: e.id, startTimePointId: e.startTimePointId, endTimePointId: e.endTimePointId,verifiedHandlingWindow:canonicalHandlingEvent(w,e) })),
     sourceVersions: sorted(w.sources.filter(s => sourceIds.has(s.id))).map(s => ({ id: s.id, current: s.currentVersionId, version: w.sourceVersions.find(v => v.id === s.currentVersionId) })),
     nativeWindowDrafts:sorted(w.extractionDrafts.filter(d=>w.recognitionRuns.some(r=>r.id===d.recognitionRunId&&w.sourceVersions.some(v=>v.id===r.sourceVersionId&&sourceIds.has(v.sourceId))))).map(d=>({id:d.id,acceptedEntityTempIds:[...d.acceptedEntityTempIds].sort(),result:d.result?{tasks:[...d.result.standaloneTasks,...d.result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(wp=>wp.tasks)])].map(t=>({tempId:t.tempId,timePointTempIds:t.timePointTempIds,evidenceIds:t.evidenceIds})),timePoints:d.result.timePoints.map(p=>({tempId:p.tempId,type:p.type,rawText:p.rawText,relatedTaskTempIds:p.relatedTaskTempIds,evidenceIds:p.evidenceIds})),evidence:d.result.evidence.map(e=>({id:e.id,quote:e.quote}))}:null})),
     courses: w.preferences.legacyData?.courseBlocks ?? [],
@@ -126,7 +128,7 @@ export function planBaseline(w: WorkspaceV8): string {
 const reasons: Record<string, string> = {
   FIXED_EVENT_ENDED:'关联的固定活动已结束；保留原时间，不改排到今天。',FIXED_EVENT_ALREADY_ON_CALENDAR:'按原文固定活动时间行动；已在日历显示，不另排个人开工时间。',FIXED_EVENT_NEEDS_REVIEW:'关联活动的时间尚未完整确定；保留原文，不改排到其他时刻。',
   SOURCE_ACTION_TIME_NEEDS_REVIEW:'原文指定办理时间尚未确定，保留原文，不改排到其他时刻。',SOURCE_ACTION_TIME_OUTSIDE_PLAN:'原文指定办理时刻不在可用范围内或存在冲突；保留指定时间。',
-  SOURCE_WINDOW_NEEDS_REVIEW:'原文办理窗口的起止尚未完整确定，先保留待定。', SOURCE_WINDOW_OUTSIDE_PLAN:'本次安排范围不在原文开放窗口内；保留待办，不改原文时间。',
+  SOURCE_WINDOW_NEEDS_REVIEW:'原文办理窗口的起止或开放日期尚未完整确定，先保留待定；不会猜晚上、休息日也开放。', SOURCE_WINDOW_OUTSIDE_PLAN:'本次安排范围不在原文开放窗口内；保留待办，不改原文时间。',
   COMPLETED: '已经完成，不重复安排。', CANCELLED: '已取消，不安排执行。', NOT_APPLICABLE: '资格不适用，不安排执行。', QUALIFICATION_UNKNOWN: '资格尚未确认，先保留待定。', NOT_CURRENT_ACTION: '不是当前有效行动。', RELATION_NEEDS_REVIEW: '修订或关联仍待核对。',
   DURATION_UNKNOWN: '耗时未知，且本次未采用估计。', DEPENDENCY_MISSING: '找不到前置事项，不能猜它已完成。', DEPENDENCY_CYCLE: '前置事项形成循环，无法确定执行顺序。', DEPENDENCY_UNSCHEDULED: '前置事项尚未排入，不能排在它之前。', OVERDUE: '原文截止已过，需明确改期决定。', CAPACITY: '可用时间不足，无法在窗口或截止前连续完成。', USER_LATER: '你选择以后再安排。', LEGACY_PLAN_UNBOUNDED: '已有个人计划缺少可靠时长，保留原计划，暂不移动。', INVALID_MANUAL_SLOT: '调整后与可用时间、固定占用、截止或前置安排冲突。', DEADLINE_CONFLICT: '存在相互矛盾或未核实的具体截止，先核对。', LOCK_CONFLICT: '锁定时间与当前固定活动、期限或前置发生冲突，保留锁定并提示。',
 }
@@ -180,6 +182,25 @@ function sourceWindowBounds(w:WorkspaceV8,t:Task,zone:string):SourceBounds {
   const points=w.timePoints.filter(p=>p.relatedTaskIds.includes(t.id)&&['window_start','window_end'].includes(String(p.legacyData?.sourceTimeRole)))
   const metadata=record(t.legacyData?.sourceWindowDeclarations)
   const invalid:SourceBounds={start:-Infinity,end:Infinity,intervals:[],invalid:true,present:true}
+  if(t.legacyData?.existingHandlingWindow!==undefined){
+    const proof=canonicalHandlingWindow(w,t)
+    if(!proof||proof.row.kind==='OPEN_DAYS_UNSTATED')return invalid
+    const row=proof.row,intervals:Interval[]=[]
+    const first=row.start.slice(0,10),last=row.end.slice(0,10)
+    if(row.kind==='DATE_ONLY_PERIOD'){
+      const a=parseBusinessDateTime(first+'T00:00',row.timezone)?.getTime(),b=parseBusinessDateTime(addDateOnlyDays(last,1)+'T00:00',row.timezone)?.getTime()
+      if(a===undefined||b===undefined||b<=a)return invalid
+      return {start:a,end:b,intervals:[{start:a,end:b}],invalid:false,present:true}
+    }
+    for(let i=0;i<62;i++){
+      const date=addDateOnlyDays(first,i);if(date>last)break
+      const a=parseBusinessDateTime(date+'T'+row.dayStart,row.timezone)?.getTime(),b=parseBusinessDateTime(date+'T'+row.dayEnd,row.timezone)?.getTime()
+      if(a===undefined||b===undefined||b<=a)return invalid
+      intervals.push({start:a,end:b})
+    }
+    if(!intervals.length||addDateOnlyDays(first,intervals.length-1)!==last)return invalid
+    return {start:intervals[0].start,end:intervals.at(-1)!.end,intervals,invalid:false,present:true}
+  }
   if(t.legacyData?.sourceWindowDeclarations!==undefined){
     const version=typeof metadata?.sourceVersionId==='string'?w.sourceVersions.find(v=>v.id===metadata.sourceVersionId):undefined
     const draft=typeof metadata?.draftId==='string'?w.extractionDrafts.find(d=>d.id===metadata.draftId):undefined
@@ -291,6 +312,9 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     }
   }
   for (const event of w.events) {
+    // Handling/learning opportunities are constraints, not fixed attendance.
+    // Require the full saved source/canonical proof before making this distinction.
+    if(canonicalHandlingEvent(w,event))continue
     const a = pointMs(w.timePoints.find(p => p.id === event.startTimePointId), zone), b = pointMs(w.timePoints.find(p => p.id === event.endTimePointId), zone)
     if (a !== undefined && b !== undefined && b > a) fixed.push({ start: a, end: b })
     else proposal.warnings.push(`“${event.title}”没有确定完整时段，保留原文；本次不能保证避开它。`)

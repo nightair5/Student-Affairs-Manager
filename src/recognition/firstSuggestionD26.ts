@@ -21,9 +21,13 @@ import {nativeQualificationReviews} from './nativeQualificationReview'
 import {projectCitedClockRanges,type CitedClockRangeDecision} from '../../cloudflare/cited-clock-range.mjs'
 import {projectCitedTimeLiterals,type CitedTimeLiteralAudit} from '../../cloudflare/cited-time-literal.mjs'
 import {resolveLiteralSourceSpan} from '../../cloudflare/recognition-literal-evidence.mjs'
+import {projectCitedTimeLayouts} from './citedLayoutSupport'
+import {citedCourseScope,courseTaskSupported,courseEventSupported,courseWindowQuotes} from './citedCourseScope'
+import {projectAlternativeObligations,supportedReceiptName} from './nativeConditionalObligation'
+import {existingHandlingWindows} from './handlingWindowSupport'
 import {isolateRecognitionItems,unanchoredAcademicWeek,LOCAL_ISOLATION_NOTE_PREFIX,LOCAL_ISOLATION_VERSION,type LocalIsolationAudit} from '../../cloudflare/recognition-local-isolation.mjs'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.28.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.29.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -32,6 +36,10 @@ export interface D26FirstSuggestionAudit {
   times: Array<{ entityId: string; before: TimeFields; after: TimeFields; interpretation: D26TimeInterpretation }>
   citedClockRanges?:CitedClockRangeDecision[]
   citedTimeLiterals?:CitedTimeLiteralAudit
+  citedTimeLayouts?:ReturnType<typeof projectCitedTimeLayouts>
+  citedCourseScope?:ReturnType<typeof citedCourseScope>
+  conditionalAlternatives?:ReturnType<typeof projectAlternativeObligations>
+  existingHandlingWindows?:ReturnType<typeof existingHandlingWindows>
   declaredSourceInformation?:ReturnType<typeof retainDeclaredSourceInformation>
   localIsolation?:LocalIsolationAudit
   retiredDeadlineContexts?:Array<{entityId:string;rule:'EXPLICIT_UNOWNED_RETIRED_CONTEXT_NOT_CURRENT_DEADLINE';evidenceIds:string[]}>
@@ -165,7 +173,10 @@ function time<T extends TimeFields & { tempId: string; rawText: string; type: Ti
   const clocks = /^(\d{1,2}):([0-5]\d)\s*[-—–]\s*(\d{1,2}):([0-5]\d)(?:同地(?:有)?[^\d。；\n]{1,20})?$/u.exec(point.rawText)
   const heading = /^\d{4}年\d{1,2}月\d{1,2}日(?:[（(](?:周|星期)[一二三四五六日天][）)])?\s*$/u.test(anchorContext)
   const validClocks = clocks && +clocks[1] <= 23 && +clocks[3] <= 23 && +clocks[3] * 60 + +clocks[4] > +clocks[1] * 60 + +clocks[2]
-  const literalRanges = ['event_start','event_end'].includes(point.type) ? unique(rangeQuotes).filter(q=>q.includes(point.rawText)).flatMap(q=>[...point.rawText.matchAll(/(?<!\d)((?:\d{4}年)?\d{1,2}月\d{1,2}日)\s*(\d{1,2}):([0-5]\d)\s*[-—–至到]\s*(\d{1,2}):([0-5]\d)(?!\d)/gu)].map(m=>({q,m}))) : []
+  // The single-day shorthand must not consume the final date of a multi-day
+  // window and overwrite its correct beginning. The range AST owns that case.
+  const compactTime=point.rawText.replace(/\s/gu,''),dateEnvelope=/(?:\d{4}年)?\d{1,2}月\d{1,2}日[-—–至到](?:\d{4}年)?(?:\d{1,2}月)?\d{1,2}日(?:每日|每天)?\d{1,2}:[0-5]\d[-—–至到]\d{1,2}:[0-5]\d/u.test(compactTime)&&[...compactTime.matchAll(/\d{1,2}:[0-5]\d/gu)].length===2
+  const literalRanges = ['event_start','event_end'].includes(point.type)&&!dateEnvelope ? unique(rangeQuotes).filter(q=>q.includes(point.rawText)).flatMap(q=>[...point.rawText.matchAll(/(?<!\d)((?:\d{4}年)?\d{1,2}月\d{1,2}日)\s*(\d{1,2}):([0-5]\d)\s*[-—–至到]\s*(\d{1,2}):([0-5]\d)(?!\d)/gu)].map(m=>({q,m}))) : []
   const closed = literalRanges.length===1 && +literalRanges[0].m[2]<24 && +literalRanges[0].m[4]<24
     && +literalRanges[0].m[4]*60+ +literalRanges[0].m[5]>+literalRanges[0].m[2]*60+ +literalRanges[0].m[3] ? literalRanges[0] : null
   if(literalRanges.length>0&&!closed){
@@ -334,6 +345,9 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   audit.activityRoles=groundActivityRoles(result,context.sourceText,'names')
   audit.declaredEventNameSupport=completeDeclaredEventNameSupport(result,context.sourceText)
   audit.citedOwnerSupport=completeCitedOwnerSupport(result,context.sourceText)
+  audit.citedTimeLayouts=projectCitedTimeLayouts(result,context.sourceText)
+  audit.citedCourseScope=citedCourseScope(result,context.sourceText)
+  audit.conditionalAlternatives=projectAlternativeObligations(result,context.sourceText)
   retainCitedMaterialQuantities(result,context.sourceText,audit)
   audit.citedSourceWindows=completeCitedSourceWindows(result,context.sourceText,context.referenceTime,context.timezone)
   const clockRanges=projectCitedClockRanges(result,context.sourceText,context.referenceTime,context.timezone)
@@ -386,17 +400,18 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     if (heading?.blocked) audit.unresolved.push({ entityId: point.tempId, reason: 'EVENT_DATE_HEADING_NOT_UNAMBIGUOUS' })
     const owners = result.events.filter(e => e.startTimePointTempId === point.tempId || e.endTimePointTempId === point.tempId)
     const window=audit.citedSourceWindows.decisions.find(w=>[w.startPointId,w.endPointId].includes(point.tempId))
-    const rangeQuotes = window?quote(window.evidenceIds):owners.length === 1 ? unique([...pointQuotes(point.tempId).filter(q => eventQuotes(owners[0].tempId).includes(q)),...(/^次日/u.test(point.rawText)?contiguousEventQuotes(eventQuotes(owners[0].tempId),context.sourceText):[])]) : []
+    const rangeQuotes = window?quote(window.evidenceIds):owners.length === 1 ? unique([...pointQuotes(point.tempId).filter(q => eventQuotes(owners[0].tempId).includes(q)),...(/^次日/u.test(point.rawText)?contiguousEventQuotes(eventQuotes(owners[0].tempId),context.sourceText):[])]) : owners.length===0?courseWindowQuotes(point.tempId,result,context.sourceText,audit.citedCourseScope):[]
     time(point, pointQuotes(point.tempId), context.referenceTime, context.timezone, audit, anchor?.date, anchor?.context, rangeQuotes,'startMinutes' in (anchor??{})?(anchor as {startMinutes?:number}).startMinutes:undefined,split??undefined)
   }
   const tasks: TaskSuggestionV2[] = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
   for (const task of tasks) {
     boundActionField(task,quote(task.evidenceIds),context.sourceText,audit)
-    const quotes = quote(task.evidenceIds),completion=supportedCourseCompletion(task,quotes,result.timePoints),attendance=supportedAttendanceAction(task.actionVerb,task.actionObject,quotes),grounded = completion||attendance||supportedAdjacent(task.actionVerb, quotes,context.sourceText) && (supportedAdjacent(task.actionObject, quotes,context.sourceText,true)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)||supportedEventDescriptor(task.actionObject,quotes))
+    const quotes = quote(task.evidenceIds),completion=supportedCourseCompletion(task,quotes,result.timePoints)||courseTaskSupported(task,audit.citedCourseScope),attendance=supportedAttendanceAction(task.actionVerb,task.actionObject,quotes),grounded = supportedReceiptName(task.tempId,result,context.sourceText,audit.conditionalAlternatives)||completion||attendance||supportedAdjacent(task.actionVerb, quotes,context.sourceText) && (supportedAdjacent(task.actionObject, quotes,context.sourceText,true)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)||supportedEventDescriptor(task.actionObject,quotes))
     if(attendance){audit.groundedNameEquivalences??=[];audit.groundedNameEquivalences.push({entityId:task.tempId,rule:'EXISTING_SAME_OBJECT_MANDATORY_ATTENDANCE',quotes})}
     if(completion)audit.actionFields.push({entityId:task.tempId,before:task.actionVerb,after:task.actionVerb,status:'EXISTING_COURSE_COMPLETION_SUPPORT',quotes})
     const original = { entityId: task.tempId, kind: 'task' as const, title: task.title, description: task.description }
-    Object.assign(task, prose(audit, original, grounded ? supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)?task.actionVerb:taskActionText(task.actionVerb, task.actionObject) : '待核对事项',
+    const alternative=audit.conditionalAlternatives.decisions.some(d=>d.taskId===task.tempId)
+    Object.assign(task, prose(audit, original, grounded ? (supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)?task.actionVerb:taskActionText(task.actionVerb, task.actionObject))+(alternative?'（错过正常窗口时）':'') : '待核对事项',
       grounded ? unique(quotes).join('\n') : '动作或对象缺少对应来源依据，请核对。'))
     if (!grounded) {
       task.selected = false; audit.unresolved.push({ entityId: task.tempId, reason: 'ACTION_OBJECT_SOURCE_SUPPORT_MISSING' })
@@ -406,7 +421,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     }
   }
   for (const event of result.events) {
-    const quotes = quote(event.evidenceIds),ownedTimes=result.timePoints.filter(p=>[event.startTimePointTempId,event.endTimePointTempId].includes(p.tempId)).map(p=>p.rawText),labelled=supportedLabelledEventName(event.title,quotes,context.sourceText,ownedTimes),grounded = supportedAdjacent(event.title, quotes, context.sourceText,true)||supportedEventDescriptor(event.title,quotes)||supportedEventOperation(event.title,quotes,context.sourceText,true)||Boolean(labelled)
+    const quotes = quote(event.evidenceIds),ownedTimes=result.timePoints.filter(p=>[event.startTimePointTempId,event.endTimePointTempId].includes(p.tempId)).map(p=>p.rawText),labelled=supportedLabelledEventName(event.title,quotes,context.sourceText,ownedTimes),grounded = supportedReceiptName(event.tempId,result,context.sourceText,audit.conditionalAlternatives)||courseEventSupported(event,audit.citedCourseScope)||supportedAdjacent(event.title, quotes, context.sourceText,true)||supportedEventDescriptor(event.title,quotes)||supportedEventOperation(event.title,quotes,context.sourceText,true)||Boolean(labelled)
     if(labelled){audit.groundedNameEquivalences??=[];audit.groundedNameEquivalences.push({entityId:event.tempId,rule:labelled,quotes})}
     const original = { entityId: event.tempId, kind: 'event' as const, title: event.title, description: event.description }
     Object.assign(event, prose(audit, original, grounded ? event.title : '待核对事件', grounded ? unique(quotes).join('\n') : '事件内容缺少对应来源依据，请核对。'))
@@ -430,6 +445,11 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   audit.nativePreconditionReview=nativePreconditionIssues(result,context.sourceText)
   for(const risk of audit.nativePreconditionReview){const id='native-precondition:'+risk.taskId;result.conflicts=result.conflicts.filter(c=>c.id!==id);result.conflicts.push({id,type:'other',message:risk.reason,entityTempIds:[risk.taskId],evidenceIds:risk.evidenceIds,requiresDecision:true});result.quality.needsHumanReview=true}
   audit.nativeQualificationReview=nativeQualificationReviews(result,context.sourceText)
+  for(const review of audit.nativeQualificationReview.filter(r=>r.role==='PROGRAM_REVIEW_OF_CITED_CONDITIONAL_OBLIGATION')){
+    const task=tasks.find(t=>t.tempId===review.taskId)
+    if(task&&review.sourceConditionValue!=='true')task.selected=false
+  }
+  audit.existingHandlingWindows=existingHandlingWindows(result,context.sourceText,context.referenceTime,context.timezone)
   return { result, audit }
 }
 
