@@ -64,7 +64,7 @@ async function safety() {
   nodeTests([['product-source-severity-audit','scripts/product-dev-severity-literal.node-test.mjs']])
   nodeTests([['historical-ci-policy','scripts/historical-ci-policy.node-test.mjs']])
   nodeTests([['current-safety-ci-policy','scripts/current-safety-ci.node-test.mjs']])
-  nodeTests([['product-generation-isolated-schema','cloudflare/recognition-product-contract-v1-7.node-test.mjs'],['product-generation-semantic-fields','cloudflare/recognition-product-contract-v1-10.node-test.mjs'],['integration-ci-trigger','scripts/ci-integration-trigger.node-test.mjs']])
+  nodeTests([['product-generation-isolated-schema','cloudflare/recognition-product-contract-v1-7.node-test.mjs'],['product-generation-semantic-fields','cloudflare/recognition-product-contract-v1-10.node-test.mjs'],['product-generation-controlled-metadata','cloudflare/recognition-product-contract-v1-11.node-test.mjs'],['integration-ci-trigger','scripts/ci-integration-trigger.node-test.mjs']])
   const groups=testFileGroups(process.cwd())
   // Frozen private-record cases are scheduled in historical(), not discarded.
   vitest('vitest-safety',groups.safety)

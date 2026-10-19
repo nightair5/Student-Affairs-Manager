@@ -808,7 +808,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   const selectedModel = extractionModel(env)
   const selectedPromptVersion = selectedModel === DEEPSEEK_MULTIMODAL_MODEL
     ? VISION_TEXT_EVALUATION_PROMPT_VERSION
-    : ['recognition-product-contract-1.2.0',PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0','recognition-product-contract-1.5.0','recognition-product-contract-1.6.0','recognition-product-contract-1.7.0','recognition-product-contract-1.8.0','recognition-product-contract-1.9.0','recognition-product-contract-1.10.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
+    : ['recognition-product-contract-1.2.0',PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0','recognition-product-contract-1.5.0','recognition-product-contract-1.6.0','recognition-product-contract-1.7.0','recognition-product-contract-1.8.0','recognition-product-contract-1.9.0','recognition-product-contract-1.10.0','recognition-product-contract-1.11.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
   // Segment offsets address the exact captured source, including leading and
   // trailing layout. Older request versions retain their original trim rule.
   const sourceContent = usesSourceSegments(selectedPromptVersion)?body.content:safeText(body.content,24_000)
