@@ -1,0 +1,373 @@
+{
+  "version": "product-dev-v5-real-short-1.0.0",
+  "createdAt": "2026-10-19T01:33:52.864Z",
+  "role": "Real short student notices; single-author provisional; NOT independent",
+  "seed": 202610196,
+  "sourceCount": 30,
+  "developmentCount": 20,
+  "reservedCount": 10,
+  "developmentIds": [
+    "REAL-SHORT-01",
+    "REAL-SHORT-03",
+    "REAL-SHORT-04",
+    "REAL-SHORT-07",
+    "REAL-SHORT-08",
+    "REAL-SHORT-11",
+    "REAL-SHORT-13",
+    "REAL-SHORT-14",
+    "REAL-SHORT-15",
+    "REAL-SHORT-16",
+    "REAL-SHORT-17",
+    "REAL-SHORT-18",
+    "REAL-SHORT-20",
+    "REAL-SHORT-21",
+    "REAL-SHORT-22",
+    "REAL-SHORT-23",
+    "REAL-SHORT-26",
+    "REAL-SHORT-27",
+    "REAL-SHORT-28",
+    "REAL-SHORT-29"
+  ],
+  "reservedIds": [
+    "REAL-SHORT-02",
+    "REAL-SHORT-05",
+    "REAL-SHORT-06",
+    "REAL-SHORT-09",
+    "REAL-SHORT-10",
+    "REAL-SHORT-12",
+    "REAL-SHORT-19",
+    "REAL-SHORT-24",
+    "REAL-SHORT-25",
+    "REAL-SHORT-30"
+  ],
+  "reserved": {
+    "name": "reserved-r6",
+    "seen": false,
+    "runPolicy": "One final model attempt; no tuning from the output"
+  },
+  "limits": [
+    "Official public pages, not authenticated student groups; oral style only where present in the actual source.",
+    "These are selected short excerpts; no claim to evaluate whole original long pages, posters, linked documents or private chat.",
+    "Single author model-assisted references; no independent adjudication or real-user evidence."
+  ],
+  "files": [
+    {
+      "path": "notifications.json",
+      "sha256": "67fb94654ffdf2448bfc17e8e74a646938d5865d738aaeea29481430e38f4566"
+    },
+    {
+      "path": "all-sources.json",
+      "sha256": "bdd233c5c54218f5ee89007c585d5703d1f8f306eb7a2f52e68cac5b27ac955f"
+    },
+    {
+      "path": "reserved-r6/notifications.json",
+      "sha256": "dd36400dd51df340cc774f23acc9c7fad7f4bad8072e9e9cb57fd1007935994c"
+    },
+    {
+      "path": "references-v6.json",
+      "sha256": "f3b3788b32068e85f599ff7ce65300b1412314976372a7b54d87783739d981e7"
+    }
+  ],
+  "sources": [
+    {
+      "id": "REAL-SHORT-01",
+      "scene": "讲座与可选后续",
+      "url": "https://cie.upc.edu.cn/info/1009/2296.htm",
+      "chars": 161,
+      "sourceSha256": "badb3bf3cae375f5ff8bf4d9d433e3e2a8be0c31d578da2d892742e57b771d8c",
+      "referenceSha256": "6495ddc6df33fc161b269920cbbff36fa7546c84117a1463acc590075569b8e8",
+      "publishedOrUpdateDate": "2024-12-12",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-02",
+      "scene": "课程学习与统计日期",
+      "url": "https://jwc.wust.edu.cn/info/1371/49022.htm",
+      "chars": 208,
+      "sourceSha256": "eb52793b0d97aec899569eb284fe9bd36ac185bcc46339b5b896199a884d6da4",
+      "referenceSha256": "262e16acad08500ceddbe9ef6cc9f56ed6124eb464e745d384e7e06a6f263ca8",
+      "publishedOrUpdateDate": "2026-02-24",
+      "group": "RESERVED_R6"
+    },
+    {
+      "id": "REAL-SHORT-03",
+      "scene": "两个独立讲座",
+      "url": "https://xsc.jlu.edu.cn/info/1048/5155.htm",
+      "chars": 91,
+      "sourceSha256": "b3f7ddbd2ac86dfea78e2fe2e9afe70d847403ca102698c5bedd80a8e28bd310",
+      "referenceSha256": "ca78ae85319eef837134d8e49a47e5b879dfefda69c0110968b9d1b34d910037",
+      "publishedOrUpdateDate": "2025-09-16",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-04",
+      "scene": "报名与条件取消",
+      "url": "https://design.sztu.edu.cn/info/1027/1053.htm",
+      "chars": 271,
+      "sourceSha256": "498e38b570d8c48ceed1b95c202f78ee20afb4fe3dfd14065302615cc927902b",
+      "referenceSha256": "a670be85f8038cbdc61a92532354e3ac784ebe874cb460557a00f9633ba18e99",
+      "publishedOrUpdateDate": "2025-03-21",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-05",
+      "scene": "纸质报名与暂定答辩",
+      "url": "https://me.seu.edu.cn/2025/0513/c1558a527665/pagem.htm",
+      "chars": 205,
+      "sourceSha256": "2e52097a176d8f097fb0d09225506f3b6e4c6e91aee5a7eede4e7d8bc4672fac",
+      "referenceSha256": "d20408820577a02fbea9dfe8d12977aec28dc94a08e1ea28b2bed2e62386addd",
+      "publishedOrUpdateDate": "2025-05-13",
+      "group": "RESERVED_R6"
+    },
+    {
+      "id": "REAL-SHORT-06",
+      "scene": "资格条件与注册章日期",
+      "url": "https://jwc.cpu.edu.cn/77/ff/c948a227327/page.htm",
+      "chars": 233,
+      "sourceSha256": "48129aec0f7f0ea0b0e01a347b26e5e051e3b905e127e0b6f1acb9945e9fdbb3",
+      "referenceSha256": "f4469da0cd12bcf357a943d6250ff8a24c55f69168ddf5fb2efc232d3a054da8",
+      "publishedOrUpdateDate": "2025-09-19",
+      "group": "RESERVED_R6"
+    },
+    {
+      "id": "REAL-SHORT-07",
+      "scene": "领取窗口与补领",
+      "url": "https://www.shupl.edu.cn/jwc/2025/0911/c2103a142176/page.htm",
+      "chars": 311,
+      "sourceSha256": "01cb4b1954c2ed0f7e42fdc21f00f5b8dd482cbae21cc7d203cded4102b151c2",
+      "referenceSha256": "6d26f69cccca0b4b105f27e589ee5218c06969e9adee121d36cd4cb54d72219d",
+      "publishedOrUpdateDate": "2025-09-11",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-08",
+      "scene": "证书代领材料",
+      "url": "https://bksy.ecnu.edu.cn/b9/32/c40503a702770/page.htm",
+      "chars": 158,
+      "sourceSha256": "f37936961b90441732e29883028cdfb9d4d39c9c96e7dcc313c74d03cd60cccf",
+      "referenceSha256": "274749c0b4e0fc7269ec27a34ba926a6ec144f9e722dc767edf0ac99d287a8ab",
+      "publishedOrUpdateDate": "2025-06-19",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-09",
+      "scene": "考试报名不同截止",
+      "url": "https://jw.nju.edu.cn/d7/6e/c26263a841582/page.htm",
+      "chars": 223,
+      "sourceSha256": "e2b03287423b5eb25a05f0563405c1c6b5181a8d1f6857c2cc8c6bbd1810bb88",
+      "referenceSha256": "c1ecec8aa6c9abbd34ae98b6f2608a0090308b966995cdb61018a80f65f9018b",
+      "publishedOrUpdateDate": "2026-08-21",
+      "group": "RESERVED_R6"
+    },
+    {
+      "id": "REAL-SHORT-10",
+      "scene": "讲座报名窗口",
+      "url": "https://jwch.fzu.edu.cn/info/1016/14085.htm",
+      "chars": 218,
+      "sourceSha256": "5278e342f248db1afedb5360063588af6b5e1fa0e9fb41b919ac3cca2807a8d5",
+      "referenceSha256": "01c8fa7251162e79042e0b9ec33999722b03db98961222455bda6e8c800831d7",
+      "publishedOrUpdateDate": "2025-05-28",
+      "group": "RESERVED_R6"
+    },
+    {
+      "id": "REAL-SHORT-11",
+      "scene": "笔记作品与组合材料",
+      "url": "https://ne.upc.edu.cn/2026/0608/c22256a494612/page.htm",
+      "chars": 157,
+      "sourceSha256": "f61738ef6e3e459417d786eea85fe4ba4540825d0ac0ad60207b2dc4d2c7bf5f",
+      "referenceSha256": "ee27486589e2ee7e0f4a96366cd304bbfd922485e33414dcfaaba2c6974bb294",
+      "publishedOrUpdateDate": "2026-06-09",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-12",
+      "scene": "征集要求和邮件渠道",
+      "url": "https://cos.neu.edu.cn/2026/0903/c11033a463166/page.htm",
+      "chars": 257,
+      "sourceSha256": "b9d66d0b6c74bc0c7bd03e28542edf1f73a53f6354569773067cd9516aadc64e",
+      "referenceSha256": "3a35a75a03269492cbc0a70215f8d52a60c34729b18330810b1409dd858f224d",
+      "publishedOrUpdateDate": "2026-09-03",
+      "group": "RESERVED_R6"
+    },
+    {
+      "id": "REAL-SHORT-13",
+      "scene": "纯信息暂停与恢复",
+      "url": "https://tsg.wust.edu.cn/info/1201/9822.htm",
+      "chars": 270,
+      "sourceSha256": "add69eab8c5541c28b95ac3e42805dac0903e09f1802cc457cb561e48c75e366",
+      "referenceSha256": "b3f3bc74d975acfbdb97ac11bc01b067e5415f9b713b37c272023e91ace1e6ab",
+      "publishedOrUpdateDate": "2025-12-01",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-14",
+      "scene": "素材提交和组成",
+      "url": "https://jwc.bucea.edu.cn/tzgg/292938247dda4b78a0936dd2858dd34f.htm",
+      "chars": 99,
+      "sourceSha256": "0aa00f7809ce1982ade2e5b6d2319d475a5b0ea0111096bb9949675e1d653772",
+      "referenceSha256": "c8a083c2ec0b72ecff3f73b38daed8441ac77f4f6da781c7b21c015ebad290da",
+      "publishedOrUpdateDate": "2026-06-23",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-15",
+      "scene": "口语报名与未知选拔时间",
+      "url": "https://cxcy.tyut.edu.cn/info/1030/6193.htm",
+      "chars": 117,
+      "sourceSha256": "54c4fb043c60313bfaea53eb0e3231e39dffd5965ea4aab00f408eeb59c94b12",
+      "referenceSha256": "85587abeb4e046a9e33801220b7677431831b71ded9cb6c47f421ea5449595e0",
+      "publishedOrUpdateDate": "2025-06-11",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-16",
+      "scene": "条件退费独立截止",
+      "url": "https://infadm.shisu.edu.cn/_s107/0d/6d/c6667a200045/page.psp",
+      "chars": 194,
+      "sourceSha256": "f85ac8082fe59bc9ac82ed4ea7cd4fa1f62791f9f18da861820404e7d81c1e5d",
+      "referenceSha256": "1440ce5528320068def8d51a3b27c3af1ae87e548c64f9bdd0e43a713f03cd39",
+      "publishedOrUpdateDate": "2025-09-17",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-17",
+      "scene": "报名意愿与条件退出",
+      "url": "https://www.coe.pku.edu.cn/undergraduates/notice/13368.html",
+      "chars": 94,
+      "sourceSha256": "f958c7258f6578fff65c8d4305887dbdf10c258a93a02a9dacc0c782fa76dfa2",
+      "referenceSha256": "88f244861acf9305d2bdb6dd4aa3984dd56f60b40a4a1d63d5b1488f36bc3402",
+      "publishedOrUpdateDate": "2025-02-17",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-18",
+      "scene": "固定训练与可选观摩",
+      "url": "https://www.sdjzu.edu.cn/tyjxb/info/1057/1761.htm",
+      "chars": 144,
+      "sourceSha256": "768c4a818b263c32d031ddf79bc31776f97f6002ea7668f8296dde72847c9ab5",
+      "referenceSha256": "b2b305a8c1d3764111ede37c8d85a4f52fa047edff4e194b2afcaf04774da069",
+      "publishedOrUpdateDate": "2025-09-25",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-19",
+      "scene": "入学指导与可申请例外",
+      "url": "https://www.jiaoliu.ecnu.edu.cn/e7/1e/c11184a714526/page.htm",
+      "chars": 131,
+      "sourceSha256": "5165e290ae235a19e6a6f0d209692eb7a5009ad37145d214bab14c2db4f71b6a",
+      "referenceSha256": "8836a4e8425432d6ac25fd776045f99fca4fa76cf41a6fbe8970d99dd8b983ba",
+      "publishedOrUpdateDate": "2025-09-03",
+      "group": "RESERVED_R6"
+    },
+    {
+      "id": "REAL-SHORT-20",
+      "scene": "暂定检查与可选报名",
+      "url": "https://radio.seu.edu.cn/2026/0311/c19216a557795/page.htm",
+      "chars": 271,
+      "sourceSha256": "cd17e3c58a72217b1060721a698cd8f6ccd2d4f6a9a8e85a954a6470c476b365",
+      "referenceSha256": "e96ba070d2ffa02aa613d15ebf387301456258638cd4eb7919f65f647274e5e9",
+      "publishedOrUpdateDate": "2026-03-11",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-21",
+      "scene": "投稿截止与条件另投",
+      "url": "https://cxcyjyxy.jlu.edu.cn/info/1060/2331.htm",
+      "chars": 244,
+      "sourceSha256": "391abfb211cd3af3d1c99453438ea234117c709d51b5e850f670e8827ff895d3",
+      "referenceSha256": "ee06c176e9da78aa096ce78412d299684b8e91df2bc8658194377648ac88463c",
+      "publishedOrUpdateDate": "2026-01-06",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-22",
+      "scene": "两门课程学习考试窗口",
+      "url": "https://jwc.seu.edu.cn/2026/0228/c67907a556257/page.htm",
+      "chars": 131,
+      "sourceSha256": "1890775cc486a128b847e073e8aa5e0fd3ee36ff80c3799a17630f560a76ffeb",
+      "referenceSha256": "cf87d45beb1e4854b0955a30fe9e9f213a32f1259803a9ea60e8daa8ba9d3c2e",
+      "publishedOrUpdateDate": "2026-02-28",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-23",
+      "scene": "开课提醒与老师角色",
+      "url": "https://jwc.seu.edu.cn/2026/0227/c67907a556157/page.htm",
+      "chars": 280,
+      "sourceSha256": "d2a7448ad11a56b8ea1d9484d8c9e41af81762bdf851a5750a6b2812362451e3",
+      "referenceSha256": "789a8f2ebc0107c89bd7c584fa161eace0b7311fe438682cfd1ddc3aac876ebf",
+      "publishedOrUpdateDate": "2026-02-27",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-24",
+      "scene": "报名延期覆盖旧截止",
+      "url": "https://jwc.seu.edu.cn/2026/0115/c67907a552734/page.htm",
+      "chars": 34,
+      "sourceSha256": "f1b334f4d3bc50775556b2100dc1b96bacc8ba95e508d9056abc9d7fb3922285",
+      "referenceSha256": "9bcc00185e83a6dacb76e451882069818900e5380ae402c8bfd85479d6418430",
+      "publishedOrUpdateDate": "2026-01-15",
+      "group": "RESERVED_R6"
+    },
+    {
+      "id": "REAL-SHORT-25",
+      "scene": "清理截止与局部关闭",
+      "url": "https://lib.lsu.edu.cn/_t131/2025/0911/c782a358038/pagem.psp",
+      "chars": 216,
+      "sourceSha256": "2cdaf7029aa96008b26a7df8a00b31477a27261393df91865bf96485147b42f1",
+      "referenceSha256": "638de8d2a52fff1652febbce517a0a37469de25a9e2ee196534ad262279be7ac",
+      "publishedOrUpdateDate": "2025-09-11",
+      "group": "RESERVED_R6"
+    },
+    {
+      "id": "REAL-SHORT-26",
+      "scene": "多日停电纯信息",
+      "url": "https://lib.uibe.edu.cn/xwgg/5c385dea78a543f5ac96178591b13922.htm",
+      "chars": 140,
+      "sourceSha256": "b030fe2c62a9674afceefcbbed40edea78545dd4fbfa10eab85400b36dddcb7c",
+      "referenceSha256": "ba1111f2fd921674c2fdde090039bf99fd009d1710e347b706b9b29d697397f1",
+      "publishedOrUpdateDate": "2025-05-23",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-27",
+      "scene": "预计恢复纯信息",
+      "url": "https://lib.shmtu.edu.cn/about/news/2722.htm",
+      "chars": 129,
+      "sourceSha256": "27475bb1fb20276aa6d8bf690a59308cc91d1ceb4f8081b9fb5c06995ff0e435",
+      "referenceSha256": "1a303a0a62e77f0161cfea496bcea67dfb1f43babbaaa5792902111b30ffb5a4",
+      "publishedOrUpdateDate": "2025-07-15",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-28",
+      "scene": "取消且未读取海报",
+      "url": "https://jwc.seu.edu.cn/2026/0323/c21681a559053/page.htm",
+      "chars": 25,
+      "sourceSha256": "5bda9176ea737cc763a7d62e2f9c8ad2ff89eb5bbb9811673c98802502b79609",
+      "referenceSha256": "a9563dd2cc6514a9e49dea8f8b161953255a3150f09bced60e718dc5f290e408",
+      "publishedOrUpdateDate": "2026-03-24",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-29",
+      "scene": "考试延期到模糊月底",
+      "url": "https://yjs.usc.edu.cn/info/1312/12577.htm",
+      "chars": 145,
+      "sourceSha256": "25e27c627f07cba4f6821f2bea2dbaff39c48e8737c966ec5e55d76bcb087fd1",
+      "referenceSha256": "5f150a2e5f2c368fdafaf116e743940e5cf4e130491b80204a249829cb973125",
+      "publishedOrUpdateDate": "2025-04-16",
+      "group": "DEVELOPMENT"
+    },
+    {
+      "id": "REAL-SHORT-30",
+      "scene": "口语请假与24点截止",
+      "url": "https://chem.nankai.edu.cn/2025/1209/c24093a586336/page.htm",
+      "chars": 189,
+      "sourceSha256": "d60b17a29a3c0a98186ba1bb2dba67a963a52e8ba7b51d1cafb1bc3c73eef75e",
+      "referenceSha256": "c5ee846ef26165e0b4287703f595be80b844cd0a09b67da57633b8b6f6648af3",
+      "publishedOrUpdateDate": "2025-12-09",
+      "group": "RESERVED_R6"
+    }
+  ]
+}

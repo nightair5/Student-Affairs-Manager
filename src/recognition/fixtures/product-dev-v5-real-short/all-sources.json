@@ -1,0 +1,1812 @@
+[
+  {
+    "id": "REAL-SHORT-01",
+    "scene": "讲座与可选后续",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "安东石油明天下午宣讲会，也有留学生招聘需求，具体情况到会场进行咨询。\n【安东石油宣讲座谈会】\n1.时间：2024年12月13日14：30-16：30\n2.地点：就业报告厅\n3.招聘对象：2025年12月31日前毕业的本科生、硕士生、博士生\n4.活动流程：宣讲会结束后有意向的同学可继续参加安东石油企业座谈会，现场确定意向；",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "宣讲",
+          "start": "2024-12-13T14:30",
+          "end": "2024-12-13T16:30",
+          "location": "就业报告厅"
+        },
+        {
+          "object": "座谈会",
+          "startUnknown": true,
+          "endUnknown": true
+        }
+      ],
+      "information": [
+        "2025年12月31日"
+      ]
+    },
+    "referenceTime": "2024-12-12T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://cie.upc.edu.cn/info/1009/2296.htm",
+      "acquiredAt": "2026-10-19T01:24:20.167080+00:00",
+      "publishedOrExplicitUpdateDate": "2024-12-12",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "0a3112161c97d92b9d2200b3dbbae6010fa07f612299e550a192c92975aec7cf",
+      "acquisitionReceiptSha256": "7f82a68d52eafdfd9cd443d1e67b62d40d006618330a9a9da9833242c28c57a0",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 317,
+          "end": 478,
+          "sourceSpanSha256": "badb3bf3cae375f5ff8bf4d9d433e3e2a8be0c31d578da2d892742e57b771d8c"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.849Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C01"
+  },
+  {
+    "id": "REAL-SHORT-02",
+    "scene": "课程学习与统计日期",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "各位同学：\n2026年寒假大部分线上课程即将进入考试阶段，但还有部分同学没有在相应平台进行登录认证及学习，现将学习进度通知如下：\n1\n、各平台未认证及未学习学生名单见附件。（名单包括未认证登录及登录后还未开始学习的学生。附件统计截止时间为2026年2月23日）\n2、选择了爱课程（中国大学MOOC）平台的同学请注意，\n平台认证码是[公开平台代码]\n，认证登录后在学校专属课程内选择spoc课程进行学习，才能认证成绩。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "平台",
+          "verbs": [
+            "登录",
+            "认证"
+          ],
+          "deadlineUnknown": true
+        },
+        {
+          "object": "spoc课程",
+          "verbs": [
+            "学习",
+            "选择"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-02-24T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.wust.edu.cn/info/1371/49022.htm",
+      "acquiredAt": "2026-10-19T01:24:21.471791+00:00",
+      "publishedOrExplicitUpdateDate": "2026-02-24",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "a9a9a424bad57206e2f803628e416bf96be4e538e8dc2d0cb17447ac4e12a0c7",
+      "acquisitionReceiptSha256": "42e6ba85ac5d6838393a762917e2bc8b9db391ff55a2825fdfef8d92097a1c99",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_PERSON_ROOM_OR_CODE",
+          "originalSha256": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
+          "replacement": "[公开平台代码]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 532,
+          "end": 738,
+          "sourceSpanSha256": "dba6b6d97021edcfe397c7911a4f447fb7612e1e3216cb51d5694419ba551b78"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.850Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C02"
+  },
+  {
+    "id": "REAL-SHORT-03",
+    "scene": "两个独立讲座",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "一、讲座时间及地点\n中心校区：\n9\n月\n21\n日星期日\n下午\n1:00-3:00\n美、加留学  [地点1]\n9\n月\n28\n日星期日\n下午\n1:00-3:00\n英、澳留学  [地点1]",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "美、加留学",
+          "start": "2025-09-21T13:00",
+          "end": "2025-09-21T15:00",
+          "location": "[地点1]"
+        },
+        {
+          "object": "英、澳留学",
+          "start": "2025-09-28T13:00",
+          "end": "2025-09-28T15:00",
+          "location": "[地点1]"
+        }
+      ]
+    },
+    "referenceTime": "2025-09-16T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://xsc.jlu.edu.cn/info/1048/5155.htm",
+      "acquiredAt": "2026-10-19T01:24:25.775865+00:00",
+      "publishedOrExplicitUpdateDate": "2025-09-16",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "a55709cf10d009a0434e843b8d5751589e7c96f8e74e614c6e1592357c3a3e3d",
+      "acquisitionReceiptSha256": "1bc404c0e18eeb74edd0f9494c9f0a75802e2b38645c3ccdc86914592c74c6e5",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_PERSON_ROOM_OR_CODE",
+          "originalSha256": "811b7bd679d598a2347b234e126e5389f49117248ae5f295140c82c0be6fd90b",
+          "replacement": "[地点1]"
+        },
+        {
+          "kind": "PUBLIC_PERSON_ROOM_OR_CODE",
+          "originalSha256": "811b7bd679d598a2347b234e126e5389f49117248ae5f295140c82c0be6fd90b",
+          "replacement": "[地点1]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 325,
+          "end": 428,
+          "sourceSpanSha256": "37cb0c6f035ce4d91f618002d851526430c573ada9a49d427b13bbea74e26781"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.851Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C03"
+  },
+  {
+    "id": "REAL-SHORT-04",
+    "scene": "报名与条件取消",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "第一讲拟邀请\n香港中文大学（深圳）图书馆馆长、\n复旦大学文科特聘资深教授\n[主讲人]\n，开展\n“信息与人类文明”\n的主题讲座，现通知如下：\n一、\n时间：\n2025年3月25日（周二）15:00\n二、\n地点：\n[地点1]\n三、参加人员：\n（一）校领导；\n（二）各基层党组织主要负责同志；\n（三）马克思主义学院（人文社科学院）全体教师；\n（四）各学院辅导员；\n（五）感兴趣的师生。\n感兴趣的师生\n，\n请扫描以下二维码报名\n提示：\n若报名后因特殊情况无法参加，请\n再次扫码点击\n“\n取消报名\n”。\n讲座结束后，学生按指引签到，可获得第二课堂学分\n。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "讲座",
+          "verbs": [
+            "报名",
+            "扫描",
+            "扫码"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "信息与人类文明",
+          "start": "2025-03-25T15:00",
+          "endUnknown": true,
+          "location": "[地点1]"
+        }
+      ],
+      "criteria": [
+        "签到"
+      ]
+    },
+    "referenceTime": "2025-03-21T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://design.sztu.edu.cn/info/1027/1053.htm",
+      "acquiredAt": "2026-10-19T01:24:27.172604+00:00",
+      "publishedOrExplicitUpdateDate": "2025-03-21",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "3711e90aa4fb0eab92a848504a0038cde734a2bee43da8d1f01062eafde9dd69",
+      "acquisitionReceiptSha256": "a5ca5d62d1279d7e2d125338b7b31dcbfdda87ee349b0382507ce6f30db050e8",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_PERSON_ROOM_OR_CODE",
+          "originalSha256": "82d3c395d5eb51f094e29c8baf61ae999e64d3f2475cc5112dc70f30a62242e7",
+          "replacement": "[地点1]"
+        },
+        {
+          "kind": "PUBLIC_PERSON_ROOM_OR_CODE",
+          "originalSha256": "189b08bf888a2a3e7b833697642b3eff044ea2361a7197b7e41b205b1ae24232",
+          "replacement": "[主讲人]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 951,
+          "end": 1232,
+          "sourceSpanSha256": "4192bc281bb81524dad60258e81ba0c20ad858a35b8093cce45840870d8d8ae9"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.851Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C04"
+  },
+  {
+    "id": "REAL-SHORT-05",
+    "scene": "纸质报名与暂定答辩",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "请有意申请参加本次答辩所有项目及研学作品于 5月22日（周四）17：00前提交《东南大学SRTP项目结题验收表》到[地点1]进行报名。\n  \n\n2.结题形式\n本次结题验收将组织现场答辩，每个项目准备5分钟PPT介绍，有条件提供视频的请提供视频资料；\n项目成员须全部参加答辩，如有成员不能到场，请同组同学将请假条携带至答辩现场。\n  \n\n3.时间地点\n预计将于5月28日在纪忠楼组织答辩，具体安排以届时通知为准。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "结题验收表",
+          "verbs": [
+            "提交",
+            "报名"
+          ],
+          "deadline": "2025-05-22T17:00",
+          "precision": "exact",
+          "channel": "[地点1]"
+        }
+      ],
+      "events": [
+        {
+          "object": "答辩",
+          "start": "2025-05-28",
+          "endUnknown": true
+        }
+      ],
+      "criteria": [
+        "5分钟",
+        "PPT",
+        "请假条"
+      ]
+    },
+    "referenceTime": "2025-05-13T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://me.seu.edu.cn/2025/0513/c1558a527665/pagem.htm",
+      "acquiredAt": "2026-10-19T01:24:51.844992+00:00",
+      "publishedOrExplicitUpdateDate": "2025-05-13",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "67597d7234f8ce94da5457f678e1ced71680243aaad7487e67e52896946d2664",
+      "acquisitionReceiptSha256": "33d230f176e1a41059159ebb8a11a18ed38c582e0b9b5aa51e39e86e538c9569",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_PERSON_ROOM_OR_CODE",
+          "originalSha256": "c62fee9177d853647d94f32c391b11b57c5fd2000920b7b556676f410a18a7c5",
+          "replacement": "[地点1]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 3471,
+          "end": 3677,
+          "sourceSpanSha256": "f0cd2724b33fb26245312b48ea8d35bdf53810dd7cbfeaaa320c961ba0825803"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.852Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C05"
+  },
+  {
+    "id": "REAL-SHORT-06",
+    "scene": "资格条件与注册章日期",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "一、注册时间：\n注册章的时间统一调定为\n“2025年9月22日”， 注册章的时间不得随意调整。\n二、注册办法：\n注册章由院部统一管理\n,具体注册方式各学院自行安排。\n三、注册要求：\n1.根据\n《中国药科大学本科学生学籍管理规定（\n2025年修订）药大教〔2025〕121号\n》，未缴纳学费的学生不予注册；本学年已\n申请助学贷款的学生正常注册，\n未缴费的学生不得私自注册，否则后果自负！\n2.请各院部严格把关，注册章由院部统一管理，不得单独交与学生或由学生自行保管 。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "注册",
+          "verbs": [
+            "办理",
+            "注册",
+            "完成"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "助学贷款",
+        "2025年9月22日"
+      ]
+    },
+    "referenceTime": "2025-09-19T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.cpu.edu.cn/77/ff/c948a227327/page.htm",
+      "acquiredAt": "2026-10-19T01:24:53.136200+00:00",
+      "publishedOrExplicitUpdateDate": "2025-09-19",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "c2ef80ad629beabd06e1469c340eecf358d08b603c828d54fee92e2b035e889a",
+      "acquisitionReceiptSha256": "d20583ec422c29fddc5128122cd67e15a50973d83198068b663f34b752954aec",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 641,
+          "end": 874,
+          "sourceSpanSha256": "48129aec0f7f0ea0b0e01a347b26e5e051e3b905e127e0b6f1acb9945e9fdbb3"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.852Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C06"
+  },
+  {
+    "id": "REAL-SHORT-07",
+    "scene": "领取窗口与补领",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "各位同学：\n2025\n秋季学期\n大二\n、大三、大四\n教材将于\n9\n月\n13\n日\n-9\n月\n14\n日上午\n9\n点\n-\n下午\n16\n点在[地点1]领取预定教材。\n注意事项：\n上海新华传媒有限公司会提前发送短信告知各位同学领取教材的具体地点，教材领取地点以短信通知为准，请各位同学注意查看短信抓紧领取。\n2.\n教材领取采用报领书编号或者\n校园卡刷卡\n的形式\n未到校同学可委托其他同学代领，需把领书编号、姓名告知我工作人   员即可。\n3.\n同学们请尽量在规定的时间内前往指定地点领取教材，避免人群拥堵。如果\n错过\n以上\n领书时间\n。\n可转至于\n9\n月\n15\n日\n-\n9\n月\n22\n日\n9:00-15:30\n在[地点2]前来领取。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "教材",
+          "verbs": [
+            "领取",
+            "领"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [],
+      "window": "2025-09-13/2025-09-14/2025-09-15/2025-09-22",
+      "criteria": [
+        "领书编号",
+        "校园卡"
+      ]
+    },
+    "referenceTime": "2025-09-11T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.shupl.edu.cn/jwc/2025/0911/c2103a142176/page.htm",
+      "acquiredAt": "2026-10-19T01:24:54.260516+00:00",
+      "publishedOrExplicitUpdateDate": "2025-09-11",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "799a4bbcb2266c57b4fce33ee3957879db5fec29f8fb98d398e96c2460996144",
+      "acquisitionReceiptSha256": "a51a79c5f45a4394f5fba91034a5ff3ad686ff229951892d54acd7c55bce89fa",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_PERSON_ROOM_OR_CODE",
+          "originalSha256": "e51af23ac6119ed50d3eba35a6d017950f1a806164d9aeded9b464ab45dbe6ff",
+          "replacement": "[地点1]"
+        },
+        {
+          "kind": "PUBLIC_PERSON_ROOM_OR_CODE",
+          "originalSha256": "0f28ce7d71e07ac7a3b05300338fa63a924c535bd858ed81f4f3f6b3756a7e63",
+          "replacement": "[地点2]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 209,
+          "end": 534,
+          "sourceSpanSha256": "504b90c2f7fcb3d8e6ca90466b2e1b7e1629cab95eeb13e3d2027e63ebd6bd44"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.853Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C07"
+  },
+  {
+    "id": "REAL-SHORT-08",
+    "scene": "证书代领材料",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "二、领证需\n携带的材料\n：\n1.\n本人领取\n①\n有效身份证件原件（身份证或户口本或护照）\n②\n主修学校毕业证书原件\n2.\n证书\n代领\n（缺一不可）\n①\n学生有效\n身份证件原件\n（身份证或户口本或护照）\n②\n代领人有效身份证件原件（身份证或户口本或护照）\n③\n委托书（委托书模板见附件\n2\n）\n④\n主修学校毕业证书原件",
+    "reference": {
+      "tasks": [
+        {
+          "object": "证书",
+          "verbs": [
+            "领取",
+            "代领",
+            "领证"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [],
+      "materials": [
+        "身份证件",
+        "毕业证书",
+        "委托书"
+      ]
+    },
+    "referenceTime": "2025-06-19T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://bksy.ecnu.edu.cn/b9/32/c40503a702770/page.htm",
+      "acquiredAt": "2026-10-19T01:24:55.320703+00:00",
+      "publishedOrExplicitUpdateDate": "2025-06-19",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "d299006f64cb06ac470a30aaf22368a25722de38bd8ecd77efc594a9a5d26cd4",
+      "acquisitionReceiptSha256": "9f0a624d648d65a85c1c3e4b69df569d0d5bc9ad1cce1ba4e26fa99fe49aced4",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 524,
+          "end": 682,
+          "sourceSpanSha256": "f37936961b90441732e29883028cdfb9d4d39c9c96e7dcc313c74d03cd60cccf"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.853Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C08"
+  },
+  {
+    "id": "REAL-SHORT-09",
+    "scene": "考试报名不同截止",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "二、时间节点\n1.\n报名时间：\n本学期补考网上报名于\n8\n月\n2\n1\n日\n14\n：\n00\n开通，公共课（数学、英语、计算机、思政）补考网上报名截止时间为\n8\n月\n25\n日\n23:59\n；其他课程的补考网上报名截止时间为\n8\n月\n27\n日\n23:59\n。\n2.\n考试时间：\n本学期公共课（数学、英语、计算机、思政）补考时间将在本科生院教学信息主页（\njw.nju.edu.cn\n）另行通知\n,\n并\n更新在网上办事服务大厅“补考办理”中，请密切关注。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "公共课",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "deadline": "2026-08-25T23:59",
+          "precision": "exact"
+        },
+        {
+          "object": "其他课程",
+          "verbs": [
+            "报名",
+            "申请"
+          ],
+          "deadline": "2026-08-27T23:59",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "补考",
+          "startUnknown": true,
+          "endUnknown": true
+        }
+      ],
+      "window": "2026-08-21",
+      "information": [
+        "另行通知"
+      ]
+    },
+    "referenceTime": "2026-08-21T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jw.nju.edu.cn/d7/6e/c26263a841582/page.htm",
+      "acquiredAt": "2026-10-19T01:24:57.381329+00:00",
+      "publishedOrExplicitUpdateDate": "2026-08-21",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "c51a2f3b5c9d3f33e59b56d6fdeba4d382d8558bbe7b2ad4566b63f7c0e71c87",
+      "acquisitionReceiptSha256": "6dcb8667f2db8215a68417b7f2052d69825f115e52f00cb03fc3691e3d6d3402",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 971,
+          "end": 1194,
+          "sourceSpanSha256": "e2b03287423b5eb25a05f0563405c1c6b5181a8d1f6857c2cc8c6bbd1810bb88"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.853Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C09"
+  },
+  {
+    "id": "REAL-SHORT-10",
+    "scene": "讲座报名窗口",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "各学院、各位同学：\n福州大学\n“嘉锡讲坛”第699期讲座——\n《多学科交叉赋能区域可持续发展》\n2025年6月13日（周五）上午9：30在福州大学国家大学科技园阳光楼一楼报告厅，主讲嘉宾：[主讲人]。欢迎广大同学前往听讲，听取讲座可获一定学分，具体办法附后。听讲前同学应先登录教务处“本科教学系统”，然后点击“各类报名”→“嘉锡讲坛”进行网上报名。\n网上报名时间从\n2025年\n5月28\n日\n12点00分 —— 6月12日12点00分。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "嘉锡讲坛",
+          "verbs": [
+            "报名",
+            "参加"
+          ],
+          "deadline": "2025-06-12T12:00",
+          "precision": "exact",
+          "channel": "本科教学系统"
+        }
+      ],
+      "events": [
+        {
+          "object": "多学科交叉赋能区域可持续发展",
+          "start": "2025-06-13T09:30",
+          "endUnknown": true,
+          "location": "阳光楼一楼报告厅"
+        }
+      ],
+      "window": "2025-05-28"
+    },
+    "referenceTime": "2025-05-28T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwch.fzu.edu.cn/info/1016/14085.htm",
+      "acquiredAt": "2026-10-19T01:24:58.953765+00:00",
+      "publishedOrExplicitUpdateDate": "2025-05-28",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "f52dbb417a019349de922b733bc580b2c5e46c721c19a05fb976e75c4e652c19",
+      "acquisitionReceiptSha256": "6c7ac4e09c6e3a71b51ebd33608981a9a030ee66347427d791369a3d3439b667",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_PERSON_ROOM_OR_CODE",
+          "originalSha256": "ebcc2d3f2df44083e9fd6a5bb14371dce1eff34a35ab6e128e391ed3d926f5bb",
+          "replacement": "[主讲人]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 191,
+          "end": 409,
+          "sourceSpanSha256": "47e37792eadc8e704ea78ab2781d6906673c32afc4046c7f08c29a5564955a3f"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.854Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C10"
+  },
+  {
+    "id": "REAL-SHORT-11",
+    "scene": "笔记作品与组合材料",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "3.\n图\n片\n拍摄高清\n，\n无反光、无遮挡\n，传送能看清字迹的\n原图，每人\n提交\n2-6\n张图片\n；并\n在W\nord文档中写100-300字\n所展示科目\n的\n学习心得/\n技巧/方法\n；\n4.\n压缩包命名为“班级＋姓名”，包含多张照片与Word文档，并\n在\n6月15日晚22点\n前将压缩包提交\n至邮箱\n[邮箱1]\n。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "压缩包",
+          "verbs": [
+            "提交",
+            "发送"
+          ],
+          "deadline": "2026-06-15T22:00",
+          "precision": "exact",
+          "channel": "[邮箱1]"
+        }
+      ],
+      "events": [],
+      "materials": [
+        "图片",
+        "Word"
+      ],
+      "naming": [
+        "班级＋姓名"
+      ],
+      "criteria": [
+        "2-6",
+        "100-300"
+      ]
+    },
+    "referenceTime": "2026-06-09T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://ne.upc.edu.cn/2026/0608/c22256a494612/page.htm",
+      "acquiredAt": "2026-10-19T01:25:01.326548+00:00",
+      "publishedOrExplicitUpdateDate": "2026-06-09",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "bbb6d499e48eb6c2b0f35c3d74ffc7efd7f713b9c6120a2f9caba5142d29cc51",
+      "acquisitionReceiptSha256": "b5ced6a8e1a99787b6e0f79b5a2e31ba2f65e637b95f0b36b43b796a4a06d4e2",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_EMAIL",
+          "originalSha256": "4998f58e1d0967ec6783af0ea97b3a61debc2c634faa7a9555940a43e01355ab",
+          "replacement": "[邮箱1]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 1313,
+          "end": 1482,
+          "sourceSpanSha256": "dc28c2738ca98394377e4299f53332adada677ef777fe6dedf52a0ae87fc4d65"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.854Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C11"
+  },
+  {
+    "id": "REAL-SHORT-12",
+    "scene": "征集要求和邮件渠道",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "一、征集对象\n理学院全体教职工、本硕博学生。\n二、征集内容\n（一）名称：可提交智能体名称，\n2—4\n字，贴合东大与理学院文化、理学院专业特色，体现\n慎思、笃行、创新、奋进\n的理学精神，附\n150—300\n字创意说明。\n（二）\nIP\n形象：原创设计，融合数理化力学符号、科学家精神等元素，适配网页、小程序、\nPPT\n插件多终端展示，附设计释义。\n三、投稿方式\n邮件投稿，邮件主题为\n理学院智能体\nIP\n征集\n-\n姓名\n-\n专业\n/\n系所\n，发送至教学办邮箱\n[邮箱1]\n。截止时间：\n2026\n年\n9\n月\n11\n日。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "IP",
+          "verbs": [
+            "投稿",
+            "提交",
+            "发送",
+            "应征"
+          ],
+          "deadline": "2026-09-11",
+          "precision": "date_only",
+          "channel": "[邮箱1]"
+        }
+      ],
+      "events": [],
+      "criteria": []
+    },
+    "referenceTime": "2026-09-03T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://cos.neu.edu.cn/2026/0903/c11033a463166/page.htm",
+      "acquiredAt": "2026-10-19T01:25:02.658465+00:00",
+      "publishedOrExplicitUpdateDate": "2026-09-03",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "2df680fcc2bb89ebb41f2746072c0b8273c1e56451101fda526763d9b37a57f7",
+      "acquisitionReceiptSha256": "f98d4d09bc3673e76b03f3c56db0aa606a83445637550967bcc54fce3897318f",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_EMAIL",
+          "originalSha256": "3c297c625a9197b3a24c4162303a073684427729914c05dfd93c48d715d57ebf",
+          "replacement": "[邮箱1]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 503,
+          "end": 777,
+          "sourceSpanSha256": "de1e0fb3875b66dd0c719b521584f602792ab8f11d437df54b2a3ba781587614"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.854Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C12"
+  },
+  {
+    "id": "REAL-SHORT-13",
+    "scene": "纯信息暂停与恢复",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "各位师生：\n为进一步优化图书馆服务系统性能，提升资源检索与借阅体验，图书馆计划于\n本周三（\n12\n月\n3\n日）全天\n进行汇文\nmeta\n系统升级维护工作。现将相关事宜通知如下：\n一、业务暂停范围\n升级期间，将暂停全校各校区图书馆的\n图书借还、续借、预约\n等线下及线上借阅业务；电子图书、期刊数据库、学位论文等电子资源访问不受影响，可正常使用。\n二、恢复服务时间\n系统升级工作预计于\n12\n月\n3\n日\n24:00\n前完成，\n12\n月\n4\n日（本周四）起全面恢复各项借阅业务\n。若因技术原因需延长维护时间，将通过图书馆官网、微信公众号另行通知。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "升级",
+          "start": "2025-12-03",
+          "endUnknown": true
+        }
+      ],
+      "information": [
+        "12月4日",
+        "电子资源"
+      ]
+    },
+    "referenceTime": "2025-12-01T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://tsg.wust.edu.cn/info/1201/9822.htm",
+      "acquiredAt": "2026-10-19T01:25:03.942125+00:00",
+      "publishedOrExplicitUpdateDate": "2025-12-01",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "30be4135e5fdf0f33274a6b911ca31700ce1a70dff0578fe89de65020c5762bf",
+      "acquisitionReceiptSha256": "338cebf26892903d7eda3f5680d2c59a224c5a1e4ccb28cebe2ce5f9e7c5b7c9",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 387,
+          "end": 657,
+          "sourceSpanSha256": "add69eab8c5541c28b95ac3e42805dac0903e09f1802cc457cb561e48c75e366"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.855Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C13"
+  },
+  {
+    "id": "REAL-SHORT-14",
+    "scene": "素材提交和组成",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "三、材料报送\n所有需参展的学生以及团队请于6月29日（17周周一）16：00点前以学院为单位提交素材文件夹（包括素材word和word中所涉及的所有图表），报送形式为电子版，发送至邮箱：[邮箱1]。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "素材文件夹",
+          "verbs": [
+            "提交",
+            "发送",
+            "报送"
+          ],
+          "deadline": "2026-06-29T16:00",
+          "precision": "exact",
+          "channel": "[邮箱1]"
+        }
+      ],
+      "events": [],
+      "criteria": [
+        "word",
+        "图表"
+      ]
+    },
+    "referenceTime": "2026-06-23T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.bucea.edu.cn/tzgg/292938247dda4b78a0936dd2858dd34f.htm",
+      "acquiredAt": "2026-10-19T01:25:05.163723+00:00",
+      "publishedOrExplicitUpdateDate": "2026-06-23",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "46694590bc493728336b3744b039fc2ad52e7a6563a8d6707d5a74f8300a51f9",
+      "acquisitionReceiptSha256": "4be6a7bf639a0f8effd06feb3d645732492bc1fb697a3fa6e86f2a9a3059ef38",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_EMAIL",
+          "originalSha256": "d477098643c3dc3cc4102b61814c04c624d8b0b9e21f199b181a347ab80da2e5",
+          "replacement": "[邮箱1]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 1107,
+          "end": 1223,
+          "sourceSpanSha256": "05da22f0ba185eb761a9b3e8e939cb673b2b0453d07da7b6382e3570e0910e84"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.855Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C14"
+  },
+  {
+    "id": "REAL-SHORT-15",
+    "scene": "口语报名与未知选拔时间",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "四、报名方式\n截止时间：2025年6月13日（本周五）18:00 。\n报名流程：加入官方QQ群（[联系号码]）查看群公告填写报名表，后续将根据报名情况通知笔试面试安排。\n五、其他说明\n1. 活动不收取费用，需自备笔记本电脑等基础工具。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名表",
+          "verbs": [
+            "填写",
+            "报名",
+            "提交"
+          ],
+          "deadline": "2025-06-13T18:00",
+          "precision": "exact",
+          "channel": "QQ群"
+        }
+      ],
+      "events": [
+        {
+          "object": "笔试",
+          "startUnknown": true,
+          "endUnknown": true
+        },
+        {
+          "object": "面试",
+          "startUnknown": true,
+          "endUnknown": true
+        }
+      ],
+      "criteria": [
+        "笔记本电脑"
+      ]
+    },
+    "referenceTime": "2025-06-11T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://cxcy.tyut.edu.cn/info/1030/6193.htm",
+      "acquiredAt": "2026-10-19T01:25:14.357673+00:00",
+      "publishedOrExplicitUpdateDate": "2025-06-11",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "e431f994333ece288b7496019225a4f7f1ebcd4b160d8e710afe127d87b090c0",
+      "acquisitionReceiptSha256": "5e756b5dc4191803c35e735b0a116d06c5118c57b4b46abf12232e2b51944e2c",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_CONTACT_NUMBER",
+          "originalSha256": "4418ae91215a7d3713a7916d73cc0ebfc80fc51e4c21dd317b410499b5f6168c",
+          "replacement": "[联系号码]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 904,
+          "end": 1025,
+          "sourceSpanSha256": "ca45aea0a3417b300b0f7a41e0ff9dbb7f3b0b7410da317fcca7e9ad0953f7e5"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.856Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C18"
+  },
+  {
+    "id": "REAL-SHORT-16",
+    "scene": "条件退费独立截止",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "1.退费\n学生如已缴费但决定放弃修读资格，请于开课前申请退费。\n（\n1）申请方式：9月20日（周六）17:00前填写并发送《辅修专业退费申请书》（上外教务处官网-辅修专栏-常用下载）至辅修工作邮箱:[邮箱1]办理。邮件主题：“松江-辅修专业-辅修退费申请-姓名-辅修学号-联系电话”，逾期不予受理。\n（\n2）注意事项：由于退费手续和流程需要一定时间，退款预计在学期末前退回至学生缴费账户。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "退费申请书",
+          "verbs": [
+            "发送",
+            "提交",
+            "填写",
+            "申请"
+          ],
+          "deadline": "2025-09-20T17:00",
+          "precision": "exact",
+          "channel": "[邮箱1]",
+          "condition": "放弃"
+        }
+      ],
+      "events": [],
+      "information": [
+        "学期末"
+      ]
+    },
+    "referenceTime": "2025-09-17T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://infadm.shisu.edu.cn/_s107/0d/6d/c6667a200045/page.psp",
+      "acquiredAt": "2026-10-19T01:25:23.256400+00:00",
+      "publishedOrExplicitUpdateDate": "2025-09-17",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "f117c68d1e31908253a451fdca58932b9985c3911deb34c913fa1305934125fe",
+      "acquisitionReceiptSha256": "9b7209f58b291a15bc90b3e6e7bc44fe01cd5f672d47c6462bb19147211e2cc9",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_EMAIL",
+          "originalSha256": "82005025fbe4f3ca10b1b02930cb0fd0e286267652ff2a6925e81498cf490746",
+          "replacement": "[邮箱1]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 980,
+          "end": 1187,
+          "sourceSpanSha256": "985f8a760829a1e11e49130ed5bae6504d83ed1bdd495eddb5b3832123af52bf"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.856Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C19"
+  },
+  {
+    "id": "REAL-SHORT-17",
+    "scene": "报名意愿与条件退出",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "请\n务必\n确认可以参赛后再进行报名\n，报名后如因特殊情况无法参赛，请务必第一时间告知[老师][邮箱1]，[联系号码]。\n*工学院学生参赛报名费由学院统一承担，如无法确认参赛，请临期再报名。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "办理",
+            "提交"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "报名费",
+        "第一时间"
+      ]
+    },
+    "referenceTime": "2025-02-17T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.coe.pku.edu.cn/undergraduates/notice/13368.html",
+      "acquiredAt": "2026-10-19T01:25:31.201950+00:00",
+      "publishedOrExplicitUpdateDate": "2025-02-17",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "e3abd32322cad955354db7ad755fa8cd819faa5f794b204b010bf6aad889a82b",
+      "acquisitionReceiptSha256": "18c3e74a8d66c55d3823dc2a1ac46f6e254063f29cc20425561518c32a14ff70",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_EMAIL",
+          "originalSha256": "3998bcdfda58530ff85f554ca75ae6b9a07afa8788cd4dd0acb81dd002ad07a4",
+          "replacement": "[邮箱1]"
+        },
+        {
+          "kind": "PUBLIC_CONTACT_NUMBER",
+          "originalSha256": "b10b9368bd9cee062232bdecffd2036ab1deec85f87b32ba6b2a543788776bce",
+          "replacement": "[联系号码]"
+        },
+        {
+          "kind": "PUBLIC_PERSON_ROOM_OR_CODE",
+          "originalSha256": "353be90feab9ce5b8cdf2f93c5fd472f0a5301f649ff16d69e9432d1b0d2ce47",
+          "replacement": "[老师]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 575,
+          "end": 685,
+          "sourceSpanSha256": "fca05a8f7019deb56a0036fb2cfeb1d5ba944c8bda0cb7f55ff2876f04d078d8"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.856Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C20"
+  },
+  {
+    "id": "REAL-SHORT-18",
+    "scene": "固定训练与可选观摩",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "一、训练安排\n1.\n时间\n：自本周起至第19周，每周四下午 14:00-16:30\n2.\n地点\n：主田径场（田径、足球）、东篮球场（男、女篮）、北排球场（女排）、网球场（网球）、体育馆羽毛球场（羽毛球）、体育馆二楼乒乓球室（乒乓球）、体育馆篮球场（武术）\n代表队训练期间，保证场地优先使用",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "训练",
+          "start": "2025-09-25T14:00",
+          "end": "2025-09-25T16:30"
+        }
+      ],
+      "information": [
+        "每周四",
+        "第19周"
+      ]
+    },
+    "referenceTime": "2025-09-25T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.sdjzu.edu.cn/tyjxb/info/1057/1761.htm",
+      "acquiredAt": "2026-10-19T01:25:32.534115+00:00",
+      "publishedOrExplicitUpdateDate": "2025-09-25",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "cb6d15f46d37fca4dd0ba9003e7fa6d58a5c81332d45f3e81206d3b2aaff37b5",
+      "acquisitionReceiptSha256": "26f9f273191f9e3ad82740cb9a4867683a581136b2e94c64ce7df80cdbe6871e",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 551,
+          "end": 695,
+          "sourceSpanSha256": "768c4a818b263c32d031ddf79bc31776f97f6002ea7668f8296dde72847c9ab5"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.857Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C21"
+  },
+  {
+    "id": "REAL-SHORT-19",
+    "scene": "入学指导与可申请例外",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "三、入学指导 入学指导内容涉及本科生培养概况介绍、选课指导、在校注意事项等，原则上不得缺席。 会议时间：2025年9月15日（周一）13:00-14:00 会议地址：[地点1] 参会形式：原则上均为线下参会，如遇课程时间冲突或有身体不适，请提前一天联系本科生院。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "入学指导",
+          "verbs": [
+            "参加",
+            "参会",
+            "出席"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "入学指导",
+          "start": "2025-09-15T13:00",
+          "end": "2025-09-15T14:00",
+          "location": "[地点1]"
+        }
+      ],
+      "information": [
+        "提前一天"
+      ]
+    },
+    "referenceTime": "2025-09-03T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.jiaoliu.ecnu.edu.cn/e7/1e/c11184a714526/page.htm",
+      "acquiredAt": "2026-10-19T01:25:42.443136+00:00",
+      "publishedOrExplicitUpdateDate": "2025-09-03",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "24b3843a098bffcec9ddf95cb95355fe247ee70267c04563e1b67bf2d6d5f4fc",
+      "acquisitionReceiptSha256": "15719ed25ae4bdc675c2c89776ceac8669b21f293c9f419331c8700c342cd865",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_PERSON_ROOM_OR_CODE",
+          "originalSha256": "15834562c3187c5fb1ff332ca55d2f1f786feb8e240259a34205c7c73b57ba63",
+          "replacement": "[地点1]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 2054,
+          "end": 2192,
+          "sourceSpanSha256": "984e0a633117838c49565e708d92f54a5f349b02cd599d64e0462b1b40468385"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.857Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C22"
+  },
+  {
+    "id": "REAL-SHORT-20",
+    "scene": "暂定检查与可选报名",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "各项目成员及指导教师：\n根据教务处要求，信息学院课外研学指导小组暂时定于\n202\n6\n年\n4\n月\n1\n日（周三）\n12:30\n开始\n对学院\n202\n6\n年\n批次\n的\n96\n项校级\nSRTP\n项目以及学生自主研学作品\n进行集中中期检查\n，答辩地点及各组顺序请关注后续通知。现将相关要求通知如下：\n一、中期检查要求\n1.\n参与对象：\n202\n6\n年批次\n所有\n校级\nSRTP\n项目均须参加\n（名单见附件\n1\n）\n；研学作品可\n自愿\n报名参加（\n请于\n3\n月\n17\n日前\n将项目名称、负责人、联系电话、其他成员、指导教师等信息发到\n[邮箱1]\n）。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "研学作品",
+          "verbs": [
+            "报名",
+            "发送",
+            "提交"
+          ],
+          "deadline": "2026-03-17",
+          "precision": "date_only",
+          "channel": "[邮箱1]"
+        }
+      ],
+      "events": [
+        {
+          "object": "中期检查",
+          "start": "2026-04-01T12:30",
+          "endUnknown": true
+        }
+      ],
+      "information": [
+        "暂时定于",
+        "后续通知"
+      ]
+    },
+    "referenceTime": "2026-03-11T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://radio.seu.edu.cn/2026/0311/c19216a557795/page.htm",
+      "acquiredAt": "2026-10-19T01:25:54.311507+00:00",
+      "publishedOrExplicitUpdateDate": "2026-03-11",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "b1bb16f07d21e41b8f1e1c37c27ed726318a344b871872ca2e88d0ebb36e74a0",
+      "acquisitionReceiptSha256": "0d4a9c0284a04d06c34176991af483aa86670f089e59a79738b99bcd3b0a33d7",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_EMAIL",
+          "originalSha256": "9905c94d5ec45514fb422f6a9a637c4a5c6741e0bd21e96ceb432a5a73396a72",
+          "replacement": "[邮箱1]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 827,
+          "end": 1111,
+          "sourceSpanSha256": "a823ddc817edcb0908bd226db465b2521ee077058b2a0146b158616cb66d43d4"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.858Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C23"
+  },
+  {
+    "id": "REAL-SHORT-21",
+    "scene": "投稿截止与条件另投",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "1.\n论文观点新颖、论点明确、论证严密、材料翔实、文理通顺，字数控制在\n5000-8000字（含图表），格式严格参照附件要求。若投稿人在2026年3月13日（星期五）前未收到录用通知，稿件可自行另投其他刊物。\n\n四、投稿方式及流程\n1.\n投稿截止时间：\n2026年3月9日（星期一）。请投稿人在此前登录\n吉林大学\n创新创业教育学院官网（\nhttps://cxcyjyxy.jlu.edu.cn/），通过“论文投稿”专项板块提交电子文稿，稿件标题格式统一标注为“姓名+联系电话+论文题目”。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "文稿",
+          "verbs": [
+            "投稿",
+            "提交",
+            "上传"
+          ],
+          "deadline": "2026-03-09",
+          "precision": "date_only",
+          "channel": "论文投稿"
+        }
+      ],
+      "events": [],
+      "criteria": [
+        "5000-8000"
+      ],
+      "information": [
+        "3月13日",
+        "另投"
+      ]
+    },
+    "referenceTime": "2026-01-06T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://cxcyjyxy.jlu.edu.cn/info/1060/2331.htm",
+      "acquiredAt": "2026-10-19T01:25:58.925377+00:00",
+      "publishedOrExplicitUpdateDate": "2026-01-06",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "a017e44ebb8f6c68ccc295d8a26e96702a739622ac9a65b0d5591d63ff634018",
+      "acquisitionReceiptSha256": "202c62156223e198da65246f891a3fdf7f5e5bbae7c16de0bb824c6a60207fcd",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 733,
+          "end": 837,
+          "sourceSpanSha256": "d7dadcecb3a0d36c5b07dd7276248f279d602761473c204856a6faca4363becd"
+        },
+        {
+          "start": 1103,
+          "end": 1241,
+          "sourceSpanSha256": "701dcb3af6bcc12a9afce59ae464720ae4cb23ca809efbe8f1467865af34ea8e"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.858Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C24"
+  },
+  {
+    "id": "REAL-SHORT-22",
+    "scene": "两门课程学习考试窗口",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "各位同学：\n由智慧树平台提供的MOOC《走进故宫》\n《创新创业与管理基础》\n将于2026年3月16日开始网络学习，请各位同学请仔细阅读通知，完成课程学习。\n学习时间：2026年3月16日—2026年5月10日\n考试时间：2026年5月11日—2026年5月24日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "走进故宫",
+          "verbs": [
+            "学习",
+            "完成",
+            "参加",
+            "修读"
+          ],
+          "deadlineUnknown": true
+        },
+        {
+          "object": "创新创业与管理基础",
+          "verbs": [
+            "学习",
+            "完成",
+            "参加",
+            "修读"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "考试",
+          "start": "2026-05-11",
+          "end": "2026-05-24"
+        }
+      ],
+      "window": "2026-03-16/2026-05-10"
+    },
+    "referenceTime": "2026-02-28T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.seu.edu.cn/2026/0228/c67907a556257/page.htm",
+      "acquiredAt": "2026-10-19T01:26:01.212464+00:00",
+      "publishedOrExplicitUpdateDate": "2026-02-28",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "9291f6e35f0ad066fa1f103c40d90508899d37eb8587350ec805c3a2a134cd8a",
+      "acquisitionReceiptSha256": "00dbe766c5c725aa2dccdf31b01ad614dd8eeb46774dca751770b87afbe680ec",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 520,
+          "end": 651,
+          "sourceSpanSha256": "1890775cc486a128b847e073e8aa5e0fd3ee36ff80c3799a17630f560a76ffeb"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.859Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C25"
+  },
+  {
+    "id": "REAL-SHORT-23",
+    "scene": "开课提醒与老师角色",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "各位老师、同学：\n根据学校安排，2025-2026学年春季学期本科教学工作自3月2日起按照春季学期课表进行，请任课老师和同学做好教学准备工作，提前在教务处主页\n查询最新课表\n，按时上课。\n一、课表及点名册查询\n请师生登录教务处主页(jwc.seu.edu.cn)->办事平台，根据所在年级查询个人课表及学生名册：\n二、调课管理\n任课老师如遇有特殊情况（如：因病、因公出差等）需要调课或临时更换老师，请在上课前三天，办理调课申请（可选择网上办理或填写调课申请单，网上办理操作指南见附件1，调课申请单见附件2），并经学院审核通过。上课第一周如无特殊情况，不得调课。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "上课",
+          "verbs": [
+            "上课",
+            "参加",
+            "按时"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "本科教学",
+          "start": "2026-03-02",
+          "endUnknown": true
+        }
+      ],
+      "information": [
+        "课表",
+        "任课老师",
+        "不得调课"
+      ]
+    },
+    "referenceTime": "2026-02-27T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.seu.edu.cn/2026/0227/c67907a556157/page.htm",
+      "acquiredAt": "2026-10-19T01:26:05.607734+00:00",
+      "publishedOrExplicitUpdateDate": "2026-02-27",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "dbd5938f69798160a5c070e837caf00e5a52c4815e43a2045f2a9c05eca5b5fe",
+      "acquisitionReceiptSha256": "facc7b3ea675f26dc00ac4fe89d9602c97f6b6daceb8856afd722b93298bfaf2",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 478,
+          "end": 758,
+          "sourceSpanSha256": "d2a7448ad11a56b8ea1d9484d8c9e41af81762bdf851a5750a6b2812362451e3"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.859Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C26"
+  },
+  {
+    "id": "REAL-SHORT-24",
+    "scene": "报名延期覆盖旧截止",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "【报名延期\n】\n经与国际合作处沟通，报名时间延长至2026年2月3日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "申请",
+            "报名",
+            "提交"
+          ],
+          "deadline": "2026-02-03",
+          "precision": "date_only"
+        }
+      ],
+      "events": [],
+      "information": [],
+      "obsoleteDates": []
+    },
+    "referenceTime": "2026-01-15T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.seu.edu.cn/2026/0115/c67907a552734/page.htm",
+      "acquiredAt": "2026-10-19T01:26:06.911238+00:00",
+      "publishedOrExplicitUpdateDate": "2026-01-15",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "08d9ee0fedd74b6f81c634c48e5c47561150daa3f325eb0fff53c597df984ad6",
+      "acquisitionReceiptSha256": "c93cabcf511394ec8406483018fd49743d2b2d8a91b8efb5a8bfe2f8035f9343",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 494,
+          "end": 528,
+          "sourceSpanSha256": "f1b334f4d3bc50775556b2100dc1b96bacc8ba95e508d9056abc9d7fb3922285"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.859Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C27"
+  },
+  {
+    "id": "REAL-SHORT-25",
+    "scene": "清理截止与局部关闭",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "各位读者：\n一、新学期开馆安排\n图书馆本学期将于9月13日正式开馆，恢复各项服务。\n二、三楼暂停开放及物品清理安排\n1.暂停开放原因：为维修三楼地面地胶破损问题，需对三楼全层进行地面修补施工。\n2.暂停开放范围：图书馆三楼全层（含朗读区）。\n3.暂停开放时间：9月13日全天。期间，读者可前往图书馆其他楼层阅览。\n4.物品清理要求：请各位读者务必于9月12日（星期五）17:00 前，将存放在三楼自习座位上的个人物品全部清理并带离。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "个人物品",
+          "verbs": [
+            "清理",
+            "带离"
+          ],
+          "deadline": "2025-09-12T17:00",
+          "precision": "exact"
+        }
+      ],
+      "events": [
+        {
+          "object": "图书馆",
+          "start": "2025-09-13",
+          "endUnknown": true
+        },
+        {
+          "object": "三楼",
+          "start": "2025-09-13",
+          "end": "2025-09-13"
+        }
+      ]
+    },
+    "referenceTime": "2025-09-11T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://lib.lsu.edu.cn/_t131/2025/0911/c782a358038/pagem.psp",
+      "acquiredAt": "2026-10-19T01:26:09.333631+00:00",
+      "publishedOrExplicitUpdateDate": "2025-09-11",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "298e35cae69307ceb5973e7b46c647bc37e90e58670fd630339e769317fa53fc",
+      "acquisitionReceiptSha256": "3c21dc0c22b4601e032c90827066df5388e209f32177382d73fb805355ee6092",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 116,
+          "end": 332,
+          "sourceSpanSha256": "2cdaf7029aa96008b26a7df8a00b31477a27261393df91865bf96485147b42f1"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.860Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C28"
+  },
+  {
+    "id": "REAL-SHORT-26",
+    "scene": "多日停电纯信息",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "各位读者：\n根据学校停电通知，在5月26日0：00—2：00、5月28日0：00—2：00、5月29日0：00—2：00的停电时段内，受设备条件限制，图书馆座位预约系统、金盘检索系统及其他在线服务将暂时无法正常使用。我们将会在恢复供电后尽快恢复上述服务，由此带来的不便，敬请理解！",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "停电",
+          "start": "2025-05-26T00:00",
+          "end": "2025-05-26T02:00"
+        },
+        {
+          "object": "停电",
+          "start": "2025-05-28T00:00",
+          "end": "2025-05-28T02:00"
+        },
+        {
+          "object": "停电",
+          "start": "2025-05-29T00:00",
+          "end": "2025-05-29T02:00"
+        }
+      ]
+    },
+    "referenceTime": "2025-05-23T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://lib.uibe.edu.cn/xwgg/5c385dea78a543f5ac96178591b13922.htm",
+      "acquiredAt": "2026-10-19T01:26:30.053028+00:00",
+      "publishedOrExplicitUpdateDate": "2025-05-23",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "d60c22c2e9fc676fa1e6ac437b99236dd084ecaafadbd1bb1534f6b8decd8500",
+      "acquisitionReceiptSha256": "95b0c66e64e45c9ae62cfedcadbc71655ab4cf0a14918d081a01a194add568c4",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 1860,
+          "end": 2000,
+          "sourceSpanSha256": "b030fe2c62a9674afceefcbbed40edea78545dd4fbfa10eab85400b36dddcb7c"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.860Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C30"
+  },
+  {
+    "id": "REAL-SHORT-27",
+    "scene": "预计恢复纯信息",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "全校师生：\n因图书馆自动化系统进行升级，书目检索系统（http://opac.library.shmtu.edu.cn:8080/opac）内的“图书续借”功能于7月15日暂停服务，预计于7月23日恢复正常。\n如有问题，可发邮件到[邮箱1]咨询。\n特此通知。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "续借",
+          "start": "2025-07-15",
+          "endUnknown": true
+        }
+      ],
+      "information": [
+        "预计",
+        "7月23日"
+      ]
+    },
+    "referenceTime": "2025-07-15T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://lib.shmtu.edu.cn/about/news/2722.htm",
+      "acquiredAt": "2026-10-19T01:26:35.267019+00:00",
+      "publishedOrExplicitUpdateDate": "2025-07-15",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "235394c18fd66950e91dd10fb270987db680afd0981dd3a106ddf9252b33b330",
+      "acquisitionReceiptSha256": "e83979d146e5c4d2bec5366367da3f63da26bb0c334b74099e8927899c8bc444",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [
+        {
+          "kind": "PUBLIC_EMAIL",
+          "originalSha256": "c1b57c5950b58262dd5b667ee4b272b45a49d2bceeddefca5701f63cace85e06",
+          "replacement": "[邮箱1]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 837,
+          "end": 980,
+          "sourceSpanSha256": "db8080333a6fcc4a4ab13b002adb6de0a97160577b9b94562c0dcfa786ee2889"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.861Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C31"
+  },
+  {
+    "id": "REAL-SHORT-28",
+    "scene": "取消且未读取海报",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "第四周课外研学讲座预告(3月24日更新：讲座取消)",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "information": [
+        "取消"
+      ],
+      "forbidden": [
+        {
+          "object": "讲座",
+          "verbs": [
+            "参加",
+            "报名",
+            "出席"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2026-03-24T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.seu.edu.cn/2026/0323/c21681a559053/page.htm",
+      "acquiredAt": "2026-10-19T01:27:16.243076+00:00",
+      "publishedOrExplicitUpdateDate": "2026-03-24",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "3fc52d4bf1ebbb7d7e75efb95a9637c43e52f1dab102faabc31d243acdaba7d0",
+      "acquisitionReceiptSha256": "eb20ec260d81fe8d99c9cf8aaa11c75a87f05a496df7081d6e0479e16229c048",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 474,
+          "end": 499,
+          "sourceSpanSha256": "5bda9176ea737cc763a7d62e2f9c8ad2ff89eb5bbb9811673c98802502b79609"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.861Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C34"
+  },
+  {
+    "id": "REAL-SHORT-29",
+    "scene": "考试延期到模糊月底",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "各位考生：\n经研究决定，我校原定于\n2025年\n4\n月\n26\n日-27日\n举行的\n2025年博士研究生招生考试初试将延\n期至2025年\n5月底\n举行。具体\n考试\n时间另行通知，请考生密切关注我校研究生院网站相关公告。\n（\nhttps://yjs.usc.edu.cn/index.htm\n）",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "招生考试",
+          "startUnknown": true,
+          "endUnknown": true
+        }
+      ],
+      "information": [
+        "5月底",
+        "另行通知"
+      ],
+      "obsoleteDates": [
+        "2025-04-26",
+        "2025-04-27"
+      ]
+    },
+    "referenceTime": "2025-04-16T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://yjs.usc.edu.cn/info/1312/12577.htm",
+      "acquiredAt": "2026-10-19T01:27:20.959394+00:00",
+      "publishedOrExplicitUpdateDate": "2025-04-16",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "8571b0b9176b74cc0752acac95773d755ce1b0768f0fdafbe953ac6136578bce",
+      "acquisitionReceiptSha256": "fcef96d359d288b20910db7f524ddda13e6b9aba1936a1eb17f7172962935f9d",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 567,
+          "end": 712,
+          "sourceSpanSha256": "25e27c627f07cba4f6821f2bea2dbaff39c48e8737c966ec5e55d76bcb087fd1"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.861Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C35"
+  },
+  {
+    "id": "REAL-SHORT-30",
+    "scene": "口语请假与24点截止",
+    "inputSourceTitle": "公开学生通知节选",
+    "inputSourceType": "text",
+    "text": "各位同学，你们好：\n请查收《关于2025年下半年全国大学英语四、六级笔试的通知》，\n因患病或突发意外不能参加考试的学生，请于12月15日24:00前用飞书扫码填写《四、六级考试请假单》（通知内含二维码）。\n无故旷考学生将取消下次四、六级报考资格。\nhttps://graduate.nankai.edu.cn/2025/1208/c82a586234/page.htm\n，谢谢！",
+    "reference": {
+      "tasks": [
+        {
+          "object": "请假单",
+          "verbs": [
+            "填写",
+            "提交",
+            "申请"
+          ],
+          "deadline": "2025-12-16T00:00",
+          "precision": "exact",
+          "channel": "飞书",
+          "condition": "患病"
+        }
+      ],
+      "events": [],
+      "information": [
+        "取消下次"
+      ]
+    },
+    "referenceTime": "2025-12-09T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://chem.nankai.edu.cn/2025/1209/c24093a586336/page.htm",
+      "acquiredAt": "2026-10-19T01:27:24.203687+00:00",
+      "publishedOrExplicitUpdateDate": "2025-12-09",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "520107110627a931d255350f8994830c7a588d679d559c4abd931361a4901206",
+      "acquisitionReceiptSha256": "68e3d56c9c9b0c7b38f50137eb8ea45e77b5cb2411099b548c0848ecfe8de971",
+      "excerpt": true,
+      "excerptScope": "Only the displayed, source-first selected paragraphs; not the complete original notice or unread attachments/poster",
+      "normalization": "Visible paragraph/line breaks retained; removed only Markdown bold formatting; separate selected spans separated by blank lines; source order unchanged",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 479,
+          "end": 668,
+          "sourceSpanSha256": "d60b17a29a3c0a98186ba1bb2dba67a963a52e8ba7b51d1cafb1bc3c73eef75e"
+        }
+      ],
+      "author": "Codex / model-assisted / single-author / provisional",
+      "groupMessageClaim": false,
+      "privateStudentData": false
+    },
+    "referenceAuthoredAt": "2026-10-19T01:33:52.861Z",
+    "referenceIndependent": false,
+    "sourceCandidate": "C36"
+  }
+]
