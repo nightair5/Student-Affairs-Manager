@@ -1,6 +1,6 @@
 // Index existing model citations back to an unambiguous literal source span.
 // This is program evidence, not a changed model answer or a new business fact.
-export const LITERAL_EVIDENCE_PROJECTION_VERSION='literal-source-citation-projection-1.2.0'
+export const LITERAL_EVIDENCE_PROJECTION_VERSION='literal-source-citation-projection-1.3.0'
 function citationLayout(text,source){
   // A doubly escaped layout break is a wire representation issue only when
   // the source does not itself contain literal backslash layout syntax. Do
@@ -9,6 +9,13 @@ function citationLayout(text,source){
 }
 function indexed(text){
   const formatting=new Set()
+  // A line-break inside a closed document-format token immediately before its
+  // Chinese noun is layout, not an English word boundary. Never join arbitrary
+  // words ("now\nhere"), ordinary spaces, filenames or changed format names.
+  for(const name of ['Word','Excel','PDF','PPT']){
+    const pattern=new RegExp('(?<![A-Za-z])'+[...name].join('[\\r\\n]*')+'(?=文档|文件|表格|演示稿)','gu')
+    for(const m of text.matchAll(pattern))for(let i=0;i<m[0].length;i++)if(/[\r\n]/u.test(m[0][i]))formatting.add(m.index+i)
+  }
   for(const m of text.matchAll(/\*\*(?=\S)([\s\S]*?\S)\*\*/gu)){
     for(const i of[m.index,m.index+1,m.index+m[0].length-2,m.index+m[0].length-1])formatting.add(i)
   }

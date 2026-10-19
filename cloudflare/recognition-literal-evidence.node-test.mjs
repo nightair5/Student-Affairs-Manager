@@ -1,6 +1,12 @@
 import test from'node:test';import assert from'node:assert/strict';import{projectLiteralSourceEvidence}from'./recognition-literal-evidence.mjs'
 import{projectCitedTimeLiterals}from'./cited-time-literal.mjs'
 
+test('closed document-format line breaks can map to literal evidence without joining ordinary words or other formats',()=>{
+ const source='在W\nord文档中写100-300字说明。',raw={evidence:[{id:'E',quote:'在Word文档中写100-300字说明。'}]},out=projectLiteralSourceEvidence(raw,source)
+ assert.equal(out.result.evidence[0].quote,source);assert.equal(out.audit.decisions.length,1);assert.deepEqual(raw.evidence[0].quote,'在Word文档中写100-300字说明。')
+ for(const [text,q]of[['now\nhere','nowhere'],['在W ord文档中写说明。','在Word文档中写说明。'],['在Excel文档中写说明。','在Word文档中写说明。'],[source+source,'在Word文档中写100-300字说明。']])assert.equal(projectLiteralSourceEvidence({evidence:[{id:'E',quote:q}]},text).audit.decisions.length,0)
+})
+
 test('an existing time keeps the literal layout of its own unique citation without supplying facts',()=>{
  const source='请于2027年6月\n8日18：30\n前提交报告。',raw={evidence:[{id:'Q',quote:source}],standaloneTasks:[{tempId:'T',actionObject:'报告',actionVerb:'提交',evidenceIds:['Q']}],timePoints:[{tempId:'D',rawText:'2027年6月8日18:30前',normalizedValue:'2027-06-08T18:30',relatedTaskTempIds:['T'],evidenceIds:['Q']}]},before=structuredClone(raw)
  const out=projectCitedTimeLiterals(raw,source),d=out.audit.decisions[0]

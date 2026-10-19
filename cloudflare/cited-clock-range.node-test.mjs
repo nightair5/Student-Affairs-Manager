@@ -1,9 +1,21 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import {projectCitedClockRanges} from './cited-clock-range.mjs'
+import {retainUnanchoredWeekTimes} from './recognition-local-isolation.mjs'
 import {applyDeterministicTimeAst,normalizeRecognitionResult} from './recognition.mjs'
 import {validateRecognitionResult} from './recognition-contract.generated.mjs'
 const reference='2027-04-01T09:00:00+08:00',timezone='Asia/Shanghai'
+
+test('known weekly clocks survive an unknown teaching-term end without selecting or inventing the series end',()=>{
+ const {raw}=fixture(),literal='自本周起至第15周，每周二下午 14:10-16:40',source='训练时间：'+literal;raw.evidence[0].quote=source
+ raw.timePoints.forEach(p=>{p.rawText=literal;p.normalizedValue=null;p.needsConfirmation=true;p.selected=false})
+ const before=structuredClone(raw),out=projectCitedClockRanges(raw,source,reference,timezone)
+ assert.deepEqual(out.result.timePoints.map(p=>p.normalizedValue),['2027-03-30T14:10','2027-03-30T16:40'])
+ assert.ok(out.result.timePoints.every(p=>p.needsConfirmation&&!p.selected));assert.deepEqual(raw,before)
+ retainUnanchoredWeekTimes(out.result,{source,referenceTime:reference,timezone});assert.equal(out.result.timePoints[1].normalizedValue,'2027-03-30T16:40')
+ for(const mutate of[r=>r.events[0].evidenceIds=[],r=>r.events[0].endTimePointTempId=null,r=>r.timePoints[0].type='task_deadline']){const bad=structuredClone(raw);mutate(bad);const candidate=projectCitedClockRanges(bad,source,reference,timezone);assert.ok(candidate.result.timePoints.every(p=>p.normalizedValue===null))}
+ const conditional='若获得资格，'+source;raw.evidence[0].quote=conditional;assert.equal(projectCitedClockRanges(raw,conditional,reference,timezone).audit.decisions.length,0)
+})
 
 test('width and an afternoon shared by two declared event endpoints survive both Worker stages',()=>{
  for(const [literal,a,b]of[['2027年4月16日14：30-16：30','14:30','16:30'],['2027年4月16日下午1:00-3:00','13:00','15:00']]){

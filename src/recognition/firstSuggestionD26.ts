@@ -11,7 +11,7 @@ import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from 
 import { groundEligibility } from './eligibilityGrounding'
 import { rangeEndpointSupport } from './rangeEndpointSupport'
 import { taskActionText } from '../lib/taskActionText'
-import { supportedCoordinatedObject, supportedEventDescriptor, supportedEventOperation } from './compoundNameSupport'
+import { supportedCoordinatedObject, supportedEventDescriptor, supportedEventOperation, supportedAttendanceAction, supportedLabelledEventName } from './compoundNameSupport'
 import {retainCurrentDeadlineFacts,type SourceCurrentFactAudit} from './sourceCurrentFacts'
 import {completeDeclaredEventNameSupport,type DeclaredEventNameAudit} from './declaredEventNameSupport'
 import {completeCitedOwnerSupport,type CitedOwnerDecision} from './citedOwnerSupport'
@@ -23,7 +23,7 @@ import {projectCitedTimeLiterals,type CitedTimeLiteralAudit} from '../../cloudfl
 import {resolveLiteralSourceSpan} from '../../cloudflare/recognition-literal-evidence.mjs'
 import {isolateRecognitionItems,unanchoredAcademicWeek,LOCAL_ISOLATION_NOTE_PREFIX,LOCAL_ISOLATION_VERSION,type LocalIsolationAudit} from '../../cloudflare/recognition-local-isolation.mjs'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.27.1'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.28.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -38,6 +38,8 @@ export interface D26FirstSuggestionAudit {
   unresolved: Array<{ entityId: string; reason: string }>
   sourceCurrentness: SourceCurrentFactAudit[]
   declaredEventNameSupport: DeclaredEventNameAudit[]
+  groundedNameEquivalences?:Array<{entityId:string;rule:string;quotes:string[]}>
+  citedMaterialQuantities?:Array<{entityId:string;before:string[];after:string[];literal:string;evidenceIds:string[];rule:'EXISTING_MATERIAL_CITED_QUANTITY_RANGE'}>
   citedOwnerSupport:CitedOwnerDecision[]
   citedSourceWindows:ReturnType<typeof completeCitedSourceWindows>
   projectDisplayDefault: {before:string;after:string;reason:string}|null
@@ -117,11 +119,24 @@ function retainActionBlocks(result:RecognitionResult,audit:D26FirstSuggestionAud
     if(!result.conflicts.some(c=>c.id===id))result.conflicts.push({id,type:'other',message:'动作字段不能从同一事项的原文中可靠拆出，请核对该事项；其他有依据的事项可单独保存。',entityTempIds:[row.entityId],evidenceIds:result.standaloneTasks.find(t=>t.tempId===row.entityId)?.evidenceIds??[],requiresDecision:true})
   }
 }
+/** A range cannot fit a scalar quantity. Retain its literal requirement on the
+ * already-declared material, from its own existing citation; no new material,
+ * owner, action or quantity is inferred from a free summary. */
+function retainCitedMaterialQuantities(result:RecognitionResult,source:string,audit:D26FirstSuggestionAudit){
+  for(const material of result.materials){
+    if(material.quantity!==null)continue
+    const escape=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&'),name=escape(material.name),pattern=new RegExp('(?:提交|提供|准备|携带|上传)\\s*((\\d{1,3})\\s*[-—–至到]\\s*(\\d{1,3})\\s*(?:张|份|件|个)\\s*'+name+')','gu')
+    const matches=result.evidence.filter(e=>material.evidenceIds.includes(e.id)&&source.includes(e.quote)&&source.indexOf(e.quote)===source.lastIndexOf(e.quote)).flatMap(e=>[...e.quote.matchAll(pattern)].filter(m=>+m[2]>0&&+m[3]>=+m[2]&&!/不要|不得|禁止|取消|无需|如果|若/u.test(e.quote.slice(0,m.index).split(/[。；\n]/u).at(-1)??'')).map(m=>({literal:m[1],id:e.id})))
+    if(!matches.length||new Set(matches.map(m=>m.literal.replace(/\s/gu,''))).size!==1)continue
+    const literal=matches[0].literal;if(material.formatRequirements.some(r=>r.replace(/\s/gu,'').includes(literal.replace(/\s/gu,''))))continue
+    const before=[...material.formatRequirements];material.formatRequirements.push(literal);audit.citedMaterialQuantities??=[];audit.citedMaterialQuantities.push({entityId:material.tempId,before,after:[...material.formatRequirements],literal,evidenceIds:matches.map(m=>m.id),rule:'EXISTING_MATERIAL_CITED_QUANTITY_RANGE'})
+  }
+}
 function timeClause(rawText: string, quote: string): string {
   const start = quote.indexOf(rawText)
   if (start < 0) return ''
-  const left = quote.slice(0, start).search(/[^，。；;,\n]*$/u)
-  const tail = quote.slice(start + rawText.length), boundary = tail.search(/[，。；;,\n]/u)
+  const left = quote.slice(0, start).search(/[^，。；;,]*$/u)
+  const tail = quote.slice(start + rawText.length), boundary = tail.search(/[，。；;,]/u)
   return quote.slice(left, start + rawText.length + (boundary < 0 ? tail.length : boundary))
 }
 function prose(audit: D26FirstSuggestionAudit, original: ProseRecord, title: string, description: string) {
@@ -191,6 +206,7 @@ function time<T extends TimeFields & { tempId: string; rawText: string; type: Ti
     audit.rangeSupport.push({entityId:point.tempId,quote:rangeQuotes.find(q=>q.includes(point.rawText))!,literalRange:point.rawText,expanded:interpretation.point.normalizedValue,rule:'CITED_SAME_EVENT_CLOCK_RANGE'})
   }
   Object.assign(point, fields(interpretation.point))
+  if(interpretation.certainty==='tentative')Object.assign(point,{selected:false})
   audit.times.push({ entityId: point.tempId, before, after: fields(point), interpretation })
 }
 
@@ -318,6 +334,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   audit.activityRoles=groundActivityRoles(result,context.sourceText,'names')
   audit.declaredEventNameSupport=completeDeclaredEventNameSupport(result,context.sourceText)
   audit.citedOwnerSupport=completeCitedOwnerSupport(result,context.sourceText)
+  retainCitedMaterialQuantities(result,context.sourceText,audit)
   audit.citedSourceWindows=completeCitedSourceWindows(result,context.sourceText,context.referenceTime,context.timezone)
   const clockRanges=projectCitedClockRanges(result,context.sourceText,context.referenceTime,context.timezone)
   Object.assign(result,clockRanges.result)
@@ -375,7 +392,8 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   const tasks: TaskSuggestionV2[] = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
   for (const task of tasks) {
     boundActionField(task,quote(task.evidenceIds),context.sourceText,audit)
-    const quotes = quote(task.evidenceIds),completion=supportedCourseCompletion(task,quotes,result.timePoints),grounded = completion||supportedAdjacent(task.actionVerb, quotes,context.sourceText) && (supportedAdjacent(task.actionObject, quotes,context.sourceText,true)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)||supportedEventDescriptor(task.actionObject,quotes))
+    const quotes = quote(task.evidenceIds),completion=supportedCourseCompletion(task,quotes,result.timePoints),attendance=supportedAttendanceAction(task.actionVerb,task.actionObject,quotes),grounded = completion||attendance||supportedAdjacent(task.actionVerb, quotes,context.sourceText) && (supportedAdjacent(task.actionObject, quotes,context.sourceText,true)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)||supportedEventDescriptor(task.actionObject,quotes))
+    if(attendance){audit.groundedNameEquivalences??=[];audit.groundedNameEquivalences.push({entityId:task.tempId,rule:'EXISTING_SAME_OBJECT_MANDATORY_ATTENDANCE',quotes})}
     if(completion)audit.actionFields.push({entityId:task.tempId,before:task.actionVerb,after:task.actionVerb,status:'EXISTING_COURSE_COMPLETION_SUPPORT',quotes})
     const original = { entityId: task.tempId, kind: 'task' as const, title: task.title, description: task.description }
     Object.assign(task, prose(audit, original, grounded ? supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)?task.actionVerb:taskActionText(task.actionVerb, task.actionObject) : '待核对事项',
@@ -388,7 +406,8 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     }
   }
   for (const event of result.events) {
-    const quotes = quote(event.evidenceIds), grounded = supportedAdjacent(event.title, quotes, context.sourceText,true)||supportedEventDescriptor(event.title,quotes)||supportedEventOperation(event.title,quotes,context.sourceText,true)
+    const quotes = quote(event.evidenceIds),ownedTimes=result.timePoints.filter(p=>[event.startTimePointTempId,event.endTimePointTempId].includes(p.tempId)).map(p=>p.rawText),labelled=supportedLabelledEventName(event.title,quotes,context.sourceText,ownedTimes),grounded = supportedAdjacent(event.title, quotes, context.sourceText,true)||supportedEventDescriptor(event.title,quotes)||supportedEventOperation(event.title,quotes,context.sourceText,true)||Boolean(labelled)
+    if(labelled){audit.groundedNameEquivalences??=[];audit.groundedNameEquivalences.push({entityId:event.tempId,rule:labelled,quotes})}
     const original = { entityId: event.tempId, kind: 'event' as const, title: event.title, description: event.description }
     Object.assign(event, prose(audit, original, grounded ? event.title : '待核对事件', grounded ? unique(quotes).join('\n') : '事件内容缺少对应来源依据，请核对。'))
     if (!grounded) {

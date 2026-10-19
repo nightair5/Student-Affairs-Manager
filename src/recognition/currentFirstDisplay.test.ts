@@ -19,9 +19,24 @@ import { buildSourceReviewPlan, commitSourceReview, verifySourceReviewReadback }
 import { emptyWorkspace } from '../experiments/mainline01/fixtures'
 import { rebindRecordedScopes } from './recordedProjectionD26'
 import { buildSourceWorkflowItems } from '../lib/sourceWorkflow'
-import { supportedEventDescriptor, supportedEventOperation } from './compoundNameSupport'
+import { supportedEventDescriptor, supportedEventOperation, supportedAttendanceAction, supportedLabelledEventName } from './compoundNameSupport'
 
 describe('source-backed display labels retain their exact identity and operation', () => {
+  it('validates mandatory attendance for the same object without turning a prohibition or condition into an action',()=>{
+    expect(supportedAttendanceAction('参加','安全培训',['安全培训内容涉及实验操作，原则上不得缺席。'])).toBe(true)
+    for(const q of ['安全培训原则上不得参加。','若审批通过，安全培训必须参加。','安全培训已取消，原来必须参加。','其他培训原则上不得缺席。'])expect(supportedAttendanceAction('参加','安全培训',[q])).toBe(false)
+    expect(supportedAttendanceAction('缴费','安全培训',['安全培训原则上不得缺席。'])).toBe(false)
+  })
+  it('keeps labelled scope and collective interruption names tied to their own identity and date',()=>{
+    const scope='暂停开放范围：资料室二楼（含自习区）。'
+    expect(supportedLabelledEventName('资料室二楼暂停开放',[scope],scope,[])).toBe('EXPLICIT_OPERATION_RANGE_LABEL')
+    expect(supportedLabelledEventName('资料室三楼暂停开放',[scope],scope,[])).toBeNull()
+    const q='在8月12日0：00—2：00的停电时段内，资料室预约系统及其他在线服务将暂时无法正常使用。',name='资料室在线服务暂停（8月12日停电时段）'
+    expect(supportedLabelledEventName(name,[q],q,['8月12日0：00—2：00'])).toBe('EXPLICIT_COLLECTIVE_SERVICE_AND_OWN_DATE')
+    expect(supportedLabelledEventName(name,[q],q,['8月13日0：00—2：00'])).toBeNull()
+    expect(supportedLabelledEventName(name.replace('资料室','体育馆'),[q],q,['8月12日0：00—2：00'])).toBeNull()
+    for(const prefix of ['若审批通过，','该安排已取消。','预计'])expect(supportedLabelledEventName(name,[prefix+q],prefix+q,['8月12日0：00—2：00'])).toBeNull()
+  })
   it('accepts an omitted linking particle for the same quoted topic and event type', () => {
     const quotes = ['开展“海洋与城市”的主题讲座。']
     expect(supportedEventDescriptor('“海洋与城市”主题讲座', quotes)).toBe(true)

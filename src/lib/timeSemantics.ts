@@ -378,7 +378,14 @@ export function parseChineseTimeAst(rawText: string, options: ChineseTimeAstOpti
   const parseText = correction ? normalizedText.slice(correctionOffset) : normalizedText
   const absoluteDates = absoluteDateCandidates(parseText, reference)
   const relativeDates = relativeDateCandidates(parseText, reference)
-  const dates = [...absoluteDates, ...relativeDates].sort((left, right) => left.index - right.index)
+  const orderedDates = [...absoluteDates, ...relativeDates].sort((left, right) => left.index - right.index)
+  // A matching parenthesized weekday/date is one date expressed twice, not a
+  // second event. A disagreement or a separate clause must remain a conflict.
+  const dates = orderedDates.filter((candidate,index)=>{
+    const previous=orderedDates[index-1]
+    return !previous||previous.kind===candidate.kind||previous.year!==candidate.year||previous.month!==candidate.month||previous.day!==candidate.day
+      ||!/^\s*[（(]\s*$/u.test(parseText.slice(previous.end,candidate.index))||!/^\s*[）)]/u.test(parseText.slice(candidate.end))
+  })
   const clocks = clockCandidates(parseText)
   const inheritedDate = options.inheritedDate ? calendarDateFromDateOnly(options.inheritedDate) : null
 

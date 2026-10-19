@@ -1,5 +1,5 @@
 // GENERATED from src/lib/timeSemantics.ts; do not edit.
-// source-sha256: 18be92700a514c9198a78a10152bd1e8b19f632147dbf0d9bfe651b37c54daf5
+// source-sha256: f7504c8eef35da7b03a9648d916ffe7139e6e54c38b86d48339dd0290fe51215
 export const DEFAULT_WORKSPACE_TIMEZONE = 'Asia/Shanghai';
 const DATE_ONLY_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/u;
 const LOCAL_DATE_TIME_PATTERN = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.\d{1,3})?)?$/u;
@@ -308,7 +308,14 @@ export function parseChineseTimeAst(rawText, options) {
     const parseText = correction ? normalizedText.slice(correctionOffset) : normalizedText;
     const absoluteDates = absoluteDateCandidates(parseText, reference);
     const relativeDates = relativeDateCandidates(parseText, reference);
-    const dates = [...absoluteDates, ...relativeDates].sort((left, right) => left.index - right.index);
+    const orderedDates = [...absoluteDates, ...relativeDates].sort((left, right) => left.index - right.index);
+    // A matching parenthesized weekday/date is one date expressed twice, not a
+    // second event. A disagreement or a separate clause must remain a conflict.
+    const dates = orderedDates.filter((candidate, index) => {
+        const previous = orderedDates[index - 1];
+        return !previous || previous.kind === candidate.kind || previous.year !== candidate.year || previous.month !== candidate.month || previous.day !== candidate.day
+            || !/^\s*[（(]\s*$/u.test(parseText.slice(previous.end, candidate.index)) || !/^\s*[）)]/u.test(parseText.slice(candidate.end));
+    });
     const clocks = clockCandidates(parseText);
     const inheritedDate = options.inheritedDate ? calendarDateFromDateOnly(options.inheritedDate) : null;
     const firstDate = dates[0];

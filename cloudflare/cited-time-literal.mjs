@@ -1,5 +1,5 @@
 import{resolveLiteralSourceSpan}from'./recognition-literal-evidence.mjs'
-export const CITED_TIME_LITERAL_VERSION='cited-time-literal-projection-1.0.1'
+export const CITED_TIME_LITERAL_VERSION='cited-time-literal-projection-1.1.0'
 const records=value=>Array.isArray(value)?value.filter(v=>v&&typeof v==='object'&&!Array.isArray(v)):[]
 const includes=(value,id)=>Array.isArray(value)&&value.includes(id)
 
@@ -30,8 +30,11 @@ export function projectCitedTimeLiterals(input,source){
       // The same object may have a student submission and a later staff
       // review. Repair only a date whose own clause states this owner's
       // action, with an existing shared citation; never bind by noun alone.
-      if(!owners.every(o=>includes(o.evidenceIds,e.id)&&resolveLiteralSourceSpan(o.name,clause)
-        &&(o.action===null||typeof o.action==='string'&&o.action&&resolveLiteralSourceSpan(o.action,clause))))return[]
+      const label=/^截止时间[：:]\s*(?:[\d年月日周星期本一二三四五六七八九十零〇（()）:：\s-]|前|晚|上|午|下|点|时|分|秒)+[。.]*$/u.test(quote.trim())
+      const uniqueDeadlineLabel=label&&typeof point.type==='string'&&point.type.endsWith('_deadline')&&records(input.evidence).filter(other=>typeof other.quote==='string'&&/^截止时间[：:]/u.test(other.quote.trim())&&source.includes(other.quote)).length===1
+      const nameSupported=o=>resolveLiteralSourceSpan(o.name,clause)||(o.action===null&&/领取$/u.test(o.name)&&resolveLiteralSourceSpan('领取'+o.name.slice(0,-2),clause))
+      if(!owners.every(o=>includes(o.evidenceIds,e.id)&&(uniqueDeadlineLabel||nameSupported(o)
+        &&(o.action===null||typeof o.action==='string'&&o.action&&resolveLiteralSourceSpan(o.action,clause)))))return[]
       return span?[{evidenceId:e.id,literal:span.literal,start:at+span.start,end:at+span.end}]:[]
     })
     if(!matches.length||new Set(matches.map(m=>m.start+':'+m.end)).size!==1)return point

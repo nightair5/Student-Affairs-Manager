@@ -11,6 +11,7 @@ import { IndexedDbWorkspaceRepository } from '../lib/repository'
 import { buildSourceReviewPlan, commitSourceReview, verifySourceReviewReadback, sourceReviewProblem } from '../domain/v2/sourceReviewD26'
 import {createContractFixture} from '../experiments/d26Recorded/contractFixtures'
 import {CHANNEL_ROLE_CASES, CHANNEL_POLARITY_CASES, createChannelRoleFixture} from '../experiments/candidate19Recorded/materialChannelFixtures'
+import {ordinaryWorkflowFixture} from './ordinaryProviderSupport.fixture'
 const root='docs/recognition-optimization/candidate19-development/'
 const sources=JSON.parse(readFileSync(root+'SOURCES.json','utf8')).sources as Array<{sourceId:string;sourceVersionId:string;sourceText:string;referenceTime:string;timezone:string}>
 const raw=(n:number)=>(JSON.parse(readFileSync(root+'paid-evidence/'+(n<3?'':'completed/')+`raw-${String(n).padStart(2,'0')}.json`,'utf8')) as {rawHttpText:string}).rawHttpText
@@ -19,6 +20,12 @@ async function recorded(n=10) {
   return { s, context, decoded:decodeCurrentSourceRecording(raw(n),n===10?'Candidate19':'Candidate17',context) }
 }
 describe('source role grounded ordinary material channels',()=>{
+  it('one literal delivery survives line layout without borrowing another object destination or reversing a prohibition',()=>{
+    const make=(source:string)=>{const r=ordinaryWorkflowFixture(source),task=r.standaloneTasks[0],material=r.materials[0];task.actionVerb='提交';task.actionObject='画稿';task.materialTempIds=[material.tempId];task.evidenceIds=['Q'];material.name='画稿';material.submissionChannel='邮箱[邮箱1]';material.relatedTaskTempIds=[task.tempId];material.evidenceIds=['Q'];r.evidence=[{id:'Q',sourceId:'pending-source',quote:source,field:'materials'}];return r}
+    const source='请将画稿\n提交\n至邮箱\n[邮箱1]。',r=make(source)
+    expect(groundMaterialChannels(r,source).result.materials[0].submissionChannel).toBe('邮箱[邮箱1]')
+    for(const bad of ['请勿将画稿\n提交至邮箱\n[邮箱1]。','画稿交到办公室。将成绩单\n提交至邮箱\n[邮箱1]。','画稿\n不得提交至邮箱\n[邮箱1]。'])expect(groundMaterialChannels(make(bad),bad).result.materials[0].submissionChannel).toBeNull()
+  })
   it.each(CHANNEL_POLARITY_CASES)('polarity scope $id: source-supported values and separate receipt note do not erase a real prohibition or condition',async row=>{
     const f=await createChannelRoleFixture(row.id),decoded=decodeCurrentSourceRecording(f.rawHttpText,'EngineeringFixture',f.context)
     const before=structuredClone(decoded.result)

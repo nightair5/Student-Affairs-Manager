@@ -1,4 +1,4 @@
-export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.5.1'
+export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.6.0'
 const escape=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')
 /** Closed grammatical equivalence, not a bag of words across source clauses. */
 export function supportedCoordinatedObject(value:string,action:string,quotes:string[]):boolean {
@@ -33,7 +33,7 @@ export function supportedEventOperation(value:string,quotes:string[],sourceText:
       &&[...q.matchAll(pattern)].some(m=>!/若|如果|假如|取消|不再|不会|不得|不|未/u.test(q.slice(0,m.index).split(/[。；\n]/u).at(-1)??'')))
     )return true
   }
-  const title=/^(.+?)(暂停服务|升级维护|停机维护|升级检修|停机|维护)$/u.exec(value)
+  const title=/^(.+?)(暂停服务|升级维护|停机维护|升级检修|正式开馆|停机|维护)$/u.exec(value)
   if(!title)return false
   const [,entity,operation]=title
   const spans=[...new Set(quotes)].flatMap(quote=>{
@@ -61,4 +61,33 @@ export function supportedEventOperation(value:string,quotes:string[],sourceText:
     }
   }
   return found
+}
+
+/** Validate an existing attendance action, never create one. A mandatory
+ * attendance statement for the same literal object is not a prohibition on
+ * attending. Conditional, cancelled and other-object statements stay blocked. */
+export function supportedAttendanceAction(action:string,object:string,quotes:string[]):boolean {
+  if(!['参加','参会','出席'].includes(action)||!object)return false
+  return quotes.some(q=>q.split(/[。；\n]/u).some(clause=>{
+    if(!clause.includes(object)||/若|如果|假如|取消|无需|不必|不得参加|禁止参加|不得参会|禁止参会|不得出席/u.test(clause))return false
+    const tail=clause.slice(clause.indexOf(object)+object.length)
+    return /^(?:[^。；\n]{0,100})(?:不得缺席|必须出席|须出席|务必参加|必须参加)(?:[，,。；\s]|$)/u.test(tail)
+  }))
+}
+
+/** A labelled range or a date-qualified collective service name can be a
+ * faithful title without being one contiguous quotation. Every field must be
+ * in this event's own uniquely located citation. The date qualifier must also
+ * be in an existing owned endpoint; no foreign date/entity is borrowed. */
+export function supportedLabelledEventName(value:string,quotes:string[],source:string,ownedTimes:string[]):string|null {
+  const own=quotes.filter(q=>q&&source.includes(q)&&source.indexOf(q)===source.lastIndexOf(q))
+  const labelled=/^(.+?)(暂停开放)$/u.exec(value)
+  if(labelled&&own.some(q=>new RegExp('^'+escape(labelled[2])+'范围[：:]\\s*'+escape(labelled[1])+'(?:（[^）]*）)?[。.]?$','u').test(q.trim())))return 'EXPLICIT_OPERATION_RANGE_LABEL'
+  const collective=/^(.+?)在线服务暂停（((?:\d{1,2}月\d{1,2}日))停电时段）$/u.exec(value)
+  if(!collective)return null
+  const [,facility,date]=collective
+  if(!ownedTimes.length||!ownedTimes.every(t=>t.startsWith(date)))return null
+  const body=new RegExp(escape(facility)+'[^，。；\n]*[、及和]其他在线服务将暂时无法正常使用[。.]?$','u')
+  return own.some(q=>ownedTimes.every(t=>q.includes(t))&&q.includes('停电时段内')&&body.test(q)
+    &&!/若|如果|假如|取消|预计|可能|不会|不再/u.test(q))?'EXPLICIT_COLLECTIVE_SERVICE_AND_OWN_DATE':null
 }

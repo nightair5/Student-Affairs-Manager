@@ -5,7 +5,7 @@ import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sou
 import { verifyWorkflowChannelEvidence, type WorkflowMaterialSupport } from './workflowChannelSupport'
 import {citedDeliveryContexts,type CitedDeliveryContext} from './citedDeliveryContext'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.10.1'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.11.0'
 export const WORKFLOW_MATERIAL_CHANNEL_VERSION = 'material-declared-workflow-channel-1.0.0'
 export interface MaterialChannelDecision {
   materialId: string
@@ -34,7 +34,10 @@ function citedClauses(evidence: Array<{quote:string}>, sourceText: string) {
   const spans = evidence.flatMap(e => {const at=sourceText.indexOf(e.quote);return at>=0&&sourceText.indexOf(e.quote,at+1)<0?[{start:at,end:at+e.quote.length}]:[]}).sort((a,b)=>a.start-b.start)
   const joined: Array<{start:number;end:number}> = []
   for(const span of spans){const previous=joined.at(-1);if(previous&&span.start<=previous.end)previous.end=Math.max(previous.end,span.end);else joined.push({...span})}
-  return [...new Set([...evidence.map(e=>e.quote),...joined.map(s=>sourceText.slice(s.start,s.end))])].flatMap(q=>q.split(/[，。；\n]/u))
+  // A line break inside one cited delivery is layout. The closed role grammar
+  // below still requires the actual object/action/destination in order; it
+  // cannot borrow across a sentence or a different object's intervening text.
+  return [...new Set([...evidence.map(e=>e.quote),...joined.map(s=>sourceText.slice(s.start,s.end))])].flatMap(q=>q.split(/[，。；]/u))
 }
 /** Role evidence, not token overlap: a receipt is not an instruction to send there. */
 function destinationRole(clause: string, object: string, channel: string, siblingObjects: string[] = []) {

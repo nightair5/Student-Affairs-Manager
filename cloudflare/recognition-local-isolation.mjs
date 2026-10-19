@@ -1,4 +1,5 @@
 import {validateRecognitionResult} from './recognition-contract.generated.mjs'
+import {citedAcademicFirstOccurrence} from './cited-clock-range.mjs'
 
 export const LOCAL_ISOLATION_VERSION='recognition-local-isolation-1.1.0'
 export const LOCAL_ISOLATION_NOTE_PREFIX='local-isolation:'
@@ -7,7 +8,7 @@ const array=v=>Array.isArray(v)?v:[]
 const tasksOf=r=>[...r.standaloneTasks,...r.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
 export const hasLocalIsolationPending=r=>(r?.ambiguities??[]).some(a=>a.id?.startsWith(LOCAL_ISOLATION_NOTE_PREFIX))
 export const unanchoredAcademicWeek=text=>typeof text==='string'&&/第\s*[一二三四五六七八九十\d]+\s*(?:[-—–至到]\s*[一二三四五六七八九十\d]+\s*)?周/u.test(text)&&!/(?:\d{4}[年/-])?\d{1,2}\s*月\s*\d{1,2}\s*日|\d{4}-\d{2}-\d{2}/u.test(text)
-export function retainUnanchoredWeekTimes(result){for(const p of result.timePoints)if(unanchoredAcademicWeek(p.rawText))Object.assign(p,{normalizedValue:null,isAllDay:false,precision:'vague',needsConfirmation:true,selected:false});return result}
+export function retainUnanchoredWeekTimes(result,context){for(const p of result.timePoints)if(unanchoredAcademicWeek(p.rawText)){const known=context&&citedAcademicFirstOccurrence(p,result,context.source,context.referenceTime,context.timezone);Object.assign(p,known?.next??{normalizedValue:null,isAllDay:false,precision:'vague',needsConfirmation:true,selected:false})}return result}
 
 /** Quarantine untrusted items outside the accept-able fact graph. Their exact
  * model values remain in audit and ordinary clarification notes. No evidence,

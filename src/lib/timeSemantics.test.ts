@@ -8,6 +8,13 @@ import {
 } from './timeSemantics'
 
 describe('clock ranges do not introduce calendar dates', () => {
+  it('a matching parenthesized relative weekday is the same date, while a disagreement stays unresolved',()=>{
+    const options={referenceTime:'2027-04-01T09:00:00+08:00',timezone:'Asia/Shanghai',type:'submission_deadline' as const}
+    expect(parseChineseTimeAst('2027年4月2日（本周五）18:00',options)).toMatchObject({normalizedValue:'2027-04-02T18:00',needsConfirmation:false})
+    expect(parseChineseTimeAst('本周五（4月2日）全天',options)).toMatchObject({normalizedValue:'2027-04-02',needsConfirmation:false})
+    expect(parseChineseTimeAst('2027年4月2日（本周四）18:00',options).needsConfirmation).toBe(true)
+    expect(parseChineseTimeAst('4月2日、下周一18:00',options).needsConfirmation).toBe(true)
+  })
   const options = { referenceTime: '2027-09-02T08:00:00+08:00', timezone: 'Asia/Shanghai', type: 'event_start' as const }
   it.each([
     ['2027年9月4日14：30-16：30', '2027-09-04T14:30', '2027-09-04T16:30'],

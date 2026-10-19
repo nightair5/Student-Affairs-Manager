@@ -47,6 +47,9 @@ export function reviewV6(result,source,{referenceV6=null,...options}={}){
  // references retain every critical date/object/owner/cancellation obligation.
  const legacy=reviewV51(result,source,options)
  for(const s of legacy.severe)if(!out.severe.some(x=>JSON.stringify(x)===JSON.stringify(s)))out.severe.push(s)
+ // R1 step equivalence must not turn a still-blocked primary item into a
+ // complete first suggestion after v5.1's earlier completeness check ran.
+ if(!out.issues.length&&options.audit?.unresolved?.length)out.issues.push({failure_layer:'SEMANTIC_COMPOSER',code:'UNRESOLVED_SOURCE_SUPPORT_NOT_WHOLE_COMPLETE',detail:options.audit.unresolved})
  out.status=out.severe.length?'错':!out.issues.length?'完整':out.issues.every(i=>i.failure_layer==='REFERENCE')?'未知':out.matched>0?'部分':'错'
  return {...out,reviewVersion:PRODUCT_REVIEW_V6_VERSION,referenceRevision:referenceV6?.version??'V6_POLICY_UNCHANGED_MINIMUM',equivalence,v51Status:legacy.status}
 }

@@ -1,6 +1,26 @@
 import {parseChineseTimeAst} from './chinese-time-ast.generated.mjs'
-export const CITED_CLOCK_RANGE_VERSION='cited-clock-range-role-1.2.1'
+export const CITED_CLOCK_RANGE_VERSION='cited-clock-range-role-1.3.0'
 const unique=values=>[...new Set(values)]
+
+/** Preserve a stated first occurrence, never invent the date of the numbered
+ * final teaching week. Existing endpoint pair, owner and literal must agree.
+ * The series remains pending and unselected. */
+export function citedAcademicFirstOccurrence(point,input,source,referenceTime,timezone){
+  if(!['event_start','event_end'].includes(point?.type)||typeof source!=='string'||!referenceTime)return null
+  const raw=point.rawText,m=/^自?本周起至第[一二三四五六七八九十\d]+周[，,]每(?:周|星期)([一二三四五六日天])(?:上午|下午|晚上)?(\d{1,2}[:：][0-5]\d)[—–至到-](\d{1,2}[:：][0-5]\d)$/u.exec(raw?.replace(/\s+/gu,''))
+  if(!m||source.indexOf(raw)<0||source.indexOf(raw)!==source.lastIndexOf(raw))return null
+  const owners=(input.events??[]).filter(e=>[e.startTimePointTempId,e.endTimePointTempId].includes(point.tempId));if(owners.length!==1)return null
+  const owner=owners[0],a=(input.timePoints??[]).find(p=>p.tempId===owner.startTimePointTempId),b=(input.timePoints??[]).find(p=>p.tempId===owner.endTimePointTempId)
+  if(!a||!b||a.tempId===b.tempId||a.type!=='event_start'||b.type!=='event_end'||a.rawText!==raw||b.rawText!==raw)return null
+  const cited=(input.evidence??[]).filter(e=>typeof e.quote==='string'&&source.includes(e.quote)&&e.quote.includes(raw)&&owner.evidenceIds?.includes(e.id)&&[a,b].every(p=>p.evidenceIds?.includes(e.id)))
+  if(cited.length!==1||/取消|作废|如果|假如|若|可能|预计/u.test(cited[0].quote))return null
+  const day=parseChineseTimeAst('本周'+m[1],{referenceTime,timezone,type:'event_start'})
+  if(!day.normalizedValue||day.needsConfirmation||day.precision!=='date_only')return null
+  const literal=day.normalizedValue.replace(/^(\d{4})-(\d{2})-(\d{2})$/u,'$1年$2月$3日'),start=parseChineseTimeAst(literal+m[2],{referenceTime,timezone,type:'event_start'}),end=parseChineseTimeAst(literal+m[3],{referenceTime,timezone,type:'event_end'})
+  if(!start.normalizedValue||!end.normalizedValue||start.needsConfirmation||end.needsConfirmation||end.normalizedValue<=start.normalizedValue)return null
+  const value=point.type==='event_end'?end.normalizedValue:start.normalizedValue,next={...point,normalizedValue:value,isAllDay:false,precision:'exact',needsConfirmation:true,selected:false}
+  return {next,decision:{pointId:point.tempId,rawText:raw,role:point.type,ownerIds:[owner.tempId],evidenceIds:cited.map(e=>e.id),quote:cited[0].quote,before:{normalizedValue:point.normalizedValue??null,needsConfirmation:Boolean(point.needsConfirmation),selected:point.selected!==false},after:{normalizedValue:value,needsConfirmation:true,selected:false},endpoint:value,reason:'KNOWN_FIRST_OCCURRENCE_SERIES_END_UNKNOWN',blocked:false}}
+}
 
 // The shared lexer owns clock syntax, including width and an inherited
 // afternoon. This layer only chooses the role of an already-declared, cited
@@ -71,6 +91,8 @@ export function projectCitedClockRanges(input,source,referenceTime,timezone='Asi
   if(!input||!Array.isArray(input.timePoints))return {result:input,audit:{version:CITED_CLOCK_RANGE_VERSION,decisions}}
   const tasks=[...(input.standaloneTasks??[]),...(input.milestones??[]).flatMap(m=>[...(m.tasks??[]),...(m.workPackages??[]).flatMap(w=>w.tasks??[])])]
   const timePoints=input.timePoints.map(point=>{
+    const academic=citedAcademicFirstOccurrence(point,input,source,referenceTime,timezone)
+    if(academic){decisions.push(academic.decision);return academic.next}
     if(!point||typeof point.rawText!=='string'||!['event_start','event_end','registration_deadline','submission_deadline','task_deadline'].includes(point.type))return point
     const sentence=sentenceHourRange(point,input,source,referenceTime,timezone)
     if(sentence){decisions.push(sentence.decision);return sentence.next}
