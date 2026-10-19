@@ -28,9 +28,16 @@ describe('source-backed display labels retain their exact identity and operation
     expect(supportedAttendanceAction('缴费','安全培训',['安全培训原则上不得缺席。'])).toBe(false)
   })
   it('keeps labelled scope and collective interruption names tied to their own identity and date',()=>{
+    const value='资料室四楼（含自习区）。',adjacent='2.暂停开放范围：'+value
+    expect(supportedLabelledEventName('资料室四楼（含自习区）暂停开放',[value],adjacent,[])).toBe('EXPLICIT_ADJACENT_OPERATION_RANGE_LABEL')
+    for(const text of ['2.暂停开放范围：其他楼层。地点：'+value,'2.若有施工，暂停开放范围：'+value,'2.暂停开放范围：除'+value])expect(supportedLabelledEventName('资料室四楼（含自习区）暂停开放',[value],text,[])).toBeNull()
+    expect(supportedLabelledEventName('资料室四楼暂停开放',[value],adjacent,[])).toBeNull()
     const scope='暂停开放范围：资料室二楼（含自习区）。'
     expect(supportedLabelledEventName('资料室二楼暂停开放',[scope],scope,[])).toBe('EXPLICIT_OPERATION_RANGE_LABEL')
     expect(supportedLabelledEventName('资料室三楼暂停开放',[scope],scope,[])).toBeNull()
+    const opening='资料室本学期将于8月12日正式开馆，恢复服务。'
+    expect(supportedEventOperation('资料室正式开馆',[opening],opening,true)).toBe(true)
+    for(const text of ['若审批通过，资料室本学期将于8月12日正式开馆。','其他馆室本学期将于8月12日正式开馆。'])expect(supportedEventOperation('资料室正式开馆',[text],text,true)).toBe(false)
     const q='在8月12日0：00—2：00的停电时段内，资料室预约系统及其他在线服务将暂时无法正常使用。',name='资料室在线服务暂停（8月12日停电时段）'
     expect(supportedLabelledEventName(name,[q],q,['8月12日0：00—2：00'])).toBe('EXPLICIT_COLLECTIVE_SERVICE_AND_OWN_DATE')
     expect(supportedLabelledEventName(name,[q],q,['8月13日0：00—2：00'])).toBeNull()

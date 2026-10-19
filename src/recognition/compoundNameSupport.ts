@@ -1,4 +1,4 @@
-export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.6.0'
+export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.6.1'
 const escape=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')
 /** Closed grammatical equivalence, not a bag of words across source clauses. */
 export function supportedCoordinatedObject(value:string,action:string,quotes:string[]):boolean {
@@ -51,12 +51,12 @@ export function supportedEventOperation(value:string,quotes:string[],sourceText:
       if(/若|如果|假如|取消|不再|不会|不|勿|不得|未计划/u.test(prefix))return false
       found=true
     }
-    const timed=new RegExp(`${escape(entity)}((?:将|在|于|进行|\\d|年|月|日|周|星期|本|次|晚|上|午|下|早|凌晨|时|点|分|秒|到|至|[一二三四五六七八九十零〇]|[（()）:：—–\\-\\s]){0,64})${escape(operation)}(?:[，。；]|$)`,'gu')
+    const timed=new RegExp(`${escape(entity)}((?:本学期|将|在|于|进行|\\d|年|月|日|周|星期|本|次|晚|上|午|下|早|凌晨|时|点|分|秒|到|至|[一二三四五六七八九十零〇]|[（()）:：—–\\-\\s]){0,64})${escape(operation)}(?:[，。；]|$)`,'gu')
     for(const m of allowTimedOperationNames?text.matchAll(timed):[]){
       const prefix=text.slice(0,m.index).split(/[，。；\n]/u).at(-1)??''
       if(/若|如果|假如|取消|不|未|勿/u.test(prefix))return false
       const sentenceLead=text.slice(0,m.index).split(/[。；\n]/u).at(-1)??''
-      if(operation==='暂停服务'&&/(?:若|如果|假如)/u.test(sentenceLead))return false
+      if(/(?:若|如果|假如)/u.test(sentenceLead))return false
       found=true
     }
   }
@@ -83,6 +83,9 @@ export function supportedLabelledEventName(value:string,quotes:string[],source:s
   const own=quotes.filter(q=>q&&source.includes(q)&&source.indexOf(q)===source.lastIndexOf(q))
   const labelled=/^(.+?)(暂停开放)$/u.exec(value)
   if(labelled&&own.some(q=>new RegExp('^'+escape(labelled[2])+'范围[：:]\\s*'+escape(labelled[1])+'(?:（[^）]*）)?[。.]?$','u').test(q.trim())))return 'EXPLICIT_OPERATION_RANGE_LABEL'
+  // A uniquely cited value may omit only its immediately adjacent field label.
+  // Retain the full parenthetical scope. No other clause supplies the role.
+  if(labelled&&own.some(q=>q.trim().replace(/[。.]$/u,'')===labelled[1]&&new RegExp('^\\s*(?:\\d+[.、]\\s*)?'+escape(labelled[2])+'范围[：:]\\s*$','u').test(source.slice(0,source.indexOf(q)).split(/[。；\n]/u).at(-1)??'')))return 'EXPLICIT_ADJACENT_OPERATION_RANGE_LABEL'
   const collective=/^(.+?)在线服务暂停（((?:\d{1,2}月\d{1,2}日))停电时段）$/u.exec(value)
   if(!collective)return null
   const [,facility,date]=collective
