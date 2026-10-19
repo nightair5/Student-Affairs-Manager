@@ -16,6 +16,13 @@ async function informationFixture() {
 }
 
 describe('source information visible without inventing entity ownership', () => {
+  it('a model-declared equipment requirement is visible as a literal source note, with no fabricated owner or new entity',()=>{
+    const note='活动免费，需自备绘图板等工具。',source='请提交画稿。'+note,r=ordinaryWorkflowFixture(source);r.evidence.push({id:'INFO',sourceId:'pending-source',quote:note,field:'requirement'});r.ignoredContent=[{text:'需自备绘图板等工具',reason:'background'}]
+    const before=structuredClone(r),first=assembleCurrentFirstSuggestion(r,{sourceText:source,referenceTime:'2027-04-01T09:00:00+08:00',timezone:'Asia/Shanghai'})
+    expect(first.result.ignoredContent).toContainEqual({text:note,reason:'other'});expect(first.result.standaloneTasks).toHaveLength(r.standaloneTasks.length);expect(first.result.materials).toHaveLength(r.materials.length);expect(r).toEqual(before)
+    const negative=structuredClone(r);negative.evidence.at(-1)!.quote='不是需自备绘图板等工具。';retainDeclaredSourceInformation(negative,'请提交画稿。不是需自备绘图板等工具。');expect(negative.ignoredContent[0].text).toBe('不是需自备绘图板等工具。')
+    const missing=structuredClone(r);missing.ignoredContent=[];expect(retainDeclaredSourceInformation(missing,source).decisions).toEqual([])
+  })
   it('ordinary assembly retains an existing unassigned requirement citation, not the model annotation opinion',()=>{
     const note='新生的课程安排请关注教务网站后续通知。',source='请提交画稿。'+note,r=ordinaryWorkflowFixture(source)
     r.evidence.push({id:'INFO',sourceId:'pending-source',quote:note,field:'requirement'})

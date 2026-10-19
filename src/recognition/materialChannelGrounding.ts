@@ -5,7 +5,7 @@ import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sou
 import { verifyWorkflowChannelEvidence, type WorkflowMaterialSupport } from './workflowChannelSupport'
 import {citedDeliveryContexts,type CitedDeliveryContext} from './citedDeliveryContext'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.11.0'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.11.1'
 export const WORKFLOW_MATERIAL_CHANNEL_VERSION = 'material-declared-workflow-channel-1.0.0'
 export interface MaterialChannelDecision {
   materialId: string
@@ -37,7 +37,7 @@ function citedClauses(evidence: Array<{quote:string}>, sourceText: string) {
   // A line break inside one cited delivery is layout. The closed role grammar
   // below still requires the actual object/action/destination in order; it
   // cannot borrow across a sentence or a different object's intervening text.
-  return [...new Set([...evidence.map(e=>e.quote),...joined.map(s=>sourceText.slice(s.start,s.end))])].flatMap(q=>q.split(/[，。；]/u))
+  return [...new Set([...evidence.map(e=>e.quote),...joined.map(s=>sourceText.slice(s.start,s.end))])].flatMap(q=>[...q.split(/[，。；]/u),...(/https:\/\//u.test(q)&&/登录/u.test(q)&&/通过/u.test(q)?[q]:[])])
 }
 /** Role evidence, not token overlap: a receipt is not an instruction to send there. */
 function destinationRole(clause: string, object: string, channel: string, siblingObjects: string[] = []) {
@@ -56,6 +56,11 @@ function destinationRole(clause: string, object: string, channel: string, siblin
     text = text.replace(new RegExp(`[（(]${escaped(composite[2])}[）)]$`, 'u'), '')
   }
   const c = escaped(label)
+  // A site plus its submission module is one explicit route. The original
+  // quote states login(site+URL), then submit(object) through that module.
+  // Validate those ordered roles, not merely that their words occur nearby.
+  const stepped=/^([^（）()]+)[（(](https:\/\/[^\s（）()]+)[）)](.+)$/u.exec(compact(channel))
+  const steppedRole=stepped?new RegExp(`登录${escaped(stepped[1])}[（(]${escaped(stepped[2])}[）)][，,](?:然后)?通过${escaped(stepped[3])}(?:直接)?(?:提交|上传|发送)${o}(?:$|[，。；])`,'u').exec(text):null
   const action = '(?:提交|上传|递交|发送|交付|送交|交)'
   const statedTime='(?:(?:当日|同日|当天)|(?:(?:\\d{4}年)?\\d{1,2}月\\d{1,2}日))?(?:\\d{1,2}:[0-5]\\d)(?:[-—–]\\d{1,2}:[0-5]\\d)?(?:前)?'
   // Only a closed object/destination or a separate post-submission action can follow.
@@ -81,15 +86,16 @@ function destinationRole(clause: string, object: string, channel: string, siblin
     new RegExp(`${o}(?:的)?(?:提交渠道|提交地址|接收邮箱|提交入口)(?:为|是|：|:)${c}${end}`, 'u'),
     new RegExp(`(?:通过|经由|在)${c}(?:完成|进行)${o}(?:登记|填报|注册)${end}`, 'u'),
     new RegExp(`(?:通过|经由|在)${c}(?:登记|填报|注册)${o}${end}`, 'u'),
-  ].map(pattern => pattern.exec(text)).find(match => match !== null) ?? listed
+  ].map(pattern => pattern.exec(text)).find(match => match !== null) ?? listed ?? steppedRole
   if (!matched) return null
   // Literal object/destination names are values, not grammatical conditions (e.g. 若水).
   // Only an explicit separate receipt-printing note may be excluded. Other trailing
   // conditions, prohibitions and contradictions still participate in the decision.
   const receiptNote = /(?:并|且)(?:保留|保存)(?:电子)?回执([（(](?:无需|无须|不用|不必)打印(?:纸质版|纸质回执)?[）)])$/u.exec(text)
   const unrelatedQualifier = receiptNote?.[1] ?? null
-  const polarityText = (unrelatedQualifier ? text.slice(0, -unrelatedQualifier.length) : text)
+  let polarityText = (unrelatedQualifier ? text.slice(0, -unrelatedQualifier.length) : text)
     .replaceAll(compact(object), '<对象>').replaceAll(label, '<渠道>')
+  if(steppedRole)for(const value of stepped!.slice(1))polarityText=polarityText.replaceAll(value,'<渠道组成>')
   // Do not collapse a double negative, condition, example, or question into permission.
   const uncertain = /请勿|勿|不要|不得|不应|不可|不能|不准|不允许|禁止|不必|无需|无须|不用|尚未|未明确|不是|并非|未必|不一定|不建议|不推荐|若|如果|例如|假如|是否|能否/u.test(polarityText)
   return { polarity: uncertain ? 'NEGATED_OR_UNCERTAIN' as const : 'AFFIRMATIVE' as const,

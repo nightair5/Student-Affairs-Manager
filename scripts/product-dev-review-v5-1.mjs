@@ -3,6 +3,7 @@
 import {reviewV5} from './product-dev-review-v5.mjs'
 import {projectLiteralSourceEvidence,resolveLiteralSourceSpan} from '../cloudflare/recognition-literal-evidence.mjs'
 import {citedRelativeCutoff} from '../cloudflare/cited-relative-cutoff.mjs'
+import {parseChineseTimeAst} from '../cloudflare/chinese-time-ast.generated.mjs'
 export const PRODUCT_REVIEW_V51_VERSION='product-development-review-5.1.0'
 export function reviewV51(result,source,options={}){
  const out=reviewV5(result,source,options)
@@ -16,12 +17,30 @@ export function reviewV51(result,source,options={}){
  const compatible=(e,x)=>contains(e.title+' '+(e.description??''),x.object)&&(!x.location||contains(e.location,x.location))&&['start','end'].every(role=>{const p=points.find(p=>p.tempId===e[role+'TimePointTempId']);return(!x[role]||!!p&&p.type==='event_'+role&&(x[role].length===10?stamp(p.normalizedValue)?.slice(0,10):stamp(p.normalizedValue))===x[role])&&(!x[role+'Unknown']||!p||p.normalizedValue===null)})
  const allocation=new Map(),assign=(index,seen)=>{for(let n=0;n<events.length;n++){if(seen.has(n)||!compatible(events[n],expectedEvents[index]))continue;seen.add(n);if(!allocation.has(n)||assign(allocation.get(n),seen)){allocation.set(n,index);return true}}return false}
  if(expectedEvents.length>1&&expectedEvents.every((_,i)=>assign(i,new Set()))){
-  const removed=out.issues.filter(i=>['MISSING_EVENT','EVENT_TIME_ROLE_OR_VALUE','MISSING_EVENT_LOCATION'].includes(i.code))
+  const removed=out.issues.filter(i=>['MISSING_EVENT','EVENT_TIME_ROLE_OR_VALUE','MISSING_EVENT_LOCATION','GUESSED_UNPUBLISHED_EVENT_TIME'].includes(i.code))
   if(removed.length){for(const i of removed){out.matched++;if(i.code==='MISSING_EVENT'){const x=i.detail,more=['start','end'].filter(role=>x[role]||x[role+'Unknown']).length+(x.location?1:0);out.required+=more;out.matched+=more}}
    out.issues=out.issues.filter(i=>!removed.includes(i)&&i.code!=='EXTRA_EVENT_REQUIRES_ADJUDICATION');for(let n=0;n<events.length;n++)if(!allocation.has(n))out.issues.push({failure_layer:'REFERENCE',code:'EXTRA_EVENT_REQUIRES_ADJUDICATION',detail:events[n].title})
    out.scorerEventMatchingBugFix={code:'ONE_TO_ONE_SAME_OBJECT_ENDPOINT_MATCH',removed,assignment:[...allocation].map(([actual,expected])=>({eventId:events[actual].tempId,expected}))}
   }
  }
+ // A source-stated forecast date is different from an unpublished date. The
+ // existing contract allows that value only while pending and unselected.
+ // Check the same event/endpoint citation, exact parsed value and precision;
+ // never accept a guessed date, a firm selection or another object's forecast.
+ const forecastIssues=out.issues.filter(i=>i.code==='GUESSED_UNPUBLISHED_EVENT_TIME'&&['start','end'].includes(i.detail?.role)&&events.some(e=>{
+  if(!contains(e.title+' '+(e.description??''),i.detail.expected.object))return false
+  const role=i.detail.role,p=points.find(p=>p.tempId===e[role+'TimePointTempId']);if(!p?.normalizedValue||p.type!=='event_'+role||p.needsConfirmation!==true||p.selected!==false)return false
+  return(result.evidence??[]).some(q=>{
+   if(!e.evidenceIds?.includes(q.id)||!p.evidenceIds?.includes(q.id)||typeof q.quote!=='string'||!source.text.includes(q.quote))return false
+   const span=resolveLiteralSourceSpan(p.rawText,q.quote);if(!span)return false
+   const lead=q.quote.slice(0,span.start).split(/[，,。；;]/u).at(-1)?.trim()??'',text=span.literal.replace(/\s/gu,''),tail=q.quote.slice(span.end).trim()
+   const stated=/^(?:预计|暂定|拟定)(?:于)?$/u.test(lead)||lead===''&&/^(?:预计|暂定|拟定)(?:于)?/u.test(text)
+   if(!stated||!/(?:恢复|结束|完成|完毕)/u.test(text+tail)||/未公布|待公布|另行通知/u.test(text+tail))return false
+   const ast=parseChineseTimeAst(p.rawText,{referenceTime:source.referenceTime,timezone:source.timezone??'Asia/Shanghai',type:p.type})
+   return !!ast.normalizedValue&&!ast.needsConfirmation&&p.precision===ast.precision&&stamp(p.normalizedValue)===stamp(ast.normalizedValue)
+  })
+ }))
+ if(forecastIssues.length){out.issues=out.issues.filter(i=>!forecastIssues.includes(i));out.matched+=forecastIssues.length;out.scorerForecastBugFix={code:'SOURCE_STATED_FORECAST_REMAINS_PENDING_NOT_UNPUBLISHED',removed:forecastIssues}}
  // Severity bug fix, not a change to the literal wire contract: a uniquely
  // reversible citation-format mismatch is still a wire issue, but does not
  // demonstrate loss of its original source. Keep the issue and partial grade.

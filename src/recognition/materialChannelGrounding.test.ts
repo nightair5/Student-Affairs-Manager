@@ -20,6 +20,12 @@ async function recorded(n=10) {
   return { s, context, decoded:decodeCurrentSourceRecording(raw(n),n===10?'Candidate19':'Candidate17',context) }
 }
 describe('source role grounded ordinary material channels',()=>{
+  it('validates the complete site URL and module as one cited login-then-submit route, never another object, URL or a receipt',()=>{
+    const channel='若水学院官网（https://example.edu/）“作品投稿”专项板块',source='请登录若水学院官网（https://example.edu/），通过“作品投稿”专项板块提交电子文稿。'
+    const make=(text:string,value=channel)=>{const r=ordinaryWorkflowFixture(text),t=r.standaloneTasks[0],m=r.materials[0];t.actionVerb='提交';t.actionObject='电子文稿';t.materialTempIds=[m.tempId];t.evidenceIds=['Q'];m.name='电子文稿';m.relatedTaskTempIds=[t.tempId];m.evidenceIds=['Q'];m.submissionChannel=value;r.evidence=[{id:'Q',sourceId:'pending-source',quote:text,field:'materials'}];return r}
+    expect(groundMaterialChannels(make(source),source).result.materials[0].submissionChannel).toBe(channel)
+    for(const [text,value]of [[source,channel.replace('example.edu','other.edu')],[source,channel.replace('作品投稿','奖学金')],[source.replace('电子文稿','成绩单'),channel],['请勿'+source,channel],['如果通过审核，'+source,channel],[source.replace('提交电子文稿','显示电子文稿接收成功'),channel]])expect(groundMaterialChannels(make(text,value),text).result.materials[0].submissionChannel).toBeNull()
+  })
   it('one literal delivery survives line layout without borrowing another object destination or reversing a prohibition',()=>{
     const make=(source:string)=>{const r=ordinaryWorkflowFixture(source),task=r.standaloneTasks[0],material=r.materials[0];task.actionVerb='提交';task.actionObject='画稿';task.materialTempIds=[material.tempId];task.evidenceIds=['Q'];material.name='画稿';material.submissionChannel='邮箱[邮箱1]';material.relatedTaskTempIds=[task.tempId];material.evidenceIds=['Q'];r.evidence=[{id:'Q',sourceId:'pending-source',quote:source,field:'materials'}];return r}
     const source='请将画稿\n提交\n至邮箱\n[邮箱1]。',r=make(source)
