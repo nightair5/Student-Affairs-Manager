@@ -18,6 +18,22 @@ function event(){
   return {r,source}
 }
 describe('existing cross-date clock values through the ordinary confirmation chain',()=>{
+  it.each(['预计','可能','拟定','暂定','尚未确定','待确定'])('a %s schedule stays unselected through the ordinary first suggestion',status=>{
+    const {r}=event(),literal='2027年4月16日14:30-16:30',source=`讲座${status}于${literal}举行。`
+    r.evidence[0].quote=source;r.events[0].title='讲座';r.events[0].description=source
+    r.timePoints.forEach((p,i)=>{p.rawText=literal;p.normalizedValue='2027-04-16T'+(i?'16:30':'14:30')})
+    const before=structuredClone(r),first=assembleCurrentFirstSuggestion(r,{sourceText:source,referenceTime,timezone})
+    expect(first.result.timePoints.every(p=>p.needsConfirmation&&p.selected===false)).toBe(true)
+    expect(r).toEqual(before)
+  })
+  it('an unrelated later uncertain effect does not make a firm interval tentative',()=>{
+    const {r}=event(),literal='2027年4月16日14:30-16:30',source=`讲座时间：${literal}，结束后可能下雨。`
+    r.evidence[0].quote=source;r.events[0].title='讲座';r.events[0].description=source
+    r.timePoints.forEach((p,i)=>{p.rawText=literal;p.normalizedValue='2027-04-16T'+(i?'16:30':'14:30')})
+    const first=assembleCurrentFirstSuggestion(r,{sourceText:source,referenceTime,timezone})
+    expect(first.result.timePoints.map(p=>p.normalizedValue)).toEqual(['2027-04-16T14:30','2027-04-16T16:30'])
+    expect(first.result.timePoints.every(p=>!p.needsConfirmation&&p.selected)).toBe(true)
+  })
   it('preserves the correct end at first display and formal independent readback without human edits',async()=>{
     const {r,source}=event(),original=structuredClone(r),first=assembleCurrentFirstSuggestion(parseRecognitionResult(r),{sourceText:source,referenceTime,timezone})
     expect(first.result.timePoints.map(p=>p.normalizedValue)).toEqual(['2027-04-09T09:00','2027-04-12T16:00'])

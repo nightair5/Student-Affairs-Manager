@@ -1,4 +1,4 @@
-export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.5.0'
+export const COMPOUND_NAME_SUPPORT_VERSION='source-compound-name-support-1.5.1'
 const escape=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')
 /** Closed grammatical equivalence, not a bag of words across source clauses. */
 export function supportedCoordinatedObject(value:string,action:string,quotes:string[]):boolean {
@@ -56,7 +56,7 @@ export function supportedEventOperation(value:string,quotes:string[],sourceText:
       const prefix=text.slice(0,m.index).split(/[，。；\n]/u).at(-1)??''
       if(/若|如果|假如|取消|不|未|勿/u.test(prefix))return false
       const sentenceLead=text.slice(0,m.index).split(/[。；\n]/u).at(-1)??''
-      if(operation==='暂停服务'&&/(?:若|如果|假如)[^。；\n]{0,40}[，,]\s*$/u.test(sentenceLead))return false
+      if(operation==='暂停服务'&&/(?:若|如果|假如)/u.test(sentenceLead))return false
       found=true
     }
   }

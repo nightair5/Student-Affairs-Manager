@@ -37,6 +37,10 @@ describe('source-backed display labels retain their exact identity and operation
     expect(supportedEventOperation('“图书查询”功能暂停服务', [negative], negative, true)).toBe(false)
     const conditional = '若审批通过，“图书查询”功能于8月12日暂停服务。'
     expect(supportedEventOperation('“图书查询”功能暂停服务', [conditional], conditional, true)).toBe(false)
+    for (const connector of ['届时', '学院届时将安排', '审核完成后']) {
+      const conditionalLater = `若审批通过，${connector}“图书查询”功能于8月12日暂停服务。`
+      expect(supportedEventOperation('“图书查询”功能暂停服务', [conditionalLater], conditionalLater, true)).toBe(false)
+    }
   })
 })
 

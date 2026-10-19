@@ -1,12 +1,12 @@
 import {parseChineseTimeAst} from './chinese-time-ast.generated.mjs'
-export const CITED_CLOCK_RANGE_VERSION='cited-clock-range-role-1.2.0'
+export const CITED_CLOCK_RANGE_VERSION='cited-clock-range-role-1.2.1'
 const unique=values=>[...new Set(values)]
 
 // The shared lexer owns clock syntax, including width and an inherited
 // afternoon. This layer only chooses the role of an already-declared, cited
 // event endpoint; it cannot create a missing endpoint or change its owner.
 function citedSingleDayAstRange(point,input,source,referenceTime,timezone){
-  if(!['event_start','event_end'].includes(point.type)||point.selected===false)return null
+  if(!['event_start','event_end'].includes(point.type))return null
   const ast=parseChineseTimeAst(point.rawText,{referenceTime,timezone,type:'event_start'})
   if(ast.precision!=='exact'||ast.needsConfirmation||!ast.normalizedValue||!ast.rangeEndNormalizedValue
     ||ast.rangeEndNormalizedValue<=ast.normalizedValue)return null
@@ -14,16 +14,24 @@ function citedSingleDayAstRange(point,input,source,referenceTime,timezone){
   if(ast.normalizedValue.slice(0,10)!==ast.rangeEndNormalizedValue.slice(0,10))return null
   const cited=(input.evidence??[]).filter(e=>point.evidenceIds?.includes(e.id)&&typeof e.quote==='string'&&source.includes(e.quote)&&e.quote.includes(point.rawText))
   const quotes=unique(cited.map(e=>e.quote));if(quotes.length!==1||source.indexOf(point.rawText)!==source.lastIndexOf(point.rawText))return null
+  // Retain tentative endpoints without making them directly acceptable. A
+  // literal clock is not proof that the surrounding schedule is final.
+  // Limit this check to the range's own clause, not a later uncertain effect.
+  const at=quotes[0].indexOf(point.rawText)
+  const lead=quotes[0].slice(0,at).split(/[。；;]/u).at(-1)??''
+  const tail=quotes[0].slice(at+point.rawText.length).split(/[，,。；;]/u)[0]
+  const tentative=/暂定|拟定|预计|可能|尚未确定|待确定/u.test(lead+point.rawText+tail)
+  if(point.selected===false&&!tentative)return null
   const owners=(input.events??[]).filter(e=>e.startTimePointTempId===point.tempId||e.endTimePointTempId===point.tempId)
   // Task-owned handling windows already have a separate, proven projection.
   // An event-only repair must not quarantine those existing valid endpoints.
   if(!owners.length)return null
   const supported=owners.length===1&&owners[0][point.type==='event_end'?'endTimePointTempId':'startTimePointTempId']===point.tempId
     &&cited.some(e=>owners[0].evidenceIds?.includes(e.id))
-  const reason=!supported?'RANGE_OWNER_NOT_CLOSED':/取消|作废|如果|假如|若|暂定|待定|另行通知/u.test(quotes[0])?'RANGE_NOT_UNCONDITIONALLY_CURRENT':null
+  const reason=!supported?'RANGE_OWNER_NOT_CLOSED':/取消|作废|如果|假如|若|待定|另行通知/u.test(quotes[0])?'RANGE_NOT_UNCONDITIONALLY_CURRENT':tentative?'RANGE_TENTATIVE':null
   const value=point.type==='event_end'?ast.rangeEndNormalizedValue:ast.normalizedValue
   const endpoint=value.replace(/^(\d{4})-(\d{2})-(\d{2})T/u,'$1年$2月$3日')
-  const next=reason?{...point,normalizedValue:null,isAllDay:false,precision:'vague',needsConfirmation:true,selected:false}
+  const next=reason?{...point,normalizedValue:reason==='RANGE_TENTATIVE'?value:null,isAllDay:false,precision:reason==='RANGE_TENTATIVE'?'exact':'vague',needsConfirmation:true,selected:false}
     :{...point,normalizedValue:value,timezone:ast.timezone,isAllDay:false,precision:'exact',needsConfirmation:false,selected:point.selected!==false}
   return {next,decision:{pointId:point.tempId,rawText:point.rawText,role:point.type,ownerIds:owners.map(e=>e.tempId),evidenceIds:cited.map(e=>e.id),quote:quotes[0],before:{normalizedValue:point.normalizedValue??null,needsConfirmation:Boolean(point.needsConfirmation),selected:point.selected!==false},after:{normalizedValue:next.normalizedValue,needsConfirmation:next.needsConfirmation,selected:next.selected},endpoint:reason?null:endpoint,reason:reason??'EXISTING_CITED_AST_CLOCK_ENDPOINT',blocked:Boolean(reason)}}
 }

@@ -1,3 +1,3 @@
-export const CITED_CLOCK_RANGE_VERSION: 'cited-clock-range-role-1.2.0'
+export const CITED_CLOCK_RANGE_VERSION: 'cited-clock-range-role-1.2.1'
 export interface CitedClockRangeDecision {pointId:string;rawText:string;role:string;ownerIds:string[];evidenceIds:string[];quote:string;before:{normalizedValue:string|null;needsConfirmation:boolean;selected:boolean};after:{normalizedValue:string|null;needsConfirmation:boolean;selected:boolean};endpoint:string|null;reason:string;blocked:boolean}
 export function projectCitedClockRanges<T>(input:T,source:string,referenceTime:string,timezone?:string):{result:T;audit:{version:typeof CITED_CLOCK_RANGE_VERSION;decisions:CitedClockRangeDecision[]}}

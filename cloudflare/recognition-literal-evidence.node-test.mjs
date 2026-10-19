@@ -2,7 +2,7 @@ import test from'node:test';import assert from'node:assert/strict';import{projec
 import{projectCitedTimeLiterals}from'./cited-time-literal.mjs'
 
 test('an existing time keeps the literal layout of its own unique citation without supplying facts',()=>{
- const source='请于2027年6月\n8日18：30\n前提交报告。',raw={evidence:[{id:'Q',quote:source}],standaloneTasks:[{tempId:'T',actionObject:'报告'}],timePoints:[{tempId:'D',rawText:'2027年6月8日18:30前',normalizedValue:'2027-06-08T18:30',relatedTaskTempIds:['T'],evidenceIds:['Q']}]},before=structuredClone(raw)
+ const source='请于2027年6月\n8日18：30\n前提交报告。',raw={evidence:[{id:'Q',quote:source}],standaloneTasks:[{tempId:'T',actionObject:'报告',actionVerb:'提交',evidenceIds:['Q']}],timePoints:[{tempId:'D',rawText:'2027年6月8日18:30前',normalizedValue:'2027-06-08T18:30',relatedTaskTempIds:['T'],evidenceIds:['Q']}]},before=structuredClone(raw)
  const out=projectCitedTimeLiterals(raw,source),d=out.audit.decisions[0]
  assert.equal(out.result.timePoints[0].rawText,'2027年6月\n8日18：30\n前');assert.equal(source.slice(d.start,d.end),d.after)
  assert.equal(out.result.timePoints[0].normalizedValue,raw.timePoints[0].normalizedValue);assert.deepEqual(out.result.timePoints[0].relatedTaskTempIds,['T'])
@@ -29,8 +29,18 @@ test('already-literal time fields stay byte-for-byte and reference-identical',()
  const source='9月8日18:00提交报告。',raw={evidence:[{id:'Q',quote:source}],timePoints:[{tempId:'P',rawText:'9月8日18:00',evidenceIds:['Q']}]}
  const out=projectCitedTimeLiterals(raw,source);assert.equal(out.result,raw);assert.deepEqual(out.audit.decisions,[])
 })
+test('one object with a later administrative action cannot donate that action date to student submission',()=>{
+ for(const separator of ['。','，']){
+  const a='学生应于5月8日前提交报告',b='学院将于5\n月\n12\n日前审核报告',source=a+separator+b+'。'
+  const raw={evidence:[{id:'A',quote:a},{id:'B',quote:b}],standaloneTasks:[{tempId:'T',actionVerb:'提交',actionObject:'报告',timePointTempIds:['D'],evidenceIds:['A']}],timePoints:[{tempId:'D',type:'task_deadline',rawText:'5月12日前',relatedTaskTempIds:['T'],evidenceIds:['B']}]},before=structuredClone(raw)
+  assert.deepEqual(projectCitedTimeLiterals(raw,source).result,before)
+  // Sharing a broader citation still cannot merge two different actions.
+  raw.evidence=[{id:'Q',quote:source}];raw.standaloneTasks[0].evidenceIds=['Q'];raw.timePoints[0].evidenceIds=['Q']
+  assert.deepEqual(projectCitedTimeLiterals(raw,source).audit.decisions,[])
+ }
+})
 test('malformed unrelated items remain available to the existing local isolator without crashing a good cited time',()=>{
- const source='请于6月\n8日提交报告。',raw={evidence:[null,{id:'Q',quote:source}],standaloneTasks:[null,{tempId:'T',actionObject:'报告'}],milestones:[null,{tasks:null,workPackages:[null]}],events:[null],timePoints:[null,{tempId:'P',rawText:'6月8日',relatedTaskTempIds:['T'],evidenceIds:['Q']}]},before=structuredClone(raw)
+ const source='请于6月\n8日提交报告。',raw={evidence:[null,{id:'Q',quote:source}],standaloneTasks:[null,{tempId:'T',actionObject:'报告',actionVerb:'提交',evidenceIds:['Q']}],milestones:[null,{tasks:null,workPackages:[null]}],events:[null],timePoints:[null,{tempId:'P',rawText:'6月8日',relatedTaskTempIds:['T'],evidenceIds:['Q']}]},before=structuredClone(raw)
  const out=projectCitedTimeLiterals(raw,source);assert.equal(out.result.timePoints[1].rawText,'6月\n8日');assert.equal(out.result.timePoints[0],null);assert.deepEqual(out.result.milestones,raw.milestones);assert.deepEqual(raw,before)
  const bad=structuredClone(raw);bad.timePoints[1].evidenceIds={Q:true};assert.deepEqual(projectCitedTimeLiterals(bad,source).audit.decisions,[])
 })

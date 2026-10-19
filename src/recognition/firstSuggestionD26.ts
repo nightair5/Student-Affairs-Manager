@@ -23,7 +23,7 @@ import {projectCitedTimeLiterals,type CitedTimeLiteralAudit} from '../../cloudfl
 import {resolveLiteralSourceSpan} from '../../cloudflare/recognition-literal-evidence.mjs'
 import {isolateRecognitionItems,unanchoredAcademicWeek,LOCAL_ISOLATION_NOTE_PREFIX,LOCAL_ISOLATION_VERSION,type LocalIsolationAudit} from '../../cloudflare/recognition-local-isolation.mjs'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.27.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.27.1'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION

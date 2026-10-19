@@ -30,6 +30,15 @@ test('a working task-owned handling window keeps its values, selection and confl
  const before=structuredClone(raw),out=projectCitedClockRanges(raw,source,reference,timezone)
  assert.deepEqual(out.result,before);assert.deepEqual(raw,before);assert.ok(out.audit.decisions.every(d=>!d.blocked))
 })
+test('a tentative clock range never becomes confirmed through the two actual Worker stages',()=>{
+ for(const status of ['预计','可能','拟定','暂定','尚未确定','待确定']){
+  const {raw}=fixture(),literal='2027年4月16日14:30-16:30',source=`讲座${status}于${literal}举行。`
+  raw.events[0].title='讲座';raw.evidence[0].quote=source
+  raw.timePoints.forEach((p,i)=>{p.rawText=literal;p.normalizedValue='2027-04-16T'+(i?'16:30':'14:30')})
+  const before=structuredClone(raw),out=normalizeRecognitionResult(applyDeterministicTimeAst(raw,reference,timezone,source),source,reference,undefined,undefined,true,timezone)
+  assert.ok(out.timePoints.every(p=>p.needsConfirmation&&p.selected===false),status);assert.deepEqual(raw,before)
+ }
+})
 function fixture(){const rawText='2027年4月9日09:00—4月12日16:00',source='答疑活动时间：'+rawText+'。',evidence=[{id:'Q',quote:source,field:'event'}],point={rawText,timezone,isAllDay:false,precision:'exact',needsConfirmation:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:['Q'],confidence:1,selected:true};return {source,raw:{schemaVersion:'2.0',evidence,standaloneTasks:[],materials:[],timePoints:[{...point,tempId:'S',type:'event_start',normalizedValue:'2027-04-09T09:00'},{...point,tempId:'E',type:'event_end',normalizedValue:'2027-04-12T16:00'}],events:[{tempId:'EV',title:'答疑活动',startTimePointTempId:'S',endTimePointTempId:'E',evidenceIds:['Q']}],conflicts:[]}}}
 test('a correct cross-date end survives both actual Worker normalization stages; no source or input changes',()=>{
   const {source,raw}=fixture(),original=structuredClone(raw)
