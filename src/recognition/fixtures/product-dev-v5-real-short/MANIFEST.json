@@ -42,8 +42,21 @@
   ],
   "reserved": {
     "name": "reserved-r6",
-    "seen": false,
-    "runPolicy": "One final model attempt; no tuning from the output"
+    "seen": true,
+    "runPolicy": "One final model attempt; no tuning from the output",
+    "firstObservedAt": "2026-10-19T02:32:36.371Z",
+    "batch": "QUALITY-R9-RESERVED-R6-20261019-R1-B1",
+    "settled": 10,
+    "attemptsPerSource": 1,
+    "productSnapshot": "0385ed377b7f845494bdbca6168dd14fece5e224",
+    "noPostObservationTuning": true,
+    "laterSafetyReview": {
+      "productCommit": "a6d2aba0e56adafebf3a8694ad85110e4fc8c7bd",
+      "trigger": "Independent authored negative examples; no tuning from reserved outputs",
+      "reservedModelRerun": false,
+      "originalScoresPreserved": true,
+      "offlineReplay": ".data/quality-r9-real-focus-20261019/RESERVED_R6_SAFETY_FINAL_OFFLINE.json"
+    }
   },
   "limits": [
     "Official public pages, not authenticated student groups; oral style only where present in the actual source.",
