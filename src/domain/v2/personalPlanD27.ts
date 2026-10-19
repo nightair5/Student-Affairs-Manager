@@ -7,7 +7,7 @@ import {projectCitedClockRanges} from '../../../cloudflare/cited-clock-range.mjs
 import {sourceReadinessValue,unresolvedSourceReadiness} from './sourceReadiness'
 
 export const PLAN_VERSION = 'personal-plan-d27-1' as const
-export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.3.2' as const
+export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.3.3' as const
 export const PLAN_RECEIPT = 'personalPlanD27Receipt'
 export const PLAN_UNDO = 'personalPlanD27Undo'
 export type DurationOrigin = 'user' | 'recorded_estimate' | 'product_estimate'
@@ -114,7 +114,7 @@ export function planBaseline(w: WorkspaceV8): string {
   const sourceIds = new Set(w.tasks.map(t => t.legacyData?.sourceId).filter(v => typeof v === 'string'))
   for (const id of relevantVersions) { const v = w.sourceVersions.find(v => v.id === id); if (v) sourceIds.add(v.sourceId) }
   return JSON.stringify({ workspaceId: w.workspace.id, timezone: w.settings.defaultTimezone, sourceWindowProgram: SOURCE_WINDOW_PLAN_VERSION,
-    tasks: sorted(w.tasks).map(t => ({ id: t.id, title: t.title, status: t.status, estimatedMinutes: t.estimatedMinutes, manualPriority: t.manualPriority, snoozedUntil: t.snoozedUntil, dependencyIds: [...t.dependencyIds].sort(), sourceId: t.legacyData?.sourceId ?? null, sourceWindowDeclarations:t.legacyData?.sourceWindowDeclarations??null, gaps: taskGaps(w, t) })),
+    tasks: sorted(w.tasks).map(t => ({ id: t.id, title: t.title, status: t.status, estimatedMinutes: t.estimatedMinutes, manualPriority: t.manualPriority, snoozedUntil: t.snoozedUntil, dependencyIds: [...t.dependencyIds].sort(), sourceId: t.legacyData?.sourceId ?? null, actionVerb:t.legacyData?.actionVerb??null, sourceWindowDeclarations:t.legacyData?.sourceWindowDeclarations??null, gaps: taskGaps(w, t) })),
     times: sorted(w.timePoints).map(p => ({ id: p.id, type: p.type, taskId: p.taskId, eventId: p.eventId, relatedTaskIds: [...p.relatedTaskIds].sort(), relatedMaterialIds:[...p.relatedMaterialIds].sort(), materialId:p.materialId, rawText:p.rawText, normalizedValue: p.normalizedValue, timezone: p.timezone, precision: p.precision, needsConfirmation: p.needsConfirmation, sourceTimeRole:p.legacyData?.sourceTimeRole??null, evidenceIds:p.legacyData?.evidenceIds??null, metadata: p.legacyData?.personalPlanD27 ?? null })),
     sourceWindowEvidence:sorted(w.evidenceRefs.filter(ref=>w.timePoints.some(p=>Array.isArray(p.legacyData?.evidenceIds)&&p.legacyData.evidenceIds.includes(ref.legacyData?.recognitionEvidenceId??null)))).map(ref=>({id:ref.id,sourceVersionId:ref.sourceVersionId,quotedText:ref.quotedText,textStart:ref.textStart,textEnd:ref.textEnd,recognitionEvidenceId:ref.legacyData?.recognitionEvidenceId??null})),
     events: sorted(w.events).map(e => ({ id: e.id, startTimePointId: e.startTimePointId, endTimePointId: e.endTimePointId })),
@@ -124,6 +124,7 @@ export function planBaseline(w: WorkspaceV8): string {
   })
 }
 const reasons: Record<string, string> = {
+  FIXED_EVENT_ENDED:'关联的固定活动已结束；保留原时间，不改排到今天。',FIXED_EVENT_ALREADY_ON_CALENDAR:'按原文固定活动时间行动；已在日历显示，不另排个人开工时间。',FIXED_EVENT_NEEDS_REVIEW:'关联活动的时间尚未完整确定；保留原文，不改排到其他时刻。',
   SOURCE_ACTION_TIME_NEEDS_REVIEW:'原文指定办理时间尚未确定，保留原文，不改排到其他时刻。',SOURCE_ACTION_TIME_OUTSIDE_PLAN:'原文指定办理时刻不在可用范围内或存在冲突；保留指定时间。',
   SOURCE_WINDOW_NEEDS_REVIEW:'原文办理窗口的起止尚未完整确定，先保留待定。', SOURCE_WINDOW_OUTSIDE_PLAN:'本次安排范围不在原文开放窗口内；保留待办，不改原文时间。',
   COMPLETED: '已经完成，不重复安排。', CANCELLED: '已取消，不安排执行。', NOT_APPLICABLE: '资格不适用，不安排执行。', QUALIFICATION_UNKNOWN: '资格尚未确认，先保留待定。', NOT_CURRENT_ACTION: '不是当前有效行动。', RELATION_NEEDS_REVIEW: '修订或关联仍待核对。',
@@ -305,6 +306,10 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
   const contained=(slot:Interval,bounds:SourceBounds)=>bounds.intervals.some(interval=>slot.start>=interval.start&&slot.end<=interval.end)
   const canUse = (slot: Interval, earliest: number, latest: number, bounds:SourceBounds) => Number.isFinite(slot.start) && slot.start >= earliest && slot.end <= latest && contained(slot,bounds) && windows.some(win => slot.start >= win.start && slot.end <= win.end) && ![...fixed, ...occupied].some(b => overlap(slot, b))
   const appointment=(t:Task)=>w.timePoints.filter(p=>p.relatedTaskIds.includes(t.id)&&p.legacyData?.sourceTimeRole==='task_action_time')
+  // Only an explicitly retained attendance verb and existing canonical endpoint
+  // ownership identify a fixed-time action. A preparation/registration task
+  // related to the same event remains independently schedulable.
+  const fixedAttendance=(t:Task)=>/^(?:参加|参会|出席)$/u.test(String(t.legacyData?.actionVerb??''))?w.events.filter(e=>[e.startTimePointId,e.endTimePointId].some(id=>w.timePoints.some(p=>p.id===id&&['event_start','event_end'].includes(p.type)&&(p.taskId===t.id||p.relatedTaskIds.includes(t.id))))):[]
   const tasks = sorted(w.tasks).sort((a, b) => Number(Boolean(appointment(b).length))-Number(Boolean(appointment(a).length)) || (deadline(a).value - deadline(b).value) || (b.manualPriority ?? 0) - (a.manualPriority ?? 0) || a.id.localeCompare(b.id))
   const handled = new Set<string>(), visiting = new Set<string>()
   const cycleIds = new Set<string>(), cycleDone = new Set<string>()
@@ -335,7 +340,7 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     const sourceBounds=sourceWindow(t)
     const sourceAppointments=appointment(t)
     const sourceAppointmentConflict=sourceAppointments.length>0&&(sourceAppointments.length!==1||sourceAppointments[0].needsConfirmation||sourceAppointments[0].precision!=='exact'||pointMs(sourceAppointments[0],zone)!==start)
-    if ([...fixed, ...occupied.slice(0, -1)].some(b => overlap(b, { start, end })) || !windows.some(win => start >= win.start && end <= win.end) || end > deadline(t).value || sourceBounds.invalid || sourceAppointmentConflict || !contained({start,end},sourceBounds) || deadline(t).conflict || staleSource(t) || t.snoozedUntil && start < parseBusinessDateTime(t.snoozedUntil, zone)!.getTime() || taskGaps(w, t).length || cycleIds.has(t.id)) reject(t, 'LOCK_CONFLICT')
+    if (fixedAttendance(t).length || [...fixed, ...occupied.slice(0, -1)].some(b => overlap(b, { start, end })) || !windows.some(win => start >= win.start && end <= win.end) || end > deadline(t).value || sourceBounds.invalid || sourceAppointmentConflict || !contained({start,end},sourceBounds) || deadline(t).conflict || staleSource(t) || t.snoozedUntil && start < parseBusinessDateTime(t.snoozedUntil, zone)!.getTime() || taskGaps(w, t).length || cycleIds.has(t.id)) reject(t, 'LOCK_CONFLICT')
   }
   const schedule = (t: Task): void => {
     if (handled.has(t.id)) return
@@ -347,6 +352,13 @@ export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: stri
     if (cycleIds.has(t.id) || visiting.has(t.id)) { reject(t, 'DEPENDENCY_CYCLE'); return }
     const override = o.overrides[t.id]
     if (override?.later) { reject(t, 'USER_LATER'); return }
+    const attendance=fixedAttendance(t)
+    if(attendance.length){
+      const bounds=attendance.map(e=>({start:pointMs(w.timePoints.find(p=>p.id===e.startTimePointId),zone),end:pointMs(w.timePoints.find(p=>p.id===e.endTimePointId),zone)}))
+      if(bounds.some(b=>b.start===undefined||b.end===undefined||b.end<=b.start))reject(t,'FIXED_EVENT_NEEDS_REVIEW')
+      else reject(t,bounds.every(b=>b.end!<=now)?'FIXED_EVENT_ENDED':'FIXED_EVENT_ALREADY_ON_CALENDAR')
+      return
+    }
     const due = deadline(t)
     const sourceBounds=sourceWindow(t)
     const sourceAppointments=appointment(t)

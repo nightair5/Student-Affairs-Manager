@@ -24,6 +24,33 @@ async function fixture(kind: 'multi' | 'no-date' = 'multi') {
   return { store, repository, w, handle, opts: { ...defaultPlanOptions(new Date(NOW)), startTime: '09:00', endTime: '12:00', days: 2 } as PlanOptions }
 }
 describe('D27 canonical bounded shared plan', () => {
+  it('does not move an ended or future attendance event into a free personal slot; uncertain endpoints remain pending',async()=>{
+    const x=await fixture(),task=x.w.tasks[0];task.legacyData={...task.legacyData,actionVerb:'参加'}
+    const base=x.w.timePoints[0],event={id:'attend-event',projectId:null,title:'匿名说明会',description:null,startTimePointId:'attend-start',endTimePointId:'attend-end',location:'报告厅',createdAt:NOW,updatedAt:NOW}
+    x.w.events.push(event)
+    x.w.timePoints.push(...['attend-start','attend-end'].map((id,i)=>({...base,id,eventId:event.id,taskId:task.id,relatedTaskIds:[task.id],relatedMaterialIds:[],materialId:null,type:i?'event_end' as const:'event_start' as const,normalizedValue:i?'2026-09-04T14:00':'2026-09-04T13:00',precision:'exact' as const,needsConfirmation:false})))
+    const facts=structuredClone(x.w),past=buildPersonalPlan(x.w,x.opts)
+    expect(past.segments.some(s=>s.taskId===task.id)).toBe(false);expect(past.unscheduled.find(s=>s.taskId===task.id)?.code).toBe('FIXED_EVENT_ENDED');expect(x.w).toEqual(facts)
+    const locked={...base,id:'personal-plan:'+task.id,eventId:null,taskId:task.id,relatedTaskIds:[task.id],relatedMaterialIds:[],materialId:null,type:'planned_start' as const,normalizedValue:'2026-09-05T09:00',precision:'exact' as const,needsConfirmation:false,legacyData:{personalPlanD27:{version:'personal-plan-d27-1',minutes:30,durationOrigin:'user',locked:true,operationId:'existing-user-plan',conditionalOn:[]}}}
+    x.w.timePoints.push(locked);const withLock=structuredClone(x.w),retained=buildPersonalPlan(x.w,x.opts)
+    expect(retained.segments.find(s=>s.taskId===task.id)).toMatchObject({retained:true,locked:true});expect(retained.unscheduled.find(s=>s.taskId===task.id)?.code).toBe('LOCK_CONFLICT');expect(x.w).toEqual(withLock)
+    x.w.timePoints.pop()
+    for(const p of x.w.timePoints.filter(p=>p.eventId===event.id))p.normalizedValue=p.normalizedValue!.replace('09-04','09-06')
+    expect(buildPersonalPlan(x.w,x.opts).unscheduled.find(s=>s.taskId===task.id)?.code).toBe('FIXED_EVENT_ALREADY_ON_CALENDAR')
+    x.w.timePoints.find(p=>p.id==='attend-end')!.normalizedValue=null
+    expect(buildPersonalPlan(x.w,x.opts).unscheduled.find(s=>s.taskId===task.id)?.code).toBe('FIXED_EVENT_NEEDS_REVIEW')
+    task.legacyData.actionVerb='准备'
+    expect(buildPersonalPlan(x.w,x.opts).segments.some(s=>s.taskId===task.id)).toBe(true)
+    task.legacyData.actionVerb='报名'
+    expect(buildPersonalPlan(x.w,x.opts).segments.some(s=>s.taskId===task.id)).toBe(true)
+  })
+  it('does not infer fixed attendance by title or by another task endpoint; attendance verb is included in conflict read-set',async()=>{
+    const x=await fixture(),task=x.w.tasks[0];task.title='参加说明会';const before=planBaseline(x.w)
+    task.legacyData={...task.legacyData,actionVerb:'参加'};expect(planBaseline(x.w)).not.toBe(before)
+    const base=x.w.timePoints[0];x.w.events.push({id:'unrelated',projectId:null,title:'说明会',description:null,startTimePointId:'foreign-start',endTimePointId:'foreign-end',location:null,createdAt:NOW,updatedAt:NOW})
+    x.w.timePoints.push(...['foreign-start','foreign-end'].map((id,i)=>({...base,id,eventId:'unrelated',taskId:null,relatedTaskIds:[],relatedMaterialIds:[],materialId:null,type:i?'event_end' as const:'event_start' as const,normalizedValue:i?'2026-09-04T14:00':'2026-09-04T13:00'})))
+    expect(buildPersonalPlan(x.w,x.opts).segments.some(s=>s.taskId===task.id)).toBe(true)
+  })
   it('rejects an expired preview before writing; current source version drift also rejects, even with identical task values', async () => {
     const x = await fixture(); const proposal = buildPersonalPlan(x.w, x.opts)
     await expect(applyPlan(x.repository, proposal, () => new Date('2026-09-05T10:00:00+08:00'))).rejects.toThrow('PERSONAL_PLAN_ELAPSED_SLOT')
