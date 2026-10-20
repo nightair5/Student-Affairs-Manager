@@ -53,7 +53,10 @@ export function projectSourceObligationViews(r: RecognitionResult, source: strin
     base.materialTempIds = distinct([...base.materialTempIds, ...fallback.materialTempIds])
     // Conjoining branch-specific "collected in this window" criteria would
     // require the same delivery twice. Originals remain in audit/source prose.
-    base.completionCriteria = [`已按实际适用的一种办理机会领取${base.actionObject}；正常与补领无需重复完成。`]
+    const commonRequirements=distinct(evidence.flatMap(e=>e!.quote.split(/[。；]/u).map(q=>q.trim())).filter(q=>
+      /采用|凭|携带|带上|出示|要求|(?:以|按).{1,80}为准|需|须|必须|应当/u.test(q)
+      && ![a[0],b[0]].some(window=>q.includes(window.rawText))))
+    base.completionCriteria = [`已按实际适用的一种办理机会领取${base.actionObject}；正常与补领无需重复完成。`,...commonRequirements]
     if(goal.completedInSource)base.selected=false
     base.description = distinct(evidence.map(e => e!.quote)).join('\n')
     for (const point of r.timePoints) if (point.relatedTaskTempIds.includes(fallback.tempId)) point.relatedTaskTempIds = distinct(point.relatedTaskTempIds.map(id => id === fallback.tempId ? base.tempId : id))

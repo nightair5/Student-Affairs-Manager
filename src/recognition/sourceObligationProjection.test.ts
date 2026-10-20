@@ -57,6 +57,20 @@ describe('one declared receipt goal and activity-owned R3 requirements',()=>{
     if(kind==='changed time')f.r.timePoints[3].rawText='2027年5月1日16:00'
     expect(first(f).audit.sourceObligationViews?.receiptGoals??[]).toEqual([])
   })
+  it('keeps common source requirements visible in the one-goal completion criteria and formal data',async()=>{
+    const f=alternativeReceiptFixture(),requirement='办理时须出示领取凭证或电子码；代领时需说明委托人。'
+    f.source+='\n'+requirement
+    f.r.evidence.push({id:'requirement',sourceId:f.r.evidence[0].sourceId,quote:requirement,field:'requirement'})
+    f.r.standaloneTasks[0].evidenceIds.push('requirement')
+    const {out,repo,h}=await capture(f),criteria=out.result.standaloneTasks[0].completionCriteria
+    expect(criteria).toContain('办理时须出示领取凭证或电子码')
+    expect(criteria).toContain('代领时需说明委托人')
+    expect(criteria[0]).toContain('无需重复完成')
+    const w=(await repo.load())!,draft=(await new IndexedDbWorkspaceRepository(repo).load())!.drafts.find(d=>d.id===h.draftId)!,plan=buildSourceReviewPlan(w,draft)
+    expect(plan.create.tasks).toHaveLength(1)
+    expect(plan.create.tasks[0].legacyData?.completionCriteria).toEqual(criteria)
+    expect(plan.create.timePoints).toHaveLength(4)
+  })
   it('rejects an edited owner, changed endpoint or forged source mapping instead of treating audit as authority',()=>{
     const f=alternativeReceiptFixture(),out=first(f),g=out.audit.sourceObligationViews
     const changed=structuredClone(out.result);changed.timePoints[3].normalizedValue='2027-04-10T16:00'
