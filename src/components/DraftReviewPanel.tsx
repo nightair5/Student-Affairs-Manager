@@ -7,6 +7,7 @@ import { assessFocusedReview } from '../recognition/focusedReview'
 import {sourceCoverageHints} from '../recognition/sourceCoverageHints'
 import {selectionFromDraftItems} from '../domain/v2/domainCommit'
 import {citedAlternativeObligations} from '../recognition/nativeConditionalObligation'
+import {receiptOpportunityViews} from '../domain/v2/receiptOpportunity'
 import { timePointDisplayLabel, timePointDisplayValue, recognitionOptionDisplay } from '../recognition/recognitionModePresentation'
 import type { ComponentType, ReactNode } from 'react'
 import type { WorkspaceV8 } from '../domain/v2/types'
@@ -189,10 +190,12 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
   const sourceText = source?.content ?? source?.rawText ?? source?.contentPreview ?? '原文暂不可用'
   const evidenceIndex = activeEvidence ? sourceText.indexOf(activeEvidence) : -1
   const recognition = draft.recognitionResult
-  const oneReceiptWithAlternatives = Boolean(recognition && draft.items.length === 2 && recognition.events.length === 0 && citedAlternativeObligations(recognition, sourceText).length === 1)
+  const oneReceiptWithAlternatives = Boolean(recognition && (draft.items.length === 2 && recognition.events.length === 0 && citedAlternativeObligations(recognition, sourceText).length === 1 || reviewWorkspace && receiptOpportunityViews(reviewWorkspace,draft.id).length > 0))
   const ordinarySelection=ordinarySourceReview&&recognition?selectionFromDraftItems(recognition,draft.items):null
   const excludedSourceTimes=ordinarySelection&&recognition?recognition.timePoints.filter(p=>p.selected===false&&p.relatedTaskTempIds.some(id=>ordinarySelection.taskTempIds.includes(id))).length:0
-  const coverageHints=recognition?sourceCoverageHints(sourceText,recognition):[]
+  const sourceAssembly=reviewWorkspace?.extractionDrafts.find(d=>d.id===draft.id)?.legacyData?.firstSuggestionAssembly
+  const obligationViews=sourceAssembly&&typeof sourceAssembly==='object'&&!Array.isArray(sourceAssembly)?sourceAssembly.sourceObligationViews:undefined
+  const coverageHints=recognition?sourceCoverageHints(sourceText,recognition,obligationViews):[]
   const focusedReview = recognition ? assessFocusedReview(recognition, {
     ...(source?.reviewMetadata ?? {}),
     sourceType: source?.type,

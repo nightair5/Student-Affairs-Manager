@@ -10,6 +10,8 @@ import {unresolvedSourceReadiness,sourceReadinessProblem} from './sourceReadines
 import { taskTimeAuthorityFromSidecar } from '../../recognition/taskTimeAuthorityContract'
 import {hasLocalIsolationPending} from '../../../cloudflare/recognition-local-isolation.mjs'
 import {existingHandlingWindows,HANDLING_WINDOW_SUPPORT_VERSION} from '../../recognition/handlingWindowSupport'
+import {receiptOpportunityViews} from './receiptOpportunity'
+import {SOURCE_OBLIGATION_VIEW_VERSION} from '../../recognition/sourceObligationProjection'
 
 export const SOURCE_REVIEW_VERSION = 'source-review-d26-1'
 export const PENDING_SOURCE_READBACK = 'source-review:pending-readback'
@@ -140,8 +142,24 @@ export function buildSourceReviewPlan(workspace: WorkspaceV8, view: DraftView, i
   if(handling?.version===HANDLING_WINDOW_SUPPORT_VERSION&&Array.isArray(handling.rows))for(const task of plan.create.tasks){
     const declared=handling.rows.find(row=>row&&typeof row==='object'&&!Array.isArray(row)&&row.taskId===task.legacyData?.recognitionTempId)
     if(!declared||typeof declared!=='object'||Array.isArray(declared)||typeof declared.referenceTime!=='string'||typeof declared.timezone!=='string')continue
-    const row=existingHandlingWindows(draft.result,version.rawText??'',declared.referenceTime,declared.timezone).rows.find(r=>r.taskId===task.legacyData?.recognitionTempId)
+    const candidates=existingHandlingWindows(draft.result,version.rawText??'',declared.referenceTime,declared.timezone).rows.filter(r=>r.taskId===task.legacyData?.recognitionTempId)
+    // Multiple opportunities need a proven personal choice below. Never let
+    // array order silently choose a window for another kind of source.
+    const row=candidates.length===1?candidates[0]:undefined
     if(row)task.legacyData={...task.legacyData,existingHandlingWindow:{version:HANDLING_WINDOW_SUPPORT_VERSION,draftId:draft.id,sourceVersionId:version.id,referenceTime:row.referenceTime,timezone:row.timezone,rowHash:workspaceSnapshotHash(row)}}
+  }
+  const receiptViews=receiptOpportunityViews(workspace,draft.id)
+  const obligationAudit=assembly&&typeof assembly==='object'&&!Array.isArray(assembly)&&assembly.sourceObligationViews&&typeof assembly.sourceObligationViews==='object'&&!Array.isArray(assembly.sourceObligationViews)?assembly.sourceObligationViews:null
+  for(const task of plan.create.tasks){
+    const view=receiptViews.find(v=>v.goal.taskId===task.legacyData?.recognitionTempId)
+    const declared=obligationAudit&&Array.isArray(obligationAudit.receiptGoals)&&obligationAudit.receiptGoals.some(g=>g&&typeof g==='object'&&!Array.isArray(g)&&g.taskId===task.legacyData?.recognitionTempId)
+    if(declared&&!view)throw Error('RECEIPT_GOAL_SOURCE_CHANGED')
+    if(!view)continue
+    const points=view.goal.originalPoints.map(p=>plan.create.timePoints.find(saved=>saved.legacyData?.recognitionTempId===p.tempId))
+    if(points.some(p=>!p))throw Error('RECEIPT_GOAL_ALL_SOURCE_POINTS_REQUIRED')
+    for(const point of points)point!.legacyData={...point!.legacyData,sourceTimeRole:point!.type==='event_start'?'window_start':'window_end'}
+    task.legacyData={...task.legacyData,receiptGoal:{version:SOURCE_OBLIGATION_VIEW_VERSION,draftId:draft.id,sourceVersionId:version.id,goalHash:workspaceSnapshotHash(view.goal),choice:view.choice,allPointIds:points.map(p=>p!.id)},
+      existingHandlingWindow:{version:HANDLING_WINDOW_SUPPORT_VERSION,draftId:draft.id,sourceVersionId:version.id,referenceTime:view.window.referenceTime,timezone:view.window.timezone,rowHash:workspaceSnapshotHash(view.window)}}
   }
   const citedWindows=assembly&&typeof assembly==='object'&&!Array.isArray(assembly)&&assembly.citedSourceWindows&&typeof assembly.citedSourceWindows==='object'&&!Array.isArray(assembly.citedSourceWindows)?assembly.citedSourceWindows:null
   if(citedWindows&&['ordinary-cited-window-projection-1.0.0','ordinary-cited-window-projection-1.0.1'].includes(String(citedWindows.version))&&Array.isArray(citedWindows.decisions))for(const task of plan.create.tasks){

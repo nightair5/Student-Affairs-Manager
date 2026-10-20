@@ -27,12 +27,14 @@ import {projectAlternativeObligations,supportedReceiptName} from './nativeCondit
 import {existingHandlingWindows} from './handlingWindowSupport'
 import {completeCitedContextSupport,supportedFormTask,citedTaskClockEndpoint} from './citedContextSupport'
 import {projectCitedOpportunityViews} from './citedOpportunityProjection'
+import {projectSourceObligationViews} from './sourceObligationProjection'
 import {isolateRecognitionItems,unanchoredAcademicWeek,LOCAL_ISOLATION_NOTE_PREFIX,LOCAL_ISOLATION_VERSION,type LocalIsolationAudit} from '../../cloudflare/recognition-local-isolation.mjs'
 
 export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.30.0'
+export const PRODUCT_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.31.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
-  version: typeof D26_FIRST_SUGGESTION_VERSION
+  version: typeof D26_FIRST_SUGGESTION_VERSION | typeof PRODUCT_FIRST_SUGGESTION_VERSION
   originalProse: ProseRecord[]
   generatedProse: ProseRecord[]
   times: Array<{ entityId: string; before: TimeFields; after: TimeFields; interpretation: D26TimeInterpretation }>
@@ -44,6 +46,7 @@ export interface D26FirstSuggestionAudit {
   existingHandlingWindows?:ReturnType<typeof existingHandlingWindows>
   citedContextSupport?:ReturnType<typeof completeCitedContextSupport>
   opportunityProjection?:ReturnType<typeof projectCitedOpportunityViews>
+  sourceObligationViews?:ReturnType<typeof projectSourceObligationViews>
   declaredSourceInformation?:ReturnType<typeof retainDeclaredSourceInformation>
   localIsolation?:LocalIsolationAudit
   retiredDeadlineContexts?:Array<{entityId:string;rule:'EXPLICIT_UNOWNED_RETIRED_CONTEXT_NOT_CURRENT_DEADLINE';evidenceIds:string[]}>
@@ -333,7 +336,7 @@ export function adaptModelWireD26(input: unknown, context: WireContext) {
 }
 
 /** Same time/display policy for the ordinary RecognitionResult. No experimental runtime or storage dependency. */
-export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string }) {
+export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string; obligationViewVersion?: 'source-obligation-view-1.0.0' }) {
   // Machine product-wire items share the Worker's isolation rule. Manual and
   // legacy semantic views keep their existing field-level source/verb checks;
   // they are not untrusted raw model containers to silently rewrite here.
@@ -458,6 +461,14 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     if(task&&review.sourceConditionValue!=='true')task.selected=false
   }
   audit.existingHandlingWindows=existingHandlingWindows(result,context.sourceText,context.referenceTime,context.timezone)
+  const obligationViews=context.obligationViewVersion?projectSourceObligationViews(result,context.sourceText,context.referenceTime,context.timezone):{receiptGoals:[],preparations:[]}
+  if(context.obligationViewVersion)audit.version=PRODUCT_FIRST_SUGGESTION_VERSION
+  if(obligationViews.receiptGoals.length||obligationViews.preparations.length){
+    audit.sourceObligationViews=obligationViews as ReturnType<typeof projectSourceObligationViews>
+    const live=new Set([...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])].map(t=>t.tempId))
+    audit.nativeQualificationReview=audit.nativeQualificationReview.filter(row=>live.has(row.taskId))
+    audit.existingHandlingWindows=existingHandlingWindows(result,context.sourceText,context.referenceTime,context.timezone)
+  }
   return { result, audit }
 }
 

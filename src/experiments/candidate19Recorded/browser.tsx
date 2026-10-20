@@ -20,7 +20,7 @@ import { decodeCurrentSourceRecording, CONDITIONAL_NON_ACTION_VERSION } from '..
 import { MATERIAL_CHANNEL_GROUNDING_VERSION } from '../../recognition/materialChannelGrounding'
 import { ELIGIBILITY_GROUNDING_VERSION } from '../../recognition/eligibilityGrounding'
 import { D26_TIME_VERSION } from '../../lib/timeSemanticsD26'
-import { D26_FIRST_SUGGESTION_VERSION } from '../../recognition/firstSuggestionD26'
+import { PRODUCT_FIRST_SUGGESTION_VERSION as D26_FIRST_SUGGESTION_VERSION } from '../../recognition/firstSuggestionD26'
 import { CANDIDATE17_PROMPT_VERSION, CANDIDATE17_VERSION } from '../realInput01/candidate17'
 import { CANDIDATE18_PROMPT_VERSION, CANDIDATE18_VERSION } from '../realInput01/candidate18'
 import { CANDIDATE19_PROMPT_VERSION, CANDIDATE19_VERSION } from '../realInput01/candidate19'

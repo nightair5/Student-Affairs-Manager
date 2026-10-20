@@ -192,7 +192,7 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
 }
 
 /** Shared ordinary first screen; no change to candidate prompts, schema, or historical scorer. */
-export function assembleCurrentFirstSuggestion(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string; sourceWindows?: import('./sourceWindowGrounding').SourceWindowDeclaration[]; sourceActionTimes?: SourceActionTimeDeclaration[]; workflowMaterialSupport?: WorkflowMaterialSupport[] }) {
+export function assembleCurrentFirstSuggestion(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string; obligationViewVersion?: 'source-obligation-view-1.0.0'; sourceWindows?: import('./sourceWindowGrounding').SourceWindowDeclaration[]; sourceActionTimes?: SourceActionTimeDeclaration[]; workflowMaterialSupport?: WorkflowMaterialSupport[] }) {
   const first = assembleRecognitionFirstSuggestionD26(input, context)
   const channels = groundMaterialChannels(first.result, context.sourceText, context.workflowMaterialSupport)
   const windows = groundSourceWindows(channels.result, context.sourceWindows ?? [], context)
@@ -200,4 +200,10 @@ export function assembleCurrentFirstSuggestion(input: RecognitionResult, context
   const reasons=[...new Set(appointments.result.quality.reviewReasons)]
   if(reasons.length>20)appointments.result.quality.reviewReasons=[...reasons.slice(0,19),`另有${reasons.length-19}项待核对说明，请展开事项、材料及冲突明细查看。`]
   return { ...first, audit:{...first.audit,sourceActionTimes:appointments.audit},result: appointments.result, materialChannelAudit: channels.audit, sourceWindowGrounding: windows.audit }
+}
+
+/** Versioned ordinary product entry. Older component/replay callers retain
+ * their declared assembly while App and current evaluation use this entry. */
+export function assembleProductFirstSuggestion(input:RecognitionResult,context:Parameters<typeof assembleCurrentFirstSuggestion>[1]){
+  return assembleCurrentFirstSuggestion(input,{...context,obligationViewVersion:'source-obligation-view-1.0.0'})
 }

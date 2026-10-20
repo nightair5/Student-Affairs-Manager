@@ -1,5 +1,6 @@
 import type {RecognitionResult} from './types'
-export const SOURCE_COVERAGE_HINT_VERSION='source-coverage-hints-1.6.0'
+import {verifiedPreparationRequirements} from './sourceObligationProjection'
+export const SOURCE_COVERAGE_HINT_VERSION='source-coverage-hints-1.7.0'
 export interface SourceCoverageHint {kind:'unread_reference'|'unrepresented_time_range'|'unrepresented_action'|'unrepresented_event'|'unresolved_time_role';title:string;detail:string;quote:string}
 function clockValue(p:RecognitionResult['timePoints'][number]){
  if(!p.normalizedValue)return null
@@ -12,8 +13,9 @@ function clockValue(p:RecognitionResult['timePoints'][number]){
 /** UI disclosure only. Source snippets are not inferred entities or Expected.
  * It neither repairs a model answer nor blocks unrelated valid confirmations.
  */
-export function sourceCoverageHints(source:string,result:RecognitionResult):SourceCoverageHint[]{
+export function sourceCoverageHints(source:string,result:RecognitionResult,obligationViews?:unknown):SourceCoverageHint[]{
  const hints:SourceCoverageHint[]=[],points=result.timePoints.filter(p=>!p.type.endsWith('_deadline')).map(p=>[p.rawText,p.normalizedValue??''].join(' ')),tasks=[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
+ const preparations=verifiedPreparationRequirements(result,source,obligationViews)
  for(const clause of source.split(/[。；\n]/u).map(x=>x.trim()).filter(Boolean)){
   if(/附件|群文件|同上|上条/u.test(clause)&&/未提供|没贴|没一起贴|未贴|未读取|没有提供/u.test(clause))hints.push({kind:'unread_reference',title:'还有未放入的补充内容',detail:'当前只整理已放入的文字；这部分补充没有被读取，不会猜补其中的要求。',quote:clause})
   if(/取消|作废|配图|历史|举例|示例/u.test(clause))continue
@@ -55,7 +57,8 @@ export function sourceCoverageHints(source:string,result:RecognitionResult):Sour
    // declared owners. An omitted duplicated task index must not turn an exact
    // existing attachment into an invented third task. No missing entity is added.
    const keptTodo=['保留','保存'].includes(verb)&&object.endsWith('待办')&&tasks.some(t=>t.actionObject.endsWith(object.slice(0,-2)))
-   const represented=keptTodo||tasks.some(t=>alternatives.some(v=>t.actionVerb===v)&&(t.actionObject.includes(object)||members.every(o=>result.materials.some(m=>(t.materialTempIds.includes(m.tempId)||m.name===o)&&m.relatedTaskTempIds.includes(t.tempId)&&m.name.includes(o)))))
+   const activityRequirement=verb==='准备'&&preparations.some(p=>p.originalTask.actionObject===object&&p.quotes.some(q=>q.includes(m[0])))
+   const represented=activityRequirement||keptTodo||tasks.some(t=>alternatives.some(v=>t.actionVerb===v)&&(t.actionObject.includes(object)||members.every(o=>result.materials.some(m=>(t.materialTempIds.includes(m.tempId)||m.name===o)&&m.relatedTaskTempIds.includes(t.tempId)&&m.name.includes(o)))))
    if(!represented)hints.push({kind:'unrepresented_action',title:'这条要求尚无对应行动',detail:'原文这条明示要求尚未找到对应行动建议；请查看原文。它不会自动变成新任务，也不妨碍接受其他正确事项。',quote:clause})
   }
  }

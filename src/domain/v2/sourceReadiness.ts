@@ -1,4 +1,5 @@
 import type { WorkspaceV8, JsonValue } from './types'
+import {receiptOpportunityViews} from './receiptOpportunity'
 import { workspaceSnapshotHash } from './migration'
 import {nativeQualificationReviews} from '../../recognition/nativeQualificationReview'
 import type {RecognitionResult} from '../../recognition/types'
@@ -71,6 +72,7 @@ export function unresolvedSourceReadiness(w:WorkspaceV8,draftId:string,taskId:st
 export function sourceReadinessProblem(w:WorkspaceV8|null,draftId:string,taskId:string):string|undefined {
  if(!w)return undefined
  try{
+  if(receiptOpportunityViews(w,draftId).some(v=>v.goal.taskId===taskId&&v.goal.completedInSource))return '原文已明确这同一领取事项完成，不再创建领取或补领待办。'
   const {native,version}=sourceState(w,draftId)
   for(const branch of native.filter(n=>n.alternativeTaskId===taskId)){
    const accepted=w.tasks.find(t=>t.legacyData?.recognitionTempId===branch.taskId&&t.legacyData?.sourceId===version.sourceId)

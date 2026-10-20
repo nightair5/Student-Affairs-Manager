@@ -19,7 +19,8 @@ export function existingHandlingWindows(r:RecognitionResult,source:string,refere
  const tasks=[...r.standaloneTasks,...r.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
  for(const task of tasks){
   const own=r.timePoints.filter(p=>task.timePointTempIds.includes(p.tempId)&&p.relatedTaskTempIds.includes(task.tempId)&&['event_start','event_end'].includes(p.type))
-  const a=own.filter(p=>p.type==='event_start'),b=own.filter(p=>p.type==='event_end')
+  for(const rawText of [...new Set(own.map(p=>p.rawText))]){
+  const a=own.filter(p=>p.rawText===rawText&&p.type==='event_start'),b=own.filter(p=>p.rawText===rawText&&p.type==='event_end')
   if(a.length!==1||b.length!==1)continue
   const start=a[0],end=b[0]
   if(start.rawText!==end.rawText||start.needsConfirmation||end.needsConfirmation||!start.normalizedValue||!end.normalizedValue||end.normalizedValue<=start.normalizedValue||start.precision!==end.precision)continue
@@ -43,6 +44,7 @@ export function existingHandlingWindows(r:RecognitionResult,source:string,refere
   if([...text.matchAll(/\d{1,2}:[0-5]\d|\d{1,2}点/gu)].length!==2)continue
   const daily=/(?:每日|每天)[：:]?(?:上午|下午)?\d/u.test(text)&&!/工作日|周末|节假日|除外|仅|另行|休息/u.test(quote)
   rows.push({taskId:task.tempId,eventIds,pointIds:[start.tempId,end.tempId],rawText:start.rawText,evidenceIds:proofs.map(e=>e.id),start:start.normalizedValue,end:end.normalizedValue,kind:daily?'DAILY_CLOCKS':'OPEN_DAYS_UNSTATED',dayStart,dayEnd,referenceTime,timezone})
+  }
  }
  return {version:HANDLING_WINDOW_SUPPORT_VERSION,rows}
 }
