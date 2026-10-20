@@ -621,15 +621,29 @@ function buildDomainCommitPlanInternal(
       },
     }
   })
+  // A material's first related time can be a handling-window start. Only a
+  // unique deadline explicitly scoped to the whole material belongs in its
+  // singular deadline field. Task-specific paper/electronic constraints stay
+  // on their original tasks; no new deadline or common scope is inferred.
+  const materialDeadline = (item: RecognitionResult['materials'][number]) => {
+    const linked = timeSuggestions.filter(point => point.relatedMaterialTempIds.includes(item.tempId))
+    const candidates = linked.filter(point => ['registration_deadline','submission_deadline','task_deadline'].includes(point.type)
+      && (!point.relatedTaskTempIds.length || item.relatedTaskTempIds.every(id => point.relatedTaskTempIds.includes(id))))
+    const retained = candidates.length === 1 ? candidates[0] : null
+    const changed = linked.length > 0 && linked[0].tempId !== retained?.tempId
+    return { id: retained ? timeIdMap.get(retained.tempId) ?? null : null,
+      ...(changed ? { audit: { version: 'material-deadline-scope-1.0.0', linkedPoints: linked.map(point => ({id: point.tempId, type: point.type, owners: point.relatedTaskTempIds})),
+        retainedPointId: retained?.tempId ?? null, reason: 'ONLY_UNIQUE_WHOLE_MATERIAL_DEADLINE' } } : {}) }
+  }
   const materials: Material[] = materialSuggestions.map((item) => ({
     id: materialIdMap.get(item.tempId)!, projectId, name: item.name, required: item.required, status: 'missing',
     requirements: [], formatRequirements: item.formatRequirements, namingRequirements: item.namingRequirements,
     quantity: item.quantity, submissionChannel: item.submissionChannel,
     relatedTaskIds: item.relatedTaskTempIds.map((id) => taskIdMap.get(id)).filter((id): id is string => Boolean(id)),
-    deadlineTimePointId: timeSuggestions.find((point) => point.relatedMaterialTempIds.includes(item.tempId))
-      ? timeIdMap.get(timeSuggestions.find((point) => point.relatedMaterialTempIds.includes(item.tempId))!.tempId) ?? null : null,
+    deadlineTimePointId: materialDeadline(item).id,
     createdAt: now, updatedAt: now, version: 1,
-    legacyData: { recognitionTempId: item.tempId, evidenceIds: item.evidenceIds },
+    legacyData: { recognitionTempId: item.tempId, evidenceIds: item.evidenceIds,
+      ...(materialDeadline(item).audit ? { deadlineProjection: materialDeadline(item).audit! } : {}) },
   }))
   const eventIdMap = new Map(eventSuggestions.map((item) => [item.tempId, entityId('event', draftId, item.tempId)]))
   const timePoints: TimePoint[] = timeSuggestions.map((item) => {

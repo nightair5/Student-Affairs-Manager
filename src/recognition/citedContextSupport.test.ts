@@ -112,13 +112,19 @@ describe('closed source contexts retain existing facts without inventing an owne
     expect(first(f).result.events[0].selected).toBe(false)
   })
   it('uses the actual review plan and atomic repository to save both deliveries with their three distinct times', async () => {
-    const f = delivery(), out = first(f), store = new MemoryWorkspaceRecordStore(), repo = new CanonicalWorkspaceRepository(store)
+    const f = delivery(), material=ordinaryWorkflowFixture(f.source).materials[0]
+    f.r.materials=[{...material,tempId:'m',name:'研究报告',formatRequirements:['纸质版','电子版'],relatedTaskTempIds:['t0','t1'],submissionChannel:'服务台；成果平台',evidenceIds:['q0','q1','q2']}]
+    for(const t of f.r.standaloneTasks)t.materialTempIds=['m']
+    for(const p of f.r.timePoints)p.relatedMaterialTempIds=['m']
+    const out = first(f), store = new MemoryWorkspaceRecordStore(), repo = new CanonicalWorkspaceRepository(store)
     await repo.initialize(emptyWorkspace())
     const capture = new CapturePersistenceService(repo), h = await capture.beginCapture({ operationId: crypto.randomUUID(), rawText: f.source, sourceType: 'text', title: '匿名申请', provider: 'manual', modelName: 'ENGINEERING_FIXTURE', promptVersion: 'cited-context-fixture', pipelineVersion: out.audit.version })
     await capture.recognize(h, async () => out.result)
     const w = (await repo.load())!, draft = (await new IndexedDbWorkspaceRepository(repo).load())!.drafts.find(d => d.id === h.draftId)!
     const plan = buildSourceReviewPlan(w, draft), back = await verifySourceReviewReadback(new CanonicalWorkspaceRepository(store), await commitSourceReview(repo, plan))
     expect(back.tasks).toHaveLength(2); expect(back.events).toHaveLength(0)
+    expect(back.materials[0].deadlineTimePointId).toBeNull()
+    expect(back.materials[0].legacyData?.deadlineProjection).toMatchObject({version:'material-deadline-scope-1.0.0',retainedPointId:null})
     expect(back.timePoints.map(p => p.normalizedValue)).toEqual(out.result.timePoints.map(p => p.normalizedValue))
     await commitSourceReview(repo, plan); expect((await repo.load())!.tasks).toHaveLength(2)
     const saved=(await repo.load())!,paper=saved.tasks.find(t=>t.title.includes('纸质'))!
