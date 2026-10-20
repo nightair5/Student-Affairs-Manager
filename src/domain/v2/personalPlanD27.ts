@@ -6,9 +6,10 @@ import {interpretTimeD26} from '../../lib/timeSemanticsD26'
 import {projectCitedClockRanges} from '../../../cloudflare/cited-clock-range.mjs'
 import {sourceReadinessValue,unresolvedSourceReadiness} from './sourceReadiness'
 import {canonicalHandlingWindow,canonicalHandlingEvent} from './handlingWindow'
+import {citedTaskClockEndpoint} from '../../recognition/citedContextSupport'
 
 export const PLAN_VERSION = 'personal-plan-d27-1' as const
-export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.4.0' as const
+export const SOURCE_WINDOW_PLAN_VERSION = 'source-window-plan-1.4.1' as const
 export const PLAN_RECEIPT = 'personalPlanD27Receipt'
 export const PLAN_UNDO = 'personalPlanD27Undo'
 export type DurationOrigin = 'user' | 'recorded_estimate' | 'product_estimate'
@@ -247,6 +248,30 @@ function sourceWindowBounds(w:WorkspaceV8,t:Task,zone:string):SourceBounds {
     return {start:Math.min(...intervals.map(i=>i.start)),end:Math.max(...intervals.map(i=>i.end)),intervals:intervals.sort((a,b)=>a.start-b.start||a.end-b.end),invalid:false,present:true}
   }
   if(!points.length){
+    // Some valid native results spell out each endpoint separately. Recheck
+    // their common, task-owned literal interval rather than treating absence
+    // of a repeated range string as absence of a scheduling constraint.
+    const source=w.sources.find(s=>s.id===t.legacyData?.sourceId),version=w.sourceVersions.find(v=>v.id===source?.currentVersionId)
+    const draft=w.extractionDrafts.find(d=>d.acceptedEntityTempIds.includes(String(t.legacyData?.recognitionTempId))&&w.recognitionRuns.find(r=>r.id===d.recognitionRunId)?.sourceVersionId===version?.id)
+    const raw=draft?.result,owner=raw&&[...raw.standaloneTasks,...raw.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(p=>p.tasks)])].find(task=>task.tempId===t.legacyData?.recognitionTempId)
+    const declared=raw?.timePoints.filter(p=>owner?.timePointTempIds.includes(p.tempId)&&['event_start','event_end'].includes(p.type))??[]
+    const proofs=raw&&version?.rawText?declared.map(point=>citedTaskClockEndpoint(point,raw,version.rawText!)):[]
+    if(proofs.some(Boolean)){
+      if(!raw||!version?.rawText||declared.length!==2||proofs.some(p=>!p))return invalid
+      const mapped=declared.map(p=>w.timePoints.filter(saved=>saved.legacyData?.recognitionTempId===p.tempId&&saved.relatedTaskIds.includes(t.id)))
+      if(mapped.some(rows=>rows.length!==1))return invalid
+      for(let i=0;i<declared.length;i++){
+        const p=mapped[i][0],proof=proofs[i]!,expected=interpretTimeD26(proof.endpoint,{type:p.type,referenceTime:raw.createdAt,timezone:zone}).point
+        if(p.type!==declared[i].type||p.precision!=='exact'||p.needsConfirmation||!expected?.normalizedValue||expected.needsConfirmation||p.normalizedValue!==expected.normalizedValue
+          ||p.taskId!==t.id||p.eventId!==null||p.relatedTaskIds.length!==1||(p.materialId!==null&&!p.relatedMaterialIds.includes(p.materialId))
+          ||p.relatedMaterialIds.some(id=>!w.materials.some(m=>m.id===id&&m.relatedTaskIds.includes(t.id)&&m.legacyData?.sourceReviewDraftId===draft?.id))||(p.timezone??zone)!==zone
+          ||!sourceWindowEvidence(w,p,version.id,proof.literal,version.rawText))return invalid
+      }
+      const start=mapped.find(([p])=>p.type==='event_start')?.[0],end=mapped.find(([p])=>p.type==='event_end')?.[0]
+      const a=start&&sourceWindowMs(start,zone,false),b=end&&sourceWindowMs(end,zone,true)
+      if(a===undefined||b===undefined||b<=a)return invalid
+      return {start:a,end:b,intervals:[{start:a,end:b}],invalid:false,present:true}
+    }
     // Native ordinary results may already declare both ends of one shared
     // task window without the semantic sidecar. Validate the stored graph and
     // citations; absence of the sidecar must not schedule outside that window.
@@ -254,9 +279,7 @@ function sourceWindowBounds(w:WorkspaceV8,t:Task,zone:string):SourceBounds {
       &&(/月\d{1,2}日?\s*[-—–至到]/u.test(p.rawText)||/\d{1,2}:[0-5]\d\s*[-—–至到]/u.test(p.rawText)))
     if(!native.length)return {start:-Infinity,end:Infinity,intervals:[{start:-Infinity,end:Infinity}],invalid:false,present:false}
     const starts=native.filter(p=>p.type==='event_start'),ends=native.filter(p=>p.type==='event_end')
-    const source=w.sources.find(s=>s.id===t.legacyData?.sourceId),version=w.sourceVersions.find(v=>v.id===source?.currentVersionId)
-    const draft=w.extractionDrafts.find(d=>d.acceptedEntityTempIds.includes(String(t.legacyData?.recognitionTempId))&&w.recognitionRuns.find(r=>r.id===d.recognitionRunId)?.sourceVersionId===version?.id)
-    const raw=draft?.result,rawTasks=raw?[...raw.standaloneTasks,...raw.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(wp=>wp.tasks)])]:[]
+    const rawTasks=raw?[...raw.standaloneTasks,...raw.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(wp=>wp.tasks)])]:[]
     if(starts.length!==1||ends.length!==1||!raw||!version?.rawText)return invalid
     const start=starts[0],end=ends[0],a=sourceWindowMs(start,zone,false),b=sourceWindowMs(end,zone,true)
     if(start.precision==='exact'&&end.precision==='exact'){

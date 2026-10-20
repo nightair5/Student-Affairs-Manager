@@ -5,7 +5,7 @@ import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sou
 import { verifyWorkflowChannelEvidence, type WorkflowMaterialSupport } from './workflowChannelSupport'
 import {citedDeliveryContexts,type CitedDeliveryContext} from './citedDeliveryContext'
 
-export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.12.0'
+export const MATERIAL_CHANNEL_GROUNDING_VERSION = 'material-channel-role-grounding-1.13.0'
 export const WORKFLOW_MATERIAL_CHANNEL_VERSION = 'material-declared-workflow-channel-1.0.0'
 export interface MaterialChannelDecision {
   materialId: string
@@ -37,7 +37,11 @@ function citedClauses(evidence: Array<{quote:string}>, sourceText: string) {
   // A line break inside one cited delivery is layout. The closed role grammar
   // below still requires the actual object/action/destination in order; it
   // cannot borrow across a sentence or a different object's intervening text.
-  return [...new Set([...evidence.map(e=>e.quote),...joined.map(s=>sourceText.slice(s.start,s.end))])].flatMap(q=>[...q.split(/[，。；]/u),...(/https:\/\//u.test(q)&&/登录/u.test(q)&&/通过/u.test(q)?[q]:[])])
+  return [...new Set([...evidence.map(e=>e.quote),...joined.map(s=>sourceText.slice(s.start,s.end))])].flatMap(q=>[...q.split(/[，。；]/u),...(/https:\/\//u.test(q)&&/登录/u.test(q)&&/通过/u.test(q)?[q]:[]),
+    // Retain a single closed sentence whose second clause explicitly says
+    // which tool to use for the immediately preceding delivery. No borrowing
+    // across a period or another object's instruction.
+    ...(/(?:提交|上传|递交|发送)[^，。；]{1,60}[，,](?:统一)?使用[^，。；]+[。；]?$/u.test(q)&&q.split(/[。；]/u).filter(Boolean).length===1?[q.replace(/[。；]$/u,'')]:[])])
 }
 /** Role evidence, not token overlap: a receipt is not an instruction to send there. */
 function destinationRole(clause: string, object: string, channel: string, siblingObjects: string[] = []) {
@@ -85,6 +89,7 @@ function destinationRole(clause: string, object: string, channel: string, siblin
     new RegExp(`${o}(?:请|须|需|应)?(?:于|在)${statedTime}(?:到|至)${c}${action}${end}`,'u'),
     new RegExp(`${o}(?:请|须|需|应)?(?:于|在)${statedTime}${action}(?:到|至|给)${c}${end}`,'u'),
     new RegExp(`${action}${o}(?:至|到|给)${c}${end}`, 'u'),
+    new RegExp(`${action}${o}[，,](?:统一)?使用${c}$`, 'u'),
     new RegExp(`${o}(?:请|须|需|应)?${action}(?:至|到|给)${c}${end}`, 'u'),
     new RegExp(`(?:把|将)${o}${action}(?:至|到|给)${c}${end}`, 'u'),
     new RegExp(`(?:通过|经由|在)${c}(?:直接|统一|线上)?${action}${o}${end}`, 'u'),

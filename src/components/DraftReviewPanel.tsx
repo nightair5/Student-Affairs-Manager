@@ -6,6 +6,7 @@ import type { InferenceLevel } from '../types'
 import { assessFocusedReview } from '../recognition/focusedReview'
 import {sourceCoverageHints} from '../recognition/sourceCoverageHints'
 import {selectionFromDraftItems} from '../domain/v2/domainCommit'
+import {citedAlternativeObligations} from '../recognition/nativeConditionalObligation'
 import { timePointDisplayLabel, timePointDisplayValue, recognitionOptionDisplay } from '../recognition/recognitionModePresentation'
 import type { ComponentType, ReactNode } from 'react'
 import type { WorkspaceV8 } from '../domain/v2/types'
@@ -188,6 +189,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
   const sourceText = source?.content ?? source?.rawText ?? source?.contentPreview ?? '原文暂不可用'
   const evidenceIndex = activeEvidence ? sourceText.indexOf(activeEvidence) : -1
   const recognition = draft.recognitionResult
+  const oneReceiptWithAlternatives = Boolean(recognition && draft.items.length === 2 && recognition.events.length === 0 && citedAlternativeObligations(recognition, sourceText).length === 1)
   const ordinarySelection=ordinarySourceReview&&recognition?selectionFromDraftItems(recognition,draft.items):null
   const excludedSourceTimes=ordinarySelection&&recognition?recognition.timePoints.filter(p=>p.selected===false&&p.relatedTaskTempIds.some(id=>ordinarySelection.taskTempIds.includes(id))).length:0
   const coverageHints=recognition?sourceCoverageHints(sourceText,recognition):[]
@@ -272,7 +274,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
   return <div className="modal-backdrop detail-backdrop" role="presentation">
     <aside ref={panelRef} className="detail-panel review-panel" role="dialog" aria-modal="true" aria-labelledby={titleId}>
       <header className="detail-header review-header">
-        <div><span className="category-label">第 2 步 · {recognitionDescription ?? ordinarySourceReview?.description ?? (draft.modelName?.includes('匿名工程')?'匿名工程建议 · 无模型请求':isolatedCapabilities ? '人工工程响应（非模型预测）' : draft.modelName?.includes('deepseek') ? 'DeepSeek 建议' : '本地规则建议')}</span><h2 id={titleId}>{recognition?.events.length ? `识别出 ${draft.items.length} 项任务、${recognition.events.length} 个事件` : `识别出 ${draft.items.length} 件事`}</h2><p>先看标题和时间；不准确时再点“编辑”。</p></div>
+        <div><span className="category-label">第 2 步 · {recognitionDescription ?? ordinarySourceReview?.description ?? (draft.modelName?.includes('匿名工程')?'匿名工程建议 · 无模型请求':isolatedCapabilities ? '人工工程响应（非模型预测）' : draft.modelName?.includes('deepseek') ? 'DeepSeek 建议' : '本地规则建议')}</span><h2 id={titleId}>{oneReceiptWithAlternatives ? '1个领取事项，2种办理机会' : recognition?.events.length ? `识别出 ${draft.items.length} 项任务、${recognition.events.length} 个事件` : `识别出 ${draft.items.length} 件事`}</h2><p>{oneReceiptWithAlternatives ? '正常领取与错过后的补领只选一种；两个窗口和原文依据均保留。' : '先看标题和时间；不准确时再点“编辑”。'}</p></div>
         <button className="icon-button" type="button" onClick={onClose} aria-label="稍后处理并关闭"><X size={20} /></button>
       </header>
       <SessionFrame {...(sessionFrame?{onClose}:{})}>

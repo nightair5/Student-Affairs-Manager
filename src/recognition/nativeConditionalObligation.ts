@@ -1,6 +1,6 @@
 import type {RecognitionResult,TaskSuggestionV2} from './types'
 
-export const NATIVE_CONDITIONAL_OBLIGATION_VERSION='native-cited-conditional-obligation-1.0.0'
+export const NATIVE_CONDITIONAL_OBLIGATION_VERSION='native-cited-conditional-obligation-1.1.0'
 const compact=(v:string)=>v.replace(/\s/gu,'')
 const tasksOf=(r:RecognitionResult)=>[...r.standaloneTasks,...r.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
 export interface CitedConditionalObligation {
@@ -14,7 +14,17 @@ export interface CitedConditionalObligation {
 export function citedAlternativeObligations(result:RecognitionResult,source:string):CitedConditionalObligation[]{
  const tasks=tasksOf(result),rows:CitedConditionalObligation[]=[]
  const valid=(t:TaskSuggestionV2)=>result.evidence.filter(e=>t.evidenceIds.includes(e.id)&&e.quote&&source.includes(e.quote)&&source.indexOf(e.quote)===source.lastIndexOf(e.quote))
- const pair=(t:TaskSuggestionV2)=>result.events.filter(e=>e.relatedTaskTempIds?.length===1&&e.relatedTaskTempIds[0]===t.tempId&&[e.startTimePointTempId,e.endTimePointTempId].every((id,i)=>{const p=result.timePoints.find(p=>p.tempId===id);return p&&p.type===(i?'event_end':'event_start')&&p.relatedTaskTempIds.length===1&&p.relatedTaskTempIds[0]===t.tempId&&t.timePointTempIds.includes(p.tempId)})).length===1
+ const pair=(t:TaskSuggestionV2)=>{
+  const events=result.events.filter(e=>e.relatedTaskTempIds?.length===1&&e.relatedTaskTempIds[0]===t.tempId&&[e.startTimePointTempId,e.endTimePointTempId].every((id,i)=>{const p=result.timePoints.find(p=>p.tempId===id);return p&&p.type===(i?'event_end':'event_start')&&p.relatedTaskTempIds.length===1&&p.relatedTaskTempIds[0]===t.tempId&&t.timePointTempIds.includes(p.tempId)}))
+  if(events.length===1)return true
+  if(result.events.some(e=>e.relatedTaskTempIds?.includes(t.tempId)))return false
+  // A projected opportunity still has its two existing, reciprocally owned
+  // endpoints. It does not need a duplicate fixed-attendance event to retain
+  // its condition. A missing/broken endpoint is never repaired here.
+  const own=result.timePoints.filter(p=>t.timePointTempIds.includes(p.tempId)&&p.relatedTaskTempIds.length===1&&p.relatedTaskTempIds[0]===t.tempId)
+  const a=own.filter(p=>p.type==='event_start'),b=own.filter(p=>p.type==='event_end')
+  return a.length===1&&b.length===1&&a[0].rawText===b[0].rawText&&valid(t).some(e=>a[0].evidenceIds.includes(e.id)&&b[0].evidenceIds.includes(e.id)&&e.quote.includes(a[0].rawText))
+ }
  for(const task of tasks){
   if(task.actionVerb!=='领取'||!task.actionObject||!pair(task))continue
   const rules=valid(task).filter(e=>/^(?:如果|若)错过(?:以上|上述|原定|首次|第一)(?:的)?(?:领书|领取|办理)?时间[。，,；;]?(?:可|可以)/u.test(compact(e.quote))
@@ -39,7 +49,21 @@ export function citedConditionalObligations(result:RecognitionResult,source:stri
   if(rows.some(r=>r.taskId===task.tempId))continue
   const own=result.evidence.filter(e=>task.evidenceIds.includes(e.id)&&e.quote&&source.includes(e.quote)&&source.indexOf(e.quote)===source.lastIndexOf(e.quote))
   const rules=own.filter(e=>/(?:学生|同学|申请人)(?:如|若)(?:已缴费|已交费)但(?:决定)?放弃(?:修读|选修|参加)(?:资格)?[，,]/u.test(compact(e.quote))&&/申请退费/u.test(compact(e.quote)))
-  if(rules.length!==1||!/退费|退款/u.test(task.actionObject)||!own.some(e=>e.sourceId===rules[0].sourceId&&compact(e.quote).includes(compact(task.actionObject))&&/填写并发送|提交|发送|递交/u.test(compact(e.quote))))continue
+  if(rules.length!==1||!/退费|退款/u.test(task.actionObject)||!own.some(e=>e.sourceId===rules[0].sourceId&&compact(e.quote).includes(compact(task.actionObject))&&/填写并发送|提交|发送|递交/u.test(compact(e.quote)))){
+   if(task.actionVerb!=='准备'||!task.actionObject||new Set(own.map(e=>e.sourceId)).size!==1)continue
+   const preparation=own.filter(e=>{
+    const q=compact(e.quote)
+    if(!q.includes(task.actionObject)||/不要|请勿|无需|不必|取消|禁止|不得|例如|假如/u.test(q))return false
+    return /(?:入选|录取)后(?:需|须|需要)(?:自行|自备)?准备/u.test(q)
+      ||/被录取的正式学员可[^。；]{0,60}[，,]各学员需自行准备/u.test(q)
+   })
+   if(preparation.length!==1)continue
+   const negative=own.filter(e=>/(?:本人|个人|我)(?:尚未|未|没有)(?:被)?(?:录取|入选)/u.test(compact(e.quote))&&!/如果|假如|例如/u.test(e.quote))
+   const positive=own.filter(e=>/(?:本人|个人|我)(?:已经|已)(?:被)?(?:录取|入选)/u.test(compact(e.quote))&&!/如果|假如|例如/u.test(e.quote))
+   const facts=[...negative,...positive],sourceConditionValue=negative.length&&positive.length?'unknown':negative.length?'false':positive.length?'true':'unknown'
+   rows.push({taskId:task.tempId,kind:'conditional_obligation',required:true,sourceConditionValue,ruleEvidenceIds:preparation.map(e=>e.id),ruleQuotes:preparation.map(e=>e.quote),factEvidenceIds:facts.map(e=>e.id),factQuotes:facts.map(e=>e.quote),blockedReason:negative.length?'原文已说明本人尚未入选或录取，准备要求当前不适用；不能用一次勾选覆盖。':null})
+   continue
+  }
   const negative=own.filter(e=>/(?:本人|我)(?:尚未缴费|未缴费|没有缴费|未放弃|不放弃|决定继续)/u.test(compact(e.quote))&&!/如果|例如|假如/u.test(e.quote))
   const positive=own.filter(e=>/(?:本人|我)(?:已经|已)缴费(?:并|且)?(?:决定)?放弃(?:选修|修读|参加)(?:资格)?[。；]?$/u.test(compact(e.quote))&&!/如果|例如|假如/u.test(e.quote))
   const facts=[...negative,...positive],sourceConditionValue=negative.length&&positive.length?'unknown':negative.length?'false':positive.length?'true':'unknown'

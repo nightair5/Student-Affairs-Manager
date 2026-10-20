@@ -25,9 +25,11 @@ import {projectCitedTimeLayouts} from './citedLayoutSupport'
 import {citedCourseScope,courseTaskSupported,courseEventSupported,courseWindowQuotes} from './citedCourseScope'
 import {projectAlternativeObligations,supportedReceiptName} from './nativeConditionalObligation'
 import {existingHandlingWindows} from './handlingWindowSupport'
+import {completeCitedContextSupport,supportedFormTask,citedTaskClockEndpoint} from './citedContextSupport'
+import {projectCitedOpportunityViews} from './citedOpportunityProjection'
 import {isolateRecognitionItems,unanchoredAcademicWeek,LOCAL_ISOLATION_NOTE_PREFIX,LOCAL_ISOLATION_VERSION,type LocalIsolationAudit} from '../../cloudflare/recognition-local-isolation.mjs'
 
-export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.29.0'
+export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.30.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION
@@ -40,6 +42,8 @@ export interface D26FirstSuggestionAudit {
   citedCourseScope?:ReturnType<typeof citedCourseScope>
   conditionalAlternatives?:ReturnType<typeof projectAlternativeObligations>
   existingHandlingWindows?:ReturnType<typeof existingHandlingWindows>
+  citedContextSupport?:ReturnType<typeof completeCitedContextSupport>
+  opportunityProjection?:ReturnType<typeof projectCitedOpportunityViews>
   declaredSourceInformation?:ReturnType<typeof retainDeclaredSourceInformation>
   localIsolation?:LocalIsolationAudit
   retiredDeadlineContexts?:Array<{entityId:string;rule:'EXPLICIT_UNOWNED_RETIRED_CONTEXT_NOT_CURRENT_DEADLINE';evidenceIds:string[]}>
@@ -160,7 +164,7 @@ function time<T extends TimeFields & { tempId: string; rawText: string; type: Ti
     return
   }
   const fullRange=/(?:\d{4}年)?\d{1,2}月\d{1,2}日?\s*(?:[-—–至到]\s*(?:\d{4}年)?(?:\d{1,2}月)?\d{1,2}日|\d{1,2}:[0-5]\d\s*[-—–至到]\s*\d{1,2}:[0-5]\d|\d{1,2}:[0-5]\d(?:开始|开场)[，,、；;\s]*\d{1,2}:[0-5]\d(?:结束|散场|闭幕))/u.test(point.rawText)
-  const range = proof?{quote:proof.context,literalRange:point.rawText,expanded:proof.endpoint,rule:proof.rule==='EXPLICIT_ONE_WEEK_BEFORE_UNIQUE_CITED_EVENT_START'?'CITED_RELATIVE_CUTOFF' as const:proof.rule==='EXISTING_SHARED_TASK_DATE_RANGE'?'CITED_SHARED_TASK_RANGE_ENDPOINT' as const:'CITED_SAME_EVENT_RANGE_ENDPOINT' as const}:supported(point.rawText, quotes)&&!fullRange?null:rangeEndpointSupport(point.rawText, point.type, rangeQuotes, referenceTime, timezone)
+  const range = proof?{quote:proof.context,literalRange:point.rawText,expanded:proof.endpoint,rule:proof.rule==='EXPLICIT_ONE_WEEK_BEFORE_UNIQUE_CITED_EVENT_START'?'CITED_RELATIVE_CUTOFF' as const:['EXISTING_SHARED_TASK_DATE_RANGE','EXISTING_TASK_OWNED_CLOCK_RANGE'].includes(proof.rule)?'CITED_SHARED_TASK_RANGE_ENDPOINT' as const:'CITED_SAME_EVENT_RANGE_ENDPOINT' as const}:supported(point.rawText, quotes)&&!fullRange?null:rangeEndpointSupport(point.rawText, point.type, rangeQuotes, referenceTime, timezone)
   if (!supported(point.rawText, quotes) && !range) {
     audit.unresolved.push({ entityId: point.tempId, reason: 'TIME_SOURCE_SUPPORT_MISSING' })
     Object.assign(point, { normalizedValue: null, isAllDay: false, precision: 'vague', needsConfirmation: true })
@@ -347,6 +351,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   audit.citedOwnerSupport=completeCitedOwnerSupport(result,context.sourceText)
   audit.citedTimeLayouts=projectCitedTimeLayouts(result,context.sourceText)
   audit.citedCourseScope=citedCourseScope(result,context.sourceText)
+  audit.citedContextSupport=completeCitedContextSupport(result,context.sourceText)
   audit.conditionalAlternatives=projectAlternativeObligations(result,context.sourceText)
   retainCitedMaterialQuantities(result,context.sourceText,audit)
   audit.citedSourceWindows=completeCitedSourceWindows(result,context.sourceText,context.referenceTime,context.timezone)
@@ -391,7 +396,7 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     }
     const clockRange=audit.citedClockRanges.find(d=>d.pointId===point.tempId)
     if(clockRange){if(clockRange.blocked)audit.unresolved.push({entityId:point.tempId,reason:clockRange.reason});continue}
-    const split=citedRelativeCutoff(point,result,result.evidence,context.sourceText,context)??citedTaskDateRange(point,[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])],result.timePoints,result.evidence,context.sourceText)??citedSplitEventRange(point,result.events,result.timePoints,result.evidence,context.sourceText)
+    const split=citedRelativeCutoff(point,result,result.evidence,context.sourceText,context)??citedTaskClockEndpoint(point,result,context.sourceText)??citedTaskDateRange(point,[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])],result.timePoints,result.evidence,context.sourceText)??citedSplitEventRange(point,result.events,result.timePoints,result.evidence,context.sourceText)
     const heading = split?undefined:citedEventDate(point, result.events, pointQuotes, eventQuotes, context.sourceText, context.referenceTime, context.timezone)
     const sequence = sequentialEventDate(point,result.events,result.timePoints,result.evidence,context.sourceText,context.referenceTime,context.timezone)
     const sameDay=citedSameDayDate(point,pointQuotes,context.sourceText,context.referenceTime,context.timezone)
@@ -403,10 +408,12 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     const rangeQuotes = window?quote(window.evidenceIds):owners.length === 1 ? unique([...pointQuotes(point.tempId).filter(q => eventQuotes(owners[0].tempId).includes(q)),...(/^次日/u.test(point.rawText)?contiguousEventQuotes(eventQuotes(owners[0].tempId),context.sourceText):[])]) : owners.length===0?courseWindowQuotes(point.tempId,result,context.sourceText,audit.citedCourseScope):[]
     time(point, pointQuotes(point.tempId), context.referenceTime, context.timezone, audit, anchor?.date, anchor?.context, rangeQuotes,'startMinutes' in (anchor??{})?(anchor as {startMinutes?:number}).startMinutes:undefined,split??undefined)
   }
+  const opportunities=projectCitedOpportunityViews(result,context.sourceText,context.referenceTime,context.timezone)
+  if(opportunities.decisions.length)audit.opportunityProjection=opportunities
   const tasks: TaskSuggestionV2[] = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
   for (const task of tasks) {
     boundActionField(task,quote(task.evidenceIds),context.sourceText,audit)
-    const quotes = quote(task.evidenceIds),completion=supportedCourseCompletion(task,quotes,result.timePoints)||courseTaskSupported(task,audit.citedCourseScope),attendance=supportedAttendanceAction(task.actionVerb,task.actionObject,quotes),grounded = supportedReceiptName(task.tempId,result,context.sourceText,audit.conditionalAlternatives)||completion||attendance||supportedAdjacent(task.actionVerb, quotes,context.sourceText) && (supportedAdjacent(task.actionObject, quotes,context.sourceText,true)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)||supportedEventDescriptor(task.actionObject,quotes))
+    const quotes = quote(task.evidenceIds),completion=supportedCourseCompletion(task,quotes,result.timePoints)||courseTaskSupported(task,audit.citedCourseScope),attendance=supportedAttendanceAction(task.actionVerb,task.actionObject,quotes),grounded = supportedFormTask(task,audit.citedContextSupport)||supportedReceiptName(task.tempId,result,context.sourceText,audit.conditionalAlternatives)||completion||attendance||supportedAdjacent(task.actionVerb, quotes,context.sourceText) && (supportedAdjacent(task.actionObject, quotes,context.sourceText,true)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)||supportedEventDescriptor(task.actionObject,quotes))
     if(attendance){audit.groundedNameEquivalences??=[];audit.groundedNameEquivalences.push({entityId:task.tempId,rule:'EXISTING_SAME_OBJECT_MANDATORY_ATTENDANCE',quotes})}
     if(completion)audit.actionFields.push({entityId:task.tempId,before:task.actionVerb,after:task.actionVerb,status:'EXISTING_COURSE_COMPLETION_SUPPORT',quotes})
     const original = { entityId: task.tempId, kind: 'task' as const, title: task.title, description: task.description }
@@ -433,7 +440,8 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
     }
   }
   const title = tasks.length ? tasks[0].title : result.events[0]?.title ?? '通知资料'
-  const summary = tasks.length || result.events.length ? `${tasks.length}项任务，${result.events.length}项事件。请核对后确认。` : '未识别到需要执行的任务或事件；原文已保留，可核对并归档。'
+  const onlyAlternative=tasks.length===2&&audit.conditionalAlternatives.decisions.length===1&&opportunities.decisions.filter(d=>d.rule==='EXISTING_ALTERNATIVE_RECEIPT_WINDOW_NOT_FIXED_ATTENDANCE').length===2
+  const summary = onlyAlternative?'1项领取事项，正常领取与错过后的补领是两种办理机会，只需按实际情况选择一种。':tasks.length || result.events.length ? `${tasks.length}项任务，${result.events.length}项事件。请核对后确认。` : '未识别到需要执行的任务或事件；原文已保留，可核对并归档。'
   prose(audit, { entityId: 'source', kind: 'source', title: result.sourceSummary.title, description: result.sourceSummary.summary }, title, summary)
   Object.assign(result.sourceSummary, { title, summary })
   retainActionBlocks(result,audit)

@@ -40,6 +40,7 @@ async function carrierTests(label,paths,pattern) {
 }
 async function product() {
   layer='current-product'
+  nodeTests([['conditional-obligation-generation','cloudflare/recognition-product-contract-v1-12.node-test.mjs']])
   nodeTests([['preview-access','cloudflare/preview-access.node-test.mjs']])
   nodeTests([['worker-literal-evidence','cloudflare/recognition-literal-evidence.node-test.mjs']])
   nodeTests([['worker-typographic-evidence','cloudflare/recognition-evidence-typography.node-test.mjs']])
