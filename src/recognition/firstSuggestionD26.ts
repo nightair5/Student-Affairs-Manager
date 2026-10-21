@@ -32,7 +32,7 @@ import {citedDocumentNames, type CitedDocumentName} from './citedDocumentName'
 import {isolateRecognitionItems,unanchoredAcademicWeek,LOCAL_ISOLATION_NOTE_PREFIX,LOCAL_ISOLATION_VERSION,type LocalIsolationAudit} from '../../cloudflare/recognition-local-isolation.mjs'
 
 export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.30.0'
-export const PRODUCT_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.32.1'
+export const PRODUCT_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.32.2'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION | typeof PRODUCT_FIRST_SUGGESTION_VERSION
@@ -225,6 +225,7 @@ function time<T extends TimeFields & { tempId: string; rawText: string; type: Ti
     interpretation.point.normalizedValue = interpretation.point.rangeEndNormalizedValue
     audit.rangeSupport.push({entityId:point.tempId,quote:rangeQuotes.find(q=>q.includes(point.rawText))!,literalRange:point.rawText,expanded:interpretation.point.normalizedValue,rule:'CITED_SAME_EVENT_CLOCK_RANGE'})
   }
+  if(interpretation.point.issues.some(i=>i==='deadline_is_unqualified_date_range'||i==='deadline_range_end_unresolved')){Object.assign(point,{selected:false});audit.unresolved.push({entityId:point.tempId,reason:'DEADLINE_RANGE_ROLE_UNPROVEN'})}
   Object.assign(point, fields(interpretation.point))
   if(interpretation.certainty==='tentative')Object.assign(point,{selected:false})
   audit.times.push({ entityId: point.tempId, before, after: fields(point), interpretation })

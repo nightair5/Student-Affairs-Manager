@@ -44,7 +44,7 @@ async function product() {
   layer='current-product'
   nodeTests([['stateful-carrier-schedule','scripts/stateful-carrier-schedule.node-test.mjs']])
   nodeTests([['typed-task-applicability-generation','cloudflare/recognition-product-contract-v1-14.node-test.mjs']])
-  nodeTests([['compact-generation-and-sampling','cloudflare/recognition-product-contract-v1-15.node-test.mjs']])
+  nodeTests([['compact-generation-and-sampling','cloudflare/recognition-product-contract-v1-15.node-test.mjs'],['deadline-range-role','cloudflare/deadline-range-role.node-test.mjs']])
   nodeTests([['conditional-obligation-generation','cloudflare/recognition-product-contract-v1-12.node-test.mjs']])
   nodeTests([['entity-first-summary-last-generation','cloudflare/recognition-product-contract-v1-13.node-test.mjs']])
   nodeTests([['preview-access','cloudflare/preview-access.node-test.mjs']])

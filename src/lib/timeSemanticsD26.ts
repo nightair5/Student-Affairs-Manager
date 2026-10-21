@@ -1,6 +1,8 @@
 import { addDateOnlyDays, parseChineseTimeAst, type ChineseTimeAst, type ChineseTimeAstOptions } from './timeSemantics'
 
-export const D26_TIME_VERSION = 'source-time-semantics-2.5.0'
+import {deadlineRangeRoleIssue} from '../../cloudflare/deadline-range-role.mjs'
+
+export const D26_TIME_VERSION = 'source-time-semantics-2.5.1'
 export interface D26TimeInterpretation {
   version: typeof D26_TIME_VERSION
   point: ChineseTimeAst
@@ -63,6 +65,8 @@ export function interpretTimeD26(rawText: string, options: ChineseTimeAstOptions
     if (partialClock) point.issues.push('day_period_without_clock')
     if (tentative) point.issues.push('tentative_time')
   }
+  const rangeIssue=deadlineRangeRoleIssue(rawText,options.type)
+  if(rangeIssue)point={...point,normalizedValue:null,rangeEndNormalizedValue:null,isAllDay:false,precision:'vague',needsConfirmation:true,issues:[...point.issues,rangeIssue]}
   return { version: D26_TIME_VERSION, point, knownDate: point.normalizedValue?.slice(0, 10) ?? null,
     dayPeriod, certainty: unannounced ? 'unannounced' : tentative ? 'tentative' : point.needsConfirmation ? 'partial' : 'stated', sourceContext: context, conversions }
 }
