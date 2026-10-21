@@ -809,7 +809,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   const selectedModel = extractionModel(env)
   const selectedPromptVersion = selectedModel === DEEPSEEK_MULTIMODAL_MODEL
     ? VISION_TEXT_EVALUATION_PROMPT_VERSION
-    : ['recognition-product-contract-1.2.0',PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0','recognition-product-contract-1.5.0','recognition-product-contract-1.6.0','recognition-product-contract-1.7.0','recognition-product-contract-1.8.0','recognition-product-contract-1.9.0','recognition-product-contract-1.10.0','recognition-product-contract-1.11.0','recognition-product-contract-1.12.0','recognition-product-contract-1.13.0','recognition-product-contract-1.14.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
+    : ['recognition-product-contract-1.2.0',PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0','recognition-product-contract-1.5.0','recognition-product-contract-1.6.0','recognition-product-contract-1.7.0','recognition-product-contract-1.8.0','recognition-product-contract-1.9.0','recognition-product-contract-1.10.0','recognition-product-contract-1.11.0','recognition-product-contract-1.12.0','recognition-product-contract-1.13.0','recognition-product-contract-1.14.0','recognition-product-contract-1.15.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
   // Segment offsets address the exact captured source, including leading and
   // trailing layout. Older request versions retain their original trim rule.
   const sourceContent = usesSourceSegments(selectedPromptVersion)?body.content:safeText(body.content,24_000)
@@ -834,7 +834,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       body: JSON.stringify({
         model: selectedModel,
         thinking: { type: 'disabled' },
-        temperature: 0.1,
+        temperature: env.DEEPSEEK_EXTRACTION_TEMPERATURE === '0' || env.DEEPSEEK_EXTRACTION_TEMPERATURE === 0 ? 0 : 0.1,
         max_tokens: Math.min(MAX_EXTRACTION_TOKENS,Math.max(1,Number(env.DEEPSEEK_EXTRACTION_MAX_TOKENS)||6_000)),
         response_format: { type: 'json_object' },
         messages: [
