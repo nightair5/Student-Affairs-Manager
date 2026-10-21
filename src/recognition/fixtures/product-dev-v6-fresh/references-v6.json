@@ -1,0 +1,1214 @@
+{
+  "version": "product-fresh-reference-v6-20261021-1",
+  "author": "Codex / single-author / model-assisted / provisional",
+  "authoredBeforeAnyOutput": true,
+  "rows": [
+    {
+      "id": "FRESH-01",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "301ccbe3b798fef03f11facad584dec4b1eb791fb8cdad956b49c1b6a89ba046",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2025-05-30T08:30",
+            "end": "2025-05-30T15:30",
+            "location": "天马"
+          }
+        ],
+        "information": [
+          "全部宿舍",
+          "食堂"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-02",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "0c4cf00e03039cd8476946e34473523b5204b099a3a9be75f431c78cf5c7e4ae",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "1号教学楼",
+            "start": "2025-12-12T18:00",
+            "end": "2025-12-13T05:00"
+          },
+          {
+            "object": "校医院",
+            "start": "2025-12-12T18:00",
+            "end": "2025-12-14T19:00"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "施工作业",
+            "verbs": [
+              "开展",
+              "进行"
+            ]
+          }
+        ],
+        "information": [
+          "非动力",
+          "严禁"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-03",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "d3549fc113ce70252423f6c641d08d1be90b4b0fde379120847cc8a95bbf9bd0",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "DeepSeek",
+            "start": "2025-02-28T10:00",
+            "endUnknown": true,
+            "location": "逸夫楼报告厅"
+          }
+        ],
+        "information": [
+          "同步直播",
+          "滨海校区"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-04",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "80d8d057c9d0a91983406a403ea998f5461dab9c7531970c7d728c3e3fea55c7",
+      "reference": {
+        "tasks": [
+          {
+            "object": "课程",
+            "verbs": [
+              "申请",
+              "补选",
+              "补修",
+              "重修",
+              "调整"
+            ],
+            "deadline": "2025-03-27T17:00",
+            "condition": "缺失",
+            "unknownEligibility": true
+          },
+          {
+            "object": "重修",
+            "verbs": [
+              "缴费",
+              "缴纳",
+              "支付"
+            ],
+            "deadline": "2025-03-28T17:00",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "课程号",
+          "线下报名表",
+          "不予退还",
+          "任课教师同意"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-05",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "33135cdc5d11d91efcbd0b298a134e5a8a4291e6050b671653250dafed870cf5",
+      "reference": {
+        "tasks": [
+          {
+            "object": "电器",
+            "verbs": [
+              "关闭"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2025-12-21T20:00",
+            "end": "2025-12-22T02:00",
+            "location": "西苑校区"
+          }
+        ],
+        "information": [
+          "电梯",
+          "移动网络",
+          "提前送电不再另行通知"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-06",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "5a21e41306cc8de2fdd3f34df1c50e2b51a8992a1569e5aeee35569fcde753ef",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "宣讲会",
+            "start": "2025-09-14T18:00",
+            "end": "2025-09-14T21:00"
+          }
+        ],
+        "information": [
+          "郑州",
+          "调整"
+        ],
+        "obsoleteDates": [
+          "2025-09-11"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-07",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "3027a6241595a44cbc25390f37bfd663aa21bcc79ed2a3f3499f9bf77525bb79",
+      "reference": {
+        "tasks": [
+          {
+            "object": "学生证",
+            "verbs": [
+              "补办",
+              "申请",
+              "提交"
+            ],
+            "deadline": "2025-12-19",
+            "precision": "date_only",
+            "material": "申请表",
+            "channel": "学院",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "materials": [
+          "照片"
+        ],
+        "information": [
+          "乘车区间",
+          "教学秘书",
+          "12",
+          "22",
+          "新地址",
+          "最终核验"
+        ],
+        "forbidden": [
+          {
+            "object": "学生证",
+            "verbs": [
+              "涂改",
+              "损毁",
+              "借给"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-08",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "1b3dda76bf241300e5d56f518d1fd5dd73af3b5bbbaf42e701f0d76e4de5f1d9",
+      "reference": {
+        "tasks": [
+          {
+            "object": "学生证",
+            "verbs": [
+              "申请",
+              "补办",
+              "换发"
+            ],
+            "deadline": "2025-06-13",
+            "precision": "date_only",
+            "material": "申请",
+            "channel": "教学秘书",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "materials": [
+          "照片"
+        ],
+        "information": [
+          "5元",
+          "蓝底",
+          "空白学生证",
+          "6月16日",
+          "学院"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-09",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "8498398706850d5b20ecd76c0fdbd9b9c15d672d3197a83ef5d2a6815a9bf141",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "完成",
+              "报名",
+              "申请"
+            ],
+            "deadline": "2025-04-01T00:00"
+          },
+          {
+            "object": "缴费",
+            "verbs": [
+              "完成",
+              "缴费",
+              "支付"
+            ],
+            "deadlineUnknown": true
+          },
+          {
+            "object": "材料",
+            "verbs": [
+              "寄送",
+              "邮寄",
+              "提交"
+            ],
+            "deadline": "2025-04-03T17:00"
+          }
+        ],
+        "events": [],
+        "information": [
+          "寄达",
+          "无效"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-10",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "8173f4e9a7a53178f2df5947bb484bf1a9198ae204fb8f14fad62bd918560c41",
+      "reference": {
+        "tasks": [
+          {
+            "object": "论文",
+            "verbs": [
+              "撰写",
+              "提交",
+              "完成"
+            ],
+            "deadline": "2025-01-03T17:00",
+            "material": "论文"
+          }
+        ],
+        "events": [],
+        "information": [
+          "3000",
+          "5000",
+          "学号",
+          "姓名",
+          "汇总",
+          "站内邮箱",
+          "考勤",
+          "听课记录"
+        ],
+        "formats": [
+          "3000",
+          "5000"
+        ],
+        "naming": [
+          "学号",
+          "姓名"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-11",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "88d398b90bf62edb318b6a43e921fc35b2424209e732f3c25824c88f9124462f",
+      "reference": {
+        "tasks": [
+          {
+            "object": "校园卡",
+            "verbs": [
+              "领取"
+            ],
+            "channel": "一卡通服务中心",
+            "unknownEligibility": true
+          },
+          {
+            "object": "绑卡",
+            "verbs": [
+              "完成",
+              "绑定",
+              "办理"
+            ],
+            "unknownEligibility": true
+          },
+          {
+            "object": "人脸",
+            "verbs": [
+              "采集",
+              "完成"
+            ],
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "新生",
+          "辅导员",
+          "101",
+          "微信",
+          "支付宝"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-12",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "3f3009f7f292e0a99b77026a3e85345c4d5fc319c9f4f8d1658677f6369b5050",
+      "reference": {
+        "tasks": [
+          {
+            "object": "课程",
+            "verbs": [
+              "补选",
+              "选课",
+              "选择",
+              "报名"
+            ],
+            "deadline": "2025-06-30T23:00",
+            "channel": "强智",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "2024",
+          "专业选修课",
+          "体育",
+          "外语",
+          "12:00",
+          "9:00",
+          "23:00",
+          "缺考",
+          "后续不再开放"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-13",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "ee616906ea133d86dc06b21233cb2e614d3917c35a7b473a07c6db6e1c5ce530",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "大语言模型",
+            "start": "2025-03-21T16:00",
+            "end": "2025-03-21T18:00",
+            "location": "202"
+          },
+          {
+            "object": "WPS",
+            "start": "2025-03-21T18:00",
+            "end": "2025-03-21T19:00",
+            "location": "202"
+          }
+        ],
+        "information": [
+          "教师",
+          "主会场",
+          "分会场",
+          "直播"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-14",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "11c8f460f98325b963ef6712c134cb3e63d39a3b97a51cb09024f2acdf956b4f",
+      "reference": {
+        "tasks": [
+          {
+            "object": "请假",
+            "verbs": [
+              "办理",
+              "申请"
+            ],
+            "unknownEligibility": true,
+            "condition": "冲突",
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "讲堂",
+            "start": "2025-03-05T14:30",
+            "endUnknown": true,
+            "location": "CIAD"
+          }
+        ],
+        "information": [
+          "教职工",
+          "3月3日",
+          "3月8日",
+          "党委备案"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-15",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "7d5cd7d699e137902f365bb6fed9dedd387a2c02a9be6a5da31c684459781f4b",
+      "reference": {
+        "tasks": [
+          {
+            "object": "名单",
+            "verbs": [
+              "报送",
+              "提交"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "教务处"
+          }
+        ],
+        "events": [
+          {
+            "object": "DeepSeek",
+            "start": "2025-03-27T15:00",
+            "endUnknown": true,
+            "location": "图书馆七楼"
+          }
+        ],
+        "information": [
+          "20",
+          "3",
+          "26",
+          "下班前",
+          "提前",
+          "10",
+          "请假"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-16",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "dda3872bc953663f5cb4e41b48a57aa3ce4f9e0081d91337f39c699314094e0c",
+      "reference": {
+        "tasks": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "6月26日",
+          "6月27日",
+          "2023级学前教育",
+          "另行通知",
+          "本人",
+          "不允许代领",
+          "严禁",
+          "邮寄"
+        ],
+        "forbidden": [
+          {
+            "object": "证书",
+            "verbs": [
+              "邮寄",
+              "快递",
+              "代领"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-17",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "932e75ee49ce598b1b2207bbb8d4728c18c92485a7d3ea1cd497fdbe87e6ce4a",
+      "reference": {
+        "tasks": [
+          {
+            "object": "学位证",
+            "verbs": [
+              "领取",
+              "申领",
+              "申请"
+            ],
+            "deadline": "2026-05-27",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "微信",
+          "人脸识别",
+          "邮寄",
+          "顺丰到付",
+          "一年",
+          "不可补办"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-18",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "dfe8c5b20c3fa9006262b44f99d6f6e0db5385397f15ef604bfdcab3eaedcfd8",
+      "reference": {
+        "tasks": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取",
+              "清点"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "辅导员",
+          "A105",
+          "9:30",
+          "10:30",
+          "10:40",
+          "11:40",
+          "成绩单",
+          "学位授予决定",
+          "盖章"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-19",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "42794ab931f9ad18b5b85e0ca9bc33ad12dd0ac898ae3c0d579be67088e8275f",
+      "reference": {
+        "tasks": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取",
+              "清点"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "图书馆731",
+          "13",
+          "14",
+          "15",
+          "毕业典礼",
+          "签收",
+          "离校手续"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-20",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "12971cc4d16b7d0d8616280b6eb6ef9e196c09c174d95cfd09bc7ae58eda9113",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "讲座",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "information": [
+          "延期",
+          "另行通知",
+          "全校停课"
+        ],
+        "obsoleteDates": [
+          "2025-09-23"
+        ],
+        "forbidden": [
+          {
+            "object": "讲座",
+            "verbs": [
+              "按原定时间参加"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-21",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "38aa90ee38e0159b3530b59a90e39e517892de5e986f625cde4c15548ae38468",
+      "reference": {
+        "tasks": [],
+        "events": [],
+        "information": [
+          "优秀成员名单",
+          "附件"
+        ],
+        "materialCount": 0
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-22",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "a11eb4876f8c16e5490aa1b05b33972e38c21e27b0909c1f4eadb9d063209cce",
+      "reference": {
+        "tasks": [
+          {
+            "object": "集章卡",
+            "verbs": [
+              "领取"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          },
+          {
+            "object": "门票",
+            "verbs": [
+              "领取",
+              "兑换"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "社团之旅",
+            "start": "2025-09-27T14:00",
+            "end": "2025-09-27T17:30",
+            "location": "E座"
+          },
+          {
+            "object": "社团之夜",
+            "start": "2025-09-27T19:00",
+            "end": "2025-09-27T21:35",
+            "location": "110"
+          }
+        ],
+        "information": [
+          "大本营",
+          "集赞",
+          "前排"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-23",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "fa3d6a91ef2e627f8cb9a97c89848e8800c9c180eb0c46f778eae647b25b5814",
+      "reference": {
+        "tasks": [
+          {
+            "object": "缓考",
+            "verbs": [
+              "申请",
+              "提交"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "考试查询",
+          "12月19日",
+          "考核开始前",
+          "Word",
+          "挂号凭证",
+          "病历",
+          "病假证明",
+          "原件",
+          "冲突考试截图",
+          "优先参加主修"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-24",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "22901f8c5ad2545ff620d6c343b31f402788e27a0df77e8eaacfbb8b650670a0",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2025-03-26",
+            "precision": "date_only",
+            "channel": "学科竞赛管理系统"
+          },
+          {
+            "object": "报名确认",
+            "verbs": [
+              "确认",
+              "办理"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "身份证号",
+          "3月28日",
+          "4月11日",
+          "4月18日",
+          "参赛费",
+          "四牌楼",
+          "九龙湖",
+          "每周五",
+          "下午2点",
+          "晚上8点",
+          "失败"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-25",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "c8e3686c59c116daa153a78d40d10435eba89c29c2eaec7b547037e590f0c559",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "闭馆",
+            "start": "2025-06-13T11:30",
+            "endUnknown": true,
+            "location": "B201"
+          }
+        ],
+        "information": [
+          "另行通知"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-26",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "a346ea4d91edc5d77ffc704e17eb52698be3c41cfa9bf529c5a3c19b0ab5ce88",
+      "reference": {
+        "tasks": [
+          {
+            "object": "图书",
+            "verbs": [
+              "归还",
+              "还书"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "闭馆",
+            "start": "2025-02-10",
+            "endUnknown": true,
+            "location": "文科图书馆"
+          }
+        ],
+        "information": [
+          "预计",
+          "另行通知",
+          "预约取书",
+          "暂定",
+          "G层",
+          "3月1日",
+          "其他各馆"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-27",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "fc1f92800a06a89d794c4cbe08c27065bce4b500e763b9a17c2eeab38f6fa1bb",
+      "reference": {
+        "tasks": [
+          {
+            "object": "程序设计大赛",
+            "verbs": [
+              "报名",
+              "参加报名"
+            ],
+            "deadline": "2025-03-29T12:00",
+            "channel": "今日校园",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "程序设计大赛",
+            "start": "2025-03-30T09:00",
+            "end": "2025-03-30T12:00",
+            "location": "C座"
+          }
+        ],
+        "information": [
+          "全日制",
+          "个人",
+          "C++",
+          "Java",
+          "机房号",
+          "QQ群"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-28",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "a929031866b85d036ec693082572aa072bce7ddd720f90a2e361886c80c6d373",
+      "reference": {
+        "tasks": [
+          {
+            "object": "个人物品",
+            "verbs": [
+              "整理",
+              "带离",
+              "取回",
+              "清理"
+            ],
+            "deadline": "2025-01-10T14:00",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "五至八层",
+          "贵重物品"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-29",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "9ae5084df72aa232cdd3ff779456b87f38574f7a0718125308bc263cd3ca0a59",
+      "reference": {
+        "tasks": [
+          {
+            "object": "个人",
+            "verbs": [
+              "领取",
+              "领回",
+              "取回",
+              "确认"
+            ],
+            "deadline": "2025-12-15T14:00",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "三至四楼",
+          "302",
+          "负一楼",
+          "服务大厅"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-30",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "a99cec270f6e0ab80364ecf4768b656efe15cc664ac1ece35b7f1c95c0fba43d",
+      "reference": {
+        "tasks": [
+          {
+            "object": "储水",
+            "verbs": [
+              "储水",
+              "做好",
+              "准备"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停水",
+            "start": "2025-05-09T22:00",
+            "end": "2025-05-10T06:00"
+          }
+        ],
+        "information": [
+          "以南",
+          "不包含南区家属区"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-31",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "052352b9884f5043c1e01534b068c3b511279235d8201d1cf241389d01c45e08",
+      "reference": {
+        "tasks": [
+          {
+            "object": "成绩复核",
+            "verbs": [
+              "申请",
+              "提交",
+              "复核"
+            ],
+            "deadline": "2025-05-19T18:00",
+            "channel": "contact@example.invalid",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "materials": [
+          "申请表"
+        ],
+        "information": [
+          "PDF",
+          "word",
+          "一致",
+          "打包",
+          "申请复核日期",
+          "考生姓名",
+          "我考点"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-32",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "34150bb1fa8834e7a5eb72cb5c7fe4f7bdc81a81f9d8b005200b9daa1983534a",
+      "reference": {
+        "tasks": [
+          {
+            "object": "成绩复查",
+            "verbs": [
+              "申请",
+              "提交",
+              "复查"
+            ],
+            "deadline": "2026-03-20T12:00",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "materials": [
+          "申请表"
+        ],
+        "information": [
+          "手写签名",
+          "照片",
+          "二维码",
+          "60分",
+          "补考",
+          "后续"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-33",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "451def285da567c8fc3f8cbf8eca8d8d0f0e67f45c0761d2d258a6cf50fdf01f",
+      "reference": {
+        "tasks": [
+          {
+            "object": "复查",
+            "verbs": [
+              "提交",
+              "申请"
+            ],
+            "deadline": "2026-05-28T11:00",
+            "channel": "教学秘书",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "VPN",
+          "素质教师",
+          "原始成绩",
+          "取高分"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-34",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "267c5c20aa7f332020912690b6b846036a6fd990990378cf1a40c9e414b54717",
+      "reference": {
+        "tasks": [
+          {
+            "object": "成绩复查",
+            "verbs": [
+              "申请",
+              "提交",
+              "复查"
+            ],
+            "deadline": "2025-03-11",
+            "precision": "date_only",
+            "material": "申请表",
+            "channel": "511",
+            "unknownEligibility": true
+          },
+          {
+            "object": "重修",
+            "verbs": [
+              "申请",
+              "提交",
+              "参加"
+            ],
+            "deadline": "2025-06-30",
+            "precision": "date_only",
+            "material": "申请表",
+            "channel": "511",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "硕士英语",
+          "硕士政治",
+          "补考",
+          "缓考",
+          "暂定",
+          "3",
+          "下旬",
+          "秋季",
+          "旷考",
+          "违纪"
+        ]
+      },
+      "preservedRequirements": []
+    },
+    {
+      "id": "FRESH-35",
+      "version": "product-fresh-reference-v6-20261021-1",
+      "author": "Codex / single-author / provisional",
+      "sourceSha256": "fb649a5023fd06b6229b7403db4f3c6fd662d99ea867ce4174f7ec4f138256a7",
+      "reference": {
+        "tasks": [
+          {
+            "object": "图书",
+            "verbs": [
+              "归还",
+              "还回"
+            ],
+            "deadline": "2025-03-04",
+            "precision": "date_only",
+            "unknownEligibility": true
+          },
+          {
+            "object": "个人物品",
+            "verbs": [
+              "带回",
+              "带离",
+              "取回"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "2",
+          "22",
+          "23",
+          "08:30",
+          "21:00",
+          "24",
+          "22:00",
+          "2024"
+        ],
+        "forbidden": [
+          {
+            "object": "个人物品",
+            "verbs": [
+              "存放",
+              "留下"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": []
+    }
+  ]
+}

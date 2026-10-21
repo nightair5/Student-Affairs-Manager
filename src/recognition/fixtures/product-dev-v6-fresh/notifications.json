@@ -1,0 +1,2350 @@
+[
+  {
+    "id": "FRESH-01",
+    "acquisitionKey": "N01",
+    "scene": "停电事件",
+    "inputSourceTitle": "停电通知",
+    "inputSourceType": "text",
+    "text": "接国网湘江新区供电公司通知，计划对湖天线湖大公寓开关站307线路、超算线树达师范#4开关站311线路进行计划检修停电。现就停电事宜安排公布如下，请各单位和用户提前做好准备，给您带来的不便，敬请谅解。\n停电时间：2025年5月30日8:30-15:30\n停电区域：天马园区全部区域，包括全部宿舍和15栋食堂、外街门面等。\n特此通知\n能源管理服务中心\n2025年5月29日",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "停电",
+          "start": "2025-05-30T08:30",
+          "end": "2025-05-30T15:30",
+          "location": "天马"
+        }
+      ],
+      "information": [
+        "全部宿舍",
+        "食堂"
+      ]
+    },
+    "referenceTime": "2025-05-29T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.hunnu.edu.cn/info/1011/20634.htm",
+      "acquiredAt": "2026-10-21T05:06:31.680529+00:00",
+      "publishedOrExplicitUpdateDate": "2025-05-29",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "7d2ef7604a1c29bbd0f6580825db20b63bea4af609df452c09830479b9bbb7da",
+      "acquisitionReceiptSha256": "19f4b1e36cfcaa78d178a66264d1a5718117f6585ceefb9c52ee9d68132b3637",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 353,
+          "end": 538,
+          "sourceSpanSha256": "2a31b0487cea6c78ed8688d3b9e59bd5c16edcd2e73de7b1bb392b84ac4f7789"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-02",
+    "acquisitionKey": "N02",
+    "scene": "多时段禁止",
+    "inputSourceTitle": "停电通知",
+    "inputSourceType": "text",
+    "text": "各相关单位：\n因校医院电气改造工程施工需要，需对部分区域实施临时停电。现将具体事宜通知如下：\n一、停电范围与时间\n1. 1号教学楼（非动力部分）、2号体育场、老图书馆消防系统：2025年12月1\n2\n日（星期\n五\n）\n18\n:00—\n12月13日（星期六）早5\n:00；\n2. 校医院：2025年12月1\n2\n日（星期\n五\n）\n18\n:00—12月14日（星期日）19:00。\n二、重要提醒\n停电期间，各单位严禁开展任何与用电相关的施工作业，避免恢复供电时引发设备损坏或安全事故，确保人员及财产安全。\n此次停电给您的工作、学习与生活带来不便，我们深表歉意，感谢您的理解与配合。\n后勤保障处\n2025年12月11日",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "1号教学楼",
+          "start": "2025-12-12T18:00",
+          "end": "2025-12-13T05:00"
+        },
+        {
+          "object": "校医院",
+          "start": "2025-12-12T18:00",
+          "end": "2025-12-14T19:00"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "施工作业",
+          "verbs": [
+            "开展",
+            "进行"
+          ]
+        }
+      ],
+      "information": [
+        "非动力",
+        "严禁"
+      ]
+    },
+    "referenceTime": "2025-12-11T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://hqbz.hlju.edu.cn/info/1209/5304.htm",
+      "acquiredAt": "2026-10-21T05:06:35.971565+00:00",
+      "publishedOrExplicitUpdateDate": "2025-12-11",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "72dec1621c738e8a4a3c3684cd4017c463fdc59fd84b43f5bf48a9d5da88babd",
+      "acquisitionReceiptSha256": "f1f6b7bfe50a28caea95d24acbe67624ece7134f68d87e59343d269a57d40153",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 280,
+          "end": 587,
+          "sourceSpanSha256": "1279d3ccc8f7f2080027a090a32911d3daefa56889be9ef8e966da7197834389"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-03",
+    "acquisitionKey": "N03",
+    "scene": "讲座",
+    "inputSourceTitle": "求索师者讲坛讲座通知",
+    "inputSourceType": "text",
+    "text": "题\n目：深度解读\nDeepSeek\n：从原理到模型\n主讲\n人：[姓名]\n时\n间：\n2025\n年\n2\n月\n28\n日（周五）\n10:00\n地\n点：马场道校区逸夫楼报告厅（滨海校区七楼会议室同步直播）\n专家简介：\n[姓名]，国家重点研发计划项目首席科学家，天津大学智能与计算学部教授，自然语言处理实验室负责人，天津市“一带一路”联合实验室语言智能与技术中外联合研究中心主任，获天津市引进领军人才资助。主要研究方向为自然语言处理，特别专注于大语言模型、机器翻译、\nAI\n对齐与安全、\nAl for Science\n等方向的研究。\n讲座梗概：\nDeepSeekR1\n的发布，触发了全球科技、经济、地缘竞争一系列连锁反应，是中国\nAI\n科技创新形成全球领导力的重要里程碑。讲座以生成式\nAI\n和科学研究范式为中心，介绍大语言模型发展路线图，解读\nDeepSeek\n大语言模型\nV3\n和推理大模型\nR1\n引起的全球效应，浅析智驱动的科学研究第五范式，讨论高校科研与教学中如何结合和运用大模型，并对未来\nAI\n发展趋势进行初步展望。\n欢迎广大教师、同学踊跃参加！",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "DeepSeek",
+          "start": "2025-02-28T10:00",
+          "endUnknown": true,
+          "location": "逸夫楼报告厅"
+        }
+      ],
+      "information": [
+        "同步直播",
+        "滨海校区"
+      ]
+    },
+    "referenceTime": "2025-02-26T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.tjfsu.edu.cn/2025/0226/c18a9177/page.htm",
+      "acquiredAt": "2026-10-21T05:06:37.152693+00:00",
+      "publishedOrExplicitUpdateDate": "2025-02-26",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "a299c87ab121c3e2167159077f85c75830faac7b69de45399868dac5c71d58ca",
+      "acquisitionReceiptSha256": "16b5db78c31cbfa48b1a6b7296d046f232fc1202297fbe4e51d909835e611b6a",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [
+        {
+          "reason": "PUBLIC_PERSON_NAME",
+          "originalSha256": "244f6671c2805288617e560247184d55ce1093babe56fd236aae78367466bf33",
+          "replacement": "[姓名]"
+        },
+        {
+          "reason": "PUBLIC_PERSON_NAME",
+          "originalSha256": "244f6671c2805288617e560247184d55ce1093babe56fd236aae78367466bf33",
+          "replacement": "[姓名]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 317,
+          "end": 789,
+          "sourceSpanSha256": "df08cd458df0b95bd3806d65e3ba69ad34b2abbd93a9446eb082a018a5c8b27f"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-04",
+    "acquisitionKey": "N04",
+    "scene": "条件选课",
+    "inputSourceTitle": "关于核对课表及调整课程的通知",
+    "inputSourceType": "text",
+    "text": "教务通知[2025]36号\n为保障后续教学工作有序进行，请各位同学认真查看个人课表。若发现课表中缺失应修课程，请及时通过教务系统完成补选、补修或重修申请，完成课程调整。具体要求如下：\n一、课程调整类型说明\n（一）补选课程\n寒假期间两轮选课环节中，应选而未选的课程，涵盖通识选修课、大学英语、四史课程以及专业选修课。\n（二）补修课程\n本专业培养方案规定的必修课程，因学籍异动（如休学、转专业等）导致未能修读的课程。需注意，由于培养方案调整，部分课程课程号发生变化，此类情况需填写线下报名表进行报名。\n（三）重修课程\n已修读且有成绩，但成绩未达及格标准的课程。若原课程停开，需经学院批准，可报名相近课程，考试合格后申请课程替代。\n二、时间安排\n课程调整：\n3月24日8:00～3月27日17:00\n重修缴费：\n3月24日8:00～3月28日17:00\n三、操作注意事项\n（一）精准区分调整方式\n请务必正确区分补选、补修和重修这三种增加课程的方式，依据自身实际情况选择对应的操作流程。\n（二）重修缴费须知\n重修课程需缴纳费用，缴费前请仔细核对课程信息，缴费后无法更改课程，且费用不予退还。\n（三）课程时间冲突处理\n若增加课程的上课时间与现有课程冲突，务必提前征得任课教师同意，方可报名。\n教\n务\n处（教师教学发展中心）\n2025年3月21日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "课程",
+          "verbs": [
+            "申请",
+            "补选",
+            "补修",
+            "重修",
+            "调整"
+          ],
+          "deadline": "2025-03-27T17:00",
+          "condition": "缺失",
+          "unknownEligibility": true
+        },
+        {
+          "object": "重修",
+          "verbs": [
+            "缴费",
+            "缴纳",
+            "支付"
+          ],
+          "deadline": "2025-03-28T17:00",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "课程号",
+        "线下报名表",
+        "不予退还",
+        "任课教师同意"
+      ]
+    },
+    "referenceTime": "2025-03-21T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.xzit.edu.cn/ff/32/c6057a196402/page.htm",
+      "acquiredAt": "2026-10-21T05:06:38.868081+00:00",
+      "publishedOrExplicitUpdateDate": "2025-03-21",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "2f73a5c71960a9b25c9974e928b87f95127cd24e616e8f9523c6b7db064f42da",
+      "acquisitionReceiptSha256": "019ff3109ad59d1e859a6fbd913025ff2b85dd56f8086c787a4be31e4dfd06e8",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 271,
+          "end": 839,
+          "sourceSpanSha256": "8eda1eb079195e1e88bad2da517b1a066e34da25eb8f072032f3b2f44e2b9161"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-05",
+    "acquisitionKey": "N06",
+    "scene": "跨日事件准备",
+    "inputSourceTitle": "停电通知",
+    "inputSourceType": "text",
+    "text": "西苑校区各单位及家属区住户：\n为了确保西苑校区电力增容项目安全推进，后勤保障部计划对西苑校区10kv高压配电室停电并安装高压柜。\n现将具体安排通知如下：\n一、停电时间\n12月21日（星期日）晚上20:00—12月22日（星期一）凌晨2：00\n二、停电区域\n西苑校区南、北院及家属区。\n三、重要提示与准备工作\n1.请相关单位在停电前务必关闭办公室、实验室、教室内的所有电器设备。\n2.电梯将停止运行。\n3.网络及固定电话服务可能会中断，重要通讯请使用移动网络。\n四、应急联系\n如遇紧急情况，请及时联系后勤24小时值班电话：[电话]。\n对于此次停电给您带来的不便，我们深表歉意！我们将尽快恢复正常供电，提前送电不再另行通知。\n后勤保障部\n2025年12月17日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "电器",
+          "verbs": [
+            "关闭"
+          ],
+          "unknownEligibility": true,
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "停电",
+          "start": "2025-12-21T20:00",
+          "end": "2025-12-22T02:00",
+          "location": "西苑校区"
+        }
+      ],
+      "information": [
+        "电梯",
+        "移动网络",
+        "提前送电不再另行通知"
+      ]
+    },
+    "referenceTime": "2025-12-18T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.haust.edu.cn/info/1049/336041.htm",
+      "acquiredAt": "2026-10-21T05:06:54.787302+00:00",
+      "publishedOrExplicitUpdateDate": "2025-12-18",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "22ce922a2d6541b456be24d0d41d6b5dc9df6deddd3ca82b11bfd66416e70d43",
+      "acquisitionReceiptSha256": "f4862b225c57653e121f003dba56fabc1a25ce87d1ad5007d22390ee326b1c29",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [
+        {
+          "reason": "PUBLIC_PHONE_OR_CONTACT_NUMBER",
+          "originalSha256": "66e78f2057b40fc5262f6757ffe00d26324c67d6ec0e1fd240e6368dc6aa346d",
+          "replacement": "[电话]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 1153,
+          "end": 1491,
+          "sourceSpanSha256": "6f5755fd9dc7eb7a3621c75e333af7dd20beb2b511930a9431205136fbc64f6d"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-06",
+    "acquisitionKey": "N07",
+    "scene": "延期",
+    "inputSourceTitle": "重要通知：江南大学2026年研究生招生宣讲会·郑州场延期举行！",
+    "inputSourceType": "text",
+    "text": "重要通知\n因郑州强暴雨天气影响，为切实保障参会师生的出行安全，原定于9月11日18:00-21:00举行的江南大学2026年研究生招生宣讲会·郑州场调整至9月14日18:00-21:00举行。\n此次调整完全基于极端天气下的安全考量，望同学们务必留意新时间，避免因信息遗漏影响参与，感谢您的理解与配合。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "宣讲会",
+          "start": "2025-09-14T18:00",
+          "end": "2025-09-14T21:00"
+        }
+      ],
+      "information": [
+        "郑州",
+        "调整"
+      ],
+      "obsoleteDates": [
+        "2025-09-11"
+      ]
+    },
+    "referenceTime": "2025-09-10T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://yz.jiangnan.edu.cn/info/1012/3676.htm",
+      "acquiredAt": "2026-10-21T05:09:50.794766+00:00",
+      "publishedOrExplicitUpdateDate": "2025-09-10",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "ff92cb944c3222ca660965fa95c853f5f01bff48d980f8e1c593757c8f2374a6",
+      "acquisitionReceiptSha256": "24f667b415aa057a8db21365de38c658eaac6cb9f52c95dad08c613c40aa08c4",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 820,
+          "end": 971,
+          "sourceSpanSha256": "d59ba4637cd8fe6b2dc6341c13aff3b04ab6d052fdbd02e12088794d9c2ad9b4"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-07",
+    "acquisitionKey": "N08",
+    "scene": "条件材料",
+    "inputSourceTitle": "关于补办学生证及火车票优惠卡的通知",
+    "inputSourceType": "text",
+    "text": "各学院（部）、中心：\n学生证及火车票优惠卡补办工作于近期进行，学生因\n学生证\n丢失或\n严重损坏\n、火车票优惠卡消磁或损坏无法使用，\n可申请补办。\n现将补办要求通知如下：\n1.202\n5\n年\n12\n月\n19\n日\n前\n，学生填写\n附件\n1\n“补办申请表”，提交所在学院教务办公室\n，\n填写新学生证并粘贴照片，乘车区间须填写准确\n。\n2.202\n5\n年\n12\n月\n22\n日\n前\n，教学秘书初审，\n填写\n附件\n2“\n补办汇总表\n”\n，将加盖公章的纸质汇总表及学生证（信息填写完整，照片粘贴牢固）提交教务处。\n3.教务处审核后开具用印单，教学秘书凭用印单到校办盖章。\n注：变更乘车区间者，需向学院提供新地址佐证材料，如新身份证、社区或居委会居住证明等。变更乘车区间后，能否享受火车票优惠以铁路部门\n最终\n核验结果为准。\n学生证是个人身份证件，应妥善保管，不得涂改损毁或借给他人使用，以免造成使用不便或其他严重后果\n,构成违规违纪者，学校将依据有关规定严肃处理。\n附件\n1：\n学生证\n补办\n申请表\n附件2：20\n2\n5\n年学生证及火车票优惠卡补办汇总表\n教务处\n20\n2\n5\n年\n12\n月\n12\n日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "学生证",
+          "verbs": [
+            "补办",
+            "申请",
+            "提交"
+          ],
+          "deadline": "2025-12-19",
+          "precision": "date_only",
+          "material": "申请表",
+          "channel": "学院",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "materials": [
+        "照片"
+      ],
+      "information": [
+        "乘车区间",
+        "教学秘书",
+        "12",
+        "22",
+        "新地址",
+        "最终核验"
+      ],
+      "forbidden": [
+        {
+          "object": "学生证",
+          "verbs": [
+            "涂改",
+            "损毁",
+            "借给"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2025-12-12T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://due.xjtu.edu.cn/info/1095/9462.htm",
+      "acquiredAt": "2026-10-21T05:09:51.801036+00:00",
+      "publishedOrExplicitUpdateDate": "2025-12-12",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "526f5a7ff203909f0ff5dc559cad9162cc2c9601e0436de2bb77a48b9f24bf48",
+      "acquisitionReceiptSha256": "844a8052e6fa6bf96aca9436b6ae6a660950da489e2bd95679335027e13edecb",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 716,
+          "end": 1210,
+          "sourceSpanSha256": "3e7fcafef7cea14786e78c869db8c1f132816ad8450eb4c6e260fa08f5aefcec"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-08",
+    "acquisitionKey": "N09",
+    "scene": "条件证件",
+    "inputSourceTitle": "关于2025年第二季度补办、换发学生证工作的通知",
+    "inputSourceType": "text",
+    "text": "各学院：\n根据学校补办、换发学生证的有关规定，现开始为学生证遗失、损坏的学生办理补办、换发手续。请各学院通知相关学生按通知要求办理。\n一、补办、换发学生证说明\n1.学生学生证遗失的，可申请补办；学生因保管不善等原因造成学生证破损、字迹辨认不清的，可申请换发；学生因学籍异动信息变更，可申请换发。\n2.补办、换发学生证需提交材料：学生手写书面申请一份、近期一寸免冠彩色蓝底照片一张、工本费5元。\n3.学生须向所在学院提出书面申请，经审核无误后，由学院登记在\n附件1.\n《XX学院学生证补办\n、\n换发\n汇总表》\n内。\n4.补办或换发学生证的同学在领到空白学生证后须按照\n附件2.\n《补办\n、\n换发\n学生证填写说明》\n如实填写个人信息。\n二、补办、换发学生证时间\n需要进行补办、换发学生证的学生，请于6月11日-6月13日将所需提交的材料交至本学院教学秘书处，各学院6月13日将补办、换发学生证信息统计表、工本费统一汇总后（申请书和照片学院留存）交至教务处注册科并领取空白学生证，6月16日将填写完毕并粘贴照片的学生证交至教务处注册科。\n三、注意事项\n学生证系证明学生身份之用，一人一证，对于谎报丢失情况、无故变更有关信息等弄虚作假办理学生证的学生，一经查出，学校将根据有关规定给予其纪律处分。\n教务处\n2025年6月11日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "学生证",
+          "verbs": [
+            "申请",
+            "补办",
+            "换发"
+          ],
+          "deadline": "2025-06-13",
+          "precision": "date_only",
+          "material": "申请",
+          "channel": "教学秘书",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "materials": [
+        "照片"
+      ],
+      "information": [
+        "5元",
+        "蓝底",
+        "空白学生证",
+        "6月16日",
+        "学院"
+      ]
+    },
+    "referenceTime": "2025-06-11T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.zbu.edu.cn/jwc/2025/0611/c848a99208/page.htm",
+      "acquiredAt": "2026-10-21T05:09:52.714828+00:00",
+      "publishedOrExplicitUpdateDate": "2025-06-11",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "7ec3ccaa1a245adf46a955f70d103e9d54952ad2191ed71e0ff53d7ce33477cd",
+      "acquisitionReceiptSha256": "0f345e9a85bca0bbffe5339549b285655c82c3b3600b4404dd4e107be5459cf5",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 312,
+          "end": 872,
+          "sourceSpanSha256": "3bcb2497c269f3f7f70b710355b5f63bdacbee8fd731a4472bd96853c5b3e517"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-09",
+    "acquisitionKey": "N10",
+    "scene": "报名延期多截止",
+    "inputSourceTitle": "北京建筑大学研究生院",
+    "inputSourceType": "text",
+    "text": "各位考生：\n根据招生工作需要，经研究决定，我校2025年博士研究生网上报名截止时间延长至\n2025年3月31日24时\n，申请材料寄送截止时间延长至\n2025年4月3日17时\n（以寄达时间为准）。\n请考生尽快完成网上报名、缴费、材料寄送，未按要求完成缴费、材料寄送的考生报名信息无效。\n如遇到问题，请与\n我校研究生招生办公室\n联系，电话[电话]。\n北京建筑大学\n研究生院\n202\n5\n年3月\n20\n日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "完成",
+            "报名",
+            "申请"
+          ],
+          "deadline": "2025-04-01T00:00"
+        },
+        {
+          "object": "缴费",
+          "verbs": [
+            "完成",
+            "缴费",
+            "支付"
+          ],
+          "deadlineUnknown": true
+        },
+        {
+          "object": "材料",
+          "verbs": [
+            "寄送",
+            "邮寄",
+            "提交"
+          ],
+          "deadline": "2025-04-03T17:00"
+        }
+      ],
+      "events": [],
+      "information": [
+        "寄达",
+        "无效"
+      ]
+    },
+    "referenceTime": "2025-03-20T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://yjsy.bucea.edu.cn/zsgz/tzgg2/b3a527bf69604712aa9665fed62c741b.htm",
+      "acquiredAt": "2026-10-21T05:09:53.681333+00:00",
+      "publishedOrExplicitUpdateDate": "2025-03-20",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "b1c8e71e0c15520352f9d173699430b6bb662d57320cc54a4b29594b71b26c72",
+      "acquisitionReceiptSha256": "7e150b5ef64fe210df6f175f170d85892c6760513832c7aa498e56d3a37ddb6f",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [
+        {
+          "reason": "PUBLIC_PHONE_OR_CONTACT_NUMBER",
+          "originalSha256": "d97f05822e534d138f0f2c9dd768e354982fd1be52dbda525e8b08e14d43be53",
+          "replacement": "[电话]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 501,
+          "end": 718,
+          "sourceSpanSha256": "ffdf831516a875e4991fd45efc385f467b557fcfd85a5237a620aba1281b8f88"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-10",
+    "acquisitionKey": "N11",
+    "scene": "课程论文",
+    "inputSourceTitle": "关于开展2024年秋季学期研究生 “都市现代农林进展”考核的通知",
+    "inputSourceType": "text",
+    "text": "各学院：\n根据《\n“都市现代农林进展”开设及考核方案》要求，请本学期参加“都市现代农林进展”的研究生，结合课堂学习情况撰写课程论文。相关要求如下：\n一、撰写内容\n结合讲座内容和本人研究方向，自选主题，提交一篇\n3000—5000字的课程论文。\n二、提交时间\n2025 年 1月 3日17:00 前。\n三、提交形式\n1.论文名称\n个人电子版以\n“学号+姓名”命名，例如：202430XXXXXX+ [姓名]。\n班级电子版文件夹以专业名称命名，例如：\n2024生物工程。\n学院电子版文件夹以学院名称命名，例如：\n2024 植科学院。\n2.提交方式\n请各学院汇总之后，将电子版提交至\n[电话]站内邮箱。\n四、注意事项\n本学期\n“都市现代农林进展”考勤情况、听课记录、课程论文均纳入考核，请各学院认真组织完成。\n联\n系\n人：[姓名]、[姓名]\n联系电话：\n[电话]\n附件1：课程论文模拟样本.doc\n附件2：都市现代农林进展课程论文格式.docx\n研究生院\n2024年 12 月 18日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "论文",
+          "verbs": [
+            "撰写",
+            "提交",
+            "完成"
+          ],
+          "deadline": "2025-01-03T17:00",
+          "material": "论文"
+        }
+      ],
+      "events": [],
+      "information": [
+        "3000",
+        "5000",
+        "学号",
+        "姓名",
+        "汇总",
+        "站内邮箱",
+        "考勤",
+        "听课记录"
+      ],
+      "formats": [
+        "3000",
+        "5000"
+      ],
+      "naming": [
+        "学号",
+        "姓名"
+      ]
+    },
+    "referenceTime": "2024-12-18T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://yjsc.bua.edu.cn/info/1151/5715.htm",
+      "acquiredAt": "2026-10-21T05:09:54.826880+00:00",
+      "publishedOrExplicitUpdateDate": "2024-12-18",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "dfd6fdc2b4a9a58cded192c85dcfc5755d936e7058cb383b8143905c754f7b83",
+      "acquisitionReceiptSha256": "76aa77c81f80dd2b3908cc5974e9bd667d972769d42f10377e8ae08b4f05823f",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [
+        {
+          "reason": "PUBLIC_PHONE_OR_CONTACT_NUMBER",
+          "originalSha256": "d563f0b7b91a56330bfbae8ee2da3dac3e26d997ed693c734a66bd5e03b2c354",
+          "replacement": "[电话]"
+        },
+        {
+          "reason": "PUBLIC_PHONE_OR_CONTACT_NUMBER",
+          "originalSha256": "3c72863f466609abfa42eca5ce28760d43cae52f1a67198b0a57f6cea57a8c6c",
+          "replacement": "[电话]"
+        },
+        {
+          "reason": "PUBLIC_PERSON_NAME",
+          "originalSha256": "1d841bc0ee98309cb7916670b7f0fdef5f4c35150711a41405ef3633b56322cf",
+          "replacement": "[姓名]"
+        },
+        {
+          "reason": "PUBLIC_PERSON_NAME",
+          "originalSha256": "27e3e838e36df095dc216c1b89d33ad4d5346668ec25f19ab4bed156cac5fea0",
+          "replacement": "[姓名]"
+        },
+        {
+          "reason": "PUBLIC_PERSON_NAME",
+          "originalSha256": "b06ec8131defa6a1f1d0947ceb6c0cb51460e5536d80613d2106a933b1becd69",
+          "replacement": "[姓名]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 320,
+          "end": 763,
+          "sourceSpanSha256": "ec0426e341c0dbe0a6bd11d90fa7e3c4daba510eb6dab2fcf2d2d7530dda9e57"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-11",
+    "acquisitionKey": "N14",
+    "scene": "角色与学生动作",
+    "inputSourceTitle": "关于领取2025级新生校园卡的通知",
+    "inputSourceType": "text",
+    "text": "各学院：\n现请通知本院新生辅导员，前往信息网络中心一卡通服务中心领取2025级新生校园卡。相关事宜说明如下：\n1. 领取地点：信息网络中心一卡通服务中心（图书馆一楼东侧101室）\n2. 联系人：[姓名]\n3. 联系电话：[电话]\n请各学院尽快传达通知，确保辅导员及时领取，保障新生入学相关工作顺利推进。同时请各辅导员提醒新生及时完成校园卡与微信或支付宝的绑卡操作；以及新生做好人脸信息采集工作，便于学生出入校门（刷校园卡、刷人脸）。\n信息网络中心\n2025年8月30日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "校园卡",
+          "verbs": [
+            "领取"
+          ],
+          "channel": "一卡通服务中心",
+          "unknownEligibility": true
+        },
+        {
+          "object": "绑卡",
+          "verbs": [
+            "完成",
+            "绑定",
+            "办理"
+          ],
+          "unknownEligibility": true
+        },
+        {
+          "object": "人脸",
+          "verbs": [
+            "采集",
+            "完成"
+          ],
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "新生",
+        "辅导员",
+        "101",
+        "微信",
+        "支付宝"
+      ]
+    },
+    "referenceTime": "2025-08-31T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://nic.xust.edu.cn/info/1003/2374.htm",
+      "acquiredAt": "2026-10-21T05:09:58.193215+00:00",
+      "publishedOrExplicitUpdateDate": "2025-08-31",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "3d4a2147b399ce9257bc83797a54e0e0ef96aa403b99a9ced5b45307e65647ea",
+      "acquisitionReceiptSha256": "1273727cba95427f3c57c5828777a28d755fa9b0a510e37fb6dcd1b2cb5b446d",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [
+        {
+          "reason": "PUBLIC_PHONE_OR_CONTACT_NUMBER",
+          "originalSha256": "d1f54f54e5440a02a5fb2d6bd52357d7fc72313625468edfd858c1af336008a8",
+          "replacement": "[电话]"
+        },
+        {
+          "reason": "PUBLIC_PERSON_NAME",
+          "originalSha256": "9dd9cacd6bb2160e36c028f4acf82ff68d385f60ad4f185114e059ad932856c2",
+          "replacement": "[姓名]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 211,
+          "end": 449,
+          "sourceSpanSha256": "31d196a5df900e5f352fdf03b22aab619e6387150ad61e308fb0aae07434db33"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-12",
+    "acquisitionKey": "N16",
+    "scene": "选课窗口",
+    "inputSourceTitle": "关于2025年秋季学期本科学生选课网上补选报名的通知",
+    "inputSourceType": "text",
+    "text": "各学院、专业及全体本科学生：\n2025\n年秋季学期专业选修课、体育选项课及外语课补选即将开始，现将有关事项通知如下：\n一、选课对象\n1.\n全体本科学生专业选修课补选。\n2.2024\n级本科学生\n体育选项课及外语课补选。\n二、选课时间\n2025\n年\n6\n月\n25\n日（中午\n12:00\n开始）—\n6\n月\n30\n日，每天早上\n9:00-\n晚上\n23:00\n。\n三、选课方法\n学生登录强智教务管理系统，对\n2025\n年秋季学期（\n2025-2026-1\n学期）所需补选课程进行选择报名\n,\n具体选课流程图详见附件\n1\n。\n四、其他事项\n1.\n全体学生须在指定时间内选课，超过规定时间系统将自动停止选课，此次补选为最后一次系统选课，后续不再开放。\n请学生务必认真核对培养方案，仔细查看自己的课程应修和已修学分，以免因选修不足无法按期毕业。\n2.\n根据学籍管理相关规定，学生需修满人才培养方案中的各类选修课学分方允许毕业，全体学生均需根据个人情况和专业要求修读选修课。其中，三角、星号选修或人才培养方案中要求修读的选修课程均须进行选课，否则将影响毕业。\n3.\n学生选课后不参加考试者，学生成绩将记录“\n缺考\n”，按学籍及考务相关管理规定处理。\n4.\n如对各选修课要求有任何疑问，请咨询所在专业学院的教学办（教学科）老师（详见附件\n2\n）。在选课期间遇到的相关问题，可及时向教学运行科咨询。联系电话：\n[电话]\n。\n特此通知。\n教务处\n2025\n年\n6\n月\n23\n日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "课程",
+          "verbs": [
+            "补选",
+            "选课",
+            "选择",
+            "报名"
+          ],
+          "deadline": "2025-06-30T23:00",
+          "channel": "强智",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "2024",
+        "专业选修课",
+        "体育",
+        "外语",
+        "12:00",
+        "9:00",
+        "23:00",
+        "缺考",
+        "后续不再开放"
+      ]
+    },
+    "referenceTime": "2025-06-23T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.gzhmu.edu.cn/info/1114/13431.htm",
+      "acquiredAt": "2026-10-21T05:10:08.573046+00:00",
+      "publishedOrExplicitUpdateDate": "2025-06-23",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "9f466f17546e198bada3983568e03121c6788423290f18935b49eebc504c31e2",
+      "acquisitionReceiptSha256": "d279a9d84210c72a42473f1606aaac54563ae85099537491d36d3a148bd05727",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [
+        {
+          "reason": "PUBLIC_PHONE_OR_CONTACT_NUMBER",
+          "originalSha256": "5bb48029a2272b8d6e7daed710aa937ea6e03e62e181240e965db12bf8f08f6c",
+          "replacement": "[电话]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 562,
+          "end": 1194,
+          "sourceSpanSha256": "29ed652ac76deb73453aee577e011017fca51e85e747c75c41ddcba19cf7bfa8"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-13",
+    "acquisitionKey": "N20",
+    "scene": "地点变更多活动",
+    "inputSourceTitle": "关于2025年人工智能赋能教育创新与教师发展专项培训第二期讲座会议地点变更的通知",
+    "inputSourceType": "text",
+    "text": "各学院、\n有关部门\n：\n原定于\n3月21日16:00-19:00开展的《\n大语言模型时代的课程建设、教学设计与创新实践》和《\nWPS在教学科研中的高级应用》培训，因会议冲突，原会场地点发生变动。变更后的会议地点及相关信息如下：\n一、会议地点\n主会场：温泉校区2号教学楼（齐学楼）A区202教室。\n分会场：\n由各单位自定地点。\n二、\n会议时间：\n3月21日 16:00-18:00\n《\n大语言模型时代的课程建设、教学设计与创新实践》；\n18:00-19:00《\nWPS在教学科研中的高级应用》\n。\n三、参会人员\n1.主会场参会人员：马克思主义学院、商学院、政法学院、教育科学学院、中国语言文学学院、历史与社会学院、心理学院、外国语学院、国际文化交流学院、数学科学学院、生命科学学院分别选派15名教师在主会场参会。\n2.除在主会场参加学习人员外，其余教师在本单位分会场集中观看直播\n（观看地址：\n校园直播平台\nhttp://tv.xjnu.edu.cn\n）。\n党委教师工作部（教师教学发展中心）\n2025年3月20日",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "大语言模型",
+          "start": "2025-03-21T16:00",
+          "end": "2025-03-21T18:00",
+          "location": "202"
+        },
+        {
+          "object": "WPS",
+          "start": "2025-03-21T18:00",
+          "end": "2025-03-21T19:00",
+          "location": "202"
+        }
+      ],
+      "information": [
+        "教师",
+        "主会场",
+        "分会场",
+        "直播"
+      ]
+    },
+    "referenceTime": "2025-03-20T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://dwjsgzb.xjnu.edu.cn/info/1003/2411.htm",
+      "acquiredAt": "2026-10-21T05:10:40.411920+00:00",
+      "publishedOrExplicitUpdateDate": "2025-03-20",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "8b8d8d1c01873c0eafe9f35b05396554910a0f086cf79b41d25288ea630fc11c",
+      "acquisitionReceiptSha256": "b5502ef74a3b5bc63e0cdd185e0caf4b1bac701c13916c6c5a4b9c471f97f043",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 535,
+          "end": 992,
+          "sourceSpanSha256": "a8b489fd39dc6189279916d75d86321fe85fca02791ccbb75d0827b843174862"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-14",
+    "acquisitionKey": "N21",
+    "scene": "角色条件",
+    "inputSourceTitle": "中国农业大学人发学院 通知公告 关于“学习者”理论讲堂第47期暨教职工2025",
+    "inputSourceType": "text",
+    "text": "为深入学习2025年中央一号文件，全面贯彻落实文件精神，现就“学习者”理论讲堂第47期学习安排如下：\n一、学习主题：2025年中央一号文件\n二、主题讲座：想象的研究与研究的想象\n三、主  讲  人：[姓名]\n四、讲座时间：2025年3月5日 下午14：30\n五、讲座地点：西校区CIAD报告厅\n六、学习资料链接：https://v.eqxiu.com/s/1cV5u3cA?bt=yxy&eip=true\n七、资料学习时间：2025年3月3日—3月8日\n请全体教职工准时参加！确因课程科研活动冲突的，请向各系党支部书记办理请假手续，并报党委备案。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "请假",
+          "verbs": [
+            "办理",
+            "申请"
+          ],
+          "unknownEligibility": true,
+          "condition": "冲突",
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "讲堂",
+          "start": "2025-03-05T14:30",
+          "endUnknown": true,
+          "location": "CIAD"
+        }
+      ],
+      "information": [
+        "教职工",
+        "3月3日",
+        "3月8日",
+        "党委备案"
+      ]
+    },
+    "referenceTime": "2025-03-03T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://cohd.cau.edu.cn/art/2025/3/3/art_22198_1058325.html",
+      "acquiredAt": "2026-10-21T05:10:41.790724+00:00",
+      "publishedOrExplicitUpdateDate": "2025-03-03",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "57f3a1e1a00017eb0f1609f04d25ca15c098f278e59d3030cb266796ac415499",
+      "acquisitionReceiptSha256": "43c49837f803bbc2cb1a8ed13c6dd0631d6b6b885ca516e569302e5170d0cf0e",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [
+        {
+          "reason": "PUBLIC_PERSON_NAME",
+          "originalSha256": "70bcc157de2640437c0aed8ae29932327dc1cea7e1ab004522d3019f342d0e16",
+          "replacement": "[姓名]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 242,
+          "end": 514,
+          "sourceSpanSha256": "bc38bb06f6e806f793e87da00610f2155a23feb525ebcb12043b025c128dd71c"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-15",
+    "acquisitionKey": "N22",
+    "scene": "报名与活动",
+    "inputSourceTitle": "关于举办DeepSeek赋能高职专业教学专题讲座的通知",
+    "inputSourceType": "text",
+    "text": "各二级院部：\n随着\nDeepSeek\n等国产大模型的成熟应用，\nAI\n技术已成为实现教学精准化、管理智能化的核心引擎。为了更好地适应教育数字化转型，提高全体教师运用\nDeepSeek\n进行教育教学活动的能力，推动人工智能技术在教学创新、管理服务等领域的应用，特组织举办此次讲座。现将具体事项通知如下：\n一、会议时间\n2025\n年\n3\n月\n27\n日（星期四）\n15:00\n二、会议地点\n图书馆七楼报告厅\n三、主讲人\n[姓名]\n武汉数据智能研究院研究员\n四、参会人员\n各二级院部组织参会人员\n20\n名\n六、相关要求\n1.\n请二级院部提前做好工作安排，通知相关人员参会。因特殊情况无法参会的，请按程序履行请假手续。\n2.\n请二级院部将参会人员名单于\n3\n月\n26\n日（星期三）下午下班前报送教务处[姓名]。\n3.\n请与会人员提前\n10\n分钟到达会场。\n教务处\n网络信息中心\n2025\n年\n3\n月\n24\n日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "名单",
+          "verbs": [
+            "报送",
+            "提交"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true,
+          "channel": "教务处"
+        }
+      ],
+      "events": [
+        {
+          "object": "DeepSeek",
+          "start": "2025-03-27T15:00",
+          "endUnknown": true,
+          "location": "图书馆七楼"
+        }
+      ],
+      "information": [
+        "20",
+        "3",
+        "26",
+        "下班前",
+        "提前",
+        "10",
+        "请假"
+      ]
+    },
+    "referenceTime": "2025-03-24T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.jstc.edu.cn/lib/info/1681/5931.htm",
+      "acquiredAt": "2026-10-21T05:10:42.946318+00:00",
+      "publishedOrExplicitUpdateDate": "2025-03-24",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "2ee544d7e60260bf1d7c02d16d232945f513acdde3469efd281e602801ade43f",
+      "acquisitionReceiptSha256": "94c9758276c389eaae15f74b81e2ec8cb0f61680ed1a2264048544f78ef2db9c",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [
+        {
+          "reason": "PUBLIC_PERSON_NAME",
+          "originalSha256": "2f2676a2f9486f0f58547a2daae93cbe3f34714379b8c581c275ba6ac513b168",
+          "replacement": "[姓名]"
+        },
+        {
+          "reason": "PUBLIC_PERSON_NAME",
+          "originalSha256": "032ec8c59ab6ec51cde53d46461d4d2f428162f64f4b42e2c7dbbfd608e6c76e",
+          "replacement": "[姓名]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 392,
+          "end": 789,
+          "sourceSpanSha256": "b4b7896f6c1dae459284ad43ade2a49a19a248e9213bf0bd1fcb8da1fe030119"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-16",
+    "acquisitionKey": "N23",
+    "scene": "领取条件未知",
+    "inputSourceTitle": "关于做好2025届毕业生学业证书发放工作的通知",
+    "inputSourceType": "text",
+    "text": "各学院：\n根据学校工作安排，\n2025届毕业生学业证书定\n于\n6月26日发放至各学院。为保障证书领取、发放的规范性，请各学院提前准备，通知学生返校，做好学生学业证书领取的相关工作。\n一、学院领取证书\n1.2025年6月23日-26日各学院根据教务处安排，协助完成证书照片张贴和印章盖制工作。\n2.2025年6月26日各学院完成证书清点、领取。\n因2023级学前教育（两年制）本期有课程考核导致毕业审核延迟，学院领取学业证书时间另行通知。\n二、学院发放证书\n6月27日各学院根据学校工作安排，自行组织完成学生学业证书发放。\n三、工作要求\n1.各学院提前布置，做好学生返校通知，为学生预留充足的领取时间。\n2.学院做好领取登记，学生学业证书需本人亲自领取，原则上不允许代领，严禁使用快递等方式邮寄证书，防止丢失、冒领等情况出现。\n教务处\n2025年6月11日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "证书",
+          "verbs": [
+            "领取"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "6月26日",
+        "6月27日",
+        "2023级学前教育",
+        "另行通知",
+        "本人",
+        "不允许代领",
+        "严禁",
+        "邮寄"
+      ],
+      "forbidden": [
+        {
+          "object": "证书",
+          "verbs": [
+            "邮寄",
+            "快递",
+            "代领"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2025-06-11T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.cqyz.edu.cn/jwc/info/1002/2092.htm",
+      "acquiredAt": "2026-10-21T05:10:43.883820+00:00",
+      "publishedOrExplicitUpdateDate": "2025-06-11",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "aa0655d3fc95b3f82705ff3793840acfd4287ab2dbb8f29a010684b3ea90247e",
+      "acquisitionReceiptSha256": "144744a9d0347c3a2c53cb3f2ac845233df8fecfb63ebc1d9e0badbdf99e3ef0",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 234,
+          "end": 612,
+          "sourceSpanSha256": "45757fcd8b403c997ecd5670d8d3c5fc3070f9818213cdc3de46b85404c3ac98"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-17",
+    "acquisitionKey": "N24",
+    "scene": "二维码材料",
+    "inputSourceTitle": "关于领取2025年下半年中国传媒大学高等教育自学考试学士学位证书的通知",
+    "inputSourceType": "text",
+    "text": "2025\n年下半年授予的中国传媒大学高等教育自学考试学士学位证书已经可以领取，现将相关事项通知如下：\n一、证书领取时间：\n2026\n年\n5\n月\n20\n日\n-2026\n年\n5\n月\n27\n日。\n二、领证方式及要求：\n邮寄：学生本人扫以下二维码（必须使用微信）人脸识别通过后，填写本人详细邮寄电子信息，学校使用顺丰到付方式邮寄。\n注意：学位证丢失不可补办，如采用代领邮寄方式进行领取，途中造成的损失和后果自行承担。学校负责保管证书的期限为一年，授予学士学位的学生应及时领取。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "学位证",
+          "verbs": [
+            "领取",
+            "申领",
+            "申请"
+          ],
+          "deadline": "2026-05-27",
+          "precision": "date_only",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "微信",
+        "人脸识别",
+        "邮寄",
+        "顺丰到付",
+        "一年",
+        "不可补办"
+      ]
+    },
+    "referenceTime": "2026-05-20T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://zikao.cuc.edu.cn/2026/0520/c4776a270598/page.htm",
+      "acquiredAt": "2026-10-21T05:10:45.849494+00:00",
+      "publishedOrExplicitUpdateDate": "2026-05-20",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "f36eb58ebb0f50a352db9e27328154abdeb853204911cfa6e9e5e4dc699c7a77",
+      "acquisitionReceiptSha256": "fda787f111ce5e55dce121b339458386c9b1597ee2d3b7943cae9adae5912af3",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 175,
+          "end": 410,
+          "sourceSpanSha256": "c02b9c03580fd47f2ee51166d4891a9b5afcd4fbdc1a87a643b16f1fc4bc237f"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-18",
+    "acquisitionKey": "N25",
+    "scene": "多领取对象",
+    "inputSourceTitle": "关于2025届本科毕业生领取毕业证、学位证的通知",
+    "inputSourceType": "text",
+    "text": "各学院：\n关于我校\n202\n5\n届\n本科\n毕业生领取毕业证、学位证\n的\n安排如下：\n一、证书发放安排：\n202\n5\n年\n6\n月\n1\n3\n日\n上午\n9:30-10:30\n：药学院，孟院，生科院，理学院，外国语学院\n10:40-11:40\n：中药学院，商学院，基临院，工学院\n发放地点为教学楼\nA105\n。集中发放的证书为\n第一批\n符合毕业及学位条件的学生证书，发放方式为毕业班辅导员集中统一领取所带班级的双证。\n往届\n共\n6\n位学生的证书，请各学院安排一名人员前往\nA105\n以学院为单位领取。\n二、\n注意事项：\n当天同时领取档案用成绩单和学位授予决定并现场盖章\n，辅导员可带两名学生一同清点核对证书和盖章，辅导员必须到场。\n教务处\n202\n5\n年\n6月\n1\n2\n日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "证书",
+          "verbs": [
+            "领取",
+            "清点"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "辅导员",
+        "A105",
+        "9:30",
+        "10:30",
+        "10:40",
+        "11:40",
+        "成绩单",
+        "学位授予决定",
+        "盖章"
+      ]
+    },
+    "referenceTime": "2025-06-12T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.cpu.edu.cn/6d/57/c843a224599/page.htm",
+      "acquiredAt": "2026-10-21T05:10:46.701511+00:00",
+      "publishedOrExplicitUpdateDate": "2025-06-12",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "3d8eba054e4419c2166921dbae6b343931c09de7551e342a3045b7caad36d8de",
+      "acquisitionReceiptSha256": "6d041e01c804e7a983876d1c295969cd675a8d15e112c842334339f5a81c3b8d",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 580,
+          "end": 913,
+          "sourceSpanSha256": "cf5100212ac28dea1b9409e780133044a3fd6059a7cea95cae8db403a77841ff"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-19",
+    "acquisitionKey": "N26",
+    "scene": "多对象时段",
+    "inputSourceTitle": "关于清点、领取和发放2025届毕业生证书的通知",
+    "inputSourceType": "text",
+    "text": "各分院：\n现将\n202\n5\n届毕业生毕业（学位）证书清点、领取和发放有关事项通知如下：\n一、为确保证书发放不出意外，各分院须指派专人负责毕业（学位）证书的清点、领取和发放工作。\n二、清点和领取证书安排\n时间\n地点\n分院\n6月\n6\n日1\n3\n：\n3\n0\n图书馆731\n经济管理分院、语言文学分院\n6月\n6\n日\n14\n：\n3\n0\n医药与健康分院、梁柏台法学院\n纺织服装与艺术设计分院\n6月\n6\n日\n15\n：\n0\n0\n信息与机电工程分院、建筑工程分院\n各分院完成证书清点工作后，将证书带回，由专人保管。\n三、发放证书\n各分院必须妥善保管证书，并于毕业典礼结束后，按照分院规定当面发放给学生，并要求学生签收。\n四、其他要求\n1.\n若有学生离校手续未完成，请各分院\n暂时保管该批学生证书，并待其\n离校手续完成\n后发放给学生。\n2.请各\n分院务必严肃认真对待毕业生证书清点、领取和发放工作，确保万无一失。\n教务处\n202\n5\n年\n6月\n3\n日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "证书",
+          "verbs": [
+            "领取",
+            "清点"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "图书馆731",
+        "13",
+        "14",
+        "15",
+        "毕业典礼",
+        "签收",
+        "离校手续"
+      ]
+    },
+    "referenceTime": "2025-06-03T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.zsit.edu.cn/info/1361/12555.htm",
+      "acquiredAt": "2026-10-21T05:10:48.154500+00:00",
+      "publishedOrExplicitUpdateDate": "2025-06-03",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "8b09265129e3f51dd1332449ae8b5d6af3b1810bc4483202d7a27c6dda7c5e9e",
+      "acquisitionReceiptSha256": "fb2a04185d2b1558a1e53e50b415a5d93b75e8765e8f0acb8fe1e932a6af281c",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 390,
+          "end": 806,
+          "sourceSpanSha256": "38b68047ed8a07196ef8ab8592f2b79a6e83b3fe90408fc381f08a683c18bd81"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-20",
+    "acquisitionKey": "N27",
+    "scene": "延期未知时间",
+    "inputSourceTitle": "关于汕头大学“山海名师讲坛”第八场讲座延期举行的通知",
+    "inputSourceType": "text",
+    "text": "全体师生：\n根据学校防风防汛应急预案，当前二级应急响应措施已生效，学校进入紧急防风状态，全校停课。\n原定于9月23日下午15:00举办的汕头大学“山海名师讲坛”第八期讲座延期举行。讲座时间及地点调整另行通知。\n请大家在此期间做好防风防汛防御工作，注意人身与财产安全。\n共青团汕头大学委员会\n汕头大学研究生会\n2025年9月23日",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "讲座",
+          "startUnknown": true,
+          "endUnknown": true
+        }
+      ],
+      "information": [
+        "延期",
+        "另行通知",
+        "全校停课"
+      ],
+      "obsoleteDates": [
+        "2025-09-23"
+      ],
+      "forbidden": [
+        {
+          "object": "讲座",
+          "verbs": [
+            "按原定时间参加"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2025-09-23T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://xtw.stu.edu.cn/info/1048/32901.htm",
+      "acquiredAt": "2026-10-21T05:14:33.640273+00:00",
+      "publishedOrExplicitUpdateDate": "2025-09-23",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "9375644ad0b1d488b20e9f5b85f6ad08e81dca83981c21f6a8eebfcf8880dd37",
+      "acquisitionReceiptSha256": "88e921fbde5d4e5fc467d21f0e0a41ec61d5daebf91bda4c61a39b0baddab6d4",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 533,
+          "end": 698,
+          "sourceSpanSha256": "27a6b3ac23327357e624d342a98c34cced0b350f3417affc257754791f6d9eb3"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-21",
+    "acquisitionKey": "N28",
+    "scene": "纯信息附件未读",
+    "inputSourceTitle": "关于公布汕头大学2024",
+    "inputSourceType": "text",
+    "text": "全校师生：\n根据《汕头大学学生骨干管理办法》，结合各校级学生组织、职能队伍成员在过去一年的工作表现，在自评及内部考评的基础上，经校团委审核，现将考核优秀成员名单予以公布（详情见附件）。\n共青团汕头大学委员会\n2025年9月17日",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "information": [
+        "优秀成员名单",
+        "附件"
+      ],
+      "materialCount": 0
+    },
+    "referenceTime": "2025-09-17T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://xtw.stu.edu.cn/info/1048/32871.htm",
+      "acquiredAt": "2026-10-21T05:14:34.465522+00:00",
+      "publishedOrExplicitUpdateDate": "2025-09-17",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "1f581e03ed75ed0c895bf7c1787222b07e12f9b9e5eade40f4dc4a0e8ce8b4e3",
+      "acquisitionReceiptSha256": "260417e1d52d481a226b415619442fc663baa4e7beef1bbdf96efd1273cbcab7",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 563,
+          "end": 678,
+          "sourceSpanSha256": "f17d1f5dac5acbc15db63a1d82a9440de61de573887e66059d721b7764e97628"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-22",
+    "acquisitionKey": "N29",
+    "scene": "多阶段活动",
+    "inputSourceTitle": "关于举办2025年汕头大学“新程跃动，青春绽FUN”社团嘉年华的通知",
+    "inputSourceType": "text",
+    "text": "全校师生：\n为了丰富同学们的课余生活，繁荣校园文化，展现汕头大学学生社团的风采，校团委、汕头大学学生社团管理服务中心举办2025年汕头大学“新程跃动，青春绽FUN”社团嘉年华活动，现将该活动的具体事项通知如下：\n一、活动主题\n新程跃动，青春绽FUN\n二、活动时间\n2025年9月27日\n三、活动对象\n汕头大学全校师生\n四、活动流程\n（一）社团之旅\n1.活动时间：9月27日14:00-17:30；\n2.活动地点：东海岸校区E座教学楼前；\n3.活动形式：学生社团通过展位进行社团宣传与招新咨询，汕大师生可以通过社团展位集章兑奖，了解学生社团的信息。\n（二）社团之夜\n1.活动时间：9月27日19:00-21:35；\n2.活动地点：汕头大学东海岸校区 B综合楼110；\n3.活动形式：学生社团通过舞台表演展示社团风采。\n五、其他事项\n1.参与集章活动需先到社团中心大本营处领取集章卡；\n2.本次演出活动采取门票兑换模式，观众可通过转发推文集赞并到社团中心大本营处领取前排席位门票，获得更佳欣赏位，具体规则请关注“汕头大学学生社团管理服务中心”微信公众号相关推文；\n3.请参与者遵从现场工作人员指引有序参与活动；\n4.更多活动详情可扫码进群咨询或关注“汕头大学学生社团管理服务中心”微信公众号获取。\n欢迎广大师生踊跃参与！\n共青团汕头大学委员会\n汕头大学学生社团管理服务中心\n2025年9月25日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "集章卡",
+          "verbs": [
+            "领取"
+          ],
+          "unknownEligibility": true,
+          "deadlineUnknown": true
+        },
+        {
+          "object": "门票",
+          "verbs": [
+            "领取",
+            "兑换"
+          ],
+          "unknownEligibility": true,
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "社团之旅",
+          "start": "2025-09-27T14:00",
+          "end": "2025-09-27T17:30",
+          "location": "E座"
+        },
+        {
+          "object": "社团之夜",
+          "start": "2025-09-27T19:00",
+          "end": "2025-09-27T21:35",
+          "location": "110"
+        }
+      ],
+      "information": [
+        "大本营",
+        "集赞",
+        "前排"
+      ]
+    },
+    "referenceTime": "2025-09-25T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://xtw.stu.edu.cn/info/1048/32931.htm",
+      "acquiredAt": "2026-10-21T05:14:35.249009+00:00",
+      "publishedOrExplicitUpdateDate": "2025-09-25",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "24bc69fc24f989f12d4dd25f7cbc977f3c34701b487b3043fa8bf7bbd491a321",
+      "acquisitionReceiptSha256": "1ed583f6d7d479dc5d94355075876fd22597acd14afe6c4867992fbe6b5355c4",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 549,
+          "end": 1145,
+          "sourceSpanSha256": "718c7f5a22c191e0797be056ccb1c4918b63319e3a091226f02cbcb902cb4f39"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-23",
+    "acquisitionKey": "N34",
+    "scene": "考试条件材料",
+    "inputSourceTitle": "关于2025",
+    "inputSourceType": "text",
+    "text": "各位同学：\n2025-2026学年第一学期本科期末考核安排于11月28日在“同济大学教学管理信息系统”https://1.tongji.edu.cn/发布。\n请各位同学登录系统，于“考试管理”→“考试查询”中查询考试信息。\n一、注意事项\n参加考核须出示证件\n（学生证/一卡通/身份证）\n供监考教师查验。\n二、缓考申请\n缓考申请须根据《同济大学本科生缓考、重考工作实施细则》（同济本【2021】66号）（附件1）要求进行。缓考申请时间为\n12月19日\n至相关课程考核开始前。\n1.因病缓考，须向“教学管理信息系统”上传以下相关证明文件：\n①上海市二级以上医院或同济大学附属同济医院分院（下文简称“医院”）挂号凭证；\n②医院化验单/检查单（需化验、拍片的提供）；\n③病历；\n④医院开具的病假证明。\n以上材料拍照后放置在一个Word文档内，请确保材料内的文字图片清晰可辨，特别是时间信息。\n缓考申请人须根据缓考审核人要求出示以上材料原件用于核验。\n2. 因考试校区或科目冲突，需提供冲突考试截图，上传至“教学管理信息系统”。\n3.主修专业课程与进阶专业课程考核时间空间冲突时，须优先参加主修专业课程考核，并按要求在系统内提交微辅修专业课程缓考申请。\n相关附件请登录“同济大学教学管理信息系统”（https://1.tongji.edu.cn）查看。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "缓考",
+          "verbs": [
+            "申请",
+            "提交"
+          ],
+          "unknownEligibility": true,
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "考试查询",
+        "12月19日",
+        "考核开始前",
+        "Word",
+        "挂号凭证",
+        "病历",
+        "病假证明",
+        "原件",
+        "冲突考试截图",
+        "优先参加主修"
+      ]
+    },
+    "referenceTime": "2025-12-01T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.tongji.edu.cn/8a/0f/c30359a363023/page.htm",
+      "acquiredAt": "2026-10-21T05:14:41.015783+00:00",
+      "publishedOrExplicitUpdateDate": "2025-12-01",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "d0f3ecc506f5028c88c6f492a8f46231a8cf8884a73a7db69f88eadb8440f57e",
+      "acquisitionReceiptSha256": "cd79eab320f9b474f98fa662fb695eeab4e636b1dcd5ec74555e6746b22c8689",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 438,
+          "end": 1010,
+          "sourceSpanSha256": "598a76d53f956083ad8154b4507f73b442a1d03c3c8efcddf638767f244e6f5d"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-24",
+    "acquisitionKey": "N37",
+    "scene": "报名延期窗口",
+    "inputSourceTitle": "关于江苏省高等学校第二十一届高等数学竞赛报名截止时间延期的通知",
+    "inputSourceType": "text",
+    "text": "江苏省高等学校第二十一届高等数学竞赛报名截止时间延期至3月26日，请需要报名的同学及时在学科竞赛管理系统提交报名信息。\n报名注意事项：\n1.系统报名：\n报名时间：即日起至2025年3月26日。通过报名网站：https://jwc.seu.edu.cn（教务处主页）→办事平台→学生学科竞赛管理系统→“2025年江苏省高等数学竞赛”。在系统中进行报名时，务必在“备注”里面填写身份证号。\n2.报名确认：\n所有同学必须在3月28日，或4月11日，或4月18日到答疑地点进行现场报名确认，进行核对报名信息，交参赛费等。如果没有进行现场报名确认，则报名失败。\n3.答疑安排\n组委会将在省赛之前定期安排答疑。安排如下：\n答疑时间：从3月22日起，每周五下午2点至晚上8点安排老师答疑。\n答疑地点：四牌楼逸夫科技楼1404；九龙湖教八400。\n注意：如果没有进行现场报名确认，第一次报名自动失效。\n江苏省高等数学竞赛选拔赛组委会\n2025年3月24日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ],
+          "deadline": "2025-03-26",
+          "precision": "date_only",
+          "channel": "学科竞赛管理系统"
+        },
+        {
+          "object": "报名确认",
+          "verbs": [
+            "确认",
+            "办理"
+          ],
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "身份证号",
+        "3月28日",
+        "4月11日",
+        "4月18日",
+        "参赛费",
+        "四牌楼",
+        "九龙湖",
+        "每周五",
+        "下午2点",
+        "晚上8点",
+        "失败"
+      ]
+    },
+    "referenceTime": "2025-03-24T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.seu.edu.cn/2025/0324/c67907a522732/page.htm",
+      "acquiredAt": "2026-10-21T05:15:32.470314+00:00",
+      "publishedOrExplicitUpdateDate": "2025-03-24",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "d1af29c7affb738b33303852e98498ae0d1e8b25ac23c8f311e410ea6d225ebc",
+      "acquisitionReceiptSha256": "2e39031dea0915521f6d1f35ff75f213da7a83419e0b7663a97aa3a50b20ab06",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 497,
+          "end": 917,
+          "sourceSpanSha256": "5b818f5a795816b550b1de26ab02e6deedef7811f38ea8b699a2bad1d9120565"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-25",
+    "acquisitionKey": "N38",
+    "scene": "结束待定",
+    "inputSourceTitle": "图书馆B201闭馆通知",
+    "inputSourceType": "text",
+    "text": "尊敬的读者：\n为进一步提升图书馆的阅读环境和服务质量，我馆计划对B201阅览室进行改造升级。为保障读者安全，B201阅览室于6月13日（周五）11:30起闭馆，开放时间另行通知。\n感谢您的理解和配合！给您带来不便，敬请谅解。\n新学期，B201阅览室将以全新的面貌迎接您的到来。敬请期待！\n特此公告。\n图书馆\n2025年6月9日",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "闭馆",
+          "start": "2025-06-13T11:30",
+          "endUnknown": true,
+          "location": "B201"
+        }
+      ],
+      "information": [
+        "另行通知"
+      ]
+    },
+    "referenceTime": "2025-06-09T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://lib.sit.edu.cn/info/1056/1192.htm",
+      "acquiredAt": "2026-10-21T05:15:33.336436+00:00",
+      "publishedOrExplicitUpdateDate": "2025-06-09",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "a22e24faf18e8a923da45b7db7dc203c7b4f03de681bb93dd7ad2ed059791983",
+      "acquisitionReceiptSha256": "bfade65b2adb1ba37ecf6e17d7b25d880a812159f76067e691e6cb4bb2167169",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 154,
+          "end": 318,
+          "sourceSpanSha256": "be5870d85cc453e4e096f9853e29e43b6bc08de86ed5db7340d0330aa3438426"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-26",
+    "acquisitionKey": "N39",
+    "scene": "闭馆借还渠道",
+    "inputSourceTitle": "文科图书馆因吊顶更新改造的闭馆通知",
+    "inputSourceType": "text",
+    "text": "各位读者好，\n为配合文科图书馆全楼吊顶更新改造工程，文科图书馆将于\n2025\n年\n2\n月\n10\n日起闭馆，预计施工至\n2025\n年下半年。重新开馆时间另行通知。\n闭馆期间，文科图书馆借书服务方式转为闭架预约取书服务，取书地点暂定文科图书馆室外预约取书柜及其他各馆。读者归还所借图书可前往文科图书馆\nG\n层自助还书机（自助服务截止至\n3\n月\n1\n日）以及其他各馆还书。\n闭馆期间咨询邮箱：\ncontact@example.invalid\n。\n对由此给您带来的不便\n,\n我们深表歉意。感谢您的理解和支持！\n图书馆\n2025\n年\n2\n月\n8\n日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "图书",
+          "verbs": [
+            "归还",
+            "还书"
+          ],
+          "unknownEligibility": true,
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "闭馆",
+          "start": "2025-02-10",
+          "endUnknown": true,
+          "location": "文科图书馆"
+        }
+      ],
+      "information": [
+        "预计",
+        "另行通知",
+        "预约取书",
+        "暂定",
+        "G层",
+        "3月1日",
+        "其他各馆"
+      ]
+    },
+    "referenceTime": "2025-02-08T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://lib.tsinghua.edu.cn/info/1071/7343.htm",
+      "acquiredAt": "2026-10-21T05:15:34.193246+00:00",
+      "publishedOrExplicitUpdateDate": "2025-02-08",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "7a10b3abf982c5317954be2d7cdab5ffca70b2b31da847636b4bb62b3229f7fd",
+      "acquisitionReceiptSha256": "f82c14acc9ed698342a77e8bb6e9c2c0f853c370f152da938f2cd59f35443494",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [
+        {
+          "reason": "PUBLIC_EMAIL",
+          "originalSha256": "8a85e0b554fd7ef4ddd4d6a9e7debe23bd5d5055947ffa535f8d4c69f0869d38",
+          "replacement": "contact@example.invalid"
+        }
+      ],
+      "spans": [
+        {
+          "start": 359,
+          "end": 624,
+          "sourceSpanSha256": "599aa1e1cfa49e6e826bfd0df72f08f162dfbdb02176cbb09c41bfe1bec5e8b6"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-27",
+    "acquisitionKey": "N40",
+    "scene": "竞赛报名",
+    "inputSourceTitle": "2025年校赛通知11：关于举办2025年第十三届安徽工程大学大学生程序设计大赛的通知",
+    "inputSourceType": "text",
+    "text": "各学院、各相关部门：\n为提升大学生利用计算机分析问题、解决问题的能力，培养计算思维，同时为安徽省机器人大赛程序设计赛道的比赛选拔优秀选手，经研究，决定举办\n2025\n年第十三届安徽工程大学大学生程序设计大赛，现将有关事宜通知如下：\n一、大赛组织\n本次大赛由教务处主办，计算机与信息学院承办，程序设计协会协办，大赛组委会名单见附件\n1\n。\n二、参赛对象及参赛方式\n1.\n参赛对象：我校全日制在校本科生。\n2.\n参赛方式：本次竞赛采用\nICPC\n赛制，以个人方式参赛，参赛学生使用\nC\n、\nC++\n或\nJava\n语言编写程序，通过校内\nOJ\n（\nOnline Judgement\n）系统完成比赛，由\nOJ\n系统进行自动评分。\n三、竞赛内容及要求\n竞赛详细规则参见《\n2025\n年安徽工程大学程序设计大赛竞赛规则》（见附件\n2\n）。\n四、大赛组织安排\n1.\n报名时间及方式\n报名截止时\n间：\n2025\n年\n3\n月\n29\n日\n12:00\n，逾期不再受理。\n报名方式：在“今日校园”中报名。\n有意向参赛的同学可以加比赛通知\nQQ\n群：\n[电话]58\n。\n2.\n比赛时间地点安排\n比赛时间：\n2025\n年\n3\n月\n30\n日\n9:00\n—\n12:00\n。\n比赛地点：\nC\n座\n5-7\n楼机房。赛前将根据报名情况在比赛通知\nQQ\n群中发布选手参赛机房号。\n校赛联系人：[姓名]老师\n联系电话：\n[电话]091\n五、奖项设置\n本次竞赛根据有效参赛人数按照\n10%\n、\n20%\n、\n30%\n的比例设定一、二、三等奖，并颁发证书。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "程序设计大赛",
+          "verbs": [
+            "报名",
+            "参加报名"
+          ],
+          "deadline": "2025-03-29T12:00",
+          "channel": "今日校园",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [
+        {
+          "object": "程序设计大赛",
+          "start": "2025-03-30T09:00",
+          "end": "2025-03-30T12:00",
+          "location": "C座"
+        }
+      ],
+      "information": [
+        "全日制",
+        "个人",
+        "C++",
+        "Java",
+        "机房号",
+        "QQ群"
+      ]
+    },
+    "referenceTime": "2025-03-20T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.ahpu.edu.cn/2025/0320/c8503a241651/page.htm",
+      "acquiredAt": "2026-10-21T05:15:35.050815+00:00",
+      "publishedOrExplicitUpdateDate": "2025-03-20",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "cb2180fdc24b921b22c0db3459d477130def53d31f8cfb7415a3c58f55718978",
+      "acquisitionReceiptSha256": "d4e2db31f2f29b54b15e8e9f9bb4f4ae78f285eacd2bed478e21e750ec59a4cf",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [
+        {
+          "reason": "PUBLIC_PHONE_OR_CONTACT_NUMBER",
+          "originalSha256": "c8381c6c3db59d8652c46a35ea02b9e5dddd3fef696a29f8fa6c335ba050ef22",
+          "replacement": "[电话]"
+        },
+        {
+          "reason": "PUBLIC_PHONE_OR_CONTACT_NUMBER",
+          "originalSha256": "50ba65c9ad550aaa3fdeef45fad44857e9669fce17d2010a591f27ea29354163",
+          "replacement": "[电话]"
+        },
+        {
+          "reason": "PUBLIC_PERSON_NAME",
+          "originalSha256": "e17c4294d9638802b83907baff37ad91e153d7c899c64dad1852e25d466128ce",
+          "replacement": "[姓名]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 344,
+          "end": 1006,
+          "sourceSpanSha256": "24b7d526d5ae4c22450037a65cffe690fb2deee7ef52deae71fa6b8b2d7e1aec"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-28",
+    "acquisitionKey": "N41",
+    "scene": "物品清理截止",
+    "inputSourceTitle": "图书馆关于学期末遗留物品清理的通知",
+    "inputSourceType": "text",
+    "text": "各位读者：\n本学期即将结束，为维护学习空间的整洁有序，\n我们将\n于\n1月10日\n下午对图书馆五\n至\n八\n层\n书库\n进行全面的清理整顿工作。在此期间，我们特别提醒各位同学注意以下事项：\n提前整理个人物品：\n请各位同学务必在\n1月10日\n下午\n14：00\n之前，仔细检查并整理自己在图书馆\n五\n至\n八\n层的所有个人物品，包括但不限于书籍、笔记、文具、水杯\n、\n折叠椅\n等。\n及时带离个人物品：\n为避免个人物品遗失或误被处理，请同学们将已整理好的个人物品及时带离图书馆。对于不再需要的书籍或资料，可以考虑捐赠或妥善处理。\n贵重物品妥善保管：\n特别提醒，图书馆在清理过程中不对个人物品的安全负责。因此，请确保所有贵重物品（如电子设备等）在清理前已被妥善保管或带离。\n请同学们理解并积极配合图书馆的工作安排，以确保清理整顿工作的顺利进行。相信通过大家的共同努力，我们能够共同维护一个更加美好、整洁的图书馆学习环境。\n祝同学们假期愉快，学业有成！\n图书馆\n2025年1月3日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "个人物品",
+          "verbs": [
+            "整理",
+            "带离",
+            "取回",
+            "清理"
+          ],
+          "deadline": "2025-01-10T14:00",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "五至八层",
+        "贵重物品"
+      ]
+    },
+    "referenceTime": "2025-01-03T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://lib.lsu.edu.cn/_t131/2025/0103/c782a351305/pagem.psp",
+      "acquiredAt": "2026-10-21T05:15:36.987773+00:00",
+      "publishedOrExplicitUpdateDate": "2025-01-03",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "16e1439a5a244ac0d0f05fdf57d6c33a9d0b3b6b0267801ab8bc91e70fe077ae",
+      "acquisitionReceiptSha256": "403dab52d6d4104cb58fbcaf3ebff6e05ea35a5ae127bdd230a8655b0828df0b",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 100,
+          "end": 532,
+          "sourceSpanSha256": "1eda853b01edbb6a62d781c5e55432fb17bf477df2e2f7d4a169a9c1ca80fa7d"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-29",
+    "acquisitionKey": "N42",
+    "scene": "物品领取",
+    "inputSourceTitle": "关于SLAC图书馆储物柜及302内未认领物品清理通知 | 温肯图书馆",
+    "inputSourceType": "text",
+    "text": "各位读者：\n假期渐近，为维持馆内整洁有序的公共环境，图书馆将对三至四楼储物柜及SLAC 302内的未认领物品进行集中清理。请各位读者于\n2025年12月15日（周一）14:00\n之前到馆确认，并领回所有个人遗留物品。逾期未认领的物品将统一移交至学生学习与活动中心负一楼学生一站式服务大厅。\n敬请各位读者相互转告，并共同遵守相关规定，感谢您对图书馆工作的支持和理解。\n若您有任何问题，欢迎随时咨询服务台工作人员。\n温州肯恩大学图书馆\n2025年12月10日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "个人",
+          "verbs": [
+            "领取",
+            "领回",
+            "取回",
+            "确认"
+          ],
+          "deadline": "2025-12-15T14:00",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "三至四楼",
+        "302",
+        "负一楼",
+        "服务大厅"
+      ]
+    },
+    "referenceTime": "2025-12-10T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://library.wku.edu.cn/zh-hans/node/2005",
+      "acquiredAt": "2026-10-21T05:15:38.932862+00:00",
+      "publishedOrExplicitUpdateDate": "2025-12-10",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "a257e2ac3f1ef7a203ed217ebeaf263a0e0fc5035f322fd869947724d6fae402",
+      "acquisitionReceiptSha256": "b4827c7fe67b16ab83924805c5c13d60f981f1b39674433aea07f49fa6c3cd53",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 346,
+          "end": 574,
+          "sourceSpanSha256": "3c8aba88e44b7236b85321fe8096ff0760483125dfcc35b45f638e4a0f267c10"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-30",
+    "acquisitionKey": "N43",
+    "scene": "跨日停水",
+    "inputSourceTitle": "停水通知",
+    "inputSourceType": "text",
+    "text": "因南区新建学生宿舍项目原有管沟内给水管线临时迁移，需停水施工。请各单位提前做好储水工作，带来不便，敬请谅解！\n1、停水时间：\n2025年5月9日22：00点—5月10日6：00点\n2、停水范围：\n图书馆、教学主楼、实验楼以南的公共区域（不包含南区家属区）。\n特此通知！\n后勤管理处\n2025年5月8日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "储水",
+          "verbs": [
+            "储水",
+            "做好",
+            "准备"
+          ],
+          "unknownEligibility": true,
+          "deadlineUnknown": true
+        }
+      ],
+      "events": [
+        {
+          "object": "停水",
+          "start": "2025-05-09T22:00",
+          "end": "2025-05-10T06:00"
+        }
+      ],
+      "information": [
+        "以南",
+        "不包含南区家属区"
+      ]
+    },
+    "referenceTime": "2025-05-08T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://zwb.neau.edu.cn/info/1122/1941.htm",
+      "acquiredAt": "2026-10-21T05:15:41.675649+00:00",
+      "publishedOrExplicitUpdateDate": "2025-05-08",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "24f2f652b8e81611cdec3083596e2b304ae7cd983cb5f6b613762215a628a644",
+      "acquisitionReceiptSha256": "80304737676fbeedd7c42edd61702378444b696a710aa6bf32bb7cd27c536759",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 144,
+          "end": 295,
+          "sourceSpanSha256": "cc013dabc2c0e0fa5815e3754f16db529e3a1c4e3fd2d2af9b6179836ebfe8a1"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-31",
+    "acquisitionKey": "N44",
+    "scene": "成绩复核材料",
+    "inputSourceTitle": "乐山师范学院关于2025年上半年（第75次）全国计算机等级考试成绩查询的通知",
+    "inputSourceType": "text",
+    "text": "各考生：\n2025\n年上半年（第\n75\n次）全国计算机等级考试成绩已下发，考生可登陆中国教育考试网\nhttp://cjcx.neea.edu.cn/\n关注成绩查询公告，获证考生可下载电子证书。考试结果以等第的形式公布：“\n3\n”表示优秀\n(90-100\n分\n)\n、“\n2\n”表示良好\n(80-89\n分\n)\n、“\n1\n”表示及格\n(60-79\n分\n)\n、“\n0\n”表示不及格\n(0-59\n分\n)\n、“\n-1\n”表示缺考，各考生成绩详见附件\n1\n。\n如对此次考试成绩有疑问，可申请复核成绩，具体流程如下：\n下载附件\n2\n《全国计算机等级考试成绩复查申请表》；\n填写完整后发送电子邮箱：\ncontact@example.invalid(PDF\n和\nword\n各一份，两份文档内容一致\n)\n，文档打包压缩以（申请复核日期\n+\n考生姓名\n+\n成绩复查表）命名，例如：\n[电话]+\n[姓名]\n+\n成绩复查表；申请成绩复核资料提交时间：即日起至\n2025\n年\n5\n月\n19\n日\n18:00\n，逾期不受理。联系电话：\n[电话]\n。\n温馨提示：申请成绩复核的考生只针对在我考点参加\n2025\n年上半年（第\n75\n次）全国计算机等级考试的考生。\n乐山师范学院教学部\n202\n5\n年\n5\n月\n9\n日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "成绩复核",
+          "verbs": [
+            "申请",
+            "提交",
+            "复核"
+          ],
+          "deadline": "2025-05-19T18:00",
+          "channel": "contact@example.invalid",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "materials": [
+        "申请表"
+      ],
+      "information": [
+        "PDF",
+        "word",
+        "一致",
+        "打包",
+        "申请复核日期",
+        "考生姓名",
+        "我考点"
+      ]
+    },
+    "referenceTime": "2025-05-09T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jiaowc.lsnu.edu.cn/info/1179/10700.htm",
+      "acquiredAt": "2026-10-21T05:15:43.891928+00:00",
+      "publishedOrExplicitUpdateDate": "2025-05-09",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "bbc8c0c5908b7a9261ecd8b7b5fd3efb0722e464ebcb02084f2851774f4acbe8",
+      "acquisitionReceiptSha256": "495d54aa1ad11a8520ad3ba6f57dc6d30864d965e51993a835ec4baa0a62d8dc",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [
+        {
+          "reason": "PUBLIC_EMAIL",
+          "originalSha256": "41d60c0689c973b734efd8bd82313295674cababd8a125631b5e1910d8a24e73",
+          "replacement": "contact@example.invalid"
+        },
+        {
+          "reason": "PUBLIC_PHONE_OR_CONTACT_NUMBER",
+          "originalSha256": "d9050e05e8c46b97fe1aa6eb3a7d3b23ba31d6f1abde159223a136a508fa1517",
+          "replacement": "[电话]"
+        },
+        {
+          "reason": "PUBLIC_PHONE_OR_CONTACT_NUMBER",
+          "originalSha256": "9cbc64099d21c4aa7a3432a5b9249834a8f2c396f119eb8b611f363b1fa5980e",
+          "replacement": "[电话]"
+        },
+        {
+          "reason": "PUBLIC_PERSON_NAME",
+          "originalSha256": "1d841bc0ee98309cb7916670b7f0fdef5f4c35150711a41405ef3633b56322cf",
+          "replacement": "[姓名]"
+        }
+      ],
+      "spans": [
+        {
+          "start": 142,
+          "end": 685,
+          "sourceSpanSha256": "73a8e4e3dcf37aca432ee0bec9bfc31453b25020e33d2afd0db918d79a6e058d"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-32",
+    "acquisitionKey": "N45",
+    "scene": "条件复核未知补考",
+    "inputSourceTitle": "2025级博士、硕士研究生（2025",
+    "inputSourceType": "text",
+    "text": "一、成绩发布\n2025级博士、硕士研究生2025-2026学年秋季学期全部课程成绩已发布至研究生教育教学管理系统，研究生可自行登录查询。\n二、成绩复查\n1、申请要求：有成绩复查需求的研究生，请下载并填写《大连医科大学研究生成绩复查申请表》（附件1），完成本人手写签名，将签名表格拍照后，扫描如下二维码上传申请表照片并完成信息填报。\n2、截止时间：成绩复查申请截止至2026年3月20日12:00，逾期不予受理。\n3、复核安排：研究生院统一汇总复查申请后分发至相关教研室所在学院，各学院开展复核，复核过程中如确有成绩问题，由学院相关负责人与研究生院培养科对接处理后续事宜。\n三、补考安排\n成绩低于60分的不及格课程，待本次成绩复查工作全部结束后，由学校统一组织补考。请相关研究生及时关注研究生院官网后续发布的补考具体安排通知。\n大连医科大学研究生院培养科\n2026年3月16日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "成绩复查",
+          "verbs": [
+            "申请",
+            "提交",
+            "复查"
+          ],
+          "deadline": "2026-03-20T12:00",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "materials": [
+        "申请表"
+      ],
+      "information": [
+        "手写签名",
+        "照片",
+        "二维码",
+        "60分",
+        "补考",
+        "后续"
+      ]
+    },
+    "referenceTime": "2026-03-16T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://yjs.dmu.edu.cn/info/1027/9261.htm",
+      "acquiredAt": "2026-10-21T05:15:44.770383+00:00",
+      "publishedOrExplicitUpdateDate": "2026-03-16",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "dde510e0e9ccae91bf51bef58b2b1807905e4fa334f19ee3664dfba18e3e1d93",
+      "acquisitionReceiptSha256": "87264f981eab812d5345595f13c4bb3d6b61745c3896a3f2820545d7929badd5",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 678,
+          "end": 1066,
+          "sourceSpanSha256": "d4ccb67d8aa1df1cadd49a01db9b16895e2406e1a8dd2f1eeaeb5e8457f0283e"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-33",
+    "acquisitionKey": "N46",
+    "scene": "成绩查询复核",
+    "inputSourceTitle": "关于发布2025",
+    "inputSourceType": "text",
+    "text": "现通过教务管理系统发布2025-2026学年第二学期毕业重修补考成绩的通知：\n1.查询方式：内网访问：https://teach.neusoft.edu.cn/；外网访问：需登录VPN（https://vpn.neuedu.com）后访问教务网络管理系统。\n2.成绩显示：重修课程原始成绩显示在当前学年学期，有效成绩显示在初修学年学期，取高分有效。\n3.成绩复查：学生如对本次发布成绩有疑义，请素质教师于2026年5月28日11:00前提交复查申请表至学院教学秘书处，逾期不再受理。\n特此通知",
+    "reference": {
+      "tasks": [
+        {
+          "object": "复查",
+          "verbs": [
+            "提交",
+            "申请"
+          ],
+          "deadline": "2026-05-28T11:00",
+          "channel": "教学秘书",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "VPN",
+        "素质教师",
+        "原始成绩",
+        "取高分"
+      ]
+    },
+    "referenceTime": "2026-05-27T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jw.neusoft.edu.cn/2026_05/27_10/content-49485.html",
+      "acquiredAt": "2026-10-21T05:15:45.674722+00:00",
+      "publishedOrExplicitUpdateDate": "2026-05-27",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "ebc05521c33054703726c394b95eab0671c64e550a3f8973fdc1daf226de3e86",
+      "acquisitionReceiptSha256": "d974f179df3de0552cc932ff4f94ea012e7002cb066486078c951fa79639491e",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 475,
+          "end": 722,
+          "sourceSpanSha256": "2cb50c0471fe344deeb612f0d2f74c02104850d1c7e1465fa1fb5529f9677e15"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-34",
+    "acquisitionKey": "N47",
+    "scene": "成绩复查",
+    "inputSourceTitle": "【成绩管理】关于公布2024",
+    "inputSourceType": "text",
+    "text": "各研究生培养单位、各位考生：\n研究生公共必修课成绩（硕士英语、硕士政治）成绩已录入完毕，请各位考生及时查询并做好后续相关事宜办理。\n一、成绩查询\n登录“研究生信息管理系统”，依次点击“培养→课务管理→课程成绩信息查询”，进行相关课程成绩查询。\n二、成绩复查\n1.\n如研究生对成绩有异议，请于\n2025\n年\n3\n月\n11\n日（星期二）前\n将《研究生期末考试成绩复查申请表》（附件\n1\n）一式一份提交至研究生院学术学位培养办公室（长安校区文汇楼\nA\n段\n511\n室）\n,\n逾期不再受理；\n2.\n成绩复查范围仅限于考卷登分、记分错误或试卷漏阅差错。评分尺度掌握的松紧程度不属于复查范围。\n3.\n研究生院组织相关课程成绩复查后，公布成绩复查结果。\n三、补考、缓考安排\n1.\n成绩不及格的研究生须参加补考；本次申请课程缓考的研究生须参加后期组织的该课程的考试。\n2.\n补考、缓考时间暂定于\n2025\n年\n3\n月下旬，考试安排将在研究生院网站后续通知。\n四、课程重修安排\n1.\n考生有以下情况的，须参加课程重修：\n①\n公共课补考成绩仍不合格的；\n②\n公共课各科目旷考的；\n③\n公共课各科目考试违纪的。\n2.\n参加课程重修的研究生须于\n2025\n年\n6\n月\n30\n日\n前提交《研究生课程重修申请表》（见附件\n2\n）至研究生院学术学位培养办公室（长安校区文汇楼\nA\n段\n511\n室）。研究生须在\n2025\n年秋季学期进行相关课程重修。\n研究生院（党\n委研究生工作部）\n2025\n年\n3\n月\n5\n日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "成绩复查",
+          "verbs": [
+            "申请",
+            "提交",
+            "复查"
+          ],
+          "deadline": "2025-03-11",
+          "precision": "date_only",
+          "material": "申请表",
+          "channel": "511",
+          "unknownEligibility": true
+        },
+        {
+          "object": "重修",
+          "verbs": [
+            "申请",
+            "提交",
+            "参加"
+          ],
+          "deadline": "2025-06-30",
+          "precision": "date_only",
+          "material": "申请表",
+          "channel": "511",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "硕士英语",
+        "硕士政治",
+        "补考",
+        "缓考",
+        "暂定",
+        "3",
+        "下旬",
+        "秋季",
+        "旷考",
+        "违纪"
+      ]
+    },
+    "referenceTime": "2025-03-05T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://newyjs.snnu.edu.cn/info/1044/17110.htm",
+      "acquiredAt": "2026-10-21T05:15:46.664626+00:00",
+      "publishedOrExplicitUpdateDate": "2025-03-05",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "b038a6ea1ef0421746436bfe64d9eef8ac1117c4cbe308452602c8d5f093f4cd",
+      "acquisitionReceiptSha256": "9f4af01759b4419327cdb4e707ecb66d22028260b8864369b3979c57d9b62959",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 643,
+          "end": 1284,
+          "sourceSpanSha256": "ca3526c88d29c6aa20d2a14f6d68d9521cd6c32d97f437a5e4f6349c35ea1be6"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": null
+    },
+    "cohort": "fresh-dev",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  },
+  {
+    "id": "FRESH-35",
+    "acquisitionKey": "N50",
+    "scene": "归还延期与日期矛盾",
+    "inputSourceTitle": "图书馆开馆通知",
+    "inputSourceType": "text",
+    "text": "各位师生读者：\n图书馆本学期于\n2025\n年\n2\n月\n22\n日起正式开馆。\n2025\n年\n2\n月\n22\n日\n-23\n日开馆时间调整为\n08:30—21:00\n；\n2\n月\n24\n日起开馆时间为\n08:30—22:00\n。\n图书馆学习区域不得存放任何个人物品，请各位读者每日闭馆前将个人物品全部带回，避免占座共同维护图书馆的整洁环境，图书馆每日对遗留物品将统一清理，如有遗失，概不负责。\n寒假期间到期应还的外借图书，归还日期将统一延期至\n3\n月\n4\n日，请广大读者及时归还到期图书。\n南京财经大学红山学院图书馆\n2024\n年\n2\n月\n19\n日",
+    "reference": {
+      "tasks": [
+        {
+          "object": "图书",
+          "verbs": [
+            "归还",
+            "还回"
+          ],
+          "deadline": "2025-03-04",
+          "precision": "date_only",
+          "unknownEligibility": true
+        },
+        {
+          "object": "个人物品",
+          "verbs": [
+            "带回",
+            "带离",
+            "取回"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "2",
+        "22",
+        "23",
+        "08:30",
+        "21:00",
+        "24",
+        "22:00",
+        "2024"
+      ],
+      "forbidden": [
+        {
+          "object": "个人物品",
+          "verbs": [
+            "存放",
+            "留下"
+          ]
+        }
+      ]
+    },
+    "referenceTime": "2025-02-20T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://hs.nufe.edu.cn/lib/2025/0220/c1397a22514/page.htm",
+      "acquiredAt": "2026-10-21T05:17:40.361118+00:00",
+      "publishedOrExplicitUpdateDate": "2025-02-20",
+      "referenceClock": "DATE_ONLY_SOURCE_ANCHOR_AT_MIDNIGHT_NOT_OBSERVED_PUBLICATION_CLOCK",
+      "originalPageTextSha256": "eee2ee506a793ea3127310bff9a7690c697656947770b00f15584926fb1e62ce",
+      "acquisitionReceiptSha256": "168d4ad23c3a144f406c8ac72944b15b4e972b3617eb2808ddaa5199b50d8d38",
+      "excerpt": false,
+      "excerptScope": "COMPLETE_NOTICE_BODY_WITHOUT_PAGE_NAVIGATION_FOOTER; attachments not fetched",
+      "normalization": "LF; trim line padding; drop blank lines only; no semantic rewriting",
+      "redactions": [],
+      "spans": [
+        {
+          "start": 221,
+          "end": 491,
+          "sourceSpanSha256": "30944b080ca6057ae7cd7f65cc4c8293e77c6f6ee03055cbead00adc54f0d918"
+        }
+      ],
+      "author": "Codex single-author / model-assisted / provisional; complete notice body; no model output observed",
+      "wordCountMethod": "non-whitespace Unicode characters <=600",
+      "publishedSignatureDispute": "Body explicitly 2025; signature says2024; retain conflict, do not guess missing clock"
+    },
+    "cohort": "reserved-r7",
+    "referenceAuthoredAt": "2026-10-21T05:19:28.374Z",
+    "referenceIndependent": false
+  }
+]
