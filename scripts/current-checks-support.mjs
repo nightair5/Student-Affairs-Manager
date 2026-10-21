@@ -46,6 +46,28 @@ export function historicalTestPattern(group, historical) {
   return historical?'(?:'+pattern+')':'^(?!.*(?:'+pattern+')).*$'
 }
 
+// These two immutable cases repeatedly load/validate a complete workspace.
+// Hosted Windows hit Vitest's implicit 5s limit (run 39399248310), while the
+// adjacent stateful cases already take 6-23s with explicit budgets. Isolate
+// exactly these names in a fresh process; keep every other default unchanged.
+export const statefulCarrierTestNames=[
+  'explicit unverified review persists independently; dependency and broken sibling remain blocked (simulation)',
+  'real runtime opens InputReview and saves independent corrections, while its send handler rejects before any run',
+]
+export function carrierExecutionGroups(){
+  const names=statefulCarrierTestNames.map(s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')
+  return [
+    {label:'vitest-carriers',pattern:'^(?='+historicalTestPattern('carriers',false)+')(?!.*(?:'+names+')$).*$',testTimeoutMs:null,processTimeoutMs:null},
+    {label:'vitest-carriers-stateful',pattern:'(?:^| )(?:'+names+')$',testTimeoutMs:20000,processTimeoutMs:90000},
+  ]
+}
+export function assertStatefulCarrierReport(report){
+  const executed=report.testResults.flatMap(f=>f.assertionResults).filter(t=>t.status!=='skipped'&&t.status!=='pending')
+  if(executed.length!==statefulCarrierTestNames.length||statefulCarrierTestNames.some(name=>executed.filter(t=>t.fullName.endsWith(' '+name)||t.fullName===name).length!==1)
+    ||executed.some(t=>t.status!=='passed'))throw Error('STATEFUL_CARRIER_EXACT_COVERAGE_REQUIRED')
+  return executed.map(t=>({name:t.fullName,durationMs:t.duration,status:t.status}))
+}
+
 export async function prepareCarriers(prepare,run,record) {
   let manifest
   try {manifest=await prepare()}

@@ -4,7 +4,7 @@ import {realpath} from 'node:fs/promises'
 import {resolve} from 'node:path'
 import {tmpdir} from 'node:os'
 import {randomUUID} from 'node:crypto'
-import {checkEnvironment,assertNoEnvironmentFiles,testFileGroups,prepareCarriers,inspectHistoricalFiles,historicalArtifactEntries,historicalTestPattern} from './current-checks-support.mjs'
+import {checkEnvironment,assertNoEnvironmentFiles,testFileGroups,prepareCarriers,inspectHistoricalFiles,historicalArtifactEntries,historicalTestPattern,carrierExecutionGroups,assertStatefulCarrierReport} from './current-checks-support.mjs'
 import {CHECK_PHASES,testLayersForPhase} from './check-schedule.mjs'
 
 const phase=process.argv[2]
@@ -21,25 +21,28 @@ const dir=resolve('.data/candidate11/checks',phase,env.TZ.replaceAll('/','-'));m
 const results=[]
 let layer=phase
 function record(row) {const entry={layer,...row};results.push(entry);console.log(JSON.stringify(entry));return entry}
-function run(label,args,extraEnv={}) {
-  const result=spawnSync(process.execPath,args,{env:{...env,...extraEnv},encoding:'utf8',maxBuffer:48*1024*1024})
+function run(label,args,extraEnv={},options={}) {
+  const started=Date.now(),result=spawnSync(process.execPath,args,{env:{...env,...extraEnv},encoding:'utf8',maxBuffer:48*1024*1024,...(options.processTimeoutMs?{timeout:options.processTimeoutMs}:{}),windowsHide:true})
   const log=resolve(dir,label+'.log');writeFileSync(log,(result.stdout??'')+(result.stderr??''))
-  return record({label,status:result.status,outcome:result.status===0?'PASS':'FAIL',error:result.error?.code??null,log})
+  let timing
+  if(options.reportPath&&result.status===0){try{timing=assertStatefulCarrierReport(JSON.parse(readFileSync(options.reportPath,'utf8')))}catch(error){return record({label,status:1,outcome:'FAIL',error:error.message,log})}}
+  return record({label,status:result.status,outcome:result.status===0?'PASS':'FAIL',error:result.error?.code??null,log,durationMs:Date.now()-started,...(timing?{tests:timing}:{}),...(options.testTimeoutMs?{testTimeoutMs:options.testTimeoutMs,processTimeoutMs:options.processTimeoutMs}: {})})
 }
 function nodeTests(entries) {for(const [label,file] of entries)run(label,['--test',file])}
-function vitest(label,paths,extraEnv={},pattern) {if(!paths.length)throw Error('C11_TEST_GROUP_EMPTY:'+label);run(label,['node_modules/vitest/vitest.mjs','run','--config','scripts/mainline-01.vitest.config.mts','--maxWorkers=2',...(pattern?['--testNamePattern',pattern]:[]),...paths],extraEnv)}
+function vitest(label,paths,extraEnv={},pattern,options={}) {if(!paths.length)throw Error('C11_TEST_GROUP_EMPTY:'+label);const reportPath=options.testTimeoutMs?resolve(dir,label+'.json'):null;run(label,['node_modules/vitest/vitest.mjs','run','--config','scripts/mainline-01.vitest.config.mts','--maxWorkers='+ (options.testTimeoutMs?1:2),...(pattern?['--testNamePattern',pattern]:[]),...(reportPath?['--testTimeout',String(options.testTimeoutMs),'--reporter=default','--reporter=json','--outputFile',reportPath]:[]),...paths],extraEnv,{...options,reportPath})}
 let carrierManifest
-async function carrierTests(label,paths,pattern) {
-  if(carrierManifest)return vitest(label,paths,{REAL_INPUT_CARRIERS_MANIFEST:carrierManifest},pattern)
+async function carrierTests(label,paths,pattern,options={}) {
+  if(carrierManifest)return vitest(label,paths,{REAL_INPUT_CARRIERS_MANIFEST:carrierManifest},pattern,options)
   await prepareCarriers(async()=>{
     const {renderEngineeringCarriers}=await import('./render-mainline-real-input-01-fixtures.mjs')
     const output=resolve(temporaryRoot,'c11-engineering-carriers-'+randomUUID())
     await renderEngineeringCarriers(output)
     return resolve(output,'carriers.json')
-  },manifest=>{carrierManifest=manifest;return vitest(label,paths,{REAL_INPUT_CARRIERS_MANIFEST:manifest},pattern)},row=>record({...row,label:row.label==='vitest-carriers'?label:row.label}))
+  },manifest=>{carrierManifest=manifest;return vitest(label,paths,{REAL_INPUT_CARRIERS_MANIFEST:manifest},pattern,options)},row=>record({...row,label:row.label==='vitest-carriers'?label:row.label}))
 }
 async function product() {
   layer='current-product'
+  nodeTests([['stateful-carrier-schedule','scripts/stateful-carrier-schedule.node-test.mjs']])
   nodeTests([['conditional-obligation-generation','cloudflare/recognition-product-contract-v1-12.node-test.mjs']])
   nodeTests([['entity-first-summary-last-generation','cloudflare/recognition-product-contract-v1-13.node-test.mjs']])
   nodeTests([['preview-access','cloudflare/preview-access.node-test.mjs']])
@@ -71,7 +74,7 @@ async function safety() {
   // Frozen private-record cases are scheduled in historical(), not discarded.
   vitest('vitest-safety',groups.safety)
   vitest('vitest-runtime-current',groups.mixed,{},historicalTestPattern('mixed',false))
-  await carrierTests('vitest-carriers',groups.carriers,historicalTestPattern('carriers',false))
+  for(const group of carrierExecutionGroups())await carrierTests(group.label,groups.carriers,group.pattern,group)
   nodeTests([['current-checks','scripts/current-checks.node-test.mjs'],['check-schedule','scripts/check-schedule.node-test.mjs'],['governance-unit','scripts/governance-protection.node-test.mjs'],
     ['multimodal-lib','scripts/multimodal-evaluation-lib.node-test.mjs'],['c11-scoring','scripts/candidate11-scoring.node-test.mjs'],['c11-preview','scripts/candidate11-preview.node-test.mjs'],
     ['d25-executor','scripts/d25-executor.node-test.mjs'],['d25-mechanism','scripts/d25-mechanism.node-test.mjs'],['d26-mechanism','scripts/d26-mechanism.node-test.mjs'],

@@ -28,10 +28,11 @@ import {existingHandlingWindows} from './handlingWindowSupport'
 import {completeCitedContextSupport,supportedFormTask,citedTaskClockEndpoint} from './citedContextSupport'
 import {projectCitedOpportunityViews} from './citedOpportunityProjection'
 import {projectSourceObligationViews} from './sourceObligationProjection'
+import {citedDocumentNames, type CitedDocumentName} from './citedDocumentName'
 import {isolateRecognitionItems,unanchoredAcademicWeek,LOCAL_ISOLATION_NOTE_PREFIX,LOCAL_ISOLATION_VERSION,type LocalIsolationAudit} from '../../cloudflare/recognition-local-isolation.mjs'
 
 export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.30.0'
-export const PRODUCT_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.31.1'
+export const PRODUCT_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.32.0'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION | typeof PRODUCT_FIRST_SUGGESTION_VERSION
@@ -54,6 +55,7 @@ export interface D26FirstSuggestionAudit {
   sourceCurrentness: SourceCurrentFactAudit[]
   declaredEventNameSupport: DeclaredEventNameAudit[]
   groundedNameEquivalences?:Array<{entityId:string;rule:string;quotes:string[]}>
+  citedDocumentNames?:CitedDocumentName[]
   citedMaterialQuantities?:Array<{entityId:string;before:string[];after:string[];literal:string;evidenceIds:string[];rule:'EXISTING_MATERIAL_CITED_QUANTITY_RANGE'}>
   citedOwnerSupport:CitedOwnerDecision[]
   citedSourceWindows:ReturnType<typeof completeCitedSourceWindows>
@@ -414,9 +416,11 @@ export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, 
   const opportunities=projectCitedOpportunityViews(result,context.sourceText,context.referenceTime,context.timezone)
   if(opportunities.decisions.length)audit.opportunityProjection=opportunities
   const tasks: TaskSuggestionV2[] = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
+  const documentNames=citedDocumentNames(result,context.sourceText)
+  if(documentNames.length)audit.citedDocumentNames=documentNames
   for (const task of tasks) {
     boundActionField(task,quote(task.evidenceIds),context.sourceText,audit)
-    const quotes = quote(task.evidenceIds),completion=supportedCourseCompletion(task,quotes,result.timePoints)||courseTaskSupported(task,audit.citedCourseScope),attendance=supportedAttendanceAction(task.actionVerb,task.actionObject,quotes),grounded = supportedFormTask(task,audit.citedContextSupport)||supportedReceiptName(task.tempId,result,context.sourceText,audit.conditionalAlternatives)||completion||attendance||supportedAdjacent(task.actionVerb, quotes,context.sourceText) && (supportedAdjacent(task.actionObject, quotes,context.sourceText,true)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)||supportedEventDescriptor(task.actionObject,quotes))
+    const quotes = quote(task.evidenceIds),completion=supportedCourseCompletion(task,quotes,result.timePoints)||courseTaskSupported(task,audit.citedCourseScope),attendance=supportedAttendanceAction(task.actionVerb,task.actionObject,quotes),grounded = supportedFormTask(task,audit.citedContextSupport)||supportedReceiptName(task.tempId,result,context.sourceText,audit.conditionalAlternatives)||completion||attendance||documentNames.some(p=>p.taskId===task.tempId)||supportedAdjacent(task.actionVerb, quotes,context.sourceText) && (supportedAdjacent(task.actionObject, quotes,context.sourceText,true)||supportedCoordinatedObject(task.actionObject,task.actionVerb,quotes)||supportedEventDescriptor(task.actionObject,quotes))
     if(attendance){audit.groundedNameEquivalences??=[];audit.groundedNameEquivalences.push({entityId:task.tempId,rule:'EXISTING_SAME_OBJECT_MANDATORY_ATTENDANCE',quotes})}
     if(completion)audit.actionFields.push({entityId:task.tempId,before:task.actionVerb,after:task.actionVerb,status:'EXISTING_COURSE_COMPLETION_SUPPORT',quotes})
     const original = { entityId: task.tempId, kind: 'task' as const, title: task.title, description: task.description }

@@ -1,4 +1,5 @@
 import type { RecognitionResult } from './types'
+import {citedDocumentNames, type CitedDocumentName} from './citedDocumentName'
 import { assembleRecognitionFirstSuggestionD26 } from './firstSuggestionD26'
 import { groundSourceWindows } from './sourceWindowGrounding'
 import { groundSourceActionTimes, type SourceActionTimeDeclaration } from './sourceActionTime'
@@ -19,6 +20,7 @@ export interface MaterialChannelDecision {
   workflowProof?: WorkflowMaterialSupport
   citedContextProof?: CitedDeliveryContext
   ownerChannels?: Array<{ownerId:string;channel:string}>
+  documentNameProof?:CitedDocumentName
 }
 export interface MaterialChannelAudit {
   version: typeof MATERIAL_CHANNEL_GROUNDING_VERSION | typeof WORKFLOW_MATERIAL_CHANNEL_VERSION
@@ -118,6 +120,7 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
   const result = structuredClone(input)
   const audit: MaterialChannelAudit = { version: workflowSupport.length ? WORKFLOW_MATERIAL_CHANNEL_VERSION : MATERIAL_CHANNEL_GROUNDING_VERSION, role: 'PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT', inferredFacts: 0, decisions: [] }
   const tasks = [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
+  const documentNames=citedDocumentNames(result,sourceText)
   for (const material of result.materials) {
     if (!material.submissionChannel) continue
     const originalValue = material.submissionChannel
@@ -126,7 +129,8 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     const evidence = result.evidence.filter(e => ids.has(e.id) && e.sourceId === result.evidence.find(r => material.evidenceIds.includes(r.id))?.sourceId
       && typeof e.quote === 'string' && sourceText.includes(e.quote)).map(e => ({ id: e.id, quote: e.quote! }))
     const clauses = citedClauses(evidence, sourceText)
-    const objects = [...new Set([material.name, ...owners.map(t => t.actionObject)].filter(Boolean))]
+    const documentNameProof=documentNames.find(p=>p.materialId===material.tempId&&owners.some(t=>t.tempId===p.taskId))
+    const objects = [...new Set([material.name, ...owners.map(t => t.actionObject),...(documentNameProof?[documentNameProof.literalObject]:[])].filter(Boolean))]
     const siblings = result.materials.filter(m => owners.some(t => m.relatedTaskTempIds.includes(t.tempId) && t.materialTempIds.includes(m.tempId))).map(m => m.name)
     const roleChecks = clauses.flatMap(quote => objects.flatMap(object => {
       const check = destinationRole(quote, object, originalValue, siblings)
@@ -162,7 +166,7 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     const receipt = !contradictory && clauses.some(c => c.includes(originalValue) && /显示|提示|回执|接收成功|收到成功/u.test(c))
       && owners.some(t => t.completionCriteria.some(c => c.includes(originalValue) && /显示|提示|回执|接收成功|收到成功/u.test(c) && evidence.some(e=>e.quote.includes(c))))
     const status = direct ? 'EXPLICIT_CHANNEL' : ownerSpecific?'EXPLICIT_OWNER_CHANNELS': workflowProof ? 'EXPLICIT_WORKFLOW_CHANNEL' : receipt ? 'RECEIPT_CONTEXT_UNRESOLVED' : 'UNSUPPORTED_OR_AMBIGUOUS_CHANNEL'
-    audit.decisions.push({ materialId: material.tempId, materialName: material.name, ownerIds: material.relatedTaskTempIds, originalValue, displayedValue: direct || ownerSpecific || workflowProof ? originalValue : null, status, evidence, roleChecks, ...(workflowProof ? { workflowProof } : {}),...(citedContextProof?{citedContextProof}:{}),...(ownerSpecific?{ownerChannels:ownerRoles.map(r=>({ownerId:r.owners[0],channel:r.part}))}:{}) })
+    audit.decisions.push({ materialId: material.tempId, materialName: material.name, ownerIds: material.relatedTaskTempIds, originalValue, displayedValue: direct || ownerSpecific || workflowProof ? originalValue : null, status, evidence, roleChecks, ...(workflowProof ? { workflowProof } : {}),...(citedContextProof?{citedContextProof}:{}),...(documentNameProof?{documentNameProof}:{}),...(ownerSpecific?{ownerChannels:ownerRoles.map(r=>({ownerId:r.owners[0],channel:r.part}))}:{}) })
     if (direct || ownerSpecific || workflowProof) continue
     // null here means unconfirmed destination, not "the source states no channel".
     material.submissionChannel = null
