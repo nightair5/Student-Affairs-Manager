@@ -34,7 +34,7 @@ test('opt-in prompt is below half length, one Schema authority, and immutable1.5
 })
 test('real Worker independently selects compact prompt and zero temperature without altering ordinary defaults',async()=>{
  let requestIndex=0
- for(const [version,sampling,expected] of [['recognition-product-contract-1.5.0',undefined,.1],['recognition-product-contract-1.5.0','0',0],['recognition-product-contract-1.15.0','0',0],['recognition-product-contract-1.15.0','0.8',.1]]){
+ for(const [version,sampling,expected] of [['recognition-product-contract-1.5.0',undefined,.1],['recognition-product-contract-1.5.0','0',0],['recognition-product-contract-1.15.0','0',0],['recognition-product-contract-1.15.0','0.8',.1],['recognition-product-contract-1.16.0',undefined,.1]]){
  const source='请于2027年4月3日18:00前提交画稿。',referenceTime='2027-04-01T09:00:00+08:00';let sent
  const raw=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:'画稿',sourceType:'text',summary:source,requiresAction:true},standaloneTasks:[{tempId:'T',title:'提交画稿',actionVerb:'提交',actionObject:'画稿',evidenceIds:['E']}],evidence:[{id:'E',quote:source,field:'description'}]},source,referenceTime,'deepseek-v4-flash',version)
  const worker=createWorker({fetcher:async(_,init)=>{sent=JSON.parse(init.body);return Response.json({choices:[{message:{content:JSON.stringify(raw)},finish_reason:'stop'}],usage:{prompt_tokens:1,completion_tokens:1}})},logger:()=>{}}),origin='http://127.0.0.1:'+(7300+requestIndex++)
@@ -43,4 +43,8 @@ test('real Worker independently selects compact prompt and zero temperature with
  assert.equal(sent.temperature,expected);assert.equal(sent.max_tokens,16384);assert.equal(sent.seed,undefined)
  assert.equal(sent.messages[0].content,recognitionSystemPrompt({modelName:'deepseek-v4-flash',productContract:true,promptVersion:version}))
  }
+})
+
+test('contrastive experiment keeps sole unchanged1.5 Schema and distinguishes adequate from unsupported evidence',async()=>{
+ const {recognitionOutputSchema:next,productGenerationContract:contract,contrastiveExamples:examples}=await import('./recognition-product-contract-v1-16.mjs');const expected=structuredClone(old);expected.properties.promptVersion.const='recognition-product-contract-1.16.0';assert.deepEqual(next,expected);assert.equal(contract().split(JSON.stringify(next)).length,2);assert.equal((examples.match(/例[一二三]，原文/g)??[]).length,3);for(const rule of ['材料要求','反：只引用','标准值null','原文不存在'])assert.ok(examples.includes(rule));assert.equal(createHash('sha256').update(recognitionSystemPrompt({modelName:'deepseek-v4-flash',productContract:true,promptVersion:'recognition-product-contract-1.5.0'})).digest('hex'),'af4251881ba87bf38ae1e5f60a7fd4c7a3733ba424a5ea7bc8f669fab3f4ff3c')
 })
