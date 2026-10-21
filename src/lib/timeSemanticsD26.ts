@@ -65,7 +65,7 @@ export function interpretTimeD26(rawText: string, options: ChineseTimeAstOptions
     if (partialClock) point.issues.push('day_period_without_clock')
     if (tentative) point.issues.push('tentative_time')
   }
-  const rangeIssue=deadlineRangeRoleIssue(rawText,options.type)
+  const rangeIssue=deadlineRangeRoleIssue(rawText,options.type,options.sourceContext)
   if(rangeIssue)point={...point,normalizedValue:null,rangeEndNormalizedValue:null,isAllDay:false,precision:'vague',needsConfirmation:true,issues:[...point.issues,rangeIssue]}
   return { version: D26_TIME_VERSION, point, knownDate: point.normalizedValue?.slice(0, 10) ?? null,
     dayPeriod, certainty: unannounced ? 'unannounced' : tentative ? 'tentative' : point.needsConfirmation ? 'partial' : 'stated', sourceContext: context, conversions }

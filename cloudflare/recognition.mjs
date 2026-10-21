@@ -2,7 +2,7 @@ import {citedEventSequence,citedSplitEventRange,citedTaskDateRange} from './cite
 import {projectCitedClockRanges} from './cited-clock-range.mjs'
 import {citedRelativeCutoff,unprovenRelativeCutoff} from './cited-relative-cutoff.mjs'
 import {retiredDeadlineContext} from './retired-deadline-context.mjs'
-import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
+import {deadlineRangeRoleIssue,citedDeadlineRoleContext} from './deadline-range-role.mjs'
 import { parseChineseTimeAst } from './chinese-time-ast.generated.mjs'
 import {productGenerationContract,productGenerationUsesSingleSchema,PRODUCT_CONTRACT_PROMPT_VERSION} from './recognition-output-contract.mjs'
 
@@ -198,7 +198,7 @@ export function applyDeterministicTimeAst(raw, referenceTime, timezone = 'Asia/S
     ...ranges.result,
     timePoints: ranges.result.timePoints.map((item) => {
       if (!item || typeof item !== 'object' || Array.isArray(item) || !TIME_POINT_TYPES.has(item.type) || typeof item.rawText !== 'string') return item
-      if(deadlineRangeRoleIssue(item.rawText,item.type))return {...item,normalizedValue:null,timezone,isAllDay:false,precision:'vague',needsConfirmation:true,selected:false}
+      if(deadlineRangeRoleIssue(item.rawText,item.type,citedDeadlineRoleContext(item,raw.evidence,sourceContent)))return {...item,normalizedValue:null,timezone,isAllDay:false,precision:'vague',needsConfirmation:true,selected:false}
       if(ranges.audit.decisions.some(d=>d.pointId===item.tempId))return item
       if(retiredDeadlineContext(item,raw,raw.evidence,sourceContent))return {...item,needsConfirmation:true,selected:false}
       if(unprovenRelativeCutoff(item,raw,raw.evidence,sourceContent,{referenceTime,timezone}))return {...item,selected:false}
@@ -286,7 +286,7 @@ export function normalizeRecognitionResult(
     const roleRange=ranges.audit.decisions.find(d=>d.pointId===item.tempId)
     const relativePending=unprovenRelativeCutoff(item,raw,evidence,sourceContent,{referenceTime:nowIso,timezone})
     const retired=retiredDeadlineContext(item,raw,evidence,sourceContent)
-    const rangeIssue=deadlineRangeRoleIssue(literal,item.type)
+    const rangeIssue=deadlineRangeRoleIssue(literal,item.type,citedDeadlineRoleContext(item,evidence,sourceContent))
     const effective=rangeIssue?{...ast,normalizedValue:null,isAllDay:false,precision:'vague',needsConfirmation:true}:roleRange||relativePending||retired?item:ast
     const normalizedValue = effective.normalizedValue
     const linkedEvidence = strings(item.evidenceIds).filter((id) => evidenceIds.has(id))

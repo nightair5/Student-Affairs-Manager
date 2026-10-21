@@ -1,6 +1,6 @@
 import type { RecognitionResult } from './types'
 
-export const CITED_DOCUMENT_NAME_VERSION = 'cited-document-name-1.0.1'
+export const CITED_DOCUMENT_NAME_VERSION = 'cited-document-name-1.0.2'
 export interface CitedDocumentName {
   taskId: string
   materialId: string
@@ -35,8 +35,18 @@ export function citedDocumentNames(result: RecognitionResult, source: string): C
     // The instruction and naming clause must both already be cited by the
     // action AND material. A summary or an unrelated heading cannot rescue it.
     const own = refs.filter(e => e?.quote && task.evidenceIds.includes(e.id) && material[0].evidenceIds.includes(e.id))
-    for (const e of own) {
-      const text = compact(e!.quote!)
+    const spans = own.map(e => ({ start: source.indexOf(e!.quote!), end: source.indexOf(e!.quote!) + e!.quote!.length, ids: [e!.id] })).sort((a,b) => a.start-b.start)
+    const joined: typeof spans = []
+    for (const span of spans) {
+      const previous = joined.at(-1)
+      // Only already cited, adjacent pieces of the SAME instruction. Never
+      // bridge a sentence, another action, or uncited lexical content.
+      if (previous && span.start >= previous.end && /^[\s，,]*$/u.test(source.slice(previous.end,span.start))) {
+        previous.end = span.end; previous.ids.push(...span.ids)
+      } else joined.push({ ...span, ids: [...span.ids] })
+    }
+    for (const span of joined) {
+      const text = compact(source.slice(span.start,span.end))
       const expression = new RegExp(escape(task.actionVerb) + '([^，,。；;]{2,50})[，,]((?:稿件|文件|文稿|材料)?(?:标题|命名)(?:格式|要求)(?:统一)?(?:标注为|为|是)[^，,。；;]+)', 'gu')
       for (const match of text.matchAll(expression)) {
         const literal = match[1], declared = compact(task.actionObject)
@@ -52,8 +62,8 @@ export function citedDocumentNames(result: RecognitionResult, source: string): C
         if (tasks.filter(t => compact(t.actionObject).endsWith(literal)).length !== 1
           || result.materials.filter(m => compact(m.name).endsWith(literal)).length !== 1) continue
         proofs.push({ taskId: task.tempId, materialId: material[0].tempId, declaredObject: task.actionObject,
-          literalObject: literal, qualifier, evidenceIds: [e!.id], start: source.indexOf(e!.quote!),
-          end: source.indexOf(e!.quote!) + e!.quote!.length, rule: 'SAME_DELIVERY_EXPLICIT_DOCUMENT_TITLE' })
+          literalObject: literal, qualifier, evidenceIds: span.ids, start: span.start,
+          end: span.end, rule: 'SAME_DELIVERY_EXPLICIT_DOCUMENT_TITLE' })
       }
     }
   }

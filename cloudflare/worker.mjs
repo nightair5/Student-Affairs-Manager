@@ -29,6 +29,7 @@ import {previewAccess} from './preview-access.mjs'
 import {projectTaskApplicability} from './recognition-product-contract-v1-14.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
+import {extractionProfile,extractionRequestOptions} from './extraction-profile.mjs'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
 const DEEPSEEK_MULTIMODAL_MODEL = MULTIMODAL_RECOGNITION_MODEL_NAME
 const EXPERIMENTAL_ROUTE = /^\/(?:benchmark|e2|fact-?ledger|selection|blind|research-preview)(?:\/|$)/iu
@@ -276,7 +277,7 @@ export function validateMultimodalExtractionRequest(value) {
 function extractionModel(env) {
   return safeText(env.ENABLE_MULTIMODAL_EVALUATION, 10) === 'true'
     ? DEEPSEEK_MULTIMODAL_MODEL
-    : DEEPSEEK_MODEL
+    : extractionProfile(env).model
 }
 
 function isIpLiteral(hostname) {
@@ -807,9 +808,10 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   const referenceTime = safeText(body.referenceTime, 80)
   const timezone = safeText(body.timezone, 80) || 'Asia/Shanghai'
   const selectedModel = extractionModel(env)
+  const runtimeProfile=extractionProfile(env)
   const selectedPromptVersion = selectedModel === DEEPSEEK_MULTIMODAL_MODEL
     ? VISION_TEXT_EVALUATION_PROMPT_VERSION
-    : ['recognition-product-contract-1.2.0',PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0','recognition-product-contract-1.5.0','recognition-product-contract-1.6.0','recognition-product-contract-1.7.0','recognition-product-contract-1.8.0','recognition-product-contract-1.9.0','recognition-product-contract-1.10.0','recognition-product-contract-1.11.0','recognition-product-contract-1.12.0','recognition-product-contract-1.13.0','recognition-product-contract-1.14.0','recognition-product-contract-1.15.0','recognition-product-contract-1.16.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
+    : ['recognition-product-contract-1.2.0',PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0','recognition-product-contract-1.5.0','recognition-product-contract-1.6.0','recognition-product-contract-1.7.0','recognition-product-contract-1.8.0','recognition-product-contract-1.9.0','recognition-product-contract-1.10.0','recognition-product-contract-1.11.0','recognition-product-contract-1.12.0','recognition-product-contract-1.13.0','recognition-product-contract-1.14.0','recognition-product-contract-1.15.0','recognition-product-contract-1.16.0','recognition-product-contract-1.15b.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
   // Segment offsets address the exact captured source, including leading and
   // trailing layout. Older request versions retain their original trim rule.
   const sourceContent = usesSourceSegments(selectedPromptVersion)?body.content:safeText(body.content,24_000)
@@ -832,11 +834,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        model: selectedModel,
-        thinking: { type: 'disabled' },
-        temperature: env.DEEPSEEK_EXTRACTION_TEMPERATURE === '0' || env.DEEPSEEK_EXTRACTION_TEMPERATURE === 0 ? 0 : 0.1,
-        max_tokens: Math.min(MAX_EXTRACTION_TOKENS,Math.max(1,Number(env.DEEPSEEK_EXTRACTION_MAX_TOKENS)||6_000)),
-        response_format: { type: 'json_object' },
+        ...extractionRequestOptions({...runtimeProfile,model:selectedModel}),
         messages: [
           { role: 'system', content: systemPrompt },
           {
@@ -845,7 +843,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
           },
         ],
       }),
-      signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+      signal: AbortSignal.timeout(runtimeProfile.timeoutMs),
     })
     if (!upstream.ok) {
       const multimodalEvaluation = selectedModel === DEEPSEEK_MULTIMODAL_MODEL

@@ -8,7 +8,12 @@ const check=(ok,code)=>{if(!ok)throw Error('D26_EXEC_'+code)}
 export function createScopedEngine(scope,{diagnostics}={}){
 check(scope&&/^[A-Z0-9-]+$/.test(scope.batch)&&Number.isInteger(scope.count)&&scope.count>0&&scope.count<=24,'SCOPED_BATCH')
 const parameters=scope.parameters??{temperature:0,maxOutputTokens:MAX_OUTPUT_TOKENS}
-const workerChat=parameters.transportRoute==='worker-chat-completions-1'
+const modelAware=parameters.transportRoute==='worker-chat-completions-model-2'
+const workerChat=parameters.transportRoute==='worker-chat-completions-1'||modelAware
+const billingModel=modelAware?parameters.billingModel:'deepseek-flash'
+const actualModel=modelAware?parameters.actualModel:'deepseek-v4-flash'
+const thinking=modelAware?parameters.thinking:'disabled'
+if(modelAware)check(['deepseek-v4-flash','deepseek-flash','deepseek-v4-pro'].includes(actualModel)&&billingModel===(actualModel==='deepseek-v4-pro'?'deepseek-v4-pro':'deepseek-flash')&&['enabled','disabled'].includes(thinking),'MODEL_PROFILE')
 // New Worker requests explicitly bind their larger output budget. Frozen
 // Responses and 6000-token Worker packets retain the original 8192 reserve.
 const budgetOutputTokens=workerChat?Math.max(MAX_OUTPUT_TOKENS,parameters.maxOutputTokens):MAX_OUTPUT_TOKENS
@@ -19,13 +24,13 @@ const scopedUpper=(input,output,pricing)=>{
 }
 const observedUsage=text=>{if(!workerChat)return rawUsage(text);try{const u=JSON.parse(text).usage;if(Number.isSafeInteger(u?.prompt_tokens)&&u.prompt_tokens>=0&&Number.isSafeInteger(u?.completion_tokens)&&u.completion_tokens>=0)return {...u,input_tokens:u.prompt_tokens,output_tokens:u.completion_tokens,usageBoundary:'NATIVE_CHAT_COMPLETIONS'}}catch{/* Original bytes remain authoritative; absent usage is unknown. */}return 'NOT_OBSERVABLE'}
 const auditMetadata=(raw,row,settle,pricing)=>{if(!workerChat)return auditUnitMetadata(raw,row,settle,pricing);const usage=observedUsage(raw.rawHttpText),cost=usage==='NOT_OBSERVABLE'?scopedUpper(pricing.maxInputTokens,budgetOutputTokens,pricing):scopedUpper(usage.input_tokens,usage.output_tokens,pricing);check(raw.httpStatus===row.httpStatus&&row.httpStatus===settle.httpStatus&&JSON.stringify(usage)===JSON.stringify(row.usage)&&JSON.stringify(usage)===JSON.stringify(settle.usage)&&cost===row.costUpperMicroUsd&&cost===settle.costUpperMicroUsd,'RAW_STATE_SETTLEMENT_METADATA_DRIFT');return {usage,costUpperMicroUsd:cost}}
-check(Number.isFinite(parameters.temperature)&&parameters.temperature>=0&&parameters.temperature<=2&&Number.isSafeInteger(parameters.maxOutputTokens)&&parameters.maxOutputTokens>0&&parameters.maxOutputTokens<=(workerChat?16384:MAX_OUTPUT_TOKENS),'SCOPED_PARAMETERS')
+check(Number.isFinite(parameters.temperature)&&parameters.temperature>=0&&parameters.temperature<=2&&Number.isSafeInteger(parameters.maxOutputTokens)&&parameters.maxOutputTokens>0&&parameters.maxOutputTokens<=(modelAware?32768:workerChat?16384:MAX_OUTPUT_TOKENS),'SCOPED_PARAMETERS')
 function newState(units, binding) {
-  return { version: 'scoped-execution-state-2', batch: scope.batch, model: 'deepseek-flash', ...binding, authorized: false,
+  return { version: 'scoped-execution-state-2', batch: scope.batch, model: billingModel, ...binding, authorized: false,
     units: units.map(unit => ({ ordinal: unit.ordinal, unitIdentitySha256: unit.unitIdentitySha256, requestSha256: unit.requestSha256, status: 'NOT_SENT' })) }
 }
 function assertAuthorization(state, auth, units, binding) {
-  check(state.version === 'scoped-execution-state-2' && state.batch === scope.batch && state.model === 'deepseek-flash' && state.units.length === scope.count && units.length === scope.count, 'STATE')
+  check(state.version === 'scoped-execution-state-2' && state.batch === scope.batch && state.model === billingModel && state.units.length === scope.count && units.length === scope.count, 'STATE')
   check(auth?.authorized === true && auth.authorizationSource === 'CURRENT_USER_MESSAGE' && /^[a-f0-9]{64}$/u.test(auth.userMessageSha256)
     && auth.batch === scope.batch && auth.count === scope.count && auth.model === state.model
     && auth.manifestSha256 === binding.manifestSha256 && auth.identitiesSha256 === binding.identitiesSha256
@@ -49,9 +54,9 @@ async function runOne({ state, auth, units, binding, ledger, transport, persist,
     const mark=async next=>{phase=next;await diagnostics?.record({ordinal,unitIdentitySha256:unit.unitIdentitySha256,requestSha256:unit.requestSha256,phase})}
     const stop=async error=>{try{await diagnostics?.record({ordinal,unitIdentitySha256:unit.unitIdentitySha256,requestSha256:unit.requestSha256,
       phase:'STOP_UNCERTAIN',failedPhase:phase,code:classifyPhaseError(error)})}catch{/* Preserve the original safety stop even when observation fails. */}}
-    check(digest(JSON.stringify(unit.body)) === unit.requestSha256 && unit.body.temperature === parameters.temperature
+    check(digest(JSON.stringify(unit.body)) === unit.requestSha256 && (modelAware&&thinking==='enabled'?unit.body.temperature===undefined:unit.body.temperature === parameters.temperature)
       && (workerChat
-        ? unit.body.model==='deepseek-v4-flash' && unit.body.thinking?.type==='disabled' && unit.body.max_tokens===parameters.maxOutputTokens && unit.body.response_format?.type==='json_object' && Array.isArray(unit.body.messages)
+        ? unit.body.model===actualModel && unit.body.thinking?.type===thinking && (!modelAware||thinking!=='enabled'||unit.body.reasoning_effort==='high') && unit.body.max_tokens===parameters.maxOutputTokens && unit.body.response_format?.type==='json_object' && Array.isArray(unit.body.messages)
         : unit.body.model==='deepseek-flash' && unit.body.reasoning?.effort==='none' && unit.body.max_output_tokens===parameters.maxOutputTokens && unit.body.stream===false), 'REQUEST_OR_PARAMETERS_DRIFT')
     check(ledger && transport && persist && rawStore && typeof preflight === 'function', 'ADAPTER_REQUIRED')
     await preflight({ state, auth, unit, ordinal })
@@ -92,5 +97,5 @@ async function runOne({ state, auth, units, binding, ledger, transport, persist,
     }
   })
 }
-return {newState,assertAuthorization,runOne,fileLock,atomicStateWriter,rawWriter,validatePriceScope,conservativeUpperMicroUsd:scopedUpper,budgetOutputTokens,rawUsage:observedUsage,nextOrdinal,auditUnitMetadata:auditMetadata}
+return {billingModel,workerChat,newState,assertAuthorization,runOne,fileLock,atomicStateWriter,rawWriter,validatePriceScope,conservativeUpperMicroUsd:scopedUpper,budgetOutputTokens,rawUsage:observedUsage,nextOrdinal,auditUnitMetadata:auditMetadata}
 }

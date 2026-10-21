@@ -20,7 +20,7 @@ function assertHostAuthorization(auth, engine, units, binding, now = Date.now())
   check(Number.isSafeInteger(auth.ledgerBaselineRows) && auth.ledgerBaselineRows > 0
     && Number.isSafeInteger(auth.ledgerBaselineBytes) && auth.ledgerBaselineBytes > 0
     && /^[a-f0-9]{64}$/u.test(auth.ledgerBaselineSha256), 'LEDGER_AUTH_BINDING')
-  check(auth.pricing.model === 'deepseek-flash' && auth.pricing.endpoint === (scope.parameters?.transportRoute==='worker-chat-completions-1'?'https://api.deepseek.com/chat/completions':'https://api.deepseek.com/responses')
+  check(auth.pricing.model === (engine.billingModel??'deepseek-flash') && auth.pricing.endpoint === (engine.workerChat||scope.parameters?.transportRoute==='worker-chat-completions-1'?'https://api.deepseek.com/chat/completions':'https://api.deepseek.com/responses')
     && auth.pricing.maxOutputTokens === (engine.budgetOutputTokens??8192) && auth.pricing.tokenBoundMethod === 'FULL_OFFICIAL_CONTEXT_UPPER_BOUND'
     && auth.pricing.reasoningMetering === 'INCLUDED_IN_OUTPUT_TOKENS'
     && auth.pricing.additionalChargeUpperMicroUsd === 0
@@ -73,7 +73,7 @@ function createHost({ root, ledgerPath, engine, packageRead, gitCheck, append, t
     check(state.authorized === true && state.grantId === auth.grantId && state.committedHead === auth.committedHead
       && state.hostAuthorizationSha256 === authSha256 && state.snapshotCommit === SNAPSHOT, 'STATE_AUTH_DRIFT')
     if (!readOnly) engine.assertAuthorization(state, auth, units, binding)
-    else check(state.version === 'scoped-execution-state-2' && state.batch === BATCH && state.model === 'deepseek-flash'
+    else check(state.version === 'scoped-execution-state-2' && state.batch === BATCH && state.model === (engine.billingModel??'deepseek-flash')
       && state.manifestSha256 === binding.manifestSha256 && state.identitiesSha256 === binding.identitiesSha256
       && state.units.length === COUNT && state.units.every((row, index) => row.ordinal === index + 1
         && row.unitIdentitySha256 === units[index].unitIdentitySha256 && row.requestSha256 === units[index].requestSha256

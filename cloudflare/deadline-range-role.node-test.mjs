@@ -1,4 +1,16 @@
 import test from 'node:test'
+import {citedDeadlineRoleContext} from './deadline-range-role.mjs'
+test('alternative on-site dates never become cutoffs; other deadlines and events remain separate',()=>{
+ const context='现场确认可选择3月28日、4月11日或4月18日任选一天。'
+ assert.equal(deadlineRangeRoleIssue('3月28日','task_deadline',context),'deadline_is_alternative_date_choice')
+ assert.equal(deadlineRangeRoleIssue('3月28日、4月11日或4月18日','task_deadline',context),'deadline_is_alternative_date_choice')
+ assert.equal(deadlineRangeRoleIssue('3月28日','event_start',context),null)
+ assert.equal(deadlineRangeRoleIssue('3月26日前','submission_deadline','报名3月26日前；'+context),null)
+ assert.equal(deadlineRangeRoleIssue('4月2日前','submission_deadline','4月2日前提交申请或4月3日前缴费。'),null)
+ assert.equal(deadlineRangeRoleIssue('3月28日','task_deadline','现场确认3月28日；考试4月11日。'),null)
+ assert.equal(citedDeadlineRoleContext({evidenceIds:['own']},[{id:'other',quote:context}],context),'')
+ assert.equal(citedDeadlineRoleContext({evidenceIds:['own']},[{id:'own',quote:'编造的或任选日期'}],context),'')
+})
 import assert from 'node:assert/strict'
 import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
 import {applyDeterministicTimeAst,normalizeRecognitionResult} from './recognition.mjs'

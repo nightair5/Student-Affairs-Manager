@@ -20,6 +20,14 @@ function first(text=source,result=fixture(text)){
   return assembleProductFirstSuggestion(bound.result,input)
 }
 describe('same-instruction document title establishes a closed compound name',()=>{
+  it('accepts two already cited adjacent pieces of one instruction, retaining both proof IDs',()=>{
+    const result=fixture(), [a,b]=source.split('，稿件标题')
+    result.evidence=[{id:'e-action',sourceId:'source-one',quote:a,field:'description'},{id:'e-name',sourceId:'source-one',quote:'稿件标题'+b,field:'description'}]
+    result.standaloneTasks[0].evidenceIds=['e-action','e-name'];result.materials[0].evidenceIds=['e-action','e-name']
+    expect(citedDocumentNames(result,source)[0].evidenceIds).toEqual(['e-action','e-name'])
+    expect(first(source,result).result.standaloneTasks[0].selected).toBe(true)
+    for(const separator of ['。','；','，提交另一份申请，'])expect(citedDocumentNames(result,a+separator+'稿件标题'+b)).toEqual([])
+  })
   it('preserves an existing object, channel, evidence and selection without inventing a material',()=>{
     const original=fixture(),copy=structuredClone(original),out=first(source,original)
     expect(out.result.standaloneTasks[0]).toMatchObject({title:'提交论文电子文稿',actionObject:'论文电子文稿',selected:true})

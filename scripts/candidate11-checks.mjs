@@ -42,6 +42,7 @@ async function carrierTests(label,paths,pattern,options={}) {
 }
 async function product() {
   layer='current-product'
+  nodeTests([['extraction-model-profiles','cloudflare/extraction-profile.node-test.mjs']])
   nodeTests([['stateful-carrier-schedule','scripts/stateful-carrier-schedule.node-test.mjs']])
   nodeTests([['typed-task-applicability-generation','cloudflare/recognition-product-contract-v1-14.node-test.mjs']])
   nodeTests([['compact-generation-and-sampling','cloudflare/recognition-product-contract-v1-15.node-test.mjs'],['deadline-range-role','cloudflare/deadline-range-role.node-test.mjs']])
@@ -62,6 +63,7 @@ async function product() {
 }
 async function safety() {
   layer='current-safety'
+  nodeTests([['scoped-model-profile','scripts/scoped-model-profile.node-test.mjs']])
   nodeTests([['product-worker-payload','scripts/product-worker-payload.node-test.mjs']])
   nodeTests([['product-segmented-worker-payload','scripts/segmented-worker-payload.node-test.mjs']])
   nodeTests([['product-facts-first-worker-payload','scripts/facts-first-worker-payload.node-test.mjs']])
