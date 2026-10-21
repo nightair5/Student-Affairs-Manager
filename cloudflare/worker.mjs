@@ -26,6 +26,7 @@ import {isolateRecognitionItems,retainUnanchoredWeekTimes} from './recognition-l
 import {decodeRecognitionOutput} from './recognition-output-recovery.mjs'
 import {bindProductEnvelope} from './recognition-product-envelope.mjs'
 import {previewAccess} from './preview-access.mjs'
+import {projectTaskApplicability} from './recognition-product-contract-v1-14.mjs'
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions'
 const DEEPSEEK_MODEL = 'deepseek-v4-flash'
@@ -808,7 +809,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   const selectedModel = extractionModel(env)
   const selectedPromptVersion = selectedModel === DEEPSEEK_MULTIMODAL_MODEL
     ? VISION_TEXT_EVALUATION_PROMPT_VERSION
-    : ['recognition-product-contract-1.2.0',PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0','recognition-product-contract-1.5.0','recognition-product-contract-1.6.0','recognition-product-contract-1.7.0','recognition-product-contract-1.8.0','recognition-product-contract-1.9.0','recognition-product-contract-1.10.0','recognition-product-contract-1.11.0','recognition-product-contract-1.12.0','recognition-product-contract-1.13.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
+    : ['recognition-product-contract-1.2.0',PRODUCT_GENERATION_EXPERIMENT_VERSION,'recognition-product-contract-1.4.0','recognition-product-contract-1.5.0','recognition-product-contract-1.6.0','recognition-product-contract-1.7.0','recognition-product-contract-1.8.0','recognition-product-contract-1.9.0','recognition-product-contract-1.10.0','recognition-product-contract-1.11.0','recognition-product-contract-1.12.0','recognition-product-contract-1.13.0','recognition-product-contract-1.14.0'].includes(env.DEEPSEEK_PRODUCT_CONTRACT_VERSION)?env.DEEPSEEK_PRODUCT_CONTRACT_VERSION:PRODUCT_CONTRACT_PROMPT_VERSION
   // Segment offsets address the exact captured source, including leading and
   // trailing layout. Older request versions retain their original trim rule.
   const sourceContent = usesSourceSegments(selectedPromptVersion)?body.content:safeText(body.content,24_000)
@@ -863,7 +864,8 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       context.errorType = 'INVALID_AI_RESPONSE'
       return failure('INVALID_AI_RESPONSE', 'DeepSeek 未返回有效的任务结构。', 502, context.requestId)
     }
-    const envelope=bindProductEnvelope(parsed,{promptVersion:selectedPromptVersion,schemaVersion:'2.0'})
+    const taskApplicability=selectedPromptVersion==='recognition-product-contract-1.14.0'?projectTaskApplicability(parsed):{result:parsed,audit:null}
+    const envelope=bindProductEnvelope(taskApplicability.result,{promptVersion:selectedPromptVersion,schemaVersion:'2.0'})
     const candidate = recognitionCandidate(
       envelope.result,
       referenceTime,
@@ -902,6 +904,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
       result,
       execution: {
         ...(envelope.audit.decisions.length?{hostEnvelopeProjection:envelope.audit}:{}),
+        ...(taskApplicability.audit?{taskApplicabilityProjection:taskApplicability.audit}:{}),
         ...(decoded.audit.partial?{outputRecovery:decoded.audit}:{}),
         ...(segmentProjection.audit?{segmentEvidence:segmentProjection.audit}:{}),
         ...(localIsolation.audit.quarantined.length||localIsolation.audit.structure.length||localIsolation.audit.relations.length?{localIsolation:localIsolation.audit}:{}),
