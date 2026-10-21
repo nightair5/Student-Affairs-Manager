@@ -1,6 +1,6 @@
 import type { RecognitionResult } from './types'
 
-export const CITED_DOCUMENT_NAME_VERSION = 'cited-document-name-1.0.0'
+export const CITED_DOCUMENT_NAME_VERSION = 'cited-document-name-1.0.1'
 export interface CitedDocumentName {
   taskId: string
   materialId: string
@@ -25,7 +25,7 @@ export function citedDocumentNames(result: RecognitionResult, source: string): C
   const proofs: CitedDocumentName[] = []
   for (const task of tasks) {
     if (!/^(?:提交|上传|发送)$/u.test(task.actionVerb)) continue
-    const material = result.materials.filter(m => m.name === task.actionObject && task.materialTempIds.includes(m.tempId)
+    const material = result.materials.filter(m => compact(task.actionObject).endsWith(compact(m.name)) && task.materialTempIds.includes(m.tempId)
       && m.relatedTaskTempIds.length === 1 && m.relatedTaskTempIds[0] === task.tempId)
     if (material.length !== 1) continue
     const ids = [...new Set([...task.evidenceIds, ...material[0].evidenceIds])]
@@ -41,6 +41,10 @@ export function citedDocumentNames(result: RecognitionResult, source: string): C
       for (const match of text.matchAll(expression)) {
         const literal = match[1], declared = compact(task.actionObject)
         if (!declared.endsWith(literal) || declared === literal) continue
+        // The model may name the material by the exact literal form while its
+        // task also includes the title's topic. No intermediate suffix or a
+        // different document is allowed by the reciprocal relation alone.
+        if (![declared,literal].includes(compact(material[0].name))) continue
         const qualifier = declared.slice(0, -literal.length)
         if (qualifier.length < 2 || qualifier.length > 24 || !match[2].includes(qualifier + '题目')) continue
         const before = text.slice(0, match.index).split(/[。；;]/u).at(-1) ?? ''

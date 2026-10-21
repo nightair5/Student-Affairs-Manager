@@ -37,6 +37,14 @@ describe('same-instruction document title establishes a closed compound name',()
     expect(out.result.standaloneTasks[0].title).toBe('提交调研报告电子文件')
     expect(out.result.materials[0].submissionChannel).toBe(channel.replace('青溪','北塘'))
   })
+  it('accepts the same material stated by its full literal short form, never an arbitrary suffix',()=>{
+    const result=fixture();result.materials[0].name='电子文稿'
+    const out=first(source,result)
+    expect(out.result.standaloneTasks[0]).toMatchObject({title:'提交论文电子文稿',selected:true})
+    expect(out.result.materials[0]).toMatchObject({name:'电子文稿',submissionChannel:channel,relatedTaskTempIds:['task-upload']})
+    result.materials[0].name='文稿'
+    expect(citedDocumentNames(result,source)).toEqual([])
+  })
   it.each([
     ['different genre',source.replace('论文题目','报告题目')],
     ['different material',source.replace('提交电子文稿','提交纸质文稿')],

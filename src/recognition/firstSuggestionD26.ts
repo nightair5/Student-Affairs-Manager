@@ -32,7 +32,7 @@ import {citedDocumentNames, type CitedDocumentName} from './citedDocumentName'
 import {isolateRecognitionItems,unanchoredAcademicWeek,LOCAL_ISOLATION_NOTE_PREFIX,LOCAL_ISOLATION_VERSION,type LocalIsolationAudit} from '../../cloudflare/recognition-local-isolation.mjs'
 
 export const D26_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.30.0'
-export const PRODUCT_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.32.0'
+export const PRODUCT_FIRST_SUGGESTION_VERSION = 'grounded-first-suggestion-1.32.1'
 interface ProseRecord { entityId: string; kind: 'task' | 'event' | 'source'; title: string; description: string }
 export interface D26FirstSuggestionAudit {
   version: typeof D26_FIRST_SUGGESTION_VERSION | typeof PRODUCT_FIRST_SUGGESTION_VERSION
