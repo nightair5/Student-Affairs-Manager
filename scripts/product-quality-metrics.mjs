@@ -35,7 +35,11 @@ export function measureQuality(result,source,{referenceV6=null,grade=null,audit=
     if(e.unknownEligibility)field('condition',root+':selection',t.selected!==true,true,t,'not preselected',t.selected,root+':selection')
     if(e.criteria)field('requirement',root+':criteria',(t.completionCriteria??[]).some(c=>has(c,e.criteria)),true,t,e.criteria,t.completionCriteria,root+':criteria')
     if(e.predecessor)field('relation',root+':predecessor',(t.dependencyTempIds??[]).some(id=>tasks.some(p=>p.tempId===id&&has(surface(p),e.predecessor))),true,t,e.predecessor,t.dependencyTempIds,root+':relation')
-    if(e.window){const [day,clocks]=e.window.split('T'),[start,end]=clocks.split('/'),ps=points.filter(p=>owned(p,t,'timePointTempIds'));field('eventTime',root+':window',ps.some(p=>local(p.normalizedValue,zone)===day+'T'+start&&valid(p))&&ps.some(p=>local(p.normalizedValue,zone)===day+'T'+end&&valid(p)),ps.length>0,t,e.window,ps.map(p=>p.normalizedValue),root+':window')}
+    if(e.window){const ps=points.filter(p=>owned(p,t,'timePointTempIds'));let ok=false
+      if(typeof e.window==='string'){const [day,clocks]=e.window.split('T'),[start,end]=(clocks??'').split('/');ok=!!start&&!!end&&ps.some(p=>local(p.normalizedValue,zone)===day+'T'+start&&valid(p))&&ps.some(p=>local(p.normalizedValue,zone)===day+'T'+end&&valid(p))}
+      else if(e.window&&typeof e.window==='object'){ok=['start','end'].every(role=>{const expected=e.window[role];return typeof expected==='string'&&ps.some(p=>p.type==='event_'+role&&valid(p)&&p.precision===(expected.length===10?'date_only':'exact')&&local(p.normalizedValue,zone)===expected)})}
+      field('eventTime',root+':window',ok,ps.length>0,t,e.window,ps.map(p=>[p.type,p.normalizedValue,p.precision]),root+':window')}
+
   }
   const eventMatch=allocate(ref.events??[],events,(e,a)=>has([a.title,a.description].join(' '),e.object)?['start','end'].reduce((n,k)=>n+Number(!!e[k]&&!(local(points.find(p=>p.tempId===a[k+'TimePointTempId'])?.normalizedValue,zone)??'').startsWith(e[k])),0):Infinity)
   for(const[i,e]of(ref.events??[]).entries()){

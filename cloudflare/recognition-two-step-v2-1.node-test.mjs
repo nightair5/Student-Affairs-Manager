@@ -79,3 +79,22 @@ test('registration keeps a participation choice while a specific mandatory comma
  assert.equal(compile(r,'必须于周五报名研究讲座。').result.standaloneTasks[0].selected,true)
  assert.equal(compile().result.standaloneTasks[0].selected,true)
 })
+
+
+test('public lecture and exam dates retain facts without assigning personal attendance; service closures and explicit mandatory attendance differ',()=>{
+ for(const name of ['秋季等级考试','能源专题讲座','春季培训会议']){const r={items:[{id:'a',kind:'活动',name,quote:name}],facts:[{type:'开始',quote:'4月8日14:00',item:'a'},{type:'地点',quote:'南厅',item:'a'}],noAction:true},x=compile(r,name+'在4月8日14:00于南厅举行。');assert.equal(x.result.events.length,1);assert.equal(x.result.events[0].selected,false);assert.equal(x.result.events[0].location,'南厅');assert.equal(x.result.timePoints[0].normalizedValue,'2028-04-08T14:00')}
+ for(const [name,s]of [['考场封闭','考场封闭，自4月8日14:00开始。'],['停电检修','停电检修，自4月8日14:00开始。'],['能源专题讲座','所有同学必须参加能源专题讲座，4月8日14:00在南厅举行。']]){const x=compile({items:[{id:'a',kind:'活动',name,quote:name}],facts:[],noAction:true},s);assert.equal(x.result.events[0].selected,true)}
+ const x=compile({items:[{id:'a',kind:'活动',name:'年度考试',quote:'年度考试'},{id:'b',kind:'任务',name:'提交实验记录',quote:'提交实验记录'}],facts:[],noAction:false},'年度考试定于4月8日举行。请同学提交实验记录。');assert.equal(x.result.standaloneTasks[0].selected,true);assert.equal(x.result.events[0].selected,false)
+})
+
+
+test('mandatory attendance cannot leak to another opportunity in the same sentence',()=>{
+ const r={items:[{id:'a',kind:'活动',name:'能源讲座',quote:'能源讲座'},{id:'b',kind:'活动',name:'等级考试',quote:'等级考试'}],facts:[],noAction:true},x=compile(r,'同学们必须参加能源讲座，等级考试可另行报名。');assert.equal(x.result.events[0].selected,true);assert.equal(x.result.events[1].selected,false)
+})
+
+
+test('an abbreviated two-day date range keeps the explicit second day and date-only precision',()=>{
+ const opts={referenceTime:'2026-09-16T00:00:00+08:00',timezone:'Asia/Shanghai',type:'event_start'}
+ for(const s of ['9月19-20日','9月19—20日','9 月19 – 20日','9月19日至20日']){const a=parseTwoStepTime(s,opts);assert.equal(a.normalizedValue,'2026-09-19');assert.equal(a.rangeEndNormalizedValue,'2026-09-20');assert.equal(a.precision,'date_only')}
+ const s='9月19日14:00-16:00',a=parseTwoStepTime(s,opts);assert.equal(a.normalizedValue,'2026-09-19T14:00');assert.equal(a.rangeEndNormalizedValue,'2026-09-19T16:00');assert.equal(a.precision,'exact')
+})

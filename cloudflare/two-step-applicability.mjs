@@ -18,8 +18,22 @@ function boundedConditionBefore(span,source){
 }
 export function applyScopedApplicability({records,source,result,audit,evidence}){
  for(const record of records){
-  if(!record.entity||record.kind!=='任务')continue
+  if(!record.entity)continue
   const scope=sentenceSpan(record.span,source),text=compact(scope.text),name=compact(record.entity.title),reasons=[]
+  // Public attendance opportunities are real events, but neither an exam date
+  // nor a named lecture establishes the user's participation or enrollment.
+  // Closures and utility service windows describe external occurrences instead.
+  if(record.kind==='活动'){
+   const attendance=/讲座|讲堂|考试|培训|会议|研讨|沙龙|竞赛|比赛|报告会|宣讲会/u.test(name)
+   const external=/停电|停水|停网|闭馆|开馆|封闭|封楼|检修|施工|维护|开放时间|启用/u.test(name)
+   const mandatory=[...text.matchAll(/(?:必须|务必|须|应当|需要|要求)[^。；;，]{0,20}(?:参加|出席|参与)[^。；;，]{0,50}/gu)].some(m=>m[0].includes(name)||compact(record.span.literal).length>=2&&m[0].includes(compact(record.span.literal)))
+   if(!attendance||external||mandatory)continue
+   record.entity.selected=false
+   if(!record.entity.description.includes('适用条件待确认'))record.entity.description+='\n适用条件待确认：原文公布了活动或考试安排，是否由本人参加尚未确认。'
+   audit.items.push({id:record.id,rule:'PUBLIC_ATTENDANCE_SCHEDULE_NOT_PERSONAL_MANDATE',quote:record.span.literal,start:record.span.start,end:record.span.end,selection:'UNKNOWN_NOT_MANDATORY'})
+   continue
+  }
+  if(record.kind!=='任务')continue
   // A school's service entitlement is not evidence that this user belongs to it.
   const role=/(?:本校|学校|本院|本学院)(?:的)?(?:师生|学生|教职工|教师|同学)/u.exec(text)
   if(role){const span=alignSourceQuote(role[0],scope.text);if(span)reasons.push({...span,start:span.start+scope.start,end:span.end+scope.start,rule:'LITERAL_LOCAL_MEMBERSHIP_UNKNOWN'})}
