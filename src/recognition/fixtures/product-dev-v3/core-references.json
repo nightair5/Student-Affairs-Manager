@@ -1,0 +1,4054 @@
+{
+  "version": "core-reference-1.0.0",
+  "createdAt": "2026-10-22T01:10:05.467Z",
+  "beforeAnyR18ModelOutput": true,
+  "role": "Development already seen",
+  "rows": [
+    {
+      "id": "DEV-01",
+      "sourceSha256": "43257139858878f307860e7ec572bb32c322eec323ab9be4e12abc79765c5c9b",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "统计课程报告",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "deadline": "2026-10-22T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "统计课程报告",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "统计课程报告",
+            "channel": "课程平台",
+            "deadline": "2026-10-22T18:00",
+            "precision": "exact",
+            "criteria": "接收成功"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ],
+        "naming": [
+          "课程报告_班级"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "804ba8c5aee16d8152d5d18d9af97a090f4b5e9f4de4dae0ed6eea2fb431788c"
+    },
+    {
+      "id": "DEV-02",
+      "sourceSha256": "7defa583271292a94dc46a98b5683507e5c2e63ab4b3af67823ffd29fdbc6224",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "第三章",
+            "verbs": [
+              "阅读"
+            ]
+          },
+          {
+            "object": "阅读笔记",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-10-25",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "第三章",
+            "verbs": [
+              "阅读"
+            ]
+          },
+          {
+            "object": "阅读笔记",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "阅读笔记",
+            "channel": "课程平台",
+            "deadline": "2026-10-25",
+            "precision": "date_only"
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "b8ef2ac11f50d015faa1236b758be558b0dd59e964a5520a483460bcb803d1da"
+    },
+    {
+      "id": "DEV-03",
+      "sourceSha256": "f2ccf4ef5795528409cabb420be8cde6544a06a962acfc8b7891a888c9bb38d5",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "压缩包",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-10-26T20:30",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "打印",
+            "verbs": [
+              "打印"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "压缩包",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "压缩包",
+            "channel": "课堂空间",
+            "deadline": "2026-10-26T20:30",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "criteria": [
+          "照片",
+          "拍摄说明"
+        ],
+        "forbidden": [
+          {
+            "object": "打印",
+            "verbs": [
+              "打印"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "d598ab19e9b946030a1d097d90d034e268fdb7f0dd52d5a1b4a199cb81882406"
+    },
+    {
+      "id": "DEV-04",
+      "sourceSha256": "9342aed40429a40eaf6ec4c8aa84f08debf0eaebbf2176dee9ea920f1d8f8a95",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "问卷设计",
+            "verbs": [
+              "完成",
+              "提交"
+            ],
+            "deadline": "2026-10-24",
+            "precision": "date_only"
+          },
+          {
+            "object": "试访",
+            "verbs": [
+              "开展",
+              "完成",
+              "提交"
+            ],
+            "deadline": "2026-10-28",
+            "precision": "date_only",
+            "predecessor": "问卷设计"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "问卷设计",
+            "verbs": [
+              "完成",
+              "提交"
+            ],
+            "material": "问卷设计",
+            "deadline": "2026-10-24",
+            "precision": "date_only"
+          },
+          {
+            "object": "试访",
+            "verbs": [
+              "开展",
+              "完成",
+              "提交"
+            ],
+            "material": "试访记录",
+            "deadline": "2026-10-28",
+            "precision": "date_only",
+            "predecessor": "问卷设计"
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "14789edbde43c89deda989a194f38d8f0990d6d2efb965f4dba6900f1c0de7c4"
+    },
+    {
+      "id": "DEV-05",
+      "sourceSha256": "3be8506066e06f0b4a8a9d0964bb6df6b16eba196a88db9d19b82c6f398e2b86",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名表",
+            "verbs": [
+              "提交",
+              "填写",
+              "报名"
+            ],
+            "deadline": "2026-10-27T16:00",
+            "precision": "exact",
+            "condition": "有意参加"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名表",
+            "verbs": [
+              "提交",
+              "填写",
+              "报名"
+            ],
+            "material": "报名表",
+            "channel": "报名系统",
+            "deadline": "2026-10-27T16:00",
+            "precision": "exact",
+            "condition": "有意参加"
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "821fdaaa2bbfe8b1cbf9050b218fa467f5d37f76fa24a0530350fa3149cdefca"
+    },
+    {
+      "id": "DEV-06",
+      "sourceSha256": "6f45fd954664dc9a9f14a3db1de64aea1a4ae3e4ab45cea60270585079fc50e9",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "申请表",
+            "verbs": [
+              "填写",
+              "提交"
+            ],
+            "deadline": "2026-10-29",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "申请表",
+            "verbs": [
+              "填写",
+              "提交"
+            ],
+            "material": "申请表",
+            "channel": "学生中心C101",
+            "deadline": "2026-10-29",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "unknownTime": "另行通知"
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "583502d458ea8be203ab7429557cfc04f50fdc967c7e3ed1dc37ed7a35dbb0d5"
+    },
+    {
+      "id": "DEV-07",
+      "sourceSha256": "5d8b972e5d6a7065428f7986d7948ae55df270956fce1b07c94a2abc2bf8a8cb",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "场次",
+            "verbs": [
+              "点选",
+              "选择",
+              "报名"
+            ],
+            "deadline": "2026-10-21T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "电影赏析",
+            "start": "2026-10-23T19:00",
+            "end": "2026-10-23T20:30",
+            "location": "学生活动室"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "附件",
+            "verbs": [
+              "上传",
+              "提交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "场次",
+            "verbs": [
+              "点选",
+              "选择",
+              "报名"
+            ],
+            "deadline": "2026-10-21T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "电影赏析",
+            "start": "2026-10-23T19:00",
+            "end": "2026-10-23T20:30",
+            "location": "学生活动室"
+          }
+        ],
+        "materialCount": 0,
+        "forbidden": [
+          {
+            "object": "附件",
+            "verbs": [
+              "上传",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "6bb676ddfae2f7d11dfde1086b7b573a1e5f88a8713c2c87026f6d4ac3b1caf4"
+    },
+    {
+      "id": "DEV-08",
+      "sourceSha256": "431582be9ad32c0484d0d74dfd4174d009fc386d97ee859d1eb9741ed722df66",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "集合",
+            "start": "2026-10-30T09:00",
+            "location": "校园北门"
+          },
+          {
+            "object": "出发",
+            "start": "2026-10-30T09:15"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "填写",
+              "提交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "集合",
+            "start": "2026-10-30T09:00",
+            "location": "校园北门"
+          },
+          {
+            "object": "出发",
+            "start": "2026-10-30T09:15"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "填写",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "14188ef4ccb8e8c992d8d549f245b48db070ab3149a40092e81b3c000f93aeec"
+    },
+    {
+      "id": "DEV-09",
+      "sourceSha256": "39c432940a82a02ee2a7ae95e84bb4eddc07dd2f2930b87fd04cec162718eecd",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "申请",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-10-31T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "回执",
+            "verbs": [
+              "保留",
+              "保存"
+            ]
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "回执",
+            "verbs": [
+              "打印"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "申请",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-10-31T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "回执",
+            "verbs": [
+              "保留",
+              "保存"
+            ]
+          }
+        ],
+        "events": [],
+        "materials": [
+          "申请表",
+          "成绩单"
+        ],
+        "formats": [
+          "PDF"
+        ],
+        "forbidden": [
+          {
+            "object": "回执",
+            "verbs": [
+              "打印"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "78d0826b7db3eceba3d206ede750286f886e0a3f9f8f01c234a1944a3fa430b4"
+    },
+    {
+      "id": "DEV-10",
+      "sourceSha256": "e2b1aad67c957c06f8f0e75cd7a2a1375d26c18fa3ff0c1c1d2479f280e20a9f",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "研究计划",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-11-02",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "注册",
+            "verbs": [
+              "注册",
+              "办理"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "研究计划",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "研究计划",
+            "channel": "若水学院材料站",
+            "deadline": "2026-11-02",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "注册",
+            "verbs": [
+              "注册",
+              "办理"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "a746e7b589ab7b544285914218caced04ecc139d06856d0f92333f0387b2a577"
+    },
+    {
+      "id": "DEV-11",
+      "sourceSha256": "147922e52817b09b703618e24317c8c4bf96c14a15cdf2ef738d1b3686cebc85",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "实习总结",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "deadline": "2026-11-03T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "实习总结",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "实习总结",
+            "deadline": "2026-11-03T18:00",
+            "precision": "exact",
+            "criteria": "收到成功",
+            "channelUnknown": true
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ],
+        "naming": [
+          "实习总结_学院"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "830387adaab316c35790783f49e2e6b33da1d10c4a8b719050ae703b6f5df675"
+    },
+    {
+      "id": "DEV-12",
+      "sourceSha256": "981f9017b71e01f3d27ab5f9ac0a42ae9e7112f732336b59dcee4aaf5d8bfbf4",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "纸质",
+            "verbs": [
+              "递交",
+              "提交"
+            ],
+            "window": "2026-11-04T09:00/11:00"
+          },
+          {
+            "object": "电子",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-11-04T16:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "纸质",
+            "verbs": [
+              "递交",
+              "提交"
+            ],
+            "material": "申请书",
+            "window": "2026-11-04T09:00/11:00"
+          },
+          {
+            "object": "电子",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "申请书",
+            "channel": "项目平台",
+            "deadline": "2026-11-04T16:00",
+            "precision": "exact"
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "32ef4f08cf7344cbf650d63fd0d0bf3d1b7c0e516e89dfad6ccaeda5fcece9ae"
+    },
+    {
+      "id": "DEV-13",
+      "sourceSha256": "597080220643f003d2cfe761a7a86a3ebfac4cbf4f523368345927ef1823139e",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "实验安全说明会",
+            "start": "2026-10-20T14:00",
+            "end": "2026-10-20T15:20",
+            "location": "实验楼201"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "实验安全说明会",
+            "start": "2026-10-20T14:00",
+            "end": "2026-10-20T15:20",
+            "location": "实验楼201"
+          }
+        ],
+        "materialCount": 0,
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "3ac10ab8d1183754cb4f37bd60aeacec2f7809f717a14ef170b85bf8c02edfd9"
+    },
+    {
+      "id": "DEV-14",
+      "sourceSha256": "4b5bde9df9ad0d53c9090a4c52b2b7f7ad028c1104f632bf9474130a6700510d",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "议题提纲",
+            "verbs": [
+              "准备",
+              "撰写"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "object": "讨论",
+            "start": "2026-10-21T18:30",
+            "endUnknown": true,
+            "location": "学习室A"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "提纲",
+            "verbs": [
+              "提交",
+              "上传"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "议题提纲",
+            "verbs": [
+              "准备",
+              "撰写"
+            ],
+            "material": "议题提纲"
+          }
+        ],
+        "events": [
+          {
+            "object": "讨论",
+            "start": "2026-10-21T18:30",
+            "endUnknown": true,
+            "location": "学习室A"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "提纲",
+            "verbs": [
+              "提交",
+              "上传"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "embedded-source-reference",
+      "sourceReferenceSha256": "354d77546588344253d5c15ccb855bee57ca35ab50b42cd08e132ec5dc6930f5"
+    },
+    {
+      "id": "DEV-15",
+      "sourceSha256": "3c6efd0da107c5203136042d6f13af82d4636e40dbd80d4acbf21b03255970e7",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "分享",
+            "start": "2026-10-24T10:00",
+            "end": "2026-10-24T11:00",
+            "location": "东区报告厅"
+          },
+          {
+            "object": "作品展示",
+            "start": "2026-10-24T11:20",
+            "end": "2026-10-24T12:00",
+            "location": "东区报告厅"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "分享",
+            "start": "2026-10-24T10:00",
+            "end": "2026-10-24T11:00",
+            "location": "东区报告厅"
+          },
+          {
+            "object": "作品展示",
+            "start": "2026-10-24T11:20",
+            "end": "2026-10-24T12:00",
+            "location": "东区报告厅"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "15cb9a04aa9b270cc4030455c6d4a9f9e774025bdb6300092ae593ba071e731b"
+    },
+    {
+      "id": "DEV-16",
+      "sourceSha256": "a62cfbed497ebd94374ee04a3bd018e4541b294a6e235f5bfe0e3ea7a1958be4",
+      "referenceTime": "2026-09-29T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "扫描"
+            ],
+            "deadline": "2026-10-11T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "活动",
+            "start": "2026-10-12T12:30",
+            "end": "2026-10-12T14:00",
+            "location": "海韵园办公楼A栋302室"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "扫描"
+            ],
+            "deadline": "2026-10-11T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "活动",
+            "start": "2026-10-12T12:30",
+            "end": "2026-10-12T14:00",
+            "location": "海韵园办公楼A栋302室"
+          }
+        ],
+        "information": [
+          "免费午餐",
+          "总人数不限"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "84678b46d42fd5ffd4f8cf9443fac632cc737bf01eed17e27b5cf9fcac37b253"
+    },
+    {
+      "id": "DEV-17",
+      "sourceSha256": "caa76edf4240d1abeda38068c1026fe521151681072c56d2f6a6dd5d7656ef69",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "答疑",
+            "verbs": [
+              "参加",
+              "到场"
+            ]
+          },
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "答疑",
+            "verbs": [
+              "参加",
+              "到场"
+            ]
+          },
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ],
+        "information": [
+          "取消"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "fbceef51296b62ba254fea63a3a93c7ec7f85a4c2b4d78886ddc198338e59d01"
+    },
+    {
+      "id": "DEV-18",
+      "sourceSha256": "a4e5f0c7c38033ef81f1d4427af56a2626703fc23bf4fbbfd48ac2a49783d470",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "课程报告",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-10-26T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": [
+          "2026-10-23"
+        ]
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "课程报告",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "课程报告",
+            "channel": "课程平台",
+            "deadline": "2026-10-26T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "obsoleteDates": [
+          "2026-10-23"
+        ],
+        "information": [
+          "旧截止作废"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "fe60e064a14c94da686f80805887f97869a1a253cf1246dfa2dc0061433069cb"
+    },
+    {
+      "id": "DEV-19",
+      "sourceSha256": "1407f878ffec6791d470b73da0ede6f4ca080d753d8995423dbf39b3a14ff446",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "健康登记表",
+            "verbs": [
+              "提交",
+              "填写"
+            ],
+            "deadline": "2026-10-28",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "照片",
+            "verbs": [
+              "提交",
+              "添加",
+              "上传"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "健康登记表",
+            "verbs": [
+              "提交",
+              "填写"
+            ],
+            "material": "健康登记表",
+            "channel": "登记站",
+            "deadline": "2026-10-28",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "照片",
+            "verbs": [
+              "提交",
+              "添加",
+              "上传"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "be4bbc5bda481dab379bee2701170afe6e853ff9d543ec65fdc993d791ed84b5"
+    },
+    {
+      "id": "DEV-20",
+      "sourceSha256": "d5757b09aed8ba376c9b9ddc7b9716b30f505b031a2dc1ece98f0a2dac0e5968",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "录音培训",
+            "startUnknown": true
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "录音培训",
+            "startUnknown": true
+          }
+        ],
+        "information": [
+          "延期",
+          "报名记录保留"
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "fc8462f9075692f5bf87799ea730b177ec391d87c695b15711b34c08b1438968"
+    },
+    {
+      "id": "DEV-21",
+      "sourceSha256": "f7d6b77ecd8c780918baafe464eebc76d80d4b25a934a713d1e589b8bb9d0f07",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "住宿申请表",
+            "verbs": [
+              "提交"
+            ],
+            "deadline": "2026-11-06",
+            "precision": "date_only",
+            "condition": "审核通过",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "住宿申请表",
+            "verbs": [
+              "提交"
+            ],
+            "material": "住宿申请表",
+            "deadline": "2026-11-06",
+            "precision": "date_only",
+            "condition": "审核通过",
+            "unknownEligibility": true
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "5888f7aa1430cd9069839f75b58746f5902eef7e6651c23af0686f3a6c74d7c9"
+    },
+    {
+      "id": "DEV-22",
+      "sourceSha256": "5f3a5516b32c52c0ba5cd988b45f4cf56ed8e7f9bf1eb592e363dcbe14a0eab1",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "培训",
+            "verbs": [
+              "完成",
+              "参加"
+            ]
+          },
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-11-07T12:00",
+            "precision": "exact",
+            "predecessor": "培训"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "培训",
+            "verbs": [
+              "完成",
+              "参加"
+            ]
+          },
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-11-07T12:00",
+            "precision": "exact",
+            "predecessor": "培训",
+            "waiting": true
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "baaabd0b10ea02de0c5818e9b4ac5b74643d0b4b8980b082dd770d0c4a28a1b2"
+    },
+    {
+      "id": "DEV-23",
+      "sourceSha256": "71f68bdabd6ae25997dc425b2231e96705cbcb5f213b96724a828380f9fdf39c",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取"
+            ]
+          },
+          {
+            "object": "说明",
+            "verbs": [
+              "提交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取"
+            ]
+          },
+          {
+            "object": "说明",
+            "verbs": [
+              "提交"
+            ]
+          }
+        ],
+        "information": [
+          "不在本次名单"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "6a6c4098fa0ac16fedea5aa99fe55d75a2c26ebeaf284abe6353864f9e64399c"
+    },
+    {
+      "id": "DEV-24",
+      "sourceSha256": "f378d8a055c8ec07beef3baa6ce08ed932adc7a601ac0467e6d115089518360e",
+      "referenceTime": "2026-06-23T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "扫描"
+            ],
+            "deadline": "2026-06-30T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "终端设备",
+            "verbs": [
+              "准备"
+            ],
+            "condition": "学员"
+          }
+        ],
+        "events": [
+          {
+            "object": "讲座",
+            "start": "2026-07-06",
+            "end": "2026-07-10"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "扫描"
+            ],
+            "deadline": "2026-06-30T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "终端设备",
+            "verbs": [
+              "准备"
+            ],
+            "condition": "学员"
+          }
+        ],
+        "events": [
+          {
+            "object": "讲座",
+            "start": "2026-07-06",
+            "end": "2026-07-10"
+          }
+        ],
+        "information": [
+          "免费",
+          "结业证书"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "embedded-source-reference",
+      "sourceReferenceSha256": "3ba551368e3ddb60d4fa3647f4b859e1753e63d81092a2f68babdf3d2141640b"
+    },
+    {
+      "id": "DEV-25",
+      "sourceSha256": "8b41c04ffc93ce7a9a5306b7da1356eed685f6e7013f70010472850471b42f6c",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "调研报告",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-11-09T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "调研报告",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-11-11T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "调研报告",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "channel": "课程平台",
+            "deadline": "2026-11-09T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "调研报告",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "channel": "展示平台",
+            "deadline": "2026-11-11T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "调研报告"
+        ],
+        "sharedMaterial": true,
+        "formats": [
+          "PDF"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "736fa46c3e65f41513859f0ca8e2aa45116f4cbd42dd0453cfa223f64a500e94"
+    },
+    {
+      "id": "DEV-26",
+      "sourceSha256": "1f58b0889c3894216af43898a0034ba3177c548681c881411c731cd0ffda6da3",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "课程论文",
+            "verbs": [
+              "提交"
+            ],
+            "deadline": "2026-11-10",
+            "precision": "date_only"
+          },
+          {
+            "object": "实践总结",
+            "verbs": [
+              "提交"
+            ],
+            "deadline": "2026-11-12",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "课程论文",
+            "verbs": [
+              "提交"
+            ],
+            "material": "课程论文",
+            "deadline": "2026-11-10",
+            "precision": "date_only"
+          },
+          {
+            "object": "实践总结",
+            "verbs": [
+              "提交"
+            ],
+            "material": "实践总结",
+            "deadline": "2026-11-12",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "成绩单"
+        ],
+        "sharedMaterial": true
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "42d964a0599f690a31efcede6e4db248781603315691f43ad53cb067b4318a51"
+    },
+    {
+      "id": "DEV-27",
+      "sourceSha256": "7c51ba813c5cab9b956d98cbf64bdc0a6c1d6e9c9636a740bac76df45bb87c78",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "项目说明",
+            "verbs": [
+              "准备",
+              "制作"
+            ]
+          },
+          {
+            "object": "项目说明",
+            "verbs": [
+              "提交"
+            ],
+            "deadline": "2026-11-13",
+            "precision": "date_only"
+          },
+          {
+            "object": "项目说明",
+            "verbs": [
+              "提交"
+            ],
+            "deadline": "2026-11-15",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "项目说明",
+            "verbs": [
+              "准备",
+              "制作"
+            ]
+          },
+          {
+            "object": "项目说明",
+            "verbs": [
+              "提交"
+            ],
+            "channel": "评审站",
+            "deadline": "2026-11-13",
+            "precision": "date_only"
+          },
+          {
+            "object": "项目说明",
+            "verbs": [
+              "提交"
+            ],
+            "channel": "备案站",
+            "deadline": "2026-11-15",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "项目说明"
+        ],
+        "sharedMaterial": true,
+        "formats": [
+          "PDF"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "embedded-source-reference",
+      "sourceReferenceSha256": "18ad03ec08739e27c47410775642eedc45cf32665a97c209be8b049fbdb9379b"
+    },
+    {
+      "id": "DEV-28",
+      "sourceSha256": "04c84eaaa20d7367eef05a1497a6c59a2fa249846667a9aa792457e5dcb3ef22",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名表",
+            "verbs": [
+              "提交"
+            ],
+            "deadline": "2026-11-16T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名表",
+            "verbs": [
+              "提交"
+            ],
+            "deadline": "2026-11-16T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "报名表",
+          "承诺书"
+        ],
+        "criteria": [
+          "签字",
+          "原表格式"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "d217c71cd9141658c86e058bddb3739691fca0d23e0ccd361650a61b8b600e6e"
+    },
+    {
+      "id": "DEV-29",
+      "sourceSha256": "fb7cafb7ab686647f691596e8d561eb80b756c179f544c9351659e8a2465c2b2",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停机",
+            "startUnknown": true,
+            "rawStart": "周三晚"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "行程",
+            "verbs": [
+              "删除"
+            ]
+          },
+          {
+            "object": "说明",
+            "verbs": [
+              "提交"
+            ]
+          },
+          {
+            "object": "消息",
+            "verbs": [
+              "发",
+              "发送"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停机",
+            "startUnknown": true,
+            "rawStart": "周三晚"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "行程",
+            "verbs": [
+              "删除"
+            ]
+          },
+          {
+            "object": "说明",
+            "verbs": [
+              "提交"
+            ]
+          },
+          {
+            "object": "消息",
+            "verbs": [
+              "发",
+              "发送"
+            ]
+          }
+        ],
+        "information": [
+          "已保存行程不受影响"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "0bf80272ec69c087b2035f0567bb3b11c920d77064ec02be2e72f177595b1ac4"
+    },
+    {
+      "id": "DEV-30",
+      "sourceSha256": "90c66b2adb1088fe39d43fe7ac0a5b530b0ffdffadbb39060aeda6da15c60cad",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "实验记录",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "实验记录",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "实验记录",
+            "channel": "实验系统",
+            "deadlineUnknown": true
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "883f34ad5b4f1a646c175e154b1a05f8c88eef479caaca52ce3d9230168809ae"
+    },
+    {
+      "id": "DEV-31",
+      "sourceSha256": "45ee4fa674322baba86902f2d9c9cc57433d5f231e2f1011dc7a3c21a2bd1218",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "研读交流",
+            "startUnknown": true,
+            "endUnknown": true,
+            "location": "资料室"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "研读交流",
+            "startUnknown": true,
+            "endUnknown": true,
+            "location": "资料室"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "52cca351383b20f77883560933b13569312596a27cdb26f90812f87d77ad1e24"
+    },
+    {
+      "id": "DEV-32",
+      "sourceSha256": "b35791f3ca9c6a96a5bde3df0a89f92b0f8be4a2adad49fc1d150e27717804d7",
+      "referenceTime": "2026-07-24T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "预注册",
+            "verbs": [
+              "完成"
+            ]
+          },
+          {
+            "object": "账号",
+            "verbs": [
+              "激活"
+            ]
+          },
+          {
+            "object": "系统",
+            "verbs": [
+              "登录"
+            ]
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "预注册",
+            "verbs": [
+              "完成"
+            ]
+          },
+          {
+            "object": "账号",
+            "verbs": [
+              "激活"
+            ]
+          },
+          {
+            "object": "系统",
+            "verbs": [
+              "登录"
+            ]
+          }
+        ],
+        "events": [],
+        "window": "2026-08-13/2026-08-27",
+        "condition": "大陆本科新生"
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "c339b4a02d0b9cf29d2df691b851d944cf8103050963c3c77188db0d539a4c97"
+    },
+    {
+      "id": "DEV-33",
+      "sourceSha256": "7d304dd958cb7e30ff640997229012599b56a4884503c3b492a9ec0012f67ac6",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [],
+        "materialCount": 0,
+        "information": [
+          "无变化"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "eff5ffd7a40510b094d9aa715352c72dc8bfc9e793432e800cc9ab91046fbb30"
+    },
+    {
+      "id": "DEV-34",
+      "sourceSha256": "ce01adfc2b8d2cafd24ace7524064aea394a2b2fcb4b453003f4a681313a3e47",
+      "referenceTime": "2021-11-16T09:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停机维护",
+            "start": "2021-11-17T23:00",
+            "end": "2021-11-18T01:00"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停机维护",
+            "start": "2021-11-17T23:00",
+            "end": "2021-11-18T01:00"
+          }
+        ],
+        "information": [
+          "正常恢复"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "6ffdf0b3a1a55b19783cc19337a963f1d78ddd53f60a065150e08c93cab21b71"
+    },
+    {
+      "id": "DEV-35",
+      "sourceSha256": "d8f8f14ee9caef6d53ec0425b156fc0d224488a9071a163a16e8e2b973abbd1b",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "申请",
+            "verbs": [
+              "申请"
+            ]
+          },
+          {
+            "object": "客户端",
+            "verbs": [
+              "下载"
+            ]
+          },
+          {
+            "object": "卡",
+            "verbs": [
+              "交",
+              "提交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [],
+        "information": [
+          "继续有效"
+        ],
+        "forbidden": [
+          {
+            "object": "申请",
+            "verbs": [
+              "申请"
+            ]
+          },
+          {
+            "object": "客户端",
+            "verbs": [
+              "下载"
+            ]
+          },
+          {
+            "object": "卡",
+            "verbs": [
+              "交",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "758f93dc0359724ffd8b71885fb1ba6e1573808bafef6774c5fc7a0d588c0eb2"
+    },
+    {
+      "id": "DEV-36",
+      "sourceSha256": "358be9163f0c30a882f4df839a94910a9aae29a31c0ea11b225f947dacc25294",
+      "referenceTime": "2026-10-14T08:30:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "作业",
+            "verbs": [
+              "上传",
+              "提交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [],
+        "information": [
+          "不影响课程成绩"
+        ],
+        "forbidden": [
+          {
+            "object": "作业",
+            "verbs": [
+              "上传",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "df6b82fe40eaa5063aa464d12dcc2dff5d72e3bf89763617b4ed992e13ad791d"
+    },
+    {
+      "id": "GROUP-17",
+      "sourceSha256": "f45c1656b4a121d8d8b163c09c352ce40e879ffa2fdb10820ae15f1ef89bc68c",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "设计作品",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "设计作品",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadlineUnknown": true,
+            "channelUnknown": true
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "6bf171a29e358c2eb7bcd05568997946035355678f431853ccbe485675fda8ba"
+    },
+    {
+      "id": "GROUP-03",
+      "sourceSha256": "3ffc31c305e26cb4a96420a0026f52011d4eac09e158d81b8fe8fd1bfd982b72",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "材料",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadline": "2026-11-05T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "材料",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "学工窗口",
+            "deadline": "2026-11-05T17:00",
+            "precision": "exact",
+            "criteria": "材料接收成功"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "申请表",
+          "成绩单"
+        ],
+        "formats": [
+          "PDF"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "d7220bcd54725f1b58d45aa2acd28cbe85f50449c32ea4d38ebebcf22fe37248"
+    },
+    {
+      "id": "GROUP-07",
+      "sourceSha256": "c7e0b656a50f9b84cd5b26e6c66d5714b56ae4927a1e289fed228138856177cb",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "调研报告",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadline": "2026-11-12T12:00",
+            "precision": "exact"
+          },
+          {
+            "object": "调研报告",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadline": "2026-11-13T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "调研报告",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "课程平台",
+            "deadline": "2026-11-12T12:00",
+            "precision": "exact"
+          },
+          {
+            "object": "调研报告",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "展示平台",
+            "deadline": "2026-11-13T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "调研报告"
+        ],
+        "formats": [
+          "PDF"
+        ],
+        "sharedMaterial": true
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "46e9932757696816250dea0b13b1dfa85e2678e4a9c2237bd171f80f2e19e4d4"
+    },
+    {
+      "id": "GROUP-09",
+      "sourceSha256": "1bbc63995d28e9b970a5480761d658dd489bfa1f40a486ac7b5f61137320719d",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停机",
+            "start": "2026-11-14T22:00",
+            "end": "2026-11-15T01:00"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "图书",
+            "verbs": [
+              "续借"
+            ]
+          },
+          {
+            "object": "说明",
+            "verbs": [
+              "提交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停机",
+            "start": "2026-11-14T22:00",
+            "end": "2026-11-15T01:00"
+          }
+        ],
+        "information": [
+          "不受影响"
+        ],
+        "forbidden": [
+          {
+            "object": "图书",
+            "verbs": [
+              "续借"
+            ]
+          },
+          {
+            "object": "说明",
+            "verbs": [
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "662c903c019a96e81e2df0244be81eb81e1c03af1a869a66251eca583cfa732e"
+    },
+    {
+      "id": "GROUP-13",
+      "sourceSha256": "6e241d9e15079007b249c93afcc1fa06045aeebebf5112c657153487fd262232",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "讲座",
+            "start": "2026-11-20T09:30",
+            "end": "2026-11-20T11:00",
+            "location": "海棠楼报告厅"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "讲座",
+            "start": "2026-11-20T09:30",
+            "end": "2026-11-20T11:00",
+            "location": "海棠楼报告厅"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "ccd07613d25c16da87ebf4cb1f68de40011ad7051fcefc4760ec5d271ecc6b60"
+    },
+    {
+      "id": "GROUP-12",
+      "sourceSha256": "f35a724e23c2dcfd77efa28b91a80f41492827265ed18080d95e7d13de0918ef",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "实习证明",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "deadline": "2026-11-18T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "实习证明",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "实习证明",
+            "channel": "实习入口",
+            "deadline": "2026-11-18T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ],
+        "naming": [
+          "班级_学号"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "fba2619f3511d04fcef7df14b400835c5d36c1bcb11b9531764e64cca0ee3fdd"
+    },
+    {
+      "id": "GROUP-11",
+      "sourceSha256": "e93040f5fc99eaaa98d51b149b5d0881e990d225605a395ddc66fb2283b5f342",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-11-17T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "答辩",
+            "start": "2026-11-19T10:00",
+            "end": "2026-11-19T12:00",
+            "location": "南楼"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-11-17T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "答辩",
+            "start": "2026-11-19T10:00",
+            "end": "2026-11-19T12:00",
+            "location": "南楼"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "4468ce3227944f5c530c5e0a63c3313ee1aade00da674d95480d3e2043588c6f"
+    },
+    {
+      "id": "GROUP-14",
+      "sourceSha256": "3d4943ef9aa797917545587af2ac762d7eaa8a8606bf8d95fde47aa44a2c3e40",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "排练说明",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadline": "2026-11-22T16:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "排练",
+            "verbs": [
+              "参加",
+              "到场"
+            ]
+          },
+          {
+            "object": "照片",
+            "verbs": [
+              "提交",
+              "交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "排练说明",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "课程平台",
+            "deadline": "2026-11-22T16:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "排练",
+            "verbs": [
+              "参加",
+              "到场"
+            ]
+          },
+          {
+            "object": "照片",
+            "verbs": [
+              "提交",
+              "交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "9905aea05572d81b43c08c42ea4ade9a1e763743b0c4f0ee28dc477be80cc288"
+    },
+    {
+      "id": "GROUP-08",
+      "sourceSha256": "ed396ca380538ff4b7095a9b65676525e827eef79ecab8fdb4604c40e6226525",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "参观",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "参观",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "afc958854eb80200dfd62be14b5f1a5f1d14e0e1a4d9bde9cc7fc97473258df3"
+    },
+    {
+      "id": "GROUP-20",
+      "sourceSha256": "3a3e567cd6c53cfea395891bebc26128c10bb5331e04e64c4b3489dce8241c00",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "认证",
+            "verbs": [
+              "完成",
+              "办理"
+            ]
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "认证",
+            "verbs": [
+              "完成",
+              "办理"
+            ],
+            "material": "学生证",
+            "channel": "认证窗口"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "学生证"
+        ],
+        "window": "2026-11-30/2026-11-30"
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "8cdfe13f6fe2443710dc35ce0781826176bfb98fd9d275fe800be29894825058"
+    },
+    {
+      "id": "GROUP-05",
+      "sourceSha256": "348a639ab4eb0ee43173e128070a399476353c696f3c365be144f821db701767",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "论文",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadline": "2026-11-10T20:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "旧版封面",
+            "verbs": [
+              "提交",
+              "交"
+            ]
+          },
+          {
+            "object": "解释",
+            "verbs": [
+              "提交",
+              "写"
+            ]
+          }
+        ],
+        "obsoleteDates": [
+          "2026-11-08"
+        ]
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "论文",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "课程平台",
+            "deadline": "2026-11-10T20:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "obsoleteDates": [
+          "2026-11-08"
+        ],
+        "forbidden": [
+          {
+            "object": "旧版封面",
+            "verbs": [
+              "提交",
+              "交"
+            ]
+          },
+          {
+            "object": "解释",
+            "verbs": [
+              "提交",
+              "写"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "f4ec14be515676fee70538092cdc18a902a8aad250c51726101a9054a9d8cf67"
+    },
+    {
+      "id": "GROUP-02",
+      "sourceSha256": "3ed60597277b0eea8492fd1a0573e8307e9416925e5792317d96a37a453458d1",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-11-04T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "摄影交流",
+            "start": "2026-11-06T19:00",
+            "end": "2026-11-06T20:30",
+            "location": "北楼201"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-11-04T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "摄影交流",
+            "start": "2026-11-06T19:00",
+            "end": "2026-11-06T20:30",
+            "location": "北楼201"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "482f5e8e969634622fe8ef4e6b7291694110a798ac839f5e3bb1328cb1dce677"
+    },
+    {
+      "id": "GROUP-15",
+      "sourceSha256": "59f4ae7d3d9cfc2418fd67437419e986e528e6c03e902f8894bbe854a440c9c4",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "安全课程",
+            "verbs": [
+              "完成",
+              "参加"
+            ]
+          },
+          {
+            "object": "申请表",
+            "verbs": [
+              "提交",
+              "申请"
+            ],
+            "deadline": "2026-11-23T17:00",
+            "precision": "exact",
+            "predecessor": "安全课程"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "安全课程",
+            "verbs": [
+              "完成",
+              "参加"
+            ]
+          },
+          {
+            "object": "申请表",
+            "verbs": [
+              "提交",
+              "申请"
+            ],
+            "material": "申请表",
+            "channel": "实验室系统",
+            "deadline": "2026-11-23T17:00",
+            "precision": "exact",
+            "predecessor": "安全课程",
+            "waiting": true
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "60de27b7ac92cca402fd4adbd9930773dd063994b65f9fa4b103a61065ecf4d5"
+    },
+    {
+      "id": "GROUP-16",
+      "sourceSha256": "029baa0b4d40d3f60af4827fd7bcf032ea0bcc906b72813f4a766b421a6ab502",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "课程论文",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadline": "2026-11-24",
+            "precision": "date_only"
+          },
+          {
+            "object": "实践总结",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadline": "2026-11-26",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "课程论文",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadline": "2026-11-24",
+            "precision": "date_only"
+          },
+          {
+            "object": "实践总结",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadline": "2026-11-26",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "成绩单"
+        ],
+        "sharedMaterial": true
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "296f5771f67687199553c92fdb7fdca1ea63da034ffa27636a5cd372074dedd4"
+    },
+    {
+      "id": "GROUP-21",
+      "sourceSha256": "7b8d476b7b24d903e3e6c73c08599fe1a46140e0c4f88b2a1f8cb36b68f2e972",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "答疑",
+            "start": "2026-12-01T19:00",
+            "end": "2026-12-01T20:00",
+            "location": "线上会议室"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "说明",
+            "verbs": [
+              "提交",
+              "补交"
+            ]
+          },
+          {
+            "object": "收到",
+            "verbs": [
+              "回复"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "答疑",
+            "start": "2026-12-01T19:00",
+            "end": "2026-12-01T20:00",
+            "location": "线上会议室"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "说明",
+            "verbs": [
+              "提交",
+              "补交"
+            ]
+          },
+          {
+            "object": "收到",
+            "verbs": [
+              "回复"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "61a3764f060f3c4677ac1cec388db0e0aca47dab81f27f55b1623ddc422a385a"
+    },
+    {
+      "id": "GROUP-19",
+      "sourceSha256": "21c0ba1aae4dbc212ecda097669c1c83fea83fed239dbabe1f0d0cd8957fd0f4",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "演讲稿",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-11-28T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "演讲展示",
+            "start": "2026-11-29T09:00",
+            "end": "2026-11-29T10:00",
+            "location": "北楼大厅"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "演讲稿",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "channel": "教学平台",
+            "deadline": "2026-11-28T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "演讲展示",
+            "start": "2026-11-29T09:00",
+            "end": "2026-11-29T10:00",
+            "location": "北楼大厅"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "854500f6e7d03ed1d384b6be025b6d4347c06120c73cfe2f5d1779a164a928c6"
+    },
+    {
+      "id": "GROUP-23",
+      "sourceSha256": "5f1be558d890e922c9166c6969938d59a0d5627002fbcb8125df4d8e033b0aac",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-12-03T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "工作坊",
+            "start": "2026-12-05T14:00",
+            "end": "2026-12-05T16:00"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-12-03T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "工作坊",
+            "start": "2026-12-05T14:00",
+            "end": "2026-12-05T16:00"
+          }
+        ],
+        "information": [
+          "录取"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "ff768069774637b502b9215e14e7341197b5549abf67ea7f3f964c4f45537416"
+    },
+    {
+      "id": "GROUP-18",
+      "sourceSha256": "8b7875310e5f4026c9cb22ac2440edc3a905b2c728c1e988ada9ef18853a37c2",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "网络检修",
+            "start": "2026-11-27T18:00",
+            "end": "2026-11-27T20:00"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "登记表",
+            "verbs": [
+              "提交",
+              "发"
+            ]
+          },
+          {
+            "object": "报修",
+            "verbs": [
+              "报修",
+              "提交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "网络检修",
+            "start": "2026-11-27T18:00",
+            "end": "2026-11-27T20:00"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "登记表",
+            "verbs": [
+              "提交",
+              "发"
+            ]
+          },
+          {
+            "object": "报修",
+            "verbs": [
+              "报修",
+              "提交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "c2aae636c8685be3296b00cd4ba42f676ae0566f866ca72352874b334fc19db6"
+    },
+    {
+      "id": "GROUP-24",
+      "sourceSha256": "6df3ed0772812a87626331948de5e9a84e6a518d17c5109fe5bea279a62c09b9",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "设备检查",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "检查单",
+            "verbs": [
+              "提交",
+              "交"
+            ]
+          },
+          {
+            "object": "设备",
+            "verbs": [
+              "检查"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "设备检查",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "检查单",
+            "verbs": [
+              "提交",
+              "交"
+            ]
+          },
+          {
+            "object": "设备",
+            "verbs": [
+              "检查"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "97d2e0ed4da7fd6fcb367e71301028d274561e0e907c80b0f852f65b36bc1c44"
+    },
+    {
+      "id": "GROUP-10",
+      "sourceSha256": "0dcd1ed7d669f3f83928bdfef189099a9c2a4160cb24a161fef98d78ec209630",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "课程小结",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "deadline": "2026-11-16T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "课程小结",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "课程小结",
+            "channel": "课程平台",
+            "deadline": "2026-11-16T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "c5a9b366bc4bcaf6a4ca093c44f8720877101d4bfceea7fa8345ffd3c2d4067a"
+    },
+    {
+      "id": "GROUP-22",
+      "sourceSha256": "d6434460e7113e1a9e93cf4b333fc93d19038acb0e8d7ba7c25f12965d6066aa",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "电子签名",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "deadline": "2026-12-02T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "照片",
+            "verbs": [
+              "提交",
+              "交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "电子签名",
+            "verbs": [
+              "提交",
+              "交"
+            ],
+            "channel": "登记平台",
+            "deadline": "2026-12-02T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "照片",
+            "verbs": [
+              "提交",
+              "交"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "05ccf1d86e11ec2afe646dfef62cdf1c7b25bc2b934ec2aa42ec813127a6a88f"
+    },
+    {
+      "id": "GROUP-04",
+      "sourceSha256": "f430436ecea5f57273cf2093e4df9b735aad6c32f490c35c2df15d2690463438",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "读书会",
+            "start": "2026-11-07T14:00",
+            "end": "2026-11-07T15:10",
+            "location": "东门书屋"
+          },
+          {
+            "object": "答疑",
+            "start": "2026-11-07T15:20",
+            "end": "2026-11-07T16:00",
+            "location": "东门书屋"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "读书会",
+            "start": "2026-11-07T14:00",
+            "end": "2026-11-07T15:10",
+            "location": "东门书屋"
+          },
+          {
+            "object": "答疑",
+            "start": "2026-11-07T15:20",
+            "end": "2026-11-07T16:00",
+            "location": "东门书屋"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "6cf1c3b9198e0b5d795014cc219eaee0a2e92a84962b64ae0626f75c3d964ae7"
+    },
+    {
+      "id": "GROUP-01",
+      "sourceSha256": "cfe795d919f7b8357156926a7a2346ceb65eff48ea6d32ed1bb0815f1ae79597",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "实验报告",
+            "verbs": [
+              "提交",
+              "上传",
+              "交"
+            ],
+            "deadline": "2026-11-03T23:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "实验报告",
+            "verbs": [
+              "提交",
+              "上传",
+              "交"
+            ],
+            "material": "实验报告",
+            "channel": "实验课程平台",
+            "deadline": "2026-11-03T23:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ],
+        "naming": [
+          "班级-学号"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "dceeccf95130610d264c70c67bccbb81fbff4ce993e321f37c3d1de885ccfa70"
+    },
+    {
+      "id": "GROUP-06",
+      "sourceSha256": "f807cd3d667fc7c77ca20c85c943767a648a1a58ed3fe31560852aeb7f38f0f1",
+      "referenceTime": "2026-10-14T14:53:38+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "耳机",
+            "verbs": [
+              "准备"
+            ],
+            "condition": "录取",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "培训",
+            "start": "2026-11-11T09:00",
+            "end": "2026-11-11T11:00"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "电话",
+            "verbs": [
+              "打",
+              "联系"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "耳机",
+            "verbs": [
+              "准备"
+            ],
+            "condition": "录取",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "培训",
+            "start": "2026-11-11T09:00",
+            "end": "2026-11-11T11:00"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "电话",
+            "verbs": [
+              "打",
+              "联系"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "embedded-source-reference",
+      "sourceReferenceSha256": "96ab4ebefa2b3bfc7b5a5e4c529561e5477e09bec72ea4477f431baa52f71853"
+    },
+    {
+      "id": "R2-RES-01",
+      "sourceSha256": "501cfe1d6953deea837094fb47f9315b124753829b9287846b071ad8c2163e0f",
+      "referenceTime": "2026-11-09T08:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "结项报告",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "deadline": "2026-11-16T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "结项报告",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "结项报告",
+            "channel": "项目结项系统",
+            "deadline": "2026-11-16T17:00",
+            "precision": "exact",
+            "criteria": "已接收"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ],
+        "naming": [
+          "项目编号"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "7d914539ca1e0ecd3d66c44fc3220f6a98fcb11a1872805ad45c48aa190cebc4"
+    },
+    {
+      "id": "R2-RES-10",
+      "sourceSha256": "0d401e6bfa449491eb4655692f33b0e1702fc24c2ee23ef070d17e90fb209e3b",
+      "referenceTime": "2026-11-09T08:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "交流活动",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "交流活动",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "information": [
+          "未公布"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "baac3b148e6169e75dce99d86999fe30cf724970ee8184133111bdcea33ce37a"
+    },
+    {
+      "id": "R2-RES-03",
+      "sourceSha256": "b5fcb2712982ffbc8e075e8bee99b62e9c0c1850d7c1650f35d84d4e4cab5332",
+      "referenceTime": "2026-11-09T08:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "实习证明",
+            "verbs": [
+              "领取"
+            ],
+            "window": "2026-11-17T09:00/11:00"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "实习证明",
+            "verbs": [
+              "领取"
+            ],
+            "window": "2026-11-17T09:00/11:00"
+          }
+        ],
+        "events": [],
+        "materialCount": 0
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "b11705cc9efa5ce7db5b6e87cbd72cd0328f6d7e7f92e00d8fec343ca6f5e408"
+    },
+    {
+      "id": "R2-RES-11",
+      "sourceSha256": "9fad5929653e769db38581dc72e73a6d12cd153ef091437a960be37bc0d3692c",
+      "referenceTime": "2026-11-09T08:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名表",
+            "verbs": [
+              "提交"
+            ],
+            "deadline": "2026-11-26T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "电脑",
+            "verbs": [
+              "准备"
+            ],
+            "condition": "入选",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "工作坊",
+            "start": "2026-11-28T14:00",
+            "end": "2026-11-28T16:00",
+            "location": "实验楼103"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名表",
+            "verbs": [
+              "提交"
+            ],
+            "material": "报名表",
+            "channel": "报名工作台",
+            "deadline": "2026-11-26T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "电脑",
+            "verbs": [
+              "准备"
+            ],
+            "condition": "入选",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "工作坊",
+            "start": "2026-11-28T14:00",
+            "end": "2026-11-28T16:00",
+            "location": "实验楼103"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "embedded-source-reference",
+      "sourceReferenceSha256": "e8939faa8a9ebd51173a832d70d124b8aa545626e9968b98db6097cacf324b3e"
+    },
+    {
+      "id": "R2-RES-07",
+      "sourceSha256": "3e8efb17d22bd4fd680b46b8904b820b019b389ed7fa16ea2b524d0571facdee",
+      "referenceTime": "2026-11-09T08:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "实践记录表",
+            "verbs": [
+              "提交"
+            ],
+            "deadline": "2026-11-23T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "实践记录表",
+            "verbs": [
+              "提交"
+            ],
+            "deadline": "2026-11-23T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "实践记录表",
+            "verbs": [
+              "提交"
+            ],
+            "material": "实践记录表",
+            "channel": "一班收件箱",
+            "deadline": "2026-11-23T17:00",
+            "precision": "exact"
+          },
+          {
+            "object": "实践记录表",
+            "verbs": [
+              "提交"
+            ],
+            "material": "实践记录表",
+            "channel": "二班收件箱",
+            "deadline": "2026-11-23T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "实践记录表"
+        ],
+        "sharedMaterial": true
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "dddfa1c664a58fc198785b774a1ba87ee2f122530a7ebe7519c89d3106ed4ff4"
+    },
+    {
+      "id": "R2-RES-09",
+      "sourceSha256": "0aa8336e10407a2bf1f33f3e7276fbf23744765e84a1cd63d0bc00cf1e642378",
+      "referenceTime": "2026-11-09T08:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "住宿确认单",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-11-25T18:00",
+            "precision": "exact",
+            "condition": "通过",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "住宿确认单",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "住宿确认单",
+            "channel": "住宿系统",
+            "deadline": "2026-11-25T18:00",
+            "precision": "exact",
+            "condition": "通过",
+            "unknownEligibility": true
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "5ecd435f22d3517d16a5046dc0bf126d57325a94c83763eae884e8f5db3db6a6"
+    },
+    {
+      "id": "R2-RES-05",
+      "sourceSha256": "85720c3652317bb7a7c2d0aef09d50b91aea8c700ed3b6e5a5ad2ee62800dcb0",
+      "referenceTime": "2026-11-09T08:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "议题提纲",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-11-21T15:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": [
+          "2026-11-19"
+        ]
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "议题提纲",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "议题提纲",
+            "channel": "讨论系统",
+            "deadline": "2026-11-21T15:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "obsoleteDates": [
+          "2026-11-19"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "8c5a6291377dfe5ba8fb240ed66bb1b03920e2fe75a3001bc78958634bff6bf2"
+    },
+    {
+      "id": "R2-RES-12",
+      "sourceSha256": "b6bdaba73a89165381a4419289194082fb8ed4d334ab9fdd6f4b13e5f9408716",
+      "referenceTime": "2026-11-09T08:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "成果摘要",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "deadline": "2026-11-27T16:00",
+            "precision": "exact"
+          },
+          {
+            "object": "承诺函",
+            "verbs": [
+              "交",
+              "递交",
+              "提交"
+            ],
+            "window": "2026-11-27T09:30/11:30"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "成果摘要",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "成果摘要",
+            "channel": "成果平台",
+            "deadline": "2026-11-27T16:00",
+            "precision": "exact"
+          },
+          {
+            "object": "承诺函",
+            "verbs": [
+              "交",
+              "递交",
+              "提交"
+            ],
+            "material": "承诺函",
+            "channel": "学生服务窗口",
+            "window": "2026-11-27T09:30/11:30"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "8db01b3df0ab2a4e2464c8daf802ec4178515bcb9e3754e8c68c2351dd50c003"
+    },
+    {
+      "id": "R2-RES-04",
+      "sourceSha256": "1d0cb125316f36b11f6388eb11f15e2ce13c5a775ffa2a886e2c9fcb586f4ec6",
+      "referenceTime": "2026-11-09T08:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "研究摘要",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-11-20T16:30",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "邮件",
+            "verbs": [
+              "提交",
+              "发送"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "研究摘要",
+            "verbs": [
+              "提交",
+              "上传"
+            ],
+            "material": "研究摘要",
+            "channel": "课程门户",
+            "deadline": "2026-11-20T16:30",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "formats": [
+          "PDF"
+        ],
+        "forbidden": [
+          {
+            "object": "邮件",
+            "verbs": [
+              "提交",
+              "发送"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "58794f3c04b72c68183569d61f95110d5e8f4f879066fc5717213f6d047063a6"
+    },
+    {
+      "id": "R2-RES-06",
+      "sourceSha256": "5310988549243e4f1ae3e51196301d0d143fa983cc3b8aee79edb6767178fe03",
+      "referenceTime": "2026-11-09T08:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "英语读书笔记",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "deadline": "2026-11-21T20:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "说明会",
+            "start": "2026-11-22T10:00",
+            "end": "2026-11-22T11:00",
+            "location": "南楼201"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "英语读书笔记",
+            "verbs": [
+              "上传",
+              "提交"
+            ],
+            "material": "英语读书笔记",
+            "channel": "英语课程平台",
+            "deadline": "2026-11-21T20:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "说明会",
+            "start": "2026-11-22T10:00",
+            "end": "2026-11-22T11:00",
+            "location": "南楼201"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "dd63b9fe412a0a2064e0fcdf46c9661b66b973cbc2655d516f976907463e37a4"
+    },
+    {
+      "id": "R2-RES-08",
+      "sourceSha256": "3beb725cf295f385839203137cc33a6795248e29d604e8b35b02f6be787d9557",
+      "referenceTime": "2026-11-09T08:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          },
+          {
+            "object": "申请",
+            "verbs": [
+              "提交"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ]
+          },
+          {
+            "object": "申请",
+            "verbs": [
+              "提交"
+            ]
+          }
+        ],
+        "information": [
+          "取消"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "aadca85cbce788a651cc01296eb8e4019f060e4b1188fe0a79d09b4905007627"
+    },
+    {
+      "id": "R2-RES-02",
+      "sourceSha256": "c287c9fb06af319ab440a8e111247857354dea3fd65c61e3925fc0e49f2422b8",
+      "referenceTime": "2026-11-09T08:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "安全培训",
+            "verbs": [
+              "完成"
+            ]
+          },
+          {
+            "object": "实验申请",
+            "verbs": [
+              "提交"
+            ],
+            "deadline": "2026-11-18T18:00",
+            "precision": "exact",
+            "predecessor": "安全培训"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "安全培训",
+            "verbs": [
+              "完成"
+            ]
+          },
+          {
+            "object": "实验申请",
+            "verbs": [
+              "提交"
+            ],
+            "material": "实验申请",
+            "channel": "实验申请系统",
+            "deadline": "2026-11-18T18:00",
+            "precision": "exact",
+            "predecessor": "安全培训"
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "6e98e8f3d88f934fc4fab125c70027f31b9ae0f50f82a7857b7ac010d8188ff5"
+    }
+  ]
+}

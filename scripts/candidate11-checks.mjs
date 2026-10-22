@@ -70,7 +70,7 @@ async function safety() {
   nodeTests([['product-facts-first-worker-payload','scripts/facts-first-worker-payload.node-test.mjs']])
   nodeTests([['product-v51-wrapped-date-bug','scripts/product-dev-review-v51-wrapped-date.node-test.mjs']])
   nodeTests([['product-v6-owner-defaults','scripts/product-dev-review-v6.node-test.mjs']])
-  nodeTests([['product-field-and-edit-metrics','scripts/product-quality-metrics.node-test.mjs']])
+  nodeTests([['product-field-and-edit-metrics','scripts/product-quality-metrics.node-test.mjs'],['product-core-usability','scripts/product-core-review.node-test.mjs']])
   nodeTests([['product-event-reference-matching','scripts/product-dev-event-matching.node-test.mjs']])
   nodeTests([['product-source-severity-audit','scripts/product-dev-severity-literal.node-test.mjs']])
   nodeTests([['historical-ci-policy','scripts/historical-ci-policy.node-test.mjs']])

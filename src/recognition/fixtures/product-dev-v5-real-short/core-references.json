@@ -1,0 +1,1567 @@
+{
+  "version": "core-reference-1.0.0",
+  "createdAt": "2026-10-22T01:15:02.278Z",
+  "beforeAnyR18ModelOutput": true,
+  "role": "Development already seen",
+  "rows": [
+    {
+      "id": "REAL-SHORT-01",
+      "sourceSha256": "badb3bf3cae375f5ff8bf4d9d433e3e2a8be0c31d578da2d892742e57b771d8c",
+      "referenceTime": "2024-12-12T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "宣讲",
+            "start": "2024-12-13T14:30",
+            "end": "2024-12-13T16:30",
+            "location": "就业报告厅"
+          },
+          {
+            "object": "座谈会",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "宣讲",
+            "start": "2024-12-13T14:30",
+            "end": "2024-12-13T16:30",
+            "location": "就业报告厅"
+          },
+          {
+            "object": "座谈会",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "information": [
+          "2025年12月31日"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "b8c011435ccf7b333d155c52804c446346f57bd243fafb140b033d2eacbe49ae"
+    },
+    {
+      "id": "REAL-SHORT-02",
+      "sourceSha256": "eb52793b0d97aec899569eb284fe9bd36ac185bcc46339b5b896199a884d6da4",
+      "referenceTime": "2026-02-24T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "平台",
+            "verbs": [
+              "登录",
+              "认证"
+            ],
+            "deadlineUnknown": true
+          },
+          {
+            "object": "spoc课程",
+            "verbs": [
+              "学习",
+              "选择"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "平台",
+            "verbs": [
+              "登录",
+              "认证"
+            ],
+            "deadlineUnknown": true
+          },
+          {
+            "object": "spoc课程",
+            "verbs": [
+              "学习",
+              "选择"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "d8ab2e19281828f119cba8fbadadf24c9a507176f87ce8792b1914a90086c820"
+    },
+    {
+      "id": "REAL-SHORT-03",
+      "sourceSha256": "b3f7ddbd2ac86dfea78e2fe2e9afe70d847403ca102698c5bedd80a8e28bd310",
+      "referenceTime": "2025-09-16T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "美、加留学",
+            "start": "2025-09-21T13:00",
+            "end": "2025-09-21T15:00",
+            "location": "[地点1]"
+          },
+          {
+            "object": "英、澳留学",
+            "start": "2025-09-28T13:00",
+            "end": "2025-09-28T15:00",
+            "location": "[地点1]"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "美、加留学",
+            "start": "2025-09-21T13:00",
+            "end": "2025-09-21T15:00",
+            "location": "[地点1]"
+          },
+          {
+            "object": "英、澳留学",
+            "start": "2025-09-28T13:00",
+            "end": "2025-09-28T15:00",
+            "location": "[地点1]"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "1dab5ee81a31ce11603425377908fc66d9d911d668af747f5407287f42a87517"
+    },
+    {
+      "id": "REAL-SHORT-04",
+      "sourceSha256": "498e38b570d8c48ceed1b95c202f78ee20afb4fe3dfd14065302615cc927902b",
+      "referenceTime": "2025-03-21T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "讲座",
+            "verbs": [
+              "报名",
+              "扫描",
+              "扫码"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "信息与人类文明",
+            "start": "2025-03-25T15:00",
+            "endUnknown": true,
+            "location": "[地点1]"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "讲座",
+            "verbs": [
+              "报名",
+              "扫描",
+              "扫码"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "信息与人类文明",
+            "start": "2025-03-25T15:00",
+            "endUnknown": true,
+            "location": "[地点1]"
+          }
+        ],
+        "criteria": [
+          "签到"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "22fe11bf85f50c91158b58045680f239f2be9b845c20e667c39805f4430ba28c"
+    },
+    {
+      "id": "REAL-SHORT-05",
+      "sourceSha256": "2e52097a176d8f097fb0d09225506f3b6e4c6e91aee5a7eede4e7d8bc4672fac",
+      "referenceTime": "2025-05-13T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "结题验收表",
+            "verbs": [
+              "提交",
+              "报名"
+            ],
+            "deadline": "2025-05-22T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "答辩",
+            "start": "2025-05-28",
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "结题验收表",
+            "verbs": [
+              "提交",
+              "报名"
+            ],
+            "deadline": "2025-05-22T17:00",
+            "precision": "exact",
+            "channel": "[地点1]"
+          }
+        ],
+        "events": [
+          {
+            "object": "答辩",
+            "start": "2025-05-28",
+            "endUnknown": true
+          }
+        ],
+        "criteria": [
+          "5分钟",
+          "PPT",
+          "请假条"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "836f45e39f1230d259ae2e8eda11725293f04bc2b7e34b55215781a10f8331b2"
+    },
+    {
+      "id": "REAL-SHORT-06",
+      "sourceSha256": "48129aec0f7f0ea0b0e01a347b26e5e051e3b905e127e0b6f1acb9945e9fdbb3",
+      "referenceTime": "2025-09-19T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "注册",
+            "verbs": [
+              "办理",
+              "注册",
+              "完成"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "注册",
+            "verbs": [
+              "办理",
+              "注册",
+              "完成"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "助学贷款",
+          "2025年9月22日"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "7aea822ffebacb91ef11cafefebc7bf4828c4fddfd06e98e87f6b739c06b1396"
+    },
+    {
+      "id": "REAL-SHORT-07",
+      "sourceSha256": "01cb4b1954c2ed0f7e42fdc21f00f5b8dd482cbae21cc7d203cded4102b151c2",
+      "referenceTime": "2025-09-11T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "教材",
+            "verbs": [
+              "领取",
+              "领"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "教材",
+            "verbs": [
+              "领取",
+              "领"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "window": "2025-09-13/2025-09-14/2025-09-15/2025-09-22",
+        "criteria": [
+          "领书编号",
+          "校园卡"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "838d2e0eef9fba895ecf912c1a161e6ad084a8da99563829f63f4ce0ad6e78e5"
+    },
+    {
+      "id": "REAL-SHORT-08",
+      "sourceSha256": "f37936961b90441732e29883028cdfb9d4d39c9c96e7dcc313c74d03cd60cccf",
+      "referenceTime": "2025-06-19T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取",
+              "代领",
+              "领证"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取",
+              "代领",
+              "领证"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "materials": [
+          "身份证件",
+          "毕业证书",
+          "委托书"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "c33ff651ba56e5790f8cf01dc7b218356c70e664db9deb4c79b784f25a208dc4"
+    },
+    {
+      "id": "REAL-SHORT-09",
+      "sourceSha256": "e2b03287423b5eb25a05f0563405c1c6b5181a8d1f6857c2cc8c6bbd1810bb88",
+      "referenceTime": "2026-08-21T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "公共课",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2026-08-25T23:59",
+            "precision": "exact"
+          },
+          {
+            "object": "其他课程",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2026-08-27T23:59",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "补考",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "公共课",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2026-08-25T23:59",
+            "precision": "exact"
+          },
+          {
+            "object": "其他课程",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2026-08-27T23:59",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "补考",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "window": "2026-08-21",
+        "information": [
+          "另行通知"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "0d4d8fd8ae02e060329596c2d4ef3028b8a1b8a0596ad6e664582fae471ad5e6"
+    },
+    {
+      "id": "REAL-SHORT-10",
+      "sourceSha256": "5278e342f248db1afedb5360063588af6b5e1fa0e9fb41b919ac3cca2807a8d5",
+      "referenceTime": "2025-05-28T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "嘉锡讲坛",
+            "verbs": [
+              "报名",
+              "参加"
+            ],
+            "deadline": "2025-06-12T12:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "多学科交叉赋能区域可持续发展",
+            "start": "2025-06-13T09:30",
+            "endUnknown": true,
+            "location": "阳光楼一楼报告厅"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "嘉锡讲坛",
+            "verbs": [
+              "报名",
+              "参加"
+            ],
+            "deadline": "2025-06-12T12:00",
+            "precision": "exact",
+            "channel": "本科教学系统"
+          }
+        ],
+        "events": [
+          {
+            "object": "多学科交叉赋能区域可持续发展",
+            "start": "2025-06-13T09:30",
+            "endUnknown": true,
+            "location": "阳光楼一楼报告厅"
+          }
+        ],
+        "window": "2025-05-28"
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "70fa3f0bba7a3fa73e5f025178dc8edffd35ffdf82619bf64453116b38709fd1"
+    },
+    {
+      "id": "REAL-SHORT-11",
+      "sourceSha256": "f61738ef6e3e459417d786eea85fe4ba4540825d0ac0ad60207b2dc4d2c7bf5f",
+      "referenceTime": "2026-06-09T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "压缩包",
+            "verbs": [
+              "提交",
+              "发送"
+            ],
+            "deadline": "2026-06-15T22:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "压缩包",
+            "verbs": [
+              "提交",
+              "发送"
+            ],
+            "deadline": "2026-06-15T22:00",
+            "precision": "exact",
+            "channel": "[邮箱1]"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "图片",
+          "Word"
+        ],
+        "naming": [
+          "班级＋姓名"
+        ],
+        "criteria": [
+          "2-6",
+          "100-300"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "092264043b260c8de1d8009f00e0b5cc7eb39d5a50cc2ccbdef569cd6d73c380"
+    },
+    {
+      "id": "REAL-SHORT-12",
+      "sourceSha256": "b9d66d0b6c74bc0c7bd03e28542edf1f73a53f6354569773067cd9516aadc64e",
+      "referenceTime": "2026-09-03T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "IP",
+            "verbs": [
+              "投稿",
+              "提交",
+              "发送",
+              "应征"
+            ],
+            "deadline": "2026-09-11",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "IP",
+            "verbs": [
+              "投稿",
+              "提交",
+              "发送",
+              "应征"
+            ],
+            "deadline": "2026-09-11",
+            "precision": "date_only",
+            "channel": "[邮箱1]"
+          }
+        ],
+        "events": [],
+        "criteria": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "3aeb471db8c149be6fa92288ff92cb02be9fb37e6f0da9f0b525b572ae67ee86"
+    },
+    {
+      "id": "REAL-SHORT-13",
+      "sourceSha256": "add69eab8c5541c28b95ac3e42805dac0903e09f1802cc457cb561e48c75e366",
+      "referenceTime": "2025-12-01T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "升级",
+            "start": "2025-12-03",
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "升级",
+            "start": "2025-12-03",
+            "endUnknown": true
+          }
+        ],
+        "information": [
+          "12月4日",
+          "电子资源"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "06b4c987c284ffcc8ce6287d752039d46a81b5c025770b1789b968edc46dab35"
+    },
+    {
+      "id": "REAL-SHORT-14",
+      "sourceSha256": "0aa00f7809ce1982ade2e5b6d2319d475a5b0ea0111096bb9949675e1d653772",
+      "referenceTime": "2026-06-23T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "素材文件夹",
+            "verbs": [
+              "提交",
+              "发送",
+              "报送"
+            ],
+            "deadline": "2026-06-29T16:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "素材文件夹",
+            "verbs": [
+              "提交",
+              "发送",
+              "报送"
+            ],
+            "deadline": "2026-06-29T16:00",
+            "precision": "exact",
+            "channel": "[邮箱1]"
+          }
+        ],
+        "events": [],
+        "criteria": [
+          "word",
+          "图表"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "64c665b4295e59b376746ee6e2364075890a307006e3d3019b8f944260c83c6c"
+    },
+    {
+      "id": "REAL-SHORT-15",
+      "sourceSha256": "54c4fb043c60313bfaea53eb0e3231e39dffd5965ea4aab00f408eeb59c94b12",
+      "referenceTime": "2025-06-11T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名表",
+            "verbs": [
+              "填写",
+              "报名",
+              "提交"
+            ],
+            "deadline": "2025-06-13T18:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "笔试",
+            "startUnknown": true,
+            "endUnknown": true
+          },
+          {
+            "object": "面试",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名表",
+            "verbs": [
+              "填写",
+              "报名",
+              "提交"
+            ],
+            "deadline": "2025-06-13T18:00",
+            "precision": "exact",
+            "channel": "QQ群"
+          }
+        ],
+        "events": [
+          {
+            "object": "笔试",
+            "startUnknown": true,
+            "endUnknown": true
+          },
+          {
+            "object": "面试",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "criteria": [
+          "笔记本电脑"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "dd887e0f00b1014ece2f255c212063040b97c09df2d894fc35f2eedb49f7a61a"
+    },
+    {
+      "id": "REAL-SHORT-16",
+      "sourceSha256": "f85ac8082fe59bc9ac82ed4ea7cd4fa1f62791f9f18da861820404e7d81c1e5d",
+      "referenceTime": "2025-09-17T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "退费申请书",
+            "verbs": [
+              "发送",
+              "提交",
+              "填写",
+              "申请"
+            ],
+            "deadline": "2025-09-20T17:00",
+            "precision": "exact",
+            "condition": "放弃"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "退费申请书",
+            "verbs": [
+              "发送",
+              "提交",
+              "填写",
+              "申请"
+            ],
+            "deadline": "2025-09-20T17:00",
+            "precision": "exact",
+            "channel": "[邮箱1]",
+            "condition": "放弃"
+          }
+        ],
+        "events": [],
+        "information": [
+          "学期末"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "c5f58bd4aa61110ceb3e4d4900677277ba4ef89f95d560d6b7185d1b0e16f9ef"
+    },
+    {
+      "id": "REAL-SHORT-17",
+      "sourceSha256": "f958c7258f6578fff65c8d4305887dbdf10c258a93a02a9dacc0c782fa76dfa2",
+      "referenceTime": "2025-02-17T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "办理",
+              "提交"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "办理",
+              "提交"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "报名费",
+          "第一时间"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "340a876a68d25832cbf964bf59199c0bebb89372499b62802b35aa2bf51e1cc4"
+    },
+    {
+      "id": "REAL-SHORT-18",
+      "sourceSha256": "768c4a818b263c32d031ddf79bc31776f97f6002ea7668f8296dde72847c9ab5",
+      "referenceTime": "2025-09-25T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "训练",
+            "start": "2025-09-25T14:00",
+            "end": "2025-09-25T16:30"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "训练",
+            "start": "2025-09-25T14:00",
+            "end": "2025-09-25T16:30"
+          }
+        ],
+        "information": [
+          "每周四",
+          "第19周"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "1e883140b5ca1a0d42bbe627d29448c8d3d62e88c7ab3f94001f58f94535bd75"
+    },
+    {
+      "id": "REAL-SHORT-19",
+      "sourceSha256": "5165e290ae235a19e6a6f0d209692eb7a5009ad37145d214bab14c2db4f71b6a",
+      "referenceTime": "2025-09-03T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "入学指导",
+            "verbs": [
+              "参加",
+              "参会",
+              "出席"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "入学指导",
+            "start": "2025-09-15T13:00",
+            "end": "2025-09-15T14:00",
+            "location": "[地点1]"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "入学指导",
+            "verbs": [
+              "参加",
+              "参会",
+              "出席"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "入学指导",
+            "start": "2025-09-15T13:00",
+            "end": "2025-09-15T14:00",
+            "location": "[地点1]"
+          }
+        ],
+        "information": [
+          "提前一天"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "0273a1dbf03d2cc24d0848b7d4d9b611ebbdb32d18c3622313d9e1ded6683441"
+    },
+    {
+      "id": "REAL-SHORT-20",
+      "sourceSha256": "cd17e3c58a72217b1060721a698cd8f6ccd2d4f6a9a8e85a954a6470c476b365",
+      "referenceTime": "2026-03-11T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "研学作品",
+            "verbs": [
+              "报名",
+              "发送",
+              "提交"
+            ],
+            "deadline": "2026-03-17",
+            "precision": "date_only"
+          }
+        ],
+        "events": [
+          {
+            "object": "中期检查",
+            "start": "2026-04-01T12:30",
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "研学作品",
+            "verbs": [
+              "报名",
+              "发送",
+              "提交"
+            ],
+            "deadline": "2026-03-17",
+            "precision": "date_only",
+            "channel": "[邮箱1]"
+          }
+        ],
+        "events": [
+          {
+            "object": "中期检查",
+            "start": "2026-04-01T12:30",
+            "endUnknown": true
+          }
+        ],
+        "information": [
+          "暂时定于",
+          "后续通知"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "fa2b33b29e94217976c9253fd120e8e7310100dacf9c71bfcd597632c7fdd09c"
+    },
+    {
+      "id": "REAL-SHORT-21",
+      "sourceSha256": "391abfb211cd3af3d1c99453438ea234117c709d51b5e850f670e8827ff895d3",
+      "referenceTime": "2026-01-06T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "文稿",
+            "verbs": [
+              "投稿",
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-03-09",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "文稿",
+            "verbs": [
+              "投稿",
+              "提交",
+              "上传"
+            ],
+            "deadline": "2026-03-09",
+            "precision": "date_only",
+            "channel": "论文投稿"
+          }
+        ],
+        "events": [],
+        "criteria": [
+          "5000-8000"
+        ],
+        "information": [
+          "3月13日",
+          "另投"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "98fe2c6500fb36cebcd2e84928ef5c5632afaebf642efc44acb26fd18f780fc6"
+    },
+    {
+      "id": "REAL-SHORT-22",
+      "sourceSha256": "1890775cc486a128b847e073e8aa5e0fd3ee36ff80c3799a17630f560a76ffeb",
+      "referenceTime": "2026-02-28T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "走进故宫",
+            "verbs": [
+              "学习",
+              "完成",
+              "参加",
+              "修读"
+            ],
+            "deadlineUnknown": true
+          },
+          {
+            "object": "创新创业与管理基础",
+            "verbs": [
+              "学习",
+              "完成",
+              "参加",
+              "修读"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "考试",
+            "start": "2026-05-11",
+            "end": "2026-05-24"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "走进故宫",
+            "verbs": [
+              "学习",
+              "完成",
+              "参加",
+              "修读"
+            ],
+            "deadlineUnknown": true
+          },
+          {
+            "object": "创新创业与管理基础",
+            "verbs": [
+              "学习",
+              "完成",
+              "参加",
+              "修读"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "考试",
+            "start": "2026-05-11",
+            "end": "2026-05-24"
+          }
+        ],
+        "window": "2026-03-16/2026-05-10"
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "65aa49e28bc69b520fec2a7b6cd01f14de6d658c8d93c5f98acd2fadd0033d93"
+    },
+    {
+      "id": "REAL-SHORT-23",
+      "sourceSha256": "d2a7448ad11a56b8ea1d9484d8c9e41af81762bdf851a5750a6b2812362451e3",
+      "referenceTime": "2026-02-27T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "上课",
+            "verbs": [
+              "上课",
+              "参加",
+              "按时"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "本科教学",
+            "start": "2026-03-02",
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "上课",
+            "verbs": [
+              "上课",
+              "参加",
+              "按时"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "本科教学",
+            "start": "2026-03-02",
+            "endUnknown": true
+          }
+        ],
+        "information": [
+          "课表",
+          "任课老师",
+          "不得调课"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "f319aafce4d3d191bc04999bb9b0ab4e0700a21225dfab5d4150fe73ee9fe03f"
+    },
+    {
+      "id": "REAL-SHORT-24",
+      "sourceSha256": "f1b334f4d3bc50775556b2100dc1b96bacc8ba95e508d9056abc9d7fb3922285",
+      "referenceTime": "2026-01-15T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "申请",
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-02-03",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "申请",
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-02-03",
+            "precision": "date_only"
+          }
+        ],
+        "events": [],
+        "information": [],
+        "obsoleteDates": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "0ef8645585f530de63a9777dae09a4647d1f8d7fcbbeaa9e93a9cc401e92cfbc"
+    },
+    {
+      "id": "REAL-SHORT-25",
+      "sourceSha256": "2cdaf7029aa96008b26a7df8a00b31477a27261393df91865bf96485147b42f1",
+      "referenceTime": "2025-09-11T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "个人物品",
+            "verbs": [
+              "清理",
+              "带离"
+            ],
+            "deadline": "2025-09-12T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "图书馆",
+            "start": "2025-09-13",
+            "endUnknown": true
+          },
+          {
+            "object": "三楼",
+            "start": "2025-09-13",
+            "end": "2025-09-13"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "个人物品",
+            "verbs": [
+              "清理",
+              "带离"
+            ],
+            "deadline": "2025-09-12T17:00",
+            "precision": "exact"
+          }
+        ],
+        "events": [
+          {
+            "object": "图书馆",
+            "start": "2025-09-13",
+            "endUnknown": true
+          },
+          {
+            "object": "三楼",
+            "start": "2025-09-13",
+            "end": "2025-09-13"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "47cc6efb09714b2ec1aa410fdbbc4a8ac8ca41ed7e46765f49a6464c03b20c82"
+    },
+    {
+      "id": "REAL-SHORT-26",
+      "sourceSha256": "b030fe2c62a9674afceefcbbed40edea78545dd4fbfa10eab85400b36dddcb7c",
+      "referenceTime": "2025-05-23T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2025-05-26T00:00",
+            "end": "2025-05-26T02:00"
+          },
+          {
+            "object": "停电",
+            "start": "2025-05-28T00:00",
+            "end": "2025-05-28T02:00"
+          },
+          {
+            "object": "停电",
+            "start": "2025-05-29T00:00",
+            "end": "2025-05-29T02:00"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2025-05-26T00:00",
+            "end": "2025-05-26T02:00"
+          },
+          {
+            "object": "停电",
+            "start": "2025-05-28T00:00",
+            "end": "2025-05-28T02:00"
+          },
+          {
+            "object": "停电",
+            "start": "2025-05-29T00:00",
+            "end": "2025-05-29T02:00"
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "834ce2283c88f55c591655784851d95c3a89a5cb5a3ca74790719a36ab79b0a3"
+    },
+    {
+      "id": "REAL-SHORT-27",
+      "sourceSha256": "27475bb1fb20276aa6d8bf690a59308cc91d1ceb4f8081b9fb5c06995ff0e435",
+      "referenceTime": "2025-07-15T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "续借",
+            "start": "2025-07-15",
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "续借",
+            "start": "2025-07-15",
+            "endUnknown": true
+          }
+        ],
+        "information": [
+          "预计",
+          "7月23日"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "f80d214e6227eb647de181cc46ecfe7a4c9e9c6e3b87f4d38b73b20916f0460e"
+    },
+    {
+      "id": "REAL-SHORT-28",
+      "sourceSha256": "5bda9176ea737cc763a7d62e2f9c8ad2ff89eb5bbb9811673c98802502b79609",
+      "referenceTime": "2026-03-24T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "讲座",
+            "verbs": [
+              "参加",
+              "报名",
+              "出席"
+            ]
+          }
+        ],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [],
+        "information": [
+          "取消"
+        ],
+        "forbidden": [
+          {
+            "object": "讲座",
+            "verbs": [
+              "参加",
+              "报名",
+              "出席"
+            ]
+          }
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "12d99a6d1ea7235c156665540d37f33df1dd28f8e7dfcf67bc5b4e2b9dc5d05c"
+    },
+    {
+      "id": "REAL-SHORT-29",
+      "sourceSha256": "25e27c627f07cba4f6821f2bea2dbaff39c48e8737c966ec5e55d76bcb087fd1",
+      "referenceTime": "2025-04-16T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "招生考试",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": [
+          "2025-04-26",
+          "2025-04-27"
+        ]
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "招生考试",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "information": [
+          "5月底",
+          "另行通知"
+        ],
+        "obsoleteDates": [
+          "2025-04-26",
+          "2025-04-27"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "5475a2216a779e5ae7c6f746f528743f3ac91568e74e47fc143e52904d14b39d"
+    },
+    {
+      "id": "REAL-SHORT-30",
+      "sourceSha256": "d60b17a29a3c0a98186ba1bb2dba67a963a52e8ba7b51d1cafb1bc3c73eef75e",
+      "referenceTime": "2025-12-09T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "请假单",
+            "verbs": [
+              "填写",
+              "提交",
+              "申请"
+            ],
+            "deadline": "2025-12-16T00:00",
+            "precision": "exact",
+            "condition": "患病"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "请假单",
+            "verbs": [
+              "填写",
+              "提交",
+              "申请"
+            ],
+            "deadline": "2025-12-16T00:00",
+            "precision": "exact",
+            "channel": "飞书",
+            "condition": "患病"
+          }
+        ],
+        "events": [],
+        "information": [
+          "取消下次"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical v6 projection; includes already-seen reserved-r6; no candidate outputs used",
+      "sourceReferenceVersion": "owner-default-reference-6.0.0",
+      "sourceReferenceSha256": "8253e224479678b188ac7e31029d85f2b7059a2efde5bb75a516add795c22182"
+    }
+  ],
+  "amendment": "Before any new output: include all10 already-seen reserved-r6 sources, not only20 development sources"
+}

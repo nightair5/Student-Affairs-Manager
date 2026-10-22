@@ -1,0 +1,1103 @@
+{
+  "version": "core-reference-1.0.0",
+  "createdAt": "2026-10-22T01:10:05.471Z",
+  "beforeAnyR18ModelOutput": true,
+  "role": "reserved-r8-UNRUN",
+  "rows": [
+    {
+      "id": "R8-RES-01",
+      "sourceSha256": "adb06e67dc60e050f5a3d82be0dc50fc82953dd68463075e5d5e7fea87d3f807",
+      "referenceTime": "2025-09-15T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "成绩复核",
+            "verbs": [
+              "申请",
+              "填写",
+              "提交"
+            ],
+            "deadline": "2025-09-17",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "成绩复核",
+            "verbs": [
+              "申请",
+              "填写",
+              "提交"
+            ],
+            "deadline": "2025-09-17",
+            "precision": "date_only",
+            "unknownEligibility": true,
+            "channel": "教务办",
+            "material": "申请表"
+          }
+        ],
+        "events": [],
+        "information": [
+          "查询",
+          "原始",
+          "有效",
+          "一式两份",
+          "所属学院",
+          "60",
+          "缓考"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "0986f35b9c6ac38cd0ed2bd93e3744174ba54189dfdf0dec2a32a317dcb18f3a"
+    },
+    {
+      "id": "R8-RES-02",
+      "sourceSha256": "cf8f02394d4d2a3c072da61b15b5c323fab5563827e485b176d16496473c85c6",
+      "referenceTime": "2025-09-03T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [],
+        "information": [
+          "2025年9月4日",
+          "周四",
+          "8:00",
+          "10:00",
+          "调整",
+          "国际工程师学院"
+        ],
+        "obsoleteDates": []
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "c72e197d9aa281873deaebcb22e8ce4b778e862b3bebab0c7b3c060bb1c8b9ae"
+    },
+    {
+      "id": "R8-RES-03",
+      "sourceSha256": "ff76d8764326e0ef90e68ea43544a89da07e16d26b570e70a6ea56eb9d7e2ae9",
+      "referenceTime": "2025-09-30T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "强师奋进大讲堂",
+            "start": "2025-10-15T14:30",
+            "endUnknown": true,
+            "location": "新大学生活动中心大礼堂"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "强师奋进大讲堂",
+            "start": "2025-10-15T14:30",
+            "endUnknown": true,
+            "location": "新大学生活动中心大礼堂"
+          }
+        ],
+        "information": [
+          "党员",
+          "分会场",
+          "审批",
+          "补训",
+          "2",
+          "周",
+          "交流研讨"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "e6b3c2d512b1cb253c66a290ab4caa3ed6346884313f0351358b8c1200d4ab38"
+    },
+    {
+      "id": "R8-RES-04",
+      "sourceSha256": "e57d0c58ed6c4928ea43965268f03170920392ae0ff2e77eab5af312bb8f6bbb",
+      "referenceTime": "2025-06-03T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "借阅",
+            "verbs": [
+              "预约",
+              "发送",
+              "发",
+              "申请"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "借阅",
+            "verbs": [
+              "预约",
+              "发送",
+              "发",
+              "申请"
+            ],
+            "unknownEligibility": true,
+            "channel": "contact@example.invalid",
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "6月7日",
+          "6月21日",
+          "6月12日",
+          "6月22日",
+          "预计",
+          "书名",
+          "馆藏地",
+          "索书号",
+          "书刊状态",
+          "借阅状态",
+          "24小时",
+          "回复",
+          "一楼总服务台",
+          "正常",
+          "噪音"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "fddf95f21c6120b34223bf93380447636796497e0596419cfdddfaae4090ce14"
+    },
+    {
+      "id": "R8-RES-05",
+      "sourceSha256": "eb4b43bd83f14aa487d48b57eb84bafefb73bc0d0e8bf23cef7670999c787dfd",
+      "referenceTime": "2025-04-02T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "闭馆",
+            "start": "2025-04-04",
+            "endUnknown": true,
+            "precision": "date_only"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "闭馆",
+            "start": "2025-04-04",
+            "endUnknown": true,
+            "precision": "date_only"
+          }
+        ],
+        "information": [
+          "4",
+          "5",
+          "正常开放",
+          "宝山",
+          "延长",
+          "嘉定",
+          "24",
+          "正常开放"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "25c38a09bdfded788e86e4a93ee7ffe1bfb3aeae4dd9372ee95acf9ae0b52bef"
+    },
+    {
+      "id": "R8-RES-06",
+      "sourceSha256": "7fa9844dc5b5cad28512f39a35268bd3e4419f5933c0440c31e3756e48aebc5a",
+      "referenceTime": "2025-11-11T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "电子校园卡",
+            "verbs": [
+              "领取",
+              "领卡",
+              "申领",
+              "办理"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "电子校园卡",
+            "verbs": [
+              "领取",
+              "领卡",
+              "申领",
+              "办理"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "2025",
+          "11",
+          "12",
+          "微信",
+          "二维码",
+          "家属",
+          "教职工本人",
+          "外单位",
+          "管理单位",
+          "学期",
+          "注销"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "7dbb0608837cc7444263158bf4463857304c7c170d90e3c34b78ab03ade30775"
+    },
+    {
+      "id": "R8-RES-07",
+      "sourceSha256": "1a422d9c493137be4b48f062906f6e91bd7a1c76ad47d317db8abfcfba50a81f",
+      "referenceTime": "2025-10-14T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "技术",
+            "start": "2025-10-20T14:30",
+            "endUnknown": true,
+            "location": "图书馆2楼教师学习空间"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "技术",
+            "start": "2025-10-20T14:30",
+            "endUnknown": true,
+            "location": "图书馆2楼教师学习空间"
+          }
+        ],
+        "information": [
+          "感兴趣",
+          "线上直播",
+          "提前10分钟"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "ecaa8ec95dd71ddf1bcb49a2d53d4d538bc5dbac715d940d0a2322513dc85585"
+    },
+    {
+      "id": "R8-RES-08",
+      "sourceSha256": "78a6327f707137f87933f9b4adaea6ba39d7c29ced7e01f62a20c33f8f358308",
+      "referenceTime": "2025-11-24T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [],
+        "information": [
+          "创新学分",
+          "2424",
+          "审核通过",
+          "附件"
+        ],
+        "materialCount": 0
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "14d2b29f7a5e25c6ec20ab6fd08f4fc6ad983945e4de3e0fa4adbcbd9a65fea7"
+    },
+    {
+      "id": "R8-RES-09",
+      "sourceSha256": "a19a7d6a2b9e19be861a44c56f94afd50b560e747eb6952f4c06fa199d591070",
+      "referenceTime": "2025-01-10T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "补考",
+            "verbs": [
+              "报名",
+              "申请",
+              "提交",
+              "确认"
+            ],
+            "deadline": "2025-02-24T15:00",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "补考",
+            "start": "2025-03-01",
+            "end": "2025-03-02",
+            "precision": "date_only"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "补考",
+            "verbs": [
+              "报名",
+              "申请",
+              "提交",
+              "确认"
+            ],
+            "deadline": "2025-02-24T15:00",
+            "unknownEligibility": true,
+            "channel": "教务系统"
+          }
+        ],
+        "events": [
+          {
+            "object": "补考",
+            "start": "2025-03-01",
+            "end": "2025-03-02",
+            "precision": "date_only"
+          }
+        ],
+        "information": [
+          "缓考",
+          "2月21日",
+          "9:00",
+          "2月26日",
+          "17:00",
+          "时间地点",
+          "最高",
+          "60",
+          "D"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "3a0fcc17786ba497dba7b1fd4bd6c8ecb25c93908358831c3a388fff43892c86"
+    },
+    {
+      "id": "R8-RES-10",
+      "sourceSha256": "b8e714d0ecc5a2268863b2667d46f1726d71ee38f874970f7ea9fc3ff57c58a6",
+      "referenceTime": "2025-04-09T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "升级",
+            "start": "2025-04-14",
+            "end": "2025-04-16",
+            "precision": "date_only"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "升级",
+            "start": "2025-04-14",
+            "end": "2025-04-16",
+            "precision": "date_only"
+          }
+        ],
+        "information": [
+          "暂停",
+          "借阅",
+          "归还",
+          "跨馆",
+          "顺延",
+          "座位预约",
+          "电子资源",
+          "不受影响"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "e2262d9428a60ee0b02fcd0b41a59b991280df9a63e7748c19cafc75e634cfa0"
+    },
+    {
+      "id": "R8-RES-11",
+      "sourceSha256": "34a16305bc21baacbf8292a99ae098c4dd861374230dc1707a4fb51bb15bed22",
+      "referenceTime": "2025-07-08T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "图书",
+            "verbs": [
+              "归还",
+              "还书"
+            ],
+            "deadline": "2025-09-30",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "图书",
+            "verbs": [
+              "归还",
+              "还书"
+            ],
+            "deadline": "2025-09-30",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "7月12日",
+          "8月22日",
+          "6",
+          "30",
+          "20",
+          "一楼",
+          "三楼",
+          "周一至周日",
+          "24",
+          "VPN",
+          "临时调整"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "3f97625fd6d2248bddfcbce7ba66e2cbe2e0a88c11df81d8cd5f0a39ed497de8"
+    },
+    {
+      "id": "R8-RES-12",
+      "sourceSha256": "2270b878577686ce62706ad958e1c0c8473e4b06717f9a97c6eb0e6723b58e2c",
+      "referenceTime": "2025-04-09T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "异议",
+            "verbs": [
+              "反映",
+              "反馈",
+              "提出",
+              "提交"
+            ],
+            "deadline": "2025-04-16",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "异议",
+            "verbs": [
+              "反映",
+              "反馈",
+              "提出",
+              "提交"
+            ],
+            "deadline": "2025-04-16",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "公示",
+          "优秀毕业生",
+          "推荐",
+          "上报",
+          "4月9日"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "6a90a2c86547be4fe24d08386821ca7ae617576534e3c65fb59348335e080452"
+    },
+    {
+      "id": "R8-RES-13",
+      "sourceSha256": "b080a4633597a27da671d907902bab16b00d279398f2e716ecf9896bebc41529",
+      "referenceTime": "2025-10-23T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "意见",
+            "verbs": [
+              "反馈",
+              "反映",
+              "提出",
+              "提交"
+            ],
+            "deadline": "2025-10-27",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "意见",
+            "verbs": [
+              "反馈",
+              "反映",
+              "提出",
+              "提交"
+            ],
+            "deadline": "2025-10-27",
+            "precision": "date_only",
+            "unknownEligibility": true,
+            "channel": "学生办公室"
+          }
+        ],
+        "events": [],
+        "information": [
+          "公示",
+          "366",
+          "2",
+          "拟",
+          "评审"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "05c96b99dc0d5286fd67e7ee2bc58c4815b44fe5b43233cf596b7c829d06008f"
+    },
+    {
+      "id": "R8-RES-14",
+      "sourceSha256": "93a48382dc4533a39323e850c4497a9d3cdf619d4f7b45efd6fd0249410df9f8",
+      "referenceTime": "2025-07-15T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [],
+        "information": [
+          "7月16日",
+          "8月25日",
+          "6:00",
+          "22:00",
+          "16:00",
+          "21:30",
+          "10:00",
+          "19:00",
+          "15:00",
+          "10:00",
+          "8月11",
+          "23日",
+          "8月15日",
+          "20日",
+          "暂停开放",
+          "羽毛球",
+          "排球"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "4711940f4ee80ecd4f1e6fdda5adc4209f8c551186b1bad95ceb8e549387d283"
+    },
+    {
+      "id": "R8-RES-15",
+      "sourceSha256": "a8fee730667fb24f3ac008967ce2582b05c0e92dd83b9802d99adea9ae6afa24",
+      "referenceTime": "2025-06-02T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "填报",
+              "提交",
+              "完成"
+            ],
+            "deadline": "2025-06-13",
+            "precision": "date_only",
+            "unknownEligibility": true
+          },
+          {
+            "object": "材料",
+            "verbs": [
+              "提交",
+              "发送",
+              "发"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "填报",
+              "提交",
+              "完成"
+            ],
+            "deadline": "2025-06-13",
+            "precision": "date_only",
+            "unknownEligibility": true,
+            "channel": "nimccs.com"
+          },
+          {
+            "object": "材料",
+            "verbs": [
+              "提交",
+              "发送",
+              "发"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "contact@example.invalid"
+          }
+        ],
+        "events": [],
+        "materials": [
+          "团队报名表",
+          "项目申报书"
+        ],
+        "information": [
+          "延期",
+          "6",
+          "16",
+          "通道关闭",
+          "PDF",
+          "成员变更",
+          "本科生",
+          "研究生"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "e2c49f148ebc2289d09a07ed23763f79fe22e0a9a95f7333bdc1d8c49bdda0d6"
+    },
+    {
+      "id": "R8-RES-16",
+      "sourceSha256": "718a894ebac7a856d530e0b77e9cee0132464dd65660fac8fa9ee7b4fd226183",
+      "referenceTime": "2025-10-10T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "两弹一星",
+            "start": "2025-10-13T14:00",
+            "endUnknown": true,
+            "location": "行政北楼二楼多功能厅"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "两弹一星",
+            "start": "2025-10-13T14:00",
+            "endUnknown": true,
+            "location": "行政北楼二楼多功能厅"
+          }
+        ],
+        "information": [
+          "辅导员",
+          "马克思主义学院",
+          "相关专业教师"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "75c0de6869c48d37ce21ae4de2f62245c8a49c2f72114c85552abd42b3fd6055"
+    },
+    {
+      "id": "R8-RES-17",
+      "sourceSha256": "2e6fd0495a60e4f268bb39ee6cf2d65fef7c8a4244d793f3fe461524f3aa1d5d",
+      "referenceTime": "2025-10-23T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "参加报名",
+              "完成"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "人工智能70年",
+            "start": "2025-10-23T10:10",
+            "end": "2025-10-23T12:00",
+            "location": "体育馆负二楼报告厅"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "参加报名",
+              "完成"
+            ],
+            "channel": "到梦空间",
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "人工智能70年",
+            "start": "2025-10-23T10:10",
+            "end": "2025-10-23T12:00",
+            "location": "体育馆负二楼报告厅"
+          }
+        ],
+        "information": [
+          "三场",
+          "考核合格",
+          "1学分",
+          "13926338"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "28d34fc508e14f570f61829393b7816387c6f42a01dc7c2a00b8b28d10129470"
+    },
+    {
+      "id": "R8-RES-18",
+      "sourceSha256": "f5dc1b2761db64360fb938eedf0e4ffba5f4c08f65e49b22e55c30db5514af70",
+      "referenceTime": "2025-09-03T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "校园卡",
+            "verbs": [
+              "领取",
+              "办理"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          },
+          {
+            "object": "虚拟卡",
+            "verbs": [
+              "绑定",
+              "完成",
+              "办理"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          },
+          {
+            "object": "照片",
+            "verbs": [
+              "发送",
+              "发",
+              "提交"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "校园卡",
+            "verbs": [
+              "领取",
+              "办理"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          },
+          {
+            "object": "虚拟卡",
+            "verbs": [
+              "绑定",
+              "完成",
+              "办理"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          },
+          {
+            "object": "照片",
+            "verbs": [
+              "发送",
+              "发",
+              "提交"
+            ],
+            "unknownEligibility": true,
+            "channel": "contact@example.invalid",
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "materials": [
+          "身份证",
+          "证件照",
+          "介绍信"
+        ],
+        "information": [
+          "9",
+          "4",
+          "5",
+          "石牌",
+          "大学城",
+          "南海",
+          "滨海",
+          "9:00",
+          "12:30",
+          "17:30",
+          "17:00",
+          "11:00",
+          "11:30",
+          "免费",
+          "无",
+          "预充值",
+          "缺少照片"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "9eba61207cf9011bdfc42fb174bf5b85770feea6d64759879ba24ac3a074823a"
+    },
+    {
+      "id": "R8-RES-19",
+      "sourceSha256": "72a0e912283b005b1d62355ace7d993eeb2ee78294678de97034b80e2211279a",
+      "referenceTime": "2025-03-03T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "补",
+            "verbs": [
+              "申请",
+              "报名",
+              "提交",
+              "办理"
+            ],
+            "deadline": "2025-03-10",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "补",
+            "verbs": [
+              "申请",
+              "报名",
+              "提交",
+              "办理"
+            ],
+            "deadline": "2025-03-10",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "2024",
+          "2025",
+          "旷考",
+          "作弊",
+          "不及格",
+          "复学",
+          "退役",
+          "不得",
+          "休学",
+          "未修读",
+          "另行通知",
+          "3月下旬",
+          "第四周"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "80792714009241439ce3cd0121a297425199c137561db31c151b1b65bcccd8c3"
+    },
+    {
+      "id": "R8-RES-20",
+      "sourceSha256": "af32296abf560297fa6893a34bfb20e2f5f7eb7916df19ea8baebf4fac5832b3",
+      "referenceTime": "2025-09-28T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex / single-author / model-assisted / provisional",
+      "core": {
+        "tasks": [
+          {
+            "object": "异议",
+            "verbs": [
+              "反映",
+              "提交",
+              "反馈",
+              "提出"
+            ],
+            "deadline": "2025-10-11",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "异议",
+            "verbs": [
+              "反映",
+              "提交",
+              "反馈",
+              "提出"
+            ],
+            "deadline": "2025-10-11",
+            "precision": "date_only",
+            "unknownEligibility": true,
+            "channel": "209"
+          }
+        ],
+        "events": [],
+        "information": [
+          "公示",
+          "207",
+          "实名",
+          "书面",
+          "无异议"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "Mechanical projection of pre-existing source-authored v6 minimum. No model output read to create this reference. Missing key times retained as unknown; source-based supplements require separate recorded amendment before new outputs.",
+      "sourceReferenceVersion": "product-reserved-r8-reference-v6-20261021-1",
+      "sourceReferenceSha256": "50495a8bdd46df1cd9d455b422a63c8d9469937e16a09666e50754a65b41d3f9"
+    }
+  ]
+}
