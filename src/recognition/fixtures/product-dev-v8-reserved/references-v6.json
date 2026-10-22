@@ -1,0 +1,629 @@
+{
+  "version": "product-reserved-r9-reference-v6-20261022-1",
+  "createdAt": "2026-10-22T06:21:42.220Z",
+  "role": "source-authored; prior to outputs",
+  "rows": [
+    {
+      "id": "R9-RES-01",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-10-02T09:00",
+            "end": "2026-10-02T10:00",
+            "location": "建设路"
+          },
+          {
+            "object": "停电",
+            "start": "2026-10-11T09:00",
+            "end": "2026-10-11T10:00",
+            "location": "建设路"
+          }
+        ],
+        "information": [
+          "东",
+          "西校区",
+          "第一家属区",
+          "提前送电不再另行通知",
+          "停电停水准备"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-02",
+      "reference": {
+        "tasks": [
+          {
+            "object": "户口迁入",
+            "verbs": [
+              "办理",
+              "迁入"
+            ],
+            "windows": [
+              {
+                "start": "2026-10-09",
+                "end": "2026-10-31"
+              }
+            ],
+            "unknownEligibility": true
+          },
+          {
+            "object": "身份证",
+            "verbs": [
+              "领取"
+            ],
+            "window": {
+              "start": "2026-09-24",
+              "end": "2026-09-24"
+            },
+            "unknownEligibility": true,
+            "material": "校园卡",
+            "channel": "基嘉楼警务室"
+          }
+        ],
+        "events": [],
+        "information": [
+          "第一批",
+          "暂停办理",
+          "校园卡或学生证"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-03",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "延时开放",
+            "start": "2026-10-26",
+            "end": null,
+            "location": "自习区"
+          }
+        ],
+        "information": [
+          "赛罕馆",
+          "盛乐馆",
+          "23:00",
+          "其余区域",
+          "22:00",
+          "22:50",
+          "严禁占座"
+        ],
+        "sourceDisputes": [
+          "这是持续服务时段，不得生成每天连续固定占用；23:00是服务结束，不是学生提交截止。"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-04",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "讲座",
+            "start": "2026-09-18T14:30",
+            "end": "2026-09-18T15:30",
+            "location": "北校区大礼堂",
+            "unknownEligibility": true
+          }
+        ],
+        "information": [
+          "2026级",
+          "提前",
+          "10",
+          "签到",
+          "不得迟到",
+          "静音",
+          "学习记录"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-05",
+      "reference": {
+        "tasks": [
+          {
+            "object": "证书和纪念品",
+            "verbs": [
+              "领取"
+            ],
+            "deadlineUnknown": true,
+            "channelUnknown": true,
+            "unknownEligibility": true,
+            "material": "校园卡"
+          }
+        ],
+        "events": [],
+        "information": [
+          "名单",
+          "时间",
+          "地点",
+          "见附件",
+          "代领人和获奖人的校园卡",
+          "省级奖项",
+          "另行通知"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-06",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "英语竞赛",
+            "start": "2025-05-11T09:00",
+            "end": "2025-05-11T11:00",
+            "location": "校本部和北校区",
+            "unknownEligibility": true
+          }
+        ],
+        "information": [
+          "原定",
+          "4月13日",
+          "延期",
+          "报名的学生直接参加决赛"
+        ],
+        "sourceDisputes": [
+          "标题/正文“初赛”与末句“直接参加决赛”同时保留；不据此强造两场独立赛事。"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-07",
+      "reference": {
+        "tasks": [
+          {
+            "object": "参会人员名单",
+            "verbs": [
+              "反馈",
+              "提交",
+              "报送"
+            ],
+            "deadline": "2025-11-26T18:00",
+            "unknownEligibility": true,
+            "channel": "[邮箱]"
+          }
+        ],
+        "events": [
+          {
+            "object": "讲座",
+            "start": "2025-11-28T15:30",
+            "end": null,
+            "location": "A01-309",
+            "unknownEligibility": true
+          }
+        ],
+        "information": [
+          "提前",
+          "15",
+          "签到",
+          "签退",
+          "2",
+          "学时"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-08",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "集成电路工程领域前沿讲座",
+            "start": "2026-09-20T14:30",
+            "end": "2026-09-20T16:00",
+            "location": "A01-313",
+            "unknownEligibility": true
+          }
+        ],
+        "information": [
+          "原定9月18日",
+          "6-7节",
+          "相互转告"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-09",
+      "reference": {
+        "tasks": [
+          {
+            "object": "成绩复查",
+            "verbs": [
+              "申请",
+              "提交"
+            ],
+            "windows": [
+              {
+                "start": "2026-09-22",
+                "end": "2026-09-30"
+              }
+            ],
+            "unknownEligibility": true,
+            "channel": "学习平台"
+          }
+        ],
+        "events": [],
+        "information": [
+          "截至2026年9月21日",
+          "错登",
+          "漏登",
+          "漏评",
+          "评分标准",
+          "不属于",
+          "最终结论"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-10",
+      "reference": {
+        "tasks": [
+          {
+            "object": "用电设备",
+            "verbs": [
+              "关停",
+              "关闭"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-10-09T00:00",
+            "end": "2026-10-09T06:00",
+            "location": "丹枫园校区"
+          }
+        ],
+        "information": [
+          "1-35栋宿舍",
+          "贵重电子设备",
+          "竞秀楼",
+          "匡庐苑小区"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-11",
+      "reference": {
+        "tasks": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取",
+              "邮寄"
+            ],
+            "windows": [
+              {
+                "start": "2025-11-03T08:00",
+                "end": "2025-11-07T17:00"
+              }
+            ],
+            "unknownEligibility": true,
+            "channel": "303办公室"
+          }
+        ],
+        "events": [],
+        "information": [
+          "通过",
+          "BIM",
+          "第三实验楼",
+          "顺丰到付",
+          "确认邮寄地址及电话"
+        ],
+        "sourceDisputes": [
+          "现场与邮寄为替代办理方式，不能要求两种都完成；窗口8:00-17:00不表示连续昼夜开放。"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-12",
+      "reference": {
+        "tasks": [
+          {
+            "object": "课程大作业",
+            "verbs": [
+              "提交",
+              "撰写",
+              "发送"
+            ],
+            "deadline": "2026-09-28T23:59",
+            "unknownEligibility": true,
+            "channel": "任课老师邮箱",
+            "material": "课程大作业",
+            "criteria": "WORD"
+          }
+        ],
+        "events": [],
+        "information": [
+          "自然辩证法概论",
+          "缓考",
+          "补考",
+          "邮件主题",
+          "文件名同邮件主题",
+          "名单见附件",
+          "学术道德"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-13",
+      "reference": {
+        "tasks": [
+          {
+            "object": "成绩复查",
+            "verbs": [
+              "申请",
+              "提交"
+            ],
+            "windows": [
+              {
+                "start": "2026-09-07T08:00",
+                "end": "2026-09-11T16:00"
+              }
+            ],
+            "unknownEligibility": true,
+            "channel": "教务信息系统"
+          },
+          {
+            "object": "成绩变更",
+            "verbs": [
+              "申请",
+              "提交"
+            ],
+            "windows": [
+              {
+                "start": "2026-09-14T08:00",
+                "end": "2026-09-18T16:00"
+              }
+            ],
+            "unknownEligibility": true,
+            "channel": "教务信息系统"
+          }
+        ],
+        "events": [],
+        "information": [
+          "尔雅",
+          "不一致",
+          "其余情况",
+          "不予受理",
+          "签字盖章",
+          "纸质",
+          "汇总表"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-14",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "闭馆",
+            "start": "2026-10-08",
+            "end": null
+          }
+        ],
+        "information": [
+          "另行通知",
+          "暂停",
+          "归还",
+          "自习",
+          "自动顺延",
+          "恢复开馆后"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-15",
+      "reference": {
+        "tasks": [
+          {
+            "object": "用电设备",
+            "verbs": [
+              "关闭"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          },
+          {
+            "object": "用电设备",
+            "verbs": [
+              "检查"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-10-06T12:00",
+            "end": "2026-10-06T20:00",
+            "location": "文体中心"
+          },
+          {
+            "object": "停电",
+            "start": "2026-10-07T06:00",
+            "end": "2026-10-07T13:00",
+            "location": "寒地实验室"
+          }
+        ],
+        "information": [
+          "建筑设计院",
+          "南区换热站",
+          "消防泵房",
+          "电梯",
+          "半个小时",
+          "切勿自行改动和检修电气线路"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-16",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-10-12T06:25",
+            "end": "2026-10-12T06:50",
+            "location": "拱宸桥校区"
+          },
+          {
+            "object": "停电",
+            "start": "2026-10-12T17:15",
+            "end": "2026-10-12T17:40",
+            "location": "拱宸桥校区"
+          },
+          {
+            "object": "停电",
+            "start": "2026-10-17T07:00",
+            "end": "2026-10-17T07:25",
+            "location": "拱宸桥校区"
+          }
+        ],
+        "information": [
+          "除致和园、树人之家外",
+          "10月12--16日",
+          "节约用电"
+        ],
+        "sourceDisputes": [
+          "原文“晚上17:15”时段标签与24小时钟点不一致；保留明确17:15，不改成其他时刻；需要核对提示。"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-17",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2025-11-28T12:00",
+            "unknownEligibility": true,
+            "channelUnknown": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "已提交",
+          "有效",
+          "无需重新提交",
+          "原通知链接",
+          "[二维码位置，未读取]"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-18",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "AI辅助科研全流程实训",
+            "start": "2026-09-23T14:00",
+            "end": "2026-09-23T15:00",
+            "location": "509"
+          }
+        ],
+        "information": [
+          "信息素养",
+          "来源",
+          "学术规范",
+          "伦理准则"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-19",
+      "reference": {
+        "tasks": [
+          {
+            "object": "相关人员和学生",
+            "verbs": [
+              "通知"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "教师资格考试",
+            "start": "2026-09-12",
+            "end": null,
+            "unknownEligibility": true
+          },
+          {
+            "object": "封楼",
+            "start": "2026-09-11T18:00",
+            "end": "2026-09-12T19:00",
+            "location": "敬业楼"
+          }
+        ],
+        "information": [
+          "与考试无关",
+          "禁止",
+          "暂停"
+        ]
+      }
+    },
+    {
+      "id": "R9-RES-20",
+      "reference": {
+        "tasks": [
+          {
+            "object": "学习用品",
+            "verbs": [
+              "带离"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "计算机等级考试",
+            "start": "2026-09-19",
+            "end": "2026-09-20",
+            "unknownEligibility": true
+          },
+          {
+            "object": "封闭",
+            "start": "2026-09-18T19:00",
+            "end": "2026-09-19T16:00",
+            "location": "光华校区一号楼"
+          },
+          {
+            "object": "封闭",
+            "start": "2026-09-18T19:00",
+            "end": "2026-09-19T18:30",
+            "location": "D、G、H栋"
+          },
+          {
+            "object": "封闭",
+            "start": "2026-09-19T18:30",
+            "end": "2026-09-20T19:00",
+            "location": "G栋513、514、408、409室"
+          }
+        ],
+        "information": [
+          "H栋401、402室",
+          "D栋201-204、301、302室",
+          "暂停上课",
+          "补课",
+          "不得进入"
+        ]
+      }
+    }
+  ]
+}

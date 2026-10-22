@@ -1,0 +1,1183 @@
+{
+  "version": "core-reference-1.0.0",
+  "createdAt": "2026-10-22T06:21:42.220Z",
+  "role": "reserved-r9-UNRUN",
+  "beforeAnyR9Output": true,
+  "rows": [
+    {
+      "id": "R9-RES-01",
+      "sourceSha256": "60a4ad33c5ca754f474aee1b6520701e09425a550cb45746d9a25a4e9674ed2b",
+      "referenceTime": "2026-09-29T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-10-02T09:00",
+            "end": "2026-10-02T10:00",
+            "location": "建设路"
+          },
+          {
+            "object": "停电",
+            "start": "2026-10-11T09:00",
+            "end": "2026-10-11T10:00",
+            "location": "建设路"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-10-02T09:00",
+            "end": "2026-10-02T10:00",
+            "location": "建设路"
+          },
+          {
+            "object": "停电",
+            "start": "2026-10-11T09:00",
+            "end": "2026-10-11T10:00",
+            "location": "建设路"
+          }
+        ],
+        "information": [
+          "东",
+          "西校区",
+          "第一家属区",
+          "提前送电不再另行通知",
+          "停电停水准备"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-02",
+      "sourceSha256": "e5591ba4a752bdb906f69f2f2ba0cf5510aeeed4060dff7a1b40e0e318505942",
+      "referenceTime": "2026-09-14T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [
+          {
+            "object": "户口迁入",
+            "verbs": [
+              "办理",
+              "迁入"
+            ],
+            "windows": [
+              {
+                "start": "2026-10-09",
+                "end": "2026-10-31"
+              }
+            ],
+            "unknownEligibility": true
+          },
+          {
+            "object": "身份证",
+            "verbs": [
+              "领取"
+            ],
+            "window": {
+              "start": "2026-09-24",
+              "end": "2026-09-24"
+            },
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "户口迁入",
+            "verbs": [
+              "办理",
+              "迁入"
+            ],
+            "windows": [
+              {
+                "start": "2026-10-09",
+                "end": "2026-10-31"
+              }
+            ],
+            "unknownEligibility": true
+          },
+          {
+            "object": "身份证",
+            "verbs": [
+              "领取"
+            ],
+            "window": {
+              "start": "2026-09-24",
+              "end": "2026-09-24"
+            },
+            "unknownEligibility": true,
+            "material": "校园卡",
+            "channel": "基嘉楼警务室"
+          }
+        ],
+        "events": [],
+        "information": [
+          "第一批",
+          "暂停办理",
+          "校园卡或学生证"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-03",
+      "sourceSha256": "a94e59b298456bfa847c4014d69b28f462fb0260c5e2617e9e0b75637c37f7e6",
+      "referenceTime": "2026-10-19T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "延时开放",
+            "start": "2026-10-26",
+            "end": null,
+            "location": "自习区"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "延时开放",
+            "start": "2026-10-26",
+            "end": null,
+            "location": "自习区"
+          }
+        ],
+        "information": [
+          "赛罕馆",
+          "盛乐馆",
+          "23:00",
+          "其余区域",
+          "22:00",
+          "22:50",
+          "严禁占座"
+        ],
+        "sourceDisputes": [
+          "这是持续服务时段，不得生成每天连续固定占用；23:00是服务结束，不是学生提交截止。"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-04",
+      "sourceSha256": "5b879edbefe7d97f670bf3dc29780d7b96b4a3aea54d429e5b7db20171ae31bf",
+      "referenceTime": "2026-09-18T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "讲座",
+            "start": "2026-09-18T14:30",
+            "end": "2026-09-18T15:30",
+            "location": "北校区大礼堂",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "讲座",
+            "start": "2026-09-18T14:30",
+            "end": "2026-09-18T15:30",
+            "location": "北校区大礼堂",
+            "unknownEligibility": true
+          }
+        ],
+        "information": [
+          "2026级",
+          "提前",
+          "10",
+          "签到",
+          "不得迟到",
+          "静音",
+          "学习记录"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-05",
+      "sourceSha256": "df86ab71181b6ef791e0bf412af86e44c84dacce8dada64b4c779c47cfa2e4a4",
+      "referenceTime": "2026-09-18T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [
+          {
+            "object": "证书和纪念品",
+            "verbs": [
+              "领取"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "证书和纪念品",
+            "verbs": [
+              "领取"
+            ],
+            "deadlineUnknown": true,
+            "channelUnknown": true,
+            "unknownEligibility": true,
+            "material": "校园卡"
+          }
+        ],
+        "events": [],
+        "information": [
+          "名单",
+          "时间",
+          "地点",
+          "见附件",
+          "代领人和获奖人的校园卡",
+          "省级奖项",
+          "另行通知"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-06",
+      "sourceSha256": "cccfadabccf44d5799fa080abae934f38abf0a682b9353d878d64e214fe2e644",
+      "referenceTime": "2025-04-12T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "英语竞赛",
+            "start": "2025-05-11T09:00",
+            "end": "2025-05-11T11:00",
+            "location": "校本部和北校区",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "英语竞赛",
+            "start": "2025-05-11T09:00",
+            "end": "2025-05-11T11:00",
+            "location": "校本部和北校区",
+            "unknownEligibility": true
+          }
+        ],
+        "information": [
+          "原定",
+          "4月13日",
+          "延期",
+          "报名的学生直接参加决赛"
+        ],
+        "sourceDisputes": [
+          "标题/正文“初赛”与末句“直接参加决赛”同时保留；不据此强造两场独立赛事。"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-07",
+      "sourceSha256": "4736b4156c1329dffc7a9580c4c9ad7299fbda81189ebb579d438d6007e49c52",
+      "referenceTime": "2025-11-24T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [
+          {
+            "object": "参会人员名单",
+            "verbs": [
+              "反馈",
+              "提交",
+              "报送"
+            ],
+            "deadline": "2025-11-26T18:00",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "讲座",
+            "start": "2025-11-28T15:30",
+            "end": null,
+            "location": "A01-309",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "参会人员名单",
+            "verbs": [
+              "反馈",
+              "提交",
+              "报送"
+            ],
+            "deadline": "2025-11-26T18:00",
+            "unknownEligibility": true,
+            "channel": "[邮箱]"
+          }
+        ],
+        "events": [
+          {
+            "object": "讲座",
+            "start": "2025-11-28T15:30",
+            "end": null,
+            "location": "A01-309",
+            "unknownEligibility": true
+          }
+        ],
+        "information": [
+          "提前",
+          "15",
+          "签到",
+          "签退",
+          "2",
+          "学时"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-08",
+      "sourceSha256": "7458156b55d3806cc7805fe395851dd9c100edf9dc7fd4e0dbb01a55b782f650",
+      "referenceTime": "2026-09-14T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "集成电路工程领域前沿讲座",
+            "start": "2026-09-20T14:30",
+            "end": "2026-09-20T16:00",
+            "location": "A01-313",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "集成电路工程领域前沿讲座",
+            "start": "2026-09-20T14:30",
+            "end": "2026-09-20T16:00",
+            "location": "A01-313",
+            "unknownEligibility": true
+          }
+        ],
+        "information": [
+          "原定9月18日",
+          "6-7节",
+          "相互转告"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-09",
+      "sourceSha256": "940d576baf2b493e9cce584216fc19aad992c0eeb3dfb7dea9b4fac4c6c9c6e0",
+      "referenceTime": "2026-09-21T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [
+          {
+            "object": "成绩复查",
+            "verbs": [
+              "申请",
+              "提交"
+            ],
+            "windows": [
+              {
+                "start": "2026-09-22",
+                "end": "2026-09-30"
+              }
+            ],
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "成绩复查",
+            "verbs": [
+              "申请",
+              "提交"
+            ],
+            "windows": [
+              {
+                "start": "2026-09-22",
+                "end": "2026-09-30"
+              }
+            ],
+            "unknownEligibility": true,
+            "channel": "学习平台"
+          }
+        ],
+        "events": [],
+        "information": [
+          "截至2026年9月21日",
+          "错登",
+          "漏登",
+          "漏评",
+          "评分标准",
+          "不属于",
+          "最终结论"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-10",
+      "sourceSha256": "5bc566cdb3cc56f2e4e61abfdda3aaa4812e1e6e5bfb5ed89f7a2994d7c3dedf",
+      "referenceTime": "2026-10-08T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [
+          {
+            "object": "用电设备",
+            "verbs": [
+              "关停",
+              "关闭"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-10-09T00:00",
+            "end": "2026-10-09T06:00",
+            "location": "丹枫园校区"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "用电设备",
+            "verbs": [
+              "关停",
+              "关闭"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-10-09T00:00",
+            "end": "2026-10-09T06:00",
+            "location": "丹枫园校区"
+          }
+        ],
+        "information": [
+          "1-35栋宿舍",
+          "贵重电子设备",
+          "竞秀楼",
+          "匡庐苑小区"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-11",
+      "sourceSha256": "2613c7b660649d71837b5c7399777280618f112e80921c925f395235f53b2562",
+      "referenceTime": "2025-11-03T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取",
+              "邮寄"
+            ],
+            "windows": [
+              {
+                "start": "2025-11-03T08:00",
+                "end": "2025-11-07T17:00"
+              }
+            ],
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取",
+              "邮寄"
+            ],
+            "windows": [
+              {
+                "start": "2025-11-03T08:00",
+                "end": "2025-11-07T17:00"
+              }
+            ],
+            "unknownEligibility": true,
+            "channel": "303办公室"
+          }
+        ],
+        "events": [],
+        "information": [
+          "通过",
+          "BIM",
+          "第三实验楼",
+          "顺丰到付",
+          "确认邮寄地址及电话"
+        ],
+        "sourceDisputes": [
+          "现场与邮寄为替代办理方式，不能要求两种都完成；窗口8:00-17:00不表示连续昼夜开放。"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-12",
+      "sourceSha256": "9d572114bc76f6d27ffd7d3ec4dba541612b6904a8a4bfefea22a543c8017539",
+      "referenceTime": "2026-09-20T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [
+          {
+            "object": "课程大作业",
+            "verbs": [
+              "提交",
+              "撰写",
+              "发送"
+            ],
+            "deadline": "2026-09-28T23:59",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "课程大作业",
+            "verbs": [
+              "提交",
+              "撰写",
+              "发送"
+            ],
+            "deadline": "2026-09-28T23:59",
+            "unknownEligibility": true,
+            "channel": "任课老师邮箱",
+            "material": "课程大作业",
+            "criteria": "WORD"
+          }
+        ],
+        "events": [],
+        "information": [
+          "自然辩证法概论",
+          "缓考",
+          "补考",
+          "邮件主题",
+          "文件名同邮件主题",
+          "名单见附件",
+          "学术道德"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-13",
+      "sourceSha256": "ec73cc1b6d26745b80d1752dc318393c3eb42eb8a4ad5cfc85041aa5d30b8c46",
+      "referenceTime": "2026-09-02T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [
+          {
+            "object": "成绩复查",
+            "verbs": [
+              "申请",
+              "提交"
+            ],
+            "windows": [
+              {
+                "start": "2026-09-07T08:00",
+                "end": "2026-09-11T16:00"
+              }
+            ],
+            "unknownEligibility": true
+          },
+          {
+            "object": "成绩变更",
+            "verbs": [
+              "申请",
+              "提交"
+            ],
+            "windows": [
+              {
+                "start": "2026-09-14T08:00",
+                "end": "2026-09-18T16:00"
+              }
+            ],
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "成绩复查",
+            "verbs": [
+              "申请",
+              "提交"
+            ],
+            "windows": [
+              {
+                "start": "2026-09-07T08:00",
+                "end": "2026-09-11T16:00"
+              }
+            ],
+            "unknownEligibility": true,
+            "channel": "教务信息系统"
+          },
+          {
+            "object": "成绩变更",
+            "verbs": [
+              "申请",
+              "提交"
+            ],
+            "windows": [
+              {
+                "start": "2026-09-14T08:00",
+                "end": "2026-09-18T16:00"
+              }
+            ],
+            "unknownEligibility": true,
+            "channel": "教务信息系统"
+          }
+        ],
+        "events": [],
+        "information": [
+          "尔雅",
+          "不一致",
+          "其余情况",
+          "不予受理",
+          "签字盖章",
+          "纸质",
+          "汇总表"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-14",
+      "sourceSha256": "b4890ef154974d664274ef319623b788fb03344487275ec25de016bac07b79bf",
+      "referenceTime": "2026-10-08T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "闭馆",
+            "start": "2026-10-08",
+            "end": null
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "闭馆",
+            "start": "2026-10-08",
+            "end": null
+          }
+        ],
+        "information": [
+          "另行通知",
+          "暂停",
+          "归还",
+          "自习",
+          "自动顺延",
+          "恢复开馆后"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-15",
+      "sourceSha256": "a48318bf056af1fa746696066766b2c7ecb9962099e8d261e977a735d31397a3",
+      "referenceTime": "2026-10-03T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [
+          {
+            "object": "用电设备",
+            "verbs": [
+              "关闭"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          },
+          {
+            "object": "用电设备",
+            "verbs": [
+              "检查"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-10-06T12:00",
+            "end": "2026-10-06T20:00",
+            "location": "文体中心"
+          },
+          {
+            "object": "停电",
+            "start": "2026-10-07T06:00",
+            "end": "2026-10-07T13:00",
+            "location": "寒地实验室"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "用电设备",
+            "verbs": [
+              "关闭"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          },
+          {
+            "object": "用电设备",
+            "verbs": [
+              "检查"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-10-06T12:00",
+            "end": "2026-10-06T20:00",
+            "location": "文体中心"
+          },
+          {
+            "object": "停电",
+            "start": "2026-10-07T06:00",
+            "end": "2026-10-07T13:00",
+            "location": "寒地实验室"
+          }
+        ],
+        "information": [
+          "建筑设计院",
+          "南区换热站",
+          "消防泵房",
+          "电梯",
+          "半个小时",
+          "切勿自行改动和检修电气线路"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-16",
+      "sourceSha256": "b6a43787ebbad8b50f6575057d35812e035cd4457d5d9b59e8028d64c38bcacc",
+      "referenceTime": "2026-10-10T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-10-12T06:25",
+            "end": "2026-10-12T06:50",
+            "location": "拱宸桥校区"
+          },
+          {
+            "object": "停电",
+            "start": "2026-10-12T17:15",
+            "end": "2026-10-12T17:40",
+            "location": "拱宸桥校区"
+          },
+          {
+            "object": "停电",
+            "start": "2026-10-17T07:00",
+            "end": "2026-10-17T07:25",
+            "location": "拱宸桥校区"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2026-10-12T06:25",
+            "end": "2026-10-12T06:50",
+            "location": "拱宸桥校区"
+          },
+          {
+            "object": "停电",
+            "start": "2026-10-12T17:15",
+            "end": "2026-10-12T17:40",
+            "location": "拱宸桥校区"
+          },
+          {
+            "object": "停电",
+            "start": "2026-10-17T07:00",
+            "end": "2026-10-17T07:25",
+            "location": "拱宸桥校区"
+          }
+        ],
+        "information": [
+          "除致和园、树人之家外",
+          "10月12--16日",
+          "节约用电"
+        ],
+        "sourceDisputes": [
+          "原文“晚上17:15”时段标签与24小时钟点不一致；保留明确17:15，不改成其他时刻；需要核对提示。"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-17",
+      "sourceSha256": "ab883d0a707258a10bd9d7bafe74d0deded64d8dbffe047708b7d4fe94fbcec9",
+      "referenceTime": "2025-11-27T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2025-11-28T12:00",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "提交"
+            ],
+            "deadline": "2025-11-28T12:00",
+            "unknownEligibility": true,
+            "channelUnknown": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "已提交",
+          "有效",
+          "无需重新提交",
+          "原通知链接",
+          "[二维码位置，未读取]"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-18",
+      "sourceSha256": "6339e604ed1067fb97f732f0b9abe775fcfce13edfe08760271f4a1e12fb6550",
+      "referenceTime": "2026-09-20T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "AI辅助科研全流程实训",
+            "start": "2026-09-23T14:00",
+            "end": "2026-09-23T15:00",
+            "location": "509"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "AI辅助科研全流程实训",
+            "start": "2026-09-23T14:00",
+            "end": "2026-09-23T15:00",
+            "location": "509"
+          }
+        ],
+        "information": [
+          "信息素养",
+          "来源",
+          "学术规范",
+          "伦理准则"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-19",
+      "sourceSha256": "a1de2e83627316162f9efac72e0957cb4c627bc9a14ef2ef40c96d8b9db208ca",
+      "referenceTime": "2026-09-10T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [
+          {
+            "object": "相关人员和学生",
+            "verbs": [
+              "通知"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "教师资格考试",
+            "start": "2026-09-12",
+            "end": null,
+            "unknownEligibility": true
+          },
+          {
+            "object": "封楼",
+            "start": "2026-09-11T18:00",
+            "end": "2026-09-12T19:00",
+            "location": "敬业楼"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "相关人员和学生",
+            "verbs": [
+              "通知"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "教师资格考试",
+            "start": "2026-09-12",
+            "end": null,
+            "unknownEligibility": true
+          },
+          {
+            "object": "封楼",
+            "start": "2026-09-11T18:00",
+            "end": "2026-09-12T19:00",
+            "location": "敬业楼"
+          }
+        ],
+        "information": [
+          "与考试无关",
+          "禁止",
+          "暂停"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    },
+    {
+      "id": "R9-RES-20",
+      "sourceSha256": "2083dcdf23008a9a1faaafdd23b98a660a28b14a522288f8eb601368f526b761",
+      "referenceTime": "2026-09-16T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+      "core": {
+        "tasks": [
+          {
+            "object": "学习用品",
+            "verbs": [
+              "带离"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "计算机等级考试",
+            "start": "2026-09-19",
+            "end": "2026-09-20",
+            "unknownEligibility": true
+          },
+          {
+            "object": "封闭",
+            "start": "2026-09-18T19:00",
+            "end": "2026-09-19T16:00",
+            "location": "光华校区一号楼"
+          },
+          {
+            "object": "封闭",
+            "start": "2026-09-18T19:00",
+            "end": "2026-09-19T18:30",
+            "location": "D、G、H栋"
+          },
+          {
+            "object": "封闭",
+            "start": "2026-09-19T18:30",
+            "end": "2026-09-20T19:00",
+            "location": "G栋513、514、408、409室"
+          }
+        ],
+        "forbidden": [],
+        "obsoleteDates": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "学习用品",
+            "verbs": [
+              "带离"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "计算机等级考试",
+            "start": "2026-09-19",
+            "end": "2026-09-20",
+            "unknownEligibility": true
+          },
+          {
+            "object": "封闭",
+            "start": "2026-09-18T19:00",
+            "end": "2026-09-19T16:00",
+            "location": "光华校区一号楼"
+          },
+          {
+            "object": "封闭",
+            "start": "2026-09-18T19:00",
+            "end": "2026-09-19T18:30",
+            "location": "D、G、H栋"
+          },
+          {
+            "object": "封闭",
+            "start": "2026-09-19T18:30",
+            "end": "2026-09-20T19:00",
+            "location": "G栋513、514、408、409室"
+          }
+        ],
+        "information": [
+          "H栋401、402室",
+          "D栋201-204、301、302室",
+          "暂停上课",
+          "补课",
+          "不得进入"
+        ]
+      },
+      "preservedRequirements": [],
+      "method": "source-authored v6 minimum + mechanical core subset; no tested output used; alternate splits remain provisional source disputes"
+    }
+  ]
+}

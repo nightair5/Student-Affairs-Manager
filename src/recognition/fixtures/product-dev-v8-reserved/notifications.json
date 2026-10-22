@@ -1,0 +1,1197 @@
+[
+  {
+    "id": "R9-RES-01",
+    "acquisitionKey": "N06",
+    "scene": "停电",
+    "text": "校\n内\n各单位：\n由于国网新乡供电公司\n进行线路检修\n，为了配合供电局工作，我校计划于近期\n停电，请各单位做好停电停水准备。\n停电时间：\n10月2日（周五）9\n点\n-\n10\n点；\n10月11日（周日）9点-10点。\n停电范围：\n建设路\n东\n、\n西校区\n及第一家属区\n停电期间如有重大活动保电需求，请与后勤服务保障部能源保障中心联系，联系电话：\n[电话]。\n如停电计划有变更将另行通知，若提前送电不再另行通知。\n后勤服务保障部\n202\n6\n年\n9\n月\n29\n日",
+    "inputSourceTitle": "停电通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "停电",
+          "start": "2026-10-02T09:00",
+          "end": "2026-10-02T10:00",
+          "location": "建设路"
+        },
+        {
+          "object": "停电",
+          "start": "2026-10-11T09:00",
+          "end": "2026-10-11T10:00",
+          "location": "建设路"
+        }
+      ],
+      "information": [
+        "东",
+        "西校区",
+        "第一家属区",
+        "提前送电不再另行通知",
+        "停电停水准备"
+      ]
+    },
+    "referenceTime": "2026-09-29T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.htu.edu.cn/hqjt/2026/0929/c1475a406158/page.htm",
+      "acquiredAt": "2026-10-22T06:14:05.905Z",
+      "publicationDate": "2026-09-29",
+      "sourceTextSha256": "a615fc279da598b40f3d0914936e36e962acae824702b61af0162c116f1fe025",
+      "span": {
+        "start": 136,
+        "end": 369
+      },
+      "redactions": [
+        {
+          "type": "phone"
+        }
+      ],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-02",
+    "acquisitionKey": "N01",
+    "scene": "户口",
+    "text": "各位\n2026\n级新生：\n结合学校中秋、国庆假期安排，经与属地公安机关沟通，现将户口迁入及身份证领取事宜通知如下：\n一、户口迁入\n原定第一批户口迁入业务暂停办理。尚未办理的同学，请于第二批（\n2026\n年\n10\n月\n9\n日—\n10\n月\n31\n日）统一办理。\n二、身份证领取\n前期已办理户口迁入或身份证换领、补办的同学，可于\n2026\n年\n9\n月\n24\n日，到基嘉楼警务室领取身份证原件。\n三、注意事项\n请按时间节点办理，逾期将影响个人户籍手续进度。\n领证时请携带校园卡或学生证，以便核对信息。\n如有疑问，可到基嘉楼警务室咨询，电话：\n[电话]\n。\n祝中秋、国庆双节快乐，假期平安顺遂！\n保卫处\n2026\n年\n9\n月\n13\n日",
+    "inputSourceTitle": "关于2026级新生户口迁入及身份证领取的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "户口迁入",
+          "verbs": [
+            "办理",
+            "迁入"
+          ],
+          "windows": [
+            {
+              "start": "2026-10-09",
+              "end": "2026-10-31"
+            }
+          ],
+          "unknownEligibility": true
+        },
+        {
+          "object": "身份证",
+          "verbs": [
+            "领取"
+          ],
+          "window": {
+            "start": "2026-09-24",
+            "end": "2026-09-24"
+          },
+          "unknownEligibility": true,
+          "material": "校园卡",
+          "channel": "基嘉楼警务室"
+        }
+      ],
+      "events": [],
+      "information": [
+        "第一批",
+        "暂停办理",
+        "校园卡或学生证"
+      ]
+    },
+    "referenceTime": "2026-09-14T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://nuist110.nuist.edu.cn/2026/0914/c3247a301251/pagem.htm",
+      "acquiredAt": "2026-10-22T06:14:05.899Z",
+      "publicationDate": "2026-09-14",
+      "sourceTextSha256": "439f581c93f25dc10d502b72b793fdf1f4d83899bd6113c1623ccc1e8e06c288",
+      "span": {
+        "start": 421,
+        "end": 742
+      },
+      "redactions": [
+        {
+          "type": "phone"
+        }
+      ],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-03",
+    "acquisitionKey": "N18",
+    "scene": "延时开放",
+    "text": "各位师生读者：\n为助力广大同学考研、考公\n，优化馆舍空间服务保障，经研究决定，自\n10月26日\n起，两校区图书馆同步实施延时开放，指定自习区域闭馆时间由22:00延长至23:00，其余区域仍按原时间22:00闭馆。具体安排通知如下：\n一、延时开放区域\n赛罕馆：\n二楼中自习区、三楼东自习区\n盛乐馆：北楼\n中厅\n自习区\n二、读者须知\n请自觉遵守图书馆入馆管理规定，保持安静，爱护阅览桌椅、照明等馆内设施，严禁占座、喧哗、饮食等不文明行为，共同维护晚间学习环境。\n晚间\n22:50 起工作人员开始清场，请合理规划学习时间，有序离馆。\n延时期间\n，\n请\n注意人身及财物安全；如遇紧急情况，及时联系值班工作人员\n或校保卫处\n。\n内蒙古师范大学图书馆\n2026\n年\n10\n月\n19\n日",
+    "inputSourceTitle": "【业务通知】图书馆关于两校区启动晚间延时开放服务的通知-内蒙古师范大学图书馆",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "延时开放",
+          "start": "2026-10-26",
+          "end": null,
+          "location": "自习区"
+        }
+      ],
+      "information": [
+        "赛罕馆",
+        "盛乐馆",
+        "23:00",
+        "其余区域",
+        "22:00",
+        "22:50",
+        "严禁占座"
+      ],
+      "sourceDisputes": [
+        "这是持续服务时段，不得生成每天连续固定占用；23:00是服务结束，不是学生提交截止。"
+      ]
+    },
+    "referenceTime": "2026-10-19T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://lib.imnu.edu.cn/info/1105/12946.htm",
+      "acquiredAt": "2026-10-22T06:14:05.913Z",
+      "publicationDate": "2026-10-19",
+      "sourceTextSha256": "bd4febe8b95f92a770c7d0bcd61c048325122c3136b969f8aca690f7f236b68b",
+      "span": {
+        "start": 337,
+        "end": 675
+      },
+      "redactions": [],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-04",
+    "acquisitionKey": "N12",
+    "scene": "反恐防暴",
+    "text": "各位\n2026级本一、研一新生：\n为进一步强化新生安全防范意识，提升同学们的反恐防暴自救能力，引导学生树立正确的网络安全观，自觉做到文明上网、守法上网，根据学校统一安排，将开展校园反恐防暴、文明守法上网专题讲座。现将具体事宜通知如下：\n一、讲座时间\n2026年9月18日（本周五）下午2:30—3:30\n二、讲座地点\n北校区大礼堂\n三、参与对象\n2026级本科一年级、研究生一年级全体新生\n四、相关要求\n1. 请全体参会新生高度重视本次讲座，提前合理安排个人时间，务必于讲座开始前10分钟有序到场签到、就座，不得迟到、早退、缺席。\n2. 参会期间自觉遵守会场纪律，保持安静整洁，将手机调至静音或关机状态，认真聆听讲座、做好学习记录。\n3. 严格遵守校园活动秩序，文明参会，展现新生良好精神风貌。\n特此通知。\n北校区综合管理中心\n2026年9月18日",
+    "inputSourceTitle": "关于开展反恐防暴与文明守法上网专题讲座的通知-郑州大学北校区综合管理中心",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "讲座",
+          "start": "2026-09-18T14:30",
+          "end": "2026-09-18T15:30",
+          "location": "北校区大礼堂",
+          "unknownEligibility": true
+        }
+      ],
+      "information": [
+        "2026级",
+        "提前",
+        "10",
+        "签到",
+        "不得迟到",
+        "静音",
+        "学习记录"
+      ]
+    },
+    "referenceTime": "2026-09-18T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www5.zzu.edu.cn/bgzx/info/1242/1936.htm",
+      "acquiredAt": "2026-10-22T06:14:05.909Z",
+      "publicationDate": "2026-09-18",
+      "sourceTextSha256": "a532cd8c6c32bbf96ba94a58dfd35f7be37078700ae1d510475f051b5cba4f9e",
+      "span": {
+        "start": 313,
+        "end": 688
+      },
+      "redactions": [],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-05",
+    "acquisitionKey": "N19",
+    "scene": "纪念品",
+    "text": "各位获奖同学： 自学校2026年读书文化节启动以来，受到全校师生的广泛关注和积极参与，各项活动有序推进，营造了深厚的校园读书文化氛围。经过几个月的精心组织，比赛类活动已全部结束，经专家评审，共评选出一等奖14人、二等奖34人、三等奖59人、优秀奖39人，请尚未领取证书和纪念品的同学在规定时间内到指定地点领取（持本人校园卡，如代领需持代领人和获奖人的校园卡），具体获奖名单及领取时间、地点见附件。 另：关于省级奖项证书和纪念品的领取另行通知。 研祥图书馆 2026年9月18日",
+    "inputSourceTitle": "关于领取2026年读书文化节比赛类活动获奖纪念品的通知-沈阳建筑大学图书馆",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "证书和纪念品",
+          "verbs": [
+            "领取"
+          ],
+          "deadlineUnknown": true,
+          "channelUnknown": true,
+          "unknownEligibility": true,
+          "material": "校园卡"
+        }
+      ],
+      "events": [],
+      "information": [
+        "名单",
+        "时间",
+        "地点",
+        "见附件",
+        "代领人和获奖人的校园卡",
+        "省级奖项",
+        "另行通知"
+      ]
+    },
+    "referenceTime": "2026-09-18T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://tsg.sjzu.edu.cn/info/1002/8356.htm",
+      "acquiredAt": "2026-10-22T06:14:05.913Z",
+      "publicationDate": "2026-09-18",
+      "sourceTextSha256": "e1ae3751e0144e9b501f61fd8aa7ad5e42569c104b3605592d722525e578ffc8",
+      "span": {
+        "start": 1775,
+        "end": 2013
+      },
+      "redactions": [],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-06",
+    "acquisitionKey": "N07",
+    "scene": "延期",
+    "text": "各位师生：\n鉴于北京市4月11-14日恶劣天气影响，以及教育部、我校相关通知要求，原定于4月13日（周日）在校本部和北校区同时举办的“2025年全国大学生英语竞赛初赛”，延期到5月11日（上午9:00-11:00）。报名的学生直接参加决赛。\n特此通知\n国际合作与交流处\n（国际学院、港澳台事务办公室）\n2025\n年4月12日",
+    "inputSourceTitle": "北京服装学院国际合作与交流处\\港澳台事务办公室",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "英语竞赛",
+          "start": "2025-05-11T09:00",
+          "end": "2025-05-11T11:00",
+          "location": "校本部和北校区",
+          "unknownEligibility": true
+        }
+      ],
+      "information": [
+        "原定",
+        "4月13日",
+        "延期",
+        "报名的学生直接参加决赛"
+      ],
+      "sourceDisputes": [
+        "标题/正文“初赛”与末句“直接参加决赛”同时保留；不据此强造两场独立赛事。"
+      ]
+    },
+    "referenceTime": "2025-04-12T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://ghc.bift.edu.cn/xwkd/tzgg/be616f22995043bea0f32920190fc541.htm",
+      "acquiredAt": "2026-10-22T06:14:05.905Z",
+      "publicationDate": "2025-04-12",
+      "sourceTextSha256": "3f9b61ff3e265779eb424d4f8864c623527b1226ef37bbae269fad67e20cb70f",
+      "span": {
+        "start": 266,
+        "end": 429
+      },
+      "redactions": [],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-07",
+    "acquisitionKey": "N02",
+    "scene": "专题讲座",
+    "text": "为深入学习党的二十届四中全会的重大意义、丰富内涵与核心要义，将学习成果转化为攻坚克难、科技创新的强大动力，学院联合科创中心举办党的二十届四中全会精神专题讲座活动。现将有关事项通知如下：\n一、活动时间\n2025\n年\n11\n月\n28\n日（周五）\n15:30\n二、活动地点\n水博园区\nA01-309\n会议室\n三、讲座主题\n理解世界百年未有之大变局，把握下一个五年高质量发展新方向\n四、主讲嘉宾\n[姓名]，浙江大学马克思主义学院副院长（主持工作）、党委副书记，浙江大学\n“\n百人计划\n”\n研究员，浙江大学马克思主义学院党的二十届四中全会精神宣讲团成员。\n五、参加人员\n本次会议纳入学院分党校培训，计\n2\n学时。\n请各党支部书记做好组织工作，并将参会人员名单于\n11\n月\n26\n日\n18\n:\n00\n前反馈至\n[邮箱]\n。\n通知各参会人员提前\n15\n分钟进场，钉钉扫码签到和签退。\n联系人：[姓名]\n联系电话：\n[电话]\n集成电路学院党委\n集成电路学院分党校\n2025\n年\n11\n月\n24\n日",
+    "inputSourceTitle": "关于召开党的二十届四中全会精神专题讲座的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "参会人员名单",
+          "verbs": [
+            "反馈",
+            "提交",
+            "报送"
+          ],
+          "deadline": "2025-11-26T18:00",
+          "unknownEligibility": true,
+          "channel": "[邮箱]"
+        }
+      ],
+      "events": [
+        {
+          "object": "讲座",
+          "start": "2025-11-28T15:30",
+          "end": null,
+          "location": "A01-309",
+          "unknownEligibility": true
+        }
+      ],
+      "information": [
+        "提前",
+        "15",
+        "签到",
+        "签退",
+        "2",
+        "学时"
+      ]
+    },
+    "referenceTime": "2025-11-24T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://ic.zju.edu.cn/2025/1124/c81381a3109244/page.htm",
+      "acquiredAt": "2026-10-22T06:14:05.902Z",
+      "publicationDate": "2025-11-24",
+      "sourceTextSha256": "da868bd257225e28561edf4c9a224e4e03df4cf491c8f98962243478a8c41354",
+      "span": {
+        "start": 782,
+        "end": 1243
+      },
+      "redactions": [
+        {
+          "type": "email"
+        },
+        {
+          "type": "phone"
+        },
+        {
+          "type": "personName"
+        },
+        {
+          "type": "personName"
+        }
+      ],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-08",
+    "acquisitionKey": "N15",
+    "scene": "调课",
+    "text": "有关研究生：\n任课老师因事申请调课，原定9月18日（周五）6-7节的《集成电路工程领域前沿讲座》课\n程调整至9月20日（周日）14:30-16:00，上课地点为杭州国际\n科创中心水博园A01-313\n。请选课同学相互转告，谢谢！\n教育教学办公室\n2026年9月14日",
+    "inputSourceTitle": "关于《集成电路工程领域前沿讲座》课程9月18日（周五）调课一次的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "集成电路工程领域前沿讲座",
+          "start": "2026-09-20T14:30",
+          "end": "2026-09-20T16:00",
+          "location": "A01-313",
+          "unknownEligibility": true
+        }
+      ],
+      "information": [
+        "原定9月18日",
+        "6-7节",
+        "相互转告"
+      ]
+    },
+    "referenceTime": "2026-09-14T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://ic.zju.edu.cn/2026/0914/c54013a3202372/page.htm",
+      "acquiredAt": "2026-10-22T06:14:05.911Z",
+      "publicationDate": "2026-09-14",
+      "sourceTextSha256": "3107fa06f9d3ec03076538a8f5e65e8962fdcceb03a7eea05e1487ac0cf2d1f8",
+      "span": {
+        "start": 806,
+        "end": 940
+      },
+      "redactions": [],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-09",
+    "acquisitionKey": "N14",
+    "scene": "成绩复查",
+    "text": "各\n校外教学点、所有在籍学员\n：\n为规范我校高等学历继续教育考试课程成绩管理，保障学员合法权益，现将线下课程成绩复查工作有关事项通知如下：\n一、复查范围\n本批次成绩复查范围为：截至2026年9月21日已结束考试并完成成绩录入的全部线下课程。\n注意：本批次复查结束后，此前线下成绩不再受理复查申请，请学员务必重视并按时查询核对。\n二、复查时间\n受理时间为2026年9月22日至9月30日，须在此期间内完成线下课程成绩复查申请的提交（详细操作流程见附件1），逾期不再受理。\n三、复查内容\n（一）答卷总分合计有无错误；\n（二）各题得分有无错登、漏登；\n（三）试卷有无漏评；\n（四）考生姓名、课程等个人信息与答卷是否一致。\n注意：评分标准、评分细则及评分尺度等实体评判事项不属于复查范围；除漏评等确属评阅差错的情形外，不重新评阅试卷。\n四、复查程序\n（一）学生本人在规定时间内登录学习平台（详细操作流程见附件1），如实填写并提交成绩复查申请。\n注意：成绩复查须由学生本人提出申请，理由应正当合理，并明确所疑课程及事项；对不合理诉求，学校不予受理。\n（二）继续教育学院收到申请后，坚持公正、客观、准确的原则，组织专人复核。\n（三）复核结束后，将复核结果反馈至学生端，供学生本人查阅。\n五、结果处理\n（一）成绩复查结束后，由继续教育学院将复核名单及成绩下载打印，归档留存；\n（二）成绩复查结果为最终结论，复查后确认成绩有误的，按更正后成绩计。\n咨询\n电话\n：\n继续教育学院教学管理办公室，[电话]（工作日8:30—11:30、14:30—17:00）\n齐齐哈尔大学继续教育学院\n2026年9月\n21\n日",
+    "inputSourceTitle": "线下课程成绩复查通知-继续教育学院",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "成绩复查",
+          "verbs": [
+            "申请",
+            "提交"
+          ],
+          "windows": [
+            {
+              "start": "2026-09-22",
+              "end": "2026-09-30"
+            }
+          ],
+          "unknownEligibility": true,
+          "channel": "学习平台"
+        }
+      ],
+      "events": [],
+      "information": [
+        "截至2026年9月21日",
+        "错登",
+        "漏登",
+        "漏评",
+        "评分标准",
+        "不属于",
+        "最终结论"
+      ]
+    },
+    "referenceTime": "2026-09-21T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jxjy.qqhru.edu.cn/info/1119/2176.htm",
+      "acquiredAt": "2026-10-22T06:14:05.910Z",
+      "publicationDate": "2026-09-21",
+      "sourceTextSha256": "e7abfd686d983a4420064c1069d6c099f4efb99f4e84466c801817666e737e95",
+      "span": {
+        "start": 208,
+        "end": 912
+      },
+      "redactions": [
+        {
+          "type": "phone"
+        }
+      ],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-10",
+    "acquisitionKey": "N04",
+    "scene": "停电",
+    "text": "各单位、各部门：\n因三号开闭所进行设备检修，需停电，相关事宜通知如下：\n停电时间：\n2026年10月9日00:00—10月9日06:00\n停电范围：\n丹枫园校区1-35栋宿舍、四号服务楼部分商户、向学楼、竞秀楼、学生一食堂、智能制造中心、匡庐苑小区\n停电期间上述区域将出现断电，请各位师生提前做好断电准备，妥善存放贵重电子设备，提前关停用电设备，避免设备受损。\n由此给大家学习、生活带来的不便，敬请谅解，感谢全体师生的理解与配合！\n特此通知！\n后勤管理处\n2026年10月8日",
+    "inputSourceTitle": "停电通知-九江学院校园网",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "用电设备",
+          "verbs": [
+            "关停",
+            "关闭"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        }
+      ],
+      "events": [
+        {
+          "object": "停电",
+          "start": "2026-10-09T00:00",
+          "end": "2026-10-09T06:00",
+          "location": "丹枫园校区"
+        }
+      ],
+      "information": [
+        "1-35栋宿舍",
+        "贵重电子设备",
+        "竞秀楼",
+        "匡庐苑小区"
+      ]
+    },
+    "referenceTime": "2026-10-08T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://tyxy1.jju.edu.cn/info/1044/93271.htm",
+      "acquiredAt": "2026-10-22T06:14:05.903Z",
+      "publicationDate": "2026-10-08",
+      "sourceTextSha256": "5ee690c2f75f4b0672c53286c68e2bd1f8befd34bb0b2a40ffae45616a3af6f9",
+      "span": {
+        "start": 448,
+        "end": 687
+      },
+      "redactions": [],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-11",
+    "acquisitionKey": "N20",
+    "scene": "证书",
+    "text": "长春工程学院考点的考生们注意了，通过2025年第二十五期全国BIM技能等级考试的考生们从即日起可以邮寄或自行领取证书了,领取方式如下：\n1.方式一：现场领取\n领取地点：\n长春工程学院湖西校区第三实验楼-BIM技术产业学院教育中心（3号门附近）-3楼303办公室\n领取时间：\n即日\n-11月07日\n（8：00-17：00）\n联系人：\n[姓名][电话]\n2.方式二：邮寄\n邮寄方式：\n如不方便现场领取，可选择顺丰到付方式，邮费由考生承担。\n注：\n如选择邮寄方式，需向考点证书发放联系人确认邮寄地址及电话。\n联系人：\n[姓名][电话]",
+    "inputSourceTitle": "第二十五期全国BIM技能等级证书领取通知-BIM产业学院",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "证书",
+          "verbs": [
+            "领取",
+            "邮寄"
+          ],
+          "windows": [
+            {
+              "start": "2025-11-03T08:00",
+              "end": "2025-11-07T17:00"
+            }
+          ],
+          "unknownEligibility": true,
+          "channel": "303办公室"
+        }
+      ],
+      "events": [],
+      "information": [
+        "通过",
+        "BIM",
+        "第三实验楼",
+        "顺丰到付",
+        "确认邮寄地址及电话"
+      ],
+      "sourceDisputes": [
+        "现场与邮寄为替代办理方式，不能要求两种都完成；窗口8:00-17:00不表示连续昼夜开放。"
+      ]
+    },
+    "referenceTime": "2025-11-03T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://bim.ccit.edu.cn/info/1012/1798.htm",
+      "acquiredAt": "2026-10-22T06:14:05.914Z",
+      "publicationDate": "2025-11-03",
+      "sourceTextSha256": "12fc110c892fe119937430c1371fbb7c2202111fb34e111d760680025aa2f54e",
+      "span": {
+        "start": 141,
+        "end": 416
+      },
+      "redactions": [
+        {
+          "type": "phone"
+        },
+        {
+          "type": "phone"
+        },
+        {
+          "type": "personName"
+        }
+      ],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-12",
+    "acquisitionKey": "N16",
+    "scene": "课程大作业",
+    "text": "2026\n年秋季学期研究生公共课缓考、补考即将进行，符合缓考和补考要求的学生需参加本次考试。现将具体事项通知如下：\n一、考核课程\n《自然辩证法概论》\n二、考试形式与时间安排\n考生按《自然辩证法概论》课程要求，在规定时间内独立重新撰写并提交课程大作业，并于\n9\n月\n28\n日\n23:59\n前完成课程大作业撰写并提交。\n三、论文提交方式\n考生将完成的课程大作业以电子邮件附件的形式，发送至任课老师邮箱，邮件主题统一命名为：“《自然辩证法概论》补考\n/\n缓考\n-\n姓名\n-\n学号\n-\n作业主标题”，附件采用微软\n2003-2007\n版本兼容的\nWORD\n格式，文件名同邮件主题。\n参加本次缓考、补考的考生名单见附件。\n四、补考注意事项\n诚信要求：课程大作业的撰写必须严格遵守学术道德规范。严重违反学术道德规范的行为一旦被发现，将作成绩不及格处理。\n质量要求：课程大作业撰写的格式、体裁、篇幅、语法、词语等要求按照《自然辩证法概论》课程要求。\n未按时提交补考课程大作业的学生，将视为自动放弃本次补考机会。\n其他未尽事宜，请咨询研究生院[姓名]，联系电话：\n[电话]\n。\n广西大学研究生院\n2026\n年\n9\n月\n20\n日",
+    "inputSourceTitle": "2026年秋季学期研究生公共课缓考、补考安排-广西大学研究生院",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "课程大作业",
+          "verbs": [
+            "提交",
+            "撰写",
+            "发送"
+          ],
+          "deadline": "2026-09-28T23:59",
+          "unknownEligibility": true,
+          "channel": "任课老师邮箱",
+          "material": "课程大作业",
+          "criteria": "WORD"
+        }
+      ],
+      "events": [],
+      "information": [
+        "自然辩证法概论",
+        "缓考",
+        "补考",
+        "邮件主题",
+        "文件名同邮件主题",
+        "名单见附件",
+        "学术道德"
+      ]
+    },
+    "referenceTime": "2026-09-20T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://yjsc.gxu.edu.cn/info/1022/4753.htm",
+      "acquiredAt": "2026-10-22T06:14:05.911Z",
+      "publicationDate": "2026-09-20",
+      "sourceTextSha256": "33340c2bc1af769fad79b01e387588252f549332ba74ca3a48844f14bdf992de",
+      "span": {
+        "start": 360,
+        "end": 868
+      },
+      "redactions": [
+        {
+          "type": "phone"
+        },
+        {
+          "type": "personName"
+        }
+      ],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-13",
+    "acquisitionKey": "N13",
+    "scene": "成绩复查",
+    "text": "一、成绩核查\n202\n5\n—202\n6\n学年第\n二\n学期考试成绩公布后，学生若对本人评分结果有异议，可在开学后第一周（即\n9\n月\n7\n日\n8:00至\n9\n月\n11\n日\n16:00）通过教务信息系统学生端成绩查询板块的复查功能，填写复查原因后提交成绩复查申请。开课单位将组织相关教师开展复核工作，并于一周内（即\n9\n月\n14\n日\n8:00至\n9\n月\n1\n8\n日\n16:00）通过教务信息系统\n向学生反馈复核结果。\n线上通识教育选修课（\n课程名称含\n“尔雅”字样的课程\n）成绩已在对应平台完成复核。若学生查询后发现教务信息系统成绩与学习平台成绩不一致，可直接通过教务信息系统提交复核申请，并在复查原因中注明：教务信息系统成绩（分数）与学习平台成绩（分数）不一致。其余情况的复查申请，教务处一律不予受理。\n二、成绩变更\n成绩提交完成后，若因特殊情况确需更正成绩，或是学生提交成绩复查申请后发现原成绩存在问题，任课教师需在\n9\n月\n14\n日\n8:00至\n9\n月\n1\n8\n日\n16:00期间提交成绩变更申请，经开课单位审查同意后报教务处备案。\n学生提出的成绩变更要求，需经开课单位教学指导委员会审查，确认成绩变更的准确性与有效性，同时报送签字盖章后的纸质版成绩变更汇总表。\n成绩变更申请须由开课单位在教务信息系统中提交，\n教务处\n将\n依据\n开课单位\n报送\n的\n纸质成绩变更汇总表\n，对\n系统内提交的申请进行审核\n，\n审核通过后\n完成\n学生成绩\n的\n更正。任课教师负责对学生试卷、\n课程考核评价分析\n、考试成绩登记表等相关材料\n完成\n更正并签字\n确认\n。\n请各学院通知学生在规定时间内\n完成成绩复查工作，超出规定时限的核查、变更申请，一律不予受理。\n附件1：成绩复查操作流程.docx\n附件2：成绩核查、成绩变更申请表（共四）.xls\n教务处\n20\n2\n6\n年\n9\n月\n3\n日",
+    "inputSourceTitle": "关于做好2026—2027学年第一学期成绩复查工作的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "成绩复查",
+          "verbs": [
+            "申请",
+            "提交"
+          ],
+          "windows": [
+            {
+              "start": "2026-09-07T08:00",
+              "end": "2026-09-11T16:00"
+            }
+          ],
+          "unknownEligibility": true,
+          "channel": "教务信息系统"
+        },
+        {
+          "object": "成绩变更",
+          "verbs": [
+            "申请",
+            "提交"
+          ],
+          "windows": [
+            {
+              "start": "2026-09-14T08:00",
+              "end": "2026-09-18T16:00"
+            }
+          ],
+          "unknownEligibility": true,
+          "channel": "教务信息系统"
+        }
+      ],
+      "events": [],
+      "information": [
+        "尔雅",
+        "不一致",
+        "其余情况",
+        "不予受理",
+        "签字盖章",
+        "纸质",
+        "汇总表"
+      ]
+    },
+    "referenceTime": "2026-09-02T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.njxzc.edu.cn/3c/c9/c9179a146633/pagem.htm",
+      "acquiredAt": "2026-10-22T06:14:05.910Z",
+      "publicationDate": "2026-09-02",
+      "sourceTextSha256": "14de8937b97489de04f56b741772b8ad90b7a32ea0e71a8f16501020a0475736",
+      "span": {
+        "start": 165,
+        "end": 948
+      },
+      "redactions": [],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-14",
+    "acquisitionKey": "N17",
+    "scene": "闭馆",
+    "text": "各位师生：\n为进一步优化馆藏布局，改善阅览环境，图书馆将开展新增书架安装、图书倒架整理、新书入库上架等专项工作。因施工与整理作业工作量大，存在一定安全隐患，图书馆需临时闭馆开展作业。现将有关事项通知如下：\n一、闭馆时间：自2026年10月8日起临时闭馆，待全部施工、图书整理工作完成后，另行通知恢复开馆时间。\n二、服务安排：闭馆期间，图书馆暂停图书借阅、归还、自习、阅览等全部线下服务。已借出图书的还书期限将自动顺延，可在恢复开馆后办理归还手续，请同学们合理安排。\n三、温馨提示：请各位读者提前规划学习、借阅安排，妥善安排自习与文献查阅事宜。恢复开馆时间将通过学院官网及时发布，请留意后续通知。\n因闭馆施工给大家学习带来的不便，敬请谅解！\n南阳工艺美术职业学院图书馆\n2026年10月8日",
+    "inputSourceTitle": "关于图书馆临时闭馆的通知-南阳工艺美术职业学院",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "闭馆",
+          "start": "2026-10-08",
+          "end": null
+        }
+      ],
+      "information": [
+        "另行通知",
+        "暂停",
+        "归还",
+        "自习",
+        "自动顺延",
+        "恢复开馆后"
+      ]
+    },
+    "referenceTime": "2026-10-08T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.nygymy.edu.cn/info/1056/12151.htm",
+      "acquiredAt": "2026-10-22T06:14:05.912Z",
+      "publicationDate": "2026-10-08",
+      "sourceTextSha256": "61001dee1feb1dd1a1c29a1721c99c7dbef3c488536e40c5749c5f80b25d4b0d",
+      "span": {
+        "start": 723,
+        "end": 1068
+      },
+      "redactions": [],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-15",
+    "acquisitionKey": "N05",
+    "scene": "停电",
+    "text": "各用电单位：\n因二校区文体中心变电所改造，二校区文体中心、寒地实验室、建筑设计院及周边配套设施停电。具体通知事宜如下：\n一、\n停电时间\n1、2026年10月6日（星期二）12:00至20:00\n2、2026年10月7日（星期三）6:00至13:00\n二、\n停电范围\n（一）\n2026年10月6日（星期二）12:00至20:00\n1、公共楼宇：二校区文体中心；\n2、配套设施：文体中心室外消防泵房、周边路灯。\n（二）\n2026年10月7日（星期三）6:00至13:00\n1、公共楼宇：二校区寒地实验室、建筑设计院；\n2、配套设施：南区换热站、文体中心室外消防泵房。\n三、\n相关提示\n1、\n请各单位\n提前关闭用电设备，\n停电期间做好电器、实验设备设施的安全管理，\n切勿自行改动和检修电气线路；\n2、电梯将在停电前半个小时停用；\n3、恢复供电后请相关单位注意检查用电设备是否运行正常\n，\n如有任何问题请及时拨打联系电话：[电话]。\n特此通知。\n总务处工程\n管理\n部\n202\n6\n年\n10\n月\n3\n日",
+    "inputSourceTitle": "关于二校区文体中心、寒地实验室、建筑设计院等楼宇的停电通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "用电设备",
+          "verbs": [
+            "关闭"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        },
+        {
+          "object": "用电设备",
+          "verbs": [
+            "检查"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        }
+      ],
+      "events": [
+        {
+          "object": "停电",
+          "start": "2026-10-06T12:00",
+          "end": "2026-10-06T20:00",
+          "location": "文体中心"
+        },
+        {
+          "object": "停电",
+          "start": "2026-10-07T06:00",
+          "end": "2026-10-07T13:00",
+          "location": "寒地实验室"
+        }
+      ],
+      "information": [
+        "建筑设计院",
+        "南区换热站",
+        "消防泵房",
+        "电梯",
+        "半个小时",
+        "切勿自行改动和检修电气线路"
+      ]
+    },
+    "referenceTime": "2026-10-03T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://hqjt.hit.edu.cn/2026/1003/c7764a402363/page.htm",
+      "acquiredAt": "2026-10-22T06:14:05.904Z",
+      "publicationDate": "2026-10-03",
+      "sourceTextSha256": "c068cabce594153bfef974caeb70f4505618adfe513701181e271348bf237e14",
+      "span": {
+        "start": 212,
+        "end": 663
+      },
+      "redactions": [
+        {
+          "type": "phone"
+        }
+      ],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-16",
+    "acquisitionKey": "N03",
+    "scene": "停电",
+    "text": "各学院（各部门）：\n根据校园建设与资产管理处对四号变电站扩容改造工作进度安排，对学校高配房计量互感器开展更换及接线作业，以及电力对永宁变检修需要，后勤保障处将对校区各变电房分批进行切换操作，操作期间校区部分楼宇会出现短时停电现象，具体切换操作时间与停电范围如下：\n1、切换操作时间：\n10月12日 星期一 早上 6：25---6：50\n10月12日 星期一 晚上 17：15--17：40\n10月17日 星期六 早上 7：00---7：25\n2、停电范围：拱宸桥校区除致和园、树人之家外的部分楼宇及楼层；\n3、温馨提示：\n（1）10月12--16日拱宸桥校区将临时由双路供电调整为单路供电模式，为保障各类用电设备安全运行，请大家自觉节约用电；\n（2）若遇停电后或其他突发用电问题，请及时联系后勤保障处：高配房 [电话] [姓名] [电话]\n停电给您带来不便，敬请谅解！\n校建设与资产管理处\n后勤保障处\n2026年10月8日",
+    "inputSourceTitle": "10月12、17日拱宸桥校区停电通知-浙江树人学院后勤保障处",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "停电",
+          "start": "2026-10-12T06:25",
+          "end": "2026-10-12T06:50",
+          "location": "拱宸桥校区"
+        },
+        {
+          "object": "停电",
+          "start": "2026-10-12T17:15",
+          "end": "2026-10-12T17:40",
+          "location": "拱宸桥校区"
+        },
+        {
+          "object": "停电",
+          "start": "2026-10-17T07:00",
+          "end": "2026-10-17T07:25",
+          "location": "拱宸桥校区"
+        }
+      ],
+      "information": [
+        "除致和园、树人之家外",
+        "10月12--16日",
+        "节约用电"
+      ],
+      "sourceDisputes": [
+        "原文“晚上17:15”时段标签与24小时钟点不一致；保留明确17:15，不改成其他时刻；需要核对提示。"
+      ]
+    },
+    "referenceTime": "2026-10-10T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://sdhq.zjsru.edu.cn/info/1044/28328.htm",
+      "acquiredAt": "2026-10-22T06:14:05.903Z",
+      "publicationDate": "2026-10-10",
+      "sourceTextSha256": "13435287946a571c6047372909d448fbfa907563c2ae834b0775066adb82dbb1",
+      "span": {
+        "start": 432,
+        "end": 854
+      },
+      "redactions": [
+        {
+          "type": "phone"
+        },
+        {
+          "type": "phone"
+        },
+        {
+          "type": "personName"
+        }
+      ],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-17",
+    "acquisitionKey": "N08",
+    "scene": "报名延期",
+    "text": "应\n东北地区\n参赛团队要求，经大会组委会批准，\n东北地区\n报名及材料提交截止时间延长至\n2025年11月\n28\n日\n中午\n12:00\n。\n报名通道及其他参赛要求保持不变，具体见原通知链接：\nhttps://mp.weixin.qq.com/s/SP2C1R4CWGuaSuL96BKx9w\n。\n已提交的报名信息、参赛作品等均有效，无需重新提交；各参赛团队在此期间妥善保管参赛作品相关资料，并可根据自身情况进一步优化完善。请各参赛团队持续关注大会后续通知，望充分利用此次延期，精心优化项目，积极完成报名。期待在现场见证各位的卓越风采，预祝各团队取得优异成绩！\n如有任何疑问，请通过以下方式联系：\n东北地区联系人\n：[姓名]\n[电话]\n；\n[姓名]\n[电话]\n参赛报名方式：通过扫码下方二维码可进行参赛报名\n[二维码位置，未读取]",
+    "inputSourceTitle": "关于第十届全国青年人工智能创新创业大会（东北地区）报名延期通知-广东省安全智能新技术重点实验室",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "提交"
+          ],
+          "deadline": "2025-11-28T12:00",
+          "unknownEligibility": true,
+          "channelUnknown": true
+        }
+      ],
+      "events": [],
+      "information": [
+        "已提交",
+        "有效",
+        "无需重新提交",
+        "原通知链接",
+        "[二维码位置，未读取]"
+      ]
+    },
+    "referenceTime": "2025-11-27T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://sailing.hitsz.edu.cn/info/1039/2451.htm",
+      "acquiredAt": "2026-10-22T06:14:05.907Z",
+      "publicationDate": "2025-11-27",
+      "sourceTextSha256": "d80e73fc5fcecbc886797cca8bf71fa9a1dfc6b626676c2746bbb084653d81c7",
+      "span": {
+        "start": 514,
+        "end": 886
+      },
+      "redactions": [
+        {
+          "type": "phone"
+        },
+        {
+          "type": "phone"
+        },
+        {
+          "type": "personName"
+        },
+        {
+          "type": "personName"
+        }
+      ],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-18",
+    "acquisitionKey": "N11",
+    "scene": "信息素养",
+    "text": "为进一步提升全校师生信息素养与科研能力，帮助大家高效利用数字学术资源，拓宽科研视野，赋能科学研究，图书馆特邀中国知网（CNKI）专业讲师开展线下专题实训讲座。具体安排如下：\n**时间：** 2026年9月23日（周三） 下午14:00—15:00\n**地点：** 图书馆五楼北放映厅509室\n**讲座主题：从文献检索到知识创新 ——AI辅助科研全流程实训**\n**讲座内容：**\n本次讲座聚焦AI时代科研全流程痛点与难点，结合学术实操场景开展实训教学，核心内容如下：\n（1）规避AI幻觉问题，精准核验、定位学术信息来源\n（2）讲解学术场景专属提问技巧，分享高效科研选题方法与创新策略\n（3）介绍新时代数字化学术阅读与高效阅读方法\n（4）拆解论文写作、修改、投稿全流程AI辅助实操工作流\n（5）解读学术规范要求，明确AI科研应用的伦理准则与使用边界\n**主讲：** [姓名]（中国知网CNKI专业讲师）\n欢迎广大师生踊跃参加！\n  \n\n  \n\n研究生工作部 研究生院 图书馆（档案馆）\n2026.9.20",
+    "inputSourceTitle": "【讲座】信息素养提升系列讲座：从文献检索到知识创新——AI辅助科研全流程实训-南京信息工程大学图书馆",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "AI辅助科研全流程实训",
+          "start": "2026-09-23T14:00",
+          "end": "2026-09-23T15:00",
+          "location": "509"
+        }
+      ],
+      "information": [
+        "信息素养",
+        "来源",
+        "学术规范",
+        "伦理准则"
+      ]
+    },
+    "referenceTime": "2026-09-20T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://lib.nuist.edu.cn/info/1002/8889.htm",
+      "acquiredAt": "2026-10-22T06:14:05.909Z",
+      "publicationDate": "2026-09-20",
+      "sourceTextSha256": "821ac0c17d6772028a391cbf5e2f7576ec46a5ead1109a408fd4db4cbf6b90fa",
+      "span": {
+        "start": 2755,
+        "end": 3205
+      },
+      "redactions": [
+        {
+          "type": "personName"
+        }
+      ],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-19",
+    "acquisitionKey": "N10",
+    "scene": "封楼",
+    "text": "教务通知[2026]84号\n各部门、学院：\n2026年9月12日将进行2026年下江苏省中小学教师资格考试，根据教育考试院考试工作的要求，将对考区进行封闭管理\n，\n封楼安排及时间如下：\n敬业楼：9月11日18:00--9月12日19:00。\n请各部门和学院及时通知相关人员和学生，封楼期间暂停一切与考试无关的活动，禁止与考试无关的人员入内。\n请提前做好相关准备，由此带来的不便敬请谅解。\n教务处（教师教学发展中心）\n2026年9月10日",
+    "inputSourceTitle": "关于2026年下江苏省中小学教师资格考试封楼的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "相关人员和学生",
+          "verbs": [
+            "通知"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        }
+      ],
+      "events": [
+        {
+          "object": "教师资格考试",
+          "start": "2026-09-12",
+          "end": null,
+          "unknownEligibility": true
+        },
+        {
+          "object": "封楼",
+          "start": "2026-09-11T18:00",
+          "end": "2026-09-12T19:00",
+          "location": "敬业楼"
+        }
+      ],
+      "information": [
+        "与考试无关",
+        "禁止",
+        "暂停"
+      ]
+    },
+    "referenceTime": "2026-09-10T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwc.xzit.edu.cn/_t127/29/f6/c6056a207350/page.htm",
+      "acquiredAt": "2026-10-22T06:14:05.908Z",
+      "publicationDate": "2026-09-10",
+      "sourceTextSha256": "72c3e058cd3dcb83b641617e66d345cbc69c41b872a8892c70393715014f10dd",
+      "span": {
+        "start": 380,
+        "end": 599
+      },
+      "redactions": [],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  },
+  {
+    "id": "R9-RES-20",
+    "acquisitionKey": "N09",
+    "scene": "封闭考场",
+    "text": "各单位、学生班级：\n广东石油化工学院2026年下半年（第78次）全国计算机等级考试定于9月19-20日进行，我校光华校区一号楼和西城校区综合教学楼均有考场和候考室。根据规定，9月18日晚上19:00起至9月19日下午16:00，光华校区一号楼全部封闭；9月18日晚上19:00起至9月19日晚上18:30，西城校区综合教学楼的D、G、H栋全部封闭；9月19日晚上18:30起至9月20日晚上19:00，西城校区综合教学楼的G栋513、514、408、409室，H栋401、402室，D栋201-204、301、302室全部封闭。\n在光华校区一号楼和西城校区D、G、H栋教学楼有课程安排的班级暂停上课，相关课程的补课事宜由任课教师自行调整。\n请同学们在课室封闭之前将学习用品带离课室。封闭期间一切人员不得进入相关的课室学习和工作。\n特此通知，请遵照执行。\n继续教育学院  教务部\n2026年9月16日",
+    "inputSourceTitle": "关于2026年下半年（第78次）全国计算机等级考试期间封闭考场的通知-教务首页",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "学习用品",
+          "verbs": [
+            "带离"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        }
+      ],
+      "events": [
+        {
+          "object": "计算机等级考试",
+          "start": "2026-09-19",
+          "end": "2026-09-20",
+          "unknownEligibility": true
+        },
+        {
+          "object": "封闭",
+          "start": "2026-09-18T19:00",
+          "end": "2026-09-19T16:00",
+          "location": "光华校区一号楼"
+        },
+        {
+          "object": "封闭",
+          "start": "2026-09-18T19:00",
+          "end": "2026-09-19T18:30",
+          "location": "D、G、H栋"
+        },
+        {
+          "object": "封闭",
+          "start": "2026-09-19T18:30",
+          "end": "2026-09-20T19:00",
+          "location": "G栋513、514、408、409室"
+        }
+      ],
+      "information": [
+        "H栋401、402室",
+        "D栋201-204、301、302室",
+        "暂停上课",
+        "补课",
+        "不得进入"
+      ]
+    },
+    "referenceTime": "2026-09-16T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jwb.gdupt.edu.cn/info/1053/10746.htm",
+      "acquiredAt": "2026-10-22T06:14:05.907Z",
+      "publicationDate": "2026-09-16",
+      "sourceTextSha256": "b4018495d853500856052d96bd6533de8752b6fe41dbbbf79eab72fff936cb53",
+      "span": {
+        "start": 504,
+        "end": 904
+      },
+      "redactions": [],
+      "attachments": "NOT_READ",
+      "normalization": "whole text body; LF and redactions only; no factual shortening"
+    },
+    "referenceAuthoredAt": "2026-10-22T06:21:42.220Z",
+    "referenceAuthor": "Codex single-author model-assisted provisional; source-only before any reserved-r9 output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r9"
+  }
+]
