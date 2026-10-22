@@ -9,6 +9,45 @@
     />
     <meta name="theme-color" content="#102c32" />
     <title>学生事务管家</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://student-affairs.site/#website",
+            "url": "https://student-affairs.site/",
+            "name": "学生事务管家",
+            "alternateName": "事务管家",
+            "description": "学生事务管家，把散落通知整理成可确认、可追溯的任务。",
+            "inLanguage": "zh-CN",
+            "about": {
+              "@id": "https://student-affairs.site/#application"
+            }
+          },
+          {
+            "@type": [
+              "SoftwareApplication",
+              "WebApplication"
+            ],
+            "@id": "https://student-affairs.site/#application",
+            "url": "https://student-affairs.site/",
+            "name": "学生事务管家",
+            "description": "将通知整理为待确认建议，确认后管理任务、日历与个人安排。数据保存在当前设备的浏览器中。",
+            "inLanguage": "zh-CN",
+            "featureList": [
+              "通知整理为待确认建议",
+              "任务管理",
+              "日历查看",
+              "可修改的个人安排"
+            ],
+            "isPartOf": {
+              "@id": "https://student-affairs.site/#website"
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
