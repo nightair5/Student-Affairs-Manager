@@ -8,3 +8,17 @@ test('a caller cannot switch generation modes in a request body',async()=>{let c
 
 
 test('new2.1mode shares the ordinary Schema while old mode and request bytes stay separate',async()=>{let calls=0;const w=createWorker({logger:()=>{},fetcher:async(_,init)=>{calls++;const b=JSON.parse(init.body);assert(b.messages[0].content.includes('标题样式属于材料'));return Response.json({model:'deepseek-flash',choices:[{message:{content:JSON.stringify(facts)},finish_reason:'stop'}],usage:{prompt_tokens:100,completion_tokens:50,total_tokens:150}})}});const res=await w.fetch(request(),{...env,DEEPSEEK_GENERATION_MODE:'two-step-2.1'}),b=await res.json();assert.equal(res.status,200,JSON.stringify(b));assert.equal(calls,1);assert.equal(b.result.promptVersion,'recognition-two-step-2.1.0');assert.equal(b.result.standaloneTasks.length,1)})
+
+test('required shared rate guard spans isolated Worker instances without upstream calls',async()=>{
+ let calls=0;const counts=new Map(),keys=[],binding={limit:async({key})=>{keys.push(key);const n=(counts.get(key)??0)+1;counts.set(key,n);return {success:n<=8}}};
+ for(let i=0;i<9;i++){const w=createWorker({fetcher:async()=>{calls++;throw Error('UPSTREAM_MUST_NOT_RUN')}}),r=new Request(origin+'/api/deepseek/extract',{method:'POST',headers:{origin,'content-type':'application/json','cf-connecting-ip':'203.0.113.19'},body:'{}'}),res=await w.fetch(r,{...env,EXTRACTION_EDGE_RATE_REQUIRED:'true',EXTRACTION_RATE_LIMITER:binding});assert.equal(res.status,i<8?400:429)}
+ assert.equal(calls,0);assert.equal(counts.size,1);assert.equal(keys.length,9);assert(keys.every(k=>k.startsWith('student-affairs:v3:client-')&&!k.includes('203.0.113.19')));
+});
+test('required missing, failed or malformed edge protection fails closed without model request',async()=>{
+ for(const binding of [undefined,{limit:async()=>{throw Error('PRIVATE_BINDING_ERROR_CANARY')}},{limit:async()=>({})}]){let calls=0;const w=createWorker({fetcher:async()=>{calls++;return Response.json({})}}),res=await w.fetch(request(),{...env,EXTRACTION_EDGE_RATE_REQUIRED:'true',EXTRACTION_RATE_LIMITER:binding}),body=await res.text();assert.equal(res.status,503);assert(body.includes('RATE_GUARD_UNAVAILABLE'));assert(!body.includes('PRIVATE_BINDING_ERROR_CANARY'));assert.equal(calls,0)}
+});
+test('unconfigured legacy route keeps its local limit and does not call an optional binding',async()=>{
+ let edgeCalls=0;const w=createWorker(),e={...env,EXTRACTION_RATE_LIMITER:{limit:async()=>{edgeCalls++;return {success:false}}}};
+ for(let i=0;i<9;i++){const res=await w.fetch(new Request(origin+'/api/deepseek/extract',{method:'POST',headers:{origin,'content-type':'application/json'},body:'{}'}),e);assert.equal(res.status,i<8?400:429)}
+ assert.equal(edgeCalls,0);
+});

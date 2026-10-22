@@ -601,6 +601,28 @@ export function createRateLimiter({ windowMs = 60_000, maxRequests = 8, now = Da
   }
 }
 
+// Shared edge counter supplements the isolate-local limiter. Cloudflare's API
+// is approximate per location, not a strict global spending quota.
+// https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/
+async function modelRateBlock(request, env, isRateLimited, context) {
+  if (isRateLimited(clientKey(request))) {
+    context.errorType = 'RATE_LIMITED'
+    return failure('RATE_LIMITED', '请求过于频繁，请稍后再试。', 429, context.requestId)
+  }
+  if (env.EXTRACTION_EDGE_RATE_REQUIRED !== 'true') return null
+  try {
+    if (typeof env.EXTRACTION_RATE_LIMITER?.limit !== 'function') throw new Error('MISSING_EDGE_RATE_BINDING')
+    const result = await env.EXTRACTION_RATE_LIMITER.limit({ key: 'student-affairs:v3:' + anonymousClientId(clientKey(request)) })
+    if (result?.success === true) return null
+    if (result?.success === false) {
+      context.errorType = 'RATE_LIMITED'
+      return failure('RATE_LIMITED', '请求过于频繁，请稍后再试。', 429, context.requestId)
+    }
+  } catch { /* Never forward binding errors, request text, IPs or credentials. */ }
+  context.errorType = 'RATE_GUARD_UNAVAILABLE'
+  return failure('RATE_GUARD_UNAVAILABLE', '服务暂时无法处理请求，请稍后重试；原始来源仍会保留。', 503, context.requestId)
+}
+
 export function createConcurrencyLimiter({ maxConcurrent = 2 } = {}) {
   const clients = new Map()
   return (key) => {
@@ -670,10 +692,8 @@ async function askDeepSeek(request, env, fetcher, isRateLimited, acquireConcurre
     context.errorType = 'INPUT_TOO_LARGE'
     return failure('INPUT_TOO_LARGE', '请求内容超过允许大小。', 413, context.requestId)
   }
-  if (isRateLimited(clientKey(request))) {
-    context.errorType = 'RATE_LIMITED'
-    return failure('RATE_LIMITED', '请求过于频繁，请稍后再试。', 429, context.requestId)
-  }
+  const rateBlock = await modelRateBlock(request, env, isRateLimited, context)
+  if (rateBlock) return rateBlock
 
   const rawBody = await request.text()
   context.inputLength = rawBody.length
@@ -796,10 +816,8 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     context.errorType = 'INPUT_TOO_LARGE'
     return failure('INPUT_TOO_LARGE', '请求内容超过允许大小。', 413, context.requestId)
   }
-  if (isRateLimited(clientKey(request))) {
-    context.errorType = 'RATE_LIMITED'
-    return failure('RATE_LIMITED', '请求过于频繁，请稍后再试。', 429, context.requestId)
-  }
+  const rateBlock = await modelRateBlock(request, env, isRateLimited, context)
+  if (rateBlock) return rateBlock
   const rawBody = await request.text()
   context.inputLength = rawBody.length
   if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
@@ -978,10 +996,8 @@ async function extractMultimodalTasks(request, env, fetcher, isRateLimited, acqu
     context.errorType = 'INPUT_TOO_LARGE'
     return failure('INPUT_TOO_LARGE', '本次图片请求超过允许大小。', 413, context.requestId)
   }
-  if (isRateLimited(clientKey(request))) {
-    context.errorType = 'RATE_LIMITED'
-    return failure('RATE_LIMITED', '请求过于频繁，请稍后再试。', 429, context.requestId)
-  }
+  const rateBlock = await modelRateBlock(request, env, isRateLimited, context)
+  if (rateBlock) return rateBlock
   const rawBody = await request.text()
   context.inputLength = rawBody.length
   if (new TextEncoder().encode(rawBody).byteLength > MAX_MULTIMODAL_BODY_BYTES) {

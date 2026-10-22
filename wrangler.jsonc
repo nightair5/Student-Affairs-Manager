@@ -8,7 +8,8 @@
     "RECOGNITION_LOCAL_ISOLATION_VERSION": "1.0.0",
     "DEEPSEEK_GENERATION_MODE": "two-step-2.1",
     "DEEPSEEK_MODEL": "deepseek-v4-flash",
-    "DEEPSEEK_EXTRACTION_MAX_TOKENS": "16384"
+    "DEEPSEEK_EXTRACTION_MAX_TOKENS": "16384",
+    "EXTRACTION_EDGE_RATE_REQUIRED": "true"
   },
   "routes": [
     {
@@ -95,5 +96,15 @@
         }
       }
     }
-  }
+  },
+  "ratelimits": [
+    {
+      "name": "EXTRACTION_RATE_LIMITER",
+      "namespace_id": "2026102219",
+      "simple": {
+        "limit": 8,
+        "period": 60
+      }
+    }
+  ]
 }
