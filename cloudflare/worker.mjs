@@ -819,7 +819,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     return failure(validationError, '来源正文或参考时间无效。', 400, context.requestId)
   }
 
-  if(['two-step-2.0','two-step-2.0x2'].includes(env.DEEPSEEK_GENERATION_MODE)) {
+  if(['two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2'].includes(env.DEEPSEEK_GENERATION_MODE)) {
     return extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,context,apiKey)
   }
 
