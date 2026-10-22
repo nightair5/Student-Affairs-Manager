@@ -3,6 +3,12 @@ import {measureQuality,tasksOf,aggregateQuality} from './product-quality-metrics
 export const CORE_REVIEW_VERSION='core-1.0'
 const norm=v=>String(v??'').replace(/\s/gu,''),has=(v,k)=>!!k&&norm(v).includes(norm(k))
 const local=(v,zone)=>!v?null:!/[Zz]|[+-]\d\d:\d\d$/u.test(v)?String(v).slice(0,16):new Intl.DateTimeFormat('sv-SE',{timeZone:zone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(v)).replace(' ','T')
+
+// Source support need not repeat a display name as one contiguous phrase.
+// Every substantive component must occur in this entity's own real citation.
+function citedComponents(value,quote){let rest=norm(value).replace(/[《》“”'、，,（）()·：:]/gu,''),q=norm(quote).replace(/[《》“”'、，,（）()·：:]/gu,'');while(rest){if(/^[的和与及并]/u.test(rest)){rest=rest.slice(1);continue}let n=rest.length;while(n>=2&&!q.includes(rest.slice(0,n)))n--;if(n<2)return false;rest=rest.slice(n)}return true}
+const verbInQuote=(v,q)=>has(q,v)||({撰写:['写'],提交:['交','递交'],扫码:['扫以下二维码','扫描二维码'],登录:['登陆'],缴纳:['缴费','支付']}[v]??[]).some(a=>has(q,a))
+
 export function reviewCore(result,source,{coreReference,legacyGrade=null,audit=null}={}){
  const ref=coreReference?.core;if(!ref)throw Error('FROZEN_CORE_REFERENCE_REQUIRED')
  const tasks=tasksOf(result),events=result?.events??[],points=result?.timePoints??[],zone=source.timezone??'Asia/Shanghai',issues=[],severe=[],edits=new Set(),decisions=new Set(),ev=new Map((result?.evidence??[]).map(e=>[e.id,e]))
@@ -19,16 +25,18 @@ export function reviewCore(result,source,{coreReference,legacyGrade=null,audit=n
   const own=points.filter(p=>t.timePointTempIds?.includes(p.tempId)||p.relatedTaskTempIds?.includes(t.tempId))
   if((e.unknownEligibility||e.condition)&&t.selected!==false)problem('UNDETERMINED_CONDITION_SHOWN_MANDATORY',t.tempId,'task:'+i+':selection',e.condition??'unknown eligibility',true)
   if(t.selected===false)decisions.add(t.tempId)
-  if(e.deadline){const p=own.find(p=>/deadline$/u.test(p.type)),precision=e.precision??(e.deadline.length===10?'date_only':'exact');if(p&&p.precision!==precision)problem('CORE_DEADLINE_PRECISION',p.tempId,'task:'+i+':deadline',{expected:precision,actual:p.precision});if(p&&local(p.normalizedValue,zone)!==e.deadline&&precision==='exact')problem('CORE_WRONG_DEADLINE',p.tempId,'task:'+i+':deadline',{expected:e.deadline,actual:local(p.normalizedValue,zone)},true)}
+  if(e.deadline){const p=own.find(p=>/deadline$/u.test(p.type)),precision=e.precision??(e.deadline.length===10?'date_only':'exact');if(p&&p.precision!==precision)problem('CORE_DEADLINE_PRECISION',p.tempId,'task:'+i+':deadline',{expected:precision,actual:p.precision});if(p?.normalizedValue&&local(p.normalizedValue,zone)!==e.deadline&&precision==='exact')problem('CORE_WRONG_DEADLINE',p.tempId,'task:'+i+':deadline',{expected:e.deadline,actual:local(p.normalizedValue,zone)},true)}
   if(e.deadlineUnknown&&own.some(p=>/deadline$/u.test(p.type)&&p.normalizedValue))problem('CORE_INVENTED_DEADLINE',t.tempId,'task:'+i+':deadline',own.filter(p=>/deadline$/u.test(p.type)),true)
   if((e.window||e.windows)&&!e.deadline&&own.some(p=>/deadline$/u.test(p.type)&&p.normalizedValue))problem('WINDOW_PROMOTED_TO_DEADLINE',t.tempId,'task:'+i+':window','Only a handling opportunity is stated',true)
   for(const [w,range]of(e.windows??[]).entries())for(const role of ['start','end']){const expected=range[role],p=own.find(p=>p.type==='event_'+role&&(expected.length===10?local(p.normalizedValue,zone)?.slice(0,10):local(p.normalizedValue,zone))===expected);if(!p||!supported(p)||p.precision!==(expected.length===10?'date_only':'exact'))problem('CORE_WINDOW_ENDPOINT',t.tempId,'task:'+i+':window:'+w+':'+role,{expected,actual:own.map(p=>[p.type,p.normalizedValue,p.precision])});}
   if(e.alternativeDates){const quoted=(t.evidenceIds??[]).map(id=>ev.get(id)?.quote??'').join(' '),description=[t.description,...(t.completionCriteria??[])].join(' ');if(!e.alternativeDates.every(d=>{const [,m,day]=d.split('-').map(Number);return new RegExp(m+'\\s*月\\s*'+day+'\\s*日','u').test(quoted+' '+description)}))problem('CORE_ALTERNATIVE_OPTIONS_MISSING',t.tempId,'task:'+i+':options',e.alternativeDates);if(own.some(p=>/deadline$/u.test(p.type)&&p.normalizedValue))problem('ALTERNATIVE_DATES_PROMOTED_TO_DEADLINE',t.tempId,'task:'+i+':deadline',null,true);}
+  if(!citedComponents(e.object,(t.evidenceIds??[]).map(id=>ev.get(id)?.quote??'').join(' ')))problem('CORE_OBJECT_EVIDENCE_MISMATCH',t.tempId,'task:'+i+':source',e.object);
   if(!supported(t))problem('CORE_SOURCE_EVIDENCE_LOSS',t.tempId,'task:'+i+':source',null,true)
  }
  for(const[i,e]of(ref.events??[]).entries()){
   const a=events.find(a=>a.tempId===eventRows[i]?.entity);if(!a)continue
   if(a.selected===false)decisions.add(a.tempId)
+  if(!citedComponents(e.object,(a.evidenceIds??[]).map(id=>ev.get(id)?.quote??'').join(' ')))problem('CORE_OBJECT_EVIDENCE_MISMATCH',a.tempId,'event:'+i+':source',e.object);
   if(!supported(a))problem('CORE_SOURCE_EVIDENCE_LOSS',a.tempId,'event:'+i+':source',null,true)
   for(const role of ['start','end']){const p=points.find(p=>p.tempId===a[role+'TimePointTempId']);if(e[role]&&p){const precision=e[role].length===10?'date_only':'exact';if(p.precision!==precision)problem('CORE_EVENT_PRECISION',p.tempId,'event:'+i+':'+role,{expected:precision,actual:p.precision});if(e[role+'Tentative']&&(!p.needsConfirmation||p.selected!==false))problem('TENTATIVE_EVENT_SHOWN_FIXED',p.tempId,'event:'+i+':'+role,{expected:'tentative source date, not fixed attendance'});if(!supported(p))problem('CORE_TIME_EVIDENCE_LOSS',p.tempId,'event:'+i+':'+role,null,true)}}
  }
@@ -36,8 +44,8 @@ export function reviewCore(result,source,{coreReference,legacyGrade=null,audit=n
  for(const p of points)if(/deadline$/u.test(p.type)&&p.normalizedValue&&(ref.obsoleteDates??[]).some(d=>(local(p.normalizedValue,zone)??'').startsWith(d))&&p.selected!==false)problem('OBSOLETE_DEADLINE_REACTIVATED',p.tempId,'time:'+p.tempId,p.normalizedValue,true)
  // Minimum refs do not enumerate every legal step. Extra items are allowed
  // only with their own literal action/object support; R1–R5 do not waive source.
- for(const t of tasks.filter(t=>!matchedTasks.has(t.tempId))){const qs=(t.evidenceIds??[]).map(id=>ev.get(id)?.quote??''),declared=has(qs.join(' '),t.actionObject)&&has(qs.join(' '),t.actionVerb);if(!supported(t)||!declared)problem('UNSUPPORTED_EXTRA_TASK',t.tempId,'extra:'+t.tempId,t.title,true)}
- for(const e of events.filter(e=>!matchedEvents.has(e.tempId))){const qs=(e.evidenceIds??[]).map(id=>ev.get(id)?.quote??'');if(!supported(e)||!has(qs.join(' '),e.title))problem('UNSUPPORTED_EXTRA_EVENT',e.tempId,'extra:'+e.tempId,e.title,true)}
+ for(const t of tasks.filter(t=>!matchedTasks.has(t.tempId))){const qs=(t.evidenceIds??[]).map(id=>ev.get(id)?.quote??''),declared=citedComponents(t.actionObject,qs.join(' '))&&verbInQuote(t.actionVerb,qs.join(' '));if(!supported(t)||!declared)problem('UNSUPPORTED_EXTRA_TASK',t.tempId,'extra:'+t.tempId,t.title,t.selected!==false)}
+ for(const e of events.filter(e=>!matchedEvents.has(e.tempId))){const qs=(e.evidenceIds??[]).map(id=>ev.get(id)?.quote??'');if(!supported(e)||!citedComponents(e.title,qs.join(' ')))problem('UNSUPPORTED_EXTRA_EVENT',e.tempId,'extra:'+e.tempId,e.title,e.selected!==false)}
  const coreIds=new Set([...matchedTasks,...matchedEvents,...points.filter(p=>events.some(e=>matchedEvents.has(e.tempId)&&[e.startTimePointTempId,e.endTimePointTempId].includes(p.tempId))||tasks.some(t=>matchedTasks.has(t.tempId)&&(t.timePointTempIds?.includes(p.tempId)||p.relatedTaskTempIds?.includes(t.tempId)))).map(p=>p.tempId)])
  for(const u of audit?.unresolved??[])if(coreIds.has(u.entityId))problem('CORE_SUPPORT_BLOCKED',u.entityId,'support:'+u.entityId,u.reason)
  for(const c of result.conflicts??[])if(c.requiresDecision&&(c.entityTempIds??[]).some(id=>coreIds.has(id)))for(const id of c.entityTempIds.filter(id=>coreIds.has(id)))decisions.add(id)

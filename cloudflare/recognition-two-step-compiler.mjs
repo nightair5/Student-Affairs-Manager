@@ -3,8 +3,24 @@ import {parseChineseTimeAst} from './chinese-time-ast.generated.mjs'
 import {resolveLiteralSourceSpan} from './recognition-literal-evidence.mjs'
 import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
 import {TWO_STEP_VERSION,validateTwoStep} from './recognition-two-step-contract.mjs'
-const norm=s=>String(s??'').replace(/\s/gu,''),verbs='填写并发送|下载并填写|撰写并提交|确认并提交|提交|上传|发送|填写|申请|报名|选课|缴纳|缴费|领取|归还|确认|核对|办理|完成|撰写|参加|准备|签署|打印|出示|登记|注册|预约|学习'
+const norm=s=>String(s??'').replace(/\s/gu,''),verbs='登录|关闭|补选|通知|履行|报送|提前到达|组织|做好|扫码|清点|保管|指派|查询|储水|退回|重新提交|申请退费|签字|盖章|联系|回复|下载|制作|收集|激活|阅读|熟悉|填写并发送|下载并填写|撰写并提交|确认并提交|提交|上传|发送|填写|申请|报名|选课|缴纳|缴费|领取|归还|确认|核对|办理|完成|撰写|参加|准备|签署|打印|出示|登记|注册|预约|学习'
 const types=new Set(['截止','开始','结束','办理时段','地点','材料','渠道','条件','取消','变更'])
+
+function sourceNameParts(name,literal){
+ let rest=norm(name).replace(/[《》“”"'、，,（）()·：:]/gu,'')
+ let available=norm(literal).replace(/[《》“”"'、，,（）()·：:]/gu,'')
+ while(rest){
+  if(/^[的和与及并]/u.test(rest)){rest=rest.slice(1);continue}
+  let n=rest.length
+  while(n>=2&&!available.includes(rest.slice(0,n)))n--
+  if(n<2)return false
+  const at=available.indexOf(rest.slice(0,n))
+  available=available.slice(0,at)+'\u0000'.repeat(n)+available.slice(at+n)
+  rest=rest.slice(n)
+ }
+ return true
+}
+
 export function alignTwoStepQuote(quote,source){
  if(typeof quote!=='string'||!quote.trim()||quote.length>500)return null
  const at=source.indexOf(quote);if(at>=0)return source.indexOf(quote,at+1)<0?{literal:quote,start:at,end:at+quote.length,rule:'EXACT_UNIQUE_SOURCE_SPAN'}:null
@@ -16,11 +32,11 @@ const valueOf=(q,type)=>q.replace(new RegExp('^(?:活动)?'+type+'[：:]\\s*','u
 export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',version=TWO_STEP_VERSION}){
  const check=validateTwoStep(raw);if(!check.valid)return{result:null,audit:{version,rootFailure:true,losses:check.errors},rootFailure:true}
  const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:'通知建议',sourceType:'text',notificationType:'teacher_task',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,version,true,timezone)
- const audit={version,mode:'MODEL_SEMANTIC_FACTS_THEN_DETERMINISTIC_STRUCTURE',rootFailure:false,inferredFacts:0,items:[],facts:[],losses:[],offsets:[],calls:1},declared=new Map(),usedIds=new Set(),pending=[]
+ const audit={version,compilerVersion:'two-step-compiler-2.0.1',mode:'MODEL_SEMANTIC_FACTS_THEN_DETERMINISTIC_STRUCTURE',rootFailure:false,inferredFacts:0,items:[],facts:[],losses:[],offsets:[],calls:1},declared=new Map(),usedIds=new Set(),pending=[]
  const evidence=(span,field)=>{let e=result.evidence.find(e=>e.textStart===span.start&&e.textEnd===span.end&&e.field===field);if(!e){e={id:'g2-e'+(result.evidence.length+1),sourceId:'pending-source',quote:span.literal,quotedText:span.literal,textStart:span.start,textEnd:span.end,field,extractionMethod:'parser',confidence:1};result.evidence.push(e)}return e.id}
  const note=(layer,id,reason,quote)=>{audit.losses.push({layer,id,reason,quote});pending.push({layer,id,reason})}
  for(const [i,item]of raw.items.entries()){
-  const span=alignTwoStepQuote(item?.quote,source),valid=item&&typeof item.id==='string'&&item.id.length<=40&&typeof item.name==='string'&&item.name.trim().length>0&&item.name.length<=120&&['任务','活动','信息'].includes(item.kind)&&!Object.keys(item).some(k=>!['id','kind','name','quote'].includes(k))
+  const span=alignTwoStepQuote(item?.quote,source),valid=item&&typeof item.id==='string'&&item.id.length<=40&&typeof item.name==='string'&&item.name.trim().length>0&&item.name.length<=120&&['任务','活动','信息'].includes(item.kind)&&!Object.entries(item).some(([k,v])=>!['id','kind','name','quote'].includes(k)&&v!==null&&v!=='')
   if(!valid||usedIds.has(item.id)){note('ITEM_STRUCTURE',item?.id??String(i),'INVALID_OR_DUPLICATE_ITEM',item?.quote);continue}usedIds.add(item.id)
   if(!span){note('ALIGNMENT',item.id,'ITEM_QUOTE_NOT_UNIQUELY_ALIGNED',item.quote);continue}
   const record={id:item.id,kind:item.kind,name:item.name,span,entity:null};declared.set(item.id,record);audit.items.push({id:item.id,name:item.name,kind:item.kind,start:span.start,end:span.end,status:'ALIGNED_MODEL_PROPOSAL_NOT_INDEPENDENT_SEMANTIC_TRUTH'});audit.offsets.push(span)
@@ -30,15 +46,16 @@ export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai
   const tempId='g2-'+(i+1)
   if(item.kind==='任务'){
    const match=new RegExp('^('+verbs+')(?:\\s*)?(.+)$','u').exec(item.name.trim());if(!match){note('ITEM_STRUCTURE',item.id,'TASK_NEEDS_ACTION_AND_OBJECT',item.quote);continue}
-   const objectSupported=norm(span.literal).includes(norm(match[2]));if(!objectSupported){note('ITEM_STRUCTURE',item.id,'TASK_OBJECT_NOT_LITERAL_IN_OWN_QUOTE',item.quote);continue}
+   if(!sourceNameParts(match[2],span.literal)){note('ITEM_STRUCTURE',item.id,'TASK_OBJECT_NOT_LITERAL_IN_OWN_QUOTE',item.quote);continue}
    record.entity={tempId,parentTempId:null,hierarchyType:'task',title:item.name,actionVerb:match[1],actionObject:match[2],description:span.literal,completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[eid],confidence:.8,inferenceLevel:'explicit',userConfirmationRequired:true,selected:true};result.standaloneTasks.push(record.entity)
-  }else{if(!norm(span.literal).includes(norm(item.name))){note('ITEM_STRUCTURE',item.id,'EVENT_NAME_NOT_LITERAL_IN_OWN_QUOTE',item.quote);continue}record.entity={tempId,title:item.name,description:span.literal,startTimePointTempId:null,endTimePointTempId:null,location:null,relatedTaskTempIds:[],evidenceIds:[eid],confidence:.8,inferenceLevel:'explicit',selected:true};result.events.push(record.entity)}
+  }else{if(!sourceNameParts(item.name,span.literal)){note('ITEM_STRUCTURE',item.id,'EVENT_NAME_NOT_LITERAL_IN_OWN_QUOTE',item.quote);continue}record.entity={tempId,title:item.name,description:span.literal,startTimePointTempId:null,endTimePointTempId:null,location:null,relatedTaskTempIds:[],evidenceIds:[eid],confidence:.8,inferenceLevel:'explicit',selected:true};result.events.push(record.entity)}
  }
  const staged=[]
  for(const [i,fact]of raw.facts.entries()){
   if(!fact||!types.has(fact.type)||!['string','object'].includes(typeof fact.item)||typeof fact.item==='object'&&fact.item!==null||Object.keys(fact).some(k=>!['type','quote','item'].includes(k))){note('FACT_STRUCTURE',String(i),'INVALID_TYPED_FACT',fact?.quote);continue}
-  const span=alignTwoStepQuote(fact.quote,source);if(!span){note('ALIGNMENT',String(i),'FACT_QUOTE_NOT_UNIQUELY_ALIGNED',fact.quote);continue}
-  let owner=declared.get(fact.item)
+  let owner=declared.get(fact.item),span=alignTwoStepQuote(fact.quote,source)
+  if(!span&&owner?.entity&&typeof fact.quote==='string'&&source.includes(fact.quote)){const options=[];let at=-1;while((at=source.indexOf(fact.quote,at+1))>=0){const candidate={literal:fact.quote,start:at,end:at+fact.quote.length,rule:'EXACT_UNIQUE_WITHIN_DECLARED_ITEM_SENTENCE'};if(sameSentence(owner.span,candidate,source))options.push(candidate)}if(options.length===1)span=options[0]}
+  if(!span){note('ALIGNMENT',String(i),'FACT_QUOTE_NOT_UNIQUELY_ALIGNED',fact.quote);continue}
   if(!owner&&fact.item===null){const options=[...declared.values()].filter(r=>r.entity&&sameSentence(r.span,span,source));if(options.length===1)owner=options[0]}
   if(!owner?.entity){note('OWNERSHIP',String(i),'FACT_OWNER_MISSING_OR_AMBIGUOUS',fact.quote);continue}
   const neighbours=[...declared.values()].filter(r=>r.entity&&sameSentence(r.span,span,source));if(neighbours.length===1&&neighbours[0].id!==owner.id){note('OWNERSHIP',String(i),'FACT_CONTRADICTS_UNIQUE_SOURCE_SENTENCE_OWNER',fact.quote);continue}
@@ -60,6 +77,11 @@ export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai
   const role=e.type==='截止'?'task_deadline':e.type==='结束'?'event_end':'event_start'
   const anchor=e.type==='结束'&&e.owner.kind==='活动'?result.timePoints.find(p=>p.tempId===owner.startTimePointTempId&&!p.needsConfirmation):null
   const ast=parseChineseTimeAst(e.span.literal,{type:role,referenceTime,timezone,...(anchor?.normalizedValue?{inheritedDate:anchor.normalizedValue.slice(0,10)}:{})})
+    // 24:00 is the explicitly stated end of that civil day, not a fabricated
+  // 23:59 cutoff. Reuse the existing parser after a canonical clock conversion.
+  const compactClock=e.span.literal.replace(/\s/gu,'').replaceAll('：',':'),midnight=/24(?::00|时(?:00分)?)(?![0-9])/u
+  if(ast.issues.includes('invalid_clock')&&midnight.test(compactClock)&&!(/24:[1-5][0-9]/u.test(compactClock))){const canonical=compactClock.replace(midnight,'00:00'),parsed=parseChineseTimeAst(canonical,{type:role,referenceTime,timezone}),nextDay=v=>{if(!v)return v;const[y,m,d]=v.slice(0,10).split('-').map(Number);return new Date(Date.UTC(y,m-1,d+1)).toISOString().slice(0,10)+v.slice(10)};if(parsed.normalizedValue&&parsed.precision==='exact'){Object.assign(ast,parsed,{rawText:e.span.literal});if(parsed.rangeEndNormalizedValue)ast.rangeEndNormalizedValue=nextDay(parsed.rangeEndNormalizedValue);else ast.normalizedValue=nextDay(parsed.normalizedValue);audit.facts.find(f=>f.start===e.span.start&&f.end===e.span.end).timeRule='EXPLICIT_24H_CIVIL_DAY_ROLLOVER'}}
+  if(/下班前|午休前|上班前/u.test(compactClock)&&!/[0-2]?[0-9]:[0-5][0-9]/u.test(compactClock)){ast.precision='vague';ast.needsConfirmation=true;ast.isAllDay=false;note('TIME',e.owner.id,'OFFICE_CLOCK_NOT_STATED',e.span.literal)}
   const alternative=/(?:任选|备选|可选择|[0-9一二三四五六七八九十]日[^。；]{0,10}或)/u.test(e.span.literal)
   const ctx=sentenceAt(e.span,source),openingAsCutoff=e.type==='截止'&&deadlineRangeRoleIssue(e.span.literal,'task_deadline',ctx.text)
   const correction=/(?:改为|调整至|变更为)/u.exec(ctx.text),obsolete=e.type==='截止'&&/取消|作废|失效/u.test(ctx.text)&&(!correction||e.span.end<=ctx.start+correction.index)
@@ -70,11 +92,12 @@ export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai
   if(isWindow){if(ast.rangeEndNormalizedValue)point(e,'event_end',ast,ast.rangeEndNormalizedValue);else{p.selected=false;p.needsConfirmation=true;note('TIME',e.owner.id,'WINDOW_ENDPOINT_INCOMPLETE',e.span.literal)}}
   if(!value){owner.selected=false;note('TIME',e.owner.id,'TIME_UNRESOLVED',e.span.literal)}
  }
+
  // Material/channel and condition order in a JSON array is not semantic.
  for(const e of staged.filter(e=>e.type==='渠道')){const ms=result.materials.filter(m=>m.relatedTaskTempIds.includes(e.owner.entity.tempId));if(ms.length===1)ms[0].submissionChannel=valueOf(e.span.literal,'渠道').slice(0,200)}
  for(const e of staged.filter(e=>e.type==='条件'))for(const m of result.materials.filter(m=>m.relatedTaskTempIds.includes(e.owner.entity.tempId)))m.selected=false
  for(const t of result.standaloneTasks){const ps=result.timePoints.filter(p=>t.timePointTempIds.includes(p.tempId)&&/deadline$/u.test(p.type)&&p.normalizedValue),values=new Set(ps.map(p=>p.normalizedValue));if(values.size>1){t.selected=false;ps.forEach(p=>{p.selected=false;p.needsConfirmation=true});note('TIME',t.tempId,'CONFLICTING_KEY_TIME',ps.map(p=>p.rawText).join('；'))}}
- for(const record of declared.values())if(record.entity&&/若|如果|入选|录取|已缴费|错过|未领取|未办理|审核后|通过后|有[^，。；]{0,12}(?:需求|意向)|决定放弃/u.test(sentenceAt(record.span,source).text)){record.entity.selected=false;audit.items.find(r=>r.id===record.id).sourceCondition='UNKNOWN_NOT_MANDATORY'}
+ for(const record of declared.values())if(record.entity&&/若|如果|入选|录取|已缴费|错过|未领取|未办理|审核后|通过后|相关单位|各学院|各二级院部|二级院部|辅导员|各单位|有[^，。；]{0,12}(?:需求|意向)|决定放弃/u.test(sentenceAt(record.span,source).text)){record.entity.selected=false;audit.items.find(r=>r.id===record.id).sourceCondition='UNKNOWN_NOT_MANDATORY'}
  result.sourceSummary.requiresAction=result.standaloneTasks.length>0
  result.sourceSummary.notificationType=result.standaloneTasks.length?'teacher_task':result.events.length?'event_notice':'information_only'
  result.sourceSummary.title=result.standaloneTasks[0]?.title??result.events[0]?.title??'通知资料'
