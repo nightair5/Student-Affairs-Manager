@@ -84,6 +84,8 @@ export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai
   if(/下班前|午休前|上班前/u.test(compactClock)&&!/[0-2]?[0-9]:[0-5][0-9]/u.test(compactClock)){ast.precision='vague';ast.needsConfirmation=true;ast.isAllDay=false;note('TIME',e.owner.id,'OFFICE_CLOCK_NOT_STATED',e.span.literal)}
   const alternative=/(?:任选|备选|可选择|[0-9一二三四五六七八九十]日[^。；]{0,10}或)/u.test(e.span.literal)
   const ctx=sentenceAt(e.span,source),openingAsCutoff=e.type==='截止'&&deadlineRangeRoleIssue(e.span.literal,'task_deadline',ctx.text)
+  const serviceEnd=e.type==='截止'&&/(?:服务|开放|接待|营业|功能|系统|平台|窗口)(?:时间)?(?:截止|截至|结束|关闭|暂停)/u.test(compactClock)&&!/(?:报名|申请|提交|申报|缴费|上传)(?:时间)?(?:截止|截至)/u.test(compactClock)
+  if(serviceEnd){ast.normalizedValue=null;ast.rangeEndNormalizedValue=null;ast.needsConfirmation=true;result.ignoredContent.push({text:e.span.literal,reason:'other'});note('TIME',e.owner.id,'SERVICE_ENDPOINT_NOT_TASK_DEADLINE',e.span.literal)}
   const correction=/(?:改为|调整至|变更为)/u.exec(ctx.text),obsolete=e.type==='截止'&&/取消|作废|失效/u.test(ctx.text)&&(!correction||e.span.end<=ctx.start+correction.index)
   if(obsolete){ast.normalizedValue=null;ast.rangeEndNormalizedValue=null;ast.needsConfirmation=true;note('TIME',e.owner.id,'OLD_TIME_NOT_REACTIVATED',e.span.literal)}
   if(alternative||openingAsCutoff){ast.normalizedValue=null;ast.rangeEndNormalizedValue=null;ast.needsConfirmation=true;note('TIME',e.owner.id,alternative?'ALTERNATIVE_DATES_NOT_A_DEADLINE':'WINDOW_START_NOT_A_DEADLINE',e.span.literal)}
