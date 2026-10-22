@@ -6,6 +6,8 @@
   "workers_dev": true,
   "vars": {
     "RECOGNITION_LOCAL_ISOLATION_VERSION": "1.0.0",
+    "DEEPSEEK_GENERATION_MODE": "two-step-2.1",
+    "DEEPSEEK_MODEL": "deepseek-v4-flash",
     "DEEPSEEK_EXTRACTION_MAX_TOKENS": "16384"
   },
   "routes": [
