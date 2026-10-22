@@ -22,10 +22,23 @@ export function rangeEndpointSupport(rawText: string, type: TimePointSuggestionV
       if(a.normalizedValue&&b?.normalizedValue&&right&&!a.needsConfirmation&&!b.needsConfirmation&&b.normalizedValue>=a.normalizedValue)return {quote:cited[0],literalRange:m[0],expanded:type==='event_start'?left:right,rule:'CITED_SAME_EVENT_RANGE_ENDPOINT' as const}
     }
   }
-  if (/^\d{4}年\d{1,2}月\d{1,2}日\d{1,2}:[0-5]\d$/u.test(rawText)) {
-    const clocks=[...new Set(quotes)].flatMap(quote=>[...quote.matchAll(/(?<!\d)(\d{4})年(\d{1,2})月(\d{1,2})日(\d{1,2}):([0-5]\d)\s*[-—–至到]\s*(\d{1,2}):([0-5]\d)(?!\d)/gu)].map(m=>({quote,m})))
+  if (/^(?:\d{4}年)?\d{1,2}月\d{1,2}日\s*\d{1,2}:[0-5]\d$/u.test(rawText)) {
+    const original=interpretTimeD26(rawText,{type,referenceTime,timezone}).point
+    if(!original.normalizedValue||original.needsConfirmation)return null
+    // A model can repeat the shared date on the right endpoint, although the
+    // literal range writes it only once. Match the declared typed endpoint,
+    // not the model's punctuation or whether it happened to repeat the year.
+    // An old/new-date sentence may contain two ranges; only the exact already
+    // declared date and endpoint can support this point. Never choose a range
+    // merely because it occurs first, or promote its start into a deadline.
+    const clocks=[...new Set(quotes)].flatMap(quote=>[...quote.matchAll(/(?<!\d)(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日\s*(\d{1,2}):([0-5]\d)\s*[-—–至到]\s*(\d{1,2}):([0-5]\d)(?!\d)/gu)].map(m=>({quote,m}))).filter(({m})=>{
+      if(+m[4]>23||+m[6]>23||+m[6]*60+ +m[7]<=+m[4]*60+ +m[5])return false
+      const date=`${m[1]?m[1]+'年':''}${m[2]}月${m[3]}日`,expanded=date+(type==='event_start'?`${m[4]}:${m[5]}`:`${m[6]}:${m[7]}`)
+      const value=interpretTimeD26(expanded,{type,referenceTime,timezone}).point
+      return !value.needsConfirmation&&value.normalizedValue===original.normalizedValue
+    })
     if(clocks.length!==1)return null
-    const {quote,m}=clocks[0],date=`${m[1]}年${m[2]}月${m[3]}日`
+    const {quote,m}=clocks[0],date=`${m[1]?m[1]+'年':''}${m[2]}月${m[3]}日`
     if(+m[4]>23||+m[6]>23||+m[6]*60+ +m[7]<=+m[4]*60+ +m[5])return null
     const expanded=date+(type==='event_start'?`${m[4]}:${m[5]}`:`${m[6]}:${m[7]}`)
     const a=interpretTimeD26(rawText,{type,referenceTime,timezone}).point

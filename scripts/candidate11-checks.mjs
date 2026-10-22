@@ -43,6 +43,7 @@ async function carrierTests(label,paths,pattern,options={}) {
 async function product() {
   layer='current-product'
   nodeTests([['extraction-model-profiles','cloudflare/extraction-profile.node-test.mjs']])
+  nodeTests([['declared-action-normalization','cloudflare/declared-action-normalization.node-test.mjs']])
   nodeTests([['stateful-carrier-schedule','scripts/stateful-carrier-schedule.node-test.mjs']])
   nodeTests([['typed-task-applicability-generation','cloudflare/recognition-product-contract-v1-14.node-test.mjs']])
   nodeTests([['compact-generation-and-sampling','cloudflare/recognition-product-contract-v1-15.node-test.mjs'],['deadline-range-role','cloudflare/deadline-range-role.node-test.mjs']])
@@ -69,6 +70,7 @@ async function safety() {
   nodeTests([['product-facts-first-worker-payload','scripts/facts-first-worker-payload.node-test.mjs']])
   nodeTests([['product-v51-wrapped-date-bug','scripts/product-dev-review-v51-wrapped-date.node-test.mjs']])
   nodeTests([['product-v6-owner-defaults','scripts/product-dev-review-v6.node-test.mjs']])
+  nodeTests([['product-field-and-edit-metrics','scripts/product-quality-metrics.node-test.mjs']])
   nodeTests([['product-event-reference-matching','scripts/product-dev-event-matching.node-test.mjs']])
   nodeTests([['product-source-severity-audit','scripts/product-dev-severity-literal.node-test.mjs']])
   nodeTests([['historical-ci-policy','scripts/historical-ci-policy.node-test.mjs']])

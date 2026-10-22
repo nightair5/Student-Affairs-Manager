@@ -122,7 +122,7 @@ function field(value, fallback, allowedCategories = false) {
   }
 }
 
-function normalizeTask(value, index, evidenceIds) {
+function normalizeTask(value, index, evidenceIds, evidence = []) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return null
   let title = text(value.title, 80)
     .replace(/^(?:各位同学|同学们|请大家|大家|请|务必|记得|麻烦|需要|要求)[:：，,、\s]*/u, '')
@@ -130,10 +130,23 @@ function normalizeTask(value, index, evidenceIds) {
     .trim()
   // A verb inside “提交回执” or “报名表” is part of the object.
   const declaredVerb = text(value.actionVerb, 20)
-  const actionVerb = (declaredVerb && title.startsWith(declaredVerb) ? declaredVerb : '')
+  const declaredObject = text(value.actionObject, 80)
+  // Structured action/object have authority over a shorter display title when
+  // their exact pair is already stated in this task's own validated citation.
+  // Do not infer a new verb from the title and then reject the resulting verb
+  // for lacking source support. No foreign item or uncited summary may rescue it.
+  const pair = (declaredVerb + declaredObject).replace(/\s/gu, '')
+  const declaredPairSupported = declaredVerb && declaredObject && evidence.some(e => {
+    if (!strings(value.evidenceIds).includes(e.id)) return false
+    const quote=String(e.quote ?? '').replace(/\s/gu, ''),at=quote.indexOf(pair)
+    if(at<0)return false
+    const prefix=quote.slice(0,at).split(/[。；;]/u).at(-1)??''
+    return !/请勿|不要|不得|禁止|取消|无需|不必|不再/u.test(prefix)
+  })
+  const actionVerb = (declaredPairSupported || declaredVerb && title.startsWith(declaredVerb) ? declaredVerb : '')
     || ACTION_VERBS.find((verb) => title.startsWith(verb)) || declaredVerb
-  if (actionVerb && !title.startsWith(actionVerb)) title = title.slice(title.indexOf(actionVerb))
-  const actionObject = text(value.actionObject, 80) || (actionVerb ? title.slice(actionVerb.length).trim() : title)
+  if (actionVerb && !title.startsWith(actionVerb) && title.includes(actionVerb)) title = title.slice(title.indexOf(actionVerb))
+  const actionObject = declaredObject || (actionVerb ? title.slice(actionVerb.length).trim() : title)
   if (!title) return null
   const referencedEvidence = strings(value.evidenceIds).filter((id) => evidenceIds.has(id))
   const inferenceLevel = INFERENCE_LEVELS.has(value.inferenceLevel) ? value.inferenceLevel : referencedEvidence.length ? 'explicit' : 'optional_suggestion'
@@ -249,7 +262,7 @@ export function normalizeRecognitionResult(
     return [{ id: text(item.id, 100, `evidence-${index + 1}`), sourceId: 'pending-source', quote, quotedText: quote,...span, field: ['title', 'deadline', 'materials', 'description', 'project', 'milestone', 'event', 'requirement'].includes(item.field) ? item.field : 'description', extractionMethod: 'ai', confidence: number01(item.confidence, 0.8) }]
   })
   const evidenceIds = new Set(evidence.map((item) => item.id))
-  const normalizeTasks = (items, limit = 20) => Array.isArray(items) ? items.slice(0, limit).map((item, index) => normalizeTask(item, index, evidenceIds)).filter(Boolean) : []
+  const normalizeTasks = (items, limit = 20) => Array.isArray(items) ? items.slice(0, limit).map((item, index) => normalizeTask(item, index, evidenceIds, evidence)).filter(Boolean) : []
   const milestones = (Array.isArray(raw.milestones) ? raw.milestones : []).slice(0, 10).flatMap((item, index) => {
     if (!item || typeof item !== 'object' || Array.isArray(item)) return []
     const workPackages = (Array.isArray(item.workPackages) ? item.workPackages : []).slice(0, 8).flatMap((workPackage, packageIndex) => {

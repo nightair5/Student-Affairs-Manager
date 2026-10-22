@@ -1,0 +1,10 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import {normalizeRecognitionResult} from './recognition.mjs'
+const source='符合条件的同学，请填写并发送《退费申请书》至指定邮箱。'
+function run({title='提交退费申请书',actionVerb='填写并发送',actionObject='《退费申请书》',ids=['E'],quote=source}={}){return normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:'办理',sourceType:'text',notificationType:'teacher_task',summary:source,requiresAction:true},projectMatch:{decision:'standalone_task'},standaloneTasks:[{tempId:'T',title,actionVerb,actionObject,evidenceIds:ids,selected:false}],evidence:[{id:'E',sourceId:'pending-source',quote,field:'description'}]},source,'2026-10-22T00:00:00Z').standaloneTasks[0]}
+test('own literal action/object pair survives a shorter, different display title',()=>{const x=run();assert.equal(x.actionVerb,'填写并发送');assert.equal(x.actionObject,'《退费申请书》');assert.equal(x.title,'提交退费申请书');assert.equal(x.selected,false)})
+test('do not use another task citation, wrong object or foreign-source text',()=>{assert.equal(run({ids:[]}).actionVerb,'提交');assert.equal(run({actionObject:'《另一申请书》'}).actionVerb,'提交');assert.equal(run({quote:'另一通知：填写并发送《退费申请书》'}).actionVerb,'提交')})
+test('a title without the declared verb never gets truncated to its last character',()=>{const x=run({title:'退费办理事项'});assert.equal(x.title,'退费办理事项');assert.equal(x.actionVerb,'填写并发送')})
+test('a prohibited pair cannot rescue a different title verb',()=>{const text='请勿填写并发送《退费申请书》。';const r=normalizeRecognitionResult({schemaVersion:'2.0',standaloneTasks:[{tempId:'T',title:'提交退费申请书',actionVerb:'填写并发送',actionObject:'《退费申请书》',evidenceIds:['E']}],evidence:[{id:'E',quote:text}]},text,'2026-10-22T00:00:00Z');assert.equal(r.standaloneTasks[0].actionVerb,'提交')})
+test('the same literal fields work for a changed document rather than a notice identity',()=>{const r=normalizeRecognitionResult({schemaVersion:'2.0',standaloneTasks:[{tempId:'T',title:'办理借阅登记',actionVerb:'填写并发送',actionObject:'《借阅登记》',evidenceIds:['E']}],evidence:[{id:'E',quote:'请填写并发送《借阅登记》。'}]},'请填写并发送《借阅登记》。','2026-10-22T00:00:00Z');assert.equal(r.standaloneTasks[0].actionVerb,'填写并发送')})
