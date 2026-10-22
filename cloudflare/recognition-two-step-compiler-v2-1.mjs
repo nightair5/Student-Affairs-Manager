@@ -30,7 +30,7 @@ export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai
  const hinted=(kind,id,q)=>{const h=alignmentHints?.[kind]?.find(x=>kind==='items'?x.id===id:x.index===id)?.span;if(!h||source.slice(h.start,h.end)!==h.literal)return null;const aligned=alignTwoStepQuote(q,h.literal);return aligned&&aligned.start===0&&aligned.end===h.literal.length?h:null}
  const check=validateTwoStep(raw);if(!check.valid)return{result:null,audit:{version,rootFailure:true,losses:check.errors},rootFailure:true}
  const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:'通知建议',sourceType:'text',notificationType:'teacher_task',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,version,true,timezone)
- const audit={version,compilerVersion:'two-step-compiler-2.1.4',mode:'MODEL_SEMANTIC_FACTS_THEN_DETERMINISTIC_STRUCTURE',rootFailure:false,inferredFacts:0,items:[],facts:[],losses:[],offsets:[],calls:1},declared=new Map(),usedIds=new Set(),pending=[]
+ const audit={version,compilerVersion:'two-step-compiler-2.1.6',mode:'MODEL_SEMANTIC_FACTS_THEN_DETERMINISTIC_STRUCTURE',rootFailure:false,inferredFacts:0,items:[],facts:[],losses:[],offsets:[],calls:1},declared=new Map(),usedIds=new Set(),pending=[]
  const evidence=(span,field)=>{let e=result.evidence.find(e=>e.textStart===span.start&&e.textEnd===span.end&&e.field===field);if(!e){e={id:'g2-e'+(result.evidence.length+1),sourceId:'pending-source',quote:span.literal,quotedText:span.literal,textStart:span.start,textEnd:span.end,field,extractionMethod:'parser',confidence:1};result.evidence.push(e)}return e.id}
  const note=(layer,id,reason,quote)=>{audit.losses.push({layer,id,reason,quote});pending.push({layer,id,reason,quote})}
  for(const [i,item]of raw.items.entries()){
@@ -45,7 +45,9 @@ export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai
   if(!actionMatch){const suffix=new RegExp('^(.+?)('+verbs+')$','u').exec(item.name.trim());if(suffix)actionMatch=[suffix[0],suffix[2],suffix[1]]}
   const hasActionInSource=new RegExp(verbs+'|协助|清点|发放|张贴|提供|交至','u').test(sentence)
   const attached=raw.facts.filter(f=>f.item===item.id)
-  const promoted=item.kind==='信息'&&hasActionInSource&&attached.some(f=>['截止','渠道'].includes(f.type))&&!/已(?:经)?(?:完成|发布)|仅供知悉/u.test(span.literal)
+  const historicalOnly=actionMatch&&new RegExp('(?:已(?:经)?|现已)[^，。；]{0,10}'+actionMatch[1],'u').test(span.literal)&&!new RegExp('(?:请|须|需|应|务必|可|欢迎|自愿)[^，。；]{0,14}'+actionMatch[1],'u').test(span.literal)
+  const explicitAction=actionMatch&&!historicalOnly&&sourceNameParts(actionMatch[2],span.literal)&&span.literal.includes(actionMatch[1])&&!/^(?:准备|制作|签字|盖章|核对|阅读|查询|熟悉)$/u.test(actionMatch[1]),actionableName=actionMatch&&sourceNameParts(actionMatch[2],sentence)&&!/^(?:时间|日期|截止|要求|说明|地点|安排|方式|渠道|对象|通知|信息|结果|记录保留|记录有效|完成状态|状态)$/u.test(norm(actionMatch[2]))
+  const promoted=item.kind==='信息'&&hasActionInSource&&actionableName&&(attached.some(f=>['截止','渠道'].includes(f.type))||explicitAction)&&!/已(?:经)?(?:完成|发布)|仅供知悉/u.test(span.literal)
   if(promoted){record.kind='任务';audit.items.push({id:item.id,rule:'INFORMATION_WITH_EXPLICIT_ACTION_REVIEW_AS_TASK'});}
 declared.set(item.id,record);audit.items.push({id:item.id,name:item.name,kind:item.kind,start:span.start,end:span.end,status:'ALIGNED_MODEL_PROPOSAL_NOT_INDEPENDENT_SEMANTIC_TRUTH'});audit.offsets.push({...span,modelQuote:item.quote})
   const eid=evidence(span,item.kind==='活动'?'event':item.kind==='任务'?'description':'description')
@@ -54,7 +56,7 @@ declared.set(item.id,record);audit.items.push({id:item.id,name:item.name,kind:it
   const before=source.slice(0,anchor.start),left=Math.max(...['。','；',';','，',',','\n'].map(x=>before.lastIndexOf(x)))+1
   const tail=source.slice(anchor.end),right=tail.search(/[。；;，,\n]/u),clause=source.slice(left,right<0?source.length:anchor.end+right)
   const polarity=clause.replace(/逾期(?:将)?(?:不再受理|不予受理|不受理|不得补交)|不得(?:缺席|迟到|早退|缺考)/gu,'')
-  if(/取消|不再|无需|无须|不必|不得|禁止|请勿/u.test(polarity)&&!/改为|调整至|变更为/u.test(polarity)){result.ignoredContent.push({text:span.literal,reason:'policy'});note('POLARITY',item.id,'CANCELLED_OR_NEGATED_ITEM_NOT_EXECUTABLE',item.quote);continue}
+  if(/取消|不再|不需要|无需|无须|不必|不得|禁止|请勿/u.test(polarity)&&!/改为|调整至|变更为/u.test(polarity)){result.ignoredContent.push({text:span.literal,reason:'policy'});note('POLARITY',item.id,'CANCELLED_OR_NEGATED_ITEM_NOT_EXECUTABLE',item.quote);continue}
   const tempId='g2-'+(i+1)
   if(record.kind==='任务'){
    const match=actionMatch;if(!match){note('ITEM_STRUCTURE',item.id,'TASK_NEEDS_ACTION_AND_OBJECT',item.quote);continue}
@@ -103,7 +105,7 @@ declared.set(item.id,record);audit.items.push({id:item.id,name:item.name,kind:it
   if(e.type==='条件'){owner.selected=false;owner.description+='\n适用条件待确认：'+e.span.literal;if(e.owner.kind==='任务')owner.completionCriteria.push('若符合以下条件则适用：'+e.span.literal);continue}
   if(e.type==='取消'||e.type==='变更'){owner.selected=false;if(e.type==='取消'){result.standaloneTasks=result.standaloneTasks.filter(t=>t.tempId!==owner.tempId);result.events=result.events.filter(t=>t.tempId!==owner.tempId);}result.ignoredContent.push({text:e.span.literal,reason:'policy'});result.ambiguities.push({id:'g2-revision-'+e.eid,field:'revision',message:'原文有取消或变更，请核对当前事项：'+e.span.literal,options:['保留当前事项','拒绝当前事项'],evidenceIds:[e.eid]});note('REVISION',e.owner.id,'REVISION_ENDPOINTS_REQUIRE_REVIEW',e.span.literal);continue}
   if(e.type==='地点'){if(e.owner.kind!=='活动'){note('OWNERSHIP',e.owner.id,'LOCATION_HAS_NO_EVENT_FIELD_RETAINED_IN_DESCRIPTION',e.span.literal);owner.description+='\n地点：'+e.span.literal}else owner.location=valueOf(e.span.literal,'地点').slice(0,160);continue}
-  if(e.type==='材料'){if(e.owner.kind==='任务'){const m={tempId:'g2-m'+(result.materials.length+1),name:valueOf(e.span.literal,'材料').slice(0,120),required:true,formatRequirements:[],namingRequirements:[],quantity:null,submissionChannel:null,relatedTaskTempIds:[owner.tempId],evidenceIds:[e.eid],confidence:.8,selected:owner.selected};result.materials.push(m);owner.materialTempIds.push(m.tempId)}else owner.description+='\n准备要求：'+e.span.literal;continue}
+  if(e.type==='材料'){if(e.owner.kind==='任务'){const m={tempId:'g2-m'+(result.materials.length+1),name:valueOf(e.span.literal,'材料').slice(0,120),required:true,formatRequirements:/字数|文件格式|PDF|Word|word|一式|字体|字号|行距|格式/u.test(e.span.literal)?[e.span.literal]:[],namingRequirements:/命名|文件名|标题格式/u.test(e.span.literal)?[e.span.literal]:[],quantity:null,submissionChannel:null,relatedTaskTempIds:[owner.tempId],evidenceIds:[e.eid],confidence:.8,selected:owner.selected};result.materials.push(m);owner.materialTempIds.push(m.tempId)}else owner.description+='\n准备要求：'+e.span.literal;continue}
   if(e.type==='渠道'){owner.description+='\n提交渠道：'+e.span.literal;const ms=result.materials.filter(m=>m.relatedTaskTempIds.includes(owner.tempId));if(ms.length===1)ms[0].submissionChannel=valueOf(e.span.literal,'渠道').slice(0,200);continue}
   const isWindow=e.type==='办理时段';if(isWindow&&e.owner.kind==='活动'){owner.selected=false;owner.description+='\n办理窗口：'+e.span.literal;note('OWNERSHIP',e.owner.id,'WINDOW_IS_NOT_FIXED_ATTENDANCE',e.span.literal);continue}
   const role=e.type==='截止'?'task_deadline':e.type==='结束'?'event_end':'event_start'
