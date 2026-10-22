@@ -6,7 +6,9 @@ const check=(v,c)=>{if(!v)throw Error('AUTONOMOUS_PACKAGE_'+c)}
 export function assertPackageBudget(pack,root,now=Date.now()){
  const hash=v=>createHash('sha256').update(v).digest('hex')
  if(pack.version==='autonomous-work-package-2'){
-  check(pack.maxRequests===null&&pack.hardLimitMicroUsd===null&&pack.maxIterations===null,'V2_SCOPE')
+  const bounded=pack.budgetPolicy==='bounded-release-close-1'
+  if(bounded)check(pack.maxRequests===85&&pack.hardLimitMicroUsd===29000000&&pack.maxIterations===5,'V2_BOUNDED_SCOPE')
+  else check(pack.maxRequests===null&&pack.hardLimitMicroUsd===null&&pack.maxIterations===null,'V2_SCOPE')
   check(Number.isFinite(Date.parse(pack.startedAt))&&Date.parse(pack.startedAt)<=now&&now<Date.parse(pack.expiresAt),'TIME_LIMIT')
   check(hash(readFileSync(join(root,'USER_AUTHORIZATION.txt')))===pack.authorizationSha256,'USER_AUTHORIZATION')
   check(Array.isArray(pack.batches)&&new Set(pack.batches.map(b=>b.batch)).size===pack.batches.length,'BATCHES')
@@ -26,7 +28,8 @@ export function assertPackageBudget(pack,root,now=Date.now()){
     }
    }
   }
-  return {countAllocated:calls,hardLimitAllocatedMicroUsd:allocated,settledMicroUsd,uncertainUnits:uncertain,uncertainUpperMicroUsd,unusedRequestLimit:null,unusedBudgetLimitMicroUsd:null,authorization:'UNBOUNDED_WITHIN_RECORDED_TIMEBOX',oldBatchRecoveryAuthorized:false}
+  if(bounded){check(calls<=pack.maxRequests&&allocated<=pack.hardLimitMicroUsd,'AGGREGATE_CAP');check(Date.parse(pack.expiresAt)-Date.parse(pack.startedAt)<=5*3600000,'TIME_LIMIT')}
+  return {countAllocated:calls,hardLimitAllocatedMicroUsd:allocated,settledMicroUsd,uncertainUnits:uncertain,uncertainUpperMicroUsd,unusedRequestLimit:bounded?pack.maxRequests-calls:null,unusedBudgetLimitMicroUsd:bounded?pack.hardLimitMicroUsd-allocated:null,authorization:bounded?'BOUNDED_RELEASE_CLOSE_85_REQUESTS_29USD':'UNBOUNDED_WITHIN_RECORDED_TIMEBOX',oldBatchRecoveryAuthorized:false}
  }
  check(pack.version==='autonomous-work-package-1'&&pack.maxRequests===16&&pack.hardLimitMicroUsd===6000000&&pack.maxIterations===3,'SCOPE')
  check(Date.parse(pack.startedAt)<=now&&now<Date.parse(pack.expiresAt)&&Date.parse(pack.expiresAt)-Date.parse(pack.startedAt)<=4*3600000,'TIME_LIMIT')

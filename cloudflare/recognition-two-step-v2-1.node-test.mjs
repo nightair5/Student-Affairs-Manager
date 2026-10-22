@@ -57,3 +57,25 @@ test('format and naming extracted as material facts populate requirement attribu
 
 test('historical record retention is not a new registration or submission obligation',()=>{for(const[name,q]of [['报名记录保留','已经报名的同学不需要重新报名，报名记录保留'],['提交申请表','已提交申请表']]){const x=compile({items:[{id:'a',kind:'信息',name,quote:q}],facts:[],noAction:true},q+'。');assert.equal(x.result.standaloneTasks.length,0)}const x=compile({items:[{id:'a',kind:'信息',name:'提交报告',quote:'已报名同学请提交报告'}],facts:[],noAction:false},'已报名同学请提交报告。');assert.equal(x.result.standaloneTasks.length,1);assert.equal(x.result.standaloneTasks[0].selected,false)})
 test('not needed blocks that action, while a separate required action is preserved',()=>{const r=raw();r.facts=[];assert.equal(compile(r,'不需要提交实验记录。').result.standaloneTasks.length,0);assert.equal(compile(r,'不需要重新准备，请提交实验记录。').result.standaloneTasks.length,1)})
+
+
+test('recipient membership qualifies a same-sentence service action without inventing an account state',()=>{
+ const r={items:[{id:'a',kind:'任务',name:'领取电子校园卡',quote:'输入个人信息领取电子校园卡'}],facts:[],noAction:false}
+ const x=compile(r,'学校师生在微信输入个人信息领取电子校园卡。')
+ assert.equal(x.result.standaloneTasks[0].selected,false)
+ assert(x.result.standaloneTasks[0].evidenceIds.every(id=>{const e=x.result.evidence.find(e=>e.id===id);return e.quote==='学校师生'||e.quote==='输入个人信息领取电子校园卡'}))
+ assert.equal(compile(r,'请同学输入个人信息领取电子校园卡。').result.standaloneTasks[0].selected,true)
+})
+test('literal intention continues through delivery steps but stops at a different recipient or section',()=>{
+ const r={items:[{id:'a',kind:'任务',name:'提交申请表',quote:'提交申请表'}],facts:[{type:'材料',quote:'申请表',item:'a'}],noAction:false}
+ const x=compile(r,'请有意向申报的团队登录系统报名。填写信息，并提交申请表。')
+ assert.equal(x.result.standaloneTasks[0].selected,false);assert.equal(x.result.materials[0].selected,false)
+ assert.equal(x.result.standaloneTasks.length,1);assert.deepEqual(x.result.standaloneTasks[0].dependencyTempIds,[])
+ for(const s of ['请有意向申报的团队登录系统报名。请所有同学提交申请表。','请有意向申报的团队登录系统报名。\n二、课程要求\n请提交申请表。'])assert.equal(compile(r,s).result.standaloneTasks[0].selected,true)
+})
+test('registration keeps a participation choice while a specific mandatory command and ordinary delivery stay usable',()=>{
+ const r={items:[{id:'a',kind:'任务',name:'报名研究讲座',quote:'报名研究讲座'}],facts:[],noAction:false}
+ assert.equal(compile(r,'登录活动平台报名研究讲座。').result.standaloneTasks[0].selected,false)
+ assert.equal(compile(r,'必须于周五报名研究讲座。').result.standaloneTasks[0].selected,true)
+ assert.equal(compile().result.standaloneTasks[0].selected,true)
+})

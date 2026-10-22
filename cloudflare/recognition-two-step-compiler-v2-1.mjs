@@ -3,6 +3,7 @@ import {parseTwoStepTime as parseChineseTimeAst} from './two-step-time.mjs'
 import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
 import {validateTwoStep} from './recognition-two-step-contract.mjs'
 import {alignSourceQuote,sourceScopes} from './two-step-source-alignment.mjs'
+import {applyScopedApplicability} from './two-step-applicability.mjs'
 const TWO_STEP_VERSION='recognition-two-step-2.1.0'
 const norm=s=>String(s??'').normalize('NFKC').replace(/\s/gu,''),verbs='补领|代领|申领|补办|换发|签到|携带|告知|清理|带离|到达|领|登录|关闭|补选|通知|履行|报送|提前到达|组织|做好|扫码|清点|保管|指派|查询|储水|退回|重新提交|申请退费|签字|盖章|联系|回复|下载|制作|收集|激活|阅读|熟悉|填写并发送|下载并填写|撰写并提交|确认并提交|提交|上传|发送|填写|申请|报名|选课|缴纳|缴费|领取|归还|确认|核对|办理|完成|撰写|参加|准备|签署|打印|出示|登记|注册|预约|学习'.split('|').sort((a,b)=>b.length-a.length).join('|')
 const types=new Set(['截止','开始','结束','办理时段','地点','材料','渠道','条件','取消','变更'])
@@ -30,7 +31,7 @@ export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai
  const hinted=(kind,id,q)=>{const h=alignmentHints?.[kind]?.find(x=>kind==='items'?x.id===id:x.index===id)?.span;if(!h||source.slice(h.start,h.end)!==h.literal)return null;const aligned=alignTwoStepQuote(q,h.literal);return aligned&&aligned.start===0&&aligned.end===h.literal.length?h:null}
  const check=validateTwoStep(raw);if(!check.valid)return{result:null,audit:{version,rootFailure:true,losses:check.errors},rootFailure:true}
  const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:'通知建议',sourceType:'text',notificationType:'teacher_task',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,version,true,timezone)
- const audit={version,compilerVersion:'two-step-compiler-2.1.6',mode:'MODEL_SEMANTIC_FACTS_THEN_DETERMINISTIC_STRUCTURE',rootFailure:false,inferredFacts:0,items:[],facts:[],losses:[],offsets:[],calls:1},declared=new Map(),usedIds=new Set(),pending=[]
+ const audit={version,compilerVersion:'two-step-compiler-2.1.7',mode:'MODEL_SEMANTIC_FACTS_THEN_DETERMINISTIC_STRUCTURE',rootFailure:false,inferredFacts:0,items:[],facts:[],losses:[],offsets:[],calls:1},declared=new Map(),usedIds=new Set(),pending=[]
  const evidence=(span,field)=>{let e=result.evidence.find(e=>e.textStart===span.start&&e.textEnd===span.end&&e.field===field);if(!e){e={id:'g2-e'+(result.evidence.length+1),sourceId:'pending-source',quote:span.literal,quotedText:span.literal,textStart:span.start,textEnd:span.end,field,extractionMethod:'parser',confidence:1};result.evidence.push(e)}return e.id}
  const note=(layer,id,reason,quote)=>{audit.losses.push({layer,id,reason,quote});pending.push({layer,id,reason,quote})}
  for(const [i,item]of raw.items.entries()){
@@ -148,6 +149,7 @@ declared.set(item.id,record);audit.items.push({id:item.id,name:item.name,kind:it
  // actions or service outages, and does not assert a personal role is true.
  const participation=/(?:请)?(?:全体|各|所有|相关)?(?:教职工|教师|辅导员|干部|工作人员|项目成员|项目组|团队|考生)[^。；！]{0,35}?(?:参加|参与)/u.exec(norm(source))??/(?:感兴趣|有意|自愿)[^。；！]{0,15}(?:师生|同学|学生|人员|者)[^。；！]{0,15}?(?:报名|参加|参与)/u.exec(norm(source))??/欢迎[^。；！]{0,15}(?:师生|同学|学生|人员|者)[^。；！]{0,8}?(?:参加|参与)/u.exec(norm(source));
  if(participation){const span=alignTwoStepQuote(participation[0],source);for(const record of declared.values())if(record.entity&&((record.kind==='活动'&&!/停电|停水|停网|维护|闭馆|开放|开馆|检修|封闭|施工/u.test(record.name))||(record.kind==='任务'&&/^(?:学习|参加|准备)$/u.test(record.entity.actionVerb)))){record.entity.selected=false;if(!record.entity.description.includes('适用条件'))record.entity.description+='\n适用条件待确认：'+(span?.literal??participation[0]);if(span)record.entity.evidenceIds.push(evidence(span,'requirement'));for(const m of result.materials.filter(m=>m.relatedTaskTempIds.includes(record.entity.tempId)))m.selected=false;audit.items.push({id:record.id,rule:'SOURCE_PARTICIPANT_SCOPE_UNKNOWN',quote:span?.literal??participation[0],start:span?.start??null,end:span?.end??null});}}
+ applyScopedApplicability({records:[...declared.values()],source,result,audit,evidence})
  result.sourceSummary.requiresAction=result.standaloneTasks.length>0
  result.sourceSummary.notificationType=result.standaloneTasks.length?'teacher_task':result.events.length?'event_notice':'information_only'
  result.sourceSummary.title=result.standaloneTasks[0]?.title??result.events[0]?.title??'通知资料'

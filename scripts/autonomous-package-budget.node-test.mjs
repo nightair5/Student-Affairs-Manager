@@ -25,3 +25,15 @@ test('expiry, changed actual consent and inflated package limits are rejected',(
  assert.throws(()=>assertPackageBudget({...base,authorizationSha256:'0'.repeat(64)},root,now),/USER_AUTHORIZATION/u)
  assert.throws(()=>assertPackageBudget({...base,maxRequests:17},root,now),/SCOPE/u)
 })
+
+
+test('release closure adds finite request and conservative cost caps without changing old packages',()=>{
+ const p={...base,version:'autonomous-work-package-2',budgetPolicy:'bounded-release-close-1',maxRequests:85,hardLimitMicroUsd:29000000,maxIterations:5,batches:[{batch:'R',count:80,hardLimitMicroUsd:28000000,executionRoot:'release'}]}
+ assert.equal(assertPackageBudget(p,root,now).unusedRequestLimit,5)
+ assert.equal(assertPackageBudget(p,root,now).unusedBudgetLimitMicroUsd,1000000)
+ assert.throws(()=>assertPackageBudget({...p,batches:[{...p.batches[0],count:86}]},root,now),/AGGREGATE_CAP/)
+ assert.throws(()=>assertPackageBudget({...p,batches:[{...p.batches[0],hardLimitMicroUsd:29000001}]},root,now),/AGGREGATE_CAP/)
+ assert.throws(()=>assertPackageBudget({...p,maxRequests:null},root,now),/BOUNDED_SCOPE/)
+ assert.throws(()=>assertPackageBudget({...p,expiresAt:new Date(now+6*3600000).toISOString()},root,now),/TIME_LIMIT/)
+ assert.throws(()=>assertPackageBudget({...p,authorizationSha256:'0'.repeat(64)},root,now),/USER_AUTHORIZATION/)
+})
