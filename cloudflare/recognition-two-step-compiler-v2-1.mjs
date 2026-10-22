@@ -30,7 +30,7 @@ export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai
  const hinted=(kind,id,q)=>{const h=alignmentHints?.[kind]?.find(x=>kind==='items'?x.id===id:x.index===id)?.span;if(!h||source.slice(h.start,h.end)!==h.literal)return null;const aligned=alignTwoStepQuote(q,h.literal);return aligned&&aligned.start===0&&aligned.end===h.literal.length?h:null}
  const check=validateTwoStep(raw);if(!check.valid)return{result:null,audit:{version,rootFailure:true,losses:check.errors},rootFailure:true}
  const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:'通知建议',sourceType:'text',notificationType:'teacher_task',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,version,true,timezone)
- const audit={version,compilerVersion:'two-step-compiler-2.1.3',mode:'MODEL_SEMANTIC_FACTS_THEN_DETERMINISTIC_STRUCTURE',rootFailure:false,inferredFacts:0,items:[],facts:[],losses:[],offsets:[],calls:1},declared=new Map(),usedIds=new Set(),pending=[]
+ const audit={version,compilerVersion:'two-step-compiler-2.1.4',mode:'MODEL_SEMANTIC_FACTS_THEN_DETERMINISTIC_STRUCTURE',rootFailure:false,inferredFacts:0,items:[],facts:[],losses:[],offsets:[],calls:1},declared=new Map(),usedIds=new Set(),pending=[]
  const evidence=(span,field)=>{let e=result.evidence.find(e=>e.textStart===span.start&&e.textEnd===span.end&&e.field===field);if(!e){e={id:'g2-e'+(result.evidence.length+1),sourceId:'pending-source',quote:span.literal,quotedText:span.literal,textStart:span.start,textEnd:span.end,field,extractionMethod:'parser',confidence:1};result.evidence.push(e)}return e.id}
  const note=(layer,id,reason,quote)=>{audit.losses.push({layer,id,reason,quote});pending.push({layer,id,reason,quote})}
  for(const [i,item]of raw.items.entries()){
@@ -153,7 +153,7 @@ declared.set(item.id,record);audit.items.push({id:item.id,name:item.name,kind:it
  if(raw.noAction&&result.standaloneTasks.length)audit.facts.push({rule:'NO_ACTION_SUMMARY_DOES_NOT_ERASE_EXPLICIT_ITEM'})
  result.quality.needsHumanReview=pending.length>0;result.quality.reviewReasons=pending.length?['部分提取内容仍需核对，原文和已定位的事实已保留。']:[]
  const labels={ALIGNMENT:'有一段引用无法在原文中唯一定位',OWNERSHIP:'有一项事实的归属尚不明确',TIME:'有一项时间尚不能确认',POLARITY:'原文包含取消或禁止的事项，已保留说明',REVISION:'有一项取消或变更需要核对当前要求',ITEM_STRUCTURE:'有一项事项尚未整理完整',FACT_STRUCTURE:'有一项事实尚未整理完整'}
- for(const [i,p]of pending.slice(0,20).entries())result.ambiguities.push({id:'g2-pending-'+i,field:'source_reference',message:(labels[p.layer]??'有一项内容需要核对')+(p.quote?'：'+p.quote.slice(0,100):'，请查看原文'),options:['查看原文','保留待核对'],evidenceIds:[]})
+ for(const [i,p]of pending.slice(0,20).entries()){const span=p.quote?alignTwoStepQuote(p.quote,source):null;result.ambiguities.push({id:'g2-pending-'+i,field:'source_reference',message:(labels[p.layer]??'有一项内容需要核对')+(p.quote?'：'+p.quote.slice(0,100):'，请查看原文'),options:['查看原文','保留待核对'],evidenceIds:span?[evidence(span,'description')]:[]})}
  return{result,audit,rootFailure:false}
 }
 export function mergeTwoStepFacts(samples,source){
