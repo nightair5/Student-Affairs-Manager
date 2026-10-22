@@ -37,6 +37,7 @@ export function reviewCore(result,source,{coreReference,legacyGrade=null,audit=n
  }
  for(const[i,e]of(ref.events??[]).entries()){
   const a=events.find(a=>a.tempId===eventRows[i]?.entity);if(!a)continue
+  if((e.unknownEligibility||e.condition)&&a.selected!==false)problem('UNDETERMINED_CONDITION_SHOWN_MANDATORY',a.tempId,'event:'+i+':selection',e.condition??'unknown eligibility',true)
   if(a.selected===false)decisions.add(a.tempId)
   if(!citedComponents(e.object,(a.evidenceIds??[]).map(id=>ev.get(id)?.quote??'').join(' ')))problem('CORE_OBJECT_EVIDENCE_MISMATCH',a.tempId,'event:'+i+':source',e.object);
   if(!supported(a))problem('CORE_SOURCE_EVIDENCE_LOSS',a.tempId,'event:'+i+':source',null,true)
