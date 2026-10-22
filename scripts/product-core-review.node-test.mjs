@@ -11,3 +11,6 @@ test('wrong character offsets cannot masquerade as valid aligned evidence',()=>{
 test('missing response is retained as unusable and unmeasured, never zero edits',()=>{const r=reviewCore(null,source,{coreReference});assert.equal(r.usable,false);assert.equal(r.coreChanges,null)});
 
 test('absent selected flag has ordinary default-selected meaning for unknown eligibility',()=>{const r=fixture();delete r.standaloneTasks[0].selected;const c=structuredClone(coreReference);c.core.tasks[0].unknownEligibility=true;assert.equal(reviewCore(r,source,{coreReference:c}).usable,false)});
+
+test('source window endpoints are required and cannot become a deadline',()=>{const r=fixture(),c=structuredClone(coreReference);delete c.core.tasks[0].deadline;c.core.tasks[0].windows=[{start:'2026-10-24T09:00',end:'2026-10-24T11:00'}];assert.equal(reviewCore(r,source,{coreReference:c}).usable,false)})
+test('a forecast date needs its tentative status, not a fixed appointment',()=>{const r=fixture(),c=structuredClone(coreReference);c.core.events[0].endTentative=true;assert.equal(reviewCore(r,source,{coreReference:c}).usable,false);r.timePoints[2].needsConfirmation=true;r.timePoints[2].selected=false;assert.equal(reviewCore(r,source,{coreReference:c}).usable,true)})

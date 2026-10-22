@@ -650,7 +650,8 @@
           {
             "object": "升级",
             "start": "2025-12-03",
-            "endUnknown": true
+            "end": "2025-12-04T00:00",
+            "endTentative": true
           }
         ],
         "forbidden": [],
@@ -1110,7 +1111,13 @@
               "参加",
               "修读"
             ],
-            "deadlineUnknown": true
+            "deadlineUnknown": true,
+            "windows": [
+              {
+                "start": "2026-03-16",
+                "end": "2026-05-10"
+              }
+            ]
           },
           {
             "object": "创新创业与管理基础",
@@ -1120,7 +1127,13 @@
               "参加",
               "修读"
             ],
-            "deadlineUnknown": true
+            "deadlineUnknown": true,
+            "windows": [
+              {
+                "start": "2026-03-16",
+                "end": "2026-05-10"
+              }
+            ]
           }
         ],
         "events": [
@@ -1401,7 +1414,8 @@
           {
             "object": "续借",
             "start": "2025-07-15",
-            "endUnknown": true
+            "end": "2025-07-23",
+            "endTentative": true
           }
         ],
         "forbidden": [],
@@ -1563,5 +1577,15 @@
       "sourceReferenceSha256": "8253e224479678b188ac7e31029d85f2b7059a2efde5bb75a516add795c22182"
     }
   ],
-  "amendment": "Before any new output: include all10 already-seen reserved-r6 sources, not only20 development sources"
+  "amendment": "Before any new output: include all10 already-seen reserved-r6 sources, not only20 development sources",
+  "supplement": {
+    "at": "2026-10-22T01:49:33.297Z",
+    "author": "Codex single-author provisional",
+    "chronology": "After C0 response capture, BEFORE any C0 content/score inspection. No response used. Initial core refs preserved separately.",
+    "changes": [
+      "REAL-SHORT-13",
+      "REAL-SHORT-22",
+      "REAL-SHORT-27"
+    ]
+  }
 }

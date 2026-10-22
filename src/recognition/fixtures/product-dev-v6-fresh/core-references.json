@@ -996,9 +996,14 @@
               "申领",
               "申请"
             ],
-            "deadline": "2026-05-27",
-            "precision": "date_only",
-            "unknownEligibility": true
+            "unknownEligibility": true,
+            "deadlineUnknown": true,
+            "windows": [
+              {
+                "start": "2026-05-20",
+                "end": "2026-05-27"
+              }
+            ]
           }
         ],
         "events": [],
@@ -1384,7 +1389,12 @@
               "确认",
               "办理"
             ],
-            "deadlineUnknown": true
+            "deadlineUnknown": true,
+            "alternativeDates": [
+              "2025-03-28",
+              "2025-04-11",
+              "2025-04-18"
+            ]
           }
         ],
         "events": [],
@@ -2088,5 +2098,14 @@
       "sourceReferenceVersion": "product-fresh-reference-v6-20261021-1",
       "sourceReferenceSha256": "929c519b1e1a3e251a69d16d2902d08447711170e49ce43829f9a1f88e4c3bb6"
     }
-  ]
+  ],
+  "supplement": {
+    "at": "2026-10-22T01:49:33.299Z",
+    "author": "Codex single-author provisional",
+    "chronology": "After C0 response capture, BEFORE any C0 content/score inspection. No response used. Initial core refs preserved separately.",
+    "changes": [
+      "FRESH-17",
+      "FRESH-24"
+    ]
+  }
 }

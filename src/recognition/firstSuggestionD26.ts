@@ -338,6 +338,20 @@ export function adaptModelWireD26(input: unknown, context: WireContext) {
   return { wire: adapted.wire, originalAdapted: adapted.adapted, adapted: first.result, audit: first.audit }
 }
 
+export function assembleAlignedTwoStepFirstSuggestion(input:RecognitionResult,context:{sourceText:string;referenceTime:string;timezone:string}){
+  const result=structuredClone(input),audit=auditRecord()
+  audit.version=PRODUCT_FIRST_SUGGESTION_VERSION
+  const valid=new Set(result.evidence.filter(e=>Number.isInteger(e.textStart)&&Number.isInteger(e.textEnd)&&e.textStart!>=0&&e.textEnd!>e.textStart!&&context.sourceText.slice(e.textStart,e.textEnd)===e.quote).map(e=>e.id))
+  const tasks=[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
+  for(const entity of [...tasks,...result.events,...result.materials,...result.timePoints]){
+    if(!entity.evidenceIds.length||entity.evidenceIds.some(id=>!valid.has(id))){entity.selected=false;audit.unresolved.push({entityId:entity.tempId,reason:'ALIGNED_SOURCE_SPAN_INVALID'});result.conflicts.push({id:'g2-source:'+entity.tempId,type:'other',message:'这一项的原文位置无法核实，请查看原文。其他依据完整的事项可以单独确认。',entityTempIds:[entity.tempId],evidenceIds:entity.evidenceIds,requiresDecision:true})}
+  }
+  audit.nativeQualificationReview=nativeQualificationReviews(result,context.sourceText)
+  for(const review of audit.nativeQualificationReview)if(review.sourceConditionValue!=='true'){const task=tasks.find(t=>t.tempId===review.taskId);if(task)task.selected=false}
+  audit.existingHandlingWindows=existingHandlingWindows(result,context.sourceText,context.referenceTime,context.timezone)
+  return{result,audit}
+}
+
 /** Same time/display policy for the ordinary RecognitionResult. No experimental runtime or storage dependency. */
 export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string; obligationViewVersion?: 'source-obligation-view-1.0.0' }) {
   // Machine product-wire items share the Worker's isolation rule. Manual and

@@ -1,3 +1,4 @@
+import {runTwoStepGeneration} from './two-step-generation.mjs'
 import {
   MULTIMODAL_RECOGNITION_MODEL_NAME,
   MULTIMODAL_RECOGNITION_PROMPT_VERSION,
@@ -762,6 +763,20 @@ function extractionUserText(body, sourceContent, sourceTitle, referenceTime, tim
   return `参考时间：${referenceTime}\n时区：${timezone}\n来源类型：${body.sourceType}\n来源标题：${sourceTitle || '未提供'}${selectedContext}\n来源正文：\n${sourceContent}`
 }
 
+async function extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,context,apiKey) {
+  const release=acquireConcurrency(clientKey(request))
+  if(!release){context.errorType='RATE_LIMITED';return failure('RATE_LIMITED','同时请求过多，请稍后再试。',429,context.requestId)}
+  try {
+    const referenceTime=safeText(body.referenceTime,80),timezone=safeText(body.timezone,80)||'Asia/Shanghai'
+    const generated=await runTwoStepGeneration({fetcher,apiKey,profile:extractionProfile(env),source:body.content,referenceTime,timezone,mode:env.DEEPSEEK_GENERATION_MODE,userText:extractionUserText(body,body.content,safeText(body.sourceTitle,160),referenceTime,timezone)})
+    if(!generated.ok){context.errorType=generated.error;if(generated.status&&generated.status!==502)return safeUpstreamFailure(generated.status,context.requestId,false);return failure(generated.error,'本次识别未完成，原文已保留，请稍后重试。',generated.error==='UPSTREAM_TIMEOUT'?504:502,context.requestId)}
+    const validation=validateRecognitionResult(generated.result,{sourceContent:body.content})
+    if(!validation.valid)return invalidRecognitionResponse(context,validation)
+    context.outputTokens=generated.execution.tokenUsage?.output??0
+    return success({model:extractionModel(env),result:generated.result,execution:generated.execution},context.requestId)
+  } finally {release()}
+}
+
 async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurrency, context) {
   if (!isTrustedOrigin(request, env.ALLOWED_ORIGINS)) {
     context.errorType = 'ORIGIN_NOT_ALLOWED'
@@ -802,6 +817,10 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
   if (validationError) {
     context.errorType = validationError
     return failure(validationError, '来源正文或参考时间无效。', 400, context.requestId)
+  }
+
+  if(['two-step-2.0','two-step-2.0x2'].includes(env.DEEPSEEK_GENERATION_MODE)) {
+    return extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,context,apiKey)
   }
 
   const sourceTitle = safeText(body.sourceTitle, 160)

@@ -43,7 +43,7 @@ async function carrierTests(label,paths,pattern,options={}) {
 async function product() {
   layer='current-product'
   nodeTests([['extraction-model-profiles','cloudflare/extraction-profile.node-test.mjs']])
-  nodeTests([['declared-action-normalization','cloudflare/declared-action-normalization.node-test.mjs']])
+  nodeTests([['declared-action-normalization','cloudflare/declared-action-normalization.node-test.mjs'],['two-step-fact-compiler','cloudflare/recognition-two-step.node-test.mjs'],['two-step-worker','cloudflare/two-step-worker.node-test.mjs']])
   nodeTests([['stateful-carrier-schedule','scripts/stateful-carrier-schedule.node-test.mjs']])
   nodeTests([['typed-task-applicability-generation','cloudflare/recognition-product-contract-v1-14.node-test.mjs']])
   nodeTests([['compact-generation-and-sampling','cloudflare/recognition-product-contract-v1-15.node-test.mjs'],['deadline-range-role','cloudflare/deadline-range-role.node-test.mjs']])
