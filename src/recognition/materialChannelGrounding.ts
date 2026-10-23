@@ -129,7 +129,11 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     const ids = new Set([...material.evidenceIds, ...owners.flatMap(t => t.evidenceIds)])
     const evidence = result.evidence.filter(e => ids.has(e.id) && e.sourceId === result.evidence.find(r => material.evidenceIds.includes(r.id))?.sourceId
       && typeof e.quote === 'string' && sourceText.includes(e.quote)).map(e => ({ id: e.id, quote: e.quote! }))
-    const clauses = citedClauses(evidence, sourceText)
+    // Local parser citations retain original separators. Split their literal
+    // clauses, including ASCII semicolons/newlines; applicability remains a
+    // separate unselected task decision, never permission to execute.
+    const clauses = result.modelName === 'local-rules'
+      ? evidence.flatMap(e => e.quote.split(/[，,。；;\n]/u)) : citedClauses(evidence, sourceText)
     const documentNameProof=documentNames.find(p=>p.materialId===material.tempId&&owners.some(t=>t.tempId===p.taskId))
     const objects = [...new Set([material.name, ...owners.map(t => t.actionObject),...(documentNameProof?[documentNameProof.literalObject]:[])].filter(Boolean))]
     const siblings = result.materials.filter(m => owners.some(t => m.relatedTaskTempIds.includes(t.tempId) && t.materialTempIds.includes(m.tempId))).map(m => m.name)

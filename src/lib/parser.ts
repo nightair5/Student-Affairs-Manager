@@ -25,6 +25,9 @@ interface TemporalMatch {
 interface EventClause {
   text: string
   bullet: boolean
+  /** Original contiguous source span; parsing text may join clauses for context. */
+  sourceStart?: number
+  sourceEnd?: number
 }
 
 interface TemporalAnchor {
@@ -140,10 +143,16 @@ function inferMaterials(content: string): string[] {
 function splitByTemporalAnchors(clause: EventClause): EventClause[] {
   const matches = findTemporalAnchors(clause.text)
   if (matches.length <= 1) return [clause]
+  // Alternative dates describe choices for one obligation, not new standalone tasks.
+  // Keep their shared condition and let time semantics retain unresolved choice.
+  if (matches.slice(1).some((match, index) => /或|任选|备选|可选择/u.test(clause.text.slice(matches[index].index + matches[index].text.length, match.index)))) return [clause]
   return matches.map((match, index) => {
     const start = index === 0 ? 0 : match.index
     const end = matches[index + 1]?.index ?? clause.text.length
-    return { text: clause.text.slice(start, end).trim(), bullet: clause.bullet }
+    const part = clause.text.slice(start, end), leading = part.length - part.trimStart().length
+    return { text: part.trim(), bullet: clause.bullet,
+      ...(clause.sourceStart !== undefined ? {sourceStart: clause.sourceStart + start + leading,
+        sourceEnd: clause.sourceStart + start + part.trimEnd().length} : {}) }
   })
 }
 
@@ -172,24 +181,30 @@ function splitOutsideRequirements(content: string): string[] {
 }
 
 function splitEventClauses(content: string): EventClause[] {
+  let sourceCursor = 0
   const rawClauses = splitOutsideRequirements(markListItems(content))
-    .map((raw) => ({
-      text: raw.replace(bulletMarker, '').trim(),
-      bullet: raw.trimStart().startsWith(bulletMarker),
-    }))
+    .map((raw) => {
+      const text = raw.replace(bulletMarker, '').trim()
+      const start = text ? content.indexOf(text, sourceCursor) : -1
+      if (start >= 0) sourceCursor = start + text.length
+      return {text, bullet: raw.trimStart().startsWith(bulletMarker),
+        ...(start >= 0 ? {sourceStart: start, sourceEnd: start + text.length} : {})}
+    })
     .filter((clause) => Boolean(clause.text))
     .flatMap(splitByTemporalAnchors)
   const groupedClauses: EventClause[] = []
-  let pendingPrefix = ''
+  let pendingPrefix: EventClause | undefined
 
   for (const clause of rawClauses) {
     const hasTemporal = findTemporalAnchors(clause.text).length > 0
     if (hasTemporal) {
       groupedClauses.push({
-        text: pendingPrefix && !clause.bullet ? `${pendingPrefix}，${clause.text}` : clause.text,
+        text: pendingPrefix && !clause.bullet ? `${pendingPrefix.text}，${clause.text}` : clause.text,
         bullet: clause.bullet,
+        sourceStart: pendingPrefix && !clause.bullet ? pendingPrefix.sourceStart : clause.sourceStart,
+        sourceEnd: clause.sourceEnd,
       })
-      pendingPrefix = ''
+      pendingPrefix = undefined
     } else if (clause.bullet) {
       groupedClauses.push(clause)
     } else if (groupedClauses.length) {
@@ -197,13 +212,14 @@ function splitEventClauses(content: string): EventClause[] {
       groupedClauses[lastIndex] = {
         ...groupedClauses[lastIndex],
         text: `${groupedClauses[lastIndex].text}，${clause.text}`,
+        sourceEnd: clause.sourceEnd,
       }
     } else {
-      pendingPrefix = pendingPrefix ? `${pendingPrefix}，${clause.text}` : clause.text
+      pendingPrefix = pendingPrefix ? {...pendingPrefix, text: `${pendingPrefix.text}，${clause.text}`, sourceEnd: clause.sourceEnd} : clause
     }
   }
 
-  if (!groupedClauses.length && pendingPrefix) return [{ text: pendingPrefix, bullet: false }]
+  if (!groupedClauses.length && pendingPrefix) return [pendingPrefix]
   return groupedClauses
 }
 
@@ -345,6 +361,8 @@ export function createSuggestions(
   let context: TemporalContext | undefined
 
   for (const clause of clauses) {
+    const evidence = clause.sourceStart !== undefined && clause.sourceEnd !== undefined
+      ? cleanContent.slice(clause.sourceStart, clause.sourceEnd) : undefined
     const temporal = parseTemporal(clause.text, context, now, timezone)
     if (temporal) {
       context = temporal.context
@@ -360,6 +378,7 @@ export function createSuggestions(
         now,
         temporal.ast,
       ))
+      if (evidence) suggestions.at(-1)!.evidence = evidence.slice(0, 220)
       continue
     }
     if (clause.bullet && context) {
@@ -378,6 +397,7 @@ export function createSuggestions(
         now,
         timePoint,
       ))
+      if (evidence) suggestions.at(-1)!.evidence = evidence.slice(0, 220)
     }
   }
 
