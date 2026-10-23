@@ -1,0 +1,25 @@
+import {describe,it,expect} from 'vitest'
+import {buildLocalRecognition,postProcessRecognition} from './pipeline'
+import {localDelivery,localEventLocation,localSubmissionChannel} from './localNoticeFacts'
+import {isRecognitionResult} from './schema'
+const recognize=(content:string)=>buildLocalRecognition({sourceType:'text',sourceTitle:'快速粘贴',content,referenceTime:new Date('2026-10-23T10:00:00+08:00'),timezone:'Asia/Shanghai',projects:[],tasks:[]})
+const tasks=(r:ReturnType<typeof recognize>)=>[...r.standaloneTasks,...r.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
+describe('local fallback source facts, independent from cloud generation',()=>{
+  it.each(['10 月 30 日 17:00 前把课程论文（PDF，学号+姓名命名）交到学习通；11 月 2 日下午 2 点在 A101 开答辩说明会','10月30日17:00前把课程论文（PDF，学号+姓名命名）交到学习通；11月2日下午2点在A101召开答辩说明会。','10月30日17:00前将课程论文(PDF,学号+姓名命名)上传到学习通；11月2日下午2点在A101举行答辩说明会。'])('keeps the object, requirements, channel and event location: %s',text=>{
+    const r=recognize(text);expect(isRecognitionResult(r)).toBe(true);expect(tasks(r)).toHaveLength(1);expect(tasks(r)[0]).toMatchObject({actionObject:'课程论文',selected:true,estimatedMinutes:null});expect(r.materials).toHaveLength(1);expect(r.materials[0]).toMatchObject({name:'课程论文',formatRequirements:['PDF'],namingRequirements:['学号+姓名'],submissionChannel:'学习通'});expect(r.events).toHaveLength(1);expect(r.events[0]).toMatchObject({title:'答辩说明会',location:'A101',selected:false});expect(r.timePoints.map(p=>[p.type,p.normalizedValue])).toEqual([['task_deadline','2026-10-30T17:00'],['event_start','2026-11-02T14:00']]);expect(r.evidence.every(e=>text.includes(e.quote))).toBe(true)
+  })
+  it('keeps format and naming attached when outside parentheses',()=>{const r=recognize('请于10月30日17:00前提交课程论文，PDF格式，文件以学号+姓名命名，交到学习通。');expect(r.materials[0]).toMatchObject({name:'课程论文',formatRequirements:['PDF'],namingRequirements:['学号+姓名'],submissionChannel:'学习通'});expect(tasks(r)[0].title).toBe('提交课程论文')})
+  it('does not turn requirements into separate tasks',()=>{const r=recognize('请于10月30日17:00前把实验报告（PDF，学号+姓名命名）交至教务系统。');expect(tasks(r)).toHaveLength(1);expect(tasks(r)[0].title).toBe('提交实验报告');expect(r.materials.map(m=>m.name)).toEqual(['实验报告'])})
+  it('keeps two separate deliveries on their own objects and channels',()=>{const r=recognize('10月30日17:00前把申请表（PDF）交到学院邮箱；10月31日18:00前把实验报告（DOCX）交到课程平台。');expect(tasks(r).map(t=>t.actionObject)).toEqual(['申请表','实验报告']);expect(r.materials.map(m=>[m.name,m.submissionChannel])).toEqual([['申请表','学院邮箱'],['实验报告','课程平台']]);expect(r.materials[0].relatedTaskTempIds).toEqual([tasks(r)[0].tempId]);expect(r.materials[1].relatedTaskTempIds).toEqual([tasks(r)[1].tempId])})
+  it('does not erase a separately requested generic report',()=>{const r=recognize('10月30日17:00前提交实验报告和报告。');expect(r.materials.map(m=>m.name)).toEqual(expect.arrayContaining(['实验报告','报告']))})
+  it('does not choose between two incompatible delivery interpretations',()=>{expect(localDelivery('将报名表交到服务台，将申请表交到办公室')).toBeNull();expect(localDelivery('把报名表交到服务台，或交到办公室')).toBeNull();expect(localSubmissionChannel('交到服务台，或交到办公室')).toBeNull()})
+  it('does not guess a room from an unrelated title',()=>{expect(localEventLocation('A101维修公告：11月2日召开说明会，地点另行通知')).toBeNull();expect(recognize('11月2日下午2点召开说明会，地点另行通知。').events[0].location).toBeNull()})
+  it('keeps known mandatory attendance selected, with an event time rather than a cutoff',()=>{const r=recognize('请全体同学于11月2日下午2点在A101参加答辩说明会。');expect(tasks(r)).toHaveLength(0);expect(r.events[0]).toMatchObject({title:'答辩说明会',location:'A101',selected:true});expect(r.timePoints[0]).toMatchObject({type:'event_start',normalizedValue:'2026-11-02T14:00'})})
+  it.each(['如已被录取，请于10月30日17:00前提交报名表至学院邮箱。','请自愿参加的同学于10月30日17:00前提交报名表至学院邮箱。','取消10月30日17:00前提交报名表的安排。','禁止10月30日17:00前提交报名表。'])('never changes an unknown condition or cancellation into a selected obligation: %s',text=>{expect(tasks(recognize(text)).every(t=>t.selected===false)).toBe(true)})
+  it.each(['请如期于10月30日17:00前提交课程论文。','10月30日17:00前提交课程论文，格式例如PDF。'])('does not mistake descriptive ru for an applicability condition: %s',text=>expect(tasks(recognize(text))[0].selected).toBe(true))
+  it('keeps a pure information notice free of tasks',()=>{const r=recognize('校历已发布，仅供参考，无需办理。');expect(tasks(r)).toHaveLength(0);expect(r.sourceSummary.requiresAction).toBe(false)})
+  it('does not label an inferred 120 minutes as a source fact',()=>expect(tasks(recognize('10月30日17:00前提交课程论文。'))[0].estimatedMinutes).toBeNull())
+  it('keeps an explicitly declared duration',()=>expect(tasks(recognize('10月30日17:00前提交课程论文，预计30分钟。'))[0].estimatedMinutes).toBe(30))
+  it('does not let an unclosed parenthesis swallow the next dated action',()=>{const r=recognize('10月30日17:00前提交实验报告（PDF；11月2日下午2点参加说明会。');expect(r.events).toHaveLength(1);expect(r.timePoints.some(p=>p.normalizedValue==='2026-11-02T14:00')).toBe(true)})
+  it('leaves already structured cloud material fields and estimates untouched',()=>{const r=recognize('10月30日17:00前提交实验报告。');tasks(r)[0].estimatedMinutes=120;const before=structuredClone(r);expect(postProcessRecognition(r,'10月30日17:00前提交实验报告。')).toEqual(before)})
+})

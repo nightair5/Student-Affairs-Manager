@@ -1,5 +1,6 @@
 import type { ParsedSuggestion, Project, SourceType, Task, TaskCategory } from '../types'
 import { createSuggestions } from '../lib/parser'
+import { localDelivery, localEventLocation, localMaterialRequirements, localActionNeedsDecision, localSubmissionChannel } from './localNoticeFacts'
 import { taskActionText } from '../lib/taskActionText'
 import { parseChineseTimeAst } from '../lib/timeSemantics'
 import { RECOGNITION_MODEL_NAME, RECOGNITION_PROMPT_VERSION } from './prompt'
@@ -193,7 +194,20 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
   parsed.forEach((item, index) => {
     const evidenceId = `evidence-${index + 1}`
     const timePointId = `time-${index + 1}`
-    const task = createTask(item, index, evidenceId, timePointId)
+    const delivery = localDelivery(item.evidence)
+    const requirements = localMaterialRequirements(item.evidence)
+    const sourceObject = delivery?.object ?? normalizeTitle(item.title).actionObject
+    const hasFileObject = Boolean(sourceObject && item.evidence.includes(sourceObject) && (delivery || /^(提交|上传|发送)/u.test(item.title)))
+    const names = hasFileObject && requirements.formats.length
+      ? item.materials.filter(name => !/^(?:PDF|DOCX?|PPTX?|XLSX?)$/iu.test(name))
+      : item.materials
+    const materialNames = hasFileObject && requirements.formats.length && names.length === 0 ? [sourceObject] : names
+    const localItem = {...item, title: delivery ? delivery.verb + delivery.object : item.title, materials: materialNames}
+    const task = createTask(localItem, index, evidenceId, timePointId)
+    // Estimated work is a personal planning choice, never an extracted source fact.
+    const duration = item.evidence.match(/(?:预计|用时|耗时|需时)\s*(\d{1,3})\s*分钟/u)
+    task.estimatedMinutes = duration ? Number(duration[1]) : null
+    if (localActionNeedsDecision(item.evidence)) task.selected = false
     const isEvent = eventPattern.test(task.title) && !/准备|制作|撰写|完成/u.test(task.title)
     const timePointType = isEvent ? 'event_start' : /报名/u.test(task.title) ? 'registration_deadline' : 'task_deadline'
     const timeAst = item.timePoint ?? parseChineseTimeAst(item.evidence, {
@@ -238,7 +252,8 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
           selected: timeSelected,
         })
       }
-      events.push({ tempId: `event-${index + 1}`, title: task.title, description: eventDescription(item.evidence), startTimePointTempId: timePointId, endTimePointTempId: endTimePointId, location: null, evidenceIds: [evidenceId], confidence: task.confidence, inferenceLevel: task.inferenceLevel, selected: task.selected })
+      const eventLocation = localEventLocation(item.evidence)
+      events.push({ tempId: `event-${index + 1}`, title: eventLocation?.name ?? task.title, description: eventDescription(item.evidence), startTimePointTempId: timePointId, endTimePointTempId: endTimePointId, location: eventLocation?.location ?? null, evidenceIds: [evidenceId], confidence: task.confidence, inferenceLevel: task.inferenceLevel, selected: task.selected })
       const preparation = preparationAction(item.evidence)
       if (preparation) {
         const preparationIndex = parsed.length + index
@@ -295,14 +310,14 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     } else {
       tasks.push(task)
     }
-    item.materials.forEach((name, materialIndex) => materials.push({
+    materialNames.forEach((name, materialIndex) => materials.push({
       tempId: `material-${index + 1}-${materialIndex + 1}`,
       name,
       required: true,
-      formatRequirements: [],
-      namingRequirements: [],
+      formatRequirements: requirements.formats,
+      namingRequirements: requirements.naming,
       quantity: null,
-      submissionChannel: null,
+      submissionChannel: delivery?.channel ?? localSubmissionChannel(item.evidence),
       relatedTaskTempIds: isEvent ? [] : [task.tempId],
       evidenceIds: [evidenceId],
       confidence: task.confidence,

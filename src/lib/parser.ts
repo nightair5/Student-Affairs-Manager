@@ -36,8 +36,8 @@ const periodSource = '(?:清晨|早晨|早上|上午|中午|下午|傍晚|晚上
 const chineseNumberSource = '[零〇一二两三四五六七八九十]{1,3}'
 const hourSource = `(?:\\d{1,2}|${chineseNumberSource})`
 const minuteSource = `(?:\\d{1,2}|${chineseNumberSource})`
-const clockSource = `(?:(?:${periodSource})\\s*${hourSource}(?:(?:[:：]${minuteSource})|(?:点|时)(?:(?:${minuteSource}分?)|半)?)?|\\d{1,2}(?:(?:[:：]\\d{1,2})|(?:点|时)(?:(?:\\d{1,2}分?)|半)?))`
-const absoluteDateSource = '(?:(?:20\\d{2})[年/-]\\s*)?\\d{1,2}[月/-]\\s*\\d{1,2}(?:日|号)?'
+const clockSource = `(?:(?:${periodSource})\\s*${hourSource}\\s*(?:(?:[:：]${minuteSource})|(?:点|时)(?:(?:${minuteSource}分?)|半)?)?|\\d{1,2}\\s*(?:(?:[:：]\\d{1,2})|(?:点|时)(?:(?:\\d{1,2}分?)|半)?))`
+const absoluteDateSource = '(?:(?:20\\d{2})\\s*[年/-]\\s*)?\\d{1,2}\\s*[月/-]\\s*\\d{1,2}\\s*(?:日|号)?'
 const relativeDateSource = '(?:今天|今日|明天|后天|(?:本周|这周|下周)[一二三四五六日天])'
 const temporalSource = `(?:(?:${absoluteDateSource}|${relativeDateSource})(?:\\s*${clockSource})?|${clockSource})`
 const headerOnlyPattern = /^(?:(?:安排|事项|时间|日程|要求|节点)(?:如下|如下所示)?|请注意)$/u
@@ -127,7 +127,14 @@ function inferMaterials(content: string): string[] {
     '申请表',
     '盖章证明',
   ]
-  return known.filter((item) => content.includes(item))
+  return known.filter((item) => {
+    const starts = [...content.matchAll(new RegExp(item, 'gu'))].map(match => match.index ?? 0)
+    return starts.some(start => !known.some(longer => longer.length > item.length
+      && [...content.matchAll(new RegExp(longer, 'gu'))].some(match => {
+        const outer = match.index ?? 0
+        return outer <= start && outer + longer.length >= start + item.length
+      })))
+  })
 }
 
 function splitByTemporalAnchors(clause: EventClause): EventClause[] {
@@ -147,9 +154,25 @@ function markListItems(content: string): string {
     .replace(/(^|\n)\s*(?:[-*•]\s*|\d{1,2}[.、]\s*|[（(]\d{1,2}[）)]\s*)/gu, `$1${bulletMarker}`)
 }
 
+/** Keep punctuation inside material requirements attached to the same action. */
+function splitOutsideRequirements(content: string): string[] {
+  const parts: string[] = []
+  let start = 0
+  const stack: string[] = []
+  for (let i = 0; i < content.length; i += 1) {
+    const char = content[i]
+    if (char === '（' || char === '(') stack.push(char)
+    else if (char === '）' && stack.at(-1) === '（' || char === ')' && stack.at(-1) === '(') stack.pop()
+    if (/[；;。！？!\n]/u.test(char) || /[，,]/u.test(char) && stack.length === 0) {
+      parts.push(content.slice(start, i)); start = i + 1; stack.length = 0
+    }
+  }
+  parts.push(content.slice(start))
+  return parts
+}
+
 function splitEventClauses(content: string): EventClause[] {
-  const rawClauses = markListItems(content)
-    .split(/[；;。！？!\n，,]+/u)
+  const rawClauses = splitOutsideRequirements(markListItems(content))
     .map((raw) => ({
       text: raw.replace(bulletMarker, '').trim(),
       bullet: raw.trimStart().startsWith(bulletMarker),

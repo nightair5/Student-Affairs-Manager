@@ -1,4 +1,4 @@
-# v3 beta 发布记录（结构化数据上线，2026-10-22）
+# v3 beta 发布记录（线上beta.2；第20轮未发布，2026-10-23）
 状态：DEPLOYED_SCHEMA_UPDATE；53bf435已上线，业务仍为beta.2同版，本次未回滚。
 正式地址：https://student-affairs.site/
 业务版本：v3.0.0-beta.2；本次仅结构化数据更新，未新建版本标签；原beta.2标签保持不变。
@@ -30,3 +30,8 @@ npm audit：0高危、0严重、2中危开发工具项；未升级依赖。
 未部署preview；未改DNS、域名、路由、Secret或其他环境。第19轮曾回滚的beta.1仍作为历史记录保留。
 已知限制：29/40仍需改核心事实；条件材料确认负担、核心时间和归属仍是主要差距。
 本次证据：.data/schema-deploy-20261022/FINAL_EVIDENCE.json；此前质量证据保留在release-close-20261022/（均不进Git）。
+
+第20轮：本地动作对象/地点/材料修复及无正文日志在integration分支，未部署beta.3。
+发布阻碍：官方Computer Use无法可靠识别无痕窗口当前网址，触发策略停止；体验基线、页面与保存回归NOT_RUN。
+未绕过策略；导航和卡片尚未改，未运行reserved-r10；不能以本地测试代替上线门槛。
+线上仍为53bf435/cce37544，以上线上回滚命令保持；本轮记录的LIVE_VERSION是cce37544。

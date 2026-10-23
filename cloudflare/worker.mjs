@@ -657,20 +657,30 @@ function timeoutError(error) {
   return error?.name === 'TimeoutError' || error?.name === 'AbortError'
 }
 
+const LOG_ROUTES = new Map([
+  ['/api/deepseek/extract', 'EXTRACT'], ['/api/deepseek/extract-multimodal', 'MULTIMODAL'],
+  ['/api/deepseek', 'CHAT'], ['/api/deepseek/status', 'STATUS'],
+  ['/api/source/fetch', 'SOURCE_FETCH'], ['/api/source/status', 'SOURCE_STATUS'],
+])
 function logRequest(context, response) {
+  const route = LOG_ROUTES.get(context.path) ?? 'OTHER_API'
+  const recognition = context.method === 'POST' && ['EXTRACT', 'MULTIMODAL'].includes(route)
+  // One event per request; aggregate these numeric fields in existing Workers Logs.
+  // No notification, IP/hash, arbitrary URL, header, credential or upstream body.
   const entry = {
-    requestId: context.requestId,
-    timestamp: new Date().toISOString(),
-    path: context.path,
-    method: context.method,
-    status: response.status,
-    durationMs: Date.now() - context.startedAt,
-    inputLength: context.inputLength,
-    outputTokens: context.outputTokens,
-    errorType: context.errorType,
-    client: context.client,
+    event: 'SERVICE_REQUEST', route, status: response.status,
+    requestCount: 1, recognitionCount: Number(recognition),
+    recognitionSuccess: Number(recognition && response.status < 400),
+    recognitionFailure: Number(recognition && response.status >= 400),
+    generationMode: context.generationMode,
+    durationMs: Math.max(0, Date.now() - context.startedAt),
+    inputLength: context.inputLength, outputTokens: context.outputTokens,
+    errorType: /^[A-Z][A-Z0-9_]{0,79}$/u.test(context.errorType ?? '') ? context.errorType : response.status >= 400 ? 'REQUEST_FAILED' : null,
   }
-  console.log(entry)
+  // Preserve the existing request-log contract; route values are allowlisted.
+  console.log({path: entry.route, status: entry.status, durationMs: entry.durationMs, inputLength: entry.inputLength, outputTokens: entry.outputTokens, errorType: entry.errorType})
+  // Versioned numeric event for success/failure counts and mode distributions.
+  console.info(entry)
 }
 
 async function askDeepSeek(request, env, fetcher, isRateLimited, acquireConcurrency, context) {
@@ -1169,7 +1179,7 @@ export function createWorker({
         inputLength: 0,
         outputTokens: 0,
         errorType: null,
-        client: anonymousClientId(clientKey(request)),
+        generationMode: ['two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2'].includes(env.DEEPSEEK_GENERATION_MODE) ? env.DEEPSEEK_GENERATION_MODE : 'structured',
       }
       let response = await previewAccess(request,env,{isLimited:previewLoginLimited,now:previewNow})
       if (response) {

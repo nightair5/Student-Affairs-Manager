@@ -699,3 +699,35 @@ test('Worker fails closed with explicit shared-contract diagnostics instead of s
     selected: false,
   })
 })
+
+
+test('observability records numeric recognition outcomes without text, IP or arbitrary paths', async () => {
+  const logs = [], original = console.log, originalInfo = console.info
+  console.log = row => logs.push(row); console.info = row => logs.push(row)
+  try {
+    const worker = createWorker({fetcher: async () => {throw Error('NETWORK_MUST_NOT_RUN')}})
+    const response = await worker.fetch(request('/api/deepseek/extract', {body: JSON.stringify({content:'匿名正文不可进入日志', sourceType:'text', sourceTitle:'匿名标题'})}), environment({DEEPSEEK_GENERATION_MODE:'two-step-2.1'}))
+    assert.equal(response.status, 503)
+    const row = logs.at(-1)
+    assert.equal(row.route, 'EXTRACT'); assert.equal(row.requestCount, 1)
+    assert.equal(row.recognitionCount, 1); assert.equal(row.recognitionSuccess, 0); assert.equal(row.recognitionFailure, 1)
+    assert.equal(row.generationMode, 'two-step-2.1'); assert.equal(typeof row.durationMs, 'number')
+    assert.equal(row.errorType, 'DEEPSEEK_NOT_CONFIGURED')
+    assert.deepEqual(Object.keys(row).sort(), ['event','route','status','requestCount','recognitionCount','recognitionSuccess','recognitionFailure','generationMode','durationMs','inputLength','outputTokens','errorType'].sort())
+    assert.doesNotMatch(JSON.stringify(logs), /匿名正文|匿名标题|203\.0\.113\.10|client-|authorization|api.key/iu)
+    await worker.fetch(new Request('https://student-affairs-manager.example/api/DO_NOT_LOG_PERSONAL_PATH'), environment({DEEPSEEK_GENERATION_MODE:'DO_NOT_LOG_UNKNOWN_ENV_VALUE'}))
+    assert.equal(logs.at(-1).route, 'OTHER_API'); assert.equal(logs.at(-1).generationMode, 'structured')
+    assert.equal(logs.at(-1).recognitionCount, 0); assert.doesNotMatch(JSON.stringify(logs), /DO_NOT_LOG/)
+  } finally { console.log = original; console.info = originalInfo }
+})
+
+test('observability distinguishes successful extraction and leaves its response unchanged', async () => {
+  const logs = [], original = console.log, originalInfo = console.info
+  console.log = row => logs.push(row); console.info = row => logs.push(row)
+  try {
+    const worker = createWorker({fetcher: async () => Response.json({choices:[{message:{content:JSON.stringify(emptyRecognitionResult())}}],usage:{prompt_tokens:10,completion_tokens:20,total_tokens:30}})})
+    const response = await worker.fetch(request('/api/deepseek/extract', {body:JSON.stringify({content:'本通知仅供参考，无需办理。',sourceType:'text',sourceTitle:'匿名通知',referenceTime:'2026-10-23T03:00:00Z',timezone:'Asia/Shanghai'})}), environment({DEEPSEEK_API_KEY:'server-only-test-key-with-length'}))
+    assert.equal(response.status, 200); assert.equal((await response.json()).result.sourceSummary.requiresAction, false)
+    assert.equal(logs.at(-1).recognitionCount, 1); assert.equal(logs.at(-1).recognitionSuccess, 1); assert.equal(logs.at(-1).recognitionFailure, 0)
+  } finally { console.log = original; console.info = originalInfo }
+})
