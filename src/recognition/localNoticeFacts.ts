@@ -1,5 +1,5 @@
 /** Local fallback only. Never used to rewrite a cloud/recorded RecognitionResult. */
-export const LOCAL_NOTICE_FACTS_VERSION = 'local-notice-facts-1.1.0'
+export const LOCAL_NOTICE_FACTS_VERSION = 'local-notice-facts-1.2.0'
 export function localDelivery(text: string): {verb: string; sourceVerb: string; object: string; channel: string} | null {
   const source = text.replace(/[（(][^（）()]*[）)]/gu, '')
   const matches = [...source.matchAll(/(?:把|将)\s*([^，,；;。！？\n]{1,60}?)\s*(提交|上传|发送|交到|交至|发到|发至)\s*([^，,；;。！？\n]{1,60})/gu)]
@@ -37,4 +37,9 @@ export function localMaterialRequirements(text: string) {
 /** A notice describes a class of people; it does not establish the current user's state. */
 export function localActionNeedsDecision(text: string): boolean {
   return /(?:如果|如(?=已|需|有|未|不|符合|决定|申请|参加|被|属于)|若(?=已|需|有|未|不|符合|决定|申请|参加|被|属于)|(?:^|[，,；;。\n])凡|仅限|符合.{0,20}条件|入选后|录取后|报名成功后|决定放弃|自愿|有意|取消|禁止|不得|无需|无须|不再|请勿|不要|不应|不可|不能|不准|不允许|不必|不用|不提交|不上传|不发送|不交)/u.test(text)
+}
+
+/** An explicit attendance request is distinct from announcing an event. */
+export function localAttendanceDirective(text: string): boolean {
+  return /请(?:大家|各位同学|同学们|全体同学)?(?:务必|准时|按时)?(?:参加|出席)/u.test(text) && !localActionNeedsDecision(text)
 }

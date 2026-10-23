@@ -35,3 +35,15 @@ describe('local delivery reaches the ordinary first screen safely',()=>{
 })
 
 it('previews event-owned time points exactly as the ordinary commit plan includes them',()=>{const r=local('10月30日17:00前提交课程论文；11月2日下午2点在A101召开说明会。');r.events[0].selected=true;const eventPoint=r.timePoints.find(p=>p.tempId===r.events[0].startTimePointTempId)!;eventPoint.selected=false;const d=createExtractionDraft('anonymous',recognitionToLegacySuggestions(r),'2026-10-23T02:00:00Z',r);const html=renderToStaticMarkup(<DraftReviewPanel ordinarySourceReview={{busy:false,unsaved:false,facts:null,onConfirm:noop}} draft={d} source={null} onClose={noop} onUpdate={noop} onConfirm={noop} onReject={noop} onConfirmAll={noop} projectWillCreate={false} projects={[]} onProjectChoice={noop} onKeepExplicit={noop} onMoveTask={noop} onToggleRecognitionEntity={noop} onToggleTaskSelected={noop} onSplitTask={noop} onMergeTask={noop}/>);expect(html.replace(/<[^>]+>/g,'')).toContain('2 个时间节点');expect(html.replace(/<[^>]+>/g,'')).toContain('1 个事件')})
+
+it('keeps an explicit attendance request selected, without treating an announcement or unknown eligibility as mandatory',()=>{
+  const examples=[
+    ['11月2日下午2点在A101召开论文答辩说明会，请准时参加。',true],
+    ['11月2日下午2点在A101召开说明会，请按时出席。',true],
+    ['11月2日下午2点在A101召开说明会。',false],
+    ['若已被录取，11月2日下午2点在A101召开说明会，请准时参加。',false],
+    ['11月2日下午2点在A101召开说明会，有意者自愿参加。',false],
+    ['取消11月2日下午2点在A101召开的说明会，请勿参加。',false],
+  ] as const
+  for(const [text,selected] of examples){const r=local(text);expect(r.events).toHaveLength(1);expect(r.events[0].selected,text).toBe(selected)}
+})

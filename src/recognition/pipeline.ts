@@ -1,6 +1,6 @@
 import type { ParsedSuggestion, Project, SourceType, Task, TaskCategory } from '../types'
 import { createSuggestions } from '../lib/parser'
-import { localDelivery, localEventLocation, localMaterialRequirements, localActionNeedsDecision, localSubmissionChannel } from './localNoticeFacts'
+import { localDelivery, localEventLocation, localMaterialRequirements, localActionNeedsDecision, localSubmissionChannel, localAttendanceDirective } from './localNoticeFacts'
 import { taskActionText } from '../lib/taskActionText'
 import { parseChineseTimeAst } from '../lib/timeSemantics'
 import { RECOGNITION_MODEL_NAME, RECOGNITION_PROMPT_VERSION } from './prompt'
@@ -210,6 +210,10 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     task.estimatedMinutes = duration ? Number(duration[1]) : null
     if (localActionNeedsDecision(item.evidence)) task.selected = false
     const isEvent = eventPattern.test(task.title) && !/准备|制作|撰写|完成/u.test(task.title)
+    if (isEvent && localEventLocation(item.evidence) && localAttendanceDirective(item.evidence)) {
+      task.inferenceLevel = 'explicit'
+      task.selected = true
+    }
     const timePointType = isEvent ? 'event_start' : /报名/u.test(task.title) ? 'registration_deadline' : 'task_deadline'
     const timeAst = item.timePoint ?? parseChineseTimeAst(item.evidence, {
       referenceTime: input.referenceTime,

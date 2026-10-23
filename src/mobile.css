@@ -214,3 +214,28 @@
 .review-panel .detail-header,.review-panel .detail-footer {position:relative;flex:0 0 auto;padding-inline:16px;}
 .review-panel .review-body .source-details {min-width:0;}
 }
+
+/* Keep both review actions visible when task/event summary counts wrap. */
+@media (max-width: 767px) {
+  .review-panel .review-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 8px;
+    max-width: 100%;
+  }
+  .review-panel .review-footer > .confirmation-preview {
+    grid-column: 1 / -1;
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+  .review-panel .confirmation-preview strong { flex-basis: 100%; }
+  .review-panel .confirmation-preview span { white-space: nowrap; }
+  .review-panel .review-footer > p { grid-column: 1 / -1; }
+  .review-panel .review-footer > button {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    min-height: 44px;
+    white-space: normal;
+  }
+}

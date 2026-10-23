@@ -652,6 +652,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       })
       return
     }
+    // First use may reach this handler before the empty workspace transaction finishes.
+    // Join the existing hydration; never let capture race initialization or replace data.
+    if (hydrationPromise.current) await hydrationPromise.current
     const localResult = createIntakeResult(input)
     const localRecognition = buildLocalRecognition({
       sourceType: input.sourceType,
