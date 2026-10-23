@@ -1,3 +1,4 @@
+import {taskCardChannels} from '../recognition/taskCardChannels'
 import {sourceEventProblem} from '../domain/v2/sourceReviewD26'
 import { AlertTriangle, Check, CheckCheck, Clock3, FileText, FolderTree, ListChecks, PencilLine, ShieldCheck, Trash2, X } from 'lucide-react'
 import { Fragment, useEffect, useId, useRef, useState } from 'react'
@@ -227,7 +228,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
       ordinary={Boolean(ordinarySourceReview)}
       waitingOn={ordinarySourceReview ? metadata?.dependencyTempIds.map(id=>taskMeta.get(id)?.title ?? '前置事项待核对') : undefined}
       durationKnown={ordinarySourceReview?metadata?.estimatedMinutes!==null:undefined}
-      materialSummary={recognition?.materials.filter(m => m.relatedTaskTempIds.includes(item.suggestion.id)).map(m => [m.name, ...m.formatRequirements, ...m.namingRequirements.map(n => '命名：' + n), m.submissionChannel ? '交至' + m.submissionChannel : ''].filter(Boolean).join(' · ')) ?? item.suggestion.materials}
+      materialSummary={recognition ? [...recognition.materials.filter(m => m.relatedTaskTempIds.includes(item.suggestion.id)).map(m => [m.name, ...m.formatRequirements, ...m.namingRequirements.map(n => '命名：' + n), m.submissionChannel ? '交至' + m.submissionChannel : ''].filter(Boolean).join(' · ')), ...(metadata ? taskCardChannels(recognition,metadata,sourceText).filter(channel => !recognition.materials.some(m => m.relatedTaskTempIds.includes(metadata.tempId) && channel === '提交渠道：'+m.submissionChannel)) : [])] : item.suggestion.materials}
       semanticFacts={<>{semanticReview?.itemFacts(item.suggestion.id, setActiveEvidence)}
         {factCorrection?.(item.suggestion.id, dirty => setFactDirty(previous => previous[item.id] === dirty ? previous : { ...previous, [item.id]: dirty }),
           isDirty(item, 'title') || isDirty(item, 'deadline'))}</>}
