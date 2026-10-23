@@ -10,7 +10,7 @@ import {
   Play,
 } from 'lucide-react'
 import type { Task } from '../types'
-import { timePointDisplayValue } from '../recognition/recognitionModePresentation'
+import { timePointDisplayValue, recognitionOptionDisplay } from '../recognition/recognitionModePresentation'
 import {
   formatDuration,
   formatDeadlineDistance,
@@ -60,7 +60,7 @@ export function TaskCard({
   const materials = getMaterialProgress(task)
   const waitingFor = allTasks.filter(t => task.dependencyIds?.includes(t.id) && t.status !== '已完成')
   const unknownMaterials = task.materials.filter(m => m.status === 'unverified').length
-  const deadline = dateView ? { date: dateView.label, time: '', weekday: dateView.noDeadlineProven ? '不自动排期' : '' } : !task.deadline ? {date:task.sourceDeadlineLabel||'原文未说明截止',time:'',weekday:'个人安排另列'} : deadlineParts(task.deadline)
+  const deadline = dateView ? { date: dateView.label, time: '', weekday: dateView.noDeadlineProven ? '不自动排期' : '' } : !task.deadline ? {date:recognitionOptionDisplay(task.sourceDeadlineLabel||'原文未说明截止'),time:'',weekday:'个人安排另列'} : deadlineParts(task.deadline)
   const priority = calculateTaskPriority(task, allTasks, new Date(), dateView ? { [task.id]: dateView } : undefined)
 
   return (

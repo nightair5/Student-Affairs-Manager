@@ -124,7 +124,7 @@ function matchProject(input: RecognitionInput, title: string, category: TaskCate
 }
 
 function suggestionsAreStandalone(content: string): boolean {
-  return !/比赛|竞赛|大赛|挑战赛|赛事|申请|课程|论文|实践|项目/u.test(content)
+  return !/比赛|竞赛|大赛|挑战赛|赛事|课题|项目/u.test(content)
 }
 
 function createTask(item: ParsedSuggestion, index: number, evidenceId: string, timePointId: string): TaskSuggestionV2 {
@@ -204,6 +204,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     const materialNames = hasFileObject && requirements.formats.length && names.length === 0 ? [sourceObject] : names
     const localItem = {...item, title: delivery ? delivery.verb + delivery.object : item.title, materials: materialNames}
     const task = createTask(localItem, index, evidenceId, timePointId)
+    if (delivery) task.actionVerb = delivery.sourceVerb
     // Estimated work is a personal planning choice, never an extracted source fact.
     const duration = item.evidence.match(/(?:预计|用时|耗时|需时)\s*(\d{1,3})\s*分钟/u)
     task.estimatedMinutes = duration ? Number(duration[1]) : null
@@ -358,6 +359,14 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     confidence: item.confidence === '高' ? 0.9 : item.confidence === '中' ? 0.7 : 0.4,
   }))
   const actionRequired = tasks.length + events.length > 0 && !/仅供参考|请知悉|自行查看/u.test(preprocessed.normalizedText)
+  // Local parsing may create a placeholder time for a sentence with no action.
+  // Keep the original information, rather than dangling references to discarded tasks.
+  if (!actionRequired && events.length === 0) {
+    materials.length = 0
+    timePoints.length = 0
+    projectMatch.decision = 'standalone_task'
+    projectMatch.matchedProjectId = null
+  }
   return postProcessRecognition({
     schemaVersion: '2.0',
     promptVersion: RECOGNITION_PROMPT_VERSION,

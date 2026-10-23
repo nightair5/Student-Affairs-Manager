@@ -113,7 +113,7 @@ export function DashboardPage({
         <ArrowRight size={17} />
       </button>}
 
-      {planning}
+      {tasks.length > 0 && planning}
       <section className="focus-section" aria-labelledby="focus-title">
         <div className="section-heading">
           <div><span className="section-index">TODAY</span><h2 id="focus-title">现在先做这些</h2></div>

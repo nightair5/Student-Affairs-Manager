@@ -1,3 +1,4 @@
+import {localDelivery,localActionNeedsDecision} from './localNoticeFacts'
 import type { RecognitionResult } from './types'
 import {citedDocumentNames, type CitedDocumentName} from './citedDocumentName'
 import { assembleRecognitionFirstSuggestionD26,assembleAlignedTwoStepFirstSuggestion } from './firstSuggestionD26'
@@ -138,7 +139,16 @@ export function groundMaterialChannels(input: RecognitionResult, sourceText: str
     }))
     const contradictory = roleChecks.some(c => c.polarity === 'NEGATED_OR_UNCERTAIN')
     const citedContextProof=!contradictory?citedDeliveryContexts(result,sourceText).find(p=>p.materialIds.includes(material.tempId)&&p.channel===originalValue):undefined
-    const direct = owners.length > 0 && !contradictory && (roleChecks.some(c => c.polarity === 'AFFIRMATIVE')||!!citedContextProof)
+    // Local fallback emits a literal parsed delivery, not model free prose.
+    // Re-verify its closed grammar against the same owner's exact source quote.
+    // Cloud/recorded generations continue through the original rules unchanged.
+    const localProof = result.modelName === 'local-rules' && owners.length === 1 && evidence.some(e => {
+      if (!owners[0].evidenceIds.includes(e.id) || localActionNeedsDecision(e.quote)) return false
+      const delivery = localDelivery(e.quote)
+      return delivery?.object === owners[0].actionObject && delivery.object === material.name
+        && delivery.sourceVerb === owners[0].actionVerb && delivery.channel === originalValue
+    })
+    const direct = owners.length > 0 && !contradictory && (roleChecks.some(c => c.polarity === 'AFFIRMATIVE')||!!citedContextProof||localProof)
     const parts=originalValue.split(/[；;]/u).map(s=>s.trim()).filter(Boolean)
     const ownerRoles=parts.length>1&&parts.length===owners.length?parts.map(part=>({part,owners:owners.filter(owner=>{
       // A shared citation may contain both paper and electronic instructions.

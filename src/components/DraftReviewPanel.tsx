@@ -1,3 +1,4 @@
+import {sourceEventProblem} from '../domain/v2/sourceReviewD26'
 import { AlertTriangle, Check, CheckCheck, Clock3, FileText, FolderTree, ListChecks, PencilLine, ShieldCheck, Trash2, X } from 'lucide-react'
 import { Fragment, useEffect, useId, useRef, useState } from 'react'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
@@ -192,6 +193,9 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
   const recognition = draft.recognitionResult
   const oneReceiptWithAlternatives = Boolean(recognition && (draft.items.length === 2 && recognition.events.length === 0 && citedAlternativeObligations(recognition, sourceText).length === 1 || reviewWorkspace && receiptOpportunityViews(reviewWorkspace,draft.id).length > 0))
   const ordinarySelection=ordinarySourceReview&&recognition?selectionFromDraftItems(recognition,draft.items):null
+  const handledEntities = new Set(reviewWorkspace?.extractionDrafts.find(d=>d.id===draft.id)?.acceptedEntityTempIds ?? [])
+  const selectedEvents = recognition?.events.filter(e=>e.selected!==false && !handledEntities.has(e.tempId) && !sourceEventProblem(recognition!,e.tempId)) ?? []
+  const previewTimeIds = ordinarySelection ? new Set([...ordinarySelection.timePointTempIds,...selectedEvents.flatMap(e=>[e.startTimePointTempId,e.endTimePointTempId]).filter((id):id is string=>Boolean(id)&&recognition!.timePoints.some(p=>p.tempId===id))]) : null
   const excludedSourceTimes=ordinarySelection&&recognition?recognition.timePoints.filter(p=>p.selected===false&&p.relatedTaskTempIds.some(id=>ordinarySelection.taskTempIds.includes(id))).length:0
   const sourceAssembly=reviewWorkspace?.extractionDrafts.find(d=>d.id===draft.id)?.legacyData?.firstSuggestionAssembly
   const obligationViews=sourceAssembly&&typeof sourceAssembly==='object'&&!Array.isArray(sourceAssembly)?sourceAssembly.sourceObligationViews:undefined
@@ -223,6 +227,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
       ordinary={Boolean(ordinarySourceReview)}
       waitingOn={ordinarySourceReview ? metadata?.dependencyTempIds.map(id=>taskMeta.get(id)?.title ?? '前置事项待核对') : undefined}
       durationKnown={ordinarySourceReview?metadata?.estimatedMinutes!==null:undefined}
+      materialSummary={recognition?.materials.filter(m => m.relatedTaskTempIds.includes(item.suggestion.id)).map(m => [m.name, ...m.formatRequirements, ...m.namingRequirements.map(n => '命名：' + n), m.submissionChannel ? '交至' + m.submissionChannel : ''].filter(Boolean).join(' · ')) ?? item.suggestion.materials}
       semanticFacts={<>{semanticReview?.itemFacts(item.suggestion.id, setActiveEvidence)}
         {factCorrection?.(item.suggestion.id, dirty => setFactDirty(previous => previous[item.id] === dirty ? previous : { ...previous, [item.id]: dirty }),
           isDirty(item, 'title') || isDirty(item, 'deadline'))}</>}
@@ -277,14 +282,14 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
   return <div className="modal-backdrop detail-backdrop" role="presentation">
     <aside ref={panelRef} className="detail-panel review-panel" role="dialog" aria-modal="true" aria-labelledby={titleId}>
       <header className="detail-header review-header">
-        <div><span className="category-label">第 2 步 · {recognitionDescription ?? ordinarySourceReview?.description ?? (draft.modelName?.includes('匿名工程')?'匿名工程建议 · 无模型请求':isolatedCapabilities ? '人工工程响应（非模型预测）' : draft.modelName?.includes('deepseek') ? 'DeepSeek 建议' : '本地规则建议')}</span><h2 id={titleId}>{oneReceiptWithAlternatives ? '1个领取事项，2种办理机会' : recognition?.events.length ? `识别出 ${draft.items.length} 项任务、${recognition.events.length} 个事件` : `识别出 ${draft.items.length} 件事`}</h2><p>{oneReceiptWithAlternatives ? '正常领取与错过后的补领只选一种；两个窗口和原文依据均保留。' : '先看标题和时间；不准确时再点“编辑”。'}</p></div>
+        <div><span className="category-label">第 2 步 · {recognitionDescription ?? ordinarySourceReview?.description ?? (draft.modelName?.includes('匿名工程')?'匿名工程建议 · 无模型请求':isolatedCapabilities ? '人工工程响应（非模型预测）' : draft.modelName?.includes('deepseek') ? 'DeepSeek 建议' : '本地规则建议')}</span><h2 id={titleId}>{oneReceiptWithAlternatives ? '1个领取事项，2种办理机会' : recognition?.events.length ? `识别出 ${draft.items.length} 项任务、${recognition.events.length} 个事件` : draft.items.length ? `识别出 ${draft.items.length} 件事` : '这是一条信息通知'}</h2><p>{oneReceiptWithAlternatives ? '正常领取与错过后的补领只选一种；两个窗口和原文依据均保留。' : '先看标题和时间；不准确时再点“编辑”。'}</p></div>
         <button className="icon-button" type="button" onClick={onClose} aria-label="稍后处理并关闭"><X size={20} /></button>
       </header>
       <SessionFrame {...(sessionFrame?{onClose}:{})}>
       <div className="detail-body review-body">
         {ordinarySourceReview?.readbackRecovery&&<section className="source-review-status" role="status"><strong>内容已经保存，读取结果还没核对完成。</strong><p>不用再次确认；重新读取已保存的内容，不会重复创建任务。</p><button type="button" disabled={ordinarySourceReview.readbackRecovery.busy} onClick={ordinarySourceReview.readbackRecovery.onRetry}>重新读取已保存内容</button></section>}
 
-        {reviewSession&&<section aria-label="未确认编辑检查点" role="status"><strong>{Object.keys(sessionRecord?.fields??{}).length?'恢复的未确认草稿':'本来源核对会话'}</strong>
+        {reviewSession&&(checkpointStatus!=='ready'||Boolean(Object.keys(sessionRecord?.fields??{}).length)||Boolean(checkpointError))&&<section aria-label="未确认编辑检查点" role="status"><strong>{Object.keys(sessionRecord?.fields??{}).length?'恢复的未确认草稿':'本来源核对会话'}</strong>
           <p>{checkpointStatus==='saving'?'正在保存未确认编辑…':checkpointStatus==='saved'?'未确认编辑检查点已保存；尚未正式确认。':checkpointStatus==='failed'?'检查点写入失败；当前输入仅在本页，刷新可能丢失。':checkpointStatus==='conflict'?'另一个标签修改了同一字段，请处理冲突。':'编辑在确认前不会创建任务。'}</p>
           {foreignCheckpoint&&<button type="button" onClick={()=>{if(reviewWorkspace&&sessionRecord)void reviewSession.recover(reviewWorkspace,draft.id,writer,Object.fromEntries(Object.entries(sessionRecord.fields).filter(([key,value])=>/^task:.+:(title|deadline|selected)$/.test(key)&&value.writer!==writer).map(([key,value])=>[key,value.revision]))).then(record=>{setSessionRecord(record);setCheckpointStatus('ready')}).catch(error=>{setCheckpointStatus('failed');setCheckpointError(String(error))})}}>接管未确认标题、日期或选择</button>}
           {checkpointStatus==='failed'&&reviewWorkspace&&<button type="button" onClick={()=>{
@@ -313,22 +318,22 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
           </fieldset>}
           {checkpointError&&<details><summary>查看具体保存原因</summary><p>{checkpointError}</p></details>}
         </section>}
-        <div className="review-progress"><ListChecks size={18} /><span><strong>{ordinarySourceReview ? `${pending.length} 项任务、${ordinarySourceReview.pendingEvents ?? recognition?.events.length ?? 0} 个事件待确认` : `${pending.length} 项待确认`}</strong><small>{processed ? `已处理 ${processed} 项任务` : '确认后才会进入今日和任务中心'}</small></span></div>
+        <div className="review-progress"><ListChecks size={18} /><span><strong>{ordinarySourceReview ? `${pending.length} 项任务、${ordinarySourceReview.pendingEvents ?? recognition?.events.length ?? 0} 个事件待确认` : `${pending.length} 项待确认`}</strong><small>{processed ? `已处理 ${processed} 项任务` : !pending.length && !recognition?.events.length ? '只保存信息，不创建待办或项目' : '确认后才会进入今日、任务或日历'}</small></span></div>
         {recognition && <section className="recognition-overview" aria-label="项目匹配与识别质量">
-          <div className="recognition-project-choice">
-            <div><FolderTree size={18} /><span><strong>事项归属</strong><small>{recognition.projectMatch.decision==='standalone_task'?'先作为独立事项保存，之后可关联项目。':recognition.projectMatch.decision==='existing_project'?'建议关联已有项目，仍可修改。':'请决定作为独立事项，还是关联项目。'}</small></span></div>
+          {recognition.projectMatch.decision !== 'standalone_task' && <div className="recognition-project-choice">
+            <div><FolderTree size={18} /><span><strong>事项归属</strong><small>{recognition.projectMatch.decision==='existing_project'?'建议关联已有项目，仍可修改。':'请决定作为独立事项，还是关联项目。'}</small></span></div>
             <label><span className="sr-only">选择项目归属</span><select disabled={isolatedCapabilities} value={recognition.projectMatch.decision === 'existing_project' && recognition.projectMatch.matchedProjectId ? `existing:${recognition.projectMatch.matchedProjectId}` : recognition.projectMatch.decision} onChange={(event) => { if (!isolatedCapabilities) onProjectChoice(event.target.value) }}>
               <option value="new_project">新建项目</option>
               {projects.map((project) => <option key={project.id} value={`existing:${project.id}`}>关联：{project.title}</option>)}
               <option value="standalone_task">作为独立事项</option>
               <option value="uncertain">稍后决定</option>
             </select></label>
-          </div>
-          <div className={needsReviewAttention ? 'recognition-quality warning' : 'recognition-quality'}>
+          </div>}
+          {needsReviewAttention && <div className="recognition-quality warning">
             {needsReviewAttention ? <AlertTriangle size={17} /> : <ShieldCheck size={17} />}
             <span><strong>{needsReviewAttention ? '这些例外需要核对' : '建议已整理'}</strong><small>{needsReviewAttention ? focusedReview?.attentionReasons.map((reason) => reason.title).join('；') || recognition.quality.reviewReasons.join('；') : `已整理${focusedReview?.counts.tasks ?? 0}项任务、${recognition.materials.length}项材料、${recognition.events.length}个事件；详细依据可展开查看`}</small></span>
-            <button type="button" className="text-button" disabled={isolatedCapabilities} onClick={() => { if (!isolatedCapabilities) onKeepExplicit() }}>只保留原文明确</button>
-          </div>
+            <details className="review-more"><summary>更多</summary><button type="button" className="text-button" disabled={isolatedCapabilities} onClick={() => { if (!isolatedCapabilities) onKeepExplicit() }}>只保留原文明确</button></details>
+          </div>}
           {coverageHints.length>0&&<section className="focused-review-callout" aria-label="方案尚未覆盖的原文"><h3>原文还有这些内容</h3><p>已整理的正确事项仍可一次接受；以下内容保留原文，不会自动补成事实。</p><ul>{coverageHints.map(h=><li key={h.kind+h.quote}><strong>{h.title}</strong><span>{h.detail}</span><blockquote>{h.quote}</blockquote><button type="button" className="text-button" onClick={()=>setActiveEvidence(h.quote)}>在原文中定位</button></li>)}</ul></section>}
           {focusedReview?.needsFocusedReview && <details className="focused-review-callout" aria-label="聚焦复核原因"><summary>查看核对原因与来源提取状态</summary>
             <header><AlertTriangle size={18} /><div><strong>仅需处理以下待定项</strong><small>其余有依据的事项仍可单独接受。</small></div></header>
@@ -346,28 +351,24 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
           {recognition.ambiguities.length > 0 && <div className="recognition-ambiguities"><strong>待澄清 {recognition.ambiguities.length} 项</strong>{recognition.ambiguities.map((ambiguity) => <article key={ambiguity.id}><p>{ambiguity.message}</p>{ambiguity.options.length > 0 && <small>可能值：{ambiguity.options.map(recognitionOptionDisplay).join(' / ')}</small>}<EvidenceLocator recognition={recognition} evidenceIds={ambiguity.evidenceIds} onFocusEvidence={setActiveEvidence} /></article>)}</div>}
           {recognition.conflicts.length > 0 && <div className="recognition-conflicts"><strong>发现 {recognition.conflicts.length} 项冲突</strong>{recognition.conflicts.map((conflict) => <article key={conflict.id}><p>{conflict.message}</p><EvidenceLocator recognition={recognition} evidenceIds={conflict.evidenceIds} onFocusEvidence={setActiveEvidence} /></article>)}</div>}
         </section>}
-        <details className="source-details" open><summary><FileText size={16} />原始通知与定位依据</summary><p>{evidenceIndex >= 0 ? <>{sourceText.slice(0, evidenceIndex)}<mark>{activeEvidence}</mark>{sourceText.slice(evidenceIndex + activeEvidence.length)}</> : sourceText}</p>{activeEvidence && evidenceIndex < 0 && <small>这条依据来自解析结果，但无法在当前保存的原文中精确定位，请人工核对。</small>}</details>
+        <details className="source-details" open={Boolean(activeEvidence)}><summary><FileText size={16} />原始通知与定位依据</summary><p>{evidenceIndex >= 0 ? <>{sourceText.slice(0, evidenceIndex)}<mark>{activeEvidence}</mark>{sourceText.slice(evidenceIndex + activeEvidence.length)}</> : sourceText}</p>{activeEvidence && evidenceIndex < 0 && <small>这条依据来自解析结果，但无法在当前保存的原文中精确定位，请人工核对。</small>}</details>
         <section className="review-list recognition-tree" aria-label="项目树待确认事项">
           {semanticReview?.sourceSession && draft.items.length > 0 && <section aria-label="同一通知的独立事件核对">
             <p>任务与独立事件在这一页核对。保存事件字段纠正后，确认任务时会在同一笔正式提交中保存独立事件和已选任务。</p>
             {semanticReview.eventReview?.(setEventDirty)}
             {eventDirty && <p role="status">独立事件仍有未保存编辑，暂不能确认任务。</p>}
           </section>}
-          {recognition?.milestones.map((milestone) => <details className="recognition-stage" key={milestone.tempId} open={expandTaskTree}>
-            <summary><span><strong>{milestone.title}</strong><small>{milestone.objective || '阶段目标待确认'}</small></span><em>{milestone.tasks.length + milestone.workPackages.reduce((count, workPackage) => count + workPackage.tasks.length, 0)} 项</em></summary>
-            {milestone.tasks.map((task) => {
-              const item = draft.items.find((candidate) => candidate.suggestion.id === task.tempId)
-              return item ? renderItem(item, draft.items.indexOf(item), milestone.tempId) : null
-            })}
-            {milestone.workPackages.map((workPackage) => <section className="recognition-work-package" key={workPackage.tempId}><header><strong>{workPackage.title}</strong><small>{workPackage.objective}</small></header>{workPackage.tasks.map((task) => { const item = draft.items.find((candidate) => candidate.suggestion.id === task.tempId); return item ? renderItem(item, draft.items.indexOf(item), milestone.tempId) : null })}</section>)}
-          </details>)}
+          {recognition?.milestones.filter(m => m.tasks.length + m.workPackages.reduce((n,w) => n+w.tasks.length,0) > 0).map(milestone => {
+            const cards = <>{milestone.tasks.map(task => { const item=draft.items.find(i=>i.suggestion.id===task.tempId); return item ? renderItem(item,draft.items.indexOf(item),milestone.tempId) : null })}{milestone.workPackages.flatMap(w => w.tasks).map(task => {const item=draft.items.find(i=>i.suggestion.id===task.tempId);return item ? renderItem(item,draft.items.indexOf(item),milestone.tempId) : null})}</>
+            return draft.items.length > 3 ? <details className="recognition-stage" key={milestone.tempId} open={expandTaskTree}><summary>{milestone.title === '正式提交' ? '提交与办理' : milestone.title === '答辩或展示' ? '参加活动' : milestone.title}</summary>{cards}</details> : <Fragment key={milestone.tempId}>{cards}</Fragment>
+          })}
           {draft.items.filter((item) => !groupedItemIds.has(item.suggestion.id)).map((item, index) => renderItem(item, index))}
           {ordinarySourceReview?.facts}
           {draftCorrection?.(setDraftDirty,draft.items.some(item=>isDirty(item,'title')||isDirty(item,'deadline')||Boolean(factDirty[item.id])))}
           {semanticReview && draft.items.length === 0 && <div>{semanticReview.information}{semanticReview.informationEditor?.(setInformationDirty)}
             <button type="button" disabled={confirmationV2?.busy || draft.workflowStatus === 'confirmed' || informationDirty || Boolean(semanticReview.informationReviewProblem)} onClick={semanticReview.onInformationReviewed}>{semanticReview.eventCount>0?`确认无任务并保存 ${semanticReview.eventCount} 个独立事件`:'标记已核对（不创建任务）'}</button></div>}
           {recognition && draft.items.length === 0 && !ordinarySourceReview && <div className="empty-state compact"><ShieldCheck size={28} /><h3>没有识别到明确行动</h3><p>可保存为资料、关闭稍后处理，或返回录入手动创建任务。</p></div>}
-          {recognition?.materials.length ? <section className={`recognition-entity-list ${focusedReview?.attentionSections.includes('materials') ? 'focused' : ''}`}><h3>材料</h3>{recognition.materials.map((material) => <div className="recognition-entity-row" key={material.tempId}><label><input type="checkbox" disabled={isolatedCapabilities} checked={material.selected !== false} onChange={(event) => { if (!isolatedCapabilities) onToggleRecognitionEntity('material', material.tempId, event.target.checked) }} /><span><strong>{material.name}</strong><small>{material.formatRequirements.join('；') || '具体要求请回看原文'}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={material.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</section> : null}
+          {recognition?.materials.length ? <details className={`recognition-entity-list ${focusedReview?.attentionSections.includes('materials') ? 'focused' : ''}`}><summary>材料选择与原文依据（{recognition.materials.length}）</summary>{recognition.materials.map((material) => <div className="recognition-entity-row" key={material.tempId}><label><input type="checkbox" disabled={isolatedCapabilities} checked={material.selected !== false} onChange={(event) => { if (!isolatedCapabilities) onToggleRecognitionEntity('material', material.tempId, event.target.checked) }} /><span><strong>{material.name}</strong><small>{material.formatRequirements.join('；') || '具体要求请回看原文'}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={material.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</details> : null}
           {recognition?.timePoints.length ? <details className={`recognition-entity-list ${focusedReview?.attentionSections.includes('timePoints') ? 'focused' : ''}`} open={Boolean(focusedReview?.attentionSections.includes('timePoints'))}><summary>查看{recognition.timePoints.length}个时间节点和依据</summary>{recognition.timePoints.map((point) => <div className="recognition-entity-row" key={point.tempId}><label><input type="checkbox" disabled={isolatedCapabilities} checked={point.selected !== false} onChange={(event) => { if (!isolatedCapabilities) onToggleRecognitionEntity('timePoint', point.tempId, event.target.checked) }} /><span><strong>{timePointDisplayLabel(point.type)}</strong><small>{timePointDisplayValue(point.normalizedValue,point.rawText)}{point.needsConfirmation ? ' · 时间待定' : ''}</small></span></label><EvidenceLocator recognition={recognition} evidenceIds={point.evidenceIds} onFocusEvidence={setActiveEvidence} /></div>)}</details> : null}
           {recognition?.events.length && !ordinarySourceReview ? <section className={`recognition-events ${focusedReview?.attentionSections.includes('events') ? 'focused' : ''}`}><h3>事件安排</h3>{confirmationV2 && <p>本轮仅保留事件供核对，不会随任务确认写入；与事件共享时间的任务将明确阻断。</p>}{recognition.events.map((event) => <article key={event.tempId}><label><input type="checkbox" disabled={Boolean(confirmationV2)} checked={confirmationV2 ? false : event.selected !== false} onChange={(changeEvent) => onToggleRecognitionEntity('event', event.tempId, changeEvent.target.checked)} /><strong>{event.title}</strong></label><span>{inferenceLabels[event.inferenceLevel]}</span><p>{event.description}</p><EvidenceLocator recognition={recognition} evidenceIds={event.evidenceIds} onFocusEvidence={setActiveEvidence} /></article>)}</section> : null}
         </section>
@@ -375,18 +376,18 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
       <footer className="detail-footer review-footer">
         {selectedPending.length > 0 && <div className="confirmation-preview" aria-label="确认后创建预览">
           <strong>{ordinarySourceReview ? '本次选择内容；已保存项不重复创建' : '本次将创建'}</strong>
-          <span>{projectWillCreate ? 1 : 0} 个项目</span>
+          {projectWillCreate && <span>1 个项目</span>}
           <span>{selectedPending.length} 个任务</span>
-          <span>{ordinarySelection ? ordinarySelection.timePointTempIds.length : confirmationV2 ? new Set(selectedPending.flatMap((item) => confirmationV2.items[item.id]?.timePointTempIds ?? [])).size : recognition?.timePoints.filter((item) => item.selected !== false).length ?? pending.length} 个时间节点</span>
+          <span>{previewTimeIds ? previewTimeIds.size : confirmationV2 ? new Set(selectedPending.flatMap((item) => confirmationV2.items[item.id]?.timePointTempIds ?? [])).size : recognition?.timePoints.filter((item) => item.selected !== false).length ?? pending.length} 个时间节点</span>
           <span>{ordinarySelection ? ordinarySelection.materialTempIds.length : confirmationV2 ? new Set(selectedPending.flatMap((item) => confirmationV2.items[item.id]?.materialTempIds ?? [])).size : pendingMaterials} 项材料</span>
           {excludedSourceTimes>0&&<p>{excludedSourceTimes}个原文时间未选入，不会随此次接受保存；可展开“时间节点和依据”查看或调整。</p>}
-          {recognition && <span>{confirmationV2 && !ordinarySourceReview ? 0 : recognition.events.filter((item) => item.selected !== false).length} 个事件</span>}
+          {recognition && <span>{confirmationV2 && !ordinarySourceReview ? 0 : selectedEvents.length} 个事件</span>}
           {semanticReview && <span>{semanticReview.eventCount} 个任务关联事件{semanticReview.sourceSession?'；上方独立事件也随本次确认保存':'（随本次确认保存）'}</span>}
         </div>}
         {ordinarySourceReview && !selectedPending.length && (!pending.length || Boolean(recognition?.events.length)) && draft.workflowStatus !== 'confirmed' && <button className="primary-button" type="button" disabled={ordinarySourceReview.busy||ordinarySourceReview.unsaved||Boolean(ordinarySourceReview.problem)} onClick={ordinarySourceReview.onConfirm}>{pending.length?'仅保存独立事件；任务仍待核对':recognition?.events.length?'确认信息并保存独立事件':'标记信息已核对（不创建任务）'}</button>}
         {ordinarySourceReview?.problem&&!selectedPending.length&&<p role="status">{ordinarySourceReview.problem}</p>}
-        <button className="secondary-button" type="button" onClick={onClose}>{pending.length ? '稍后再处理' : '完成'}</button>
-        {selectedPending.length > 0 && <button className="primary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || eventDirty || Boolean(reviewSession&&(checkpointStatus==='loading'||checkpointStatus==='saving'||checkpointStatus==='failed')) || selectedPending.some((item) => !confirmationV2.items[item.id] || confirmationV2.items[item.id].blockedReason || hasUnsaved(item) || itemCheckpointUnsafe(item)))} onClick={onConfirmAll}><CheckCheck size={17} />{ordinarySourceReview?'一次接受本通知':semanticReview?.sourceSession?'确认本通知已选任务及独立事件':'加入已选任务'}（{selectedPending.length}）</button>}
+        <button className="secondary-button" type="button" onClick={onClose}>{draft.workflowStatus === 'confirmed' ? '完成' : '稍后再处理'}</button>
+        {selectedPending.length > 0 && <button className="primary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || eventDirty || Boolean(reviewSession&&(checkpointStatus==='loading'||checkpointStatus==='saving'||checkpointStatus==='failed')) || selectedPending.some((item) => !confirmationV2.items[item.id] || confirmationV2.items[item.id].blockedReason || hasUnsaved(item) || itemCheckpointUnsafe(item)))} onClick={onConfirmAll}><CheckCheck size={17} />{ordinarySourceReview?'全部添加':semanticReview?.sourceSession?'确认本通知已选任务及独立事件':'加入已选任务'}（{selectedPending.length}）</button>}
       </footer>
       </SessionFrame>
     </aside>
@@ -394,6 +395,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
 }
 
 interface DraftItemReviewProps {
+  materialSummary?: string[]
   waitingOn?:string[]
   ordinary?:boolean
   durationKnown?:boolean
@@ -422,7 +424,7 @@ interface DraftItemReviewProps {
   onMergeTask: DraftReviewPanelProps['onMergeTask']
 }
 
-function DraftItemReview({ waitingOn, ordinary, durationKnown, onFieldInput, semanticFacts, onDefer, isolatedCapabilities, index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
+function DraftItemReview({ materialSummary, waitingOn, ordinary, onFieldInput, semanticFacts, onDefer, isolatedCapabilities, index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
   const suggestion = item.suggestion
   const [mergeTargetId, setMergeTargetId] = useState('')
   if (item.status !== '待确认') return <article className={`review-item processed ${item.status === '已拒绝' ? 'rejected' : ''}`}>
@@ -431,19 +433,17 @@ function DraftItemReview({ waitingOn, ordinary, durationKnown, onFieldInput, sem
 
   return <article className="review-item">
     <header className="review-item-header">
-      <label className="review-task-select"><input type="checkbox" checked={item.selected !== false} onChange={(event) => onToggleSelected(event.target.checked)} /><span className="sr-only">选择该任务</span></label>
+      <label className="review-task-select"><input type="checkbox" checked={item.selected !== false} onChange={(event) => onToggleSelected(event.target.checked)} /><span className="sr-only">选择该任务</span><span className="review-keep-label">保留</span></label>
       <span className="review-number">{index + 1}</span>
       <div><strong>{suggestion.title}</strong><time><Clock3 size={14} />{confirmationV2 ? confirmationV2.dateLabel ?? '日期状态未加载，暂不能确认' : deadlineLabel(suggestion.deadline)}</time></div>
       <button className={editing ? 'review-edit active' : 'review-edit'} type="button" onClick={onToggleEdit}><PencilLine size={14} />{editing ? '收起' : '编辑'}</button>
     </header>
-    <div className="review-meta"><span>{suggestion.category}</span><span>{durationKnown===false||!Number.isFinite(suggestion.estimatedMinutes)?'耗时尚未估计':`约 ${suggestion.estimatedMinutes} 分钟（建议）`}</span>{suggestion.materials.length > 0 && <span>{suggestion.materials.length} 项材料</span>}{inferenceLevel && <span className={`inference-badge ${inferenceLevel}`}>{inferenceLabels[inferenceLevel]}</span>}{suggestion.confidence === '低' && <em>请重点核对</em>}</div>
-    <p className="review-next"><span>{ordinary&&confirmationV2?.blockedReason?'核对后动作':waitingOn?.length?'前置完成后':'下一步'}</span>{suggestion.nextAction}</p>
+    <div className="review-meta">{inferenceLevel && inferenceLevel !== 'explicit' && <span>{inferenceLevel === 'optional_suggestion' ? '是否适用需确认' : '请核对依据'}</span>}{suggestion.confidence === '低' && <em>请重点核对</em>}</div>
+    {materialSummary?.length ? <ul className="review-card-materials" aria-label="材料与要求">{materialSummary.map((text,i)=><li key={i}>{text}</li>)}</ul> : null}
     {waitingOn?.length ? <p>等待前一步：{waitingOn.join('、')}。这项待办可以保留，前置完成状态未被改成已完成。</p> : null}
-    {confirmationV2 && !ordinary && <p>首次建议、原文和你的修改分开保留。编辑后先点“保存修改”，再正式核对确认；只有显示“检查点已保存”的工程入口可恢复未确认输入。{confirmationV2.blockedReason && <strong role="status">需核对（{confirmationV2.blockedReason}）</strong>}</p>}
     {ordinary && confirmationV2?.blockedReason && <p role="status">{confirmationV2.blockedReason}</p>}
     {confirmationV2?.unsaved && <p role="status">有未保存修改：请先保存修改，再确认该任务。</p>}
     {confirmationV2?.dateEditBlockedReason && <p role="status">{confirmationV2.dateEditBlockedReason}</p>}
-    {semanticFacts}
     {onDefer && item.status === '待确认' && <div>
       <button type="button" disabled={confirmationV2?.busy || confirmationV2?.unsaved} onClick={onDefer}>稍后核对此项</button>
       <button type="button" disabled={confirmationV2?.busy || confirmationV2?.unsaved} onClick={() => onReject(item.id)}>记录此项不需要</button>
@@ -460,7 +460,9 @@ function DraftItemReview({ waitingOn, ordinary, durationKnown, onFieldInput, sem
       {milestones.length > 0 && <label className="field span-2"><span>移动到阶段</span><select disabled={isolatedCapabilities} value={milestoneTempId ?? ''} onChange={(event) => onMoveTask(suggestion.id, event.target.value)}>{!milestoneTempId && <option value="">未分组</option>}{milestones.map((milestone) => <option key={milestone.id} value={milestone.id}>{milestone.title}</option>)}</select></label>}
       <div className="review-structure-actions span-2"><button className="text-button" type="button" disabled={isolatedCapabilities} onClick={() => { if (!isolatedCapabilities) onSplitTask(item.id) }}>拆成两项</button>{mergeTargets.length > 0 && <><label><span className="sr-only">选择合并目标</span><select value={mergeTargetId} onChange={(event) => setMergeTargetId(event.target.value)}><option value="">选择合并目标</option>{mergeTargets.map((target) => <option key={target.id} value={target.id}>{target.title}</option>)}</select></label><button className="text-button" type="button" disabled={isolatedCapabilities || !mergeTargetId} onClick={() => !isolatedCapabilities && mergeTargetId && onMergeTask(item.id, mergeTargetId)}>合并到目标</button></>}</div>
     </div></fieldset>}
-    <details className="item-evidence" open={suggestion.confidence === '低'}><summary>为什么这样拆？</summary><p>{suggestion.evidence || '原文未直接说明，需要人工确认。'}</p>{suggestion.evidenceRefs?.length ? <ul>{suggestion.evidenceRefs.map((reference) => { const quote = reference.quotedText ?? reference.quote; return <li key={reference.id}><strong>{reference.field}</strong>：{quote}<button type="button" onClick={() => onFocusEvidence(quote)}>在原文中定位</button></li> })}</ul> : <small>系统推测 · 原文未提供可定位依据</small>}</details>
-    <footer className="review-item-actions"><button className="text-button remove" type="button" disabled={isolatedCapabilities} onClick={() => { if (!isolatedCapabilities) onReject(item.id) }}><Trash2 size={14} />不需要</button><button className="secondary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || confirmationV2.unsaved || !confirmationV2.dateLabel || Boolean(confirmationV2.blockedReason))} onClick={() => onConfirm(item.id)}><Check size={15} />{ordinary&&item.selected===false&&/^(报名|申请参加|登记参加)/u.test(suggestion.title)?'我要报名，保存待办':'加入任务'}</button></footer>
+
+    <footer className="review-item-actions"><button className="text-button remove" type="button" disabled={isolatedCapabilities} onClick={() => { if (!isolatedCapabilities) onReject(item.id) }}><Trash2 size={14} />不需要</button><details className="review-more"><summary>更多</summary><p className="review-next"><span>{ordinary&&confirmationV2?.blockedReason?'核对后动作':waitingOn?.length?'前置完成后':'下一步'}</span>{suggestion.nextAction}</p>
+    {confirmationV2 && !ordinary && <p>首次建议、原文和你的修改分开保留。编辑后先点“保存修改”，再正式核对确认；只有显示“检查点已保存”的工程入口可恢复未确认输入。{confirmationV2.blockedReason && <strong role="status">需核对（{confirmationV2.blockedReason}）</strong>}</p>}
+    {semanticFacts}    <section className="item-evidence"><h4>原文与拆分依据</h4><p>{suggestion.evidence || '原文未直接说明，需要人工确认。'}</p>{suggestion.evidenceRefs?.length ? <ul>{suggestion.evidenceRefs.map((reference) => { const quote = reference.quotedText ?? reference.quote; return <li key={reference.id}><strong>{reference.field}</strong>：{quote}<button type="button" onClick={() => onFocusEvidence(quote)}>在原文中定位</button></li> })}</ul> : <small>系统推测 · 原文未提供可定位依据</small>}</section><button className="secondary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || confirmationV2.unsaved || !confirmationV2.dateLabel || Boolean(confirmationV2.blockedReason))} onClick={() => onConfirm(item.id)}><Check size={15} />{ordinary&&item.selected===false&&/^(报名|申请参加|登记参加)/u.test(suggestion.title)?'我要报名，保存待办':'加入任务'}</button></details></footer>
   </article>
 }

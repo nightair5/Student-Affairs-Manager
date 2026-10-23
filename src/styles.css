@@ -8343,3 +8343,37 @@ button.agenda-item.event {
     max-height: none;
   }
 }
+
+/* R20: summary cards retain the same confirmation and recovery controls. */
+.sidebar-more > summary {display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px 14px;color:var(--text-secondary,#52616c);list-style:none;border-radius:10px;}
+.sidebar-more > summary::-webkit-details-marker {display:none;}
+.sidebar-more[open] {max-height:50vh;overflow-y:auto;}
+.review-card-materials {margin:8px 0 12px;padding-left:22px;line-height:1.6;color:#274959;overflow-wrap:anywhere;}
+.review-card-details,.review-more {margin:10px 0;min-width:0;}
+.review-card-details > summary,.review-more > summary {cursor:pointer;color:#376072;font-size:13px;line-height:1.6;}
+.review-more[open] > button {margin-top:8px;}
+.review-keep-label {font-size:12px;}
+.review-body .recognition-overview:empty {display:none;}
+.review-body .recognition-entity-row {gap:12px;align-items:flex-start;}
+.review-item-header > div {min-width:0;overflow-wrap:anywhere;}
+.review-item-header .review-task-select {display:flex;align-items:center;gap:4px;}
+@media(max-width:767px){
+.mobile-bottom-nav {grid-template-columns:repeat(6,minmax(0,1fr));}
+.mobile-bottom-nav small {font-size:10px;white-space:nowrap;}
+.review-item-header {grid-template-columns:auto minmax(0,1fr) auto;gap:8px;}
+.review-item-header .review-number {display:none;}
+.review-item-header time {font-size:14px;line-height:1.6;}
+.review-body .recognition-entity-row {flex-wrap:wrap;}
+.review-body .recognition-entity-row > div {min-width:0;flex:1 1 160px;overflow-wrap:anywhere;}
+.review-footer {flex-wrap:wrap;gap:8px;}
+.review-footer .confirmation-preview {flex-basis:100%;}
+}
+
+.review-item-actions {flex-wrap:wrap;}
+.review-item-actions > .review-more[open] {flex:1 1 100%;order:2;}
+.review-item-actions > .review-more[open] .item-evidence {margin-top:12px;}
+@media(min-width:901px){
+.review-body:has(> .source-details:not([open])) {grid-template-columns:minmax(0,1fr);}
+.review-body:has(> .source-details:not([open])) > * {grid-column:1;}
+.review-body > .source-details:not([open]) {grid-row:auto;position:static;}
+}

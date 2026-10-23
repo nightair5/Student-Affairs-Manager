@@ -1,3 +1,4 @@
+import {recognitionOptionDisplay} from '../recognition/recognitionModePresentation'
 import type { TaskDateView } from '../experiments/mainline02/taskDateView'
 import type { ReactNode } from 'react'
 import {
@@ -354,7 +355,7 @@ export function TaskDetailPanel({
               <Clock3 size={18} />
               <span>
                 <small>截止时间</small>
-                <strong>{dateView?.label ?? task.sourceDeadlineLabel ?? (task.deadline ? formatDeadline(task.deadline) : '原文未提供确定截止')}</strong>
+                <strong>{recognitionOptionDisplay(dateView?.label ?? task.sourceDeadlineLabel ?? (task.deadline ? formatDeadline(task.deadline) : '原文未提供确定截止'))}</strong>
                 {task.sourceWindowLabel&&<small>原文办理时段：{task.sourceWindowLabel}（不改为截止）</small>}
                 {task.plannedStart && <small>我的计划：{formatDeadline(task.plannedStart)}（不改变原文截止）</small>}
               </span>

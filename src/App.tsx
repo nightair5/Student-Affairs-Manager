@@ -11,7 +11,6 @@ import { Sidebar } from './components/Sidebar'
 import { SourceSupplementPanel } from './components/SourceSupplementPanel'
 import { TaskDetailPanel } from './components/TaskDetailPanel'
 import { WorkspaceRecoveryPanel } from './components/WorkspaceRecoveryPanel'
-import { demoSources, demoTasks } from './data/demo'
 import { InboxPage } from './pages/InboxPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { TasksPage } from './pages/TasksPage'
@@ -158,7 +157,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   if (runtime !== undefined) assertMainlineRuntime(runtime)
   const [boundRuntime] = useState(runtime)
   if (runtime !== boundRuntime) throw new Error('MAINLINE_RUNTIME_CHANGE_FORBIDDEN')
-  const [initialWorkspace] = useState(() => runtime ? runtime.view(runtime.initial) : ordinaryEnvironment?.initial ?? loadWorkspace(demoTasks, demoSources))
+  const [initialWorkspace] = useState(() => runtime ? runtime.view(runtime.initial) : ordinaryEnvironment?.initial ?? loadWorkspace([], []))
   const [ordinaryCanonical, setOrdinaryCanonical] = useState<WorkspaceV8 | null>(null)
   const [ordinaryBusy,setOrdinaryBusy] = useState(false)
   const [ordinaryFactsDirty,setOrdinaryFactsDirty] = useState(false)

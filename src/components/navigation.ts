@@ -21,13 +21,13 @@ export interface NavigationItem {
 export const coreNavigation: NavigationItem[] = [
   { id: 'today', label: '今日', icon: Home },
   { id: 'inbox', label: '收件箱', icon: Inbox },
-  { id: 'archive', label: '项目', icon: FolderKanban },
   { id: 'calendar', label: '日历', icon: CalendarDays },
+  { id: 'tasks', label: '所有任务', shortLabel: '任务', icon: CheckSquare2 },
+  { id: 'library', label: '资料库', icon: FileText },
 ]
 
 export const libraryNavigation: NavigationItem[] = [
-  { id: 'library', label: '资料库', icon: FileText },
-  { id: 'tasks', label: '所有任务', icon: CheckSquare2 },
+  { id: 'archive', label: '项目', icon: FolderKanban },
   { id: 'knowledge', label: '知识问答', icon: MessagesSquare },
   { id: 'reports', label: '周报月报', icon: ClipboardList },
 ]

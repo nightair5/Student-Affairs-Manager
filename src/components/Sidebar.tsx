@@ -62,9 +62,9 @@ export function Sidebar({
 
   const renderDesktopNavigation = (items: NavigationItem[]) => items.map((item) => {
     const Icon = item.icon
-    const active = item.id === currentPage && (item.id !== 'inbox' || inboxView === 'all')
+    const active = item.id === currentPage
     return <button key={item.id} className={active ? 'nav-item active' : 'nav-item'} type="button" onClick={() => navigate(item.id)} aria-current={active ? 'page' : undefined}>
-      <Icon size={18} strokeWidth={1.8} />{item.label}
+      <Icon size={18} strokeWidth={1.8} />{item.label}{item.id === 'inbox' && pendingReviewCount > 0 && <span className="nav-badge" aria-label={`${pendingReviewCount}项待确认`}>{pendingReviewCount}</span>}
     </button>
   })
 
@@ -85,24 +85,18 @@ export function Sidebar({
       </button>
 
       <nav className="primary-nav" aria-label="主要导航">
-        <span className="nav-caption">执行闭环</span>
-        {renderDesktopNavigation(coreNavigation.slice(0, 2))}
-        <button className={currentPage === 'inbox' && inboxView === 'needs_review' ? 'nav-item pending-review-shortcut active' : 'nav-item pending-review-shortcut'} type="button" onClick={() => { onOpenPendingReview(); setMobileMenuOpen(false) }} aria-current={currentPage === 'inbox' && inboxView === 'needs_review' ? 'page' : undefined} aria-label={`打开待确认队列，共 ${pendingReviewCount} 项`}>
-          <ClipboardCheck size={18} strokeWidth={1.8} />待确认
-          <span className={pendingReviewCount ? 'nav-badge' : 'nav-badge empty'}>{pendingReviewCount}</span>
-        </button>
-        {renderDesktopNavigation(coreNavigation.slice(2))}
-        {renderDesktopNavigation(libraryNavigation.slice(0, 1))}
-        <span className="nav-caption secondary-caption">低频工具</span>
-        {renderDesktopNavigation(libraryNavigation.slice(1))}
+        {renderDesktopNavigation(coreNavigation)}
       </nav>
 
-      <div className="sidebar-utility">
+      <details className="sidebar-utility sidebar-more">
+        <summary><Menu size={18} />更多</summary>
+        {renderDesktopNavigation(libraryNavigation)}
+        <button type="button" onClick={onOpenPendingReview}><ClipboardCheck size={16} />待确认（{pendingReviewCount}）</button>
         <button type="button" onClick={() => navigate('tasks')}><Search size={16} />搜索事项</button>
         <button type="button" onClick={onOpenGuide}><HelpCircle size={16} />新手教程</button>
         <button type="button" className={currentPage === 'services' ? 'active' : ''} onClick={() => navigate('services')}><Server size={16} />设置与服务</button>
         <button type="button" className={currentPage === 'privacy' ? 'active' : ''} onClick={() => navigate('privacy')}><ShieldCheck size={16} />隐私与数据</button>
-      </div>
+      </details>
 
       <div className="sidebar-note">
         <span className="status-dot" />
@@ -123,7 +117,7 @@ export function Sidebar({
     <nav className="mobile-bottom-nav" aria-label="手机端主要导航">
       {coreNavigation.map((item) => {
         const Icon = item.icon
-        const active = item.id === currentPage && (item.id !== 'inbox' || inboxView === 'all')
+        const active = item.id === currentPage
         return <button key={item.id} type="button" className={active ? 'active' : ''} onClick={() => navigate(item.id)} aria-current={active ? 'page' : undefined}>
           <span className="mobile-nav-icon"><Icon size={21} strokeWidth={active ? 2.2 : 1.8} />{item.id === 'inbox' && pendingReviewCount > 0 && <em>{pendingReviewCount > 99 ? '99+' : pendingReviewCount}</em>}</span>
           <small>{item.shortLabel ?? item.label}</small>
