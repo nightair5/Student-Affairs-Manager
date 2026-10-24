@@ -1,6 +1,7 @@
 import { exportWorkspaceV8, importWorkspaceV8 } from './serialization'
 import type { WorkspaceV8 } from './types'
 import { parseWorkspaceV8 } from './workspaceSchema'
+import { prepareStoredDraftRecovery, STORED_DRAFT_RECOVERY_VERSION } from './storedDraftRecovery'
 import {
   applyPreparedV8Migration,
   createWorkspaceV7Backup,
@@ -387,6 +388,48 @@ export class CanonicalWorkspaceRepository {
     await this.store.remove(this.recordKey)
   }
 
+  /** Read-only rescue export: strict parsing must not prevent saving the original. */
+  async exportProtectedCurrentSnapshot(): Promise<string | null> {
+    const snapshot = await this.store.read(this.recordKey)
+    if (snapshot === undefined) return null
+    return JSON.stringify({ kind: 'workspace_original_rescue', version: 1, createdAt: new Date().toISOString(),
+      integrityHash: workspaceSnapshotHash(snapshot), snapshot }, null, 2)
+  }
+
+  private async recoverStoredDrafts(raw: unknown, now: string): Promise<WorkspaceV8 | null> {
+    const sourceHash = workspaceSnapshotHash(raw)
+    const originalJson = JSON.stringify(raw)
+    const isOriginal = (value: unknown) => workspaceSnapshotHash(value) === sourceHash && JSON.stringify(value) === originalJson
+    const backupId = `draft-recovery-backup:${sourceHash}`
+    const prepared = prepareStoredDraftRecovery(raw, backupId, now)
+    if (!prepared) return null
+    const verifyBackup = (value: unknown) => {
+      if (!isRecord(value) || value.kind !== STORED_DRAFT_RECOVERY_VERSION || value.id !== backupId
+        || value.integrityHash !== sourceHash || !isOriginal(value.snapshot)) {
+        throw new Error('DRAFT_RECOVERY_BACKUP_INVALID')
+      }
+    }
+    // Backup is committed and independently read before any current-record change.
+    await this.store.transactionMany([this.recordKey, backupId], records => {
+      if (!isOriginal(records.get(this.recordKey))) throw new Error('WORKSPACE_CHANGED_DURING_RECOVERY')
+      const existing = records.get(backupId)
+      if (existing === undefined) records.set(backupId, { id: backupId, kind: STORED_DRAFT_RECOVERY_VERSION,
+        createdAt: now, integrityHash: sourceHash, snapshot: cloneValue(raw) })
+      else verifyBackup(existing)
+      return records
+    })
+    verifyBackup(await this.store.read(backupId))
+    const candidate = importWorkspaceV8(exportWorkspaceV8(prepared))
+    await this.store.transactionMany([this.recordKey, backupId], records => {
+      verifyBackup(records.get(backupId))
+      if (!isOriginal(records.get(this.recordKey))) throw new Error('WORKSPACE_CHANGED_DURING_RECOVERY')
+      records.set(this.recordKey, cloneValue(candidate))
+      return records
+    })
+    // Read the committed current value, not an in-memory success assumption.
+    return parseWorkspaceV8(await this.store.read(this.recordKey))
+  }
+
   async loadOrMigrate(options: MigrationOptions = {}): Promise<RuntimeMigrationResult> {
     const raw = await this.store.read(this.recordKey)
     if (raw === undefined) {
@@ -397,6 +440,14 @@ export class CanonicalWorkspaceRepository {
       try {
         workspace = parseWorkspaceV8(raw)
       } catch (error) {
+        try {
+          const recovered = await this.recoverStoredDrafts(raw, options.now ?? new Date().toISOString())
+          if (recovered) return { status: 'already_v8', workspace: recovered, backupId: null,
+            warnings: ['STORED_DRAFTS_RECOVERED_OR_ISOLATED'], errors: [] }
+        } catch (recoveryError) {
+          return { status: 'migration_failed', workspace: null, backupId: null, warnings: [],
+            errors: [errorMessage(recoveryError, 'DRAFT_RECOVERY_FAILED')] }
+        }
         const backupId = migrationBackupId(raw)
         if (backupId) {
           try {

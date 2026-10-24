@@ -359,7 +359,11 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
         ]
       : []
     const recognizedTasksById = new Map(recognizedTasks.map((task) => [task.tempId, task]))
-    const legacyItems = legacy.items ?? []
+    const recovery = item.legacyData?.storedDraftRecovery
+    const isolated = recovery && typeof recovery === 'object' && !Array.isArray(recovery)
+      && recovery.mode === 'isolated_unconfirmed_result'
+    // Never resurrect obsolete UI projections from a deliberately isolated answer.
+    const legacyItems = isolated ? [] : legacy.items ?? []
     return {
       id: item.id,
       sourceId: version?.sourceId ?? legacy.sourceId ?? '',

@@ -819,6 +819,10 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
     return backup === undefined ? null : JSON.stringify(backup, null, 2)
   }
 
+  async exportProtectedCurrentSnapshot(): Promise<string | null> {
+    return this.canonical.exportProtectedCurrentSnapshot()
+  }
+
   async exportMigrationBackup(backupId: string): Promise<string | null> {
     const backup = await this.canonical.readMigrationBackup(backupId)
     return backup ? JSON.stringify(backup, null, 2) : null

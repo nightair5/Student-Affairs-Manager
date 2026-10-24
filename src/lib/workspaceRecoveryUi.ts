@@ -20,6 +20,21 @@ export function workspaceLoadFailureText(error: unknown): string {
 
 export type WorkspaceRecoveryAction = 'blocked' | 'arm' | 'recover'
 
+/** Allowlisted diagnostics only: never serialize an Error or copy arbitrary text. */
+export function workspaceLoadDiagnostic(error: unknown) {
+  const message = error instanceof Error ? error.message : ''
+  const known = ['INVALID_TYPE', 'INVALID_ENUM', 'MISSING_REFERENCE', 'WORKSPACE_V8_INVALID',
+    'WORKSPACE_V7_INVALID', 'WORKSPACE_V7_NESTED_INVALID', 'WORKSPACE_CHANGED_DURING_RECOVERY',
+    'DRAFT_RECOVERY_BACKUP_INVALID', 'MIGRATION_BACKUP_INVALID', 'MIGRATION_BACKUP_CONFLICT',
+    'PRODUCT_UPGRADE_BACKUP_INVALID', 'WORKSPACE_RECOVERY_EMPTY']
+  const codes = known.filter(code => new RegExp(`(?:^|[^A-Z_])${code}(?:$|[^A-Z_])`, 'u').test(message))
+  if (error instanceof Error && ['QuotaExceededError', 'SecurityError', 'InvalidStateError', 'VersionError'].includes(error.name)) codes.push(error.name)
+  const sections = ['extractionDrafts', 'tasks', 'materials', 'events', 'timePoints', 'sourceVersions', 'sources', 'recognitionRuns', 'historyRecords']
+    .filter(section => new RegExp(`(?:^|[.:,])${section}\\[\\d+\\]`, 'u').test(message))
+  return { version: 'workspace-load-diagnostic-1', createdAt: new Date().toISOString(),
+    codes: codes.length ? codes : ['WORKSPACE_OPEN_FAILED'], sections, containsUserContent: false }
+}
+
 /**
  * `savedAt` is persistence metadata rather than an editable workspace fact.
  * Ignoring it lets hydration distinguish an unchanged compatibility view from

@@ -7,6 +7,7 @@ import type {
 } from './types'
 import { validateWorkspaceV8 } from './validators/workspaceValidator'
 import { LEGACY_DIAGNOSTIC_COMPATIBILITY, repairLegacyDraftDiagnostics } from './legacyDraftDiagnostics'
+import { prepareStoredDraftRecovery } from './storedDraftRecovery'
 
 export interface WorkspaceV7Backup {
   id: string
@@ -530,7 +531,7 @@ export function prepareV7ToV8Migration(
       orphanHistoryRecords: history.orphans,
       unknownTopLevelFields,
     })
-    const candidate: WorkspaceV8 = {
+    let candidate: WorkspaceV8 = {
       schemaVersion: 8,
       workspace: { id: workspaceId, title: '学生事务管家本机工作区', createdAt: workspace.savedAt, updatedAt: now, legacyData: topLevelLegacy },
       settings: { defaultTimezone: timezone, locale: 'zh-CN' },
@@ -554,6 +555,9 @@ export function prepareV7ToV8Migration(
       migrationMetadata: [metadata],
       savedAt: workspace.savedAt,
     }
+    // Only the repository's verified-backup path may isolate unreadable, unconfirmed
+    // suggestions. Pure migration validation remains strict for unbacked inputs.
+    if (persistedBackup) candidate = prepareStoredDraftRecovery(candidate, backup.id, now) ?? candidate
     const validation = validateWorkspaceV8(candidate)
     if (!validation.valid) {
       metadata.status = 'failed'

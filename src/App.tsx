@@ -32,6 +32,7 @@ import {
   safeWorkspaceRecoveryErrors,
   safeIntakeError,
   workspaceLoadFailureText,
+  workspaceLoadDiagnostic,
   workspacePersistenceRevision,
 } from './lib/workspaceRecoveryUi'
 import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
@@ -210,6 +211,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const [workspaceReady, setWorkspaceReady] = useState(false)
   const [storageError, setStorageError] = useState(false)
   const [workspaceLoadFailure, setWorkspaceLoadFailure] = useState<string | null>(null)
+  const [workspaceDiagnostic, setWorkspaceDiagnostic] = useState<ReturnType<typeof workspaceLoadDiagnostic> | null>(null)
   const [workspaceLoadRetrying, setWorkspaceLoadRetrying] = useState(false)
   const [workspaceRecovery, setWorkspaceRecovery] = useState<WorkspaceRecoveryState | null>(null)
   const [intakeOpen, setIntakeOpen] = useState(false)
@@ -346,7 +348,12 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         const pending=canonical?.extractionDrafts.map(d=>d.legacyData?.[PENDING_SOURCE_READBACK]).find(Boolean)
         if(pending&&typeof pending==='object'&&!Array.isArray(pending)&&pending.version==='source-review-d26-1')setOrdinaryReceipt(pending as unknown as SourceReviewReceipt)
         const repaired = canonical?.extractionDrafts.filter(d => d.legacyData?.diagnosticCompatibility).length ?? 0
-        if (repaired) setNotice({ text: `已兼容 ${repaired} 份旧草稿的附注格式，升级前完整备份已保留。已有任务未被修改；旧草稿中待核对的说明仍需核对。` })
+        const isolated = canonical?.extractionDrafts.filter(d => {
+          const recovery = d.legacyData?.storedDraftRecovery
+          return recovery && typeof recovery === 'object' && !Array.isArray(recovery) && recovery.mode === 'isolated_unconfirmed_result'
+        }).length ?? 0
+        if (isolated) setNotice({ text: `数据已打开；${isolated} 份旧建议请到收件箱重新整理。` })
+        else if (repaired) setNotice({ text: `已打开 ${repaired} 份旧草稿，原始备份已保留。` })
       }).catch(() => { if (active) setStorageError(true) })
       setStorageError(false)
       setWorkspaceLoadFailure(null)
@@ -366,6 +373,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         return
       }
       setWorkspaceLoadFailure(workspaceLoadFailureText(error))
+      setWorkspaceDiagnostic(workspaceLoadDiagnostic(error))
       setStorageError(true)
     }).finally(() => {
       if (active) setWorkspaceReady(true)
@@ -1433,6 +1441,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       setNotice({ text: '本机数据已重新打开；输入框中的通知仍保留，可以继续整理。' })
     } catch (error) {
       setWorkspaceLoadFailure(workspaceLoadFailureText(error))
+      setWorkspaceDiagnostic(workspaceLoadDiagnostic(error))
       setStorageError(true)
     } finally {
       setWorkspaceLoadRetrying(false)
@@ -1440,8 +1449,22 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   }
 
   const exportProtectedBackup = async () => {
-    try { await handleExportMigrationBackup() }
+    try {
+      const serialized = await workspaceRepository.exportProtectedCurrentSnapshot()
+      if (!serialized) { setNotice({ text: '未读到原始记录，请保留当前页面，不要清空浏览器数据。' }); return }
+      downloadRecoveryFile(serialized, 'original-backup')
+      setNotice({ text: '原始记录备份已下载，包含本机通知和任务，请妥善保存。下载不会更改浏览器内的数据。' })
+    }
     catch { setNotice({ text: '备份暂时无法下载，原记录没有被覆盖。请保留当前页面，不要清空浏览器数据。' }) }
+  }
+
+  const downloadRecoveryFile = (serialized: string, label: string) => {
+    const url = URL.createObjectURL(new Blob([serialized], { type: 'application/json;charset=utf-8' }))
+    const anchor = document.createElement('a')
+    anchor.href = url
+    anchor.download = `student-affairs-${label}-${new Date().toISOString().slice(0, 10)}.json`
+    document.body.append(anchor); anchor.click(); anchor.remove()
+    setTimeout(() => URL.revokeObjectURL(url), 1_000)
   }
 
   const handleExportRecoveryBackup = async () => {
@@ -1702,6 +1725,11 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             <button className="secondary-button" type="button" onClick={() => void exportProtectedBackup()}>下载原始备份</button>
             {workspaceLoadFailure && <button className="primary-button" type="button" disabled={workspaceLoadRetrying} onClick={() => void retryWorkspaceLoading()}>{workspaceLoadRetrying ? '正在重新加载…' : '重试加载'}</button>}
           </div>
+          {workspaceLoadFailure && workspaceDiagnostic && <details>
+            <summary>仍无法打开？保存排查信息</summary>
+            <p>排查信息只有错误类别，不含通知、任务、姓名或联系方式。原始备份包含个人数据，请勿公开发送。</p>
+            <button className="secondary-button" type="button" onClick={() => downloadRecoveryFile(JSON.stringify(workspaceDiagnostic, null, 2), 'diagnostic')}>下载不含正文的排查信息</button>
+          </details>}
         </section>}
         {ordinaryEnvironment && <details className="ordinary-engineering-mode"><summary>{ordinaryEnvironment.recognitionMetadata?.().responseRole==='RECORDED_MODEL_ENGINEERING_REPLAY'?'真实回答固定回放 · 普通产品路径 · 不新增模型请求':'匿名工程输入 · 普通产品路径 · 不发送模型请求'}</summary><p>{ordinaryEnvironment.label}；{ordinaryEnvironment.store.name}</p></details>}
         {viewConflict && <section className="source-review-status" role="alert"><strong>另一页面已修改相同内容，你的输入保留在本页。</strong>
@@ -1731,7 +1759,12 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         </section>}
         <PageLoadBoundary key={currentPage} onRetry={() => window.location.reload()}>
           <Suspense fallback={<main className="page page-loading" role="status">正在打开页面…</main>}>
-            {renderPage()}
+            {workspaceLoadFailure && <main className="page workspace-unavailable" role="status">
+              <h1>你的事项暂时还没读出来</h1>
+              <p>这不代表任务和通知为空或已删除。请先使用上方的备份与恢复操作，打开后再继续整理。</p>
+              <p>已经输入的内容会保留在当前页面，请不要清空浏览器数据。</p>
+            </main>}
+            <div hidden={Boolean(workspaceLoadFailure)}>{renderPage()}</div>
           </Suspense>
         </PageLoadBoundary>
       </div>
