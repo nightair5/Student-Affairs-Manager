@@ -52,7 +52,8 @@ export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai
   const record={id:item.id,kind:item.kind,name:item.name,span,entity:null};
   const ownScope=itemScope(span,source,item.name),sentence=ownScope.text
   let displayName=item.name,eventSupportSpan=null
-  const topicMatches=raw.items.filter(x=>x.kind==='活动').length===1?[...source.matchAll(/(?:讲座主题|报告题目|活动主题|讲座题目)[：:]\s*([^\n。；]{2,120})/gu)].map(m=>{const literal=m[1].replace(/\*+$/u,'').trim(),start=m.index+m[0].indexOf(literal);return {literal,start,end:start+literal.length,rule:'UNIQUE_EXPLICIT_EVENT_TOPIC_WITH_DECLARED_NAME'}}).filter(x=>norm(item.name).includes(norm(x.literal))):[]
+  const topicScope=sourceScopes(span,source)[1]
+  const topicMatches=raw.items.filter(x=>x.kind==='活动').length===1?[...source.matchAll(/(?:讲座主题|报告题目|活动主题|讲座题目)[：:]\s*([^\n。；]{2,120})/gu)].map(m=>{const literal=m[1].replace(/\*+$/u,'').trim(),start=m.index+m[0].indexOf(literal);return {literal,start,end:start+literal.length,rule:'UNIQUE_EXPLICIT_EVENT_TOPIC_WITH_DECLARED_NAME'}}).filter(x=>topicScope.end-topicScope.start<=650&&x.start>=topicScope.start&&x.end<=topicScope.end&&norm(item.name).includes(norm(x.literal))):[]
   if(item.kind==='活动'&&topicMatches.length===1){displayName=topicMatches[0].literal;eventSupportSpan=topicMatches[0];audit.items.push({id:item.id,rule:'UNIQUE_EXPLICIT_EVENT_TOPIC_WITH_DECLARED_NAME',before:item.name,after:displayName,start:eventSupportSpan.start,end:eventSupportSpan.end})}
   if(item.kind==='活动'&&!eventSupportSpan&&!sourceNameParts(item.name,sentence)){const literalName=span.literal.replace(/^(?:活动名称|主题讲座|活动主题)[：:]\s*/u,'').trim();if(literalName.length>=2&&literalName.length<=120&&norm(item.name).includes(norm(literalName))&&!/时间|另行通知|[0-9]月[0-9]日/u.test(literalName)&&/[\p{Script=Han}A-Za-z]/u.test(literalName)){displayName=literalName;audit.items.push({id:item.id,rule:'DISPLAY_FROM_ALIGNED_EVENT_QUOTE',before:item.name,after:displayName})}}
   if(item.kind==='活动'&&!eventSupportSpan&&!sourceNameParts(displayName,sentence)&&/讲座|讲堂|会议|考试|停电|停水|停网|闭馆|开放|封闭|维护|检修|说明会|报告会|培训|工作坊/u.test(span.literal)&&span.literal.length<=120&&!/取消|不再|禁止|不得/u.test(span.literal)){
@@ -81,10 +82,11 @@ declared.set(item.id,record);audit.items.push({id:item.id,name:item.name,kind:it
    const equivalentActions={提交:['交至','交到','递交','报送','上传','投稿'],发送:['发至','发到'],登录:['登陆'],扫码:['扫以下二维码','扫描二维码'],缴纳:['缴费','支付'],撰写:['写'],补领:['领取'],领:['领取']}
    const objectInQuote=sourceNameParts(match[2],span.literal),channelSupported=attached.some(f=>f.type==='渠道'&&alignTwoStepQuote(f.quote,source))
    const actionSupported=sentence.includes(match[1])||(equivalentActions[match[1]]??[]).some(v=>sentence.includes(v))||objectInQuote&&channelSupported
-   const verbAt=span.literal.indexOf(match[1]),tail=verbAt<0?'':span.literal.slice(verbAt+match[1].length).trim(),quotedTail=new RegExp('^(?:'+verbs+'|并|且|将|把|可|须|需|请|应当|先|再|后|到|至|自行|\\s)*$','u').test(tail)?'':tail
+   const verbAt=span.literal.lastIndexOf(match[1]),tail=verbAt<0?'':span.literal.slice(verbAt+match[1].length).trim(),quotedTail=new RegExp('^(?:'+verbs+'|并|且|将|把|可|须|需|请|应当|先|再|后|到|至|自行|\\s)*$','u').test(tail)?'':tail
    const otherActions=[...new Set([...sentence.matchAll(new RegExp(verbs+'|协助|清点|发放|张贴|提供|交至','gu'))].map(m=>m[0]))]
    const heading=/^(?:[一二三四五六七八九十]+[、．.]|[（(][一二三四五六七八九十0-9]+[）)]|[0-9]+[、．.])[^\n]*/u.exec(ownScope.text)?.[0]
-   const headingContinuation=!!heading&&sourceNameParts(match[2],heading)&&norm(span.literal).includes(norm(match[2]).slice(-2))
+   const continuationObject=norm(quotedTail).replace(/第[一二三四五六七八九十0-9]+批(?:次)?/gu,'').replace(/[。；，,：:]/gu,'')
+   const headingContinuation=!!heading&&sourceNameParts(match[2],heading)&&continuationObject.length>=2&&sourceNameParts(continuationObject,heading)
    if(!actionSupported||!objectInQuote&&!headingContinuation&&otherActions.length>1&&quotedTail.length>=2){note('ITEM_STRUCTURE',item.id,'ACTION_OBJECT_SCOPE_AMBIGUOUS',item.quote);continue}
    if(!sourceNameParts(match[2],sentence)){note('ITEM_STRUCTURE',item.id,'TASK_OBJECT_NOT_LITERAL_IN_OWN_QUOTE',item.quote);continue}
    if(!sourceNameParts(match[2],span.literal)){const scope=ownScope;if(scope.text.length<=650)record.supportSpan={literal:scope.text,start:scope.start,end:scope.end,rule:'DISPLAY_NAME_SUPPORTED_BY_SAME_SENTENCE'};}
