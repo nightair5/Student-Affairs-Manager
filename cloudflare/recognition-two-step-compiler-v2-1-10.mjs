@@ -24,16 +24,6 @@ function sourceNameParts(name,literal){
 }
 
 
-// An explicit section heading can supply a repeated/omitted object, but only
-// within its one contiguous section. The full original range becomes evidence.
-function itemScope(span,source,name){
- const scopes=sourceScopes(span,source),sentence=scopes[0];
- if(sourceNameParts(name,sentence.text))return sentence;
- const section=scopes[2],header=/^(?:[一二三四五六七八九十]+[、．.]|[（(][一二三四五六七八九十0-9]+[）)]|[0-9]+[、．.])[^\n]*/u.exec(section.text);
- if(header&&section.start<=span.start&&span.start-section.start<=500&&sentence.end-section.start<=650&&sourceNameParts(name,source.slice(section.start,sentence.end)))return {start:section.start,end:sentence.end,text:source.slice(section.start,sentence.end)};
- return sentence;
-}
-
 export const alignTwoStepQuote=alignSourceQuote
 const sentenceAt=(span,source)=>{const before=source.slice(0,span.start),left=Math.max(before.lastIndexOf('。'),before.lastIndexOf('；'),before.lastIndexOf(';'))+1,tail=source.slice(span.end).search(/[。；;]/u),end=tail<0?source.length:span.end+tail+1;return{start:left,end,text:source.slice(left,end)}}
 const sameSentence=(a,b,source)=>{const left=Math.min(a.start,b.start),right=Math.max(a.end,b.end);return !/[。；;！？!?]/u.test(source.slice(left,right))}
@@ -50,15 +40,13 @@ export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai
   if(!valid||usedIds.has(item.id)){note('ITEM_STRUCTURE',item?.id??String(i),'INVALID_OR_DUPLICATE_ITEM',item?.quote);continue}usedIds.add(item.id)
   if(!span){note('ALIGNMENT',item.id,'ITEM_QUOTE_NOT_UNIQUELY_ALIGNED',item.quote);continue}
   const record={id:item.id,kind:item.kind,name:item.name,span,entity:null};
-  const ownScope=itemScope(span,source,item.name),sentence=ownScope.text
+  const ownScope=sentenceAt(span,source),sentence=ownScope.text
   let displayName=item.name,eventSupportSpan=null
   const topicScope=sourceScopes(span,source)[1]
   const topicMatches=raw.items.filter(x=>x.kind==='活动').length===1?[...source.matchAll(/(?:讲座主题|报告题目|活动主题|讲座题目)[：:]\s*([^\n。；]{2,120})/gu)].map(m=>{const literal=m[1].replace(/\*+$/u,'').trim(),start=m.index+m[0].indexOf(literal);return {literal,start,end:start+literal.length,rule:'UNIQUE_EXPLICIT_EVENT_TOPIC_WITH_DECLARED_NAME'}}).filter(x=>topicScope.end-topicScope.start<=650&&x.start>=topicScope.start&&x.end<=topicScope.end&&norm(item.name).includes(norm(x.literal))):[]
   if(item.kind==='活动'&&topicMatches.length===1){displayName=topicMatches[0].literal;eventSupportSpan=topicMatches[0];audit.items.push({id:item.id,rule:'UNIQUE_EXPLICIT_EVENT_TOPIC_WITH_DECLARED_NAME',before:item.name,after:displayName,start:eventSupportSpan.start,end:eventSupportSpan.end})}
   if(item.kind==='活动'&&!eventSupportSpan&&!sourceNameParts(item.name,sentence)){const literalName=span.literal.replace(/^(?:活动名称|主题讲座|活动主题)[：:]\s*/u,'').trim();if(literalName.length>=2&&literalName.length<=120&&norm(item.name).includes(norm(literalName))&&!/时间|另行通知|[0-9]月[0-9]日/u.test(literalName)&&/[\p{Script=Han}A-Za-z]/u.test(literalName)){displayName=literalName;audit.items.push({id:item.id,rule:'DISPLAY_FROM_ALIGNED_EVENT_QUOTE',before:item.name,after:displayName})}}
-  if(item.kind==='活动'&&!eventSupportSpan&&!sourceNameParts(displayName,sentence)&&/讲座|讲堂|会议|考试|停电|停水|停网|闭馆|开放|封闭|维护|检修|说明会|报告会|培训|工作坊/u.test(span.literal)&&span.literal.length<=120&&!/取消|不再|禁止|不得/u.test(span.literal)){
-   displayName=span.literal;audit.items.push({id:item.id,rule:'UNSUPPORTED_DISPLAY_MODIFIERS_REMOVED_FROM_EXISTING_EVENT',before:item.name,after:displayName,start:span.start,end:span.end});
-  }
+  // Unsupported display words cannot replace a different event object.
   let actionMatch=new RegExp('('+verbs+'|协助|清点|发放|张贴|提供)(?:\\s*)?(.+)','u').exec(item.name.trim())
   if(!actionMatch){const suffix=new RegExp('^(.+?)('+verbs+')$','u').exec(item.name.trim());if(suffix)actionMatch=[suffix[0],suffix[2],suffix[1]]}
   const hasActionInSource=new RegExp(verbs+'|协助|清点|发放|张贴|提供|交至','u').test(sentence)
@@ -91,7 +79,7 @@ declared.set(item.id,record);audit.items.push({id:item.id,name:item.name,kind:it
    if(!sourceNameParts(match[2],sentence)){note('ITEM_STRUCTURE',item.id,'TASK_OBJECT_NOT_LITERAL_IN_OWN_QUOTE',item.quote);continue}
    if(!sourceNameParts(match[2],span.literal)){const scope=ownScope;if(scope.text.length<=650)record.supportSpan={literal:scope.text,start:scope.start,end:scope.end,rule:'DISPLAY_NAME_SUPPORTED_BY_SAME_SENTENCE'};}
    record.entity={tempId,parentTempId:null,hierarchyType:'task',title:item.name,actionVerb:match[1],actionObject:match[2],description:span.literal,completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[eid],confidence:.8,inferenceLevel:'explicit',userConfirmationRequired:true,selected:!promoted};if(promoted)note('ITEM_STRUCTURE',item.id,'INFORMATION_PROMOTED_REQUIRES_ACTION_REVIEW',span.literal);result.standaloneTasks.push(record.entity)
-  }else{if(!eventSupportSpan&&!sourceNameParts(displayName,sentence)){note('ITEM_STRUCTURE',item.id,'EVENT_NAME_NOT_LITERAL_IN_OWN_QUOTE',item.quote);continue}if(eventSupportSpan)record.supportSpan=eventSupportSpan;else if(!sourceNameParts(displayName,span.literal)){const scope=ownScope;if(scope.text.length<=650)record.supportSpan={literal:scope.text,start:scope.start,end:scope.end,rule:'DISPLAY_NAME_SUPPORTED_BY_SAME_SENTENCE'};}record.entity={tempId,title:displayName,description:span.literal,startTimePointTempId:null,endTimePointTempId:null,location:null,relatedTaskTempIds:[],evidenceIds:[eid],confidence:.8,inferenceLevel:'explicit',selected:true};result.events.push(record.entity)}
+  }else{if(!eventSupportSpan&&!sourceNameParts(displayName,sentence)){note('ITEM_STRUCTURE',item.id,'EVENT_NAME_NOT_LITERAL_IN_OWN_QUOTE',item.quote);continue}if(eventSupportSpan)record.supportSpan=eventSupportSpan;else if(!sourceNameParts(displayName,span.literal)){const scope=ownScope;if(scope.text.length<=650)record.supportSpan={literal:scope.text,start:scope.start,end:scope.end,rule:'DISPLAY_NAME_SUPPORTED_BY_SAME_SENTENCE'};}record.entity={tempId,title:displayName,description:span.literal,startTimePointTempId:null,endTimePointTempId:null,location:null,relatedTaskTempIds:[],evidenceIds:[eid],confidence:.8,inferenceLevel:'explicit',selected:!eventSupportSpan};if(eventSupportSpan){record.entity.description+='\n适用条件待确认：原文给出了活动主题，是否由本人参加尚需确认。';audit.items.push({id:item.id,rule:'RESTORED_TOPIC_NOT_PERSONAL_PARTICIPATION',start:eventSupportSpan.start,end:eventSupportSpan.end});}result.events.push(record.entity)}
   if(record.supportSpan){record.entity.evidenceIds.push(evidence(record.supportSpan,'description'));audit.offsets.push(record.supportSpan)}
  }
  const staged=[]

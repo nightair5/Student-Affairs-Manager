@@ -3,7 +3,7 @@
   "role": "reserved-r10",
   "createdAt": "2026-10-24T03:18:46.329Z",
   "seed": 2026102423,
-  "seen": false,
+  "seen": true,
   "count": 20,
   "referenceAuthor": "single-author/provisional",
   "sourceUrlsDisjointFromAllPriorProductFixtures": true,
@@ -190,5 +190,15 @@
       "chars": 523,
       "seen": false
     }
-  ]
+  ],
+  "seenAt": "2026-10-24T04:08:27.850Z",
+  "evaluation": {
+    "round": "quality-r23-direct-20261024",
+    "frozenProgram": "98a5feff946ca0e484ab1e0f622f6f25d64fa403",
+    "planned": "LIVE and CANDIDATE20x2",
+    "settled": 79,
+    "unknown": 1,
+    "unknownIdentity": "dc9c5d56dda1f732d7dff348cd969a8cb5e6cc3f3915f7f049f9881b04eb632f",
+    "policy": "No uncertain request resent; no tuning based on these outputs"
+  }
 }
