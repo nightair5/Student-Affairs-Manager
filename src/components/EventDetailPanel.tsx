@@ -3,6 +3,7 @@ import { useId, useRef } from 'react'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { Event, Project } from '../types'
 import type { ReactNode } from 'react'
+import { eventMoment } from './EventCard'
 
 interface EventDetailPanelProps {
   isolatedFacts?: { startLabel: string; endLabel: string; content: ReactNode }
@@ -14,10 +15,7 @@ interface EventDetailPanelProps {
 }
 
 function dateTime(value: string | null | undefined): string {
-  if (!value || Number.isNaN(new Date(value).getTime())) return '时间待确认'
-  return new Intl.DateTimeFormat('zh-CN', {
-    year: 'numeric', month: 'long', day: 'numeric', weekday: 'short', hour: '2-digit', minute: '2-digit',
-  }).format(new Date(value))
+  return eventMoment(value ?? null)
 }
 
 export function EventDetailPanel({ isolatedFacts, event, project, evidenceQuotes, sourceTitles, onClose }: EventDetailPanelProps) {

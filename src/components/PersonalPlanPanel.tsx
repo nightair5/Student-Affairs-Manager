@@ -114,8 +114,17 @@ export function PersonalPlanPanel({ workspace, repository, reader, store, onRelo
     } finally { setBusy(false); lock.current = false }
   }
   const last = workspace.preferences.legacyData?.[PLAN_UNDO]
+  // Completed/cancelled work is history, not a request for the student to act.
+  // Keep the original proposal intact for validation, audit, and atomic saving.
+  const needsScheduling = proposal?.unscheduled.filter(item => {
+    const task = workspace.tasks.find(task => task.id === item.taskId)
+    return task && task.status !== 'completed' && task.status !== 'cancelled'
+  }) ?? []
+  const needsAttention = Boolean(receipt || problem || generated.error || unsaved || conflict.length)
   return <section className="personal-plan" aria-labelledby="personal-plan-title">
-    <div className="section-heading"><div><span className="section-index">PLAN</span><h2 id="personal-plan-title"><CalendarClock size={22} /> 今日与近期安排</h2><p>原文截止保留；以下时段是可修改、可撤回的个人建议。</p></div></div>
+    <details className="plan-workspace" open={needsAttention || undefined}>
+    <summary className="plan-entry"><CalendarClock size={22} /><span><strong id="personal-plan-title">安排我的时间</strong><small>{needsAttention ? '有安排需要核对，请展开处理' : '需要时再排期；不会改动通知中的截止时间'}</small></span><span className="plan-entry-action">展开</span></summary>
+    <div className="plan-workspace-content">
     <details onToggle={e => { if (e.currentTarget.open) void begin().catch(() => setUnsaved(true)) }}>
       <summary>可用时间与估计 · {options.startTime}—{options.endTime} · {options.days}天</summary>
       <p>尚未录入偏好时，先预览下列假设；接受安排表示采用本次时段。仅依据本机已记录行程。已接受的个人耗时保留，默认暂估只用于尚无个人耗时的事项。</p>
@@ -134,7 +143,7 @@ export function PersonalPlanPanel({ workspace, repository, reader, store, onRelo
       <strong>{s.title}</strong><span>{timeLabel(s.start, workspace.settings.defaultTimezone)}—{timeLabel(s.end, workspace.settings.defaultTimezone)} · {s.minutes}分钟 · {durationLabel[s.durationOrigin]}</span><small>原文截止：{s.originalDeadline ?? '未说明'}。{s.reason}</small>
       <div><button type="button" className="text-button" onClick={() => { void begin(); setEditing(editing === s.taskId ? null : s.taskId) }}>调整安排</button><label><input type="checkbox" checked={s.locked} onChange={e => override(s.taskId, { locked: e.target.checked }, 'lock')} />保留并锁定</label><button type="button" className="text-button" disabled={s.locked} onClick={() => override(s.taskId, { later: true }, 'later')}>以后再安排</button></div>
       {editing === s.taskId && <div className="plan-options" onBlur={() => track('read')}><label>建议开工时间<input type="datetime-local" disabled={s.locked} value={planLocalValue(s.start, workspace.settings.defaultTimezone)} onChange={e => override(s.taskId, { start: e.target.value }, 'start')} /></label><label>个人估计分钟<input type="number" min={5} max={480} disabled={s.locked} value={s.minutes} onChange={e => override(s.taskId, { minutes: Number(e.target.value) }, 'duration')} /></label>{s.locked && <small>先明确取消锁定，才能调整该时段。</small>}</div>}
-    </li>)}</ul></details>{proposal.unscheduled.length > 0 && <details open><summary>未新排入或需要处理 · {proposal.unscheduled.length}项</summary><ul>{proposal.unscheduled.map(s => <li key={s.taskId}><strong>{s.title}</strong>：{s.reason}{options.overrides[s.taskId] && <button type="button" className="text-button" onClick={() => { const next = { ...options.overrides }; delete next[s.taskId]; change({ ...options, overrides: next }, s.taskId + ':reset') }}>撤销该项调整</button>}</li>)}</ul></details>}
+    </li>)}</ul></details>{needsScheduling.length > 0 && <details><summary>暂未安排 · {needsScheduling.length}项</summary><ul>{needsScheduling.map(s => <li key={s.taskId}><strong>{s.title}</strong>：{s.reason}{options.overrides[s.taskId] && <button type="button" className="text-button" onClick={() => { const next = { ...options.overrides }; delete next[s.taskId]; change({ ...options, overrides: next }, s.taskId + ':reset') }}>撤销该项调整</button>}</li>)}</ul></details>}
       {editing && !proposal.segments.some(s => s.taskId === editing) && <div className="plan-options"><strong>继续调整：{workspace.tasks.find(t => t.id === editing)?.title}</strong><label>建议开工时间<input type="datetime-local" value={options.overrides[editing]?.start ?? ''} onChange={e => override(editing, { start: e.target.value }, 'start')}/></label><label>个人估计分钟<input type="number" min={5} max={480} value={options.overrides[editing]?.minutes ?? workspace.tasks.find(t => t.id === editing)?.estimatedMinutes ?? options.estimateMinutes ?? ''} onChange={e => override(editing, { minutes: Number(e.target.value) }, 'duration')}/></label></div>}
       <details><summary>安排依据与待定点</summary><ul>{proposal.warnings.map(text => <li key={text}>{text}</li>)}</ul><p>未排入的原有非锁定个人时段会在接受新方案时移除；任务和原文事实仍保留。锁定冲突只提示，不静默移动。</p></details>
     </>}
@@ -146,6 +155,7 @@ export function PersonalPlanPanel({ workspace, repository, reader, store, onRelo
       {!!last && !receipt && <button className="text-button" type="button" disabled={busy} onClick={() => void execute('undo')}>撤回上次安排</button>}
       <button className="text-button" type="button" disabled={busy} onClick={() => void onReload().then(() => { setOptions(current => ({ ...current, now: new Date().toISOString() })); setProblem(''); setConflict([]); setNotice('已重新读取。调整仍保留，请核对新方案后再接受。') }).catch(e => setProblem(message(e)))}>重新读取并核对</button>
     </div>
-    <details><summary>本次安排记录与时间</summary><p>这是个人计划工程记录，与首次识别质量、历史measurement3.2及low-edit-v2分开；不计真人指标。</p><button type="button" onClick={() => { track('read'); void measurement.report().then(v => setReport(JSON.stringify(v, null, 2))) }}>查看安排测量记录</button><pre>{report}</pre></details>
+    <details><summary>操作记录</summary><p>遇到保存问题时，可以查看本次安排的记录。</p><button type="button" onClick={() => { track('read'); void measurement.report().then(v => setReport(JSON.stringify(v, null, 2))) }}>查看安排测量记录</button><pre>{report}</pre></details>
+    </div></details>
   </section>
 }

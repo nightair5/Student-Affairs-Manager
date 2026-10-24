@@ -2,8 +2,10 @@ import type { TaskDateViews } from '../experiments/mainline02/taskDateView'
 import { ArrowRight, ClipboardPaste, Inbox, Link2, Plus, Upload } from 'lucide-react'
 import { useState, type FormEvent, type ReactNode } from 'react'
 import { TaskCard } from '../components/TaskCard'
+import { EventCard } from '../components/EventCard'
+import { localDateKey } from '../lib/calendar'
 import { getBlockedAndWaitingTasks, getFocusTasks } from '../lib/taskLogic'
-import type { Project, Task } from '../types'
+import type { Event, Project, Task } from '../types'
 
 interface DashboardPageProps {
   planning?: ReactNode
@@ -13,6 +15,9 @@ interface DashboardPageProps {
   dateViews?: TaskDateViews
   readOnly?: boolean
   tasks: Task[]
+  events?: Event[]
+  onOpenEvent?: (event: Event) => void
+  onShowCalendar?: () => void
   projects: Project[]
   pendingReviewCount: number
   onQuickCapture: (content: string) => Promise<void>
@@ -39,6 +44,7 @@ export function DashboardPage({
   engineeringInputLabel,
   dateViews, readOnly, realInput,
   tasks,
+  events = [], onOpenEvent, onShowCalendar,
   projects,
   pendingReviewCount,
   onQuickCapture,
@@ -58,6 +64,12 @@ export function DashboardPage({
   const focusTasks = getFocusTasks(tasks, new Date(), 3, dateViews)
   const deferredTasks = getBlockedAndWaitingTasks(tasks, new Date(), dateViews)
   const activeCount = tasks.filter((task) => task.status !== '已完成').length
+  const today = localDateKey(new Date())
+  // Only presentation order changes. The calendar retains every saved event.
+  const upcomingEvents = events.filter(event => {
+    const end = event.endAt || event.startAt
+    return !end || !Number.isFinite(Date.parse(end)) || localDateKey(end) >= today
+  }).sort((a, b) => (a.startAt || '9999').localeCompare(b.startAt || '9999')).slice(0, 3)
 
   const submitQuickCapture = async (event: FormEvent) => {
     event.preventDefault()
@@ -77,16 +89,7 @@ export function DashboardPage({
     }
   }
 
-  return (
-    <main className="page dashboard-page">
-      <header className="simple-dashboard-header">
-        <div>
-          <span className="date-line">{todayLabel()}</span>
-          <h1>{focusTasks.length ? <>今天只看最重要的 <em>{focusTasks.length}</em> 件事</> : '先把新通知变成清楚的下一步'}</h1>
-          <p>不用管理所有事情。先处理首页，再去任务中心查看其余内容。</p>
-        </div>
-      </header>
-
+  const captureForm = (
       <form className="quick-capture" onSubmit={submitQuickCapture}>
         <div className="quick-capture-heading">
           <span className="quick-capture-icon"><ClipboardPaste size={20} /></span>
@@ -106,6 +109,19 @@ export function DashboardPage({
         </div>
         <small className="cloud-send-disclosure">{engineeringInput ? '本入口只接受当前列出的输入，回放已有建议，不新增模型请求；编辑、确认和保存使用普通产品路径。' : realInput ? `此按钮只打开输入核对，不立即发送。${realInput.networkDescription} 建议须经用户确认，仅保存到隔离测试库。` : dateViews ? '只接受旧匿名工程通知，在独立本机测试库保存；不发送文字、不调用模型，也不回退本地识别。请核对后确认。' : '点击整理只发送当前粘贴文字，不附带已有项目或任务；已配置服务调用时验证，结果仅为待确认建议。服务未配置时不发送，使用本地规则。'}</small>
       </form>
+  )
+
+  return (
+    <main className="page dashboard-page">
+      <header className="simple-dashboard-header">
+        <div>
+          <span className="date-line">{todayLabel()}</span>
+          <h1>{focusTasks.length ? <>今天先做这 <em>{focusTasks.length}</em> 件事</> : upcomingEvents.length ? '接下来有哪些安排' : '先把新通知变成清楚的下一步'}</h1>
+          <p>任务和日程都在这里，按自己的节奏逐件完成。</p>
+        </div>
+      </header>
+
+      {!tasks.length && !events.length && captureForm}
 
       {pendingReviewCount > 0 && <button className="pending-review-banner" type="button" onClick={onShowInbox}>
         <Inbox size={18} />
@@ -113,7 +129,6 @@ export function DashboardPage({
         <ArrowRight size={17} />
       </button>}
 
-      {tasks.length > 0 && planning}
       <section className="focus-section" aria-labelledby="focus-title">
         <div className="section-heading">
           <div><span className="section-index">TODAY</span><h2 id="focus-title">现在先做这些</h2></div>
@@ -121,12 +136,14 @@ export function DashboardPage({
         </div>
         {focusTasks.length
           ? <div className="focus-grid">{focusTasks.map((task, index) => { const project = projects.find((candidate) => candidate.id === task.projectId); return <TaskCard dateView={dateViews?.[task.id]} readOnly={readOnly} key={task.id} task={task} allTasks={tasks} projectTitle={project?.title} stageTitle={project?.milestones.find((milestone) => milestone.id === task.milestoneId)?.title} featured={index === 0} onOpen={onOpenTask} onComplete={onCompleteTask} onStart={onStartTask} onSnooze={onSnoozeTask} onTogglePin={onTogglePinTask} /> })}</div>
-          : <div className="home-empty-state"><strong>{deferredTasks.length ? '当前没有可立即执行的任务' : '今天还没有任务'}</strong><p>{deferredTasks.length ? '受阻和稍后事项已单独列出，不会回填到今日 Top 3。' : '把一段通知粘贴到上方，确认后就会出现在这里。'}</p></div>}
+          : <div className="home-empty-state"><strong>{deferredTasks.length ? '暂时没有可开始的任务' : tasks.length ? '任务都完成了' : '今天还没有任务'}</strong><p>{deferredTasks.length ? '需要等待或稍后处理的事项在下方，可以随时查看。' : tasks.length ? '有新通知时再添加，也可以查看接下来的日程。' : '粘贴一段通知，确认后就会出现在这里。'}</p></div>}
       </section>
+
+      {upcomingEvents.length > 0 && onOpenEvent && <section className="upcoming-events-section" aria-labelledby="upcoming-events-title"><div className="section-heading"><div><span className="section-index">日程</span><h2 id="upcoming-events-title">接下来的活动</h2></div><button className="text-button" type="button" onClick={onShowCalendar}>查看日历<ArrowRight size={16} /></button></div><div className="upcoming-events-grid">{upcomingEvents.map(event => <EventCard key={event.id} event={event} onOpen={onOpenEvent} />)}</div></section>}
 
       {deferredTasks.length > 0 && <section className="deferred-execution-section" aria-labelledby="deferred-title">
         <div className="section-heading compact">
-          <div><span className="section-index">BLOCKED / WAITING</span><h2 id="deferred-title">受阻与稍后</h2><p>这些事项暂不进入今日 Top 3；完成前置项或到达稍后时间后再重新排序。</p></div>
+          <div><h2 id="deferred-title">稍后再做</h2><p>等待前一步完成，或到了你选好的时间再开始。</p></div>
           <span className="deferred-count">{deferredTasks.length} 项</span>
         </div>
         <div className="deferred-task-list">
@@ -137,6 +154,8 @@ export function DashboardPage({
           </button>)}
         </div>
       </section>}
+      {(tasks.length > 0 || events.length > 0) && <details className="dashboard-add-notice"><summary><Plus size={18} /><span>添加新的通知</span></summary>{captureForm}</details>}
+      {tasks.length > 0 && planning}
     </main>
   )
 }

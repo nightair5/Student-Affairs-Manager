@@ -1480,6 +1480,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             tasks={tasks}
             projects={projects}
             pendingReviewCount={pendingReviewCount}
+            events={events}
+            onOpenEvent={(event) => setSelectedEventId(event.id)}
+            onShowCalendar={() => setCurrentPage('calendar')}
             onQuickCapture={handleQuickCapture}
             onOpenIntake={() => setIntakeOpen(true)}
             onOpenTask={(task) => setSelectedTaskId(task.id)}

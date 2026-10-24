@@ -1,4 +1,5 @@
 import {taskMaterialSummaries} from '../recognition/taskMaterialSummaries'
+import './SuggestionCard.css'
 import {taskCardChannels} from '../recognition/taskCardChannels'
 import {sourceEventProblem} from '../domain/v2/sourceReviewD26'
 import {eventDisposition} from '../domain/v2/eventDisposition'
@@ -57,6 +58,7 @@ const reviewFieldLabel=(key:string)=>key.endsWith(':selected')?'本次确认选�
 
 function deadlineLabel(value: string): string {
   if (Number.isNaN(new Date(value).getTime())) return '日期待确认'
+  if (/^\d{4}-\d{2}-\d{2}$/u.test(value)) return timePointDisplayValue(value, value)
   return new Intl.DateTimeFormat('zh-CN', {
     month: 'numeric', day: 'numeric', weekday: 'short', hour: '2-digit', minute: '2-digit',
   }).format(new Date(value))
@@ -243,6 +245,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
       onFieldInput={onFieldInput}
       key={item.id}
       ordinary={Boolean(ordinarySourceReview)}
+      decisionQuotes={metadata && recognition ? [...new Set(recognition.evidence.filter(e => metadata.evidenceIds.includes(e.id) && e.quote && sourceText.includes(e.quote)).map(e => e.quote))] : []}
       waitingOn={ordinarySourceReview ? metadata?.dependencyTempIds.map(id=>taskMeta.get(id)?.title ?? '前置事项待核对') : undefined}
       durationKnown={ordinarySourceReview?metadata?.estimatedMinutes!==null:undefined}
       materialSummary={recognition ? [...taskMaterialSummaries(recognition,item.suggestion.id), ...(metadata ? taskCardChannels(recognition,metadata,sourceText).filter(channel => !recognition.materials.some(m => m.relatedTaskTempIds.includes(metadata.tempId) && channel === '提交渠道：'+m.submissionChannel)) : [])] : item.suggestion.materials}
@@ -338,7 +341,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
         </section>}
         {(processed > 0 || !pending.length && !recognition?.events.length) && <div className="review-progress"><ListChecks size={18} /><span>{processed ? `已处理 ${processed} 项任务，其余仍可继续核对` : '这是一条通知信息，保存后不会创建待办或项目。'}</span></div>}
         {coverageHints.length > 0 && <button type="button" className="review-attention-link" onClick={() => { if (contextRef.current) { contextRef.current.open = true; contextRef.current.scrollIntoView({ block: 'nearest' }) } }}>还有 {coverageHints.length} 处原文信息未整理完整，查看后再决定</button>}
-        <section className="review-list recognition-tree" aria-label="识别出的任务和事件">
+        <section className={`review-list recognition-tree${ordinarySourceReview && draft.items.length <= 3 ? ' review-card-grid' : ''}${draft.items.length + (recognition?.events.length ?? 0) === 1 ? ' review-single-card' : ''}`} aria-label="识别出的任务和事件">
           {semanticReview?.sourceSession && draft.items.length > 0 && <section aria-label="同一通知的独立事件核对">
             <p>任务与独立事件在这一页核对。保存事件字段纠正后，确认任务时会在同一笔正式提交中保存独立事件和已选任务。</p>
             {semanticReview.eventReview?.(setEventDirty)}
@@ -418,6 +421,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
 
 interface DraftItemReviewProps {
   materialSummary?: string[]
+  decisionQuotes?: string[]
   waitingOn?:string[]
   ordinary?:boolean
   durationKnown?:boolean
@@ -446,22 +450,24 @@ interface DraftItemReviewProps {
   onMergeTask: DraftReviewPanelProps['onMergeTask']
 }
 
-function DraftItemReview({ materialSummary, waitingOn, ordinary, onFieldInput, semanticFacts, onDefer, isolatedCapabilities, index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
+function DraftItemReview({ materialSummary, decisionQuotes, waitingOn, ordinary, onFieldInput, semanticFacts, onDefer, isolatedCapabilities, index, item, editing, onToggleEdit, onUpdate, onConfirm, onReject, onToggleSelected, onFocusEvidence, inferenceLevel, milestones, milestoneTempId, onMoveTask, mergeTargets, onSplitTask, onMergeTask, confirmationV2 }: DraftItemReviewProps) {
   const suggestion = item.suggestion
   const [mergeTargetId, setMergeTargetId] = useState('')
   if (item.status !== '待确认') return <article className={`review-item processed ${item.status === '已拒绝' ? 'rejected' : ''}`}>
     <span className="review-number">{index + 1}</span><div><strong>{suggestion.title}</strong><p>{item.status === '已确认' ? '已加入任务中心' : '已移除，不会创建任务'}</p></div>
   </article>
 
-  return <article className="review-item">
+  return <article className="review-item suggestion-card" data-selected={item.selected !== false}>
     <header className="review-item-header">
-      <label className="review-task-select"><input type="checkbox" checked={item.selected !== false} onChange={(event) => onToggleSelected(event.target.checked)} /><span className="sr-only">选择该任务</span><span className="review-keep-label">保留</span></label>
-      <span className="review-number">{index + 1}</span>
-      <div><strong>{suggestion.title}</strong><time><Clock3 size={14} />{confirmationV2 ? confirmationV2.dateLabel ?? '日期状态未加载，暂不能确认' : deadlineLabel(suggestion.deadline)}</time></div>
+      <span className="review-kind"><ListChecks size={16} />任务</span>
       <button className={editing ? 'review-edit active' : 'review-edit'} type="button" onClick={onToggleEdit}><PencilLine size={14} />{editing ? '收起' : '编辑'}</button>
     </header>
+    <h3 className="suggestion-card-title">{suggestion.title}</h3>
+    <div className="suggestion-card-time"><span><Clock3 size={16} />时间</span><strong>{confirmationV2 ? confirmationV2.dateLabel ?? '日期状态未加载，暂不能确认' : deadlineLabel(suggestion.deadline)}</strong></div>
     <div className="review-meta">{inferenceLevel && inferenceLevel !== 'explicit' && <span>{inferenceLevel === 'optional_suggestion' ? '是否适用需确认' : '请核对依据'}</span>}{suggestion.confidence === '低' && <em>请重点核对</em>}</div>
-    {materialSummary?.length ? <ul className="review-card-materials" aria-label="材料与要求">{materialSummary.map((text,i)=><li key={i}>{text}</li>)}</ul> : null}
+    {materialSummary?.length ? <section className="suggestion-card-materials"><h4>材料与提交方式</h4><ul className="review-card-materials" aria-label="材料与要求">{materialSummary.map((text,i)=><li key={i}>{text}</li>)}</ul></section> : null}
+    {item.selected === false && <section className="suggestion-card-decision" aria-label="是否保留这项任务"><strong>是否需要办理，请你确认</strong>{decisionQuotes?.map(quote => <blockquote key={quote}>{quote}</blockquote>)}<p>需要时勾选下方“保留”，再一起添加。</p></section>}
+    {suggestion.nextAction && <div className="suggestion-card-next"><span>{item.selected===false?'选择保留后':ordinary&&confirmationV2?.blockedReason?'核对后再做':waitingOn?.length?'前置完成后':'下一步'}</span><p>{suggestion.nextAction}</p></div>}
     {waitingOn?.length ? <p>等待前一步：{waitingOn.join('、')}。这项待办可以保留，前置完成状态未被改成已完成。</p> : null}
     {ordinary && confirmationV2?.blockedReason && <p role="status">{confirmationV2.blockedReason}</p>}
     {confirmationV2?.unsaved && <p role="status">有未保存修改：请先保存修改，再确认该任务。</p>}
@@ -483,7 +489,7 @@ function DraftItemReview({ materialSummary, waitingOn, ordinary, onFieldInput, s
       <div className="review-structure-actions span-2"><button className="text-button" type="button" disabled={isolatedCapabilities} onClick={() => { if (!isolatedCapabilities) onSplitTask(item.id) }}>拆成两项</button>{mergeTargets.length > 0 && <><label><span className="sr-only">选择合并目标</span><select value={mergeTargetId} onChange={(event) => setMergeTargetId(event.target.value)}><option value="">选择合并目标</option>{mergeTargets.map((target) => <option key={target.id} value={target.id}>{target.title}</option>)}</select></label><button className="text-button" type="button" disabled={isolatedCapabilities || !mergeTargetId} onClick={() => !isolatedCapabilities && mergeTargetId && onMergeTask(item.id, mergeTargetId)}>合并到目标</button></>}</div>
     </div></fieldset>}
 
-    <footer className="review-item-actions"><button className="text-button remove" type="button" disabled={isolatedCapabilities} onClick={() => { if (!isolatedCapabilities) onReject(item.id) }}><Trash2 size={14} />不需要</button><details className="review-more"><summary>更多</summary><p className="review-next"><span>{ordinary&&confirmationV2?.blockedReason?'核对后动作':waitingOn?.length?'前置完成后':'下一步'}</span>{suggestion.nextAction}</p>
+    <footer className="review-item-actions"><label className="review-task-select"><input type="checkbox" checked={item.selected !== false} onChange={(event) => onToggleSelected(event.target.checked)} /><span className="sr-only">选择该任务</span><span className="review-keep-label">保留</span></label><button className="text-button remove" type="button" disabled={isolatedCapabilities} onClick={() => { if (!isolatedCapabilities) onReject(item.id) }}><Trash2 size={14} />不需要</button><details className="review-more"><summary>更多</summary>
     {confirmationV2 && !ordinary && <p>首次建议、原文和你的修改分开保留。编辑后先点“保存修改”，再正式核对确认；只有显示“检查点已保存”的工程入口可恢复未确认输入。{confirmationV2.blockedReason && <strong role="status">需核对（{confirmationV2.blockedReason}）</strong>}</p>}
     {semanticFacts}    <section className="item-evidence"><h4>原文与拆分依据</h4><p>{suggestion.evidence || '原文未直接说明，需要人工确认。'}</p>{suggestion.evidenceRefs?.length ? <ul>{suggestion.evidenceRefs.map((reference) => { const quote = reference.quotedText ?? reference.quote; return <li key={reference.id}><strong>{reference.field}</strong>：{quote}<button type="button" onClick={() => onFocusEvidence(quote)}>在原文中定位</button></li> })}</ul> : <small>系统推测 · 原文未提供可定位依据</small>}</section><button className="secondary-button" type="button" disabled={confirmationV2 && (confirmationV2.busy || confirmationV2.unsaved || !confirmationV2.dateLabel || Boolean(confirmationV2.blockedReason))} onClick={() => onConfirm(item.id)}><Check size={15} />{ordinary&&item.selected===false&&/^(报名|申请参加|登记参加)/u.test(suggestion.title)?'我要报名，保存待办':'加入任务'}</button></details></footer>
   </article>

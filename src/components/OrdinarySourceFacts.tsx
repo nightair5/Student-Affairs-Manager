@@ -134,10 +134,10 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
       const disabled = busy || Boolean(buffer) || Boolean(pendingChoice) || Boolean(handled)
       const start = result.timePoints.find(p => p.tempId === event.startTimePointTempId)
       const end = result.timePoints.find(p => p.tempId === event.endTimePointTempId)
-      return <article className="review-event-card recognition-entity-row" key={event.tempId} aria-label={event.title}>
+      return <article className="review-event-card recognition-entity-row suggestion-card" data-selected={disposition === 'keep'} key={event.tempId} aria-label={event.title}>
         <header><span className="review-kind"><CalendarDays size={15} />事件</span><button type="button" className="review-edit" disabled={disabled} onClick={() => edit({ eventId: event.tempId, title: event.title, location: event.location || '', start: start?.rawText || '', end: end?.rawText || '' }, false)}><PencilLine size={14} />编辑事件</button></header>
-        <h3>{event.title}</h3>
-        <p className="review-event-time"><Clock3 size={16} /><span>{reviewEventTime(start, end)}</span></p>
+        <h3 className="suggestion-card-title">{event.title}</h3>
+        <div className="suggestion-card-time"><span><Clock3 size={16} />活动时间</span><strong>{reviewEventTime(start, end)}</strong></div>
         <p className="review-event-location"><MapPin size={16} /><span>{event.location || '地点未说明'}</span></p>
         {problem && <p className="review-item-warning" role="status">{problem}</p>}
         {!handled && disposition === 'defer' && !problem && <p className="review-item-hint">是否参加由你决定；勾选保留后，再添加到日历。</p>}

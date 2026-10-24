@@ -1,0 +1,80 @@
+/* The recognition preview uses the same title / time / next-step hierarchy as TaskCard. */
+.review-results-first .suggestion-card, .review-results-first .review-event-card.suggestion-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid #cbdfee;
+  border-top: 3px solid #39688f;
+  border-radius: 18px;
+  background: #fff;
+  overflow-wrap: anywhere;
+}
+.review-results-first .suggestion-card[data-selected="false"] { border-top-color: #b1bdc8; }
+.suggestion-card .review-item-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.review-results-first .suggestion-card > header { width: 100%; justify-content: space-between; }
+.suggestion-card .review-kind { color: #416889; font-size: 13px; letter-spacing: .04em; }
+.review-results-first .suggestion-card .suggestion-card-title {
+  margin: 20px 0 18px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 650;
+  line-height: 1.45;
+  color: var(--navy);
+}
+.suggestion-card-time { padding: 16px 18px; border: 1px solid #cbdff0; border-radius: 12px; background: #f1f7fd; }
+.suggestion-card-time > span { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #54708b; }
+.suggestion-card-time > strong { display: block; margin-top: 8px; color: #173e60; font-size: 19px; line-height: 1.6; font-weight: 650; }
+.suggestion-card-materials { margin: 18px 0 0; }
+.suggestion-card-materials h4 { margin: 0 0 7px; font-size: 12px; color: #60748a; font-weight: 600; }
+.suggestion-card .review-card-materials { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.8; }
+.suggestion-card-next { margin-top: 18px; padding: 12px 14px; background: #f6f9fc; border-left: 2px solid #86a9cb; }
+.suggestion-card-next > span { font-size: 12px; color: #56738b; }
+.suggestion-card-next p { margin: 6px 0 0; font-size: 14px; line-height: 1.65; }
+.suggestion-card-decision { margin-top: 18px; padding: 14px; border: 1px solid #e0c7a7; border-radius: 10px; background: #fffaf3; font-size: 14px; line-height: 1.7; }
+.suggestion-card-decision strong { color: #765029; }
+.suggestion-card-decision blockquote { margin: 8px 0; padding: 0; border: 0; color: #314b60; }
+.suggestion-card-decision p { margin: 8px 0 0; color: #665746; }
+.suggestion-card .review-meta:empty { display: none; }
+.suggestion-card .review-meta:not(:empty) { margin-top: 14px; }
+.suggestion-card .review-event-location { margin-top: 18px; font-size: 15px; }
+.suggestion-card .review-item-actions, .suggestion-card .review-event-actions {
+  display: flex; flex-direction: row; align-items: center; flex-wrap: wrap; justify-content: flex-start; gap: 16px;
+  margin-top: 20px; padding-top: 16px; border-top: 1px solid #e0eaf2;
+}
+.suggestion-card .review-task-select { display: inline-flex; gap: 7px; align-items: center; width: auto; font-size: 14px; }
+.suggestion-card .review-task-select input { width: 18px; height: 18px; accent-color: #244e67; }
+.suggestion-card .review-more { margin-left: auto; }
+.suggestion-card .review-more[open] { margin-left: 0; }
+.suggestion-card .review-item-actions > button { width: auto; }
+.suggestion-card .review-event-actions { width: 100%; }
+.suggestion-card .review-card-details { margin-top: 12px; }
+.suggestion-card button:focus-visible, .suggestion-card summary:focus-visible, .suggestion-card input:focus-visible { outline: 3px solid #528bb4; outline-offset: 3px; }
+.upcoming-events-section { margin: 32px 0; }
+.upcoming-events-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.dashboard-page .dashboard-event-card { min-height: 0; border-top: 3px solid #2b7569; }
+.dashboard-event-card .category-label { display: inline-flex; align-items: center; gap: 7px; }
+.dashboard-event-card .suggestion-card-time small { display: block; margin-top: 6px; color: #526e87; font-size: 13px; }
+.dashboard-event-location { display: flex; align-items: center; gap: 8px; margin: 18px 0 0; font-size: 15px; }
+.dashboard-event-location svg { flex-shrink: 0; }
+.upcoming-events-grid > :only-child { grid-column: 1 / -1; }
+.dashboard-add-notice { margin: 24px 0; }
+.dashboard-add-notice > summary { display: flex; align-items: center; gap: 9px; padding: 16px 18px; border: 1px dashed #aec6da; border-radius: 12px; color: #2f5d82; cursor: pointer; font-weight: 600; }
+.dashboard-add-notice > summary:hover { background: #eff6fb; }
+.dashboard-add-notice > summary:focus-visible { outline: 3px solid #528bb4; outline-offset: 3px; }
+.dashboard-add-notice > .quick-capture { margin-top: 12px; }
+@media (min-width: 900px) {
+  .review-results-first .review-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
+  .review-card-grid > :not(.suggestion-card) { grid-column: 1 / -1; }
+  .review-results-first .review-card-grid > section[aria-label="同一通知的独立事件与信息"] { display: contents; }
+  .review-card-grid > section[aria-label="同一通知的独立事件与信息"] > :not(.suggestion-card) { grid-column: 1 / -1; }
+  .review-single-card .suggestion-card { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .upcoming-events-grid { grid-template-columns: 1fr; }
+  .review-results-first .suggestion-card { padding: 18px 16px; border-radius: 14px; }
+  .review-results-first .suggestion-card .suggestion-card-title { font-size: 22px; margin: 16px 0; }
+  .suggestion-card-time { padding: 13px; }
+  .suggestion-card-time > strong { font-size: 17px; }
+}
