@@ -1,4 +1,5 @@
 import type { TaskDateViews } from '../experiments/mainline02/taskDateView'
+import { safeIntakeError } from '../lib/workspaceRecoveryUi'
 import { ArrowRight, ClipboardPaste, Inbox, Link2, Plus, Upload } from 'lucide-react'
 import { useState, type FormEvent, type ReactNode } from 'react'
 import { TaskCard } from '../components/TaskCard'
@@ -83,7 +84,7 @@ export function DashboardPage({
       // Clear only the successfully submitted original; failed captures retain it.
       setQuickText(current => current === submittedText ? '' : current)
     } catch (error) {
-      setQuickError(error instanceof Error ? error.message : '原文尚未保存，输入已保留；请保留此页或复制文字后重试。')
+      setQuickError(safeIntakeError(error, '原文尚未保存，输入已保留；请保留此页或复制文字后重试。'))
     } finally {
       setIsParsing(false)
     }

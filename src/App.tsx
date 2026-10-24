@@ -30,6 +30,8 @@ import { buildLocalRecognition } from './recognition/pipeline'
 import {
   nextWorkspaceRecoveryAction,
   safeWorkspaceRecoveryErrors,
+  safeIntakeError,
+  workspaceLoadFailureText,
   workspacePersistenceRevision,
 } from './lib/workspaceRecoveryUi'
 import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
@@ -207,6 +209,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const [legacyData, setLegacyData] = useState<Record<string, unknown>>({})
   const [workspaceReady, setWorkspaceReady] = useState(false)
   const [storageError, setStorageError] = useState(false)
+  const [workspaceLoadFailure, setWorkspaceLoadFailure] = useState<string | null>(null)
+  const [workspaceLoadRetrying, setWorkspaceLoadRetrying] = useState(false)
   const [workspaceRecovery, setWorkspaceRecovery] = useState<WorkspaceRecoveryState | null>(null)
   const [intakeOpen, setIntakeOpen] = useState(false)
   const [guideOpen, setGuideOpen] = useState(() => runtime || ordinaryEnvironment ? false : shouldShowOnboarding())
@@ -341,8 +345,11 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         setOrdinaryCanonical(canonical)
         const pending=canonical?.extractionDrafts.map(d=>d.legacyData?.[PENDING_SOURCE_READBACK]).find(Boolean)
         if(pending&&typeof pending==='object'&&!Array.isArray(pending)&&pending.version==='source-review-d26-1')setOrdinaryReceipt(pending as unknown as SourceReviewReceipt)
-      })
+        const repaired = canonical?.extractionDrafts.filter(d => d.legacyData?.diagnosticCompatibility).length ?? 0
+        if (repaired) setNotice({ text: `已兼容 ${repaired} 份旧草稿的附注格式，升级前完整备份已保留。已有任务未被修改；旧草稿中待核对的说明仍需核对。` })
+      }).catch(() => { if (active) setStorageError(true) })
       setStorageError(false)
+      setWorkspaceLoadFailure(null)
       setWorkspaceRecovery(null)
     }).catch((error: unknown) => {
       if (!active) return
@@ -358,6 +365,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         })
         return
       }
+      setWorkspaceLoadFailure(workspaceLoadFailureText(error))
       setStorageError(true)
     }).finally(() => {
       if (active) setWorkspaceReady(true)
@@ -655,7 +663,12 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     }
     // First use may reach this handler before the empty workspace transaction finishes.
     // Join the existing hydration; never let capture race initialization or replace data.
-    if (hydrationPromise.current) await hydrationPromise.current
+    try {
+      if (hydrationPromise.current) await hydrationPromise.current
+    } catch (error) {
+      throw new Error(`${workspaceLoadFailureText(error)} 新通知尚未保存，输入已保留。`, { cause: error })
+    }
+    if (storageError || workspaceRecovery) throw new Error('本机数据正在保护中，输入已保留。请先完成数据恢复，再整理新通知。')
     const localResult = createIntakeResult(input)
     const localRecognition = buildLocalRecognition({
       sourceType: input.sourceType,
@@ -772,7 +785,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             : 'DeepSeek 当前未连接；来源已先保存，并由本地规则生成可编辑建议。',
       )
     } catch (error) {
-      const reason = error instanceof Error ? error.message : 'DeepSeek 智能整理暂时不可用'
+      const reason = safeIntakeError(error, '整理暂时没有完成')
       if (useCloudRecognition && !ordinaryEnvironment) setSmartExtractionStatus('unavailable')
       try {
         const canonical = await canonicalWorkspaceRepository.load()
@@ -834,7 +847,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       setCurrentPage('inbox')
       setNotice({ text: '链接已作为未整理来源保存在本机；尚未读取网页、调用 DeepSeek 或创建任务。' })
     } catch (error) {
-      const message = error instanceof Error ? error.message : '链接保存失败，请稍后重试。'
+      const message = safeIntakeError(error, '链接保存失败，请稍后重试。')
       setNotice({ text: message })
       throw error
     }
@@ -1398,6 +1411,39 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     setNotice({ text: '已下载升级前备份；恢复前请先保留当前数据备份。' })
   }
 
+  const retryWorkspaceLoading = async () => {
+    if (!workspaceLoadFailure || workspaceLoadRetrying || runtime) return
+    setWorkspaceLoadRetrying(true)
+    // Only available after initial loading failed: never discard unsaved edits
+    // following a later write failure. Keep the user's intake text mounted.
+    const attempt = workspaceRepository.load().then(saved => {
+      if (!saved) throw new Error('WORKSPACE_RECOVERY_EMPTY')
+      return saved
+    })
+    hydrationPromise.current = attempt
+    try {
+      const saved = await attempt
+      const canonical = await canonicalWorkspaceRepository.load()
+      persistedWorkspaceRevision.current = persistenceRevisionForView(saved)
+      pendingWorkspaceRevision.current = null
+      applyWorkspaceView(saved)
+      setOrdinaryCanonical(canonical)
+      setWorkspaceLoadFailure(null)
+      setStorageError(false)
+      setNotice({ text: '本机数据已重新打开；输入框中的通知仍保留，可以继续整理。' })
+    } catch (error) {
+      setWorkspaceLoadFailure(workspaceLoadFailureText(error))
+      setStorageError(true)
+    } finally {
+      setWorkspaceLoadRetrying(false)
+    }
+  }
+
+  const exportProtectedBackup = async () => {
+    try { await handleExportMigrationBackup() }
+    catch { setNotice({ text: '备份暂时无法下载，原记录没有被覆盖。请保留当前页面，不要清空浏览器数据。' }) }
+  }
+
   const handleExportRecoveryBackup = async () => {
     if (runtime) { rejectExperimentAction(); return }
     const recovery = workspaceRecovery
@@ -1441,9 +1487,12 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     setWorkspaceRecovery({ ...recovery, busy: 'recovering', failureCode: null })
     try {
       const recovered = await workspaceRepository.recoverMigration(recovery.backupId)
+      hydrationPromise.current = Promise.resolve(recovered)
       persistedWorkspaceRevision.current = persistenceRevisionForView(recovered)
       pendingWorkspaceRevision.current = null
       applyWorkspaceView(recovered)
+      setOrdinaryCanonical(await canonicalWorkspaceRepository.load())
+      setWorkspaceLoadFailure(null)
       setStorageError(false)
       setWorkspaceRecovery(null)
       setNotice({ text: '迁移数据已从指定备份恢复并重新校验；自动保存已恢复。' })
@@ -1629,6 +1678,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     <div className="app-shell">
       <a className="skip-link" href="#main-content">跳到主要内容</a>
       <Sidebar
+        storageState={!workspaceReady ? 'loading' : storageError || workspaceRecovery ? 'blocked' : 'ready'}
         currentPage={currentPage}
         inboxView={inboxView}
         pendingReviewCount={pendingReviewCount}
@@ -1645,6 +1695,14 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         onOpenGuide={() => runtime ? rejectExperimentAction() : setGuideOpen(true)}
       />
       <div id="main-content" className="content-shell" tabIndex={-1}>
+        {storageError && <section className="workspace-storage-protection" role="alert">
+          <strong>{workspaceLoadFailure ? '先恢复本机数据，再继续整理' : '这次更改尚未保存'}</strong>
+          <p>{workspaceLoadFailure ?? '请保留当前页面和输入。存储暂时不可用，已保存的数据不会被清空；不要继续编辑或直接刷新。'}</p>
+          <div>
+            <button className="secondary-button" type="button" onClick={() => void exportProtectedBackup()}>下载原始备份</button>
+            {workspaceLoadFailure && <button className="primary-button" type="button" disabled={workspaceLoadRetrying} onClick={() => void retryWorkspaceLoading()}>{workspaceLoadRetrying ? '正在重新加载…' : '重试加载'}</button>}
+          </div>
+        </section>}
         {ordinaryEnvironment && <details className="ordinary-engineering-mode"><summary>{ordinaryEnvironment.recognitionMetadata?.().responseRole==='RECORDED_MODEL_ENGINEERING_REPLAY'?'真实回答固定回放 · 普通产品路径 · 不新增模型请求':'匿名工程输入 · 普通产品路径 · 不发送模型请求'}</summary><p>{ordinaryEnvironment.label}；{ordinaryEnvironment.store.name}</p></details>}
         {viewConflict && <section className="source-review-status" role="alert"><strong>另一页面已修改相同内容，你的输入保留在本页。</strong>
           {viewConflict.conflicts.map(c=><p key={c.path}>{c.path}：编辑前「{String(c.baseline)}」→最新「{String(c.current)}」；我的输入「{String(c.proposed)}」</p>)}
@@ -1679,7 +1737,6 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       </div>
 
       {!workspaceReady && <div className="workspace-status" role="status">正在恢复本机工作区…</div>}
-      {storageError && <div className="workspace-status error" role="alert">本机数据库不可用；当前页面中的更改不会保存。请停止编辑并重新加载后重试。</div>}
       {notice && <div className="app-toast" role="status"><span>{notice.text}</span>{notice.undo && <button type="button" onClick={() => { notice.undo?.(); setNotice(null) }}>撤销</button>}<button type="button" onClick={() => setNotice(null)} aria-label="关闭提示">×</button></div>}
 
       {workspaceRecovery && <WorkspaceRecoveryPanel

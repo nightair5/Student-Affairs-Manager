@@ -6,6 +6,7 @@ import type {
   Task, TimePoint, WorkspaceV8,
 } from './types'
 import { validateWorkspaceV8 } from './validators/workspaceValidator'
+import { LEGACY_DIAGNOSTIC_COMPATIBILITY, repairLegacyDraftDiagnostics } from './legacyDraftDiagnostics'
 
 export interface WorkspaceV7Backup {
   id: string
@@ -185,6 +186,7 @@ function mapSources(workspace: WorkspaceData, workspaceId: string): { sources: S
 }
 
 function mapRecognition(workspace: WorkspaceData): { recognitionRuns: RecognitionRun[]; extractionDrafts: ExtractionDraft[] } {
+  const repairs = new Map(workspace.drafts.map(draft => [draft.id, repairLegacyDraftDiagnostics(draft.recognitionResult)]))
   const recognitionRuns = workspace.drafts.map((draft): RecognitionRun => {
     const result = draft.recognitionResult
     const modelName = result?.modelName ?? draft.modelName ?? null
@@ -214,14 +216,19 @@ function mapRecognition(workspace: WorkspaceData): { recognitionRuns: Recognitio
     id: draft.id,
     recognitionRunId: `recognition-run:${draft.id}`,
     status: draft.workflowStatus ?? (draft.status === '已确认' ? 'confirmed' : draft.status === '部分确认' ? 'partially_confirmed' : draft.status === '已拒绝' ? 'rejected' : 'needs_review'),
-    result: draft.recognitionResult ?? null,
+    result: repairs.get(draft.id)?.result ?? draft.recognitionResult ?? null,
     commitOperationIds: [],
     acceptedEntityTempIds: draft.items.filter((item) => item.status === '已确认').map((item) => item.suggestion.id),
     rejectedEntityTempIds: draft.items.filter((item) => item.status === '已拒绝').map((item) => item.suggestion.id),
     createdAt: draft.createdAt,
     updatedAt: draft.updatedAt,
-    needsReview: !draft.recognitionResult,
-    legacyData: legacy({ v7Record: draft, items: draft.items, legacyStatus: draft.status }),
+    needsReview: !draft.recognitionResult || Boolean(repairs.get(draft.id)),
+    legacyData: legacy({ v7Record: draft, items: draft.items, legacyStatus: draft.status,
+      ...(repairs.get(draft.id) ? { diagnosticCompatibility: {
+        version: LEGACY_DIAGNOSTIC_COMPATIBILITY, paths: repairs.get(draft.id)!.paths,
+        blocksConfirmation: repairs.get(draft.id)!.blocksConfirmation,
+      } } : {}),
+    }),
   }))
   return { recognitionRuns, extractionDrafts }
 }

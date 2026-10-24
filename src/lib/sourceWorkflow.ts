@@ -144,6 +144,11 @@ function modelLabel(source: Source, draft: ExtractionDraft | null, canonicalWork
 
 export function mapSourceWorkflowItem(source: Source, drafts: ExtractionDraft[], canonicalWorkspace?:WorkspaceV8): SourceWorkflowItem {
   const draft = latestDraftForSource(source, drafts)
+  const canonicalDraft = canonicalWorkspace?.extractionDrafts.find(item => item.id === draft?.id)
+  const compatibility = canonicalDraft?.legacyData?.diagnosticCompatibility
+  const oldNotesNeedReview = Boolean(compatibility && typeof compatibility === 'object' && !Array.isArray(compatibility)
+    && compatibility.blocksConfirmation === true && canonicalDraft?.status === 'needs_review'
+    && canonicalDraft.acceptedEntityTempIds.length === 0)
   const counts=entityCounts(draft, canonicalWorkspace)
   const status = canonicalStatus(source, draft, counts)
   if(canonicalWorkspace&&status==='confirmed'){
@@ -162,11 +167,11 @@ export function mapSourceWorkflowItem(source: Source, drafts: ExtractionDraft[],
       : statusDescriptions[status],
     modelLabel: modelLabel(source, draft, canonicalWorkspace),
     projectLabel: projectLabel(draft),
-    errorMessage: source.processingError?.trim() || null,
+    errorMessage: oldNotesNeedReview ? '旧版核对说明已保留。请查看原文，可用本地规则重新整理，或手工补充；已有任务不受影响。' : source.processingError?.trim() || null,
     counts,
     canOpenDraft: (status === 'needs_review' || status === 'info_only' || status === 'confirmed') && Boolean(draft),
-    canRetry: status === 'failed' || status === 'processing',
-    canManualSupplement: status === 'failed' || status === 'unprocessed' || status === 'processing',
+    canRetry: status === 'failed' || status === 'processing' || oldNotesNeedReview,
+    canManualSupplement: status === 'failed' || status === 'unprocessed' || status === 'processing' || oldNotesNeedReview,
     updatedAt: draft?.updatedAt ?? source.updatedAt ?? source.createdAt,
   }
 }

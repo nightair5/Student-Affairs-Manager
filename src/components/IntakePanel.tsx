@@ -1,3 +1,4 @@
+import { safeIntakeError } from '../lib/workspaceRecoveryUi'
 import {
   Camera,
   FileImage,
@@ -282,7 +283,7 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
         await onSubmitIntake({ operationId: operationIdRef.current, sourceType, content, sourceTitle, fileName, mimeType, fileSize, fileHash, url: linkUrl, reviewMetadata, multimodal })
       }
     } catch (cause) {
-      setSubmissionError(cause instanceof Error ? cause.message : '这次没有整理成功，原文仍在输入框中。请重试。')
+      setSubmissionError(safeIntakeError(cause, '这次没有整理成功，原文仍在输入框中。请重试。'))
     } finally {
       submitInFlight.current = false
       setMultimodalMessage('')
@@ -304,7 +305,7 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
       setLinkMessage(`已读取网页正文（${result.text.length.toLocaleString('zh-CN')} 字）。请核对后再交给 DeepSeek 整理。`)
     } catch (cause) {
       setLinkStatus('error')
-      setLinkMessage(cause instanceof Error ? cause.message : '网页正文读取失败，请粘贴正文后继续。')
+      setLinkMessage(safeIntakeError(cause, '网页正文读取失败，请粘贴正文后继续。'))
     }
   }
 
@@ -328,7 +329,7 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
       })
     } catch (cause) {
       setLinkStatus('error')
-      setLinkMessage(cause instanceof Error ? cause.message : '链接保存失败，请稍后重试。')
+      setLinkMessage(safeIntakeError(cause, '链接保存失败，请稍后重试。'))
     } finally {
       setIsSavingSource(false)
     }

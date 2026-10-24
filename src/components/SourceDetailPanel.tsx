@@ -3,6 +3,7 @@ import { useId, useRef } from 'react'
 import { sourceTypeLabels, type SourceWorkflowItem } from '../lib/sourceWorkflow'
 import type {WorkspaceV8} from '../domain/v2/types'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
+import { safeIntakeError } from '../lib/workspaceRecoveryUi'
 
 interface SourceDetailPanelProps {
   item: SourceWorkflowItem
@@ -69,7 +70,7 @@ export function SourceDetailPanel({
 
         {(item.errorMessage || actionError) && <div className="source-error-detail" role="alert">
           <AlertTriangle size={17} />
-          <div><strong>{actionError ? '本次操作未完成' : '识别记录的错误'}</strong><p>{actionError ?? item.errorMessage}</p></div>
+          <div><strong>{actionError ? '本次操作未完成' : '识别暂未完成'}</strong><p>{safeIntakeError(new Error(actionError ?? item.errorMessage ?? ''), '原文仍在；请重新整理或手工补充。')}</p></div>
         </div>}
 
         <dl className="source-detail-facts">

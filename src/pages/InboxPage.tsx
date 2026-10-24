@@ -4,6 +4,7 @@ import { SourceDetailPanel } from '../components/SourceDetailPanel'
 import { buildSourceWorkflowItems, selectPendingReviewItems, sourceTypeLabels } from '../lib/sourceWorkflow'
 import type { ExtractionDraft, Source } from '../types'
 import type {WorkspaceV8} from '../domain/v2/types'
+import { safeIntakeError } from '../lib/workspaceRecoveryUi'
 
 interface InboxPageProps {
   canonicalWorkspace?:WorkspaceV8
@@ -73,7 +74,7 @@ export function InboxPage({
     } catch (error) {
       setActionFailure({
         sourceId,
-        message: error instanceof Error && error.message.trim() ? error.message : '重试未完成，未收到可记录的错误信息。',
+        message: safeIntakeError(error, '重试未完成，原文仍保留在收件箱；请稍后再试。'),
       })
       return false
     } finally {
@@ -138,7 +139,7 @@ export function InboxPage({
                 ? `${counts.tasks} 任务 · 独立事件及时间请在核对页查看`
                 : `${counts.tasks} 任务 · ${counts.materials} 材料 · ${counts.timePoints} 时间 · ${counts.events} 活动`}</dd></div>
             </dl>
-            {item.errorMessage && <p className="inline-error" role="alert">{item.errorMessage}</p>}
+            {item.errorMessage && <p className="inline-error" role="alert">{safeIntakeError(new Error(item.errorMessage), '这份来源尚未整理成功，原文仍在；可重新整理或手工补充。')}</p>}
             {actionFailure?.sourceId === source.id && <p className="inline-error" role="alert">{actionFailure.message}</p>}
             {item.canRetry && (!onRetrySource || !onManualSupplementSource) && <p className="source-action-note">重试接线未完成；系统不会用“新建来源”代替重试。</p>}
             <div className="task-card-actions inbox-card-actions">

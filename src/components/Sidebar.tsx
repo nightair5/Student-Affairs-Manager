@@ -23,6 +23,7 @@ const mobileNavigationDescription: Partial<Record<PageId, string>> = {
 }
 
 interface SidebarProps {
+  storageState?: 'loading' | 'blocked' | 'ready'
   currentPage: PageId
   inboxView: 'all' | 'needs_review'
   pendingReviewCount: number
@@ -33,6 +34,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({
+  storageState = 'ready',
   currentPage,
   inboxView,
   pendingReviewCount,
@@ -100,7 +102,7 @@ export function Sidebar({
 
       <div className="sidebar-note">
         <span className="status-dot" />
-        <div><strong>已在此设备自动保存</strong><p>同一浏览器与站点地址下可恢复；识别结果确认后才入库。</p></div>
+        <div><strong>{storageState === 'blocked' ? '保存已暂停，数据受保护' : storageState === 'loading' ? '正在打开本机数据' : '已在此设备自动保存'}</strong><p>{storageState === 'blocked' ? '请先处理页面上的恢复提示，不要清空浏览器数据。' : '同一浏览器与站点地址下可恢复；识别结果确认后才入库。'}</p></div>
       </div>
     </aside>
 
