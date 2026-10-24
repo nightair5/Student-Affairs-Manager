@@ -7,7 +7,7 @@ import type {
 } from './types'
 import { validateWorkspaceV8 } from './validators/workspaceValidator'
 import { LEGACY_DIAGNOSTIC_COMPATIBILITY, repairLegacyDraftDiagnostics } from './legacyDraftDiagnostics'
-import { prepareStoredDraftRecovery } from './storedDraftRecovery'
+import { prepareStoredDraftRecovery, type StoredDraftRecoveryOptions } from './storedDraftRecovery'
 
 export interface WorkspaceV7Backup {
   id: string
@@ -26,7 +26,7 @@ export interface V7ToV8MigrationPreparation {
   targetIntegrityHash: string | null
 }
 
-export interface MigrationOptions {
+export interface MigrationOptions extends StoredDraftRecoveryOptions {
   now?: string
   migrationId?: string
   workspaceId?: string
@@ -557,7 +557,7 @@ export function prepareV7ToV8Migration(
     }
     // Only the repository's verified-backup path may isolate unreadable, unconfirmed
     // suggestions. Pure migration validation remains strict for unbacked inputs.
-    if (persistedBackup) candidate = prepareStoredDraftRecovery(candidate, backup.id, now) ?? candidate
+    if (persistedBackup) candidate = prepareStoredDraftRecovery(candidate, backup.id, now, options) ?? candidate
     const validation = validateWorkspaceV8(candidate)
     if (!validation.valid) {
       metadata.status = 'failed'

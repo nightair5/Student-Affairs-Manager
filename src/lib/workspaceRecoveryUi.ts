@@ -35,6 +35,36 @@ export function workspaceLoadDiagnostic(error: unknown) {
     codes: codes.length ? codes : ['WORKSPACE_OPEN_FAILED'], sections, containsUserContent: false }
 }
 
+/** v2 includes schema locations, never field values, IDs, original messages or stacks.
+ * Unknown property names are redacted even if an Error contains a crafted path. */
+export function workspaceLoadDiagnosticV2(error: unknown) {
+  const base = workspaceLoadDiagnostic(error)
+  const fields = new Set(('extractionDrafts tasks events materials timePoints sources sourceVersions recognitionRuns historyRecords '
+    + 'result id recognitionRunId status commitOperationIds acceptedEntityTempIds rejectedEntityTempIds createdAt updatedAt needsReview legacyData '
+    + 'schemaVersion modelName promptVersion pipelineVersion sourceSummary notificationType summary requiresAction studentRoles '
+    + 'projectMatch projectSuggestion milestones standaloneTasks workPackages title name action object tasks events materials timePoints '
+    + 'evidence fragments ambiguities ignoredContent quality field message question options evidenceIds text content quote reason '
+    + 'value confidence inferenceLevel selected needsConfirmation reviewReasons hasAmbiguity hasLowConfidence hasPotentialHallucination '
+    + 'tempId type precision normalizedValue rawText timezone relatedTaskTempIds relatedEventTempIds materialTempIds timePointTempIds '
+    + 'startTimePointTempId endTimePointTempId location channel constraints dependencies completionCriteria eligibilityConditions '
+    + 'decision matchedProjectId suggestedProjectTitle rationale mode warnings errors startOffset endOffset sourceId sourceVersionId '
+    + 'projectId milestoneId workPackageId taskId eventId materialId originEvidenceIds').split(' '))
+  const message = error instanceof Error ? error.message : ''
+  const locations: { code: string; path: string }[] = []
+  for (const match of message.matchAll(/\b(INVALID_TYPE|INVALID_ENUM|MISSING_REFERENCE):([A-Za-z][A-Za-z0-9_.[\]-]{0,600})(?=:|,|$)/gu)) {
+    const path = match[2].split('.').map(part => {
+      const segment = /^([A-Za-z][A-Za-z0-9_-]*)(\[\d{1,6}\])*$/u.exec(part)
+      return segment && fields.has(segment[1]) ? part : '[field]'
+    }).join('.')
+    if (!locations.some(item => item.code === match[1] && item.path === path)) locations.push({ code: match[1], path })
+  }
+  const resultOnly = locations.length > 0 && locations.every(item => /^extractionDrafts\[\d+\]\.result(?:\.|\[|$)/u.test(item.path))
+    && base.sections.length === 1 && base.sections[0] === 'extractionDrafts'
+    && base.codes.every(code => ['INVALID_TYPE', 'INVALID_ENUM', 'WORKSPACE_V8_INVALID'].includes(code))
+  return { ...base, version: 'workspace-load-diagnostic-2', locations: locations.slice(0, 80),
+    locationsTruncated: locations.length > 80, canTryHistoricalRepair: resultOnly }
+}
+
 /**
  * `savedAt` is persistence metadata rather than an editable workspace fact.
  * Ignoring it lets hydration distinguish an unchanged compatibility view from

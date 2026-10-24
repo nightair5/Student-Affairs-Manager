@@ -396,12 +396,12 @@ export class CanonicalWorkspaceRepository {
       integrityHash: workspaceSnapshotHash(snapshot), snapshot }, null, 2)
   }
 
-  private async recoverStoredDrafts(raw: unknown, now: string): Promise<WorkspaceV8 | null> {
+  private async recoverStoredDrafts(raw: unknown, now: string, options: MigrationOptions): Promise<WorkspaceV8 | null> {
     const sourceHash = workspaceSnapshotHash(raw)
     const originalJson = JSON.stringify(raw)
     const isOriginal = (value: unknown) => workspaceSnapshotHash(value) === sourceHash && JSON.stringify(value) === originalJson
-    const backupId = `draft-recovery-backup:${sourceHash}`
-    const prepared = prepareStoredDraftRecovery(raw, backupId, now)
+    const backupId = `${options.isolateHistoricalResults ? 'draft-history-recovery-backup' : 'draft-recovery-backup'}:${sourceHash}`
+    const prepared = prepareStoredDraftRecovery(raw, backupId, now, options)
     if (!prepared) return null
     const verifyBackup = (value: unknown) => {
       if (!isRecord(value) || value.kind !== STORED_DRAFT_RECOVERY_VERSION || value.id !== backupId
@@ -441,7 +441,7 @@ export class CanonicalWorkspaceRepository {
         workspace = parseWorkspaceV8(raw)
       } catch (error) {
         try {
-          const recovered = await this.recoverStoredDrafts(raw, options.now ?? new Date().toISOString())
+          const recovered = await this.recoverStoredDrafts(raw, options.now ?? new Date().toISOString(), options)
           if (recovered) return { status: 'already_v8', workspace: recovered, backupId: null,
             warnings: ['STORED_DRAFTS_RECOVERED_OR_ISOLATED'], errors: [] }
         } catch (recoveryError) {

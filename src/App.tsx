@@ -32,7 +32,7 @@ import {
   safeWorkspaceRecoveryErrors,
   safeIntakeError,
   workspaceLoadFailureText,
-  workspaceLoadDiagnostic,
+  workspaceLoadDiagnosticV2 as workspaceLoadDiagnostic,
   workspacePersistenceRevision,
 } from './lib/workspaceRecoveryUi'
 import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
@@ -631,6 +631,11 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     try {
       const canonical = await (runtime ? runtime.load() : canonicalWorkspaceRepository.load())
       const canonicalDraft = canonical?.extractionDrafts.find((candidate) => candidate.id === draftId)
+      const recovery = canonicalDraft?.legacyData?.storedDraftRecovery
+      if (recovery && typeof recovery === 'object' && !Array.isArray(recovery) && recovery.mode === 'isolated_historical_result') {
+        setNotice({ text: '这份旧回答已保留在备份中，不会重复确认。已保存的事项可在任务和日历中查看。' })
+        return
+      }
       const run = canonicalDraft
         ? canonical?.recognitionRuns.find((candidate) => candidate.id === canonicalDraft.recognitionRunId)
         : null
@@ -1419,12 +1424,12 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     setNotice({ text: '已下载升级前备份；恢复前请先保留当前数据备份。' })
   }
 
-  const retryWorkspaceLoading = async () => {
+  const retryWorkspaceLoading = async (repairHistory = false) => {
     if (!workspaceLoadFailure || workspaceLoadRetrying || runtime) return
     setWorkspaceLoadRetrying(true)
     // Only available after initial loading failed: never discard unsaved edits
     // following a later write failure. Keep the user's intake text mounted.
-    const attempt = workspaceRepository.load().then(saved => {
+    const attempt = (repairHistory ? workspaceRepository.recoverHistoricalDrafts() : workspaceRepository.load()).then(saved => {
       if (!saved) throw new Error('WORKSPACE_RECOVERY_EMPTY')
       return saved
     })
@@ -1437,8 +1442,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       applyWorkspaceView(saved)
       setOrdinaryCanonical(canonical)
       setWorkspaceLoadFailure(null)
+      setWorkspaceDiagnostic(null)
       setStorageError(false)
-      setNotice({ text: '本机数据已重新打开；输入框中的通知仍保留，可以继续整理。' })
+      setNotice({ text: repairHistory ? '本机数据已打开。旧识别回答已完整备份，已保存的任务和日程保持不变；输入框内容仍保留。' : '本机数据已重新打开；输入框中的通知仍保留，可以继续整理。' })
     } catch (error) {
       setWorkspaceLoadFailure(workspaceLoadFailureText(error))
       setWorkspaceDiagnostic(workspaceLoadDiagnostic(error))
@@ -1618,7 +1624,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           />
         )
       case 'library':
-        return <LibraryPage canonicalWorkspace={isolatedSnapshot??undefined} sources={sources} drafts={drafts} onOpenIntake={() => setIntakeOpen(true)} onOpenDraft={(draftId) => { void selectDraftForReview(draftId) }} onRetrySource={handleRetrySource} onManualSupplementSource={openManualSupplement} onMarkIndependent={(sourceId) => {
+        return <LibraryPage canonicalWorkspace={ordinaryCanonical??isolatedSnapshot??undefined} sources={sources} drafts={drafts} onOpenIntake={() => setIntakeOpen(true)} onOpenDraft={(draftId) => { void selectDraftForReview(draftId) }} onRetrySource={handleRetrySource} onManualSupplementSource={openManualSupplement} onMarkIndependent={(sourceId) => {
           setSources((current) => current.map((source) => source.id === sourceId
             ? { ...source, duplicateReviewStatus: '保留为独立来源' }
             : source))
@@ -1725,9 +1731,13 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             <button className="secondary-button" type="button" onClick={() => void exportProtectedBackup()}>下载原始备份</button>
             {workspaceLoadFailure && <button className="primary-button" type="button" disabled={workspaceLoadRetrying} onClick={() => void retryWorkspaceLoading()}>{workspaceLoadRetrying ? '正在重新加载…' : '重试加载'}</button>}
           </div>
+          {workspaceLoadFailure && workspaceDiagnostic?.canTryHistoricalRepair && <div>
+            <p>可以先备份，再单独保留无法读取的旧识别回答。已保存的任务、日程和材料不会重建或删除；旧回答中未确认的建议仍保留在备份里，不会自动添加。</p>
+            <button className="primary-button" type="button" disabled={workspaceLoadRetrying} onClick={() => void retryWorkspaceLoading(true)}>{workspaceLoadRetrying ? '正在备份并校验…' : '备份并修复旧识别记录'}</button>
+          </div>}
           {workspaceLoadFailure && workspaceDiagnostic && <details>
             <summary>仍无法打开？保存排查信息</summary>
-            <p>排查信息只有错误类别，不含通知、任务、姓名或联系方式。原始备份包含个人数据，请勿公开发送。</p>
+            <p>排查信息只有错误类别和字段位置，不含通知正文、任务内容、姓名或联系方式。原始备份包含个人数据，请勿公开发送。</p>
             <button className="secondary-button" type="button" onClick={() => downloadRecoveryFile(JSON.stringify(workspaceDiagnostic, null, 2), 'diagnostic')}>下载不含正文的排查信息</button>
           </details>}
         </section>}

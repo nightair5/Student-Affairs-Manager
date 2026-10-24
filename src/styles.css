@@ -4788,6 +4788,15 @@ select:focus-visible {
     min-width: 0;
   }
 
+  .content-shell > .workspace-storage-protection {
+    margin: calc(var(--mobile-topbar-height) + env(safe-area-inset-top) + 12px) 12px 12px;
+    padding: 16px;
+  }
+
+  .workspace-storage-protection ~ .workspace-unavailable.page {
+    padding-top: 24px;
+  }
+
   .mobile-topbar {
     position: fixed;
     inset: 0 0 auto;

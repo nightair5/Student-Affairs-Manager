@@ -149,6 +149,8 @@ export function mapSourceWorkflowItem(source: Source, drafts: ExtractionDraft[],
   const recovery = canonicalDraft?.legacyData?.storedDraftRecovery
   const isolated = recovery && typeof recovery === 'object' && !Array.isArray(recovery)
     && recovery.mode === 'isolated_unconfirmed_result'
+  const historical = recovery && typeof recovery === 'object' && !Array.isArray(recovery)
+    && recovery.mode === 'isolated_historical_result'
   const oldNotesNeedReview = Boolean(compatibility && typeof compatibility === 'object' && !Array.isArray(compatibility)
     && compatibility.blocksConfirmation === true && canonicalDraft?.status === 'needs_review'
     && canonicalDraft.acceptedEntityTempIds.length === 0)
@@ -165,16 +167,16 @@ export function mapSourceWorkflowItem(source: Source, drafts: ExtractionDraft[],
     draft,
     status,
     statusLabel: sourceStatusLabels[status],
-    statusDescription: isolated ? '原通知和旧识别回答都已保留。这份旧建议暂时无法读取，可以重新整理；其他已保存事项不受影响。' : status === 'confirmed' && taskCount(draft) === 0
+    statusDescription: historical ? '原通知和旧识别回答已完整备份，已保存的任务和日程保持不变。旧建议无法继续确认；请在任务和日历中查看已保存事项，未处理内容可按原文手工补充。' : isolated ? '原通知和旧识别回答都已保留。这份旧建议暂时无法读取，可以重新整理；其他已保存事项不受影响。' : status === 'confirmed' && taskCount(draft) === 0
       ? '通知已核对，来源已保存；没有创建任务或项目。事件和不确定时间请按原文核对。'
       : statusDescriptions[status],
     modelLabel: modelLabel(source, draft, canonicalWorkspace),
     projectLabel: projectLabel(draft),
     errorMessage: isolated ? '旧建议已单独保留，请重新整理这份通知，或手工补充。' : oldNotesNeedReview ? '旧版核对说明已保留。请查看原文，可用本地规则重新整理，或手工补充；已有任务不受影响。' : source.processingError?.trim() || null,
     counts,
-    canOpenDraft: (status === 'needs_review' || status === 'info_only' || status === 'confirmed') && Boolean(draft),
-    canRetry: status === 'failed' || status === 'processing' || oldNotesNeedReview,
-    canManualSupplement: status === 'failed' || status === 'unprocessed' || status === 'processing' || oldNotesNeedReview,
+    canOpenDraft: !historical && (status === 'needs_review' || status === 'info_only' || status === 'confirmed') && Boolean(draft),
+    canRetry: !historical && (status === 'failed' || status === 'processing' || oldNotesNeedReview),
+    canManualSupplement: !historical && (status === 'failed' || status === 'unprocessed' || status === 'processing' || oldNotesNeedReview),
     updatedAt: draft?.updatedAt ?? source.updatedAt ?? source.createdAt,
   }
 }

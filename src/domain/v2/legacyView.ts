@@ -361,7 +361,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     const recognizedTasksById = new Map(recognizedTasks.map((task) => [task.tempId, task]))
     const recovery = item.legacyData?.storedDraftRecovery
     const isolated = recovery && typeof recovery === 'object' && !Array.isArray(recovery)
-      && recovery.mode === 'isolated_unconfirmed_result'
+      && ['isolated_unconfirmed_result', 'isolated_historical_result'].includes(String(recovery.mode))
     // Never resurrect obsolete UI projections from a deliberately isolated answer.
     const legacyItems = isolated ? [] : legacy.items ?? []
     return {

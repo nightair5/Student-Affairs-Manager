@@ -823,6 +823,14 @@ export class IndexedDbWorkspaceRepository implements WorkspaceRepository {
     return this.canonical.exportProtectedCurrentSnapshot()
   }
 
+  /** Called only by the visible recovery action; keeps original answers and formal facts. */
+  async recoverHistoricalDrafts(): Promise<WorkspaceData> {
+    const outcome = await this.canonical.loadOrMigrate({ isolateHistoricalResults: true })
+    this.rememberCanonicalBackup(outcome.backupId)
+    if (!outcome.workspace) throw new Error(outcome.errors.join(',') || 'DRAFT_HISTORY_RECOVERY_NOT_APPLICABLE')
+    return this.rememberRead(workspaceV8ToLegacyView(outcome.workspace))
+  }
+
   async exportMigrationBackup(backupId: string): Promise<string | null> {
     const backup = await this.canonical.readMigrationBackup(backupId)
     return backup ? JSON.stringify(backup, null, 2) : null
