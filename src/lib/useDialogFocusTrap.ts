@@ -38,7 +38,7 @@ export function useDialogFocusTrap(
       }
       if (event.key !== 'Tab') return
       const focusable = [...dialog.querySelectorAll<HTMLElement>(focusableSelector)]
-        .filter((element) => !element.hidden && element.getAttribute('aria-hidden') !== 'true')
+        .filter((element) => !element.closest('[hidden], [aria-hidden="true"], [inert]') && element.getClientRects().length > 0)
       if (!focusable.length) {
         event.preventDefault()
         return

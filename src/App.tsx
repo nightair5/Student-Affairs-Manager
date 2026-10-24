@@ -216,6 +216,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const [draftSourceSnapshot, setDraftSourceSnapshot] = useState<{ draftId: string; sourceVersionId: string; rawText: string } | null>(null)
   const [supplementSourceId, setSupplementSourceId] = useState<string | null>(null)
   const [notice, setNotice] = useState<{ text: string; undo?: () => void } | null>(null)
+  const [ordinarySaveError, setOrdinarySaveError] = useState<{draftId:string;text:string}|null>(null)
   const [smartExtractionStatus, setSmartExtractionStatus] = useState<'checking' | 'connected' | 'unavailable'>('checking')
   const [notificationPermission, setNotificationPermission] =
     useState<BrowserNotificationPermission>(() => runtime || ordinaryEnvironment ? 'unsupported' : getBrowserNotificationPermission())
@@ -1249,7 +1250,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     if(ordinaryCommitLock.current||ordinaryReceipt||ordinaryFactsDirty||ordinaryReadinessDirty||ordinaryOpportunityDirty)return
     const draft=drafts.find(d=>d.id===draftId)
     if(!draft?.recognitionResult)return
-    ordinaryCommitLock.current=true;setOrdinaryBusy(true)
+    ordinaryCommitLock.current=true;setOrdinaryBusy(true);setOrdinarySaveError(null)
     let receipt:SourceReviewReceipt|null=null,waiting=false
     try {
       await ordinaryMeasurement.wait(draftId);waiting=true
@@ -1272,12 +1273,20 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       setNotice({text:`已保存并独立读回：${plan.create.tasks.length} 项任务、${plan.create.events.length} 个事件；不确定时间保持原状。`})
       if(!itemId&&receipt.disposition!=='partial'){setSelectedDraftId(null);setCurrentPage('today')}
     }catch(error){
-      if(waiting)await ordinaryMeasurement.waitEnd(draftId)
-      await ordinaryMeasurement.failure(draftId,error instanceof Error?error.message:'UNKNOWN')
-      if(receipt){setNotice({text:'已提交，读回尚未验证；输入和提交记录保留，请重新读回，勿重复提交。'})}
-      else if(error instanceof WorkspaceViewConflictError){setViewConflict(error);setNotice({text:'其他页面修改了相同内容。你的输入保留，请核对差异。'})}
-      else if(error instanceof Error&&error.message==='DOMAIN_COMMIT_PROJECT_DECISION_REQUIRED')setNotice({text:'请先在“选择项目归属”中选“作为独立事项”，或选择要关联的项目，再接受本通知。当前尚未创建正式事项。'})
-      else setNotice({text:'暂时未能保存。本通知和建议仍在，没有留下半份事项；请手动重试接受，或先关闭稍后处理。'})
+      // A full/unavailable browser store can reject the failure log too. That
+      // secondary failure must not hide the original error from the dialog.
+      let diagnosticWriteFailed=false
+      try {
+        if(waiting)await ordinaryMeasurement.waitEnd(draftId)
+        await ordinaryMeasurement.failure(draftId,error instanceof Error?error.message:'UNKNOWN')
+      } catch { diagnosticWriteFailed=true }
+      if(error instanceof WorkspaceViewConflictError)setViewConflict(error)
+      const text=receipt?'已提交，读回尚未验证；输入和提交记录保留，请重新读回，勿重复提交。'
+        :error instanceof WorkspaceViewConflictError?'其他页面修改了相同内容。你的输入保留，请核对差异。'
+        :error instanceof Error&&error.message==='DOMAIN_COMMIT_PROJECT_DECISION_REQUIRED'?'请在下方选择作为独立事项，或关联项目，再添加。当前尚未创建正式事项。'
+        :'暂时未能保存。本通知和建议仍在，没有留下半份事项；请重试添加，或先关闭稍后处理。'
+      const visibleText=diagnosticWriteFailed?`${text} 浏览器保存仍不可用，请保留原文，不要清空已有数据。`:text
+      setNotice({text:visibleText});setOrdinarySaveError({draftId,text:visibleText})
     }finally{ordinaryCommitLock.current=false;setOrdinaryBusy(false)}
   }
   const handleConfirmDraftItem = async (draftId:string,itemId:string) => {
@@ -1720,7 +1729,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           key={runtime ? selectedDraft.id : undefined}
           isolatedCapabilities={Boolean(runtime)}
           recognitionDescription={runtime?.realInput ? runtime.recognitionDescription : undefined}
-          ordinarySourceReview={!runtime ? {readbackRecovery:ordinaryReceipt?.draftId===selectedDraft.id?{busy:ordinaryBusy,onRetry:()=>void retryOrdinaryReadback()}:undefined,problem:selectedDraft.recognitionResult?sourceInformationReviewProblem(selectedDraft.recognitionResult):undefined,pendingEvents:selectedDraftSource ? mapSourceWorkflowItem(selectedDraftSource,[selectedDraft],ordinaryCanonical ?? undefined).counts.pendingEvents : 0,busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),unsaved:ordinaryFactsDirty||ordinaryReadinessDirty||ordinaryOpportunityDirty,description:recognitionModeDescription(ordinaryCanonical,selectedDraft.id),onConfirm:()=>void handleConfirmAll(selectedDraft.id),facts:<>{ordinaryCanonical&&<ReceiptOpportunityReview workspace={ordinaryCanonical} draftId={selectedDraft.id} session={ordinaryReviewSession} disabled={ordinaryFactsDirty||ordinaryReadinessDirty||ordinaryBusy||Boolean(ordinaryReceipt)||Boolean(viewConflict)} onDirty={setOrdinaryOpportunityDirty} onApply={input=>handleOrdinaryOpportunity(selectedDraft.id,input)} />}{ordinaryCanonical&&<SourceReadinessReview workspace={ordinaryCanonical} draftId={selectedDraft.id} session={ordinaryReviewSession} disabled={ordinaryFactsDirty||ordinaryOpportunityDirty||ordinaryBusy||Boolean(ordinaryReceipt)||Boolean(viewConflict)} onDirty={setOrdinaryReadinessDirty} onApply={input=>handleOrdinaryReadiness(selectedDraft.id,input)} />}<OrdinarySourceFacts draft={selectedDraft} source={selectedDraftSource} workspace={ordinaryCanonical} session={ordinaryReviewSession} onDirty={setOrdinaryFactsDirty} onSave={(result,decision)=>handleOrdinaryFacts(selectedDraft.id,result,decision)} /></>} : undefined}
+          ordinarySourceReview={!runtime ? {saveError:ordinarySaveError?.draftId===selectedDraft.id?ordinarySaveError.text:undefined,readbackRecovery:ordinaryReceipt?.draftId===selectedDraft.id?{busy:ordinaryBusy,onRetry:()=>void retryOrdinaryReadback()}:undefined,problem:selectedDraft.recognitionResult?sourceInformationReviewProblem(selectedDraft.recognitionResult):undefined,pendingEvents:selectedDraftSource ? mapSourceWorkflowItem(selectedDraftSource,[selectedDraft],ordinaryCanonical ?? undefined).counts.pendingEvents : 0,busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),unsaved:ordinaryFactsDirty||ordinaryReadinessDirty||ordinaryOpportunityDirty,description:recognitionModeDescription(ordinaryCanonical,selectedDraft.id),onConfirm:()=>void handleConfirmAll(selectedDraft.id),facts:<>{ordinaryCanonical&&<ReceiptOpportunityReview workspace={ordinaryCanonical} draftId={selectedDraft.id} session={ordinaryReviewSession} disabled={ordinaryFactsDirty||ordinaryReadinessDirty||ordinaryBusy||Boolean(ordinaryReceipt)||Boolean(viewConflict)} onDirty={setOrdinaryOpportunityDirty} onApply={input=>handleOrdinaryOpportunity(selectedDraft.id,input)} />}{ordinaryCanonical&&<SourceReadinessReview workspace={ordinaryCanonical} draftId={selectedDraft.id} session={ordinaryReviewSession} disabled={ordinaryFactsDirty||ordinaryOpportunityDirty||ordinaryBusy||Boolean(ordinaryReceipt)||Boolean(viewConflict)} onDirty={setOrdinaryReadinessDirty} onApply={input=>handleOrdinaryReadiness(selectedDraft.id,input)} />}<OrdinarySourceFacts draft={selectedDraft} source={selectedDraftSource} workspace={ordinaryCanonical} session={ordinaryReviewSession} onDirty={setOrdinaryFactsDirty} onSave={(result,decision)=>handleOrdinaryFacts(selectedDraft.id,result,decision)} /></>} : undefined}
           confirmationV2={runtime && experimentalReview ? { busy: isolatedBusy || storageError, items: experimentalReview.states } : !runtime && selectedDraft.recognitionResult ? {busy:ordinaryBusy || Boolean(ordinaryReceipt) || Boolean(viewConflict),items:Object.fromEntries(selectedDraft.items.map(item=>{const r=selectedDraft.recognitionResult!,p=r.timePoints.filter(t=>t.relatedTaskTempIds.includes(item.suggestion.id)),coveragePending=r.conflicts.some(c=>c.requiresDecision&&c.id===`coverage:${item.suggestion.id}:time`);return [item.id,{dateLabel:p.length?taskSourceTimeSummary(r,ordinaryCanonical?.extractionDrafts.find(d=>d.id===selectedDraft.id)?.legacyData?.semanticSidecar,{id:selectedDraft.sourceId,text:selectedDraftSource?.content??selectedDraftSource?.rawText??''},item.suggestion.id):coveragePending?'时间覆盖待核对，不能当成未说明':'原答未提供截止',blockedReason:sourceReadinessProblem(ordinaryCanonical,selectedDraft.id,item.suggestion.id)??sourceReviewProblem(r,item.suggestion.id,selectedDraftSource?.content??selectedDraftSource?.rawText??''),materialTempIds:r.materials.filter(m=>m.relatedTaskTempIds.includes(item.suggestion.id)).map(m=>m.tempId),timePointTempIds:p.map(t=>t.tempId)}]}))} : undefined}
           semanticReview={runtime?.semantic && isolatedSnapshot && experimentalReview && isolatedSnapshot.extractionDrafts.find(d=>d.id===selectedDraft.id)?.legacyData?.mainline05 ? {
             itemFacts: (taskId, onFocus) => runtime.semantic!.facts(isolatedSnapshot, selectedDraft.id, taskId, onFocus),

@@ -3,6 +3,7 @@ import { createSuggestions } from '../lib/parser'
 import { localDelivery, localEventLocation, localMaterialRequirements, localActionNeedsDecision, localSubmissionChannel, localAttendanceDirective } from './localNoticeFacts'
 import { taskActionText } from '../lib/taskActionText'
 import { parseChineseTimeAst } from '../lib/timeSemantics'
+import { localMeetingBlock, localNamedMeeting } from './localMeetingBlock'
 import { RECOGNITION_MODEL_NAME, RECOGNITION_PROMPT_VERSION } from './prompt'
 import type {
   EventSuggestion,
@@ -119,6 +120,7 @@ function matchProject(input: RecognitionInput, title: string, category: TaskCate
   const best = candidates[0]
   if (best && best.score >= 0.75) return { decision: 'existing_project', matchedProjectId: best.project.id, suggestedProjectTitle: best.project.title, confidence: best.score, reasons: ['项目名称和分类高度相似，仍需用户确认关联'] }
   if (best && best.score >= 0.4) return { decision: 'uncertain', matchedProjectId: best.project.id, suggestedProjectTitle: title, confidence: best.score, reasons: [`可能关联“${best.project.title}”，名称或分类只有部分重合`] }
+  if (suggestionsAreStandalone(`${input.sourceTitle}\n${input.content}`)) return { decision: 'standalone_task', matchedProjectId: null, suggestedProjectTitle: title, confidence: 0.78, reasons: ['原文未声明项目结构，作为独立事项核对'] }
   if (input.projects.length === 0 && input.sourceTitle.length < 4) return { decision: 'uncertain', matchedProjectId: null, suggestedProjectTitle: title, confidence: 0.35, reasons: ['来源缺少稳定项目名称'] }
   return { decision: suggestionsAreStandalone(`${input.sourceTitle}\n${input.content}`) ? 'standalone_task' : 'new_project', matchedProjectId: null, suggestedProjectTitle: title, confidence: 0.78, reasons: ['未发现足够相似的已有项目'] }
 }
@@ -182,7 +184,10 @@ function preparationAction(evidence: string): { quote: string; object: string; m
 
 export function buildLocalRecognition(input: RecognitionInput): RecognitionResult {
   const preprocessed = preprocessSource(input.content)
-  const parsed = createSuggestions(preprocessed.normalizedText, input.sourceType, input.sourceTitle, input.referenceTime, input.timezone)
+  const parsed = createSuggestions(preprocessed.normalizedText, input.sourceType, input.sourceTitle, input.referenceTime, input.timezone).map(item => {
+    const meeting = localMeetingBlock(preprocessed.normalizedText, item.evidence)
+    return meeting ? { ...item, title: meeting.title, evidence: meeting.quote, timePoint: parseChineseTimeAst(meeting.timeText, { referenceTime: input.referenceTime, timezone: input.timezone, type: 'event_start' }) } : item
+  })
   const category = projectCategory(parsed)
   const title = projectTitle(input, parsed)
   const projectMatch = matchProject(input, title, category)
@@ -193,6 +198,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
   const supplementalEvidence: RecognitionResult['evidence'] = []
   parsed.forEach((item, index) => {
     const evidenceId = `evidence-${index + 1}`
+    const meeting = localMeetingBlock(preprocessed.normalizedText, item.evidence)
     const timePointId = `time-${index + 1}`
     const delivery = localDelivery(item.evidence)
     const requirements = localMaterialRequirements(item.evidence)
@@ -209,7 +215,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     const duration = item.evidence.match(/(?:预计|用时|耗时|需时)\s*(\d{1,3})\s*分钟/u)
     task.estimatedMinutes = duration ? Number(duration[1]) : null
     if (localActionNeedsDecision(item.evidence)) task.selected = false
-    const isEvent = eventPattern.test(task.title) && !/准备|制作|撰写|完成/u.test(task.title)
+    const isEvent = Boolean(meeting) || eventPattern.test(task.title) && !/准备|制作|撰写|完成/u.test(task.title)
     if (isEvent && localEventLocation(item.evidence) && localAttendanceDirective(item.evidence)) {
       task.inferenceLevel = 'explicit'
       task.selected = true
@@ -258,7 +264,8 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
         })
       }
       const eventLocation = localEventLocation(item.evidence)
-      events.push({ tempId: `event-${index + 1}`, title: eventLocation?.name ?? task.title, description: eventDescription(item.evidence), startTimePointTempId: timePointId, endTimePointTempId: endTimePointId, location: eventLocation?.location ?? null, evidenceIds: [evidenceId], confidence: task.confidence, inferenceLevel: task.inferenceLevel, selected: task.selected })
+      const namedMeeting = /^(?:参加|出席|开会)$/u.test(task.title) ? localNamedMeeting(item.evidence) : null
+      events.push({ tempId: `event-${index + 1}`, title: meeting?.title ?? eventLocation?.name ?? namedMeeting ?? task.title, description: eventDescription(item.evidence), startTimePointTempId: timePointId, endTimePointTempId: endTimePointId, location: meeting?.location ?? eventLocation?.location ?? null, evidenceIds: [evidenceId], confidence: task.confidence, inferenceLevel: task.inferenceLevel, selected: meeting ? false : task.selected })
       const preparation = preparationAction(item.evidence)
       if (preparation) {
         const preparationIndex = parsed.length + index

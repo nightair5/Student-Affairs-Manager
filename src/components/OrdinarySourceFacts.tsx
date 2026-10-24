@@ -1,3 +1,6 @@
+import { CalendarDays, Clock3, MapPin, PencilLine } from 'lucide-react'
+import { reviewEventTime } from './reviewEventSummary'
+import { sourceEventProblem } from '../domain/v2/sourceReviewD26'
 import {useEffect,useRef,useState} from 'react'
 import type {ExtractionDraft,Source} from '../types'
 import type {RecognitionResult,TimePointSuggestionV2} from '../recognition/types'
@@ -27,6 +30,13 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
   const [busy,setBusy]=useState(false)
   const [pendingChoice,setPendingChoice]=useState<{eventId:string;decision:EventDisposition;field:ReviewField|null}|null>(null)
   const queue=useRef(Promise.resolve())
+  const editorRef=useRef<HTMLFieldSetElement>(null)
+  const editingKey=buffer?buffer.eventId||`new-${buffer.kind??'event'}`:null
+  useEffect(()=>{
+    if(editingKey===null)return
+    editorRef.current?.scrollIntoView?.({block:'nearest'})
+    editorRef.current?.querySelector('input')?.focus({preventScroll:true})
+  },[editingKey])
   const key='event:source:ordinary-buffer'
   const writer=session.writer
   const storedAudit=workspace?.extractionDrafts.find(d=>d.id===draft.id)?.legacyData?.materialChannelGrounding
@@ -116,7 +126,26 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
     }catch(error){setStatus(String(error))}finally{setBusy(false)}
   }
   return <section aria-label="同一通知的独立事件与信息">
-    {sourceInformation?.status==='CURRENT'&&sourceInformation.preview.items.length>0&&<section aria-label="通知补充说明"><h3>通知补充说明</h3><p>原回答保留的信息；未关联到具体事项，不会据此新增任务或日程。</p>{sourceInformation.preview.items.map(item=><blockquote key={item.text}>{item.text}</blockquote>)}<details><summary>查看补充说明原文依据</summary>{sourceInformation.preview.items.flatMap(item=>item.evidenceIds.map(id=>{const evidence=result.evidence.find(e=>e.id===id);return evidence?<blockquote key={item.text+id}>{evidence.quote}</blockquote>:null}))}</details></section>}
+    {result.events.map(event => {
+      const stored = workspace?.extractionDrafts.find(d => d.id === draft.id)
+      const handled = stored?.acceptedEntityTempIds.includes(event.tempId) || stored?.rejectedEntityTempIds.includes(event.tempId)
+      const disposition = eventDisposition(workspace, draft.id, event.tempId)
+      const problem = sourceEventProblem(result, event.tempId)
+      const disabled = busy || Boolean(buffer) || Boolean(pendingChoice) || Boolean(handled)
+      const start = result.timePoints.find(p => p.tempId === event.startTimePointTempId)
+      const end = result.timePoints.find(p => p.tempId === event.endTimePointTempId)
+      return <article className="review-event-card recognition-entity-row" key={event.tempId} aria-label={event.title}>
+        <header><span className="review-kind"><CalendarDays size={15} />事件</span><button type="button" className="review-edit" disabled={disabled} onClick={() => edit({ eventId: event.tempId, title: event.title, location: event.location || '', start: start?.rawText || '', end: end?.rawText || '' }, false)}><PencilLine size={14} />编辑事件</button></header>
+        <h3>{event.title}</h3>
+        <p className="review-event-time"><Clock3 size={16} /><span>{reviewEventTime(start, end)}</span></p>
+        <p className="review-event-location"><MapPin size={16} /><span>{event.location || '地点未说明'}</span></p>
+        {problem && <p className="review-item-warning" role="status">{problem}</p>}
+        {!handled && disposition === 'defer' && !problem && <p className="review-item-hint">是否参加由你决定；勾选保留后，再添加到日历。</p>}
+        <footer className="review-event-actions"><label><input type="checkbox" aria-label={'保留事件：' + event.title} disabled={disabled} checked={disposition === 'keep'} onChange={e => void applyChoice(event.tempId, e.target.checked ? 'keep' : 'defer')} />保留</label><button type="button" className="text-button remove" disabled={disabled} onClick={() => void applyChoice(event.tempId, 'reject')}>{disposition === 'reject' ? '已选不需要' : '不需要'}</button>{handled && <span>已处理</span>}</footer>
+        <details className="review-card-details"><summary>说明与原文</summary>{event.description && <p>{event.description}</p>}{[start, end].filter(Boolean).map(p => <p key={p!.tempId}>{eventTimeSummary(p!)}</p>)}{event.evidenceIds.map(id => { const evidence = result.evidence.find(e => e.id === id); return evidence ? <blockquote key={id}>{evidence.quote}</blockquote> : null })}{Boolean(event.relatedTaskTempIds?.length) && <p>关联事项：{event.relatedTaskTempIds!.map(id => [...result.standaloneTasks, ...result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])].find(t => t.tempId === id)?.title ?? '待核对事项').join('、')}</p>}</details>
+      </article>
+    })}
+    {sourceInformation?.status==='CURRENT'&&sourceInformation.preview.items.length>0&&<details className="review-card-details" aria-label="通知补充说明"><summary>通知补充说明</summary>{sourceInformation.preview.items.map(item=><blockquote key={item.text}>{item.text}</blockquote>)}<details><summary>查看补充说明原文依据</summary>{sourceInformation.preview.items.flatMap(item=>item.evidenceIds.map(id=>{const evidence=result.evidence.find(e=>e.id===id);return evidence?<blockquote key={item.text+id}>{evidence.quote}</blockquote>:null}))}</details></details>}
     {sourceInformation?.status==='SOURCE_VERSION_UNAVAILABLE'&&result.ignoredContent.some(i=>i.reason==='other')&&<p role="status">来源版本已变化或暂不可读取，请重新打开当前通知后核对补充说明。</p>}
     {windows.length>0&&<section aria-label="原文办理窗口"><h3>办理窗口</h3>{windows.map(v=><div key={v.id}><strong>{v.ownerTitle}</strong><p>{v.summary}</p><details><summary>查看窗口原文与起止依据</summary><blockquote>{v.rawText}</blockquote>{v.pointIds.map(id=>{const p=result.timePoints.find(p=>p.tempId===id);return p?<p key={id}>{eventTimeSummary(p)}</p>:null})}</details></div>)}</section>}
     {appointments.length>0&&<section aria-label="原文指定办理时刻"><h3>原文指定办理时刻</h3>{appointments.map((v,i)=>{if(!v||typeof v!=='object'||Array.isArray(v))return null;const p=result.timePoints.find(p=>p.tempId===v.id);return p?<p key={i}>{eventTimeSummary(p)}。这是办理时刻，不能改成截止或随意提前安排。</p>:null})}</section>}
@@ -125,17 +154,15 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
         <details><summary>查看渠道原文依据</summary>{d.evidence.map(e=><blockquote key={e.id}>{e.quote}</blockquote>)}</details></div>)}
       {result.standaloneTasks.filter(t=>t.completionCriteria.length).map(t=><div key={t.tempId}><strong>{t.title}</strong>{t.timePointTempIds.map(id=>result.timePoints.find(p=>p.tempId===id)).filter(p=>p&&/deadline$/u.test(p.type)).map(p=>p?<p key={p.tempId}>{eventTimeSummary(p)}</p>:null)}{t.completionCriteria.map((c,i)=><p key={i}>完成标准：{c}</p>)}</div>)}
     </details>:null}
-    {result.events.length > 0 && <h3>活动与事件</h3>}
-    {result.events.map(event=>{const handled=workspace?.extractionDrafts.find(d=>d.id===draft.id)?.acceptedEntityTempIds.includes(event.tempId)||workspace?.extractionDrafts.find(d=>d.id===draft.id)?.rejectedEntityTempIds.includes(event.tempId);return <article className="recognition-entity-row" key={event.tempId}><div><strong>{event.title}</strong><p>{event.location||'地点未说明'}；{[event.startTimePointTempId,event.endTimePointTempId].filter(Boolean).map(id=>{const p=result.timePoints.find(t=>t.tempId===id);return p?eventTimeSummary(p):''}).join(' → ')||'原文未说明时间'}</p>{event.description && <details><summary>说明与原文要求</summary><p>{event.description}</p></details>}{Boolean(event.relatedTaskTempIds?.length)&&<p>关联事项：{event.relatedTaskTempIds!.map(id=>[...result.standaloneTasks,...result.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])].find(t=>t.tempId===id)?.title??'待核对事项').join('、')}。任务是否已确认单独保留。</p>}<p>{handled?'已正式处置':eventDisposition(workspace,draft.id,event.tempId)==='reject'?'已拒绝（草稿）':event.selected===false?'暂缓确认':'保留，待正式确认'}</p><label>处置“{event.title}”<select disabled={busy||Boolean(buffer)||Boolean(pendingChoice)||Boolean(handled)} value={eventDisposition(workspace,draft.id,event.tempId)} onChange={e=>void applyChoice(event.tempId,e.target.value as EventDisposition)}><option value="keep">保留</option><option value="defer">暂缓</option><option value="reject">拒绝多余事件</option></select></label></div><button type="button" disabled={busy||Boolean(buffer)||Boolean(pendingChoice)||Boolean(handled)} onClick={()=>edit({eventId:event.tempId,title:event.title,location:event.location||'',start:result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.rawText||'',end:result.timePoints.find(p=>p.tempId===event.endTimePointTempId)?.rawText||''},false)}>编辑事件</button></article>})}
     {pendingChoice&&<div role="alert"><p>{pendingChoice.field?'事件选择检查点保留，尚未完成草稿保存。':'事件选择仍在本页，检查点尚未保存；刷新可能丢失，请手动重试。'}</p>{pendingChoice.field?.conflict?<>{(['latest','incoming'] as const).map(choice=><button key={choice} disabled={busy} onClick={()=>{if(workspace&&pendingChoice.field)void session.resolve(workspace,draft.id,`event:${pendingChoice.eventId}:disposition`,choice,writer,pendingChoice.field.revision).then(r=>{const f=r.fields[`event:${pendingChoice.eventId}:disposition`],value=f.mine as {eventId:string;decision:EventDisposition};setPendingChoice({...value,field:f})}).catch(e=>setStatus(String(e)))}}>采用{choice==='latest'?'最新选择':'我的选择'}</button>)}</>:<button disabled={busy} onClick={()=>{if(!workspace)return;const p=pendingChoice;if(p.field&&p.field.writer!==writer)void session.recover(workspace,draft.id,writer,{[`event:${p.eventId}:disposition`]:p.field.revision}).then(r=>applyChoice(p.eventId,p.decision,r.fields[`event:${p.eventId}:disposition`])).catch(e=>setStatus(String(e)));else void applyChoice(p.eventId,p.decision,p.field??undefined)}}>恢复并保存事件选择</button>}</div>}
     {!result.events.length && !draft.items.length && <p>{result.sourceSummary.summary}</p>}
     <details className="review-more"><summary>补充遗漏事项</summary>
     <button type="button" disabled={Boolean(buffer)} onClick={()=>edit(blank,false)}>依据原文补充遗漏事件</button>
     <button type="button" disabled={Boolean(buffer)} onClick={()=>edit({...blank,kind:'task',action:'',object:''},false)}>依据原文补充遗漏任务</button>
     </details>
-    {buffer&&<fieldset><legend>{buffer.kind==='task'?'未确认任务输入':'未确认事件输入'}</legend>
-      <p>请先保存或明确放弃这份输入，再编辑其他事项；恢复的输入不会被重新打开编辑覆盖。</p>
-      {field?.writer!==writer&&!field?.conflict&&<button type="button" onClick={()=>{if(workspace&&field)void session.recover(workspace,draft.id,writer,{[key]:field.revision}).then(r=>{setField(r.fields[key]);setStatus('已接管，可以直接保存，无需改字。')})}}>恢复我的输入并继续</button>}
+    {buffer&&<fieldset ref={editorRef}><legend>{buffer.kind==='task'?'补充任务':'修改事件'}</legend>
+      <p>按原文修改并保存，再确认添加；也可以放弃这次修改。</p>
+      {field&&field.writer!==writer&&!field.conflict&&<button type="button" onClick={()=>{if(workspace&&field)void session.recover(workspace,draft.id,writer,{[key]:field.revision}).then(r=>{setField(r.fields[key]);setStatus('已接管，可以直接保存，无需改字。')})}}>恢复我的输入并继续</button>}
       {field?.conflict&&<div role="alert"><p>编辑前、最新和我的事件输入发生冲突，原输入都保留。</p>{(['latest','incoming'] as const).map(choice=><button type="button" key={choice} onClick={()=>{if(workspace&&field)void session.resolve(workspace,draft.id,key,choice,writer,field.revision).then(r=>{setField(r.fields[key]);setBuffer(r.fields[key].mine as Buffer)})}}>采用{choice==='latest'?'最新事件':'我的事件输入'}</button>)}</div>}
       <div className="form-grid">{(buffer.kind==='task'?([['action','做什么（原文动作）'],['object','对什么做（原文对象）']] as const):([['title','事件名称（原文）'],['location','地点（没有可留空）'],['start','开始时间原文（没有可留空）'],['end','结束时间原文（没有可留空）']] as const)).map(([name,label])=><label className="field" key={name}><span>{label}</span><input value={buffer[name]??''} onChange={e=>edit({...buffer,[name]:e.target.value})}/></label>)}</div>
       <p>这里只保留原文时间；模糊或未公布时刻保持未知，不编造日历日期。</p><button type="button" disabled={busy||Boolean(field?.conflict)} onClick={()=>void save()}>{buffer.kind==='task'?'保存遗漏任务草稿':'保存事件草稿纠正'}</button>

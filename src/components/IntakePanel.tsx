@@ -36,6 +36,7 @@ import {
   type IntakeInput,
 } from '../lib/intake'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
+import { intakeFailureMessage } from '../lib/intakeError'
 import type { Priority, SourceReviewMetadata, SourceType, TaskCategory } from '../types'
 
 interface IntakePanelProps {
@@ -66,6 +67,8 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
   const [pdfPageSelection, setPdfPageSelection] = useState('1')
   const [multimodalMessage, setMultimodalMessage] = useState('')
   const [multimodalError, setMultimodalError] = useState('')
+  const [submissionError, setSubmissionError] = useState('')
+  const submitInFlight = useRef(false)
   const [linkUrl, setLinkUrl] = useState('')
   const [linkAuthorized, setLinkAuthorized] = useState(false)
   const [linkStatus, setLinkStatus] = useState<'idle' | 'reading' | 'ready' | 'error'>('idle')
@@ -107,6 +110,7 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
     setPdfPageSelection('1')
     setMultimodalMessage('')
     setMultimodalError('')
+    setSubmissionError('')
     setLinkUrl('')
     setLinkAuthorized(false)
     setLinkStatus('idle')
@@ -223,9 +227,11 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
   const handleParse = async (event: FormEvent) => {
     if (textOnly && (sourceType !== 'text' || manualMode)) { event.preventDefault(); return }
     event.preventDefault()
-    if (!canSubmitWithConsent) return
+    if (!canSubmitWithConsent || submitInFlight.current) return
+    submitInFlight.current = true
     setIsParsing(true)
     setMultimodalError('')
+    setSubmissionError('')
     try {
       if (manualMode) {
         const evidence = `手动录入：${manualTitle.trim()}；截止 ${manualDeadline}；下一步 ${manualNextAction.trim()}`
@@ -276,8 +282,9 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
         await onSubmitIntake({ operationId: operationIdRef.current, sourceType, content, sourceTitle, fileName, mimeType, fileSize, fileHash, url: linkUrl, reviewMetadata, multimodal })
       }
     } catch (cause) {
-      setMultimodalError(cause instanceof Error ? cause.message : '本次图片准备失败，请关闭多模态开关后使用文字版。')
+      setSubmissionError(cause instanceof Error ? cause.message : '这次没有整理成功，原文仍在输入框中。请重试。')
     } finally {
+      submitInFlight.current = false
       setMultimodalMessage('')
       setIsParsing(false)
     }
@@ -333,8 +340,8 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
         <header className="intake-header">
           <div>
             <span className="eyebrow">新事务 · 第 1 步</span>
-            <h2 id={titleId}>把通知原样放进来</h2>
-            <p>不用先整理。下一步会让你核对拆分结果。</p>
+            <h2 id={titleId}>粘贴通知，整理成待办</h2>
+            <p>先看任务和事件，确认后再添加。</p>
           </div>
           <button className="icon-button" type="button" onClick={onClose} aria-label="关闭录入面板">
             <X size={20} />
@@ -360,7 +367,7 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
           {!manualMode && sourceType === 'text' && (
             <label className="field">
               <span>粘贴老师消息、群通知或网页正文</span>
-              <textarea ref={firstControlRef} value={content} onChange={(event) => setContent(event.target.value)} rows={7} placeholder="例如：8 月 4 日 18:00 前提交报名表；8 月 6 日上午 9 点参加说明会……" required />
+              <textarea ref={firstControlRef} value={content} onChange={(event) => setContent(event.target.value)} rows={7} placeholder="例如：周五 17:00 前提交课程论文；下周一下午 2 点在 A101 参加说明会。" required />
               <small>包含多个时间也没关系，系统会逐条拆开。</small>
               {!textOnly && !content && <button className="example-fill" type="button" onClick={() => setContent('比赛通知：8月4日18:00提交报名表和确认函；8月6日上午9点参加说明会；8月8日20:00上传作品初稿。')}>不会填？放入一段示例</button>}
             </label>
@@ -497,9 +504,13 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
                   : ' 默认点击整理只发送本次粘贴或本机提取的文字，不发送图片或文件本体；结果确认前不会创建任务。'
                 : ' DeepSeek 未配置，当前内容不会发往云端，将生成可编辑的本地规则建议。'}
           </p></div>
-          <button className="primary-button wide" type="submit" disabled={!canSubmitWithConsent || isParsing || isSavingSource}>
-            {isParsing ? <><LoaderCircle className="spin" size={18} />正在智能整理…</> : <><Sparkles size={18} />整理成待确认任务</>}
-          </button>
+          <div className="intake-submit-area" aria-busy={isParsing}>
+            {submissionError && <div className="intake-submit-error" role="alert"><strong>没有整理成功</strong><p>{intakeFailureMessage(submissionError)}</p><details><summary>查看详细原因</summary><p>{submissionError}</p></details></div>}
+            {isParsing && <p role="status" className="intake-progress-message">正在整理任务、时间和地点，请稍候。确认前不会添加到待办。</p>}
+            <button className="primary-button wide" type="submit" disabled={!canSubmitWithConsent || isParsing || isSavingSource}>
+              {isParsing ? <><LoaderCircle className="spin" size={18} />正在整理…</> : <><Sparkles size={18} />{submissionError ? '重试整理' : '识别任务和事件'}</>}
+            </button>
+          </div>
         </form></>}
       </section>
     </div>

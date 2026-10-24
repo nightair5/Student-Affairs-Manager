@@ -16,6 +16,11 @@
   --red-soft: var(--status-danger-surface);
 }
 
+.review-footer .confirmation-preview { display: block; flex-basis: 100%; font-size: 12px; }
+.review-footer .confirmation-preview summary { cursor: pointer; color: var(--muted); }
+.review-footer .confirmation-preview[open] > span { display: inline-block; margin: 6px 6px 0 0; }
+.review-save-error { flex-basis: 100%; margin: 0; border-left: 3px solid var(--status-danger); padding: 8px 12px; background: var(--status-danger-surface); color: var(--status-danger); font-size: 14px; }
+
 /* Informational and confirmed states use cool blue, never mint or sage. */
 .pending-review-banner {
   color: var(--status-info);
@@ -401,4 +406,56 @@
   .mobile-menu-grid > button.active { border-color: #9fc5e2; background: #eaf5ff; }
   .mobile-menu-grid > button > span { color: #2b6da7; background: #e7f3fd; }
   .mobile-guide-button { color: #2f6798; border-color: #bfd7e9; background: #f0f7fc; }
+}
+/* Results are the primary surface. Evidence and diagnostics stay available on demand. */
+.review-panel .review-results-first {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+}
+.review-results-first > *, .review-results-first .review-list { min-width: 0; width: 100%; }
+.review-results-first .review-progress { padding: 0; background: transparent; border: 0; }
+.review-results-first .review-progress strong { font-size: 14px; }
+.review-results-first .review-progress small { font-size: 12px; }
+.review-results-first .review-attention-link {
+  text-align: left; padding: 10px 14px; color: #835526;
+  background: #fff8ec; border: 1px solid #ead7b6; border-radius: 8px;
+  font-size: 13px; line-height: 1.5; cursor: pointer;
+}
+.review-results-first .review-context { border-top: 1px solid var(--line); padding-top: 12px; }
+.review-context > summary { color: var(--ink-soft); font-size: 14px; cursor: pointer; padding: 10px 0; }
+.review-context .source-details { position: static; max-height: 320px; margin: 12px 0; }
+.review-context .source-details summary, .review-context .source-details p { font-size: 13px; }
+.review-context .recognition-overview { margin-top: 12px; }
+.review-list > section[aria-label="同一通知的独立事件与信息"] { display: grid; gap: 14px; }
+.review-results-first .review-event-card {
+  display: block; padding: 18px 20px; border: 1px solid #d7e2e7;
+  border-radius: 12px; background: #fff; min-width: 0; overflow-wrap: anywhere;
+}
+.review-event-card > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.review-kind { display: inline-flex; align-items: center; gap: 6px; color: #48636d; font-size: 12px; }
+.review-event-card h3 { margin: 12px 0; font-size: 19px; line-height: 1.5; color: var(--ink); }
+.review-event-card .review-event-time, .review-event-card .review-event-location {
+  display: flex; align-items: flex-start; gap: 9px; font-size: 15px; line-height: 1.65; margin: 7px 0;
+}
+.review-event-card .review-event-time { font-weight: 650; color: #173e57; }
+.review-event-card svg { flex-shrink: 0; margin-top: 3px; }
+.review-event-card .review-event-actions { display: flex; align-items: center; gap: 20px; margin-top: 16px; }
+.review-event-actions label { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
+.review-event-actions input { width: 18px; height: 18px; accent-color: #244e67; }
+.review-event-card .review-card-details { margin-top: 12px; font-size: 13px; color: var(--ink-soft); }
+.review-card-details > summary { cursor: pointer; padding: 8px 0; }
+.review-item-warning { padding: 10px 12px; background: #fff7eb; border-radius: 7px; color: #80532d; font-size: 13px; }
+.review-item-hint { color: var(--ink-soft); font-size: 13px; }
+.intake-submit-area { position: sticky; bottom: 0; padding: 14px 0 4px; background: var(--paper); overflow-anchor: none; }
+.intake-submit-error { margin-bottom: 12px; padding: 14px; border: 1px solid #d9a598; background: #fff5ef; border-radius: 8px; }
+.intake-submit-error strong { color: #8d3e2d; font-size: 15px; }
+.intake-submit-error p { margin: 7px 0; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+.intake-submit-error small, .intake-progress-message { color: var(--ink-soft); font-size: 13px; line-height: 1.6; }
+@media (max-width: 600px) {
+  .review-results-first .review-event-card { padding: 15px; }
+  .review-event-card h3 { font-size: 18px; }
+  .review-event-card .review-event-time, .review-event-card .review-event-location { font-size: 14px; }
+  .intake-submit-area { padding-bottom: max(8px, env(safe-area-inset-bottom)); }
 }
