@@ -337,7 +337,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
           {checkpointError&&<details><summary>查看具体保存原因</summary><p>{checkpointError}</p></details>}
         </section>}
         {(processed > 0 || !pending.length && !recognition?.events.length) && <div className="review-progress"><ListChecks size={18} /><span>{processed ? `已处理 ${processed} 项任务，其余仍可继续核对` : '这是一条通知信息，保存后不会创建待办或项目。'}</span></div>}
-        {coverageHints.length > 0 && <button type="button" className="review-attention-link" onClick={() => { if (contextRef.current) { contextRef.current.open = true; contextRef.current.scrollIntoView({ block: 'nearest', behavior: 'smooth' }) } }}>还有 {coverageHints.length} 处原文信息未整理完整，查看后再决定</button>}
+        {coverageHints.length > 0 && <button type="button" className="review-attention-link" onClick={() => { if (contextRef.current) { contextRef.current.open = true; contextRef.current.scrollIntoView({ block: 'nearest' }) } }}>还有 {coverageHints.length} 处原文信息未整理完整，查看后再决定</button>}
         <section className="review-list recognition-tree" aria-label="识别出的任务和事件">
           {semanticReview?.sourceSession && draft.items.length > 0 && <section aria-label="同一通知的独立事件核对">
             <p>任务与独立事件在这一页核对。保存事件字段纠正后，确认任务时会在同一笔正式提交中保存独立事件和已选任务。</p>
