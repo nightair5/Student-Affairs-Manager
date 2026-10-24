@@ -1,0 +1,1022 @@
+[
+  {
+    "id": "R10-RES-01",
+    "acquisitionKey": "10",
+    "scene": "服务变更与条件归还",
+    "text": "各位读者：\n为做好图书馆新馆开放准备，经研究决定，临时图书馆将于近期进行整体搬迁。现将有关事项通知如下：\n一、闭馆时间\n2025 年5月7日（周三）起，暂停临时图书馆所有图书借还服务。预计6月上旬起图书馆新馆将逐步恢复各项服务，具体开放时间另行通知。\n二、相关事项说明\n1.借阅服务\n因校区图书设备调试及图书搬迁影响，4月29日起，暂停校园间图书委托借还服务。 5月7日起暂停所有图书借还服务。\n2.空间开放服务\n闭馆期间，临时图书馆图书阅览室1-6及总服务台暂停服务。自修室、展览空间、电子阅览室、培训室短期内维持开放，开放时间为 8:00-22:30（以上空间具体搬迁关闭时间另行通知）。\n3.电子资源访问服务\n闭馆期间，图书馆官网、数据库等线上资源可正常访问使用，如需帮助可通过图书馆官网或者“华南师大图书馆”微信公众号联系智能客服。\n4.图书归还服务\n为方便毕业生办理离校手续，毕业班读者可在每周一9:00-11:00到临时图书馆总服务台归还图书。\n其他读者闭馆期间到期的图书，归还日期将统一顺延至6月30日，逾期不产生违约金。\n感谢您对图书馆工作的理解与支持！我们将加快工作进度，尽快恢复服务，期待以全新面貌与您相见！\n汕尾校区图书馆综合业务部\n2025 年 4 月 27 日",
+    "inputSourceTitle": "关于汕尾校区临时图书馆闭馆的通知 ",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "归还图书",
+          "verbs": [
+            "归还"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true,
+          "channel": "总服务台"
+        }
+      ],
+      "events": [
+        {
+          "object": "委托借还",
+          "start": "2025-04-29"
+        },
+        {
+          "object": "借还服务",
+          "start": "2025-05-07"
+        }
+      ],
+      "forbidden": [],
+      "information": [
+        "6月上旬",
+        "具体开放时间另行通知",
+        "每周一9:00-11:00",
+        "6月30日"
+      ]
+    },
+    "referenceTime": "2025-04-28T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://swc.scnu.edu.cn/announce/campus-notice/2025/0428/1509.html",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-04-28",
+      "sourceTextSha256": "abd9d62aae3ee4f5229d63c59aee3cec57d33c390a4934f69fcacc7858d23879",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-02",
+    "acquisitionKey": "11",
+    "scene": "条件材料提交",
+    "text": "各位师生：\n因紫金港校区通信光缆突发故障，图书馆主馆各类网络暂时中断。受此影响，主馆借还书服务、智能座位及空间预约、存包柜等服务临时关闭，服务变更具体如下：\n一、主馆所有图书实行在馆阅览不外借，主馆图书预约服务暂停。如有特别急需图书，请发送邮件至\n[邮箱]\n。图书归还请移步至其他馆舍操作。\n二、主馆智能座位预约服务关闭，实行自由落座，请有序使用。多人研讨间、单人研习间等关闭预约，如有需要请至三楼咨询台登记使用。\n三、因受网络中断造成的各类违约行为，将做统一清除处理。\n目前，相关部门正在全力抢修，各类服务具体恢复时间请留意后续通知。如需帮助可随时咨询现场工作人员。带来不便，敬请理解。\n浙江大学图书馆\n2025\n年\n10\n月\n5\n日",
+    "inputSourceTitle": "图书馆关于暂停主馆借还书、智能座位及空间预约等服务的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "图书",
+          "verbs": [
+            "申请",
+            "发送"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true,
+          "channel": "[邮箱]"
+        },
+        {
+          "object": "研讨间",
+          "verbs": [
+            "登记",
+            "使用"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true,
+          "channel": "三楼咨询台"
+        }
+      ],
+      "events": [
+        {
+          "object": "网络",
+          "start": null,
+          "end": null
+        }
+      ],
+      "forbidden": [],
+      "information": [
+        "恢复时间请留意后续通知",
+        "预约服务暂停"
+      ]
+    },
+    "referenceTime": "2025-10-05T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://libweb.zju.edu.cn/2025/1005/c39478a3088494/page.htm",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-10-05",
+      "sourceTextSha256": "089ed08e30e0f1d5675a71493d3a9677209669d123bb3f7013e4deb3ac3f9924",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-03",
+    "acquisitionKey": "12",
+    "scene": "开放安排",
+    "text": "亲爱的读者：\n暑期即将来临，为方便大家在假期间的学习研究和图书借还，图书馆将继续开放，为了提高效益，\n7\n月\n20\n日至\n8\n月\n24\n日期间将对各馆舍开放时间和各项服务做出如下安排：\n一、馆舍开放\n（一）\n唐岛湾校区总馆\n开放文艺书库（一楼）、社科书库（二楼）、科技书库（三楼）、文艺报刊阅览室（三楼）、单本库（四楼）、专业刊阅览室（四楼）与研读区（五楼、七楼、八楼）\n，开放时间为\n8:00-22:00\n。\n由于空调设施故障，暂停工具书库（五楼）的开放。\n（二）唐岛湾校区东馆\n暂停开放。\n（三）\n古镇口校区东区学习中心\n开放时间为\n9:00-18:00\n。\n另外，这期间将暂停图书异地委托借还服务。\n8\n月\n25\n日各馆舍将恢复正常开放。\n咨询电话：[电话]\n二、数字文献资源服务\n数字文献资源全部正常运行。校内可全天访问，校外可通过学校\nVPN\n访问（\nVPN\n的使用按照信息化建设管理处的说明执行）。\n咨询电话：\n[电话]\n。\n三、查收查引及科技查新服务\n通过线上方式正常开展。\n1.\n查收查引\n登录链接：\nhttp://library.upc.edu.cn/kyzc1/kjcxyxxfw/cscy.htm\n2.\n科技查新\n登录链接：\nhttp://library.upc.edu.cn/kyzc1/kjcxyxxfw/kjcx.htm\n咨询电话：\n[电话]\n。\n四、技术保障服务\n咨询或报修电话：\n[电话]\n。",
+    "inputSourceTitle": "图书馆暑假工作安排",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "唐岛湾校区东馆",
+          "start": "2025-07-20",
+          "end": "2025-08-24"
+        },
+        {
+          "object": "工具书库",
+          "start": "2025-07-20",
+          "end": "2025-08-24"
+        }
+      ],
+      "forbidden": [],
+      "information": [
+        "8:00-22:00",
+        "9:00-18:00",
+        "8月25日",
+        "数字文献资源全部正常运行"
+      ]
+    },
+    "referenceTime": "2025-07-15T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://library.upc.edu.cn/info/1018/7671.htm",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-07-15",
+      "sourceTextSha256": "ae971436ab4a0120ee0f11480c51328638807bcb4425eb8fb0674ec3798c577e",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": "图书馆、博物馆（筹）\n2025\n年\n7\n月\n15\n日",
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-04",
+    "acquisitionKey": "13",
+    "scene": "服务变更与禁止",
+    "text": "各位读者：\n根据珠海校区图书馆中央空调改造项目的施工进度安排，9月25日起，图书馆中央空调将暂停使用，恢复时间待定。受此影响，馆内各楼层或将出现闷热情况，请优先选择前楼一楼电子阅览室进行学习（该区域配备独立空调）。\n同时请各位读者注意安全，切勿进入施工围蔽区域。由此带来不便，敬请谅解！\n让我们共同期待项目完成后拥有更好的阅读和学习环境。\n珠海校区图书馆\n2025年9月25日",
+    "inputSourceTitle": "关于珠海校区图书馆中央空调暂停使用的温馨提示",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "中央空调",
+          "start": "2025-09-25",
+          "end": null,
+          "location": "图书馆"
+        }
+      ],
+      "forbidden": [
+        {
+          "object": "施工围蔽区域",
+          "verbs": [
+            "进入"
+          ]
+        }
+      ],
+      "information": [
+        "恢复时间待定",
+        "前楼一楼电子阅览室"
+      ]
+    },
+    "referenceTime": "2025-09-26T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://zh.jnu.edu.cn/2025/0925/c8378a843285/page.psp",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-09-26",
+      "sourceTextSha256": "eee0cb5be92e896047178a4373f04251b5b316675ff9f21a5c93d2063aae81b8",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-05",
+    "acquisitionKey": "16",
+    "scene": "考试资格",
+    "text": "各位同学：\n计算机学院将于9月12日—9月22日组织开展2025-2026学年第一学期缓补考工作。上学期已获批缓考学生，应按时参加本次缓补考（缓补考日期在休学期内的学生除外）。请\n已获批缓考、已报名补考且已审核通过\n的同学做好考前准备，按时参加缓补考。\n一、考试安排查看\n缓考申请和补考报名的审核结果可在教务系统申请页面查看，本人的缓补考考试安排可在教务系统“考试信息查看”查阅（登录教务系统—常用服务—更多—考试信息查看）。\n二、注意事项\n考生应携带身份证或校园卡（学生证），提前15分钟到达考场，以备查验。\n三、本学院开设课程缓补考具体安排（见附件）\n联系人：[姓名]\n联系电话：[电话]\n邮箱：[邮箱]\n计算机学院\n2025年8月7日",
+    "inputSourceTitle": "计算机学院25学年第一学期本科课程缓补考通知 | 中山大学计算机学院",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "缓补考",
+          "start": "2025-09-12",
+          "end": "2025-09-22",
+          "unknownEligibility": true
+        }
+      ],
+      "forbidden": [],
+      "information": [
+        "身份证或校园卡",
+        "提前15分钟",
+        "教务系统"
+      ]
+    },
+    "referenceTime": "2025-08-08T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://cse.sysu.edu.cn/article/3284",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-08-08",
+      "sourceTextSha256": "0dbe3d9e014cb09bdbaa2c23adc561d5648986ccc40d480a22f4fc6f20c81fd6",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-06",
+    "acquisitionKey": "17",
+    "scene": "投稿材料提交",
+    "text": "根据《关于举办2025年读书月系列活动的通知》（湘理院字〔2025〕18号）文件精神，结合实际情况和读者投票结果，选定《三国演义》、《毛泽东选集》、《物种起源》和《白鹿原》作为2025年“一校一书”征文大赛的精读图书，现面向全体在校学生征集读书报告，具体要求如下：\n一、征文时间\n即日起至2025年9月30日\n二、征文内容\n围绕我校精读图书《三国演义》、《毛泽东选集》、《物种起源》和《白鹿原》选定其中一本撰写1000-4000字的读书报告，查重率低于20%，体裁不限（诗歌除外），必须原创，杜绝抄袭。\n三、投稿方式\n作品形式为WORD格式，电子版，通过Email发送至报名邮箱[邮箱]，邮件名为“2025年一校一书读书报告”，并在正文后注明作者详细信息，“姓名+班级+学号+手机联系方式”。\n四、征文评奖\n1.征文将在全校范围内组织专家评奖；\n2.奖项设置一等奖2名、二等奖2名、三等奖2名，颁发校级荣誉证书及奖品；\n3.一等奖作品将推荐参加省级“一校一书”阅读推广活动读书报告评选，由省教育厅予以表彰。",
+    "inputSourceTitle": "有奖征文启事！2025年“一校一书”征文比赛开始啦！",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "读书报告",
+          "verbs": [
+            "提交",
+            "发送",
+            "投稿",
+            "撰写"
+          ],
+          "deadline": "2025-09-30",
+          "precision": "date_only",
+          "materials": [
+            "读书报告"
+          ],
+          "channel": "[邮箱]",
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "forbidden": [],
+      "information": [
+        "1000-4000字",
+        "WORD",
+        "查重率低于20%",
+        "2025年一校一书读书报告"
+      ]
+    },
+    "referenceTime": "2025-05-23T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://youth.xtit.edu.cn/index.php/60/242.html",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-05-23",
+      "sourceTextSha256": "798fa13aaa643934c3cf1b29291e80b5822a3a625983b58cc55bd86710ff369b",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-07",
+    "acquisitionKey": "18",
+    "scene": "选课与缴费",
+    "text": "各学院：\n根据教学工作安排，202\n6\n-202\n7\n学年第一学期\n2\n4\n级、\n2\n5\n级学生课程重\n/补修工作即将开始，具体工作安排如下：\n一、\n涉及对象及课程\n（一）涉及对象：\n202\n4\n级、\n202\n5\n级在校生\n（二）课程：\n2023-2024-1、2023-2024-\n2\n、\n2024-2025-1、2024-2025-2学期所有不及格及培养方案内该学期未修课程，\n不包含\nCC课程和公选课。\n在校生原则上每学期重\n/补修课程数不得超过10门。\n二、\n重/补修报名方式\n重修：学生登陆教务系统，选择需要重修课程报名，报名时间\n9月23日\n15\n:00—9月2\n5\n日\n1\n5\n:00，报名流程见附件1。重修逾期未报名的学生，视为自动放弃。\n补修：补修\n课程\n教学事务部会进行统一\n安排，无需另外报名\n。\n三、\n重/补修教学安排\n2024级：线上线下结合的授课模式，线下授课时间自教学周第6周至教学周第12周。考试时间为第12周，具体安排另行通知。\n2025级：线下授课模式，与新生课程一起结课。\n重/补修课程成绩录入工作第16周起开始，具体安排另行通知。\n四、\n其他\n本次报名主要采用线上自主报名缴费的方式，报名重修的学生按照学分自助缴费，重修费200元/学分。缴费时间9月2\n6\n日\n-9月27日，缴费完成后重修报名方可生效。\n重修科目有疑问，学生所在学院可联系成绩管理员确认，再通知学生线上缴费报名。\n附件1：重修申请报名流程.docx",
+    "inputSourceTitle": "关于24、25级学生重/补修安排的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "重修",
+          "verbs": [
+            "报名",
+            "选课"
+          ],
+          "windows": [
+            {
+              "start": "2026-09-23T15:00",
+              "end": "2026-09-25T15:00"
+            }
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true,
+          "channel": "教务系统"
+        },
+        {
+          "object": "缴费",
+          "verbs": [
+            "缴费",
+            "缴纳"
+          ],
+          "windows": [
+            {
+              "start": "2026-09-26",
+              "end": "2026-09-27"
+            }
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "forbidden": [
+        {
+          "object": "补修",
+          "verbs": [
+            "报名"
+          ]
+        }
+      ],
+      "information": [
+        "不包含CC课程和公选课",
+        "200元/学分",
+        "缴费完成后重修报名方可生效"
+      ]
+    },
+    "referenceTime": "2026-09-22T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.scc.edu.cn/2026/0922/c116a8433/page.htm",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2026-09-22",
+      "sourceTextSha256": "14d7724196245322edb4ee356f9a1244acc58c4f31776d8a9b8ac0a9e1828309",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": "教学事务部\n2026年9月22日",
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-08",
+    "acquisitionKey": "31",
+    "scene": "系统维护",
+    "text": "尊敬的各位老师：\n为进一步优化“教师一张表”平台功能，提升系统稳定性与用户体验，我单位拟于 2026年1月5日（周一）22:00-22:30 对“教师一张表”平台进行维护。维护期间，“教师一张表”平台“我的服务-2025教职工数据核对”功能将暂停服务，您将无法进行数据核对。\n如您在维护前后遇到任何疑问或技术问题，欢迎随时联系信息化工作办公室。我们将竭诚为您提供支持与协助。\n联系电话：[电话]\n感谢您一直以来对我们工作的理解与支持！我们将持续优化系统，努力为您提供更加安全、便捷、高效的信息化服务。",
+    "inputSourceTitle": "教师一张表系统维护通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "教师一张表",
+          "start": "2026-01-05T22:00",
+          "end": "2026-01-05T22:30"
+        }
+      ],
+      "forbidden": []
+    },
+    "referenceTime": "2026-01-05T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://wlzx.cug.edu.cn/info/1007/5844.htm",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2026-01-05",
+      "sourceTextSha256": "e7e628ae0ec9d0ca78915fd3ea43e5f1aef3be78cb248bf781e2865d1f4540b3",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-09",
+    "acquisitionKey": "32",
+    "scene": "系统维护",
+    "text": "为提升系统性能，保障选课期间服务稳定，教务管理系统（网址https://jwgl.baiyunu.edu.cn/cas/login.action）将于 2025年12月22日20:00:00进行服务器升级维护，预计耗时 30分钟。维护期间系统将暂停访问，请合理安排工作和学习，避免在此时段提交关键数据。如维护提前完成，将即时恢复服务，不再另行通知。若因特殊情况延迟，请留意官网最新公告。由此带来的不便，敬请谅解！",
+    "inputSourceTitle": "广东白云学院教务管理系统维护通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "教务管理系统",
+          "start": "2025-12-22T20:00",
+          "end": null
+        }
+      ],
+      "forbidden": [],
+      "information": [
+        "预计耗时30分钟",
+        "如维护提前完成",
+        "若因特殊情况延迟"
+      ]
+    },
+    "referenceTime": "2025-12-22T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://it.baiyunu.edu.cn/info/1011/4351.htm",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-12-22",
+      "sourceTextSha256": "fa3098b3d2c46236f59e39a109f4caac95f56eb75b30a278e90f226c91a1d5d6",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-10",
+    "acquisitionKey": "33",
+    "scene": "纯信息",
+    "text": "经紧急抢修，因技术服务商超星公司网络故障导致的“学习通”系统服务受限问题已解决，目前网页端及移动端均可正常登录和使用。\n教育技术中心将持续关注系统运行状态，确保服务稳定。若使用中遇到异常，请及时联系教育技术中心（电话：[电话]）或通过在线客服反馈。\n感谢全体师生在此期间的配合与理解！请大家合理安排线上教学与学习活动。\n教育技术中心\n2025年11月18日",
+    "inputSourceTitle": "关于“学习通”系统恢复正常的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "forbidden": [],
+      "information": [
+        "学习通",
+        "恢复",
+        "网页端",
+        "移动端"
+      ]
+    },
+    "referenceTime": "2025-11-18T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://it.baiyunu.edu.cn/info/1011/4311.htm",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-11-18",
+      "sourceTextSha256": "5bc4c634925183444f16d7e62bf21291ac6b136e9b18f1f0dbee4f74b71396eb",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-11",
+    "acquisitionKey": "34",
+    "scene": "讲座",
+    "text": "《开放苏州》讲座通知\n主讲人：\n[姓名]\n主讲时间：\n2025-04-02 15:20\n主讲人简介：\n昆山市党史研究室主任，曾任昆山市委宣传部副部长，昆山市文联党组书记，主席\n主讲内容：\n昆山之路的发展内涵与经验启示\n讲座地点：\n2-101\n主办部门：\n马克思主义学院",
+    "inputSourceTitle": "《开放苏州》讲座通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "开放苏州",
+          "start": "2025-04-02T15:20",
+          "location": "2-101",
+          "unknownEligibility": true
+        }
+      ],
+      "forbidden": []
+    },
+    "referenceTime": "2025-03-30T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.szcu.edu.cn/2025/0330/c335a71299/page.htm",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-03-30",
+      "sourceTextSha256": "bf69f98528aa63184b0b30e2da286ec5628116f47c97613aa2a9c8187015a6a1",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-12",
+    "acquisitionKey": "35",
+    "scene": "讲座",
+    "text": "《读懂苏州之经济苏州》讲座通知\n主讲人：\n[姓名]\n主讲时间：\n2025-03-05 12:30:00\n主讲人简介：\n苏州城市学院马克思主义学院教授、江苏高校“青蓝工程”中青年学术带头人、苏州市姑苏宣传文化特聘人才\n主讲内容：\n苏州经济社会及产业结构的现状特点和发展趋势等\n讲座地点：\n2-101\n主办部门：\n马克思主义学院",
+    "inputSourceTitle": "《读懂苏州之经济苏州》讲座通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "读懂苏州",
+          "start": "2025-03-05T12:30",
+          "location": "2-101",
+          "unknownEligibility": true
+        }
+      ],
+      "forbidden": []
+    },
+    "referenceTime": "2025-03-04T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://www.szcu.edu.cn/2025/0304/c335a70551/page.htm",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-03-04",
+      "sourceTextSha256": "95f312fd6f6e099df05f92668ef4d71b29ab3c317307a28669b79ebcc6e5057c",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-13",
+    "acquisitionKey": "36",
+    "scene": "课程作业",
+    "text": "关于毕业年级本科生“形势与政策”课程结课的通知\n各位\n2022级同学：\n根据学校通知要求，\n现将\n2025-2026学年春季学期2022级本科生《形势与政策》课程论文要求发布如下：\n一、结课方式说明\n202\n2\n级本科同学可从以下\n专题\n中任选其一或结合\n202\n6\n年时政热点话题自行拟定主题撰写一篇结课论文。\n1.\n2026年全国两会\n2.\n2026年中央一号文件中的农机新信号\n3.智慧农机与新质生产力的田野落地\n4.从“十五五”规划看中国制造的升级路径\n二、论文要求\n1.论文需紧扣主题，理论联系实际，立意新颖，观点明确，立场坚定，学理性突出。\n2.结构严谨，逻辑清晰，语言流畅。\n3.内容充实具体，论据充分。\n4.论文格式规范，应包含论文标题、摘要、关键词、正文、参考文献等基本要素。\n5.独立思考、独立完成，严禁抄袭、严禁雷同。\n6.字数控制在2500字至3500字之间。\n7.评分标准：格式正确，20分；立意新颖，内容贴切，20分；结构逻辑清楚，使用学科术语，20分；详略得当，表述规范，20分；论点正确，论据充分，论证有力，20分。\n三、论文提交要求\n请各位同学于\n5月\n26\n日前提交至班长处，论文以\n“班级-姓名-学号-202\n6\n年春季形势与政策论文\n”命名。班长汇总后，以班级为单位将论文发送至邮箱\n[邮箱]，邮件主题命名为“班级-202\n6\n年春季形势与政策论文\n”。\n工学院\n2025年\n5\n月\n2\n4\n日",
+    "inputSourceTitle": "关于毕业年级本科生“形势与政策”课程结课的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "形势与政策",
+          "verbs": [
+            "撰写",
+            "提交"
+          ],
+          "deadline": "2026-05-26",
+          "precision": "date_only",
+          "unknownEligibility": true,
+          "channel": "班长",
+          "materials": [
+            "论文"
+          ]
+        },
+        {
+          "object": "论文",
+          "verbs": [
+            "汇总",
+            "发送"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true,
+          "channel": "[邮箱]"
+        }
+      ],
+      "events": [],
+      "forbidden": [],
+      "information": [
+        "2500字至3500字",
+        "班级-姓名-学号",
+        "严禁抄袭"
+      ]
+    },
+    "referenceTime": "2026-05-25T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://coe.cau.edu.cn/art/2026/5/25/art_43260_1115197.html",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2026-05-25",
+      "sourceTextSha256": "19890c391b24e9ec46db95adcd7fa99c76b4219437f091584d96181c9937cfa1",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10",
+    "sourceDateDiscrepancy": "Published2026-05-25 and2025-2026 spring/2026 topics vs signature2025-05-24. ReferenceTime uses actual publication; preserve original discrepancy."
+  },
+  {
+    "id": "R10-RES-14",
+    "acquisitionKey": "38",
+    "scene": "成绩与选考",
+    "text": "参加\n202\n5\n年\n12\n月课程考试的同学，现在已经可以在平台上查询成绩了。\n（\n1\n）请同学们在平台首页，输入自己的帐号和密码，进入网络课程界面后，点击左侧“导航菜单”下面的“个人档案”，选择“我的成绩”，即可查看自己的课程考试成绩。\n（\n2\n）学生在成绩发布之日起\n7\n日内可对成绩不及格课程向所在学习中心提交成绩复查申请，由当地校外学习中心签字盖章后在\n10\n日内将申请原件寄给继续教育学院，逾期不予办理。\n复查结果将由学院通知各校外学习中心，请学生向当地校外学习中心查询。\n（\n3\n）\n202\n6\n年\n4\n月的课程考试安排请查看网络平台上的“重要通知”；\n202\n6\n年\n4\n月课程考试网上选考时间为\n202\n6\n年\n3\n月\n6\n日至\n16\n日\n，届时请同学们根据自己的情况及时进行选考，并请相互转告。\n祝同学们学习愉快！\n中国传媒大学继续教育学院\n202\n6\n年\n3\n月\n6\n日",
+    "inputSourceTitle": "2025年12月现代远程教育考试成绩查询通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "复查申请",
+          "verbs": [
+            "提交",
+            "申请"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true,
+          "channel": "学习中心"
+        },
+        {
+          "object": "选考",
+          "verbs": [
+            "选考",
+            "报名"
+          ],
+          "windows": [
+            {
+              "start": "2026-03-06",
+              "end": "2026-03-16"
+            }
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        }
+      ],
+      "events": [],
+      "forbidden": [],
+      "information": [
+        "成绩发布之日起7日内",
+        "10日内",
+        "个人档案",
+        "我的成绩"
+      ]
+    },
+    "referenceTime": "2026-03-06T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jxjy.cuc.edu.cn/2026/0306/c13354a267361/page.htm",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2026-03-06",
+      "sourceTextSha256": "91cc18cd7ca9870fa530565f856986a49d7c542749d1e80e8fa16e770cacbebf",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-15",
+    "acquisitionKey": "39",
+    "scene": "成绩材料提交",
+    "text": "各校内办学学院、教学点、各位学员：\n高等学历教育（成人教育）2024年下半年期末课程考试成绩已发布，可登录平台查询，现将有关事宜通知如下：\n一、请办学学院（教学点）于2025年1月03日登录网上查询成绩，打开浏览器输入\n网址\nhttp://scucj.jxjy.chaoxing.com/login\n进入继教平台，点击“最终总评成绩查询”。\n二、请2024级学员于2025年1月06日登录网上查询成绩，打开浏览器输入网址\nhttp://scucj.jxjy.chaoxing.com/login\n进入继教学习平台，点击“总评成绩查询”。\n三、期末课程考试成绩复查办法\n1、学生申请查询办法：\n对成绩有质疑需复查的学生，请本人填写《四川大学教育培训部（成人教育）学生期末课程考试成绩复查表》（附件1）交办学学院（教学点）。\n2、办学学院（教学点）统一提交本中心学生复查成绩汇总表：\n请办学学院（教学点）于2025年1月13日17：00前统一收集、填写《成人教育2024年下半年期末课程考试成绩复查汇总表》（附件2）、汇总后发至[姓名]邮箱：\n[邮箱]\n。学校不接收单个学生直接查询，为确保教学各项工作正常进行，逾期将不予受理。\n期末课程考试成绩复查表报送汇总请致电：（028）85460105  [姓名]",
+    "inputSourceTitle": "关于高等学历继续教育（成人教育）2024年下半年\r\n期末课程考试成绩查询的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "成绩复查表",
+          "verbs": [
+            "填写",
+            "提交",
+            "交"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        },
+        {
+          "object": "成绩复查汇总表",
+          "verbs": [
+            "汇总",
+            "发送",
+            "填写"
+          ],
+          "deadline": "2025-01-13T17:00",
+          "precision": "exact",
+          "unknownEligibility": true,
+          "channel": "[邮箱]"
+        }
+      ],
+      "events": [],
+      "forbidden": [],
+      "information": [
+        "2025年1月06日",
+        "总评成绩查询",
+        "学校不接收单个学生直接查询"
+      ]
+    },
+    "referenceTime": "2025-01-03T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://cce.scu.edu.cn/mana/view/home/news.do?id=5600",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-01-03",
+      "sourceTextSha256": "1301543689ff9d354b9b10e400a1ed806c37e90a5748c8ca1ca33aea97a6ae1e",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": "附件：\n附件1：四川大学教育培训部（成人教育）学生期末课程考试成绩复查表.docx\n附件2：成人教育2024年下半年期末课程考试成绩复查汇总表.xls",
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-16",
+    "acquisitionKey": "02",
+    "scene": "讲座",
+    "text": "【北京大学国际中文教育讲坛预告】大语言模型应用实践探索\n时间：2025-03-17\n时间：2025年3月21日（周五）下午14:00～16:00\n地点：对外汉语教育学院B101\n报告人:[姓名]\n报告人介绍：\n[姓名]，高级工程师，硕士生导师，北京大学计算中心人工智能应用工作组组长，专注于AI技术在校园场景的落地与应用研究。带领团队研发了小北学长、汉苑智能助手等智能应用，致力于为学校的教学、管理和服务提供智能化解决方案。\n内容简介：\n本次讲座以“大语言模型应用实践探索”为主题，从四个方面阐述大语言模型技术的发展脉络及其在高校教育工作中的应用。讲座将概述大模型技术的发展历程，帮助听众了解其理论基础和演进过程；解析大模型的核心能力，探索其在自然语言处理、知识推理等方面的技术优势；通过具体的应用案例，展示如何使用大模型提升教师们的工作效率，包括知识库创建、文档分析处理、智能问答等；最后展望大模型技术的未来发展方向。本次讲座旨在帮助老师们更好地理解和运用大模型技术，对他们的工作提供实实在在的支持。",
+    "inputSourceTitle": "【北京大学国际中文教育讲坛预告】大语言模型应用实践探索",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "大语言模型应用实践探索",
+          "start": "2025-03-21T14:00",
+          "end": "2025-03-21T16:00",
+          "location": "B101",
+          "unknownEligibility": true
+        }
+      ],
+      "forbidden": []
+    },
+    "referenceTime": "2025-03-17T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://hanyu.pku.edu.cn/xwgg/tzgg/50176hyxycs386329.htm",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-03-17",
+      "sourceTextSha256": "4a635bf3b1a88a6e7a2eb5b73704f3c01450e6153891045512ee9ff520c7f783",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-17",
+    "acquisitionKey": "05",
+    "scene": "条件报名及讲座",
+    "text": "各位师生：\n良乡大学城人工智能大讲堂是由北京基金小镇、良乡大学城管委会及北京中关村学院联合打造，依托\n“AI+\n金融\n”\n创新实验室的资源优势，汇聚来自清华大学、北京交通大学、华为、中关村人工智能研究院等学术与产业界的权威专家，\n合力\n打造的涵盖理论与实践的系列化、阶梯式课程体系，本次是\n大讲堂\n第四期\n-\n中国社会科学院大学专场讲座，具体安排通知如下：\n一、讲座主题\n人工智能在量化投资中的应用\n二、讲座时间\n2025年12月12日（星期五）上午9:00\n三、讲座地点\n中国社会科学院大学良乡校区教学综合楼四层418学术报告厅\n四、主讲人\n[姓名] 清华大学交叉信息研究院 长聘教授、博士生导师\n五、报名方式\n欢迎有意愿参加的各位师生通过链接报名，\nhttps://v.wjx.cn/vm/h2Rk8UF.aspx#\n名额有限，先到先得，报满即止。活动现场主办方特别设置幸运抽奖环节，奖品为蓝牙耳机，可现场根据主持人调度参加。\n请成功报名的师生提前10分钟进入会场。\n特此通知。\n教务处\n2025年12月11日",
+    "inputSourceTitle": "关于报名参加良乡大学城人工智能大讲堂（第四期）的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名",
+          "verbs": [
+            "报名",
+            "填写"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true,
+          "channel": "https://v.wjx.cn/vm/h2Rk8UF.aspx"
+        }
+      ],
+      "events": [
+        {
+          "object": "人工智能在量化投资中的应用",
+          "start": "2025-12-12T09:00",
+          "location": "418",
+          "unknownEligibility": true
+        }
+      ],
+      "forbidden": []
+    },
+    "referenceTime": "2025-12-11T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://jw.ucass.edu.cn/info/1146/2249.htm",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-12-11",
+      "sourceTextSha256": "1a36c04d0f3cfb91e19849dda31fe61f700760912e9f7450c5ae25759f642c51",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-18",
+    "acquisitionKey": "06",
+    "scene": "服务变更",
+    "text": "由于图书馆管理系统切换，部分服务将暂停或延至寒假后。具体安排如下：\n1\n、书刊荐购服务\n暂停时间：\n2026\n年\n1\n月\n4\n日\n-1\n月\n16\n日\n恢复时间：\n2026\n年\n1\n月\n17\n日\n注意：\n2025\n年\n11\n月在图书馆官网荐购的书刊会延迟上架。\n2\n、道博书屋借还书服务\n暂停时间：\n2026\n年\n1\n月\n4\n日\n-3\n月\n1\n日\n恢复时间：\n2026\n年\n3\n月\n2\n日\n3\n、芸悦读平台\n暂停时间：\n2026\n年\n1\n月\n4\n日\n-3\n月\n1\n日\n恢复时间：\n2026\n年\n3\n月\n2\n日\n道博书屋及芸悦读平台将延长还书期限，请平台关闭前来不及还书的读者于下学期开学第一周内，将图书还至各校区图书馆服务台或宝山本部道博书屋。\n由此给您带来的不便，敬请谅解。\n若有任何疑问请致电联系：\n[电话]\n、\n[电话]\n[姓名]\n上海大学图书馆\n2025\n年\n12\n月\n23\n日",
+    "inputSourceTitle": "关于图书馆管理系统切换期间部分服务调整的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "归还图书",
+          "verbs": [
+            "归还",
+            "还至"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true,
+          "channel": "服务台"
+        }
+      ],
+      "events": [
+        {
+          "object": "书刊荐购",
+          "start": "2026-01-04",
+          "end": "2026-01-16"
+        },
+        {
+          "object": "道博书屋",
+          "start": "2026-01-04",
+          "end": "2026-03-01"
+        },
+        {
+          "object": "芸悦读",
+          "start": "2026-01-04",
+          "end": "2026-03-01"
+        }
+      ],
+      "forbidden": [],
+      "information": [
+        "2026年1月17日",
+        "2026年3月2日",
+        "下学期开学第一周"
+      ]
+    },
+    "referenceTime": "2025-12-23T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://lib.shu.edu.cn/info/1022/6604.htm",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-12-23",
+      "sourceTextSha256": "53ef4744b96dfd4c8c4f62fb8fcac9a0fea2f865aa473c4dbf8546402df24a0e",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-19",
+    "acquisitionKey": "07",
+    "scene": "服务暂停与条件申请",
+    "text": "各位读者：\n接到BALIS原文传递管理中心通知，由于近期网络维护，BALIS原文传递系统暂停服务，预计10月30日以后恢复正常。\n在此期间，CALIS系统（https://ill.calis.edu.cn/reader/index.html?tenant=a000577）和CASHL系统（https://www.cashl.edu.cn/）正常服务。如您有文献传递的需求，可以在CALIS和CASHL系统提交。\n感谢您对图书馆工作的支持与理解！\n咨询电话：[电话]\nEmail:\n[邮箱]\n清华大学图书馆\n2025年10月15日",
+    "inputSourceTitle": "关于BALIS原文传递服务暂停的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "文献传递",
+          "verbs": [
+            "提交",
+            "申请"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        }
+      ],
+      "events": [
+        {
+          "object": "BALIS",
+          "start": null,
+          "end": null
+        }
+      ],
+      "forbidden": [],
+      "information": [
+        "预计10月30日以后",
+        "CALIS",
+        "CASHL"
+      ]
+    },
+    "referenceTime": "2025-10-15T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://lib.tsinghua.edu.cn/info/1073/7657.htm",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-10-15",
+      "sourceTextSha256": "88d88189a32a7801776a31a24da344d1d94e2710a517906d43f8058983c4e874",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  },
+  {
+    "id": "R10-RES-20",
+    "acquisitionKey": "08",
+    "scene": "停电及物品要求",
+    "text": "各位读者：\n接后勤服务中心通知，因高压配电房改造工程施工需要，将于\n2025\n年\n3\n月\n1\n日\n-3\n月\n3\n日对图书馆进行停电改造，经研究，现将停电期间具体安排及注意事项通知如下：\n一、具体安排\n开放区域：除六楼共享空间暂停开放外，其余场馆均开放。\n开放时间：\n3\n月\n1\n日\n-3\n月\n3\n日\n7\n：\n30-17\n：\n30\n；\n3\n月\n4\n日（周二）恢复正常。\n二、注意事项\n1.\n暂停图书馆网站服务，图书馆电子资源可通过以下方式访问：\n校内：（\n1\n）直接地址访问：\nhttp://elib.zufe.edu.cn\n（\n2\n）登录学校网页\nhttps://www.zufe.edu.cn\n→门户→服务→图书馆数字资源（校内专用）即可访问；\n校外：登录学校网页\nhttps://www.zufe.edu.cn\n→\nVPN\n→免插件版\nwebvpn\n→图书馆电子资源。\n2.\n暂停\n全馆照明、插座、空调、电梯、网络等服务\n，停电期间图书馆正门为唯一出入通道。\n3.\n暂停人工及自助借还书、空间座位预约、人脸识别存包柜等服务。由于断电后存包柜无法开启，图书馆工作人员将于\n2\n月\n28\n日中午\n12\n：\n00\n清空所有人脸识别存包柜\n，请读者提前取走柜内物品。\n4.\n施工期间可能产生噪音。\n请各位读者提前做好安排，带来不便敬请谅解！\n特此通知，望相互转告。\n图书馆\n2025\n年\n2\n月\n25\n日",
+    "inputSourceTitle": "关于图书馆停电期间服务调整的通知",
+    "inputSourceType": "text",
+    "reference": {
+      "tasks": [
+        {
+          "object": "柜内物品",
+          "verbs": [
+            "取走",
+            "领取"
+          ],
+          "deadlineUnknown": true,
+          "unknownEligibility": true
+        }
+      ],
+      "events": [
+        {
+          "object": "停电",
+          "start": "2025-03-01",
+          "end": "2025-03-03",
+          "location": "图书馆"
+        }
+      ],
+      "forbidden": [],
+      "information": [
+        "7：30-17：30",
+        "3月4日",
+        "2月28日中午12：00",
+        "六楼共享空间暂停开放"
+      ]
+    },
+    "referenceTime": "2025-02-25T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "provenance": {
+      "type": "OFFICIAL_PUBLIC_NOTIFICATION",
+      "url": "https://lib.zufe.edu.cn/home/servicedetail/0/5905",
+      "acquiredAt": "2026-10-24T03:18:46.329Z",
+      "publicationDate": "2025-02-25",
+      "sourceTextSha256": "d4381b524711aa7785819bc641f9836c96e5f6e782e3359524160ab1227a12b6",
+      "fullBody": true,
+      "bodyPolicy": "Complete substantive text; metadata/signature kept separately; LF and redactions only. No instruction, window or condition removed.",
+      "signature": null,
+      "attachmentListing": null,
+      "attachments": "NOT_READ"
+    },
+    "referenceAuthoredAt": "2026-10-24T03:18:46.329Z",
+    "referenceAuthor": "Codex single-author/provisional; source-first before any R23 model output",
+    "referenceIndependent": false,
+    "cohort": "reserved-r10"
+  }
+]

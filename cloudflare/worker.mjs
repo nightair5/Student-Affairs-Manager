@@ -798,7 +798,7 @@ async function extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,c
   if(!release){context.errorType='RATE_LIMITED';return failure('RATE_LIMITED','同时请求过多，请稍后再试。',429,context.requestId)}
   try {
     const referenceTime=safeText(body.referenceTime,80),timezone=safeText(body.timezone,80)||'Asia/Shanghai'
-    const generated=await runTwoStepGeneration({fetcher,apiKey,profile:extractionProfile(env),source:body.content,referenceTime,timezone,mode:env.DEEPSEEK_GENERATION_MODE,userText:extractionUserText(body,body.content,safeText(body.sourceTitle,160),referenceTime,timezone)})
+    const generated=await runTwoStepGeneration({fetcher,apiKey,profile:extractionProfile(env),source:body.content,referenceTime,timezone,mode:env.DEEPSEEK_GENERATION_MODE,compilerVersion:env.TWO_STEP_COMPILER_VERSION??'2.1.9',userText:extractionUserText(body,body.content,safeText(body.sourceTitle,160),referenceTime,timezone)})
     if(!generated.ok){context.errorType=generated.error;if(generated.status&&generated.status!==502)return safeUpstreamFailure(generated.status,context.requestId,false);return failure(generated.error,'本次识别未完成，原文已保留，请稍后重试。',generated.error==='UPSTREAM_TIMEOUT'?504:502,context.requestId)}
     const validation=validateRecognitionResult(generated.result,{sourceContent:body.content})
     if(!validation.valid)return invalidRecognitionResponse(context,validation)
@@ -847,7 +847,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     return failure(validationError, '来源正文或参考时间无效。', 400, context.requestId)
   }
 
-  if(['two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2'].includes(env.DEEPSEEK_GENERATION_MODE)) {
+  if(['two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2'].includes(env.DEEPSEEK_GENERATION_MODE)) {
     return extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,context,apiKey)
   }
 
@@ -1179,7 +1179,7 @@ export function createWorker({
         inputLength: 0,
         outputTokens: 0,
         errorType: null,
-        generationMode: ['two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2'].includes(env.DEEPSEEK_GENERATION_MODE) ? env.DEEPSEEK_GENERATION_MODE : 'structured',
+        generationMode: ['two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2'].includes(env.DEEPSEEK_GENERATION_MODE) ? env.DEEPSEEK_GENERATION_MODE : 'structured',
       }
       let response = await previewAccess(request,env,{isLimited:previewLoginLimited,now:previewNow})
       if (response) {

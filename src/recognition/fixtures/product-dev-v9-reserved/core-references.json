@@ -1,0 +1,1146 @@
+{
+  "version": "core-reference-1.0.0",
+  "createdAt": "2026-10-24T03:18:46.329Z",
+  "beforeAnyOutput": true,
+  "role": "reserved-r10",
+  "rows": [
+    {
+      "id": "R10-RES-01",
+      "sourceSha256": "abd9d62aae3ee4f5229d63c59aee3cec57d33c390a4934f69fcacc7858d23879",
+      "referenceTime": "2025-04-28T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [
+          {
+            "object": "归还图书",
+            "verbs": [
+              "归还"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "总服务台"
+          }
+        ],
+        "events": [
+          {
+            "object": "委托借还",
+            "start": "2025-04-29"
+          },
+          {
+            "object": "借还服务",
+            "start": "2025-05-07"
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "6月上旬",
+          "具体开放时间另行通知",
+          "每周一9:00-11:00",
+          "6月30日"
+        ]
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "归还图书",
+            "verbs": [
+              "归还"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "总服务台"
+          }
+        ],
+        "events": [
+          {
+            "object": "委托借还",
+            "start": "2025-04-29"
+          },
+          {
+            "object": "借还服务",
+            "start": "2025-05-07"
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "6月上旬",
+          "具体开放时间另行通知",
+          "每周一9:00-11:00",
+          "6月30日"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-02",
+      "sourceSha256": "089ed08e30e0f1d5675a71493d3a9677209669d123bb3f7013e4deb3ac3f9924",
+      "referenceTime": "2025-10-05T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [
+          {
+            "object": "图书",
+            "verbs": [
+              "申请",
+              "发送"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "[邮箱]"
+          },
+          {
+            "object": "研讨间",
+            "verbs": [
+              "登记",
+              "使用"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "三楼咨询台"
+          }
+        ],
+        "events": [
+          {
+            "object": "网络",
+            "start": null,
+            "end": null
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "恢复时间请留意后续通知",
+          "预约服务暂停"
+        ]
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "图书",
+            "verbs": [
+              "申请",
+              "发送"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "[邮箱]"
+          },
+          {
+            "object": "研讨间",
+            "verbs": [
+              "登记",
+              "使用"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "三楼咨询台"
+          }
+        ],
+        "events": [
+          {
+            "object": "网络",
+            "start": null,
+            "end": null
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "恢复时间请留意后续通知",
+          "预约服务暂停"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-03",
+      "sourceSha256": "ae971436ab4a0120ee0f11480c51328638807bcb4425eb8fb0674ec3798c577e",
+      "referenceTime": "2025-07-15T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "唐岛湾校区东馆",
+            "start": "2025-07-20",
+            "end": "2025-08-24"
+          },
+          {
+            "object": "工具书库",
+            "start": "2025-07-20",
+            "end": "2025-08-24"
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "8:00-22:00",
+          "9:00-18:00",
+          "8月25日",
+          "数字文献资源全部正常运行"
+        ]
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "唐岛湾校区东馆",
+            "start": "2025-07-20",
+            "end": "2025-08-24"
+          },
+          {
+            "object": "工具书库",
+            "start": "2025-07-20",
+            "end": "2025-08-24"
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "8:00-22:00",
+          "9:00-18:00",
+          "8月25日",
+          "数字文献资源全部正常运行"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-04",
+      "sourceSha256": "eee0cb5be92e896047178a4373f04251b5b316675ff9f21a5c93d2063aae81b8",
+      "referenceTime": "2025-09-26T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "中央空调",
+            "start": "2025-09-25",
+            "end": null,
+            "location": "图书馆"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "施工围蔽区域",
+            "verbs": [
+              "进入"
+            ]
+          }
+        ],
+        "information": [
+          "恢复时间待定",
+          "前楼一楼电子阅览室"
+        ]
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "中央空调",
+            "start": "2025-09-25",
+            "end": null,
+            "location": "图书馆"
+          }
+        ],
+        "forbidden": [
+          {
+            "object": "施工围蔽区域",
+            "verbs": [
+              "进入"
+            ]
+          }
+        ],
+        "information": [
+          "恢复时间待定",
+          "前楼一楼电子阅览室"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-05",
+      "sourceSha256": "0dbe3d9e014cb09bdbaa2c23adc561d5648986ccc40d480a22f4fc6f20c81fd6",
+      "referenceTime": "2025-08-08T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "缓补考",
+            "start": "2025-09-12",
+            "end": "2025-09-22",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "身份证或校园卡",
+          "提前15分钟",
+          "教务系统"
+        ]
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "缓补考",
+            "start": "2025-09-12",
+            "end": "2025-09-22",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "身份证或校园卡",
+          "提前15分钟",
+          "教务系统"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-06",
+      "sourceSha256": "798fa13aaa643934c3cf1b29291e80b5822a3a625983b58cc55bd86710ff369b",
+      "referenceTime": "2025-05-23T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [
+          {
+            "object": "读书报告",
+            "verbs": [
+              "提交",
+              "发送",
+              "投稿",
+              "撰写"
+            ],
+            "deadline": "2025-09-30",
+            "precision": "date_only",
+            "materials": [
+              "读书报告"
+            ],
+            "channel": "[邮箱]",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "information": [
+          "1000-4000字",
+          "WORD",
+          "查重率低于20%",
+          "2025年一校一书读书报告"
+        ]
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "读书报告",
+            "verbs": [
+              "提交",
+              "发送",
+              "投稿",
+              "撰写"
+            ],
+            "deadline": "2025-09-30",
+            "precision": "date_only",
+            "materials": [
+              "读书报告"
+            ],
+            "channel": "[邮箱]",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "information": [
+          "1000-4000字",
+          "WORD",
+          "查重率低于20%",
+          "2025年一校一书读书报告"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-07",
+      "sourceSha256": "14d7724196245322edb4ee356f9a1244acc58c4f31776d8a9b8ac0a9e1828309",
+      "referenceTime": "2026-09-22T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [
+          {
+            "object": "重修",
+            "verbs": [
+              "报名",
+              "选课"
+            ],
+            "windows": [
+              {
+                "start": "2026-09-23T15:00",
+                "end": "2026-09-25T15:00"
+              }
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "教务系统"
+          },
+          {
+            "object": "缴费",
+            "verbs": [
+              "缴费",
+              "缴纳"
+            ],
+            "windows": [
+              {
+                "start": "2026-09-26",
+                "end": "2026-09-27"
+              }
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "补修",
+            "verbs": [
+              "报名"
+            ]
+          }
+        ],
+        "information": [
+          "不包含CC课程和公选课",
+          "200元/学分",
+          "缴费完成后重修报名方可生效"
+        ]
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "重修",
+            "verbs": [
+              "报名",
+              "选课"
+            ],
+            "windows": [
+              {
+                "start": "2026-09-23T15:00",
+                "end": "2026-09-25T15:00"
+              }
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "教务系统"
+          },
+          {
+            "object": "缴费",
+            "verbs": [
+              "缴费",
+              "缴纳"
+            ],
+            "windows": [
+              {
+                "start": "2026-09-26",
+                "end": "2026-09-27"
+              }
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "补修",
+            "verbs": [
+              "报名"
+            ]
+          }
+        ],
+        "information": [
+          "不包含CC课程和公选课",
+          "200元/学分",
+          "缴费完成后重修报名方可生效"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-08",
+      "sourceSha256": "e7e628ae0ec9d0ca78915fd3ea43e5f1aef3be78cb248bf781e2865d1f4540b3",
+      "referenceTime": "2026-01-05T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "教师一张表",
+            "start": "2026-01-05T22:00",
+            "end": "2026-01-05T22:30"
+          }
+        ],
+        "forbidden": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "教师一张表",
+            "start": "2026-01-05T22:00",
+            "end": "2026-01-05T22:30"
+          }
+        ],
+        "forbidden": []
+      }
+    },
+    {
+      "id": "R10-RES-09",
+      "sourceSha256": "fa3098b3d2c46236f59e39a109f4caac95f56eb75b30a278e90f226c91a1d5d6",
+      "referenceTime": "2025-12-22T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "教务管理系统",
+            "start": "2025-12-22T20:00",
+            "end": null
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "预计耗时30分钟",
+          "如维护提前完成",
+          "若因特殊情况延迟"
+        ]
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "教务管理系统",
+            "start": "2025-12-22T20:00",
+            "end": null
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "预计耗时30分钟",
+          "如维护提前完成",
+          "若因特殊情况延迟"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-10",
+      "sourceSha256": "5bc4c634925183444f16d7e62bf21291ac6b136e9b18f1f0dbee4f74b71396eb",
+      "referenceTime": "2025-11-18T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [],
+        "information": [
+          "学习通",
+          "恢复",
+          "网页端",
+          "移动端"
+        ]
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [],
+        "forbidden": [],
+        "information": [
+          "学习通",
+          "恢复",
+          "网页端",
+          "移动端"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-11",
+      "sourceSha256": "bf69f98528aa63184b0b30e2da286ec5628116f47c97613aa2a9c8187015a6a1",
+      "referenceTime": "2025-03-30T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "开放苏州",
+            "start": "2025-04-02T15:20",
+            "location": "2-101",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "开放苏州",
+            "start": "2025-04-02T15:20",
+            "location": "2-101",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": []
+      }
+    },
+    {
+      "id": "R10-RES-12",
+      "sourceSha256": "95f312fd6f6e099df05f92668ef4d71b29ab3c317307a28669b79ebcc6e5057c",
+      "referenceTime": "2025-03-04T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "读懂苏州",
+            "start": "2025-03-05T12:30",
+            "location": "2-101",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "读懂苏州",
+            "start": "2025-03-05T12:30",
+            "location": "2-101",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": []
+      }
+    },
+    {
+      "id": "R10-RES-13",
+      "sourceSha256": "19890c391b24e9ec46db95adcd7fa99c76b4219437f091584d96181c9937cfa1",
+      "referenceTime": "2026-05-25T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [
+          {
+            "object": "形势与政策",
+            "verbs": [
+              "撰写",
+              "提交"
+            ],
+            "deadline": "2026-05-26",
+            "precision": "date_only",
+            "unknownEligibility": true,
+            "channel": "班长",
+            "materials": [
+              "论文"
+            ]
+          },
+          {
+            "object": "论文",
+            "verbs": [
+              "汇总",
+              "发送"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "[邮箱]"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "information": [
+          "2500字至3500字",
+          "班级-姓名-学号",
+          "严禁抄袭"
+        ]
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "形势与政策",
+            "verbs": [
+              "撰写",
+              "提交"
+            ],
+            "deadline": "2026-05-26",
+            "precision": "date_only",
+            "unknownEligibility": true,
+            "channel": "班长",
+            "materials": [
+              "论文"
+            ]
+          },
+          {
+            "object": "论文",
+            "verbs": [
+              "汇总",
+              "发送"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "[邮箱]"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "information": [
+          "2500字至3500字",
+          "班级-姓名-学号",
+          "严禁抄袭"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-14",
+      "sourceSha256": "91cc18cd7ca9870fa530565f856986a49d7c542749d1e80e8fa16e770cacbebf",
+      "referenceTime": "2026-03-06T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [
+          {
+            "object": "复查申请",
+            "verbs": [
+              "提交",
+              "申请"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "学习中心"
+          },
+          {
+            "object": "选考",
+            "verbs": [
+              "选考",
+              "报名"
+            ],
+            "windows": [
+              {
+                "start": "2026-03-06",
+                "end": "2026-03-16"
+              }
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "information": [
+          "成绩发布之日起7日内",
+          "10日内",
+          "个人档案",
+          "我的成绩"
+        ]
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "复查申请",
+            "verbs": [
+              "提交",
+              "申请"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "学习中心"
+          },
+          {
+            "object": "选考",
+            "verbs": [
+              "选考",
+              "报名"
+            ],
+            "windows": [
+              {
+                "start": "2026-03-06",
+                "end": "2026-03-16"
+              }
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "information": [
+          "成绩发布之日起7日内",
+          "10日内",
+          "个人档案",
+          "我的成绩"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-15",
+      "sourceSha256": "1301543689ff9d354b9b10e400a1ed806c37e90a5748c8ca1ca33aea97a6ae1e",
+      "referenceTime": "2025-01-03T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [
+          {
+            "object": "成绩复查表",
+            "verbs": [
+              "填写",
+              "提交",
+              "交"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          },
+          {
+            "object": "成绩复查汇总表",
+            "verbs": [
+              "汇总",
+              "发送",
+              "填写"
+            ],
+            "deadline": "2025-01-13T17:00",
+            "precision": "exact",
+            "unknownEligibility": true,
+            "channel": "[邮箱]"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "information": [
+          "2025年1月06日",
+          "总评成绩查询",
+          "学校不接收单个学生直接查询"
+        ]
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "成绩复查表",
+            "verbs": [
+              "填写",
+              "提交",
+              "交"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          },
+          {
+            "object": "成绩复查汇总表",
+            "verbs": [
+              "汇总",
+              "发送",
+              "填写"
+            ],
+            "deadline": "2025-01-13T17:00",
+            "precision": "exact",
+            "unknownEligibility": true,
+            "channel": "[邮箱]"
+          }
+        ],
+        "events": [],
+        "forbidden": [],
+        "information": [
+          "2025年1月06日",
+          "总评成绩查询",
+          "学校不接收单个学生直接查询"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-16",
+      "sourceSha256": "4a635bf3b1a88a6e7a2eb5b73704f3c01450e6153891045512ee9ff520c7f783",
+      "referenceTime": "2025-03-17T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "大语言模型应用实践探索",
+            "start": "2025-03-21T14:00",
+            "end": "2025-03-21T16:00",
+            "location": "B101",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": []
+      },
+      "secondary": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "大语言模型应用实践探索",
+            "start": "2025-03-21T14:00",
+            "end": "2025-03-21T16:00",
+            "location": "B101",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": []
+      }
+    },
+    {
+      "id": "R10-RES-17",
+      "sourceSha256": "1a36c04d0f3cfb91e19849dda31fe61f700760912e9f7450c5ae25759f642c51",
+      "referenceTime": "2025-12-11T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "填写"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "https://v.wjx.cn/vm/h2Rk8UF.aspx"
+          }
+        ],
+        "events": [
+          {
+            "object": "人工智能在量化投资中的应用",
+            "start": "2025-12-12T09:00",
+            "location": "418",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": []
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "报名",
+            "verbs": [
+              "报名",
+              "填写"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "https://v.wjx.cn/vm/h2Rk8UF.aspx"
+          }
+        ],
+        "events": [
+          {
+            "object": "人工智能在量化投资中的应用",
+            "start": "2025-12-12T09:00",
+            "location": "418",
+            "unknownEligibility": true
+          }
+        ],
+        "forbidden": []
+      }
+    },
+    {
+      "id": "R10-RES-18",
+      "sourceSha256": "53ef4744b96dfd4c8c4f62fb8fcac9a0fea2f865aa473c4dbf8546402df24a0e",
+      "referenceTime": "2025-12-23T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [
+          {
+            "object": "归还图书",
+            "verbs": [
+              "归还",
+              "还至"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "服务台"
+          }
+        ],
+        "events": [
+          {
+            "object": "书刊荐购",
+            "start": "2026-01-04",
+            "end": "2026-01-16"
+          },
+          {
+            "object": "道博书屋",
+            "start": "2026-01-04",
+            "end": "2026-03-01"
+          },
+          {
+            "object": "芸悦读",
+            "start": "2026-01-04",
+            "end": "2026-03-01"
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "2026年1月17日",
+          "2026年3月2日",
+          "下学期开学第一周"
+        ]
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "归还图书",
+            "verbs": [
+              "归还",
+              "还至"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "服务台"
+          }
+        ],
+        "events": [
+          {
+            "object": "书刊荐购",
+            "start": "2026-01-04",
+            "end": "2026-01-16"
+          },
+          {
+            "object": "道博书屋",
+            "start": "2026-01-04",
+            "end": "2026-03-01"
+          },
+          {
+            "object": "芸悦读",
+            "start": "2026-01-04",
+            "end": "2026-03-01"
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "2026年1月17日",
+          "2026年3月2日",
+          "下学期开学第一周"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-19",
+      "sourceSha256": "88d88189a32a7801776a31a24da344d1d94e2710a517906d43f8058983c4e874",
+      "referenceTime": "2025-10-15T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [
+          {
+            "object": "文献传递",
+            "verbs": [
+              "提交",
+              "申请"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "BALIS",
+            "start": null,
+            "end": null
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "预计10月30日以后",
+          "CALIS",
+          "CASHL"
+        ]
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "文献传递",
+            "verbs": [
+              "提交",
+              "申请"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "BALIS",
+            "start": null,
+            "end": null
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "预计10月30日以后",
+          "CALIS",
+          "CASHL"
+        ]
+      }
+    },
+    {
+      "id": "R10-RES-20",
+      "sourceSha256": "d4381b524711aa7785819bc641f9836c96e5f6e782e3359524160ab1227a12b6",
+      "referenceTime": "2025-02-25T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "author": "Codex single-author/provisional; source-first before any R23 model output",
+      "core": {
+        "tasks": [
+          {
+            "object": "柜内物品",
+            "verbs": [
+              "取走",
+              "领取"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2025-03-01",
+            "end": "2025-03-03",
+            "location": "图书馆"
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "7：30-17：30",
+          "3月4日",
+          "2月28日中午12：00",
+          "六楼共享空间暂停开放"
+        ]
+      },
+      "secondary": {
+        "tasks": [
+          {
+            "object": "柜内物品",
+            "verbs": [
+              "取走",
+              "领取"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2025-03-01",
+            "end": "2025-03-03",
+            "location": "图书馆"
+          }
+        ],
+        "forbidden": [],
+        "information": [
+          "7：30-17：30",
+          "3月4日",
+          "2月28日中午12：00",
+          "六楼共享空间暂停开放"
+        ]
+      }
+    }
+  ]
+}
