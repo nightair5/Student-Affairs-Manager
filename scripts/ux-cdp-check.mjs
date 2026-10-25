@@ -105,6 +105,8 @@ export class UxBrowser {
     await this.click(`[data-ux-cdp="${marker}"]`)
   }
   async input(selector, value) {
+    const nativeDate = await this.evaluate(`(() => {const e=document.querySelector(${JSON.stringify(selector)});if(!e)throw Error('INPUT_MISSING');if(!['date','time','datetime-local'].includes(e.type))return false;e.focus();Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(e,${JSON.stringify(value)});e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));return e.value===${JSON.stringify(value)}})()`)
+    if (nativeDate) return
     await this.evaluate(`document.querySelector(${JSON.stringify(selector)}).focus()`)
     await this.call('Input.dispatchKeyEvent', { type: 'keyDown', key: 'a', code: 'KeyA', windowsVirtualKeyCode: 65, modifiers: 2 })
     await this.call('Input.dispatchKeyEvent', { type: 'keyUp', key: 'a', code: 'KeyA', windowsVirtualKeyCode: 65, modifiers: 2 })

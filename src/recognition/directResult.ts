@@ -1,5 +1,6 @@
 import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from './types'
 import { parseChineseTimeAst, parseBusinessDateTime } from '../lib/timeSemantics'
+import {projectDirectActions} from './directActionProjection'
 
 export const DIRECT_MODE_VERSION = 'direct-mode-1'
 export type DirectTag = '时间待定' | '如符合条件' | '待确认'
@@ -15,7 +16,16 @@ const recordTasks = (r: RecognitionResult) => new Map(flatTasks(r).map(t => [t.t
 
 /** A new presentation policy, never a modification to a recorded/model result.
  * Uncertainty becomes an explicit label; it never authorizes invented facts. */
-export function convertDirectResult(input: RecognitionResult, sourceText: string, original?: RecognitionResult): DirectConversion {
+export function convertDirectResult(input: RecognitionResult, sourceText: string, original?: RecognitionResult, options:{actionRecovery?:boolean}={}): DirectConversion {
+  if(options.actionRecovery){
+    const baseline=convertDirectResult(input,sourceText,original)
+    const prepared=structuredClone(baseline.result)
+    for(const t of flatTasks(prepared))if(baseline.items.find(i=>i.tempId===t.tempId)?.tags.includes('待确认'))t.selected=false
+    const projected=projectDirectActions(prepared,sourceText)
+    if(JSON.stringify(projected)===JSON.stringify(prepared))return baseline
+    const next=convertDirectResult(projected,sourceText)
+    return {...next,omitted:[...baseline.omitted,...next.omitted]}
+  }
   const result = structuredClone(input), omitted: DirectConversion['omitted'] = [], items: DirectItem[] = []
   const originalTasks = original ? recordTasks(original) : new Map<string, TaskSuggestionV2>()
   const located = new Map(result.evidence.flatMap(e => {

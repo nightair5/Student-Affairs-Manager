@@ -1,0 +1,31 @@
+import type {Task, Event} from '../types'
+import {parseBusinessDateTime} from './timeSemantics'
+
+/** Presentation only: never supplies a missing value or changes its role. */
+export function flowDate(value:string|null|undefined):string {
+  if(!value)return '未设日期'
+  const dateOnly=/^(\d{4})-(\d{2})-(\d{2})$/u.exec(value)
+  if(dateOnly)return `${Number(dateOnly[1])===new Date().getFullYear()?'':dateOnly[1]+'年'}${Number(dateOnly[2])}月${Number(dateOnly[3])}日`
+  const date=parseBusinessDateTime(value,'Asia/Shanghai')
+  if(!date)return '未设日期'
+  return new Intl.DateTimeFormat('zh-CN',{timeZone:'Asia/Shanghai',...(date.getFullYear()===new Date().getFullYear()?{}:{year:'numeric' as const}),month:'long',day:'numeric',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).format(date)
+}
+export function flowTaskDate(task:Task):string {
+  if(task.deadline)return `${flowDate(task.deadline)} 截止`
+  if(task.directDate)return flowDate(task.directDate)
+  if(task.sourceWindowLabel)return `办理时段：${task.sourceWindowLabel}`
+  return '未设日期'
+}
+export function flowEventDate(event:Event):string {
+  const start=flowDate(event.startAt)
+  if(!event.endAt)return start
+  return `${start} — ${flowDate(event.endAt)}`
+}
+
+export function flowEditValue(value:string|null|undefined):string {
+  if(!value)return ''
+  if(/^\d{4}-\d{2}-\d{2}$/u.test(value))return value
+  const date=parseBusinessDateTime(value,'Asia/Shanghai');if(!date)return ''
+  const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(date),part=(type:Intl.DateTimeFormatPartTypes)=>parts.find(p=>p.type===type)?.value??''
+  return `${part('year')}-${part('month')}-${part('day')}T${part('hour')}:${part('minute')}`
+}

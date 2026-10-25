@@ -5,6 +5,7 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } fro
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { DirectResultList, RecentDirectAdditions } from './components/DirectResultList'
 import { commitDirectDraft, deleteDirectItem, directDuplicate, editDirectItem, recentDirectBatches, undoDirectBatch } from './domain/v2/directIntake'
+import {historicalDirectDraftIds} from './lib/homeFlow'
 import { EventDetailPanel } from './components/EventDetailPanel'
 import { IntakePanel } from './components/IntakePanel'
 import { OnboardingGuide } from './components/OnboardingGuide'
@@ -236,6 +237,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const directMode = !runtime && (ordinaryEnvironment ? ordinaryEnvironment.directMode === true : ordinaryCanonical?.preferences.legacyData?.directReviewBeforeAdd !== true)
   const directBatches = ordinaryCanonical ? recentDirectBatches(ordinaryCanonical) : []
   const activeDirectBatch = directBatches.find(b => b.id === directBatchId && b.status === 'active')
+  const showDirectHistory=Boolean(activeDirectBatch&&activeDirectBatch.id!==directBatches.find(b=>b.status==='active')?.id)
+  const [historicalAdding,setHistoricalAdding]=useState(false)
+  const historicalDirectIds=ordinaryCanonical?historicalDirectDraftIds(ordinaryCanonical):[]
   const [ordinarySaveError, setOrdinarySaveError] = useState<{draftId:string;text:string}|null>(null)
   const [smartExtractionStatus, setSmartExtractionStatus] = useState<'checking' | 'connected' | 'unavailable'>('checking')
   const [notificationPermission, setNotificationPermission] =
@@ -691,6 +695,17 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     setIntakeOpen(false);setSelectedDraftId(null);setCurrentPage('today');setDirectBatchId(receipt.batch?.id??null)
     const batch=receipt.batch
     setNotice({text:receipt.duplicate?'这条通知已添加过':`已添加 ${batch?.items.length??0} 项`,direct:true,...(batch?{undo:()=>{void undoDirect(batch.id).catch(()=>setNotice({text:'未能撤销，原有内容保留。请从最近添加重试。'}))}}:{})})
+  }
+  const ignoreHistoricalDirect=async()=>{
+    try{await canonicalWorkspaceRepository.transaction(w=>({...w,preferences:{...w.preferences,legacyData:{...w.preferences.legacyData,ignoredHistoricalDraftIds:[...new Set([...(Array.isArray(w.preferences.legacyData?.ignoredHistoricalDraftIds)?w.preferences.legacyData.ignoredHistoricalDraftIds:[]),...historicalDirectIds])]}}}));await refreshOrdinary()}
+    catch{setNotice({text:'没有保存成功，通知仍保留。请重试。'})}
+  }
+  const addHistoricalDirect=async()=>{
+    if(historicalAdding)return
+    setHistoricalAdding(true);const batches:string[]=[];let failed=0
+    for(const id of historicalDirectIds){try{await addDirect(id);const w=await canonicalWorkspaceRepository.load(),batch=w&&recentDirectBatches(w).find(b=>b.draftId===id&&b.status==='active');if(batch)batches.push(batch.id)}catch{failed++;break}}
+    setHistoricalAdding(false)
+    setNotice({text:`已加入 ${batches.length} 条通知${failed?'，其余通知保留，可稍后重试':''}`,direct:true,...(batches.length?{undo:()=>{void(async()=>{for(const id of [...batches].reverse())await undoDirect(id)})().catch(()=>setNotice({text:'未能全部撤销，剩余记录保留，可从最近添加重试。'}))}}:{})})
   }
   const handleIntakeInput = async (input: IntakeInput) => {
     if (runtime?.realInput) {
@@ -1609,7 +1624,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         return (
           <DashboardPage
             directMode={directMode}
-            recentAdditions={directMode&&ordinaryCanonical?<RecentDirectAdditions workspace={ordinaryCanonical} batches={directBatches} onUndo={undoDirect} onOpen={setDirectBatchId}/>:undefined}
+            directNotice={notice?.direct?<div className="direct-inline-notice" role="status"><span>{notice.text}</span>{notice.undo&&<button type="button" className="text-button" onClick={()=>{notice.undo?.();setNotice(null)}}>撤销</button>}<button type="button" className="icon-button" aria-label="关闭提示" onClick={()=>setNotice(null)}>×</button></div>:undefined}
+            recentAdditions={directMode&&ordinaryCanonical?<RecentDirectAdditions workspace={ordinaryCanonical} batches={directBatches} onUndo={undoDirect} onOpen={setDirectBatchId} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}}/>:undefined}
+            historicalNotice={directMode?{count:historicalDirectIds.length,busy:historicalAdding,onAdd:addHistoricalDirect,onIgnore:ignoreHistoricalDirect}:undefined}
             planning={!runtime && ordinaryCanonical ? <PersonalPlanPanel workspace={ordinaryCanonical} repository={canonicalWorkspaceRepository} reader={independentReader} store={ordinaryEnvironment?.store ?? ordinaryStore} onReload={()=>refreshOrdinary()}/> : undefined}
             engineeringInput={Boolean(ordinaryEnvironment)}
             engineeringInputLabel={ordinaryEnvironment?.recognitionMetadata?.().responseRole==='RECORDED_MODEL_ENGINEERING_REPLAY'?'真实回答固定回放 · 不新增模型请求':undefined}
@@ -1841,14 +1858,14 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
               <p>这不代表任务和通知为空或已删除。请先使用上方的备份与恢复操作，打开后再继续整理。</p>
               <p>已经输入的内容会保留在当前页面，请不要清空浏览器数据。</p>
             </main>}
-            <div hidden={Boolean(workspaceLoadFailure)||Boolean(activeDirectBatch)}>{renderPage()}</div>
-            {!workspaceLoadFailure&&activeDirectBatch&&ordinaryCanonical&&<DirectResultList key={activeDirectBatch.id} workspace={ordinaryCanonical} batch={activeDirectBatch} onClose={()=>setDirectBatchId(null)} onUndo={()=>undoDirect(activeDirectBatch.id)} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)}/>}
+            <div hidden={Boolean(workspaceLoadFailure)||showDirectHistory}>{renderPage()}</div>
+            {!workspaceLoadFailure&&showDirectHistory&&activeDirectBatch&&ordinaryCanonical&&<DirectResultList key={activeDirectBatch.id} workspace={ordinaryCanonical} batch={activeDirectBatch} onClose={()=>setDirectBatchId(null)} onUndo={()=>undoDirect(activeDirectBatch.id)} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)}/>}
           </Suspense>
         </PageLoadBoundary>
       </div>
 
       {!workspaceReady && <div className="workspace-status" role="status">正在恢复本机工作区…</div>}
-      {notice && <div className={`app-toast${notice.direct?' direct-toast':''}`} role="status"><span>{notice.text}</span>{notice.undo && <button type="button" onClick={() => { notice.undo?.(); setNotice(null) }}>撤销</button>}<button type="button" onClick={() => setNotice(null)} aria-label="关闭提示">×</button></div>}
+      {notice&&!notice.direct && <div className="app-toast" role="status"><span>{notice.text}</span>{notice.undo && <button type="button" onClick={() => { notice.undo?.(); setNotice(null) }}>撤销</button>}<button type="button" onClick={() => setNotice(null)} aria-label="关闭提示">×</button></div>}
 
       {workspaceRecovery && <WorkspaceRecoveryPanel
         backupId={workspaceRecovery.backupId}
@@ -1941,6 +1958,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       )}
       {!workspaceRecovery && selectedTask && (
         <TaskDetailPanel
+          compact={!runtime}
+          canonicalMaterials={ordinaryCanonical?.materials.filter(m=>m.relatedTaskIds.includes(selectedTask.id))}
+          onDirectEdit={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedTask.id))?async edit=>{await editDirectItem(canonicalWorkspaceRepository,selectedTask.id,edit);await refreshOrdinary()}:undefined}
           onDelete={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedTask.id))?async()=>{await deleteDirectItem(canonicalWorkspaceRepository,selectedTask.id);await refreshOrdinary();setSelectedTaskId(null)}:undefined}
           pendingSave={Boolean(viewConflict)}
           semanticContent={runtime?.semantic && isolatedSnapshot ? runtime.semantic.taskFacts(isolatedSnapshot, selectedTask.id) : selectedTask.directTags&&ordinaryCanonical?<details className="direct-audit-detail"><summary>识别与添加记录</summary>{ordinaryCanonical.extractionDrafts.filter(d=>recentDirectBatches(ordinaryCanonical).some(b=>b.draftId===d.id&&b.items.some(i=>i.id===selectedTask.id))).map(d=>{const run=ordinaryCanonical.recognitionRuns.find(r=>r.id===d.recognitionRunId);return <div key={d.id}><p>识别服务：{run?.modelName??'本地规则'}；生成版本：{run?.promptVersion??'未记录'}</p><details><summary>查看识别记录</summary><pre>{JSON.stringify({result:d.result,audit:d.legacyData?.directConversion},null,2)}</pre></details></div>})}</details>:undefined}
@@ -1958,6 +1978,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       )}
       {!workspaceRecovery && selectedEvent && (
         <EventDetailPanel
+          compact={!runtime}
+          onEdit={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedEvent.id))?async edit=>{await editDirectItem(canonicalWorkspaceRepository,selectedEvent.id,edit);await refreshOrdinary()}:undefined}
+          onDelete={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedEvent.id))?async()=>{await deleteDirectItem(canonicalWorkspaceRepository,selectedEvent.id);await refreshOrdinary();setSelectedEventId(null)}:undefined}
           isolatedFacts={runtime?.semantic && isolatedSnapshot ? runtime.semantic.eventFacts(isolatedSnapshot, selectedEvent.id) : undefined}
           event={selectedEvent}
           project={projects.find((project) => project.id === selectedEvent.projectId)}

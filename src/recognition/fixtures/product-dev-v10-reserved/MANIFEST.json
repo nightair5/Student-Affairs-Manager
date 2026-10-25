@@ -1,0 +1,152 @@
+{
+  "version": "reserved-r11-1",
+  "role": "reserved-r11",
+  "seen": false,
+  "createdAt": "2026-10-25T09:26:24.180Z",
+  "sourceCount": 20,
+  "sourceSelection": "Source-first short excerpts, not whole-page/human-independent validation. Twenty new exact source URLs, no prior fixture URL reuse; no candidate output seen.",
+  "runPolicy": "LIVE / CANDIDATE each two independent attempts per source, alternating order; same generation and Worker program, frontend direct converter differs; additionally cross-replay same raw to distinguish program effect from sampling.",
+  "referencePolicy": "single-author provisional, source semantics manually reviewed before output; current v6/v5.1 are diagnostic only",
+  "sources": [
+    {
+      "id": "R11-RES-01",
+      "url": "https://cj.sdbi.edu.cn/info/1024/5312.htm",
+      "chars": 572,
+      "sourceSha256": "ff50bc89c6d1ce2991a24d32edaa886430471efacfcfde63689ac840634e88a3",
+      "referenceSha256": "40e3e96d221f2cf2ddecb593907488ec4e952009a26ac3d7c46c2fd6d5043fbe"
+    },
+    {
+      "id": "R11-RES-02",
+      "url": "https://www.scut.edu.cn/new/2025/1203/c235a58775/page.htm",
+      "chars": 103,
+      "sourceSha256": "8e2be71c194ba54f70b01c66e1e889a52dcd909862a4cfbd03f0fa08f595ac3a",
+      "referenceSha256": "8c0a01693ecebbbe43461d5ff6e85f501c548039dfbaf4b175186a1099810d01"
+    },
+    {
+      "id": "R11-RES-03",
+      "url": "https://www.hsu.edu.cn/4f/de/c3718a217054/page.htm",
+      "chars": 206,
+      "sourceSha256": "7df47744c1bf7aed2d22f70412c029b32c8396ba68909ec51e88990b2138b599",
+      "referenceSha256": "0a6c0af02e836e61b8a62adfe81b6496f4b03ee9feb6b06659002b961f48adc2"
+    },
+    {
+      "id": "R11-RES-04",
+      "url": "https://jwc.zut.edu.cn/info/1063/5374.htm",
+      "chars": 490,
+      "sourceSha256": "1ba24fe7c068c4f7a314af810c5352e09643000e803b4923949f8093e66730c2",
+      "referenceSha256": "a99131d712830a5639a82618260a6f882a168d9c4823c997ac2faf578eaa25f5"
+    },
+    {
+      "id": "R11-RES-05",
+      "url": "https://www.mba.uestc.edu.cn/info/1014/8547.htm",
+      "chars": 241,
+      "sourceSha256": "ef46aa9af4c910cfbe3d814bbc750ff1f7a343cbfeb750e512dba762e6862925",
+      "referenceSha256": "680f7320a6114861eb666af88918402716294226b947cceaeb939419234c5870"
+    },
+    {
+      "id": "R11-RES-06",
+      "url": "https://jxyxbzzx.dlut.edu.cn/info/1379/9563.htm",
+      "chars": 152,
+      "sourceSha256": "c9ca36702126b19fc292d0e856f0228e7da59f52175de6850e42ba114c19517f",
+      "referenceSha256": "559acdbb1697594a84f7b820c774ed16015e983b34088518a4bb1a106d677d0b"
+    },
+    {
+      "id": "R11-RES-07",
+      "url": "https://jxyxbzzx.dlut.edu.cn/info/1379/9543.htm",
+      "chars": 290,
+      "sourceSha256": "c59d4fa5be91bb987abe0a4d57c8a5ba8bb236ae708f86ee1d3cfd9a2090a183",
+      "referenceSha256": "8642204d0d4de8bbbc316e3a030696abf9a823d9e04f669c2bfd8e94a7990944"
+    },
+    {
+      "id": "R11-RES-08",
+      "url": "https://jxyxbzzx.dlut.edu.cn/info/1379/9533.htm",
+      "chars": 242,
+      "sourceSha256": "1734aa29b210e0fff8ebbf07ec9c4230ac99d206254ef911a02f2826075f5d3f",
+      "referenceSha256": "8a708c07eb6e12d7f20415a8767c771b47e3621d25f3f0d4cddc0b844a745119"
+    },
+    {
+      "id": "R11-RES-09",
+      "url": "https://www.cup.edu.cn/nic/tzgg/5311e21d4c8142dfbe0a6aa36331ddc0.htm",
+      "chars": 438,
+      "sourceSha256": "36aef02b755aa08e8815fc46ba26488984aa32fcaba02ea0c72b1387169b2dbf",
+      "referenceSha256": "2c1f62c485801220883401c195f2ad6a3703c0c1a27b97cb989a1b3587a003a2"
+    },
+    {
+      "id": "R11-RES-10",
+      "url": "https://www.cup.edu.cn/nic/tzgg/7e75f44f33cf4f998e9d8ed77ef65f5e.htm",
+      "chars": 241,
+      "sourceSha256": "655e48f1c8b4ee8a0aa763ea2c71b0cb258094171f5b965a6e2c776512b61c21",
+      "referenceSha256": "357a043470466c83eaa11a0ee7c7da1303af1c4f057ad97d9c2cfb190862766f"
+    },
+    {
+      "id": "R11-RES-11",
+      "url": "https://www.ahstu.edu.cn/zhxy/info/1046/13297.htm",
+      "chars": 564,
+      "sourceSha256": "f37e71e8cff608c612d59488ecb1814f1f29bcc87f484ee8ccfb3f5115588f53",
+      "referenceSha256": "2b17a4fb030466138c3fa163090da92223aceff6de46da09a676f04fdb00bf5e"
+    },
+    {
+      "id": "R11-RES-12",
+      "url": "https://hqzgs.nuist.edu.cn/2026/0924/c3225a301761/page.htm",
+      "chars": 182,
+      "sourceSha256": "4f83dad718c98c380f59c11f95b0fadeb25c1c638c851247e0e9d43ff8fc839e",
+      "referenceSha256": "d28c40eabf8a5fbc7abba97ed370db53c42ca5c85e6f480ef3134ac1fcbd22b2"
+    },
+    {
+      "id": "R11-RES-13",
+      "url": "https://oi.nju.edu.cn/e3/f9/c21415a844793/pagem.htm",
+      "chars": 178,
+      "sourceSha256": "a7371f78252cee23bb4760dced28ce4e60f2ced2a97b1060ff2cb72edd56e085",
+      "referenceSha256": "b21882072c298143f9651f3059ddb335421be7e69a97fe28a12f45e10b783ba1"
+    },
+    {
+      "id": "R11-RES-14",
+      "url": "https://oi.nju.edu.cn/e0/f2/c21415a844018/pagem.htm",
+      "chars": 550,
+      "sourceSha256": "994453aedef68c415ea39e7a031d5445f5edd702015b1718e9d0e26d8f14b160",
+      "referenceSha256": "f2805eb19562f9cd6c62e849fa3acda1c1cee8eff6922a8bec9846e9f542f79c"
+    },
+    {
+      "id": "R11-RES-15",
+      "url": "https://lcc.sjtu.edu.cn/Data/View/4599",
+      "chars": 502,
+      "sourceSha256": "50fe4b12048d0b2ed95acc53f690a95cb92c5bd610975c0640dc42efa5f2069b",
+      "referenceSha256": "376c7e6a6aca1ed79151fbd8df337c69d3d98748df656c4bc158d1fd2be04607"
+    },
+    {
+      "id": "R11-RES-16",
+      "url": "https://www.sbc.usst.edu.cn/2026/0929/c14853a371246/page.htm",
+      "chars": 553,
+      "sourceSha256": "640fc01f2726a00abc405f7cef418029551333cf42908d1b9855009d748a9b63",
+      "referenceSha256": "60c39f64507022a9934d762c7696eec5895e67cc4756d66196439fd93f6416bd"
+    },
+    {
+      "id": "R11-RES-17",
+      "url": "https://www.cup.edu.cn/nic/tzgg/38ca5b37ddf34e3abff18cc60eab4380.htm",
+      "chars": 86,
+      "sourceSha256": "6a7f0cbe809c3352f063909fa65cf4838fee3264a35f0c93cf1ee89610fbbb34",
+      "referenceSha256": "ec45e5eca8be81a704ed107e43bddd5d9a4f774b6bf619078eea119cf462e41c"
+    },
+    {
+      "id": "R11-RES-18",
+      "url": "https://www.cup.edu.cn/nic/tzgg/c02fdfaca083448391b057d5406f8600.htm",
+      "chars": 177,
+      "sourceSha256": "158cfb49ee40da2fb206ca8a43bf5aa6e8f0b8b482b8c706ae7fe09a89a13715",
+      "referenceSha256": "93470d1d167b97b432b98a41f761adfc641c5406ceabd9ee86f4737fb92430ef"
+    },
+    {
+      "id": "R11-RES-19",
+      "url": "https://xlzx.hust.edu.cn/info/1094/1934.htm",
+      "chars": 331,
+      "sourceSha256": "38d303a885710a6b14d96efc18f9b6a4aa3c592fc6f0f518c82fec7c3438c960",
+      "referenceSha256": "f9ac9b00f9d21e6b464061bea5a0155b9e8023198d7374ab4542e026f740cd4f"
+    },
+    {
+      "id": "R11-RES-20",
+      "url": "https://comm.ecnu.edu.cn/6e/af/c41587a749231/page.htm",
+      "chars": 521,
+      "sourceSha256": "48748caf3d6a72239488333c5f05730b16f580ed5b38bcb13ac2a1c0957b2a17",
+      "referenceSha256": "4cd398ecb8dd312aa63e0c29299ca727f8d6179acdb0436a8d3e6277c4f8d8a3"
+    }
+  ]
+}

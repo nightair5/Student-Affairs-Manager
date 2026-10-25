@@ -37,6 +37,9 @@ import type {
 } from '../types'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import { buildCalendarIcs, buildTodoIcs, shareOrDownloadIcs, SOURCE_PRESERVING_CALENDAR_EXPORT } from '../lib/calendarExport'
+import {CompactTaskDetailPanel} from './CompactTaskDetailPanel'
+import type {DirectEdit} from '../domain/v2/directIntake'
+import type {Material as CanonicalMaterial} from '../domain/v2/types'
 
 const materialStatusOptions: Array<{ value: MaterialStatus; label: string }> = [
   { value: 'missing', label: '缺失' },
@@ -47,7 +50,12 @@ const materialStatusOptions: Array<{ value: MaterialStatus; label: string }> = [
   { value: 'not_required', label: '不需要' },
 ]
 
-interface TaskDetailPanelProps {
+export interface TaskDetailPanelProps {
+  compact?:boolean
+  canonicalMaterials?:CanonicalMaterial[]
+  onDirectEdit?:(edit:DirectEdit)=>Promise<void>
+  hideUnavailable?:boolean
+  onBackToCompact?:()=>void
   onDelete?: ()=>Promise<void>
   pendingSave?: boolean
   semanticContent?: ReactNode
@@ -62,7 +70,13 @@ interface TaskDetailPanelProps {
   onRequestNotificationPermission: () => Promise<BrowserNotificationPermission>
 }
 
-export function TaskDetailPanel({
+export function TaskDetailPanel(props:TaskDetailPanelProps){
+  const [advanced,setAdvanced]=useState(false)
+  return props.compact&&!advanced?<CompactTaskDetailPanel {...props} onAdvanced={()=>setAdvanced(true)}/>:<LegacyTaskDetailPanel {...props} hideUnavailable={props.compact} onBackToCompact={props.compact?()=>setAdvanced(false):undefined}/>
+}
+
+function LegacyTaskDetailPanel({
+  hideUnavailable,onBackToCompact,
   onDelete,
   pendingSave,
   readOnly, dateView, semanticContent,
@@ -215,6 +229,7 @@ export function TaskDetailPanel({
             <h2 id={titleId}>{task.title}</h2>
           </div>
           <div className="detail-header-actions">
+            {onBackToCompact&&<button className="text-button" type="button" onClick={onBackToCompact}>返回简洁详情</button>}
             <button
               className={editing ? 'detail-edit-button active' : 'detail-edit-button'}
               type="button"
@@ -467,7 +482,7 @@ export function TaskDetailPanel({
                 />
               </label>
             )}
-            <div className="reminder-option">
+            {!hideUnavailable&&<div className="reminder-option">
               <div>
                 <span className="reminder-icon">
                   <Mail size={17} />
@@ -489,8 +504,8 @@ export function TaskDetailPanel({
                   <i />
                 </label>
               </div>
-            </div>
-            {emailReminder?.enabled && (
+            </div>}
+            {!hideUnavailable&&emailReminder?.enabled && (
               <label className="field reminder-time">
                 <span>
                   <CalendarClock size={15} />
@@ -513,7 +528,7 @@ export function TaskDetailPanel({
               </div>
               {calendarFeedback && <p role="status">{calendarFeedback}</p>}
             </div>
-            <div className="reminder-option disabled-option">
+            {!hideUnavailable&&<div className="reminder-option disabled-option">
               <div>
                 <span className="reminder-icon">
                   <BellRing size={17} />
@@ -524,7 +539,7 @@ export function TaskDetailPanel({
                 </span>
               </div>
               <span className="coming-badge">待授权</span>
-            </div>
+            </div>}
           </section>
 
           <section className="detail-section">

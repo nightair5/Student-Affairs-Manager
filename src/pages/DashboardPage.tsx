@@ -7,9 +7,13 @@ import { EventCard } from '../components/EventCard'
 import { localDateKey } from '../lib/calendar'
 import { getBlockedAndWaitingTasks, getFocusTasks } from '../lib/taskLogic'
 import type { Event, Project, Task } from '../types'
+import {homeFlow} from '../lib/homeFlow'
+import {FlowEventList,FlowTaskList} from '../components/FlowItemList'
 
 interface DashboardPageProps {
   directMode?: boolean
+  directNotice?:ReactNode
+  historicalNotice?: {count:number;busy:boolean;onAdd:()=>Promise<void>;onIgnore:()=>Promise<void>}
   recentAdditions?: ReactNode
   planning?: ReactNode
   engineeringInput?: boolean
@@ -42,7 +46,7 @@ function todayLabel(): string {
 }
 
 export function DashboardPage({
-  directMode, recentAdditions,
+  directMode, recentAdditions, historicalNotice, directNotice,
   planning,
   engineeringInput,
   engineeringInputLabel,
@@ -99,9 +103,9 @@ export function DashboardPage({
         <div className="quick-capture-heading">
           <span className="quick-capture-icon"><ClipboardPaste size={20} /></span>
           <div><strong>收到新通知？直接粘贴</strong><small>{realInput ? '先核对输入文字，再决定本次发送范围。' : directMode ? '点一次整理，待办和日程直接加入，可随时撤销。' : '日期、事项和材料会先拆成待确认建议。'}</small></div>
-          <span className={`ai-assist-status ${smartExtractionStatus}`}>
+          {(!directMode||engineeringInput||realInput||dateViews)&&<span className={`ai-assist-status ${smartExtractionStatus}`}>
             {engineeringInput ? engineeringInputLabel??'匿名工程输入 · 模型派发关闭' : realInput ? '真实输入隔离实验 · 发送前核对' : dateViews ? '人工工程响应 · 不调用模型' : smartExtractionStatus === 'connected' ? 'DeepSeek 已配置 · 调用时验证' : smartExtractionStatus === 'checking' ? '正在检查智能服务' : 'DeepSeek 未配置 · 本地规则可用'}
-          </span>
+          </span>}
         </div>
         <textarea value={quickText} readOnly={isParsing} onChange={(event) => { setQuickText(event.target.value); setQuickError('') }} rows={3} placeholder="粘贴老师消息、群通知或网页正文……" aria-label="快速粘贴通知" aria-describedby={quickError ? 'quick-capture-error' : undefined} />
         {isParsing && <p role="status">{directMode?'正在整理并添加，完成后会显示事项。':'正在保存和整理这份原文；完成后可继续放入下一份。'}</p>}
@@ -112,9 +116,27 @@ export function DashboardPage({
             {isParsing ? (realInput ? '正在打开输入核对…' : dateViews ? '正在保存工程草稿…' : '正在整理…') : <><Plus size={16} />{realInput ? '先核对输入文字' : dateViews ? '生成工程建议' : directMode ? '整理' : '智能拆分任务'}</>}
           </button>
         </div>
-        <small className="cloud-send-disclosure">{engineeringInput ? '本入口只接受当前列出的输入，回放已有建议，不新增模型请求；编辑、确认和保存使用普通产品路径。' : realInput ? `此按钮只打开输入核对，不立即发送。${realInput.networkDescription} 建议须经用户确认，仅保存到隔离测试库。` : dateViews ? '只接受旧匿名工程通知，在独立本机测试库保存；不发送文字、不调用模型，也不回退本地识别。请核对后确认。' : directMode ? '只发送本次粘贴的文字。整理后自动添加并保存在本机，可修改、删除或撤销；服务不可用时可使用本地规则。' : '点击整理只发送当前粘贴文字，不附带已有项目或任务；已配置服务调用时验证，结果仅为待确认建议。服务未配置时不发送，使用本地规则。'}</small>
+        <small className="cloud-send-disclosure">{engineeringInput ? '本入口只接受当前列出的输入，回放已有建议，不新增模型请求；编辑、确认和保存使用普通产品路径。' : realInput ? `此按钮只打开输入核对，不立即发送。${realInput.networkDescription} 建议须经用户确认，仅保存到隔离测试库。` : dateViews ? '只接受旧匿名工程通知，在独立本机测试库保存；不发送文字、不调用模型，也不回退本地识别。请核对后确认。' : directMode ? '只发送这次通知；保存在当前浏览器，可修改或撤销。' : '点击整理只发送当前粘贴文字，不附带已有项目或任务；已配置服务调用时验证，结果仅为待确认建议。服务未配置时不发送，使用本地规则。'}</small>
       </form>
   )
+
+  if(directMode){
+    const flow=homeFlow(tasks,events),active=flow.dated.length+flow.undated.length
+    return <main className="page dashboard-page flow-dashboard">
+      <header className="flow-page-heading"><span className="date-line">{todayLabel()}</span><h1>今天与接下来</h1></header>
+      {captureForm}
+      {historicalNotice&&historicalNotice.count>0&&<div className="flow-history-notice"><span>发现 {historicalNotice.count} 条以前的通知</span><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onAdd()}>{historicalNotice.busy?'正在添加…':'全部加入'}</button><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onIgnore()}>忽略</button></div>}
+      {directNotice}
+      {recentAdditions}
+      {(flow.dated.length>0||flow.events.length>0)&&<section className="today-next-section" aria-labelledby="today-next-title"><div className="section-heading"><h2 id="today-next-title">今天和接下来</h2><button className="text-button" type="button" onClick={onShowCalendar}>日历<ArrowRight size={16}/></button></div>
+        <FlowTaskList tasks={flow.dated} onOpen={onOpenTask} onComplete={onCompleteTask}/>
+        {onOpenEvent&&<FlowEventList events={flow.events} onOpen={onOpenEvent}/>}
+      </section>}
+      {flow.undated.length>0&&<section className="flow-undated-section" aria-labelledby="undated-title"><div className="section-heading"><h2 id="undated-title">待安排</h2><small>可以现在处理，也可以稍后设置日期</small></div><FlowTaskList tasks={flow.undated} onOpen={onOpenTask} onComplete={onCompleteTask}/></section>}
+      {flow.deferred.length>0&&<section className="deferred-execution-section" aria-labelledby="deferred-title"><div className="section-heading"><h2 id="deferred-title">稍后再做</h2></div><div className="deferred-task-list">{flow.deferred.map(({task,reason})=><button key={task.id} className="deferred-task" type="button" onClick={()=>onOpenTask(task)}><span className="deferred-task-copy"><strong>{task.title}</strong><small>{reason}</small></span><ArrowRight size={16}/></button>)}</div></section>}
+      {!active&&!flow.deferred.length&&!flow.events.length&&<section className="home-empty-state"><strong>{tasks.length?'事情都处理好了':'放入第一条通知，待办和日程就会出现在这里'}</strong><p>粘贴原消息，点一次整理即可。</p></section>}
+    </main>
+  }
 
   return (
     <main className="page dashboard-page">

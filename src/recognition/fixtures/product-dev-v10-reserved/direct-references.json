@@ -1,0 +1,595 @@
+{
+  "version": "direct-reference-1.0",
+  "createdAt": "2026-10-25T09:26:24.180Z",
+  "author": "Codex / single-author / provisional",
+  "beforeAnyR25ModelOutput": true,
+  "rows": [
+    {
+      "id": "R11-RES-01",
+      "sourceSha256": "ff50bc89c6d1ce2991a24d32edaa886430471efacfcfde63689ac840634e88a3",
+      "referenceTime": "2025-11-19T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "毕业作业",
+            "verbs": [
+              "提交",
+              "完成",
+              "撰写",
+              "写"
+            ],
+            "aliases": [
+              "工作总结"
+            ],
+            "deadline": "2026-05-20",
+            "precision": "date_only"
+          }
+        ],
+        "events": []
+      }
+    },
+    {
+      "id": "R11-RES-02",
+      "sourceSha256": "8e2be71c194ba54f70b01c66e1e889a52dcd909862a4cfbd03f0fa08f595ac3a",
+      "referenceTime": "2025-12-03T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [],
+        "events": [],
+        "informationOnly": true,
+        "readingFallback": true,
+        "forbidden": [
+          {
+            "object": "报告会",
+            "verbs": [
+              "参加",
+              "报名",
+              "出席"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-03",
+      "sourceSha256": "7df47744c1bf7aed2d22f70412c029b32c8396ba68909ec51e88990b2138b599",
+      "referenceTime": "2026-09-30T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停水",
+            "start": "2026-10-05T13:00",
+            "end": "2026-10-05T17:00",
+            "location": "率水校区"
+          }
+        ],
+        "readingFallback": true,
+        "informationOnly": true
+      }
+    },
+    {
+      "id": "R11-RES-04",
+      "sourceSha256": "1ba24fe7c068c4f7a314af810c5352e09643000e803b4923949f8093e66730c2",
+      "referenceTime": "2026-10-23T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "考试",
+            "verbs": [
+              "参加",
+              "准备"
+            ],
+            "aliases": [
+              "入学考试"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "语文",
+            "start": "2026-10-27T14:00",
+            "end": "2026-10-27T14:30"
+          },
+          {
+            "object": "数学",
+            "start": "2026-10-27T14:30",
+            "end": "2026-10-27T15:30"
+          },
+          {
+            "object": "素描",
+            "start": "2026-10-27T15:50",
+            "end": "2026-10-27T17:50",
+            "unknownEligibility": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-05",
+      "sourceSha256": "ef46aa9af4c910cfbe3d814bbc750ff1f7a343cbfeb750e512dba762e6862925",
+      "referenceTime": "2026-10-21T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "讲座",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "aliases": [
+              "一切皆可重做"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "window": {
+              "start": "2026-10-22T10:00",
+              "end": "2026-10-23T16:00"
+            }
+          }
+        ],
+        "events": [
+          {
+            "object": "一切皆可重做",
+            "start": "2026-10-24T12:50",
+            "endUnknown": true,
+            "location": "A201"
+          }
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-06",
+      "sourceSha256": "c9ca36702126b19fc292d0e856f0228e7da59f52175de6850e42ba114c19517f",
+      "referenceTime": "2026-10-22T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [],
+        "events": [],
+        "readingFallback": true,
+        "informationOnly": true,
+        "information": [
+          "主楼东侧楼110",
+          "112(114)",
+          "2026-10-26"
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-07",
+      "sourceSha256": "c59d4fa5be91bb987abe0a4d57c8a5ba8bb236ae708f86ee1d3cfd9a2090a183",
+      "referenceTime": "2026-10-20T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "排考",
+            "verbs": [
+              "提交",
+              "申请"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          },
+          {
+            "object": "新考试时间",
+            "verbs": [
+              "报送",
+              "提交"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "forbidden": [
+          {
+            "object": "原定课程考试",
+            "verbs": [
+              "参加"
+            ]
+          }
+        ],
+        "information": [
+          "取消",
+          "10月30日",
+          "11月3日"
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-08",
+      "sourceSha256": "1734aa29b210e0fff8ebbf07ec9c4230ac99d206254ef911a02f2826075f5d3f",
+      "referenceTime": "2026-10-19T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "课表",
+            "verbs": [
+              "核对",
+              "查询",
+              "查看"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "其他教学楼",
+          "10月29日",
+          "11月1日"
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-09",
+      "sourceSha256": "36aef02b755aa08e8815fc46ba26488984aa32fcaba02ea0c72b1387169b2dbf",
+      "referenceTime": "2026-09-14T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "准考证",
+            "verbs": [
+              "打印",
+              "下载"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "模拟考试",
+            "start": "2026-09-17T14:00",
+            "end": "2026-09-17T15:00"
+          }
+        ],
+        "information": [
+          "准考证上考试地点一致",
+          "9月14日"
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-10",
+      "sourceSha256": "655e48f1c8b4ee8a0aa763ea2c71b0cb258094171f5b965a6e2c776512b61c21",
+      "referenceTime": "2026-05-15T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "复查",
+            "verbs": [
+              "申请",
+              "提交",
+              "填写",
+              "发送"
+            ],
+            "aliases": [
+              "成绩复查申请表"
+            ],
+            "deadline": "2026-05-22",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "同时致电",
+          "[邮箱]"
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-11",
+      "sourceSha256": "f37e71e8cff608c612d59488ecb1814f1f29bcc87f484ee8ccfb3f5115588f53",
+      "referenceTime": "2025-09-22T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "建议",
+            "verbs": [
+              "提交",
+              "发送",
+              "投递"
+            ],
+            "deadline": "2025-10-30",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "500字",
+          "东办公楼",
+          "213"
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-12",
+      "sourceSha256": "4f83dad718c98c380f59c11f95b0fadeb25c1c638c851247e0e9d43ff8fc839e",
+      "referenceTime": "2026-09-24T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停水",
+            "start": "2026-10-03T08:00",
+            "end": "2026-10-03T17:00",
+            "location": "行政楼"
+          }
+        ],
+        "readingFallback": true,
+        "informationOnly": true
+      }
+    },
+    {
+      "id": "R11-RES-13",
+      "sourceSha256": "a7371f78252cee23bb4760dced28ce4e60f2ced2a97b1060ff2cb72edd56e085",
+      "referenceTime": "2026-09-23T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "升级",
+            "start": "2026-09-23T22:00",
+            "end": "2026-09-24T00:00"
+          }
+        ],
+        "readingFallback": true,
+        "informationOnly": true
+      }
+    },
+    {
+      "id": "R11-RES-14",
+      "sourceSha256": "994453aedef68c415ea39e7a031d5445f5edd702015b1718e9d0e26d8f14b160",
+      "referenceTime": "2026-09-16T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "新版VPN",
+            "verbs": [
+              "安装",
+              "下载"
+            ],
+            "aliases": [
+              "aTrust"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          },
+          {
+            "object": "接入地址",
+            "verbs": [
+              "切换",
+              "修改",
+              "输入"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "旧版",
+          "停止服务",
+          "9月16日"
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-15",
+      "sourceSha256": "50fe4b12048d0b2ed95acc53f690a95cb92c5bd610975c0640dc42efa5f2069b",
+      "referenceTime": "2026-03-03T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "奖学金",
+            "verbs": [
+              "申请",
+              "提交"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          },
+          {
+            "object": "纸质",
+            "verbs": [
+              "提交",
+              "交至",
+              "交"
+            ],
+            "aliases": [
+              "申请材料"
+            ],
+            "deadline": "2026-03-09T12:00",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "答辩",
+            "startUnknown": true,
+            "endUnknown": true
+          }
+        ],
+        "information": [
+          "A429",
+          "ssc",
+          "成绩单"
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-16",
+      "sourceSha256": "640fc01f2726a00abc405f7cef418029551333cf42908d1b9855009d748a9b63",
+      "referenceTime": "2026-09-29T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "案例",
+            "verbs": [
+              "发送",
+              "提交",
+              "报送"
+            ],
+            "deadline": "2026-10-12",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "Word",
+          "中文",
+          "英文",
+          "JPG",
+          "PNG"
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-17",
+      "sourceSha256": "6a7f0cbe809c3352f063909fa65cf4838fee3264a35f0c93cf1ee89610fbbb34",
+      "referenceTime": "2026-07-14T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "OA",
+            "start": "2026-07-15T12:00",
+            "end": "2026-07-15T18:00"
+          }
+        ],
+        "readingFallback": true,
+        "informationOnly": true
+      }
+    },
+    {
+      "id": "R11-RES-18",
+      "sourceSha256": "158cfb49ee40da2fb206ca8a43bf5aa6e8f0b8b482b8c706ae7fe09a89a13715",
+      "referenceTime": "2026-07-13T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "在线文档",
+            "verbs": [
+              "保存"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "网络",
+            "start": "2026-07-15T00:30",
+            "end": "2026-07-15T06:30",
+            "location": "东校园"
+          }
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-19",
+      "sourceSha256": "38d303a885710a6b14d96efc18f9b6a4aa3c592fc6f0f518c82fec7c3438c960",
+      "referenceTime": "2025-10-10T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名表",
+            "verbs": [
+              "填写",
+              "报名",
+              "提交"
+            ],
+            "deadline": "2025-10-14T22:00",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "剧场",
+            "start": "2025-10-15T18:30",
+            "end": "2025-10-15T21:30",
+            "location": "民族团结德育活动室"
+          },
+          {
+            "object": "剧场",
+            "start": "2025-10-22T18:30",
+            "end": "2025-10-22T21:30",
+            "location": "民族团结德育活动室"
+          },
+          {
+            "object": "剧场",
+            "start": "2025-10-29T18:30",
+            "end": "2025-10-29T21:30",
+            "location": "民族团结德育活动室"
+          }
+        ],
+        "information": [
+          "最终入组",
+          "10-20人"
+        ]
+      }
+    },
+    {
+      "id": "R11-RES-20",
+      "sourceSha256": "48748caf3d6a72239488333c5f05730b16f580ed5b38bcb13ac2a1c0957b2a17",
+      "referenceTime": "2026-03-20T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名问卷",
+            "verbs": [
+              "填写",
+              "报名",
+              "提交"
+            ],
+            "deadline": "2026-03-24T18:00",
+            "unknownEligibility": true
+          },
+          {
+            "object": "大众评审",
+            "verbs": [
+              "报名",
+              "申请"
+            ],
+            "deadline": "2026-03-24T18:00",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [
+          {
+            "object": "歌手",
+            "start": "2026-03-25T20:00",
+            "endUnknown": true,
+            "location": "光华书院302"
+          }
+        ],
+        "information": [
+          "观众",
+          "无需报名",
+          "提前30分钟"
+        ]
+      }
+    }
+  ]
+}

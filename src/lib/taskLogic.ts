@@ -159,7 +159,6 @@ export function getExecutableTasks(
 ): Task[] {
   return tasks.filter((task) => {
     if (task.status === '已完成') return false
-    if (task.directTags?.length) return false
     const priority = calculateTaskPriority(task, tasks, now, dateViews)
     return !priority.isSnoozed && !priority.risks.includes('有依赖')
   })
@@ -198,7 +197,6 @@ export function getBlockedAndWaitingTasks(
   return tasks
     .filter((task) => task.status !== '已完成')
     .flatMap((task): DeferredExecutionTask[] => {
-      if (task.directTags?.length) return [{task,state:'waiting',reason:task.directTags.join(' · ')}]
       const priority = calculateTaskPriority(task, tasks, now, dateViews)
       if (priority.risks.includes('有依赖')) {
         const reason = priority.reasons.find((item) => item.includes('前置事项'))

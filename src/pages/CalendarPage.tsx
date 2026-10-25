@@ -109,6 +109,8 @@ export function CalendarPage({ preserveDateOnlyPrecision = false, personalPlans,
     ? `${dayLabel(selectedDateKey)} · ${selectedItems.length} 项`
     : `全部即将到来 · ${upcomingItems.length} 项`
   const suggestions = useMemo(() => personalPlans ? [] : executableTasks
+    // Showing a labelled item never declares its personal conditions met.
+    .filter(task=>!task.directTags?.length)
     .map((task) => ({ task, slot: findSuggestedWorkSlot(task, courseBlocks, today) }))
     .filter((item) => item.slot)
     .slice(0, 3), [courseBlocks, executableTasks, today, personalPlans])

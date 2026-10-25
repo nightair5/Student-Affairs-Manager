@@ -1,0 +1,745 @@
+{
+  "version": "direct-reference-1.0",
+  "createdAt": "2026-10-25T09:00:33.693Z",
+  "author": "Codex / single-author / provisional",
+  "beforeAnyR25NewOutput": true,
+  "role": "already-seen Development / safety, not unseen evidence",
+  "rows": [
+    {
+      "id": "FRESH-05",
+      "sourceSha256": "33135cdc5d11d91efcbd0b298a134e5a8a4291e6050b671653250dafed870cf5",
+      "referenceTime": "2025-12-18T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "电器",
+            "verbs": [
+              "关闭"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停电",
+            "start": "2025-12-21T20:00",
+            "end": "2025-12-22T02:00",
+            "location": "西苑校区"
+          }
+        ],
+        "information": [
+          "电梯",
+          "移动网络",
+          "提前送电不再另行通知"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-06",
+      "sourceSha256": "5a21e41306cc8de2fdd3f34df1c50e2b51a8992a1569e5aeee35569fcde753ef",
+      "referenceTime": "2025-09-10T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "宣讲会",
+            "start": "2025-09-14T18:00",
+            "end": "2025-09-14T21:00"
+          }
+        ],
+        "information": [
+          "郑州",
+          "调整"
+        ],
+        "obsoleteDates": [
+          "2025-09-11"
+        ],
+        "informationOnly": true,
+        "readingFallback": true
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-08",
+      "sourceSha256": "1b3dda76bf241300e5d56f518d1fd5dd73af3b5bbbaf42e701f0d76e4de5f1d9",
+      "referenceTime": "2025-06-11T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "学生证",
+            "verbs": [
+              "申请",
+              "补办",
+              "换发"
+            ],
+            "deadline": "2025-06-13",
+            "precision": "date_only",
+            "material": "申请",
+            "channel": "教学秘书",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "materials": [
+          "照片"
+        ],
+        "information": [
+          "5元",
+          "蓝底",
+          "空白学生证",
+          "6月16日",
+          "学院"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-10",
+      "sourceSha256": "8173f4e9a7a53178f2df5947bb484bf1a9198ae204fb8f14fad62bd918560c41",
+      "referenceTime": "2024-12-18T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "论文",
+            "verbs": [
+              "撰写",
+              "提交",
+              "完成"
+            ],
+            "deadline": "2025-01-03T17:00",
+            "material": "论文"
+          }
+        ],
+        "events": [],
+        "information": [
+          "3000",
+          "5000",
+          "学号",
+          "姓名",
+          "汇总",
+          "站内邮箱",
+          "考勤",
+          "听课记录"
+        ],
+        "formats": [
+          "3000",
+          "5000"
+        ],
+        "naming": [
+          "学号",
+          "姓名"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-12",
+      "sourceSha256": "3f3009f7f292e0a99b77026a3e85345c4d5fc319c9f4f8d1658677f6369b5050",
+      "referenceTime": "2025-06-23T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "课程",
+            "verbs": [
+              "补选",
+              "选课",
+              "选择",
+              "报名"
+            ],
+            "deadline": "2025-06-30T23:00",
+            "channel": "强智",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "2024",
+          "专业选修课",
+          "体育",
+          "外语",
+          "12:00",
+          "9:00",
+          "23:00",
+          "缺考",
+          "后续不再开放"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-14",
+      "sourceSha256": "11c8f460f98325b963ef6712c134cb3e63d39a3b97a51cb09024f2acdf956b4f",
+      "referenceTime": "2025-03-03T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "请假",
+            "verbs": [
+              "办理",
+              "申请"
+            ],
+            "unknownEligibility": true,
+            "condition": "冲突",
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "讲堂",
+            "start": "2025-03-05T14:30",
+            "endUnknown": true,
+            "location": "CIAD"
+          }
+        ],
+        "information": [
+          "教职工",
+          "3月3日",
+          "3月8日",
+          "党委备案"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-15",
+      "sourceSha256": "7d5cd7d699e137902f365bb6fed9dedd387a2c02a9be6a5da31c684459781f4b",
+      "referenceTime": "2025-03-24T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "名单",
+            "verbs": [
+              "报送",
+              "提交"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true,
+            "channel": "教务处"
+          }
+        ],
+        "events": [
+          {
+            "object": "DeepSeek",
+            "start": "2025-03-27T15:00",
+            "endUnknown": true,
+            "location": "图书馆七楼"
+          }
+        ],
+        "information": [
+          "20",
+          "3",
+          "26",
+          "下班前",
+          "提前",
+          "10",
+          "请假"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-16",
+      "sourceSha256": "dda3872bc953663f5cb4e41b48a57aa3ce4f9e0081d91337f39c699314094e0c",
+      "referenceTime": "2025-06-11T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "6月26日",
+          "6月27日",
+          "2023级学前教育",
+          "另行通知",
+          "本人",
+          "不允许代领",
+          "严禁",
+          "邮寄"
+        ],
+        "forbidden": [
+          {
+            "object": "证书",
+            "verbs": [
+              "邮寄",
+              "快递",
+              "代领"
+            ]
+          }
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-17",
+      "sourceSha256": "932e75ee49ce598b1b2207bbb8d4728c18c92485a7d3ea1cd497fdbe87e6ce4a",
+      "referenceTime": "2026-05-20T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "学位证",
+            "verbs": [
+              "领取",
+              "申领",
+              "申请"
+            ],
+            "deadline": "2026-05-27",
+            "precision": "date_only",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "微信",
+          "人脸识别",
+          "邮寄",
+          "顺丰到付",
+          "一年",
+          "不可补办"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-18",
+      "sourceSha256": "dfe8c5b20c3fa9006262b44f99d6f6e0db5385397f15ef604bfdcab3eaedcfd8",
+      "referenceTime": "2025-06-12T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取",
+              "清点"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "辅导员",
+          "A105",
+          "9:30",
+          "10:30",
+          "10:40",
+          "11:40",
+          "成绩单",
+          "学位授予决定",
+          "盖章"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-19",
+      "sourceSha256": "42794ab931f9ad18b5b85e0ca9bc33ad12dd0ac898ae3c0d579be67088e8275f",
+      "referenceTime": "2025-06-03T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "证书",
+            "verbs": [
+              "领取",
+              "清点"
+            ],
+            "deadlineUnknown": true,
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "图书馆731",
+          "13",
+          "14",
+          "15",
+          "毕业典礼",
+          "签收",
+          "离校手续"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-22",
+      "sourceSha256": "a11eb4876f8c16e5490aa1b05b33972e38c21e27b0909c1f4eadb9d063209cce",
+      "referenceTime": "2025-09-25T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "集章卡",
+            "verbs": [
+              "领取"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          },
+          {
+            "object": "门票",
+            "verbs": [
+              "领取",
+              "兑换"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "社团之旅",
+            "start": "2025-09-27T14:00",
+            "end": "2025-09-27T17:30",
+            "location": "E座"
+          },
+          {
+            "object": "社团之夜",
+            "start": "2025-09-27T19:00",
+            "end": "2025-09-27T21:35",
+            "location": "110"
+          }
+        ],
+        "information": [
+          "大本营",
+          "集赞",
+          "前排"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-23",
+      "sourceSha256": "fa3d6a91ef2e627f8cb9a97c89848e8800c9c180eb0c46f778eae647b25b5814",
+      "referenceTime": "2025-12-01T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "缓考",
+            "verbs": [
+              "申请",
+              "提交"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "考试查询",
+          "12月19日",
+          "考核开始前",
+          "Word",
+          "挂号凭证",
+          "病历",
+          "病假证明",
+          "原件",
+          "冲突考试截图",
+          "优先参加主修"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-26",
+      "sourceSha256": "a346ea4d91edc5d77ffc704e17eb52698be3c41cfa9bf529c5a3c19b0ab5ce88",
+      "referenceTime": "2025-02-08T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "图书",
+            "verbs": [
+              "归还",
+              "还书"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "闭馆",
+            "start": "2025-02-10",
+            "endUnknown": true,
+            "location": "文科图书馆"
+          }
+        ],
+        "information": [
+          "预计",
+          "另行通知",
+          "预约取书",
+          "暂定",
+          "G层",
+          "3月1日",
+          "其他各馆"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-29",
+      "sourceSha256": "9ae5084df72aa232cdd3ff779456b87f38574f7a0718125308bc263cd3ca0a59",
+      "referenceTime": "2025-12-10T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "个人",
+            "verbs": [
+              "领取",
+              "领回",
+              "取回",
+              "确认"
+            ],
+            "deadline": "2025-12-15T14:00",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "三至四楼",
+          "302",
+          "负一楼",
+          "服务大厅"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-30",
+      "sourceSha256": "a99cec270f6e0ab80364ecf4768b656efe15cc664ac1ece35b7f1c95c0fba43d",
+      "referenceTime": "2025-05-08T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "储水",
+            "verbs": [
+              "储水",
+              "做好",
+              "准备"
+            ],
+            "unknownEligibility": true,
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "停水",
+            "start": "2025-05-09T22:00",
+            "end": "2025-05-10T06:00"
+          }
+        ],
+        "information": [
+          "以南",
+          "不包含南区家属区"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-31",
+      "sourceSha256": "052352b9884f5043c1e01534b068c3b511279235d8201d1cf241389d01c45e08",
+      "referenceTime": "2025-05-09T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "成绩复核",
+            "verbs": [
+              "申请",
+              "提交",
+              "复核"
+            ],
+            "deadline": "2025-05-19T18:00",
+            "channel": "contact@example.invalid",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "materials": [
+          "申请表"
+        ],
+        "information": [
+          "PDF",
+          "word",
+          "一致",
+          "打包",
+          "申请复核日期",
+          "考生姓名",
+          "我考点"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-32",
+      "sourceSha256": "34150bb1fa8834e7a5eb72cb5c7fe4f7bdc81a81f9d8b005200b9daa1983534a",
+      "referenceTime": "2026-03-16T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "成绩复查",
+            "verbs": [
+              "申请",
+              "提交",
+              "复查"
+            ],
+            "deadline": "2026-03-20T12:00",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "materials": [
+          "申请表"
+        ],
+        "information": [
+          "手写签名",
+          "照片",
+          "二维码",
+          "60分",
+          "补考",
+          "后续"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-33",
+      "sourceSha256": "451def285da567c8fc3f8cbf8eca8d8d0f0e67f45c0761d2d258a6cf50fdf01f",
+      "referenceTime": "2026-05-27T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "复查",
+            "verbs": [
+              "提交",
+              "申请"
+            ],
+            "deadline": "2026-05-28T11:00",
+            "channel": "教学秘书",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "VPN",
+          "素质教师",
+          "原始成绩",
+          "取高分"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    },
+    {
+      "id": "FRESH-34",
+      "sourceSha256": "267c5c20aa7f332020912690b6b846036a6fd990990378cf1a40c9e414b54717",
+      "referenceTime": "2025-03-05T00:00:00+08:00",
+      "timezone": "Asia/Shanghai",
+      "reference": {
+        "tasks": [
+          {
+            "object": "成绩复查",
+            "verbs": [
+              "申请",
+              "提交",
+              "复查"
+            ],
+            "deadline": "2025-03-11",
+            "precision": "date_only",
+            "material": "申请表",
+            "channel": "511",
+            "unknownEligibility": true
+          },
+          {
+            "object": "重修",
+            "verbs": [
+              "申请",
+              "提交",
+              "参加"
+            ],
+            "deadline": "2025-06-30",
+            "precision": "date_only",
+            "material": "申请表",
+            "channel": "511",
+            "unknownEligibility": true
+          }
+        ],
+        "events": [],
+        "information": [
+          "硕士英语",
+          "硕士政治",
+          "补考",
+          "缓考",
+          "暂定",
+          "3",
+          "下旬",
+          "秋季",
+          "旷考",
+          "违纪"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "method": "Source review plus fixed v6 semantic reference; no candidate output. A source with no required student action receives one owner-authored reading task, including informational event/cancellation notices; scheduled events are still required. An action-bearing notice cannot substitute a reading task."
+    }
+  ]
+}

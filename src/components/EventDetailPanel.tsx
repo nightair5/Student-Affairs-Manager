@@ -4,8 +4,13 @@ import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
 import type { Event, Project } from '../types'
 import type { ReactNode } from 'react'
 import { eventMoment } from './EventCard'
+import {CompactEventDetailPanel} from './CompactEventDetailPanel'
+import type {DirectEdit} from '../domain/v2/directIntake'
 
-interface EventDetailPanelProps {
+export interface EventDetailPanelProps {
+  compact?:boolean
+  onEdit?:(edit:DirectEdit)=>Promise<void>
+  onDelete?:()=>Promise<void>
   isolatedFacts?: { startLabel: string; endLabel: string; content: ReactNode }
   event: Event
   project?: Project
@@ -18,7 +23,9 @@ function dateTime(value: string | null | undefined): string {
   return eventMoment(value ?? null)
 }
 
-export function EventDetailPanel({ isolatedFacts, event, project, evidenceQuotes, sourceTitles, onClose }: EventDetailPanelProps) {
+export function EventDetailPanel(props:EventDetailPanelProps){return props.compact?<CompactEventDetailPanel {...props}/>:<LegacyEventDetailPanel {...props}/>}
+
+function LegacyEventDetailPanel({ isolatedFacts, event, project, evidenceQuotes, sourceTitles, onClose }: EventDetailPanelProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   useDialogFocusTrap(panelRef, onClose)

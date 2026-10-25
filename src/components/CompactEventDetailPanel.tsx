@@ -1,0 +1,21 @@
+import {useId,useRef,useState} from 'react'
+import {CalendarDays,MapPin,Trash2,X} from 'lucide-react'
+import {useDialogFocusTrap} from '../lib/useDialogFocusTrap'
+import {flowEditValue,flowEventDate} from '../lib/flowPresentation'
+import type {EventDetailPanelProps} from './EventDetailPanel'
+
+export function CompactEventDetailPanel({event,evidenceQuotes,sourceTitles,onClose,onEdit,onDelete}:EventDetailPanelProps){
+  const id=useId(),ref=useRef<HTMLElement>(null),[title,setTitle]=useState(event.title),[location,setLocation]=useState(event.location??''),[open,setOpen]=useState(false),[start,setStart]=useState(flowEditValue(event.startAt)),[end,setEnd]=useState(flowEditValue(event.endAt)),[error,setError]=useState(''),[busy,setBusy]=useState(false)
+  useDialogFocusTrap(ref,onClose)
+  const save=async()=>{if(!onEdit)return;setBusy(true);setError('');try{await onEdit({title:title.trim()||event.title,date:start,end,location});setOpen(false)}catch{setError('未能保存，请检查时间后重试。')}finally{setBusy(false)}}
+  return <div className="modal-backdrop detail-backdrop" role="presentation"><aside ref={ref} className="detail-panel compact-detail-panel event-detail-panel" role="dialog" aria-modal="true" aria-labelledby={id}>
+    <header className="detail-header"><div><h2 id={id}>{event.title}</h2></div><button className="icon-button" type="button" onClick={onClose} aria-label="关闭事件详情"><X size={20}/></button></header>
+    <div className="detail-body">{error&&<p role="alert">{error}</p>}
+      <section className="detail-primary-section" aria-label="时间和地点"><h3><CalendarDays size={16}/>时间</h3><p>{flowEventDate(event)}</p>{event.location&&<p><MapPin size={15}/>{event.location}</p>}{Boolean(event.directTags?.length)&&<div className="direct-inline-tags">{event.directTags!.map(t=><span className="direct-tag" key={t}>{t}</span>)}</div>}{onEdit&&<button className="text-button" type="button" onClick={()=>setOpen(v=>!v)}>修改</button>}
+        {open&&<form className="compact-date-editor" onSubmit={e=>{e.preventDefault();void save()}}><label>名称<input value={title} onChange={e=>setTitle(e.target.value)} required/></label><label>开始<input type={/^\d{4}-\d{2}-\d{2}$/u.test(start)?'date':'datetime-local'} value={start.slice(0,16)} onChange={e=>setStart(e.target.value)}/></label><label>结束（可留空）<input type={/^\d{4}-\d{2}-\d{2}$/u.test(end)?'date':'datetime-local'} value={end.slice(0,16)} onChange={e=>setEnd(e.target.value)}/></label><label>地点<input value={location} onChange={e=>setLocation(e.target.value)}/></label><button type="submit" className="primary-button" disabled={busy}>保存修改</button></form>}
+      </section>
+      {event.description&&<section className="detail-primary-section" aria-label="备注"><h3>备注</h3><p>{event.description}</p></section>}
+      <details className="detail-more"><summary>更多</summary><section><h3>查看原文</h3>{evidenceQuotes.map(q=><p key={q}>{q}</p>)}{sourceTitles.length>0&&<small>{sourceTitles.join('、')}</small>}</section></details>
+    </div><footer className="detail-footer">{onDelete&&<button className="text-button danger-text" type="button" disabled={busy} onClick={()=>{void onDelete().catch(()=>setError('没有删除成功，请重试。'))}}><Trash2 size={16}/>删除</button>}<button type="button" className="primary-button" onClick={onClose}>完成</button></footer>
+  </aside></div>
+}
