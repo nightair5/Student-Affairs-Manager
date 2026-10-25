@@ -35,7 +35,7 @@ export function EventDetailPanel({ isolatedFacts, event, project, evidenceQuotes
           <div><dt>开始</dt><dd>{isolatedFacts?.startLabel ?? dateTime(event.startAt)}</dd></div>
           <div><dt>结束</dt><dd>{isolatedFacts?.endLabel ?? dateTime(event.endAt)}</dd></div>
           <div><dt>地点</dt><dd>{event.location || '未提供'}</dd></div>
-          <div><dt>时间状态</dt><dd>{event.needsConfirmation ? '待人工确认' : '已记录'}</dd></div>
+          <div><dt>{event.directTags?'事项状态':'时间状态'}</dt><dd>{event.directTags?.length?event.directTags.join(' · '):event.needsConfirmation ? '待人工确认' : '已记录'}</dd></div>
         </dl>
         <section className="source-original" aria-label="事件说明">
           <div className="source-section-heading"><CalendarDays size={17} /><h3>事件说明</h3></div>

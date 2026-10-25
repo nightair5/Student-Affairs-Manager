@@ -60,7 +60,7 @@ export function TaskCard({
   const materials = getMaterialProgress(task)
   const waitingFor = allTasks.filter(t => task.dependencyIds?.includes(t.id) && t.status !== '已完成')
   const unknownMaterials = task.materials.filter(m => m.status === 'unverified').length
-  const deadline = dateView ? { date: dateView.label, time: '', weekday: dateView.noDeadlineProven ? '不自动排期' : '' } : !task.deadline ? {date:recognitionOptionDisplay(task.sourceDeadlineLabel||'原文未说明截止'),time:'',weekday:'个人安排另列'} : deadlineParts(task.deadline)
+  const deadline = dateView ? { date: dateView.label, time: '', weekday: dateView.noDeadlineProven ? '不自动排期' : '' } : !task.deadline ? task.directDate?deadlineParts(task.directDate):{date:recognitionOptionDisplay(task.sourceDeadlineLabel||(task.directTags?'时间待定':'原文未说明截止')),time:'',weekday:task.directTags?'':'个人安排另列'} : deadlineParts(task.deadline)
   const priority = calculateTaskPriority(task, allTasks, new Date(), dateView ? { [task.id]: dateView } : undefined)
 
   return (
@@ -76,13 +76,14 @@ export function TaskCard({
       </div>
 
       <h3 className="task-card-title">{task.title}</h3>
+      {task.directTags?.length ? <div className="direct-inline-tags">{task.directTags.map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}</div> : null}
 
       <div className="task-timing-panel">
         <div className="task-deadline-block">
-          <span><Clock3 size={15} />截止时间</span>
+          <span><Clock3 size={15} />{task.directDate&&!task.deadline?'日期':'截止时间'}</span>
           <strong>{deadline.date}</strong>
           <em>{deadline.weekday} · {deadline.time}</em>
-          <small>{dateView ? dateView.noDeadlineProven ? '不自动生成提醒' : '' : task.deadline ? formatDeadlineDistance(task.deadline) : '不虚构截止时间'}</small>
+          <small>{dateView ? dateView.noDeadlineProven ? '不自动生成提醒' : '' : task.deadline ? formatDeadlineDistance(task.deadline) : task.directTags?'':'不虚构截止时间'}</small>
         </div>
         <div className="task-duration-block">
           <span>预计用时</span>
@@ -92,8 +93,8 @@ export function TaskCard({
       </div>
 
       <p className="priority-reason">排序理由：{priority.reasons.slice(0, 2).join('；')}</p>
-      {task.sourceWindowLabel&&<p className="task-source-window">原文办理时段：<strong>{task.sourceWindowLabel}</strong>（与截止、个人计划分开）</p>}
-      {task.plannedStart && <p>我的计划：{Number.isFinite(Date.parse(task.plannedStart)) ? new Intl.DateTimeFormat('zh-CN', {month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(task.plannedStart)) : '待核对'}（原文截止另列）</p>}
+      {task.sourceWindowLabel&&<p className="task-source-window">{task.directTags?'办理时段：':'原文办理时段：'}<strong>{task.sourceWindowLabel}</strong>{!task.directTags&&'（与截止、个人计划分开）'}</p>}
+      {task.plannedStart && !task.directDate && <p>我的计划：{Number.isFinite(Date.parse(task.plannedStart)) ? new Intl.DateTimeFormat('zh-CN', {month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(task.plannedStart)) : '待核对'}（原文截止另列）</p>}
 
       <div className="next-action">
         {waitingFor.length > 0 && <p role="status">等待先完成：{waitingFor.map(t => t.title).join('、')}</p>}

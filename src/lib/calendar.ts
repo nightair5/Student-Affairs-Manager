@@ -86,14 +86,14 @@ export function buildMonthCells(viewDate: Date, today = new Date()): MonthCell[]
 export function groupTasksByDate(tasks: Task[]): Map<string, Task[]> {
   const grouped = new Map<string, Task[]>()
   for (const task of tasks) {
-    const date = new Date(task.deadline)
+    const date = new Date(task.deadline || task.directDate || "")
     if (Number.isNaN(date.getTime())) continue
     const key = localDateKey(date)
     grouped.set(key, [...(grouped.get(key) ?? []), task])
   }
   for (const [key, items] of grouped) {
     grouped.set(key, items.sort((a, b) => (
-      new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
+      new Date(a.deadline || a.directDate || "").getTime() - new Date(b.deadline || b.directDate || "").getTime()
     )))
   }
   return grouped
@@ -140,8 +140,8 @@ export function buildUpcomingCalendarItems(
   const threshold = now.getTime()
   const taskItems: CalendarTimelineItem[] = tasks
     .filter((task) => task.status !== '已完成')
-    .filter((task) => Number.isFinite(new Date(task.deadline).getTime()) && new Date(task.deadline).getTime() >= threshold)
-    .map((task) => ({ kind: 'task', id: task.id, title: task.title, at: task.deadline, task }))
+    .filter((task) => Number.isFinite(new Date(task.deadline || task.directDate || "").getTime()) && new Date(task.deadline || task.directDate || "").getTime() >= threshold)
+    .map((task) => ({ kind: 'task', id: task.id, title: task.title, at: task.deadline || task.directDate || "", task }))
   const eventItems: CalendarTimelineItem[] = events
     .filter((event) => Boolean(event.startAt) && Number.isFinite(new Date(event.startAt!).getTime()) && new Date(event.startAt!).getTime() >= threshold)
     .map((event) => ({ kind: 'event', id: event.id, title: event.title, at: event.startAt!, event }))
@@ -159,13 +159,13 @@ function compactTitle(title: string, limit = 4): string {
 
 export function summarizeCalendarDay(tasks: Task[], events: Event[]): DaySummary | null {
   if (!tasks.length && !events.length) return null
-  const sorted = [...tasks].sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime())
+  const sorted = [...tasks].sort((a, b) => new Date(a.deadline || a.directDate || "").getTime() - new Date(b.deadline || b.directDate || "").getTime())
   const activeTasks = sorted.filter((task) => task.status !== '已完成')
   const activeItems = [
-    ...activeTasks.map((task) => ({ title: task.title, at: task.deadline })),
+    ...activeTasks.map((task) => ({ title: task.title, at: task.deadline || task.directDate || "" })),
     ...events.filter((event) => event.startAt).map((event) => ({ title: event.title, at: event.startAt! })),
   ].sort((a, b) => new Date(a.at).getTime() - new Date(b.at).getTime())
-  const fallback = sorted.map((task) => ({ title: task.title, at: task.deadline }))
+  const fallback = sorted.map((task) => ({ title: task.title, at: task.deadline || task.directDate || "" }))
   const focus = activeItems.length ? activeItems : fallback
   const timed=focus.filter(item=>!isDateOnly(item.at)),hasDateOnly=focus.some(item=>isDateOnly(item.at))
   const timeLabel = timed.length?(hasDateOnly?'含仅日期事项；':'')+workspaceTimeLabel(timed[0].at):'仅日期'

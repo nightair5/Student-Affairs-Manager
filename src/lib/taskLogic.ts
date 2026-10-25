@@ -63,6 +63,8 @@ export function calculateTaskPriority(
     else if(windowHours<=24){score+=70;risks.add('紧急');reasons.push('原文办理时段将在24小时内结束')}
     else if(windowHours<=72){score+=45;reasons.push('原文办理时段将在3天内结束')}
     else reasons.push('按原文办理时段安排，未另设截止')
+  } else if (!Number.isFinite(deadline) && task.directDate) {
+    reasons.push('按通知日期查看')
   } else if (!Number.isFinite(deadline) && dateViews?.[task.id]?.noDeadlineProven) {
     reasons.push('原文未说明截止时间，不自动排期')
   } else if (!Number.isFinite(deadline)) {
@@ -157,6 +159,7 @@ export function getExecutableTasks(
 ): Task[] {
   return tasks.filter((task) => {
     if (task.status === '已完成') return false
+    if (task.directTags?.length) return false
     const priority = calculateTaskPriority(task, tasks, now, dateViews)
     return !priority.isSnoozed && !priority.risks.includes('有依赖')
   })
@@ -195,6 +198,7 @@ export function getBlockedAndWaitingTasks(
   return tasks
     .filter((task) => task.status !== '已完成')
     .flatMap((task): DeferredExecutionTask[] => {
+      if (task.directTags?.length) return [{task,state:'waiting',reason:task.directTags.join(' · ')}]
       const priority = calculateTaskPriority(task, tasks, now, dateViews)
       if (priority.risks.includes('有依赖')) {
         const reason = priority.reasons.find((item) => item.includes('前置事项'))

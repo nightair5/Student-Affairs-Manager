@@ -19,6 +19,6 @@ export function EventCard({ event, onOpen }: { event: Event; onOpen: (event: Eve
     <h3 className="task-card-title">{event.title}</h3>
     <div className="suggestion-card-time"><span><Clock3 size={16} />活动时间</span><strong>{event.startAt ? eventMoment(event.startAt) : '开始时间未说明'}</strong><small>{event.endAt ? `结束：${eventMoment(event.endAt)}` : '结束时间未说明'}</small></div>
     <p className="dashboard-event-location"><MapPin size={16} />{event.location || '地点未说明'}</p>
-    {event.needsConfirmation && <p className="review-item-warning">时间仍需核对，请查看原文。</p>}
+    {event.directTags?.length?<div className="direct-inline-tags">{event.directTags.map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}</div>:event.needsConfirmation && <p className="review-item-warning">时间仍需核对，请查看原文。</p>}
   </article>
 }

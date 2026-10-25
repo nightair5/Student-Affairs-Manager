@@ -100,6 +100,7 @@ function taskGaps(w: WorkspaceV8, t: Task): string[] {
   const row = Array.isArray(semantic?.tasks) ? semantic.tasks.map(record).find(row => row?.id === temp) : undefined
   const condition = record(row?.condition), semantics = record(row?.semantics)
   const codes: string[] = []
+  if(t.legacyData?.directMode==='direct-mode-1'&&Array.isArray(t.legacyData.directTags)&&t.legacyData.directTags.length)codes.push('DIRECT_UNCERTAIN')
   if (condition?.value === 'unknown' && (!draft || sourceReadinessValue(w,draft.id,String(temp))===undefined)) codes.push('QUALIFICATION_UNKNOWN')
   // Already-confirmed native drafts may predate the eligibility review guard.
   // Do not schedule them as unconditional work merely because they were saved.
@@ -127,6 +128,7 @@ export function planBaseline(w: WorkspaceV8): string {
   })
 }
 const reasons: Record<string, string> = {
+  DIRECT_UNCERTAIN:'事项的条件或时间尚未确定，保留待办，暂不自动安排。',
   FIXED_EVENT_ENDED:'关联的固定活动已结束；保留原时间，不改排到今天。',FIXED_EVENT_ALREADY_ON_CALENDAR:'按原文固定活动时间行动；已在日历显示，不另排个人开工时间。',FIXED_EVENT_NEEDS_REVIEW:'关联活动的时间尚未完整确定；保留原文，不改排到其他时刻。',
   SOURCE_ACTION_TIME_NEEDS_REVIEW:'原文指定办理时间尚未确定，保留原文，不改排到其他时刻。',SOURCE_ACTION_TIME_OUTSIDE_PLAN:'原文指定办理时刻不在可用范围内或存在冲突；保留指定时间。',
   SOURCE_WINDOW_NEEDS_REVIEW:'原文办理窗口的起止或开放日期尚未完整确定，先保留待定；不会猜晚上、休息日也开放。', SOURCE_WINDOW_OUTSIDE_PLAN:'本次安排范围不在原文开放窗口内；保留待办，不改原文时间。',

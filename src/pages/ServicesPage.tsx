@@ -30,6 +30,8 @@ import {
 import type { ConnectionIntent, SyncIntegrationState, WebMonitor, WorkspaceData } from '../types'
 
 interface ServicesPageProps {
+  reviewBeforeAdd?: boolean
+  onChangeReviewBeforeAdd?: (value:boolean)=>Promise<void>
   workspace: WorkspaceData
   syncState: SyncIntegrationState
   onUpdateSyncState: (patch: Partial<SyncIntegrationState>) => void
@@ -47,7 +49,7 @@ function maskedEmail(value: string): string {
   return domain ? `${name.slice(0, 2)}***@${domain}` : '已隐藏'
 }
 
-export function ServicesPage({ workspace, syncState, onUpdateSyncState, webMonitors, onUpdateWebMonitors, connectionIntents, onUpdateConnectionIntents, onReplaceWorkspace }: ServicesPageProps) {
+export function ServicesPage({ reviewBeforeAdd, onChangeReviewBeforeAdd, workspace, syncState, onUpdateSyncState, webMonitors, onUpdateWebMonitors, connectionIntents, onUpdateConnectionIntents, onReplaceWorkspace }: ServicesPageProps) {
   const [endpoint, setEndpoint] = useState(syncState.endpoint)
   const [token, setToken] = useState('')
   const [operation, setOperation] = useState<OperationState>('idle')
@@ -220,6 +222,7 @@ export function ServicesPage({ workspace, syncState, onUpdateSyncState, webMonit
   }
 
   return <main className="page services-page">
+    {onChangeReviewBeforeAdd&&<section className="service-card direct-settings"><h1>设置</h1><details><summary>高级</summary><label><input type="checkbox" checked={Boolean(reviewBeforeAdd)} onChange={e=>{void onChangeReviewBeforeAdd(e.target.checked).catch(()=>setMessage('设置未能保存，请重试。'))}}/>添加前先核对</label><p>默认整理后直接加入待办和日程，可修改或撤销。开启后先查看识别建议，再决定添加。</p></details></section>}
     <header className="page-header">
       <div><span className="eyebrow">P2 · 安全服务边界</span><h1>服务接入</h1><p>真实服务默认关闭。密钥只属于服务端；浏览器令牌不持久化，任何覆盖都需要你再次确认。</p></div>
       <div className="header-stat"><ShieldCheck size={20} /><span><strong>{health?.status === 'ok' ? '可达' : '本机'}</strong> 安全边界</span></div>

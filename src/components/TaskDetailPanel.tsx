@@ -48,6 +48,7 @@ const materialStatusOptions: Array<{ value: MaterialStatus; label: string }> = [
 ]
 
 interface TaskDetailPanelProps {
+  onDelete?: ()=>Promise<void>
   pendingSave?: boolean
   semanticContent?: ReactNode
   readOnly?: boolean
@@ -62,6 +63,7 @@ interface TaskDetailPanelProps {
 }
 
 export function TaskDetailPanel({
+  onDelete,
   pendingSave,
   readOnly, dateView, semanticContent,
   task,
@@ -588,6 +590,7 @@ export function TaskDetailPanel({
 
         {task.status !== '已完成' && (
           <footer className="detail-footer">
+            {onDelete&&<button type="button" className="text-button" onClick={()=>{void onDelete().catch(()=>setNotificationFeedback('没有删除成功，请重试。'))}}>删除待办</button>}
             <button
               className="primary-button wide"
               type="button"

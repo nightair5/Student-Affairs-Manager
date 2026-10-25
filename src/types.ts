@@ -90,6 +90,9 @@ export interface HistoryEntry {
 }
 
 export interface Task {
+  /** Versioned direct-mode presentation; not a new canonical fact array. */
+  directTags?: string[]
+  directDate?: string
   id: string
   projectId?: string
   parentTaskId?: string
@@ -337,6 +340,7 @@ export interface WorkPackage {
 }
 
 export interface Event {
+  directTags?: string[]
   id: string
   projectId?: string
   milestoneId?: string

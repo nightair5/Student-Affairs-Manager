@@ -299,6 +299,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       id: item.id,
       projectId: item.projectId ?? undefined,
       parentTaskId: item.parentTaskId ?? undefined,
+      ...(item.legacyData?.directMode === 'direct-mode-1' ? {directTags:stringArray(item.legacyData.directTags),...(personalPlan?.normalizedValue?{directDate:personalPlan.normalizedValue}:{})} : {}),
       hierarchyType: item.parentTaskId ? 'subtask' : legacy.hierarchyType ?? 'task',
       milestoneId: item.milestoneId ?? undefined,
       workPackageId: item.workPackageId ?? undefined,
@@ -536,6 +537,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
 
   const events: LegacyEvent[] = workspace.events.map((item) => ({
     id: item.id,
+    ...(item.legacyData?.directMode==='direct-mode-1'?{directTags:stringArray(item.legacyData.directTags)}:{}),
     projectId: item.projectId ?? undefined,
     milestoneId: workspace.timePoints.find((point) => point.eventId === item.id)?.milestoneId ?? undefined,
     title: item.title,
@@ -544,7 +546,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     endAt: item.endTimePointId ? workspace.timePoints.find((point) => point.id === item.endTimePointId)?.normalizedValue ?? null : null,
     location: item.location ?? undefined,
     evidenceIds: stringArray(item.legacyData?.evidenceIds),
-    needsConfirmation: [item.startTimePointId, item.endTimePointId].filter(Boolean).some((id) => workspace.timePoints.find((point) => point.id === id)?.needsConfirmation),
+    needsConfirmation: item.legacyData?.directMode==='direct-mode-1'&&item.needsReview===true || [item.startTimePointId, item.endTimePointId].filter(Boolean).some((id) => workspace.timePoints.find((point) => point.id === id)?.needsConfirmation),
     createdAt: item.createdAt,
     updatedAt: item.updatedAt,
   }))

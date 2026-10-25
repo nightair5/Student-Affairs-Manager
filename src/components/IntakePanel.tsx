@@ -41,6 +41,7 @@ import { intakeFailureMessage } from '../lib/intakeError'
 import type { Priority, SourceReviewMetadata, SourceType, TaskCategory } from '../types'
 
 interface IntakePanelProps {
+  directMode?: boolean
   engineeringInput?: boolean
   realInputPanel?: import('react').ReactNode
   textOnly?: boolean
@@ -50,7 +51,7 @@ interface IntakePanelProps {
   smartExtractionStatus: 'checking' | 'connected' | 'unavailable'
 }
 
-export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClose, onSubmitIntake, onSaveSource, smartExtractionStatus }: IntakePanelProps) {
+export function IntakePanel({ directMode, engineeringInput, realInputPanel, textOnly, onClose, onSubmitIntake, onSaveSource, smartExtractionStatus }: IntakePanelProps) {
   const [sourceType, setSourceType] = useState<SourceType>('text')
   const [manualMode, setManualMode] = useState(false)
   const [content, setContent] = useState('')
@@ -340,9 +341,9 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
       <section ref={panelRef} className="intake-panel" role="dialog" aria-modal="true" aria-labelledby={titleId} onPaste={realInputPanel ? undefined : handlePaste}>
         <header className="intake-header">
           <div>
-            <span className="eyebrow">新事务 · 第 1 步</span>
+            <span className="eyebrow">{directMode?'添加通知':'新事务 · 第 1 步'}</span>
             <h2 id={titleId}>粘贴通知，整理成待办</h2>
-            <p>先看任务和事件，确认后再添加。</p>
+            <p>{directMode?'整理后直接加入待办和日程，可修改或撤销。':'先看任务和事件，确认后再添加。'}</p>
           </div>
           <button className="icon-button" type="button" onClick={onClose} aria-label="关闭录入面板">
             <X size={20} />
@@ -350,7 +351,7 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
         </header>
         {realInputPanel ?? <>{textOnly && <p>仅测试旧匿名工程通知文字；文件、图片、链接、手动任务本轮未测量。</p>}
         <form className="intake-body" onSubmit={handleParse}>
-          <div className="intake-steps" aria-label="录入流程"><span className="active">1 放入原文</span><span>2 核对拆分</span><span>3 回到今日</span></div>
+          {!directMode&&<div className="intake-steps" aria-label="录入流程"><span className="active">1 放入原文</span><span>2 核对拆分</span><span>3 回到今日</span></div>}
           <div className="source-tabs" role="tablist" aria-label="选择来源">
             <button type="button" className={!manualMode && sourceType === 'text' ? 'active' : ''} onClick={() => selectSourceType('text')}>
               <FileText size={17} />粘贴消息
@@ -502,14 +503,14 @@ export function IntakePanel({ engineeringInput, realInputPanel, textOnly, onClos
               : smartExtractionStatus === 'connected'
                 ? multimodalConsent
                   ? ' 本次已显式允许发送当前图片/所选页面与 OCR 文字；实验模型的结果确认前不会创建任务。'
-                  : ' 默认点击整理只发送本次粘贴或本机提取的文字，不发送图片或文件本体；结果确认前不会创建任务。'
+                  : directMode ? ' 点击整理后自动添加待办和日程；只发送本次文字，添加后可修改或撤销。' : ' 默认点击整理只发送本次粘贴或本机提取的文字，不发送图片或文件本体；结果确认前不会创建任务。'
                 : ' DeepSeek 未配置，当前内容不会发往云端，将生成可编辑的本地规则建议。'}
           </p></div>
           <div className="intake-submit-area" aria-busy={isParsing}>
             {submissionError && <div className="intake-submit-error" role="alert"><strong>没有整理成功</strong><p>{intakeFailureMessage(submissionError)}</p><details><summary>查看详细原因</summary><p>{submissionError}</p></details></div>}
-            {isParsing && <p role="status" className="intake-progress-message">正在整理任务、时间和地点，请稍候。确认前不会添加到待办。</p>}
+            {isParsing && <p role="status" className="intake-progress-message">{directMode?'正在整理并添加，请稍候。':'正在整理任务、时间和地点，请稍候。确认前不会添加到待办。'}</p>}
             <button className="primary-button wide" type="submit" disabled={!canSubmitWithConsent || isParsing || isSavingSource}>
-              {isParsing ? <><LoaderCircle className="spin" size={18} />正在整理…</> : <><Sparkles size={18} />{submissionError ? '重试整理' : '识别任务和事件'}</>}
+              {isParsing ? <><LoaderCircle className="spin" size={18} />正在整理…</> : <><Sparkles size={18} />{submissionError ? '重试整理' : directMode ? '整理' : '识别任务和事件'}</>}
             </button>
           </div>
         </form></>}

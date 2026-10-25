@@ -7,6 +7,7 @@ import type {WorkspaceV8} from '../domain/v2/types'
 import { safeIntakeError } from '../lib/workspaceRecoveryUi'
 
 interface InboxPageProps {
+  onDirectAdd?: (draftId:string)=>Promise<void>
   canonicalWorkspace?:WorkspaceV8
   drafts: ExtractionDraft[]
   sources: Source[]
@@ -23,6 +24,7 @@ interface InboxPageProps {
 }
 
 export function InboxPage({
+  onDirectAdd,
   canonicalWorkspace,
   drafts,
   sources,
@@ -86,22 +88,22 @@ export function InboxPage({
     <main className="page">
       <header className="page-header">
         <div>
-          <span className="eyebrow">来源先保存，确认后入库</span>
-          <h1>{view === 'needs_review' ? '待确认' : '收件箱'}</h1>
+          <span className="eyebrow">{onDirectAdd?'通知与添加记录':'来源先保存，确认后入库'}</span>
+          <h1>{view === 'needs_review' ? onDirectAdd?'待处理':'待确认' : '收件箱'}</h1>
           <p>{view === 'needs_review'
-            ? '这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。'
-            : '查看每份来源的真实处理状态。失败不会删除来源；重新识别会沿用原来源与当前版本。'}</p>
+            ? onDirectAdd?'以前留下的通知可以一键加入待办，添加后仍可修改或撤销。':'这里只显示已经形成建议、仍等待你核对的来源；确认前不会创建正式任务。'
+            : onDirectAdd?'通知与添加记录都在这里。':'查看每份来源的真实处理状态。失败不会删除来源；重新识别会沿用原来源与当前版本。'}</p>
         </div>
         <div className="header-stat"><FileSearch size={20} /><span><strong>{attentionCount}</strong> 份需关注</span></div>
       </header>
 
       <div className="inbox-actions">
         <div className="inbox-view-tabs" role="group" aria-label="收件箱视图">
-          <button type="button" className={view === 'all' ? 'active' : ''} aria-pressed={view === 'all'} onClick={() => onChangeView('all')}>全部来源</button>
-          <button type="button" className={view === 'needs_review' ? 'active' : ''} aria-pressed={view === 'needs_review'} onClick={() => onChangeView('needs_review')}>待确认 {pendingDrafts.length}</button>
+          <button type="button" className={view === 'all' ? 'active' : ''} aria-pressed={view === 'all'} onClick={() => onChangeView('all')}>{onDirectAdd?'全部通知':'全部来源'}</button>
+          <button type="button" className={view === 'needs_review' ? 'active' : ''} aria-pressed={view === 'needs_review'} onClick={() => onChangeView('needs_review')}>{onDirectAdd?'待处理':'待确认'} {pendingDrafts.length}</button>
         </div>
         <button className="secondary-button" type="button" onClick={onOpenManual}><PenLine size={16} />新建手动来源</button>
-        {pendingDrafts.length > 0 && <label className="select-all-drafts">
+        {!onDirectAdd&&pendingDrafts.length > 0 && <label className="select-all-drafts">
           <input
             type="checkbox"
             checked={selected.length === pendingDrafts.length}
@@ -109,7 +111,7 @@ export function InboxPage({
           />
           选择全部待核对
         </label>}
-        {selected.length > 0 && <div className="batch-actions" role="group" aria-label={`已选择 ${selected.length} 份草稿`}>
+        {!onDirectAdd&&selected.length > 0 && <div className="batch-actions" role="group" aria-label={`已选择 ${selected.length} 份草稿`}>
           <span>已选 {selected.length} 份</span>
           <button type="button" onClick={() => runBatch(onConfirmDrafts)}><CheckCheck size={15} />批量确认</button>
           <button type="button" onClick={() => runBatch(onArchiveDrafts)}><Archive size={15} />批量归档</button>
@@ -121,29 +123,33 @@ export function InboxPage({
           const { source, draft, counts } = item
           const draftSelectable = Boolean(draft && selectableIds.includes(draft.id))
           const retrying = retryingSourceId === source.id
+          const historical=canonicalWorkspace?.extractionDrafts.find(d=>d.id===draft?.id)?.legacyData?.storedDraftRecovery
+          const historyBlocked=historical&&typeof historical==='object'&&!Array.isArray(historical)&&historical.mode==='isolated_historical_result'
+          const undone=Boolean(canonicalWorkspace?.sources.find(s=>s.id===source.id)?.legacyData?.directUndoneAt)
           return <article className={`task-card inbox-card inbox-status-${item.status}`} key={source.id} data-source-status={item.status}>
-            {draftSelectable && draft && <label className="draft-selector">
+            {!onDirectAdd&&draftSelectable && draft && <label className="draft-selector">
               <input type="checkbox" checked={selected.includes(draft.id)} onChange={() => toggleSelected(draft.id)} />
               <span className="sr-only">选择 {source.title}</span>
             </label>}
             <div className="task-card-top">
-              <span className="category-label">{item.modelLabel ?? sourceTypeLabels[source.type]}</span>
-              <span className={`source-workflow-status status-${item.status}`}>{item.statusLabel}</span>
+              <span className="category-label">{onDirectAdd?'通知':item.modelLabel ?? sourceTypeLabels[source.type]}</span>
+              <span className={`source-workflow-status status-${item.status}`}>{onDirectAdd?undone?'已撤销':item.status==='confirmed'?'已添加':item.status==='needs_review'?'可加入待办':item.statusLabel:item.statusLabel}</span>
             </div>
             <h2>{source.title}</h2>
-            <p className="task-description">{source.contentPreview || '当前来源没有可显示的文字摘要。'}</p>
-            <p className="source-status-description">{item.statusDescription}</p>
-            <dl className="inbox-source-meta">
+            {!onDirectAdd&&<p className="task-description">{source.contentPreview || '当前来源没有可显示的文字摘要。'}</p>}
+            {!onDirectAdd&&<p className="source-status-description">{item.statusDescription}</p>}
+            {!onDirectAdd&&<dl className="inbox-source-meta">
               <div><dt>项目</dt><dd>{item.projectLabel ?? '未形成项目建议'}</dd></div>
               <div><dt>实体</dt><dd>{item.modelLabel?.includes('工程夹具')&&item.status==='needs_review'
                 ? `${counts.tasks} 任务 · 独立事件及时间请在核对页查看`
                 : `${counts.tasks} 任务 · ${counts.materials} 材料 · ${counts.timePoints} 时间 · ${counts.events} 活动`}</dd></div>
-            </dl>
+            </dl>}
             {item.errorMessage && <p className="inline-error" role="alert">{safeIntakeError(new Error(item.errorMessage), '这份来源尚未整理成功，原文仍在；可重新整理或手工补充。')}</p>}
             {actionFailure?.sourceId === source.id && <p className="inline-error" role="alert">{actionFailure.message}</p>}
             {item.canRetry && (!onRetrySource || !onManualSupplementSource) && <p className="source-action-note">重试接线未完成；系统不会用“新建来源”代替重试。</p>}
             <div className="task-card-actions inbox-card-actions">
-              {item.canOpenDraft && draft && <button className="secondary-button" type="button" onClick={() => onOpenDraft(draft.id)}><ListChecks size={16} />{counts.pending ? `核对 ${counts.pendingTasks} 项任务、${counts.pendingEvents} 个事件` : item.status === 'confirmed' ? '查看已确认事实' : '核对信息与原文'}</button>}
+              {onDirectAdd&&!historyBlocked&&draft&&['needs_review','failed','partially_confirmed'].includes(item.status)&&<button className="primary-button" type="button" onClick={()=>{setActionFailure(null);void onDirectAdd(draft.id).catch(()=>setActionFailure({sourceId:source.id,message:'没有添加成功，通知仍保留。请重试。'}))}}>一键加入待办</button>}
+              {!onDirectAdd&&item.canOpenDraft && draft && <button className="secondary-button" type="button" onClick={() => onOpenDraft(draft.id)}><ListChecks size={16} />{counts.pending ? `核对 ${counts.pendingTasks} 项任务、${counts.pendingEvents} 个事件` : item.status === 'confirmed' ? '查看已确认事实' : '核对信息与原文'}</button>}
               {item.canRetry && <button
                 className="secondary-button"
                 type="button"
@@ -158,7 +164,7 @@ export function InboxPage({
                 disabled={!onManualSupplementSource || retrying}
                 title={!onManualSupplementSource ? '需要连接既有来源手工补充入口' : undefined}
               ><SquarePen size={16} />手工补充</button>}
-              <button className="text-button" type="button" onClick={() => setSelectedSourceId(source.id)}><Eye size={15} />查看来源</button>
+              {!onDirectAdd&&<button className="text-button" type="button" onClick={() => setSelectedSourceId(source.id)}><Eye size={15} />查看来源</button>}
               {item.canOpenDraft && draft && <button className="text-button" type="button" onClick={() => onArchiveDrafts([draft.id])}><Archive size={15} />归档</button>}
             </div>
           </article>

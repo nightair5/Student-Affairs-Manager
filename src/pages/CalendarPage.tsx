@@ -213,11 +213,11 @@ export function CalendarPage({ preserveDateOnlyPrecision = false, personalPlans,
                 : onOpenEvent
                   ? <button className="agenda-item event" key={`event:${item.id}`} type="button" onClick={() => onOpenEvent(item.event)}>
                       <span className="agenda-time">{displayTime(item.at)}</span>
-                      <span className="agenda-copy"><strong>{item.title}</strong><small><Flag size={13} />事件{item.event.location ? ` · ${item.event.location}` : ''}{item.event.needsConfirmation ? ' · 时间待核对' : ''}</small></span>
+                      <span className="agenda-copy"><strong>{item.title}</strong><small><Flag size={13} />事件{item.event.location ? ` · ${item.event.location}` : ''}{item.event.directTags?.length?` · ${item.event.directTags.join(' · ')}`:item.event.needsConfirmation ? ' · 时间待核对' : ''}</small></span>
                     </button>
                   : <article className="agenda-item event" key={`event:${item.id}`}>
                       <span className="agenda-time">{displayTime(item.at)}</span>
-                      <span className="agenda-copy"><strong>{item.title}</strong><small><Flag size={13} />事件{item.event.location ? <><MapPin size={12} />{item.event.location}</> : null}{item.event.needsConfirmation ? ' · 时间待核对' : ''}</small></span>
+                      <span className="agenda-copy"><strong>{item.title}</strong><small><Flag size={13} />事件{item.event.location ? <><MapPin size={12} />{item.event.location}</> : null}{item.event.directTags?.length?` · ${item.event.directTags.join(' · ')}`:item.event.needsConfirmation ? ' · 时间待核对' : ''}</small></span>
                     </article>)}</div>
             : <div className="calendar-empty-agenda"><strong>{agendaMode === 'selected' ? '所选日期没有事项' : '没有即将到来的事项'}</strong><p>确认后的任务和事件会按日期进入这里。</p></div>}
           {undatedEvents.length > 0 && <section className="calendar-undated-events" aria-labelledby="undated-events-title">

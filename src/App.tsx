@@ -3,6 +3,8 @@ import type { WorkspaceV8 } from './domain/v2/types'
 import { storedPersonalPlans } from './domain/v2/personalPlanD27'
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
+import { DirectResultList, RecentDirectAdditions } from './components/DirectResultList'
+import { commitDirectDraft, deleteDirectItem, directDuplicate, editDirectItem, recentDirectBatches, undoDirectBatch } from './domain/v2/directIntake'
 import { EventDetailPanel } from './components/EventDetailPanel'
 import { IntakePanel } from './components/IntakePanel'
 import { OnboardingGuide } from './components/OnboardingGuide'
@@ -35,7 +37,7 @@ import {
   workspaceLoadDiagnosticV2 as workspaceLoadDiagnostic,
   workspacePersistenceRevision,
 } from './lib/workspaceRecoveryUi'
-import { markOnboardingComplete, shouldShowOnboarding } from './lib/onboarding'
+import { markOnboardingComplete } from './lib/onboarding'
 import { CapturePersistenceService } from './domain/v2/capture'
 import { retryExistingSourceRecognition } from './domain/v2/sourceRetry'
 import { mapSourceWorkflowItem, selectPendingReviewItems } from './lib/sourceWorkflow'
@@ -85,6 +87,8 @@ const defaultReviewSession = new D20ReviewSessionRepository(ordinaryStore, defau
 
 /** Replaces transport/provider only; App, capture, review and DomainCommitPlan remain the ordinary product path. */
 export interface OrdinaryAppEnvironment {
+  /** Explicit opt-in for new direct-mode engineering tests; frozen review replays retain their original policy. */
+  directMode?: boolean
   canonical: CanonicalWorkspaceRepository
   viewRepository: IndexedDbWorkspaceRepository
   reader: CanonicalWorkspaceRepository
@@ -215,13 +219,23 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const [workspaceLoadRetrying, setWorkspaceLoadRetrying] = useState(false)
   const [workspaceRecovery, setWorkspaceRecovery] = useState<WorkspaceRecoveryState | null>(null)
   const [intakeOpen, setIntakeOpen] = useState(false)
-  const [guideOpen, setGuideOpen] = useState(() => runtime || ordinaryEnvironment ? false : shouldShowOnboarding())
+  const [guideOpen, setGuideOpen] = useState(false)
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null)
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null)
+  const [directBatchId, setDirectBatchId] = useState<string | null>(null)
+  const [directReadbackPending, setDirectReadbackPending] = useState<string | null>(null)
   const [draftSourceSnapshot, setDraftSourceSnapshot] = useState<{ draftId: string; sourceVersionId: string; rawText: string } | null>(null)
   const [supplementSourceId, setSupplementSourceId] = useState<string | null>(null)
-  const [notice, setNotice] = useState<{ text: string; undo?: () => void } | null>(null)
+  const [notice, setNotice] = useState<{ text: string; undo?: () => void; direct?: boolean } | null>(null)
+  useEffect(() => {
+    if (!notice?.direct) return
+    const timer = setTimeout(() => setNotice(current => current === notice ? null : current), 10_000)
+    return () => clearTimeout(timer)
+  }, [notice])
+  const directMode = !runtime && (ordinaryEnvironment ? ordinaryEnvironment.directMode === true : ordinaryCanonical?.preferences.legacyData?.directReviewBeforeAdd !== true)
+  const directBatches = ordinaryCanonical ? recentDirectBatches(ordinaryCanonical) : []
+  const activeDirectBatch = directBatches.find(b => b.id === directBatchId && b.status === 'active')
   const [ordinarySaveError, setOrdinarySaveError] = useState<{draftId:string;text:string}|null>(null)
   const [smartExtractionStatus, setSmartExtractionStatus] = useState<'checking' | 'connected' | 'unavailable'>('checking')
   const [notificationPermission, setNotificationPermission] =
@@ -660,6 +674,24 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     setNotice({ text: message })
   }
 
+  const undoDirect = async (batchId: string) => {
+    await undoDirectBatch(canonicalWorkspaceRepository, batchId)
+    await refreshOrdinary()
+    if (directBatchId === batchId) setDirectBatchId(null)
+    setNotice({text:'本次添加已撤销，之前的事项保持不变。',direct:true})
+  }
+  const addDirect = async (draftId: string) => {
+    const receipt = await commitDirectDraft(canonicalWorkspaceRepository,draftId)
+    try {
+      const readback = await independentReader.load()
+      if (!readback || receipt.batch?.status === 'active' && receipt.batch.items.some(i => ![...readback.tasks,...readback.events].some(e => e.id === i.id))) throw Error('DIRECT_READBACK_PENDING')
+    } catch(error) {setDirectReadbackPending(receipt.batch?.id??draftId);throw Error('DIRECT_READBACK_PENDING',{cause:error})}
+    setDirectReadbackPending(null)
+    await refreshOrdinary()
+    setIntakeOpen(false);setSelectedDraftId(null);setCurrentPage('today');setDirectBatchId(receipt.batch?.id??null)
+    const batch=receipt.batch
+    setNotice({text:receipt.duplicate?'这条通知已添加过':`已添加 ${batch?.items.length??0} 项`,direct:true,...(batch?{undo:()=>{void undoDirect(batch.id).catch(()=>setNotice({text:'未能撤销，原有内容保留。请从最近添加重试。'}))}}:{})})
+  }
   const handleIntakeInput = async (input: IntakeInput) => {
     if (runtime?.realInput) {
       if (input.sourceType !== 'text' || input.manualSuggestion || input.multimodal || input.url || input.fileName) { rejectExperimentAction(); return }
@@ -682,6 +714,16 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       throw new Error(`${workspaceLoadFailureText(error)} 新通知尚未保存，输入已保留。`, { cause: error })
     }
     if (storageError || workspaceRecovery) throw new Error('本机数据正在保护中，输入已保留。请先完成数据恢复，再整理新通知。')
+    if (directMode) {
+      const current=await canonicalWorkspaceRepository.load()
+      const duplicate=current&&directDuplicate(current,input.content)
+      if(duplicate){await refreshOrdinary();setIntakeOpen(false);setNotice({text:'这条通知已添加过',direct:true});return}
+      const pending=current?.extractionDrafts.find(d=>{
+        const run=current.recognitionRuns.find(r=>r.id===d.recognitionRunId),version=run&&current.sourceVersions.find(v=>v.id===run.sourceVersionId)
+        return d.result&&['needs_review','failed','partially_confirmed'].includes(d.status)&&version?.rawText?.replace(/\r\n?/gu,'\n').trim()===input.content.replace(/\r\n?/gu,'\n').trim()
+      })
+      if(pending){await addDirect(pending.id);return}
+    }
     const localResult = createIntakeResult(input)
     const localRecognition = buildLocalRecognition({
       sourceType: input.sourceType,
@@ -756,6 +798,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         const stored = await canonicalWorkspaceRepository.load()
         const existing = stored?.extractionDrafts.find(d => d.id === handle.draftId)
         if (existing?.result) {
+          if(directMode){await addDirect(handle.draftId);return}
           const saved = await workspaceRepository.load()
           if (saved) applyWorkspaceView(saved)
           setOrdinaryCanonical(stored)
@@ -783,6 +826,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       }
       const sourceInformation=projectSourceInformation(assembled.result,{sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId,text:input.content})
       await canonicalWorkspaceRepository.transaction(w=>({...w,recognitionRuns:w.recognitionRuns.map(r=>r.id===handle.recognitionRunId?{...r,legacyData:{...r.legacyData,originalRecognitionResult:JSON.parse(JSON.stringify(recognitionResult))}}:r),extractionDrafts:w.extractionDrafts.map(d=>d.id===handle.draftId?{...d,result:assembled.result,legacyData:{...d.legacyData,...(semanticSidecar?{semanticSidecar:JSON.parse(JSON.stringify(semanticSidecar))}:{}),firstSuggestionDisplayed:JSON.parse(JSON.stringify(assembled.result)),firstSourceInformationDisplayed:JSON.parse(JSON.stringify(sourceInformation)),firstSuggestionAssembly:JSON.parse(JSON.stringify(assembled.audit)),materialChannelGrounding:JSON.parse(JSON.stringify(assembled.materialChannelAudit)),sourceWindowGrounding:JSON.parse(JSON.stringify(assembled.sourceWindowGrounding))}}:d)}))
+      if(directMode){await addDirect(handle.draftId);return}
       const saved = await workspaceRepository.load()
       if (saved) applyWorkspaceView(saved)
       setOrdinaryCanonical(await canonicalWorkspaceRepository.load())
@@ -799,6 +843,21 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       )
     } catch (error) {
       const reason = safeIntakeError(error, '整理暂时没有完成')
+      if(directMode){
+        // Recognition failure can use the preserved text. Storage/commit and
+        // post-commit read failures must never be mistaken for model failures.
+        if(!(error instanceof Error&&error.message==='DIRECT_READBACK_PENDING')){
+          const w=await canonicalWorkspaceRepository.load().catch(()=>null)
+          const source=w?.sources.find(s=>s.legacyData?.captureOperationId===captureRequest.operationId)
+          const failed=w?.recognitionRuns.find(r=>r.sourceVersionId===source?.currentVersionId&&r.status==='failed')
+          const draft=failed&&w?.extractionDrafts.find(d=>d.recognitionRunId===failed.id&&!d.result)
+          if(draft){try{await addDirect(draft.id);setNotice(current=>current?{...current,text:current.text+' · 本次使用本机整理'}:current);return}catch(fallbackError){if(fallbackError instanceof Error&&fallbackError.message==='DIRECT_READBACK_PENDING'){await refreshOrdinary().catch(()=>undefined);throw new Error('内容已添加，暂时未能读回。请使用重新读取，不会重复添加。',{cause:fallbackError})}}}
+        }
+        await refreshOrdinary().catch(()=>undefined)
+        const message=error instanceof Error&&error.message==='DIRECT_READBACK_PENDING'?'内容已添加，暂时未能读回。请使用重新读取，不会重复添加。':'这次未能完成添加，输入仍保留。请重试；已保存的内容不会重复添加。'
+        setNotice({text:message})
+        throw new Error(message,{cause:error})
+      }
       if (useCloudRecognition && !ordinaryEnvironment) setSmartExtractionStatus('unavailable')
       try {
         const canonical = await canonicalWorkspaceRepository.load()
@@ -1549,7 +1608,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       case 'today':
         return (
           <DashboardPage
-            planning={!runtime && ordinaryCanonical ? <PersonalPlanPanel workspace={ordinaryCanonical} repository={canonicalWorkspaceRepository} reader={independentReader} store={ordinaryEnvironment?.store ?? ordinaryStore} onReload={refreshOrdinary}/> : undefined}
+            directMode={directMode}
+            recentAdditions={directMode&&ordinaryCanonical?<RecentDirectAdditions workspace={ordinaryCanonical} batches={directBatches} onUndo={undoDirect} onOpen={setDirectBatchId}/>:undefined}
+            planning={!runtime && ordinaryCanonical ? <PersonalPlanPanel workspace={ordinaryCanonical} repository={canonicalWorkspaceRepository} reader={independentReader} store={ordinaryEnvironment?.store ?? ordinaryStore} onReload={()=>refreshOrdinary()}/> : undefined}
             engineeringInput={Boolean(ordinaryEnvironment)}
             engineeringInputLabel={ordinaryEnvironment?.recognitionMetadata?.().responseRole==='RECORDED_MODEL_ENGINEERING_REPLAY'?'真实回答固定回放 · 不新增模型请求':undefined}
             realInput={runtime?.realInput}
@@ -1582,13 +1643,14 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             {isolatedSnapshot.extractionDrafts.filter(d=>d.status==='failed'&&typeof (d.legacyData?.mainline05Failure as {response?:unknown}|undefined)?.response==='string').map(d=><button className="secondary-button" type="button" key={d.id} onClick={()=>void selectDraftForReview(d.id)}>
               纠错：{sources.find(s=>s.id===drafts.find(view=>view.id===d.id)?.sourceId)?.title??'失败通知'}</button>)}</section>}
           <InboxPage
+          onDirectAdd={directMode?addDirect:undefined}
           canonicalWorkspace={ordinaryCanonical??isolatedSnapshot??undefined}
           drafts={drafts}
           sources={sources}
           view={inboxView}
           onChangeView={setInboxView}
           onOpenDraft={(draftId) => { void selectDraftForReview(draftId) }}
-          onConfirmDrafts={(draftIds) => { if (runtime) void confirmExperiment(draftIds); else draftIds.forEach(handleConfirmAll) }}
+          onConfirmDrafts={async (draftIds) => { if (runtime) await confirmExperiment(draftIds); else for(const id of draftIds) await handleConfirmAll(id) }}
           onArchiveDrafts={handleArchiveDrafts}
           onOpenManual={() => setIntakeOpen(true)}
           onRetrySource={handleRetrySource}
@@ -1670,6 +1732,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         return <ReportsPage tasks={tasks} projects={projects} />
       case 'services':
         return <ServicesPage
+          reviewBeforeAdd={!directMode}
+          onChangeReviewBeforeAdd={!runtime?async value=>{await canonicalWorkspaceRepository.transaction(w=>({...w,preferences:{...w.preferences,legacyData:{...w.preferences.legacyData,directReviewBeforeAdd:value}}}));await refreshOrdinary()}:undefined}
           workspace={workspace}
           syncState={integrations.sync}
           webMonitors={integrations.webMonitors}
@@ -1713,10 +1777,12 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         pendingReviewCount={pendingReviewCount}
         onNavigate={(page) => {
           if (runtime && !['today', 'inbox', 'tasks', 'calendar'].includes(page)) { rejectExperimentAction(); return }
+          setDirectBatchId(null)
           if (page === 'inbox') setInboxView('all')
           setCurrentPage(page)
         }}
         onOpenPendingReview={() => {
+          setDirectBatchId(null)
           setInboxView('needs_review')
           setCurrentPage('inbox')
         }}
@@ -1724,6 +1790,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         onOpenGuide={() => runtime ? rejectExperimentAction() : setGuideOpen(true)}
       />
       <div id="main-content" className="content-shell" tabIndex={-1}>
+        {directReadbackPending&&<section className="workspace-storage-protection direct-readback-recovery" role="alert"><strong>内容已添加，暂时未能显示</strong><p>通知和保存记录仍在。重新读取即可，不会重复添加。</p><button type="button" className="primary-button" onClick={()=>{void independentReader.load().then(async w=>{if(!w)throw Error('DIRECT_READBACK_PENDING');await refreshOrdinary();setDirectBatchId(recentDirectBatches(w).find(b=>b.id===directReadbackPending||b.draftId===directReadbackPending)?.id??null);setDirectReadbackPending(null);setIntakeOpen(false);setNotice({text:'已重新显示保存的事项，没有重复添加。',direct:true})}).catch(()=>setNotice({text:'暂时仍未能读取，请稍后重试；已保存的数据保持。'}))}}>重新读取</button></section>}
         {storageError && <section className="workspace-storage-protection" role="alert">
           <strong>{workspaceLoadFailure ? '先恢复本机数据，再继续整理' : '这次更改尚未保存'}</strong>
           <p>{workspaceLoadFailure ?? '请保留当前页面和输入。存储暂时不可用，已保存的数据不会被清空；不要继续编辑或直接刷新。'}</p>
@@ -1774,13 +1841,14 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
               <p>这不代表任务和通知为空或已删除。请先使用上方的备份与恢复操作，打开后再继续整理。</p>
               <p>已经输入的内容会保留在当前页面，请不要清空浏览器数据。</p>
             </main>}
-            <div hidden={Boolean(workspaceLoadFailure)}>{renderPage()}</div>
+            <div hidden={Boolean(workspaceLoadFailure)||Boolean(activeDirectBatch)}>{renderPage()}</div>
+            {!workspaceLoadFailure&&activeDirectBatch&&ordinaryCanonical&&<DirectResultList key={activeDirectBatch.id} workspace={ordinaryCanonical} batch={activeDirectBatch} onClose={()=>setDirectBatchId(null)} onUndo={()=>undoDirect(activeDirectBatch.id)} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)}/>}
           </Suspense>
         </PageLoadBoundary>
       </div>
 
       {!workspaceReady && <div className="workspace-status" role="status">正在恢复本机工作区…</div>}
-      {notice && <div className="app-toast" role="status"><span>{notice.text}</span>{notice.undo && <button type="button" onClick={() => { notice.undo?.(); setNotice(null) }}>撤销</button>}<button type="button" onClick={() => setNotice(null)} aria-label="关闭提示">×</button></div>}
+      {notice && <div className={`app-toast${notice.direct?' direct-toast':''}`} role="status"><span>{notice.text}</span>{notice.undo && <button type="button" onClick={() => { notice.undo?.(); setNotice(null) }}>撤销</button>}<button type="button" onClick={() => setNotice(null)} aria-label="关闭提示">×</button></div>}
 
       {workspaceRecovery && <WorkspaceRecoveryPanel
         backupId={workspaceRecovery.backupId}
@@ -1798,6 +1866,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
 
       {!workspaceRecovery && intakeOpen && (
         <IntakePanel
+          directMode={directMode}
           engineeringInput={Boolean(ordinaryEnvironment)}
           realInputPanel={RealInputPanel && isolatedSnapshot ? <RealInputPanel workspace={isolatedSnapshot}
             initialText={realInputInitialText} onSaved={refreshExperiment}
@@ -1872,8 +1941,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       )}
       {!workspaceRecovery && selectedTask && (
         <TaskDetailPanel
+          onDelete={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedTask.id))?async()=>{await deleteDirectItem(canonicalWorkspaceRepository,selectedTask.id);await refreshOrdinary();setSelectedTaskId(null)}:undefined}
           pendingSave={Boolean(viewConflict)}
-          semanticContent={runtime?.semantic && isolatedSnapshot ? runtime.semantic.taskFacts(isolatedSnapshot, selectedTask.id) : undefined}
+          semanticContent={runtime?.semantic && isolatedSnapshot ? runtime.semantic.taskFacts(isolatedSnapshot, selectedTask.id) : selectedTask.directTags&&ordinaryCanonical?<details className="direct-audit-detail"><summary>识别与添加记录</summary>{ordinaryCanonical.extractionDrafts.filter(d=>recentDirectBatches(ordinaryCanonical).some(b=>b.draftId===d.id&&b.items.some(i=>i.id===selectedTask.id))).map(d=>{const run=ordinaryCanonical.recognitionRuns.find(r=>r.id===d.recognitionRunId);return <div key={d.id}><p>识别服务：{run?.modelName??'本地规则'}；生成版本：{run?.promptVersion??'未记录'}</p><details><summary>查看识别记录</summary><pre>{JSON.stringify({result:d.result,audit:d.legacyData?.directConversion},null,2)}</pre></details></div>})}</details>:undefined}
           readOnly={Boolean(runtime)}
           dateView={dateViews?.[selectedTask.id]}
           key={selectedTask.id}
