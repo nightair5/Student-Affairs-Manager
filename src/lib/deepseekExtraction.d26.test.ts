@@ -55,4 +55,16 @@ describe('D26 selected cloud extraction scope', () => {
     expect(fetchMock).toHaveBeenCalledTimes(1)
     expect(fetchMock.mock.calls[0]![0]).toBe('/api/deepseek/status')
   })
+
+  it('bounds an unanswered initial status check and never POSTs text after its timeout', async () => {
+    const fetchMock=vi.fn<typeof fetch>((_url,options)=>new Promise((_resolve,reject)=>{
+      options?.signal?.addEventListener('abort',()=>reject(new DOMException('Timed out','TimeoutError')),{once:true})
+    }))
+    vi.stubGlobal('fetch',fetchMock)
+    const service=new ProxyDeepSeekExtractionService('/api/deepseek',25)
+    expect(await service.status()).toEqual({configured:false})
+    await expect(service.recognize(input,workspace)).rejects.toThrow('来源内容未发送')
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(fetchMock.mock.calls[0]![0]).toBe('/api/deepseek/status')
+  })
 })

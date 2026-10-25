@@ -242,6 +242,13 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const historicalDirectIds=ordinaryCanonical?historicalDirectDraftIds(ordinaryCanonical):[]
   const [ordinarySaveError, setOrdinarySaveError] = useState<{draftId:string;text:string}|null>(null)
   const [smartExtractionStatus, setSmartExtractionStatus] = useState<'checking' | 'connected' | 'unavailable'>('checking')
+  const initialServiceCheck = useRef<{service:DeepSeekExtractionService;promise:Promise<boolean>}|null>(null)
+  const initialServiceReady=useCallback(()=>{
+    if(initialServiceCheck.current?.service===deepSeekExtractionService)return initialServiceCheck.current.promise
+    const promise=deepSeekExtractionService.status().then(status=>status.configured,()=>false)
+    initialServiceCheck.current={service:deepSeekExtractionService,promise}
+    return promise
+  },[deepSeekExtractionService])
   const [notificationPermission, setNotificationPermission] =
     useState<BrowserNotificationPermission>(() => runtime || ordinaryEnvironment ? 'unsupported' : getBrowserNotificationPermission())
   const deliveredNotifications = useRef(new Set<string>())
@@ -335,11 +342,11 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   useEffect(() => {
     if (runtime) return
     let active = true
-    void deepSeekExtractionService.status().then((status) => {
-      if (active) setSmartExtractionStatus(status.configured ? 'connected' : 'unavailable')
+    void initialServiceReady().then((configured) => {
+      if (active) setSmartExtractionStatus(configured ? 'connected' : 'unavailable')
     })
     return () => { active = false }
-  }, [runtime, deepSeekExtractionService])
+  }, [runtime, initialServiceReady])
 
   useEffect(() => {
     let active = true
@@ -735,16 +742,23 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       if(duplicate){await refreshOrdinary();setIntakeOpen(false);setNotice({text:'这条通知已添加过',direct:true});return}
       const pending=current?.extractionDrafts.find(d=>{
         const run=current.recognitionRuns.find(r=>r.id===d.recognitionRunId),version=run&&current.sourceVersions.find(v=>v.id===run.sourceVersionId)
-        return d.result&&['needs_review','failed','partially_confirmed'].includes(d.status)&&version?.rawText?.replace(/\r\n?/gu,'\n').trim()===input.content.replace(/\r\n?/gu,'\n').trim()
+        const source=version&&current.sources.find(s=>s.id===version.sourceId)
+        const retryable=d.result||(d.status==='failed'&&run?.status==='failed')
+        return retryable&&['needs_review','failed','partially_confirmed'].includes(d.status)&&source?.currentVersionId===version?.id&&version?.rawText?.replace(/\r\n?/gu,'\n').trim()===input.content.replace(/\r\n?/gu,'\n').trim()
       })
-      if(pending){await addDirect(pending.id);return}
+      if(pending){
+        await addDirect(pending.id)
+        if(!pending.result)setNotice(current=>current?{...current,text:current.text+' · 本次使用本机整理'}:current)
+        return
+      }
     }
-    const localResult = createIntakeResult(input)
+    const intakeClock=input.now??new Date()
+    const localResult = createIntakeResult({...input,now:intakeClock})
     const localRecognition = buildLocalRecognition({
       sourceType: input.sourceType,
       sourceTitle: input.sourceTitle ?? input.fileName ?? localResult.source.title,
       content: input.content,
-      referenceTime: input.now ?? new Date(),
+      referenceTime: intakeClock,
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai',
       projects,
       tasks,
@@ -754,7 +768,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       : localRecognition
     // An invalid recording is a source-level rejection, not an unavailable
     // provider. Keep injected offline providers separate from local fallback.
-    const useCloudRecognition = !input.manualSuggestion && (Boolean(ordinaryEnvironment?.extraction.recognize) || smartExtractionStatus === 'connected')
+    const awaitInitialService=directMode&&!ordinaryEnvironment&&smartExtractionStatus==='checking'
+    const useCloudRecognition = !input.manualSuggestion && (Boolean(ordinaryEnvironment?.extraction.recognize) || smartExtractionStatus === 'connected'||awaitInitialService)
     const reviewQualityFlags = [...new Set([
       ...(input.reviewMetadata?.qualityFlags ?? []),
       ...(input.multimodal
@@ -805,7 +820,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           qualityFlags: reviewQualityFlags,
         },
       },
-      now: input.now?.toISOString(),
+      now: intakeClock.toISOString(),
     }
     try {
       const handle = await capturePersistenceService.beginCapture(captureRequest)
@@ -821,13 +836,18 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           return
         }
       }
-      const providerInput={...input,sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId}
+      const providerInput={...input,now:intakeClock,sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId}
       const recognitionResult = await capturePersistenceService.recognize(
         handle,
         input.manualSuggestion
           ? async () => draftRecognition
           : useCloudRecognition
-            ? async () => deepSeekExtractionService.recognize!(providerInput, { projects, tasks })
+            ? async () => {
+              // Source and draft are already durable. A quick first click must
+              // join the bounded initial check instead of silently choosing local rules.
+              if(awaitInitialService&&!(await initialServiceReady()))throw new Error('DEEPSEEK_STATUS_UNAVAILABLE')
+              return deepSeekExtractionService.recognize!(providerInput, { projects, tasks })
+            }
             : async () => draftRecognition,
       )
       const semanticSidecar=!input.manualSuggestion && useCloudRecognition

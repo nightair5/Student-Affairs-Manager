@@ -58,11 +58,11 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
   private readonly sidecars = new Map<string, OrdinaryProviderSidecar>()
   private configuredState: boolean | null = null
 
-  constructor(private readonly endpoint = '/api/deepseek') {}
+  constructor(private readonly endpoint = '/api/deepseek', private readonly statusTimeoutMs = 5_000) {}
 
   async status(): Promise<{ configured: boolean; model?: string; multimodalModel?: string }> {
     try {
-      const response = await fetch(`${this.endpoint}/status`, { headers: { Accept: 'application/json' } })
+      const response = await fetch(`${this.endpoint}/status`, { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(this.statusTimeoutMs) })
       if (!response.ok) { this.configuredState = false; return { configured: false } }
       const data: unknown = await response.json()
       if (typeof data !== 'object' || data === null) { this.configuredState = false; return { configured: false } }
