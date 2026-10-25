@@ -28,3 +28,4 @@
 首次尝试7a05ef65因首开服务就绪竞态回滚到beta.5，未发AI请求、未打beta.6标签；失败证据保留。
 模型请求82次（80次封存评测、2次线上）；真实用量计价$0.016760892，UNCERTAIN为0，账户实扣不可见。
 线上截图：.data/flow-r25-20261025/production-direct-task-saved-320.png；production-direct-recruit-saved-1024.png。
+收尾排序补丁已验证：待安排保持置顶和手动优先级，尚待最终发布；beta.6首发标签1819eee不移动。

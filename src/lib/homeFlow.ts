@@ -5,9 +5,10 @@ import type {WorkspaceV8} from '../domain/v2/types'
 
 export function homeFlow(tasks:Task[],events:Event[],now=new Date()){
   const ready=getExecutableTasks(tasks,now),dated=(t:Task)=>Boolean(t.deadline||t.directDate||t.sourceWindowLabel)
-  const byPriority=(a:Task,b:Task)=>calculateTaskPriority(b,tasks,now).score-calculateTaskPriority(a,tasks,now).score||a.createdAt.localeCompare(b.createdAt)||a.id.localeCompare(b.id)
+  const priorityDifference=(a:Task,b:Task)=>calculateTaskPriority(b,tasks,now).score-calculateTaskPriority(a,tasks,now).score
+  const byPriority=(a:Task,b:Task)=>priorityDifference(a,b)||a.createdAt.localeCompare(b.createdAt)||a.id.localeCompare(b.id)
   const today=localDateKey(now),next=new Date(now);next.setDate(next.getDate()+7);const end=localDateKey(next)
-  return {dated:ready.filter(dated).sort(byPriority),undated:ready.filter(t=>!dated(t)).sort((a,b)=>b.createdAt.localeCompare(a.createdAt)||a.id.localeCompare(b.id)),deferred:getBlockedAndWaitingTasks(tasks,now),
+  return {dated:ready.filter(dated).sort(byPriority),undated:ready.filter(t=>!dated(t)).sort((a,b)=>priorityDifference(a,b)||b.createdAt.localeCompare(a.createdAt)||a.id.localeCompare(b.id)),deferred:getBlockedAndWaitingTasks(tasks,now),
     events:events.filter(e=>e.startAt&&localDateKey(e.startAt)<=end&&localDateKey(e.endAt||e.startAt)>=today).sort((a,b)=>(a.startAt??'').localeCompare(b.startAt??'')||a.id.localeCompare(b.id))}
 }
 
