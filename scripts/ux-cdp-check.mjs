@@ -105,9 +105,11 @@ export class UxBrowser {
     await this.click(`[data-ux-cdp="${marker}"]`)
   }
   async input(selector, value) {
+    await this.evaluate(`(() => {const e=document.querySelector(${JSON.stringify(selector)});if(!(e instanceof HTMLInputElement)&&!(e instanceof HTMLTextAreaElement))throw Error('INPUT_TARGET_IS_NOT_A_FIELD')})()`)
     const nativeDate = await this.evaluate(`(() => {const e=document.querySelector(${JSON.stringify(selector)});if(!e)throw Error('INPUT_MISSING');if(!['date','time','datetime-local'].includes(e.type))return false;e.focus();Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(e,${JSON.stringify(value)});e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));return e.value===${JSON.stringify(value)}})()`)
     if (nativeDate) return
     await this.evaluate(`document.querySelector(${JSON.stringify(selector)}).focus()`)
+    await this.evaluate(`(() => {if(document.activeElement!==document.querySelector(${JSON.stringify(selector)}))throw Error('INPUT_TARGET_NOT_FOCUSED')})()`)
     await this.call('Input.dispatchKeyEvent', { type: 'keyDown', key: 'a', code: 'KeyA', windowsVirtualKeyCode: 65, modifiers: 2 })
     await this.call('Input.dispatchKeyEvent', { type: 'keyUp', key: 'a', code: 'KeyA', windowsVirtualKeyCode: 65, modifiers: 2 })
     await this.call('Input.insertText', { text: value })
@@ -171,6 +173,8 @@ async function selfTest(artifacts) {
         await browser.open(url, { width: 320, height: 800 })
         await browser.wait('textarea')
         await browser.input('textarea', '匿名通知')
+        await assert.rejects(() => browser.input('div', '不应写入'), /INPUT_TARGET_IS_NOT_A_FIELD/)
+        assert.equal(await browser.evaluate("document.querySelector('textarea').value"), '匿名通知')
         await browser.evaluate("document.querySelector('button').focus()")
         await browser.key('Enter')
         assert.equal(await browser.text('output'), '匿名通知')
