@@ -718,7 +718,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       setDirectBatchId(receipt.batch?.id??null)
       try{const readback=await independentReader.load();if(!readback||receipt.batch?.items.some(i=>![...readback.tasks,...readback.events].some(e=>e.id===i.id)))throw Error('READBACK');await refreshOrdinary()}catch(error){setDirectReadbackPending(receipt.batch!.id);throw Error('DIRECT_RETRY_READBACK_PENDING',{cause:error})}
       setNotice({text:'已用 AI 重新整理，原来的简单规则结果已替换。',direct:true})
-    }catch(error){await refreshOrdinary().catch(()=>undefined);throw new Error(error instanceof Error&&error.message==='DIRECT_RETRY_READBACK_PENDING'?'AI 结果已保存，暂时未能读回。请使用重新读取，不会重复添加。':error instanceof Error&&/已修改过/u.test(error.message)?error.message:'AI 暂时仍不可用，原来的事项保留，可以稍后重新整理。',{cause:error})}
+    }catch(error){await refreshOrdinary().catch(()=>undefined);throw new Error(error instanceof Error&&error.message==='DIRECT_RETRY_READBACK_PENDING'?'AI 结果已保存，暂时未能读回。请使用重新读取，不会重复添加。':error instanceof Error&&/已修改过|原来的事项保留/u.test(error.message)?error.message:'AI 暂时仍不可用，原来的事项保留，可以稍后重新整理。',{cause:error})}
   }
   const ignoreHistoricalDirect=async()=>{
     try{await canonicalWorkspaceRepository.transaction(w=>({...w,preferences:{...w.preferences,legacyData:{...w.preferences.legacyData,ignoredHistoricalDraftIds:[...new Set([...(Array.isArray(w.preferences.legacyData?.ignoredHistoricalDraftIds)?w.preferences.legacyData.ignoredHistoricalDraftIds:[]),...historicalDirectIds])]}}}));await refreshOrdinary()}

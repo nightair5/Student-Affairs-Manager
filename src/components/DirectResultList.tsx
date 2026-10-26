@@ -31,7 +31,7 @@ export function DirectResultList({embedded=false,inlineEdit=false,workspace,batc
   const Container=embedded?'section':'main'
   return <Container className={`${embedded?'flow-recent-section':'page'} direct-result-page`} aria-labelledby={titleId}>
     <header className="direct-result-heading"><span className="direct-success-mark"><CheckCircle2 size={24}/></span><div>{embedded?<h2 id={titleId}>刚添加 <small>{items.length}项</small></h2>:<h1 id={titleId} ref={heading} tabIndex={-1}>已添加 {items.length} 项</h1>}</div></header>
-    {batch.origin==='local'&&<div className="direct-fallback-notice" role="status">AI 暂时不可用，已用简单规则整理{onRetry&&<button type="button" className="text-button" disabled={busy} onClick={()=>void run(onRetry)}>{busy?'正在重新整理…':'重新整理'}</button>}</div>}
+    {batch.origin==='local'&&<div className="direct-fallback-notice" role="status">{batch.fallbackReason==='semantic'?'AI 未能保留完整行动，已用简单规则补齐':'AI 暂时不可用，已用简单规则整理'}{onRetry&&<button type="button" className="text-button" disabled={busy} onClick={()=>void run(onRetry)}>{busy?'正在重新整理…':'重新整理'}</button>}</div>}
     {error&&<p className="inline-error" role="alert">{error}</p>}
     <ul className="direct-result-list">{items.map(item=><li key={item.id} data-direct-kind={item.kind} data-completed={'status'in item.entity&&item.entity.status==='completed'}>
       <span className="direct-item-icon">{item.kind==='event'?<CalendarDays size={21}/>:<Check size={21}/>}</span>

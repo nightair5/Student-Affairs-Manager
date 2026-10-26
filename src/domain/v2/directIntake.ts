@@ -1,4 +1,4 @@
-import {improveDirectFallback} from '../../recognition/directFallback'
+import {improveDirectFallback,recoverMissingDirectActions} from '../../recognition/directFallback'
 import { convertDirectResult, DIRECT_MODE_VERSION, type DirectItem, type DirectTag } from '../../recognition/directResult'
 import {DIRECT_ACTION_PROJECTION_VERSION} from '../../recognition/directActionProjection'
 import {DIRECT_RETENTION_VERSION,DIRECT_RETENTION_DEFAULT} from '../../recognition/directRetention'
@@ -12,7 +12,7 @@ import { buildLocalRecognition } from '../../recognition/pipeline'
 
 export interface DirectBatch {
   version: typeof DIRECT_MODE_VERSION; id: string; draftId: string; sourceId: string; addedAt: string
-  status: 'active' | 'undone'; contentHash: string; origin?: 'ai' | 'local'
+  status: 'active' | 'undone'; contentHash: string; origin?: 'ai' | 'local'; fallbackReason?: 'network'|'semantic'
   items: Array<DirectItem & { id: string }>
   created: Record<string, string[]>
   beforeDraft: Pick<ExtractionDraft,'status'|'acceptedEntityTempIds'|'rejectedEntityTempIds'|'commitOperationIds'|'result'|'updatedAt'>
@@ -60,7 +60,9 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const input=localFallback?improveDirectFallback(rawInput,v.rawText):rawInput
     const actionRecovery=(import.meta as ImportMeta&{env?:{VITE_DIRECT_ACTION_RECOVERY?:string}}).env?.VITE_DIRECT_ACTION_RECOVERY==='1'
     const retention=DIRECT_RETENTION_DEFAULT||(import.meta as ImportMeta&{env?:{VITE_DIRECT_RETENTION?:string}}).env?.VITE_DIRECT_RETENTION==='1'
-    const converted=convertDirectResult(input,v.rawText,record(original)?original as unknown as RecognitionResult:undefined,{actionRecovery,retention})
+    const initial=convertDirectResult(input,v.rawText,record(original)?original as unknown as RecognitionResult:undefined,{actionRecovery,retention})
+    const converted=localFallback?initial:recoverMissingDirectActions(initial,buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(rawInput.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]}),v.rawText)
+    const semanticFallback=converted!==initial
     const result=converted.result
     const newTasks=new Set(result.standaloneTasks.filter(t=>!w.tasks.some(x=>x.id===`task:${d.id}:${t.tempId}`)).map(t=>t.tempId))
     const newEvents=new Set(result.events.filter(e=>!w.events.some(x=>x.id===`event:${d.id}:${e.tempId}`)).map(e=>e.tempId))
@@ -91,7 +93,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     plan.create.tasks=plan.create.tasks.map(t=>({...t,needsReview:Boolean(tags.get(String(t.legacyData?.recognitionTempId))?.length),legacyData:{...t.legacyData,directTags:tags.get(String(t.legacyData?.recognitionTempId))??[],directMode:DIRECT_MODE_VERSION}}))
     plan.create.events=plan.create.events.map(e=>({...e,needsReview:Boolean(tags.get(String(e.legacyData?.recognitionTempId))?.length),legacyData:{...e.legacyData,directTags:tags.get(String(e.legacyData?.recognitionTempId))??[],directMode:DIRECT_MODE_VERSION,sourceId:s.id}}))
     const created=Object.fromEntries(Object.entries(plan.create).map(([key,value])=>[key,value.map(e=>e.id)]))
-    const batch:DirectBatch={version:DIRECT_MODE_VERSION,id:plan.operationId,draftId:d.id,sourceId:s.id,status:'active',addedAt:now,contentHash:contentHash(v.rawText),created,origin:localFallback?'local':'ai',
+    const batch:DirectBatch={version:DIRECT_MODE_VERSION,id:plan.operationId,draftId:d.id,sourceId:s.id,status:'active',addedAt:now,contentHash:contentHash(v.rawText),created,origin:localFallback||semanticFallback?'local':'ai',...(localFallback||semanticFallback?{fallbackReason:semanticFallback?'semantic' as const:'network' as const}:{}),
       items:converted.items.filter(i=>i.kind==='task'?newTasks.has(i.tempId):newEvents.has(i.tempId)).map(i=>({...i,id:`${i.kind}:${d.id}:${i.tempId}`})),
       beforeDraft:{status:d.status,acceptedEntityTempIds:d.acceptedEntityTempIds,rejectedEntityTempIds:d.rejectedEntityTempIds,commitOperationIds:d.commitOperationIds,result:d.result,updatedAt:d.updatedAt},beforeSource:{status:s.status,updatedAt:s.updatedAt}}
     const next=applyDomainCommitPlan(prepared,plan,now)
@@ -137,6 +139,9 @@ export async function replaceDirectFallback(repo:CanonicalWorkspaceRepository,ba
  await undoDirectBatch(memory,batchId,now)
  const receipt=await commitDirectDraft(memory,draftId,now)
  if(!receipt.batch||receipt.duplicate)throw Error('DIRECT_REPLACEMENT_NOT_CREATED')
+ if(receipt.batch.origin==='local')throw Error('AI 结果尚未更完整，原来的事项保留。')
+ const oldIds=new Set(batch.items.map(i=>i.id)),newIds=new Set(receipt.batch.items.map(i=>i.id)),oldActions=before.tasks.filter(t=>oldIds.has(t.id)&&!/^查看[：:]/u.test(t.title)),newActions=prepared.tasks.filter(t=>newIds.has(t.id)&&!/^查看[：:]/u.test(t.title))
+ if(oldActions.length&&!newActions.length||before.timePoints.some(p=>p.normalizedValue&&p.relatedTaskIds.some(id=>oldIds.has(id))&&!prepared.timePoints.some(next=>next.normalizedValue===p.normalizedValue&&next.type===p.type&&next.relatedTaskIds.some(id=>newIds.has(id)))))throw Error('AI 结果缺少已有的行动或时间，原来的事项保留。')
  await repo.transaction(current=>{if(workspaceSnapshotHash(current)!==workspaceSnapshotHash(before))throw Error('DIRECT_REPLACEMENT_WORKSPACE_CHANGED');return prepared})
  return receipt
 }
