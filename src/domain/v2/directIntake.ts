@@ -1,3 +1,4 @@
+import {improveDirectFallback} from '../../recognition/directFallback'
 import { convertDirectResult, DIRECT_MODE_VERSION, type DirectItem, type DirectTag } from '../../recognition/directResult'
 import {DIRECT_ACTION_PROJECTION_VERSION} from '../../recognition/directActionProjection'
 import {DIRECT_RETENTION_VERSION,DIRECT_RETENTION_DEFAULT} from '../../recognition/directRetention'
@@ -11,7 +12,7 @@ import { buildLocalRecognition } from '../../recognition/pipeline'
 
 export interface DirectBatch {
   version: typeof DIRECT_MODE_VERSION; id: string; draftId: string; sourceId: string; addedAt: string
-  status: 'active' | 'undone'; contentHash: string
+  status: 'active' | 'undone'; contentHash: string; origin?: 'ai' | 'local'
   items: Array<DirectItem & { id: string }>
   created: Record<string, string[]>
   beforeDraft: Pick<ExtractionDraft,'status'|'acceptedEntityTempIds'|'rejectedEntityTempIds'|'commitOperationIds'|'result'|'updatedAt'>
@@ -22,7 +23,9 @@ const json = (v: unknown) => JSON.parse(JSON.stringify(v)) as JsonValue
 const contentHash = (text: string) => workspaceSnapshotHash(text.replace(/\r\n?/gu,'\n').trim())
 export function directBatch(draft: ExtractionDraft): DirectBatch | null {
   const b=draft.legacyData?.directBatch
-  return record(b)&&b.version===DIRECT_MODE_VERSION ? b as unknown as DirectBatch : null
+  if(!record(b)||b.version!==DIRECT_MODE_VERSION)return null
+  const batch=b as unknown as DirectBatch,conversion=draft.legacyData?.directConversion
+  return batch.origin?batch:record(conversion)&&conversion.inputProvider==='local-rules-from-preserved-source'?{...batch,origin:'local'}:batch
 }
 export const recentDirectBatches = (w: WorkspaceV8) => w.extractionDrafts.flatMap(d => {const b=directBatch(d);return b?[b]:[]}).sort((a,b)=>b.addedAt.localeCompare(a.addedAt))
 export function directDuplicate(w: WorkspaceV8, text: string): string | null {
@@ -41,7 +44,7 @@ export function directDuplicate(w: WorkspaceV8, text: string): string | null {
 
 /** Conversion, plan, audit and all formal entities are one existing Repository
  * transaction. No view projection can write canonical arrays here. */
-export async function commitDirectDraft(repo: CanonicalWorkspaceRepository, draftId: string, now=new Date().toISOString()): Promise<{batch:DirectBatch|null;duplicate:boolean}> {
+export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,'transaction'>, draftId: string, now=new Date().toISOString()): Promise<{batch:DirectBatch|null;duplicate:boolean}> {
   let receipt:{batch:DirectBatch|null;duplicate:boolean}={batch:null,duplicate:false}
   await repo.transaction(w=>{
     const d=w.extractionDrafts.find(x=>x.id===draftId),run=d&&w.recognitionRuns.find(x=>x.id===d.recognitionRunId)
@@ -52,7 +55,9 @@ export async function commitDirectDraft(repo: CanonicalWorkspaceRepository, draf
     const duplicateSource=directDuplicate(w,v.rawText)
     if(duplicateSource&&(duplicateSource!==s.id||directBatch(d)?.status==='active'||d.status==='confirmed')){receipt={batch:recentDirectBatches(w).find(b=>b.sourceId===duplicateSource&&b.status==='active')??null,duplicate:true};return w}
     const original=run?.legacyData?.originalRecognitionResult
-    const input=d.result??buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(run?.startedAt??d.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]})
+    const localFallback=!d.result||run?.provider==='local-rules'
+    const rawInput=d.result??buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(run?.startedAt??d.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]})
+    const input=localFallback?improveDirectFallback(rawInput,v.rawText):rawInput
     const actionRecovery=(import.meta as ImportMeta&{env?:{VITE_DIRECT_ACTION_RECOVERY?:string}}).env?.VITE_DIRECT_ACTION_RECOVERY==='1'
     const retention=DIRECT_RETENTION_DEFAULT||(import.meta as ImportMeta&{env?:{VITE_DIRECT_RETENTION?:string}}).env?.VITE_DIRECT_RETENTION==='1'
     const converted=convertDirectResult(input,v.rawText,record(original)?original as unknown as RecognitionResult:undefined,{actionRecovery,retention})
@@ -86,7 +91,7 @@ export async function commitDirectDraft(repo: CanonicalWorkspaceRepository, draf
     plan.create.tasks=plan.create.tasks.map(t=>({...t,needsReview:Boolean(tags.get(String(t.legacyData?.recognitionTempId))?.length),legacyData:{...t.legacyData,directTags:tags.get(String(t.legacyData?.recognitionTempId))??[],directMode:DIRECT_MODE_VERSION}}))
     plan.create.events=plan.create.events.map(e=>({...e,needsReview:Boolean(tags.get(String(e.legacyData?.recognitionTempId))?.length),legacyData:{...e.legacyData,directTags:tags.get(String(e.legacyData?.recognitionTempId))??[],directMode:DIRECT_MODE_VERSION,sourceId:s.id}}))
     const created=Object.fromEntries(Object.entries(plan.create).map(([key,value])=>[key,value.map(e=>e.id)]))
-    const batch:DirectBatch={version:DIRECT_MODE_VERSION,id:plan.operationId,draftId:d.id,sourceId:s.id,status:'active',addedAt:now,contentHash:contentHash(v.rawText),created,
+    const batch:DirectBatch={version:DIRECT_MODE_VERSION,id:plan.operationId,draftId:d.id,sourceId:s.id,status:'active',addedAt:now,contentHash:contentHash(v.rawText),created,origin:localFallback?'local':'ai',
       items:converted.items.filter(i=>i.kind==='task'?newTasks.has(i.tempId):newEvents.has(i.tempId)).map(i=>({...i,id:`${i.kind}:${d.id}:${i.tempId}`})),
       beforeDraft:{status:d.status,acceptedEntityTempIds:d.acceptedEntityTempIds,rejectedEntityTempIds:d.rejectedEntityTempIds,commitOperationIds:d.commitOperationIds,result:d.result,updatedAt:d.updatedAt},beforeSource:{status:s.status,updatedAt:s.updatedAt}}
     const next=applyDomainCommitPlan(prepared,plan,now)
@@ -99,7 +104,7 @@ export async function commitDirectDraft(repo: CanonicalWorkspaceRepository, draf
 }
 
 const createdKeys=['projects','milestones','workPackages','tasks','events','materials','timePoints','evidenceRefs','historyRecords'] as const
-export async function undoDirectBatch(repo:CanonicalWorkspaceRepository,batchId:string,now=new Date().toISOString()):Promise<void>{
+export async function undoDirectBatch(repo:Pick<CanonicalWorkspaceRepository,'transaction'>,batchId:string,now=new Date().toISOString()):Promise<void>{
   await repo.transaction(w=>{
     const d=w.extractionDrafts.find(d=>directBatch(d)?.id===batchId),batch=d&&directBatch(d)
     if(!d||!batch)throw Error('DIRECT_BATCH_NOT_FOUND')
@@ -115,6 +120,25 @@ export async function undoDirectBatch(repo:CanonicalWorkspaceRepository,batchId:
     return {...next,savedAt:now,sources:next.sources.map(s=>s.id===batch.sourceId?{...s,status:'archived',legacyData:{...s.legacyData,directUndoneAt:now,directUndoHistory:json([...(Array.isArray(s.legacyData?.directUndoHistory)?s.legacyData.directUndoHistory:[]),{batchId:batch.id,at:now,created:batch.created}])},updatedAt:now}:s),
       extractionDrafts:next.extractionDrafts.map(x=>x.id===d.id?{...x,...batch.beforeDraft,legacyData:{...x.legacyData,directBatch:json(undone)},updatedAt:now}:x)}
   })
+}
+
+/** Prepare in memory, then compare and atomically replace through the same
+ * Repository transaction. A failed recognition never enters this function. */
+export async function replaceDirectFallback(repo:CanonicalWorkspaceRepository,batchId:string,draftId:string,now=new Date().toISOString()){
+ const before=await repo.load()
+ if(!before)throw Error('DIRECT_SOURCE_NOT_AVAILABLE')
+ const batch=recentDirectBatches(before).find(b=>b.id===batchId&&b.status==='active')
+ if(!batch||batch.origin!=='local')throw Error('DIRECT_FALLBACK_NOT_ACTIVE')
+ const oldRun=before.recognitionRuns.find(r=>r.id===before.extractionDrafts.find(d=>d.id===batch.draftId)?.recognitionRunId),newRun=before.recognitionRuns.find(r=>r.id===before.extractionDrafts.find(d=>d.id===draftId)?.recognitionRunId)
+ if(!oldRun||oldRun.sourceVersionId!==newRun?.sourceVersionId||newRun.provider!=='deepseek'||newRun.status!=='succeeded')throw Error('DIRECT_REPLACEMENT_NOT_SUCCESSFUL_AI')
+ if(batch.items.some(i=>{const e=[...before.tasks,...before.events].find(e=>e.id===i.id);return !e||e.updatedAt>batch.addedAt||'status'in e&&e.status==='completed'}))throw Error('已修改过这些事项，请保留当前内容，避免覆盖你的修改。')
+ let prepared=structuredClone(before)
+ const memory:Pick<CanonicalWorkspaceRepository,'transaction'>={transaction:async mutate=>{prepared=mutate(prepared);return structuredClone(prepared)}}
+ await undoDirectBatch(memory,batchId,now)
+ const receipt=await commitDirectDraft(memory,draftId,now)
+ if(!receipt.batch||receipt.duplicate)throw Error('DIRECT_REPLACEMENT_NOT_CREATED')
+ await repo.transaction(current=>{if(workspaceSnapshotHash(current)!==workspaceSnapshotHash(before))throw Error('DIRECT_REPLACEMENT_WORKSPACE_CHANGED');return prepared})
+ return receipt
 }
 
 /** Only entities created by a direct batch are removable through this entry. */

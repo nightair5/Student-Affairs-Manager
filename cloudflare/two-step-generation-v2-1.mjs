@@ -1,3 +1,4 @@
+import {compileTwoStep as compileFixed} from './recognition-two-step-compiler-v2-1-11.mjs'
 import {twoStepSystemPrompt as twoStep22SystemPrompt,TWO_STEP_VERSION as TWO_STEP22_VERSION} from './recognition-two-step-contract-v2-2.mjs'
 import {extractionRequestOptions} from './extraction-profile.mjs'
 import {TWO_STEP_VERSION,twoStepSystemPrompt,validateTwoStep} from './recognition-two-step-contract-v2-1.mjs'
@@ -40,7 +41,7 @@ export async function runTwoStep21Generation({fetcher,apiKey,profile,userText,so
  }
  const usable=samples.filter(s=>s.status===200&&validateTwoStep(s.value).valid)
  if(!usable.length)return {ok:false,status:samples.find(s=>s.status&&s.status!==200)?.status??502,error:samples.some(s=>s.error==='UPSTREAM_TIMEOUT')?'UPSTREAM_TIMEOUT':'INVALID_AI_RESPONSE',samples:samples.map(({value,chunk,...s})=>({...s,sourceStart:chunk.start,sourceEnd:chunk.end}))}
- const merged=mergeAlignedExtractions(usable,source,{preserveWithinPass:mode==='two-step-2.2'}),compiled=(compilerVersion==='direct-1.0'?compileRetained:compilerVersion==='2.1.10'?compileDirect:compileLegacy)(merged.raw,{source,referenceTime,timezone,model:profile.model,version,alignmentHints:merged.hints})
+ const merged=mergeAlignedExtractions(usable,source,{preserveWithinPass:mode==='two-step-2.2'}),compiled=(compilerVersion==='direct-1.0'?compileRetained:compilerVersion==='2.1.11'?compileFixed:compilerVersion==='2.1.10'?compileDirect:compileLegacy)(merged.raw,{source,referenceTime,timezone,model:profile.model,version,alignmentHints:merged.hints})
  if(!compiled.result)return {ok:false,status:502,error:'INVALID_AI_RESPONSE',samples:[]}
  if(usable.length<samples.length||samples.length<plannedCalls||samples.some(s=>s.truncated)){const message=usable.length<samples.length||samples.length<plannedCalls?'部分提取未完成，成功内容已保留，请核对原文。':'通知较长，后半部分可能尚未处理，请核对原文。';compiled.result.quality.needsHumanReview=true;compiled.result.quality.reviewReasons.push(message);compiled.result.ambiguities.push({id:'g21-incomplete',field:'source_reference',message,options:['查看原文','保留待核对'],evidenceIds:[]})}
  const all=samples.every(s=>Number.isFinite(s.usage?.prompt_tokens)&&Number.isFinite(s.usage?.completion_tokens)),sum=k=>samples.reduce((n,s)=>n+(s.usage?.[k]??0),0)

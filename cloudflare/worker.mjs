@@ -1,3 +1,4 @@
+import {boundedNetworkRetry} from './upstream-network-retry.mjs'
 import {runTwoStepGeneration} from './two-step-generation.mjs'
 import {runSimpleGeneration} from './simple-generation.mjs'
 import {
@@ -799,10 +800,13 @@ async function extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,c
   if(!release){context.errorType='RATE_LIMITED';return failure('RATE_LIMITED','同时请求过多，请稍后再试。',429,context.requestId)}
   try {
     const referenceTime=safeText(body.referenceTime,80),timezone=safeText(body.timezone,80)||'Asia/Shanghai'
+    const transport=boundedNetworkRetry(fetcher,{enabled:env.DEEPSEEK_NETWORK_RETRY==='1'})
     const generated=env.DEEPSEEK_GENERATION_MODE==='simple-1.0'
-      ?await runSimpleGeneration({fetcher,apiKey,profile:extractionProfile(env),body:{...body,referenceTime,timezone}})
-      :await runTwoStepGeneration({fetcher,apiKey,profile:extractionProfile(env),source:body.content,referenceTime,timezone,mode:env.DEEPSEEK_GENERATION_MODE,compilerVersion:env.TWO_STEP_COMPILER_VERSION??'2.1.9',userText:extractionUserText(body,body.content,safeText(body.sourceTitle,160),referenceTime,timezone)})
+      ?await runSimpleGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),body:{...body,referenceTime,timezone}})
+      :await runTwoStepGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),source:body.content,referenceTime,timezone,mode:env.DEEPSEEK_GENERATION_MODE,compilerVersion:env.TWO_STEP_COMPILER_VERSION??'2.1.9',userText:extractionUserText(body,body.content,safeText(body.sourceTitle,160),referenceTime,timezone)})
     if(!generated.ok){context.errorType=generated.error;if(generated.status&&generated.status!==502)return safeUpstreamFailure(generated.status,context.requestId,false);return failure(generated.error,'本次识别未完成，原文已保留，请稍后重试。',generated.error==='UPSTREAM_TIMEOUT'?504:502,context.requestId)}
+    generated.execution.networkAttempts=transport.attempts
+    if(transport.attempts.some(a=>a.status===null)){generated.execution.tokenUsage=null;generated.execution.upstreamUsageComplete=false;generated.execution.unmeteredAttemptCount=transport.attempts.filter(a=>a.status===null).length}
     const validation=validateRecognitionResult(generated.result,{sourceContent:body.content})
     if(!validation.valid)return invalidRecognitionResponse(context,validation)
     context.outputTokens=generated.execution.tokenUsage?.output??0

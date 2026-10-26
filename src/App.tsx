@@ -4,7 +4,7 @@ import { storedPersonalPlans } from './domain/v2/personalPlanD27'
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { DirectResultList, RecentDirectAdditions } from './components/DirectResultList'
-import { commitDirectDraft, deleteDirectItem, directDuplicate, editDirectItem, recentDirectBatches, undoDirectBatch } from './domain/v2/directIntake'
+import { commitDirectDraft, replaceDirectFallback, deleteDirectItem, directDuplicate, editDirectItem, recentDirectBatches, undoDirectBatch } from './domain/v2/directIntake'
 import {historicalDirectDraftIds} from './lib/homeFlow'
 import { EventDetailPanel } from './components/EventDetailPanel'
 import { IntakePanel } from './components/IntakePanel'
@@ -702,6 +702,23 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     setIntakeOpen(false);setSelectedDraftId(null);setCurrentPage('today');setDirectBatchId(receipt.batch?.id??null)
     const batch=receipt.batch
     setNotice({text:receipt.duplicate?'这条通知已添加过':`已添加 ${batch?.items.length??0} 项`,direct:true,...(batch?{undo:()=>{void undoDirect(batch.id).catch(()=>setNotice({text:'未能撤销，原有内容保留。请从最近添加重试。'}))}}:{})})
+  }
+  const retryDirectFallback=async(batchId:string)=>{
+    const w=await canonicalWorkspaceRepository.load(),batch=w&&recentDirectBatches(w).find(b=>b.id===batchId&&b.origin==='local'&&b.status==='active')
+    const source=batch&&w?.sources.find(s=>s.id===batch.sourceId),version=source&&w?.sourceVersions.find(v=>v.id===source.currentVersionId)
+    if(!batch||!source||!version?.rawText)throw Error('未找到可以重新整理的通知')
+    try{
+      const metadata=ordinaryEnvironment?.recognitionMetadata?.()
+      const retried=await retryExistingSourceRecognition(capturePersistenceService,source.id,{provider:'deepseek',modelName:metadata?.modelName??'deepseek-v4-flash',promptVersion:metadata?.promptVersion??null,pipelineVersion:'direct-ai-retry-v1',expectedSourceVersionId:version.id},async()=>deepSeekExtractionService.recognize!({sourceType:source.type,sourceTitle:source.title,content:version.rawText!,sourceId:source.id,sourceVersionId:version.id,now:new Date(version.createdAt)},{projects,tasks}))
+      const sidecar=ordinaryEnvironment?.semanticSidecar?.(source.id)??deepSeekExtractionService.semanticSidecar?.(source.id,version.id)
+      const context=ordinaryEnvironment?.recognitionContext?.(version.rawText)??ordinaryProviderContextFromSidecar(sidecar)??{referenceTime:retried.result.createdAt,timezone:w!.settings.defaultTimezone}
+      const assembled=assembleProductFirstSuggestion(retried.result,{sourceText:version.rawText,...context,sourceWindows:sourceWindowsFromSidecar(sidecar),sourceActionTimes:sourceActionTimesFromSidecar(sidecar),workflowMaterialSupport:[...workflowMaterialSupportFromSidecar(sidecar),...ordinaryWorkflowMaterialSupportFromSidecar(sidecar)]})
+      await canonicalWorkspaceRepository.transaction(current=>({...current,extractionDrafts:current.extractionDrafts.map(d=>d.id===retried.draftId?{...d,result:assembled.result,legacyData:{...d.legacyData,firstSuggestionDisplayed:JSON.parse(JSON.stringify(assembled.result)),...(sidecar?{semanticSidecar:JSON.parse(JSON.stringify(sidecar))}:{})}}:d),recognitionRuns:current.recognitionRuns.map(r=>r.id===current.extractionDrafts.find(d=>d.id===retried.draftId)?.recognitionRunId?{...r,legacyData:{...r.legacyData,originalRecognitionResult:JSON.parse(JSON.stringify(retried.result))}}:r)}))
+      const receipt=await replaceDirectFallback(canonicalWorkspaceRepository,batchId,retried.draftId)
+      setDirectBatchId(receipt.batch?.id??null)
+      try{const readback=await independentReader.load();if(!readback||receipt.batch?.items.some(i=>![...readback.tasks,...readback.events].some(e=>e.id===i.id)))throw Error('READBACK');await refreshOrdinary()}catch(error){setDirectReadbackPending(receipt.batch!.id);throw Error('DIRECT_RETRY_READBACK_PENDING',{cause:error})}
+      setNotice({text:'已用 AI 重新整理，原来的简单规则结果已替换。',direct:true})
+    }catch(error){await refreshOrdinary().catch(()=>undefined);throw new Error(error instanceof Error&&error.message==='DIRECT_RETRY_READBACK_PENDING'?'AI 结果已保存，暂时未能读回。请使用重新读取，不会重复添加。':error instanceof Error&&/已修改过/u.test(error.message)?error.message:'AI 暂时仍不可用，原来的事项保留，可以稍后重新整理。',{cause:error})}
   }
   const ignoreHistoricalDirect=async()=>{
     try{await canonicalWorkspaceRepository.transaction(w=>({...w,preferences:{...w.preferences,legacyData:{...w.preferences.legacyData,ignoredHistoricalDraftIds:[...new Set([...(Array.isArray(w.preferences.legacyData?.ignoredHistoricalDraftIds)?w.preferences.legacyData.ignoredHistoricalDraftIds:[]),...historicalDirectIds])]}}}));await refreshOrdinary()}
@@ -1645,7 +1662,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           <DashboardPage
             directMode={directMode}
             directNotice={notice?.direct?<div className="direct-inline-notice" role="status"><span>{notice.text}</span>{notice.undo&&<button type="button" className="text-button" onClick={()=>{notice.undo?.();setNotice(null)}}>撤销</button>}<button type="button" className="icon-button" aria-label="关闭提示" onClick={()=>setNotice(null)}>×</button></div>:undefined}
-            recentAdditions={directMode&&ordinaryCanonical?<RecentDirectAdditions workspace={ordinaryCanonical} batches={directBatches} onUndo={undoDirect} onOpen={setDirectBatchId} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}}/>:undefined}
+            recentAdditions={directMode&&ordinaryCanonical?<RecentDirectAdditions workspace={ordinaryCanonical} batches={directBatches} onRetry={retryDirectFallback} onUndo={undoDirect} onOpen={setDirectBatchId} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}}/>:undefined}
             historicalNotice={directMode?{count:historicalDirectIds.length,busy:historicalAdding,onAdd:addHistoricalDirect,onIgnore:ignoreHistoricalDirect}:undefined}
             planning={!runtime && ordinaryCanonical ? <PersonalPlanPanel workspace={ordinaryCanonical} repository={canonicalWorkspaceRepository} reader={independentReader} store={ordinaryEnvironment?.store ?? ordinaryStore} onReload={()=>refreshOrdinary()}/> : undefined}
             engineeringInput={Boolean(ordinaryEnvironment)}
@@ -1879,7 +1896,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
               <p>已经输入的内容会保留在当前页面，请不要清空浏览器数据。</p>
             </main>}
             <div hidden={Boolean(workspaceLoadFailure)||showDirectHistory}>{renderPage()}</div>
-            {!workspaceLoadFailure&&showDirectHistory&&activeDirectBatch&&ordinaryCanonical&&<DirectResultList key={activeDirectBatch.id} workspace={ordinaryCanonical} batch={activeDirectBatch} onClose={()=>setDirectBatchId(null)} onUndo={()=>undoDirect(activeDirectBatch.id)} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)}/>}
+            {!workspaceLoadFailure&&showDirectHistory&&activeDirectBatch&&ordinaryCanonical&&<DirectResultList key={activeDirectBatch.id} workspace={ordinaryCanonical} batch={activeDirectBatch} onRetry={()=>retryDirectFallback(activeDirectBatch.id)} onClose={()=>setDirectBatchId(null)} onUndo={()=>undoDirect(activeDirectBatch.id)} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)}/>}
           </Suspense>
         </PageLoadBoundary>
       </div>

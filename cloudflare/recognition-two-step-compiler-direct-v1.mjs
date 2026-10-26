@@ -1,3 +1,4 @@
+import {mergeOwnedLocations} from './two-step-location.mjs'
 import {normalizeRecognitionResult} from './recognition.mjs'
 import {parseDirectSourceTime as parseChineseTimeAst} from './direct-source-time.mjs'
 import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
@@ -32,7 +33,7 @@ export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai
  const hinted=(kind,id,q)=>{const h=alignmentHints?.[kind]?.find(x=>kind==='items'?x.id===id:x.index===id)?.span;if(!h||source.slice(h.start,h.end)!==h.literal)return null;const aligned=alignTwoStepQuote(q,h.literal);return aligned&&aligned.start===0&&aligned.end===h.literal.length?h:null}
  const check=validateTwoStep(raw);if(!check.valid)return{result:null,audit:{version,rootFailure:true,losses:check.errors},rootFailure:true}
  const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:'通知建议',sourceType:'text',notificationType:'teacher_task',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,version,true,timezone)
- const audit={version,compilerVersion:'two-step-compiler-direct-1.0.2',mode:'MODEL_SEMANTIC_FACTS_THEN_DETERMINISTIC_STRUCTURE',rootFailure:false,inferredFacts:0,items:[],facts:[],losses:[],offsets:[],calls:1},declared=new Map(),usedIds=new Set(),pending=[]
+ const audit={version,compilerVersion:'two-step-compiler-direct-1.0.3',mode:'MODEL_SEMANTIC_FACTS_THEN_DETERMINISTIC_STRUCTURE',rootFailure:false,inferredFacts:0,items:[],facts:[],losses:[],offsets:[],calls:1},declared=new Map(),usedIds=new Set(),pending=[]
  const evidence=(span,field)=>{let e=result.evidence.find(e=>e.textStart===span.start&&e.textEnd===span.end&&e.field===field);if(!e){e={id:'g2-e'+(result.evidence.length+1),sourceId:'pending-source',quote:span.literal,quotedText:span.literal,textStart:span.start,textEnd:span.end,field,extractionMethod:'parser',confidence:1};result.evidence.push(e)}return e.id}
  const note=(layer,id,reason,quote)=>{audit.losses.push({layer,id,reason,quote});pending.push({layer,id,reason,quote})}
  for(const [i,item]of raw.items.entries()){
@@ -145,6 +146,7 @@ declared.set(item.id,record);audit.items.push({id:item.id,name:item.name,kind:it
   if(!value){owner.selected=false;note('TIME',e.owner.id,'TIME_UNRESOLVED',e.span.literal)}
  }
 
+ for(const record of declared.values())if(record.kind==='活动'&&record.entity){const locations=staged.filter(e=>e.type==='地点'&&e.owner.id===record.id);if(locations.length)record.entity.location=mergeOwnedLocations(locations,valueOf)}
  // Material/channel and condition order in a JSON array is not semantic.
  for(const e of staged.filter(e=>e.type==='渠道')){const ms=result.materials.filter(m=>m.relatedTaskTempIds.includes(e.owner.entity.tempId));if(ms.length===1)ms[0].submissionChannel=valueOf(e.span.literal,'渠道').slice(0,200)}
  for(const e of staged.filter(e=>e.type==='条件'&&!/命名|文件名|标题格式|字数|文件格式|PDF|Word|word|一式|字体|字号|行距/u.test(e.span.literal)))for(const m of result.materials.filter(m=>m.relatedTaskTempIds.includes(e.owner.entity.tempId)))m.selected=false

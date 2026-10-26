@@ -1,3 +1,4 @@
+import {parseDirectSourceTime} from '../../cloudflare/direct-source-time.mjs'
 import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from './types'
 import { parseChineseTimeAst, parseBusinessDateTime } from '../lib/timeSemantics'
 import {projectDirectActions} from './directActionProjection'
@@ -79,7 +80,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if (!text || !name || !cores.length || !cores.every(word=>compact(text).includes(word)) || cores.some(core=>isCancelled(text,core))) { omitted.push({id:e.tempId,reason:'EVENT_UNGROUNDED_OR_CANCELLED'}); return [] }
     const tags: DirectTag[] = conditional.test(text) ? ['如符合条件','待确认'] : e.selected === false||conflicts.has(e.tempId) ? ['待确认'] : []
     tagsById.set(e.tempId, tags)
-    const location = e.location && compact(text).includes(compact(e.location)) ? e.location : null
+    const location = e.location && e.location.split(' · ').every(part=>compact(text).includes(compact(part))) ? e.location : null
     return [{...e, location, selected:true, relatedTaskTempIds:e.relatedTaskTempIds?.filter(id => taskIds.has(id))}]
   })
   const eventIds = new Set(events.flatMap(e => [e.startTimePointTempId,e.endTimePointTempId]).filter(Boolean))
@@ -90,13 +91,14 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     // A previously isolated/ambiguous value stays unknown. The policy changes
     // whether the item is saved, not whether a missing time becomes known.
     const unsupported = !quotes(p.evidenceIds).length || !raw || !compact(text).includes(compact(raw))
-    const risky = alternatives.test(text) || (/_deadline$/u.test(p.type) && (!deadline.test(text) || /办理时段|开放时间|领取时段/u.test(text) && !/截止|最迟/u.test(text)))
+    const applicationCutoff=/申请|申报|报名/u.test(text)&&/逾期[^。；]{0,20}(?:不再受理|不予受理|不受理)/u.test(text)&&/至|到|—/u.test(raw)
+    const risky = alternatives.test(text) || (/_deadline$/u.test(p.type) && (!deadline.test(text)&&!applicationCutoff || /办理时段|开放时间|领取时段/u.test(text) && !/截止|最迟/u.test(text)))
     if (unsupported || risky || deadlineConflicts.has(p.tempId)||p.relatedTaskTempIds.some(id=>deadlineConflicts.has(id))||!p.normalizedValue || p.needsConfirmation && p.precision !== 'date_only') return unknown()
     if(p.normalizedValue){
-      let parsed=parseChineseTimeAst(raw,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
+      let parsed=parseDirectSourceTime(raw,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
       const correction=/(?:改为|调整为|更正为|延期至|现为)([^。；;\n]*)/u.exec(text)
-      if(correction)parsed=parseChineseTimeAst(correction[1],{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
-      else if(parsed.dateKind==='none')parsed=parseChineseTimeAst(text,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
+      if(correction)parsed=parseDirectSourceTime(correction[1],{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
+      else if(parsed.dateKind==='none')parsed=parseDirectSourceTime(text,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
       const expected=p.type==='event_end'&&parsed.rangeEndNormalizedValue?parsed.rangeEndNormalizedValue:parsed.normalizedValue
       const same=expected&&(/T/u.test(expected)?parseBusinessDateTime(expected,p.timezone)?.getTime()===parseBusinessDateTime(p.normalizedValue,p.timezone)?.getTime():expected===p.normalizedValue)
       if(!same||parsed.needsConfirmation||parsed.dateKind==='none')return unknown()
