@@ -1,6 +1,7 @@
 import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from './types'
 import { parseChineseTimeAst, parseBusinessDateTime } from '../lib/timeSemantics'
 import {projectDirectActions} from './directActionProjection'
+import {convertRetainedDirectResult} from './directRetention'
 
 export const DIRECT_MODE_VERSION = 'direct-mode-1'
 export type DirectTag = '时间待定' | '如符合条件' | '待确认'
@@ -16,7 +17,8 @@ const recordTasks = (r: RecognitionResult) => new Map(flatTasks(r).map(t => [t.t
 
 /** A new presentation policy, never a modification to a recorded/model result.
  * Uncertainty becomes an explicit label; it never authorizes invented facts. */
-export function convertDirectResult(input: RecognitionResult, sourceText: string, original?: RecognitionResult, options:{actionRecovery?:boolean}={}): DirectConversion {
+export function convertDirectResult(input: RecognitionResult, sourceText: string, original?: RecognitionResult, options:{actionRecovery?:boolean;retention?:boolean}={}): DirectConversion {
+  if(options.retention)return convertRetainedDirectResult(input,sourceText,original)
   if(options.actionRecovery){
     const baseline=convertDirectResult(input,sourceText,original)
     const prepared=structuredClone(baseline.result)

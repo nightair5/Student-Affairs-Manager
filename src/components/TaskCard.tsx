@@ -1,3 +1,4 @@
+import {directCardTitle,visibleDirectTags} from '../lib/directCardPresentation'
 import type { TaskDateView } from '../experiments/mainline02/taskDateView'
 import {
   AlarmClock,
@@ -75,8 +76,8 @@ export function TaskCard({
         </button>
       </div>
 
-      <h3 className="task-card-title">{task.title}</h3>
-      {task.directTags?.length ? <div className="direct-inline-tags">{task.directTags.map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}</div> : null}
+      <h3 className="task-card-title" title={task.title}>{task.directTags?directCardTitle(task.title):task.title}</h3>
+      {task.directTags?.length ? <div className="direct-inline-tags">{visibleDirectTags(task.directTags,deadline.date,task.title).map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}</div> : null}
 
       <div className="task-timing-panel">
         <div className="task-deadline-block">

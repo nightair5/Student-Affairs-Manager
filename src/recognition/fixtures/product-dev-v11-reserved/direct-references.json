@@ -1,0 +1,786 @@
+{
+  "version": "direct-reference-1.0",
+  "createdAt": "2026-10-26T00:25:38.994Z",
+  "author": "Codex / single-author / provisional",
+  "beforeAnyR26NewOutput": true,
+  "rows": [
+    {
+      "id": "R12-RES-01",
+      "sourceSha256": "d62f342606ffdba20bbd2726c02723444b2bf8dc91d4091921358dd650b5395e",
+      "reference": {
+        "tasks": [],
+        "events": [],
+        "informationOnly": true,
+        "readingFallback": true,
+        "forbidden": [
+          {
+            "object": "人工智能发展前沿",
+            "verbs": [
+              "参加",
+              "报名"
+            ]
+          }
+        ],
+        "obsoleteTimes": [
+          "2026-07-12"
+        ]
+      },
+      "referenceTime": "2026-07-11T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-02",
+      "sourceSha256": "0a7c06b02c901affe60cdb76f1e7499399656c3df3137bba446463196528a8f4",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "遥感大数据在经济学中的使用",
+            "aliases": [
+              "嘉锡讲坛第746期讲座",
+              "第746期讲座"
+            ],
+            "start": "2026-06-11T14:30",
+            "endUnknown": true,
+            "location": "福州大学晋江楼一楼学术报告厅"
+          }
+        ],
+        "readingFallback": true,
+        "informationOnly": true,
+        "obsoleteTimes": [
+          "2026-06-11T15:00"
+        ]
+      },
+      "referenceTime": "2026-06-09T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-03",
+      "sourceSha256": "0e170459e9d7365c5c8f271000f6a09a6aeb50416f8ab6d8068acee4bcee3bc5",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "维修",
+            "aliases": [
+              "暂停开放",
+              "暂停使用",
+              "施工"
+            ],
+            "start": "2026-10-06",
+            "end": "2026-10-10",
+            "location": "普陀校区图书馆一楼D区"
+          }
+        ],
+        "readingFallback": true,
+        "informationOnly": true
+      },
+      "referenceTime": "2026-10-04T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-04",
+      "sourceSha256": "818f712dd4f02ff7a3b584c6f892bcc937dff9d7214a96186be8eeda5d857ff2",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "政经学术论坛",
+            "aliases": [
+              "经济学院论坛"
+            ],
+            "start": "2026-10-10T08:00",
+            "end": "2026-10-10T17:20",
+            "location": "1125"
+          }
+        ],
+        "readingFallback": true,
+        "informationOnly": true
+      },
+      "referenceTime": "2026-10-08T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-05",
+      "sourceSha256": "23a82c5fc4ab1539d173a70fc1cd6b4b0df104e1fe48812cb4aac433f728cdaa",
+      "reference": {
+        "tasks": [
+          {
+            "object": "三方协议",
+            "aliases": [
+              "就业协议书"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadlineUnknown": true,
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-10-14T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-06",
+      "sourceSha256": "6c6dfe7a94ca07b3d46296c44482c727ca88efa38ac6928f28739f30b81d64e0",
+      "reference": {
+        "tasks": [
+          {
+            "object": "助学",
+            "aliases": [
+              "奖学金系统",
+              "系统申请"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadline": "2026-10-24T17:00",
+            "precision": "exact",
+            "conditional": true
+          },
+          {
+            "object": "电子",
+            "aliases": [
+              "助学申请表",
+              "申请材料"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadline": "2026-10-24T17:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-10-23T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-07",
+      "sourceSha256": "db1d670339c6a27a81c4ca1c98d3adae260165bd5ca4b273b32eefb491c9e154",
+      "reference": {
+        "tasks": [
+          {
+            "object": "黎明人才奖学金",
+            "aliases": [
+              "申请表",
+              "申请材料"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadline": "2026-10-23T17:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-10-20T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-08",
+      "sourceSha256": "da28e529d19e80241c375b126687b3621b98ebac2bea2ba918e14bc2e586ef44",
+      "reference": {
+        "tasks": [
+          {
+            "object": "报名问卷",
+            "aliases": [
+              "志愿者",
+              "金融街论坛"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadline": "2026-09-15T18:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": [
+          {
+            "object": "金融街论坛",
+            "aliases": [
+              "论坛年会",
+              "志愿服务"
+            ],
+            "start": "2026-10-19",
+            "end": "2026-10-22",
+            "conditional": true
+          }
+        ]
+      },
+      "referenceTime": "2026-09-14T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-09",
+      "sourceSha256": "6b7862c2866f2058741d541ce4b801acc8ab3437156ceb291f7968bcb0981616",
+      "reference": {
+        "tasks": [
+          {
+            "object": "选课",
+            "aliases": [
+              "选修课",
+              "小班研讨",
+              "课程"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadline": "2026-10-13T00:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-10-09T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-10",
+      "sourceSha256": "ce8fe595b55d44b65002f2c6df9e3e552222672d33c36077cd63b1fde24d89d9",
+      "reference": {
+        "tasks": [
+          {
+            "object": "选课",
+            "aliases": [
+              "课程"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadlineUnknown": true,
+            "conditional": true,
+            "windows": [
+              {
+                "start": "2026-09-29T10:00",
+                "end": "2026-10-09T10:00"
+              }
+            ]
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-09-28T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-11",
+      "sourceSha256": "45985eaafd2646f94ed75052efaa044852537c44073be13496591e41b8761869",
+      "reference": {
+        "tasks": [
+          {
+            "object": "HSK",
+            "aliases": [
+              "汉语考试",
+              "考试报名"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadline": "2026-10-07",
+            "precision": "date_only",
+            "conditional": true
+          }
+        ],
+        "events": [
+          {
+            "object": "HSK",
+            "aliases": [
+              "汉语考试",
+              "HSKK"
+            ],
+            "start": "2026-10-17",
+            "endUnknown": true
+          }
+        ]
+      },
+      "referenceTime": "2026-09-24T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-12",
+      "sourceSha256": "53509c7dc80daba3b10aba46c5048f7780398e7bb4d8a07925aed7ce29a4e89d",
+      "reference": {
+        "tasks": [
+          {
+            "object": "讲座",
+            "aliases": [
+              "未来教师训练营",
+              "人工智能时代人才培养体系"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadlineUnknown": true,
+            "conditional": true
+          }
+        ],
+        "events": [
+          {
+            "object": "人工智能时代人才培养体系的改革思考与实践",
+            "aliases": [
+              "未来教师训练营",
+              "讲座"
+            ],
+            "start": "2026-10-08T14:30",
+            "end": "2026-10-08T16:00",
+            "location": "润良报告厅",
+            "conditional": true
+          }
+        ]
+      },
+      "referenceTime": "2026-10-07T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-13",
+      "sourceSha256": "8ba103adacd3b40617dfa14912498d77f6ce979743856fdd973c6f04194b2eda",
+      "reference": {
+        "tasks": [
+          {
+            "object": "申请",
+            "aliases": [
+              "申请表",
+              "奖学金",
+              "优秀奖"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadline": "2026-10-22T17:00",
+            "precision": "exact",
+            "conditional": true
+          },
+          {
+            "object": "成绩单",
+            "aliases": [
+              "成绩原件"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadline": "2026-10-22T17:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-10-19T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-14",
+      "sourceSha256": "b493fb3400b5acc8aef18fc284cdfb7098b74399228fec2b3c0fe81b7e678999",
+      "reference": {
+        "tasks": [
+          {
+            "object": "雅思",
+            "aliases": [
+              "奖学金申请表",
+              "申请材料"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadline": "2026-10-10T17:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-09-20T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-15",
+      "sourceSha256": "990a867c8383dd0675d33727244dac76cc7f201eaaacd250b4bad4b2acd2b4c3",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "知网实用指南",
+            "aliases": [],
+            "start": "2026-10-10T15:00",
+            "end": "2026-10-10T16:00",
+            "location": "411"
+          },
+          {
+            "object": "四六级考试冲刺攻略",
+            "aliases": [],
+            "start": "2026-10-12T15:00",
+            "end": "2026-10-12T16:00",
+            "location": "411"
+          },
+          {
+            "object": "编制类考试及高质量就业指导",
+            "aliases": [],
+            "start": "2026-10-19T15:00",
+            "end": "2026-10-19T16:00",
+            "location": "411"
+          },
+          {
+            "object": "研究生考试全程备考指导",
+            "aliases": [],
+            "start": "2026-10-26T15:00",
+            "end": "2026-10-26T16:00"
+          }
+        ],
+        "readingFallback": true,
+        "informationOnly": true
+      },
+      "referenceTime": "2026-09-10T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-16",
+      "sourceSha256": "7eb27b93be468fcbc2128ebb4b6fb0415ddaed0bc1490340a08b87d39c618529",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "消防",
+            "aliases": [
+              "急救培训演练",
+              "消防与急救"
+            ],
+            "start": "2026-11-04T14:30",
+            "end": "2026-11-04T17:00",
+            "location": "润良报告厅",
+            "conditional": true
+          }
+        ],
+        "readingFallback": true,
+        "informationOnly": true
+      },
+      "referenceTime": "2026-10-16T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-17",
+      "sourceSha256": "6d9cf4d98c30394b4bbb347c0e80960a4e6bce1fe772973a5a082c8365a49853",
+      "reference": {
+        "tasks": [],
+        "events": [
+          {
+            "object": "停水",
+            "aliases": [],
+            "start": "2026-10-01T22:00",
+            "end": "2026-10-02T06:00",
+            "location": "松江"
+          }
+        ],
+        "readingFallback": true,
+        "informationOnly": true
+      },
+      "referenceTime": "2026-09-28T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-18",
+      "sourceSha256": "3bf7a96f836a4d78617928500c277c1346914c68c5667238c6251fff69e2fc04",
+      "reference": {
+        "tasks": [
+          {
+            "object": "作品",
+            "aliases": [
+              "材料",
+              "压缩包"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadline": "2026-10-25",
+            "precision": "date_only"
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-10-12T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-19",
+      "sourceSha256": "1d08d8802d068881d24a8006e03e6a1c003f6eb8237ef27a76a1a1701ed6ab71",
+      "reference": {
+        "tasks": [
+          {
+            "object": "志愿者",
+            "aliases": [
+              "校园跑",
+              "报名"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadline": "2026-10-08T00:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": [
+          {
+            "object": "面试",
+            "aliases": [],
+            "start": "2026-10-08T18:00",
+            "endUnknown": true,
+            "conditional": true
+          }
+        ]
+      },
+      "referenceTime": "2026-09-30T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "R12-RES-20",
+      "sourceSha256": "7e176c52ad948b6cb23f99d693dcf4d64fc36e0a5778762d4da4a36dbaabca23",
+      "reference": {
+        "tasks": [
+          {
+            "object": "志愿者",
+            "aliases": [
+              "全球城市论坛",
+              "报名"
+            ],
+            "verbs": [
+              "提交",
+              "报送",
+              "发送",
+              "填写",
+              "申请",
+              "申报",
+              "报名",
+              "领取",
+              "参加",
+              "完成",
+              "选课",
+              "核对",
+              "缴费",
+              "登记"
+            ],
+            "deadline": "2026-10-15T17:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": [
+          {
+            "object": "筹备",
+            "aliases": [
+              "会议准备"
+            ],
+            "start": "2026-11-02",
+            "endUnknown": true,
+            "location": "外滩茂悦大酒店",
+            "conditional": true
+          },
+          {
+            "object": "论坛",
+            "aliases": [
+              "世界城市日",
+              "大会",
+              "会议"
+            ],
+            "start": "2026-11-03",
+            "endUnknown": true,
+            "location": "外滩茂悦大酒店",
+            "conditional": true
+          }
+        ]
+      },
+      "referenceTime": "2026-10-10T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    }
+  ]
+}

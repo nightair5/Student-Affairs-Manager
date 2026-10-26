@@ -1,0 +1,109 @@
+{
+  "role": "development-must-pass",
+  "seen": false,
+  "createdAt": "2026-10-25T15:57:29.654Z",
+  "publicSources": 8,
+  "engineeringFixtures": 6,
+  "referencePolicy": "Frozen before new model outputs, v6/R1-R5 direct-mode source semantics; provisional single author; excerpts not independent holdout",
+  "sources": [
+    {
+      "id": "MUST-01",
+      "url": "https://comm.xmu.edu.cn/info/2231/68512.htm",
+      "chars": 308,
+      "sha256": "350e4f1745e0e9b559d865357647bf61ff4e1b2e8ae5cd8b536e7089a5d5a3f3",
+      "referenceSha256": "8dd1e3e8c4b0bfc81e735ba18050b42b33d09ba61ef1dff01d5ccfbef6500f06"
+    },
+    {
+      "id": "MUST-02",
+      "url": "https://www.archaeology.sdu.edu.cn/info/1029/6276.htm",
+      "chars": 150,
+      "sha256": "b08b9e1d9f226e8dd86f23eccb97d03d1d4ca5237510dc17e0957c413354be7d",
+      "referenceSha256": "5e61457f52e133fd3e3e711a1d003ed284415e1a6785e3b4f878f43543093c9b"
+    },
+    {
+      "id": "MUST-03",
+      "url": "https://mse.zju.edu.cn/2026/1009/c51031a3212393/pagem.htm",
+      "chars": 183,
+      "sha256": "a015602ef70faf8d36aee5561ef93a8ca40b1eb7882fdeace70853ec481ad708",
+      "referenceSha256": "4d9a273441492dd751f65d2ee44eb149ac3a06c43c5035dd121f28802d45255a"
+    },
+    {
+      "id": "MUST-04",
+      "url": "https://au.cug.edu.cn/info/1096/15934.htm",
+      "chars": 236,
+      "sha256": "88870e6a093ba3df42fdedba7c22e403fbb2a50561c456d029fc288e7ce4e922",
+      "referenceSha256": "4e03a361aeccc15bdb71d8d313a3c7154c5a9a835d4e372827f928b7a357f19c"
+    },
+    {
+      "id": "MUST-05",
+      "url": "https://tas.nankai.edu.cn/info/1076/6879.htm",
+      "chars": 250,
+      "sha256": "edc77d65f971b6619fa1aa8e0f61708c93c5e94657786612df26909e2e7926e9",
+      "referenceSha256": "d94cbd48bed5020174281e8681086ec4fe3ef264cea3299884065701f2161d4c"
+    },
+    {
+      "id": "MUST-06",
+      "url": "https://www.smbu.edu.cn/info/4591/140111.htm",
+      "chars": 154,
+      "sha256": "f0be2f326bc5b16f52eaa1656909b451ad1c85b1902f115e1f649ffe920a33dc",
+      "referenceSha256": "128cda222383b9d79c65915af9a726472deffcca66b7d957e53706f36167b068"
+    },
+    {
+      "id": "MUST-07",
+      "url": "https://comm.xmu.edu.cn/info/2231/67922.htm",
+      "chars": 214,
+      "sha256": "c5717d01a2616c1d4ad8b1d5df265a1e5a9a9139edc02e39cb283fc174477ea8",
+      "referenceSha256": "34e31900337e54058f9c1a51061dfb060d5f27538f04a26003c5903f5047cc98"
+    },
+    {
+      "id": "MUST-08",
+      "url": "https://www.lc.tsinghua.edu.cn/info/1079/1990.htm",
+      "chars": 210,
+      "sha256": "24bcf9c972d4ffcf75c43dbc973b40da29f6d23a6ae41f8621b7b38b66ba121e",
+      "referenceSha256": "26f43959e11014b27d9f57021da850a4754c2867a42ad1e8d31f21add2567466"
+    },
+    {
+      "id": "FLOW-01",
+      "url": null,
+      "chars": 52,
+      "sha256": "23634dd0174bbb93b2e2af27fbb9de2eb165c7bc08b9459b54993d24ac93be1a",
+      "referenceSha256": "507ee0e85fe7816bfc04d61bcd366ab5c5aa386a7c4904081ea299ff913a3f81"
+    },
+    {
+      "id": "FLOW-02",
+      "url": null,
+      "chars": 42,
+      "sha256": "a27064d53ccd77325c0ef875bc2c1a6a537a59e1508c76b698224e4b00960c95",
+      "referenceSha256": "4a79810135af78a698f8fc1d1ca477619bbd6a2f9b3de5c8c8635dd90141c806"
+    },
+    {
+      "id": "FLOW-03",
+      "url": null,
+      "chars": 43,
+      "sha256": "20602c4ab0d70c2645b602199efaafc6cbd80027fe114abee763d37d198c6974",
+      "referenceSha256": "c9e3a6f78eef774ecfd6010ff817f8b242cf110a335ba54f7c7497f45f5c5b42"
+    },
+    {
+      "id": "FLOW-04",
+      "url": null,
+      "chars": 100,
+      "sha256": "471fd627ca3f09445997f8db9c81a6bb0da667bd3a72a4d1694b00122856211a",
+      "referenceSha256": "77b5d9beb8bf64826352acbb901676c8801df4683789847a701d389e1fb0727e"
+    },
+    {
+      "id": "FLOW-05",
+      "url": null,
+      "chars": 39,
+      "sha256": "3782ad7355310d6cb1b10a25f7430e57a5d8663ac02f57036c5a84ef4238c144",
+      "referenceSha256": "39ecc0e09f1e6d354b72aa92a87961cf06b62701cdebe2c4f680afc536e6a2c4"
+    },
+    {
+      "id": "FLOW-06",
+      "url": null,
+      "chars": 75,
+      "sha256": "8d21982bbf2634909286d61741eda2255338bebd44581c0569f7b30d8fe595ad",
+      "referenceSha256": "08764fd4fceff0fe6192eb947d01e96cb00f67c307eafc67c247dc7ecb97c566"
+    }
+  ],
+  "sourceReviewBeforeAnyR26Request": "2026-10-25T16:06:43.368Z"
+}

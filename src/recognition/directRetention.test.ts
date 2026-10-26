@@ -1,0 +1,12 @@
+import {describe,it,expect} from 'vitest'
+import {buildLocalRecognition} from './pipeline'
+import {convertDirectResult} from './directResult'
+import {directCardTitle,visibleDirectTags} from '../lib/directCardPresentation'
+describe('versioned direct retention',()=>{
+ const source='符合条件的同学请于2026年10月30日17:00前提交奖学金申请表。'
+ const input=()=>buildLocalRecognition({sourceType:'text',sourceTitle:'奖学金申请',content:source,referenceTime:new Date('2026-10-20T12:00:00+08:00'),timezone:'Asia/Shanghai',projects:[],tasks:[]})
+ it('keeps conditional action and its explicit deadline without mutating the answer',()=>{const r=input(),copy=structuredClone(r),c=convertDirectResult(r,source,undefined,{retention:true});expect(r).toEqual(copy);expect(c.result.standaloneTasks.some(t=>t.actionVerb!=='查看')).toBe(true);expect(c.items.some(i=>i.tags.includes('待确认'))).toBe(true);expect(c.result.timePoints.some(p=>p.normalizedValue==='2026-10-30T17:00')).toBe(true)})
+ it('keeps model name with a review label',()=>{const r=input();r.standaloneTasks[0].actionObject='申请材料';r.standaloneTasks[0].title='提交奖学金申请材料';const c=convertDirectResult(r,source,undefined,{retention:true});expect(c.result.standaloneTasks[0].actionVerb).not.toBe('查看');expect(c.items[0].tags).toContain('待确认')})
+ it('does not revive cancelled actions or turn alternative dates into a deadline',()=>{const r=input();const cancelled='提交奖学金申请表事项已取消，无需提交。';const a=convertDirectResult(r,cancelled,undefined,{retention:true});expect(a.result.standaloneTasks.every(t=>t.actionVerb==='查看')).toBe(true);expect(a.omitted.some(x=>x.reason==='CANCELLED_OR_PROHIBITED')).toBe(true);const b=input();b.evidence.forEach(e=>{e.quote=e.quotedText='可选择10月29日或10月30日办理。'});const c=convertDirectResult(b,'可选择10月29日或10月30日办理。',undefined,{retention:true});expect(c.result.timePoints.some(p=>/deadline$/u.test(p.type)&&p.normalizedValue)).toBe(false)})
+ it('the feature is opt-in; card shortening does not rewrite a stored title',()=>{const r=input();expect(convertDirectResult(r,source)).toEqual(convertDirectResult(r,source,undefined,{retention:false}));const title='如符合条件 提交新闻传播学院社会捐赠奖学金申请表及证明材料';expect(directCardTitle(title).length).toBe(25);expect(title).toContain('证明材料');expect(visibleDirectTags(['时间待定','时间待定','待确认'],'时间待定',title)).toEqual(['待确认'])})
+})

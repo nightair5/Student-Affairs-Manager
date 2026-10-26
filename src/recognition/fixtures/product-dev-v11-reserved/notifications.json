@@ -1,0 +1,1330 @@
+[
+  {
+    "id": "R12-RES-01",
+    "scene": "嘉锡讲坛第750期讲座取消通知",
+    "inputSourceTitle": "嘉锡讲坛第750期讲座取消通知",
+    "inputSourceType": "text",
+    "text": "嘉锡讲坛第750期讲座取消通知\n福州大学“嘉锡讲坛”第750期讲座——《人工智能发展前沿》，主讲嘉宾：[讲者或联系人]，原定2026年7月12日（周日）晚上19:30在福州大学图书馆明德厅举行，因天气因素现讲座取消。",
+    "reference": {
+      "tasks": [],
+      "events": [],
+      "informationOnly": true,
+      "readingFallback": true,
+      "forbidden": [
+        {
+          "object": "人工智能发展前沿",
+          "verbs": [
+            "参加",
+            "报名"
+          ]
+        }
+      ],
+      "obsoleteTimes": [
+        "2026-07-12"
+      ]
+    },
+    "referenceTime": "2026-07-11T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://jwch.fzu.edu.cn/info/1016/14740.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-07-11",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 148,
+          "end": 234,
+          "sha256": "d47feeadcde3e422050063c17726ec777d465d91a7f9943f2a938f8d84e0655f"
+        }
+      ],
+      "receiptSha256": "29ab08bfe976512d542b615dd3de7efaf87f2b5086605c036ccd12d42ab4c35e",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-02",
+    "scene": "嘉锡讲坛第746期讲座时间改动",
+    "inputSourceTitle": "嘉锡讲坛第746期讲座时间改动",
+    "inputSourceType": "text",
+    "text": "嘉锡讲坛第746期讲座时间改动\n福州大学“嘉锡讲坛”第746期讲座——《遥感大数据在经济学中的使用》，主讲嘉宾：[讲者或联系人]，原定2026年6月11日（周四）下午15:00在福州大学晋江楼一楼学术报告厅举行，现讲座时间更改为2026年6月11日（周四）下午14:30。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "遥感大数据在经济学中的使用",
+          "aliases": [
+            "嘉锡讲坛第746期讲座",
+            "第746期讲座"
+          ],
+          "start": "2026-06-11T14:30",
+          "endUnknown": true,
+          "location": "福州大学晋江楼一楼学术报告厅"
+        }
+      ],
+      "readingFallback": true,
+      "informationOnly": true,
+      "obsoleteTimes": [
+        "2026-06-11T15:00"
+      ]
+    },
+    "referenceTime": "2026-06-09T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://jwch.fzu.edu.cn/info/1016/14683.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-06-09",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 152,
+          "end": 266,
+          "sha256": "bd6694cb2b4be19174ff8f40caeb972ed01a854cceb453ec921195e88bd07093"
+        }
+      ],
+      "receiptSha256": "c062a0d3e312dea00d2594e07e91ae76b744f7f286e36d1d0d14a4551efd63b5",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-03",
+    "scene": "普陀校区图书馆一楼D区暂停开放",
+    "inputSourceTitle": "普陀校区图书馆一楼D区暂停开放",
+    "inputSourceType": "text",
+    "text": "普陀校区图书馆一楼D区暂停开放\n各位读者：普陀校区图书馆一楼D区（咖吧区域）于10月6日至10日进行墙面渗漏维修施工，期间D112室、录播间、自助咖啡机暂停使用。带来不便，敬请谅解。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "维修",
+          "aliases": [
+            "暂停开放",
+            "暂停使用",
+            "施工"
+          ],
+          "start": "2026-10-06",
+          "end": "2026-10-10",
+          "location": "普陀校区图书馆一楼D区"
+        }
+      ],
+      "readingFallback": true,
+      "informationOnly": true
+    },
+    "referenceTime": "2026-10-04T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://lib.ecnu.edu.cn/f3/4c/c38307a783180/page.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-10-04",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 1226,
+          "end": 1301,
+          "sha256": "594020da7968ade949fffc3273a60c7abc3a9f0bde80b31317243d624f68ea93"
+        }
+      ],
+      "receiptSha256": "4b9a7e22ae2dd0397db848043869a495f878e6559513dae7749f6dc82b331024",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-04",
+    "scene": "2026年复旦大学经济学院政经学术论坛",
+    "inputSourceTitle": "2026年复旦大学经济学院政经学术论坛",
+    "inputSourceType": "text",
+    "text": "2026年复旦大学经济学院政经学术论坛\n时间：10月10日（周六）8:00-17:20\n地点：复旦大学经济学院1125会议室\n（国权路579号A栋）",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "政经学术论坛",
+          "aliases": [
+            "经济学院论坛"
+          ],
+          "start": "2026-10-10T08:00",
+          "end": "2026-10-10T17:20",
+          "location": "1125"
+        }
+      ],
+      "readingFallback": true,
+      "informationOnly": true
+    },
+    "referenceTime": "2026-10-08T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://fddi.fudan.edu.cn/_t2515/1c/dc/c21257a793820/page.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-10-08",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 292,
+          "end": 315,
+          "sha256": "088439256ac61fb6fcc6a237cc63c3723de389be5fcf40d0ae79a953e064d05a"
+        },
+        {
+          "start": 315,
+          "end": 333,
+          "sha256": "38bafd9ac9c76c080b6ea38fa0d352cc0bcd0cd83e20bf275c94b37aba0a9b55"
+        },
+        {
+          "start": 333,
+          "end": 344,
+          "sha256": "8cdad45efe47ed8c2ec574aa7073509da9f806194eff44e11c98135b87ecef4e"
+        }
+      ],
+      "receiptSha256": "33a138db2d839cdfdc9ca60fe6fc84bafffbfea5cf55fab89a53322f88d78860",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-05",
+    "scene": "2027届毕业生三方协议领取通知",
+    "inputSourceTitle": "2027届毕业生三方协议领取通知",
+    "inputSourceType": "text",
+    "text": "2027届毕业生三方协议领取通知\n凡有求职需求的毕业生，在获得书面、口头、邮件等形式的offer后，可选择网上签约，或前往计算机学院学生工作办公室（电信群楼3-102）领取纸质三方协议。注意：网上签约无需领取纸质三方协议（网签与纸质三方协议仅可二选一）。\n一、领取时间工作日（周一至周五），10月16日起。•上午：8:30-11:30•下午：13:30-17:00",
+    "reference": {
+      "tasks": [
+        {
+          "object": "三方协议",
+          "aliases": [
+            "就业协议书"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadlineUnknown": true,
+          "conditional": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-14T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://www.cs.sjtu.edu.cn/xsgz-tzgg-zyfz/1941.html",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-10-14",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 692,
+          "end": 802,
+          "sha256": "15d1beff58eb3a17bd00fa6b6ea6b8e98b7a143b1a7cb95049b8885349cbbcbc"
+        },
+        {
+          "start": 802,
+          "end": 856,
+          "sha256": "cac0b4a1af8cbffc5ebfc3d46111c7a64ee6c72860d9c04d1cd0e41dece292ae"
+        }
+      ],
+      "receiptSha256": "049ff20279c4957f62d30dcfd27d0ded1bf0039b49146e6993d0bf4520737d87",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-06",
+    "scene": "同心光彩助学申请通知",
+    "inputSourceTitle": "同心光彩助学申请通知",
+    "inputSourceType": "text",
+    "text": "同心光彩助学申请通知\n候选人须为2026级家庭经济困难本科生（2026-2027学年“华侨大学阳光成长计划”成员）\n1.学生申请：申请学生务必于10月24日17:00前，通过信息门户-办事大厅-奖学金进行申请，各项信息请务必如实准确填写。并填写《附件1：同心·光彩助学申请表》。电子材料：申请学生务必于10月24日17:00前将《附件1：同心·光彩助学申请表》（word版）、奖学金系统提交申请截图、特殊困难群体证明材料、本人银行卡正反面复印件（PDF版）、参加社会实践、志愿服务或公益活动等佐证材料（如：志愿汇工时记录截图、无偿献血证明等），压缩包以“班级-姓名”命名，发送至邮箱[邮箱]。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "助学",
+          "aliases": [
+            "奖学金系统",
+            "系统申请"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadline": "2026-10-24T17:00",
+          "precision": "exact",
+          "conditional": true
+        },
+        {
+          "object": "电子",
+          "aliases": [
+            "助学申请表",
+            "申请材料"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadline": "2026-10-24T17:00",
+          "precision": "exact",
+          "conditional": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-23T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://med.hqu.edu.cn/info/1052/109132.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-10-23",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 984,
+          "end": 1030,
+          "sha256": "fc71b3240c69856f06746d205860dfa090e90a6c5472ad4bcf65e9b0d4021664"
+        },
+        {
+          "start": 1344,
+          "end": 1595,
+          "sha256": "231746e60dea13b1ad7b5444433ae69de52e4acf85902f3d2a4003bbf03be1ec"
+        }
+      ],
+      "receiptSha256": "6d2569786e761083e9d9a2ff2a9c3a3d8ea5dcf71d344648dfde655f620327bf",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-07",
+    "scene": "2026年度黎明人才奖学金申请",
+    "inputSourceTitle": "2026年度黎明人才奖学金申请",
+    "inputSourceType": "text",
+    "text": "2026年度黎明人才奖学金申请\n五、学生申报说明（一）填写电子版《吉林大学汽车工程学院2026年度“黎明人才奖学金”申请表》（附件1）。（二）各项申报信息请严格按照填表要求填写，填表要求见《吉林大学汽车工程学院社会奖学金申请表填表说明》（附件2）。（三）综合成绩要求成绩来源于学生工作办公室，参见2025-2026学年度奖学金公示的综合成绩排名。（四）学生申报截止时间为2026年10月23日17:00前，将申请表及佐证材料以“姓名＋黎明人才奖学金申请材料”形式命名，发送至邮箱[邮箱]，逾期未报，视为放弃。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "黎明人才奖学金",
+          "aliases": [
+            "申请表",
+            "申请材料"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadline": "2026-10-23T17:00",
+          "precision": "exact",
+          "conditional": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-20T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://auto.jlu.edu.cn/info/1114/8849.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-10-20",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 996,
+          "end": 1247,
+          "sha256": "504fbd956dbde841e4e9084adad3217dd84dea0b16510dd191199163897f8b47"
+        }
+      ],
+      "receiptSha256": "47834691971bc91fb939ff1b25515e8ee2c1eb53c50637ecd2b4d0ad9c8040f4",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-08",
+    "scene": "2026金融街论坛年会志愿者招募",
+    "inputSourceTitle": "2026金融街论坛年会志愿者招募",
+    "inputSourceType": "text",
+    "text": "2026金融街论坛年会志愿者招募\n招募对象创新发展学院、澄明书院全体本硕博学生活动时间2026年10月19日-10月22日招募人数预计20-25人（1）报名阶段请有意向报名的同学于9月15日18:00前认真填写文末报名问卷并进入志愿者招募群。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "报名问卷",
+          "aliases": [
+            "志愿者",
+            "金融街论坛"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadline": "2026-09-15T18:00",
+          "precision": "exact",
+          "conditional": true
+        }
+      ],
+      "events": [
+        {
+          "object": "金融街论坛",
+          "aliases": [
+            "论坛年会",
+            "志愿服务"
+          ],
+          "start": "2026-10-19",
+          "end": "2026-10-22",
+          "conditional": true
+        }
+      ]
+    },
+    "referenceTime": "2026-09-14T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://sind.cufe.edu.cn/info/1051/4722_1.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-09-14",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 582,
+          "end": 686,
+          "sha256": "1b287f1dee70614811a269cfbce4a4a14f43a581a12c31b05b5a34a44ff10d72"
+        }
+      ],
+      "receiptSha256": "621d873a776b10c2f0c7bd43da4fd0e623f76a8d06573a0254e5a03b552b640b",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-09",
+    "scene": "2026级新生小班研讨及普通选修课选课",
+    "inputSourceTitle": "2026级新生小班研讨及普通选修课选课",
+    "inputSourceType": "text",
+    "text": "2026级新生小班研讨及普通选修课选课\n1.网上选课的地址为：http://jwc.cpu.edu.cn（主页“学生空间”点击后从“新版教务平台”进入）。2.选课对象：本次选课面向2026级新生。具体的以选课系统中显示的为准，能在系统中看见的课程，就可以选，课表都可以在教务处网站查询。3.报名时间为：2026年10月10日12：00—10月12日24：00，请同学按时上网登录选课系统报名，先到先得，选修课额满为止，逾期不再补报。因本次课程资源有限，每人限选两门，未选上的学生不能上课，即使上了课也不能获得该门课程的学分。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "选课",
+          "aliases": [
+            "选修课",
+            "小班研讨",
+            "课程"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadline": "2026-10-13T00:00",
+          "precision": "exact",
+          "conditional": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-09T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://jwc.cpu.edu.cn/bc/0e/c884a244750/page.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-10-09",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 566,
+          "end": 808,
+          "sha256": "e7b7edcb36061532f9f8f3b24c8513c24c31af3bc908a5c08af81ad499f4ac21"
+        }
+      ],
+      "receiptSha256": "df5c3599776c63d5dba5fbae480f21c88e403e2c39b4e55c9a758362ad89cb6b",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-10",
+    "scene": "2026秋季学期新生选课",
+    "inputSourceTitle": "2026秋季学期新生选课",
+    "inputSourceType": "text",
+    "text": "2026秋季学期新生选课\n学生需在教务系统中对各类课程进行选课后，才能参加课程的学习和考核。\n一、选课时间2026年9月29日10：00至10月9日10：00",
+    "reference": {
+      "tasks": [
+        {
+          "object": "选课",
+          "aliases": [
+            "课程"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadlineUnknown": true,
+          "conditional": true,
+          "windows": [
+            {
+              "start": "2026-09-29T10:00",
+              "end": "2026-10-09T10:00"
+            }
+          ]
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-09-28T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://jwc.wtu.edu.cn/info/1055/14512.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-09-28",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 259,
+          "end": 292,
+          "sha256": "bd5c0fa513b30e9bc394a43915fa395975a9ab926ee41f53a35b0150d19d9397"
+        },
+        {
+          "start": 317,
+          "end": 349,
+          "sha256": "92070e71e155a8580c282cc1256e765645c3b28e02d6a9aa37fb84b3b2fed2d7"
+        }
+      ],
+      "receiptSha256": "2c43f1ed48e9d1b2979bf44b47c812b63e8f758841214f4a8019056812501cbb",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-11",
+    "scene": "2026年10月17日HSK考试报名",
+    "inputSourceTitle": "2026年10月17日HSK考试报名",
+    "inputSourceType": "text",
+    "text": "2026年10月17日HSK考试报名\n1.考试信息ExamInformation考试日期TestDate考试级别HSKLevel报名截止时间RegistrationDeadline10月17日（周六）October17(Saturday)HSK三、四、五、六级HSKK初级、中级、高级HSKLevel3,Level4,Level5,Level6HSKKPrimary/Intermediate/AdvancedLevel10月7日October7\n考试采用网上报名的形式，请考生登陆汉语考试服务网（网址：http://www.chinesetest.cn/index.do）进行报名，步骤如下：",
+    "reference": {
+      "tasks": [
+        {
+          "object": "HSK",
+          "aliases": [
+            "汉语考试",
+            "考试报名"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadline": "2026-10-07",
+          "precision": "date_only",
+          "conditional": true
+        }
+      ],
+      "events": [
+        {
+          "object": "HSK",
+          "aliases": [
+            "汉语考试",
+            "HSKK"
+          ],
+          "start": "2026-10-17",
+          "endUnknown": true
+        }
+      ]
+    },
+    "referenceTime": "2026-09-24T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://ies.ysu.edu.cn/info/1167/8915.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-09-24",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 855,
+          "end": 1059,
+          "sha256": "2928a9cb90af1f6ec600d312fb49afe4a0953f0a154b9b6418f72b8a8dd93dd4"
+        },
+        {
+          "start": 1084,
+          "end": 1157,
+          "sha256": "52833c855f16767605dfb76051e9f7218c49d5ab2128a023b869f4ada3d5bc1c"
+        }
+      ],
+      "receiptSha256": "5086c103de57e31d123f718bc47a9f86e520128f798607e74a27b61df62c7512",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-12",
+    "scene": "未来教师训练营第二场活动",
+    "inputSourceTitle": "未来教师训练营第二场活动",
+    "inputSourceType": "text",
+    "text": "未来教师训练营第二场活动\n根据“未来教师训练营”培训安排，10月8日（星期四）将开展第二场讲座活动，请各学院教学院长、系主任、专业负责人等骨干教师按要求参加。具体安排如下：一、主题：人工智能时代人才培养体系的改革思考与实践二、时间：10月8日14:30-16:00三、地点：学术交流中心润良报告厅",
+    "reference": {
+      "tasks": [
+        {
+          "object": "讲座",
+          "aliases": [
+            "未来教师训练营",
+            "人工智能时代人才培养体系"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadlineUnknown": true,
+          "conditional": true
+        }
+      ],
+      "events": [
+        {
+          "object": "人工智能时代人才培养体系的改革思考与实践",
+          "aliases": [
+            "未来教师训练营",
+            "讲座"
+          ],
+          "start": "2026-10-08T14:30",
+          "end": "2026-10-08T16:00",
+          "location": "润良报告厅",
+          "conditional": true
+        }
+      ]
+    },
+    "referenceTime": "2026-10-07T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://www.scuec.edu.cn/jxsfzx/info/1041/2764.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-10-07",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 277,
+          "end": 412,
+          "sha256": "ceeef7016da1b248f682cf2f0506dfe05aaea335d6fb54fd4875b390e29ef16f"
+        }
+      ],
+      "receiptSha256": "39eae98486df46c07a4881f010138010b070c7c32fd8635a16b1df40f6cf8451",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-13",
+    "scene": "创新班英语法语学习优秀奖申请",
+    "inputSourceTitle": "创新班英语法语学习优秀奖申请",
+    "inputSourceType": "text",
+    "text": "创新班英语法语学习优秀奖申请\n（二）英语学习优秀奖、法语学习优秀奖本次获奖统计截止时间为2026年9月4日，符合条件的学生请于2026年10月19日至10月22日17：00向学院提出申请，提交手写签字后的学生申请表（附件2）（pdf版）及外语成绩证明（如雅思、托福、托业成绩单pdf版，需手写“本人承诺成绩单真实有效”并签名），将上述材料以附件形式发送到[邮箱]，电子邮件标题请按“班级+姓名+英语学习优秀奖/法语学习优秀奖”命名，并于2026年10月19日至10月22日17：00前携带成绩单原件前往院系楼303办公室[讲者或联系人]处进行核对。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "申请",
+          "aliases": [
+            "申请表",
+            "奖学金",
+            "优秀奖"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadline": "2026-10-22T17:00",
+          "precision": "exact",
+          "conditional": true
+        },
+        {
+          "object": "成绩单",
+          "aliases": [
+            "成绩原件"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadline": "2026-10-22T17:00",
+          "precision": "exact",
+          "conditional": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-19T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://jingmao.gdufs.edu.cn/info/1462/20819.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-10-19",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 905,
+          "end": 1173,
+          "sha256": "f386d9c6b6011cb6f6ad16a5ef8a1697d2e8d6c1771478e6954e811c41c65849"
+        }
+      ],
+      "receiptSha256": "2651152effc0afb4cffe13d3ef75aa793b927675b239779698169420b872dcbc",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-14",
+    "scene": "雅思专项奖学金申请",
+    "inputSourceTitle": "雅思专项奖学金申请",
+    "inputSourceType": "text",
+    "text": "雅思专项奖学金申请\n四、评定办法及流程1.申请人下载《珠海科技学院雅思专项奖学金申请表》（见附件），填写完整后送所在学院审批。2.经所在学院审批同意后，将申请表、雅思成绩单复印件、在校成绩单复印件和国外合作高校录取通知书复印件等纸质材料于2026年10月10日17:00前交至行政楼（图书馆南区）104室。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "雅思",
+          "aliases": [
+            "奖学金申请表",
+            "申请材料"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadline": "2026-10-10T17:00",
+          "precision": "exact",
+          "conditional": true
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-09-20T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://iec.jluzh.edu.cn/2026/0920/c1248a195186/page.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-09-20",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 3984,
+          "end": 4127,
+          "sha256": "7377bd220f1a415e6f40fcd68ad47e91d836ea71eb17aa809c8b363a90e74d4e"
+        }
+      ],
+      "receiptSha256": "ce01c9f578a7ec0e51104f14340751c6e73a800fc72f1a74cd004bdc21466003",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-15",
+    "scene": "2026年秋季信息素养公共讲座",
+    "inputSourceTitle": "2026年秋季信息素养公共讲座",
+    "inputSourceType": "text",
+    "text": "2026年秋季信息素养公共讲座\n1.讲座主题：知网实用指南：让你轻松搞定文献查找\n讲座时间:2026年10月10日15:00-16:00\n讲座地点:图书馆四楼文献检索教室(411室)\n2.讲座主题：四六级考试冲刺攻略\n讲座时间:2026年10月12日15:00-16:00\n讲座地点：图书馆四楼文献检索教室（411室）\n3.讲座主题：编制类考试及高质量就业指导\n讲座时间：10月19日15:00-16:00\n讲座地点：图书馆四楼文献检索室（411室）\n4.讲座主题：研究生考试全程备考指导\n讲座时间：10月26日15:00-16:00",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "知网实用指南",
+          "aliases": [],
+          "start": "2026-10-10T15:00",
+          "end": "2026-10-10T16:00",
+          "location": "411"
+        },
+        {
+          "object": "四六级考试冲刺攻略",
+          "aliases": [],
+          "start": "2026-10-12T15:00",
+          "end": "2026-10-12T16:00",
+          "location": "411"
+        },
+        {
+          "object": "编制类考试及高质量就业指导",
+          "aliases": [],
+          "start": "2026-10-19T15:00",
+          "end": "2026-10-19T16:00",
+          "location": "411"
+        },
+        {
+          "object": "研究生考试全程备考指导",
+          "aliases": [],
+          "start": "2026-10-26T15:00",
+          "end": "2026-10-26T16:00"
+        }
+      ],
+      "readingFallback": true,
+      "informationOnly": true
+    },
+    "referenceTime": "2026-09-10T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://lib.hueb.edu.cn/info/1086/4436.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-09-10",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 2187,
+          "end": 2211,
+          "sha256": "c460a6d1c9aac8991fe227551656705921048b2e20ce204b90ba9b6ffa0a6241"
+        },
+        {
+          "start": 2283,
+          "end": 2310,
+          "sha256": "aba483ab80c7f481e3ba110c8d4f977786a90cfa21370b8b6b900dd53a5dc1b5"
+        },
+        {
+          "start": 2310,
+          "end": 2332,
+          "sha256": "e4173999aeefba4a20c0812ca481618a1839109623eea09e98aae9354385cce7"
+        },
+        {
+          "start": 2369,
+          "end": 2385,
+          "sha256": "1e62a91b5810bec038b9971181f6a2b4ea1d4895276ff7a08851bd85793bb6d6"
+        },
+        {
+          "start": 2490,
+          "end": 2517,
+          "sha256": "da3279c595eee37f074477f08d3a69c8d811047d7798712f578670a783e25c1e"
+        },
+        {
+          "start": 2517,
+          "end": 2539,
+          "sha256": "1e5c1ba15ffee2f6d7225f6c49c85afc192f63bb00edc979b6e76fba853ddb5b"
+        },
+        {
+          "start": 2595,
+          "end": 2615,
+          "sha256": "eda4a175535e0f7fa6800f13ea7867745952b03cef6ffd6518b0de2ee8c6e866"
+        },
+        {
+          "start": 2670,
+          "end": 2692,
+          "sha256": "ff4257777c77257ba223e82498e2e661cea8797aed870bfa6991a19411b7ccc4"
+        },
+        {
+          "start": 2692,
+          "end": 2713,
+          "sha256": "6c5ff031bf26562a4a74588033ee2c99bdb49fd03f2010cc2867560608f26a92"
+        },
+        {
+          "start": 2750,
+          "end": 2768,
+          "sha256": "05b9f2ab5c118e9e957ba820b7acfa42385647cd60b3039ad5dffc2312575599"
+        },
+        {
+          "start": 2857,
+          "end": 2879,
+          "sha256": "12aa1a19ab41ff1294a1c9120186dcf0dc53d456e9f91b556f4e33fe5b5cff7f"
+        }
+      ],
+      "receiptSha256": "2fd5604d6908db43955da05d025499dc2c7eebc9cde12f0da1bff375dda59257",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-16",
+    "scene": "实验室安全教育宣传月消防与急救培训演练",
+    "inputSourceTitle": "实验室安全教育宣传月消防与急救培训演练",
+    "inputSourceType": "text",
+    "text": "实验室安全教育宣传月消防与急救培训演练\n（四）项目四：消防与急救培训演练1.活动时间：11月4日（周三）下14:30-17:002.活动地点：学术交流中心二楼润良报告厅及门前广场3.参与人员：各学院实验室主任及安全员。化学与材料科学学院（组织45人）、生命科学学院（组织45人）、药学院（组织45人）、资源与环境学院（组织45人）、生物医学工程学院（组织20人）等单位分别组织学生骨干（含科研团队学生安全员）参会4.活动内容：专题培训（第一场）：医疗急救讲座与演练；专题培训（第二场）：消防安全讲座与演练。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "消防",
+          "aliases": [
+            "急救培训演练",
+            "消防与急救"
+          ],
+          "start": "2026-11-04T14:30",
+          "end": "2026-11-04T17:00",
+          "location": "润良报告厅",
+          "conditional": true
+        }
+      ],
+      "readingFallback": true,
+      "informationOnly": true
+    },
+    "referenceTime": "2026-10-16T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://www.scuec.edu.cn/gzc/info/1032/2159.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-10-16",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 1584,
+          "end": 1817,
+          "sha256": "b9156e36801ca50eaeecba8bb668e49af203d2770f137fc8a607e07fca567cba"
+        }
+      ],
+      "receiptSha256": "aab4f311129e063909568de32ccd799ad5067d595111f70da2797a4f39977cb1",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-17",
+    "scene": "松江校区停水通知",
+    "inputSourceTitle": "松江校区停水通知",
+    "inputSourceType": "text",
+    "text": "松江校区停水通知\n为了保障学校师生的用水卫生，将对学校供水水箱进行定期清洗工作，在水箱清洗时要暂停一些大楼的供水。松江校区停水时间：定于2026年10月1日（星期四）22：00分至2026年10月2日（星期五）06：00分。停水范围：（化学楼、综合楼、第一教学楼、第二教学楼、1.2.3.4.5号学院楼、行政楼、师生活动中心、科技创新楼、研究生公寓C/D楼、复合材料协同创新中心大楼、图文中心和图书馆、工程训练中心）二楼以上的用水；以及现代纺织大楼、教师之家的用水；一食堂二楼及以上用水。",
+    "reference": {
+      "tasks": [],
+      "events": [
+        {
+          "object": "停水",
+          "aliases": [],
+          "start": "2026-10-01T22:00",
+          "end": "2026-10-02T06:00",
+          "location": "松江"
+        }
+      ],
+      "readingFallback": true,
+      "informationOnly": true
+    },
+    "referenceTime": "2026-09-28T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://news.dhu.edu.cn/2026/0928/c6411a427369/pagem.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-09-28",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 70,
+          "end": 305,
+          "sha256": "eaff8419d54a7540aeccbf52aac06c92da72c1ee4b0a7a66818b47cf785b513d"
+        }
+      ],
+      "receiptSha256": "3d5960e968bffe5b7788799526c958eddda4d3c81ed435b0266e324979f16388",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-18",
+    "scene": "电信T.A杯AI教育创新应用技能大赛作品提交",
+    "inputSourceTitle": "电信T.A杯AI教育创新应用技能大赛作品提交",
+    "inputSourceType": "text",
+    "text": "电信T.A杯AI教育创新应用技能大赛作品提交\n一、提交时间作品提交截止时间为2026年10月25日，所有材料提交逾期不予受理。二、提交方式1.提交地址。请使用浏览器打开作品提交链接：https://pan.xjtu.edu.cn/collection/470be743138df05cb9159b80f09582662.压缩包上传。（1）请将全部材料打包压缩为一个文件（zip/rar等格式）后整体上传；请勿以零散文件逐个上传，也不要上传未压缩的文件夹。（2）赛道四作品提交材料分为“大赛官方材料清单”“任务书要求材料”两类，参赛者须在压缩包内分别建立两个文件夹分类存放后提交。3.命名规范。",
+    "reference": {
+      "tasks": [
+        {
+          "object": "作品",
+          "aliases": [
+            "材料",
+            "压缩包"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadline": "2026-10-25",
+          "precision": "date_only"
+        }
+      ],
+      "events": []
+    },
+    "referenceTime": "2026-10-12T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://agent.xjtu.edu.cn/aiic/info/1023/1206.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-10-12",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 309,
+          "end": 582,
+          "sha256": "3d8ddd16a0fc555f0db2b3611b69208eefaff46e38f2781dfd3b5eb91bdd8b6f"
+        }
+      ],
+      "receiptSha256": "6df45d65b91686530494d9a84ab4ca37b6ec1b894a02c274a2bc3c07aa7fbf20",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-19",
+    "scene": "秋季学期校园跑志愿者招募",
+    "inputSourceTitle": "秋季学期校园跑志愿者招募",
+    "inputSourceType": "text",
+    "text": "秋季学期校园跑志愿者招募\n招募对象：上海第二工业大学全日制本专科生\n面试时间：10月8日晚上18:00（暂定）\n四、招募方式1、符合报名要求的同学扫描下方二维码进行报名！（问卷中的个人信息请如实填写）2、完成报名后请扫码进入QQ群，后续通知将在群内发布注意：请大家根据自身实际情况报名，若后续中途退出，将会被记入黑名单1次3、报名截止时间：2026年10月7日24点",
+    "reference": {
+      "tasks": [
+        {
+          "object": "志愿者",
+          "aliases": [
+            "校园跑",
+            "报名"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadline": "2026-10-08T00:00",
+          "precision": "exact",
+          "conditional": true
+        }
+      ],
+      "events": [
+        {
+          "object": "面试",
+          "aliases": [],
+          "start": "2026-10-08T18:00",
+          "endUnknown": true,
+          "conditional": true
+        }
+      ]
+    },
+    "referenceTime": "2026-09-30T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://pe2016.sspu.edu.cn/2026/0930/c342a172524/page.htm",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-09-30",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 344,
+          "end": 364,
+          "sha256": "58857e572c783be722de57f6f68379ef5f21ae47ad2cd58da386be99da14409f"
+        },
+        {
+          "start": 377,
+          "end": 398,
+          "sha256": "ccbb3a3de26b31a2b95c6fd4014ad8e0ed2af605ebf6f3a5385a22c1c21bd40a"
+        },
+        {
+          "start": 731,
+          "end": 858,
+          "sha256": "50269ebe5502e6fe8e226884a0904be001f26e28fa78e9dbd53afb6f896a4ef2"
+        }
+      ],
+      "receiptSha256": "403bbc24df9cda9cfd63b3654bb75c7614782108b9db3de1cfaee15a32e77301",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  },
+  {
+    "id": "R12-RES-20",
+    "scene": "2026全球城市论坛志愿者招募",
+    "inputSourceTitle": "2026全球城市论坛志愿者招募",
+    "inputSourceType": "text",
+    "text": "2026全球城市论坛志愿者招募\n志愿者招募英雄帖时间2026年11月2日-3日（会议重要，需要你的全情投入！）（1）11月2日全天：会议筹备（2）11月3日全天：上午开幕式，主旨报告；下午分论坛地点上海外滩茂悦大酒店（虹口区黄浦路199号）要求交大在校学生（徐汇校区学生优先考虑）、英语口语较好、文字功底较好、服从安排、珍惜荣誉收获提供志愿者服装；增加社会实践经验，提升沟通协调能力；每天有志愿者补贴；颁发志愿者证书；提供午餐、饮用水等报名方式请长按二维码报名参加，截止时间：10月15日（周四）下午17:00前。志愿者名额有限有意愿的同学请尽快报名！",
+    "reference": {
+      "tasks": [
+        {
+          "object": "志愿者",
+          "aliases": [
+            "全球城市论坛",
+            "报名"
+          ],
+          "verbs": [
+            "提交",
+            "报送",
+            "发送",
+            "填写",
+            "申请",
+            "申报",
+            "报名",
+            "领取",
+            "参加",
+            "完成",
+            "选课",
+            "核对",
+            "缴费",
+            "登记"
+          ],
+          "deadline": "2026-10-15T17:00",
+          "precision": "exact",
+          "conditional": true
+        }
+      ],
+      "events": [
+        {
+          "object": "筹备",
+          "aliases": [
+            "会议准备"
+          ],
+          "start": "2026-11-02",
+          "endUnknown": true,
+          "location": "外滩茂悦大酒店",
+          "conditional": true
+        },
+        {
+          "object": "论坛",
+          "aliases": [
+            "世界城市日",
+            "大会",
+            "会议"
+          ],
+          "start": "2026-11-03",
+          "endUnknown": true,
+          "location": "外滩茂悦大酒店",
+          "conditional": true
+        }
+      ]
+    },
+    "referenceTime": "2026-10-10T00:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "referenceAuthoredAt": "2026-10-26T00:25:38.994Z",
+    "referenceIndependent": false,
+    "cohort": "reserved-r12",
+    "provenance": {
+      "url": "https://ciug.sjtu.edu.cn/Web/Show?f=6824&p=3&w=37",
+      "acquiredAt": "2026-10-26T00:25:38.994Z",
+      "publishedOrExplicitUpdateDate": "2026-10-10",
+      "type": "OFFICIAL_PUBLIC_SOURCE_FIRST_EXCERPT",
+      "scope": "Short notice body or explicitly scoped public section selected before any R26 outputs; omitted biographies/navigation/other campuses or independent sections. Generalization applies to these excerpts.",
+      "normalizedSourceSpans": [
+        {
+          "start": 562,
+          "end": 822,
+          "sha256": "55ab54db30b67c0cd227ae231e3d26332a091127a59e419dd011367b6dfb5377"
+        }
+      ],
+      "receiptSha256": "a987021501cb31d506dabc9308b91301dacee2d8c74bbb8ed2646a7ce8c2d2f1",
+      "redactions": "Contact names, phones, emails removed; no attachments or QR contents read",
+      "author": "Codex / single-author / provisional"
+    }
+  }
+]

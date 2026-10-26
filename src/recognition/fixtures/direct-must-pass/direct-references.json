@@ -1,0 +1,487 @@
+{
+  "version": "direct-reference-1.0",
+  "author": "Codex / single-author / provisional",
+  "createdAt": "2026-10-25T15:57:29.654Z",
+  "beforeAnyR26NewOutput": true,
+  "rows": [
+    {
+      "id": "MUST-01",
+      "sourceSha256": "350e4f1745e0e9b559d865357647bf61ff4e1b2e8ae5cd8b536e7089a5d5a3f3",
+      "reference": {
+        "tasks": [
+          {
+            "object": "奖学金",
+            "aliases": [
+              "申请表",
+              "申请材料",
+              "电子版材料"
+            ],
+            "verbs": [
+              "提交",
+              "申请",
+              "申报",
+              "报名",
+              "填写",
+              "报送",
+              "发送",
+              "递交"
+            ],
+            "deadline": "2026-10-26T00:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-10-20T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "MUST-02",
+      "sourceSha256": "b08b9e1d9f226e8dd86f23eccb97d03d1d4ca5237510dc17e0957c413354be7d",
+      "reference": {
+        "tasks": [
+          {
+            "object": "助学金",
+            "aliases": [
+              "奖助学金"
+            ],
+            "verbs": [
+              "提交",
+              "申请",
+              "申报",
+              "报名",
+              "填写",
+              "报送",
+              "发送",
+              "递交"
+            ],
+            "deadline": "2026-10-11T12:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-09-29T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "MUST-03",
+      "sourceSha256": "a015602ef70faf8d36aee5561ef93a8ca40b1eb7882fdeace70853ec481ad708",
+      "reference": {
+        "tasks": [
+          {
+            "object": "一等奖学金",
+            "aliases": [
+              "浙江大学一等奖学金"
+            ],
+            "verbs": [
+              "提交",
+              "申请",
+              "申报",
+              "报名",
+              "填写",
+              "报送",
+              "发送",
+              "递交"
+            ],
+            "deadline": "2026-10-11T00:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-10-09T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "MUST-04",
+      "sourceSha256": "88870e6a093ba3df42fdedba7c22e403fbb2a50561c456d029fc288e7ce4e922",
+      "reference": {
+        "tasks": [
+          {
+            "object": "助学金",
+            "aliases": [
+              "奖助学金"
+            ],
+            "verbs": [
+              "提交",
+              "申请",
+              "申报",
+              "报名",
+              "填写",
+              "报送",
+              "发送",
+              "递交"
+            ],
+            "deadline": "2026-10-02T00:00",
+            "precision": "exact",
+            "conditional": true
+          },
+          {
+            "object": "申请表",
+            "aliases": [
+              "纸质材料"
+            ],
+            "verbs": [
+              "提交",
+              "申请",
+              "申报",
+              "报名",
+              "填写",
+              "报送",
+              "发送",
+              "递交"
+            ],
+            "deadline": "2026-10-14T12:00",
+            "precision": "exact",
+            "conditional": true
+          },
+          {
+            "object": "电子",
+            "aliases": [
+              "感谢信",
+              "登记照"
+            ],
+            "verbs": [
+              "提交",
+              "申请",
+              "申报",
+              "报名",
+              "填写",
+              "报送",
+              "发送",
+              "递交"
+            ],
+            "deadline": "2026-10-14T12:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-09-28T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "MUST-05",
+      "sourceSha256": "edc77d65f971b6619fa1aa8e0f61708c93c5e94657786612df26909e2e7926e9",
+      "reference": {
+        "tasks": [
+          {
+            "object": "助学金",
+            "aliases": [],
+            "verbs": [
+              "提交",
+              "申请",
+              "申报",
+              "报名",
+              "填写",
+              "报送",
+              "发送",
+              "递交"
+            ],
+            "deadline": "2026-10-08T17:00",
+            "precision": "exact",
+            "conditional": true
+          },
+          {
+            "object": "纸质",
+            "aliases": [
+              "纸质版材料"
+            ],
+            "verbs": [
+              "提交",
+              "申请",
+              "申报",
+              "报名",
+              "填写",
+              "报送",
+              "发送",
+              "递交"
+            ],
+            "deadline": "2026-10-08T17:00",
+            "precision": "exact",
+            "conditional": true
+          },
+          {
+            "object": "电子",
+            "aliases": [
+              "电子版材料"
+            ],
+            "verbs": [
+              "提交",
+              "申请",
+              "申报",
+              "报名",
+              "填写",
+              "报送",
+              "发送",
+              "递交"
+            ],
+            "deadline": "2026-10-08T17:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-09-24T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "MUST-06",
+      "sourceSha256": "f0be2f326bc5b16f52eaa1656909b451ad1c85b1902f115e1f649ffe920a33dc",
+      "reference": {
+        "tasks": [
+          {
+            "object": "奖学金",
+            "aliases": [
+              "国家奖学金"
+            ],
+            "verbs": [
+              "提交",
+              "申请",
+              "申报",
+              "报名",
+              "填写",
+              "报送",
+              "发送",
+              "递交"
+            ],
+            "deadline": "2026-10-10T00:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-09-29T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "MUST-07",
+      "sourceSha256": "c5717d01a2616c1d4ad8b1d5df265a1e5a9a9139edc02e39cb283fc174477ea8",
+      "reference": {
+        "tasks": [
+          {
+            "object": "奖学金",
+            "aliases": [
+              "电子版材料",
+              "申请材料"
+            ],
+            "verbs": [
+              "提交",
+              "申请",
+              "申报",
+              "报名",
+              "填写",
+              "报送",
+              "发送",
+              "递交"
+            ],
+            "deadline": "2026-09-24T12:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-09-21T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "MUST-08",
+      "sourceSha256": "24bcf9c972d4ffcf75c43dbc973b40da29f6d23a6ae41f8621b7b38b66ba121e",
+      "reference": {
+        "tasks": [
+          {
+            "object": "永旺奖学金",
+            "aliases": [
+              "奖学金申请表",
+              "申请材料"
+            ],
+            "verbs": [
+              "提交",
+              "申请",
+              "申报",
+              "报名",
+              "填写",
+              "报送",
+              "发送",
+              "递交"
+            ],
+            "deadline": "2026-10-20T17:00",
+            "precision": "exact",
+            "conditional": true
+          }
+        ],
+        "events": []
+      },
+      "referenceTime": "2026-10-09T00:00:00+08:00",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "FLOW-01",
+      "sourceSha256": "23634dd0174bbb93b2e2af27fbb9de2eb165c7bc08b9459b54993d24ac93be1a",
+      "reference": {
+        "tasks": [
+          {
+            "object": "课程论文",
+            "deadline": "2026-10-28T17:00",
+            "precision": "exact",
+            "verbs": [
+              "提交"
+            ]
+          }
+        ],
+        "events": [],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "referenceTime": "2026-10-25T08:14:59.509Z",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "FLOW-02",
+      "sourceSha256": "a27064d53ccd77325c0ef875bc2c1a6a537a59e1508c76b698224e4b00960c95",
+      "reference": {
+        "tasks": [
+          {
+            "object": "新闻实践讲座",
+            "verbs": [
+              "参加",
+              "到场"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "新闻实践讲座",
+            "start": "2026-10-27T14:00",
+            "end": "2026-10-27T15:00",
+            "location": "A101"
+          }
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "referenceTime": "2026-10-25T08:14:59.509Z",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "FLOW-03",
+      "sourceSha256": "20602c4ab0d70c2645b602199efaafc6cbd80027fe114abee763d37d198c6974",
+      "reference": {
+        "tasks": [
+          {
+            "object": "奖学金申请表",
+            "deadline": "2026-10-30T17:00",
+            "precision": "exact",
+            "conditional": true,
+            "verbs": [
+              "提交"
+            ]
+          }
+        ],
+        "events": [],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "referenceTime": "2026-10-25T08:14:59.509Z",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "FLOW-04",
+      "sourceSha256": "471fd627ca3f09445997f8db9c81a6bb0da667bd3a72a4d1694b00122856211a",
+      "reference": {
+        "tasks": [
+          {
+            "object": "观众报名表",
+            "deadline": "2026-10-28T18:00",
+            "precision": "exact",
+            "conditional": true,
+            "verbs": [
+              "填写",
+              "提交",
+              "报名"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "object": "全媒体新闻采编实务",
+            "aliases": [
+              "课程活动",
+              "现场观众活动"
+            ],
+            "start": "2026-10-30T14:00",
+            "end": "2026-10-30T16:00",
+            "location": "A101",
+            "conditional": true
+          }
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "referenceTime": "2026-10-25T08:14:59.509Z",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "FLOW-05",
+      "sourceSha256": "3782ad7355310d6cb1b10a25f7430e57a5d8663ac02f57036c5a84ef4238c144",
+      "reference": {
+        "informationOnly": true,
+        "tasks": [
+          {
+            "object": "图书馆",
+            "date": "2026-10-26",
+            "role": "planned_start",
+            "verbs": [
+              "查看"
+            ]
+          }
+        ],
+        "events": [],
+        "readingFallback": true
+      },
+      "referenceTime": "2026-10-25T08:14:59.509Z",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "FLOW-06",
+      "sourceSha256": "8d21982bbf2634909286d61741eda2255338bebd44581c0569f7b30d8fe595ad",
+      "reference": {
+        "tasks": [
+          {
+            "object": "课程答疑会",
+            "verbs": [
+              "参加",
+              "到场"
+            ],
+            "deadlineUnknown": true
+          }
+        ],
+        "events": [
+          {
+            "object": "课程答疑会",
+            "start": "2026-10-29T15:00",
+            "end": "2026-10-29T16:00",
+            "location": "B202"
+          }
+        ],
+        "obsoleteTimes": [
+          "2026-10-27T14:00"
+        ],
+        "informationOnly": false,
+        "readingFallback": false
+      },
+      "referenceTime": "2026-10-25T08:14:59.509Z",
+      "timezone": "Asia/Shanghai"
+    }
+  ],
+  "sourceReviewBeforeAnyR26Request": "2026-10-25T16:06:43.368Z"
+}

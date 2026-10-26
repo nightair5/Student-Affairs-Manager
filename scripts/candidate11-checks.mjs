@@ -42,7 +42,7 @@ async function carrierTests(label,paths,pattern,options={}) {
 }
 async function product() {
   layer='current-product'
-  nodeTests([['direct-source-compiler','cloudflare/two-step-direct.node-test.mjs']])
+  nodeTests([['direct-source-compiler','cloudflare/two-step-direct.node-test.mjs'],['simple-direct-generation','cloudflare/simple-generation.node-test.mjs']])
   nodeTests([['extraction-model-profiles','cloudflare/extraction-profile.node-test.mjs']])
   nodeTests([['declared-action-normalization','cloudflare/declared-action-normalization.node-test.mjs'],['two-step-fact-compiler','cloudflare/recognition-two-step.node-test.mjs'],['two-step-worker','cloudflare/two-step-worker.node-test.mjs'],['two-step21-compiler','cloudflare/recognition-two-step-v2-1.node-test.mjs']])
   nodeTests([['stateful-carrier-schedule','scripts/stateful-carrier-schedule.node-test.mjs']])
