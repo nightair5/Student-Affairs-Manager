@@ -1,7 +1,7 @@
 {
   "version": "reserved-r12-1",
   "role": "reserved-r12",
-  "seen": false,
+  "seen": true,
   "createdAt": "2026-10-26T00:25:38.994Z",
   "sourceCount": 20,
   "sourceSelection": "Twenty URL-unique official public short bodies/scoped excerpts <=600 chars, source-first before R26 model outputs; not a whole-notice or independent-author evaluation",
@@ -148,5 +148,16 @@
       "sourceSha256": "7e176c52ad948b6cb23f99d693dcf4d64fc36e0a5778762d4da4a36dbaabca23",
       "referenceSha256": "ee8859ad82e418ed5190dc066f5a38b657ab5f19f6e8328907743d453f433f88"
     }
-  ]
+  ],
+  "seenAt": "2026-10-26T07:17:53.617Z",
+  "firstExposureAt": "2026-10-26T06:39:38.637Z",
+  "exposure": {
+    "attempts": 80,
+    "settled": 64,
+    "uncertain": 16,
+    "frozenCandidateCommit": "ee66dd7a402ba3a1333033f3545ee19aec3e7e65",
+    "result": "rejected",
+    "evidence": ".data/recog-r26-continue-20261026/RELEASE_DECISION.json"
+  },
+  "runPolicyAfterExposure": "Seen regression set only; do not claim unseen or tune a release winner on these results."
 }

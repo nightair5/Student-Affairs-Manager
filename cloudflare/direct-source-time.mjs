@@ -1,12 +1,12 @@
 import {parseTwoStepTime} from './two-step-time.mjs'
-export const DIRECT_SOURCE_TIME_VERSION='direct-source-time-1.0.0'
+export const DIRECT_SOURCE_TIME_VERSION='direct-source-time-1.0.1'
 const weekdays={日:0,天:0,一:1,二:2,三:3,四:4,五:5,六:6}
 const next=v=>{if(!v)return v;const d=new Date(v.slice(0,10)+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10)+v.slice(10)}
 /** Formatting adapter for the opt-in direct path. Evidence remains the exact
  * original span. It neither changes the legacy parser nor resolves ambiguity. */
 export function parseDirectSourceTime(raw,options){
- const compact=raw.normalize('NFKC').replace(/\s/gu,''),decorations=[...compact.matchAll(/\((?:周|星期)([一二三四五六日天])\)/gu)],clean=compact.replace(/\((?:周|星期)[一二三四五六日天]\)/gu,'')
- let parsed=parseTwoStepTime(clean,options),rule=decorations.length?'SOURCE_WEEKDAY_DECORATION_REMOVED':null
+ const compact=raw.normalize('NFKC').replace(/\s/gu,''),decorations=[...compact.matchAll(/\((?:周|星期)([一二三四五六日天])\)/gu)],unadorned=compact.replace(/\((?:周|星期)[一二三四五六日天]\)/gu,''),revision=/原定|原截止|旧截止|原时间/u.test(unadorned)&&/调整至|调整为|更正为|更改为|变更为|改至|延期至/u.test(unadorned),clean=revision?unadorned.replace(/调整至|调整为|更正为|更改为|变更为|改至|延期至/gu,'改为'):unadorned
+ let parsed=parseTwoStepTime(clean,options),rule=revision?'EXPLICIT_REVISION_CUE_CANONICALIZED':decorations.length?'SOURCE_WEEKDAY_DECORATION_REMOVED':null
  const midnight=/24(?::00(?::00)?|时(?:00分)?|点)(?![0-9:])/u
  if((parsed.needsConfirmation||parsed.issues.includes('invalid_clock'))&&midnight.test(clean)&&!/24:[0-5][1-9]|24:[1-5][0-9]/u.test(clean)){
   const canonical=clean.replace(/(?:晚上|夜间|夜里|晚间)(?=24(?::00|时|点))/u,'').replace(midnight,'00:00'),p=parseTwoStepTime(canonical,options)
