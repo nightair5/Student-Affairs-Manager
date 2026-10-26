@@ -1,5 +1,6 @@
 import type { TimePointSuggestionV2 } from './types'
-import { parseChineseTimeAst, parseBusinessDateTime } from '../lib/timeSemantics'
+import { parseBusinessDateTime } from '../lib/timeSemantics'
+import { parseDirectSourceTime } from '../../cloudflare/direct-source-time.mjs'
 
 const change = /调整至|调整为|更改为|改为|改至|延期至|延\s*期至|更正为|现为|旧截止取消了，改/gu
 const obsolete = /原定|原截止|旧截止|之前说|原时间/u
@@ -37,8 +38,11 @@ export function directTimeSafetyReason(point:TimePointSuggestionV2,source:string
   if(alternatives.test(context))return 'ALTERNATIVE_DATE_NOT_FIXED_TIME'
   if(/预计|暂估|可能|另行通知/u.test(raw)&&/截止|deadline|event_end/u.test(point.type))return 'ESTIMATED_ENDPOINT_NOT_FIXED_TIME'
   const datedDelivery=/\d\s*[日号]\s*(?:提交|交到|交至|报送|上传|发送)/u.test(raw)
-  if(/deadline$/u.test(point.type)&&(!deadline.test(context)&&!datedDelivery||/办理时段|办理窗口|开放时间|领取时段/u.test(context)&&!/截止|截至|最迟/u.test(context)))return 'WINDOW_OR_UNPROVEN_DEADLINE_ROLE'
-  const parsed=parseChineseTimeAst(raw,{type:point.type,referenceTime,timezone:point.timezone})
+  // An explicit application interval plus refusal of late applications proves
+  // its right endpoint only. General office/service windows do not qualify.
+  const compactContext=context.replace(/\s/gu,''),compactRaw=raw.replace(/\s/gu,''),applicationCutoff=/(?:申请|申报|报名)/u.test(compactContext)&&/逾期[^。；]{0,20}(?:不再受理|不予受理|不受理)/u.test(compactContext)&&['至','到','—','–','-'].some(join=>compactContext.includes(join+compactRaw))&&!/办理时段|办理窗口|开放时间|领取时段/u.test(compactContext)
+  if(/deadline$/u.test(point.type)&&(!deadline.test(context)&&!datedDelivery&&!applicationCutoff||/办理时段|办理窗口|开放时间|领取时段/u.test(context)&&!/截止|截至|最迟/u.test(context)))return 'WINDOW_OR_UNPROVEN_DEADLINE_ROLE'
+  const parsed=parseDirectSourceTime(raw,{type:point.type,referenceTime,timezone:point.timezone})
   if(parsed.needsConfirmation||!parsed.normalizedValue)return 'UNPARSED_SOURCE_TIME'
   if(point.type==='event_end'&&!parsed.rangeEndNormalizedValue&&!/结束|闭幕|终止|截至|截止|持续至|至此/u.test(context))return 'UNPROVEN_EVENT_END'
   const expected=point.type==='event_end'&&parsed.rangeEndNormalizedValue?parsed.rangeEndNormalizedValue:parsed.normalizedValue
@@ -54,18 +58,19 @@ export function simpleTimeSafetyReason(point:TimePointSuggestionV2,source:string
   const calendar=/\d{1,2}\s*月\s*\d{1,2}\s*[日号]|\d{4}[-/]\d{1,2}[-/]\d{1,2}|今天|明天|后天|星期|周[一二三四五六日天]|月底|月末|即日起/u
   if(!calendar.test(source))return 'UNSTATED_MODEL_DATE'
   const context=calendar.test(point.rawText)?point.rawText:source
+  if(/deadline$/u.test(point.type)&&/下班前|午休前|上班前/u.test(context)&&!/[0-2]?[0-9]:[0-5][0-9]/u.test(context))return 'OFFICE_CLOCK_NOT_STATED'
+  if(/deadline$/u.test(point.type)&&/(?:服务|开放|接待|营业|功能|系统|平台|窗口)(?:时间)?(?:截止|截至|结束|关闭|暂停)/u.test(context.replace(/\s/gu,''))&&!/(?:报名|申请|提交|申报|缴费|上传)(?:时间)?(?:截止|截至)/u.test(context))return 'SERVICE_ENDPOINT_NOT_TASK_DEADLINE'
   if(alternatives.test(context))return 'ALTERNATIVE_DATE_NOT_FIXED_TIME'
   if(/deadline$/u.test(point.type)&&/办理时段|办理窗口|开放时间|领取时段/u.test(context)&&!deadline.test(context))return 'WINDOW_NOT_DEADLINE'
+  if(/deadline$/u.test(point.type)&&!deadline.test(context)&&!/\d\s*[日号]\s*(?:提交|交到|交至|报送|上传|发送)/u.test(context)&&!/领取时间[^。；]{0,100}(?:至|到|[-—–])/u.test(context))return 'UNPROVEN_DEADLINE_ROLE'
   if(/预计|暂估|可能|另行通知/u.test(context)&&/deadline|event_end/u.test(point.type))return 'ESTIMATED_ENDPOINT_NOT_FIXED_TIME'
   if(point.normalizedValue.includes('T')&&!/\d{1,2}\s*[:：]\s*\d{2}|[一二三四五六七八九十两零\d]+\s*[点时]|午夜|正午|小时|分钟/u.test(context))return 'CLOCK_NOT_STATED'
   if(point.type==='event_end'&&!/结束|闭幕|终止|散场|散会|持续|为期|小时|分钟|(?:日|号).{0,8}(?:至|到|—|–|~|～)|\d[:：]\d{2}.{0,8}[-—–~～至到]|\d[点时].{0,8}[-—–~～至到]|\d{4}[-/]\d{1,2}[-/]\d{1,2}.{0,4}(?:至|到)/u.test(context))return 'UNPROVEN_EVENT_END'
   const spans=[...source.matchAll(/(?:\d{4}\s*年\s*)?\d{1,2}\s*月\s*\d{1,2}\s*[日号](?:\s*[（(](?:周|星期)[一二三四五六日天][）)])?(?:\s*(?:上午|下午|晚上)?\s*\d{1,2}(?:[:：]\d{2}|[点时](?:半|\d{1,2}分)?))?|\d{4}[-/]\d{1,2}[-/]\d{1,2}(?:[T\s]+\d{1,2}:\d{2})?/gu)]
   let revoked=false,active=false
   for(const span of spans){
-    const clean=span[0].replace(/[（(](?:周|星期)[一二三四五六日天][）)]/gu,''),midnight=/24[:：]00/u.test(clean)
-    const parsed=parseChineseTimeAst(clean.replace(/24[:：]00/u,'00:00'),{type:point.type,referenceTime,timezone:point.timezone})
+    const parsed=parseDirectSourceTime(span[0],{type:point.type,referenceTime,timezone:point.timezone})
     if(!parsed.normalizedValue||parsed.needsConfirmation)continue
-    if(midnight&&parsed.normalizedValue.includes('T')){const day=new Date(parsed.normalizedValue.slice(0,10)+'T00:00:00Z');day.setUTCDate(day.getUTCDate()+1);parsed.normalizedValue=day.toISOString().slice(0,10)+'T00:00'}
     const matches=parsed.normalizedValue.length===10?parsed.normalizedValue===point.normalizedValue.slice(0,10):parseBusinessDateTime(parsed.normalizedValue,point.timezone)?.getTime()===parseBusinessDateTime(point.normalizedValue,point.timezone)?.getTime()
     if(matches){if(inactiveSourceTime(source,span[0]))revoked=true;else active=true}
   }

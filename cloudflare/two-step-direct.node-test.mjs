@@ -1,9 +1,23 @@
 import test from'node:test';import assert from'node:assert/strict'
+import{compileTwoStep as retained}from'./recognition-two-step-compiler-direct-v1.mjs'
 import{compileTwoStep as legacy}from'./recognition-two-step-compiler-v2-1.mjs'
 import{compileTwoStep}from'./recognition-two-step-compiler-v2-1-10.mjs'
 import{validateRecognitionResult}from'./recognition-contract.generated.mjs'
 const opts=source=>({source,referenceTime:'2028-04-01T08:00:00+08:00',timezone:'Asia/Shanghai'})
 const event=(name,quote,facts=[])=>({items:[{id:'a',kind:'活动',name,quote}],facts,noAction:true})
+
+test('direct: losing eligibility does not revoke the application deadline; actual revoked time stays blocked',()=>{
+ const source='提交申请材料。材料截止时间：2026年10月25日（周日）24:00\n有违纪情况者取消申请资格。',raw={items:[{id:'a',kind:'任务',name:'提交申请材料',quote:'提交申请材料'}],facts:[{type:'截止',quote:'材料截止时间：2026年10月25日（周日）24:00',item:'a'},{type:'取消',quote:'有违纪情况者取消申请资格',item:'a'}],noAction:false};
+ const x=retained(raw,{...opts(source),referenceTime:'2026-10-20T00:00:00+08:00'});assert.equal(x.result.timePoints[0].normalizedValue,'2026-10-26T00:00');assert.equal(x.result.standaloneTasks[0].selected,false);
+ const old='请提交申请表，原截止4月8日17:00已取消，改为4月9日17:00。',r={items:[{id:'a',kind:'任务',name:'提交申请表',quote:'提交申请表'}],facts:[{type:'截止',quote:'4月8日17:00',item:'a'},{type:'截止',quote:'4月9日17:00',item:'a'}],noAction:false},y=retained(r,opts(old));assert.equal(y.result.timePoints[0].normalizedValue,null);assert.equal(y.result.timePoints[1].normalizedValue,'2028-04-09T17:00');
+})
+test('direct: identical time words are located within their declared delivery quote, not an arbitrary occurrence',()=>{
+ const source='请将纸质材料于4月8日17:00前送至办公室，电子材料于4月8日17:00前发至平台。',raw={items:[{id:'a',kind:'任务',name:'提交纸质材料',quote:'纸质材料于4月8日17:00前送至办公室'},{id:'b',kind:'任务',name:'提交电子材料',quote:'电子材料于4月8日17:00前发至平台'}],facts:[{type:'截止',quote:'4月8日17:00前',item:'a'},{type:'截止',quote:'4月8日17:00前',item:'b'}],noAction:false},x=retained(raw,opts(source));assert.equal(x.result.timePoints.length,2);assert.deepEqual(x.result.timePoints.map(p=>p.relatedTaskTempIds),[['g2-1'],['g2-2']]);assert(x.audit.facts.filter(f=>f.type==='截止').every(f=>f.alignmentRule==='EXACT_UNIQUE_WITHIN_DECLARED_ITEM_QUOTE'));
+ raw.items[0].quote=source;raw.items[1].quote=source;assert.equal(retained(raw,opts(source)).result.timePoints.length,0);
+})
+test('direct: future paper instructions remain visible information alongside the current electronic submission',()=>{
+ const source='请提交电子材料。纸质版提交等待后续通知。',raw={items:[{id:'a',kind:'任务',name:'提交电子材料',quote:'提交电子材料'},{id:'b',kind:'信息',name:'纸质版提交后续通知',quote:'纸质版提交等待后续通知'}],facts:[],noAction:false},x=retained(raw,opts(source));assert.equal(x.result.standaloneTasks.length,1);assert(x.result.ignoredContent.some(i=>i.text==='纸质版提交等待后续通知'));
+})
 test('unsupported modifiers stay isolated; a fully literal event retains its time',()=>{const s='东区图书馆同步延时开放。4月8日起开放。',r=event('东区图书馆晚间延时开放','东区图书馆同步延时开放',[{type:'开始',quote:'4月8日起',item:'a'}]);assert.equal(compileTwoStep(r,opts(s)).result.events.length,0);r.items[0].name='东区图书馆同步延时开放';const x=compileTwoStep(r,opts(s));assert.equal(x.result.events[0].title,'东区图书馆同步延时开放');assert.equal(x.result.timePoints[0].normalizedValue,'2028-04-08');assert(validateRecognitionResult(x.result,{sourceContent:s}).valid)})
 
 test('a literal unique lecture topic supports a composed name, not an unrelated title',()=>{const s='学院举办线下专题讲座。\n讲座主题：数据检索与科研实践\n地点：研读楼B203',r=event('信息素养讲座：数据检索与科研实践','学院举办线下专题讲座',[{type:'地点',quote:'研读楼B203',item:'a'}]),x=compileTwoStep(r,opts(s));assert.equal(x.result.events[0].title,'数据检索与科研实践');assert.equal(x.result.events[0].location,'研读楼B203');assert(x.result.evidence.some(e=>e.quote==='数据检索与科研实践'));const bad=event('另一院举办的国际大会','学院举办线下专题讲座');assert(!compileTwoStep(bad,opts(s)).result.events.some(e=>e.title.includes('国际大会')))})

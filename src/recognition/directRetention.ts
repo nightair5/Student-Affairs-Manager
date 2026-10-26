@@ -3,8 +3,10 @@ import type { DirectConversion, DirectItem, DirectTag } from './directResult'
 import { parseChineseTimeAst } from '../lib/timeSemantics'
 import { projectDirectActions } from './directActionProjection'
 import { directTimeSafetyReason, inactiveSourceTime, simpleTimeSafetyReason } from './directTimeSafety'
+import {sameSectionEligibility,bindDirectSourceTimes} from './directSourceScope'
 
-export const DIRECT_RETENTION_VERSION = 'direct-retention-1.0.3'
+export const DIRECT_RETENTION_VERSION = 'direct-retention-1.0.4'
+export const DIRECT_RETENTION_DEFAULT = false
 const norm=(s:string)=>s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu,'')
 const action=/申请退费|申请|申报|报名|提交|报送|填写|登记|预约|选课|缴费|领取|上传|参加|归还|学习|完成|发送|准备|打印|下载/u
 const timeWords=/\d{1,4}\s*[年/月日号:：.-]|今天|明天|后天|周[一二三四五六日天]|星期|月底|月末|即日起|上午|下午|晚上/u
@@ -47,6 +49,8 @@ export function convertRetainedDirectResult(input:RecognitionResult,source:strin
     }
     return true
   }).map(t=>{
+    const scoped=sameSectionEligibility(t.evidenceIds,result.evidence,source)
+    if(scoped){const id='direct-eligibility-'+t.tempId;result.evidence.push({id,sourceId,quote:scoped.text,quotedText:scoped.text,textStart:scoped.start,textEnd:scoped.end,field:'requirement',extractionMethod:'parser',confidence:1});t={...t,evidenceIds:[...new Set([...t.evidenceIds,id])],description:t.description+'\n适用条件待确认：'+scoped.text};addTag(t.tempId,'如符合条件');addTag(t.tempId,'待确认');omitted.push({id:t.tempId,reason:'SAME_NUMBERED_SECTION_EXPLICIT_ELIGIBILITY'})}
     const context=literal(t.evidenceIds)||source
     const uncertain=!t.selected||!t.actionObject||!norm(context).includes(norm(t.actionObject))||!t.evidenceIds.length||/待核对/u.test(t.title)
     if(uncertain)addTag(t.tempId,'待确认')
@@ -60,6 +64,7 @@ export function convertRetainedDirectResult(input:RecognitionResult,source:strin
     if(qualification.test(literal(e.evidenceIds))||qualification.test(e.description)){addTag(e.tempId,'如符合条件');addTag(e.tempId,'待确认')}
     return {...e,selected:true}
   })
+  bindDirectSourceTimes(result,tasks,source,omitted)
   // A declared event's own end quote may state the complete range. Use that
   // range to refine its date-only start; never borrow a different event's time.
   for(const e of events){

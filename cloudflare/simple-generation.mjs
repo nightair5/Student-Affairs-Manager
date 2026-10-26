@@ -4,6 +4,7 @@ import {decodeRecognitionOutput} from './recognition-output-recovery.mjs'
 import {alignSourceQuote} from './two-step-source-alignment.mjs'
 
 export const SIMPLE_VERSION='recognition-simple-1.0.0'
+export const SIMPLE_COMPILER_VERSION='simple-compiler-1.0.1'
 export const SIMPLE_FIELDS={kind:'待办|日程',title:'动作+对象，24字内',due:'截止ISO或null',start:'开始ISO或null',end:'结束ISO或null',location:'原文地点或空串',materials:['材料及要求'],note:'备注或空串',condition:'适用条件原文或空串',quote:'最能代表这一项的原文一句'}
 export const SIMPLE_EXAMPLES=[
  {source:'请于2026年11月3日17:00前提交读书报告，PDF格式。',items:[{kind:'待办',title:'提交读书报告',due:'2026-11-03T17:00',materials:['读书报告（PDF）'],quote:'请于2026年11月3日17:00前提交读书报告，PDF格式。'}]},
@@ -21,10 +22,12 @@ const cancellation=/(?:取消|作废|不再举办|无需提交|禁止|请勿)/u
 export function compileSimple(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash'}){
  if(!raw||!Array.isArray(raw.items)||raw.items.length>20)return {result:null,audit:{version:SIMPLE_VERSION,rootFailure:true}}
  const r=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:'通知资料',sourceType:'text',notificationType:'uncertain',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,SIMPLE_VERSION,true,timezone)
- const audit={version:SIMPLE_VERSION,mode:'SINGLE_MODEL_DATES_BASIC_VALIDATION',items:[],facts:[],losses:[],offsets:[],calls:1},year=Number(referenceTime.slice(0,4))
+ const audit={version:SIMPLE_VERSION,compiler:SIMPLE_COMPILER_VERSION,mode:'SINGLE_MODEL_DATES_BASIC_VALIDATION',items:[],facts:[],losses:[],normalizations:[],offsets:[],calls:1},year=Number(referenceTime.slice(0,4))
  const evidence=(quote,field)=>{const s=alignSourceQuote(quote,source);if(!s)return [];let e=r.evidence.find(e=>e.textStart===s.start&&e.textEnd===s.end&&e.field===field);if(!e){e={id:'s-e'+(r.evidence.length+1),sourceId:'pending-source',quote:s.literal,quotedText:s.literal,textStart:s.start,textEnd:s.end,field,extractionMethod:'parser',confidence:1};r.evidence.push(e);audit.offsets.push(s)}return [e.id]}
  const point=(item,role,value,ids)=>{
   if(!value)return null
+  const midnight=typeof value==='string'?/^(\d{4}-\d{2}-\d{2})T24:00(?::00)?(Z|[+-]\d{2}:\d{2})?$/u.exec(value):null
+  if(midnight&&/24\s*(?:[:：]\s*00|[时点])/u.test(source)){const day=new Date(midnight[1]+'T00:00:00Z');if(Number.isFinite(day.getTime())&&day.toISOString().slice(0,10)===midnight[1]){const original=value;day.setUTCDate(day.getUTCDate()+1);value=day.toISOString().slice(0,10)+'T00:00'+(value.includes('T24:00:00')?':00':'')+(midnight[2]??'');audit.normalizations.push({rule:'SOURCE_SUPPORTED_ISO_24H_CANONICALIZATION',original,value})}}
   const shape=typeof value==='string'&&/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:\d{2})?)?$/u.test(value),dateOnly=shape&&value.length===10
   const n=shape?new Date(value):null,parts=shape?value.slice(0,10).split('-').map(Number):[],calendar=shape?new Date(Date.UTC(parts[0],parts[1]-1,parts[2])):null
   const valid=n&&Number.isFinite(n.getTime())&&Math.abs(parts[0]-year)<=1&&calendar.toISOString().slice(0,10)===value.slice(0,10)&&(!value.includes('T')||Number(value.slice(11,13))<=23&&Number(value.slice(14,16))<=59)

@@ -1,5 +1,6 @@
 import { convertDirectResult, DIRECT_MODE_VERSION, type DirectItem, type DirectTag } from '../../recognition/directResult'
 import {DIRECT_ACTION_PROJECTION_VERSION} from '../../recognition/directActionProjection'
+import {DIRECT_RETENTION_VERSION,DIRECT_RETENTION_DEFAULT} from '../../recognition/directRetention'
 import { buildDomainCommitPlan, applyDomainCommitPlan } from './domainCommit'
 import { workspaceSnapshotHash } from './migration'
 import type { CanonicalWorkspaceRepository } from './repository'
@@ -53,7 +54,7 @@ export async function commitDirectDraft(repo: CanonicalWorkspaceRepository, draf
     const original=run?.legacyData?.originalRecognitionResult
     const input=d.result??buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(run?.startedAt??d.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]})
     const actionRecovery=(import.meta as ImportMeta&{env?:{VITE_DIRECT_ACTION_RECOVERY?:string}}).env?.VITE_DIRECT_ACTION_RECOVERY==='1'
-    const retention=(import.meta as ImportMeta&{env?:{VITE_DIRECT_RETENTION?:string}}).env?.VITE_DIRECT_RETENTION==='1'
+    const retention=DIRECT_RETENTION_DEFAULT||(import.meta as ImportMeta&{env?:{VITE_DIRECT_RETENTION?:string}}).env?.VITE_DIRECT_RETENTION==='1'
     const converted=convertDirectResult(input,v.rawText,record(original)?original as unknown as RecognitionResult:undefined,{actionRecovery,retention})
     const result=converted.result
     const newTasks=new Set(result.standaloneTasks.filter(t=>!w.tasks.some(x=>x.id===`task:${d.id}:${t.tempId}`)).map(t=>t.tempId))
@@ -91,7 +92,7 @@ export async function commitDirectDraft(repo: CanonicalWorkspaceRepository, draf
     const next=applyDomainCommitPlan(prepared,plan,now)
     next.sources=next.sources.map(x=>x.id===s.id?{...x,legacyData:{...x.legacyData,directUndoneAt:null}}:x)
     if(s.title==='手动粘贴消息'&&!d.acceptedEntityTempIds.length)next.sources=next.sources.map(x=>x.id===s.id?{...x,title:result.standaloneTasks[0]?.title??result.events[0]?.title??x.title}:x)
-    next.extractionDrafts=next.extractionDrafts.map(x=>x.id===d.id?{...x,legacyData:{...x.legacyData,directBatch:json(batch),directConversion:json({version:DIRECT_MODE_VERSION,inputProvider:d.result?'stored-answer':'local-rules-from-preserved-source',omitted:converted.omitted,...(actionRecovery?{actionProjectionVersion:DIRECT_ACTION_PROJECTION_VERSION,sourceDerivedTaskIds:result.standaloneTasks.filter(t=>t.tempId.startsWith('direct-action-')).map(t=>t.tempId)}:{})})}}:x)
+    next.extractionDrafts=next.extractionDrafts.map(x=>x.id===d.id?{...x,legacyData:{...x.legacyData,directBatch:json(batch),directConversion:json({version:DIRECT_MODE_VERSION,...(retention?{retentionVersion:DIRECT_RETENTION_VERSION}:{}),inputProvider:d.result?'stored-answer':'local-rules-from-preserved-source',omitted:converted.omitted,...(actionRecovery?{actionProjectionVersion:DIRECT_ACTION_PROJECTION_VERSION,sourceDerivedTaskIds:result.standaloneTasks.filter(t=>t.tempId.startsWith('direct-action-')).map(t=>t.tempId)}:{})})}}:x)
     receipt={batch,duplicate:false};return next
   })
   return receipt
