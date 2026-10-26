@@ -4,7 +4,7 @@ import { parseChineseTimeAst } from '../lib/timeSemantics'
 import { projectDirectActions } from './directActionProjection'
 import { directTimeSafetyReason, inactiveSourceTime, simpleTimeSafetyReason } from './directTimeSafety'
 
-export const DIRECT_RETENTION_VERSION = 'direct-retention-1.0.1'
+export const DIRECT_RETENTION_VERSION = 'direct-retention-1.0.2'
 const norm=(s:string)=>s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu,'')
 const action=/申请退费|申请|申报|报名|提交|报送|填写|登记|预约|选课|缴费|领取|上传|参加|归还|学习|完成|发送|准备|打印|下载/u
 const timeWords=/\d{1,4}\s*[年/月日号:：.-]|今天|明天|后天|周[一二三四五六日天]|星期|月底|月末|即日起|上午|下午|晚上/u
@@ -41,7 +41,7 @@ export function convertRetainedDirectResult(input:RecognitionResult,source:strin
   tasks=tasks.filter(t=>{
     const context=literal(t.evidenceIds)||source
     if(cancelled(t.title,context)){omitted.push({id:t.tempId,reason:'CANCELLED_OR_PROHIBITED'});return false}
-    if(/待(?:另行)?通知|尚未公布/u.test(t.title)&&/^(通知|公布|安排|等待|查看)$/u.test(t.actionVerb)){
+    if(/待(?:另行)?通知|另行通知|尚未公布/u.test(t.title)&&(/^(通知|公布|安排|等待|查看)$/u.test(t.actionVerb)||/^(?:待|另行|后续)?通知$/u.test(t.actionObject))){
       result.ignoredContent.push({text:context.slice(0,1000),reason:'other'});omitted.push({id:t.tempId,reason:'FUTURE_STATUS_KEPT_AS_INFORMATION'});return false
     }
     return true
