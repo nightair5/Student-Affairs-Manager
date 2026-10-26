@@ -51,16 +51,21 @@ export function directTimeSafetyReason(point:TimePointSuggestionV2,source:string
  * parser. Parsing individual source spans below only identifies revoked dates. */
 export function simpleTimeSafetyReason(point:TimePointSuggestionV2,source:string,referenceTime:string):string|null {
   if(!point.normalizedValue)return 'UNKNOWN_TIME'
-  const context=point.rawText||source
+  const calendar=/\d{1,2}\s*月\s*\d{1,2}\s*[日号]|\d{4}[-/]\d{1,2}[-/]\d{1,2}|今天|明天|后天|星期|周[一二三四五六日天]|月底|月末|即日起/u
+  if(!calendar.test(source))return 'UNSTATED_MODEL_DATE'
+  const context=calendar.test(point.rawText)?point.rawText:source
   if(alternatives.test(context))return 'ALTERNATIVE_DATE_NOT_FIXED_TIME'
   if(/deadline$/u.test(point.type)&&/办理时段|办理窗口|开放时间|领取时段/u.test(context)&&!deadline.test(context))return 'WINDOW_NOT_DEADLINE'
   if(/预计|暂估|可能|另行通知/u.test(context)&&/deadline|event_end/u.test(point.type))return 'ESTIMATED_ENDPOINT_NOT_FIXED_TIME'
-  if(point.normalizedValue.includes('T')&&!/\d{1,2}\s*[:：]\s*\d{2}|[一二三四五六七八九十两\d]\s*点|上午|下午|晚上|小时|分钟/u.test(context))return 'CLOCK_NOT_STATED'
-  const spans=[...source.matchAll(/(?:\d{4}\s*年\s*)?\d{1,2}\s*月\s*\d{1,2}\s*[日号](?:\s*(?:上午|下午|晚上)?\s*\d{1,2}(?:[:：]\d{2}|点(?:半|\d{1,2}分)?))?|\d{4}[-/]\d{1,2}[-/]\d{1,2}(?:[T\s]+\d{1,2}:\d{2})?/gu)]
+  if(point.normalizedValue.includes('T')&&!/\d{1,2}\s*[:：]\s*\d{2}|[一二三四五六七八九十两零\d]+\s*[点时]|午夜|正午|小时|分钟/u.test(context))return 'CLOCK_NOT_STATED'
+  if(point.type==='event_end'&&!/结束|闭幕|终止|散场|散会|持续|为期|小时|分钟|(?:日|号).{0,8}(?:至|到|—|–|~|～)|\d[:：]\d{2}.{0,8}[-—–~～至到]|\d[点时].{0,8}[-—–~～至到]|\d{4}[-/]\d{1,2}[-/]\d{1,2}.{0,4}(?:至|到)/u.test(context))return 'UNPROVEN_EVENT_END'
+  const spans=[...source.matchAll(/(?:\d{4}\s*年\s*)?\d{1,2}\s*月\s*\d{1,2}\s*[日号](?:\s*[（(](?:周|星期)[一二三四五六日天][）)])?(?:\s*(?:上午|下午|晚上)?\s*\d{1,2}(?:[:：]\d{2}|[点时](?:半|\d{1,2}分)?))?|\d{4}[-/]\d{1,2}[-/]\d{1,2}(?:[T\s]+\d{1,2}:\d{2})?/gu)]
   let revoked=false,active=false
   for(const span of spans){
-    const parsed=parseChineseTimeAst(span[0],{type:point.type,referenceTime,timezone:point.timezone})
+    const clean=span[0].replace(/[（(](?:周|星期)[一二三四五六日天][）)]/gu,''),midnight=/24[:：]00/u.test(clean)
+    const parsed=parseChineseTimeAst(clean.replace(/24[:：]00/u,'00:00'),{type:point.type,referenceTime,timezone:point.timezone})
     if(!parsed.normalizedValue||parsed.needsConfirmation)continue
+    if(midnight&&parsed.normalizedValue.includes('T')){const day=new Date(parsed.normalizedValue.slice(0,10)+'T00:00:00Z');day.setUTCDate(day.getUTCDate()+1);parsed.normalizedValue=day.toISOString().slice(0,10)+'T00:00'}
     const matches=parsed.normalizedValue.length===10?parsed.normalizedValue===point.normalizedValue.slice(0,10):parseBusinessDateTime(parsed.normalizedValue,point.timezone)?.getTime()===parseBusinessDateTime(point.normalizedValue,point.timezone)?.getTime()
     if(matches){if(inactiveSourceTime(source,span[0]))revoked=true;else active=true}
   }

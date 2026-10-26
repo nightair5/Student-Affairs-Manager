@@ -4,7 +4,7 @@ import { parseChineseTimeAst } from '../lib/timeSemantics'
 import { projectDirectActions } from './directActionProjection'
 import { directTimeSafetyReason, inactiveSourceTime, simpleTimeSafetyReason } from './directTimeSafety'
 
-export const DIRECT_RETENTION_VERSION = 'direct-retention-1.0.2'
+export const DIRECT_RETENTION_VERSION = 'direct-retention-1.0.3'
 const norm=(s:string)=>s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu,'')
 const action=/申请退费|申请|申报|报名|提交|报送|填写|登记|预约|选课|缴费|领取|上传|参加|归还|学习|完成|发送|准备|打印|下载/u
 const timeWords=/\d{1,4}\s*[年/月日号:：.-]|今天|明天|后天|周[一二三四五六日天]|星期|月底|月末|即日起|上午|下午|晚上/u
@@ -32,6 +32,7 @@ function cancelled(title:string,text:string):boolean {
 export function convertRetainedDirectResult(input:RecognitionResult,source:string,original?:RecognitionResult):DirectConversion {
   const usable=original&&Array.isArray(original.standaloneTasks)&&Array.isArray(original.evidence)&&Array.isArray(original.timePoints)
   let result=structuredClone(usable?original:input)
+  const simple=result.promptVersion==='recognition-simple-1.0.0'
   const omitted:DirectConversion['omitted']=[],items:DirectItem[]=[],sourceId=result.evidence[0]?.sourceId??'source'
   const tags=new Map<string,DirectTag[]>(),addTag=(id:string,tag:DirectTag)=>tags.set(id,[...new Set([...(tags.get(id)??[]),tag])])
   const literal=(ids:string[])=>ids.flatMap(id=>{const e=result.evidence.find(e=>e.id===id),q=e?.quotedText??e?.quote;return q&&source.includes(q)?[q]:[]}).join('\n')
@@ -75,9 +76,9 @@ export function convertRetainedDirectResult(input:RecognitionResult,source:strin
     let value=p.normalizedValue,type=p.type
     const invalid=!value||!/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:\d{2})?)?$/u.test(value)||!Number.isFinite(Date.parse(value))
     if(invalid||!timeWords.test(source)){value=null;affected.forEach(id=>addTag(id,'时间待定'))}
-    if(isDeadline&&(!timeWords.test(q)||alternative.test(q))){value=null;affected.forEach(id=>addTag(id,'待确认'))}
+    if(isDeadline&&(!timeWords.test(simple?source:q)||alternative.test(q))){value=null;affected.forEach(id=>addTag(id,'待确认'))}
     if(isDeadline&&/办理时段|开放时间|领取时段|办理窗口/u.test(q)&&!deadlineCue.test(q)){type='event_start';affected.forEach(id=>addTag(id,'待确认'))}
-    const safetyReason=(result.promptVersion==='recognition-simple-1.0.0'?simpleTimeSafetyReason:directTimeSafetyReason)({...p,type},source,result.createdAt)
+    const safetyReason=(simple?simpleTimeSafetyReason:directTimeSafetyReason)({...p,type},source,result.createdAt)
     if(safetyReason&&value){value=null;affected.forEach(id=>addTag(id,'待确认'));omitted.push({id:p.tempId,reason:safetyReason})}
     if(p.needsConfirmation||!literal(p.evidenceIds))affected.forEach(id=>addTag(id,'待确认'))
     if(!value)for(const t of tasks.filter(t=>ownerIds.includes(t.tempId)))if(p.rawText&&!t.description.includes(p.rawText))t.description+='\n原文时间：'+p.rawText
