@@ -8419,3 +8419,27 @@ button.agenda-item.event {
 @media(max-width:600px){.flow-dashboard .quick-capture-actions{display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:10px}.flow-dashboard .quick-capture-actions .primary-button{order:2;width:auto;min-width:105px;flex:0 0 auto}.flow-dashboard .quick-capture-actions .text-button{order:1;width:auto;min-width:0}.flow-dashboard .quick-capture textarea{min-height:88px;height:88px}.flow-dashboard .cloud-send-disclosure{font-size:11px;line-height:1.6}}
 
 .direct-primary-time{flex-basis:100%;font-size:16px;color:#183b56;line-height:1.6}.direct-fallback-notice{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 0;padding:10px 14px;border-radius:10px;background:#fff6e9;color:#754b27;font-size:14px}.direct-fallback-notice button{white-space:nowrap}
+.flow-task-row{position:relative;flex-direction:row;min-height:0;scroll-margin-block:110px}
+.flow-item-list{overflow:visible}
+.flow-item-list>li:first-child{border-top-left-radius:15px;border-top-right-radius:15px}
+.flow-item-list>li:last-child{border-bottom-left-radius:15px;border-bottom-right-radius:15px}
+.flow-item-list .flow-task-row[data-new=true]{background:#f0f8ff}
+.flow-row-actions{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.task-schedule-control{position:relative;flex-shrink:0}
+.task-schedule-trigger{display:inline-flex;align-items:center;gap:5px;min-height:36px;padding:5px 9px;background:#f2f6fa;border:1px solid #d9e4ed;border-radius:8px;color:#335d7d;font:inherit;font-size:13px;cursor:pointer}
+.task-schedule-trigger:hover{background:#e5f1fc}
+.task-schedule-trigger:focus-visible,.flow-complete:focus-visible{outline:3px solid #82b9e5;outline-offset:3px}
+.task-schedule-popover{position:absolute;right:0;top:calc(100% + 8px);z-index:40;box-sizing:border-box;width:272px;padding:16px;background:white;border:1px solid #d3e2ed;border-radius:13px;box-shadow:0 10px 30px #16365225;color:#203c53;scroll-margin-block:105px}
+.task-schedule-popover>strong{font-size:15px}
+.task-schedule-shortcuts{display:flex;gap:8px;margin:12px 0}
+.task-schedule-shortcuts button{flex:1;padding:8px;border:1px solid #cddfed;background:#f0f6fc;border-radius:7px;color:#244d70;font:inherit;font-size:14px;cursor:pointer}
+.task-schedule-popover form{display:grid;gap:10px}
+.task-schedule-popover label{display:grid;gap:4px;font-size:13px}
+.task-schedule-popover input{box-sizing:border-box;min-width:0;width:100%;padding:8px;border:1px solid #cddbe6;border-radius:7px;font:inherit;background:white;color:#243f55}
+.task-schedule-popover small{display:block;margin-top:10px;line-height:1.5;color:#526c7e}
+.task-schedule-popover .text-button{margin-top:8px;font-size:13px}
+.flow-today-section h2 small,.flow-undated-section h2 small,.today-next-section h2 small{font:500 13px system-ui;color:#688096;margin-left:6px}
+.flow-item-main h3{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.flow-item-facts{font-weight:600}
+.flow-recent-group{margin-top:0}
+@media(max-width:600px){.flow-row-actions{gap:0}.task-schedule-trigger{padding:7px;min-width:32px;min-height:36px}.task-schedule-trigger span{display:none}.flow-complete.icon-button{width:36px;min-width:36px;height:40px}.flow-item-main h3{font-size:15px}.flow-item-list>li.flow-task-row{gap:8px;padding:13px 10px}.flow-row-actions>.icon-button{width:28px;min-width:28px}.task-schedule-popover{position:fixed;top:auto;left:12px;right:12px;bottom:calc(82px + env(safe-area-inset-bottom));width:auto;max-height:calc(100dvh - 170px);overflow-y:auto}.flow-item-facts{font-size:12px}.flow-dashboard .quick-capture-heading small{display:none}.flow-dashboard .quick-capture textarea{height:72px;min-height:72px}}

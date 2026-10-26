@@ -9,6 +9,7 @@ import {
   groupTasksByDate,
   localDateKey,
   summarizeCalendarDay,
+  taskCalendarDate,
   type CalendarTimelineItem,
 } from '../lib/calendar'
 import { findSuggestedWorkSlot } from '../lib/scheduling'
@@ -89,7 +90,7 @@ export function CalendarPage({ preserveDateOnlyPrecision = false, personalPlans,
     const selectedTasks = taskByDate.get(selectedDateKey) ?? []
     const selectedEvents = eventByDate.get(selectedDateKey) ?? []
     return [
-      ...selectedTasks.map((task): CalendarTimelineItem => ({ kind: 'task', id: task.id, title: task.title, at: task.deadline, task })),
+      ...selectedTasks.map((task): CalendarTimelineItem => ({ kind: 'task', id: task.id, title: task.title, at: taskCalendarDate(task), task })),
       ...selectedEvents.filter((event) => event.startAt).map((event): CalendarTimelineItem => ({ kind: 'event', id: event.id, title: event.title, at: event.startAt!, event })),
     ].sort((a, b) => new Date(a.at).getTime() - new Date(b.at).getTime())
   }, [eventByDate, selectedDateKey, taskByDate])

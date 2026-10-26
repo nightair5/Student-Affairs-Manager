@@ -18,6 +18,7 @@ const flatten=(r:RecognitionResult)=>[...r.standaloneTasks,...r.milestones.flatM
 /** Presentation cleanup only. The complete model/source wording stays in description/audit. */
 export function cleanDirectTopic(text:string):string {
   return text.replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,'')
+    .replace(/^[^：:\n。]{2,18}(?:公告|通知|提醒)[：:]\s*/u,'')
     .replace(/[【[][^】\]]{0,24}(?:提醒|通知|公告|消息|资讯|申报)[】\]]/gu,'')
     .replace(/[【】[\]]/gu,'').replace(/^(?:各位同学[：:,，]?|同学们[：:,，]?|关于开展|关于|通知[：:])/u,'')
     .replace(/(?:的通知|通知|公告)[。！!：:]*$/u,'').replace(/\s+/gu,'').trim().slice(0,24)||'通知内容'

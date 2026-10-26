@@ -4,6 +4,7 @@ import { storedPersonalPlans } from './domain/v2/personalPlanD27'
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { DirectResultList, RecentDirectAdditions } from './components/DirectResultList'
+import { setTaskSchedule } from './domain/v2/taskSchedule'
 import { commitDirectDraft, replaceDirectFallback, deleteDirectItem, directDuplicate, editDirectItem, recentDirectBatches, undoDirectBatch } from './domain/v2/directIntake'
 import {historicalDirectDraftIds} from './lib/homeFlow'
 import { EventDetailPanel } from './components/EventDetailPanel'
@@ -225,6 +226,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null)
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null)
   const [directBatchId, setDirectBatchId] = useState<string | null>(null)
+  const [directHistoryOpen, setDirectHistoryOpen] = useState(false)
   const [directReadbackPending, setDirectReadbackPending] = useState<string | null>(null)
   const [draftSourceSnapshot, setDraftSourceSnapshot] = useState<{ draftId: string; sourceVersionId: string; rawText: string } | null>(null)
   const [supplementSourceId, setSupplementSourceId] = useState<string | null>(null)
@@ -237,7 +239,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const directMode = !runtime && (ordinaryEnvironment ? ordinaryEnvironment.directMode === true : ordinaryCanonical?.preferences.legacyData?.directReviewBeforeAdd !== true)
   const directBatches = ordinaryCanonical ? recentDirectBatches(ordinaryCanonical) : []
   const activeDirectBatch = directBatches.find(b => b.id === directBatchId && b.status === 'active')
-  const showDirectHistory=Boolean(activeDirectBatch&&activeDirectBatch.id!==directBatches.find(b=>b.status==='active')?.id)
+  const showDirectHistory=Boolean(activeDirectBatch&&directHistoryOpen)
   const [historicalAdding,setHistoricalAdding]=useState(false)
   const historicalDirectIds=ordinaryCanonical?historicalDirectDraftIds(ordinaryCanonical):[]
   const [ordinarySaveError, setOrdinarySaveError] = useState<{draftId:string;text:string}|null>(null)
@@ -691,6 +693,11 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     if (directBatchId === batchId) setDirectBatchId(null)
     setNotice({text:'本次添加已撤销，之前的事项保持不变。',direct:true})
   }
+  const scheduleDirectTask = async (taskId: string, date: string) => {
+    await setTaskSchedule(canonicalWorkspaceRepository, taskId, date)
+    try { await independentReader.load(); await refreshOrdinary() }
+    catch { setDirectReadbackPending(directBatches.find(batch=>batch.status==='active'&&batch.items.some(item=>item.id===taskId))?.id??taskId) }
+  }
   const addDirect = async (draftId: string) => {
     const receipt = await commitDirectDraft(canonicalWorkspaceRepository,draftId)
     try {
@@ -699,7 +706,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     } catch(error) {setDirectReadbackPending(receipt.batch?.id??draftId);throw Error('DIRECT_READBACK_PENDING',{cause:error})}
     setDirectReadbackPending(null)
     await refreshOrdinary()
-    setIntakeOpen(false);setSelectedDraftId(null);setCurrentPage('today');setDirectBatchId(receipt.batch?.id??null)
+    setIntakeOpen(false);setSelectedDraftId(null);setCurrentPage('today');setDirectBatchId(receipt.batch?.id??null);setDirectHistoryOpen(false)
     const batch=receipt.batch
     setNotice({text:receipt.duplicate?'这条通知已添加过':`已添加 ${batch?.items.length??0} 项`,direct:true,...(batch?{undo:()=>{void undoDirect(batch.id).catch(()=>setNotice({text:'未能撤销，原有内容保留。请从最近添加重试。'}))}}:{})})
   }
@@ -1662,7 +1669,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           <DashboardPage
             directMode={directMode}
             directNotice={notice?.direct?<div className="direct-inline-notice" role="status"><span>{notice.text}</span>{notice.undo&&<button type="button" className="text-button" onClick={()=>{notice.undo?.();setNotice(null)}}>撤销</button>}<button type="button" className="icon-button" aria-label="关闭提示" onClick={()=>setNotice(null)}>×</button></div>:undefined}
-            recentAdditions={directMode&&ordinaryCanonical?<RecentDirectAdditions workspace={ordinaryCanonical} batches={directBatches} onRetry={retryDirectFallback} onUndo={undoDirect} onOpen={setDirectBatchId} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}}/>:undefined}
+            recentAdditions={directMode&&ordinaryCanonical?<RecentDirectAdditions workspace={ordinaryCanonical} batches={directBatches} onRetry={retryDirectFallback} onUndo={undoDirect} onOpen={id=>{setDirectBatchId(id);setDirectHistoryOpen(true)}} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}}/>:undefined}
             historicalNotice={directMode?{count:historicalDirectIds.length,busy:historicalAdding,onAdd:addHistoricalDirect,onIgnore:ignoreHistoricalDirect}:undefined}
             planning={!runtime && ordinaryCanonical ? <PersonalPlanPanel workspace={ordinaryCanonical} repository={canonicalWorkspaceRepository} reader={independentReader} store={ordinaryEnvironment?.store ?? ordinaryStore} onReload={()=>refreshOrdinary()}/> : undefined}
             engineeringInput={Boolean(ordinaryEnvironment)}
@@ -1680,6 +1687,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             onOpenIntake={() => setIntakeOpen(true)}
             onOpenTask={(task) => setSelectedTaskId(task.id)}
             onCompleteTask={handleComplete}
+            onScheduleTask={scheduleDirectTask}
+            recentItemIds={activeDirectBatch?.items.map(item=>item.id)}
             onStartTask={handleStart}
             onSnoozeTask={handleSnooze}
             onTogglePinTask={handleTogglePin}
@@ -1896,7 +1905,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
               <p>已经输入的内容会保留在当前页面，请不要清空浏览器数据。</p>
             </main>}
             <div hidden={Boolean(workspaceLoadFailure)||showDirectHistory}>{renderPage()}</div>
-            {!workspaceLoadFailure&&showDirectHistory&&activeDirectBatch&&ordinaryCanonical&&<DirectResultList key={activeDirectBatch.id} workspace={ordinaryCanonical} batch={activeDirectBatch} onRetry={()=>retryDirectFallback(activeDirectBatch.id)} onClose={()=>setDirectBatchId(null)} onUndo={()=>undoDirect(activeDirectBatch.id)} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)}/>}
+            {!workspaceLoadFailure&&showDirectHistory&&activeDirectBatch&&ordinaryCanonical&&<DirectResultList key={activeDirectBatch.id} workspace={ordinaryCanonical} batch={activeDirectBatch} onRetry={()=>retryDirectFallback(activeDirectBatch.id)} onClose={()=>setDirectHistoryOpen(false)} onUndo={()=>undoDirect(activeDirectBatch.id)} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)}/>}
           </Suspense>
         </PageLoadBoundary>
       </div>

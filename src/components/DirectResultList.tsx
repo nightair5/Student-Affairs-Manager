@@ -45,9 +45,12 @@ export function DirectResultList({embedded=false,inlineEdit=false,workspace,batc
 
 export function RecentDirectAdditions({workspace,batches,onRetry,onUndo,onOpen,onDetail,onEdit,onDelete}:{workspace:WorkspaceV8;batches:DirectBatch[];onRetry?:(id:string)=>Promise<void>;onUndo:(id:string)=>Promise<void>;onOpen:(id:string)=>void;onDetail?:(id:string,kind:'task'|'event')=>void;onEdit?:(id:string,edit:DirectEdit)=>Promise<void>;onDelete?:(id:string)=>Promise<void>}){
   const [error,setError]=useState('')
+  const [retrying,setRetrying]=useState(false)
   if(!batches.length)return null
   const latest=batches.find(b=>b.status==='active'&&b.items.some(i=>[...workspace.tasks,...workspace.events].some(e=>e.id===i.id)))
-  return <div className="flow-recent-group">{latest&&onDetail&&onEdit&&onDelete&&<DirectResultList embedded key={latest.id} workspace={workspace} batch={latest} onRetry={onRetry?()=>onRetry(latest.id):undefined} onUndo={()=>onUndo(latest.id)} onClose={()=>document.querySelector<HTMLTextAreaElement>('.quick-capture textarea')?.focus()} onDetail={onDetail} onEdit={onEdit} onDelete={onDelete}/>}
+  // The task/event list is the single visible result; this area retains recovery and history only.
+  void onDetail;void onEdit;void onDelete
+  return <div className="flow-recent-group">{latest?.origin==='local'&&<div className="direct-fallback-notice" role="status"><span>{latest.fallbackReason==='semantic'?'已用简单规则补齐行动':'AI 暂时不可用，已用简单规则整理'}</span>{onRetry&&<button type="button" className="text-button" disabled={retrying} onClick={()=>{setRetrying(true);setError('');void onRetry(latest.id).catch(error=>setError(error instanceof Error&&/原来的事项保留|已修改过/u.test(error.message)?error.message:'暂时未能重新整理，原来的事项保留。')).finally(()=>setRetrying(false))}}>{retrying?'正在重新整理…':'重新整理'}</button>}</div>}{error&&<p role="alert">{error}</p>}
     <details className="recent-direct-additions" aria-label="最近添加"><summary>最近的添加记录</summary>{error&&<p role="alert">{error}</p>}<ul>{batches.map(b=><li key={b.id}><button type="button" className="text-button" disabled={b.status==='undone'} onClick={()=>onOpen(b.id)}>{workspace.sources.find(s=>s.id===b.sourceId)?.title.slice(0,60)??'通知'}<small>{b.status==='undone'?'已撤销':`${b.items.filter(i=>[...workspace.tasks,...workspace.events].some(e=>e.id===i.id)).length} 项`}</small></button>{b.status==='active'&&<button className="text-button" type="button" onClick={()=>{setError('');void onUndo(b.id).catch(()=>setError('未能撤销，原有内容保留。请重试。'))}}>撤销</button>}</li>)}</ul></details>
   </div>
 }

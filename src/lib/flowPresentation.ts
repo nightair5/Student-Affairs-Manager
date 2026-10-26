@@ -11,8 +11,9 @@ export function flowDate(value:string|null|undefined):string {
   return new Intl.DateTimeFormat('zh-CN',{timeZone:'Asia/Shanghai',...(date.getFullYear()===new Date().getFullYear()?{}:{year:'numeric' as const}),month:'long',day:'numeric',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).format(date)
 }
 export function flowTaskDate(task:Task):string {
+  const plan=task.plannedStart||task.directDate
+  if(plan)return `${flowDate(plan)} 计划${task.deadline?` · ${flowDate(task.deadline)} 截止`:''}`
   if(task.deadline)return `${flowDate(task.deadline)} 截止`
-  if(task.directDate)return flowDate(task.directDate)
   if(task.sourceWindowLabel)return `办理时段：${task.sourceWindowLabel}`
   return '未设日期'
 }

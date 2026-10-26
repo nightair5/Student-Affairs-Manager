@@ -4,11 +4,12 @@ import {localDateKey} from './calendar'
 import type {WorkspaceV8} from '../domain/v2/types'
 
 export function homeFlow(tasks:Task[],events:Event[],now=new Date()){
-  const ready=getExecutableTasks(tasks,now),dated=(t:Task)=>Boolean(t.deadline||t.directDate||t.sourceWindowLabel)
+  const ready=getExecutableTasks(tasks,now),dated=(t:Task)=>Boolean(t.deadline||t.plannedStart||t.directDate)
   const priorityDifference=(a:Task,b:Task)=>calculateTaskPriority(b,tasks,now).score-calculateTaskPriority(a,tasks,now).score
   const byPriority=(a:Task,b:Task)=>priorityDifference(a,b)||a.createdAt.localeCompare(b.createdAt)||a.id.localeCompare(b.id)
   const today=localDateKey(now),next=new Date(now);next.setDate(next.getDate()+7);const end=localDateKey(next)
-  return {dated:ready.filter(dated).sort(byPriority),undated:ready.filter(t=>!dated(t)).sort((a,b)=>priorityDifference(a,b)||b.createdAt.localeCompare(a.createdAt)||a.id.localeCompare(b.id)),deferred:getBlockedAndWaitingTasks(tasks,now),
+  const isToday=(t:Task)=>{const value=t.plannedStart||t.directDate||t.deadline;return Boolean(value&&localDateKey(value)<=today)}
+  return {dated:ready.filter(dated).sort(byPriority),today:ready.filter(t=>dated(t)&&isToday(t)).sort(byPriority),next:ready.filter(t=>dated(t)&&!isToday(t)).sort((a,b)=>(a.plannedStart||a.directDate||a.deadline).localeCompare(b.plannedStart||b.directDate||b.deadline)||byPriority(a,b)),undated:ready.filter(t=>!dated(t)).sort((a,b)=>priorityDifference(a,b)||b.createdAt.localeCompare(a.createdAt)||a.id.localeCompare(b.id)),deferred:getBlockedAndWaitingTasks(tasks,now),
     events:events.filter(e=>e.startAt&&localDateKey(e.startAt)<=end&&localDateKey(e.endAt||e.startAt)>=today).sort((a,b)=>(a.startAt??'').localeCompare(b.startAt??'')||a.id.localeCompare(b.id))}
 }
 
