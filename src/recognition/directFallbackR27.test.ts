@@ -37,4 +37,9 @@ describe('local fallback actions and cutoff safety',()=>{
   const text='请于10月30日17:00前提交课程论文。',{input,out}=run(text)
   expect(recoverMissingDirectActions(out,input,text)).toBe(out)
  })
+ it('keeps a clean reading title for information and preserves the complete wording',()=>{
+  const text='📢【公告提醒】关于图书馆设备维护的通知。仅供知悉，无需办理。',{out}=run(text)
+  expect(out.result.standaloneTasks[0].title).not.toMatch(/📢|【|公告提醒/u)
+  expect(out.result.standaloneTasks[0].description).toContain('完整通知主题')
+ })
 })

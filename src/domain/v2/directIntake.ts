@@ -134,6 +134,7 @@ export async function replaceDirectFallback(repo:CanonicalWorkspaceRepository,ba
  const oldRun=before.recognitionRuns.find(r=>r.id===before.extractionDrafts.find(d=>d.id===batch.draftId)?.recognitionRunId),newRun=before.recognitionRuns.find(r=>r.id===before.extractionDrafts.find(d=>d.id===draftId)?.recognitionRunId)
  if(!oldRun||oldRun.sourceVersionId!==newRun?.sourceVersionId||newRun.provider!=='deepseek'||newRun.status!=='succeeded')throw Error('DIRECT_REPLACEMENT_NOT_SUCCESSFUL_AI')
  if(batch.items.some(i=>{const e=[...before.tasks,...before.events].find(e=>e.id===i.id);return !e||e.updatedAt>batch.addedAt||'status'in e&&e.status==='completed'}))throw Error('已修改过这些事项，请保留当前内容，避免覆盖你的修改。')
+ if([...before.materials,...before.timePoints].some(e=>(batch.created.materials?.includes(e.id)||batch.created.timePoints?.includes(e.id))&&e.updatedAt>batch.addedAt))throw Error('已修改过这些事项的时间或材料，请保留当前内容，避免覆盖你的修改。')
  let prepared=structuredClone(before)
  const memory:Pick<CanonicalWorkspaceRepository,'transaction'>={transaction:async mutate=>{prepared=mutate(prepared);return structuredClone(prepared)}}
  await undoDirectBatch(memory,batchId,now)

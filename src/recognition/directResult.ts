@@ -2,7 +2,7 @@ import {parseDirectSourceTime} from '../../cloudflare/direct-source-time.mjs'
 import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from './types'
 import { parseChineseTimeAst, parseBusinessDateTime } from '../lib/timeSemantics'
 import {projectDirectActions} from './directActionProjection'
-import {convertRetainedDirectResult} from './directRetention'
+import {convertRetainedDirectResult,cleanDirectTopic} from './directRetention'
 
 export const DIRECT_MODE_VERSION = 'direct-mode-1'
 export type DirectTag = '时间待定' | '如符合条件' | '待确认'
@@ -126,11 +126,12 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     // Owner-authored read action, not a claim that the notice demanded it.
     // Even a cancellation has an update to read; its cancelled action is absent.
     const proposed=result.sourceSummary.title.trim(),core=compact(proposed.replace(/关于|通知|公告|安排/gu,''))
-    const title = core.length>=2&&compact(sourceText).includes(core)?proposed.slice(0,60):sourceText.replace(/\s+/gu,'').split(/[。！？]/u).find(s=>s.trim())?.trim().slice(0,60)||'通知'
+    const fullTitle = core.length>=2&&compact(sourceText).includes(core)?proposed:sourceText.replace(/\s+/gu,'').split(/[。！？]/u).find(s=>s.trim())?.trim()||'通知'
+    const title=cleanDirectTopic(fullTitle)
     const id = 'direct-read-notice', evidenceId = 'direct-source-notice'
     const sourceId=result.evidence[0]?.sourceId || 'source',noticeQuote=sourceText.slice(0,500)
     result.evidence.push({id:evidenceId,sourceId,textStart:0,textEnd:noticeQuote.length,quote:noticeQuote,field:'description',extractionMethod:'parser',confidence:1})
-    tasks.push({tempId:id,parentTempId:null,hierarchyType:'task',title:`查看：${title}`,actionVerb:'查看',actionObject:title,description:'按直达规则保留的阅读待办',completionCriteria:['查看通知内容'],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'low',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[evidenceId],confidence:1,inferenceLevel:'optional_suggestion',userConfirmationRequired:false,selected:true})
+    tasks.push({tempId:id,parentTempId:null,hierarchyType:'task',title:`查看：${title}`,actionVerb:'查看',actionObject:title,description:'按直达规则保留的阅读待办\n完整通知主题：'+fullTitle,completionCriteria:['查看通知内容'],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'low',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[evidenceId],confidence:1,inferenceLevel:'optional_suggestion',userConfirmationRequired:false,selected:true})
     const date = parseChineseTimeAst(sourceText,{type:'planned_start',referenceTime:result.createdAt,timezone:result.timePoints[0]?.timezone || 'Asia/Shanghai'})
     const tags:DirectTag[] = []
     // A reading date is a planned date, never an invented deadline.
