@@ -7,7 +7,7 @@ import { EventCard } from '../components/EventCard'
 import { localDateKey } from '../lib/calendar'
 import { getBlockedAndWaitingTasks, getFocusTasks } from '../lib/taskLogic'
 import type { Event, Project, Task } from '../types'
-import {homeFlow,pairUndatedEvents,workspaceEventTimeHints} from '../lib/homeFlow'
+import {homeFlow,pairFlowEvents,workspaceEventTimeHints} from '../lib/homeFlow'
 import type {WorkspaceV8} from '../domain/v2/types'
 import {FlowEventList,FlowTaskList} from '../components/FlowItemList'
 
@@ -127,8 +127,8 @@ export function DashboardPage({
   )
 
   if(directMode){
-    const flow=homeFlow(tasks,events),active=flow.dated.length+flow.undated.length
-    const paired=onOpenEvent?pairUndatedEvents([...flow.today,...flow.next,...flow.undated],flow.undatedEvents,canonicalWorkspace):{linked:{},unpaired:flow.undatedEvents}
+    const paired=onOpenEvent?pairFlowEvents(tasks,events,canonicalWorkspace):{linked:{},unpaired:events}
+    const flow=homeFlow(tasks,paired.unpaired,new Date(),paired.linked),active=flow.dated.length+flow.undated.length
     const eventTimeHints=workspaceEventTimeHints(canonicalWorkspace)
     return <main className="page dashboard-page flow-dashboard">
       <header className="flow-page-heading"><span className="date-line">{todayLabel()}</span><h1>今天与接下来</h1></header>
@@ -140,7 +140,7 @@ export function DashboardPage({
         {flow.next.length>0&&<FlowTaskList tasks={flow.next} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} highlightIds={recentItemIds} channels={taskChannels} linkedEvents={paired.linked} eventTimeHints={eventTimeHints} onOpenEvent={onOpenEvent}/>}
         {onOpenEvent&&flow.upcomingEvents.length>0&&<FlowEventList events={flow.upcomingEvents} onOpen={onOpenEvent} timeHints={eventTimeHints} highlightIds={recentItemIds}/>}
       </section>}
-      {(flow.undated.length>0||paired.unpaired.length>0)&&<section className="flow-undated-section" aria-labelledby="undated-title"><div className="section-heading"><h2 id="undated-title">未安排 <small>{flow.undated.length+paired.unpaired.length}</small></h2></div>{flow.undated.length>0&&<FlowTaskList tasks={flow.undated} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} highlightIds={recentItemIds} channels={taskChannels} linkedEvents={paired.linked} eventTimeHints={eventTimeHints} onOpenEvent={onOpenEvent}/>} {onOpenEvent&&paired.unpaired.length>0&&<FlowEventList events={paired.unpaired} onOpen={onOpenEvent} timeHints={eventTimeHints} highlightIds={recentItemIds}/>}</section>}
+      {(flow.undated.length>0||flow.undatedEvents.length>0)&&<section className="flow-undated-section" aria-labelledby="undated-title"><div className="section-heading"><h2 id="undated-title">未安排 <small>{flow.undated.length+flow.undatedEvents.length}</small></h2></div>{flow.undated.length>0&&<FlowTaskList tasks={flow.undated} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} highlightIds={recentItemIds} channels={taskChannels} linkedEvents={paired.linked} eventTimeHints={eventTimeHints} onOpenEvent={onOpenEvent}/>} {onOpenEvent&&flow.undatedEvents.length>0&&<FlowEventList events={flow.undatedEvents} onOpen={onOpenEvent} timeHints={eventTimeHints} highlightIds={recentItemIds}/>}</section>}
       {flow.deferred.length>0&&<section className="deferred-execution-section" aria-labelledby="deferred-title"><div className="section-heading"><h2 id="deferred-title">稍后再做</h2></div><div className="deferred-task-list">{flow.deferred.map(({task,reason})=><button key={task.id} className="deferred-task" type="button" onClick={()=>onOpenTask(task)}><span className="deferred-task-copy"><strong>{task.title}</strong><small>{reason}</small></span><ArrowRight size={16}/></button>)}</div></section>}
       {!active&&!flow.deferred.length&&!flow.todayEvents.length&&!flow.upcomingEvents.length&&!flow.undatedEvents.length&&<section className="home-empty-state"><strong>{tasks.length?'事情都处理好了':'放入第一条通知，待办和日程就会出现在这里'}</strong><p>粘贴原消息，点一次整理即可。</p></section>}
       {recentAdditions}

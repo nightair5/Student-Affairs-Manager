@@ -9,6 +9,7 @@ import type { WorkspaceV8, JsonValue, ExtractionDraft, Source } from './types'
 import type { RecognitionResult } from '../../recognition/types'
 import { parseBusinessDateTime, isDateOnly } from '../../lib/timeSemantics'
 import { buildLocalRecognition } from '../../recognition/pipeline'
+import {directReplacementPreserves} from './directReplacementSafety'
 
 export interface DirectBatch {
   version: typeof DIRECT_MODE_VERSION; id: string; draftId: string; sourceId: string; addedAt: string
@@ -92,6 +93,15 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const tags=new Map(converted.items.map(i=>[i.tempId,i.tags]))
     plan.create.tasks=plan.create.tasks.map(t=>({...t,needsReview:Boolean(tags.get(String(t.legacyData?.recognitionTempId))?.length),legacyData:{...t.legacyData,directTags:tags.get(String(t.legacyData?.recognitionTempId))??[],directMode:DIRECT_MODE_VERSION}}))
     plan.create.events=plan.create.events.map(e=>({...e,needsReview:Boolean(tags.get(String(e.legacyData?.recognitionTempId))?.length),legacyData:{...e.legacyData,directTags:tags.get(String(e.legacyData?.recognitionTempId))??[],directMode:DIRECT_MODE_VERSION,sourceId:s.id}}))
+    // The local compiler has proved these two endpoints as one delivery window.
+    // Reuse the existing display declaration; never project a window as a cutoff.
+    for(const task of plan.create.tasks){
+      const temp=String(task.legacyData?.recognitionTempId)
+      if(!/(?:^|:)local-direct-delivery-/u.test(temp))continue
+      const points=plan.create.timePoints.filter(p=>p.taskId===task.id&&!p.eventId&&p.relatedTaskIds.includes(task.id)&&['event_start','event_end'].includes(p.type)&&p.normalizedValue&&!p.needsConfirmation)
+      if(points.length!==2||new Set(points.map(p=>p.type)).size!==2||points[0].rawText!==points[1].rawText||!v.rawText.includes(points[0].rawText))continue
+      task.legacyData={...task.legacyData,sourceWindowDeclarations:{version:'source-window-declarations-1.0.0',ownerTaskId:task.id,sourceVersionId:v.id,windows:[{state:'RESOLVED_DISCRETE',rawText:points[0].rawText,pointIds:points.map(p=>p.id)}]}}
+    }
     const created=Object.fromEntries(Object.entries(plan.create).map(([key,value])=>[key,value.map(e=>e.id)]))
     const batch:DirectBatch={version:DIRECT_MODE_VERSION,id:plan.operationId,draftId:d.id,sourceId:s.id,status:'active',addedAt:now,contentHash:contentHash(v.rawText),created,origin:localFallback||semanticFallback?'local':'ai',...(localFallback||semanticFallback?{fallbackReason:semanticFallback?'semantic' as const:'network' as const}:{}),
       items:converted.items.filter(i=>i.kind==='task'?newTasks.has(i.tempId):newEvents.has(i.tempId)).map(i=>({...i,id:`${i.kind}:${d.id}:${i.tempId}`})),
@@ -141,8 +151,8 @@ export async function replaceDirectFallback(repo:CanonicalWorkspaceRepository,ba
  const receipt=await commitDirectDraft(memory,draftId,now)
  if(!receipt.batch||receipt.duplicate)throw Error('DIRECT_REPLACEMENT_NOT_CREATED')
  if(receipt.batch.origin==='local')throw Error('AI 结果尚未更完整，原来的事项保留。')
- const oldIds=new Set(batch.items.map(i=>i.id)),newIds=new Set(receipt.batch.items.map(i=>i.id)),oldActions=before.tasks.filter(t=>oldIds.has(t.id)&&!/^查看[：:]/u.test(t.title)),newActions=prepared.tasks.filter(t=>newIds.has(t.id)&&!/^查看[：:]/u.test(t.title))
- if(oldActions.length&&!newActions.length||before.timePoints.some(p=>p.normalizedValue&&p.relatedTaskIds.some(id=>oldIds.has(id))&&!prepared.timePoints.some(next=>next.normalizedValue===p.normalizedValue&&next.type===p.type&&next.relatedTaskIds.some(id=>newIds.has(id)))))throw Error('AI 结果缺少已有的行动或时间，原来的事项保留。')
+ const oldIds=new Set(batch.items.map(i=>i.id)),newIds=new Set(receipt.batch.items.map(i=>i.id))
+ if(!directReplacementPreserves(before,prepared,oldIds,newIds))throw Error('AI 结果缺少已有的行动、时间或材料，原来的事项保留。')
  await repo.transaction(current=>{if(workspaceSnapshotHash(current)!==workspaceSnapshotHash(before))throw Error('DIRECT_REPLACEMENT_WORKSPACE_CHANGED');return prepared})
  return receipt
 }

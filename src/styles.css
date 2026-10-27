@@ -8420,6 +8420,15 @@ button.agenda-item.event {
 
 .direct-primary-time{flex-basis:100%;font-size:16px;color:#183b56;line-height:1.6}.direct-fallback-notice{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 0;padding:10px 14px;border-radius:10px;background:#fff6e9;color:#754b27;font-size:14px}.direct-fallback-notice button{white-space:nowrap}
 .flow-task-row{position:relative;flex-direction:row;min-height:0;scroll-margin-block:110px}
+.flow-tasks-page .flow-page-heading p{color:#55738b;font-size:14px;margin-top:8px}
+.flow-tasks-page .toolbar{flex-wrap:wrap}
+.compact-time-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:12px}
+.compact-time-actions .task-schedule-popover{left:0;right:auto}
+.detail-primary-section .detail-time-value{font-size:17px;font-weight:650}
+.flow-calendar-page .calendar-agenda-list .flow-item-main{min-width:0}
+.flow-calendar-page .schedule-section>summary{padding:16px 0;cursor:pointer;color:#55738b;font-size:14px}
+.flow-complete:disabled{color:#4c7e6c;opacity:.7;cursor:default}
+@media(max-width:600px){.compact-time-actions .task-schedule-popover{left:12px;right:12px}.flow-calendar-page .calendar-agenda .flow-row-actions{max-width:78px}}
 .flow-item-list{overflow:visible}
 .flow-item-list>li:first-child{border-top-left-radius:15px;border-top-right-radius:15px}
 .flow-item-list>li:last-child{border-bottom-left-radius:15px;border-bottom-right-radius:15px}

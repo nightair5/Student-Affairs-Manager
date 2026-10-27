@@ -74,19 +74,41 @@ export function pairUndatedEvents(tasks:Task[],events:Event[],workspace:Workspac
   return {linked,unpaired:events.filter(event=>!linkedIds.has(event.id))}
 }
 
-export function homeFlow(tasks:Task[],events:Event[],now=new Date()){
-  const ready=getExecutableTasks(tasks,now),dated=(t:Task)=>Boolean(t.deadline||t.plannedStart||t.directDate)
+/** Explicit stored attendance relations also pair dated events. Never infer a
+ * relation from a similar title, date, or two unrelated sources. */
+export function pairFlowEvents(tasks:Task[],events:Event[],workspace:WorkspaceV8|null|undefined){
+  const fallback=pairUndatedEvents(tasks,events,workspace),linked={...fallback.linked}
+  const proposed=new Map<string,Event[]>()
+  for(const event of events){
+    const stored=workspace?.events.find(e=>e.id===event.id),relation=stored?.legacyData?.sourceTaskRelations
+    if(!relation||typeof relation!=='object'||Array.isArray(relation)||relation.version!=='source-event-task-relations-1'||typeof relation.draftId!=='string'||!Array.isArray(relation.taskTempIds)||relation.taskTempIds.length!==1)continue
+    const formalId=`task:${relation.draftId}:${relation.taskTempIds[0]}`
+    const task=tasks.find(t=>t.id===formalId&&t.status!=='已完成')
+    if(!task||typeof stored?.legacyData?.sourceId!=='string'||!task.sourceIds.includes(stored.legacyData.sourceId))continue
+    const canonical=workspace?.tasks.find(t=>t.id===task.id)
+    if(canonical?.legacyData?.actionVerb!=='参加')continue
+    const list=proposed.get(task.id)??[];list.push(event);proposed.set(task.id,list)
+  }
+  for(const [id,matches] of proposed)if(matches.length===1)linked[id]=matches[0]
+  const ids=new Set(Object.values(linked).map(e=>e.id))
+  return {linked,unpaired:events.filter(e=>!ids.has(e.id))}
+}
+
+export function homeFlow(tasks:Task[],events:Event[],now=new Date(),linked:Readonly<Record<string,Event>>={}){
+  const relatedDate=(t:Task)=>t.sourceWindowLabel?t.sourceWindowEnd:linked[t.id]?.startAt
+  const ready=getExecutableTasks(tasks,now),dated=(t:Task)=>Boolean(t.deadline||t.plannedStart||t.directDate||relatedDate(t))
   const priorityDifference=(a:Task,b:Task)=>calculateTaskPriority(b,tasks,now).score-calculateTaskPriority(a,tasks,now).score
   const byPriority=(a:Task,b:Task)=>priorityDifference(a,b)||a.createdAt.localeCompare(b.createdAt)||a.id.localeCompare(b.id)
   const today=localDateKey(now),next=new Date(now);next.setDate(next.getDate()+7);const end=localDateKey(next)
   // A later personal plan must not hide a deadline which falls today.
-  const firstDate=(t:Task)=>[t.plannedStart||t.directDate,t.deadline].filter((value):value is string=>Boolean(value)).map(localDateKey).sort()[0]??''
+  const firstDate=(t:Task)=>[t.plannedStart||t.directDate,t.deadline,relatedDate(t)].filter((value):value is string=>Boolean(value)).map(localDateKey).sort()[0]??''
   const isToday=(t:Task)=>{
     const plan=t.plannedStart||t.directDate
     // Preserve existing placement for old overdue tasks with a future plan,
     // while ensuring an actual deadline today remains visible today.
     if(plan)return localDateKey(plan)<=today||Boolean(t.deadline&&localDateKey(t.deadline)===today)
-    return Boolean(t.deadline&&localDateKey(t.deadline)<=today)
+    const date=t.deadline||relatedDate(t)
+    return Boolean(date&&localDateKey(date)<=today)
   }
   const upcoming=events.filter(e=>e.startAt&&Number.isFinite(Date.parse(e.startAt))&&localDateKey(e.endAt&&Number.isFinite(Date.parse(e.endAt))?e.endAt:e.startAt)>=today).sort((a,b)=>(a.startAt??'').localeCompare(b.startAt??'')||a.id.localeCompare(b.id))
   return {dated:ready.filter(dated).sort(byPriority),today:ready.filter(t=>dated(t)&&isToday(t)).sort(byPriority),next:ready.filter(t=>dated(t)&&!isToday(t)).sort((a,b)=>firstDate(a).localeCompare(firstDate(b))||byPriority(a,b)),undated:ready.filter(t=>!dated(t)).sort((a,b)=>priorityDifference(a,b)||b.createdAt.localeCompare(a.createdAt)||a.id.localeCompare(b.id)),deferred:getBlockedAndWaitingTasks(tasks,now),

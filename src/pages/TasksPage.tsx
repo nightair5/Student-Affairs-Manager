@@ -3,8 +3,16 @@ import { CheckCircle2, Filter, ListTodo, Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { TaskCard } from '../components/TaskCard'
 import type { Project, Task, TaskCategory, TaskStatus } from '../types'
+import type {Event} from '../types'
+import type {WorkspaceV8} from '../domain/v2/types'
+import {DirectTasksView} from '../components/DirectTasksView'
 
 interface TasksPageProps {
+  directMode?:boolean
+  workspace?:WorkspaceV8|null
+  events?:Event[]
+  onScheduleTask?:(id:string,date:string)=>Promise<void>
+  onOpenEvent?:(event:Event)=>void
   dateViews?: TaskDateViews
   readOnly?: boolean
   tasks: Task[]
@@ -16,6 +24,7 @@ interface TasksPageProps {
 type FilterValue = '全部' | TaskCategory | TaskStatus
 
 export function TasksPage({
+  directMode,workspace,events,onScheduleTask,onOpenEvent,
   dateViews, readOnly,
   tasks,
   projects,
@@ -40,6 +49,7 @@ export function TasksPage({
     [filter, query, tasks],
   )
 
+  if(directMode)return <DirectTasksView tasks={tasks} events={events} workspace={workspace} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} onOpenEvent={onOpenEvent}/>
   return (
     <main className="page">
       <header className="page-header">

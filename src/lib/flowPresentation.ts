@@ -13,7 +13,7 @@ export function flowDate(value:string|null|undefined):string {
 }
 export function flowTaskDate(task:Task):string {
   const plan=task.plannedStart||task.directDate
-  if(plan)return `${flowDate(plan)} 计划${task.deadline?` · ${flowDate(task.deadline)} 截止`:''}`
+  if(plan)return `${flowDate(plan)} 计划${task.deadline?` · ${flowDate(task.deadline)} 截止`:task.sourceWindowLabel?` · 办理时段：${task.sourceWindowLabel}`:''}`
   if(task.deadline)return `${flowDate(task.deadline)} 截止`
   if(task.sourceWindowLabel)return `办理时段：${task.sourceWindowLabel}`
   return '未设日期'

@@ -1,4 +1,5 @@
 import {parseDirectSourceTime} from '../../cloudflare/direct-source-time.mjs'
+import {directEventRevision} from './directLocalFacts'
 import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from './types'
 import { parseChineseTimeAst, parseBusinessDateTime } from '../lib/timeSemantics'
 import {projectDirectActions} from './directActionProjection'
@@ -12,7 +13,7 @@ const flatTasks = (r: RecognitionResult) => [...r.standaloneTasks, ...r.mileston
 const compact = (s: string) => s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu, '')
 const cancelled = /取消|作废|废止|不再(?:举办|举行|提交|报名|申请)|禁止|不得(?:提交|报名|申请|参加|领取)/u
 const conditional = /(?:若|如果|如已|如需|符合.{0,18}条件|有意|自愿|入选后|录取后|已缴费|放弃修读|仅限|限.{0,10}学生)/u
-const deadline = /截止|最迟|不晚于|不得(?:晚于|迟于)|之前|以前|前(?:[，,。；;\s]|将|把|须|需|请|提交|交到|交至|送至|送到|递交|完成|报送|报名|申请|办理|领取|上传|$)|(?:\d{1,2}(?:日|号|点|时|分)|\d{1,2}:\d{2})\s*前(?:通过|在线)|于.{0,32}(?:提交|交至|交到|报送)/u
+const deadline = /截止|最迟|不晚于|不得(?:晚于|迟于)|之前|以前|前(?:[，,。；;\s]|将|把|须|需|请|提交|交到|交至|送至|送到|递交|完成|报送|报名|申请|办理|领取|上传|填写|登记|预约|$)|(?:\d{1,2}(?:日|号|点|时|分)|\d{1,2}:\d{2})\s*前(?:通过|在线)|于.{0,32}(?:提交|交至|交到|报送)/u
 const alternatives = /任选|备选|可选择|任一|(?:日|号|\d)\s*(?:或|、).{0,18}(?:日|号)/u
 const recordTasks = (r: RecognitionResult) => new Map(flatTasks(r).map(t => [t.tempId, t]))
 
@@ -45,7 +46,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const revised=/(?:改为|调整为|更正为|延期至|现为)([^。；;\n]*)/u.exec(text)
     const clauses=clauseFor(text,object).split('；'),affirmative=clauses.some(c=>!cancelled.test(c)&&/请|可以|可|允许|须|应当|务必/u.test(c))
     const prohibited=clauses.some(c=>cancelled.test(c)&&!(affirmative&&/不符合|不具备|未经|未(?:获|经|通过|完成|报名|缴费|取得)/u.test(c)))
-    return prohibited && !(revised&&compact(revised[1]).includes(compact(object)))
+    return prohibited && !(revised&&compact(revised[1]).includes(compact(object))) && !directEventRevision(text,object)
   }
   const tagsById = new Map<string, DirectTag[]>()
   const conflicts=new Set(result.conflicts.filter(c=>c.requiresDecision).flatMap(c=>c.entityTempIds))
@@ -116,6 +117,19 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     .map(m => ({...m,selected:true,relatedTaskTempIds:m.relatedTaskTempIds.filter(id => taskIds.has(id))}))
   const materialIds = new Set(result.materials.map(m => m.tempId))
   for (const p of times) p.relatedMaterialTempIds = p.relatedMaterialTempIds.filter(id => materialIds.has(id))
+  // A named event is already an actionable result. Represent participation and
+  // the calendar entry as a related pair, not an unrelated “read this notice”.
+  if (!tasks.length && events.length) for (const event of events) {
+    // A host announcing an event is not a direction for this user to attend.
+    if(!/请[^。；\n]{0,50}(?:参加|出席)|(?:^|[，,])参加/u.test(context(event.evidenceIds)))continue
+    const name=event.title.replace(/^(?:参加|出席)/u,''),id=`direct-attend:${event.tempId}`
+    const tags=[...tagsById.get(event.tempId)!]
+    if(!/请[^。；\n]{0,50}(?:参加|出席)|(?:^|[，,])参加/u.test(context(event.evidenceIds))&&!tags.includes('待确认'))tags.push('待确认')
+    const task:TaskSuggestionV2={tempId:id,parentTempId:null,hierarchyType:'task',title:`${tags.includes('如符合条件')?'如符合条件 ':''}参加${name}`,actionVerb:'参加',actionObject:name,description:event.description,completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[...event.evidenceIds],confidence:event.confidence,inferenceLevel:'strong_inference',userConfirmationRequired:tags.length>0,selected:true}
+    event.relatedTaskTempIds=[id]
+    for(const point of times)if(point.tempId===event.startTimePointTempId||point.tempId===event.endTimePointTempId)point.relatedTaskTempIds.push(id)
+    tagsById.set(id,tags);tasks.push({...task,parentTempId:null,hierarchyType:'task',selected:true});taskIds.add(id)
+  }
   tasks.forEach(t => {
     t.materialTempIds = result.materials.filter(m => m.relatedTaskTempIds.includes(t.tempId)).map(m => m.tempId)
     t.timePointTempIds = times.filter(p => p.relatedTaskTempIds.includes(t.tempId)).map(p => p.tempId)
@@ -127,7 +141,8 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     // Even a cancellation has an update to read; its cancelled action is absent.
     const proposed=result.sourceSummary.title.trim(),core=compact(proposed.replace(/关于|通知|公告|安排/gu,''))
     const fullTitle = core.length>=2&&compact(sourceText).includes(core)?proposed:sourceText.replace(/\s+/gu,'').split(/[。！？]/u).find(s=>s.trim())?.trim()||'通知'
-    const title=cleanDirectTopic(fullTitle)
+    const cancelledTopic=/(?:举行|举办|召开)的?([^，。；]{2,45}?)(?:取消|作废)/u.exec(sourceText)?.[1]
+    const title=cancelledTopic?cleanDirectTopic(cancelledTopic+'取消通知'):cleanDirectTopic(fullTitle)
     const id = 'direct-read-notice', evidenceId = 'direct-source-notice'
     const sourceId=result.evidence[0]?.sourceId || 'source',noticeQuote=sourceText.slice(0,500)
     result.evidence.push({id:evidenceId,sourceId,textStart:0,textEnd:noticeQuote.length,quote:noticeQuote,field:'description',extractionMethod:'parser',confidence:1})
@@ -139,12 +154,13 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
       const short=parseChineseTimeAst(m[0],{type:'planned_start',referenceTime:result.createdAt,timezone:date.timezone})
       return short.normalizedValue===date.normalizedValue&&!short.needsConfirmation
     })
-    if (datedSpan && date.normalizedValue && !date.needsConfirmation && !alternatives.test(sourceText) && !date.rangeEndNormalizedValue) {
+    const dateIsForReading=!/取消|作废|废止|原定|改期|改为|调整为|发布日期|发布于|发布时间/u.test(sourceText)
+    if (dateIsForReading && datedSpan && date.normalizedValue && !date.needsConfirmation && !alternatives.test(sourceText) && !date.rangeEndNormalizedValue) {
       const dateEvidence='direct-reading-date-evidence'
       result.evidence.push({id:dateEvidence,sourceId,textStart:datedSpan.index,textEnd:datedSpan.index!+datedSpan[0].length,quote:datedSpan[0],field:'deadline',extractionMethod:'parser',confidence:1})
       const point:TimePointSuggestionV2 = {tempId:'direct-reading-date',type:'planned_start',rawText:datedSpan[0],normalizedValue:date.normalizedValue,timezone:date.timezone,isAllDay:date.isAllDay,precision:date.precision,needsConfirmation:false,relatedTaskTempIds:[id],relatedMaterialTempIds:[],evidenceIds:[dateEvidence],confidence:1,selected:true}
       times.push(point);tasks[0].timePointTempIds.push(point.tempId)
-    } else tags.push('时间待定')
+    }
     items.push({tempId:id,kind:'task',tags})
   }
   result.milestones=[];result.standaloneTasks=tasks;result.events=events;result.timePoints=times

@@ -57,24 +57,37 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
   private readonly inFlight = new Map<string, Promise<ProxyRecognitionObservation>>()
   private readonly sidecars = new Map<string, OrdinaryProviderSidecar>()
   private configuredState: boolean | null = null
+  private statusAttempted = false
+  private statusInFlight: Promise<{ configured: boolean; model?: string; multimodalModel?: string }> | null = null
 
   constructor(private readonly endpoint = '/api/deepseek', private readonly statusTimeoutMs = 5_000) {}
 
-  async status(): Promise<{ configured: boolean; model?: string; multimodalModel?: string }> {
+  status(): Promise<{ configured: boolean; model?: string; multimodalModel?: string }> {
+    // Join concurrent checks, but never cache a failed check for the page lifetime.
+    if (this.statusInFlight) return this.statusInFlight
+    const pending = this.requestStatus().finally(() => {
+      if (this.statusInFlight === pending) this.statusInFlight = null
+    })
+    this.statusInFlight = pending
+    return pending
+  }
+
+  private async requestStatus(): Promise<{ configured: boolean; model?: string; multimodalModel?: string }> {
+    this.statusAttempted = true
     try {
       const response = await fetch(`${this.endpoint}/status`, { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(this.statusTimeoutMs) })
-      if (!response.ok) { this.configuredState = false; return { configured: false } }
+      if (!response.ok) { this.configuredState = null; return { configured: false } }
       const data: unknown = await response.json()
-      if (typeof data !== 'object' || data === null) { this.configuredState = false; return { configured: false } }
+      if (typeof data !== 'object' || data === null) { this.configuredState = null; return { configured: false } }
       const record = data as { configured?: unknown; model?: unknown; multimodalModel?: unknown }
-      this.configuredState = record.configured === true
+      this.configuredState = typeof record.configured === 'boolean' ? record.configured : null
       return {
         configured: record.configured === true,
         model: typeof record.model === 'string' ? record.model : undefined,
         multimodalModel: typeof record.multimodalModel === 'string' ? record.multimodalModel : undefined,
       }
     } catch {
-      this.configuredState = false
+      this.configuredState = null
       return { configured: false }
     }
   }
@@ -92,7 +105,7 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
   }
 
   async recognize(input: RecognitionServiceInput, context: RecognitionWorkspaceContext = { projects: [], tasks: [] }): Promise<RecognitionResult> {
-    if (this.configuredState === false) throw new Error('DeepSeek 尚未配置，来源内容未发送。')
+    if (this.statusAttempted && this.configuredState !== true) throw new Error(this.configuredState === false ? 'DeepSeek 尚未配置，来源内容未发送。' : 'AI 服务暂时不可用，来源内容未发送。')
     if (Boolean(input.sourceId) !== Boolean(input.sourceVersionId)) throw new Error('ORDINARY_PROVIDER_CAPTURE_REQUIRED')
     // A failed response must not expose an earlier source version's audit.
     if (input.sourceId) this.sidecars.delete(input.sourceId)

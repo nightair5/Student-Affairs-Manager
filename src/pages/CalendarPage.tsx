@@ -17,8 +17,13 @@ import { isDateOnly, instantToWallClock } from '../lib/timeSemantics'
 import { formatDuration, getExecutableTasks } from '../lib/taskLogic'
 import type { CourseBlock, Event, Task } from '../types'
 import type { PlanSegment } from '../domain/v2/personalPlanD27'
+import {FlowEventList,FlowTaskList} from '../components/FlowItemList'
 
 interface CalendarPageProps {
+  directMode?:boolean
+  onCompleteTask?:(id:string)=>void
+  onScheduleTask?:(id:string,date:string)=>Promise<void>
+  taskChannels?:Readonly<Record<string,string[]>>
   /** Canonical v8 retains date precision; bare legacy task views do not. */
   preserveDateOnlyPrecision?: boolean
   personalPlans?: readonly PlanSegment[]
@@ -59,7 +64,8 @@ function itemTime(value: string): string {
     .format(new Date(value))
 }
 
-export function CalendarPage({ preserveDateOnlyPrecision = false, personalPlans, personalPlanTimezone = 'Asia/Shanghai', pendingDateTaskIds, isolatedTimezone, dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
+export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChannels, preserveDateOnlyPrecision = false, personalPlans, personalPlanTimezone = 'Asia/Shanghai', pendingDateTaskIds, isolatedTimezone, dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
+  const ScheduleContainer=directMode?'details':'section'
   const [today] = useState(() => isolatedTimezone ? instantToWallClock(new Date(), isolatedTimezone) : new Date())
   const displayTime = (value: string) => isDateOnly(value) ? '仅日期' : isolatedTimezone ? value.slice(11, 16) + '（' + isolatedTimezone + '）' : itemTime(value)
   const [viewDate, setViewDate] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1))
@@ -137,7 +143,7 @@ export function CalendarPage({ preserveDateOnlyPrecision = false, personalPlans,
   }
 
   return (
-    <main className="page calendar-page">
+    <main className={`page calendar-page${directMode?' flow-calendar-page':''}`}>
       {pendingDateTaskIds&&<section aria-label="日期待定任务"><h2>日期待定任务</h2>
         {tasks.filter(task=>pendingDateTaskIds.includes(task.id)&&dateViews?.[task.id]?.kind==='review'&&!task.deadline).map(task=><button type="button" key={task.id} onClick={()=>onOpenTask(task)}>
           {task.title} · {dateViews?.[task.id]?.label}</button>)}
@@ -147,8 +153,8 @@ export function CalendarPage({ preserveDateOnlyPrecision = false, personalPlans,
         {tasks.filter(task => dateViews[task.id]?.noDeadlineProven).map(task => <button type="button" key={task.id} onClick={() => onOpenTask(task)}>{task.title} · {dateViews[task.id].label}</button>)}
         <p>未自动分配日期或提醒；也可在任务中心搜索。</p></section>}
       <header className="page-header calendar-page-header">
-        <div><span className="eyebrow">截止、事件与开工安排</span><h1>日历</h1><p>日期格汇总任务与正式事件；选择日期或切换“即将到来”查看不截断的完整清单。</p></div>
-        <div className="legend"><span><i className="legend-dot deadline" />格内为行动摘要</span><span><i className="legend-dot start" />当前选中</span></div>
+        <div>{!directMode&&<span className="eyebrow">截止、事件与开工安排</span>}<h1>日历</h1><p>{directMode?'截止、日程和你的个人计划，一起查看。':'日期格汇总任务与正式事件；选择日期或切换“即将到来”查看不截断的完整清单。'}</p></div>
+        {!directMode&&<div className="legend"><span><i className="legend-dot deadline" />格内为行动摘要</span><span><i className="legend-dot start" />当前选中</span></div>}
       </header>
 
       <div className="calendar-layout">
@@ -202,13 +208,14 @@ export function CalendarPage({ preserveDateOnlyPrecision = false, personalPlans,
         </section>
 
         <aside className="calendar-agenda">
-          <div className="section-heading compact"><div><span className="section-index">DETAIL</span><h2>{agendaTitle}</h2></div><CalendarDays size={20} /></div>
+          <div className="section-heading compact"><div>{!directMode&&<span className="section-index">DETAIL</span>}<h2>{agendaTitle}</h2></div><CalendarDays size={20} /></div>
           <div className="calendar-agenda-tabs" role="group" aria-label="日历详情范围">
             <button type="button" className={agendaMode === 'selected' ? 'active' : ''} aria-pressed={agendaMode === 'selected'} onClick={() => setAgendaMode('selected')}>所选日期</button>
             <button type="button" className={agendaMode === 'upcoming' ? 'active' : ''} aria-pressed={agendaMode === 'upcoming'} onClick={() => setAgendaMode('upcoming')}>即将到来</button>
           </div>
           {agendaItems.length
-            ? <div className="calendar-agenda-list">{agendaItems.map((item) => item.kind === 'task'
+            ? directMode&&onCompleteTask?<div className="calendar-agenda-list">{agendaItems.map(item=>item.kind==='task'?<FlowTaskList key={item.id} tasks={[item.task]} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} channels={taskChannels}/>:onOpenEvent?<FlowEventList key={item.id} events={[item.event]} onOpen={onOpenEvent}/>:null)}</div>
+            : <div className="calendar-agenda-list">{agendaItems.map((item) => item.kind === 'task'
                 ? <button className="agenda-item" key={`task:${item.id}`} type="button" onClick={() => onOpenTask(item.task)}>
                     <span className="agenda-time">{isDateOnly(item.at) && !dateViews && !preserveDateOnlyPrecision ? itemTime(item.at) : displayTime(item.at)}</span>
                     <span className="agenda-copy"><strong>{item.title}</strong><small><Clock3 size={13} />任务 · 预计 {formatDuration(item.task.estimatedMinutes)} · {item.task.status}</small></span>
@@ -222,13 +229,13 @@ export function CalendarPage({ preserveDateOnlyPrecision = false, personalPlans,
                       <span className="agenda-time">{displayTime(item.at)}</span>
                       <span className="agenda-copy"><strong>{item.title}</strong><small><Flag size={13} />事件{item.event.location ? <><MapPin size={12} />{item.event.location}</> : null}{item.event.directTags?.length?` · ${item.event.directTags.join(' · ')}`:item.event.needsConfirmation ? ' · 时间待核对' : ''}</small></span>
                     </article>)}</div>
-            : <div className="calendar-empty-agenda"><strong>{agendaMode === 'selected' ? '所选日期没有事项' : '没有即将到来的事项'}</strong><p>确认后的任务和事件会按日期进入这里。</p></div>}
+            : <div className="calendar-empty-agenda"><strong>{agendaMode === 'selected' ? '所选日期没有事项' : '没有即将到来的事项'}</strong><p>{directMode?'安排日期后，会显示在这里。':'确认后的任务和事件会按日期进入这里。'}</p></div>}
           {undatedEvents.length > 0 && <section className="calendar-undated-events" aria-labelledby="undated-events-title">
             <div className="section-heading compact">
-              <div><span className="section-index">UNSCHEDULED</span><h3 id="undated-events-title">不定时间 / 待确认事件 · {undatedEvents.length} 项</h3></div>
+              <div>{!directMode&&<span className="section-index">UNSCHEDULED</span>}<h3 id="undated-events-title">{directMode?'未设日期的日程':'不定时间 / 待确认事件'} · {undatedEvents.length} 项</h3></div>
               <Flag size={18} />
             </div>
-            <p className="muted-copy">这些事件没有可靠的开始时间，因此不会被放进日期格或即将到来的时间排序。</p>
+            {!directMode&&<p className="muted-copy">这些事件没有可靠的开始时间，因此不会被放进日期格或即将到来的时间排序。</p>}
             <div className="calendar-agenda-list">{undatedEvents.map((event) => onOpenEvent
               ? <button className="agenda-item event" key={`undated-event:${event.id}`} type="button" onClick={() => onOpenEvent(event)}>
                   <span className="agenda-time">待定</span>
@@ -239,11 +246,12 @@ export function CalendarPage({ preserveDateOnlyPrecision = false, personalPlans,
                   <span className="agenda-copy"><strong>{event.title}</strong><small><Flag size={13} />事件 · 时间待确认{event.location ? <><MapPin size={12} />{event.location}</> : null}</small></span>
                 </article>)}</div>
           </section>}
-          <div className="agenda-tip"><Lightbulb size={18} /><p>即将到来展示全部未来任务和事件，不截断；月历格仍只显示行动摘要。</p></div>
+          {!directMode&&<div className="agenda-tip"><Lightbulb size={18} /><p>即将到来展示全部未来任务和事件，不截断；月历格仍只显示行动摘要。</p></div>}
         </aside>
       </div>
 
-      <section className="schedule-section" aria-labelledby="schedule-title">
+      <ScheduleContainer className="schedule-section" aria-labelledby="schedule-title">
+        {directMode&&<summary>课程与更多安排</summary>}
         <div className="section-heading"><div><span className="section-index">PLAN</span><h2 id="schedule-title">课程表避让</h2><p>{personalPlans ? '录入每周固定课程；返回今日页核对整体安排。日期格中的任务时间表示原文截止，个人开工时段在下方单列。' : '录入每周固定课程，本机规则会寻找 08:00–22:00 的连续空档。'}</p></div><CalendarDays size={20} /></div>
         <div className="schedule-grid">
           <div className="course-panel">
@@ -258,7 +266,7 @@ export function CalendarPage({ preserveDateOnlyPrecision = false, personalPlans,
           </div>
           <div className="work-slot-panel"><h3>{personalPlans ? '已接受的个人安排' : '建议开工时段'}</h3>{personalPlans ? personalPlans.length ? personalPlans.map(plan => <button type="button" className="work-slot" key={plan.taskId} onClick={() => { const task = tasks.find(t => t.id === plan.taskId); if (task) onOpenTask(task) }}><span><strong>{plan.title}</strong><small>{new Intl.DateTimeFormat('zh-CN', { timeZone: personalPlanTimezone, month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(plan.start))} 开始 · {plan.minutes}分钟{plan.durationOrigin === 'product_estimate' ? '（产品暂估）' : ''}{plan.locked ? ' · 已锁定' : ''}</small></span><em>与首页同一份已保存安排；原文截止另列{plan.conditionalOn.length ? '，须先实际完成前置事项' : ''}。</em></button>) : <p className="muted-copy">尚未接受个人安排；今日页会按共同容量生成可核对方案。</p> : suggestions.length ? suggestions.map(({ task, slot }) => slot && <button type="button" className="work-slot" key={task.id} onClick={() => onOpenTask(task)}><span><strong>{task.title}</strong><small>{new Intl.DateTimeFormat('zh-CN', { month: 'numeric', day: 'numeric', weekday: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(slot.start))} 开始 · {formatDuration(task.estimatedMinutes)}</small></span><em>{slot.reason}</em></button>) : <p className="muted-copy">当前没有可计算的未完成任务或连续空档。</p>}</div>
         </div>
-      </section>
+      </ScheduleContainer>
     </main>
   )
 }

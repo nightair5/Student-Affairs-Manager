@@ -1,5 +1,5 @@
 import {directCardTitle,visibleDirectTags} from '../lib/directCardPresentation'
-import {CalendarDays,Circle,ChevronRight,Clock3} from 'lucide-react'
+import {CalendarDays,CheckCircle2,Circle,ChevronRight,Clock3} from 'lucide-react'
 import {TaskScheduleButton} from './TaskScheduleButton'
 import {useEffect,useState} from 'react'
 import type {Event,Task} from '../types'
@@ -10,16 +10,17 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
   useEffect(()=>{const timer=setTimeout(()=>setExpired(key),5000);return()=>clearTimeout(timer)},[key])
   return <ul className="flow-item-list">{tasks.map(task=>{
     const linked=linkedEvents[task.id], taskDate=flowTaskDate(task), hint=linked&&eventTimeHints[linked.id]
-    const eventDate=hint?`${hint} · 时间待定`:'日程时间待定'
+    const eventDate=linked?(flowEventDate(linked,hint)==='时间待定'?'日程时间待定':flowEventDate(linked,hint)):'日程时间待定'
     const displayedDate=linked&&taskDate==='未设日期'?eventDate:taskDate
     const taskChannels=channels[task.id]??[]
     const tags=visibleDirectTags(task.directTags,displayedDate,task.title)
     return <li className="flow-task-row" key={task.id} data-task-id={task.id} data-new={recent.split('|').includes(task.id)||undefined}>
-      <button className="flow-complete icon-button" type="button" onClick={()=>onComplete(task.id)} aria-label={`完成${task.title}`}><Circle size={21}/></button>
+      <button className="flow-complete icon-button" type="button" disabled={task.status==='已完成'} onClick={()=>onComplete(task.id)} aria-label={`${task.status==='已完成'?'已完成':'完成'}${task.title}`}>{task.status==='已完成'?<CheckCircle2 size={21}/>:<Circle size={21}/>}</button>
       <button className="flow-item-main" type="button" onClick={()=>onOpen(task)}>
         <h3 data-task-title title={task.title}>{directCardTitle(task.title)}</h3>
         <span className="flow-item-facts"><Clock3 size={14}/>{displayedDate}
           {linked&&taskDate!=='未设日期'&&<small>{eventDate}</small>}
+          {linked?.location&&<small>{linked.location}</small>}
           {task.materials.length>0&&<small>{task.materials.length}项材料</small>}
           {taskChannels.length>0&&<small className="flow-task-channel" title={taskChannels.join('、')}>提交：{taskChannels.join('、')}</small>}
           {planAfterDeadline(task.plannedStart||task.directDate,task.deadline)&&<small className="flow-deadline-warning">计划晚于截止</small>}
@@ -28,7 +29,7 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
       </button>
       <div className="flow-row-actions">
         {linked&&onOpenEvent&&<button className="flow-linked-event" type="button" data-event-id={linked.id} onClick={()=>onOpenEvent(linked)} aria-label={`查看${linked.title}日程`}>日程</button>}
-        {onSchedule&&<TaskScheduleButton task={task} onSchedule={onSchedule}/>}<button className="icon-button" type="button" onClick={()=>onOpen(task)} aria-label={`编辑${task.title}`}><ChevronRight size={17}/></button>
+        {onSchedule&&task.status!=='已完成'&&<TaskScheduleButton task={task} onSchedule={onSchedule}/>}<button className="icon-button" type="button" onClick={()=>onOpen(task)} aria-label={`编辑${task.title}`}><ChevronRight size={17}/></button>
       </div>
     </li>
   })}</ul>

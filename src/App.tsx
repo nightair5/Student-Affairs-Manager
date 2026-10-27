@@ -6,7 +6,7 @@ import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { DirectResultList, RecentDirectAdditions } from './components/DirectResultList'
 import { setTaskSchedule } from './domain/v2/taskSchedule'
 import { commitDirectDraft, replaceDirectFallback, deleteDirectItem, directDuplicate, editDirectItem, recentDirectBatches, undoDirectBatch } from './domain/v2/directIntake'
-import {historicalDirectDraftIds,workspaceTaskChannels} from './lib/homeFlow'
+import {historicalDirectDraftIds,workspaceTaskChannels,pairFlowEvents,workspaceEventTimeHints} from './lib/homeFlow'
 import { EventDetailPanel } from './components/EventDetailPanel'
 import { IntakePanel } from './components/IntakePanel'
 import { OnboardingGuide } from './components/OnboardingGuide'
@@ -245,9 +245,12 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const [ordinarySaveError, setOrdinarySaveError] = useState<{draftId:string;text:string}|null>(null)
   const [smartExtractionStatus, setSmartExtractionStatus] = useState<'checking' | 'connected' | 'unavailable'>('checking')
   const initialServiceCheck = useRef<{service:DeepSeekExtractionService;promise:Promise<boolean>}|null>(null)
+  const directRetriesInFlight=useRef(new Set<string>())
   const initialServiceReady=useCallback(()=>{
     if(initialServiceCheck.current?.service===deepSeekExtractionService)return initialServiceCheck.current.promise
-    const promise=deepSeekExtractionService.status().then(status=>status.configured,()=>false)
+    const promise=deepSeekExtractionService.status().then(status=>status.configured,()=>false).finally(()=>{
+      if(initialServiceCheck.current?.promise===promise)initialServiceCheck.current=null
+    })
     initialServiceCheck.current={service:deepSeekExtractionService,promise}
     return promise
   },[deepSeekExtractionService])
@@ -711,10 +714,20 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     setNotice({text:receipt.duplicate?'这条通知已添加过':`已添加 ${batch?.items.length??0} 项`,direct:true,...(batch?{undo:()=>{void undoDirect(batch.id).catch(()=>setNotice({text:'未能撤销，原有内容保留。请从最近添加重试。'}))}}:{})})
   }
   const retryDirectFallback=async(batchId:string)=>{
+    if(directRetriesInFlight.current.has(batchId))throw Error('正在重新整理，请稍候。')
+    directRetriesInFlight.current.add(batchId)
+    try{return await performDirectRetry(batchId)}finally{directRetriesInFlight.current.delete(batchId)}
+  }
+  const performDirectRetry=async(batchId:string)=>{
     const w=await canonicalWorkspaceRepository.load(),batch=w&&recentDirectBatches(w).find(b=>b.id===batchId&&b.origin==='local'&&b.status==='active')
     const source=batch&&w?.sources.find(s=>s.id===batch.sourceId),version=source&&w?.sourceVersions.find(v=>v.id===source.currentVersionId)
     if(!batch||!source||!version?.rawText)throw Error('未找到可以重新整理的通知')
     try{
+      if(!ordinaryEnvironment){
+        const ready=await initialServiceReady()
+        setSmartExtractionStatus(ready?'connected':'unavailable')
+        if(!ready)throw Error('DEEPSEEK_STATUS_UNAVAILABLE')
+      }
       const metadata=ordinaryEnvironment?.recognitionMetadata?.()
       const retried=await retryExistingSourceRecognition(capturePersistenceService,source.id,{provider:'deepseek',modelName:metadata?.modelName??'deepseek-v4-flash',promptVersion:metadata?.promptVersion??null,pipelineVersion:'direct-ai-retry-v1',expectedSourceVersionId:version.id},async()=>deepSeekExtractionService.recognize!({sourceType:source.type,sourceTitle:source.title,content:version.rawText!,sourceId:source.id,sourceVersionId:version.id,now:new Date(version.createdAt)},{projects,tasks}))
       const sidecar=ordinaryEnvironment?.semanticSidecar?.(source.id)??deepSeekExtractionService.semanticSidecar?.(source.id,version.id)
@@ -792,7 +805,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       : localRecognition
     // An invalid recording is a source-level rejection, not an unavailable
     // provider. Keep injected offline providers separate from local fallback.
-    const awaitInitialService=directMode&&!ordinaryEnvironment&&smartExtractionStatus==='checking'
+    const awaitInitialService=directMode&&!ordinaryEnvironment
     const useCloudRecognition = !input.manualSuggestion && (Boolean(ordinaryEnvironment?.extraction.recognize) || smartExtractionStatus === 'connected'||awaitInitialService)
     const reviewQualityFlags = [...new Set([
       ...(input.reviewMetadata?.qualityFlags ?? []),
@@ -1724,6 +1737,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       case 'tasks':
         return (
           <TasksPage
+            directMode={directMode} workspace={ordinaryCanonical} events={events} onScheduleTask={scheduleDirectTask} onOpenEvent={event=>setSelectedEventId(event.id)}
             dateViews={dateViews}
             readOnly={Boolean(runtime)}
             tasks={tasks}
@@ -1735,6 +1749,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       case 'calendar':
         return (
           <CalendarPage
+            directMode={directMode} onCompleteTask={handleComplete} onScheduleTask={scheduleDirectTask} taskChannels={workspaceTaskChannels(ordinaryCanonical)}
             preserveDateOnlyPrecision={Boolean(ordinaryCanonical)}
             personalPlanTimezone={ordinaryCanonical?.settings.defaultTimezone}
             personalPlans={!runtime && ordinaryCanonical ? storedPersonalPlans(ordinaryCanonical).filter(p => !['completed', 'cancelled'].includes(ordinaryCanonical.tasks.find(t => t.id === p.taskId)?.status ?? '')) : undefined}
@@ -2006,6 +2021,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       )}
       {!workspaceRecovery && selectedTask && (
         <TaskDetailPanel
+          linkedEvent={!runtime?pairFlowEvents(tasks,events,ordinaryCanonical).linked[selectedTask.id]:undefined}
+          eventTimeHint={!runtime?workspaceEventTimeHints(ordinaryCanonical)[pairFlowEvents(tasks,events,ordinaryCanonical).linked[selectedTask.id]?.id]:undefined}
+          onScheduleTask={!runtime?scheduleDirectTask:undefined}
           compact={!runtime}
           canonicalMaterials={ordinaryCanonical?.materials.filter(m=>m.relatedTaskIds.includes(selectedTask.id))}
           onDirectEdit={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedTask.id))?async edit=>{await editDirectItem(canonicalWorkspaceRepository,selectedTask.id,edit);await refreshOrdinary()}:undefined}

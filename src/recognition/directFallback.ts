@@ -3,9 +3,13 @@ import {convertDirectResult,type DirectConversion} from './directResult'
 import {parseDirectSourceTime} from '../../cloudflare/direct-source-time.mjs'
 import {cleanDirectTopic} from './directRetention'
 import {localDelivery,localSubmissionChannel,localMaterialRequirements} from './localNoticeFacts'
+import {completeDirectLocalFacts,directEventRevision} from './directLocalFacts'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
+ return completeDirectLocalFacts(improveLocalActions(input,source),source)
+}
+function improveLocalActions(input:RecognitionResult,source:string):RecognitionResult {
  if(/无需办理|无需操作|仅供知悉/u.test(source)&&!/提交|报名|申请|申报|缴费|领取|上传/u.test(source.replace(/(?:无需|不必|不要|无须)(?:办理|操作|提交|报名|申请|申报|缴费|领取|上传)/gu,''))){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/仅供知悉|无需|无须|不必/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
  const existing=[...input.standaloneTasks,...input.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
  const grounded=existing.filter(t=>/^(?:提交|报送|上传|发送|填写|申请|申报|报名|领取|缴费|参加|完成|撰写)$/u.test(t.actionVerb)&&t.actionObject&&source.includes(t.actionObject)&&!/^的|^至|^到|https?:|\.edu\.|以下|期间|[（(]/u.test(t.actionObject)&&t.title.includes(t.actionVerb)&&!/^查看|^无需|^无须|^不必|待核对/u.test(t.title))
@@ -65,21 +69,47 @@ export function improveDirectFallback(input:RecognitionResult,source:string):Rec
  return r
 }
 
-/** Fill only a complete loss of actionable tasks. Already retained AI tasks,
- * events and their facts are left intact. The caller records local provenance. */
+/** Fill independently evidenced missing actions without replacing retained
+ * AI entities or borrowing their times. The caller records local provenance. */
 export function recoverMissingDirectActions(base:DirectConversion,local:RecognitionResult,source:string):DirectConversion {
- if(base.result.standaloneTasks.some(t=>t.actionVerb!=='查看'))return base
  const candidate=convertDirectResult(improveDirectFallback(local,source),source)
- if(!candidate.result.standaloneTasks.some(t=>t.tempId.startsWith('local-direct-')&&t.actionVerb!=='查看'))return base
+ const key=(value:string)=>value.replace(/\s/gu,'').replace(/^如符合条件/u,'')
+ const revision=directEventRevision(source)
+ const eventKey=(title:string)=>key(title).replace(/^(?:参加|出席)/u,'')
+ const missingEvents=candidate.result.events.filter(e=>revision&&/请[^。；\n]{0,50}(?:参加|出席)/u.test(revision.sentence)&&e.title===revision.title&&!base.result.events.some(b=>eventKey(b.title)===eventKey(e.title)))
+ const attendance=missingEvents.flatMap(e=>candidate.result.standaloneTasks.filter(t=>e.relatedTaskTempIds?.includes(t.tempId)))
+ const retainedAttendance=new Map(attendance.flatMap(t=>{const matches=base.result.standaloneTasks.filter(b=>b.actionVerb==='参加'&&key(b.actionObject)===key(t.actionObject));return matches.length===1?[[t.tempId,matches[0].tempId] as const]:[]}))
+ const missing=candidate.result.standaloneTasks.filter(t=>{
+  if(t.actionVerb==='查看'||t.actionVerb==='核对'||t.tempId.startsWith('direct-attend:'))return false
+  const hasAction=base.result.standaloneTasks.some(b=>b.actionVerb!=='查看')
+  // Preserve the existing complete-loss recovery. Partial completion needs
+  // stronger evidence of a separate delivery, not an incidental action word.
+  if(!hasAction)return t.tempId.startsWith('local-direct-')
+  const quotes=candidate.result.evidence.filter(e=>t.evidenceIds.includes(e.id)).map(e=>e.quotedText||e.quote||'')
+  if(!quotes.some(q=>source.includes(q)&&q.includes(t.actionObject)&&q.includes(t.actionVerb)))return false
+  if(hasAction){
+   if(t.title.startsWith('如符合条件')||/适用条件待确认/u.test(t.description))return false
+   if(!/^(?:提交|报送|上传|发送|填写|登记|递交|送交)$/u.test(t.actionVerb))return false
+   const own=candidate.result.timePoints.filter(p=>p.relatedTaskTempIds.includes(t.tempId)&&p.normalizedValue),oldTimes=base.result.timePoints.filter(p=>p.relatedTaskTempIds.length&&p.normalizedValue)
+   if(!own.length||!oldTimes.length||own.some(p=>oldTimes.some(old=>old.normalizedValue===p.normalizedValue)))return false
+   if(!quotes.some(q=>/(?:请|须|需|应)(?:于|在|将|把)/u.test(q)&&q.includes(t.actionVerb)&&q.includes(t.actionObject)))return false
+  }
+  return !base.result.standaloneTasks.some(b=>b.actionVerb!=='查看'&&(key(b.actionObject)===key(t.actionObject)||key(b.title)===key(t.title)))
+   &&!base.result.events.some(e=>t.actionVerb==='参加'&&key(e.title.replace(/^参加/u,''))===key(t.actionObject))
+ })
+ if(!missing.length&&!missingEvents.length)return base
  const r=structuredClone(base.result),extra=structuredClone(candidate.result),prefix=(id:string)=>'local-completion:'+id
- const tasks=extra.standaloneTasks.filter(t=>t.tempId.startsWith('local-direct-')&&t.actionVerb!=='查看'),ids=new Set(tasks.map(t=>t.tempId)),materials=extra.materials.filter(m=>m.relatedTaskTempIds.some(id=>ids.has(id))),materialIds=new Set(materials.map(m=>m.tempId)),times=extra.timePoints.filter(p=>p.relatedTaskTempIds.some(id=>ids.has(id))),eventTimes=new Set(r.events.flatMap(e=>[e.startTimePointTempId,e.endTimePointTempId]))
- r.timePoints=r.timePoints.filter(p=>eventTimes.has(p.tempId));r.materials=[]
- const refs=new Set([...tasks,...materials,...times].flatMap(x=>x.evidenceIds))
+ const tasks=[...missing,...attendance.filter(t=>!retainedAttendance.has(t.tempId))],ids=new Set(tasks.map(t=>t.tempId)),materials=extra.materials.filter(m=>m.relatedTaskTempIds.some(id=>ids.has(id))),materialIds=new Set(materials.map(m=>m.tempId)),eventTimes=new Set(missingEvents.flatMap(e=>[e.startTimePointTempId,e.endTimePointTempId])),times=extra.timePoints.filter(p=>p.relatedTaskTempIds.some(id=>ids.has(id))||eventTimes.has(p.tempId))
+ const removed=new Set(r.standaloneTasks.filter(t=>t.tempId==='direct-read-notice').map(t=>t.tempId))
+ r.standaloneTasks=r.standaloneTasks.filter(t=>!removed.has(t.tempId))
+ r.timePoints=r.timePoints.filter(p=>!p.relatedTaskTempIds.length||p.relatedTaskTempIds.some(id=>!removed.has(id))).map(p=>({...p,relatedTaskTempIds:p.relatedTaskTempIds.filter(id=>!removed.has(id))}))
+ r.materials=r.materials.filter(m=>m.relatedTaskTempIds.some(id=>!removed.has(id))).map(m=>({...m,relatedTaskTempIds:m.relatedTaskTempIds.filter(id=>!removed.has(id))}))
+ const refs=new Set([...tasks,...materials,...times,...missingEvents].flatMap(x=>x.evidenceIds))
  r.evidence.push(...extra.evidence.filter(e=>refs.has(e.id)).map(e=>({...e,id:prefix(e.id)})))
- r.standaloneTasks=tasks.map(t=>({...t,tempId:prefix(t.tempId),dependencyTempIds:[],evidenceIds:t.evidenceIds.map(prefix),materialTempIds:t.materialTempIds.filter(id=>materialIds.has(id)).map(prefix),timePointTempIds:t.timePointTempIds.map(prefix)}))
+ r.standaloneTasks.push(...tasks.map(t=>({...t,tempId:prefix(t.tempId),dependencyTempIds:[],evidenceIds:t.evidenceIds.map(prefix),materialTempIds:t.materialTempIds.filter(id=>materialIds.has(id)).map(prefix),timePointTempIds:t.timePointTempIds.map(prefix)})))
  r.materials.push(...materials.map(m=>({...m,tempId:prefix(m.tempId),relatedTaskTempIds:m.relatedTaskTempIds.filter(id=>ids.has(id)).map(prefix),evidenceIds:m.evidenceIds.map(prefix)})))
- r.timePoints.push(...times.map(p=>({...p,tempId:prefix(p.tempId),relatedTaskTempIds:p.relatedTaskTempIds.filter(id=>ids.has(id)).map(prefix),relatedMaterialTempIds:p.relatedMaterialTempIds.filter(id=>materialIds.has(id)).map(prefix),evidenceIds:p.evidenceIds.map(prefix)})))
- for(const e of r.events)e.relatedTaskTempIds=[]
- r.milestones=[]
- return {result:r,items:[...base.items.filter(i=>i.kind==='event'),...candidate.items.filter(i=>i.kind==='task'&&ids.has(i.tempId)).map(i=>({...i,tempId:prefix(i.tempId),tags:[...new Set([...i.tags,'待确认' as const])]}))],omitted:[...base.omitted,{id:'source-actions',reason:'LOCAL_SOURCE_ACTION_COMPLETION_AFTER_AI_ACTION_LOSS'}]}
+ r.timePoints.push(...times.map(p=>({...p,tempId:prefix(p.tempId),relatedTaskTempIds:p.relatedTaskTempIds.flatMap(id=>ids.has(id)?[prefix(id)]:retainedAttendance.has(id)?[retainedAttendance.get(id)!]:[]),relatedMaterialTempIds:p.relatedMaterialTempIds.filter(id=>materialIds.has(id)).map(prefix),evidenceIds:p.evidenceIds.map(prefix)})))
+ for(const task of r.standaloneTasks)for(const point of r.timePoints)if(point.relatedTaskTempIds.includes(task.tempId)&&!task.timePointTempIds.includes(point.tempId))task.timePointTempIds.push(point.tempId)
+ r.events.push(...missingEvents.map(e=>({...e,tempId:prefix(e.tempId),startTimePointTempId:e.startTimePointTempId?prefix(e.startTimePointTempId):null,endTimePointTempId:e.endTimePointTempId?prefix(e.endTimePointTempId):null,relatedTaskTempIds:e.relatedTaskTempIds?.map(id=>retainedAttendance.get(id)??prefix(id)),evidenceIds:e.evidenceIds.map(prefix)})))
+ return {result:r,items:[...base.items.filter(i=>!removed.has(i.tempId)),...candidate.items.filter(i=>i.kind==='task'?ids.has(i.tempId):missingEvents.some(e=>e.tempId===i.tempId)).map(i=>({...i,tempId:prefix(i.tempId),tags:[...new Set([...i.tags,'待确认' as const])]}))],omitted:[...base.omitted,{id:'source-actions',reason:'LOCAL_SOURCE_ACTION_COMPLETION_AFTER_AI_ACTION_LOSS'}]}
 }

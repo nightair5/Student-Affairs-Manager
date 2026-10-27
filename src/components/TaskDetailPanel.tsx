@@ -51,6 +51,9 @@ const materialStatusOptions: Array<{ value: MaterialStatus; label: string }> = [
 ]
 
 export interface TaskDetailPanelProps {
+  linkedEvent?:import('../types').Event
+  eventTimeHint?:string
+  onScheduleTask?:(id:string,date:string)=>Promise<void>
   compact?:boolean
   canonicalMaterials?:CanonicalMaterial[]
   onDirectEdit?:(edit:DirectEdit)=>Promise<void>

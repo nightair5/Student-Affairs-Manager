@@ -100,7 +100,7 @@ export function groupTasksByDate(tasks: Task[]): Map<string, Task[]> {
 }
 
 /** A personal date determines placement; the original deadline remains on the task. */
-export function taskCalendarDate(task: Task): string { return task.plannedStart || task.directDate || task.deadline || '' }
+export function taskCalendarDate(task: Task): string { return task.plannedStart || task.directDate || task.deadline || (task.sourceWindowLabel?task.sourceWindowEnd:'') || '' }
 
 export function groupEventsByDate(events: Event[]): Map<string, Event[]> {
   const grouped = new Map<string, Event[]>()
