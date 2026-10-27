@@ -1,5 +1,6 @@
 import type {Task, Event} from '../types'
-import {parseBusinessDateTime} from './timeSemantics'
+import {isDateOnly,parseBusinessDateTime} from './timeSemantics'
+import {localDateKey} from './calendar'
 
 /** Presentation only: never supplies a missing value or changes its role. */
 export function flowDate(value:string|null|undefined):string {
@@ -17,7 +18,19 @@ export function flowTaskDate(task:Task):string {
   if(task.sourceWindowLabel)return `办理时段：${task.sourceWindowLabel}`
   return '未设日期'
 }
-export function flowEventDate(event:Event):string {
+/** Only flag a definite conflict; date-only values do not invent a clock time. */
+export function planAfterDeadline(plan:string|null|undefined,deadline:string|null|undefined):boolean {
+  if(!plan||!deadline)return false
+  try {
+    const planDay=localDateKey(plan),deadlineDay=localDateKey(deadline)
+    if(planDay!==deadlineDay)return planDay>deadlineDay
+    if(isDateOnly(plan)||isDateOnly(deadline))return false
+    const planTime=parseBusinessDateTime(plan,'Asia/Shanghai'),deadlineTime=parseBusinessDateTime(deadline,'Asia/Shanghai')
+    return Boolean(planTime&&deadlineTime&&planTime.getTime()>deadlineTime.getTime())
+  } catch { return false }
+}
+export function flowEventDate(event:Event,hint?:string):string {
+  if(!event.startAt)return event.endAt?`开始时间待定 · ${flowDate(event.endAt)}结束`:hint?`${hint} · 时间待定`:'时间待定'
   const start=flowDate(event.startAt)
   if(!event.endAt)return start
   return `${start} — ${flowDate(event.endAt)}`

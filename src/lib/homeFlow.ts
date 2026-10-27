@@ -1,16 +1,99 @@
 import type {Event,Task} from '../types'
 import {calculateTaskPriority,getBlockedAndWaitingTasks,getExecutableTasks} from './taskLogic'
-import {localDateKey} from './calendar'
+import {getUndatedCalendarEvents,localDateKey} from './calendar'
 import type {WorkspaceV8} from '../domain/v2/types'
+
+/** Only show channels already associated with a task in the canonical workspace. */
+export function workspaceTaskChannels(workspace:WorkspaceV8|null|undefined):Record<string,string[]> {
+  const channels:Record<string,string[]>={}
+  for(const material of workspace?.materials??[]){
+    const channel=material.submissionChannel?.trim()
+    if(!channel)continue
+    for(const taskId of material.relatedTaskIds){
+      const values=channels[taskId]??[]
+      if(!values.includes(channel))values.push(channel)
+      channels[taskId]=values
+    }
+  }
+  return channels
+}
+
+/** A short relative-time hint is shown only when the exact words still exist
+ * in the event's source. It never supplies a calendar date or clock time. */
+export function workspaceEventTimeHints(workspace:WorkspaceV8|null|undefined):Record<string,string> {
+  const hints:Record<string,string>={}
+  if(!workspace)return hints
+  const points=new Map(workspace.timePoints.map(point=>[point.id,point]))
+  const sources=new Map(workspace.sources.map(source=>[source.id,source]))
+  const versions=new Map(workspace.sourceVersions.map(version=>[version.id,version]))
+  const eventsBySource=new Map<string,typeof workspace.events>()
+  for(const event of workspace.events){const sourceId=event.legacyData?.sourceId;if(typeof sourceId==='string'){const list=eventsBySource.get(sourceId)??[];list.push(event);eventsBySource.set(sourceId,list)}}
+  for(const event of workspace.events){
+    const point=event.startTimePointId?points.get(event.startTimePointId):undefined
+    const sourceId=event.legacyData?.sourceId
+    if(!point||point.type!=='event_start'||point.normalizedValue||!point.rawText||typeof sourceId!=='string')continue
+    const source=sources.get(sourceId)
+    const original=source?versions.get(source.currentVersionId)?.rawText:null
+    if(!original)continue
+    const matches=[...point.rawText.matchAll(/(?:本周|这周|下周)[^，,。；;！!\n]{0,24}?(?:下课后|课程结束后|课结束后|课后)/gu)].map(match=>match[0])
+    if(matches.length!==1)continue
+    const at=original.indexOf(matches[0])
+    if(at<0||at!==original.lastIndexOf(matches[0]))continue
+    const before=original.slice(0,at),after=original.slice(at+matches[0].length)
+    const left=Math.max(before.lastIndexOf('。'),before.lastIndexOf('！'),before.lastIndexOf('？'),before.lastIndexOf('\n'))+1
+    const end=after.search(/[。！？\n]/u),sentence=original.slice(left,at+matches[0].length+(end<0?after.length:end))
+    if(/取消|作废|不再|禁止|改为|改至|延期|调整至/u.test(sentence))continue
+    const owners=(eventsBySource.get(sourceId)??[]).filter(item=>item.title&&sentence.includes(item.title))
+    if(owners.length===1&&owners[0].id===event.id)hints[event.id]=matches[0]
+  }
+  return hints
+}
+
+/** Group a task and an undated event only for display when the same source and
+ * exact title identify a unique pair. Both saved entities remain accessible. */
+export function pairUndatedEvents(tasks:Task[],events:Event[],workspace:WorkspaceV8|null|undefined):{linked:Record<string,Event>;unpaired:Event[]} {
+  const storedEvents=new Map((workspace?.events??[]).map(event=>[event.id,event]))
+  const tasksBySourceAndTitle=new Map<string,Task[]>()
+  for(const task of tasks)if(task.status!=='已完成')for(const sourceId of new Set(task.sourceIds)){
+    const key=JSON.stringify([sourceId,task.title]),matches=tasksBySourceAndTitle.get(key)??[]
+    matches.push(task);tasksBySourceAndTitle.set(key,matches)
+  }
+  const proposals=events.flatMap(event=>{
+    if(event.startAt||event.endAt||event.location)return []
+    const sourceId=storedEvents.get(event.id)?.legacyData?.sourceId
+    if(typeof sourceId!=='string')return []
+    const matches=(tasksBySourceAndTitle.get(JSON.stringify([sourceId,event.title]))??[]).filter(task=>
+      (event.directTags??[]).every(tag=>tag==='时间待定'||task.directTags?.includes(tag)))
+    return matches.length===1?[{taskId:matches[0].id,event}]:[]
+  })
+  const proposalCounts=new Map<string,number>()
+  for(const pair of proposals)proposalCounts.set(pair.taskId,(proposalCounts.get(pair.taskId)??0)+1)
+  const linked:Record<string,Event>={}
+  for(const pair of proposals)if(proposalCounts.get(pair.taskId)===1)linked[pair.taskId]=pair.event
+  const linkedIds=new Set(Object.values(linked).map(event=>event.id))
+  return {linked,unpaired:events.filter(event=>!linkedIds.has(event.id))}
+}
 
 export function homeFlow(tasks:Task[],events:Event[],now=new Date()){
   const ready=getExecutableTasks(tasks,now),dated=(t:Task)=>Boolean(t.deadline||t.plannedStart||t.directDate)
   const priorityDifference=(a:Task,b:Task)=>calculateTaskPriority(b,tasks,now).score-calculateTaskPriority(a,tasks,now).score
   const byPriority=(a:Task,b:Task)=>priorityDifference(a,b)||a.createdAt.localeCompare(b.createdAt)||a.id.localeCompare(b.id)
   const today=localDateKey(now),next=new Date(now);next.setDate(next.getDate()+7);const end=localDateKey(next)
-  const isToday=(t:Task)=>{const value=t.plannedStart||t.directDate||t.deadline;return Boolean(value&&localDateKey(value)<=today)}
-  return {dated:ready.filter(dated).sort(byPriority),today:ready.filter(t=>dated(t)&&isToday(t)).sort(byPriority),next:ready.filter(t=>dated(t)&&!isToday(t)).sort((a,b)=>(a.plannedStart||a.directDate||a.deadline).localeCompare(b.plannedStart||b.directDate||b.deadline)||byPriority(a,b)),undated:ready.filter(t=>!dated(t)).sort((a,b)=>priorityDifference(a,b)||b.createdAt.localeCompare(a.createdAt)||a.id.localeCompare(b.id)),deferred:getBlockedAndWaitingTasks(tasks,now),
-    events:events.filter(e=>e.startAt&&localDateKey(e.startAt)<=end&&localDateKey(e.endAt||e.startAt)>=today).sort((a,b)=>(a.startAt??'').localeCompare(b.startAt??'')||a.id.localeCompare(b.id))}
+  // A later personal plan must not hide a deadline which falls today.
+  const firstDate=(t:Task)=>[t.plannedStart||t.directDate,t.deadline].filter((value):value is string=>Boolean(value)).map(localDateKey).sort()[0]??''
+  const isToday=(t:Task)=>{
+    const plan=t.plannedStart||t.directDate
+    // Preserve existing placement for old overdue tasks with a future plan,
+    // while ensuring an actual deadline today remains visible today.
+    if(plan)return localDateKey(plan)<=today||Boolean(t.deadline&&localDateKey(t.deadline)===today)
+    return Boolean(t.deadline&&localDateKey(t.deadline)<=today)
+  }
+  const upcoming=events.filter(e=>e.startAt&&Number.isFinite(Date.parse(e.startAt))&&localDateKey(e.endAt&&Number.isFinite(Date.parse(e.endAt))?e.endAt:e.startAt)>=today).sort((a,b)=>(a.startAt??'').localeCompare(b.startAt??'')||a.id.localeCompare(b.id))
+  return {dated:ready.filter(dated).sort(byPriority),today:ready.filter(t=>dated(t)&&isToday(t)).sort(byPriority),next:ready.filter(t=>dated(t)&&!isToday(t)).sort((a,b)=>firstDate(a).localeCompare(firstDate(b))||byPriority(a,b)),undated:ready.filter(t=>!dated(t)).sort((a,b)=>priorityDifference(a,b)||b.createdAt.localeCompare(a.createdAt)||a.id.localeCompare(b.id)),deferred:getBlockedAndWaitingTasks(tasks,now),
+    events:upcoming.filter(e=>localDateKey(e.startAt!)<=end),
+    todayEvents:upcoming.filter(e=>localDateKey(e.startAt!)<=today),
+    upcomingEvents:upcoming.filter(e=>localDateKey(e.startAt!)>today),
+    undatedEvents:getUndatedCalendarEvents(events)}
 }
 
 export function historicalDirectDraftIds(w:WorkspaceV8):string[]{

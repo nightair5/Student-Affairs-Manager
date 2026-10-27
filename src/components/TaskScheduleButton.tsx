@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
 import { CalendarDays } from 'lucide-react'
 import type { Task } from '../types'
 import { localDateKey } from '../lib/calendar'
-import { flowDate, flowEditValue } from '../lib/flowPresentation'
+import { flowDate, flowEditValue, planAfterDeadline } from '../lib/flowPresentation'
 
 export function TaskScheduleButton({ task, onSchedule }: { task: Task; onSchedule: (id: string, date: string) => Promise<void> }) {
   const [open, setOpen] = useState(false), [date, setDate] = useState(''), [time, setTime] = useState(''), [busy, setBusy] = useState(false), [error, setError] = useState('')
@@ -18,6 +18,7 @@ export function TaskScheduleButton({ task, onSchedule }: { task: Task; onSchedul
       <strong>打算哪天做？</strong><div className="task-schedule-shortcuts"><button type="button" disabled={busy} onClick={() => shortcut(0)}>今天</button><button type="button" disabled={busy} onClick={() => shortcut(1)}>明天</button></div>
       <form onSubmit={submit}><label>选择日期<input type="date" value={date} required disabled={busy} onChange={event => setDate(event.target.value)} /></label><label>时间（可不填）<input type="time" value={time} disabled={busy} onChange={event => setTime(event.target.value)} /></label><button type="submit" className="primary-button" disabled={busy || !date}>{busy ? '保存中…' : '安排'}</button></form>
       {task.deadline && <small>截止：{flowDate(task.deadline)}，保持不变</small>}
+      {date && planAfterDeadline(date + (time ? 'T' + time : ''), task.deadline) && <small className="flow-deadline-warning">计划晚于截止，可调整后再保存。</small>}
       {(task.plannedStart || task.directDate) && <button className="text-button" type="button" disabled={busy} onClick={() => void save('')}>清除个人安排</button>}
       {error && <p role="alert">{error}</p>}
     </div>}

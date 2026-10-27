@@ -26,6 +26,11 @@ export function localEventLocation(text: string): {name: string; location: strin
 }
 export function localSubmissionChannel(text: string): string | null {
   const matches = [...text.matchAll(/(?:交到|交至|发到|发至|提交到|提交至|上传到|上传至|发送到|发送至)\s*([^，,；;。！？（）()\n]{1,60})/gu)].map(m => m[1].trim())
+  // A channel can precede the action: “通过报名平台填写表格”.
+  // Do not mistake “通过审核后在平台……” for the name of a channel.
+  const via = [...text.matchAll(/通过\s*([^，,；;。！？（）()\n]{1,30}?(?:平台|系统|邮箱|网站|小程序))\s*(?=提交|上传|填写|报名|申请|登记|申报)/gu)]
+    .map(m => m[1].trim()).filter(value => !/(?:审核|考试|考核|审批|验证)(?:通过|后)|后(?:在|使用|再|通过)/u.test(value))
+  matches.push(...via)
   const unique = [...new Set(matches)]
   return unique.length === 1 ? unique[0] : null
 }

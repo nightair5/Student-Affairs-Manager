@@ -6,7 +6,7 @@ import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { DirectResultList, RecentDirectAdditions } from './components/DirectResultList'
 import { setTaskSchedule } from './domain/v2/taskSchedule'
 import { commitDirectDraft, replaceDirectFallback, deleteDirectItem, directDuplicate, editDirectItem, recentDirectBatches, undoDirectBatch } from './domain/v2/directIntake'
-import {historicalDirectDraftIds} from './lib/homeFlow'
+import {historicalDirectDraftIds,workspaceTaskChannels} from './lib/homeFlow'
 import { EventDetailPanel } from './components/EventDetailPanel'
 import { IntakePanel } from './components/IntakePanel'
 import { OnboardingGuide } from './components/OnboardingGuide'
@@ -1688,6 +1688,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             onOpenTask={(task) => setSelectedTaskId(task.id)}
             onCompleteTask={handleComplete}
             onScheduleTask={scheduleDirectTask}
+            taskChannels={workspaceTaskChannels(ordinaryCanonical)}
+            canonicalWorkspace={ordinaryCanonical}
             recentItemIds={activeDirectBatch?.items.map(item=>item.id)}
             onStartTask={handleStart}
             onSnoozeTask={handleSnooze}

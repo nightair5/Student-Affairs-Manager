@@ -8423,8 +8423,9 @@ button.agenda-item.event {
 .flow-item-list{overflow:visible}
 .flow-item-list>li:first-child{border-top-left-radius:15px;border-top-right-radius:15px}
 .flow-item-list>li:last-child{border-bottom-left-radius:15px;border-bottom-right-radius:15px}
-.flow-item-list .flow-task-row[data-new=true]{background:#f0f8ff}
+.flow-item-list .flow-task-row[data-new=true],.flow-item-list .flow-event-row[data-new=true]{background:#f0f8ff}
 .flow-row-actions{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.flow-linked-event{min-width:40px;min-height:40px;padding:5px 7px;border:1px solid #d9e4ed;border-radius:8px;background:#fff;color:#335d7d;font:inherit;font-size:12px;cursor:pointer}.flow-linked-event:focus-visible{outline:3px solid #82b9e5;outline-offset:3px}
 .task-schedule-control{position:relative;flex-shrink:0}
 .task-schedule-trigger{display:inline-flex;align-items:center;gap:5px;min-height:36px;padding:5px 9px;background:#f2f6fa;border:1px solid #d9e4ed;border-radius:8px;color:#335d7d;font:inherit;font-size:13px;cursor:pointer}
 .task-schedule-trigger:hover{background:#e5f1fc}
@@ -8438,6 +8439,9 @@ button.agenda-item.event {
 .task-schedule-popover input{box-sizing:border-box;min-width:0;width:100%;padding:8px;border:1px solid #cddbe6;border-radius:7px;font:inherit;background:white;color:#243f55}
 .task-schedule-popover small{display:block;margin-top:10px;line-height:1.5;color:#526c7e}
 .task-schedule-popover .text-button{margin-top:8px;font-size:13px}
+.flow-item-facts .flow-deadline-warning,.task-schedule-popover .flow-deadline-warning{color:#a74527;font-weight:650}
+.flow-task-channel{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.flow-item-facts .direct-tag{padding:2px 6px}
 .flow-today-section h2 small,.flow-undated-section h2 small,.today-next-section h2 small{font:500 13px system-ui;color:#688096;margin-left:6px}
 .flow-item-main h3{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .flow-item-facts{font-weight:600}

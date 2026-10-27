@@ -7,7 +7,8 @@ import { EventCard } from '../components/EventCard'
 import { localDateKey } from '../lib/calendar'
 import { getBlockedAndWaitingTasks, getFocusTasks } from '../lib/taskLogic'
 import type { Event, Project, Task } from '../types'
-import {homeFlow} from '../lib/homeFlow'
+import {homeFlow,pairUndatedEvents,workspaceEventTimeHints} from '../lib/homeFlow'
+import type {WorkspaceV8} from '../domain/v2/types'
 import {FlowEventList,FlowTaskList} from '../components/FlowItemList'
 
 interface DashboardPageProps {
@@ -32,6 +33,8 @@ interface DashboardPageProps {
   onOpenTask: (task: Task) => void
   onCompleteTask: (taskId: string) => void
   onScheduleTask?: (taskId: string, date: string) => Promise<void>
+  taskChannels?: Readonly<Record<string,string[]>>
+  canonicalWorkspace?: WorkspaceV8 | null
   recentItemIds?: readonly string[]
   onStartTask: (taskId: string) => void
   onSnoozeTask: (taskId: string) => void
@@ -61,7 +64,7 @@ export function DashboardPage({
   onOpenIntake,
   onOpenTask,
   onCompleteTask,
-  onScheduleTask, recentItemIds,
+  onScheduleTask, recentItemIds, taskChannels, canonicalWorkspace,
   onStartTask,
   onSnoozeTask,
   onTogglePinTask,
@@ -125,19 +128,21 @@ export function DashboardPage({
 
   if(directMode){
     const flow=homeFlow(tasks,events),active=flow.dated.length+flow.undated.length
+    const paired=onOpenEvent?pairUndatedEvents([...flow.today,...flow.next,...flow.undated],flow.undatedEvents,canonicalWorkspace):{linked:{},unpaired:flow.undatedEvents}
+    const eventTimeHints=workspaceEventTimeHints(canonicalWorkspace)
     return <main className="page dashboard-page flow-dashboard">
       <header className="flow-page-heading"><span className="date-line">{todayLabel()}</span><h1>今天与接下来</h1></header>
       {captureForm}
       {historicalNotice&&historicalNotice.count>0&&<div className="flow-history-notice"><span>发现 {historicalNotice.count} 条以前的通知</span><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onAdd()}>{historicalNotice.busy?'正在添加…':'全部加入'}</button><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onIgnore()}>忽略</button></div>}
       {directNotice}
-      {flow.today.length>0&&<section className="flow-today-section" aria-labelledby="flow-today-title"><div className="section-heading"><h2 id="flow-today-title">今天 <small>{flow.today.length}</small></h2></div><FlowTaskList tasks={flow.today} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} highlightIds={recentItemIds}/></section>}
-      {(flow.next.length>0||flow.events.length>0)&&<section className="today-next-section" aria-labelledby="today-next-title"><div className="section-heading"><h2 id="today-next-title">接下来 <small>{flow.next.length+flow.events.length}</small></h2><button className="text-button" type="button" onClick={onShowCalendar}>日历<ArrowRight size={16}/></button></div>
-        {flow.next.length>0&&<FlowTaskList tasks={flow.next} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} highlightIds={recentItemIds}/>}
-        {onOpenEvent&&flow.events.length>0&&<FlowEventList events={flow.events} onOpen={onOpenEvent}/>}
+      {(flow.today.length>0||flow.todayEvents.length>0)&&<section className="flow-today-section" aria-labelledby="flow-today-title"><div className="section-heading"><h2 id="flow-today-title">今天 <small>{flow.today.length+flow.todayEvents.length}</small></h2></div>{flow.today.length>0&&<FlowTaskList tasks={flow.today} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} highlightIds={recentItemIds} channels={taskChannels} linkedEvents={paired.linked} eventTimeHints={eventTimeHints} onOpenEvent={onOpenEvent}/>} {onOpenEvent&&flow.todayEvents.length>0&&<FlowEventList events={flow.todayEvents} onOpen={onOpenEvent} timeHints={eventTimeHints} highlightIds={recentItemIds}/>}</section>}
+      {(flow.next.length>0||flow.upcomingEvents.length>0)&&<section className="today-next-section" aria-labelledby="today-next-title"><div className="section-heading"><h2 id="today-next-title">接下来 <small>{flow.next.length+flow.upcomingEvents.length}</small></h2><button className="text-button" type="button" onClick={onShowCalendar}>日历<ArrowRight size={16}/></button></div>
+        {flow.next.length>0&&<FlowTaskList tasks={flow.next} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} highlightIds={recentItemIds} channels={taskChannels} linkedEvents={paired.linked} eventTimeHints={eventTimeHints} onOpenEvent={onOpenEvent}/>}
+        {onOpenEvent&&flow.upcomingEvents.length>0&&<FlowEventList events={flow.upcomingEvents} onOpen={onOpenEvent} timeHints={eventTimeHints} highlightIds={recentItemIds}/>}
       </section>}
-      {flow.undated.length>0&&<section className="flow-undated-section" aria-labelledby="undated-title"><div className="section-heading"><h2 id="undated-title">未安排 <small>{flow.undated.length}</small></h2></div><FlowTaskList tasks={flow.undated} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} highlightIds={recentItemIds}/></section>}
+      {(flow.undated.length>0||paired.unpaired.length>0)&&<section className="flow-undated-section" aria-labelledby="undated-title"><div className="section-heading"><h2 id="undated-title">未安排 <small>{flow.undated.length+paired.unpaired.length}</small></h2></div>{flow.undated.length>0&&<FlowTaskList tasks={flow.undated} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} highlightIds={recentItemIds} channels={taskChannels} linkedEvents={paired.linked} eventTimeHints={eventTimeHints} onOpenEvent={onOpenEvent}/>} {onOpenEvent&&paired.unpaired.length>0&&<FlowEventList events={paired.unpaired} onOpen={onOpenEvent} timeHints={eventTimeHints} highlightIds={recentItemIds}/>}</section>}
       {flow.deferred.length>0&&<section className="deferred-execution-section" aria-labelledby="deferred-title"><div className="section-heading"><h2 id="deferred-title">稍后再做</h2></div><div className="deferred-task-list">{flow.deferred.map(({task,reason})=><button key={task.id} className="deferred-task" type="button" onClick={()=>onOpenTask(task)}><span className="deferred-task-copy"><strong>{task.title}</strong><small>{reason}</small></span><ArrowRight size={16}/></button>)}</div></section>}
-      {!active&&!flow.deferred.length&&!flow.events.length&&<section className="home-empty-state"><strong>{tasks.length?'事情都处理好了':'放入第一条通知，待办和日程就会出现在这里'}</strong><p>粘贴原消息，点一次整理即可。</p></section>}
+      {!active&&!flow.deferred.length&&!flow.todayEvents.length&&!flow.upcomingEvents.length&&!flow.undatedEvents.length&&<section className="home-empty-state"><strong>{tasks.length?'事情都处理好了':'放入第一条通知，待办和日程就会出现在这里'}</strong><p>粘贴原消息，点一次整理即可。</p></section>}
       {recentAdditions}
     </main>
   }

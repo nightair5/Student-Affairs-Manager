@@ -12,7 +12,7 @@ const flatTasks = (r: RecognitionResult) => [...r.standaloneTasks, ...r.mileston
 const compact = (s: string) => s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu, '')
 const cancelled = /取消|作废|废止|不再(?:举办|举行|提交|报名|申请)|禁止|不得(?:提交|报名|申请|参加|领取)/u
 const conditional = /(?:若|如果|如已|如需|符合.{0,18}条件|有意|自愿|入选后|录取后|已缴费|放弃修读|仅限|限.{0,10}学生)/u
-const deadline = /截止|最迟|不晚于|不得(?:晚于|迟于)|之前|以前|前(?:[，,。；;\s]|将|把|须|需|请|提交|交到|交至|送至|送到|递交|完成|报送|报名|申请|办理|领取|上传|$)|于.{0,32}(?:提交|交至|交到|报送)/u
+const deadline = /截止|最迟|不晚于|不得(?:晚于|迟于)|之前|以前|前(?:[，,。；;\s]|将|把|须|需|请|提交|交到|交至|送至|送到|递交|完成|报送|报名|申请|办理|领取|上传|$)|(?:\d{1,2}(?:日|号|点|时|分)|\d{1,2}:\d{2})\s*前(?:通过|在线)|于.{0,32}(?:提交|交至|交到|报送)/u
 const alternatives = /任选|备选|可选择|任一|(?:日|号|\d)\s*(?:或|、).{0,18}(?:日|号)/u
 const recordTasks = (r: RecognitionResult) => new Map(flatTasks(r).map(t => [t.tempId, t]))
 
