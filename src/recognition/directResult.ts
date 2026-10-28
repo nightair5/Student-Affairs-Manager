@@ -1,5 +1,6 @@
 import {parseDirectSourceTime} from '../../cloudflare/direct-source-time.mjs'
 import {directEventRevision} from './directLocalFacts'
+import {sameWeekdayTime} from './directStructuredEvent'
 import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from './types'
 import { parseChineseTimeAst, parseBusinessDateTime } from '../lib/timeSemantics'
 import {projectDirectActions} from './directActionProjection'
@@ -11,7 +12,7 @@ export interface DirectItem { tempId: string; kind: 'task' | 'event'; tags: Dire
 export interface DirectConversion { result: RecognitionResult; items: DirectItem[]; omitted: { id: string; reason: string }[] }
 const flatTasks = (r: RecognitionResult) => [...r.standaloneTasks, ...r.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
 const compact = (s: string) => s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu, '')
-const cancelled = /取消|作废|废止|不再(?:举办|举行|提交|报名|申请)|禁止|不得(?:提交|报名|申请|参加|领取)/u
+const cancelled = /取消|作废|废止|不再(?:举办|举行|提交|报名|申请|参加|出席)|禁止|(?:不得|不要|请勿|不能|不可)(?:提交|报名|申请|参加|出席|领取)/u
 const conditional = /(?:若|如果|如已|如需|符合.{0,18}条件|有意|自愿|入选后|录取后|已缴费|放弃修读|仅限|限.{0,10}学生)/u
 const deadline = /截止|最迟|不晚于|不得(?:晚于|迟于)|之前|以前|前(?:[，,。；;\s]|将|把|须|需|请|提交|交到|交至|送至|送到|递交|完成|报送|报名|申请|办理|领取|上传|填写|登记|预约|$)|(?:\d{1,2}(?:日|号|点|时|分)|\d{1,2}:\d{2})\s*前(?:通过|在线)|于.{0,32}(?:提交|交至|交到|报送)/u
 const alternatives = /任选|备选|可选择|任一|(?:日|号|\d)\s*(?:或|、).{0,18}(?:日|号)/u
@@ -94,12 +95,13 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const unsupported = !quotes(p.evidenceIds).length || !raw || !compact(text).includes(compact(raw))
     const applicationCutoff=/申请|申报|报名/u.test(text)&&/逾期[^。；]{0,20}(?:不再受理|不予受理|不受理)/u.test(text)&&/至|到|—/u.test(raw)
     const risky = alternatives.test(text) || (/_deadline$/u.test(p.type) && (!deadline.test(text)&&!applicationCutoff || /办理时段|开放时间|领取时段/u.test(text) && !/截止|最迟/u.test(text)))
-    if (unsupported || risky || deadlineConflicts.has(p.tempId)||p.relatedTaskTempIds.some(id=>deadlineConflicts.has(id))||!p.normalizedValue || p.needsConfirmation && p.precision !== 'date_only') return unknown()
+    const inferredWeekday=p.tempId==='local-direct-optional-event:start'&&p.type==='event_start'
+    if (unsupported || risky || deadlineConflicts.has(p.tempId)||p.relatedTaskTempIds.some(id=>deadlineConflicts.has(id))||!p.normalizedValue || p.needsConfirmation && p.precision !== 'date_only'&&!inferredWeekday) return unknown()
     if(p.normalizedValue){
       let parsed=parseDirectSourceTime(raw,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
       const correction=/(?:改为|调整为|更正为|延期至|现为)([^。；;\n]*)/u.exec(text)
       if(correction)parsed=parseDirectSourceTime(correction[1],{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
-      else if(parsed.dateKind==='none')parsed=parseDirectSourceTime(text,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
+      else if(parsed.dateKind==='none')parsed=(inferredWeekday?sameWeekdayTime(raw,result.createdAt,p.timezone):null)??parseDirectSourceTime(text,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
       const expected=p.type==='event_end'&&parsed.rangeEndNormalizedValue?parsed.rangeEndNormalizedValue:parsed.normalizedValue
       const same=expected&&(/T/u.test(expected)?parseBusinessDateTime(expected,p.timezone)?.getTime()===parseBusinessDateTime(p.normalizedValue,p.timezone)?.getTime():expected===p.normalizedValue)
       if(!same||parsed.needsConfirmation||parsed.dateKind==='none')return unknown()
@@ -121,7 +123,9 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   // the calendar entry as a related pair, not an unrelated “read this notice”.
   if (!tasks.length && events.length) for (const event of events) {
     // A host announcing an event is not a direction for this user to attend.
-    if(!/请[^。；\n]{0,50}(?:参加|出席)|(?:^|[，,])参加/u.test(context(event.evidenceIds)))continue
+    const attendanceContext=context(event.evidenceIds)
+    if(!/请[^。；\n]{0,50}(?:参加|出席)|(?:^|[，,])参加/u.test(attendanceContext))continue
+    if(!/请[^。；\n]{0,50}(?:参加|出席)/u.test(attendanceContext)&&/(?:参加|出席)[^。；，,]{0,40}的(?:同学|学生|人员|人)/u.test(attendanceContext))continue
     const name=event.title.replace(/^(?:参加|出席)/u,''),id=`direct-attend:${event.tempId}`
     const tags=[...tagsById.get(event.tempId)!]
     if(!/请[^。；\n]{0,50}(?:参加|出席)|(?:^|[，,])参加/u.test(context(event.evidenceIds))&&!tags.includes('待确认'))tags.push('待确认')

@@ -4,6 +4,7 @@ import {parseDirectSourceTime} from '../../cloudflare/direct-source-time.mjs'
 import {cleanDirectTopic} from './directRetention'
 import {localDelivery,localSubmissionChannel,localMaterialRequirements} from './localNoticeFacts'
 import {completeDirectLocalFacts,directEventRevision} from './directLocalFacts'
+import {structuredOptionalEvent} from './directStructuredEvent'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
@@ -76,10 +77,25 @@ export function recoverMissingDirectActions(base:DirectConversion,local:Recognit
  const key=(value:string)=>value.replace(/\s/gu,'').replace(/^如符合条件/u,'')
  const revision=directEventRevision(source)
  const eventKey=(title:string)=>key(title).replace(/^(?:参加|出席)/u,'')
- const missingEvents=candidate.result.events.filter(e=>revision&&/请[^。；\n]{0,50}(?:参加|出席)/u.test(revision.sentence)&&e.title===revision.title&&!base.result.events.some(b=>eventKey(b.title)===eventKey(e.title)))
+ const noExistingAction=base.result.standaloneTasks.every(t=>t.actionVerb==='查看')
+ const structured=structuredOptionalEvent(source)
+ const missingEvents=candidate.result.events.filter(e=>{
+  if(base.result.events.some(b=>eventKey(b.title)===eventKey(e.title)))return false
+  if(revision&&/请[^。；\n]{0,50}(?:参加|出席)/u.test(revision.sentence)&&e.title===revision.title)return true
+  if(!noExistingAction)return false
+  if(structured&&!base.result.events.length&&e.title===structured.title&&e.relatedTaskTempIds?.length===1)return true
+  const attendance=candidate.result.standaloneTasks.filter(t=>e.relatedTaskTempIds?.includes(t.tempId)&&t.tempId.startsWith('direct-attend:'))
+  if(attendance.length!==1)return false
+  const name=eventKey(e.title)
+  return candidate.result.evidence.filter(x=>e.evidenceIds.includes(x.id)).some(x=>{
+   const quote=x.quotedText||x.quote||''
+   return quote&&source.includes(quote)&&key(quote).includes(name)&&/请[^。；\n]{0,50}(?:参加|出席)/u.test(quote)&&!/(?:不要|请勿|不得|禁止|取消|不再|不能|不可)[^。；\n]{0,30}(?:参加|出席)/u.test(quote)
+  })
+ })
  const attendance=missingEvents.flatMap(e=>candidate.result.standaloneTasks.filter(t=>e.relatedTaskTempIds?.includes(t.tempId)))
  const retainedAttendance=new Map(attendance.flatMap(t=>{const matches=base.result.standaloneTasks.filter(b=>b.actionVerb==='参加'&&key(b.actionObject)===key(t.actionObject));return matches.length===1?[[t.tempId,matches[0].tempId] as const]:[]}))
  const missing=candidate.result.standaloneTasks.filter(t=>{
+  if(attendance.some(a=>a.tempId===t.tempId))return false
   if(t.actionVerb==='查看'||t.actionVerb==='核对'||t.tempId.startsWith('direct-attend:'))return false
   const hasAction=base.result.standaloneTasks.some(b=>b.actionVerb!=='查看')
   // Preserve the existing complete-loss recovery. Partial completion needs

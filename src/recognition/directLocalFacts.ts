@@ -2,6 +2,7 @@ import type {RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2} from '.
 import {parseDirectSourceTime} from '../../cloudflare/direct-source-time.mjs'
 import {cleanDirectTopic} from './directRetention'
 import {localActionNeedsDecision} from './localNoticeFacts'
+import {sameWeekdayTime,structuredOptionalEvent} from './directStructuredEvent'
 
 const compact=(value:string)=>value.replace(/\s/gu,'')
 const eventName=(value:string)=>value.replace(/^(?:参加|出席|举行|召开)/u,'').trim()
@@ -63,6 +64,19 @@ export function completeDirectLocalFacts(input:RecognitionResult,source:string):
     r.timePoints=r.timePoints.filter(p=>p.tempId!==id);r.timePoints.push(point);return id
   }
   const revision=directEventRevision(source)
+  const structured=structuredOptionalEvent(source)
+  const onlyPlaceholderEvents=r.events.every(e=>/^(?:参加|出席)(?:的同学|者|人员|对象)/u.test(e.title))
+  const explanatoryCompletion=/为[^。！？\n]{0,60}帮助[^。！？\n]{0,80}顺利完成/u.test(source)
+  if(structured&&onlyPlaceholderEvents&&r.standaloneTasks.every(t=>t.actionVerb==='核对'||t.actionVerb==='准备'&&/^(?:材料|资料)$/u.test(t.actionObject)||t.actionVerb==='完成'&&explanatoryCompletion)){
+    const eid=evidence(source,'description'),teid=evidence(structured.time,'deadline'),parsed=sameWeekdayTime(structured.time,r.createdAt)
+    if(eid&&teid&&parsed?.normalizedValue){
+      const taskId='local-direct-optional-attendance',eventId='local-direct-optional-event',timeId=eventId+':start'
+      r.standaloneTasks=[];r.milestones=[];r.materials=[];r.timePoints=[];r.events=[]
+      r.standaloneTasks.push({tempId:taskId,parentTempId:null,hierarchyType:'task',title:'参加'+structured.title,actionVerb:'参加',actionObject:structured.title,description:'建议有意向的同学到场，适用情况待确认。',completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[timeId],evidenceIds:[eid],confidence:0.8,inferenceLevel:'strong_inference',userConfirmationRequired:true,selected:false})
+      r.timePoints.push({tempId:timeId,type:'event_start',rawText:structured.time,normalizedValue:parsed.normalizedValue,timezone:'Asia/Shanghai',precision:'exact',isAllDay:false,needsConfirmation:true,relatedTaskTempIds:[taskId],relatedMaterialTempIds:[],evidenceIds:[teid],confidence:0.8,selected:false})
+      r.events.push({tempId:eventId,title:structured.title,description:'建议有意向的同学到场，星期日期按接收日期推算，请确认。',location:structured.location,startTimePointTempId:timeId,endTimePointTempId:null,evidenceIds:[eid],confidence:0.8,inferenceLevel:'strong_inference',selected:false,relatedTaskTempIds:[taskId]})
+    }
+  }
   if(revision){
     const eid=evidence(revision.sentence,'description'),parsed=parseDirectSourceTime(revision.after,{type:'event_start',referenceTime:r.createdAt,timezone:'Asia/Shanghai'})
     if(eid&&parsed.normalizedValue&&!parsed.needsConfirmation){
