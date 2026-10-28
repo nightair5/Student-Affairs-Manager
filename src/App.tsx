@@ -5,7 +5,7 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } fro
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { DirectResultList, RecentDirectAdditions } from './components/DirectResultList'
 import { setTaskSchedule } from './domain/v2/taskSchedule'
-import { commitDirectDraft, replaceDirectFallback, deleteDirectItem, directDuplicate, editDirectItem, recentDirectBatches, undoDirectBatch } from './domain/v2/directIntake'
+import { commitDirectDraft, directBatch, replaceDirectFallback, deleteDirectItem, editDirectItem, recentDirectBatches, undoDirectBatch } from './domain/v2/directIntake'
 import {historicalDirectDraftIds,workspaceTaskChannels,pairFlowEvents,workspaceEventTimeHints} from './lib/homeFlow'
 import { EventDetailPanel } from './components/EventDetailPanel'
 import { IntakePanel } from './components/IntakePanel'
@@ -711,7 +711,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     await refreshOrdinary()
     setIntakeOpen(false);setSelectedDraftId(null);setCurrentPage('today');setDirectBatchId(receipt.batch?.id??null);setDirectHistoryOpen(false)
     const batch=receipt.batch
-    setNotice({text:receipt.duplicate?'这条通知已添加过':`已添加 ${batch?.items.length??0} 项`,direct:true,...(batch?{undo:()=>{void undoDirect(batch.id).catch(()=>setNotice({text:'未能撤销，原有内容保留。请从最近添加重试。'}))}}:{})})
+    setNotice({text:receipt.duplicate?'本次整理已添加，无需重复提交':`已添加 ${batch?.items.length??0} 项`,direct:true,...(batch?{undo:()=>{void undoDirect(batch.id).catch(()=>setNotice({text:'未能撤销，原有内容保留。请从最近添加重试。'}))}}:{})})
   }
   const retryDirectFallback=async(batchId:string)=>{
     if(directRetriesInFlight.current.has(batchId))throw Error('正在重新整理，请稍候。')
@@ -774,10 +774,11 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     }
     if (storageError || workspaceRecovery) throw new Error('本机数据正在保护中，输入已保留。请先完成数据恢复，再整理新通知。')
     if (directMode) {
+      if (directReadbackPending) throw new Error('本次内容已保存，请先点击“重新读取”后再整理。')
       const current=await canonicalWorkspaceRepository.load()
-      const duplicate=current&&directDuplicate(current,input.content)
-      if(duplicate){await refreshOrdinary();setIntakeOpen(false);setNotice({text:'这条通知已添加过',direct:true});return}
       const pending=current?.extractionDrafts.find(d=>{
+        // A deliberately undone addition is history, not an unfinished retry.
+        if(directBatch(d)?.status==='undone')return false
         const run=current.recognitionRuns.find(r=>r.id===d.recognitionRunId),version=run&&current.sourceVersions.find(v=>v.id===run.sourceVersionId)
         const source=version&&current.sources.find(s=>s.id===version.sourceId)
         const retryable=d.result||(d.status==='failed'&&run?.status==='failed')
@@ -1122,8 +1123,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     }
   }
 
-  const handleQuickCapture = async (content: string) => {
-    await handleIntakeInput({ sourceType: 'text', content })
+  const handleQuickCapture = async (content: string, operationId: string) => {
+    await handleIntakeInput({ sourceType: 'text', content, operationId })
   }
 
   const handleUpdateDraft = async (

@@ -53,8 +53,12 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     if(!d||!v?.rawText||!s||s.currentVersionId!==v.id||run?.status==='running')throw Error('DIRECT_SOURCE_NOT_AVAILABLE')
     const recovery=d.legacyData?.storedDraftRecovery
     if(record(recovery)&&recovery.mode==='isolated_historical_result')throw Error('DIRECT_HISTORICAL_ANSWER_ISOLATED')
-    const duplicateSource=directDuplicate(w,v.rawText)
-    if(duplicateSource&&(duplicateSource!==s.id||directBatch(d)?.status==='active'||d.status==='confirmed')){receipt={batch:recentDirectBatches(w).find(b=>b.sourceId===duplicateSource&&b.status==='active')??null,duplicate:true};return w}
+    // A new capture may intentionally contain the same text. Only the same
+    // draft/operation is idempotent, so retries cannot create a second batch.
+    const existingBatch=directBatch(d)
+    if(existingBatch?.status==='active'||d.status==='confirmed'){receipt={batch:existingBatch?.status==='active'?existingBatch:null,duplicate:true};return w}
+    const text=v.rawText.replace(/\r\n?/gu,'\n').trim()
+    const intentionalRepeat=w.sourceVersions.some(previous=>previous.sourceId!==s.id&&previous.rawText?.replace(/\r\n?/gu,'\n').trim()===text)
     const original=run?.legacyData?.originalRecognitionResult
     const localFallback=!d.result||run?.provider==='local-rules'
     const rawInput=d.result??buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(run?.startedAt??d.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]})
@@ -107,7 +111,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
       items:converted.items.filter(i=>i.kind==='task'?newTasks.has(i.tempId):newEvents.has(i.tempId)).map(i=>({...i,id:`${i.kind}:${d.id}:${i.tempId}`})),
       beforeDraft:{status:d.status,acceptedEntityTempIds:d.acceptedEntityTempIds,rejectedEntityTempIds:d.rejectedEntityTempIds,commitOperationIds:d.commitOperationIds,result:d.result,updatedAt:d.updatedAt},beforeSource:{status:s.status,updatedAt:s.updatedAt}}
     const next=applyDomainCommitPlan(prepared,plan,now)
-    next.sources=next.sources.map(x=>x.id===s.id?{...x,legacyData:{...x.legacyData,directUndoneAt:null}}:x)
+    next.sources=next.sources.map(x=>x.id===s.id?{...x,legacyData:{...x.legacyData,directUndoneAt:null,...(intentionalRepeat?{duplicateReviewStatus:'保留为独立来源'}:{})}}:x)
     if(s.title==='手动粘贴消息'&&!d.acceptedEntityTempIds.length)next.sources=next.sources.map(x=>x.id===s.id?{...x,title:result.standaloneTasks[0]?.title??result.events[0]?.title??x.title}:x)
     next.extractionDrafts=next.extractionDrafts.map(x=>x.id===d.id?{...x,legacyData:{...x.legacyData,directBatch:json(batch),directConversion:json({version:DIRECT_MODE_VERSION,...(retention?{retentionVersion:DIRECT_RETENTION_VERSION}:{}),inputProvider:d.result?'stored-answer':'local-rules-from-preserved-source',omitted:converted.omitted,...(actionRecovery?{actionProjectionVersion:DIRECT_ACTION_PROJECTION_VERSION,sourceDerivedTaskIds:result.standaloneTasks.filter(t=>t.tempId.startsWith('direct-action-')).map(t=>t.tempId)}:{})})}}:x)
     receipt={batch,duplicate:false};return next

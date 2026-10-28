@@ -1,7 +1,7 @@
 import type { TaskDateViews } from '../experiments/mainline02/taskDateView'
 import { safeIntakeError } from '../lib/workspaceRecoveryUi'
 import { ArrowRight, ClipboardPaste, Inbox, Link2, Plus, Upload } from 'lucide-react'
-import { useState, type FormEvent, type ReactNode } from 'react'
+import { useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { TaskCard } from '../components/TaskCard'
 import { EventCard } from '../components/EventCard'
 import { localDateKey } from '../lib/calendar'
@@ -28,7 +28,7 @@ interface DashboardPageProps {
   onShowCalendar?: () => void
   projects: Project[]
   pendingReviewCount: number
-  onQuickCapture: (content: string) => Promise<void>
+  onQuickCapture: (content: string, operationId: string) => Promise<void>
   onOpenIntake: () => void
   onOpenTask: (task: Task) => void
   onCompleteTask: (taskId: string) => void
@@ -75,6 +75,8 @@ export function DashboardPage({
   const [quickText, setQuickText] = useState('')
   const [quickError, setQuickError] = useState('')
   const [isParsing, setIsParsing] = useState(false)
+  const quickSubmitInFlight = useRef(false)
+  const quickAttempt = useRef<{ content: string; operationId: string } | null>(null)
   const focusTasks = getFocusTasks(tasks, new Date(), 3, dateViews)
   const deferredTasks = getBlockedAndWaitingTasks(tasks, new Date(), dateViews)
   const activeCount = tasks.filter((task) => task.status !== '已完成').length
@@ -88,18 +90,25 @@ export function DashboardPage({
 
   const submitQuickCapture = async (event: FormEvent) => {
     event.preventDefault()
-    if (isParsing || !quickText.trim()) return
+    if (quickSubmitInFlight.current || isParsing || !quickText.trim()) return
     const submittedText = quickText
     const content = realInput ? submittedText : submittedText.trim()
+    const attempt = quickAttempt.current?.content === content
+      ? quickAttempt.current
+      : { content, operationId: crypto.randomUUID() }
+    quickAttempt.current = attempt
+    quickSubmitInFlight.current = true
     setQuickError('')
     setIsParsing(true)
     try {
-      await onQuickCapture(content)
+      await onQuickCapture(content, attempt.operationId)
+      quickAttempt.current = null
       // Clear only the successfully submitted original; failed captures retain it.
       setQuickText(current => current === submittedText ? '' : current)
     } catch (error) {
       setQuickError(safeIntakeError(error, '原文尚未保存，输入已保留；请保留此页或复制文字后重试。'))
     } finally {
+      quickSubmitInFlight.current = false
       setIsParsing(false)
     }
   }
