@@ -1,6 +1,7 @@
 import type {Event,Task} from '../types'
 import {calculateTaskPriority,getBlockedAndWaitingTasks,getExecutableTasks} from './taskLogic'
 import {getUndatedCalendarEvents,localDateKey} from './calendar'
+import {isDateOnly,parseBusinessDateTime} from './timeSemantics'
 import type {WorkspaceV8} from '../domain/v2/types'
 
 /** Only show channels already associated with a task in the canonical workspace. */
@@ -102,6 +103,30 @@ export function homeFlow(tasks:Task[],events:Event[],now=new Date(),linked:Reado
   const today=localDateKey(now),next=new Date(now);next.setDate(next.getDate()+7);const end=localDateKey(next)
   // A later personal plan must not hide a deadline which falls today.
   const firstDate=(t:Task)=>[t.plannedStart||t.directDate,t.deadline,relatedDate(t)].filter((value):value is string=>Boolean(value)).map(localDateKey).sort()[0]??''
+  // For a day with incomplete precision, preserve its existing priority slot.
+  // Never interpret an unspecified clock time as midnight. Sort only the
+  // clock-bearing slots amongst themselves, avoiding a non-transitive comparator.
+  const firstTime=(t:Task):number|null=>{
+    const day=firstDate(t)
+    const values=[t.plannedStart||t.directDate,t.deadline,relatedDate(t)].filter((value):value is string=>Boolean(value)&&localDateKey(value!)===day)
+    if(!values.length||values.some(isDateOnly))return null
+    const dates=values.map(value=>parseBusinessDateTime(value))
+    if(dates.some(value=>!value))return null
+    return Math.min(...dates.map(value=>value!.getTime()))
+  }
+  const sortUpcoming=(items:Task[])=>{
+    const result=items.sort((a,b)=>firstDate(a).localeCompare(firstDate(b))||byPriority(a,b))
+    for(let start=0;start<result.length;){
+      let end=start+1
+      while(end<result.length&&firstDate(result[end])===firstDate(result[start]))end++
+      const positions:number[]=[],precise:Task[]=[]
+      for(let i=start;i<end;i++)if(firstTime(result[i])!==null){positions.push(i);precise.push(result[i])}
+      precise.sort((a,b)=>firstTime(a)!-firstTime(b)!||byPriority(a,b))
+      positions.forEach((position,index)=>{result[position]=precise[index]})
+      start=end
+    }
+    return result
+  }
   const isToday=(t:Task)=>{
     const plan=t.plannedStart||t.directDate
     // Preserve existing placement for old overdue tasks with a future plan,
@@ -111,7 +136,7 @@ export function homeFlow(tasks:Task[],events:Event[],now=new Date(),linked:Reado
     return Boolean(date&&localDateKey(date)<=today)
   }
   const upcoming=events.filter(e=>e.startAt&&Number.isFinite(Date.parse(e.startAt))&&localDateKey(e.endAt&&Number.isFinite(Date.parse(e.endAt))?e.endAt:e.startAt)>=today).sort((a,b)=>(a.startAt??'').localeCompare(b.startAt??'')||a.id.localeCompare(b.id))
-  return {dated:ready.filter(dated).sort(byPriority),today:ready.filter(t=>dated(t)&&isToday(t)).sort(byPriority),next:ready.filter(t=>dated(t)&&!isToday(t)).sort((a,b)=>firstDate(a).localeCompare(firstDate(b))||byPriority(a,b)),undated:ready.filter(t=>!dated(t)).sort((a,b)=>priorityDifference(a,b)||b.createdAt.localeCompare(a.createdAt)||a.id.localeCompare(b.id)),deferred:getBlockedAndWaitingTasks(tasks,now),
+  return {dated:ready.filter(dated).sort(byPriority),today:ready.filter(t=>dated(t)&&isToday(t)).sort(byPriority),next:sortUpcoming(ready.filter(t=>dated(t)&&!isToday(t))),undated:ready.filter(t=>!dated(t)).sort((a,b)=>priorityDifference(a,b)||b.createdAt.localeCompare(a.createdAt)||a.id.localeCompare(b.id)),deferred:getBlockedAndWaitingTasks(tasks,now),
     events:upcoming.filter(e=>localDateKey(e.startAt!)<=end),
     todayEvents:upcoming.filter(e=>localDateKey(e.startAt!)<=today),
     upcomingEvents:upcoming.filter(e=>localDateKey(e.startAt!)>today),

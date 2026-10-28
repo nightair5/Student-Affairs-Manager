@@ -56,6 +56,53 @@ describe('direct home: actionable and dated facts stay visible', () => {
     const html = renderToStaticMarkup(<FlowTaskList tasks={[ownerTask, other]} channels={channels} onOpen={noop} onComplete={noop} />)
     expect(html.match(/提交：学习平台/gu)).toHaveLength(1)
   })
+  it('shows a recorded duration as an estimate without inventing one for other tasks', () => {
+    const estimated = task({ id: 'estimated', estimatedMinutes: 30, estimatedMinutesKnown: true })
+    const unknown = task({ id: 'unknown', estimatedMinutes: 120, estimatedMinutesKnown: false })
+    const unspecified = task({ id: 'unspecified', estimatedMinutes: 60, estimatedMinutesKnown: undefined })
+    const html = renderToStaticMarkup(<FlowTaskList tasks={[estimated, unknown, unspecified]} onOpen={noop} onComplete={noop} />)
+    expect(html).toContain('预计耗时 30 分钟')
+    expect(html.match(/预计耗时/gu)).toHaveLength(1)
+    expect(html).not.toContain('2 小时')
+  })
+  it('offers clearly labelled, display-only duration suggestions for specific registration and material tasks', () => {
+    const register = task({ id:'register', title:'线上系统报名', estimatedMinutesKnown:false })
+    const materials = task({ id:'materials', title:'学院初赛报名材料提交', estimatedMinutesKnown:false })
+    const alreadyEstimated = task({ id:'saved', title:'提交申请材料', estimatedMinutesKnown:true, estimatedMinutes:45 })
+    const before=JSON.stringify([register,materials,alreadyEstimated])
+    const html=renderToStaticMarkup(<FlowTaskList tasks={[register,materials,alreadyEstimated]} onOpen={noop} onComplete={noop} />)
+    expect(html).toContain('建议约 30 分钟')
+    expect(html).toContain('建议约 1 小时')
+    expect(html).toContain('估计而非原文，可在详情修改，不自动安排')
+    expect(html).toContain('预计耗时 45 分钟')
+    expect(html.match(/建议约/gu)).toHaveLength(2)
+    expect(JSON.stringify([register,materials,alreadyEstimated])).toBe(before)
+  })
+  it('does not propose durations for information, unrelated activities or generic materials', () => {
+    const titles=['查看：线上系统报名','线上报名培训','准备作业材料','参加职业指导会','取消系统报名','提交材料']
+    const html=renderToStaticMarkup(<FlowTaskList tasks={titles.map((title,i)=>task({id:`other-${i}`,title,estimatedMinutesKnown:false}))} onOpen={noop} onComplete={noop} />)
+    expect(html).not.toContain('建议约')
+  })
+  it('shows a unique explicitly labelled website for its own registration task without storing a channel', () => {
+    const own=task({id:'reg',title:'线上系统报名',description:'请完成线上系统报名。\n（网址：apply.example.edu.cn，具体材料见附件）'})
+    const before=JSON.stringify(own)
+    const html=renderToStaticMarkup(<FlowTaskList tasks={[own]} onOpen={noop} onComplete={noop} />)
+    expect(html).toContain('报名网址：apply.example.edu.cn')
+    expect(JSON.stringify(own)).toBe(before)
+    const once=renderToStaticMarkup(<FlowTaskList tasks={[own]} channels={{reg:['apply.example.edu.cn']}} onOpen={noop} onComplete={noop} />)
+    expect(once.match(/apply\.example\.edu\.cn/gu)).toHaveLength(2) // title attribute and visible channel
+    expect(once).not.toContain('报名网址：')
+  })
+  it('does not guess which link applies when the label or task ownership is ambiguous', () => {
+    const cases=[
+      task({id:'unlabelled',title:'线上报名',description:'报名请访问 apply.example.edu.cn'}),
+      task({id:'multiple',title:'系统报名',description:'网址：one.example.edu.cn；网址：two.example.edu.cn'}),
+      task({id:'other',title:'提交报名材料',description:'（网址：apply.example.edu.cn）'}),
+      task({id:'notice',title:'查看：报名通知',description:'（网址：apply.example.edu.cn）'}),
+    ]
+    const html=renderToStaticMarkup(<FlowTaskList tasks={cases} onOpen={noop} onComplete={noop} />)
+    expect(html).not.toContain('报名网址：')
+  })
   it('shows a saved undated event and does not invent a clock', () => {
     const html = renderToStaticMarkup(<DashboardPage {...props} events={[event()]} />)
     expect(html).toContain('实习说明会')

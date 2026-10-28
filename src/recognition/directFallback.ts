@@ -5,10 +5,11 @@ import {cleanDirectTopic} from './directRetention'
 import {localDelivery,localSubmissionChannel,localMaterialRequirements} from './localNoticeFacts'
 import {completeDirectLocalFacts,directEventRevision} from './directLocalFacts'
 import {structuredOptionalEvent} from './directStructuredEvent'
+import {completeNumberedActions} from './directNumberedActions'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
- return completeDirectLocalFacts(improveLocalActions(input,source),source)
+ return completeNumberedActions(completeDirectLocalFacts(improveLocalActions(input,source),source),source)
 }
 function improveLocalActions(input:RecognitionResult,source:string):RecognitionResult {
  if(/无需办理|无需操作|仅供知悉/u.test(source)&&!/提交|报名|申请|申报|缴费|领取|上传/u.test(source.replace(/(?:无需|不必|不要|无须)(?:办理|操作|提交|报名|申请|申报|缴费|领取|上传)/gu,''))){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/仅供知悉|无需|无须|不必/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
@@ -73,6 +74,8 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
 /** Fill independently evidenced missing actions without replacing retained
  * AI entities or borrowing their times. The caller records local provenance. */
 export function recoverMissingDirectActions(base:DirectConversion,local:RecognitionResult,source:string):DirectConversion {
+ const completed=completeNumberedActions(base.result,source)
+ if(JSON.stringify(completed)!==JSON.stringify(base.result))base=convertDirectResult(completed,source)
  const candidate=convertDirectResult(improveDirectFallback(local,source),source)
  const key=(value:string)=>value.replace(/\s/gu,'').replace(/^如符合条件/u,'')
  const revision=directEventRevision(source)

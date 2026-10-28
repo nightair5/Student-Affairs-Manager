@@ -4,6 +4,27 @@ import {TaskScheduleButton} from './TaskScheduleButton'
 import {useEffect,useState} from 'react'
 import type {Event,Task} from '../types'
 import {flowEventDate,flowTaskDate,planAfterDeadline} from '../lib/flowPresentation'
+import {formatDuration} from '../lib/taskLogic'
+
+/** A display-only planning hint: it never changes source facts or schedules. */
+function suggestedDuration(task:Task):string | undefined {
+  if (task.estimatedMinutesKnown === true) return undefined
+  const title=task.title.replace(/[\s。！!]+$/gu,'')
+  if (/^(?:查看|取消|停止|禁止|不要|无需)/u.test(title)) return undefined
+  if (!/(?:讲座|培训|咨询|答疑|说明会|材料|文件)/u.test(title) && /(?:线上|网上|网络|系统)(?:系统)?报名$/u.test(title)) return '30 分钟'
+  if (/(?:提交|准备|整理|递交).{0,16}(?:报名|申请).{0,8}材料$/u.test(title) || /(?:报名|申请).{0,8}材料(?:提交|准备|整理|递交)$/u.test(title)) return '1 小时'
+  return undefined
+}
+
+/** Display a unique explicitly labelled registration site from this task's own
+ * description. This is not a new material, channel, or stored source fact. */
+function registrationSite(task:Task):string | undefined {
+  if (!/报名/u.test(task.title) || /^(?:查看|取消|禁止|停止|无需)/u.test(task.title) || /材料|申请表|PPT|汇报|审核|咨询|通知|培训/iu.test(task.title)) return undefined
+  const domain='(?:https?:\\/\\/)?(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,63}(?:\\/[a-z0-9._~!$&\'()*+,;=:@%/?#-]*)?'
+  const urls=[...task.description.matchAll(new RegExp(domain,'giu'))].map(match=>match[0])
+  const labelled=[...task.description.matchAll(new RegExp(`(?:^|[\\n（(])\\s*网址\\s*[:：]\\s*(${domain})`,'gimu'))].map(match=>match[1])
+  return urls.length===1&&labelled.length===1&&urls[0]===labelled[0]?labelled[0]:undefined
+}
 
 export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[],channels={},linkedEvents={},eventTimeHints={},onOpenEvent}:{tasks:Task[];onOpen:(t:Task)=>void;onComplete:(id:string)=>void;onSchedule?:(id:string,date:string)=>Promise<void>;highlightIds?:readonly string[];channels?:Readonly<Record<string,string[]>>;linkedEvents?:Readonly<Record<string,Event>>;eventTimeHints?:Readonly<Record<string,string>>;onOpenEvent?:(event:Event)=>void}){
   const key=highlightIds.join('|'),[expired,setExpired]=useState(''),recent=expired===key?'':key
@@ -14,15 +35,20 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
     const displayedDate=linked&&taskDate==='未设日期'?eventDate:taskDate
     const taskChannels=channels[task.id]??[]
     const tags=visibleDirectTags(task.directTags,displayedDate,task.title)
+    const durationHint=suggestedDuration(task)
+    const site=registrationSite(task)
     return <li className="flow-task-row" key={task.id} data-task-id={task.id} data-new={recent.split('|').includes(task.id)||undefined}>
       <button className="flow-complete icon-button" type="button" disabled={task.status==='已完成'} onClick={()=>onComplete(task.id)} aria-label={`${task.status==='已完成'?'已完成':'完成'}${task.title}`}>{task.status==='已完成'?<CheckCircle2 size={21}/>:<Circle size={21}/>}</button>
       <button className="flow-item-main" type="button" onClick={()=>onOpen(task)}>
         <h3 data-task-title title={task.title}>{directCardTitle(task.title)}</h3>
-        <span className="flow-item-facts"><Clock3 size={14}/>{displayedDate}
+        <span className="flow-item-facts"><span className="flow-item-time"><Clock3 size={14} aria-hidden="true"/>{displayedDate}</span>
           {linked&&taskDate!=='未设日期'&&<small>{eventDate}</small>}
           {linked?.location&&<small>{linked.location}</small>}
           {task.materials.length>0&&<small>{task.materials.length}项材料</small>}
+          {task.estimatedMinutesKnown===true&&Number.isFinite(task.estimatedMinutes)&&task.estimatedMinutes>0&&<small className="flow-item-duration">预计耗时 {formatDuration(task.estimatedMinutes)}</small>}
+          {durationHint&&<small className="flow-item-duration">建议约 {durationHint}（估计而非原文，可在详情修改，不自动安排）</small>}
           {taskChannels.length>0&&<small className="flow-task-channel" title={taskChannels.join('、')}>提交：{taskChannels.join('、')}</small>}
+          {site&&!taskChannels.some(channel=>channel.includes(site))&&<small className="flow-task-channel">报名网址：{site}</small>}
           {planAfterDeadline(task.plannedStart||task.directDate,task.deadline)&&<small className="flow-deadline-warning">计划晚于截止</small>}
           {tags.map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}
         </span>

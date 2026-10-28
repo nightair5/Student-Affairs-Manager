@@ -8449,7 +8449,9 @@ button.agenda-item.event {
 .task-schedule-popover small{display:block;margin-top:10px;line-height:1.5;color:#526c7e}
 .task-schedule-popover .text-button{margin-top:8px;font-size:13px}
 .flow-item-facts .flow-deadline-warning,.task-schedule-popover .flow-deadline-warning{color:#a74527;font-weight:650}
-.flow-task-channel{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.flow-item-time{display:inline-flex;align-items:center;gap:5px;color:#244f70;font-weight:700}
+.flow-item-duration{color:#526e80;font-weight:500}
+.flow-task-channel{max-width:100%;overflow-wrap:anywhere}
 .flow-item-facts .direct-tag{padding:2px 6px}
 .flow-today-section h2 small,.flow-undated-section h2 small,.today-next-section h2 small{font:500 13px system-ui;color:#688096;margin-left:6px}
 .flow-item-main h3{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
