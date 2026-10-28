@@ -29,7 +29,7 @@ export function numberedNoticeSections(source:string):Section[]{
  * source heading; the heading remains separately cited as source evidence. */
 function namedRegistrationContext(source:string):{quote:string;name:string;at:number}|null{
  const line=source.split(/\r?\n/u).find(s=>s.trim());if(!line)return null
- const quote=line.trim(),raw=quote.replace(/^[【\[《]|[】\]》]$/gu,'').trim()
+ const quote=line.trim(),raw=quote.replace(/^[【[《]|[】\]》]$/gu,'').trim()
  if(!/^关于/u.test(raw)||!/通知$/u.test(raw))return null
  const name=raw.replace(/^关于(?:开展|举办)?/u,'').replace(/(?:的)?(?:报名|注册)(?:工作|事项)?通知$/u,'').replace(/(?:的)?通知$/u,'').trim()
  if(name.length<4||name.length>40||/[、,，&＆/\\]|以及|或者|和|与|或|及/u.test(name))return null
