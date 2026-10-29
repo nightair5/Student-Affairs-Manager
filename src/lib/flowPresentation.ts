@@ -19,6 +19,11 @@ export function flowTaskDate(task:Task):string {
   if(task.sourceDeadlineLabel&&/另行通知|另行公布|待通知/u.test(task.sourceDeadlineLabel))return '截止时间另行通知'
   return '未设日期'
 }
+/** Retain an actionable relative-time condition without guessing an anchor. */
+export function taskRelativeTimeHint(task:Task):string|undefined {
+  return task.description.split(/\r?\n/u).map(line=>line.trim()).find(line=>
+    line.length>0&&line.length<=160&&/(?:开始|结束|开赛|上课|下课|开幕|入场)(?:前|后)|课后/u.test(line))
+}
 /** Only flag a definite conflict; date-only values do not invent a clock time. */
 export function planAfterDeadline(plan:string|null|undefined,deadline:string|null|undefined):boolean {
   if(!plan||!deadline)return false

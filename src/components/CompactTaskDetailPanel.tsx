@@ -1,7 +1,7 @@
 import {useId,useRef,useState} from 'react'
 import {CheckCircle2,ChevronDown,Trash2,X} from 'lucide-react'
 import {useDialogFocusTrap} from '../lib/useDialogFocusTrap'
-import {flowEditValue,flowTaskDate,flowEventDate} from '../lib/flowPresentation'
+import {flowEditValue,flowTaskDate,flowEventDate,taskRelativeTimeHint} from '../lib/flowPresentation'
 import type {TaskDetailPanelProps} from './TaskDetailPanel'
 import {TaskScheduleButton} from './TaskScheduleButton'
 import {suggestedTaskDuration} from '../lib/taskDurationSuggestion'
@@ -18,14 +18,16 @@ export function CompactTaskDetailPanel({task,sources,onClose,onComplete,onUpdate
   const materials=canonicalMaterials??task.materials.map(m=>({id:m.id,name:m.name,requirements:[],formatRequirements:[],namingRequirements:[],submissionChannel:null}))
   const channels=[...new Set(materials.map(m=>m.submissionChannel).filter(Boolean))]
   const naming=[...new Set(materials.flatMap(m=>m.namingRequirements))]
-  const sourceRequirements=[...new Set(task.description.split('\n').map(line=>line.trim()).filter(line=>line.length>0&&line.length<=500&&/(?:须为|必须|不得|不包括|不超过|至少|原创)/u.test(line)&&linked.some(s=>(s.rawText||s.content||s.contentPreview||'').includes(line))))]
+  const sourceRequirements=[...new Set(task.description.split('\n').map(line=>line.trim()).filter(line=>line.length>0&&line.length<=500&&/(?:须为|必须|不得|不包括|不超过|至少|原创|任选|二选一|或者)/u.test(line)&&linked.some(s=>(s.rawText||s.content||s.contentPreview||'').includes(line))))]
   const durationHint=suggestedTaskDuration(task)
+  const relativeHint=taskRelativeTimeHint(task)
   const saveDate=async()=>{setBusy(true);setError('');try{const value=date?date+(time?'T'+time:''):'';if(onDirectEdit)await onDirectEdit({title:title.trim()||task.title,date:value});else onUpdate(task.id,{deadline:value});setDateOpen(false)}catch{setError('日期未能保存，请重试。')}finally{setBusy(false)}}
   return <div className="modal-backdrop detail-backdrop" role="presentation"><aside className="detail-panel compact-detail-panel" ref={ref} role="dialog" aria-modal="true" aria-labelledby={id}>
     <header className="detail-header"><div><h2 id={id} className="sr-only">待办详情</h2><textarea rows={2} className="detail-title-input" aria-label="待办名称" value={title} maxLength={300} onChange={e=>setTitle(e.target.value)} onBlur={()=>{if(title.trim()&&title.trim()!==task.title)onUpdate(task.id,{title:title.trim()})}} onKeyDown={e=>{if(e.key==='Enter'){e.preventDefault();e.currentTarget.blur()}}}/></div><button className="icon-button" type="button" onClick={onClose} aria-label="关闭任务详情"><X size={20}/></button></header>
     <div className="detail-body">
       {error&&<p role="alert" className="inline-error">{error}</p>}
       <section className="detail-primary-section compact-time-section" aria-label="时间和地点"><h3>时间</h3><p className="detail-time-value">{linkedEvent&&flowTaskDate(task)==='未设日期'?flowEventDate(linkedEvent,eventTimeHint):flowTaskDate(task)}</p>
+        {relativeHint&&<p>{relativeHint}</p>}
         {linkedEvent&&flowTaskDate(task)!=='未设日期'&&<p>{flowEventDate(linkedEvent,eventTimeHint)}</p>}
         {linkedEvent?.location&&<p>{linkedEvent.location}</p>}
         <div className="compact-time-actions">{onScheduleTask&&<TaskScheduleButton task={task} onSchedule={onScheduleTask}/>} {(task.deadline||!onScheduleTask)&&<button type="button" className="text-button" onClick={()=>setDateOpen(v=>!v)}>{task.deadline?'修改原文截止':'设置日期'}</button>}</div>

@@ -3,7 +3,7 @@ import {CalendarDays,CheckCircle2,Circle,ChevronRight,Clock3} from 'lucide-react
 import {TaskScheduleButton} from './TaskScheduleButton'
 import {useEffect,useState} from 'react'
 import type {Event,Task} from '../types'
-import {flowEventDate,flowTaskDate,planAfterDeadline} from '../lib/flowPresentation'
+import {flowEventDate,flowTaskDate,planAfterDeadline,taskRelativeTimeHint} from '../lib/flowPresentation'
 import {formatDuration} from '../lib/taskLogic'
 import {displayMaterialRequirement,materialSummary} from '../lib/materialPresentation'
 import {suggestedTaskDuration} from '../lib/taskDurationSuggestion'
@@ -28,6 +28,7 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
     const taskChannels=channels[task.id]??[]
     const tags=visibleDirectTags(task.directTags,displayedDate,task.title)
     const durationHint=suggestedTaskDuration(task)
+    const relativeHint=taskRelativeTimeHint(task)
     const site=registrationSite(task)
     const naming=[...new Set(task.materials.flatMap(m=>m.namingRequirements??[]))]
     return <li className="flow-task-row" key={task.id} data-task-id={task.id} data-new={recent.split('|').includes(task.id)||undefined}>
@@ -36,6 +37,7 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
       <button className="flow-item-main" type="button" onClick={()=>onOpen(task)}>
         <h3 data-task-title title={task.title}>{directCardTitle(task.title)}</h3>
         <span className="flow-item-facts"><span className="flow-item-time"><Clock3 size={14} aria-hidden="true"/>{displayedDate}</span>
+          {relativeHint&&<small>{relativeHint}</small>}
           {linked&&taskDate!=='未设日期'&&<small>{eventDate}</small>}
           {linked?.location&&<small>{linked.location}</small>}
           {task.materials.length>0&&<small className="flow-material-summary">材料：{materialSummary(task.materials)}</small>}
