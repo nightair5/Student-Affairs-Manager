@@ -55,6 +55,19 @@ describe('task and event cards before optional planning', () => {
     expect(html).not.toContain('dashboard-add-notice')
   })
 
+  it('shows the original deadline, materials and editable estimate for a task with an unfinished prerequisite', () => {
+    const first = { ...demoTasks[1], id: 'first', title: '完成系统报名', status: '待开始' as const, deadline: '2099-11-02T12:00', dependencyIds: [], dependencies: [] }
+    const second = { ...demoTasks[0], id: 'second', title: '提交学院报名材料', status: '待开始' as const, deadline: '2099-11-03T12:00', estimatedMinutesKnown: false, dependencyIds: ['first'], dependencies: [], materials: [{ id: 'form', name: '报名表', done: false }] }
+    const html = renderToStaticMarkup(<DashboardPage {...dashboardProps} directMode tasks={[first, second]} onScheduleTask={async()=>undefined} />)
+    expect(html).toContain('有 1 项前置事项未完成')
+    expect(html).toContain('2099年11月3日')
+    expect(html).toContain('12:00')
+    expect(html).toContain('报名表')
+    expect(html).toContain('建议约 1 小时')
+    expect(html).toContain('完成提交学院报名材料')
+    expect(html).toContain('材料与要求')
+  })
+
   it('keeps source facts and conditional selection intact inside review cards', () => {
     const content = '仅限已报名同学，请于10月30日17:00前将申请表提交至学习通。'
     const result = buildLocalRecognition({ content, sourceTitle: '匿名通知', sourceType: 'text', referenceTime: new Date('2026-10-24T10:00:00+08:00'), timezone: 'Asia/Shanghai', projects: [], tasks: [] })

@@ -18,7 +18,7 @@ function registrationSite(task:Task):string | undefined {
   return urls.length===1&&labelled.length===1&&urls[0]===labelled[0]?labelled[0]:undefined
 }
 
-export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[],channels={},linkedEvents={},eventTimeHints={},onOpenEvent}:{tasks:Task[];onOpen:(t:Task)=>void;onComplete:(id:string)=>void;onSchedule?:(id:string,date:string)=>Promise<void>;highlightIds?:readonly string[];channels?:Readonly<Record<string,string[]>>;linkedEvents?:Readonly<Record<string,Event>>;eventTimeHints?:Readonly<Record<string,string>>;onOpenEvent?:(event:Event)=>void}){
+export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[],channels={},linkedEvents={},eventTimeHints={},blockedReasons={},onOpenEvent}:{tasks:Task[];onOpen:(t:Task)=>void;onComplete:(id:string)=>void;onSchedule?:(id:string,date:string)=>Promise<void>;highlightIds?:readonly string[];channels?:Readonly<Record<string,string[]>>;linkedEvents?:Readonly<Record<string,Event>>;eventTimeHints?:Readonly<Record<string,string>>;blockedReasons?:Readonly<Record<string,string>>;onOpenEvent?:(event:Event)=>void}){
   const key=highlightIds.join('|'),[expired,setExpired]=useState(''),recent=expired===key?'':key
   useEffect(()=>{const timer=setTimeout(()=>setExpired(key),5000);return()=>clearTimeout(timer)},[key])
   return <ul className="flow-item-list">{tasks.map(task=>{
@@ -37,6 +37,7 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
       <button className="flow-item-main" type="button" onClick={()=>onOpen(task)}>
         <h3 data-task-title title={task.title}>{directCardTitle(task.title)}</h3>
         <span className="flow-item-facts"><span className="flow-item-time"><Clock3 size={14} aria-hidden="true"/>{displayedDate}</span>
+          {blockedReasons[task.id]&&<small>{blockedReasons[task.id]}</small>}
           {relativeHint&&<small>{relativeHint}</small>}
           {linked&&taskDate!=='未设日期'&&<small>{eventDate}</small>}
           {linked?.location&&<small>{linked.location}</small>}
