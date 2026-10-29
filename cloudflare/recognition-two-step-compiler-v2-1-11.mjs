@@ -28,7 +28,7 @@ export const alignTwoStepQuote=alignSourceQuote
 const sentenceAt=(span,source)=>{const before=source.slice(0,span.start),left=Math.max(before.lastIndexOf('。'),before.lastIndexOf('；'),before.lastIndexOf(';'))+1,tail=source.slice(span.end).search(/[。；;]/u),end=tail<0?source.length:span.end+tail+1;return{start:left,end,text:source.slice(left,end)}}
 const sameSentence=(a,b,source)=>{const left=Math.min(a.start,b.start),right=Math.max(a.end,b.end);return !/[。；;！？!?]/u.test(source.slice(left,right))}
 const valueOf=(q,type)=>q.replace(new RegExp('^(?:活动)?'+type+'[：:]\\s*','u'),'').replace(/^[在至到]\s*/u,'').replace(/(?:举办|举行|办理)[。；;]?$/u,'').replace(/[。；;]$/u,'').trim()
-export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',version=TWO_STEP_VERSION,alignmentHints=null}){
+export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',version=TWO_STEP_VERSION,alignmentHints=null,polarityNormalizer=null}){
  const hinted=(kind,id,q)=>{const h=alignmentHints?.[kind]?.find(x=>kind==='items'?x.id===id:x.index===id)?.span;if(!h||source.slice(h.start,h.end)!==h.literal)return null;const aligned=alignTwoStepQuote(q,h.literal);return aligned&&aligned.start===0&&aligned.end===h.literal.length?h:null}
  const check=validateTwoStep(raw);if(!check.valid)return{result:null,audit:{version,rootFailure:true,losses:check.errors},rootFailure:true}
  const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:'通知建议',sourceType:'text',notificationType:'teacher_task',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,version,true,timezone)
@@ -57,7 +57,8 @@ declared.set(item.id,record);audit.items.push({id:item.id,name:item.name,kind:it
   const anchor=alignTwoStepQuote(item.name,source)??span
   const before=source.slice(0,anchor.start),left=Math.max(...['。','；',';','，',',','\n'].map(x=>before.lastIndexOf(x)))+1
   const tail=source.slice(anchor.end),right=tail.search(/[。；;，,\n]/u),clause=source.slice(left,right<0?source.length:anchor.end+right)
-  const polarity=clause.replace(/逾期(?:将)?(?:不再受理|不予受理|不受理|不得补交)|不得(?:缺席|迟到|早退|缺考)/gu,'')
+  const originalPolarity=clause.replace(/逾期(?:将)?(?:不再受理|不予受理|不受理|不得补交)|不得(?:缺席|迟到|早退|缺考)/gu,'')
+  const polarity=typeof polarityNormalizer==='function'?polarityNormalizer(originalPolarity):originalPolarity
   if(/取消|不再|不需要|无需|无须|不必|不得|禁止|请勿/u.test(polarity)&&!/改为|调整至|变更为/u.test(polarity)){result.ignoredContent.push({text:span.literal,reason:'policy'});note('POLARITY',item.id,'CANCELLED_OR_NEGATED_ITEM_NOT_EXECUTABLE',item.quote);continue}
   const tempId='g2-'+(i+1)
   if(record.kind==='任务'){

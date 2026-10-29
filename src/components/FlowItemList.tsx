@@ -7,6 +7,7 @@ import {flowEventDate,flowTaskDate,planAfterDeadline,taskRelativeTimeHint} from 
 import {formatDuration} from '../lib/taskLogic'
 import {displayMaterialRequirement,materialSummary} from '../lib/materialPresentation'
 import {suggestedTaskDuration} from '../lib/taskDurationSuggestion'
+import {eventDescriptionSections,eventDurationLabel} from '../lib/eventPresentation'
 
 /** Display a unique explicitly labelled registration site from this task's own
  * description. This is not a new material, channel, or stored source fact. */
@@ -41,6 +42,8 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
           {relativeHint&&<small>{relativeHint}</small>}
           {linked&&taskDate!=='未设日期'&&<small>{eventDate}</small>}
           {linked?.location&&<small>{linked.location}</small>}
+          {linked&&eventDurationLabel(linked)&&<small>{eventDurationLabel(linked)}</small>}
+          {linked&&eventDescriptionSections(linked.description).filter(s=>s.label==='主讲人').map((s,i)=><small key={i}>主讲：{s.content}</small>)}
           {task.materials.length>0&&<small className="flow-material-summary">材料：{materialSummary(task.materials)}</small>}
           {task.estimatedMinutesKnown===true&&Number.isFinite(task.estimatedMinutes)&&task.estimatedMinutes>0&&<small className="flow-item-duration">预计耗时 {formatDuration(task.estimatedMinutes)}</small>}
           {durationHint&&<small className="flow-item-duration">建议约 {durationHint}（估计而非原文，可在详情修改，不自动安排）</small>}
@@ -62,5 +65,5 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
 export function FlowEventList({events,onOpen,timeHints={},highlightIds=[]}:{events:Event[];onOpen:(e:Event)=>void;timeHints?:Readonly<Record<string,string>>;highlightIds?:readonly string[]}){
   const key=highlightIds.join('|'),[expired,setExpired]=useState(''),recent=expired===key?'':key
   useEffect(()=>{const timer=setTimeout(()=>setExpired(key),5000);return()=>clearTimeout(timer)},[key])
-  return <ul className="flow-item-list">{events.map(event=><li className="flow-event-row" key={event.id} data-event-id={event.id} data-new={recent.split('|').includes(event.id)||undefined}><span className="flow-item-icon"><CalendarDays size={20}/></span><button type="button" className="flow-item-main" onClick={()=>onOpen(event)}><h3 title={event.title}>{directCardTitle(event.title)}</h3><span className="flow-item-facts">日程 · {flowEventDate(event,timeHints[event.id])}{event.location&&<small>{event.location}</small>}</span>{Boolean(event.directTags?.length)&&<span className="direct-inline-tags">{visibleDirectTags(event.directTags,flowEventDate(event,timeHints[event.id]),event.title).map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}</span>}</button><ChevronRight size={17}/></li>)}</ul>
+  return <ul className="flow-item-list">{events.map(event=><li className="flow-event-row" key={event.id} data-event-id={event.id} data-new={recent.split('|').includes(event.id)||undefined}><span className="flow-item-icon"><CalendarDays size={20}/></span><button type="button" className="flow-item-main" onClick={()=>onOpen(event)}><h3 title={event.title}>{directCardTitle(event.title)}</h3><span className="flow-item-facts">日程 · {flowEventDate(event,timeHints[event.id])}{eventDurationLabel(event)&&<small>{eventDurationLabel(event)}</small>}{event.location&&<small>{event.location}</small>}{eventDescriptionSections(event.description).filter(s=>s.label==='主讲人').map((s,i)=><small key={i}>主讲：{s.content}</small>)}</span>{Boolean(event.directTags?.length)&&<span className="direct-inline-tags">{visibleDirectTags(event.directTags,flowEventDate(event,timeHints[event.id]),event.title).map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}</span>}</button><ChevronRight size={17}/></li>)}</ul>
 }

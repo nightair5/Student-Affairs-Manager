@@ -345,6 +345,8 @@ export interface WorkPackage {
 
 export interface Event {
   directTags?: string[]
+  estimatedMinutes?: number | null
+  estimatedMinutesKnown?: boolean
   id: string
   projectId?: string
   milestoneId?: string

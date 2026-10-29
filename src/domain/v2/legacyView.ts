@@ -540,6 +540,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
 
   const events: LegacyEvent[] = workspace.events.map((item) => ({
     id: item.id,
+    ...(item.legacyData?.eventEstimateKnown === true ? { estimatedMinutesKnown: true, estimatedMinutes: typeof item.legacyData.eventEstimatedMinutes === 'number' ? item.legacyData.eventEstimatedMinutes : null } : {}),
     ...(item.legacyData?.directMode==='direct-mode-1'?{directTags:stringArray(item.legacyData.directTags)}:{}),
     projectId: item.projectId ?? undefined,
     milestoneId: workspace.timePoints.find((point) => point.eventId === item.id)?.milestoneId ?? undefined,

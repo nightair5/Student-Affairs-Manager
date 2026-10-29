@@ -2,6 +2,7 @@ import {parseDirectSourceTime} from '../../cloudflare/direct-source-time.mjs'
 import {directEventRevision} from './directLocalFacts'
 import {sameWeekdayTime} from './directStructuredEvent'
 import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from './types'
+import {isEventEligibility,normalizeEventPolarity} from '../../cloudflare/event-eligibility.mjs'
 import { parseChineseTimeAst, parseBusinessDateTime } from '../lib/timeSemantics'
 import {projectDirectActions} from './directActionProjection'
 import {convertRetainedDirectResult,cleanDirectTopic} from './directRetention'
@@ -45,9 +46,9 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   const quotes = (ids: string[]) => ids.flatMap(id => located.has(id) ? [located.get(id)!.quote] : [])
   const context = (ids: string[]) => ids.flatMap(id=>{const found=located.get(id);if(!found)return [];const before=sourceText.slice(0,found.at),after=sourceText.slice(found.at+found.quote.length),left=Math.max(before.lastIndexOf('。'),before.lastIndexOf('\n'),before.lastIndexOf('！'),before.lastIndexOf('？'))+1,right=after.search(/[。！？\n]/u);return [sourceText.slice(left,found.at+found.quote.length+(right<0?after.length:right))]}).join('\n')
   const clauseFor = (text: string, object: string) => text.split(/[，,；;。！？\n]/u).filter(s => compact(s).includes(compact(object))).join('；')
-  const isCancelled = (text: string, object: string) => {
+  const isCancelled = (text: string, object: string, eventPolarity=false) => {
     const revised=/(?:改为|调整为|更正为|延期至|现为)([^。；;\n]*)/u.exec(text)
-    const clauses=clauseFor(text,object).split('；'),affirmative=clauses.some(c=>!cancelled.test(c)&&/请|可以|可|允许|须|应当|务必/u.test(c))
+    const clauses=clauseFor(text,object).split('；').map(c=>eventPolarity?normalizeEventPolarity(c):c),affirmative=clauses.some(c=>!cancelled.test(c)&&/请|可以|可|允许|须|应当|务必/u.test(c))
     const prohibited=clauses.some(c=>cancelled.test(c)&&!(affirmative&&/不符合|不具备|未经|未(?:获|经|通过|完成|报名|缴费|取得)/u.test(c)))
     return prohibited && !(revised&&compact(revised[1]).includes(compact(object))) && !directEventRevision(text,object)
   }
@@ -81,13 +82,18 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   const events = result.events.flatMap(e => {
     const text = context(e.evidenceIds), name = compact(e.title)
     const cores=e.title.replace(/(?:参加|关于|召开|举行|出席)/gu,'').split(/和|与|及|暨/u).map(compact).filter(Boolean)
-    if (!text || !name || !cores.length || !cores.every(word=>compact(text).includes(word)) || cores.some(core=>isCancelled(text,core))) { omitted.push({id:e.tempId,reason:'EVENT_UNGROUNDED_OR_CANCELLED'}); return [] }
+    if (!text || !name || !cores.length || !cores.every(word=>compact(text).includes(word)) || cores.some(core=>isCancelled(text,core,result.promptVersion==='recognition-two-step-2.3.0'))) { omitted.push({id:e.tempId,reason:'EVENT_UNGROUNDED_OR_CANCELLED'}); return [] }
     // A submission call is not itself a scheduled event. Keep an explicitly
     // held activity even when its date is unknown; only isolate a title that
     // merely announces a collection/registration and has no event facts.
     const hasEventTime=result.timePoints.some(p=>(p.tempId===e.startTimePointTempId||p.tempId===e.endTimePointTempId)&&p.normalizedValue)
     if (!hasEventTime&&!e.location&&/(?:征集|征稿|报名|申报|投稿)/u.test(text)&&!/(?:举办|举行|召开|开设|上课|讲座|培训会|说明会|展览|演出)/u.test(text)) {omitted.push({id:e.tempId,reason:'COLLECTION_TITLE_NOT_SCHEDULED_EVENT'});return []}
-    const tags: DirectTag[] = conditional.test(text) ? ['如符合条件','待确认'] : e.selected === false||conflicts.has(e.tempId) ? ['待确认'] : []
+    const eventCondition=result.promptVersion==='recognition-two-step-2.3.0'
+      ? result.evidence.some(ref=>e.evidenceIds.includes(ref.id)&&ref.field==='requirement'&&located.has(ref.id)&&isEventEligibility(located.get(ref.id)!.quote))
+      : e.tempId==='local-direct-optional-event'||e.tempId==='local-labelled-event'
+        ? /(?:若|如果|如已|如需|符合.{0,18}条件|入选后|录取后|已缴费|已报名|持(?:有|学生证|证|卡)|凭(?:学生证|证件|卡)|仅限|限.{0,10}学生)/u.test(text)
+        : conditional.test(text)
+    const tags: DirectTag[] = eventCondition ? ['如符合条件','待确认'] : e.selected === false||conflicts.has(e.tempId) ? ['待确认'] : []
     tagsById.set(e.tempId, tags)
     const location = e.location && e.location.split(' · ').every(part=>compact(text).includes(compact(part))) ? e.location : null
     return [{...e, location, selected:true, relatedTaskTempIds:e.relatedTaskTempIds?.filter(id => taskIds.has(id))}]
@@ -147,7 +153,8 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if (!times.some(p => p.relatedTaskTempIds.includes(t.tempId) && p.normalizedValue)) tagsById.get(t.tempId)!.push('时间待定')
     items.push({tempId:t.tempId,kind:'task',tags:[...new Set(tagsById.get(t.tempId)!)]})
   })
-  if (!tasks.length) {
+  const eventIsPrimary=events.length>0&&(result.promptVersion==='recognition-two-step-2.3.0'||events.some(e=>e.tempId==='local-labelled-event'))
+  if (!tasks.length && !eventIsPrimary) {
     // Owner-authored read action, not a claim that the notice demanded it.
     // Even a cancellation has an update to read; its cancelled action is absent.
     const proposed=result.sourceSummary.title.trim(),core=compact(proposed.replace(/关于|通知|公告|安排/gu,''))
