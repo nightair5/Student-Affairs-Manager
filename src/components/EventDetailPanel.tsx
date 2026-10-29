@@ -16,6 +16,7 @@ export interface EventDetailPanelProps {
   project?: Project
   evidenceQuotes: string[]
   sourceTitles: string[]
+  sourceSupplement?: string[]
   onClose: () => void
 }
 

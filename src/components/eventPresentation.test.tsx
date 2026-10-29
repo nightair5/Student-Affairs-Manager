@@ -9,6 +9,14 @@ const event=(patch:Partial<Event>={}):Event=>({id:'event-1',title:'校园培训�
 const noop=()=>undefined
 
 describe('event details presentation',()=>{
+  it('shows source-level information as unassigned, without presenting it as an event fact',()=>{
+    const html=renderToStaticMarkup(<CompactEventDetailPanel event={event()} evidenceQuotes={[]} sourceTitles={[]} sourceSupplement={['参加活动可获得一次学习证明']} onClose={noop}/> )
+    expect(html).toContain('这条通知还提到（所属事项待确认）')
+    expect(html).toContain('参加活动可获得一次学习证明')
+    expect(html).not.toContain('参加须知')
+    const empty=renderToStaticMarkup(<CompactEventDetailPanel event={event()} evidenceQuotes={[]} sourceTitles={[]} onClose={noop}/> )
+    expect(empty).not.toContain('这条通知还提到')
+  })
   it('keeps source-backed description visible even when an evidence quote contains it',()=>{
     const description='主讲人：王老师，课程中心教师\n活动内容：讲解申请和常见问题。\n参加须知：提前入场并可现场提问。\n嘉宾简介：相关经历\n多年工作。'
     const e=event({description})

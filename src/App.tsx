@@ -64,6 +64,7 @@ import { sourceActionTimesFromSidecar } from './recognition/sourceActionTime'
 import { groundTaskTimeWindows, taskTimeAuthorityFromSidecar } from './recognition/taskTimeAuthorityContract'
 import { indexImmutableScopesV11 } from './recognition/scopeIndexV11'
 import { projectSourceInformation } from './recognition/sourceInformationPreview'
+import { eventEvidenceDraftId, eventSourceSupplement } from './recognition/eventSourceSupplement'
 import {createOrdinaryMeasurement,type OrdinaryMeasurement} from './domain/v2/ordinaryMeasurementD26'
 import {
   mergeRecognitionTasks,
@@ -267,7 +268,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     tasks.find((task) => task.id === selectedTaskId) ?? null
   const selectedEvent = events.find((event) => event.id === selectedEventId) ?? null
   const selectedEventDrafts = selectedEvent
-    ? drafts.filter((draft) => draft.recognitionResult?.evidence.some((evidence) => selectedEvent.evidenceIds.includes(evidence.id)))
+    ? ordinaryCanonical
+      ? drafts.filter(draft => draft.id === eventEvidenceDraftId(ordinaryCanonical,selectedEvent.id,selectedEvent.evidenceIds))
+      : drafts.filter((draft) => draft.recognitionResult?.evidence.some((evidence) => selectedEvent.evidenceIds.includes(evidence.id)))
     : []
   const selectedEventEvidenceQuotes = selectedEvent
     ? [...new Set(selectedEventDrafts.flatMap((draft) => draft.recognitionResult?.evidence
@@ -2046,6 +2049,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           project={projects.find((project) => project.id === selectedEvent.projectId)}
           evidenceQuotes={selectedEventEvidenceQuotes}
           sourceTitles={selectedEventSourceTitles}
+          sourceSupplement={eventSourceSupplement(ordinaryCanonical,selectedEvent.id)}
           onClose={() => setSelectedEventId(null)}
         />
       )}
