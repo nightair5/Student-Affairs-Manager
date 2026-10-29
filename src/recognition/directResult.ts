@@ -108,13 +108,17 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const unsupported = !quotes(p.evidenceIds).length || !raw || !compact(text).includes(compact(raw))
     const applicationCutoff=/申请|申报|报名/u.test(text)&&/逾期[^。；]{0,20}(?:不再受理|不予受理|不受理)/u.test(text)&&/至|到|—/u.test(raw)
     const risky = alternatives.test(text) || (/_deadline$/u.test(p.type) && (!deadline.test(text)&&!applicationCutoff || /办理时段|开放时间|领取时段/u.test(text) && !/截止|最迟/u.test(text)))
-    const inferredWeekday=p.tempId==='local-direct-optional-event:start'&&p.type==='event_start'
+    const weekdayRaw=raw.replace(/^\s*(?:活动|会议|讲座|培训)?时间[：:]\s*/u,'')
+    const prefix=text.slice(0,Math.max(0,text.indexOf(raw)))
+    const clause=prefix.slice(Math.max(...['。','；',';','，',',','！','!','？','?'].map(mark=>prefix.lastIndexOf(mark)))+1)
+    const eventTimeLabel=/^\s*(?:活动|会议|讲座|培训)?时间[：:]\s*周/u.test(raw)||/(?:^|\s)(?:活动|会议|讲座|培训)?时间[：:]\s*$/u.test(clause)
+    const inferredWeekday=p.type==='event_start'&&(p.tempId==='local-direct-optional-event:start'||result.promptVersion==='recognition-two-step-2.3.0'&&eventIds.has(p.tempId)&&eventTimeLabel&&!/(?:报名|申请|提交|缴费|预约|截止|截至)/u.test(clause)&&Boolean(sameWeekdayTime(weekdayRaw,result.createdAt,p.timezone)))
     if (unsupported || risky || deadlineConflicts.has(p.tempId)||p.relatedTaskTempIds.some(id=>deadlineConflicts.has(id))||!p.normalizedValue || p.needsConfirmation && p.precision !== 'date_only'&&!inferredWeekday) return unknown()
     if(p.normalizedValue){
       let parsed=parseDirectSourceTime(raw,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
       const correction=/(?:改为|调整为|更正为|延期至|现为)([^。；;\n]*)/u.exec(text)
       if(correction)parsed=parseDirectSourceTime(correction[1],{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
-      else if(parsed.dateKind==='none')parsed=(inferredWeekday?sameWeekdayTime(raw,result.createdAt,p.timezone):null)??parseDirectSourceTime(text,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
+      else if(parsed.dateKind==='none')parsed=(inferredWeekday?sameWeekdayTime(weekdayRaw,result.createdAt,p.timezone):null)??parseDirectSourceTime(text,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
       const expected=p.type==='event_end'&&parsed.rangeEndNormalizedValue?parsed.rangeEndNormalizedValue:parsed.normalizedValue
       const same=expected&&(/T/u.test(expected)?parseBusinessDateTime(expected,p.timezone)?.getTime()===parseBusinessDateTime(p.normalizedValue,p.timezone)?.getTime():expected===p.normalizedValue)
       if(!same||parsed.needsConfirmation||parsed.dateKind==='none')return unknown()

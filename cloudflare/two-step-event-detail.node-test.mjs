@@ -149,3 +149,90 @@ test('candidate selected by env while 2.1 generation request is unchanged',async
  assert.equal(sent[0].messages[0].content,twoStepSystemPrompt())
 })
 
+test('candidate preserves a location name beginning with 至 and only removes explicit prepositions',()=>{
+ for(const [quote,expected] of [['至善楼309','至善楼309'],['地点：至善楼309','至善楼309'],['在至善楼309举行','至善楼309'],['到北楼报告厅举办','北楼报告厅']]){
+  const source=`阅读讲座。${quote}。`,raw={items:[{id:'a',kind:'活动',name:'阅读讲座',quote:'阅读讲座'}],facts:[{type:'地点',item:'a',quote}],noAction:true},result=compileTwoStep(raw,opt(source))
+  assert.equal(result.result.events[0]?.location,expected,quote)
+ }
+})
+test('locations stay with their activity and merge without deleting first characters',()=>{
+ const source='一、阅读讲座。地点：至善楼309。地址：南校区。\n二、科技讲座。地点：北楼报告厅。',raw={items:[{id:'a',kind:'活动',name:'阅读讲座',quote:'阅读讲座'},{id:'b',kind:'活动',name:'科技讲座',quote:'科技讲座'}],facts:[{type:'地点',item:'a',quote:'至善楼309'},{type:'地点',item:'a',quote:'南校区'},{type:'地点',item:'b',quote:'北楼报告厅'}],noAction:true},c=compileTwoStep(raw,opt(source))
+ assert.equal(c.result.events[0].location,'至善楼309 · 南校区')
+ assert.equal(c.result.events[1].location,'北楼报告厅')
+})
+test('a source-aligned location preposition can be removed when the following verb proves its role',()=>{
+ const source='阅读讲座在会议室举行。',raw={items:[{id:'a',kind:'活动',name:'阅读讲座',quote:'阅读讲座'}],facts:[{type:'地点',item:'a',quote:'在会议室'}],noAction:true}
+ assert.equal(compileTwoStep(raw,opt(source)).result.events[0].location,'会议室')
+})
+test('a location from another numbered activity cannot be borrowed even if the model assigns it there',()=>{
+ const source='一、阅读讲座。\n地点：南楼会议室。\n二、科技讲座。\n地点：北楼报告厅。',raw={items:[{id:'a',kind:'活动',name:'阅读讲座',quote:'阅读讲座'},{id:'b',kind:'活动',name:'科技讲座',quote:'科技讲座'}],facts:[{type:'地点',item:'a',quote:'北楼报告厅'},{type:'地点',item:'b',quote:'南楼会议室'}],noAction:true},c=compileTwoStep(raw,opt(source))
+ assert.equal(c.result.events[0].location,null);assert.equal(c.result.events[1].location,null)
+ assert.equal(c.audit.losses.filter(x=>x.reason==='LOCATION_CONTRADICTS_SOURCE_SCOPE').length,2)
+})
+test('two activities in the same sentence do not exchange ambiguous locations',()=>{
+ const source='读书讲座和科技讲座分别在南楼和北楼举行。',raw={items:[{id:'a',kind:'活动',name:'读书讲座',quote:'读书讲座'},{id:'b',kind:'活动',name:'科技讲座',quote:'科技讲座'}],facts:[{type:'地点',item:'a',quote:'北楼'},{type:'地点',item:'b',quote:'南楼'}],noAction:true},c=compileTwoStep(raw,opt(source))
+ assert.equal(c.result.events[0].location,null);assert.equal(c.result.events[1].location,null)
+})
+test('numbered activities cannot borrow another section time, including explicit dates and bare weekdays',()=>{
+ for(const [first,second,referenceTime] of [['2026年10月29日09:00','2026年10月30日14:00','2026-10-29T08:00:00+08:00'],['周四 09:00','周五 14:00','2026-10-29T08:00:00+08:00']]){
+  const source=`一、读书讲座。时间：${first}。地点：南楼。\n二、科技讲座。时间：${second}。地点：北楼。`,items=[{id:'a',kind:'活动',name:'读书讲座',quote:'读书讲座'},{id:'b',kind:'活动',name:'科技讲座',quote:'科技讲座'}],facts=[{type:'开始',item:'a',quote:second},{type:'开始',item:'b',quote:first},{type:'地点',item:'a',quote:'南楼'},{type:'地点',item:'b',quote:'北楼'}]
+  const c=compileTwoStep({items,facts,noAction:true},{...opt(source),referenceTime})
+  assert.equal(c.result.events[0].location,'南楼');assert.equal(c.result.events[1].location,'北楼')
+  for(const event of c.result.events)assert.equal(c.result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.normalizedValue??null,null)
+  assert.equal(c.audit.losses.filter(x=>x.reason==='EVENT_TIME_CONTRADICTS_OR_AMBIGUOUS_IN_SOURCE_SCOPE').length,2)
+  const correct=compileTwoStep({items,facts:[{type:'开始',item:'a',quote:first},{type:'开始',item:'b',quote:second}],noAction:true},{...opt(source),referenceTime})
+  assert(correct.result.events.every(event=>correct.result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.normalizedValue))
+ }
+})
+test('two activities in the same sentence do not receive an ambiguous weekday time',()=>{
+ const source='读书讲座和科技讲座分别于周四 09:00和周五 14:00举办。',raw={items:[{id:'a',kind:'活动',name:'读书讲座',quote:'读书讲座'},{id:'b',kind:'活动',name:'科技讲座',quote:'科技讲座'}],facts:[{type:'开始',item:'a',quote:'周五 14:00'},{type:'开始',item:'b',quote:'周四 09:00'}],noAction:true},c=compileTwoStep(raw,{...opt(source),referenceTime:'2026-10-29T08:00:00+08:00'})
+ for(const event of c.result.events)assert.equal(c.result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.normalizedValue??null,null)
+})
+test('slash dates remain unresolved while preserving original evidence',()=>{
+ const quote='2025/10/27 14:00—16:00',source='阅读讲座。时间：'+quote+'。',raw={items:[{id:'a',kind:'活动',name:'阅读讲座',quote:'阅读讲座'}],facts:[{type:'开始',item:'a',quote}],noAction:true},c=compileTwoStep(raw,{...opt(source),referenceTime:'2025-10-01T12:00:00+08:00'}),event=c.result.events[0]
+ assert.equal(c.result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.normalizedValue,null)
+ assert.equal(event.endTimePointTempId,null)
+ assert.equal(c.result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.rawText,quote)
+ assert(c.result.evidence.some(e=>e.quote===quote&&source.slice(e.textStart,e.textEnd)===quote))
+ for(const bad of ['2025/02/30 14:00','10/27 14:00','2025/13/27 14:00']){
+  const s='阅读讲座。时间：'+bad+'。',r=compileTwoStep({...raw,facts:[{type:'开始',item:'a',quote:bad}]},{...opt(s),referenceTime:'2025-10-01T12:00:00+08:00'})
+  assert.equal(r.result.timePoints[0].normalizedValue,null,bad)
+ }
+})
+test('two activities on separate lines retain their own unambiguous dates',()=>{
+ const source='读书讲座 10月30日09:00\n科技讲座 11月1日14:00',raw={items:[{id:'a',kind:'活动',name:'读书讲座',quote:'读书讲座'},{id:'b',kind:'活动',name:'科技讲座',quote:'科技讲座'}],facts:[{type:'开始',item:'a',quote:'10月30日09:00'},{type:'开始',item:'b',quote:'11月1日14:00'}],noAction:true},c=compileTwoStep(raw,{...opt(source),referenceTime:'2026-10-29T08:00:00+08:00'})
+ assert.equal(c.result.timePoints.find(p=>p.tempId===c.result.events[0].startTimePointTempId)?.normalizedValue,'2026-10-30T09:00')
+ assert.equal(c.result.timePoints.find(p=>p.tempId===c.result.events[1].startTimePointTempId)?.normalizedValue,'2026-11-01T14:00')
+ const swapped=compileTwoStep({...raw,facts:[{type:'开始',item:'a',quote:'11月1日14:00'},{type:'开始',item:'b',quote:'10月30日09:00'}]},{...opt(source),referenceTime:'2026-10-29T08:00:00+08:00'})
+ for(const e of swapped.result.events)assert.equal(swapped.result.timePoints.find(p=>p.tempId===e.startTimePointTempId)?.normalizedValue??null,null)
+})
+test('speaker history, recurring meetings, and signup deadlines do not become a weekday activity start',()=>{
+ for(const [source,quote] of [
+  ['读书讲座。主讲嘉宾此前于2024/10/27 14:00获得教学奖。具体讲座时间另行通知。','2024/10/27 14:00'],
+  ['读书讲座。讲师每周四中午12:40参加例会。具体讲座时间另行通知。','周四中午12:40'],
+  ['读书讲座。报名截止2026/10/27 14:00。讲座时间另行通知。','2026/10/27 14:00'],
+  ['读书讲座。报名截止时间：周四 12:40。讲座时间另行通知。','周四 12:40'],
+ ]){
+  const raw={items:[{id:'a',kind:'活动',name:'读书讲座',quote:'读书讲座'}],facts:[{type:'开始',item:'a',quote}],noAction:true},c=compileTwoStep(raw,{...opt(source),referenceTime:'2026-10-29T08:00:00+08:00'}),e=c.result.events[0]
+  assert.equal(c.result.timePoints.find(p=>p.tempId===e.startTimePointTempId)?.normalizedValue??null,null,source)
+ }
+})
+test('candidate resolves a bare weekday only in the fixed reference week, retaining uncertainty',()=>{
+ const source='阅读讲座。时间：周四 中午 12:40。',raw={items:[{id:'a',kind:'活动',name:'阅读讲座',quote:'阅读讲座'}],facts:[{type:'开始',item:'a',quote:'周四 中午 12:40'}],noAction:true}
+ const fixed={...opt(source),referenceTime:'2026-10-29T13:55:17+08:00'},c=compileTwoStep(raw,fixed),event=c.result.events[0],p=c.result.timePoints.find(x=>x.tempId===event.startTimePointTempId)
+ assert.equal(p.normalizedValue,'2026-10-29T12:40');assert.equal(p.needsConfirmation,true);assert.equal(event.endTimePointTempId,null)
+ assert.match(event.description,/星期日期按通知接收时间推算/u)
+ assert.equal(compileTwoStep(raw,fixed).result.timePoints.find(x=>x.tempId===event.startTimePointTempId).normalizedValue,p.normalizedValue)
+ for(const referenceTime of ['2026-10-30T09:00:00+08:00','invalid'])assert.equal(compileTwoStep(raw,{...fixed,referenceTime}).result.timePoints[0].normalizedValue,null)
+ const noClock=source.replace(' 中午 12:40',''),withoutClock={...raw,facts:[{type:'开始',item:'a',quote:'周四'}]}
+ assert.equal(compileTwoStep(withoutClock,{...fixed,source:noClock}).result.timePoints[0].normalizedValue,null)
+})
+test('worker returns the candidate weekday and original location without manufacturing an end',async()=>{
+ const source='阅读讲座。时间：周四 中午 12:40。地点：至善楼309。',raw={items:[{id:'a',kind:'活动',name:'阅读讲座',quote:'阅读讲座'}],facts:[{type:'开始',item:'a',quote:'周四 中午 12:40'},{type:'地点',item:'a',quote:'至善楼309'}],noAction:true},origin='https://test.example'
+ const worker=createWorker({logger:()=>{},fetcher:async()=>Response.json({model:'deepseek-flash',choices:[{message:{content:JSON.stringify(raw)},finish_reason:'stop'}],usage:{prompt_tokens:10,completion_tokens:20,total_tokens:30}})})
+ const req=new Request(origin+'/api/deepseek/extract',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({content:source,sourceType:'text',referenceTime:'2026-10-29T13:55:17+08:00',timezone:'Asia/Shanghai'})})
+ const response=await worker.fetch(req,{ALLOWED_ORIGINS:origin,DEEPSEEK_API_KEY:'server-only-test-key',DEEPSEEK_GENERATION_MODE:'two-step-2.3',TWO_STEP_COMPILER_VERSION:'2.1.12'}),json=await response.json(),event=json.result?.events[0]
+ assert.equal(response.status,200,JSON.stringify(json));assert.equal(event.location,'至善楼309');assert.equal(event.endTimePointTempId,null)
+ assert.equal(json.result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.normalizedValue,'2026-10-29T12:40')
+})
+

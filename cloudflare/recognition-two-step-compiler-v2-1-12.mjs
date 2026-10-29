@@ -2,6 +2,7 @@ import {compileTwoStep as compileBase} from './recognition-two-step-compiler-v2-
 import {alignSourceQuote,sourceScopes} from './two-step-source-alignment.mjs'
 import {isEventEligibility,normalizeEventPolarity} from './event-eligibility.mjs'
 import {parseDirectSourceTime} from './direct-source-time.mjs'
+import {mergeOwnedLocations} from './two-step-location.mjs'
 
 const detailTypes=new Set(['主讲人','主持人','活动内容','参加须知','嘉宾简介','原文时长'])
 function checkedHint(hint,quote,source){
@@ -11,6 +12,49 @@ function checkedHint(hint,quote,source){
 }
 const conditionPattern=/(?:仅(?:对|供|面向|限)|通过审核|审核通过|符合.{0,12}条件|入选后|录取后|若|如果)/u
 const eventPolarity=normalizeEventPolarity
+// A bare weekday is resolved only in the source's reference week. It stays a
+// user-visible inference, never a silently asserted date or a rolling next week.
+function referenceWeekdayTime(raw,options){
+ const prefix=/^\s*(?:(?:活动|会议|讲座|培训)?时间[：:]\s*)?周([一二三四五六日天])(?=\s|\d|上午|中午|下午|晚上)/u.exec(raw)
+ if(!prefix||options.timezone&&options.timezone!=='Asia/Shanghai')return null
+ const reference=new Date(options.referenceTime)
+ if(!Number.isFinite(reference.getTime()))return null
+ const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(reference)
+ const get=type=>Number(parts.find(p=>p.type===type)?.value)
+ const weekday=new Date(Date.UTC(get('year'),get('month')-1,get('day'))).getUTCDay()||7
+ const desired={'一':1,'二':2,'三':3,'四':4,'五':5,'六':6,'日':7,'天':7}[prefix[1]]
+ if(desired<weekday)return null
+ const timeText=raw.slice(prefix[0].lastIndexOf('周')).replace(/^周/u,'本周')
+ const parsed=parseDirectSourceTime(timeText,{type:'event_start',referenceTime:options.referenceTime,timezone:'Asia/Shanghai'})
+ return parsed.normalizedValue&&parsed.precision==='exact'&&!parsed.needsConfirmation?parsed:null
+}
+// Location names may begin with 至; only strip an explicit preposition when
+// the source fragment itself makes it a preposition, never an arbitrary first character.
+function sourceLocation(literal,following=''){
+ let value=literal.replace(/^(?:活动|会议)?地点[：:]\s*/u,'').trim()
+ if(/^(?:在|到)\s*.+(?:举行|举办|召开|办理)[。；;]?$/u.test(value)||/^(?:在|到)\s*.+/u.test(value)&&/^\s*(?:举行|举办|召开|办理)/u.test(following))value=value.replace(/^(?:在|到)\s*/u,'')
+ return value.replace(/(?:举办|举行|召开|办理)[。；;]?$/u,'').replace(/[。；;]$/u,'').trim()
+}
+// A model-provided item id cannot override a conflicting source section. When
+// multiple events share all available scopes, keep that field unresolved.
+function sourceScopeOwnsFact(fact,ownerId,raw,options){
+ const events=raw.items.filter(item=>item.kind==='活动')
+ const lineStart=options.source.lastIndexOf('\n',Math.max(0,fact.start-1))+1,lineStop=options.source.indexOf('\n',fact.end)
+ const line={start:lineStart,end:lineStop<0?options.source.length:lineStop}
+ for(const scope of [line,...sourceScopes(fact,options.source)]){
+  const neighbours=events.flatMap(candidate=>{const span=checkedHint(options.alignmentHints?.items?.find(h=>h.id===candidate.id)?.span,candidate.quote,options.source)??alignSourceQuote(candidate.quote,options.source);return span&&span.start>=scope.start&&span.end<=scope.end?[candidate.id]:[]})
+  if(neighbours.length===1)return neighbours[0]===ownerId
+ }
+ return events.length===1&&events[0].id===ownerId
+}
+function explicitEventWeekdayTime(fact,source){
+ const lineStart=source.lastIndexOf('\n',Math.max(0,fact.start-1))+1
+ const leading=source.slice(lineStart,fact.start)
+ const clause=leading.slice(Math.max(...['。','；',';','，',',','！','!','？','?'].map(p=>leading.lastIndexOf(p)))+1)
+ const quotedLabel=/^\s*(?:活动|会议|讲座|培训)?时间[：:]\s*周/u.test(fact.literal)
+ const precedingLabel=/(?:^|\s)(?:活动|会议|讲座|培训)?时间[：:]\s*$/u.test(clause)
+ return (quotedLabel||precedingLabel)&&!/(?:报名|申请|提交|缴费|预约|截止|截至)/u.test(clause)
+}
 function isEventRevision(clause){
  const active=eventPolarity(clause)
  return /(?:取消|作废|不再举办|改期|延期)/u.test(active)||/(?:调整至|变更为|改为)(?=[^。；;\n]{0,30}(?:\d|[一二三四五六七八九十]+月|周[一二三四五六日天]|下周|明天|另行通知))/u.test(active)
@@ -66,6 +110,39 @@ export function compileTwoStep(raw,options){
  if(!base.result)return base
  base.audit.compilerVersion='two-step-compiler-2.1.12'
  for(const name of restoredNames)base.audit.items.push({...name,rule:'EVENT_TITLE_FROM_EXPLICIT_LITERAL_QUOTE'})
+ for(const [i,item] of raw.items.entries()){
+  const event=base.result.events.find(e=>e.tempId==='g2-'+(i+1))
+  if(!event)continue
+  const candidates=base.audit.facts.filter(f=>f.item===item.id&&f.type==='地点'&&f.status==='ALIGNED_AND_OWNED'&&options.source.slice(f.start,f.end)===f.literal)
+  const owned=candidates.filter(f=>sourceScopeOwnsFact(f,item.id,raw,options))
+  if(candidates.length)event.location=owned.length?mergeOwnedLocations(owned.map(f=>({span:{start:f.start,literal:f.literal}})),literal=>{const f=owned.find(x=>x.literal===literal);return sourceLocation(literal,options.source.slice(f.end,f.end+8))})||null:null
+  for(const f of candidates.filter(f=>!owned.includes(f)))base.audit.losses.push({layer:'OWNERSHIP',id:item.id,reason:'LOCATION_CONTRADICTS_SOURCE_SCOPE',quote:f.literal})
+  const point=base.result.timePoints.find(p=>p.tempId===event.startTimePointTempId&&p.type==='event_start')
+  const fact=base.audit.facts.find(f=>f.item===item.id&&f.type==='开始'&&f.status==='ALIGNED_AND_OWNED'&&f.literal===point?.rawText&&options.source.slice(f.start,f.end)===f.literal)
+  if(point&&fact&&!sourceScopeOwnsFact(fact,item.id,raw,options)){
+   Object.assign(point,{normalizedValue:null,isAllDay:false,precision:'vague',needsConfirmation:true,selected:false})
+   event.selected=false
+   base.audit.losses.push({layer:'OWNERSHIP',id:item.id,reason:'EVENT_TIME_CONTRADICTS_OR_AMBIGUOUS_IN_SOURCE_SCOPE',quote:fact.literal})
+  }else if(point&&!point.normalizedValue&&fact&&explicitEventWeekdayTime(fact,options.source)){
+   const parsed=referenceWeekdayTime(fact.literal,options)
+   if(parsed){
+    Object.assign(point,{normalizedValue:parsed.normalizedValue,timezone:'Asia/Shanghai',isAllDay:false,precision:'exact',needsConfirmation:true,selected:false})
+    const note='参加须知：星期日期按通知接收时间推算，请确认。'
+    if(!event.description.includes(note)&&event.description.length+note.length+1<=800)event.description+='\n'+note
+    base.audit.facts.push({rule:'EVENT_WEEKDAY_IN_REFERENCE_WEEK_REQUIRES_CONFIRMATION',item:item.id,start:fact.start,end:fact.end,referenceTime:options.referenceTime})
+   }
+  }
+  for(const [type,pointId] of [['开始',event.startTimePointTempId],['结束',event.endTimePointTempId]]){
+   const p=base.result.timePoints.find(x=>x.tempId===pointId&&x.type===(type==='开始'?'event_start':'event_end'))
+   const sourceFact=base.audit.facts.find(f=>f.item===item.id&&f.type===type&&f.status==='ALIGNED_AND_OWNED'&&f.literal===p?.rawText&&options.source.slice(f.start,f.end)===f.literal)
+   if(p&&sourceFact&&!sourceScopeOwnsFact(sourceFact,item.id,raw,options)){
+    Object.assign(p,{normalizedValue:null,isAllDay:false,precision:'vague',needsConfirmation:true,selected:false})
+    event.selected=false
+    if(!base.audit.losses.some(l=>l.id===item.id&&l.reason==='EVENT_TIME_CONTRADICTS_OR_AMBIGUOUS_IN_SOURCE_SCOPE'&&l.quote===sourceFact.literal))base.audit.losses.push({layer:'OWNERSHIP',id:item.id,reason:'EVENT_TIME_CONTRADICTS_OR_AMBIGUOUS_IN_SOURCE_SCOPE',quote:sourceFact.literal})
+    continue
+   }
+  }
+ }
  for(const [i,item] of raw.items.entries()){
   const event=base.result.events.find(e=>e.tempId==='g2-'+(i+1))
   if(!event)continue
