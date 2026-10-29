@@ -236,3 +236,24 @@ test('worker returns the candidate weekday and original location without manufac
  assert.equal(json.result.timePoints.find(p=>p.tempId===event.startTimePointTempId)?.normalizedValue,'2026-10-29T12:40')
 })
 
+
+test('repeated event title is aligned only when a unique heading supplies the source context',()=>{
+ const source='【校园讲座预告】\n### 校园讲座预告 | 学术主题\n活动时间：2028年4月2日14:00。',raw={items:[{id:'a',kind:'活动',name:'校园讲座',quote:'校园讲座预告'}],facts:[{type:'开始',item:'a',quote:'2028年4月2日14:00'}],noAction:false}
+ const c=compileTwoStep(raw,opt(source));assert.equal(c.result.events.length,1);assert.equal(c.result.evidence.find(e=>e.field==='event').textStart,source.indexOf('校园讲座预告',source.indexOf('###')))
+ const ambiguous=source+'\n### 校园讲座预告 | 另一主题';assert.equal(compileTwoStep(raw,opt(ambiguous)).result.events.length,0)
+})
+test('separate event sections recover repeated locations and retain each distinct time',()=>{
+ const source='主办方：校园文化中心。\n第一场：读书讲座\n时间：2028年4月2日09:00\n地点：公共教室\n主持人：甲老师\n第二场：科技讲座\n时间：2028年4月2日14:00\n地点：公共教室\n主持人：乙老师',raw={items:[{id:'a',kind:'活动',name:'读书讲座',quote:'读书讲座'},{id:'b',kind:'活动',name:'科技讲座',quote:'科技讲座'}],facts:[{type:'开始',item:'a',quote:'2028年4月2日09:00'},{type:'地点',item:'a',quote:'公共教室'},{type:'主持人',item:'a',quote:'主持人：甲老师'},{type:'开始',item:'b',quote:'2028年4月2日14:00'},{type:'地点',item:'b',quote:'公共教室'},{type:'主持人',item:'b',quote:'主持人：乙老师'}],noAction:false}
+ const c=compileTwoStep(raw,opt(source)),[a,b]=c.result.events;assert.equal(a.location,'公共教室');assert.equal(b.location,'公共教室');assert.match(a.description,/甲老师/u);assert.match(b.description,/乙老师/u);assert.match(c.result.timePoints.find(p=>p.tempId===a.startTimePointTempId).normalizedValue,/09:00/u);assert.match(c.result.timePoints.find(p=>p.tempId===b.startTimePointTempId).normalizedValue,/14:00/u)
+})
+
+test('questions and invitations do not create eligibility restrictions',()=>{
+ const source='职业发展讲座。时间：周四中午12:40。欢迎有意向的同学参加，如果有疑问可以咨询老师。',raw={items:[{id:'a',kind:'活动',name:'职业发展讲座',quote:'职业发展讲座'}],facts:[{type:'开始',item:'a',quote:'周四中午12:40'},{type:'参加须知',item:'a',quote:'如果有疑问可以咨询老师'}],noAction:false},c=compileTwoStep(raw,opt(source))
+ assert.doesNotMatch(c.result.events[0].description,/适用条件待确认/u);assert.match(c.result.events[0].description,/如果有疑问可以咨询老师/u)
+})
+
+test('incidental event mentions do not claim later unnamed numbered sessions',()=>{
+ const source='本周将举行读书讲座。\n另外举办科技讲座。\n第一场活动，时间：2026年10月30日09:00，地点：南楼。\n第二场活动，时间：2026年10月31日14:00，地点：北楼。',raw={items:[{id:'a',kind:'活动',name:'读书讲座',quote:'读书讲座'},{id:'b',kind:'活动',name:'科技讲座',quote:'科技讲座'}],facts:[{type:'开始',item:'b',quote:'2026年10月30日09:00'},{type:'地点',item:'b',quote:'南楼'}],noAction:false}
+ const c=compileTwoStep(raw,opt(source)),event=c.result.events.find(e=>e.title==='科技讲座'),start=c.result.timePoints.find(p=>p.tempId===event.startTimePointTempId)
+ assert.equal(event.location,null);assert.equal(start?.normalizedValue,null);assert(c.audit.losses.some(x=>x.reason==='EVENT_TIME_CONTRADICTS_OR_AMBIGUOUS_IN_SOURCE_SCOPE'))
+})

@@ -35,6 +35,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     return {...next,omitted:[...baseline.omitted,...next.omitted]}
   }
   const result = structuredClone(composeSharedSubmissions(input,sourceText)), omitted: DirectConversion['omitted'] = [], items: DirectItem[] = []
+  const eventDetailContract = result.promptVersion==='recognition-two-step-2.3.0'||result.promptVersion==='recognition-two-step-2.4.0'
   const originalTasks = original ? recordTasks(original) : new Map<string, TaskSuggestionV2>()
   const located = new Map(result.evidence.flatMap(e => {
     const quote = e.quotedText || e.quote
@@ -55,6 +56,17 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   const tagsById = new Map<string, DirectTag[]>()
   const conflicts=new Set(result.conflicts.filter(c=>c.requiresDecision).flatMap(c=>c.entityTempIds))
   const deadlineConflicts=new Set(result.conflicts.filter(c=>c.requiresDecision&&c.type==='deadline').flatMap(c=>c.entityTempIds))
+  // Only a clause that describes attendance can qualify a local event. An
+  // unrelated "if you have questions" or a cancelled registration must not
+  // become an event eligibility label merely because it appears nearby.
+  const localEventCondition=(text:string,eventTitle:string)=>text.split(/[。；;！？\n]/u).some(clause=>{
+    const qualification=/(?:仅(?:对|供|面向|限)|符合.{0,18}(?:条件|资格)|入选后|录取后|通过审核|审核通过|已(?:报名|登记|注册|缴费|预约)|持(?:有|学生证|证|卡)|凭(?:学生证|证件|卡)|限.{0,10}(?:学生|同学|人员))/u
+    if(!qualification.test(clause)||!isEventEligibility(clause)||/取消(?:报名|预约|注册|资格)/u.test(clause))return false
+    const otherEvents=result.events.filter(candidate=>candidate.title!==eventTitle).some(candidate=>compact(candidate.title)&&compact(clause).includes(compact(candidate.title)))
+    if(otherEvents)return false
+    const scopedToEvent=compact(clause).includes(compact(eventTitle))||/(?:参加|出席|参会|听讲|入场)/u.test(clause)
+    return scopedToEvent||result.events.length===1&&/(?:仅(?:对|供|面向|限)|符合.{0,18}(?:条件|资格)|入选后|录取后)/u.test(clause)
+  })
   const tasks = flatTasks(result).flatMap(task => {
     let t = task
     const old = originalTasks.get(task.tempId)
@@ -82,16 +94,16 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   const events = result.events.flatMap(e => {
     const text = context(e.evidenceIds), name = compact(e.title)
     const cores=e.title.replace(/(?:参加|关于|召开|举行|出席)/gu,'').split(/和|与|及|暨/u).map(compact).filter(Boolean)
-    if (!text || !name || !cores.length || !cores.every(word=>compact(text).includes(word)) || cores.some(core=>isCancelled(text,core,result.promptVersion==='recognition-two-step-2.3.0'))) { omitted.push({id:e.tempId,reason:'EVENT_UNGROUNDED_OR_CANCELLED'}); return [] }
+    if (!text || !name || !cores.length || !cores.every(word=>compact(text).includes(word)) || cores.some(core=>isCancelled(text,core,eventDetailContract))) { omitted.push({id:e.tempId,reason:'EVENT_UNGROUNDED_OR_CANCELLED'}); return [] }
     // A submission call is not itself a scheduled event. Keep an explicitly
     // held activity even when its date is unknown; only isolate a title that
     // merely announces a collection/registration and has no event facts.
     const hasEventTime=result.timePoints.some(p=>(p.tempId===e.startTimePointTempId||p.tempId===e.endTimePointTempId)&&p.normalizedValue)
     if (!hasEventTime&&!e.location&&/(?:征集|征稿|报名|申报|投稿)/u.test(text)&&!/(?:举办|举行|召开|开设|上课|讲座|培训会|说明会|展览|演出)/u.test(text)) {omitted.push({id:e.tempId,reason:'COLLECTION_TITLE_NOT_SCHEDULED_EVENT'});return []}
-    const eventCondition=result.promptVersion==='recognition-two-step-2.3.0'
+    const eventCondition=eventDetailContract
       ? result.evidence.some(ref=>e.evidenceIds.includes(ref.id)&&ref.field==='requirement'&&located.has(ref.id)&&isEventEligibility(located.get(ref.id)!.quote))
       : e.tempId==='local-direct-optional-event'||e.tempId==='local-labelled-event'
-        ? /(?:若|如果|如已|如需|符合.{0,18}条件|入选后|录取后|已缴费|已报名|持(?:有|学生证|证|卡)|凭(?:学生证|证件|卡)|仅限|限.{0,10}学生)/u.test(text)
+        ? localEventCondition(text,e.title)
         : conditional.test(text)
     const tags: DirectTag[] = eventCondition ? ['如符合条件','待确认'] : e.selected === false||conflicts.has(e.tempId) ? ['待确认'] : []
     tagsById.set(e.tempId, tags)
@@ -112,7 +124,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const prefix=text.slice(0,Math.max(0,text.indexOf(raw)))
     const clause=prefix.slice(Math.max(...['。','；',';','，',',','！','!','？','?'].map(mark=>prefix.lastIndexOf(mark)))+1)
     const eventTimeLabel=/^\s*(?:活动|会议|讲座|培训)?时间[：:]\s*周/u.test(raw)||/(?:^|\s)(?:活动|会议|讲座|培训)?时间[：:]\s*$/u.test(clause)
-    const inferredWeekday=p.type==='event_start'&&(p.tempId==='local-direct-optional-event:start'||result.promptVersion==='recognition-two-step-2.3.0'&&eventIds.has(p.tempId)&&eventTimeLabel&&!/(?:报名|申请|提交|缴费|预约|截止|截至)/u.test(clause)&&Boolean(sameWeekdayTime(weekdayRaw,result.createdAt,p.timezone)))
+    const inferredWeekday=p.type==='event_start'&&(p.tempId==='local-direct-optional-event:start'||eventDetailContract&&eventIds.has(p.tempId)&&eventTimeLabel&&!/(?:报名|申请|提交|缴费|预约|截止|截至)/u.test(clause)&&Boolean(sameWeekdayTime(weekdayRaw,result.createdAt,p.timezone)))
     if (unsupported || risky || deadlineConflicts.has(p.tempId)||p.relatedTaskTempIds.some(id=>deadlineConflicts.has(id))||!p.normalizedValue || p.needsConfirmation && p.precision !== 'date_only'&&!inferredWeekday) return unknown()
     if(p.normalizedValue){
       let parsed=parseDirectSourceTime(raw,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
@@ -157,7 +169,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if (!times.some(p => p.relatedTaskTempIds.includes(t.tempId) && p.normalizedValue)) tagsById.get(t.tempId)!.push('时间待定')
     items.push({tempId:t.tempId,kind:'task',tags:[...new Set(tagsById.get(t.tempId)!)]})
   })
-  const eventIsPrimary=events.length>0&&(result.promptVersion==='recognition-two-step-2.3.0'||events.some(e=>e.tempId==='local-labelled-event'))
+  const eventIsPrimary=events.length>0&&(eventDetailContract||events.some(e=>e.tempId==='local-labelled-event'))
   if (!tasks.length && !eventIsPrimary) {
     // Owner-authored read action, not a claim that the notice demanded it.
     // Even a cancellation has an update to read; its cancelled action is absent.

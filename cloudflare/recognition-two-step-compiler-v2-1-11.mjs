@@ -28,7 +28,7 @@ export const alignTwoStepQuote=alignSourceQuote
 const sentenceAt=(span,source)=>{const before=source.slice(0,span.start),left=Math.max(before.lastIndexOf('。'),before.lastIndexOf('；'),before.lastIndexOf(';'))+1,tail=source.slice(span.end).search(/[。；;]/u),end=tail<0?source.length:span.end+tail+1;return{start:left,end,text:source.slice(left,end)}}
 const sameSentence=(a,b,source)=>{const left=Math.min(a.start,b.start),right=Math.max(a.end,b.end);return !/[。；;！？!?]/u.test(source.slice(left,right))}
 const valueOf=(q,type)=>q.replace(new RegExp('^(?:活动)?'+type+'[：:]\\s*','u'),'').replace(/^[在至到]\s*/u,'').replace(/(?:举办|举行|办理)[。；;]?$/u,'').replace(/[。；;]$/u,'').trim()
-export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',version=TWO_STEP_VERSION,alignmentHints=null,polarityNormalizer=null}){
+export function compileTwoStep(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',version=TWO_STEP_VERSION,alignmentHints=null,polarityNormalizer=null,ownershipVerifier=null}){
  const hinted=(kind,id,q)=>{const h=alignmentHints?.[kind]?.find(x=>kind==='items'?x.id===id:x.index===id)?.span;if(!h||source.slice(h.start,h.end)!==h.literal)return null;const aligned=alignTwoStepQuote(q,h.literal);return aligned&&aligned.start===0&&aligned.end===h.literal.length?h:null}
  const check=validateTwoStep(raw);if(!check.valid)return{result:null,audit:{version,rootFailure:true,losses:check.errors},rootFailure:true}
  const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:'通知建议',sourceType:'text',notificationType:'teacher_task',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,version,true,timezone)
@@ -94,7 +94,7 @@ declared.set(item.id,record);audit.items.push({id:item.id,name:item.name,kind:it
    }
   }
   if(!owner?.entity){note('OWNERSHIP',String(i),'FACT_OWNER_MISSING_OR_AMBIGUOUS',fact.quote);continue}
-  const neighbours=[...declared.values()].filter(r=>r.entity&&sameSentence(r.span,span,source));if(neighbours.length===1&&neighbours[0].id!==owner.id){note('OWNERSHIP',String(i),'FACT_CONTRADICTS_UNIQUE_SOURCE_SENTENCE_OWNER',fact.quote);continue}
+  const neighbours=[...declared.values()].filter(r=>r.entity&&sameSentence(r.span,span,source));if(neighbours.length===1&&neighbours[0].id!==owner.id&&!(typeof ownershipVerifier==='function'&&ownershipVerifier(owner,span))){note('OWNERSHIP',String(i),'FACT_CONTRADICTS_UNIQUE_SOURCE_SENTENCE_OWNER',fact.quote);continue}
   const eid=evidence(span,['截止','开始','结束','办理时段'].includes(fact.type)?'deadline':fact.type==='材料'?'materials':fact.type==='条件'?'requirement':'description')
   staged.push({type:fact.type,span,owner,eid});owner.entity.evidenceIds=[...new Set([...owner.entity.evidenceIds,eid])];audit.facts.push({type:fact.type,item:owner.id,start:span.start,end:span.end,modelQuote:fact.quote,literal:span.literal,alignmentRule:span.rule,status:'ALIGNED_AND_OWNED'})
  }

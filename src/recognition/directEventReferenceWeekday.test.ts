@@ -20,6 +20,14 @@ describe('a candidate weekday retains its fixed source reference',()=>{
   expect(direct.result.timePoints[0]?.needsConfirmation).toBe(true)
   expect(direct.items.find(i=>i.kind==='event')?.tags).toContain('待确认')
  })
+ it('retains the fixed source weekday in 2.4 but not in the old 2.1 contract',()=>{
+  const current=makeResult();current.promptVersion='recognition-two-step-2.4.0'
+  const converted=convertDirectResult(current,source)
+  expect(converted.result.timePoints[0]?.normalizedValue).toBe('2026-10-29T12:40')
+  expect(converted.result.timePoints[0]?.needsConfirmation).toBe(true)
+  const legacy=makeResult();legacy.promptVersion='recognition-two-step-2.1.0'
+  expect(convertDirectResult(legacy,source).result.timePoints[0]?.normalizedValue).toBeNull()
+ })
  it('does not accept a forged date, a different reference week, or enable it for 2.1',()=>{
   const forged=makeResult();forged.timePoints[0].normalizedValue='2026-11-05T12:40'
   expect(convertDirectResult(forged,source).result.timePoints[0]?.normalizedValue).toBeNull()

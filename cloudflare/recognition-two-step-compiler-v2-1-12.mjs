@@ -10,7 +10,50 @@ function checkedHint(hint,quote,source){
  const aligned=alignSourceQuote(quote,hint.literal)
  return aligned&&aligned.start===0&&aligned.end===hint.literal.length?hint:null
 }
-const conditionPattern=/(?:仅(?:对|供|面向|限)|通过审核|审核通过|符合.{0,12}条件|入选后|录取后|若|如果)/u
+// A repeated title is usable only if a single occurrence is explicitly a Markdown heading.
+// Never pick the first arbitrary duplicate: offsets always come from the original source.
+function uniqueHeadingSpan(quote,source){
+ if(typeof quote!=='string'||!quote.trim())return null
+ const spans=[];let at=-1
+ while((at=source.indexOf(quote,at+1))>=0){const left=source.lastIndexOf('\n',at-1)+1;if(/^\s*#{1,6}\s+$/u.test(source.slice(left,at)))spans.push({start:at,end:at+quote.length,literal:quote,rule:'UNIQUE_MARKDOWN_HEADING'})}
+ return spans.length===1?spans[0]:null
+}
+function eventSections(raw,source,hints){
+ const events=raw.items.filter(item=>item.kind==='活动')
+ const anchors=events.map(item=>({id:item.id,span:checkedHint(hints?.items?.find(h=>h.id===item.id)?.span,item.quote,source)??alignSourceQuote(item.quote,source)??uniqueHeadingSpan(item.quote,source)}))
+ if(anchors.length<2||anchors.some(a=>!a.span))return []
+ const ordered=anchors.map(a=>({...a,start:source.lastIndexOf('\n',Math.max(0,a.span.start-1))+1})).sort((a,b)=>a.start-b.start)
+ if(new Set(ordered.map(a=>a.start)).size!==ordered.length)return []
+ // An incidental mention in prose is not a section heading. Only treat an
+ // event anchor as a heading if it begins the line, optionally after a
+ // conventional heading marker; narrative introductions cannot claim all
+ // following unlabelled facts.
+ for(const a of ordered){
+  const prefix=source.slice(a.start,a.span.start).trim()
+  if(prefix&&!/^(?:#{1,6}|[一二三四五六七八九十0-9]+[、.．]|第[一二三四五六七八九十0-9]+(?:场|讲|项|期)[：:]?)$/u.test(prefix))return []
+  const after=source.slice(a.span.end,source.indexOf('\n',a.span.end)<0?source.length:source.indexOf('\n',a.span.end)).trim()
+  if(after&&!/^[。！？.!?]$/u.test(after)&&!/^(?:[：:]|时间[：:]|地点[：:]|\d{4}年|\d{1,2}月)/u.test(after))return []
+ }
+ const numbered=[...source.matchAll(/^[ \t]*(?:第[一二三四五六七八九十0-9]+(?:场|讲|项|期)|[一二三四五六七八九十]+[、.．]|[0-9]+[、.．])/gmu)].map(m=>m.index)
+ return ordered.map((a,i)=>({id:a.id,start:a.start,end:Math.min(ordered[i+1]?.start??source.length,numbered.find(pos=>pos>a.start)??source.length)}))
+}
+function contextualHints(raw,source,existing){
+ const items=[...(existing?.items??[])],facts=[...(existing?.facts??[])]
+ for(const item of raw.items.filter(x=>x.kind==='活动')){
+  if(items.some(h=>h.id===item.id)||alignSourceQuote(item.quote,source))continue
+  const span=uniqueHeadingSpan(item.quote,source);if(span)items.push({id:item.id,span})
+ }
+ const hints={items,facts},sections=eventSections(raw,source,hints)
+ raw.facts.forEach((fact,index)=>{
+  if(facts.some(h=>h.index===index)||typeof fact.quote!=='string'||alignSourceQuote(fact.quote,source))return
+  const section=sections.find(s=>s.id===fact.item);if(!section)return
+  const positions=[];let at=section.start-1
+  while((at=source.indexOf(fact.quote,at+1))>=0&&at<section.end){if(at+fact.quote.length<=section.end)positions.push(at)}
+  if(positions.length===1)facts.push({index,span:{literal:fact.quote,start:positions[0],end:positions[0]+fact.quote.length,rule:'UNIQUE_IN_EVENT_SECTION'}})
+ })
+ return hints
+}
+const conditionPattern=/(?:仅(?:对|供|面向|限)|通过审核|审核通过|符合.{0,12}条件|入选后|录取后)/u
 const eventPolarity=normalizeEventPolarity
 // A bare weekday is resolved only in the source's reference week. It stays a
 // user-visible inference, never a silently asserted date or a rolling next week.
@@ -39,6 +82,8 @@ function sourceLocation(literal,following=''){
 // multiple events share all available scopes, keep that field unresolved.
 function sourceScopeOwnsFact(fact,ownerId,raw,options){
  const events=raw.items.filter(item=>item.kind==='活动')
+ const section=eventSections(raw,options.source,options.alignmentHints).find(s=>fact.start>=s.start&&fact.end<=s.end)
+ if(section)return section.id===ownerId
  const lineStart=options.source.lastIndexOf('\n',Math.max(0,fact.start-1))+1,lineStop=options.source.indexOf('\n',fact.end)
  const line={start:lineStart,end:lineStop<0?options.source.length:lineStop}
  for(const scope of [line,...sourceScopes(fact,options.source)]){
@@ -78,13 +123,16 @@ function eventRevision(item,raw,options){
 // All new content remains human-readable in the existing event description;
 // the older contract, storage shape and compiler remain byte-for-byte intact.
 export function compileTwoStep(raw,options){
+ const effectiveHints=contextualHints(raw,options.source,options.alignmentHints)
+ options={...options,alignmentHints:effectiveHints}
  const retained=[],detail=[],indexes=new Map()
  for(const [index,fact] of raw.facts.entries()){
   if(detailTypes.has(fact?.type))detail.push({fact,index})
   else {indexes.set(index,retained.length);retained.push(fact)}
  }
  const alignmentHints=options.alignmentHints?{...options.alignmentHints,facts:(options.alignmentHints.facts??[]).filter(h=>indexes.has(h.index)).map(h=>({...h,index:indexes.get(h.index)}))}:null
- const first=compileBase({...raw,facts:retained},{...options,alignmentHints,polarityNormalizer:eventPolarity})
+ const ownershipVerifier=(owner,span)=>{const section=eventSections(raw,options.source,options.alignmentHints).find(s=>span.start>=s.start&&span.end<=s.end);return !!section&&section.id===owner.id}
+ const first=compileBase({...raw,facts:retained},{...options,alignmentHints,polarityNormalizer:eventPolarity,ownershipVerifier})
  if(!first.result)return first
  const restoredNames=[]
  const items=raw.items.map((item,index)=>{
@@ -106,7 +154,7 @@ export function compileTwoStep(raw,options){
   if(isSpecificName&&!revised&&!sourceScope.includes(item.name.normalize('NFKC').replace(/\s/gu,''))){restoredNames.push({id:item.id,before:item.name,after:literal});return {...item,name:literal}}
   return item
  })
- const base=restoredNames.length?compileBase({...raw,items,facts:retained},{...options,alignmentHints,polarityNormalizer:eventPolarity}):first
+ const base=restoredNames.length?compileBase({...raw,items,facts:retained},{...options,alignmentHints,polarityNormalizer:eventPolarity,ownershipVerifier}):first
  if(!base.result)return base
  base.audit.compilerVersion='two-step-compiler-2.1.12'
  for(const name of restoredNames)base.audit.items.push({...name,rule:'EVENT_TITLE_FROM_EXPLICIT_LITERAL_QUOTE'})
@@ -197,6 +245,8 @@ export function compileTwoStep(raw,options){
    if(conditionPattern.test(scope.text)){localCondition=true;break}
   }
   const hasActualCondition=base.audit.facts.some(f=>f.item===item.id&&f.type==='条件'&&f.status==='ALIGNED_AND_OWNED'&&isEventEligibility(f.literal))||localCondition
+  for(const f of base.audit.facts.filter(f=>f.item===item.id&&f.type==='条件'&&f.status==='ALIGNED_AND_OWNED'&&!isEventEligibility(f.literal))){event.description=event.description.replace('适用条件待确认：'+f.literal,'参加须知：'+f.literal)}
+  if(!hasActualCondition)event.description=event.description.replace(/\n适用条件待确认：(?:原文公布了活动或考试安排，是否由本人参加尚未确认。|[^\n]*(?:有意|感兴趣|欢迎|自愿)[^\n]*)/gu,'')
   const hasItemLoss=base.audit.losses.some(l=>l.id===item.id&&['TIME','REVISION','POLARITY'].includes(l.layer))
   const voluntary=itemAudit.some(a=>a.rule==='SOURCE_PARTICIPANT_SCOPE_UNKNOWN'||a.rule==='PUBLIC_ATTENDANCE_SCHEDULE_NOT_PERSONAL_MANDATE')
   if(voluntary&&!hasActualCondition&&!hasItemLoss){
@@ -211,11 +261,12 @@ export function compileTwoStep(raw,options){
   const hint=options.alignmentHints?.facts?.find(h=>h.index===index)?.span
   const span=checkedHint(hint,fact.quote,options.source)??alignSourceQuote(fact.quote,options.source)
   if(!event||!span){base.audit.losses.push({layer:!span?'ALIGNMENT':'OWNERSHIP',id:String(index),reason:!span?'EVENT_DETAIL_UNALIGNED':'EVENT_DETAIL_OWNER_MISSING',quote:fact.quote});continue}
+  const detailSection=eventSections(raw,options.source,options.alignmentHints).find(s=>span.start>=s.start&&span.end<=s.end)
   let conflictingScope=null
   const scopes=sourceScopes(span,options.source),sentence=scopes[0],before=options.source.slice(sentence.start,span.start),after=options.source.slice(span.end,sentence.end)
   const comma=Math.max(before.lastIndexOf('，'),before.lastIndexOf(',')),nextComma=after.search(/[，,]/u)
   const clause={level:'CLAUSE',start:comma<0?sentence.start:sentence.start+comma+1,end:nextComma<0?sentence.end:span.end+nextComma}
-  for(const scope of [clause,...scopes]){
+  for(const scope of detailSection?.id===fact.item?[]:[clause,...scopes]){
    const neighbours=raw.items.filter(item=>item.kind==='活动').flatMap(item=>{const s=checkedHint(options.alignmentHints?.items?.find(h=>h.id===item.id)?.span,item.quote,options.source)??alignSourceQuote(item.quote,options.source);return s&&s.start>=scope.start&&s.end<=scope.end?[item.id]:[]})
    if(neighbours.length===1){if(neighbours[0]!==fact.item)conflictingScope=scope.level;break}
    // A scope containing several activities cannot prove either ownership.
@@ -227,6 +278,7 @@ export function compileTwoStep(raw,options){
     break
    }
   }
+  if(!conflictingScope&&detailSection&&detailSection.id!==fact.item)conflictingScope='EVENT_SECTION'
   if(conflictingScope){base.audit.losses.push({layer:'OWNERSHIP',id:String(index),reason:'EVENT_DETAIL_CONTRADICTS_SOURCE_SCOPE',scope:conflictingScope,quote:fact.quote});continue}
   const value=span.literal.replace(new RegExp('^'+fact.type+'[：:]\\s*','u'),'').trim()
   const line=fact.type+'：'+value

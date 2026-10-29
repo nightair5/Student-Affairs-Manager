@@ -1,3 +1,4 @@
+import {twoStepSystemPrompt as twoStep24SystemPrompt,TWO_STEP_VERSION as TWO_STEP24_VERSION} from './recognition-two-step-contract-v2-4.mjs'
 import {compileTwoStep as compileFixed} from './recognition-two-step-compiler-v2-1-11.mjs'
 import {compileTwoStep as compileDetails} from './recognition-two-step-compiler-v2-1-12.mjs'
 import {twoStepSystemPrompt as twoStep23SystemPrompt,TWO_STEP_VERSION as TWO_STEP23_VERSION} from './recognition-two-step-contract-v2-3.mjs'
@@ -14,7 +15,7 @@ export function chunkTwoStepSource(source,limit=1500){
  const chunks=[];let start=0
  while(start<source.length){let end=Math.min(source.length,start+limit);if(end<source.length){const part=source.slice(start,end);let cut=-1;for(const m of part.matchAll(/\n(?=(?:[一二三四五六七八九十]+[、.]|[（(][一二三四五六七八九十0-9]+[）)]|[0-9]+[、.]))|\n\n|[。；;]/gu))if(m.index>limit/3)cut=m.index+m[0].length;if(cut>0)end=start+cut}chunks.push({start,end,text:source.slice(start,end)});start=end}return chunks
 }
-export function twoStep21Request(profile,userText,mode='two-step-2.1'){return {...extractionRequestOptions(profile),messages:[{role:'system',content:mode==='two-step-2.3'?twoStep23SystemPrompt():mode==='two-step-2.2'?twoStep22SystemPrompt():twoStepSystemPrompt()},{role:'user',content:userText}]}}
+export function twoStep21Request(profile,userText,mode='two-step-2.1'){return {...extractionRequestOptions(profile),messages:[{role:'system',content:mode==='two-step-2.4'?twoStep24SystemPrompt():mode==='two-step-2.3'?twoStep23SystemPrompt():mode==='two-step-2.2'?twoStep22SystemPrompt():twoStepSystemPrompt()},{role:'user',content:userText}]}}
 // Sequential extraction passes, first aligned proposal wins for the same object.
 // Distinct evidence is retained; conflicting key times remain explicit conflicts.
 export function mergeAlignedExtractions(samples,source,{preserveWithinPass=false}={}){
@@ -34,7 +35,7 @@ export function mergeAlignedExtractions(samples,source,{preserveWithinPass=false
  return {raw,hints,audit}
 }
 export async function runTwoStep21Generation({fetcher,apiKey,profile,userText,source,referenceTime,timezone,mode='two-step-2.1',budgetMs=45000,compilerVersion='2.1.9'}){
- const version=mode==='two-step-2.3'?TWO_STEP23_VERSION:mode==='two-step-2.2'?TWO_STEP22_VERSION:TWO_STEP_VERSION
+ const version=mode==='two-step-2.4'?TWO_STEP24_VERSION:mode==='two-step-2.3'?TWO_STEP23_VERSION:mode==='two-step-2.2'?TWO_STEP22_VERSION:TWO_STEP_VERSION
  const started=Date.now(),passes=mode==='two-step-2.1x2'?2:1,chunks=chunkTwoStepSource(source),samples=[],deadline=started+Math.max(1,Math.min(45000,budgetMs)),plannedCalls=passes*chunks.length
  for(let pass=0;pass<passes;pass++)for(const [chunkIndex,chunk]of chunks.entries()){
   if(Date.now()>=deadline)break;
@@ -43,7 +44,7 @@ export async function runTwoStep21Generation({fetcher,apiKey,profile,userText,so
  }
  const usable=samples.filter(s=>s.status===200&&validateTwoStep(s.value).valid)
  if(!usable.length)return {ok:false,status:samples.find(s=>s.status&&s.status!==200)?.status??502,error:samples.some(s=>s.error==='UPSTREAM_TIMEOUT')?'UPSTREAM_TIMEOUT':'INVALID_AI_RESPONSE',samples:samples.map(({value,chunk,...s})=>({...s,sourceStart:chunk.start,sourceEnd:chunk.end}))}
- const merged=mergeAlignedExtractions(usable,source,{preserveWithinPass:mode==='two-step-2.2'||mode==='two-step-2.3'}),compiled=(mode==='two-step-2.3'?compileDetails:compilerVersion==='direct-1.0'?compileRetained:compilerVersion==='2.1.11'?compileFixed:compilerVersion==='2.1.10'?compileDirect:compileLegacy)(merged.raw,{source,referenceTime,timezone,model:profile.model,version,alignmentHints:merged.hints})
+ const merged=mergeAlignedExtractions(usable,source,{preserveWithinPass:mode==='two-step-2.2'||mode==='two-step-2.3'||mode==='two-step-2.4'}),compiled=((mode==='two-step-2.3'||mode==='two-step-2.4')?compileDetails:compilerVersion==='direct-1.0'?compileRetained:compilerVersion==='2.1.11'?compileFixed:compilerVersion==='2.1.10'?compileDirect:compileLegacy)(merged.raw,{source,referenceTime,timezone,model:profile.model,version,alignmentHints:merged.hints})
  if(!compiled.result)return {ok:false,status:502,error:'INVALID_AI_RESPONSE',samples:[]}
  if(usable.length<samples.length||samples.length<plannedCalls||samples.some(s=>s.truncated)){const message=usable.length<samples.length||samples.length<plannedCalls?'部分提取未完成，成功内容已保留，请核对原文。':'通知较长，后半部分可能尚未处理，请核对原文。';compiled.result.quality.needsHumanReview=true;compiled.result.quality.reviewReasons.push(message);compiled.result.ambiguities.push({id:'g21-incomplete',field:'source_reference',message,options:['查看原文','保留待核对'],evidenceIds:[]})}
  const all=samples.every(s=>Number.isFinite(s.usage?.prompt_tokens)&&Number.isFinite(s.usage?.completion_tokens)),sum=k=>samples.reduce((n,s)=>n+(s.usage?.[k]??0),0)

@@ -854,7 +854,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     return failure(validationError, '来源正文或参考时间无效。', 400, context.requestId)
   }
 
-  if(['simple-1.0','two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2','two-step-2.3'].includes(env.DEEPSEEK_GENERATION_MODE)) {
+  if(['simple-1.0','two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2','two-step-2.3','two-step-2.4'].includes(env.DEEPSEEK_GENERATION_MODE)) {
     return extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,context,apiKey)
   }
 
@@ -1186,7 +1186,7 @@ export function createWorker({
         inputLength: 0,
         outputTokens: 0,
         errorType: null,
-        generationMode: ['simple-1.0','two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2','two-step-2.3'].includes(env.DEEPSEEK_GENERATION_MODE) ? env.DEEPSEEK_GENERATION_MODE : 'structured',
+        generationMode: ['simple-1.0','two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2','two-step-2.3','two-step-2.4'].includes(env.DEEPSEEK_GENERATION_MODE) ? env.DEEPSEEK_GENERATION_MODE : 'structured',
       }
       let response = await previewAccess(request,env,{isLimited:previewLoginLimited,now:previewNow})
       if (response) {
