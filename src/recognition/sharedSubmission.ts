@@ -102,6 +102,9 @@ export function composeSharedSubmissions(input:RecognitionResult,source:string):
   }
   const sharedId=evidence(shared,'description')
   const topic=shortTopic(source)
+  const headline=source.split(/\r?\n/u).find(line=>line.trim())??''
+  const headlineStart=source.indexOf(headline)
+  const headlineKey=(value:string)=>normal(value).replace(/[\p{P}\p{S}\s]/gu,'').replace(/^\d{4}年?/u,'')
   const topicCore=normal(topic).replace(/^\d{4}年?/u,'').replace(/[\p{P}\p{S}\s]/gu,'')
   const commonObject=/报名材料|参赛材料|申请材料|申报材料|参赛作品|作品|材料/u.exec(shared.text+'\n'+source)?.[0]??'材料'
   const priorTasks=[...r.standaloneTasks,...r.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
@@ -109,6 +112,15 @@ export function composeSharedSubmissions(input:RecognitionResult,source:string):
   // interpretations of this shared delivery or its incomplete headings.
   const isSameDelivery=(t:TaskSuggestionV2)=>{
     const title=t.title+' '+t.actionObject
+    // A model can label a noun inside an announcement headline as an action
+    // (“学习笔记” → “学习”). A headline-only extraction is redundant once
+    // the explicitly requested deliveries have been reconstructed.
+    const headlineOnly=t.evidenceIds.length>0&&t.evidenceIds.every(id=>{
+      const e=r.evidence.find(ref=>ref.id===id),quote=e?.quotedText||e?.quote
+      const at=typeof e?.textStart==='number'&&quote&&source.slice(e.textStart,e.textStart+quote.length)===quote?e.textStart:quote&&source.indexOf(quote)===source.lastIndexOf(quote)?source.indexOf(quote):-1
+      return Boolean(quote&&at>=headlineStart&&at+quote.length<=headlineStart+headline.length)
+    })
+    if(headlineOnly&&headlineKey(t.title)===headlineKey(headline)&&/(?:征集|征稿|通知|公告)$/u.test(headlineKey(t.title)))return true
     // A generic invitation to take part is not a second registration step
     // when the actual submission is already represented by these deliveries.
     const invitationOnly=/^(?:报名|参加)$/u.test(t.title.trim())&&/^(?:欢迎|诚邀).{0,18}(?:报名|参加)/u.test(t.actionObject.trim())

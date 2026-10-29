@@ -76,6 +76,12 @@ describe('shared submission semantics',()=>{
     expect(r.standaloneTasks).toHaveLength(3)
     expect(r.standaloneTasks.some(t=>t.title==='报名')).toBe(false)
   })
+  it('does not turn an announcement headline into another action',()=>{
+    const r=local(source),quote='星光计划材料征集',at=source.indexOf(quote)
+    const headline:TaskSuggestionV2={tempId:'headline-only',parentTempId:null,hierarchyType:'task',title:quote,actionVerb:'学习',actionObject:'计划材料征集',description:quote,completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:['headline-evidence'],confidence:1,inferenceLevel:'strong_inference',userConfirmationRequired:true,selected:false}
+    r.evidence.push({id:'headline-evidence',sourceId:'source',quote,quotedText:quote,textStart:at,textEnd:at+quote.length,field:'description',extractionMethod:'parser',confidence:1});r.standaloneTasks.push(headline)
+    expect(composeSharedSubmissions(r,source).standaloneTasks.some(task=>task.tempId===headline.tempId)).toBe(false)
+  })
   it('retains an unrelated delivery rather than folding it into the shared list',()=>{
     const text=source+'\n另外请提交纸质实习报告到实习办公室。',r=local(text),quote='另外请提交纸质实习报告到实习办公室。',at=text.indexOf(quote)
     const t:TaskSuggestionV2={tempId:'other-delivery',parentTempId:null,hierarchyType:'task',title:'提交纸质实习报告',actionVerb:'提交',actionObject:'实习报告',description:quote,completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:['other-evidence'],confidence:1,inferenceLevel:'explicit',userConfirmationRequired:false,selected:true}
