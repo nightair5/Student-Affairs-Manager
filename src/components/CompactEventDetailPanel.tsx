@@ -8,6 +8,25 @@ import type {EventDetailPanelProps} from './EventDetailPanel'
 export function CompactEventDetailPanel({event,evidenceQuotes,sourceTitles,onClose,onEdit,onDelete}:EventDetailPanelProps){
   const id=useId(),ref=useRef<HTMLElement>(null),[title,setTitle]=useState(event.title),[location,setLocation]=useState(event.location??''),[open,setOpen]=useState(false),[start,setStart]=useState(flowEditValue(event.startAt)),[end,setEnd]=useState(flowEditValue(event.endAt)),[startEdited,setStartEdited]=useState(false),[endEdited,setEndEdited]=useState(false),[description,setDescription]=useState(event.description),[minutes,setMinutes]=useState(event.estimatedMinutesKnown&&event.estimatedMinutes?String(event.estimatedMinutes):''),[durationEdited,setDurationEdited]=useState(false),[error,setError]=useState(''),[busy,setBusy]=useState(false)
   const sections=eventDescriptionSections(event.description),duration=eventDurationLabel(event)
+  // A short, source-backed biography is useful alongside the speaker. Longer
+  // biographies remain available in one disclosure, without changing saved data.
+  const biographies=sections.filter(section=>section.label==='嘉宾简介')
+  const speakers=sections.filter(section=>section.label==='主讲人'||section.label==='主持人')
+  // A biography without a name cannot safely be assigned to one of several
+  // guests. Named descriptions can still be shown without guessing ownership.
+  const speakerNames=speakers.flatMap(section=>section.content.replace(/^(?:主讲嘉宾|主讲人|报告人|主持人)[：:]\s*/u,'').split(/[、；;]|(?:和|与)(?=.{1,12}$)/u).flatMap(part=>{
+    const commaParts=part.split(/[，,]/u).map(name=>name.trim()).filter(Boolean)
+    // A comma before a second name may list another guest. A comma followed
+    // by a standalone role such as “教授” is instead a single person's title.
+    const anotherGuest=commaParts.slice(1).some(name=>/^[\p{Script=Han}A-Za-z·. ]{2,12}$/u.test(name)&&!/^(?:教授|副教授|研究员|记者|博士|讲师|教师|老师|编辑|主持人)$/u.test(name))
+    return anotherGuest?commaParts:[part.trim()]
+  }).filter(Boolean))
+  const previewIndex=speakerNames.length===1?0:biographies.findIndex(section=>speakerNames.some(name=>name.length>=2&&section.content.includes(name)))
+  const biography=previewIndex>=0?biographies[previewIndex]?.content:undefined
+  const firstSentence=biography?.split(/(?<=[。；;])/u)[0]?.trim()
+  const preview=biography&&biography.length<=100?biography:firstSentence&&firstSentence.length<=100&&/[。；;]$/u.test(firstSentence)?firstSentence:undefined
+  const remainingBiographies=preview&&preview===biography?biographies.filter((_,index)=>index!==previewIndex):biographies
+  const contentSections=sections.filter(section=>section.label!=='主讲人'&&section.label!=='主持人'&&section.label!=='嘉宾简介')
   useDialogFocusTrap(ref,onClose)
   const save=async()=>{if(!onEdit)return;setBusy(true);setError('');try{await onEdit({title:title.trim()||event.title,date:startEdited?start:event.startAt??'',end:endEdited?end:event.endAt??'',location,description,...(!startEdited?{preserveStart:true}:{}),...(!endEdited?{preserveEnd:true}:{}),...(!startEdited&&!endEdited?{preserveTimes:true}:{}),...(durationEdited?{estimatedMinutes:minutes?Number(minutes):null}:{})});setDurationEdited(false);setStartEdited(false);setEndEdited(false);setOpen(false)}catch{setError('未能保存，请检查时间后重试。')}finally{setBusy(false)}}
   return <div className="modal-backdrop detail-backdrop" role="presentation"><aside ref={ref} className="detail-panel compact-detail-panel event-detail-panel" role="dialog" aria-modal="true" aria-labelledby={id}>
@@ -16,7 +35,10 @@ export function CompactEventDetailPanel({event,evidenceQuotes,sourceTitles,onClo
       <section className="detail-primary-section" aria-label="时间和地点"><h3><CalendarDays size={16}/>时间</h3><p>{flowEventDate(event)}</p>{duration&&<p>{duration}</p>}{event.location&&<p><MapPin size={15}/>{event.location}</p>}{Boolean(event.directTags?.length)&&<div className="direct-inline-tags">{event.directTags!.map(t=><span className="direct-tag" key={t}>{t}</span>)}</div>}{onEdit&&<button className="text-button" type="button" onClick={()=>setOpen(v=>!v)}>修改</button>}
         {open&&<form className="compact-date-editor" onSubmit={e=>{e.preventDefault();void save()}}><label>名称<input value={title} onChange={e=>setTitle(e.target.value)} required/></label><label>开始<input type={/^\d{4}-\d{2}-\d{2}$/u.test(start)?'date':'datetime-local'} value={start.slice(0,16)} onChange={e=>{setStart(e.target.value);setStartEdited(true)}}/></label><label>结束（可留空）<input type={/^\d{4}-\d{2}-\d{2}$/u.test(end)?'date':'datetime-local'} value={end.slice(0,16)} onChange={e=>{setEnd(e.target.value);setEndEdited(true)}}/></label><label>地点<input value={location} onChange={e=>setLocation(e.target.value)}/></label><label>个人预计用时（分钟，可留空）<input type="number" min="1" max="1440" value={minutes} onChange={e=>{setMinutes(e.target.value);setDurationEdited(true)}}/></label><label className="compact-notes-label">活动内容与须知<textarea value={description} onChange={e=>setDescription(e.target.value)}/></label><button type="submit" className="primary-button" disabled={busy}>保存修改</button></form>}
       </section>
-      {sections.map((section,index)=>section.label==='嘉宾简介'?<details className="detail-more" key={`${section.label}-${index}`}><summary>嘉宾简介</summary><p>{section.content}</p></details>:<section className="detail-primary-section" aria-label={section.label} key={`${section.label}-${index}`}><h3>{section.label}</h3><p>{section.content}</p></section>)}
+      {speakers.map((section,index)=><section className="detail-primary-section" aria-label={section.label} key={`${section.label}-${index}`}><h3>{section.label}</h3><p>{section.content}</p></section>)}
+      {preview&&<section className="detail-primary-section" aria-label="嘉宾简介"><h3>嘉宾简介</h3><p>{preview}</p></section>}
+      {contentSections.map((section,index)=><section className="detail-primary-section" aria-label={section.label} key={`${section.label}-${index}`}><h3>{section.label}</h3><p>{section.content}</p></section>)}
+      {remainingBiographies.length>0&&<details className="detail-more"><summary>更多嘉宾简介</summary>{remainingBiographies.map((section,index)=><p key={index}>{section.content}</p>)}</details>}
       <details className="detail-more"><summary>更多</summary><section><h3>查看原文</h3>{evidenceQuotes.map(q=><p key={q}>{q}</p>)}{sourceTitles.length>0&&<small>{sourceTitles.join('、')}</small>}</section></details>
     </div><footer className="detail-footer">{onDelete&&<button className="text-button danger-text" type="button" disabled={busy} onClick={()=>{void onDelete().catch(()=>setError('没有删除成功，请重试。'))}}><Trash2 size={16}/>删除</button>}<button type="button" className="primary-button" onClick={onClose}>完成</button></footer>
   </aside></div>

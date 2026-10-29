@@ -254,6 +254,29 @@ export function compileTwoStep(raw,options){
    event.selected=true
   }
  }
+ // A participation note is attached only if the source explicitly names
+ // this event or the note immediately follows its source-backed title. A
+ // model returning one event does not prove the source contains only one.
+ const sourceEvents=raw.items.filter(item=>item.kind==='活动')
+ if(sourceEvents.length===1&&base.result.events.length===1){
+  const event=base.result.events[0],owner=sourceEvents[0]
+  const ownerSpan=checkedHint(options.alignmentHints?.items?.find(h=>h.id===owner.id)?.span,owner.quote,options.source)??alignSourceQuote(owner.quote,options.source)
+  for(const [index,item] of raw.items.entries()){
+   if(item.kind!=='信息'||typeof item.quote!=='string'||!ownerSpan)continue
+   const span=checkedHint(options.alignmentHints?.items?.find(h=>h.id===item.id)?.span,item.quote,options.source)??alignSourceQuote(item.quote,options.source)
+   if(!span||!/^\s*(?:参加|参与|出席|到场)/u.test(span.literal))continue
+   const ownerLiteral=ownerSpan.literal.replace(/^[【\[（(《\s]+|[】\]）)》\s]+$/gu,'').trim()
+   const namesOwner=ownerLiteral.length>=4&&span.literal.includes(ownerLiteral)
+   const nextToTitle=span.start>=ownerSpan.end&&/^[\s。！？!?.]*$/u.test(options.source.slice(ownerSpan.end,span.start))
+   if(!namesOwner&&!nextToTitle)continue
+   const line='参加须知：'+span.literal.trim()
+   if(event.description.includes(span.literal.trim())||event.description.length+line.length+1>800)continue
+   const evidenceId='g2-info-note-e'+(index+1)
+   base.result.evidence.push({id:evidenceId,sourceId:'pending-source',quote:span.literal,quotedText:span.literal,textStart:span.start,textEnd:span.end,field:'description',extractionMethod:'parser',confidence:1})
+   event.evidenceIds.push(evidenceId);event.description+='\n'+line
+   base.audit.facts.push({type:'参加须知',item:owner.id,start:span.start,end:span.end,literal:span.literal,status:'ALIGNED_AND_OWNED',rule:namesOwner?'EXPLICIT_EVENT_NAME_PARTICIPATION_NOTE':'ADJACENT_EVENT_TITLE_PARTICIPATION_NOTE'})
+  }
+ }
  const priority={'主讲人':0,'主持人':1,'参加须知':2,'活动内容':3,'原文时长':4,'嘉宾简介':5}
  for(const {index,fact} of detail.toSorted((a,b)=>priority[a.fact.type]-priority[b.fact.type]||a.index-b.index)){
   const ownerIndex=raw.items.findIndex(item=>item.id===fact.item&&item.kind==='活动')

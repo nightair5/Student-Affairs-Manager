@@ -26,6 +26,49 @@ describe('event details presentation',()=>{
     expect(eventDurationLabel(event({estimatedMinutesKnown:true,estimatedMinutes:null}))).toBeUndefined()
     expect(eventDurationLabel(event({title:'地点开放',startAt:'2026-10-29',endAt:'2026-10-30'}))).toBeUndefined()
   })
+  it('shows a short guest identity immediately and groups remaining biography paragraphs',()=>{
+    const description='主讲人：王老师\n活动内容：交流学习方法\n嘉宾简介：新闻中心副主任，高级记者\n嘉宾简介：多年教育经历\n嘉宾简介：开设过多场讲座'
+    const html=renderToStaticMarkup(<CompactEventDetailPanel event={event({description})} evidenceQuotes={[]} sourceTitles={[]} onClose={noop}/> )
+    const more=html.indexOf('<summary>更多嘉宾简介</summary>')
+    expect(more).toBeGreaterThan(-1)
+    expect(html.indexOf('新闻中心副主任，高级记者')).toBeLessThan(more)
+    expect(html.indexOf('多年教育经历')).toBeGreaterThan(more)
+    expect(html.match(/<summary>更多嘉宾简介<\/summary>/gu)).toHaveLength(1)
+    expect(html).toContain('交流学习方法')
+  })
+  it('does not put an unabridged long biography in the main detail',()=>{
+    const biography='曾从事教育研究。'.repeat(20)
+    const html=renderToStaticMarkup(<CompactEventDetailPanel event={event({description:`主讲人：王老师\n嘉宾简介：${biography}`})} evidenceQuotes={[]} sourceTitles={[]} onClose={noop}/> )
+    const more=html.indexOf('<summary>更多嘉宾简介</summary>')
+    expect(more).toBeGreaterThan(-1)
+    expect(html.indexOf(biography)).toBeGreaterThan(more)
+  })
+  it('does not assign an unnamed biography to one of multiple guests',()=>{
+    const description='主讲人：王老师\n主讲人：李老师\n嘉宾简介：高校教授'
+    const html=renderToStaticMarkup(<CompactEventDetailPanel event={event({description})} evidenceQuotes={[]} sourceTitles={[]} onClose={noop}/> )
+    const more=html.indexOf('<summary>更多嘉宾简介</summary>')
+    expect(more).toBeGreaterThan(-1)
+    expect(html.indexOf('高校教授')).toBeGreaterThan(more)
+    const named=renderToStaticMarkup(<CompactEventDetailPanel event={event({description:'主讲人：王老师\n主讲人：李老师\n嘉宾简介：王老师是高校教授'})} evidenceQuotes={[]} sourceTitles={[]} onClose={noop}/> )
+    expect(named).toContain('<p>王老师是高校教授</p>')
+    expect(named).not.toContain('<summary>更多嘉宾简介</summary>')
+  })
+  it('also treats names listed together as multiple guests',()=>{
+    const description='主讲人：王老师、李老师\n嘉宾简介：高校教授'
+    const html=renderToStaticMarkup(<CompactEventDetailPanel event={event({description})} evidenceQuotes={[]} sourceTitles={[]} onClose={noop}/> )
+    const more=html.indexOf('<summary>更多嘉宾简介</summary>')
+    expect(more).toBeGreaterThan(-1)
+    expect(html.indexOf('高校教授')).toBeGreaterThan(more)
+  })
+  it('distinguishes comma-separated guests from a single guest and their role',()=>{
+    const multiple=renderToStaticMarkup(<CompactEventDetailPanel event={event({description:'主讲人：甲老师，乙老师\n嘉宾简介：高校教授'})} evidenceQuotes={[]} sourceTitles={[]} onClose={noop}/> )
+    const more=multiple.indexOf('<summary>更多嘉宾简介</summary>')
+    expect(more).toBeGreaterThan(-1)
+    expect(multiple.indexOf('高校教授')).toBeGreaterThan(more)
+    const single=renderToStaticMarkup(<CompactEventDetailPanel event={event({description:'主讲人：王老师，教授\n嘉宾简介：新闻中心副主任'})} evidenceQuotes={[]} sourceTitles={[]} onClose={noop}/> )
+    expect(single).toContain('<p>新闻中心副主任</p>')
+    expect(single).not.toContain('<summary>更多嘉宾简介</summary>')
+  })
   it('surfaces the real event time, duration and speaker on a compact row',()=>{
     const e=event({startAt:'2026-10-29T15:00',endAt:'2026-10-29T16:30',location:'教学楼301',description:'主讲人：王老师\n参加须知：自愿参与'})
     const html=renderToStaticMarkup(<FlowEventList events={[e]} onOpen={noop}/>)

@@ -257,3 +257,25 @@ test('incidental event mentions do not claim later unnamed numbered sessions',()
  const c=compileTwoStep(raw,opt(source)),event=c.result.events.find(e=>e.title==='科技讲座'),start=c.result.timePoints.find(p=>p.tempId===event.startTimePointTempId)
  assert.equal(event.location,null);assert.equal(start?.normalizedValue,null);assert(c.audit.losses.some(x=>x.reason==='EVENT_TIME_CONTRADICTS_OR_AMBIGUOUS_IN_SOURCE_SCOPE'))
 })
+
+test('explicit participation information is attached only to a single grounded activity',()=>{
+ const source='科学讲座。参与讲座可获得学习证明。食堂开放时间调整。',raw={items:[{id:'a',kind:'活动',name:'科学讲座',quote:'科学讲座'},{id:'b',kind:'信息',name:'参与讲座可获得学习证明',quote:'参与讲座可获得学习证明'},{id:'c',kind:'信息',name:'食堂开放时间调整',quote:'食堂开放时间调整'}],facts:[],noAction:false},c=compileTwoStep(raw,opt(source)),event=c.result.events[0]
+ assert.match(event.description,/参加须知：参与讲座可获得学习证明/u);assert.doesNotMatch(event.description,/食堂开放时间/u)
+ const e=c.result.evidence.find(x=>x.id.startsWith('g2-info-note'));assert.equal(source.slice(e.textStart,e.textEnd),e.quote)
+})
+test('participation information is not guessed across multiple activities',()=>{
+ const source='科学讲座。读书讲座。参与讲座可获得学习证明。',raw={items:[{id:'a',kind:'活动',name:'科学讲座',quote:'科学讲座'},{id:'b',kind:'活动',name:'读书讲座',quote:'读书讲座'},{id:'c',kind:'信息',name:'参与讲座可获得学习证明',quote:'参与讲座可获得学习证明'}],facts:[],noAction:false},c=compileTwoStep(raw,opt(source))
+ assert.equal(c.result.events.length,2);for(const event of c.result.events)assert.doesNotMatch(event.description,/学习证明/u)
+})
+
+test('participation note is not attached when source mentions another unextracted session',()=>{
+ for(const source of ['第一场：科学讲座。第二场：读书讲座。参加该讲座可获得学习证明。','科学讲座。读书讲座。参加该讲座可获得学习证明。']){
+  const raw={items:[{id:'a',kind:'活动',name:'科学讲座',quote:'科学讲座'},{id:'b',kind:'信息',name:'参加该讲座可获得学习证明',quote:'参加该讲座可获得学习证明'}],facts:[],noAction:false},c=compileTwoStep(raw,opt(source))
+  assert.equal(c.result.events.length,1);assert.doesNotMatch(c.result.events[0].description,/学习证明/u)
+ }
+})
+
+test('an omitted activity mentioned in the same sentence does not inherit its participation note',()=>{
+ const source='上午举办科学讲座，下午举办读书讲座。参加该讲座可获得学习证明。',raw={items:[{id:'a',kind:'活动',name:'科学讲座',quote:'科学讲座'},{id:'b',kind:'信息',name:'参加该讲座可获得学习证明',quote:'参加该讲座可获得学习证明'}],facts:[],noAction:false},c=compileTwoStep(raw,opt(source))
+ assert.equal(c.result.events.length,1);assert.doesNotMatch(c.result.events[0].description,/学习证明/u)
+})
