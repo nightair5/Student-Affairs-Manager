@@ -5,7 +5,7 @@ import {isRecognitionResult} from '../../recognition/schema'
 import {createGoldenWorkspaceV8} from './fixtures'
 import {CanonicalWorkspaceRepository,MemoryWorkspaceRecordStore} from './repository'
 import {CapturePersistenceService} from './capture'
-import {commitDirectDraft,directDuplicate,undoDirectBatch,recentDirectBatches,deleteDirectItem,editDirectItem} from './directIntake'
+import {commitDirectDraft,directDuplicate,pendingDirectDraft,undoDirectBatch,recentDirectBatches,deleteDirectItem,editDirectItem} from './directIntake'
 import {workspaceV8ToLegacyView} from './legacyView'
 import {getFocusTasks} from '../../lib/taskLogic'
 import {validateWorkspaceV8} from './validators/workspaceValidator'
@@ -20,6 +20,19 @@ async function setup(text='请于10月30日17:00前提交课程论文。'){
   await capture.recognize(handle,async()=>local(text));return {repo,store,handle,text}
 }
 describe('owner-authorized direct mode',()=>{
+  it('recovers only unfinished captures, not an active partially confirmed addition or an undone batch',async()=>{
+    const {repo,handle,text}=await setup()
+    const unfinished=(await repo.load())!
+    expect(pendingDirectDraft(unfinished,text)?.id).toBe(handle.draftId)
+    const failed=structuredClone(unfinished)
+    failed.extractionDrafts[0].status='failed';failed.extractionDrafts[0].result=null;failed.recognitionRuns[0].status='failed'
+    expect(pendingDirectDraft(failed,text)?.id).toBe(handle.draftId)
+    const receipt=await commitDirectDraft(repo,handle.draftId,now),active=(await repo.load())!
+    active.extractionDrafts[0].status='partially_confirmed'
+    expect(pendingDirectDraft(active,text)).toBeUndefined()
+    await undoDirectBatch(repo,receipt.batch!.id)
+    expect(pendingDirectDraft((await repo.load())!,text)).toBeUndefined()
+  })
   it('accepts a deadline followed by material requirements and keeps unknown times valid for canonical storage',async()=>{for(const text of ['请于10月30日17:00前将课程论文（PDF格式，以学号+姓名命名）提交至学习通。','办理时段为10月30日9:00—11:00，请领取教材。']){const {repo,handle}=await setup(text);await commitDirectDraft(repo,handle.draftId,now);expect(validateWorkspaceV8((await repo.load())!).valid).toBe(true)}})
   it('keeps the original answer unchanged and creates a grounded ordinary task',()=>{const text='请于10月30日17:00前提交课程论文。',r=local(text),before=structuredClone(r),c=convertDirectResult(r,text);expect(r).toEqual(before);expect(c.result.standaloneTasks[0].title).toContain('课程论文');expect(c.result.timePoints.some(p=>p.normalizedValue==='2026-10-30T17:00')).toBe(true);expect(isRecognitionResult(c.result)).toBe(true)})
   it.each(['校历已更新，仅供参考。','11月2日公布考试成绩，无需办理。','原定11月2日的讲座取消，请知悉。'])('creates an explicit read action without reviving cancelled obligations: %s',text=>{const c=convertDirectResult(local(text),text);expect(c.result.standaloneTasks).toHaveLength(1);expect(c.result.standaloneTasks[0].title).toMatch(/^查看：/u);expect(c.result.timePoints.filter(p=>p.relatedTaskTempIds.includes('direct-read-notice')).every(p=>p.type==='planned_start')).toBe(true);expect(c.result.events).toHaveLength(0);expect(isRecognitionResult(c.result)).toBe(true)})

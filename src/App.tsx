@@ -5,7 +5,7 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } fro
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { DirectResultList, RecentDirectAdditions } from './components/DirectResultList'
 import { setTaskSchedule } from './domain/v2/taskSchedule'
-import { commitDirectDraft, directBatch, replaceDirectFallback, deleteDirectItem, editDirectItem, recentDirectBatches, undoDirectBatch } from './domain/v2/directIntake'
+import { commitDirectDraft, pendingDirectDraft, replaceDirectFallback, deleteDirectItem, editDirectItem, recentDirectBatches, undoDirectBatch } from './domain/v2/directIntake'
 import {historicalDirectDraftIds,workspaceTaskChannels,pairFlowEvents,workspaceEventTimeHints} from './lib/homeFlow'
 import { EventDetailPanel } from './components/EventDetailPanel'
 import { IntakePanel } from './components/IntakePanel'
@@ -776,14 +776,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     if (directMode) {
       if (directReadbackPending) throw new Error('本次内容已保存，请先点击“重新读取”后再整理。')
       const current=await canonicalWorkspaceRepository.load()
-      const pending=current?.extractionDrafts.find(d=>{
-        // A deliberately undone addition is history, not an unfinished retry.
-        if(directBatch(d)?.status==='undone')return false
-        const run=current.recognitionRuns.find(r=>r.id===d.recognitionRunId),version=run&&current.sourceVersions.find(v=>v.id===run.sourceVersionId)
-        const source=version&&current.sources.find(s=>s.id===version.sourceId)
-        const retryable=d.result||(d.status==='failed'&&run?.status==='failed')
-        return retryable&&['needs_review','failed','partially_confirmed'].includes(d.status)&&source?.currentVersionId===version?.id&&version?.rawText?.replace(/\r\n?/gu,'\n').trim()===input.content.replace(/\r\n?/gu,'\n').trim()
-      })
+      const pending=current&&pendingDirectDraft(current,input.content)
       if(pending){
         await addDirect(pending.id)
         if(!pending.result)setNotice(current=>current?{...current,text:current.text+' · 本次使用本机整理'}:current)

@@ -29,6 +29,20 @@ export function directBatch(draft: ExtractionDraft): DirectBatch | null {
   return batch.origin?batch:record(conversion)&&conversion.inputProvider==='local-rules-from-preserved-source'?{...batch,origin:'local'}:batch
 }
 export const recentDirectBatches = (w: WorkspaceV8) => w.extractionDrafts.flatMap(d => {const b=directBatch(d);return b?[b]:[]}).sort((a,b)=>b.addedAt.localeCompare(a.addedAt))
+
+/** Only unfinished captures are eligible for recovery on another submission. */
+export function pendingDirectDraft(w: WorkspaceV8, text: string): ExtractionDraft | undefined {
+  const normalized=text.replace(/\r\n?/gu,'\n').trim()
+  return w.extractionDrafts.find(d=>{
+    // An active or undone batch is history, even when the draft still has
+    // unselected suggestions. A later click starts a new independent capture.
+    if(directBatch(d))return false
+    const run=w.recognitionRuns.find(r=>r.id===d.recognitionRunId),version=run&&w.sourceVersions.find(v=>v.id===run.sourceVersionId)
+    const source=version&&w.sources.find(s=>s.id===version.sourceId)
+    const retryable=d.result||(d.status==='failed'&&run?.status==='failed')
+    return Boolean(retryable&&['needs_review','failed','partially_confirmed'].includes(d.status)&&source?.currentVersionId===version?.id&&version?.rawText?.replace(/\r\n?/gu,'\n').trim()===normalized)
+  })
+}
 export function directDuplicate(w: WorkspaceV8, text: string): string | null {
   const normalized=text.replace(/\r\n?/gu,'\n').trim(),sources=new Map(w.sources.map(s=>[s.id,s])),allBatches=recentDirectBatches(w),formalIds=new Set([...w.tasks,...w.events].map(e=>e.id))
   for(const v of w.sourceVersions){
