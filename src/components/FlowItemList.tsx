@@ -5,16 +5,8 @@ import {useEffect,useState} from 'react'
 import type {Event,Task} from '../types'
 import {flowEventDate,flowTaskDate,planAfterDeadline} from '../lib/flowPresentation'
 import {formatDuration} from '../lib/taskLogic'
-
-/** A display-only planning hint: it never changes source facts or schedules. */
-function suggestedDuration(task:Task):string | undefined {
-  if (task.estimatedMinutesKnown === true) return undefined
-  const title=task.title.replace(/[\s。！!]+$/gu,'')
-  if (/^(?:查看|取消|停止|禁止|不要|无需)/u.test(title)) return undefined
-  if (!/(?:讲座|培训|咨询|答疑|说明会|材料|文件)/u.test(title) && /(?:线上|网上|网络|系统)(?:系统)?报名$/u.test(title)) return '30 分钟'
-  if (/(?:提交|准备|整理|递交).{0,16}(?:报名|申请).{0,8}材料$/u.test(title) || /(?:报名|申请).{0,8}材料(?:提交|准备|整理|递交)$/u.test(title)) return '1 小时'
-  return undefined
-}
+import {displayMaterialRequirement,materialSummary} from '../lib/materialPresentation'
+import {suggestedTaskDuration} from '../lib/taskDurationSuggestion'
 
 /** Display a unique explicitly labelled registration site from this task's own
  * description. This is not a new material, channel, or stored source fact. */
@@ -35,16 +27,18 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
     const displayedDate=linked&&taskDate==='未设日期'?eventDate:taskDate
     const taskChannels=channels[task.id]??[]
     const tags=visibleDirectTags(task.directTags,displayedDate,task.title)
-    const durationHint=suggestedDuration(task)
+    const durationHint=suggestedTaskDuration(task)
     const site=registrationSite(task)
+    const naming=[...new Set(task.materials.flatMap(m=>m.namingRequirements??[]))]
     return <li className="flow-task-row" key={task.id} data-task-id={task.id} data-new={recent.split('|').includes(task.id)||undefined}>
       <button className="flow-complete icon-button" type="button" disabled={task.status==='已完成'} onClick={()=>onComplete(task.id)} aria-label={`${task.status==='已完成'?'已完成':'完成'}${task.title}`}>{task.status==='已完成'?<CheckCircle2 size={21}/>:<Circle size={21}/>}</button>
+      <div className="flow-item-content">
       <button className="flow-item-main" type="button" onClick={()=>onOpen(task)}>
         <h3 data-task-title title={task.title}>{directCardTitle(task.title)}</h3>
         <span className="flow-item-facts"><span className="flow-item-time"><Clock3 size={14} aria-hidden="true"/>{displayedDate}</span>
           {linked&&taskDate!=='未设日期'&&<small>{eventDate}</small>}
           {linked?.location&&<small>{linked.location}</small>}
-          {task.materials.length>0&&<small>{task.materials.length}项材料</small>}
+          {task.materials.length>0&&<small className="flow-material-summary">材料：{materialSummary(task.materials)}</small>}
           {task.estimatedMinutesKnown===true&&Number.isFinite(task.estimatedMinutes)&&task.estimatedMinutes>0&&<small className="flow-item-duration">预计耗时 {formatDuration(task.estimatedMinutes)}</small>}
           {durationHint&&<small className="flow-item-duration">建议约 {durationHint}（估计而非原文，可在详情修改，不自动安排）</small>}
           {taskChannels.length>0&&<small className="flow-task-channel" title={taskChannels.join('、')}>提交：{taskChannels.join('、')}</small>}
@@ -53,6 +47,8 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
           {tags.map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}
         </span>
       </button>
+      {task.materials.length>0&&<details className="flow-material-details"><summary>材料与要求</summary><ul>{task.materials.map(m=><li key={m.id}><strong>{m.name}</strong>{(m.formatRequirements??[]).map(requirement=><span key={requirement}>{displayMaterialRequirement(requirement)}</span>)}</li>)}</ul>{naming.length>0&&<div><strong>命名或标注</strong>{naming.map(value=><p key={value}>{value}</p>)}</div>}</details>}
+      </div>
       <div className="flow-row-actions">
         {linked&&onOpenEvent&&<button className="flow-linked-event" type="button" data-event-id={linked.id} onClick={()=>onOpenEvent(linked)} aria-label={`查看${linked.title}日程`}>日程</button>}
         {onSchedule&&task.status!=='已完成'&&<TaskScheduleButton task={task} onSchedule={onSchedule}/>}<button className="icon-button" type="button" onClick={()=>onOpen(task)} aria-label={`编辑${task.title}`}><ChevronRight size={17}/></button>

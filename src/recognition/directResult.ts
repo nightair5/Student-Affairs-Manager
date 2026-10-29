@@ -5,6 +5,8 @@ import type { RecognitionResult, TaskSuggestionV2, TimePointSuggestionV2 } from 
 import { parseChineseTimeAst, parseBusinessDateTime } from '../lib/timeSemantics'
 import {projectDirectActions} from './directActionProjection'
 import {convertRetainedDirectResult,cleanDirectTopic} from './directRetention'
+import {composeSharedSubmissions} from './sharedSubmission'
+import {linkExplicitDependencies} from './sourceDependencies'
 
 export const DIRECT_MODE_VERSION = 'direct-mode-1'
 export type DirectTag = '时间待定' | '如符合条件' | '待确认'
@@ -14,7 +16,7 @@ const flatTasks = (r: RecognitionResult) => [...r.standaloneTasks, ...r.mileston
 const compact = (s: string) => s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu, '')
 const cancelled = /取消|作废|废止|不再(?:举办|举行|提交|报名|申请|参加|出席)|禁止|(?:不得|不要|请勿|不能|不可)(?:提交|报名|申请|参加|出席|领取)/u
 const conditional = /(?:若|如果|如已|如需|符合.{0,18}条件|有意|自愿|入选后|录取后|已缴费|放弃修读|仅限|限.{0,10}学生)/u
-const deadline = /截止|最迟|不晚于|不得(?:晚于|迟于)|之前|以前|前(?:[，,。；;\s]|将|把|须|需|请|提交|交到|交至|送至|送到|递交|完成|报送|报名|申请|办理|领取|上传|填写|登记|预约|$)|(?:\d{1,2}(?:日|号|点|时|分)|\d{1,2}:\d{2})\s*前(?:通过|在线)|于.{0,32}(?:提交|交至|交到|报送)/u
+const deadline = /截止|最迟|不晚于|不得(?:晚于|迟于)|之前|以前|前(?:[，,。；;\s]|将|把|须|需|请|提交|交到|交至|送至|送到|递交|发送|寄送|上交|完成|报送|报名|申请|办理|领取|上传|填写|登记|预约|$)|(?:\d{1,2}(?:日|号|点|时|分)|\d{1,2}:\d{2})\s*前(?:通过|在线)|于.{0,32}(?:提交|交至|交到|报送|发送|寄送|上交)/u
 const alternatives = /任选|备选|可选择|任一|(?:日|号|\d)\s*(?:或|、).{0,18}(?:日|号)/u
 const recordTasks = (r: RecognitionResult) => new Map(flatTasks(r).map(t => [t.tempId, t]))
 
@@ -31,7 +33,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const next=convertDirectResult(projected,sourceText)
     return {...next,omitted:[...baseline.omitted,...next.omitted]}
   }
-  const result = structuredClone(input), omitted: DirectConversion['omitted'] = [], items: DirectItem[] = []
+  const result = structuredClone(composeSharedSubmissions(input,sourceText)), omitted: DirectConversion['omitted'] = [], items: DirectItem[] = []
   const originalTasks = original ? recordTasks(original) : new Map<string, TaskSuggestionV2>()
   const located = new Map(result.evidence.flatMap(e => {
     const quote = e.quotedText || e.quote
@@ -80,6 +82,11 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const text = context(e.evidenceIds), name = compact(e.title)
     const cores=e.title.replace(/(?:参加|关于|召开|举行|出席)/gu,'').split(/和|与|及|暨/u).map(compact).filter(Boolean)
     if (!text || !name || !cores.length || !cores.every(word=>compact(text).includes(word)) || cores.some(core=>isCancelled(text,core))) { omitted.push({id:e.tempId,reason:'EVENT_UNGROUNDED_OR_CANCELLED'}); return [] }
+    // A submission call is not itself a scheduled event. Keep an explicitly
+    // held activity even when its date is unknown; only isolate a title that
+    // merely announces a collection/registration and has no event facts.
+    const hasEventTime=result.timePoints.some(p=>(p.tempId===e.startTimePointTempId||p.tempId===e.endTimePointTempId)&&p.normalizedValue)
+    if (!hasEventTime&&!e.location&&/(?:征集|征稿|报名|申报|投稿)/u.test(text)&&!/(?:举办|举行|召开|开设|上课|讲座|培训会|说明会|展览|演出)/u.test(text)) {omitted.push({id:e.tempId,reason:'COLLECTION_TITLE_NOT_SCHEDULED_EVENT'});return []}
     const tags: DirectTag[] = conditional.test(text) ? ['如符合条件','待确认'] : e.selected === false||conflicts.has(e.tempId) ? ['待确认'] : []
     tagsById.set(e.tempId, tags)
     const location = e.location && e.location.split(' · ').every(part=>compact(text).includes(compact(part))) ? e.location : null
@@ -167,6 +174,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     }
     items.push({tempId:id,kind:'task',tags})
   }
+  linkExplicitDependencies(tasks,sourceText)
   result.milestones=[];result.standaloneTasks=tasks;result.events=events;result.timePoints=times
   const retainedIds=new Set([...tasks,...events,...times,...result.materials].map(e=>e.tempId))
   result.conflicts=result.conflicts.map(c=>({...c,entityTempIds:c.entityTempIds.filter(id=>retainedIds.has(id))}))

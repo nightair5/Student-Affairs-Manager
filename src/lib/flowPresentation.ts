@@ -13,9 +13,10 @@ export function flowDate(value:string|null|undefined):string {
 }
 export function flowTaskDate(task:Task):string {
   const plan=task.plannedStart||task.directDate
-  if(plan)return `${flowDate(plan)} 计划${task.deadline?` · ${flowDate(task.deadline)} 截止`:task.sourceWindowLabel?` · 办理时段：${task.sourceWindowLabel}`:''}`
+  if(plan)return `${flowDate(plan)} 计划${task.deadline?` · ${flowDate(task.deadline)} 截止`:task.sourceWindowLabel?` · 办理时段：${task.sourceWindowLabel}`:task.sourceDeadlineLabel&&/另行通知|另行公布|待通知/u.test(task.sourceDeadlineLabel)?' · 截止时间另行通知':''}`
   if(task.deadline)return `${flowDate(task.deadline)} 截止`
   if(task.sourceWindowLabel)return `办理时段：${task.sourceWindowLabel}`
+  if(task.sourceDeadlineLabel&&/另行通知|另行公布|待通知/u.test(task.sourceDeadlineLabel))return '截止时间另行通知'
   return '未设日期'
 }
 /** Only flag a definite conflict; date-only values do not invent a clock time. */

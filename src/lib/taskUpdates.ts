@@ -9,6 +9,7 @@ type EditableTaskPatch = Partial<
     | 'status'
     | 'deadline'
     | 'estimatedMinutes'
+    | 'estimatedMinutesKnown'
     | 'nextAction'
     | 'description'
     | 'priority'
@@ -27,6 +28,7 @@ const fieldLabels: Record<keyof EditableTaskPatch, string> = {
   status: '状态',
   deadline: '截止时间',
   estimatedMinutes: '预计耗时',
+  estimatedMinutesKnown: '预计耗时状态',
   nextAction: '下一步动作',
   description: '任务说明',
   priority: '优先级',

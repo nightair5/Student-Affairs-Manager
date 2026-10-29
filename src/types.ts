@@ -59,6 +59,10 @@ export interface Material {
   id: string
   name: string
   done: boolean
+  /** Read-only fields projected from the canonical material for task lists. */
+  formatRequirements?: string[]
+  namingRequirements?: string[]
+  quantity?: number | null
   status?: MaterialStatus
   taskId?: string
   projectId?: string

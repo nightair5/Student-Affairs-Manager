@@ -1,5 +1,5 @@
 /** Truncates only the card view. Details and persisted titles keep the full name. */
 export const directCardTitle=(title:string)=>title.length>24?title.slice(0,24)+'…':title
 export function visibleDirectTags(tags:readonly string[]|undefined,shownFacts:string,title:string):string[]{
-  return [...new Set(tags??[])].filter(tag=>!shownFacts.includes(tag)&&!(tag==='时间待定'&&/未设日期|未设置日期|未定日期|计划/u.test(shownFacts))&&!(tag==='如符合条件'&&title.startsWith('如符合条件')))
+  return [...new Set(tags??[])].filter(tag=>!shownFacts.includes(tag)&&!(tag==='时间待定'&&/未设日期|未设置日期|未定日期|另行通知|计划/u.test(shownFacts))&&!(tag==='如符合条件'&&title.startsWith('如符合条件')))
 }
