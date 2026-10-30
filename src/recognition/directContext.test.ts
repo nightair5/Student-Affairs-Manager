@@ -19,6 +19,16 @@ describe('literal contextual evidence reaches the first saved suggestion',()=>{
   expect(converted.result.standaloneTasks.map(t=>t.title)).toContain('填写毕业去向调查问卷')
   expect(converted.result.timePoints.some(p=>p.type==='task_deadline'&&p.normalizedValue==='2026-11-05T17:00')).toBe(true)
  })
+ it('keeps a sourced action when the model placed it in a channel fact',()=>{
+  const source='毕业去向调查。请同学们填写下方问卷。截止11月5日17:00。'
+  const raw={items:[{id:'a',kind:'任务',name:'毕业去向调查',quote:'毕业去向调查'}],facts:[{type:'截止',quote:'截止11月5日17:00',item:'a'},{type:'渠道',quote:'填写下方问卷',item:'a'}],noAction:false}
+  const referenceTime='2026-10-30T09:05:10+08:00',timezone='Asia/Shanghai'
+  const compiled=parseRecognitionResult(compileTwoStep(raw,{source,referenceTime,timezone,version:'recognition-two-step-2.4.0'}).result)
+  const assembled=assembleProductFirstSuggestion(compiled,{sourceText:source,referenceTime,timezone}).result
+  const converted=convertDirectResult(assembled,source)
+  expect(converted.result.standaloneTasks.map(t=>t.title)).toContain('填写毕业去向调查问卷')
+  expect(converted.result.timePoints.some(p=>p.type==='task_deadline'&&p.normalizedValue==='2026-11-05T17:00')).toBe(true)
+ })
  it('persists the sourced long event description through direct intake and an independent read',async()=>{
   const details=[
    ['主讲人','主讲人：陈老师负责写作训练。'],

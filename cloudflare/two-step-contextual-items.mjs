@@ -58,3 +58,31 @@ export function contextualizeItems(raw,source){
  })
  return {raw:{...raw,items},edits}
 }
+
+/** Some models put a topic in the item and its literal action in a channel
+ * fact. Reclassify only a single short referential action in the same source
+ * paragraph; preserve every actual channel and the untouched original raw. */
+export function promoteReferentialActions(raw,source){
+ const edits=[],consumed=new Set()
+ const items=raw.items.map(item=>{
+  if(item?.kind!=='任务'||typeof item.name!=='string'||typeof item.quote!=='string'||action.test(item.name)||!item.name.trim())return item
+  const topic=alignSourceQuote(item.quote,source)
+  if(!topic||!compact(topic.literal).includes(compact(item.name))||unsafe.test(topic.literal))return item
+  const candidates=raw.facts.flatMap((fact,index)=>{
+   if(fact?.item!==item.id||fact.type!=='渠道'||typeof fact.quote!=='string')return []
+   const m=/^(填写|提交|上传|报名|申请|登记|预约|领取|下载|阅读)(?:下方|以下|上述|该份|这份|此份|该|本次)([\p{L}\p{N}]{2,18})$/u.exec(fact.quote.trim())
+   const span=m&&alignSourceQuote(fact.quote,source)
+   return m&&span?[{index,match:m,span}]:[]
+  })
+  if(candidates.length!==1||raw.facts.some(f=>f?.item===item.id&&(f.type==='取消'||f.type==='变更')))return item
+  const {index,match,span}=candidates[0],scopes=sourceScopes(span,source),paragraph=scopes.find(s=>s.level==='PARAGRAPH'),sentence=scopes.find(s=>s.level==='SENTENCE')
+  if(!paragraph||topic.start<paragraph.start||topic.end>span.start||span.end-topic.start>300)return item
+  const literal=source.slice(topic.start,span.end)
+  if(unsafe.test(literal)||unsafe.test(sentence?.text??'')||/纸质/u.test(sentence?.text??'')&&/电子/u.test(sentence?.text??'')||raw.items.some(x=>x.id!==item.id&&typeof x.quote==='string'&&x.quote&&literal.includes(x.quote)))return item
+  const topicName=item.name.trim(),object=topicName.endsWith(match[2])?topicName:topicName+match[2],name=match[1]+object
+  if(name.length>80||!sourceSupportsObjectParts(object,literal))return item
+  consumed.add(index);edits.push({id:item.id,rule:'REFERENTIAL_ACTION_IN_CHANNEL_FACT',modelQuote:item.quote,literal,actionFactIndex:index})
+  return {...item,name,quote:literal}
+ })
+ return {raw:{...raw,items,facts:raw.facts.filter((_,index)=>!consumed.has(index))},edits,consumed:[...consumed]}
+}

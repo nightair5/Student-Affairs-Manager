@@ -17,6 +17,32 @@ test('topic and referential action retain their title, deadline and real offsets
  assert(validateRecognitionResult(next.result,{sourceContent:source}).valid)
  assert.equal(JSON.stringify(raw),snapshot)
 })
+test('a referenced action mistakenly labelled as a channel is kept with its topic and deadline',()=>{
+ const source='毕业去向调查。请同学们填写下方问卷。截止11月5日17:00。'
+ const raw={items:[{id:'a',kind:'任务',name:'毕业去向调查',quote:'毕业去向调查'}],facts:[{type:'截止',quote:'截止11月5日17:00',item:'a'},{type:'渠道',quote:'填写下方问卷',item:'a'}],noAction:false}
+ const original=JSON.stringify(raw)
+ assert.equal(old(raw,opts(source)).result.standaloneTasks.length,0)
+ const out=current(raw,opts(source)),task=out.result.standaloneTasks[0]
+ assert.equal(task?.title,'填写毕业去向调查问卷')
+ assert.equal(out.result.timePoints[0]?.normalizedValue,'2026-11-05T17:00')
+ assert(!task.description.includes('提交渠道：填写'))
+ assert(out.result.evidence.every(e=>source.slice(e.textStart,e.textEnd)===e.quote))
+ assert.equal(out.audit.contextualItems[0].rule,'REFERENTIAL_ACTION_IN_CHANNEL_FACT')
+ assert.equal(JSON.stringify(raw),original)
+ assert(validateRecognitionResult(out.result,{sourceContent:source}).valid)
+})
+test('does not promote an unrelated action, cancellation or competing delivery',()=>{
+ const sources=[
+  '毕业去向调查。其他事项。请同学们填写下方问卷。截止11月5日17:00。',
+  '毕业去向调查。请勿填写下方问卷。截止11月5日17:00。',
+  '毕业去向调查。请同学们填写下方问卷，电子版或纸质版任选。截止11月5日17:00。',
+ ]
+ for(const source of sources){
+  const actionQuote=source.includes('请勿')?'填写下方问卷':'填写下方问卷'
+  const raw={items:[{id:'a',kind:'任务',name:'毕业去向调查',quote:'毕业去向调查'},...(source.includes('其他事项')?[{id:'b',kind:'任务',name:'提交其他事项',quote:'其他事项'}]:[])],facts:[{type:'截止',quote:'截止11月5日17:00',item:'a'},{type:'渠道',quote:actionQuote,item:'a'}],noAction:false}
+  assert.equal(current(raw,opts(source)).audit.contextualItems?.filter(e=>e.rule==='REFERENTIAL_ACTION_IN_CHANNEL_FACT').length??0,0,source)
+ }
+})
 test('repeated identical mentions are cited as an honest bounded passage',()=>{
  const source='报名说明：提交申请表。其他材料说明后，再提醒提交申请表。截止11月5日17:00。',raw=sample('提交申请表','提交申请表')
  assert.equal(old(raw,opts(source)).result.standaloneTasks.length,0)

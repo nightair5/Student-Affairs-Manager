@@ -1,5 +1,5 @@
 import {compileTwoStep as compilePrevious} from './recognition-two-step-compiler-v2-1-12.mjs'
-import {contextualizeItems} from './two-step-contextual-items.mjs'
+import {contextualizeItems,promoteReferentialActions} from './two-step-contextual-items.mjs'
 import {alignSourceQuote} from './two-step-source-alignment.mjs'
 
 // Only revisit facts that the previous compiler already aligned and assigned to
@@ -32,12 +32,16 @@ function restoreLongEventDetails(raw,options,compiled){
 // ownership. This preserves the original model raw and the 2.1.12 compiler.
 export function compileTwoStep(raw,options){
  if(!raw||!Array.isArray(raw.items)||!Array.isArray(raw.facts))return compilePrevious(raw,options)
- const prepared=contextualizeItems(raw,options.source)
- const compiled=compilePrevious(prepared.raw,options)
+ const promoted=promoteReferentialActions(raw,options.source),prepared=contextualizeItems(promoted.raw,options.source)
+ const consumed=new Set(promoted.consumed),newIndexes=new Map()
+ for(let index=0,next=0;index<raw.facts.length;index++)if(!consumed.has(index))newIndexes.set(index,next++)
+ const alignmentHints=options.alignmentHints?{...options.alignmentHints,facts:(options.alignmentHints.facts??[]).filter(h=>newIndexes.has(h.index)).map(h=>({...h,index:newIndexes.get(h.index)}))}:null
+ const adjusted={...options,alignmentHints}
+ const compiled=compilePrevious(prepared.raw,adjusted)
  if(compiled.audit){
   compiled.audit.compilerVersion='two-step-compiler-2.1.13'
-  compiled.audit.contextualItems=prepared.edits
-  compiled.audit.restoredLongEventDetails=restoreLongEventDetails(prepared.raw,options,compiled)
+  compiled.audit.contextualItems=[...promoted.edits,...prepared.edits]
+  compiled.audit.restoredLongEventDetails=restoreLongEventDetails(prepared.raw,adjusted,compiled)
  }
  return compiled
 }
