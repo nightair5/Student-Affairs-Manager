@@ -7,7 +7,7 @@ import type {EventDetailPanelProps} from './EventDetailPanel'
 
 export function CompactEventDetailPanel({event,evidenceQuotes,sourceTitles,sourceSupplement=[],onClose,onEdit,onDelete}:EventDetailPanelProps){
   const id=useId(),ref=useRef<HTMLElement>(null),[title,setTitle]=useState(event.title),[location,setLocation]=useState(event.location??''),[open,setOpen]=useState(false),[start,setStart]=useState(flowEditValue(event.startAt)),[end,setEnd]=useState(flowEditValue(event.endAt)),[startEdited,setStartEdited]=useState(false),[endEdited,setEndEdited]=useState(false),[description,setDescription]=useState(event.description),[minutes,setMinutes]=useState(event.estimatedMinutesKnown&&event.estimatedMinutes?String(event.estimatedMinutes):''),[durationEdited,setDurationEdited]=useState(false),[error,setError]=useState(''),[busy,setBusy]=useState(false)
-  const sections=eventDescriptionSections(event.description),duration=eventDurationLabel(event)
+  const sections=eventDescriptionSections(event.description).filter(section=>section.label!=='活动说明'||section.content.trim()!==event.title.trim()),duration=eventDurationLabel(event)
   // A short, source-backed biography is useful alongside the speaker. Longer
   // biographies remain available in one disclosure, without changing saved data.
   const biographies=sections.filter(section=>section.label==='嘉宾简介')

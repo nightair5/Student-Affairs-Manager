@@ -97,7 +97,7 @@ function validEvent(value: unknown): boolean {
   if (!isRecord(value)) return false
   return boundedString(value.tempId, 100)
     && boundedString(value.title, 160)
-    && boundedString(value.description, 800, true)
+    && boundedString(value.description, 2400, true)
     && (value.startTimePointTempId === null || boundedString(value.startTimePointTempId, 100))
     && (value.endTimePointTempId === null || boundedString(value.endTimePointTempId, 100))
     && (value.location === null || boundedString(value.location, 200))

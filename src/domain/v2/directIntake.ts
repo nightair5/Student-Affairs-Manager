@@ -9,11 +9,13 @@ import type { WorkspaceV8, JsonValue, ExtractionDraft, Source } from './types'
 import type { RecognitionResult } from '../../recognition/types'
 import { parseBusinessDateTime, isDateOnly } from '../../lib/timeSemantics'
 import { buildLocalRecognition } from '../../recognition/pipeline'
-import {directReplacementPreserves} from './directReplacementSafety'
+import {directReplacementDiff, type DirectReplacementDiff} from './directReplacementSafety'
 
 export interface DirectBatch {
   version: typeof DIRECT_MODE_VERSION; id: string; draftId: string; sourceId: string; addedAt: string
   status: 'active' | 'undone'; contentHash: string; origin?: 'ai' | 'local'; fallbackReason?: 'network'|'semantic'
+  /** origin is retained for old readers; provenance distinguishes AI plus source-rule completion. */
+  provenance?: 'ai' | 'local' | 'hybrid'; processing?: 'complete' | 'partial'
   items: Array<DirectItem & { id: string }>
   created: Record<string, string[]>
   beforeDraft: Pick<ExtractionDraft,'status'|'acceptedEntityTempIds'|'rejectedEntityTempIds'|'commitOperationIds'|'result'|'updatedAt'>
@@ -22,6 +24,12 @@ export interface DirectBatch {
 const record = (v: unknown): v is Record<string, unknown> => Boolean(v) && typeof v === 'object' && !Array.isArray(v)
 const json = (v: unknown) => JSON.parse(JSON.stringify(v)) as JsonValue
 const contentHash = (text: string) => workspaceSnapshotHash(text.replace(/\r\n?/gu,'\n').trim())
+export class DirectReplacementConflict extends Error {
+  constructor(readonly comparison:DirectReplacementDiff){
+    super('新结果缺少已有的行动、时间、材料或活动信息，原来的事项保留。')
+    this.name='DirectReplacementConflict'
+  }
+}
 export function directBatch(draft: ExtractionDraft): DirectBatch | null {
   const b=draft.legacyData?.directBatch
   if(!record(b)||b.version!==DIRECT_MODE_VERSION)return null
@@ -82,6 +90,12 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const initial=convertDirectResult(input,v.rawText,record(original)?original as unknown as RecognitionResult:undefined,{actionRecovery,retention})
     const converted=localFallback?initial:recoverMissingDirectActions(initial,buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(rawInput.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]}),v.rawText)
     const semanticFallback=converted!==initial
+    // A generated reading fallback does not count as an AI-supported action.
+    // Keep provenance separate from the legacy origin, which older readers use
+    // to surface a retry affordance for rule-completed batches.
+    const aiHasAction=initial.result.standaloneTasks.some(t=>t.tempId!=='direct-read-notice'&&t.actionVerb!=='查看')||initial.result.events.length>0
+    const provenance=localFallback||semanticFallback&&!aiHasAction?'local':semanticFallback?'hybrid':'ai'
+    const processing=rawInput.quality.reviewReasons.some(reason=>/部分提取未完成|后半部分可能尚未处理/u.test(reason))?'partial':'complete'
     const result=converted.result
     const newTasks=new Set(result.standaloneTasks.filter(t=>!w.tasks.some(x=>x.id===`task:${d.id}:${t.tempId}`)).map(t=>t.tempId))
     const newEvents=new Set(result.events.filter(e=>!w.events.some(x=>x.id===`event:${d.id}:${e.tempId}`)).map(e=>e.tempId))
@@ -121,7 +135,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
       task.legacyData={...task.legacyData,sourceWindowDeclarations:{version:'source-window-declarations-1.0.0',ownerTaskId:task.id,sourceVersionId:v.id,windows:[{state:'RESOLVED_DISCRETE',rawText:points[0].rawText,pointIds:points.map(p=>p.id)}]}}
     }
     const created=Object.fromEntries(Object.entries(plan.create).map(([key,value])=>[key,value.map(e=>e.id)]))
-    const batch:DirectBatch={version:DIRECT_MODE_VERSION,id:plan.operationId,draftId:d.id,sourceId:s.id,status:'active',addedAt:now,contentHash:contentHash(v.rawText),created,origin:localFallback||semanticFallback?'local':'ai',...(localFallback||semanticFallback?{fallbackReason:semanticFallback?'semantic' as const:'network' as const}:{}),
+    const batch:DirectBatch={version:DIRECT_MODE_VERSION,id:plan.operationId,draftId:d.id,sourceId:s.id,status:'active',addedAt:now,contentHash:contentHash(v.rawText),created,origin:localFallback||semanticFallback?'local':'ai',provenance,processing,...(localFallback||semanticFallback?{fallbackReason:semanticFallback?'semantic' as const:'network' as const}:{}),
       items:converted.items.filter(i=>i.kind==='task'?newTasks.has(i.tempId):newEvents.has(i.tempId)).map(i=>({...i,id:`${i.kind}:${d.id}:${i.tempId}`})),
       beforeDraft:{status:d.status,acceptedEntityTempIds:d.acceptedEntityTempIds,rejectedEntityTempIds:d.rejectedEntityTempIds,commitOperationIds:d.commitOperationIds,result:d.result,updatedAt:d.updatedAt},beforeSource:{status:s.status,updatedAt:s.updatedAt}}
     const next=applyDomainCommitPlan(prepared,plan,now)
@@ -158,7 +172,7 @@ export async function replaceDirectFallback(repo:CanonicalWorkspaceRepository,ba
  const before=await repo.load()
  if(!before)throw Error('DIRECT_SOURCE_NOT_AVAILABLE')
  const batch=recentDirectBatches(before).find(b=>b.id===batchId&&b.status==='active')
- if(!batch||batch.origin!=='local')throw Error('DIRECT_FALLBACK_NOT_ACTIVE')
+ if(!batch)throw Error('DIRECT_FALLBACK_NOT_ACTIVE')
  const oldRun=before.recognitionRuns.find(r=>r.id===before.extractionDrafts.find(d=>d.id===batch.draftId)?.recognitionRunId),newRun=before.recognitionRuns.find(r=>r.id===before.extractionDrafts.find(d=>d.id===draftId)?.recognitionRunId)
  if(!oldRun||oldRun.sourceVersionId!==newRun?.sourceVersionId||newRun.provider!=='deepseek'||newRun.status!=='succeeded')throw Error('DIRECT_REPLACEMENT_NOT_SUCCESSFUL_AI')
  if(batch.items.some(i=>{const e=[...before.tasks,...before.events].find(e=>e.id===i.id);return !e||e.updatedAt>batch.addedAt||'status'in e&&e.status==='completed'}))throw Error('已修改过这些事项，请保留当前内容，避免覆盖你的修改。')
@@ -168,9 +182,10 @@ export async function replaceDirectFallback(repo:CanonicalWorkspaceRepository,ba
  await undoDirectBatch(memory,batchId,now)
  const receipt=await commitDirectDraft(memory,draftId,now)
  if(!receipt.batch||receipt.duplicate)throw Error('DIRECT_REPLACEMENT_NOT_CREATED')
- if(receipt.batch.origin==='local')throw Error('AI 结果尚未更完整，原来的事项保留。')
+ if(receipt.batch.provenance==='local')throw Error('AI 未提供可用的行动或活动，原来的事项保留。')
  const oldIds=new Set(batch.items.map(i=>i.id)),newIds=new Set(receipt.batch.items.map(i=>i.id))
- if(!directReplacementPreserves(before,prepared,oldIds,newIds))throw Error('AI 结果缺少已有的行动、时间或材料，原来的事项保留。')
+ const comparison=directReplacementDiff(before,prepared,oldIds,newIds)
+ if(!comparison.preserved)throw new DirectReplacementConflict(comparison)
  await repo.transaction(current=>{if(workspaceSnapshotHash(current)!==workspaceSnapshotHash(before))throw Error('DIRECT_REPLACEMENT_WORKSPACE_CHANGED');return prepared})
  return receipt
 }

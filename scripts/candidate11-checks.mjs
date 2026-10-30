@@ -46,6 +46,7 @@ async function product() {
   nodeTests([['direct-source-compiler','cloudflare/two-step-direct.node-test.mjs'],['direct-source-time','cloudflare/direct-source-time.node-test.mjs'],['simple-direct-generation','cloudflare/simple-generation.node-test.mjs']])
   nodeTests([['extraction-model-profiles','cloudflare/extraction-profile.node-test.mjs']])
   nodeTests([['declared-action-normalization','cloudflare/declared-action-normalization.node-test.mjs'],['two-step-fact-compiler','cloudflare/recognition-two-step.node-test.mjs'],['two-step-worker','cloudflare/two-step-worker.node-test.mjs'],['two-step21-compiler','cloudflare/recognition-two-step-v2-1.node-test.mjs']])
+  nodeTests([['two-step-contextual-items','cloudflare/two-step-contextual-items.node-test.mjs']])
   nodeTests([['stateful-carrier-schedule','scripts/stateful-carrier-schedule.node-test.mjs']])
   nodeTests([['typed-task-applicability-generation','cloudflare/recognition-product-contract-v1-14.node-test.mjs']])
   nodeTests([['compact-generation-and-sampling','cloudflare/recognition-product-contract-v1-15.node-test.mjs'],['deadline-range-role','cloudflare/deadline-range-role.node-test.mjs']])

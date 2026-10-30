@@ -12,7 +12,18 @@ export function eventDescriptionSections(description:string):Array<{label:string
     else if(sections.length)sections[sections.length-1].content+=`${sections[sections.length-1].content?'\n':''}${line}`
     else if(line.trim())sections.push({label:'活动说明',content:line})
   }
-  return sections.map(s=>({...s,content:s.content.trim()})).filter(s=>s.content)
+  const grouped:Array<{label:string;content:string}>=[]
+  const mergeLabels=new Set(['活动内容','参加须知','准备要求'])
+  for(const section of sections){
+    const content=section.content.trim();if(!content)continue
+    const prior=mergeLabels.has(section.label)?grouped.find(s=>s.label===section.label):undefined
+    if(!prior){grouped.push({...section,content});continue}
+    // Only identical facts are deduplicated; distinct requirements remain
+    // readable and the original saved description stays untouched.
+    const normalized=(s:string)=>s.normalize('NFKC').replace(/\s/gu,'').replace(/[。；;]$/u,'')
+    if(!prior.content.split('\n').some(line=>normalized(line)===normalized(content)))prior.content+='\n'+content
+  }
+  return grouped
 }
 
 /** Actual duration requires two explicit clock times; estimates never fill an end. */

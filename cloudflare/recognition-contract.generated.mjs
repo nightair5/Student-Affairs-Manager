@@ -1,5 +1,5 @@
 // GENERATED from src/recognition/schema.ts; do not edit.
-// source-sha256: e6e5b1b0482cb08c48562e7a7660fcc3d86079589a3672c58da985785f57c59b
+// source-sha256: d29b0348a24df8c359fdf24bea514c1ac367c5ec52c70f06f106689e0100561d
 const categories = new Set(['比赛', '保研', '课程', '老师任务', '其他']);
 const inferenceLevels = new Set(['explicit', 'strong_inference', 'optional_suggestion']);
 const priorities = new Set(['low', 'medium', 'high', 'urgent']);
@@ -87,7 +87,7 @@ function validEvent(value) {
         return false;
     return boundedString(value.tempId, 100)
         && boundedString(value.title, 160)
-        && boundedString(value.description, 800, true)
+        && boundedString(value.description, 2400, true)
         && (value.startTimePointTempId === null || boundedString(value.startTimePointTempId, 100))
         && (value.endTimePointTempId === null || boundedString(value.endTimePointTempId, 100))
         && (value.location === null || boundedString(value.location, 200))

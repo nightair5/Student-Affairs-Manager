@@ -8,6 +8,7 @@ import {projectDirectActions} from './directActionProjection'
 import {convertRetainedDirectResult,cleanDirectTopic} from './directRetention'
 import {composeSharedSubmissions} from './sharedSubmission'
 import {linkExplicitDependencies} from './sourceDependencies'
+import {sourceSupportsObjectParts} from '../../cloudflare/two-step-contextual-items.mjs'
 
 export const DIRECT_MODE_VERSION = 'direct-mode-1'
 export type DirectTag = '时间待定' | '如符合条件' | '待确认'
@@ -72,10 +73,14 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const old = originalTasks.get(task.tempId)
     if ((!t.actionVerb || !t.actionObject || /待核对|待确认事项/u.test(t.title)) && old) t = structuredClone(old)
     const text = context(t.evidenceIds), object = compact(t.actionObject)
+    // The compiler may cite a bounded source passage containing an explicit
+    // topic and its referential action. Its title can join those literal parts
+    // without pretending they were consecutive in the notice.
+    const compositeObject=quotes(t.evidenceIds).some(q=>/[。！？!?]/u.test(q)&&/下方|以下|上述|本次|此次|这份|该项|此项|该份|此份/u.test(q)&&!cancelled.test(q)&&!(q.includes('纸质')&&q.includes('电子'))&&q.includes(t.actionVerb)&&sourceSupportsObjectParts(t.actionObject,q))
     if (/^(?:公布|发布|公示)/u.test(t.actionVerb+t.actionObject) || /^(?:公布|发布|公示)/u.test(t.actionObject)) {
       if (/无需办理|仅供参考|无需操作/u.test(text)) {omitted.push({id:t.tempId,reason:'INFORMATION_NOT_STUDENT_ACTION'});return []}
     }
-    if (!text || !object || !compact(text).includes(object) || !t.actionVerb.trim() || /待核对|待确认事项/u.test(t.title)) {
+    if (!text || !object || !compact(text).includes(object)&&!compositeObject || !t.actionVerb.trim() || /待核对|待确认事项/u.test(t.title)) {
       omitted.push({ id: t.tempId, reason: 'OBJECT_OR_ACTION_NOT_GROUNDED' }); return []
     }
     if (isCancelled(text, t.actionObject)) { omitted.push({id:t.tempId,reason:'CANCELLED_OR_PROHIBITED'}); return [] }

@@ -722,9 +722,10 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     try{return await performDirectRetry(batchId)}finally{directRetriesInFlight.current.delete(batchId)}
   }
   const performDirectRetry=async(batchId:string)=>{
-    const w=await canonicalWorkspaceRepository.load(),batch=w&&recentDirectBatches(w).find(b=>b.id===batchId&&b.origin==='local'&&b.status==='active')
+    const w=await canonicalWorkspaceRepository.load(),batch=w&&recentDirectBatches(w).find(b=>b.id===batchId&&b.status==='active')
     const source=batch&&w?.sources.find(s=>s.id===batch.sourceId),version=source&&w?.sourceVersions.find(v=>v.id===source.currentVersionId)
     if(!batch||!source||!version?.rawText)throw Error('未找到可以重新整理的通知')
+    let stage:'recognition'|'mapping'|'saving'|'readback'='recognition'
     try{
       if(!ordinaryEnvironment){
         const ready=await initialServiceReady()
@@ -733,15 +734,18 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       }
       const metadata=ordinaryEnvironment?.recognitionMetadata?.()
       const retried=await retryExistingSourceRecognition(capturePersistenceService,source.id,{provider:'deepseek',modelName:metadata?.modelName??'deepseek-v4-flash',promptVersion:metadata?.promptVersion??null,pipelineVersion:'direct-ai-retry-v1',expectedSourceVersionId:version.id},async()=>deepSeekExtractionService.recognize!({sourceType:source.type,sourceTitle:source.title,content:version.rawText!,sourceId:source.id,sourceVersionId:version.id,now:new Date(version.createdAt)},{projects,tasks}))
+      stage='mapping'
       const sidecar=ordinaryEnvironment?.semanticSidecar?.(source.id)??deepSeekExtractionService.semanticSidecar?.(source.id,version.id)
       const context=ordinaryEnvironment?.recognitionContext?.(version.rawText)??ordinaryProviderContextFromSidecar(sidecar)??{referenceTime:retried.result.createdAt,timezone:w!.settings.defaultTimezone}
       const assembled=assembleProductFirstSuggestion(retried.result,{sourceText:version.rawText,...context,sourceWindows:sourceWindowsFromSidecar(sidecar),sourceActionTimes:sourceActionTimesFromSidecar(sidecar),workflowMaterialSupport:[...workflowMaterialSupportFromSidecar(sidecar),...ordinaryWorkflowMaterialSupportFromSidecar(sidecar)]})
+      stage='saving'
       await canonicalWorkspaceRepository.transaction(current=>({...current,extractionDrafts:current.extractionDrafts.map(d=>d.id===retried.draftId?{...d,result:assembled.result,legacyData:{...d.legacyData,firstSuggestionDisplayed:JSON.parse(JSON.stringify(assembled.result)),...(sidecar?{semanticSidecar:JSON.parse(JSON.stringify(sidecar))}:{})}}:d),recognitionRuns:current.recognitionRuns.map(r=>r.id===current.extractionDrafts.find(d=>d.id===retried.draftId)?.recognitionRunId?{...r,legacyData:{...r.legacyData,originalRecognitionResult:JSON.parse(JSON.stringify(retried.result))}}:r)}))
       const receipt=await replaceDirectFallback(canonicalWorkspaceRepository,batchId,retried.draftId)
       setDirectBatchId(receipt.batch?.id??null)
+      stage='readback'
       try{const readback=await independentReader.load();if(!readback||receipt.batch?.items.some(i=>![...readback.tasks,...readback.events].some(e=>e.id===i.id)))throw Error('READBACK');await refreshOrdinary()}catch(error){setDirectReadbackPending(receipt.batch!.id);throw Error('DIRECT_RETRY_READBACK_PENDING',{cause:error})}
-      setNotice({text:'已用 AI 重新整理，原来的简单规则结果已替换。',direct:true})
-    }catch(error){await refreshOrdinary().catch(()=>undefined);throw new Error(error instanceof Error&&error.message==='DIRECT_RETRY_READBACK_PENDING'?'AI 结果已保存，暂时未能读回。请使用重新读取，不会重复添加。':error instanceof Error&&/已修改过|原来的事项保留/u.test(error.message)?error.message:'AI 暂时仍不可用，原来的事项保留，可以稍后重新整理。',{cause:error})}
+      setNotice({text:receipt.batch?.provenance==='hybrid'?'已重新整理，简单规则补充了部分内容。':'已用 AI 重新整理。',direct:true})
+    }catch(error){await refreshOrdinary().catch(()=>undefined);const message=error instanceof Error?error.message:'';throw new Error(message==='DIRECT_RETRY_READBACK_PENDING'?'AI 结果已保存，暂时未能读回。请使用重新读取，不会重复添加。':/已修改过|原来的事项保留/u.test(message)?message:stage==='recognition'?'AI 没能完成识别，原来的事项保留，可以稍后重新整理。':stage==='mapping'?'识别内容暂时无法整理，原来的事项保留。':stage==='saving'?'这次结果未能保存，原来的事项保留。':'结果已保存，暂时未能读回。请重新读取，不会重复添加。',{cause:error})}
   }
   const ignoreHistoricalDirect=async()=>{
     try{await canonicalWorkspaceRepository.transaction(w=>({...w,preferences:{...w.preferences,legacyData:{...w.preferences.legacyData,ignoredHistoricalDraftIds:[...new Set([...(Array.isArray(w.preferences.legacyData?.ignoredHistoricalDraftIds)?w.preferences.legacyData.ignoredHistoricalDraftIds:[]),...historicalDirectIds])]}}}));await refreshOrdinary()}

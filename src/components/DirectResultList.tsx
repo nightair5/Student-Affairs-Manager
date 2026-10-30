@@ -20,6 +20,12 @@ function editFields(point:TimePoint|undefined){
   return {date:`${part('year')}-${part('month')}-${part('day')}`,time:`${part('hour')}:${part('minute')}`}
 }
 interface Props {onRetry?:()=>Promise<void>;embedded?:boolean;inlineEdit?:boolean;workspace:WorkspaceV8;batch:DirectBatch;onClose:()=>void;onUndo:()=>Promise<void>;onDelete:(id:string)=>Promise<void>;onEdit:(id:string,edit:DirectEdit)=>Promise<void>;onDetail:(id:string,kind:'task'|'event')=>void}
+function batchNotice(batch:DirectBatch):string|null {
+  if(batch.processing==='partial')return '部分内容尚未整理完成，已保留可用结果'
+  if(batch.provenance==='hybrid')return 'AI 已整理，简单规则补充了部分内容'
+  if(batch.origin==='local')return batch.fallbackReason==='semantic'?'已使用简单规则补充内容':'已使用简单规则整理'
+  return null
+}
 export function DirectResultList({embedded=false,inlineEdit=false,workspace,batch,onClose,onUndo,onDelete,onEdit,onDetail,onRetry}:Props){
   const heading=useRef<HTMLHeadingElement>(null)
   const titleId=useId()
@@ -31,7 +37,7 @@ export function DirectResultList({embedded=false,inlineEdit=false,workspace,batc
   const Container=embedded?'section':'main'
   return <Container className={`${embedded?'flow-recent-section':'page'} direct-result-page`} aria-labelledby={titleId}>
     <header className="direct-result-heading"><span className="direct-success-mark"><CheckCircle2 size={24}/></span><div>{embedded?<h2 id={titleId}>刚添加 <small>{items.length}项</small></h2>:<h1 id={titleId} ref={heading} tabIndex={-1}>已添加 {items.length} 项</h1>}</div></header>
-    {batch.origin==='local'&&<div className="direct-fallback-notice" role="status">{batch.fallbackReason==='semantic'?'AI 未能保留完整行动，已用简单规则补齐':'AI 暂时不可用，已用简单规则整理'}{onRetry&&<button type="button" className="text-button" disabled={busy} onClick={()=>void run(onRetry)}>{busy?'正在重新整理…':'重新整理'}</button>}</div>}
+    {batchNotice(batch)&&<div className="direct-fallback-notice" role="status">{batchNotice(batch)}{onRetry&&<button type="button" className="text-button" disabled={busy} onClick={()=>void run(onRetry)}>{busy?'正在重新整理…':'重新整理'}</button>}</div>}
     {error&&<p className="inline-error" role="alert">{error}</p>}
     <ul className="direct-result-list">{items.map(item=><li key={item.id} data-direct-kind={item.kind} data-completed={'status'in item.entity&&item.entity.status==='completed'}>
       <span className="direct-item-icon">{item.kind==='event'?<CalendarDays size={21}/>:<Check size={21}/>}</span>
@@ -48,9 +54,10 @@ export function RecentDirectAdditions({workspace,batches,onRetry,onUndo,onOpen,o
   const [retrying,setRetrying]=useState(false)
   if(!batches.length)return null
   const latest=batches.find(b=>b.status==='active'&&b.items.some(i=>[...workspace.tasks,...workspace.events].some(e=>e.id===i.id)))
+  const retry=(id:string)=>{if(!onRetry||retrying)return;setRetrying(true);setError('');void onRetry(id).catch(error=>setError(error instanceof Error&&/原来的事项保留|已修改过|不会重复添加/u.test(error.message)?error.message:'暂时未能重新整理，原来的事项保留。')).finally(()=>setRetrying(false))}
   // The task/event list is the single visible result; this area retains recovery and history only.
   void onDetail;void onEdit;void onDelete
-  return <div className="flow-recent-group">{latest?.origin==='local'&&<div className="direct-fallback-notice" role="status"><span>{latest.fallbackReason==='semantic'?'已用简单规则补齐行动':'AI 暂时不可用，已用简单规则整理'}</span>{onRetry&&<button type="button" className="text-button" disabled={retrying} onClick={()=>{setRetrying(true);setError('');void onRetry(latest.id).catch(error=>setError(error instanceof Error&&/原来的事项保留|已修改过/u.test(error.message)?error.message:'暂时未能重新整理，原来的事项保留。')).finally(()=>setRetrying(false))}}>{retrying?'正在重新整理…':'重新整理'}</button>}</div>}{error&&<p role="alert">{error}</p>}
-    <details className="recent-direct-additions" aria-label="最近添加"><summary>最近的添加记录</summary>{error&&<p role="alert">{error}</p>}<ul>{batches.map(b=><li key={b.id}><button type="button" className="text-button" disabled={b.status==='undone'} onClick={()=>onOpen(b.id)}>{workspace.sources.find(s=>s.id===b.sourceId)?.title.slice(0,60)??'通知'}<small>{b.status==='undone'?'已撤销':`${b.items.filter(i=>[...workspace.tasks,...workspace.events].some(e=>e.id===i.id)).length} 项`}</small></button>{b.status==='active'&&<button className="text-button" type="button" onClick={()=>{setError('');void onUndo(b.id).catch(()=>setError('未能撤销，原有内容保留。请重试。'))}}>撤销</button>}</li>)}</ul></details>
+  return <div className="flow-recent-group">{latest&&batchNotice(latest)&&<div className="direct-fallback-notice" role="status"><span>{batchNotice(latest)}</span>{onRetry&&<button type="button" className="text-button" disabled={retrying} onClick={()=>retry(latest.id)}>{retrying?'正在重新整理…':'重新整理'}</button>}</div>}{error&&<p role="alert">{error}</p>}
+    <details className="recent-direct-additions" aria-label="最近添加"><summary>最近的添加记录</summary>{error&&<p role="alert">{error}</p>}<ul>{batches.map(b=><li key={b.id}><button type="button" className="text-button" disabled={b.status==='undone'} onClick={()=>onOpen(b.id)}>{workspace.sources.find(s=>s.id===b.sourceId)?.title.slice(0,60)??'通知'}<small>{b.status==='undone'?'已撤销':`${b.items.filter(i=>[...workspace.tasks,...workspace.events].some(e=>e.id===i.id)).length} 项`}</small></button>{b.status==='active'&&onRetry&&<button className="text-button" type="button" disabled={retrying} onClick={()=>retry(b.id)}>重新整理</button>}{b.status==='active'&&<button className="text-button" type="button" onClick={()=>{setError('');void onUndo(b.id).catch(()=>setError('未能撤销，原有内容保留。请重试。'))}}>撤销</button>}</li>)}</ul></details>
   </div>
 }
