@@ -1,5 +1,5 @@
 // GENERATED from src/lib/timeSemantics.ts; do not edit.
-// source-sha256: f7504c8eef35da7b03a9648d916ffe7139e6e54c38b86d48339dd0290fe51215
+// source-sha256: c2607cc9e18f06fbb1d60ea9f46664d71c48bd0c746f4228cc242233af2643a8
 export const DEFAULT_WORKSPACE_TIMEZONE = 'Asia/Shanghai';
 const DATE_ONLY_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/u;
 const LOCAL_DATE_TIME_PATTERN = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.\d{1,3})?)?$/u;
@@ -319,7 +319,11 @@ export function parseChineseTimeAst(rawText, options) {
     const clocks = clockCandidates(parseText);
     const inheritedDate = options.inheritedDate ? calendarDateFromDateOnly(options.inheritedDate) : null;
     const firstDate = dates[0];
-    const baseDate = firstDate ?? (inheritedDate ? { ...inheritedDate, index: 0, end: 0, kind: 'absolute' } : null);
+    // A separate event end such as “次日00:30” is relative to that event's
+    // already verified start, not to the notification reception date.
+    const nextDayEnd = options.type === 'event_end' && inheritedDate && !firstDate && clocks.length === 1 && /(?:次日|翌日)/u.test(parseText);
+    const inheritedBase = inheritedDate && nextDayEnd ? addCalendarDays(inheritedDate, 1) : inheritedDate;
+    const baseDate = firstDate ?? (inheritedBase ? { ...inheritedBase, index: 0, end: 0, kind: 'absolute' } : null);
     const dateKind = firstDate?.kind ?? (inheritedDate ? 'inherited' : 'none');
     if (baseDate && !validCalendarDate(baseDate))
         return vagueTimeAst(rawText, options.type, timezone, ['invalid_calendar_date']);

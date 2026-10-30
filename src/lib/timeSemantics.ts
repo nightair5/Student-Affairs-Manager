@@ -390,7 +390,11 @@ export function parseChineseTimeAst(rawText: string, options: ChineseTimeAstOpti
   const inheritedDate = options.inheritedDate ? calendarDateFromDateOnly(options.inheritedDate) : null
 
   const firstDate = dates[0]
-  const baseDate = firstDate ?? (inheritedDate ? { ...inheritedDate, index: 0, end: 0, kind: 'absolute' as const } : null)
+  // A separate event end such as “次日00:30” is relative to that event's
+  // already verified start, not to the notification reception date.
+  const nextDayEnd = options.type === 'event_end' && inheritedDate && !firstDate && clocks.length === 1 && /(?:次日|翌日)/u.test(parseText)
+  const inheritedBase = inheritedDate && nextDayEnd ? addCalendarDays(inheritedDate, 1) : inheritedDate
+  const baseDate = firstDate ?? (inheritedBase ? { ...inheritedBase, index: 0, end: 0, kind: 'absolute' as const } : null)
   const dateKind: ChineseTimeAst['dateKind'] = firstDate?.kind ?? (inheritedDate ? 'inherited' : 'none')
   if (baseDate && !validCalendarDate(baseDate)) return vagueTimeAst(rawText, options.type, timezone, ['invalid_calendar_date'])
 

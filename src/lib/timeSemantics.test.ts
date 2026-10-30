@@ -8,6 +8,17 @@ import {
 } from './timeSemantics'
 
 describe('clock ranges do not introduce calendar dates', () => {
+  it('anchors a separately quoted next-day end to the same event start, including year rollover', () => {
+    const options = { referenceTime: '2026-10-30T09:00:00+08:00', timezone: 'Asia/Shanghai', type: 'event_end' as const }
+    expect(parseChineseTimeAst('次日00:30结束', { ...options, inheritedDate: '2026-11-06' }))
+      .toMatchObject({ normalizedValue: '2026-11-07T00:30', needsConfirmation: false })
+    expect(parseChineseTimeAst('翌日00:30结束', { ...options, inheritedDate: '2026-12-31' }))
+      .toMatchObject({ normalizedValue: '2027-01-01T00:30', needsConfirmation: false })
+    expect(parseChineseTimeAst('次日00:30结束', options))
+      .toMatchObject({ normalizedValue: null, needsConfirmation: true })
+    expect(parseChineseTimeAst('2026年11月7日00:30结束', { ...options, inheritedDate: '2026-11-06' }))
+      .toMatchObject({ normalizedValue: '2026-11-07T00:30', needsConfirmation: false })
+  })
   it('a matching parenthesized relative weekday is the same date, while a disagreement stays unresolved',()=>{
     const options={referenceTime:'2027-04-01T09:00:00+08:00',timezone:'Asia/Shanghai',type:'submission_deadline' as const}
     expect(parseChineseTimeAst('2027年4月2日（本周五）18:00',options)).toMatchObject({normalizedValue:'2027-04-02T18:00',needsConfirmation:false})

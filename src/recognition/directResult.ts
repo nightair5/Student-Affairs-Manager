@@ -116,6 +116,16 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     return [{...e, location, selected:true, relatedTaskTempIds:e.relatedTaskTempIds?.filter(id => taskIds.has(id))}]
   })
   const eventIds = new Set(events.flatMap(e => [e.startTimePointTempId,e.endTimePointTempId]).filter(Boolean))
+  const anchoredNextDay = (p:TimePointSuggestionV2):string|undefined => {
+    if(p.type!=='event_end'||!/(?:次日|翌日)/u.test(p.rawText))return undefined
+    const owners=events.filter(e=>e.endTimePointTempId===p.tempId)
+    if(owners.length!==1)return undefined
+    const start=result.timePoints.find(x=>x.tempId===owners[0].startTimePointTempId&&x.type==='event_start')
+    if(!start?.normalizedValue||start.needsConfirmation||start.precision!=='exact'||deadlineConflicts.has(start.tempId)||alternatives.test(context(start.evidenceIds))||!quotes(start.evidenceIds).length||!compact(context(start.evidenceIds)).includes(compact(start.rawText)))return undefined
+    const parsed=parseDirectSourceTime(start.rawText,{type:'event_start',referenceTime:result.createdAt,timezone:start.timezone})
+    if(parsed.needsConfirmation||parsed.dateKind==='none'||parsed.normalizedValue!==start.normalizedValue)return undefined
+    return start.normalizedValue.slice(0,10)
+  }
   const times: TimePointSuggestionV2[] = result.timePoints.filter(p => p.relatedTaskTempIds.some(id => taskIds.has(id)) || eventIds.has(p.tempId)).map(p => {
     const point = {...p, relatedTaskTempIds:p.relatedTaskTempIds.filter(id => taskIds.has(id)),selected:true}
     const unknown = ():TimePointSuggestionV2 => ({...point,normalizedValue:null,precision:'vague',isAllDay:false,needsConfirmation:true})
@@ -131,8 +141,10 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const eventTimeLabel=/^\s*(?:活动|会议|讲座|培训)?时间[：:]\s*周/u.test(raw)||/(?:^|\s)(?:活动|会议|讲座|培训)?时间[：:]\s*$/u.test(clause)
     const inferredWeekday=p.type==='event_start'&&(p.tempId==='local-direct-optional-event:start'||eventDetailContract&&eventIds.has(p.tempId)&&eventTimeLabel&&!/(?:报名|申请|提交|缴费|预约|截止|截至)/u.test(clause)&&Boolean(sameWeekdayTime(weekdayRaw,result.createdAt,p.timezone)))
     if (unsupported || risky || deadlineConflicts.has(p.tempId)||p.relatedTaskTempIds.some(id=>deadlineConflicts.has(id))||!p.normalizedValue || p.needsConfirmation && p.precision !== 'date_only'&&!inferredWeekday) return unknown()
+    const nextDayAnchor=anchoredNextDay(p)
+    if(p.type==='event_end'&&/(?:次日|翌日)/u.test(raw)&&!nextDayAnchor)return unknown()
     if(p.normalizedValue){
-      let parsed=parseDirectSourceTime(raw,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
+      let parsed=parseDirectSourceTime(raw,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone,inheritedDate:nextDayAnchor})
       const correction=/(?:改为|调整为|更正为|延期至|现为)([^。；;\n]*)/u.exec(text)
       if(correction)parsed=parseDirectSourceTime(correction[1],{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
       else if(parsed.dateKind==='none')parsed=(inferredWeekday?sameWeekdayTime(weekdayRaw,result.createdAt,p.timezone):null)??parseDirectSourceTime(text,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})

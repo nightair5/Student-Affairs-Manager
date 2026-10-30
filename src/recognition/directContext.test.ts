@@ -9,6 +9,25 @@ import {CapturePersistenceService} from '../domain/v2/capture'
 import {commitDirectDraft} from '../domain/v2/directIntake'
 
 describe('literal contextual evidence reaches the first saved suggestion',()=>{
+ it('keeps an explicitly next-day event end tied to its own sourced start',()=>{
+  const source='观星活动11月6日23:30开始，次日00:30结束，地点为天文台。参加者请自备外套。'
+  const raw={items:[{id:'a',kind:'活动',name:'观星活动',quote:'观星活动'}],facts:[{type:'开始',quote:'11月6日23:30开始',item:'a'},{type:'结束',quote:'次日00:30结束',item:'a'},{type:'地点',quote:'地点为天文台',item:'a'}],noAction:false}
+  const referenceTime='2026-10-30T09:05:10+08:00',timezone='Asia/Shanghai'
+  const compiled=parseRecognitionResult(compileTwoStep(raw,{source,referenceTime,timezone,version:'recognition-two-step-2.4.0'}).result)
+  const assembled=assembleProductFirstSuggestion(compiled,{sourceText:source,referenceTime,timezone}).result
+  const converted=convertDirectResult(assembled,source)
+  expect(converted.result.timePoints.find(p=>p.type==='event_start')?.normalizedValue).toBe('2026-11-06T23:30')
+  expect(converted.result.timePoints.find(p=>p.type==='event_end')?.normalizedValue).toBe('2026-11-07T00:30')
+  const noStart=structuredClone(assembled)
+  noStart.events[0].startTimePointTempId=null
+  expect(convertDirectResult(noStart,source).result.timePoints.find(p=>p.type==='event_end')?.normalizedValue).toBeNull()
+  const unverifiedStart=structuredClone(assembled)
+  unverifiedStart.timePoints.find(p=>p.type==='event_start')!.needsConfirmation=true
+  expect(convertDirectResult(unverifiedStart,source).result.timePoints.find(p=>p.type==='event_end')?.normalizedValue).toBeNull()
+  const sharedEnd=structuredClone(assembled)
+  sharedEnd.events.push({...sharedEnd.events[0],tempId:'other-event'})
+  expect(convertDirectResult(sharedEnd,source).result.timePoints.find(p=>p.type==='event_end')?.normalizedValue).toBeNull()
+ })
  it('keeps the topic, referential action and deadline across both conversion layers',()=>{
   const source='毕业去向调查。请同学们填写下方问卷。截止11月5日17:00。'
   const raw={items:[{id:'a',kind:'任务',name:'填写毕业去向调查问卷',quote:'请同学们填写下方问卷'}],facts:[{type:'截止',quote:'截止11月5日17:00',item:'a'}],noAction:false}
