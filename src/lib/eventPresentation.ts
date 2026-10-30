@@ -4,7 +4,7 @@ import {formatDuration} from './taskLogic'
 
 /** The persisted description is the authority; labels are only a display projection. */
 export function eventDescriptionSections(description:string):Array<{label:string;content:string}> {
-  const labels=new Set(['主讲人','主持人','活动内容','参加须知','准备要求','嘉宾简介','原文时长'])
+  const labels=new Set(['主讲人','主持人','活动内容','参加须知','准备要求','嘉宾简介','原文时长','通知补充'])
   const sections:Array<{label:string;content:string}>=[]
   for(const line of description.split(/\r?\n/u)){
     const match=/^\s*([^：:]{1,12})[：:]\s*(.*)$/u.exec(line)
@@ -13,7 +13,7 @@ export function eventDescriptionSections(description:string):Array<{label:string
     else if(line.trim())sections.push({label:'活动说明',content:line})
   }
   const grouped:Array<{label:string;content:string}>=[]
-  const mergeLabels=new Set(['活动内容','参加须知','准备要求'])
+  const mergeLabels=new Set(['活动内容','参加须知','准备要求','通知补充'])
   for(const section of sections){
     const content=section.content.trim();if(!content)continue
     const prior=mergeLabels.has(section.label)?grouped.find(s=>s.label===section.label):undefined

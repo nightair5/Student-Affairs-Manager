@@ -7,6 +7,7 @@ import {TaskScheduleButton} from './TaskScheduleButton'
 import {suggestedTaskDuration} from '../lib/taskDurationSuggestion'
 import {formatDuration} from '../lib/taskLogic'
 import {displayMaterialRequirement} from '../lib/materialPresentation'
+import {TextWithLinks} from './TextWithLinks'
 
 export function CompactTaskDetailPanel({task,sources,onClose,onComplete,onUpdate,onDelete,onDirectEdit,onScheduleTask,canonicalMaterials,semanticContent,onAdvanced,linkedEvent,eventTimeHint}:TaskDetailPanelProps&{onAdvanced:()=>void}){
   const initialDate=flowEditValue(task.deadline||task.directDate)
@@ -31,7 +32,7 @@ export function CompactTaskDetailPanel({task,sources,onClose,onComplete,onUpdate
         {linkedEvent&&flowTaskDate(task)!=='未设日期'&&<p>{flowEventDate(linkedEvent,eventTimeHint)}</p>}
         {linkedEvent?.location&&<p>{linkedEvent.location}</p>}
         <div className="compact-time-actions">{onScheduleTask&&<TaskScheduleButton task={task} onSchedule={onScheduleTask}/>} {(task.deadline||!onScheduleTask)&&<button type="button" className="text-button" onClick={()=>setDateOpen(v=>!v)}>{task.deadline?'修改原文截止':'设置日期'}</button>}</div>
-        {channels.length>0&&<p className="compact-channel">{channels.join(' · ')}</p>}
+        {channels.length>0&&<p className="compact-channel"><TextWithLinks text={channels.join(' · ')}/></p>}
         {(durationHint||task.estimatedMinutesKnown)&&<div className="compact-duration"><span>{task.estimatedMinutesKnown?`预计耗时 ${formatDuration(task.estimatedMinutes)}`:`建议约 ${durationHint}（估计，可修改）`}</span> <button type="button" className="text-button" onClick={()=>setDurationOpen(value=>!value)}>修改耗时</button>{durationOpen&&<form onSubmit={event=>{event.preventDefault();const value=Number(minutes);if(Number.isFinite(value)&&value>=5){onUpdate(task.id,{estimatedMinutes:value,estimatedMinutesKnown:true});setDurationOpen(false)}}}><label>预计耗时（分钟）<input type="number" min="5" step="5" value={minutes} onChange={event=>setMinutes(event.target.value)} required/></label><button className="primary-button" type="submit">保存耗时</button></form>}</div>}
         {dateOpen&&<form className="compact-date-editor" onSubmit={e=>{e.preventDefault();void saveDate()}}><label>{task.deadline?'原文截止日期':'日期'}<input type="date" value={date} onChange={e=>setDate(e.target.value)}/></label><label>时间（可留空）<input type="time" value={time} onChange={e=>setTime(e.target.value)}/></label><button className="primary-button" disabled={busy} type="submit">保存日期</button></form>}
         {Boolean(task.directTags?.length)&&<div className="direct-inline-tags">{task.directTags!.map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}</div>}

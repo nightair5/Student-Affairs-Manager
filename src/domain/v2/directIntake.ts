@@ -9,6 +9,7 @@ import type { WorkspaceV8, JsonValue, ExtractionDraft, Source } from './types'
 import type { RecognitionResult } from '../../recognition/types'
 import { parseBusinessDateTime, isDateOnly } from '../../lib/timeSemantics'
 import { buildLocalRecognition } from '../../recognition/pipeline'
+import {completeParallelSessions,linkFollowingFormChannel} from '../../recognition/directParallelSessions'
 import {directReplacementDiff, type DirectReplacementDiff} from './directReplacementSafety'
 
 export interface DirectBatch {
@@ -84,16 +85,17 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const original=run?.legacyData?.originalRecognitionResult
     const localFallback=!d.result||run?.provider==='local-rules'
     const rawInput=d.result??buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(run?.startedAt??d.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]})
-    const input=localFallback?improveDirectFallback(rawInput,v.rawText):rawInput
+    const input=localFallback?improveDirectFallback(rawInput,v.rawText):linkFollowingFormChannel(completeParallelSessions(rawInput,v.rawText),v.rawText)
     const actionRecovery=(import.meta as ImportMeta&{env?:{VITE_DIRECT_ACTION_RECOVERY?:string}}).env?.VITE_DIRECT_ACTION_RECOVERY==='1'
     const retention=DIRECT_RETENTION_DEFAULT||(import.meta as ImportMeta&{env?:{VITE_DIRECT_RETENTION?:string}}).env?.VITE_DIRECT_RETENTION==='1'
     const initial=convertDirectResult(input,v.rawText,record(original)?original as unknown as RecognitionResult:undefined,{actionRecovery,retention})
     const converted=localFallback?initial:recoverMissingDirectActions(initial,buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(rawInput.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]}),v.rawText)
-    const semanticFallback=converted!==initial
+    const semanticFallback=converted!==initial||!localFallback&&input!==rawInput
     // A generated reading fallback does not count as an AI-supported action.
     // Keep provenance separate from the legacy origin, which older readers use
     // to surface a retry affordance for rule-completed batches.
-    const aiHasAction=initial.result.standaloneTasks.some(t=>t.tempId!=='direct-read-notice'&&t.actionVerb!=='查看')||initial.result.events.length>0
+    const aiResult=!localFallback&&input!==rawInput?convertDirectResult(rawInput,v.rawText,record(original)?original as unknown as RecognitionResult:undefined,{actionRecovery,retention}).result:initial.result
+    const aiHasAction=aiResult.standaloneTasks.some(t=>t.tempId!=='direct-read-notice'&&t.actionVerb!=='查看')||aiResult.events.length>0
     const provenance=localFallback||semanticFallback&&!aiHasAction?'local':semanticFallback?'hybrid':'ai'
     const processing=rawInput.quality.reviewReasons.some(reason=>/部分提取未完成|后半部分可能尚未处理/u.test(reason))?'partial':'complete'
     const result=converted.result

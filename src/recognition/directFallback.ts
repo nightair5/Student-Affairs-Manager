@@ -8,11 +8,12 @@ import {structuredOptionalEvent} from './directStructuredEvent'
 import {completeNumberedActions} from './directNumberedActions'
 import {retainLocalEventDetails} from './localEventDetails'
 import {recoverLabeledLocalEvent} from './directLabeledEvent'
+import {completeParallelSessions,linkFollowingFormChannel} from './directParallelSessions'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
  const improved=retainLocalEventDetails(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(improveLocalActions(input,source),source),source),source),source)
- return removeLocalSectionHeadings(improved)
+ return linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(improved),source),source)
 }
 
 const localSectionHeading=/^\s*(?:参加|参与|报名|活动)(?:须知|说明|要求|事项|方式|条件|时间|地点|流程|规则|注意事项)(?:\s*[：:]\s*|\s*$)/u

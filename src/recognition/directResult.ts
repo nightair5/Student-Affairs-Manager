@@ -98,7 +98,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   tasks.forEach(t => { const retained=t.dependencyTempIds.filter(id=>taskIds.has(id));if(retained.length!==t.dependencyTempIds.length){tagsById.get(t.tempId)!.push('待确认');omitted.push({id:t.tempId,reason:'UNRESOLVED_RELATION_NOT_EXECUTABLE'})}t.dependencyTempIds=retained })
   const events = result.events.flatMap(e => {
     const text = context(e.evidenceIds), name = compact(e.title)
-    const cores=e.title.replace(/(?:参加|关于|召开|举行|出席)/gu,'').split(/和|与|及|暨/u).map(compact).filter(Boolean)
+    const cores=(e.tempId.startsWith('direct-session:')?e.title.split(' · '):e.title.replace(/(?:参加|关于|召开|举行|出席)/gu,'').split(/和|与|及|暨/u)).map(compact).filter(Boolean)
     if (!text || !name || !cores.length || !cores.every(word=>compact(text).includes(word)) || cores.some(core=>isCancelled(text,core,eventDetailContract))) { omitted.push({id:e.tempId,reason:'EVENT_UNGROUNDED_OR_CANCELLED'}); return [] }
     // A submission call is not itself a scheduled event. Keep an explicitly
     // held activity even when its date is unknown; only isolate a title that
@@ -186,7 +186,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if (!times.some(p => p.relatedTaskTempIds.includes(t.tempId) && p.normalizedValue)) tagsById.get(t.tempId)!.push('时间待定')
     items.push({tempId:t.tempId,kind:'task',tags:[...new Set(tagsById.get(t.tempId)!)]})
   })
-  const eventIsPrimary=events.length>0&&(eventDetailContract||events.some(e=>e.tempId==='local-labelled-event'))
+  const eventIsPrimary=events.length>0&&(eventDetailContract||events.some(e=>e.tempId==='local-labelled-event'||e.tempId.startsWith('direct-session:')))
   if (!tasks.length && !eventIsPrimary) {
     // Owner-authored read action, not a claim that the notice demanded it.
     // Even a cancellation has an update to read; its cancelled action is absent.
