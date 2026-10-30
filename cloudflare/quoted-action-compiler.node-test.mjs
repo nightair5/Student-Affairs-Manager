@@ -13,6 +13,7 @@ test('a noun-only item keeps a single action and subject already present in its 
  for(const [source,name,quote,title] of [
   ['毕业去向调查。请同学们填写下方问卷。截止11月5日17:00。','毕业去向调查问卷','毕业去向调查。请同学们填写下方问卷。','填写毕业去向调查问卷'],
   ['课程反馈。请填写下方问卷。截止11月5日17:00。','课程反馈问卷','课程反馈。请填写下方问卷。','填写课程反馈问卷'],
+  ['课程反馈。请填写下方问卷。截止11月5日17:00。','课程反馈','课程反馈。请填写下方问卷。','填写课程反馈问卷'],
   ['请提交课程报告。截止11月5日17:00。','课程报告','请提交课程报告。','提交课程报告'],
  ]){
   const raw=fixture(name,quote,source.includes('问卷')?'下方问卷':null),snapshot=JSON.stringify(raw)

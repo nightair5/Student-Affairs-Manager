@@ -43,14 +43,16 @@ function promoteQuotedActions(raw,source){
   const verb=actions[0][0],at=actions[0].index,tail=span.literal.slice(at+verb.length)
   const directAt=tail.indexOf(name),reference=/^(?:\s*)(?:下方|以下|上述|该份|这份|此份|该|本次)([\p{L}\p{N}]{2,18})/u.exec(tail)
   const direct=directAt>=0&&directAt<=16&&!/[。；;！？!?\n]/u.test(tail.slice(0,directAt))
-  const referential=reference&&compact(name).endsWith(compact(reference[1]))
+  const quotedTopic=span.literal.slice(0,at).includes(name)
+  const referencedObject=reference&&(compact(name).endsWith(compact(reference[1]))?name:quotedTopic?name+reference[1]:null)
+  const referential=referencedObject&&sourceSupportsObjectParts(referencedObject,span.literal)
   if(!direct&&!referential)return item
   if(/(?:已(?:经)?|现已|曾(?:经)?)[^，。；]{0,10}$/u.test(span.literal.slice(0,at))&&!/(?:请|须|需|应|务必|可|欢迎|自愿)[^，。；]{0,14}$/u.test(span.literal.slice(0,at)))return item
   if(referential)for(const [index,fact] of raw.facts.entries()){
    if(fact?.item===item.id&&fact.type==='渠道'&&compact(fact.quote)===compact(reference[0]))consumed.add(index)
   }
   edits.push({id:item.id,rule:'SINGLE_ACTION_IN_ITEM_SOURCE_QUOTE',modelQuote:item.quote,literal:span.literal,start:span.start,end:span.end})
-  return {...item,name:verb+name}
+  return {...item,name:verb+(direct?name:referencedObject)}
  })
  return {raw:{...raw,items,facts:raw.facts.filter((_,index)=>!consumed.has(index))},edits,consumed}
 }
