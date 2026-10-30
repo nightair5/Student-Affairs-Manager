@@ -11,7 +11,67 @@ import {recoverLabeledLocalEvent} from './directLabeledEvent'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
- return retainLocalEventDetails(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(improveLocalActions(input,source),source),source),source),source)
+ const improved=retainLocalEventDetails(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(improveLocalActions(input,source),source),source),source),source)
+ return removeLocalSectionHeadings(improved)
+}
+
+const localSectionHeading=/^\s*(?:参加|参与|报名|活动)(?:须知|说明|要求|事项|方式|条件|时间|地点|流程|规则|注意事项)(?:\s*[：:]\s*|\s*$)/u
+/** A section label can begin with a verb, but is not an action's object. */
+function isLocalSectionHeading(task:TaskSuggestionV2):boolean {
+ return localSectionHeading.test(task.title)
+}
+function removeLocalSectionHeadings(input:RecognitionResult):RecognitionResult {
+ const all=[...input.standaloneTasks,...input.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
+ const removed=new Set(all.filter(isLocalSectionHeading).map(t=>t.tempId))
+ if(!removed.size)return input
+ const r=structuredClone(input)
+ const keptTasks=(tasks:TaskSuggestionV2[])=>tasks.filter(t=>!removed.has(t.tempId)).map(t=>({...t,dependencyTempIds:t.dependencyTempIds.filter(id=>!removed.has(id))}))
+ r.standaloneTasks=keptTasks(r.standaloneTasks)
+ r.milestones=r.milestones.map(m=>({...m,tasks:keptTasks(m.tasks),workPackages:m.workPackages.map(w=>({...w,tasks:keptTasks(w.tasks)}))}))
+ const eventPoints=new Set(r.events.flatMap(e=>[e.startTimePointTempId,e.endTimePointTempId]))
+ r.events=r.events.map(e=>({...e,relatedTaskTempIds:e.relatedTaskTempIds?.filter(id=>!removed.has(id))}))
+ r.materials=r.materials.filter(m=>!m.relatedTaskTempIds.length||m.relatedTaskTempIds.some(id=>!removed.has(id))).map(m=>({...m,relatedTaskTempIds:m.relatedTaskTempIds.filter(id=>!removed.has(id))}))
+ const materialIds=new Set(r.materials.map(m=>m.tempId))
+ r.timePoints=r.timePoints.filter(p=>!p.relatedTaskTempIds.length||p.relatedTaskTempIds.some(id=>!removed.has(id))||eventPoints.has(p.tempId)).map(p=>({...p,relatedTaskTempIds:p.relatedTaskTempIds.filter(id=>!removed.has(id)),relatedMaterialTempIds:p.relatedMaterialTempIds.filter(id=>materialIds.has(id))}))
+ return r
+}
+
+/** Clarify an already retained generic registration only when one material's
+ * existing source span is part of a single explicit, affirmative form action. */
+function clarifyOwnedFormAction(base:DirectConversion,source:string):DirectConversion {
+ const edits=new Map<string,{verb:string;object:string;quote:string;start:number;sourceId:string}>()
+ for(const task of base.result.standaloneTasks){
+  if(!/^(?:报名|登记|申请|申报|填写|填报|提交|递交|上传|报送)$/u.test(task.actionVerb))continue
+  const owned=base.result.materials.filter(m=>m.required&&m.relatedTaskTempIds.length===1&&m.relatedTaskTempIds[0]===task.tempId&&/(?:表|材料|文件|文档|申请书)$/u.test(m.name))
+  if(owned.length!==1)continue
+  const material=owned[0],positions=base.result.evidence.flatMap(e=>{
+   if(!material.evidenceIds.includes(e.id))return []
+   const quote=e.quotedText||e.quote,at=e.textStart
+   if(!quote||typeof at!=='number'||source.slice(at,at+quote.length)!==quote)return []
+   const within=quote.indexOf(material.name)
+   return within>=0?[{at:at+within,sourceId:e.sourceId}]:[]
+  })
+  if(/^(?:填写|填报|提交|递交|上传|报送)/u.test(task.title)&&task.title.includes(material.name))continue
+  const matches=positions.flatMap(position=>{
+   const before=source.slice(0,position.at),clauseStart=Math.max(before.lastIndexOf('。'),before.lastIndexOf('！'),before.lastIndexOf('？'),before.lastIndexOf('；'),before.lastIndexOf(';'),before.lastIndexOf('\n'))+1
+   const clause=source.slice(clauseStart,position.at),verbs=[...clause.matchAll(/填写|填报|提交|递交|上传|报送/gu)]
+   if(verbs.length!==1)return []
+   const verb=verbs[0][0],start=clauseStart+verbs[0].index!,between=source.slice(start+verb.length,position.at),prefix=source.slice(clauseStart,start)
+   if(between.length>16||/[，,、；;。！？\n]|或者|任选|二选一|例如|比如|并|以及|然后|随后|查看/u.test(between)||/(?:无需|无须|不用|不需要|不必|暂不|请勿|不要|不得|禁止|不再|取消|作废|例如|比如|示例|任选|二选一)/u.test(prefix)||/已(?:经)?\s*$/u.test(prefix))return []
+   return [{verb,object:material.name,quote:source.slice(start,position.at+material.name.length),start,sourceId:position.sourceId}]
+  })
+  if(matches.length===1)edits.set(task.tempId,matches[0])
+ }
+ if(!edits.size)return base
+ const result=structuredClone(base.result)
+ for(const task of result.standaloneTasks){
+  const edit=edits.get(task.tempId);if(!edit)continue
+  const id=`direct-form-action:${task.tempId}:${edit.start}`,context=task.title.trim(),prefix=edit.verb+edit.object
+  task.title=context.includes(edit.object)?edit.verb+context:`${prefix}（${context.slice(0,Math.max(0,78-prefix.length))}）`
+  task.actionVerb=edit.verb;task.actionObject=edit.object;task.evidenceIds.push(id)
+  result.evidence.push({id,sourceId:edit.sourceId,quote:edit.quote,quotedText:edit.quote,textStart:edit.start,textEnd:edit.start+edit.quote.length,field:'description',extractionMethod:'parser',confidence:1})
+ }
+ return {...base,result}
 }
 function improveLocalActions(input:RecognitionResult,source:string):RecognitionResult {
  if(/无需办理|无需操作|仅供知悉/u.test(source)&&!/提交|报名|申请|申报|缴费|领取|上传/u.test(source.replace(/(?:无需|不必|不要|无须)(?:办理|操作|提交|报名|申请|申报|缴费|领取|上传)/gu,''))){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/仅供知悉|无需|无须|不必/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
@@ -45,9 +105,11 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
  const allCutoffs=spans.flatMap(s=>{const p=cutoff(s.text);return p?[{...s,p}]:[]})
  const evidence=(text:string,at:number,field:'description'|'deadline')=>{const id=`local-direct:${field}:${at}`;if(!r.evidence.some(e=>e.id===id))r.evidence.push({id,sourceId,quote:text,quotedText:text,textStart:at,textEnd:at+text.length,field,extractionMethod:'parser',confidence:1});return id}
  for(const span of spans){
-  const q=span.text,plain=q.replace(/[（(][^）)]*[）)]/gu,'')
+  // Interpret section headings as labels, not as an object before “须”.
+  // Keep q and its original offsets for evidence, deadlines and channel.
+  const q=span.text,plain=q.replace(/[（(][^）)]*[）)]/gu,'').replace(localSectionHeading,'')
   if(/仅供知悉|无需办理|无需操作/u.test(q))continue
-  const delivery=localDelivery(q)
+  const delivery=localDelivery(plain)
   let verb=delivery?.verb,object=delivery?.object?.replace(/交$/u,'')
   const choice=/(?:^|[，,])(?:请|须|需)?(提交|递交|报送|上传|发送)([^，,；;。！？\n]{2,30}?)(?=可任选|可选择|可以选择|任选)/u.exec(plain)
   if(choice&&/或者|二选一|任选|择一/u.test(plain)){verb=choice[1];object=choice[2].trim()}
@@ -98,6 +160,7 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
 export function recoverMissingDirectActions(base:DirectConversion,local:RecognitionResult,source:string):DirectConversion {
  const completed=completeNumberedActions(base.result,source)
  if(JSON.stringify(completed)!==JSON.stringify(base.result))base=convertDirectResult(completed,source)
+ base=clarifyOwnedFormAction(base,source)
  const candidate=convertDirectResult(improveDirectFallback(local,source),source)
  const key=(value:string)=>value.replace(/\s/gu,'').replace(/^如符合条件/u,'')
  const revision=directEventRevision(source)
