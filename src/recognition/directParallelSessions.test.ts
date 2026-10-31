@@ -34,6 +34,15 @@ describe('parallel event sessions and source-specific dates',()=>{
   expect(r.timePoints.find(p=>p.relatedTaskTempIds.includes(form!.tempId)&&p.type==='task_deadline')?.normalizedValue).toBe('2026-11-01T18:00')
   expect(r.materials.find(m=>m.relatedTaskTempIds.includes(form!.tempId))?.submissionChannel).toBe('https://example.edu/form')
  })
+ it('keeps AI session titles that combine the topic and role without inventing a literal quote',()=>{
+  const parsed=completeParallelSessions(local(notice),notice)
+  expect(parsed.events).toHaveLength(2)
+  parsed.events=parsed.events.map((event,index)=>({...event,tempId:`g2-${index+1}`,title:index===0?'职业探索活动宣讲会':'职业探索活动交流会'}))
+  const r=convertDirectResult(completeParallelSessions(parsed,notice),notice).result
+  expect(r.events).toHaveLength(2)
+  expect(r.events.find(e=>e.title.includes('宣讲'))?.location).toContain('报告厅')
+  expect(r.events.find(e=>e.title.includes('交流'))?.location).toContain('展厅')
+ })
  it('matches role labels even when the location order is reversed',()=>{
   const swapped=notice.replace('文化中心一楼报告厅（宣讲）、展厅（交流）','文化中心展厅（交流）、报告厅（宣讲）')
   const r=run(swapped)

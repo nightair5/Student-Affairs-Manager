@@ -88,7 +88,8 @@ export function completeParallelSessions(input:RecognitionResult,source:string):
    description+=(description?'\n':'')+'通知补充：'+text;r.evidence.push(evidence(item.id,item.quote,item.start,'description'));supplementalIds.push(item.id)
   }
   const requiredRefs=[headingId,lineId,...(roleLine?[placeId]:[]),...supplementalIds]
-  const event:EventSuggestion={tempId:id,title:current?.title??`${topic} · ${role}`,description,location:locationFor(role)??current?.location??null,startTimePointTempId:selectedTime?timeId:current?.startTimePointTempId??null,endTimePointTempId:end?endId:selectedTime?null:current?.endTimePointTempId??null,evidenceIds:[...new Set([...(current?.evidenceIds??aggregate[0]?.evidenceIds??[]).slice(0,Math.max(0,20-requiredRefs.length)),...requiredRefs])],confidence:current?.confidence??1,inferenceLevel:current?.inferenceLevel??'explicit',selected:true,relatedTaskTempIds:current?.relatedTaskTempIds??[]}
+  const title=current&&squash(source).includes(squash(current.title))?current.title:`${topic} · ${role}`
+  const event:EventSuggestion={tempId:id,title,description,location:locationFor(role)??current?.location??null,startTimePointTempId:selectedTime?timeId:current?.startTimePointTempId??null,endTimePointTempId:end?endId:selectedTime?null:current?.endTimePointTempId??null,evidenceIds:[...new Set([...(current?.evidenceIds??aggregate[0]?.evidenceIds??[]).slice(0,Math.max(0,20-requiredRefs.length)),...requiredRefs])],confidence:current?.confidence??1,inferenceLevel:current?.inferenceLevel??'explicit',selected:true,relatedTaskTempIds:current?.relatedTaskTempIds??[]}
   r.events=r.events.filter(e=>e.tempId!==id);r.events.push(event)
  }
  r.timePoints=r.timePoints.filter(p=>p.relatedTaskTempIds.length>0||p.relatedMaterialTempIds.length>0||r.events.some(e=>e.startTimePointTempId===p.tempId||e.endTimePointTempId===p.tempId)||!sessions.some(s=>[s.line.value,s.line.whole].some(quote=>squash(quote)===squash(p.rawText))))

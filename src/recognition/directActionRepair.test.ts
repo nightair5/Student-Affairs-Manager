@@ -30,6 +30,12 @@ describe('direct action completion preserves the actual delivery without turning
   expect(actual.result.timePoints.find(p=>p.relatedTaskTempIds.includes(task.tempId))?.normalizedValue).toBe('2026-11-05T17:00')
   expect(()=>parseRecognitionResult(actual.result)).not.toThrow()
  })
+ it('does not prepend the action twice when a conditional task already names its form',()=>{
+  const source='【科研写作分享会】\n时间：2026年11月5日14:00—15:30。地点：教学楼B203。\n有意参加的同学请于2026年11月2日17:00前填写报名表，通过https://example.edu/signup提交。'
+  const raw={items:[{id:'a',kind:'活动',name:'科研写作分享会',quote:'【科研写作分享会】'},{id:'b',kind:'任务',name:'填写报名表',quote:'填写报名表'}],facts:[{type:'开始',quote:'2026年11月5日14:00—15:30',item:'a'},{type:'结束',quote:'2026年11月5日14:00—15:30',item:'a'},{type:'地点',quote:'教学楼B203',item:'a'},{type:'截止',quote:'2026年11月2日17:00前',item:'b'},{type:'材料',quote:'报名表',item:'b'},{type:'渠道',quote:'https://example.edu/signup',item:'b'}],noAction:false}
+  const {actual}=run(source,raw),task=actual.result.standaloneTasks.find(t=>t.actionObject==='报名表')
+  expect(task).toBeDefined();expect(task!.title).not.toContain('填写如符合条件 填写');expect(task!.title).toMatch(/^(?:如符合条件\s*)?填写报名表$/u)
+ })
  it('keeps attendance instructions in their event instead of making a second task',()=>{
   const source='【科学传播工作坊】\n活动主题：让数据讲故事。\n时间：2026年11月6日18:30—20:00。\n地点：学术中心206。\n主讲人：周老师，高校新闻学教师。\n内容：讲解图表制作、数据核验，并现场答疑。\n参加须知：请提前10分钟入场，自带笔记本电脑。'
   const raw={items:[{id:'a',kind:'活动',name:'科学传播工作坊',quote:'【科学传播工作坊】'}],facts:[{type:'开始',quote:'2026年11月6日18:30—20:00',item:'a'},{type:'结束',quote:'2026年11月6日18:30—20:00',item:'a'},{type:'地点',quote:'学术中心206',item:'a'},{type:'主讲人',quote:'主讲人：周老师，高校新闻学教师',item:'a'},{type:'活动内容',quote:'讲解图表制作、数据核验，并现场答疑',item:'a'},{type:'参加须知',quote:'请提前10分钟入场，自带笔记本电脑',item:'a'}],noAction:false}

@@ -52,7 +52,7 @@ function clarifyOwnedFormAction(base:DirectConversion,source:string):DirectConve
    const within=quote.indexOf(material.name)
    return within>=0?[{at:at+within,sourceId:e.sourceId}]:[]
   })
-  if(/^(?:填写|填报|提交|递交|上传|报送)/u.test(task.title)&&task.title.includes(material.name))continue
+  if(/^(?:填写|填报|提交|递交|上传|报送)/u.test(task.title.replace(/^如符合条件\s*/u,''))&&task.title.includes(material.name))continue
   const matches=positions.flatMap(position=>{
    const before=source.slice(0,position.at),clauseStart=Math.max(before.lastIndexOf('。'),before.lastIndexOf('！'),before.lastIndexOf('？'),before.lastIndexOf('；'),before.lastIndexOf(';'),before.lastIndexOf('\n'))+1
    const clause=source.slice(clauseStart,position.at),verbs=[...clause.matchAll(/填写|填报|提交|递交|上传|报送/gu)]
