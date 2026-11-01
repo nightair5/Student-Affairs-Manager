@@ -2,7 +2,7 @@ import {normalizeRecognitionResult} from './recognition.mjs'
 import {locateSourceQuote} from './source-text-index.mjs'
 import {parseDirectSourceTime} from './direct-source-time.mjs'
 import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
-import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-0-2.mjs'
+import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-0-3.mjs'
 
 const object = value => Boolean(value && typeof value === 'object' && !Array.isArray(value))
 const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(0,max) : ''
@@ -13,6 +13,45 @@ const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
 const cancelled = value => /(?:取消|作废|废止|不再(?:举办|举行|提交|报名|申请|参加)|禁止|请勿|不得(?:提交|报名|申请|参加))/u.test(value)
 const sourceDay = /(?<![\d:])(?:\d{4}[-/.]\d{1,2}[-/.]\d{1,2}|(?:\d{4}\s*年\s*)?\d{1,2}\s*月\s*\d{1,2}\s*[日号]?|\d{1,2}[/.]\d{1,2}\s*[日号]?)(?![\d:])|(?:本周|下周|周|星期)[一二三四五六日天]|今天|明天|后天|今日|明日/u
+
+// A broken model quote can be recovered only when the model's action and
+// object both occur in exactly one source clause. Never pick a nearest match.
+function sourceTaskClause(source,item) {
+  const action=compact(text(item.action,20)),target=compact(text(item.object,80))
+  if(!action||target.length<2)return null
+  const candidates=[...source.matchAll(/[^。！？；;\n]+/gu)].filter(m=>{
+    const clause=compact(m[0])
+    const actionAt=clause.indexOf(action),before=clause.slice(Math.max(0,actionAt-8),actionAt)
+    const background=/(?:介绍|讲解|指导|展示|分享|讨论|学习|培训)(?:如何|怎样|有关|关于)?$/u.test(before)
+    return actionAt>=0&&clause.includes(target)&&!cancelled(m[0])&&!background&&!/(?:无需|无须|不必|不用|不需要|请勿|禁止|不得|不再)$/u.test(before)
+  })
+  if(candidates.length!==1)return null
+  const match=candidates[0],literal=match[0].trim(),start=match.index+match[0].indexOf(literal)
+  return {literal,start,end:start+literal.length}
+}
+
+// An event needs its literal name plus an independently stated time or place
+// in the same unique source clause before a missing quote can be recovered.
+function sourceEventClause(source,item) {
+  const title=compact(text(item.title,160))
+  const signals=[text(item.location,160),...(Array.isArray(item.times)?item.times.flatMap(t=>object(t)?[text(t.raw,160)]:[]):[])].map(compact).filter(s=>s.length>=2)
+  if(title.length<2||!signals.length)return null
+  const candidates=[...source.matchAll(/[^。！？；;\n]+/gu)].filter(m=>{
+    const clause=compact(m[0])
+    return clause.includes(title)&&signals.some(s=>clause.includes(s))&&!cancelled(m[0])
+  })
+  if(candidates.length!==1)return null
+  const match=candidates[0],literal=match[0].trim(),start=match.index+match[0].indexOf(literal)
+  return {literal,start,end:start+literal.length}
+}
+
+// Remove only formatting differences and an equivalent introduction; do not
+// merge alternatives with mandatory requirements, or different facts.
+function requirementKey(value) {
+  return compact(value).replace(/^(?:材料)?要求[：:]?/u,'')
+    .replace(/^任选(?:一项|一种方式)(?:提交)?[：:]?/u,'任选:')
+    .replace(/[，,。；;：:、\s]/gu,'')
+}
 
 // Preserve a literal channel or a uniquely source-backed address when a model
 // has wrapped that address in a nonliteral descriptive label.
@@ -48,10 +87,10 @@ function sourceLocation(source,value,title,ownText) {
  * validates source-backed time values without re-parsing the display title. */
 export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash'}={}) {
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
-    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.0',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
+    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.1',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
   const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:text(raw.topic,160)||'通知',sourceType:'text',notificationType:'uncertain',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,SEMANTIC_NOTICE_VERSION,true,timezone)
-  const audit={version:SEMANTIC_NOTICE_VERSION,compilerVersion:'semantic-notice-compiler-1.0.0',rootFailure:false,items:[],facts:[],losses:[]}
+  const audit={version:SEMANTIC_NOTICE_VERSION,compilerVersion:'semantic-notice-compiler-1.0.1',rootFailure:false,items:[],facts:[],losses:[]}
   const note=(layer,id,reason)=>audit.losses.push({layer,id,reason})
   const evidence=(quote,field,id) => {
     const q=text(quote,500);if(!q)return null
@@ -70,6 +109,11 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     if(item.status==='cancelled'){audit.items.push({key:item.key,status:'CANCELLED'});continue}
     if(item.status!==undefined&&item.status!=='active'){note('ITEM_STRUCTURE',item.key,'UNKNOWN_STATUS');continue}
     const tempId='sem-i'+(index+1),refs=list(item.evidence,12,500),ids=refs.flatMap(q=>{const e=evidence(q,item.kind==='event'?'event':'description',item.key);return e?[e]:[]})
+    let recoveredEvidence=false
+    if(!ids.length){
+      const span=item.kind==='task'?sourceTaskClause(source,item):sourceEventClause(source,item)
+      if(span){const id=evidence(span.literal,item.kind==='event'?'event':'description',item.key);if(id){ids.push(id);recoveredEvidence=true;note('ALIGNMENT',item.key,item.kind==='task'?'RECOVERED_FROM_UNIQUE_ACTION_OBJECT_CLAUSE':'RECOVERED_FROM_UNIQUE_EVENT_CLAUSE')}}
+    }
     if(!ids.length){note('ITEM_STRUCTURE',item.key,'ITEM_UNGROUNDED');continue}
     const ownText=ids.map(id=>result.evidence.find(e=>e.id===id)?.quote??'').join('\n')
     const immediatelyCancelled=ids.some(id=>{
@@ -92,7 +136,8 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       if(channel&&!supportedChannel)note('CHANNEL',item.key,'CHANNEL_NOT_SOURCE_GROUNDED')
       if(deliveryForm&&!supportedForm)note('DELIVERY',item.key,'DELIVERY_FORM_NOT_SOURCE_GROUNDED')
       const lines=[text(item.description,500),supportedForm?'交付形式：'+supportedForm:'',supportedChannel?'提交渠道：'+supportedChannel:'',condition?'适用条件待确认：'+condition:'',prerequisite?'前置事项：'+prerequisite:'',voluntary?'参加说明：'+voluntary:'',...requirements.map(r=>'要求：'+r)].filter(Boolean)
-      entity={tempId,parentTempId:null,hierarchyType:'task',title:text(item.title,80),actionVerb:action,actionObject:target,description:lines.join('\n').slice(0,800),completionCriteria:requirements,estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[...new Set(ids)],confidence:.8,inferenceLevel:'explicit',userConfirmationRequired:Boolean(condition),selected:!condition}
+      const title=recoveredEvidence?(target.startsWith(action)?target:action+target):text(item.title,80)
+      entity={tempId,parentTempId:null,hierarchyType:'task',title,actionVerb:action,actionObject:target,description:lines.join('\n').slice(0,800),completionCriteria:requirements,estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[...new Set(ids)],confidence:.8,inferenceLevel:recoveredEvidence?'strong_inference':'explicit',userConfirmationRequired:Boolean(condition)||recoveredEvidence,selected:!condition&&!recoveredEvidence}
       result.standaloneTasks.push(entity)
     } else {
       const location=text(item.location,160),supportedLocation=sourceLocation(source,location,item.title,ownText)
@@ -101,19 +146,20 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const notices=list(item.notices,10,300)
       const voluntaryShown=voluntary&&notices.some(n=>compact(n).includes(compact(voluntary))||compact(voluntary).includes(compact(n)))
       const lines=[...speakers,text(item.content,1000)?'活动内容：'+text(item.content,1000):'',...notices.map(n=>'参加须知：'+n),...requirements.map(n=>'准备要求：'+n),condition?'适用条件待确认：'+condition:'',voluntary&&!voluntaryShown?'参加须知：'+voluntary:''].filter(Boolean)
-      entity={tempId,title:text(item.title,160),description:[...new Set(lines)].join('\n').slice(0,2400),startTimePointTempId:null,endTimePointTempId:null,location:supportedLocation||null,relatedTaskTempIds:[],evidenceIds:[...new Set(ids)],confidence:.8,inferenceLevel:'explicit',selected:!condition}
+      entity={tempId,title:text(item.title,160),description:[...new Set(lines)].join('\n').slice(0,2400),startTimePointTempId:null,endTimePointTempId:null,location:supportedLocation||null,relatedTaskTempIds:[],evidenceIds:[...new Set(ids)],confidence:.8,inferenceLevel:recoveredEvidence?'strong_inference':'explicit',selected:!condition&&!recoveredEvidence}
       result.events.push(entity)
     }
-    keys.set(item.key,{item,entity,kind:item.kind,condition});pending.push({item,entity,kind:item.kind})
+    keys.set(item.key,{item,entity,kind:item.kind,condition});pending.push({item,entity,kind:item.kind,recoveredEvidence,ownText})
     audit.items.push({key:item.key,tempId,kind:item.kind,status:'RETAINED'})
   }
 
-  for(const {item,entity,kind} of pending) {
+  for(const {item,entity,kind,recoveredEvidence,ownText} of pending) {
     if(kind==='task')entity.dependencyTempIds=list(item.dependsOn,20,40).flatMap(key=>{const dependency=keys.get(key);if(dependency?.kind==='task')return [dependency.entity.tempId];note('RELATION',item.key,'DEPENDENCY_NOT_FOUND');return []})
     for(const entry of (Array.isArray(item.times)?item.times.slice(0,20):[])) {
       if(!object(entry)||!['deadline','start','end','window'].includes(entry.role))continue
       const rawTime=text(entry.raw,160);let span=rawTime&&locateSourceQuote(rawTime,source)
       if(!span){note('TIME',item.key,'TIME_TEXT_NOT_UNIQUELY_LOCATED');continue}
+      if(recoveredEvidence&&!ownText.includes(span.literal)){note('TIME',item.key,'RECOVERED_ITEM_TIME_SCOPE_UNCERTAIN');continue}
       if(!sourceDay.test(foldWidth(span.literal))){
         // A bare clock must not silently inherit today's date. Only recover a
         // single explicit day from the same uninterrupted source clause.
@@ -149,9 +195,21 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       if(!value)note('TIME',item.key,previous?'OBSOLETE_TIME':unsafeDeadline?'UNSAFE_DEADLINE_ROLE':'TIME_UNRESOLVED')
       const point={tempId:'sem-p'+(result.timePoints.length+1),type:role,rawText:span.literal,normalizedValue:value,timezone,isAllDay:value?parsed.isAllDay:false,precision:value?parsed.precision:'vague',needsConfirmation:!value,relatedTaskTempIds:kind==='task'?[entity.tempId]:[],relatedMaterialTempIds:[],evidenceIds:[eid],confidence:.8,selected:Boolean(value)}
       if(entry.role==='window'){
-        // A service window is descriptive; never project its opening as a cutoff.
-        if(kind==='task')entity.description+=(entity.description?'\n':'')+'办理时段：'+span.literal
-        else entity.description+=(entity.description?'\n':'')+'参加须知：办理时段 '+span.literal
+        // A service window belongs to the task, but is neither a deadline nor
+        // a personal plan. Store its actual source-backed endpoints.
+        if(kind==='task'){
+          const endOnly=!parsed.rangeEndNormalizedValue&&/^(?:自?即日起|从现在起|自(?:通知|发布)之日起|直至|截至|至|到)\s*(?:至|到|—|-)?/u.test(foldWidth(span.literal).trim())
+          if(endOnly)point.type='event_end'
+          point.tempId='sem-window-'+(endOnly?'end':'start')+'-'+(result.timePoints.length+1)
+          result.timePoints.push(point);entity.timePointTempIds.push(point.tempId)
+          if(parsed.rangeEndNormalizedValue&&!previous&&!parsed.needsConfirmation){
+            const end={...point,tempId:'sem-window-end-'+(result.timePoints.length+1),type:'event_end',normalizedValue:parsed.rangeEndNormalizedValue}
+            result.timePoints.push(end);entity.timePointTempIds.push(end.tempId)
+          }
+          entity.evidenceIds=[...new Set([...entity.evidenceIds,eid])].slice(0,20)
+          entity.description+=(entity.description?'\n':'')+'办理时段：'+span.literal
+        } else entity.description+=(entity.description?'\n':'')+'参加须知：办理时段 '+span.literal
+        audit.facts.push({item:item.key,role:'window',raw:span.literal,value,sourceStart:span.start,sourceEnd:span.end})
         continue
       }
       if(kind==='task'&&(entry.role==='start'||entry.role==='end')){
@@ -185,7 +243,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     result.materials.push(m)
     for(const owner of owners){
       owner.materialTempIds.push(m.tempId);owner.evidenceIds=[...new Set([...owner.evidenceIds,...ids])].slice(0,20)
-      for(const requirement of requirements)if(!owner.completionCriteria.includes(requirement)){
+      for(const requirement of requirements)if(!owner.completionCriteria.some(existing=>requirementKey(existing)===requirementKey(requirement))){
         if(owner.completionCriteria.length<12)owner.completionCriteria.push(requirement)
         const line='材料要求：'+requirement
         if(!owner.description.split('\n').includes(line))owner.description+=(owner.description?'\n':'')+line

@@ -10,6 +10,7 @@ import {commitDirectDraft,undoDirectBatch} from '../domain/v2/directIntake'
 import {buildLocalRecognition} from './pipeline'
 import {improveDirectFallback} from './directFallback'
 import {exportWorkspaceV8,importWorkspaceV8} from '../domain/v2/serialization'
+import {sourceWindowDisplayLabel,sourceWindowLastEnd} from '../domain/v2/sourceWindowDisplay'
 
 const referenceTime='2026-11-01T04:12:32.675Z',timezone='Asia/Shanghai'
 const source='请于11月8日18:00前提交申请表至课程平台。申请表须为Word和PDF两种格式，文件名为项目号加姓名。名单需按贡献大小排序。'
@@ -31,6 +32,14 @@ async function add(repo:CanonicalWorkspaceRepository,operationId:string){
   await repo.transaction(w=>({...w,extractionDrafts:w.extractionDrafts.map(d=>d.id===h.draftId?{...d,result:first.result}:d)}))
   return commitDirectDraft(repo,h.draftId,referenceTime)
 }
+async function addNotice(repo:CanonicalWorkspaceRepository,operationId:string,text:string,value:unknown){
+  const capture=new CapturePersistenceService(repo),h=await capture.beginCapture({operationId,sourceType:'text',title:'匿名工程通知',rawText:text,provider:'deepseek',modelName:'synthetic-offline',promptVersion:null,pipelineVersion:'semantic-test',now:referenceTime})
+  const result=semantic(text,value);result.evidence.forEach(e=>{e.sourceId=h.sourceId})
+  await capture.recognize(h,async()=>result)
+  const first=assembleProductFirstSuggestion(result,{sourceText:text,referenceTime,timezone})
+  await repo.transaction(w=>({...w,extractionDrafts:w.extractionDrafts.map(d=>d.id===h.draftId?{...d,result:first.result}:d)}))
+  return commitDirectDraft(repo,h.draftId,referenceTime)
+}
 
 describe('semantic notice direct delivery',()=>{
   it('does not re-run a fixed verb list or turn an explicit cutoff into a reading date',()=>{
@@ -39,6 +48,70 @@ describe('semantic notice direct delivery',()=>{
     const first=assembleProductFirstSuggestion(input,{sourceText:s,referenceTime,timezone}).result,direct=convertDirectResult(first,s)
     expect(direct.result.standaloneTasks.map(t=>t.title)).toEqual(['备份实验数据'])
     expect(direct.result.timePoints.map(t=>[t.type,t.normalizedValue])).toEqual([['task_deadline','2026-11-08T18:00']])
+  })
+  it('recovers a uniquely supported action when only the model citation is broken',()=>{
+    const text='请于11月8日18:00前备份实验数据。'
+    const value={topic:'实验',kind:'action',items:[{key:'a',kind:'task',title:'立即备份实验数据并上传',action:'备份',object:'实验数据',evidence:['改写过的引用'],times:[{role:'deadline',raw:'11月8日18:00前'}]}],materials:[]}
+    const result=semantic(text,value),task=result.standaloneTasks[0]
+    expect(task.title).toBe('备份实验数据');expect(task.userConfirmationRequired).toBe(true)
+    expect(result.evidence.some(e=>e.quotedText===text.slice(0,-1))).toBe(true)
+    expect(result.timePoints[0].normalizedValue).toBe('2026-11-08T18:00')
+    expect(convertDirectResult(result,text).items[0].tags).toContain('待确认')
+    for(const rejected of ['取消备份实验数据。','无需备份实验数据。','培训将讲解如何备份实验数据。','备份实验数据。请再次备份实验数据。','请整理课程笔记。']){
+      expect(semantic(rejected,value).standaloneTasks).toHaveLength(0)
+    }
+    const unrelated='请备份实验数据。请于11月8日18:00前提交申请表。'
+    expect(semantic(unrelated,value).timePoints).toHaveLength(0)
+  })
+  it('recovers an event with a broken quote only from a unique name and time or place in one clause',()=>{
+    const text='分享会11月8日14:00在A201举办。'
+    const value={topic:'分享会',kind:'event',items:[{key:'a',kind:'event',title:'分享会',evidence:['不存在的引用'],location:'A201',times:[{role:'start',raw:'11月8日14:00'}]}],materials:[]}
+    const result=semantic(text,value)
+    expect(result.events.map(e=>[e.title,e.location])).toEqual([['分享会','A201']])
+    expect(result.timePoints[0].normalizedValue).toBe('2026-11-08T14:00')
+    expect(convertDirectResult(result,text).items[0].tags).toContain('待确认')
+    expect(semantic('分享会11月8日14:00在A201举办已取消。',value).events).toHaveLength(0)
+    expect(semantic('分享会11月8日14:00在A201举办。分享会11月8日14:00在A201举办。',value).events).toHaveLength(0)
+    expect(semantic('分享会另行通知。',value).events).toHaveLength(0)
+  })
+  it('keeps a source window as owned time points rather than a deadline or a personal plan',async()=>{
+    const text='请在11月8日09:00—11:00到服务台领取资料。'
+    const value={topic:'资料领取',kind:'action',items:[{key:'a',kind:'task',title:'领取资料',action:'领取',object:'资料',evidence:['领取资料'],times:[{role:'window',raw:'11月8日09:00—11:00'}]}],materials:[]}
+    const repo=await emptyRepo();await addNotice(repo,'source-window',text,value)
+    const stored=(await repo.load())!,task=stored.tasks[0]
+    expect(stored.timePoints.map(p=>[p.type,p.normalizedValue,p.legacyData?.sourceTimeRole])).toEqual([
+      ['event_start','2026-11-08T09:00','window_start'],['event_end','2026-11-08T11:00','window_end'],
+    ])
+    expect(stored.events).toHaveLength(0)
+    expect(stored.timePoints.some(p=>p.type.endsWith('_deadline')||p.type==='planned_start')).toBe(false)
+    expect(sourceWindowDisplayLabel(task.id,task.legacyData?.sourceWindowDeclarations,stored.timePoints,stored.sourceVersions)).toBe('11月8日09:00—11:00')
+    expect(sourceWindowLastEnd(task.id,task.legacyData?.sourceWindowDeclarations,stored.timePoints,stored.sourceVersions)).toBeTruthy()
+    const imported=importWorkspaceV8(exportWorkspaceV8(stored))
+    expect(imported.timePoints.map(p=>p.legacyData?.sourceTimeRole)).toEqual(['window_start','window_end'])
+  })
+  it('retains a date-only source window without inventing a clock or an end',async()=>{
+    const text='请于11月22日上午到服务台领取资料。'
+    const value={topic:'资料领取',kind:'action',items:[{key:'a',kind:'task',title:'领取资料',action:'领取',object:'资料',evidence:['领取资料'],times:[{role:'window',raw:'11月22日上午'}]}],materials:[]}
+    const repo=await emptyRepo();await addNotice(repo,'source-window-date',text,value)
+    const stored=(await repo.load())!,task=stored.tasks[0]
+    expect(stored.timePoints.map(p=>[p.type,p.normalizedValue,p.precision])).toEqual([['event_start','2026-11-22','date_only']])
+    expect(sourceWindowDisplayLabel(task.id,task.legacyData?.sourceWindowDeclarations,stored.timePoints,stored.sourceVersions)).toBe('11月22日上午')
+    expect(sourceWindowLastEnd(task.id,task.legacyData?.sourceWindowDeclarations,stored.timePoints,stored.sourceVersions)).toBeUndefined()
+  })
+  it('keeps an open-ended source window endpoint as the end, never its start or a cutoff',async()=>{
+    const text='即日起至11月7日可到服务台领取资料。'
+    const value={topic:'资料领取',kind:'action',items:[{key:'a',kind:'task',title:'领取资料',action:'领取',object:'资料',evidence:['领取资料'],times:[{role:'window',raw:'即日起至11月7日'}]}],materials:[]}
+    const repo=await emptyRepo();await addNotice(repo,'source-window-open',text,value)
+    const stored=(await repo.load())!,task=stored.tasks[0]
+    expect(stored.timePoints.map(p=>[p.type,p.normalizedValue,p.legacyData?.sourceTimeRole])).toEqual([['event_end','2026-11-07','window_end']])
+    expect(sourceWindowDisplayLabel(task.id,task.legacyData?.sourceWindowDeclarations,stored.timePoints,stored.sourceVersions)).toBe('即日起至11月7日')
+    expect(stored.timePoints.some(p=>p.type.endsWith('_deadline')||p.type==='planned_start')).toBe(false)
+  })
+  it('deduplicates equivalent requirements without merging choices with obligations',()=>{
+    const text='任选一项：纸质版交到教学楼101，或电子版发送至report@example.edu。两种方式均需签名。'
+    const result=semantic(text,{topic:'报告提交',kind:'action',items:[{key:'a',kind:'task',title:'提交报告',action:'提交',object:'报告',evidence:['任选一项：纸质版交到教学楼101，或电子版发送至report@example.edu'],requirements:['任选一项：纸质版交到教学楼101，或电子版发送至report@example.edu']}],materials:[{key:'m',name:'报告',owners:['a'],evidence:['两种方式均需签名'],requirements:['任选一种方式提交：纸质版交到教学楼101，或电子版发送至report@example.edu','两种方式均需签名']}]})
+    expect(result.standaloneTasks[0].completionCriteria).toEqual(['任选一项：纸质版交到教学楼101，或电子版发送至report@example.edu','两种方式均需签名'])
+    expect(result.standaloneTasks[0].description.match(/report@example\.edu/gu)).toHaveLength(1)
   })
   it('keeps tasks, material identity and cutoff across independent batches and batch undo',async()=>{
     const repo=await emptyRepo(),first=await add(repo,'semantic-one'),second=await add(repo,'semantic-two')

@@ -88,7 +88,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const original=run?.legacyData?.originalRecognitionResult
     const localFallback=!d.result||run?.provider==='local-rules'
     const rawInput=d.result??buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(run?.startedAt??d.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]})
-    const semanticNotice=!localFallback&&/^recognition-semantic-notice-3\.0\.[012]$/.test(rawInput.promptVersion)
+    const semanticNotice=!localFallback&&/^recognition-semantic-notice-3\.0\.[0123]$/.test(rawInput.promptVersion)
     const input=localFallback?improveDirectFallback(rawInput,v.rawText):semanticNotice?rawInput:linkFollowingFormChannel(completeParallelSessions(rawInput,v.rawText),v.rawText)
     const actionRecovery=(import.meta as ImportMeta&{env?:{VITE_DIRECT_ACTION_RECOVERY?:string}}).env?.VITE_DIRECT_ACTION_RECOVERY==='1'
     const retention=DIRECT_RETENTION_DEFAULT||(import.meta as ImportMeta&{env?:{VITE_DIRECT_RETENTION?:string}}).env?.VITE_DIRECT_RETENTION==='1'
@@ -139,6 +139,20 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     // Reuse the existing display declaration; never project a window as a cutoff.
     for(const task of plan.create.tasks){
       const temp=String(task.legacyData?.recognitionTempId)
+      const semanticPoints=plan.create.timePoints.filter(p=>p.taskId===task.id&&!p.eventId&&p.relatedTaskIds.includes(task.id)&&/^(?:direct-copy-)?sem-window-(?:start|end)-/u.test(String(p.legacyData?.recognitionTempId)))
+      if(semanticPoints.length){
+        for(const p of semanticPoints)p.legacyData={...p.legacyData,sourceTimeRole:p.type==='event_end'?'window_end':'window_start'}
+        const groups=new Map<string,typeof semanticPoints>()
+        for(const p of semanticPoints)groups.set(p.rawText,[...(groups.get(p.rawText)??[]),p])
+        const windows=[...groups.entries()].flatMap(([rawText,points])=>{
+          if(!rawText||!v.rawText?.includes(rawText)||points.some(p=>p.needsConfirmation||!p.normalizedValue))return []
+          const start=points.find(p=>p.type==='event_start'),end=points.find(p=>p.type==='event_end')
+          if(points.length>2||points.length===2&&(!start||!end)||points.length===1&&!start&&!end)return []
+          const state=start&&end?'RESOLVED_DISCRETE':end?'RESOLVED_SOURCE_END':'RESOLVED_SOURCE_DATE'
+          return [{state,rawText,pointIds:points.map(p=>p.id)}]
+        })
+        if(windows.length)task.legacyData={...task.legacyData,sourceWindowDeclarations:{version:'source-window-declarations-1.0.0',ownerTaskId:task.id,sourceVersionId:v.id,windows}}
+      }
       if(!/(?:^|:)local-direct-delivery-/u.test(temp))continue
       const points=plan.create.timePoints.filter(p=>p.taskId===task.id&&!p.eventId&&p.relatedTaskIds.includes(task.id)&&['event_start','event_end'].includes(p.type)&&p.normalizedValue&&!p.needsConfirmation)
       if(points.length!==2||new Set(points.map(p=>p.type)).size!==2||points[0].rawText!==points[1].rawText||!v.rawText.includes(points[0].rawText))continue
