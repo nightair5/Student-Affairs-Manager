@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import './semantic-notice-compiler-v3.node-test.mjs'
 import {
   classifyDeepSeekUpstreamStatus,
   createWorker,
@@ -10,6 +11,26 @@ import {
 } from './worker.mjs'
 
 const baseContext = [{ kind: '任务', title: '报名材料', excerpt: '今天 18:00 截止' }]
+
+test('opt-in semantic generation uses one upstream call and reports the observed model', async () => {
+  const source='请于11月8日18:00前备份实验数据。'
+  const modelResult={topic:'实验数据',kind:'action',items:[{key:'a',kind:'task',title:'备份实验数据',action:'备份',object:'实验数据',evidence:['备份实验数据'],times:[{role:'deadline',raw:'11月8日18:00前'}]}],materials:[]}
+  let calls=0
+  const worker=createWorker({fetcher:async (_url,options)=>{
+    calls++
+    const sent=JSON.parse(options.body)
+    assert.match(sent.messages[0].content,/不可信资料/u)
+    assert.match(sent.messages[1].content,/备份实验数据/u)
+    return Response.json({model:'observed-test-flash',choices:[{finish_reason:'stop',message:{content:JSON.stringify(modelResult)}}],usage:{prompt_tokens:100,completion_tokens:30,total_tokens:130}})
+  }})
+  const response=await worker.fetch(request('/api/deepseek/extract',{body:JSON.stringify({sourceType:'text',content:source,referenceTime:'2026-11-01T04:12:32.675Z',timezone:'Asia/Shanghai'})}),environment({DEEPSEEK_API_KEY:'server-only-test-key-with-length',DEEPSEEK_GENERATION_MODE:'semantic-notice-3.0'}))
+  assert.equal(response.status,200)
+  const body=await response.json()
+  assert.equal(calls,1);assert.equal(body.model,'observed-test-flash')
+  assert.equal(body.execution.modelFactSamples[0].actualModel,'observed-test-flash')
+  assert.equal(body.result.standaloneTasks[0].title,'备份实验数据')
+  assert.equal(body.result.timePoints[0].normalizedValue,'2026-11-08T18:00')
+})
 
 function request(path = '/api/deepseek', options = {}) {
   return new Request(`https://student-affairs-manager.example${path}`, {

@@ -6,7 +6,7 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } fro
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { DirectResultList, RecentDirectAdditions } from './components/DirectResultList'
 import { setTaskSchedule } from './domain/v2/taskSchedule'
-import { commitDirectDraft, pendingDirectDraft, replaceDirectFallback, deleteDirectItem, editDirectItem, recentDirectBatches, undoDirectBatch } from './domain/v2/directIntake'
+import { commitDirectDraft, pendingDirectDraft, replaceDirectFallback, deleteDirectItem, editDirectItem, recentDirectBatches, undoDirectBatchPreservingEdits } from './domain/v2/directIntake'
 import {historicalDirectDraftIds,workspaceTaskChannels,pairFlowEvents,workspaceEventTimeHints} from './lib/homeFlow'
 import { EventDetailPanel } from './components/EventDetailPanel'
 import { IntakePanel } from './components/IntakePanel'
@@ -695,7 +695,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   }
 
   const undoDirect = async (batchId: string) => {
-    await undoDirectBatch(canonicalWorkspaceRepository, batchId)
+    await undoDirectBatchPreservingEdits(canonicalWorkspaceRepository, batchId)
     await refreshOrdinary()
     if (directBatchId === batchId) setDirectBatchId(null)
     setNotice({text:'本次添加已撤销，之前的事项保持不变。',direct:true})
@@ -715,7 +715,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     await refreshOrdinary()
     setIntakeOpen(false);setSelectedDraftId(null);setCurrentPage('today');setDirectBatchId(receipt.batch?.id??null);setDirectHistoryOpen(false)
     const batch=receipt.batch
-    setNotice({text:receipt.duplicate?'本次整理已添加，无需重复提交':`已添加 ${batch?.items.length??0} 项`,direct:true,...(batch?{undo:()=>{void undoDirect(batch.id).catch(()=>setNotice({text:'未能撤销，原有内容保留。请从最近添加重试。'}))}}:{})})
+    setNotice({text:receipt.duplicate?'本次整理已添加，无需重复提交':`已添加 ${batch?.items.length??0} 项`,direct:true,...(batch?{undo:()=>{void undoDirect(batch.id).catch(error=>setNotice({text:error instanceof Error&&error.message.startsWith('这批事项已修改')?error.message:'未能撤销，原有内容保留。请从最近添加重试。'}))}}:{})})
   }
   const retryDirectFallback=async(batchId:string)=>{
     if(directRetriesInFlight.current.has(batchId))throw Error('正在重新整理，请稍候。')

@@ -92,11 +92,18 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
   const clauses=[...m[0].matchAll(/[^；;]+/gu)]
   const deliveries=clauses.filter(c=>localDelivery(c[0])).length
   const sections=deliveries>1?clauses:[{0:m[0],index:0}]
-  // A connecting “并将” introduces another action, while retaining the
-  // original offsets so any shared deadline is still traceable.
+  // Split only a connector followed by another explicit verb and object.
+  // “并提交至平台” continues the preceding delivery and is not a new object.
   return sections.flatMap(section=>{
-   const parts=[...section[0].matchAll(/(?:^|(?<=[，,])(?=并(?:将|把)))[^，]*(?:[，,](?!并(?:将|把))[^，]*)*/gu)]
-   return parts.length>1?parts.map(p=>({text:p[0],at:m.index!+section.index!+p.index!})):[{text:section[0],at:m.index!+section.index!}]
+   // Keep the existing “，并将…” boundary, then handle the bare “并提交…”
+   // form within each part without losing either action's source offsets.
+   const legacy=[...section[0].matchAll(/(?:^|(?<=[，,])(?=并(?:将|把)))[^，]*(?:[，,](?!并(?:将|把))[^，]*)*/gu)]
+   const pieces=legacy.length>1?legacy:[{0:section[0],index:0}]
+   return pieces.flatMap(piece=>{
+    const connectors=[...piece[0].matchAll(/(?:并|以及|同时)(?=(?:提交|递交|报送|上传|发送|填写|登记|领取|缴费|申请|报名)(?!至|到|给|向|于|在|通过)[^，,；;。！？\n]{2})/gu)]
+    const positions=[0,...connectors.map(c=>c.index!),piece[0].length]
+    return positions.slice(0,-1).map((start,index)=>({text:piece[0].slice(start,positions[index+1]),at:m.index!+section.index!+piece.index!+start})).filter(part=>part.text.trim())
+   })
   })
  })
  const cutoff=(q:string)=>{
@@ -122,6 +129,7 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
   const routed=/(?:平台|系统)(提交|上传|填写)([^，,；;]{2,45})/u.exec(plain)
   if(routed&&(!verb||/申请|报名/u.test(verb))){verb=routed[1];object=routed[2].trim()}
   if(!verb){const m=/(?:请|须|需|应|可|有意|自愿|学生|同学)[^。；]{0,40}?(申请|申报|报名|提交|报送|上传|填写|登记|预约|缴费|领取)\s*([^，,；;：:]{1,55})/u.exec(plain);if(m){verb=m[1];object=m[2].replace(/[（(][^）)]*[）)]/gu,'').replace(/^(?:本次|此次|该项)/u,'').split(/至|到|并|后|前|进行|即可/u)[0].trim()}}
+  if(!verb){const m=/^\s*(?:并|以及|同时)(?:请)?(提交|递交|报送|上传|发送|填写|登记|领取|缴费|申请|报名)\s*([^，,；;：:。！？\n]{2,55})/u.exec(plain);if(m){verb=m[1];object=m[2].split(/至|到|给|并|后|前|进行|即可/u)[0].trim()}}
   if(!verb){const m=/(?:^|[，,]|后|分钟)(?:请(?:大家|同学们)?(?:准时)?|需要|须|应|需)?参加([^。；，,]{2,40})/u.exec(plain);if(m&&!/^(?:者|人员|资格|条件|对象)|的同学|的学生/u.test(m[1])){verb='参加';object=m[1].trim()}}
   if(/申请者须|^申请截止|^材料截止|^三、申请截止/u.test(q))continue
   if(!verb&&subject&&/申请|申报|报名/u.test(q)&&/系统|平台|截止|提交|填写|自愿/u.test(q)){verb=/申报/u.test(q)?'申报':'申请';object=subject}

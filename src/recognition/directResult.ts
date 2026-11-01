@@ -10,6 +10,7 @@ import {composeSharedSubmissions} from './sharedSubmission'
 import {linkExplicitDependencies} from './sourceDependencies'
 import {sourceSupportsObjectParts} from '../../cloudflare/two-step-contextual-items.mjs'
 import {alignRecognitionEvidence} from '../../cloudflare/source-text-index.mjs'
+import {convertSemanticNotice} from './directSemanticNotice'
 
 export const DIRECT_MODE_VERSION = 'direct-mode-1'
 export type DirectTag = '时间待定' | '如符合条件' | '待确认'
@@ -26,6 +27,7 @@ const recordTasks = (r: RecognitionResult) => new Map(flatTasks(r).map(t => [t.t
 /** A new presentation policy, never a modification to a recorded/model result.
  * Uncertainty becomes an explicit label; it never authorizes invented facts. */
 export function convertDirectResult(input: RecognitionResult, sourceText: string, original?: RecognitionResult, options:{actionRecovery?:boolean;retention?:boolean}={}): DirectConversion {
+  if(input.promptVersion==='recognition-semantic-notice-3.0.0')return convertSemanticNotice(input,sourceText)
   if(options.retention)return convertRetainedDirectResult(input,sourceText,original)
   if(options.actionRecovery){
     const baseline=convertDirectResult(input,sourceText,original)
@@ -53,7 +55,8 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const revised=/(?:改为|调整为|更正为|延期至|现为)([^。；;\n]*)/u.exec(text)
     const clauses=clauseFor(text,object).split('；').map(c=>eventPolarity?normalizeEventPolarity(c):c),affirmative=clauses.some(c=>!cancelled.test(c)&&/请|可以|可|允许|须|应当|务必/u.test(c))
     const prohibited=clauses.some(c=>cancelled.test(c)&&!(affirmative&&/不符合|不具备|未经|未(?:获|经|通过|完成|报名|缴费|取得)/u.test(c)))
-    return prohibited && !(revised&&compact(revised[1]).includes(compact(object))) && !directEventRevision(text,object)
+    const supportedRevision=directEventRevision(text,object)||text.split('\n').some(part=>Boolean(directEventRevision(part,object)))
+    return prohibited && !(revised&&compact(revised[1]).includes(compact(object))) && !supportedRevision
   }
   const tagsById = new Map<string, DirectTag[]>()
   const conflicts=new Set(result.conflicts.filter(c=>c.requiresDecision).flatMap(c=>c.entityTempIds))
@@ -187,7 +190,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if (!times.some(p => p.relatedTaskTempIds.includes(t.tempId) && p.normalizedValue)) tagsById.get(t.tempId)!.push('时间待定')
     items.push({tempId:t.tempId,kind:'task',tags:[...new Set(tagsById.get(t.tempId)!)]})
   })
-  const eventIsPrimary=events.length>0&&(eventDetailContract||events.some(e=>e.tempId==='local-labelled-event'||e.tempId.startsWith('direct-session:')))
+  const eventIsPrimary=events.length>0&&(eventDetailContract||events.some(e=>e.tempId==='local-labelled-event'||e.tempId==='direct-local-revised-event'||e.tempId.startsWith('direct-session:')))
   if (!tasks.length && !eventIsPrimary) {
     // Owner-authored read action, not a claim that the notice demanded it.
     // Even a cancellation has an update to read; its cancelled action is absent.

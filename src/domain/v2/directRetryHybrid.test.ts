@@ -72,6 +72,28 @@ describe('retrying mixed AI and local completion',()=>{
     expect(diff.preserved).toBe(false)
     expect(diff.issues.map(i=>i.field)).toEqual(expect.arrayContaining(['material','dependency','event_detail']))
   })
+  it('keeps equivalent event notices when courtesy and number notation change',()=>{
+    const before=createGoldenWorkspaceV8(),after=structuredClone(before),event=before.events[0]
+    event.description='参加须知：请提前十分钟入场'
+    after.events[0].description='参加须知：提前10分钟入场'
+    const ids=new Set([event.id])
+    expect(directReplacementDiff(before,after,ids,ids).preserved).toBe(true)
+    after.events[0].description='参加须知：提前5分钟入场'
+    expect(directReplacementDiff(before,after,ids,ids).issues.some(i=>i.field==='event_detail')).toBe(true)
+  })
+  it('accepts a material name separated from its format without losing extra requirements',()=>{
+    const before=createGoldenWorkspaceV8(),after=structuredClone(before),task=before.tasks[0],old=before.materials[0],next=after.materials[0]
+    task.title='提交申请表';task.legacyData={...task.legacyData,actionVerb:'提交',actionObject:'申请表'}
+    after.tasks[0].title=task.title;after.tasks[0].legacyData={...after.tasks[0].legacyData,actionVerb:'提交',actionObject:'申请表'}
+    old.name='申请表须保存为PDF格式';old.relatedTaskIds=[task.id];old.requirements=[];old.formatRequirements=[old.name];old.namingRequirements=[]
+    next.name='申请表';next.relatedTaskIds=[task.id];next.requirements=[];next.formatRequirements=['PDF'];next.namingRequirements=[]
+    const ids=new Set([task.id])
+    expect(directReplacementDiff(before,after,ids,ids).preserved).toBe(true)
+    old.formatRequirements=['申请表须保存为PDF格式并由老师签字']
+    expect(directReplacementDiff(before,after,ids,ids).issues.some(i=>i.field==='material')).toBe(true)
+    old.formatRequirements=['申请表须保存为PDF格式'];next.formatRequirements=['Word']
+    expect(directReplacementDiff(before,after,ids,ids).issues.some(i=>i.field==='material')).toBe(true)
+  })
   it('never treats a different action on the same object as a replacement',()=>{
     const before=createGoldenWorkspaceV8(),after=structuredClone(before)
     const old=before.tasks[0],next=after.tasks[0]

@@ -5,7 +5,7 @@ import {isRecognitionResult} from '../../recognition/schema'
 import {createGoldenWorkspaceV8} from './fixtures'
 import {CanonicalWorkspaceRepository,MemoryWorkspaceRecordStore} from './repository'
 import {CapturePersistenceService} from './capture'
-import {commitDirectDraft,directDuplicate,pendingDirectDraft,undoDirectBatch,recentDirectBatches,deleteDirectItem,editDirectItem} from './directIntake'
+import {commitDirectDraft,directDuplicate,pendingDirectDraft,undoDirectBatch,undoDirectBatchPreservingEdits,recentDirectBatches,deleteDirectItem,editDirectItem} from './directIntake'
 import {workspaceV8ToLegacyView} from './legacyView'
 import {getFocusTasks} from '../../lib/taskLogic'
 import {validateWorkspaceV8} from './validators/workspaceValidator'
@@ -87,6 +87,13 @@ describe('owner-authorized direct mode',()=>{
   })
   it('does not re-add an older version or suppress a new pending revision',async()=>{const {repo,handle,text}=await setup();await commitDirectDraft(repo,handle.draftId,now);const revised='请于11月9日17:00前提交课程论文修订稿。';await new CapturePersistenceService(repo).beginRevision(handle.sourceId,{operationId:'direct-revision',rawText:revised,provider:'local-rules',modelName:'local-rules',promptVersion:'unchanged',pipelineVersion:'direct-test',now});const w=(await repo.load())!;expect(directDuplicate(w,text)).toBe(handle.sourceId);expect(directDuplicate(w,revised)).toBeNull()})
   it('undo restores old facts, retains source/audit, and is idempotent',async()=>{const {repo,handle,text}=await setup(),before=(await repo.load())!,r=await commitDirectDraft(repo,handle.draftId,now);await undoDirectBatch(repo,r.batch!.id);const after=(await repo.load())!;for(const key of ['tasks','events','materials','timePoints','evidenceRefs','projects','historyRecords'] as const)expect(after[key]).toEqual(before[key]);expect(after.sources[0].status).toBe('archived');expect(directDuplicate(after,text)).toBeNull();await undoDirectBatch(repo,r.batch!.id);expect((await repo.load())?.tasks).toHaveLength(0)})
+  it('keeps a whole batch and its user edits when undo would discard them',async()=>{
+    const {repo,handle}=await setup(),receipt=await commitDirectDraft(repo,handle.draftId,now),id=receipt.batch!.items[0].id
+    await editDirectItem(repo,id,{title:'已修改的课程论文',date:'2026-11-03'},now)
+    const before=await repo.load()
+    await expect(undoDirectBatchPreservingEdits(repo,receipt.batch!.id)).rejects.toThrow(/已修改/u)
+    expect(await repo.load()).toEqual(before)
+  })
   it('re-adding an undone notice clears its withdrawn badge but preserves the undo audit',async()=>{const {repo,handle}=await setup(),r=await commitDirectDraft(repo,handle.draftId,now);await undoDirectBatch(repo,r.batch!.id);await commitDirectDraft(repo,handle.draftId,'2026-10-25T06:01:00.000Z');const w=(await repo.load())!;expect(w.tasks).toHaveLength(1);expect(w.sources[0].legacyData?.directUndoneAt).toBeNull();expect(w.sources[0].legacyData?.directUndoHistory).toBeInstanceOf(Array)})
   it('does not leave half a commit on transaction failure and can retry without another model call',async()=>{const {repo,handle}=await setup(),before=(await repo.load())!,tx=repo.transaction.bind(repo);repo.transaction=async()=>{throw Error('INJECTED_FAILURE')};await expect(commitDirectDraft(repo,handle.draftId,now)).rejects.toThrow();expect(await repo.load()).toEqual(before);repo.transaction=tx;await commitDirectDraft(repo,handle.draftId,now);expect((await repo.load())?.tasks).toHaveLength(1)})
   it('persists unknown conditions as visible work without claiming eligibility',async()=>{const {repo,handle}=await setup('符合条件的同学请于10月30日17:00前提交奖学金申请表。');await commitDirectDraft(repo,handle.draftId,now);const w=(await repo.load())!;expect(w.tasks[0].title).toMatch(/^如符合条件/u);expect(w.tasks[0].needsReview).toBe(true);expect(getFocusTasks(workspaceV8ToLegacyView(w).tasks)).toHaveLength(1)})

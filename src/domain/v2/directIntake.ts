@@ -88,11 +88,12 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const original=run?.legacyData?.originalRecognitionResult
     const localFallback=!d.result||run?.provider==='local-rules'
     const rawInput=d.result??buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(run?.startedAt??d.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]})
-    const input=localFallback?improveDirectFallback(rawInput,v.rawText):linkFollowingFormChannel(completeParallelSessions(rawInput,v.rawText),v.rawText)
+    const semanticNotice=!localFallback&&rawInput.promptVersion==='recognition-semantic-notice-3.0.0'
+    const input=localFallback?improveDirectFallback(rawInput,v.rawText):semanticNotice?rawInput:linkFollowingFormChannel(completeParallelSessions(rawInput,v.rawText),v.rawText)
     const actionRecovery=(import.meta as ImportMeta&{env?:{VITE_DIRECT_ACTION_RECOVERY?:string}}).env?.VITE_DIRECT_ACTION_RECOVERY==='1'
     const retention=DIRECT_RETENTION_DEFAULT||(import.meta as ImportMeta&{env?:{VITE_DIRECT_RETENTION?:string}}).env?.VITE_DIRECT_RETENTION==='1'
     const initial=convertDirectResult(input,v.rawText,record(original)?original as unknown as RecognitionResult:undefined,{actionRecovery,retention})
-    const converted=localFallback?initial:recoverMissingDirectActions(initial,buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(rawInput.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]}),v.rawText)
+    const converted=localFallback||semanticNotice?initial:recoverMissingDirectActions(initial,buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(rawInput.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]}),v.rawText)
     const semanticFallback=converted!==initial||!localFallback&&input!==rawInput
     // A generated reading fallback does not count as an AI-supported action.
     // Keep provenance separate from the legacy origin, which older readers use
@@ -104,7 +105,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const requestDiagnostic=record(observed)&&observed.version==='recognition-request-observation-1'?observed as unknown as RecognitionRequestDiagnostic:undefined
     const readingOnly=converted.result.standaloneTasks.every(t=>t.actionVerb==='查看')&&converted.result.events.length===0
     const droppedAction=!localFallback&&readingOnly&&((requestDiagnostic?.modelActionCount??0)>0||rawInput.sourceSummary.requiresAction)
-    const processing=droppedAction||(requestDiagnostic?.compilerLossCount??0)>0||rawInput.quality.reviewReasons.some(reason=>/部分提取|后半部分可能尚未处理/u.test(reason))?'partial':'complete'
+    const processing=droppedAction||(requestDiagnostic?.compilerLossCount??0)>0||rawInput.quality.reviewReasons.some(reason=>/部分提取|部分内容尚未完整|未完整结束|后半部分可能尚未处理/u.test(reason))?'partial':'complete'
     const result=converted.result
     const newTasks=new Set(result.standaloneTasks.filter(t=>!w.tasks.some(x=>x.id===`task:${d.id}:${t.tempId}`)).map(t=>t.tempId))
     const newEvents=new Set(result.events.filter(e=>!w.events.some(x=>x.id===`event:${d.id}:${e.tempId}`)).map(e=>e.tempId))
@@ -157,13 +158,29 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
 }
 
 const createdKeys=['projects','milestones','workPackages','tasks','events','materials','timePoints','evidenceRefs','historyRecords'] as const
-export async function undoDirectBatch(repo:Pick<CanonicalWorkspaceRepository,'transaction'>,batchId:string,now=new Date().toISOString()):Promise<void>{
+/** Historical whole-batch rollback primitive. Callers must protect user edits. */
+export function undoDirectBatch(repo:Pick<CanonicalWorkspaceRepository,'transaction'>,batchId:string,now=new Date().toISOString()):Promise<void>{
+  return undoDirectBatchTransaction(repo,batchId,now,false)
+}
+/** User-facing undo refuses to erase subsequent user edits in the same batch. */
+export function undoDirectBatchPreservingEdits(repo:Pick<CanonicalWorkspaceRepository,'transaction'>,batchId:string,now=new Date().toISOString()):Promise<void>{
+  return undoDirectBatchTransaction(repo,batchId,now,true)
+}
+async function undoDirectBatchTransaction(repo:Pick<CanonicalWorkspaceRepository,'transaction'>,batchId:string,now:string,protectEdits:boolean):Promise<void>{
   await repo.transaction(w=>{
     const d=w.extractionDrafts.find(d=>directBatch(d)?.id===batchId),batch=d&&directBatch(d)
     if(!d||!batch)throw Error('DIRECT_BATCH_NOT_FOUND')
     if(batch.status==='undone')return w
     const run=w.recognitionRuns.find(r=>r.id===d.recognitionRunId),source=w.sources.find(s=>s.id===batch.sourceId)
     if(!run||source?.currentVersionId!==run.sourceVersionId)throw Error('DIRECT_UNDO_SOURCE_CHANGED')
+    // Undo is not allowed to silently erase work the user changed after the
+    // batch was added. Keep the entire transaction intact on conflict.
+    const createdIds=new Set(['tasks','events','materials','timePoints'].flatMap(key=>batch.created[key]??[]))
+    const liveEntities=[...w.tasks,...w.events,...w.materials,...w.timePoints].filter(e=>createdIds.has(e.id))
+    const liveIds=new Set(liveEntities.map(e=>e.id))
+    const edited=liveEntities.some(e=>e.updatedAt>batch.addedAt||('version' in e&&typeof e.version==='number'&&e.version>1))
+      ||w.historyRecords.some(h=>liveIds.has(h.entityId)&&h.actor==='user'&&h.action!=='created'&&h.changedAt>=batch.addedAt)
+    if(protectEdits&&edited)throw Error('这批事项已修改，未撤销以保护你的内容。可单独删除不需要的事项。')
     let next={...w}
     for(const key of createdKeys){const ids=new Set(batch.created[key]??[]);next={...next,[key]:next[key].filter(e=>!ids.has(e.id))}}
     const removedIds=new Set(Object.values(batch.created).flat())

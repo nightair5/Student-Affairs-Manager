@@ -152,14 +152,21 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
     const key = `${promptVersion}:${modelName}:${serialized}`
     const capture = (observation: ProxyRecognitionObservation,reused=false) => {
       const diagnostic={...observation.diagnostic,responseReuse:reused}
-      if (!input.sourceId || !input.sourceVersionId) return registerRecognitionDiagnostic(structuredClone(observation.result),diagnostic)
+      const markSourceCoverage=(result:RecognitionResult)=>{
+        if(input.content.length>body.content.length){
+          result.quality.needsHumanReview=true
+          result.quality.reviewReasons=[...new Set([...result.quality.reviewReasons,'通知后半部分未发送，部分内容尚未完整整理。'])]
+        }
+        return result
+      }
+      if (!input.sourceId || !input.sourceVersionId) return registerRecognitionDiagnostic(markSourceCoverage(structuredClone(observation.result)),diagnostic)
       const bound = bindOrdinaryProviderSupport(observation.result, {
         sourceId: input.sourceId, sourceVersionId: input.sourceVersionId, sourceText: input.content,
         processedSourceText: body.content, referenceTime: body.referenceTime, timezone: body.timezone,
       }, observation.originalProxyResponse)
       this.sidecars.set(input.sourceId, bound.sidecar)
       if (this.sidecars.size > 20) this.sidecars.delete(this.sidecars.keys().next().value ?? input.sourceId)
-      return registerRecognitionDiagnostic(bound.result,diagnostic)
+      return registerRecognitionDiagnostic(markSourceCoverage(bound.result),diagnostic)
     }
     const cached = this.cache.get(key)
     if (cached) return capture(cached,true)

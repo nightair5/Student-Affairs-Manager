@@ -352,6 +352,14 @@ export function assembleAlignedTwoStepFirstSuggestion(input:RecognitionResult,co
   return{result,audit}
 }
 
+/** Semantic-notice results already passed their versioned source/time adapter.
+ * Preserve the facts; this projection must not run the older semantic rules. */
+export function assembleSemanticNoticeFirstSuggestion(input:RecognitionResult){
+  const audit=auditRecord()
+  audit.version=PRODUCT_FIRST_SUGGESTION_VERSION
+  return {result:structuredClone(input),audit}
+}
+
 /** Same time/display policy for the ordinary RecognitionResult. No experimental runtime or storage dependency. */
 export function assembleRecognitionFirstSuggestionD26(input: RecognitionResult, context: { sourceText: string; referenceTime: string; timezone: string; obligationViewVersion?: 'source-obligation-view-1.0.0' }) {
   // Machine product-wire items share the Worker's isolation rule. Manual and

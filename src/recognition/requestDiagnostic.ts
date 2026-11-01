@@ -31,7 +31,7 @@ export function responseDiagnostic(body:unknown,status:number,elapsedMs:number):
  result.compilerVersion=record(execution.twoStep)&&typeof execution.twoStep.compilerVersion==='string'?execution.twoStep.compilerVersion.slice(0,80):null
  result.compilerLossCount=record(execution.twoStep)&&Array.isArray(execution.twoStep.losses)?execution.twoStep.losses.length:null
  if(record(execution.tokenUsage)){result.inputTokens=count(execution.tokenUsage.input);result.outputTokens=count(execution.tokenUsage.output)}
- result.modelActionCount=samples.length?samples.reduce((total,s)=>total+(record(s.facts)&&Array.isArray(s.facts.items)?s.facts.items.filter(i=>record(i)&&['任务','活动'].includes(String(i.kind))).length:0),0):null
+ result.modelActionCount=samples.length?samples.reduce((total,s)=>total+(record(s.facts)&&Array.isArray(s.facts.items)?s.facts.items.filter(i=>record(i)&&['任务','活动','task','event'].includes(String(i.kind))).length:0),0):null
  return result
 }
 export function registerRecognitionDiagnostic(result:RecognitionResult,diagnostic:RecognitionRequestDiagnostic):RecognitionResult {

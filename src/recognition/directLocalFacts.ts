@@ -20,7 +20,8 @@ export function directEventRevision(text:string,name?:string){
     if(!/原定|原安排/u.test(before))return []
     const named=[...before.matchAll(/(?:举行|举办|召开)的?([^，,；;]{2,45}?)(?:取消|作废|[，,；;]|$)/gu)]
     if(!named.length){
-      const withoutVerb=/的([^，,；;]{2,45}(?:会议|说明会|答疑会|交流会|讲座|培训|研讨会|宣讲会|活动|报告会|开幕式|答辩|考试))\s*$/u.exec(before)
+      const priorTitle=before.replace(/(?:取消|作废)(?:[，,；;]\s*)?$/u,'').trim()
+      const withoutVerb=/的([^，,；;]{2,45}(?:会议|说明会|答疑会|交流会|分享会|讲座|培训|研讨会|宣讲会|活动|报告会|开幕式|答辩|考试))\s*$/u.exec(priorTitle)
       if(withoutVerb)named.push(withoutVerb)
     }
     if(named.length!==1)return []

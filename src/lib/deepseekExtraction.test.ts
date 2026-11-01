@@ -110,6 +110,19 @@ describe('smart intake', () => {
     }
   })
 
+  it('marks an overlength notice partial when only its prefix reaches the model', async () => {
+    const prefix='请提交课程报告。',content=prefix+'说明'.repeat(12_001)
+    const recognition=buildLocalRecognition({sourceType:'text',sourceTitle:'匿名通知',content:prefix,referenceTime:new Date('2026-11-01T04:12:32Z'),timezone:'Asia/Shanghai',projects:[],tasks:[]})
+    let sent=''
+    vi.stubGlobal('fetch',vi.fn(async (_url:string|URL|Request,options?:RequestInit)=>{sent=(JSON.parse(String(options?.body)) as {content:string}).content;return Response.json({result:recognition})}))
+    try {
+      const result=await new ProxyDeepSeekExtractionService().recognize({sourceType:'text',content,now:new Date('2026-11-01T04:12:32Z')})
+      expect(sent).toHaveLength(24_000)
+      expect(result.quality.needsHumanReview).toBe(true)
+      expect(result.quality.reviewReasons.join('')).toContain('后半部分未发送')
+    } finally {vi.unstubAllGlobals()}
+  })
+
   it('uses the isolated multimodal endpoint only for an explicit ephemeral image payload', async () => {
     const recognition = buildLocalRecognition({ sourceType: 'image', sourceTitle: '报名截图', content: '8月10日18:00提交报名表', referenceTime: new Date('2026-08-02T08:00:00+08:00'), timezone: 'Asia/Shanghai', projects: [], tasks: [] })
     let requestedUrl = ''

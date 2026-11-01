@@ -1,14 +1,35 @@
 import type {WorkspaceV8} from './types'
 
 const key=(value:unknown)=>typeof value==='string'?value.replace(/\s/gu,'').replace(/^如符合条件/u,''):''
-const requirementKey=(value:string)=>key(value.normalize('NFKC')).replace(/[“”‘’「」『』"']/gu,'').toLocaleLowerCase()
-function preservesRequirement(before:string,after:string):boolean {
+const smallChineseNumber=(value:string):string=>{
+  const digits:Record<string,number>={零:0,〇:0,一:1,二:2,两:2,三:3,四:4,五:5,六:6,七:7,八:8,九:9}
+  if(value==='十')return '10'
+  if(value.includes('十')){const [tens,ones]=value.split('十');return String((tens?digits[tens]:1)*10+(ones?digits[ones]:0))}
+  return value.length===1&&digits[value]!==undefined?String(digits[value]):value
+}
+const requirementKey=(value:string)=>key(value.normalize('NFKC'))
+  .replace(/[“”‘’「」『』"']/gu,'')
+  .replace(/([零〇一二两三四五六七八九十]{1,3})(?=分钟|小时|页|份|人)/gu,(_,number:string)=>smallChineseNumber(number))
+  .replace(/(^|[：:])请(?=提前|于|在|按)/gu,'$1')
+  .toLocaleLowerCase()
+const formatOnly=(value:string,materialName:string)=>{
+  let normalized=requirementKey(value)
+  const name=requirementKey(materialName)
+  if(name&&normalized.startsWith(name))normalized=normalized.slice(name.length)
+  const match=normalized.match(/^(?:(?:须|需|应|请)?(?:保存|提交|提供|转换|导出|上传)?(?:为|成)?)?(pdf|word|docx?|xlsx?|excel|pptx?|png|jpg)(?:格式|文件|版本|版)?$/u)
+  return match?.[1]??''
+}
+function preservesRequirement(before:string,after:string,materialName=''):boolean {
   const previous=requirementKey(before),next=requirementKey(after)
   if(previous===next)return true
   // A combined label may preserve several requirements, but a prohibition
   // mentioning the old format is not equivalent to requesting that format.
   if(/禁止|不得|不接受|不能|无需|不需要|不必|不允许|非/u.test(next))return false
-  return next.includes(previous)
+  if(next.includes(previous))return true
+  // Only collapse a plain format statement; extra requirements such as a
+  // signature, another format, or a prohibition must remain visible.
+  const beforeFormat=formatOnly(before,materialName),afterFormat=formatOnly(after,materialName)
+  return Boolean(beforeFormat&&beforeFormat===afterFormat)
 }
 
 export interface DirectReplacementIssue { entityId:string; field:'task'|'event'|'time'|'material'|'dependency'|'event_detail'; reason:'missing_or_ambiguous'|'changed_or_missing' }
@@ -58,15 +79,20 @@ export function directReplacementDiff(before:WorkspaceV8,after:WorkspaceV8,oldId
         // Some extractors label a material with its format/naming requirements.
         // Accept that representation only when the deliverable itself is still
         // the same task object and the label is an actual material requirement.
-        return Boolean(object&&key(material.name)===object&&key(next.legacyData?.actionObject)===object
-          &&[...m.requirements,...m.formatRequirements,...m.namingRequirements].some(r=>requirementKey(r)===requirementKey(m.name)))
+        const oldLabel=requirementKey(material.name),newLabel=requirementKey(m.name)
+        const oldWasSentence=newLabel===object&&oldLabel.startsWith(newLabel)
+          &&[...material.requirements,...material.formatRequirements,...material.namingRequirements].some(r=>requirementKey(r)===oldLabel)
+        const newIsSentence=oldLabel===object
+          &&[...m.requirements,...m.formatRequirements,...m.namingRequirements].some(r=>requirementKey(r)===newLabel)
+        return Boolean(object&&key(next.legacyData?.actionObject)===object&&(oldWasSentence||newIsSentence))
       })
       const preserved=candidates.some(m=>{
+        if(material.required&&!m.required)return false
         if(material.submissionChannel&&key(m.submissionChannel)!==key(material.submissionChannel))return false
         if(material.quantity!==null&&m.quantity!==material.quantity)return false
         const existing=[...material.requirements,...material.formatRequirements,...material.namingRequirements]
         const replacement=[...m.requirements,...m.formatRequirements,...m.namingRequirements]
-        return existing.every(r=>replacement.some(n=>preservesRequirement(r,n)))
+        return existing.every(r=>replacement.some(n=>preservesRequirement(r,n,m.name)))
       })
       if(!preserved)issue(old.id,'material','changed_or_missing')
     }
@@ -86,7 +112,8 @@ export function directReplacementDiff(before:WorkspaceV8,after:WorkspaceV8,oldId
     const next=matches[0];used.add(next.id);matched.push({before:old.id,after:next.id})
     if(!sameTimes(old.id,next.id,true)||old.location&&key(old.location)!==key(next.location))issue(old.id,'time','changed_or_missing')
     const important=(old.description??'').split('\n').filter(line=>/^(?:主讲人|主持人|活动内容|参加须知|嘉宾简介|准备要求|原文时长)[：:]/u.test(line.trim()))
-    if(important.some(line=>!key(next.description).includes(key(line))))issue(old.id,'event_detail','changed_or_missing')
+    const nextLines=(next.description??'').split('\n')
+    if(important.some(line=>!nextLines.some(candidate=>preservesRequirement(line,candidate))))issue(old.id,'event_detail','changed_or_missing')
   }
   return {preserved:issues.length===0,issues,matched,added:[...newIds].filter(id=>!used.has(id))}
 }
