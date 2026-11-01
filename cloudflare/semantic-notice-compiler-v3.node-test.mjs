@@ -106,3 +106,49 @@ test('voluntary participation is not an eligibility condition',()=>{
   assert.match(result.events[0].description,/有意向的同学欢迎参加/u)
   assert.doesNotMatch(result.events[0].description,/适用条件待确认/u)
 })
+
+test('dates with interspersed spaces preserve their cutoff, including 24:00 rollover',()=>{
+  const source='线上登记截止：11 月 2 日 晚24：00；申请材料截止：11 月 3 日 中午 12:00。'
+  const {result}=compile(source,{items:[
+    {key:'a',kind:'task',title:'线上登记',action:'登记',object:'线上信息',evidence:['线上登记截止：11 月 2 日 晚24：00'],times:[{role:'deadline',raw:'11 月 2 日 晚24：00'}]},
+    {key:'b',kind:'task',title:'提交申请材料',action:'提交',object:'申请材料',evidence:['申请材料截止：11 月 3 日 中午 12:00'],times:[{role:'deadline',raw:'11 月 3 日 中午 12:00'}]},
+  ]})
+  assert.deepEqual(result.timePoints.map(p=>p.normalizedValue),['2026-11-03T00:00','2026-11-03T12:00'])
+  for(const e of result.evidence)assert.equal(source.slice(e.textStart,e.textEnd),e.quote)
+})
+
+test('distinct role-labelled rooms can share a source-backed building without mixing sessions',()=>{
+  const source='【活动地点】明德中心二楼报告厅（分享）、展厅（招聘）\n分享会与招聘会开放参加。'
+  const raw={kind:'event',items:[
+    {key:'a',kind:'event',title:'分享会',location:'明德中心二楼报告厅',evidence:['【活动地点】明德中心二楼报告厅（分享）、展厅（招聘）']},
+    {key:'b',kind:'event',title:'招聘会',location:'明德中心展厅',evidence:['【活动地点】明德中心二楼报告厅（分享）、展厅（招聘）']},
+    {key:'c',kind:'event',title:'分享会与招聘会',location:'明德中心展厅',evidence:['【活动地点】明德中心二楼报告厅（分享）、展厅（招聘）']},
+  ]}
+  const {result,audit}=compile(source,raw)
+  assert.equal(result.events[0].location,'明德中心二楼报告厅')
+  assert.equal(result.events[1].location,'明德中心 · 展厅')
+  assert.equal(result.events[2].location,null)
+  assert.ok(audit.losses.some(x=>x.id==='c'&&x.reason==='LOCATION_NOT_SOURCE_GROUNDED'))
+})
+
+test('wrapped URLs and choices retain source-backed destinations even in long notices',()=>{
+  const source='说明。'.repeat(400)+'请填写问卷。报名链接：https://forms.example.edu/join\n纸质交教学楼101，或者电子版发送至report@example.edu，任选一种。'
+  const {result}=compile(source,{items:[
+    {key:'a',kind:'task',title:'填写问卷',action:'填写',object:'问卷',channel:'在线问卷（https://forms.example.edu/join）',evidence:['请填写问卷']},
+    {key:'b',kind:'task',title:'提交报告',action:'提交',object:'报告',channel:'纸质交教学楼101，或电子版发送至report@example.edu',evidence:['纸质交教学楼101，或者电子版发送至report@example.edu，任选一种']},
+  ]})
+  assert.match(result.standaloneTasks[0].description,/https:\/\/forms\.example\.edu\/join/u)
+  assert.match(result.standaloneTasks[1].description,/纸质交教学楼101.*电子版发送至report@example\.edu/u)
+})
+
+test('a stated prerequisite does not become an eligibility condition',()=>{
+  const source='完成登记后提交申请材料。'
+  const {result}=compile(source,{items:[
+    {key:'a',kind:'task',title:'完成登记',action:'完成',object:'登记',evidence:['完成登记']},
+    {key:'b',kind:'task',title:'提交申请材料',action:'提交',object:'申请材料',condition:'完成登记后',dependsOn:['a'],evidence:['提交申请材料']},
+  ]})
+  assert.deepEqual(result.standaloneTasks[1].dependencyTempIds,['sem-i1'])
+  assert.match(result.standaloneTasks[1].description,/前置事项/u)
+  assert.doesNotMatch(result.standaloneTasks[1].description,/适用条件/u)
+  assert.equal(result.standaloneTasks[1].selected,true)
+})

@@ -27,7 +27,7 @@ const recordTasks = (r: RecognitionResult) => new Map(flatTasks(r).map(t => [t.t
 /** A new presentation policy, never a modification to a recorded/model result.
  * Uncertainty becomes an explicit label; it never authorizes invented facts. */
 export function convertDirectResult(input: RecognitionResult, sourceText: string, original?: RecognitionResult, options:{actionRecovery?:boolean;retention?:boolean}={}): DirectConversion {
-  if(input.promptVersion==='recognition-semantic-notice-3.0.0')return convertSemanticNotice(input,sourceText)
+  if(/^recognition-semantic-notice-3\.0\.[01]$/.test(input.promptVersion))return convertSemanticNotice(input,sourceText)
   if(options.retention)return convertRetainedDirectResult(input,sourceText,original)
   if(options.actionRecovery){
     const baseline=convertDirectResult(input,sourceText,original)

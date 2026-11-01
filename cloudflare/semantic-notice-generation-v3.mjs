@@ -1,7 +1,7 @@
 import {extractionRequestOptions} from './extraction-profile.mjs'
 import {decodeRecognitionOutput} from './recognition-output-recovery.mjs'
 import {compileSemanticNotice} from './semantic-notice-compiler-v3.mjs'
-import {SEMANTIC_NOTICE_MODE,SEMANTIC_NOTICE_VERSION,semanticNoticeRequest} from './semantic-notice-contract-v3.mjs'
+import {SEMANTIC_NOTICE_MODE,SEMANTIC_NOTICE_VERSION,semanticNoticeRequest} from './semantic-notice-contract-v3-0-1.mjs'
 
 /** One full-notice request. No hidden retry or second semantic rewrite. */
 export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userText,source,referenceTime,timezone}) {
