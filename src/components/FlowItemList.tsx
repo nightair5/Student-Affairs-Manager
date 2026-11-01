@@ -8,6 +8,7 @@ import {formatDuration} from '../lib/taskLogic'
 import {displayMaterialRequirement,materialSummary} from '../lib/materialPresentation'
 import {suggestedTaskDuration} from '../lib/taskDurationSuggestion'
 import {eventDescriptionSections,eventDurationLabel} from '../lib/eventPresentation'
+import {taskPublicContent} from '../lib/taskContentPresentation'
 
 /** Display a unique explicitly labelled registration site from this task's own
  * description. This is not a new material, channel, or stored source fact. */
@@ -31,6 +32,7 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
     const durationHint=suggestedTaskDuration(task)
     const relativeHint=taskRelativeTimeHint(task)
     const site=registrationSite(task)
+    const location=taskPublicContent(task).location
     const naming=[...new Set(task.materials.flatMap(m=>m.namingRequirements??[]))]
     return <li className="flow-task-row" key={task.id} data-task-id={task.id} data-new={recent.split('|').includes(task.id)||undefined}>
       <button className="flow-complete icon-button" type="button" disabled={task.status==='已完成'} onClick={()=>onComplete(task.id)} aria-label={`${task.status==='已完成'?'已完成':'完成'}${task.title}`}>{task.status==='已完成'?<CheckCircle2 size={21}/>:<Circle size={21}/>}</button>
@@ -40,6 +42,7 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
         <span className="flow-item-facts"><span className="flow-item-time"><Clock3 size={14} aria-hidden="true"/>{displayedDate}</span>
           {blockedReasons[task.id]&&<small>{blockedReasons[task.id]}</small>}
           {relativeHint&&<small>{relativeHint}</small>}
+          {location&&location!==linked?.location&&<small>地点：{location}</small>}
           {linked&&taskDate!=='未设日期'&&<small>{eventDate}</small>}
           {linked?.location&&<small>{linked.location}</small>}
           {linked&&eventDurationLabel(linked)&&<small>{eventDurationLabel(linked)}</small>}

@@ -98,6 +98,18 @@ describe('semantic notice direct delivery',()=>{
     expect(sourceWindowDisplayLabel(task.id,task.legacyData?.sourceWindowDeclarations,stored.timePoints,stored.sourceVersions)).toBe('11月22日上午')
     expect(sourceWindowLastEnd(task.id,task.legacyData?.sourceWindowDeclarations,stored.timePoints,stored.sourceVersions)).toBeUndefined()
   })
+  it('preserves a task location supported by that task and does not borrow another item location',async()=>{
+    const text='领取器材：11月13日9:00—10:00在实践中心A室。'
+    const value={topic:'器材领取',kind:'action',items:[{key:'a',kind:'task',title:'领取器材',action:'领取',object:'器材',evidence:['领取器材：11月13日9:00—10:00在实践中心A室'],location:'实践中心A室',times:[{role:'window',raw:'11月13日9:00—10:00'}]}],materials:[]}
+    const repo=await emptyRepo();await addNotice(repo,'task-location',text,value)
+    const stored=(await repo.load())!
+    expect(stored.tasks[0].description).toContain('地点：实践中心A室')
+    expect(importWorkspaceV8(exportWorkspaceV8(stored)).tasks[0].description).toContain('地点：实践中心A室')
+    const unrelated='请领取器材。培训地点在实践中心A室。'
+    const compiled=compileSemanticNotice({...value,items:[{...value.items[0],evidence:['请领取器材'],times:[]}]},{source:unrelated,referenceTime,timezone})
+    expect(parseRecognitionResult(compiled.result).standaloneTasks[0].description).not.toContain('地点：实践中心A室')
+    expect(compiled.audit.losses.some((loss:{reason:string})=>loss.reason==='TASK_LOCATION_NOT_OWNER_GROUNDED')).toBe(true)
+  })
   it('keeps an open-ended source window endpoint as the end, never its start or a cutoff',async()=>{
     const text='即日起至11月7日可到服务台领取资料。'
     const value={topic:'资料领取',kind:'action',items:[{key:'a',kind:'task',title:'领取资料',action:'领取',object:'资料',evidence:['领取资料'],times:[{role:'window',raw:'即日起至11月7日'}]}],materials:[]}

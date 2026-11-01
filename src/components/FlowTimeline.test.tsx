@@ -3,6 +3,7 @@ import {renderToStaticMarkup} from 'react-dom/server'
 import {demoTasks} from '../data/demo'
 import type {Event,Task} from '../types'
 import {FlowTimeline} from './FlowTimeline'
+import {FlowTaskList} from './FlowItemList'
 import {sortTimeline,timelineDate,timelineGroupLabel} from '../lib/flowTimelineDates'
 
 describe('timeline date semantics',()=>{
@@ -30,6 +31,13 @@ describe('timeline date semantics',()=>{
   const event:Event={id:'e2',title:'讲座',description:'主讲人：王老师\n活动内容：介绍课程安排\n参加须知：提前入场',startAt:'2026-11-03T09:00',endAt:'2026-11-03T10:00',location:'A101',evidenceIds:[],needsConfirmation:false,createdAt:'2026-10-01T00:00:00Z',updatedAt:'2026-10-01T00:00:00Z'}
   const html=renderToStaticMarkup(<FlowTimeline tasks={[task]} events={[]} deferred={[]} linked={{t2:event}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onOpenEvent={()=>{}} onComplete={()=>{}} />)
   for(const value of ['计划晚于截止','数量：','王老师','介绍课程安排','提前入场','时长 1 小时','data-event-id="e2"','查看讲座日程'])expect(html).toContain(value)
+ })
+ it('shows the saved task location in the timeline, detail and task list without duplicating its note',()=>{
+  const task:Task={...demoTasks[0],id:'location',title:'领取器材',status:'待开始',deadline:'',materials:[],dependencies:[],sourceIds:[],history:[],description:'地点：实践中心A室\n要求：携带学生证'}
+  const timeline=renderToStaticMarkup(<FlowTimeline tasks={[task]} events={[]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onComplete={()=>{}} />)
+  expect(timeline.match(/实践中心A室/gu)).toHaveLength(2)
+  expect(timeline).toContain('携带学生证')
+  expect(renderToStaticMarkup(<FlowTaskList tasks={[task]} onOpen={()=>{}} onComplete={()=>{}} />)).toContain('地点：实践中心A室')
  })
 
 })
