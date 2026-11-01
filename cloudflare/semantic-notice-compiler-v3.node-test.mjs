@@ -152,3 +152,19 @@ test('a stated prerequisite does not become an eligibility condition',()=>{
   assert.doesNotMatch(result.standaloneTasks[1].description,/适用条件/u)
   assert.equal(result.standaloneTasks[1].selected,true)
 })
+
+test('material formats and naming stay with the corresponding delivery',()=>{
+  const source='提交项目表电子版PDF到邮箱，文件名写编号；纸质版交办公室，注明姓名。'
+  const {result}=compile(source,{items:[
+    {key:'e',kind:'task',title:'提交项目表电子版',action:'提交',object:'项目表',deliveryForm:'电子版',materials:['me'],evidence:['提交项目表电子版PDF到邮箱']},
+    {key:'p',kind:'task',title:'提交项目表纸质版',action:'提交',object:'项目表',deliveryForm:'纸质版',materials:['mp'],evidence:['纸质版交办公室，注明姓名']},
+  ],materials:[
+    {key:'me',name:'项目表',formats:['PDF'],naming:['编号'],owners:['e'],evidence:['提交项目表电子版PDF到邮箱，文件名写编号']},
+    {key:'mp',name:'项目表',formats:['纸质版'],requirements:['注明姓名'],owners:['p'],evidence:['纸质版交办公室，注明姓名']},
+  ]})
+  assert.deepEqual(result.standaloneTasks.map(t=>t.materialTempIds),[['sem-m1'],['sem-m2']])
+  assert.deepEqual(result.materials.map(m=>m.formatRequirements),[['PDF'],['纸质版']])
+  assert.deepEqual(result.materials.map(m=>m.namingRequirements),[['编号'],[]])
+  assert.match(result.standaloneTasks[1].description,/注明姓名/u)
+  assert.doesNotMatch(result.standaloneTasks[1].description,/文件名写编号/u)
+})

@@ -88,7 +88,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const original=run?.legacyData?.originalRecognitionResult
     const localFallback=!d.result||run?.provider==='local-rules'
     const rawInput=d.result??buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(run?.startedAt??d.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]})
-    const semanticNotice=!localFallback&&/^recognition-semantic-notice-3\.0\.[01]$/.test(rawInput.promptVersion)
+    const semanticNotice=!localFallback&&/^recognition-semantic-notice-3\.0\.[012]$/.test(rawInput.promptVersion)
     const input=localFallback?improveDirectFallback(rawInput,v.rawText):semanticNotice?rawInput:linkFollowingFormChannel(completeParallelSessions(rawInput,v.rawText),v.rawText)
     const actionRecovery=(import.meta as ImportMeta&{env?:{VITE_DIRECT_ACTION_RECOVERY?:string}}).env?.VITE_DIRECT_ACTION_RECOVERY==='1'
     const retention=DIRECT_RETENTION_DEFAULT||(import.meta as ImportMeta&{env?:{VITE_DIRECT_RETENTION?:string}}).env?.VITE_DIRECT_RETENTION==='1'

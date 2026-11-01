@@ -223,7 +223,7 @@ export function assembleCurrentFirstSuggestion(input: RecognitionResult, context
 /** Versioned ordinary product entry. Older component/replay callers retain
  * their declared assembly while App and current evaluation use this entry. */
 export function assembleProductFirstSuggestion(input:RecognitionResult,context:Parameters<typeof assembleCurrentFirstSuggestion>[1]){
-  if(/^recognition-semantic-notice-3\.0\.[01]$/.test(input.promptVersion)){
+  if(/^recognition-semantic-notice-3\.0\.[012]$/.test(input.promptVersion)){
     const first=assembleSemanticNoticeFirstSuggestion(input),windows=groundSourceWindows(first.result,[],context)
     const materialChannelAudit:MaterialChannelAudit={version:MATERIAL_CHANNEL_GROUNDING_VERSION,role:'PROGRAM_FIELD_GROUNDING_NOT_NEW_MODEL_OUTPUT',inferredFacts:0,decisions:[]}
     return {...first,result:first.result,audit:{...first.audit,sourceActionTimes:{version:SOURCE_ACTION_TIME_VERSION,operation:'SOURCE_APPOINTMENT_NOT_DEADLINE_OR_PERSONAL_PLAN',inferredFacts:0,decisions:[],rejectedDeadlineRoles:[]}},materialChannelAudit,sourceWindowGrounding:windows.audit}
