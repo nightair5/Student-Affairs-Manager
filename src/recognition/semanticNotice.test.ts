@@ -113,6 +113,17 @@ describe('semantic notice direct delivery',()=>{
     expect(result.standaloneTasks[0].completionCriteria).toEqual(['任选一项：纸质版交到教学楼101，或电子版发送至report@example.edu','两种方式均需签名'])
     expect(result.standaloneTasks[0].description.match(/report@example\.edu/gu)).toHaveLength(1)
   })
+  it('removes a contained duplicate requirement without merging opposite instructions',()=>{
+    const text='提交申请表。纸质材料注明“学院+编号+姓名”，不得填写公开名单。'
+    const result=semantic(text,{topic:'申请表提交',kind:'action',items:[{key:'a',kind:'task',title:'提交申请表',action:'提交',object:'申请表',evidence:['提交申请表'],requirements:['纸质材料注明“学院+编号+姓名”','不得填写公开名单']}],materials:[{key:'m',name:'申请表',owners:['a'],evidence:['纸质材料注明“学院+编号+姓名”'],requirements:['注明“学院+编号+姓名”','填写公开名单']}]})
+    expect(result.standaloneTasks[0].completionCriteria).toEqual(['纸质材料注明“学院+编号+姓名”','不得填写公开名单','填写公开名单'])
+    expect(result.standaloneTasks[0].description.match(/学院\+编号\+姓名/gu)).toHaveLength(1)
+  })
+  it('also removes equivalent requirements emitted twice on the task itself',()=>{
+    const text='任选一项：纸质版交到教学楼101，或电子版发送至report@example.edu。'
+    const result=semantic(text,{topic:'报告提交',kind:'action',items:[{key:'a',kind:'task',title:'提交报告',action:'提交',object:'报告',evidence:['任选一项：纸质版交到教学楼101，或电子版发送至report@example.edu'],requirements:['任选一项：纸质版交到教学楼101，或电子版发送至report@example.edu','任选一种方式提交：纸质版交到教学楼101，或电子版发送至report@example.edu']}],materials:[]})
+    expect(result.standaloneTasks[0].completionCriteria).toHaveLength(1)
+  })
   it('keeps tasks, material identity and cutoff across independent batches and batch undo',async()=>{
     const repo=await emptyRepo(),first=await add(repo,'semantic-one'),second=await add(repo,'semantic-two')
     const before=await repo.load();expect(before?.tasks).toHaveLength(2)

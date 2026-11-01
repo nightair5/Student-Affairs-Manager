@@ -52,6 +52,20 @@ function requirementKey(value) {
     .replace(/^任选(?:一项|一种方式)(?:提交)?[：:]?/u,'任选:')
     .replace(/[，,。；;：:、\s]/gu,'')
 }
+function requirementCovered(existing,additional) {
+  const first=requirementKey(existing),second=requirementKey(additional)
+  if(first===second)return true
+  if(second.length<6)return false
+  const at=first.indexOf(second)
+  // A longer existing requirement can already contain the whole shorter one;
+  // a negative prefix may instead reverse it, so retain both in that case.
+  return at>=0&&!/(?:不|无|未|禁止|不得|无需|取消|非)/u.test(first.slice(0,at))
+}
+function uniqueRequirements(values) {
+  const result=[]
+  for(const value of list(values,12,160))if(!result.some(existing=>requirementCovered(existing,value)))result.push(value)
+  return result
+}
 
 // Preserve a literal channel or a uniquely source-backed address when a model
 // has wrapped that address in a nonliteral descriptive label.
@@ -87,10 +101,10 @@ function sourceLocation(source,value,title,ownText) {
  * validates source-backed time values without re-parsing the display title. */
 export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash'}={}) {
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
-    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.1',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
+    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.2',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
   const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:text(raw.topic,160)||'通知',sourceType:'text',notificationType:'uncertain',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,SEMANTIC_NOTICE_VERSION,true,timezone)
-  const audit={version:SEMANTIC_NOTICE_VERSION,compilerVersion:'semantic-notice-compiler-1.0.1',rootFailure:false,items:[],facts:[],losses:[]}
+  const audit={version:SEMANTIC_NOTICE_VERSION,compilerVersion:'semantic-notice-compiler-1.0.2',rootFailure:false,items:[],facts:[],losses:[]}
   const note=(layer,id,reason)=>audit.losses.push({layer,id,reason})
   const evidence=(quote,field,id) => {
     const q=text(quote,500);if(!q)return null
@@ -125,7 +139,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     const proposedCondition=text(item.condition,160),groundedCondition=proposedCondition&&hasLiteral(source,proposedCondition)?proposedCondition:''
     const voluntary=groundedCondition&&/有意向|感兴趣|自愿|欢迎/u.test(groundedCondition)&&!/仅限|符合资格|必须具备|须具备|不符合/u.test(groundedCondition)?groundedCondition:''
     const prerequisite=groundedCondition&&list(item.dependsOn,20,40).some(key=>activeTaskKeys.has(key))&&/^(?:完成|填写|提交|办理|通过|取得|先).+后$/u.test(groundedCondition)?groundedCondition:''
-    const condition=voluntary||prerequisite?'':groundedCondition,requirements=list(item.requirements,12,160)
+    const condition=voluntary||prerequisite?'':groundedCondition,requirements=uniqueRequirements(item.requirements)
     if(proposedCondition&&!groundedCondition)note('CONDITION',item.key,'CONDITION_NOT_SOURCE_GROUNDED')
     let entity
     if(item.kind==='task') {
@@ -243,7 +257,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     result.materials.push(m)
     for(const owner of owners){
       owner.materialTempIds.push(m.tempId);owner.evidenceIds=[...new Set([...owner.evidenceIds,...ids])].slice(0,20)
-      for(const requirement of requirements)if(!owner.completionCriteria.some(existing=>requirementKey(existing)===requirementKey(requirement))){
+      for(const requirement of requirements)if(!owner.completionCriteria.some(existing=>requirementCovered(existing,requirement))){
         if(owner.completionCriteria.length<12)owner.completionCriteria.push(requirement)
         const line='材料要求：'+requirement
         if(!owner.description.split('\n').includes(line))owner.description+=(owner.description?'\n':'')+line
