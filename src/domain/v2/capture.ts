@@ -1,6 +1,7 @@
 import { isRecognitionResult } from '../../recognition/schema'
 import type { RecognitionResult } from '../../recognition/types'
 import { workspaceSnapshotHash } from './migration'
+import {recognitionDiagnostic,failureDiagnostic,unobservedDiagnostic} from '../../recognition/requestDiagnostic'
 import type { CanonicalWorkspaceRepository } from './repository'
 import type { ExtractionDraft, JsonValue, LegacyData, RecognitionRun, Source, SourceVersion, WorkspaceV8 } from './types'
 
@@ -423,6 +424,7 @@ export class CapturePersistenceService {
           recognitionRuns: workspace.recognitionRuns.map((item) => item.id === handle.recognitionRunId ? {
             ...item, status: 'succeeded', completedAt, durationMs: Math.max(0, Date.parse(completedAt) - Date.parse(item.startedAt)),
             qualityFlags: value.quality.reviewReasons, errorCode: null,
+            legacyData:{...item.legacyData,requestDiagnostic:JSON.parse(JSON.stringify(recognitionDiagnostic(value)??unobservedDiagnostic(item.provider==='local-rules'?'LOCAL_MODE':'UNOBSERVED')))},
           } : item),
           extractionDrafts: workspace.extractionDrafts.map((item) => item.id === handle.draftId ? { ...item, status: 'needs_review', result: value, updatedAt: completedAt } : item),
           sources: updateAggregate
@@ -439,7 +441,7 @@ export class CapturePersistenceService {
         const updateAggregate = ownsSourceAggregate(workspace, handle)
         return {
           ...workspace,
-          recognitionRuns: workspace.recognitionRuns.map((item) => item.id === handle.recognitionRunId ? { ...item, status: 'failed', completedAt: failedAt, errorCode: code } : item),
+          recognitionRuns: workspace.recognitionRuns.map((item) => item.id === handle.recognitionRunId ? { ...item, status: 'failed', completedAt: failedAt, errorCode: code,legacyData:{...item.legacyData,requestDiagnostic:JSON.parse(JSON.stringify(failureDiagnostic(error)))} } : item),
           extractionDrafts: workspace.extractionDrafts.map((item) => item.id === handle.draftId ? { ...item, status: 'failed', updatedAt: failedAt } : item),
           sources: updateAggregate
             ? workspace.sources.map((item) => item.id === handle.sourceId ? { ...item, status: 'failed', updatedAt: failedAt } : item)

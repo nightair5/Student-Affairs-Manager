@@ -11,12 +11,15 @@ import { parseBusinessDateTime, isDateOnly } from '../../lib/timeSemantics'
 import { buildLocalRecognition } from '../../recognition/pipeline'
 import {completeParallelSessions,linkFollowingFormChannel} from '../../recognition/directParallelSessions'
 import {directReplacementDiff, type DirectReplacementDiff} from './directReplacementSafety'
+import type {RecognitionRequestDiagnostic} from '../../recognition/requestDiagnostic'
 
 export interface DirectBatch {
   version: typeof DIRECT_MODE_VERSION; id: string; draftId: string; sourceId: string; addedAt: string
   status: 'active' | 'undone'; contentHash: string; origin?: 'ai' | 'local'; fallbackReason?: 'network'|'semantic'
   /** origin is retained for old readers; provenance distinguishes AI plus source-rule completion. */
   provenance?: 'ai' | 'local' | 'hybrid'; processing?: 'complete' | 'partial'
+  requestDiagnostic?:RecognitionRequestDiagnostic
+  fallbackCause?:RecognitionRequestDiagnostic['reason']|'SEMANTIC_COMPLETION'
   items: Array<DirectItem & { id: string }>
   created: Record<string, string[]>
   beforeDraft: Pick<ExtractionDraft,'status'|'acceptedEntityTempIds'|'rejectedEntityTempIds'|'commitOperationIds'|'result'|'updatedAt'>
@@ -97,7 +100,11 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const aiResult=!localFallback&&input!==rawInput?convertDirectResult(rawInput,v.rawText,record(original)?original as unknown as RecognitionResult:undefined,{actionRecovery,retention}).result:initial.result
     const aiHasAction=aiResult.standaloneTasks.some(t=>t.tempId!=='direct-read-notice'&&t.actionVerb!=='查看')||aiResult.events.length>0
     const provenance=localFallback||semanticFallback&&!aiHasAction?'local':semanticFallback?'hybrid':'ai'
-    const processing=rawInput.quality.reviewReasons.some(reason=>/部分提取未完成|后半部分可能尚未处理/u.test(reason))?'partial':'complete'
+    const observed=run?.legacyData?.requestDiagnostic
+    const requestDiagnostic=record(observed)&&observed.version==='recognition-request-observation-1'?observed as unknown as RecognitionRequestDiagnostic:undefined
+    const readingOnly=converted.result.standaloneTasks.every(t=>t.actionVerb==='查看')&&converted.result.events.length===0
+    const droppedAction=!localFallback&&readingOnly&&((requestDiagnostic?.modelActionCount??0)>0||rawInput.sourceSummary.requiresAction)
+    const processing=droppedAction||(requestDiagnostic?.compilerLossCount??0)>0||rawInput.quality.reviewReasons.some(reason=>/部分提取|后半部分可能尚未处理/u.test(reason))?'partial':'complete'
     const result=converted.result
     const newTasks=new Set(result.standaloneTasks.filter(t=>!w.tasks.some(x=>x.id===`task:${d.id}:${t.tempId}`)).map(t=>t.tempId))
     const newEvents=new Set(result.events.filter(e=>!w.events.some(x=>x.id===`event:${d.id}:${e.tempId}`)).map(e=>e.tempId))
@@ -137,7 +144,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
       task.legacyData={...task.legacyData,sourceWindowDeclarations:{version:'source-window-declarations-1.0.0',ownerTaskId:task.id,sourceVersionId:v.id,windows:[{state:'RESOLVED_DISCRETE',rawText:points[0].rawText,pointIds:points.map(p=>p.id)}]}}
     }
     const created=Object.fromEntries(Object.entries(plan.create).map(([key,value])=>[key,value.map(e=>e.id)]))
-    const batch:DirectBatch={version:DIRECT_MODE_VERSION,id:plan.operationId,draftId:d.id,sourceId:s.id,status:'active',addedAt:now,contentHash:contentHash(v.rawText),created,origin:localFallback||semanticFallback?'local':'ai',provenance,processing,...(localFallback||semanticFallback?{fallbackReason:semanticFallback?'semantic' as const:'network' as const}:{}),
+    const batch:DirectBatch={version:DIRECT_MODE_VERSION,id:plan.operationId,draftId:d.id,sourceId:s.id,status:'active',addedAt:now,contentHash:contentHash(v.rawText),created,origin:localFallback||semanticFallback?'local':'ai',provenance,processing,...(requestDiagnostic?{requestDiagnostic}:{}),...(localFallback||semanticFallback?{fallbackReason:semanticFallback?'semantic' as const:'network' as const,fallbackCause:semanticFallback?'SEMANTIC_COMPLETION' as const:requestDiagnostic?.reason??(run?.provider==='local-rules'?'LOCAL_MODE' as const:'UNOBSERVED' as const)}:{}),
       items:converted.items.filter(i=>i.kind==='task'?newTasks.has(i.tempId):newEvents.has(i.tempId)).map(i=>({...i,id:`${i.kind}:${d.id}:${i.tempId}`})),
       beforeDraft:{status:d.status,acceptedEntityTempIds:d.acceptedEntityTempIds,rejectedEntityTempIds:d.rejectedEntityTempIds,commitOperationIds:d.commitOperationIds,result:d.result,updatedAt:d.updatedAt},beforeSource:{status:s.status,updatedAt:s.updatedAt}}
     const next=applyDomainCommitPlan(prepared,plan,now)

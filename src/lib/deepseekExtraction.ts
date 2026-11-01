@@ -8,6 +8,7 @@ import type { RecognitionResult } from '../recognition/types'
 import { RECOGNITION_PROMPT_VERSION } from '../recognition/prompt'
 import { MULTIMODAL_MODEL_NAME, MULTIMODAL_PROMPT_VERSION } from './multimodal'
 import { bindOrdinaryProviderSupport, type OrdinaryProviderSidecar } from '../recognition/ordinaryProviderSupport'
+import {ObservedRecognitionError,unobservedDiagnostic,responseDiagnostic,registerRecognitionDiagnostic,type RecognitionRequestDiagnostic} from '../recognition/requestDiagnostic'
 
 export type SmartExtractionMethod = 'deepseek-v4-flash' | 'deepseek-v4-flash-vision-exp' | 'local-rules'
 
@@ -44,6 +45,7 @@ export interface RecognitionServiceInput extends IntakeInput {
 interface ProxyRecognitionObservation {
   result: RecognitionResult
   originalProxyResponse: string
+  diagnostic:RecognitionRequestDiagnostic
 }
 
 function serverMessage(value: unknown, fallback: string): string {
@@ -105,7 +107,7 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
   }
 
   async recognize(input: RecognitionServiceInput, context: RecognitionWorkspaceContext = { projects: [], tasks: [] }): Promise<RecognitionResult> {
-    if (this.statusAttempted && this.configuredState !== true) throw new Error(this.configuredState === false ? 'DeepSeek 尚未配置，来源内容未发送。' : 'AI 服务暂时不可用，来源内容未发送。')
+    if (this.statusAttempted && this.configuredState !== true) throw new ObservedRecognitionError(this.configuredState === false ? 'DeepSeek 尚未配置，来源内容未发送。' : 'AI 服务暂时不可用，来源内容未发送。',unobservedDiagnostic(this.configuredState===false?'NOT_CONFIGURED':'STATUS_UNAVAILABLE'))
     if (Boolean(input.sourceId) !== Boolean(input.sourceVersionId)) throw new Error('ORDINARY_PROVIDER_CAPTURE_REQUIRED')
     // A failed response must not expose an earlier source version's audit.
     if (input.sourceId) this.sidecars.delete(input.sourceId)
@@ -148,32 +150,35 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
     // Bind cache identity to the complete request. A short noncryptographic
     // hash alone must never substitute another notice's response.
     const key = `${promptVersion}:${modelName}:${serialized}`
-    const capture = (observation: ProxyRecognitionObservation) => {
-      if (!input.sourceId || !input.sourceVersionId) return structuredClone(observation.result)
+    const capture = (observation: ProxyRecognitionObservation,reused=false) => {
+      const diagnostic={...observation.diagnostic,responseReuse:reused}
+      if (!input.sourceId || !input.sourceVersionId) return registerRecognitionDiagnostic(structuredClone(observation.result),diagnostic)
       const bound = bindOrdinaryProviderSupport(observation.result, {
         sourceId: input.sourceId, sourceVersionId: input.sourceVersionId, sourceText: input.content,
         processedSourceText: body.content, referenceTime: body.referenceTime, timezone: body.timezone,
       }, observation.originalProxyResponse)
       this.sidecars.set(input.sourceId, bound.sidecar)
       if (this.sidecars.size > 20) this.sidecars.delete(this.sidecars.keys().next().value ?? input.sourceId)
-      return bound.result
+      return registerRecognitionDiagnostic(bound.result,diagnostic)
     }
     const cached = this.cache.get(key)
-    if (cached) return capture(cached)
+    if (cached) return capture(cached,true)
     const running = this.inFlight.get(key)
-    if (running) return running.then(capture)
+    if (running) return running.then(value=>capture(value,true))
     const request = this.requestRecognition(serialized, Boolean(input.multimodal)).then((result) => {
       this.cache.set(key, result)
       if (this.cache.size > 20) this.cache.delete(this.cache.keys().next().value ?? key)
       return result
     }).finally(() => this.inFlight.delete(key))
     this.inFlight.set(key, request)
-    return request.then(capture)
+    return request.then(value=>capture(value))
   }
 
   private async requestRecognition(body: string, multimodal: boolean): Promise<ProxyRecognitionObservation> {
     const controller = new AbortController()
     const timeout = globalThis.setTimeout(() => controller.abort(), 50_000)
+    const started=Date.now()
+    let diagnostic:RecognitionRequestDiagnostic={...unobservedDiagnostic('TIMEOUT_OR_NETWORK'),state:'uncertain'}
     try {
       const response = await fetch(`${this.endpoint}/${multimodal ? 'extract-multimodal' : 'extract'}`, {
         method: 'POST',
@@ -186,14 +191,17 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
       const originalProxyResponse = await response.text()
       let data: unknown = null
       try { data = JSON.parse(originalProxyResponse) } catch { /* Preserve existing invalid-response behavior. */ }
-      if (!response.ok) throw new Error(serverMessage(data, 'DeepSeek 智能整理暂时不可用'))
-      if (typeof data !== 'object' || data === null) throw new Error('DeepSeek 返回了无法识别的结果')
-      return { result: parseRecognitionResult((data as { result?: unknown }).result), originalProxyResponse }
+      diagnostic=responseDiagnostic(data,response.status,Date.now()-started)
+      if (!response.ok) throw new ObservedRecognitionError(serverMessage(data, 'DeepSeek 智能整理暂时不可用'),{...diagnostic,reason:'HTTP_ERROR'})
+      if (typeof data !== 'object' || data === null) throw new ObservedRecognitionError('DeepSeek 返回了无法识别的结果',{...diagnostic,reason:'INVALID_JSON'})
+      try {return {result:parseRecognitionResult((data as {result?:unknown}).result),originalProxyResponse,diagnostic}}
+      catch(error){throw new ObservedRecognitionError('AI 回答格式未通过校验（RecognitionResult 2.0），原始来源已保存，可重试。',{...diagnostic,reason:'SCHEMA_ERROR'},{cause:error})}
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') {
-        throw new Error('DeepSeek 识别超时，原始来源已保存，可稍后重试', { cause: error })
+        throw new ObservedRecognitionError('DeepSeek 识别超时，原始来源已保存，可稍后重试',{...diagnostic,elapsedMs:Date.now()-started}, { cause: error })
       }
-      throw error
+      if(error instanceof ObservedRecognitionError)throw error
+      throw new ObservedRecognitionError('AI 服务暂时不可用，原始来源已保存，可重试。',{...diagnostic,elapsedMs:Date.now()-started},{cause:error})
     } finally {
       globalThis.clearTimeout(timeout)
     }

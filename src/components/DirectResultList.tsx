@@ -21,10 +21,8 @@ function editFields(point:TimePoint|undefined){
 }
 interface Props {onRetry?:()=>Promise<void>;embedded?:boolean;inlineEdit?:boolean;workspace:WorkspaceV8;batch:DirectBatch;onClose:()=>void;onUndo:()=>Promise<void>;onDelete:(id:string)=>Promise<void>;onEdit:(id:string,edit:DirectEdit)=>Promise<void>;onDetail:(id:string,kind:'task'|'event')=>void}
 function batchNotice(batch:DirectBatch):string|null {
-  if(batch.processing==='partial')return '部分内容尚未整理完成，已保留可用结果'
-  if(batch.provenance==='hybrid')return 'AI 已整理，简单规则补充了部分内容'
-  if(batch.origin==='local')return batch.fallbackReason==='semantic'?'已使用简单规则补充内容':'已使用简单规则整理'
-  return null
+  const origin=batch.provenance==='hybrid'?'AI 已整理，简单规则补充了部分内容':batch.origin==='local'?(batch.fallbackReason==='semantic'?'已使用简单规则补充内容':batch.fallbackCause==='LOCAL_MODE'?'已用简单规则整理':'AI 暂时不可用，已用简单规则整理'):batch.requestDiagnostic?.state==='response'&&batch.requestDiagnostic.actualModels.length?'AI 已整理':null
+  return batch.processing==='partial'?[origin,'部分内容待补充，已保留可用结果'].filter(Boolean).join(' · '):origin
 }
 export function DirectResultList({embedded=false,inlineEdit=false,workspace,batch,onClose,onUndo,onDelete,onEdit,onDetail,onRetry}:Props){
   const heading=useRef<HTMLHeadingElement>(null)

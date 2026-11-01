@@ -42,6 +42,7 @@ async function carrierTests(label,paths,pattern,options={}) {
 }
 async function product() {
   layer='current-product'
+  nodeTests([['source-text-index','cloudflare/source-text-index.node-test.mjs'],['notice-delivery-roles','cloudflare/notice-delivery-roles.node-test.mjs'],['declared-task-support','cloudflare/declared-task-support.node-test.mjs']])
   nodeTests([['r27-time-location-network','cloudflare/r27-time-location.node-test.mjs'],['relay-pre-post-tls','scripts/reliable-relay-transport.node-test.mjs']])
   nodeTests([['direct-source-compiler','cloudflare/two-step-direct.node-test.mjs'],['direct-source-time','cloudflare/direct-source-time.node-test.mjs'],['simple-direct-generation','cloudflare/simple-generation.node-test.mjs']])
   nodeTests([['extraction-model-profiles','cloudflare/extraction-profile.node-test.mjs']])

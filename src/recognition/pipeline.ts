@@ -4,6 +4,7 @@ import { localDelivery, localEventLocation, localMaterialRequirements, localActi
 import { taskActionText } from '../lib/taskActionText'
 import { parseChineseTimeAst } from '../lib/timeSemantics'
 import { localMeetingBlock, localNamedMeeting } from './localMeetingBlock'
+import {normalizeSourceWithOffsets,alignRecognitionEvidence} from '../../cloudflare/source-text-index.mjs'
 import { RECOGNITION_MODEL_NAME, RECOGNITION_PROMPT_VERSION } from './prompt'
 import type {
   EventSuggestion,
@@ -44,7 +45,7 @@ function stableHash(value: string): string {
 }
 
 export function preprocessSource(content: string): PreprocessedSource {
-  const normalizedText = content.replace(/\r\n?/gu, '\n').replace(/[\t\u00a0]+/gu, ' ').replace(/ {2,}/gu, ' ').trim()
+  const normalizedText = normalizeSourceWithOffsets(content).text
   let cursor = 0
   const paragraphs = normalizedText.split(/\n+/u).map((text, index) => {
     const start = normalizedText.indexOf(text, cursor)
@@ -184,9 +185,10 @@ function preparationAction(evidence: string): { quote: string; object: string; m
 
 export function buildLocalRecognition(input: RecognitionInput): RecognitionResult {
   const preprocessed = preprocessSource(input.content)
-  const parsed = createSuggestions(preprocessed.normalizedText, input.sourceType, input.sourceTitle, input.referenceTime, input.timezone).map(item => {
+  const sourceIndex=normalizeSourceWithOffsets(input.content)
+  const parsed = createSuggestions(preprocessed.normalizedText, input.sourceType, input.sourceTitle, input.referenceTime, input.timezone,{sourceOffsets:true}).map(item => {
     const meeting = localMeetingBlock(preprocessed.normalizedText, item.evidence)
-    return meeting ? { ...item, title: meeting.title, evidence: meeting.quote, timePoint: parseChineseTimeAst(meeting.timeText, { referenceTime: input.referenceTime, timezone: input.timezone, type: 'event_start' }) } : item
+    return meeting ? { ...item, title: meeting.title, evidence: meeting.quote,evidenceRefs:undefined, timePoint: parseChineseTimeAst(meeting.timeText, { referenceTime: input.referenceTime, timezone: input.timezone, type: 'event_start' }) } : item
   })
   const category = projectCategory(parsed)
   const title = projectTitle(input, parsed)
@@ -360,7 +362,11 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
   }
   const complexity = assessSourceComplexity(preprocessed.normalizedText)
   const duplicateCount = tasks.length - new Set(tasks.map((task) => `${task.actionVerb}|${task.actionObject}|${task.timePointTempIds[0]}`)).size
-  const parsedEvidence: RecognitionResult['evidence'] = parsed.map((item, index) => ({
+  const parsedEvidence: RecognitionResult['evidence'] = parsed.map((item, index) => {
+    const ref=item.evidenceRefs?.find(e=>e.quote===item.evidence&&typeof e.textStart==='number'&&typeof e.textEnd==='number')
+    const start=ref&&sourceIndex.starts[ref.textStart!],end=ref&&sourceIndex.ends[ref.textEnd!-1]
+    const span=typeof start==='number'&&typeof end==='number'?{textStart:start,textEnd:end,quote:input.content.slice(start,end),quotedText:input.content.slice(start,end)}:{}
+    return {
     id: `evidence-${index + 1}`,
     sourceId: 'pending-source',
     quote: item.evidence,
@@ -368,7 +374,8 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     field: 'description',
     extractionMethod: 'demo',
     confidence: item.confidence === '高' ? 0.9 : item.confidence === '中' ? 0.7 : 0.4,
-  }))
+    ...span,
+  }})
   const actionRequired = tasks.length + events.length > 0 && !/仅供参考|请知悉|自行查看/u.test(preprocessed.normalizedText)
   // Local parsing may create a placeholder time for a sentence with no action.
   // Keep the original information, rather than dangling references to discarded tasks.
@@ -396,7 +403,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     materials,
     timePoints,
     events,
-    evidence: [...parsedEvidence, ...supplementalEvidence],
+    evidence: alignRecognitionEvidence({evidence:[...parsedEvidence,...supplementalEvidence]},input.content).result.evidence,
     conflicts: [],
     ambiguities: timePoints.filter((point) => point.needsConfirmation).map((point, index) => ({ id: `ambiguity-${index + 1}`, field: 'timePoint', message: `“${point.rawText}”的日期或时刻需要确认`, options: [], evidenceIds: point.evidenceIds })),
     ignoredContent: actionRequired ? [] : [{ text: preprocessed.normalizedText.slice(0, 240), reason: 'background' }],

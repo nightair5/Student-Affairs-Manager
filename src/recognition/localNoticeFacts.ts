@@ -1,5 +1,6 @@
 /** Local fallback only. Never used to rewrite a cloud/recorded RecognitionResult. */
 export const LOCAL_NOTICE_FACTS_VERSION = 'local-notice-facts-1.2.0'
+import {documentFormats} from '../../cloudflare/notice-delivery-roles.mjs'
 export function localDelivery(text: string): {verb: string; sourceVerb: string; object: string; channel: string} | null {
   const source = text.replace(/[（(][^（）()]*[）)]/gu, '')
   const matches = [...source.matchAll(/(?:把|将)\s*([^，,；;。！？\n]{1,60}?)\s*(提交|递交|报送|上传|发送|交到|交至|发到|发至)\s*([^，,；;。！？\n]{1,60})/gu)]
@@ -39,8 +40,8 @@ export function localSubmissionChannel(text: string): string | null {
   return unique.length === 1 ? unique[0] : null
 }
 export function localMaterialRequirements(text: string) {
-  const formats = [...new Set((text.match(/\b(?:PDF|DOCX?|PPTX?|XLSX?)\b/giu) ?? []))]
-  const naming = [...new Set((text.match(/学号\s*[+＋]\s*姓名|姓名\s*[+＋]\s*学号/gu) ?? []))]
+  const formats = documentFormats(text)
+  const naming = [...new Set([...text.matchAll(/(?:文件名(?:修改为|为|使用)?|(?:文件夹|材料|文件)(?:以|按))\s*[“"‘]([^”"’\n]{2,160})[”"’](?:命名)?/gu)].map(m=>m[0]).concat(text.match(/学号\s*[+＋]\s*姓名|姓名\s*[+＋]\s*学号/gu)??[]))]
   return {formats, naming}
 }
 /** A notice describes a class of people; it does not establish the current user's state. */

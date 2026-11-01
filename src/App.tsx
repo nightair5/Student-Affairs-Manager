@@ -1,3 +1,4 @@
+import {RecognitionRunDetails} from './components/RecognitionRunDetails'
 import { assertMainlineRuntime, type MainlineRuntime } from './experiments/mainline02/runtime'
 import type { WorkspaceV8 } from './domain/v2/types'
 import { storedPersonalPlans } from './domain/v2/personalPlanD27'
@@ -730,7 +731,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       if(!ordinaryEnvironment){
         const ready=await initialServiceReady()
         setSmartExtractionStatus(ready?'connected':'unavailable')
-        if(!ready)throw Error('DEEPSEEK_STATUS_UNAVAILABLE')
+        // The provider retains the precise reason (unconfigured versus a
+        // failed status check) and prevents an unavailable request itself.
       }
       const metadata=ordinaryEnvironment?.recognitionMetadata?.()
       const retried=await retryExistingSourceRecognition(capturePersistenceService,source.id,{provider:'deepseek',modelName:metadata?.modelName??'deepseek-v4-flash',promptVersion:metadata?.promptVersion??null,pipelineVersion:'direct-ai-retry-v1',expectedSourceVersionId:version.id},async()=>deepSeekExtractionService.recognize!({sourceType:source.type,sourceTitle:source.title,content:version.rawText!,sourceId:source.id,sourceVersionId:version.id,now:new Date(version.createdAt)},{projects,tasks}))
@@ -883,7 +885,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             ? async () => {
               // Source and draft are already durable. A quick first click must
               // join the bounded initial check instead of silently choosing local rules.
-              if(awaitInitialService&&!(await initialServiceReady()))throw new Error('DEEPSEEK_STATUS_UNAVAILABLE')
+              if(awaitInitialService)await initialServiceReady()
               return deepSeekExtractionService.recognize!(providerInput, { projects, tasks })
             }
             : async () => draftRecognition,
@@ -2030,7 +2032,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           onDirectEdit={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedTask.id))?async edit=>{await editDirectItem(canonicalWorkspaceRepository,selectedTask.id,edit);await refreshOrdinary()}:undefined}
           onDelete={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedTask.id))?async()=>{await deleteDirectItem(canonicalWorkspaceRepository,selectedTask.id);await refreshOrdinary();setSelectedTaskId(null)}:undefined}
           pendingSave={Boolean(viewConflict)}
-          semanticContent={runtime?.semantic && isolatedSnapshot ? runtime.semantic.taskFacts(isolatedSnapshot, selectedTask.id) : selectedTask.directTags&&ordinaryCanonical?<details className="direct-audit-detail"><summary>识别与添加记录</summary>{ordinaryCanonical.extractionDrafts.filter(d=>recentDirectBatches(ordinaryCanonical).some(b=>b.draftId===d.id&&b.items.some(i=>i.id===selectedTask.id))).map(d=>{const run=ordinaryCanonical.recognitionRuns.find(r=>r.id===d.recognitionRunId);return <div key={d.id}><p>识别服务：{run?.modelName??'本地规则'}；生成版本：{run?.promptVersion??'未记录'}</p><details><summary>查看识别记录</summary><pre>{JSON.stringify({result:d.result,audit:d.legacyData?.directConversion},null,2)}</pre></details></div>})}</details>:undefined}
+          semanticContent={runtime?.semantic && isolatedSnapshot ? runtime.semantic.taskFacts(isolatedSnapshot, selectedTask.id) : selectedTask.directTags&&ordinaryCanonical?<details className="direct-audit-detail"><summary>识别与添加记录</summary>{ordinaryCanonical.extractionDrafts.filter(d=>recentDirectBatches(ordinaryCanonical).some(b=>b.draftId===d.id&&b.items.some(i=>i.id===selectedTask.id))).map(d=>{const run=ordinaryCanonical.recognitionRuns.find(r=>r.id===d.recognitionRunId);return <RecognitionRunDetails key={d.id} run={run} draft={d}/>})}</details>:undefined}
           readOnly={Boolean(runtime)}
           dateView={dateViews?.[selectedTask.id]}
           key={selectedTask.id}

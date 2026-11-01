@@ -8,12 +8,12 @@ import {suggestedTaskDuration} from '../lib/taskDurationSuggestion'
 import {formatDuration} from '../lib/taskLogic'
 import {displayMaterialRequirement} from '../lib/materialPresentation'
 import {TextWithLinks} from './TextWithLinks'
+import {taskPublicDescription} from '../lib/taskContentPresentation'
 
 export function CompactTaskDetailPanel({task,sources,onClose,onComplete,onUpdate,onDelete,onDirectEdit,onScheduleTask,canonicalMaterials,semanticContent,onAdvanced,linkedEvent,eventTimeHint}:TaskDetailPanelProps&{onAdvanced:()=>void}){
   const initialDate=flowEditValue(task.deadline||task.directDate)
   const linked=sources.filter(s=>task.sourceIds.includes(s.id))
-  const editedNotes=task.history.some(h=>/description|任务说明|备注/u.test(h.field))
-  const publicNotes=editedNotes?task.description:task.description.split('\n').filter(line=>!/^按直达规则保留的阅读待办|^完整通知主题：/u.test(line)&&!linked.some(s=>(s.rawText||s.content||s.contentPreview||'').includes(line.trim()))).join('\n')
+  const publicNotes=taskPublicDescription(task)
   const id=useId(),ref=useRef<HTMLElement>(null),[title,setTitle]=useState(task.title),[notes,setNotes]=useState(publicNotes),[dateOpen,setDateOpen]=useState(false),[date,setDate]=useState(initialDate.slice(0,10)),[time,setTime]=useState(initialDate.slice(11,16)),[durationOpen,setDurationOpen]=useState(false),[minutes,setMinutes]=useState(task.estimatedMinutesKnown?String(task.estimatedMinutes):''),[busy,setBusy]=useState(false),[error,setError]=useState('')
   useDialogFocusTrap(ref,onClose)
   const materials=canonicalMaterials??task.materials.map(m=>({id:m.id,name:m.name,requirements:[],formatRequirements:[],namingRequirements:[],submissionChannel:null}))

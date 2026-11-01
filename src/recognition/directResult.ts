@@ -9,6 +9,7 @@ import {convertRetainedDirectResult,cleanDirectTopic} from './directRetention'
 import {composeSharedSubmissions} from './sharedSubmission'
 import {linkExplicitDependencies} from './sourceDependencies'
 import {sourceSupportsObjectParts} from '../../cloudflare/two-step-contextual-items.mjs'
+import {alignRecognitionEvidence} from '../../cloudflare/source-text-index.mjs'
 
 export const DIRECT_MODE_VERSION = 'direct-mode-1'
 export type DirectTag = '时间待定' | '如符合条件' | '待确认'
@@ -35,7 +36,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const next=convertDirectResult(projected,sourceText)
     return {...next,omitted:[...baseline.omitted,...next.omitted]}
   }
-  const result = structuredClone(composeSharedSubmissions(input,sourceText)), omitted: DirectConversion['omitted'] = [], items: DirectItem[] = []
+  const result = alignRecognitionEvidence(composeSharedSubmissions(input,sourceText),sourceText).result, omitted: DirectConversion['omitted'] = [], items: DirectItem[] = []
   const eventDetailContract = result.promptVersion==='recognition-two-step-2.3.0'||result.promptVersion==='recognition-two-step-2.4.0'
   const originalTasks = original ? recordTasks(original) : new Map<string, TaskSuggestionV2>()
   const located = new Map(result.evidence.flatMap(e => {
@@ -191,7 +192,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     // Owner-authored read action, not a claim that the notice demanded it.
     // Even a cancellation has an update to read; its cancelled action is absent.
     const proposed=result.sourceSummary.title.trim(),core=compact(proposed.replace(/关于|通知|公告|安排/gu,''))
-    const fullTitle = core.length>=2&&compact(sourceText).includes(core)?proposed:sourceText.replace(/\s+/gu,'').split(/[。！？]/u).find(s=>s.trim())?.trim()||'通知'
+    const fullTitle = core.length>=2&&compact(sourceText).includes(core)?proposed:sourceText.split(/[\r\n。！？]/u).find(s=>s.trim()&&!/^\s*(?:各位同学|同学们|各位老师)[好！!：:,，\s]*$/u.test(s))?.trim()||'通知'
     const cancelledTopic=/(?:举行|举办|召开)的?([^，。；]{2,45}?)(?:取消|作废)/u.exec(sourceText)?.[1]
     const title=cancelledTopic?cleanDirectTopic(cancelledTopic+'取消通知'):cleanDirectTopic(fullTitle)
     const id = 'direct-read-notice', evidenceId = 'direct-source-notice'

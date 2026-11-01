@@ -9,10 +9,11 @@ import {completeNumberedActions} from './directNumberedActions'
 import {retainLocalEventDetails} from './localEventDetails'
 import {recoverLabeledLocalEvent} from './directLabeledEvent'
 import {completeParallelSessions,linkFollowingFormChannel} from './directParallelSessions'
+import {projectLocalDeliveryRoles} from './deliveryRoleProjection'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
- const improved=retainLocalEventDetails(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(improveLocalActions(input,source),source),source),source),source)
+ const improved=retainLocalEventDetails(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(projectLocalDeliveryRoles(improveLocalActions(input,source),source),source),source),source),source)
  return linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(improved),source),source)
 }
 
@@ -75,6 +76,8 @@ function clarifyOwnedFormAction(base:DirectConversion,source:string):DirectConve
  return {...base,result}
 }
 function improveLocalActions(input:RecognitionResult,source:string):RecognitionResult {
+ const positiveDirective=source.split(/[。！？；;，,\n]/u).some(clause=>/(?:请|须|需|应|务必)[^。；]{0,30}(?:提交|填写|申请|申报|报名|领取|缴费|参加|上传|登记|预约)/u.test(clause)&&!/(?:无需|无须|不用|不必|不得|禁止|请勿|不要|不再)/u.test(clause))
+ if(/仅供知悉|仅供参考|请知悉|无需操作|无需办理/u.test(source)&&!positiveDirective){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/^\s*(?:各位同学|同学们)/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
  if(/无需办理|无需操作|仅供知悉/u.test(source)&&!/提交|报名|申请|申报|缴费|领取|上传/u.test(source.replace(/(?:无需|不必|不要|无须)(?:办理|操作|提交|报名|申请|申报|缴费|领取|上传)/gu,''))){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/仅供知悉|无需|无须|不必/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
  const existing=[...input.standaloneTasks,...input.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
  const grounded=existing.filter(t=>/^(?:提交|报送|上传|发送|填写|申请|申报|报名|领取|缴费|参加|完成|撰写)$/u.test(t.actionVerb)&&t.actionObject&&source.includes(t.actionObject)&&!/^的|^至|^到|https?:|\.edu\.|以下|期间|[（(]/u.test(t.actionObject)&&t.title.includes(t.actionVerb)&&!/^查看|^无需|^无须|^不必|待核对/u.test(t.title))

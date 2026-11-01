@@ -350,6 +350,7 @@ export function createSuggestions(
   sourceTitle?: string,
   now = new Date(),
   timezone = DEFAULT_WORKSPACE_TIMEZONE,
+  options: {sourceOffsets?:boolean} = {},
 ): ParsedSuggestion[] {
   const cleanContent = content.trim()
   const clauses = splitEventClauses(cleanContent)
@@ -359,6 +360,11 @@ export function createSuggestions(
     `${sourceTitle ?? ''}${cleanContent.slice(0, firstAnchorIndex)}`,
   )
   let context: TemporalContext | undefined
+  const preserveEvidence=(item:ParsedSuggestion,clause:EventClause,evidence?:string)=>{
+    if(!evidence)return
+    item.evidence=evidence.slice(0,220)
+    if(options.sourceOffsets&&clause.sourceStart!==undefined)item.evidenceRefs=[{id:'parser-span-'+suggestions.length,sourceId:'pending-source',quote:item.evidence,textStart:clause.sourceStart,textEnd:clause.sourceStart+item.evidence.length,field:'description',extractionMethod:'parser'}]
+  }
 
   for (const clause of clauses) {
     const evidence = clause.sourceStart !== undefined && clause.sourceEnd !== undefined
@@ -378,7 +384,7 @@ export function createSuggestions(
         now,
         temporal.ast,
       ))
-      if (evidence) suggestions.at(-1)!.evidence = evidence.slice(0, 220)
+      preserveEvidence(suggestions.at(-1)!,clause,evidence)
       continue
     }
     if (clause.bullet && context) {
@@ -397,7 +403,7 @@ export function createSuggestions(
         now,
         timePoint,
       ))
-      if (evidence) suggestions.at(-1)!.evidence = evidence.slice(0, 220)
+      preserveEvidence(suggestions.at(-1)!,clause,evidence)
     }
   }
 
