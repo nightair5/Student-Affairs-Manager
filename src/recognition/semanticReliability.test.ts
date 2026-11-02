@@ -14,9 +14,9 @@ async function emptyRepo(){
  for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','projects','milestones','workPackages','tasks','materials','timePoints','events','evidenceRefs','historyRecords','reminderRecords','changeProposals'] as const)workspace[key]=[]
  const repo=new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore());await repo.save(workspace);return repo
 }
-async function add(repo:CanonicalWorkspaceRepository,operationId:string,text:string,value:unknown){
+async function add(repo:CanonicalWorkspaceRepository,operationId:string,text:string,value:unknown,promptVersion='recognition-semantic-notice-3.1.0'){
  const capture=new CapturePersistenceService(repo),handle=await capture.beginCapture({operationId,sourceType:'text',title:'匿名通知',rawText:text,provider:'deepseek',modelName:'synthetic-offline',promptVersion:null,pipelineVersion:'semantic-reliability-test',now:referenceTime})
- const result=parseRecognitionResult(compileSemanticNotice(value,{source:text,referenceTime,timezone,promptVersion:'recognition-semantic-notice-3.1.0'}).result)
+ const result=parseRecognitionResult(compileSemanticNotice(value,{source:text,referenceTime,timezone,promptVersion}).result)
  result.evidence.forEach(e=>{e.sourceId=handle.sourceId})
  await capture.recognize(handle,async()=>result)
  const first=assembleProductFirstSuggestion(result,{sourceText:text,referenceTime,timezone})
@@ -60,5 +60,17 @@ describe('semantic repairs across the existing save path',()=>{
   const stored=(await repo.load())!
   for(const requirement of requirements)expect(stored.tasks[0].description).toContain(requirement)
   expect(importWorkspaceV8(exportWorkspaceV8(stored)).tasks[0].description).toContain(requirements[12])
+ })
+ it('saves shared source requirements on each named delivery and preserves them on export',async()=>{
+  const text='作品须为本人原创，不得使用网络图片。电子版提交至平台，纸质版提交至服务台。'
+  const value={topic:'作品提交',kind:'action',items:[
+   {key:'digital',kind:'task',title:'提交电子版作品',action:'提交',object:'作品',deliveryForm:'电子版',evidence:['电子版提交至平台']},
+   {key:'paper',kind:'task',title:'提交纸质版作品',action:'提交',object:'作品',deliveryForm:'纸质版',evidence:['纸质版提交至服务台']},
+  ],materials:[],sharedRequirements:[{owners:['digital','paper'],evidence:['作品须为本人原创']},{owners:['digital','paper'],evidence:['不得使用网络图片']}]}
+  const repo=await emptyRepo();await add(repo,'semantic-shared',text,value,'recognition-semantic-notice-3.2.0')
+  const stored=(await repo.load())!,roundTrip=importWorkspaceV8(exportWorkspaceV8(stored))
+  expect(stored.tasks).toHaveLength(2)
+  for(const task of stored.tasks){expect(task.description).toContain('作品须为本人原创');expect(task.description).toContain('不得使用网络图片')}
+  for(const task of roundTrip.tasks)expect(task.description).toContain('不得使用网络图片')
  })
 })

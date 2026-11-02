@@ -3,6 +3,7 @@ import assert from 'node:assert/strict'
 import {compileSemanticNotice} from './semantic-notice-compiler-v3.mjs'
 import {validateRecognitionResult} from './recognition-contract.generated.mjs'
 import {SEMANTIC_NOTICE_VERSION,semanticNoticeSystemPrompt} from './semantic-notice-contract-v3-1-0.mjs'
+import {SEMANTIC_NOTICE_VERSION as SHARED_VERSION,semanticNoticeSystemPrompt as sharedPrompt} from './semantic-notice-contract-v3-2-0.mjs'
 
 const referenceTime='2026-11-02T04:00:00.000Z', timezone='Asia/Shanghai'
 function compile(source,raw){
@@ -23,6 +24,60 @@ test('new shared-material examples use literal source evidence and time text',()
       for(const time of item.times??[])assert.ok(source.includes(time.raw),`time absent from source: ${time.raw}`)
     }
   }
+})
+
+test('shared-requirement example binds only literal source quotations to owners',()=>{
+  assert.equal(SHARED_VERSION,'recognition-semantic-notice-3.2.0')
+  const examples=[...sharedPrompt().matchAll(/示例原文：([^\n]+)\n示例JSON：([^\n]+)/gu)]
+  const [,source,json]=examples.at(-1)
+  const example=JSON.parse(json)
+  for(const requirement of example.sharedRequirements){
+    for(const quote of requirement.evidence)assert.ok(source.includes(quote))
+    for(const owner of requirement.owners)assert.ok(example.items.some(item=>item.key===owner))
+  }
+})
+
+test('source-backed document requirements follow their declared delivery owners',()=>{
+  const source='作品须为本人原创，不得使用网络图片。电子版提交至平台，纸质版提交至服务台。请填写反馈表。'
+  const {result}=compile(source,{items:[
+    {key:'digital',kind:'task',title:'提交电子版作品',action:'提交',object:'作品',deliveryForm:'电子版',evidence:['电子版提交至平台']},
+    {key:'paper',kind:'task',title:'提交纸质版作品',action:'提交',object:'作品',deliveryForm:'纸质版',evidence:['纸质版提交至服务台']},
+    {key:'feedback',kind:'task',title:'填写反馈表',action:'填写',object:'反馈表',evidence:['请填写反馈表']},
+  ],sharedRequirements:[
+    {owners:['digital','paper'],evidence:['作品须为本人原创']},
+    {owners:['digital','paper'],evidence:['不得使用网络图片']},
+  ]})
+  for(const task of result.standaloneTasks.slice(0,2)){
+    assert.ok(task.completionCriteria.includes('作品须为本人原创'))
+    assert.ok(task.completionCriteria.includes('不得使用网络图片'))
+    assert.match(task.description,/作品须为本人原创/u)
+  }
+  assert.equal(result.standaloneTasks[2].completionCriteria.length,0)
+  for(const e of result.evidence)assert.equal(source.slice(e.textStart,e.textEnd),e.quote)
+})
+
+test('missing shared evidence or opposite delivery scope does not remove the task',()=>{
+  const source='电子版须为PDF。电子版提交至平台，纸质版提交至服务台。'
+  const {result,audit}=compile(source,{items:[
+    {key:'paper',kind:'task',title:'提交纸质版作品',action:'提交',object:'作品',deliveryForm:'纸质版',evidence:['纸质版提交至服务台']},
+  ],sharedRequirements:[
+    {owners:['paper'],evidence:['电子版须为PDF']},
+    {owners:['paper'],evidence:['必须缴纳费用']},
+  ]})
+  assert.equal(result.standaloneTasks.length,1)
+  assert.equal(result.standaloneTasks[0].completionCriteria.length,0)
+  assert.ok(audit.losses.some(x=>x.reason==='SHARED_REQUIREMENT_OTHER_DELIVERY_SCOPE'))
+  assert.ok(audit.losses.some(x=>x.reason==='SHARED_REQUIREMENT_UNGROUNDED'))
+  assert.equal(result.quality.needsHumanReview,true)
+})
+
+test('a shared restriction on electronic content also applies to paper delivery',()=>{
+  const source='作品可为纸质手写或电子设备手写笔记，不包括纯电子笔记。电子版提交至平台，纸质版提交至服务台。'
+  const {result}=compile(source,{items:[
+    {key:'digital',kind:'task',title:'提交电子版作品',action:'提交',object:'作品',deliveryForm:'电子版',evidence:['电子版提交至平台']},
+    {key:'paper',kind:'task',title:'提交纸质版作品',action:'提交',object:'作品',deliveryForm:'纸质版',evidence:['纸质版提交至服务台']},
+  ],sharedRequirements:[{owners:['digital','paper'],evidence:['不包括纯电子笔记']}]})
+  for(const task of result.standaloneTasks)assert.ok(task.completionCriteria.includes('不包括纯电子笔记'))
 })
 
 for(const [label,separator,locationLabel] of [['fullwidth colon','：','地点：'],['spaced colon','： ','地点：'],['bracket label','： ','【地点】']]){

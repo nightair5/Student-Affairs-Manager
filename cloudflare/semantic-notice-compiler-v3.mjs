@@ -2,7 +2,7 @@ import {normalizeRecognitionResult} from './recognition.mjs'
 import {locateSourceQuote} from './source-text-index.mjs'
 import {parseDirectSourceTime} from './direct-source-time.mjs'
 import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
-import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-1-0.mjs'
+import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-2-0.mjs'
 
 const object = value => Boolean(value && typeof value === 'object' && !Array.isArray(value))
 const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(0,max) : ''
@@ -145,9 +145,10 @@ function sourceChannel(source,value) {
 // Reject only a clear contradiction: a field is explicitly scoped to the
 // opposite delivery form in its own source clause. Missing or shared scope is
 // not treated as proof of a mismatch; the rest of the item remains intact.
-function conflictingDeliveryScope(source,field,expectedForm) {
+function conflictingDeliveryScope(source,field,expectedForm,{explicitOnly=false}={}) {
   const deliveryKind=value=>{
-    const paper=/(?:纸质|纸版)/u.test(value),electronic=/(?:电子|线上|网上|在线)/u.test(value)
+    const paper=(explicitOnly?/(?:纸质版|纸版|纸质(?:提交|材料|交付))/u:/(?:纸质|纸版)/u).test(value)
+    const electronic=(explicitOnly?/(?:电子版|电子(?:提交|材料|交付)|(?:线上|网上|在线)(?:提交|交付))/u:/(?:电子|线上|网上|在线)/u).test(value)
     return paper===electronic?'':paper?'paper':'electronic'
   }
   const expected=deliveryKind(expectedForm||'')
@@ -188,10 +189,10 @@ function sourceLocation(source,value,title,ownText) {
  * validates source-backed time values without re-parsing the display title. */
 export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',promptVersion='recognition-semantic-notice-3.0.5'}={}) {
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
-    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.6',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
+    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.7',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
   const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:text(raw.topic,160)||'通知',sourceType:'text',notificationType:'uncertain',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,promptVersion,true,timezone)
-  const audit={version:promptVersion,compilerVersion:'semantic-notice-compiler-1.0.6',rootFailure:false,items:[],facts:[],losses:[]}
+  const audit={version:promptVersion,compilerVersion:'semantic-notice-compiler-1.0.7',rootFailure:false,items:[],facts:[],losses:[]}
   const note=(layer,id,reason)=>audit.losses.push({layer,id,reason})
   const evidence=(quote,field,id,start) => {
     const q=text(quote,500);if(!q)return null
@@ -214,7 +215,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const numbers=normalizeCountNumbers(value).match(/\d+(?:\.\d+)?/gu)??[]
       if(numbers.some(number=>!sourceNumbers.has(number))){note('REQUIREMENT',id,'REQUIREMENT_NUMBER_NOT_IN_SOURCE');return false}
       if(numberedUnits(value).some(unit=>!sourceUnits.has(unit))){note('REQUIREMENT',id,'REQUIREMENT_NUMBER_UNIT_NOT_IN_SOURCE');return false}
-      if(promptVersion===SEMANTIC_NOTICE_VERSION&&!/(?:不得|禁止|不能|不可|不允许|无需|无须|不必|不需要|请勿|不再)/u.test(value)){
+      if([SEMANTIC_NOTICE_VERSION,'recognition-semantic-notice-3.1.0'].includes(promptVersion)&&!/(?:不得|禁止|不能|不可|不允许|无需|无须|不必|不需要|请勿|不再)/u.test(value)){
         const phrase=compact(value).replace(/^(?:请务必|必须|务必|需要|应当|请|须|需|应|要求)/u,'')
         const positions=[]
         if(phrase.length>=2)for(let at=normalizedSource.indexOf(phrase);at>=0;at=normalizedSource.indexOf(phrase,at+1))positions.push(at)
@@ -406,6 +407,33 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
         record.requirements=uniqueRequirements([...record.requirements,...requirements])
         applyTaskRequirements(owner,record.baseLines,record.requirements,material.key)
       }
+    }
+  }
+  // Explicit document-level requirements attach only to the task keys named
+  // by the model, and the saved wording is always an actual source span.
+  // A local alignment failure never clears an otherwise valid task.
+  const shared=Array.isArray(raw.sharedRequirements)?raw.sharedRequirements:[]
+  if(shared.length>40)note('REQUIREMENT','shared','SHARED_REQUIREMENT_INPUT_OVERFLOW')
+  for(const [index,entry] of shared.slice(0,40).entries()){
+    if(!object(entry)){note('REQUIREMENT',String(index),'INVALID_SHARED_REQUIREMENT');continue}
+    const ownerKeys=list(entry.owners,20,40),quotes=list(entry.evidence,12,500)
+    if(!ownerKeys.length||!quotes.length){note('REQUIREMENT',String(index),'SHARED_REQUIREMENT_OWNER_OR_EVIDENCE_MISSING');continue}
+    const ids=quotes.flatMap(quote=>{const id=evidence(quote,'description','shared-'+index);return id?[id]:[]})
+    if(!ids.length){note('REQUIREMENT',String(index),'SHARED_REQUIREMENT_UNGROUNDED');continue}
+    const spans=ids.map(id=>result.evidence.find(item=>item.id===id)).filter(Boolean)
+    for(const ownerKey of ownerKeys){
+      const record=pending.find(item=>item.item.key===ownerKey&&item.kind==='task')
+      if(!record){note('REQUIREMENT',ownerKey,'SHARED_REQUIREMENT_OWNER_MISSING');continue}
+      const accepted=spans.filter(span=>!conflictingDeliveryScope(source,span.quote,text(record.item.deliveryForm,80)||record.item.title,{explicitOnly:true}))
+      if(accepted.length!==spans.length)note('REQUIREMENT',ownerKey,'SHARED_REQUIREMENT_OTHER_DELIVERY_SCOPE')
+      if(!accepted.length)continue
+      const oldLines=new Set(record.requirements.map(value=>'要求：'+value))
+      record.baseLines=record.entity.description.split('\n').filter(line=>line&&!oldLines.has(line))
+      record.requirements=uniqueRequirements([...record.requirements,...accepted.map(span=>span.quote)])
+      applyTaskRequirements(record.entity,record.baseLines,record.requirements,ownerKey)
+      const refs=[...new Set([...record.entity.evidenceIds,...accepted.map(span=>span.id)])]
+      if(refs.length>20)note('REQUIREMENT',ownerKey,'SHARED_REQUIREMENT_EVIDENCE_OVERFLOW')
+      record.entity.evidenceIds=refs.slice(0,20)
     }
   }
   result.sourceSummary.title=text(raw.topic,160)||result.standaloneTasks[0]?.title||result.events[0]?.title||'通知'
