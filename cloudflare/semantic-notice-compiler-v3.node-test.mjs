@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import {compileSemanticNotice} from './semantic-notice-compiler-v3.mjs'
 import {validateRecognitionResult} from './recognition-contract.generated.mjs'
-import {SEMANTIC_NOTICE_VERSION,semanticNoticeSystemPrompt} from './semantic-notice-contract-v3-0-4.mjs'
+import {SEMANTIC_NOTICE_VERSION,semanticNoticeSystemPrompt} from './semantic-notice-contract-v3-0-5.mjs'
 
 const referenceTime='2026-11-01T04:12:32.675Z',timezone='Asia/Shanghai'
 function compile(source,raw){
@@ -14,10 +14,79 @@ function compile(source,raw){
 
 test('semantic prompt distinguishes separate activities from an agenda and binds unknown deadlines to delivery',()=>{
   const prompt=semanticNoticeSystemPrompt()
-  assert.equal(SEMANTIC_NOTICE_VERSION,'recognition-semantic-notice-3.0.4')
+  assert.equal(SEMANTIC_NOTICE_VERSION,'recognition-semantic-notice-3.0.5')
   assert.match(prompt,/不得把两个活动的首个开始与另一活动的结束合成一场/u)
   assert.match(prompt,/签到、分享、问答是流程/u)
   assert.match(prompt,/纸质版截止时间另行通知.*纸质提交任务/u)
+  assert.match(prompt,/个人行动，即使给出可办理的时间段和地点，仍是task/u)
+})
+
+test('prompt examples use real source quotations and time text',()=>{
+  const pairs=[...semanticNoticeSystemPrompt().matchAll(/示例原文：([^\n]+)\n示例JSON：([^\n]+)/gu)]
+  assert.ok(pairs.length>=8)
+  for(const [,source,json] of pairs){
+    const example=JSON.parse(json)
+    for(const item of [...example.items,...example.materials]){
+      for(const quote of item.evidence??[])assert.ok(source.includes(quote),`quote is absent from example source: ${quote}`)
+      for(const point of item.times??[])assert.ok(source.includes(point.raw),`time is absent from example source: ${point.raw}`)
+    }
+  }
+})
+
+test('a pickup window remains a task with an owned window, not an invented event',()=>{
+  const source='请于11月13日9:00—10:00到服务台领取资料。'
+  const {result}=compile(source,{items:[{key:'pickup',kind:'task',title:'领取资料',action:'领取',object:'资料',evidence:['请于11月13日9:00—10:00到服务台领取资料'],times:[{role:'window',raw:'11月13日9:00—10:00'}],location:'服务台'}]})
+  assert.equal(result.standaloneTasks.length,1);assert.equal(result.events.length,0)
+  assert.match(result.standaloneTasks[0].description,/地点：服务台/u)
+  assert.deepEqual(result.timePoints.map(p=>[p.type,p.normalizedValue]),[['event_start','2026-11-13T09:00'],['event_end','2026-11-13T10:00']])
+})
+
+test('requirement containment removes duplicates in either order without erasing negation',()=>{
+  const source='提交申请表。材料注明学院和姓名。不得提交原件。'
+  const {result}=compile(source,{items:[{key:'a',kind:'task',title:'提交申请表',action:'提交',object:'申请表',evidence:['提交申请表'],requirements:['注明学院和姓名','材料注明学院和姓名','不得提交原件','提交原件']}]})
+  assert.deepEqual(result.standaloneTasks[0].completionCriteria,['材料注明学院和姓名','不得提交原件','提交原件'])
+})
+
+test('requirement containment preserves differences in exact or qualified quantities',()=>{
+  const source='提交申请表。精选笔记4页，至少精选笔记4页。'
+  const {result}=compile(source,{items:[{key:'a',kind:'task',title:'提交申请表',action:'提交',object:'申请表',evidence:['提交申请表'],requirements:['精选笔记4页','至少精选笔记4页']}]})
+  assert.deepEqual(result.standaloneTasks[0].completionCriteria,['精选笔记4页','至少精选笔记4页'])
+})
+
+test('a paper delivery cannot take an explicitly electronic deadline or channel',()=>{
+  const source='电子版截止11月7日23:59前；电子版发送至report@example.edu；纸质版截止与提交方式另行通知。'
+  const {result,audit}=compile(source,{items:[
+    {key:'e',kind:'task',title:'提交电子版作品',action:'提交',object:'作品',deliveryForm:'电子版',channel:'report@example.edu',evidence:['电子版截止11月7日23:59前'],times:[{role:'deadline',raw:'11月7日23:59前'}]},
+    {key:'p',kind:'task',title:'提交纸质版作品',action:'提交',object:'作品',deliveryForm:'纸质版',channel:'report@example.edu',evidence:['纸质版截止与提交方式另行通知'],times:[{role:'deadline',raw:'11月7日23:59前'}]},
+  ]})
+  assert.equal(result.standaloneTasks.length,2)
+  assert.match(result.standaloneTasks[0].description,/report@example\.edu/u)
+  assert.doesNotMatch(result.standaloneTasks[1].description,/report@example\.edu/u)
+  assert.deepEqual(result.standaloneTasks[1].timePointTempIds,[])
+  assert.deepEqual(result.timePoints.map(p=>p.normalizedValue),['2026-11-07T23:59'])
+  assert.ok(audit.losses.some(x=>x.id==='p'&&x.reason==='CHANNEL_OTHER_DELIVERY_SCOPE'))
+  assert.ok(audit.losses.some(x=>x.id==='p'&&x.reason==='TIME_OTHER_DELIVERY_SCOPE'))
+})
+
+test('a shared material cannot copy the electronic-only address into a paper owner',()=>{
+  const source='电子版发送至report@example.edu；纸质版提交方式另行通知。两种形式均需报名表。'
+  const {result,audit}=compile(source,{items:[
+    {key:'e',kind:'task',title:'提交电子版报名表',action:'提交',object:'报名表',deliveryForm:'电子版',channel:'report@example.edu',materials:['m'],evidence:['电子版发送至report@example.edu']},
+    {key:'p',kind:'task',title:'提交纸质版报名表',action:'提交',object:'报名表',deliveryForm:'纸质版',materials:['m'],evidence:['纸质版提交方式另行通知']},
+  ],materials:[{key:'m',name:'报名表',channel:'report@example.edu',owners:['e','p'],evidence:['两种形式均需报名表']}]})
+  assert.match(result.standaloneTasks[0].description,/report@example\.edu/u)
+  assert.doesNotMatch(result.standaloneTasks[1].description,/report@example\.edu/u)
+  assert.equal(result.materials[0].submissionChannel,null)
+  assert.ok(audit.losses.some(x=>x.id==='m'&&x.reason==='CHANNEL_OTHER_DELIVERY_SCOPE'))
+})
+
+test('task and material requirement copies are merged in both orderings',()=>{
+  const source='请提交报名表。纸质材料注明学院和姓名。'
+  const resultFor=(taskRequirement,materialRequirement)=>compile(source,{items:[{key:'a',kind:'task',title:'提交报名表',action:'提交',object:'报名表',evidence:['请提交报名表'],materials:['m'],requirements:[taskRequirement]}],materials:[{key:'m',name:'报名表',owners:['a'],requirements:[materialRequirement],evidence:['纸质材料注明学院和姓名']}]}).result.standaloneTasks[0]
+  for(const item of [resultFor('纸质材料注明学院和姓名','注明学院和姓名'),resultFor('注明学院和姓名','纸质材料注明学院和姓名')]){
+    assert.deepEqual(item.completionCriteria,['纸质材料注明学院和姓名'])
+    assert.equal(item.description.split('\n').filter(line=>line.includes('注明学院和姓名')).length,1)
+  }
 })
 
 test('a delivery task retains its cited unknown deadline without inheriting another deadline',()=>{

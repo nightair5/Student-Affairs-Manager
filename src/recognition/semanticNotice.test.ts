@@ -43,9 +43,10 @@ async function addNotice(repo:CanonicalWorkspaceRepository,operationId:string,te
 }
 
 describe('semantic notice direct delivery',()=>{
-  it('routes the new explicitly supported semantic contract through the same assembly and commit path',async()=>{
+  it('routes explicitly supported semantic contracts through the same assembly and commit path',async()=>{
     expect(isSemanticNoticeVersion('recognition-semantic-notice-3.0.4')).toBe(true)
-    expect(isSemanticNoticeVersion('recognition-semantic-notice-3.0.5')).toBe(false)
+    expect(isSemanticNoticeVersion('recognition-semantic-notice-3.0.5')).toBe(true)
+    expect(isSemanticNoticeVersion('recognition-semantic-notice-3.0.6')).toBe(false)
     const text='电子版截止11月7日23:59前。纸质版截止时间在交流群中另行通知。请提交纸质版作品并加入交流群。'
     const value={topic:'作品提交',kind:'action',items:[
       {key:'paper',kind:'task',title:'提交纸质版作品',action:'提交',object:'作品',deliveryForm:'纸质版',evidence:['纸质版截止时间在交流群中另行通知','请提交纸质版作品并加入交流群']},

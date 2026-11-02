@@ -2,7 +2,7 @@ import {normalizeRecognitionResult} from './recognition.mjs'
 import {locateSourceQuote} from './source-text-index.mjs'
 import {parseDirectSourceTime} from './direct-source-time.mjs'
 import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
-import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-0-4.mjs'
+import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-0-5.mjs'
 
 const object = value => Boolean(value && typeof value === 'object' && !Array.isArray(value))
 const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(0,max) : ''
@@ -57,13 +57,21 @@ function requirementCovered(existing,additional) {
   if(first===second)return true
   if(second.length<6)return false
   const at=first.indexOf(second)
-  // A longer existing requirement can already contain the whole shorter one;
-  // a negative prefix may instead reverse it, so retain both in that case.
-  return at>=0&&!/(?:不|无|未|禁止|不得|无需|取消|非)/u.test(first.slice(0,at))
+  // A contained phrase is not equivalent if the extra text qualifies,
+  // reverses or restricts it. Retain both rather than dropping that distinction.
+  if(at<0)return false
+  const extra=first.slice(0,at)+first.slice(at+second.length)
+  return !/(?:不|无|未|禁止|不得|无需|取消|非|仅|只|任选|可选|或者|或|若|如果|除非|至少|不少于|不超过|最多|以上|以下|以内|之前|之后|截至|截止)/u.test(extra)
 }
 function uniqueRequirements(values) {
   const result=[]
-  for(const value of list(values,12,160))if(!result.some(existing=>requirementCovered(existing,value)))result.push(value)
+  for(const value of list(values,12,160)){
+    if(result.some(existing=>requirementCovered(existing,value)))continue
+    // A longer, equivalent statement encountered later replaces its contained
+    // duplicate; a negation or other extra facts must never be removed.
+    for(let i=result.length-1;i>=0;i--)if(requirementCovered(value,result[i]))result.splice(i,1)
+    result.push(value)
+  }
   return result
 }
 
@@ -89,6 +97,26 @@ function sourceChannel(source,value) {
   return supported.length===1?supported[0]:''
 }
 
+// Reject only a clear contradiction: a field is explicitly scoped to the
+// opposite delivery form in its own source clause. Missing or shared scope is
+// not treated as proof of a mismatch; the rest of the item remains intact.
+function conflictingDeliveryScope(source,field,expectedForm) {
+  const deliveryKind=value=>{
+    const paper=/(?:纸质|纸版)/u.test(value),electronic=/(?:电子|线上|网上|在线)/u.test(value)
+    return paper===electronic?'':paper?'paper':'electronic'
+  }
+  const expected=deliveryKind(expectedForm||'')
+  if(!expected||!field)return false
+  const span=locateSourceQuote(field,source)
+  if(!span)return false
+  const before=source.slice(0,span.start),after=source.slice(span.end)
+  const left=Math.max(...['。','；',';','，',',','！','？','\n'].map(mark=>before.lastIndexOf(mark)))+1
+  const right=after.search(/[。；;，,！？\n]/u)
+  const clause=source.slice(left,span.end)+(right<0?after:after.slice(0,right))
+  const actual=deliveryKind(clause)
+  return Boolean(actual&&actual!==expected)
+}
+
 // A source line can explicitly assign rooms to different sessions while using
 // one shared building. Only compose when the item's title selects one role and
 // the model's proposed location equals those two source fragments.
@@ -111,10 +139,10 @@ function sourceLocation(source,value,title,ownText) {
  * validates source-backed time values without re-parsing the display title. */
 export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash'}={}) {
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
-    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.4',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
+    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.5',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
   const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:text(raw.topic,160)||'通知',sourceType:'text',notificationType:'uncertain',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,SEMANTIC_NOTICE_VERSION,true,timezone)
-  const audit={version:SEMANTIC_NOTICE_VERSION,compilerVersion:'semantic-notice-compiler-1.0.4',rootFailure:false,items:[],facts:[],losses:[]}
+  const audit={version:SEMANTIC_NOTICE_VERSION,compilerVersion:'semantic-notice-compiler-1.0.5',rootFailure:false,items:[],facts:[],losses:[]}
   const note=(layer,id,reason)=>audit.losses.push({layer,id,reason})
   const evidence=(quote,field,id) => {
     const q=text(quote,500);if(!q)return null
@@ -156,10 +184,12 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     if(item.kind==='task') {
       const action=text(item.action,20),target=text(item.object,80)
       if(!action||!target){note('ITEM_STRUCTURE',item.key,'ACTION_OR_OBJECT_UNAVAILABLE');continue}
-      const channel=text(item.channel,160),supportedChannel=sourceChannel(source,channel)
+      const channel=text(item.channel,160),channelInSource=sourceChannel(source,channel)
       const deliveryForm=text(item.deliveryForm,80),supportedForm=deliveryForm&&hasLiteral(source,deliveryForm)?deliveryForm:''
+      const wrongChannelScope=conflictingDeliveryScope(source,channelInSource,supportedForm||item.title)
+      const supportedChannel=wrongChannelScope?'':channelInSource
       const location=text(item.location,160),supportedLocation=sourceLocation(ownText,location,item.title,ownText)
-      if(channel&&!supportedChannel)note('CHANNEL',item.key,'CHANNEL_NOT_SOURCE_GROUNDED')
+      if(channel&&!supportedChannel)note('CHANNEL',item.key,wrongChannelScope?'CHANNEL_OTHER_DELIVERY_SCOPE':'CHANNEL_NOT_SOURCE_GROUNDED')
       if(deliveryForm&&!supportedForm)note('DELIVERY',item.key,'DELIVERY_FORM_NOT_SOURCE_GROUNDED')
       if(location&&!supportedLocation)note('LOCATION',item.key,'TASK_LOCATION_NOT_OWNER_GROUNDED')
       const lines=[text(item.description,500),supportedForm?'交付形式：'+supportedForm:'',supportedChannel?'提交渠道：'+supportedChannel:'',supportedLocation&&compact(supportedLocation)!==compact(supportedChannel)?'地点：'+supportedLocation:'',condition?'适用条件待确认：'+condition:'',prerequisite?'前置事项：'+prerequisite:'',voluntary?'参加说明：'+voluntary:'',...requirements.map(r=>'要求：'+r)].filter(Boolean)
@@ -187,6 +217,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const rawTime=text(entry.raw,160);let span=rawTime&&locateSourceQuote(rawTime,source)
       if(!span){note('TIME',item.key,'TIME_TEXT_NOT_UNIQUELY_LOCATED');continue}
       if(recoveredEvidence&&!ownText.includes(span.literal)){note('TIME',item.key,'RECOVERED_ITEM_TIME_SCOPE_UNCERTAIN');continue}
+      if(kind==='task'&&conflictingDeliveryScope(source,span.literal,text(item.deliveryForm,80)||item.title)){note('TIME',item.key,'TIME_OTHER_DELIVERY_SCOPE');continue}
       if(!sourceDay.test(foldWidth(span.literal))){
         // A bare clock must not silently inherit today's date. Only recover a
         // single explicit day from the same uninterrupted source clause.
@@ -262,19 +293,25 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     if(!owners.length){note('MATERIAL',material.key,'MATERIAL_OWNER_MISSING');continue}
     const refs=list(material.evidence,12,500),ids=refs.flatMap(q=>{const e=evidence(q,'materials',material.key);return e?[e]:[]})
     if(!ids.length){note('MATERIAL',material.key,'MATERIAL_EVIDENCE_MISSING');continue}
-    const channel=text(material.channel,160),supportedChannel=sourceChannel(source,channel)||null
+    const channel=text(material.channel,160),channelInSource=sourceChannel(source,channel)
+    // A shared material must not carry one delivery's exclusive channel into
+    // a different owner. That owner's own separately grounded channel remains.
+    const wrongChannelScope=Boolean(channelInSource&&pending.some(x=>owners.includes(x.entity)&&conflictingDeliveryScope(source,channelInSource,text(x.item.deliveryForm,80)||x.item.title)))
+    const supportedChannel=wrongChannelScope?null:channelInSource||null
     const formats=list(material.formats,20,160),naming=list(material.naming,20,160),requirements=list(material.requirements,12,160)
-    if(channel&&!supportedChannel)note('CHANNEL',material.key,'CHANNEL_NOT_SOURCE_GROUNDED')
+    if(channel&&!supportedChannel)note('CHANNEL',material.key,wrongChannelScope?'CHANNEL_OTHER_DELIVERY_SCOPE':'CHANNEL_NOT_SOURCE_GROUNDED')
     const quantity=Number.isFinite(material.quantity)&&material.quantity>0?material.quantity:null
     const m={tempId:'sem-m'+(index+1),name:text(material.name,160),required:material.required!==false,formatRequirements:formats,namingRequirements:naming,quantity,submissionChannel:supportedChannel,relatedTaskTempIds:owners.map(t=>t.tempId),evidenceIds:[...new Set(ids)],confidence:.8,selected:true}
     result.materials.push(m)
     for(const owner of owners){
       owner.materialTempIds.push(m.tempId);owner.evidenceIds=[...new Set([...owner.evidenceIds,...ids])].slice(0,20)
-      for(const requirement of requirements)if(!owner.completionCriteria.some(existing=>requirementCovered(existing,requirement))){
-        if(owner.completionCriteria.length<12)owner.completionCriteria.push(requirement)
-        const line='材料要求：'+requirement
-        if(!owner.description.split('\n').includes(line))owner.description+=(owner.description?'\n':'')+line
-      }
+      // Merge task-level and material-level requirements once, preserving the
+      // stronger full wording and any distinct negation or quantity qualifier.
+      const previous=owner.completionCriteria
+      const tagged=new Set(previous.flatMap(value=>['要求：'+value,'材料要求：'+value]))
+      const otherLines=owner.description.split('\n').filter(line=>line&&!tagged.has(line))
+      owner.completionCriteria=uniqueRequirements([...previous,...requirements])
+      owner.description=[...otherLines,...owner.completionCriteria.map(value=>'要求：'+value)].join('\n')
       if(owner.description.length>800){note('DESCRIPTION',material.key,'REQUIREMENTS_TRUNCATED');owner.description=owner.description.slice(0,800)}
     }
   }
