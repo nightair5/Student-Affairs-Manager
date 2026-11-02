@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import test from 'node:test'
 import './semantic-notice-compiler-v3.node-test.mjs'
 import './semantic-notice-reliability.node-test.mjs'
@@ -12,6 +13,23 @@ import {
 } from './worker.mjs'
 
 const baseContext = [{ kind: '任务', title: '报名材料', excerpt: '今天 18:00 截止' }]
+
+test('production configuration selects semantic recognition while preserving edge rate limiting', async () => {
+  const config=JSON.parse(readFileSync(new URL('../wrangler.jsonc',import.meta.url),'utf8'))
+  const source='请于11月8日18:00前备份实验数据。'
+  const modelResult={topic:'实验数据',kind:'action',items:[{key:'a',kind:'task',title:'备份实验数据',action:'备份',object:'实验数据',evidence:['备份实验数据'],times:[{role:'deadline',raw:'11月8日18:00前'}]}],materials:[],sharedRequirements:[]}
+  let calls=0,rateChecks=0
+  const worker=createWorker({fetcher:async()=>{calls++;return Response.json({model:'observed-test-flash',choices:[{finish_reason:'stop',message:{content:JSON.stringify(modelResult)}}],usage:{prompt_tokens:100,completion_tokens:30,total_tokens:130}})}})
+  const env=environment({...config.vars,DEEPSEEK_API_KEY:'server-only-test-key-with-length',EXTRACTION_RATE_LIMITER:{limit:async()=>{rateChecks++;return {success:true}}}})
+  const response=await worker.fetch(request('/api/deepseek/extract',{body:JSON.stringify({sourceType:'text',content:source,referenceTime:'2026-11-01T04:12:32.675Z',timezone:'Asia/Shanghai'})}),env)
+  assert.equal(response.status,200)
+  const body=await response.json()
+  assert.equal(calls,1);assert.equal(rateChecks,1)
+  assert.equal(body.execution.generationMode,'semantic-notice-3.0')
+  assert.equal(body.result.promptVersion,'recognition-semantic-notice-3.2.0')
+  assert.equal(body.result.standaloneTasks[0].title,'备份实验数据')
+  assert.equal(body.result.timePoints[0].normalizedValue,'2026-11-08T18:00')
+})
 
 test('opt-in semantic generation uses one upstream call and reports the observed model', async () => {
   const source='请于11月8日18:00前备份实验数据。'
