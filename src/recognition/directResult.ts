@@ -11,6 +11,7 @@ import {linkExplicitDependencies} from './sourceDependencies'
 import {sourceSupportsObjectParts} from '../../cloudflare/two-step-contextual-items.mjs'
 import {alignRecognitionEvidence} from '../../cloudflare/source-text-index.mjs'
 import {convertSemanticNotice} from './directSemanticNotice'
+import {isSemanticNoticeVersion} from './semanticNoticeVersion'
 
 export const DIRECT_MODE_VERSION = 'direct-mode-1'
 export type DirectTag = '时间待定' | '如符合条件' | '待确认'
@@ -27,7 +28,7 @@ const recordTasks = (r: RecognitionResult) => new Map(flatTasks(r).map(t => [t.t
 /** A new presentation policy, never a modification to a recorded/model result.
  * Uncertainty becomes an explicit label; it never authorizes invented facts. */
 export function convertDirectResult(input: RecognitionResult, sourceText: string, original?: RecognitionResult, options:{actionRecovery?:boolean;retention?:boolean}={}): DirectConversion {
-  if(/^recognition-semantic-notice-3\.0\.[0123]$/.test(input.promptVersion))return convertSemanticNotice(input,sourceText)
+  if(isSemanticNoticeVersion(input.promptVersion))return convertSemanticNotice(input,sourceText)
   if(options.retention)return convertRetainedDirectResult(input,sourceText,original)
   if(options.actionRecovery){
     const baseline=convertDirectResult(input,sourceText,original)

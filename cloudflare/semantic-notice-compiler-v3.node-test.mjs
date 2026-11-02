@@ -2,6 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import {compileSemanticNotice} from './semantic-notice-compiler-v3.mjs'
 import {validateRecognitionResult} from './recognition-contract.generated.mjs'
+import {SEMANTIC_NOTICE_VERSION,semanticNoticeSystemPrompt} from './semantic-notice-contract-v3-0-4.mjs'
 
 const referenceTime='2026-11-01T04:12:32.675Z',timezone='Asia/Shanghai'
 function compile(source,raw){
@@ -10,6 +11,35 @@ function compile(source,raw){
   assert.deepEqual(validateRecognitionResult(out.result,{sourceContent:source}),{valid:true,failureCategory:null,issues:[]})
   return out
 }
+
+test('semantic prompt distinguishes separate activities from an agenda and binds unknown deadlines to delivery',()=>{
+  const prompt=semanticNoticeSystemPrompt()
+  assert.equal(SEMANTIC_NOTICE_VERSION,'recognition-semantic-notice-3.0.4')
+  assert.match(prompt,/不得把两个活动的首个开始与另一活动的结束合成一场/u)
+  assert.match(prompt,/签到、分享、问答是流程/u)
+  assert.match(prompt,/纸质版截止时间另行通知.*纸质提交任务/u)
+})
+
+test('a delivery task retains its cited unknown deadline without inheriting another deadline',()=>{
+  const source='电子版截止11月7日23:59前。纸质版截止时间在交流群中另行通知。请提交纸质版作品并加入交流群。'
+  const {result}=compile(source,{items:[
+    {key:'electronic',kind:'task',title:'提交电子版作品',action:'提交',object:'作品',deliveryForm:'电子版',evidence:['电子版截止11月7日23:59前'],times:[{role:'deadline',raw:'11月7日23:59前'}]},
+    {key:'paper',kind:'task',title:'提交纸质版作品',action:'提交',object:'作品',deliveryForm:'纸质版',evidence:['纸质版截止时间在交流群中另行通知','请提交纸质版作品并加入交流群']},
+    {key:'group',kind:'task',title:'加入交流群',action:'加入',object:'交流群',evidence:['请提交纸质版作品并加入交流群']},
+  ]})
+  assert.match(result.standaloneTasks[1].description,/纸质版截止时间在交流群中另行通知/u)
+  assert.deepEqual(result.standaloneTasks[1].completionCriteria,['纸质版截止时间在交流群中另行通知'])
+  assert.deepEqual(result.standaloneTasks[1].timePointTempIds,[])
+  assert.doesNotMatch(result.standaloneTasks[2].description,/纸质版截止/u)
+  assert.deepEqual(result.timePoints.map(p=>p.normalizedValue),['2026-11-07T23:59'])
+})
+
+test('unrelated delivery unknown deadline is not copied across owners',()=>{
+  const source='电子版截止时间另行通知，纸质版请提交到办公室。'
+  const {result}=compile(source,{items:[{key:'paper',kind:'task',title:'提交纸质版材料',action:'提交',object:'材料',deliveryForm:'纸质版',evidence:['电子版截止时间另行通知，纸质版请提交到办公室']}]})
+  assert.equal(result.standaloneTasks[0].completionCriteria.length,0)
+  assert.doesNotMatch(result.standaloneTasks[0].description,/电子版截止/u)
+})
 
 test('open-ended actions and their deadlines survive semantic mapping',()=>{
   for(const [verb,object] of [['备份','实验数据'],['录制','项目介绍视频'],['校对','课程论文'],['装订','课程档案']]){

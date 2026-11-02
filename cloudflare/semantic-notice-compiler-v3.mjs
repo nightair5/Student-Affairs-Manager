@@ -2,7 +2,7 @@ import {normalizeRecognitionResult} from './recognition.mjs'
 import {locateSourceQuote} from './source-text-index.mjs'
 import {parseDirectSourceTime} from './direct-source-time.mjs'
 import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
-import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-0-3.mjs'
+import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-0-4.mjs'
 
 const object = value => Boolean(value && typeof value === 'object' && !Array.isArray(value))
 const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(0,max) : ''
@@ -67,6 +67,16 @@ function uniqueRequirements(values) {
   return result
 }
 
+// A task's own explicitly cited delivery form can carry an unresolved source
+// deadline. Keep the literal wording with that task, never turn it into a date.
+function citedUnknownDeadline(item,ownText) {
+  const form=text(item.deliveryForm,80)
+  if(!form)return []
+  return ownText.split(/[。；;，,\n]/u).map(part=>part.trim()).filter(part=>
+    part.startsWith(form)&&/(?:截止|期限|日期|时间)/u.test(part)&&/(?:另行|后续|之后|日后).{0,16}(?:通知|公布|确定)/u.test(part),
+  )
+}
+
 // Preserve a literal channel or a uniquely source-backed address when a model
 // has wrapped that address in a nonliteral descriptive label.
 function sourceChannel(source,value) {
@@ -101,10 +111,10 @@ function sourceLocation(source,value,title,ownText) {
  * validates source-backed time values without re-parsing the display title. */
 export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash'}={}) {
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
-    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.3',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
+    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.4',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
   const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:text(raw.topic,160)||'通知',sourceType:'text',notificationType:'uncertain',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,SEMANTIC_NOTICE_VERSION,true,timezone)
-  const audit={version:SEMANTIC_NOTICE_VERSION,compilerVersion:'semantic-notice-compiler-1.0.3',rootFailure:false,items:[],facts:[],losses:[]}
+  const audit={version:SEMANTIC_NOTICE_VERSION,compilerVersion:'semantic-notice-compiler-1.0.4',rootFailure:false,items:[],facts:[],losses:[]}
   const note=(layer,id,reason)=>audit.losses.push({layer,id,reason})
   const evidence=(quote,field,id) => {
     const q=text(quote,500);if(!q)return null
@@ -139,7 +149,8 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     const proposedCondition=text(item.condition,160),groundedCondition=proposedCondition&&hasLiteral(source,proposedCondition)?proposedCondition:''
     const voluntary=groundedCondition&&/有意向|感兴趣|自愿|欢迎/u.test(groundedCondition)&&!/仅限|符合资格|必须具备|须具备|不符合/u.test(groundedCondition)?groundedCondition:''
     const prerequisite=groundedCondition&&list(item.dependsOn,20,40).some(key=>activeTaskKeys.has(key))&&/^(?:完成|填写|提交|办理|通过|取得|先).+后$/u.test(groundedCondition)?groundedCondition:''
-    const condition=voluntary||prerequisite?'':groundedCondition,requirements=uniqueRequirements(item.requirements)
+    const condition=voluntary||prerequisite?'':groundedCondition
+    const requirements=uniqueRequirements([...list(item.requirements,12,160),...(item.kind==='task'?citedUnknownDeadline(item,ownText):[])])
     if(proposedCondition&&!groundedCondition)note('CONDITION',item.key,'CONDITION_NOT_SOURCE_GROUNDED')
     let entity
     if(item.kind==='task') {

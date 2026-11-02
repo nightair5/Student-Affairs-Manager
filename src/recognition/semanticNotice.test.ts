@@ -11,6 +11,7 @@ import {buildLocalRecognition} from './pipeline'
 import {improveDirectFallback} from './directFallback'
 import {exportWorkspaceV8,importWorkspaceV8} from '../domain/v2/serialization'
 import {sourceWindowDisplayLabel,sourceWindowLastEnd} from '../domain/v2/sourceWindowDisplay'
+import {isSemanticNoticeVersion} from './semanticNoticeVersion'
 
 const referenceTime='2026-11-01T04:12:32.675Z',timezone='Asia/Shanghai'
 const source='请于11月8日18:00前提交申请表至课程平台。申请表须为Word和PDF两种格式，文件名为项目号加姓名。名单需按贡献大小排序。'
@@ -42,6 +43,21 @@ async function addNotice(repo:CanonicalWorkspaceRepository,operationId:string,te
 }
 
 describe('semantic notice direct delivery',()=>{
+  it('routes the new explicitly supported semantic contract through the same assembly and commit path',async()=>{
+    expect(isSemanticNoticeVersion('recognition-semantic-notice-3.0.4')).toBe(true)
+    expect(isSemanticNoticeVersion('recognition-semantic-notice-3.0.5')).toBe(false)
+    const text='电子版截止11月7日23:59前。纸质版截止时间在交流群中另行通知。请提交纸质版作品并加入交流群。'
+    const value={topic:'作品提交',kind:'action',items:[
+      {key:'paper',kind:'task',title:'提交纸质版作品',action:'提交',object:'作品',deliveryForm:'纸质版',evidence:['纸质版截止时间在交流群中另行通知','请提交纸质版作品并加入交流群']},
+      {key:'group',kind:'task',title:'加入交流群',action:'加入',object:'交流群',evidence:['请提交纸质版作品并加入交流群']},
+    ],materials:[]}
+    const repo=await emptyRepo();await addNotice(repo,'semantic-version-routing',text,value)
+    const stored=(await repo.load())!
+    expect(stored.tasks.map(t=>t.title)).toEqual(['提交纸质版作品','加入交流群'])
+    expect(stored.tasks[0].description).toContain('纸质版截止时间在交流群中另行通知')
+    expect(stored.tasks[1].description??'').not.toContain('纸质版截止')
+    expect(stored.timePoints.filter(p=>p.type.endsWith('_deadline'))).toHaveLength(0)
+  })
   it('does not re-run a fixed verb list or turn an explicit cutoff into a reading date',()=>{
     const s='请于11月8日18:00前备份实验数据。'
     const input=semantic(s,{topic:'实验数据',kind:'action',items:[{key:'a',kind:'task',title:'备份实验数据',action:'备份',object:'实验数据',evidence:['备份实验数据'],times:[{role:'deadline',raw:'11月8日18:00前'}]}],materials:[]})
