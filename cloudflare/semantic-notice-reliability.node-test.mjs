@@ -80,6 +80,15 @@ test('a shared restriction on electronic content also applies to paper delivery'
   for(const task of result.standaloneTasks)assert.ok(task.completionCriteria.includes('不包括纯电子笔记'))
 })
 
+test('overlong shared evidence is explicitly partial instead of silently complete',()=>{
+  const longRequirement='作品要求：'+('说明'.repeat(270))
+  const source='请提交作品。'+longRequirement+'。'
+  const {result,audit}=compile(source,{items:[{key:'a',kind:'task',title:'提交作品',action:'提交',object:'作品',evidence:['请提交作品']}],sharedRequirements:[{owners:['a'],evidence:[longRequirement]}]})
+  assert.equal(result.standaloneTasks.length,1)
+  assert.ok(audit.losses.some(x=>x.reason==='SHARED_REQUIREMENT_EVIDENCE_TRUNCATED'))
+  assert.equal(result.quality.needsHumanReview,true)
+})
+
 for(const [label,separator,locationLabel] of [['fullwidth colon','：','地点：'],['spaced colon','： ','地点：'],['bracket label','： ','【地点】']]){
   test(`same-day events retain their own times and rooms: ${label}`,()=>{
     const source=`校园交流日分为分享会和体验展${separator}11月8日9:00—10:00举办分享会，10:30—12:00举办体验展；${locationLabel}大学生活动中心报告厅（分享）、展厅（体验）。`

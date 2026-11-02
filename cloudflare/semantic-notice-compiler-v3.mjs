@@ -189,10 +189,10 @@ function sourceLocation(source,value,title,ownText) {
  * validates source-backed time values without re-parsing the display title. */
 export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',promptVersion='recognition-semantic-notice-3.0.5'}={}) {
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
-    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.7',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
+    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.8',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
   const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:text(raw.topic,160)||'通知',sourceType:'text',notificationType:'uncertain',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,promptVersion,true,timezone)
-  const audit={version:promptVersion,compilerVersion:'semantic-notice-compiler-1.0.7',rootFailure:false,items:[],facts:[],losses:[]}
+  const audit={version:promptVersion,compilerVersion:'semantic-notice-compiler-1.0.8',rootFailure:false,items:[],facts:[],losses:[]}
   const note=(layer,id,reason)=>audit.losses.push({layer,id,reason})
   const evidence=(quote,field,id,start) => {
     const q=text(quote,500);if(!q)return null
@@ -416,6 +416,9 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
   if(shared.length>40)note('REQUIREMENT','shared','SHARED_REQUIREMENT_INPUT_OVERFLOW')
   for(const [index,entry] of shared.slice(0,40).entries()){
     if(!object(entry)){note('REQUIREMENT',String(index),'INVALID_SHARED_REQUIREMENT');continue}
+    if(Array.isArray(entry.owners)&&entry.owners.length>20)note('REQUIREMENT',String(index),'SHARED_REQUIREMENT_OWNER_OVERFLOW')
+    if(Array.isArray(entry.evidence)&&entry.evidence.length>12)note('REQUIREMENT',String(index),'SHARED_REQUIREMENT_EVIDENCE_OVERFLOW')
+    if(Array.isArray(entry.evidence)&&entry.evidence.some(value=>typeof value==='string'&&value.trim().length>500))note('REQUIREMENT',String(index),'SHARED_REQUIREMENT_EVIDENCE_TRUNCATED')
     const ownerKeys=list(entry.owners,20,40),quotes=list(entry.evidence,12,500)
     if(!ownerKeys.length||!quotes.length){note('REQUIREMENT',String(index),'SHARED_REQUIREMENT_OWNER_OR_EVIDENCE_MISSING');continue}
     const ids=quotes.flatMap(quote=>{const id=evidence(quote,'description','shared-'+index);return id?[id]:[]})
