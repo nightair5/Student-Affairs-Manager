@@ -114,6 +114,20 @@ test('Chinese and Arabic quantities can refer to the same supported requirement'
   assert.ok(result.standaloneTasks[0].completionCriteria.includes('报告最多2页'))
 })
 
+test('equivalent choice units preserve the alternative channels',()=>{
+  const source='请于11月22日17:00前提交申请表：纸质版交到A102，或者电子版上传课程平台，任选一种。'
+  const requirement='任选一项：纸质版交到A102，或电子版上传课程平台'
+  const {result}=compile(source,{items:[{key:'a',kind:'task',title:'提交申请表',action:'提交',object:'申请表',evidence:[source],requirements:[requirement]}]})
+  assert.ok(result.standaloneTasks[0].completionCriteria.includes(requirement))
+})
+
+test('different numbers of required choices are not treated as equivalent',()=>{
+  const source='请提交申请表，以下材料任选两种。'
+  const {result,audit}=compile(source,{items:[{key:'a',kind:'task',title:'提交申请表',action:'提交',object:'申请表',evidence:[source],requirements:['任选一项材料']} ]})
+  assert.equal(result.standaloneTasks[0].completionCriteria.length,0)
+  assert.ok(audit.losses.some(x=>x.reason==='REQUIREMENT_NUMBER_NOT_IN_SOURCE'))
+})
+
 test('a number contained inside a different number does not ground a requirement',()=>{
   const source='请提交课程报告，活动共有1500人参加。'
   const {result,audit}=compile(source,{items:[{key:'a',kind:'task',title:'提交课程报告',action:'提交',object:'课程报告',evidence:['请提交课程报告'],requirements:['必须缴纳500元报名费']}]})

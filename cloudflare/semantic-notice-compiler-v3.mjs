@@ -81,7 +81,7 @@ function requirementKey(value) {
 }
 function normalizeCountNumbers(value) {
   const digits={零:0,〇:0,一:1,二:2,两:2,三:3,四:4,五:5,六:6,七:7,八:8,九:9},units={十:10,百:100,千:1000}
-  return compact(value).replace(/[零〇一二两三四五六七八九十百千]{1,6}(?=页|份|人|天|小时|分钟|字|张|门|项|个|次|元|件|套|本|名|位)/gu,word=>{
+  return compact(value).replace(/[零〇一二两三四五六七八九十百千]{1,6}(?=页|份|人|天|小时|分钟|字|张|门|项|种|个|次|元|件|套|本|名|位)/gu,word=>{
     if(!/[十百千]/u.test(word))return [...word].map(char=>digits[char]).join('')
     let sum=0,current=0
     for(const char of word){if(char in units){sum+=(current||1)*units[char];current=0}else current=digits[char]}
@@ -90,8 +90,11 @@ function normalizeCountNumbers(value) {
 }
 function numberedUnits(value) {
   const normalized=normalizeCountNumbers(value),units=[]
-  for(const match of normalized.matchAll(/(\d+(?:\.\d+)?)(?:个)?(小时|分钟|元|页|份|人|名|位|天|字|张|门|项|次|件|套|本)/gu))
-    units.push(match[1]+':'+(['名','位'].includes(match[2])?'人':match[2]))
+  for(const match of normalized.matchAll(/(\d+(?:\.\d+)?)(?:个)?(小时|分钟|元|页|份|人|名|位|天|字|张|门|项|种|个|次|件|套|本)/gu)){
+    const prefix=normalized.slice(Math.max(0,match.index-8),match.index)
+    const choice=['项','种','个'].includes(match[2])&&/(?:任选|可选|选择|选取|选用|挑选)(?:其中)?$/u.test(prefix)
+    units.push(match[1]+':'+(choice?'选择':(['名','位'].includes(match[2])?'人':match[2])))
+  }
   return units
 }
 function requirementCovered(existing,additional) {
