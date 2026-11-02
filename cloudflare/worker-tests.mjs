@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import './semantic-notice-compiler-v3.node-test.mjs'
+import './semantic-notice-reliability.node-test.mjs'
 import {
   classifyDeepSeekUpstreamStatus,
   createWorker,
