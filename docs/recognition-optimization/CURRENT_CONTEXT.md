@@ -1,4 +1,18 @@
-# 当前进度：beta.21 已上线（2026年11月2日）
+# 当前进度：beta.22 已上线（2026年11月3日）
+
+正式站点 student-affairs.site 运行代码 f9aa28c6e5cdab7012156df5b24686bac2f8e052，生产版本 a78254da-b3a9-470b-b863-3a5b4fc49141。
+线上使用 Flash 与语义识别 3.2.0，编译器 1.0.9；一次整理直接保存，Workspace v8 不迁移。
+修复未知结束时间、明确预留时长、同日活动、资格、办理窗口、备选及材料要求的部分丢失。
+三条匿名通知线上真实识别关键事实通过；隔离本地浏览器的保存、编辑、重复添加、撤销、刷新和备份导入通过。
+线上页面未在真实浏览器中验证；未访问用户现有浏览器数据，也未改写旧记录。
+部署提交的六项远端 CI 与本地必要检查通过；审计无高危但有 13 项中危依赖提示。
+回滚点为 beta.21 版本 83b12324-012e-4294-ab75-a84ddbacea3d；命令见 docs/release/v3-beta/RELEASE.md。
+剩余：部分表单标题缺主题、需求误标资格、备选事项可能额外出现待定活动；小样本不能保证泛化。
+证据：.data/recognition-completeness-20261103-081958/REVIEW.md。
+
+## 以下为 beta.21 当时的历史记录
+
+# 历史进度：beta.21 已上线（2026年11月2日）
 
 正式站点 student-affairs.site 运行代码 cdd5b327fd6280e01f0dc20d7c72eb30219afebf，生产版本 83b12324-012e-4294-ab75-a84ddbacea3d。
 线上默认 Flash + semantic-notice-3.0，提示词 recognition-semantic-notice-3.2.0；一次整理直接保存，Workspace v8 不迁移。
