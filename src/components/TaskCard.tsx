@@ -77,6 +77,7 @@ export function TaskCard({
       </div>
 
       <h3 className="task-card-title" title={task.title}>{task.directTags?directCardTitle(task.title):task.title}</h3>
+      {task.sourceChoice&&<span className="direct-tag">任选一项</span>}
       {task.directTags?.length ? <div className="direct-inline-tags">{visibleDirectTags(task.directTags,deadline.date,task.title).map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}</div> : null}
 
       <div className="task-timing-panel">

@@ -62,10 +62,14 @@ export function contextualEventDay(source,span,item){
   const start=boundary+day.index,end=start+day[0].length,between=source.slice(end,span.start)
   const literal=source.slice(start,end),folded=x=>String(x??'').normalize('NFKC').replace(/\s/gu,'')
   const ownCitation=(Array.isArray(item.evidence)?item.evidence:[]).some(ref=>folded(ref).includes(folded(literal))&&folded(ref).includes(folded(span.literal)))
-  const explicitShared=/(?:当天|当日|同日|同一天|两场|两个环节|活动日|交流日|开放日|均为|均在|均于)/u.test(prefix)
+  const explicitShared=/(?:当天|当日|同日|同一天|两场|两个环节|活动日|交流日|开放日|均为|均在|均于)/u.test(prefix)||/^(?:当天|当日|同日|同一天)/u.test(span.literal)
   const ownName=[item.title,...(Array.isArray(item.evidence)?item.evidence:[])].some(ref=>typeof ref==='string'&&folded(ref).length>=2&&folded(prefix).includes(folded(ref)))
   const sameItemLeading=ownName&&!/[；;]/u.test(between)&&!clock(fold(between))
-  if(!differentDay.test(between+span.literal)&&(ownCitation||explicitShared||sameItemLeading))return {start,end,literal}
+  // A date at the start of an agenda heading can govern multiple cited
+  // sessions in that same sentence; a preceding deadline cannot act as one.
+  const ownClock=(Array.isArray(item.evidence)?item.evidence:[]).some(ref=>typeof ref==='string'&&folded(ref).includes(folded(span.literal)))
+  const dateHeading=!source.slice(boundary,start).trim()&&/^\s*(?:活动|日程|安排|活动安排|日程安排)?\s*[：:]/u.test(between)&&ownClock
+  if(!differentDay.test(between+span.literal)&&(ownCitation||explicitShared||sameItemLeading||dateHeading))return {start,end,literal}
   return null
  }
  const shared=modelOwnedSharedDay(source,item)

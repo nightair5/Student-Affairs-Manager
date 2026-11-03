@@ -10,6 +10,7 @@ import type {DirectEdit} from '../domain/v2/directIntake'
 export interface EventDetailPanelProps {
   compact?:boolean
   onEdit?:(edit:DirectEdit)=>Promise<void>
+  onDirtyChange?:(dirty:boolean)=>void
   onDelete?:()=>Promise<void>
   isolatedFacts?: { startLabel: string; endLabel: string; content: ReactNode }
   event: Event

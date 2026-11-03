@@ -59,11 +59,14 @@ export interface Material {
   id: string
   name: string
   done: boolean
+  /** False means optional or only needed under an explicitly stated condition. */
+  required?: boolean
   /** Read-only fields projected from the canonical material for task lists. */
   requirements?: string[]
   formatRequirements?: string[]
   namingRequirements?: string[]
   quantity?: number | null
+  submissionChannel?: string | null
   status?: MaterialStatus
   taskId?: string
   projectId?: string
@@ -98,6 +101,8 @@ export interface Task {
   /** Versioned direct-mode presentation; not a new canonical fact array. */
   directTags?: string[]
   directDate?: string
+  /** Source-backed mutually exclusive delivery branches, projected from v8. */
+  sourceChoice?: { id:string; optionTaskIds:string[] }
   id: string
   projectId?: string
   parentTaskId?: string
@@ -118,6 +123,10 @@ export interface Task {
   sourceDeadlineLabel?: string
   /** Read-only display of an existing, source-verified operating window. */
   sourceWindowLabel?: string
+  /** Read-only start of one source-verified operating window; not a personal plan. */
+  sourceWindowStart?: string
+  /** Option number when a combined choice contains a branch-specific window. */
+  sourceWindowChoiceBranch?: number
   /** Read-only UTC endpoint of an already-saved source window; never a deadline. */
   sourceWindowEnd?: string
   nextAction: string

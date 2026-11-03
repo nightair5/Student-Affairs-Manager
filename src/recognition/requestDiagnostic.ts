@@ -14,6 +14,8 @@ export interface RecognitionRequestDiagnostic {
  compilerLossCount:number|null
  elapsedMs:number|null
  responseReuse:boolean
+ /** Present only for an explicitly initiated recognition attempt. */
+ attemptId?:string
 }
 const observations=new WeakMap<RecognitionResult,RecognitionRequestDiagnostic>()
 export const unobservedDiagnostic=(reason:RecognitionRequestDiagnostic['reason']='UNOBSERVED'):RecognitionRequestDiagnostic=>({version:'recognition-request-observation-1',state:reason==='UNOBSERVED'?'unobserved':'not_sent',reason,httpStatus:null,actualModels:[],generationMode:null,compilerVersion:null,inputTokens:null,outputTokens:null,modelActionCount:null,compilerLossCount:null,elapsedMs:null,responseReuse:false})

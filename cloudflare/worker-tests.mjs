@@ -4,6 +4,8 @@ import test from 'node:test'
 import './semantic-notice-compiler-v3.node-test.mjs'
 import './semantic-notice-reliability.node-test.mjs'
 import './semantic-notice-completeness.node-test.mjs'
+import './semantic-item-polarity.node-test.mjs'
+import './semantic-choice-single.node-test.mjs'
 import {
   classifyDeepSeekUpstreamStatus,
   createWorker,

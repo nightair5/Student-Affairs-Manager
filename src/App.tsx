@@ -6,6 +6,11 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } fro
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { DirectResultList, RecentDirectAdditions } from './components/DirectResultList'
 import { setTaskSchedule } from './domain/v2/taskSchedule'
+import {commitTaskCommand,ensureTaskEditsSettled,type TaskCommandValues} from './domain/v2/taskCommand'
+import {commitMaterialCommand,type MaterialCommandValues} from './domain/v2/materialCommand'
+import {readCommandReceipt,readCommittedBatch} from './domain/v2/commandReadback'
+import type {MaterialEditDraft} from './components/MaterialEditor'
+import {workspaceV8ToLegacyView} from './domain/v2/legacyView'
 import { commitDirectDraft, pendingDirectDraft, replaceDirectFallback, deleteDirectItem, editDirectItem, recentDirectBatches, undoDirectBatchPreservingEdits } from './domain/v2/directIntake'
 import {historicalDirectDraftIds,workspaceTaskChannels,pairFlowEvents,workspaceEventTimeHints} from './lib/homeFlow'
 import { EventDetailPanel } from './components/EventDetailPanel'
@@ -121,6 +126,16 @@ function captureActionMessage(error: unknown, fallback: string): string {
   return known[code] ?? (code.trim() || fallback)
 }
 
+function taskSaveFailure(error: unknown): string {
+  const code = error instanceof Error ? error.message : ''
+  if (code === 'TASK_COMMAND_FIELD_CONFLICT') return '这项内容已在其他页面修改；当前输入保留，请核对后重试。'
+  if (code === 'TASK_COMMAND_NOT_FOUND') return '这项待办已不存在，当前输入保留。'
+  if (code === 'TASK_COMMAND_TITLE_REQUIRED') return '请输入任务名称后重试。'
+  if (code === 'TASK_COMMAND_DURATION_INVALID') return '请输入至少 5 分钟的预计用时。'
+  if (code.includes('已保存') || code.includes('尚未读回') || code.includes('未保存的修改')) return code
+  return '更改未能保存，请保留输入并重试。'
+}
+
 interface WorkspaceRecoveryState {
   backupId: string
   errorCodes: string[]
@@ -171,6 +186,20 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const [initialWorkspace] = useState(() => runtime ? runtime.view(runtime.initial) : ordinaryEnvironment?.initial ?? loadWorkspace([], []))
   const [ordinaryCanonical, setOrdinaryCanonical] = useState<WorkspaceV8 | null>(null)
   const [ordinaryBusy,setOrdinaryBusy] = useState(false)
+  const [taskWritesPending,setTaskWritesPending] = useState(0)
+  const [taskEditDrafts,setTaskEditDrafts] = useState<Record<string,{title?:string;description?:string}>>({})
+  const [materialEditDrafts,setMaterialEditDrafts] = useState<Record<string,MaterialEditDraft>>({})
+  const [eventDirtyCount,setEventDirtyCount] = useState(0)
+  const eventDirtyIds=useRef(new Set<string>())
+  const taskEditDraftsRef=useRef(taskEditDrafts)
+  const materialEditDraftsRef=useRef(materialEditDrafts)
+  const updateTaskEditDrafts=(mutate:(current:typeof taskEditDrafts)=>typeof taskEditDrafts)=>{const next=mutate(taskEditDraftsRef.current);taskEditDraftsRef.current=next;setTaskEditDrafts(next)}
+  const updateMaterialEditDrafts=(mutate:(current:typeof materialEditDrafts)=>typeof materialEditDrafts)=>{const next=mutate(materialEditDraftsRef.current);materialEditDraftsRef.current=next;setMaterialEditDrafts(next)}
+  const taskWriteQueue=useRef<Promise<void>>(Promise.resolve())
+  const taskWritesCount=useRef(0)
+  const taskCompletionInFlight=useRef(new Set<string>())
+  const taskReadbackBlocked=useRef(false)
+  const ownTaskWrites=useRef(new Map<string,Map<string,{base:unknown;after:unknown}>>())
   const [ordinaryFactsDirty,setOrdinaryFactsDirty] = useState(false)
   const [ordinaryReadinessDirty,setOrdinaryReadinessDirty] = useState(false)
   const [ordinaryOpportunityDirty,setOrdinaryOpportunityDirty] = useState(false)
@@ -435,6 +464,13 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     })
   }, [storageError, workspace, workspaceReady, workspaceRecovery, runtime, viewConflict, ordinaryBusy, workspaceRepository, canonicalWorkspaceRepository])
 
+  useEffect(()=>{
+    if(!taskWritesPending&&!Object.keys(taskEditDrafts).length&&!Object.keys(materialEditDrafts).length&&!eventDirtyCount)return
+    const beforeUnload=(event:BeforeUnloadEvent)=>{event.preventDefault();event.returnValue=''}
+    window.addEventListener('beforeunload',beforeUnload)
+    return()=>window.removeEventListener('beforeunload',beforeUnload)
+  },[taskWritesPending,taskEditDrafts,materialEditDrafts,eventDirtyCount])
+
   useEffect(() => {
     const openIntake = (event: KeyboardEvent) => {
       if (
@@ -554,40 +590,90 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     })
   }
 
+  const canonicalStatus=(status:Task['status']):'todo'|'in_progress'|'completed'=>status==='已完成'?'completed':status==='进行中'?'in_progress':'todo'
+  const hasUncommittedBatchEdit=(workspace:WorkspaceV8,batchId:string)=>{
+    const batch=recentDirectBatches(workspace).find(item=>item.id===batchId)
+    if(!batch)return false
+    const taskIds=new Set(batch.items.filter(item=>item.kind==='task').map(item=>item.id))
+    return [...taskIds].some(id=>Boolean(taskEditDraftsRef.current[id]))||batch.items.some(item=>item.kind==='event'&&eventDirtyIds.current.has(item.id))||workspace.materials.some(material=>material.relatedTaskIds.some(id=>taskIds.has(id))&&Boolean(materialEditDraftsRef.current[material.id]))
+  }
+  const saveCoreTaskPatch=(task:Task,patch:Partial<Task>):Promise<void>=>{
+    const changes:TaskCommandValues={},expected:TaskCommandValues={}
+    if(patch.title!==undefined){changes.title=patch.title;expected.title=task.title}
+    if(patch.description!==undefined){changes.description=patch.description||null;expected.description=task.description||null}
+    if(patch.status!==undefined){changes.status=canonicalStatus(patch.status);expected.status=canonicalStatus(task.status)}
+    if(patch.estimatedMinutes!==undefined||patch.estimatedMinutesKnown!==undefined){changes.estimatedMinutes=patch.estimatedMinutesKnown===false?null:patch.estimatedMinutes??task.estimatedMinutes;expected.estimatedMinutes=task.estimatedMinutesKnown?task.estimatedMinutes:null}
+    const operationId=crypto.randomUUID(),changedAt=new Date().toISOString()
+    taskWritesCount.current++;setTaskWritesPending(taskWritesCount.current);setNotice({text:'正在保存更改…'})
+    const work=taskWriteQueue.current.then(async()=>{
+      if(directReadbackPending||taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')
+      const own=ownTaskWrites.current.get(task.id)
+      for(const field of Object.keys(changes) as Array<keyof TaskCommandValues>){
+        const previous=own?.get(field)
+        if(previous&&JSON.stringify(expected[field])===JSON.stringify(previous.base))Object.assign(expected,{[field]:previous.after})
+      }
+      const receipt=await commitTaskCommand(canonicalWorkspaceRepository,{operationId,taskId:task.id,expected,changes,changedAt})
+      const ownNext=own??new Map<string,{base:unknown;after:unknown}>()
+      for(const field of Object.keys(changes) as Array<keyof TaskCommandValues>){const previous=ownNext.get(field);ownNext.set(field,{base:previous?previous.base:expected[field],after:changes[field]})}
+      ownTaskWrites.current.set(task.id,ownNext)
+      let readback:WorkspaceV8|null
+      try{
+        readback=await readCommandReceipt(independentReader,{kind:'task',operationId,entityId:task.id,changed:receipt.changed})
+      }catch(error){taskReadbackBlocked.current=true;setDirectReadbackPending(task.id);throw new Error('更改已保存，暂时未能读回。请先重新读取，不会重复提交。',{cause:error})}
+      const saved=workspaceV8ToLegacyView(readback).tasks.find(item=>item.id===task.id)
+      if(!saved){taskReadbackBlocked.current=true;setDirectReadbackPending(task.id);throw Error('更改已保存，暂时未能读回。请先重新读取，不会重复提交。')}
+      setTasks(current=>current.map(item=>{
+        if(item.id!==task.id)return item
+        const history=[...item.history,...saved.history.filter(entry=>!item.history.some(existing=>existing.id===entry.id))]
+        return {...item,...(changes.title!==undefined?{title:saved.title,...(item.nextAction===task.nextAction?{nextAction:saved.nextAction}:{})}:{}),...(changes.description!==undefined?{description:saved.description}:{}),...(changes.status!==undefined?{status:saved.status}:{}),...(changes.estimatedMinutes!==undefined?{estimatedMinutes:saved.estimatedMinutes,estimatedMinutesKnown:saved.estimatedMinutesKnown}:{}),updatedAt:saved.updatedAt,history}
+      }))
+      setOrdinaryCanonical(readback)
+      if(task.projectId&&changes.status!==undefined)setProjects(current=>current.map(project=>project.id===task.projectId?syncTaskMilestone(project,saved):project))
+    })
+    taskWriteQueue.current=work.catch(()=>undefined)
+    return work.finally(()=>{taskWritesCount.current--;setTaskWritesPending(taskWritesCount.current)})
+  }
+
+  const saveMaterialPatch=(taskId:string,material:WorkspaceV8['materials'][number],changes:MaterialCommandValues,expected:MaterialCommandValues,expectedOwnerIds:string[]):Promise<void>=>{
+    const operationId=crypto.randomUUID(),changedAt=new Date().toISOString()
+    taskWritesCount.current++;setTaskWritesPending(taskWritesCount.current);setNotice({text:'正在保存材料要求…'})
+    const work=taskWriteQueue.current.then(async()=>{
+      if(directReadbackPending||taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')
+      const receipt=await commitMaterialCommand(canonicalWorkspaceRepository,{operationId,materialId:material.id,taskId,expected,expectedOwnerIds,changes,changedAt})
+      let readback:WorkspaceV8|null
+      try{readback=await readCommandReceipt(independentReader,{kind:'material',operationId,entityId:material.id,changed:receipt.changed})}
+      catch(error){taskReadbackBlocked.current=true;setDirectReadbackPending(taskId);throw new Error('更改已保存，暂时未能读回。请先重新读取，不会重复提交。',{cause:error})}
+      const projected=workspaceV8ToLegacyView(readback)
+      const related=new Set(expectedOwnerIds)
+      setTasks(current=>current.map(item=>{const saved=projected.tasks.find(candidate=>candidate.id===item.id);return related.has(item.id)&&saved?{...item,materials:saved.materials}:item}))
+      setMaterialItems(current=>current.map(item=>item.id===material.id?projected.materialItems.find(saved=>saved.id===item.id)??item:item))
+      setOrdinaryCanonical(readback)
+    })
+    taskWriteQueue.current=work.catch(()=>undefined)
+    return work.finally(()=>{taskWritesCount.current--;setTaskWritesPending(taskWritesCount.current)})
+  }
+
   const handleComplete = (taskId: string) => {
     if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
-    if (!task) return
-    const nextTask = updateTaskWithHistory(task, { status: '已完成' })
-    setTasks((current) => current.map((candidate) => candidate.id === taskId ? nextTask : candidate))
-    if (task.projectId) {
-      setProjects((current) => current.map((project) => project.id === task.projectId
-        ? syncTaskMilestone(project, nextTask)
-        : project))
-    }
-    setSelectedTaskId(null)
-    setNotice({
-      text: '任务已完成。',
-      undo: () => {
-        const undoAt = new Date().toISOString()
-        setTasks((current) => current.map((candidate) => candidate.id === taskId
-          ? updateTaskWithHistory(candidate, { status: task.status }, undoAt)
-          : candidate))
-        if (task.projectId) {
-          setProjects((current) => current.map((project) => project.id === task.projectId
-            ? syncTaskMilestone(project, { ...nextTask, status: task.status, updatedAt: undoAt })
-            : project))
-        }
-      },
-    })
+    if (!task||taskCompletionInFlight.current.has(taskId)) return
+    taskCompletionInFlight.current.add(taskId)
+    void (async()=>{
+      // A blur may already have queued an edit. Never close the detail and
+      // announce completion while that edit is still unsaved or has failed.
+      await ensureTaskEditsSettled(taskWriteQueue.current,()=>Boolean(taskEditDraftsRef.current[taskId])||task.materials.some(material=>Boolean(materialEditDraftsRef.current[material.id])))
+      await saveCoreTaskPatch(task,{status:'已完成'})
+    })().then(()=>{
+      setSelectedTaskId(null)
+      setNotice({text:'任务已完成。',undo:()=>{const completed={...task,status:'已完成' as const};void saveCoreTaskPatch(completed,{status:task.status}).then(()=>setNotice({text:'已撤销完成。'})).catch(error=>setNotice({text:error instanceof Error?error.message:'撤销未能保存，请重试。'}))}})
+    }).catch(error=>setNotice({text:taskSaveFailure(error)})).finally(()=>taskCompletionInFlight.current.delete(taskId))
   }
 
   const handleStart = (taskId: string) => {
     if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
     if (!task || task.status !== '待开始') return
-    handleUpdateTask(taskId, { status: '进行中' })
-    setNotice({ text: '已开始任务，首页会优先帮助你收尾。' })
+    void saveCoreTaskPatch(task,{status:'进行中'}).then(()=>setNotice({text:'已开始任务，首页会优先帮助你收尾。'})).catch(error=>setNotice({text:taskSaveFailure(error)}))
   }
 
   const handleSnooze = (taskId: string) => {
@@ -621,6 +707,11 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
     if (!task) return
+    const coreFields=new Set(['title','description','status','estimatedMinutes','estimatedMinutesKnown'])
+    if(Object.keys(patch).length&&Object.keys(patch).every(field=>coreFields.has(field))){
+      void saveCoreTaskPatch(task,patch).then(()=>setNotice({text:taskWritesCount.current?'仍有更改正在保存…':'更改已保存。'})).catch(error=>setNotice({text:taskSaveFailure(error)}))
+      return
+    }
     const nextTask = updateTaskWithHistory(task, patch)
     setTasks((current) => current.map((candidate) => candidate.id === taskId ? nextTask : candidate))
     if (patch.materials) {
@@ -695,29 +786,45 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   }
 
   const undoDirect = async (batchId: string) => {
-    await undoDirectBatchPreservingEdits(canonicalWorkspaceRepository, batchId)
-    await refreshOrdinary()
+    await taskWriteQueue.current
+    if(taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')
+    const before=await canonicalWorkspaceRepository.load()
+    if(!before)throw Error('工作区暂不可读取，原有内容保留。')
+    if(hasUncommittedBatchEdit(before,batchId))throw Error('这批事项还有未保存的修改，请先保存或取消修改。')
+    await undoDirectBatchPreservingEdits(canonicalWorkspaceRepository, batchId,undefined,()=>!hasUncommittedBatchEdit(before,batchId))
+    try{const w=await independentReader.load();if(!w||recentDirectBatches(w).find(batch=>batch.id===batchId)?.status!=='undone')throw Error('UNDO_READBACK');await refreshOrdinary()}
+    catch(error){taskReadbackBlocked.current=true;setDirectReadbackPending(batchId);throw new Error('撤销已保存，暂时未能读回。请先重新读取，不会重复提交。',{cause:error})}
     if (directBatchId === batchId) setDirectBatchId(null)
     setNotice({text:'本次添加已撤销，之前的事项保持不变。',direct:true})
   }
   const scheduleDirectTask = async (taskId: string, date: string) => {
+    await taskWriteQueue.current
+    if(taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')
     await setTaskSchedule(canonicalWorkspaceRepository, taskId, date)
-    try { await independentReader.load(); await refreshOrdinary() }
-    catch { setDirectReadbackPending(directBatches.find(batch=>batch.status==='active'&&batch.items.some(item=>item.id===taskId))?.id??taskId) }
+    try { if(!await independentReader.load())throw Error('READBACK');await refreshOrdinary() }
+    catch(error) { taskReadbackBlocked.current=true;setDirectReadbackPending(directBatches.find(batch=>batch.status==='active'&&batch.items.some(item=>item.id===taskId))?.id??taskId);throw new Error('安排已保存，暂时未能读回。请先重新读取，不会重复提交。',{cause:error}) }
+  }
+  const persistDirectChange=async(id:string,mutation:()=>Promise<void>)=>{
+    await taskWriteQueue.current
+    if(taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')
+    await mutation()
+    try{if(!await independentReader.load())throw Error('DIRECT_CHANGE_READBACK');await refreshOrdinary()}
+    catch(error){taskReadbackBlocked.current=true;setDirectReadbackPending(id);throw new Error('更改已保存，暂时未能读回。请先重新读取，不会重复提交。',{cause:error})}
   }
   const addDirect = async (draftId: string) => {
+    if(taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')
     const receipt = await commitDirectDraft(canonicalWorkspaceRepository,draftId)
     try {
-      const readback = await independentReader.load()
-      if (!readback || receipt.batch?.status === 'active' && receipt.batch.items.some(i => ![...readback.tasks,...readback.events].some(e => e.id === i.id))) throw Error('DIRECT_READBACK_PENDING')
-    } catch(error) {setDirectReadbackPending(receipt.batch?.id??draftId);throw Error('DIRECT_READBACK_PENDING',{cause:error})}
+      await readCommittedBatch(independentReader,refreshOrdinary,readback=>receipt.batch?.status!=='active'||!receipt.batch.items.some(i=>![...readback.tasks,...readback.events].some(e=>e.id===i.id)))
+    } catch(error) {taskReadbackBlocked.current=true;setDirectReadbackPending(receipt.batch?.id??draftId);throw Error('DIRECT_READBACK_PENDING',{cause:error})}
     setDirectReadbackPending(null)
-    await refreshOrdinary()
     setIntakeOpen(false);setSelectedDraftId(null);setCurrentPage('today');setDirectBatchId(receipt.batch?.id??null);setDirectHistoryOpen(false)
     const batch=receipt.batch
-    setNotice({text:receipt.duplicate?'本次整理已添加，无需重复提交':`已添加 ${batch?.items.length??0} 项`,direct:true,...(batch?{undo:()=>{void undoDirect(batch.id).catch(error=>setNotice({text:error instanceof Error&&error.message.startsWith('这批事项已修改')?error.message:'未能撤销，原有内容保留。请从最近添加重试。'}))}}:{})})
+    setNotice({text:receipt.duplicate?'本次整理已添加，无需重复提交':`已添加 ${batch?.items.length??0} 项`,direct:true,...(batch?{undo:()=>{void undoDirect(batch.id).catch(error=>setNotice({text:error instanceof Error&&/^(?:这批事项|撤销已保存|已有更改已保存)/u.test(error.message)?error.message:'未能撤销，原有内容保留。请从最近添加重试。'}))}}:{})})
   }
   const retryDirectFallback=async(batchId:string)=>{
+    await taskWriteQueue.current
+    if(taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')
     if(directRetriesInFlight.current.has(batchId))throw Error('正在重新整理，请稍候。')
     directRetriesInFlight.current.add(batchId)
     try{return await performDirectRetry(batchId)}finally{directRetriesInFlight.current.delete(batchId)}
@@ -735,17 +842,21 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         // failed status check) and prevents an unavailable request itself.
       }
       const metadata=ordinaryEnvironment?.recognitionMetadata?.()
-      const retried=await retryExistingSourceRecognition(capturePersistenceService,source.id,{provider:'deepseek',modelName:metadata?.modelName??'deepseek-v4-flash',promptVersion:metadata?.promptVersion??null,pipelineVersion:'direct-ai-retry-v1',expectedSourceVersionId:version.id},async()=>deepSeekExtractionService.recognize!({sourceType:source.type,sourceTitle:source.title,content:version.rawText!,sourceId:source.id,sourceVersionId:version.id,now:new Date(version.createdAt)},{projects,tasks}))
+      const attemptId=crypto.randomUUID()
+      const retried=await retryExistingSourceRecognition(capturePersistenceService,source.id,{provider:'deepseek',modelName:metadata?.modelName??'deepseek-v4-flash',promptVersion:metadata?.promptVersion??null,pipelineVersion:'direct-ai-retry-v1',expectedSourceVersionId:version.id},async()=>deepSeekExtractionService.recognize!({sourceType:source.type,sourceTitle:source.title,content:version.rawText!,sourceId:source.id,sourceVersionId:version.id,now:new Date(version.createdAt)},{projects,tasks},{attemptId,allowStatusUnknown:true}))
       stage='mapping'
       const sidecar=ordinaryEnvironment?.semanticSidecar?.(source.id)??deepSeekExtractionService.semanticSidecar?.(source.id,version.id)
       const context=ordinaryEnvironment?.recognitionContext?.(version.rawText)??ordinaryProviderContextFromSidecar(sidecar)??{referenceTime:retried.result.createdAt,timezone:w!.settings.defaultTimezone}
       const assembled=assembleProductFirstSuggestion(retried.result,{sourceText:version.rawText,...context,sourceWindows:sourceWindowsFromSidecar(sidecar),sourceActionTimes:sourceActionTimesFromSidecar(sidecar),workflowMaterialSupport:[...workflowMaterialSupportFromSidecar(sidecar),...ordinaryWorkflowMaterialSupportFromSidecar(sidecar)]})
       stage='saving'
       await canonicalWorkspaceRepository.transaction(current=>({...current,extractionDrafts:current.extractionDrafts.map(d=>d.id===retried.draftId?{...d,result:assembled.result,legacyData:{...d.legacyData,firstSuggestionDisplayed:JSON.parse(JSON.stringify(assembled.result)),...(sidecar?{semanticSidecar:JSON.parse(JSON.stringify(sidecar))}:{})}}:d),recognitionRuns:current.recognitionRuns.map(r=>r.id===current.extractionDrafts.find(d=>d.id===retried.draftId)?.recognitionRunId?{...r,legacyData:{...r.legacyData,originalRecognitionResult:JSON.parse(JSON.stringify(retried.result))}}:r)}))
-      const receipt=await replaceDirectFallback(canonicalWorkspaceRepository,batchId,retried.draftId)
+      await taskWriteQueue.current
+      if(taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')
+      if(hasUncommittedBatchEdit(w!,batchId))throw Error('这批事项还有未保存的修改，原来的事项保留。请先保存或取消修改。')
+      const receipt=await replaceDirectFallback(canonicalWorkspaceRepository,batchId,retried.draftId,undefined,()=>!hasUncommittedBatchEdit(w!,batchId))
       setDirectBatchId(receipt.batch?.id??null)
       stage='readback'
-      try{const readback=await independentReader.load();if(!readback||receipt.batch?.items.some(i=>![...readback.tasks,...readback.events].some(e=>e.id===i.id)))throw Error('READBACK');await refreshOrdinary()}catch(error){setDirectReadbackPending(receipt.batch!.id);throw Error('DIRECT_RETRY_READBACK_PENDING',{cause:error})}
+      try{await readCommittedBatch(independentReader,refreshOrdinary,readback=>!receipt.batch?.items.some(i=>![...readback.tasks,...readback.events].some(e=>e.id===i.id)))}catch(error){taskReadbackBlocked.current=true;setDirectReadbackPending(receipt.batch!.id);throw Error('DIRECT_RETRY_READBACK_PENDING',{cause:error})}
       setNotice({text:receipt.batch?.provenance==='hybrid'?'已重新整理，简单规则补充了部分内容。':'已用 AI 重新整理。',direct:true})
     }catch(error){await refreshOrdinary().catch(()=>undefined);const message=error instanceof Error?error.message:'';throw new Error(message==='DIRECT_RETRY_READBACK_PENDING'?'AI 结果已保存，暂时未能读回。请使用重新读取，不会重复添加。':/已修改过|原来的事项保留/u.test(message)?message:stage==='recognition'?'AI 没能完成识别，原来的事项保留，可以稍后重新整理。':stage==='mapping'?'识别内容暂时无法整理，原来的事项保留。':stage==='saving'?'这次结果未能保存，原来的事项保留。':'结果已保存，暂时未能读回。请重新读取，不会重复添加。',{cause:error})}
   }
@@ -761,6 +872,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     setNotice({text:`已加入 ${batches.length} 条通知${failed?'，其余通知保留，可稍后重试':''}`,direct:true,...(batches.length?{undo:()=>{void(async()=>{for(const id of [...batches].reverse())await undoDirect(id)})().catch(()=>setNotice({text:'未能全部撤销，剩余记录保留，可从最近添加重试。'}))}}:{})})
   }
   const handleIntakeInput = async (input: IntakeInput) => {
+    if(!runtime){await taskWriteQueue.current;if(taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')}
     if (runtime?.realInput) {
       if (input.sourceType !== 'text' || input.manualSuggestion || input.multimodal || input.url || input.fileName) { rejectExperimentAction(); return }
       setRealInputInitialText(input.content); setIntakeOpen(true); return
@@ -783,7 +895,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     }
     if (storageError || workspaceRecovery) throw new Error('本机数据正在保护中，输入已保留。请先完成数据恢复，再整理新通知。')
     if (directMode) {
-      if (directReadbackPending) throw new Error('本次内容已保存，请先点击“重新读取”后再整理。')
+      if (directReadbackPending||taskReadbackBlocked.current) throw new Error('本次内容已保存，请先点击“重新读取”后再整理。')
       const current=await canonicalWorkspaceRepository.load()
       const pending=current&&pendingDirectDraft(current,input.content)
       if(pending){
@@ -886,7 +998,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
               // Source and draft are already durable. A quick first click must
               // join the bounded initial check instead of silently choosing local rules.
               if(awaitInitialService)await initialServiceReady()
-              return deepSeekExtractionService.recognize!(providerInput, { projects, tasks })
+              return deepSeekExtractionService.recognize!(providerInput, { projects, tasks }, {allowStatusUnknown:true})
             }
             : async () => draftRecognition,
       )
@@ -1685,7 +1797,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           <DashboardPage
             directMode={directMode}
             directNotice={notice?.direct?<div className="direct-inline-notice" role="status"><span>{notice.text}</span>{notice.undo&&<button type="button" className="text-button" onClick={()=>{notice.undo?.();setNotice(null)}}>撤销</button>}<button type="button" className="icon-button" aria-label="关闭提示" onClick={()=>setNotice(null)}>×</button></div>:undefined}
-            recentAdditions={directMode&&ordinaryCanonical?<RecentDirectAdditions workspace={ordinaryCanonical} batches={directBatches} onRetry={retryDirectFallback} onUndo={undoDirect} onOpen={id=>{setDirectBatchId(id);setDirectHistoryOpen(true)}} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}}/>:undefined}
+            recentAdditions={directMode&&ordinaryCanonical?<RecentDirectAdditions workspace={ordinaryCanonical} batches={directBatches} onRetry={retryDirectFallback} onUndo={undoDirect} onOpen={id=>{setDirectBatchId(id);setDirectHistoryOpen(true)}} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)} onEdit={(id,edit)=>persistDirectChange(id,()=>editDirectItem(canonicalWorkspaceRepository,id,edit))} onDelete={id=>persistDirectChange(id,()=>deleteDirectItem(canonicalWorkspaceRepository,id))}/>:undefined}
             historicalNotice={directMode?{count:historicalDirectIds.length,busy:historicalAdding,onAdd:addHistoricalDirect,onIgnore:ignoreHistoricalDirect}:undefined}
             planning={!runtime && ordinaryCanonical ? <PersonalPlanPanel workspace={ordinaryCanonical} repository={canonicalWorkspaceRepository} reader={independentReader} store={ordinaryEnvironment?.store ?? ordinaryStore} onReload={()=>refreshOrdinary()}/> : undefined}
             engineeringInput={Boolean(ordinaryEnvironment)}
@@ -1873,7 +1985,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         onOpenGuide={() => runtime ? rejectExperimentAction() : setGuideOpen(true)}
       />
       <div id="main-content" className="content-shell" tabIndex={-1}>
-        {directReadbackPending&&<section className="workspace-storage-protection direct-readback-recovery" role="alert"><strong>内容已添加，暂时未能显示</strong><p>通知和保存记录仍在。重新读取即可，不会重复添加。</p><button type="button" className="primary-button" onClick={()=>{void independentReader.load().then(async w=>{if(!w)throw Error('DIRECT_READBACK_PENDING');await refreshOrdinary();setDirectBatchId(recentDirectBatches(w).find(b=>b.id===directReadbackPending||b.draftId===directReadbackPending)?.id??null);setDirectReadbackPending(null);setIntakeOpen(false);setNotice({text:'已重新显示保存的事项，没有重复添加。',direct:true})}).catch(()=>setNotice({text:'暂时仍未能读取，请稍后重试；已保存的数据保持。'}))}}>重新读取</button></section>}
+        {directReadbackPending&&<section className="workspace-storage-protection direct-readback-recovery" role="alert"><strong>更改已保存，暂时未能显示</strong><p>保存记录仍在。重新读取即可，不会重复提交。</p><button type="button" className="primary-button" onClick={()=>{void independentReader.load().then(async w=>{if(!w)throw Error('DIRECT_READBACK_PENDING');await refreshOrdinary();setDirectBatchId(recentDirectBatches(w).find(b=>b.id===directReadbackPending||b.draftId===directReadbackPending)?.id??null);taskReadbackBlocked.current=false;setDirectReadbackPending(null);setIntakeOpen(false);setNotice({text:'已重新显示保存的事项，没有重复提交。',direct:true})}).catch(()=>setNotice({text:'暂时仍未能读取，请稍后重试；已保存的数据保持。'}))}}>重新读取</button></section>}
         {storageError && <section className="workspace-storage-protection" role="alert">
           <strong>{workspaceLoadFailure ? '先恢复本机数据，再继续整理' : '这次更改尚未保存'}</strong>
           <p>{workspaceLoadFailure ?? '请保留当前页面和输入。存储暂时不可用，已保存的数据不会被清空；不要继续编辑或直接刷新。'}</p>
@@ -1925,7 +2037,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
               <p>已经输入的内容会保留在当前页面，请不要清空浏览器数据。</p>
             </main>}
             <div hidden={Boolean(workspaceLoadFailure)||showDirectHistory}>{renderPage()}</div>
-            {!workspaceLoadFailure&&showDirectHistory&&activeDirectBatch&&ordinaryCanonical&&<DirectResultList key={activeDirectBatch.id} workspace={ordinaryCanonical} batch={activeDirectBatch} onRetry={()=>retryDirectFallback(activeDirectBatch.id)} onClose={()=>setDirectHistoryOpen(false)} onUndo={()=>undoDirect(activeDirectBatch.id)} onDelete={async id=>{await deleteDirectItem(canonicalWorkspaceRepository,id);await refreshOrdinary()}} onEdit={async(id,edit)=>{await editDirectItem(canonicalWorkspaceRepository,id,edit);await refreshOrdinary()}} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)}/>}
+            {!workspaceLoadFailure&&showDirectHistory&&activeDirectBatch&&ordinaryCanonical&&<DirectResultList key={activeDirectBatch.id} workspace={ordinaryCanonical} batch={activeDirectBatch} onRetry={()=>retryDirectFallback(activeDirectBatch.id)} onClose={()=>setDirectHistoryOpen(false)} onUndo={()=>undoDirect(activeDirectBatch.id)} onDelete={id=>persistDirectChange(id,()=>deleteDirectItem(canonicalWorkspaceRepository,id))} onEdit={(id,edit)=>persistDirectChange(id,()=>editDirectItem(canonicalWorkspaceRepository,id,edit))} onDetail={(id,kind)=>kind==='task'?setSelectedTaskId(id):setSelectedEventId(id)}/>}
           </Suspense>
         </PageLoadBoundary>
       </div>
@@ -2029,8 +2141,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           onScheduleTask={!runtime?scheduleDirectTask:undefined}
           compact={!runtime}
           canonicalMaterials={ordinaryCanonical?.materials.filter(m=>m.relatedTaskIds.includes(selectedTask.id))}
-          onDirectEdit={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedTask.id))?async edit=>{await editDirectItem(canonicalWorkspaceRepository,selectedTask.id,edit);await refreshOrdinary()}:undefined}
-          onDelete={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedTask.id))?async()=>{await deleteDirectItem(canonicalWorkspaceRepository,selectedTask.id);await refreshOrdinary();setSelectedTaskId(null)}:undefined}
+          onDirectEdit={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedTask.id))?edit=>persistDirectChange(selectedTask.id,()=>editDirectItem(canonicalWorkspaceRepository,selectedTask.id,edit)):undefined}
+          onDelete={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedTask.id))?async()=>{await persistDirectChange(selectedTask.id,()=>deleteDirectItem(canonicalWorkspaceRepository,selectedTask.id));setSelectedTaskId(null)}:undefined}
           pendingSave={Boolean(viewConflict)}
           semanticContent={runtime?.semantic && isolatedSnapshot ? runtime.semantic.taskFacts(isolatedSnapshot, selectedTask.id) : selectedTask.directTags&&ordinaryCanonical?<details className="direct-audit-detail"><summary>识别与添加记录</summary>{ordinaryCanonical.extractionDrafts.filter(d=>recentDirectBatches(ordinaryCanonical).some(b=>b.draftId===d.id&&b.items.some(i=>i.id===selectedTask.id))).map(d=>{const run=ordinaryCanonical.recognitionRuns.find(r=>r.id===d.recognitionRunId);return <RecognitionRunDetails key={d.id} run={run} draft={d}/>})}</details>:undefined}
           readOnly={Boolean(runtime)}
@@ -2041,15 +2153,23 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           onClose={() => setSelectedTaskId(null)}
           onComplete={handleComplete}
           onUpdate={handleUpdateTask}
+          editDraft={taskEditDrafts[selectedTask.id]}
+          onEditDraft={(field,value)=>updateTaskEditDrafts(current=>{const item={...current[selectedTask.id]};if(value===undefined)delete item[field];else item[field]=value;const next={...current};if(Object.keys(item).length)next[selectedTask.id]=item;else delete next[selectedTask.id];return next})}
+          onSaveTaskPatch={!runtime?async(taskId,patch)=>{const task=tasks.find(item=>item.id===taskId);if(!task)throw new Error('这项待办已不存在，当前输入保留。');try{await saveCoreTaskPatch(task,patch);updateTaskEditDrafts(current=>{const item={...current[taskId]};if(patch.title!==undefined&&item.title===patch.title)delete item.title;if(patch.description!==undefined&&item.description===patch.description)delete item.description;const next={...current};if(Object.keys(item).length)next[taskId]=item;else delete next[taskId];return next});setNotice({text:taskWritesCount.current?'仍有更改正在保存…':'更改已保存。'})}catch(error){const message=taskSaveFailure(error);setNotice({text:message});throw new Error(message,{cause:error})}}:undefined}
+          materialEditDrafts={materialEditDrafts}
+          onEditMaterialDraft={(id,value,expected)=>updateMaterialEditDrafts(current=>{const next={...current};if(value)next[id]=value;else if(!expected||JSON.stringify(current[id])===JSON.stringify(expected))delete next[id];return next})}
+          onSaveMaterial={!runtime?async(material,values,base,ownerIds)=>{try{await saveMaterialPatch(selectedTask.id,material,values,base,ownerIds);setNotice({text:taskWritesCount.current?'仍有更改正在保存…':'材料要求已保存。'})}catch(error){const code=error instanceof Error?error.message:'';const message=code==='MATERIAL_COMMAND_FIELD_CONFLICT'?'材料已在其他页面修改；当前输入保留，请核对后重试。':code.includes('已保存')||code.includes('尚未读回')?code:'材料要求未能保存，当前输入保留，请重试。';setNotice({text:message});throw new Error(message,{cause:error})}}:undefined}
           notificationPermission={notificationPermission}
           onRequestNotificationPermission={handleRequestNotificationPermission}
         />
       )}
       {!workspaceRecovery && selectedEvent && (
         <EventDetailPanel
+          key={selectedEvent.id}
+          onDirtyChange={dirty=>{if(dirty)eventDirtyIds.current.add(selectedEvent.id);else eventDirtyIds.current.delete(selectedEvent.id);setEventDirtyCount(eventDirtyIds.current.size)}}
           compact={!runtime}
-          onEdit={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedEvent.id))?async edit=>{await editDirectItem(canonicalWorkspaceRepository,selectedEvent.id,edit);await refreshOrdinary()}:undefined}
-          onDelete={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedEvent.id))?async()=>{await deleteDirectItem(canonicalWorkspaceRepository,selectedEvent.id);await refreshOrdinary();setSelectedEventId(null)}:undefined}
+          onEdit={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedEvent.id))?edit=>persistDirectChange(selectedEvent.id,()=>editDirectItem(canonicalWorkspaceRepository,selectedEvent.id,edit)):undefined}
+          onDelete={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedEvent.id))?async()=>{await persistDirectChange(selectedEvent.id,()=>deleteDirectItem(canonicalWorkspaceRepository,selectedEvent.id));setSelectedEventId(null)}:undefined}
           isolatedFacts={runtime?.semantic && isolatedSnapshot ? runtime.semantic.eventFacts(isolatedSnapshot, selectedEvent.id) : undefined}
           event={selectedEvent}
           project={projects.find((project) => project.id === selectedEvent.projectId)}

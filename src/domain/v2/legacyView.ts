@@ -24,7 +24,7 @@ import { isDateOnly, parseBusinessDateTime } from '../../lib/timeSemantics'
 import { createIntegrationState } from '../../lib/workspace'
 import { workspaceSnapshotHash } from './migration'
 import type { JsonValue, LegacyData, WorkspaceV8 } from './types'
-import {sourceWindowDisplayLabel,sourceWindowLastEnd} from './sourceWindowDisplay'
+import {sourceWindowChoiceBranch,sourceWindowDisplayLabel,sourceWindowFirstStart,sourceWindowLastEnd} from './sourceWindowDisplay'
 import {canonicalHandlingWindow} from './handlingWindow'
 import {handlingWindowLabel} from '../../recognition/handlingWindowSupport'
 
@@ -65,6 +65,18 @@ function v7Record<T>(legacyData: LegacyData | undefined): Partial<T> {
 
 function stringArray(value: unknown): string[] {
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : []
+}
+
+function sourceChoiceForTask(workspace:WorkspaceV8,item:WorkspaceV8['tasks'][number]):LegacyTask['sourceChoice'] {
+  const ownerId=typeof item.legacyData?.sourceChoiceOwnerId==='string'?item.legacyData.sourceChoiceOwnerId:item.id
+  const owner=workspace.tasks.find(task=>task.id===ownerId),group=record(owner?.legacyData?.sourceChoiceGroup)
+  if(group?.version!=='source-choice-group-1.0.0'||typeof group.id!=='string'||typeof group.sourceVersionId!=='string'||typeof group.quotation!=='string')return undefined
+  const ids=stringArray(group.optionTaskIds)
+  if(ids.length!==2||new Set(ids).size!==2||!ids.includes(item.id)||!ids.includes(ownerId))return undefined
+  const version=workspace.sourceVersions.find(value=>value.id===group.sourceVersionId)
+  if(!version?.rawText?.includes(group.quotation))return undefined
+  if(ids.some(id=>!workspace.tasks.some(task=>task.id===id&&task.legacyData?.sourceId===version.sourceId)))return undefined
+  return {id:group.id,optionTaskIds:ids}
 }
 
 function legacyTaskStatus(status: WorkspaceV8['tasks'][number]['status']): LegacyTask['status'] {
@@ -134,10 +146,12 @@ function taskMaterials(workspace: WorkspaceV8, taskId: string, sourceId?: string
   return workspace.materials.filter((item) => item.relatedTaskIds.includes(taskId)).map((item) => ({
     id: item.id,
     name: item.name,
+    required: item.required,
     ...(item.requirements.length ? {requirements:item.requirements} : {}),
     ...(item.formatRequirements.length ? {formatRequirements:item.formatRequirements} : {}),
     ...(item.namingRequirements.length ? {namingRequirements:item.namingRequirements} : {}),
     ...(item.quantity !== null ? {quantity:item.quantity} : {}),
+    ...(item.submissionChannel ? {submissionChannel:item.submissionChannel} : {}),
     done: ['ready', 'submitted', 'verified', 'not_required'].includes(item.status),
     status: item.status,
     taskId,
@@ -294,7 +308,9 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     const deadline = taskDeadline(workspace, item.id)
     const handling=canonicalHandlingWindow(workspace,item)?.row
     const windowLabel=sourceWindowDisplayLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)??(handling?handlingWindowLabel(handling):undefined)
+    const windowStart=sourceWindowFirstStart(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)
     const windowEnd=sourceWindowLastEnd(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)??(handling?.kind!=='OPEN_DAYS_UNSTATED'?handling?.end:undefined)
+    const sourceChoice=sourceChoiceForTask(workspace,item)
     const hasSeparateDeadline=workspace.timePoints.some(point=>(point.taskId===item.id||point.relatedTaskIds.includes(item.id))&&!['event_start','event_end','planned_start'].includes(point.type))
     const personalPlan = workspace.timePoints.find((point) => point.type === 'planned_start' && point.relatedTaskIds.includes(item.id))
     const personalPlanData = personalPlan?.legacyData?.personalPlanD27
@@ -304,6 +320,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       projectId: item.projectId ?? undefined,
       parentTaskId: item.parentTaskId ?? undefined,
       ...(item.legacyData?.directMode === 'direct-mode-1' ? {directTags:stringArray(item.legacyData.directTags),...(personalPlan?.normalizedValue?{directDate:personalPlan.normalizedValue}:{})} : {}),
+      ...(sourceChoice?{sourceChoice}:{}),
       hierarchyType: item.parentTaskId ? 'subtask' : legacy.hierarchyType ?? 'task',
       milestoneId: item.milestoneId ?? undefined,
       workPackageId: item.workPackageId ?? undefined,
@@ -320,6 +337,8 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       estimatedMinutesKnown: item.estimatedMinutes !== null,
       sourceDeadlineLabel: sourceDeadlineLabel(workspace, item.id),
       sourceWindowLabel: windowLabel,
+      sourceWindowStart: windowStart,
+      sourceWindowChoiceBranch: sourceWindowChoiceBranch(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions),
       sourceWindowEnd: windowEnd,
       nextAction: item.nextAction ?? item.title,
       description: item.description ?? '',

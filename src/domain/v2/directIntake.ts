@@ -31,7 +31,9 @@ const json = (v: unknown) => JSON.parse(JSON.stringify(v)) as JsonValue
 const contentHash = (text: string) => workspaceSnapshotHash(text.replace(/\r\n?/gu,'\n').trim())
 export class DirectReplacementConflict extends Error {
   constructor(readonly comparison:DirectReplacementDiff){
-    super('新结果缺少已有的行动、时间、材料或活动信息，原来的事项保留。')
+    const names:Record<DirectReplacementDiff['issues'][number]['field'],string>={task:'行动',task_detail:'渠道、条件或要求',choice:'任选关系',event:'活动',time:'时间或地点',material:'材料',dependency:'前置关系',event_detail:'活动详情'}
+    const missing=[...new Set(comparison.issues.map(issue=>names[issue.field]))].join('、')
+    super(`新结果缺少或改变了已有的${missing||'关键信息'}，原来的事项保留。`)
     this.name='DirectReplacementConflict'
   }
 }
@@ -136,15 +138,25 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const tags=new Map(converted.items.map(i=>[i.tempId,i.tags]))
     plan.create.tasks=plan.create.tasks.map(t=>({...t,needsReview:Boolean(tags.get(String(t.legacyData?.recognitionTempId))?.length),legacyData:{...t.legacyData,directTags:tags.get(String(t.legacyData?.recognitionTempId))??[],directMode:DIRECT_MODE_VERSION}}))
     plan.create.events=plan.create.events.map(e=>({...e,needsReview:Boolean(tags.get(String(e.legacyData?.recognitionTempId))?.length),legacyData:{...e.legacyData,directTags:tags.get(String(e.legacyData?.recognitionTempId))??[],directMode:DIRECT_MODE_VERSION,sourceId:s.id}}))
+    // Preserve independently timed alternatives as a source-backed relation.
+    // Each option keeps its own canonical materials and time points.
+    for(const choice of result.conflicts.filter(c=>c.id.startsWith('sem-choice-')&&c.type==='other'&&!c.requiresDecision)){
+      if(!v.rawText.includes(choice.message)||choice.entityTempIds.length!==2)continue
+      const options=choice.entityTempIds.map(id=>plan.create.tasks.find(task=>task.legacyData?.recognitionTempId===id))
+      if(options.some(option=>!option)||options[0]!.id===options[1]!.id)continue
+      const [owner,other]=options as [typeof plan.create.tasks[number],typeof plan.create.tasks[number]]
+      owner.legacyData={...owner.legacyData,sourceChoiceGroup:{version:'source-choice-group-1.0.0',id:`${d.id}:${choice.id}`,sourceVersionId:v.id,quotation:choice.message,optionTaskIds:[owner.id,other.id]}}
+      other.legacyData={...other.legacyData,sourceChoiceOwnerId:owner.id}
+    }
     // The local compiler has proved these two endpoints as one delivery window.
     // Reuse the existing display declaration; never project a window as a cutoff.
     for(const task of plan.create.tasks){
       const temp=String(task.legacyData?.recognitionTempId)
       const choicePoints=plan.create.timePoints.filter(p=>p.taskId===task.id&&!p.eventId&&p.relatedTaskIds.includes(task.id)&&/^(?:direct-copy-)?sem-choice-window-(?:start|end)-/u.test(String(p.legacyData?.recognitionTempId)))
       for(const p of choicePoints)p.legacyData={...p.legacyData,sourceTimeRole:p.type==='event_end'?'choice_window_end':'choice_window_start'}
-      const semanticPoints=plan.create.timePoints.filter(p=>p.taskId===task.id&&!p.eventId&&p.relatedTaskIds.includes(task.id)&&/^(?:direct-copy-)?sem-window-(?:start|end)-/u.test(String(p.legacyData?.recognitionTempId)))
+      const semanticPoints=plan.create.timePoints.filter(p=>p.taskId===task.id&&!p.eventId&&p.relatedTaskIds.includes(task.id)&&(/^(?:direct-copy-)?sem-window-(?:start|end)-/u.test(String(p.legacyData?.recognitionTempId))||/^(?:direct-copy-)?sem-choice-window-(?:start|end)-\d+-branch-[12]$/u.test(String(p.legacyData?.recognitionTempId))))
       if(semanticPoints.length){
-        for(const p of semanticPoints)p.legacyData={...p.legacyData,sourceTimeRole:p.type==='event_end'?'window_end':'window_start'}
+        for(const p of semanticPoints){const choice=/^(?:direct-copy-)?sem-choice-window-/u.test(String(p.legacyData?.recognitionTempId));p.legacyData={...p.legacyData,sourceTimeRole:choice?(p.type==='event_end'?'choice_window_end':'choice_window_start'):(p.type==='event_end'?'window_end':'window_start')}}
         const groups=new Map<string,typeof semanticPoints>()
         for(const p of semanticPoints)groups.set(p.rawText,[...(groups.get(p.rawText)??[]),p])
         const windows=[...groups.entries()].flatMap(([rawText,points])=>{
@@ -180,16 +192,17 @@ export function undoDirectBatch(repo:Pick<CanonicalWorkspaceRepository,'transact
   return undoDirectBatchTransaction(repo,batchId,now,false)
 }
 /** User-facing undo refuses to erase subsequent user edits in the same batch. */
-export function undoDirectBatchPreservingEdits(repo:Pick<CanonicalWorkspaceRepository,'transaction'>,batchId:string,now=new Date().toISOString()):Promise<void>{
-  return undoDirectBatchTransaction(repo,batchId,now,true)
+export function undoDirectBatchPreservingEdits(repo:Pick<CanonicalWorkspaceRepository,'transaction'>,batchId:string,now=new Date().toISOString(),canUndo?:()=>boolean):Promise<void>{
+  return undoDirectBatchTransaction(repo,batchId,now,true,canUndo)
 }
-async function undoDirectBatchTransaction(repo:Pick<CanonicalWorkspaceRepository,'transaction'>,batchId:string,now:string,protectEdits:boolean):Promise<void>{
+async function undoDirectBatchTransaction(repo:Pick<CanonicalWorkspaceRepository,'transaction'>,batchId:string,now:string,protectEdits:boolean,canUndo?:()=>boolean):Promise<void>{
   await repo.transaction(w=>{
     const d=w.extractionDrafts.find(d=>directBatch(d)?.id===batchId),batch=d&&directBatch(d)
     if(!d||!batch)throw Error('DIRECT_BATCH_NOT_FOUND')
     if(batch.status==='undone')return w
     const run=w.recognitionRuns.find(r=>r.id===d.recognitionRunId),source=w.sources.find(s=>s.id===batch.sourceId)
     if(!run||source?.currentVersionId!==run.sourceVersionId)throw Error('DIRECT_UNDO_SOURCE_CHANGED')
+    if(protectEdits&&canUndo&&!canUndo())throw Error('这批事项还有未保存的修改，请先保存或取消修改。')
     // Undo is not allowed to silently erase work the user changed after the
     // batch was added. Keep the entire transaction intact on conflict.
     const createdIds=new Set(['tasks','events','materials','timePoints'].flatMap(key=>batch.created[key]??[]))
@@ -211,15 +224,15 @@ async function undoDirectBatchTransaction(repo:Pick<CanonicalWorkspaceRepository
 
 /** Prepare in memory, then compare and atomically replace through the same
  * Repository transaction. A failed recognition never enters this function. */
-export async function replaceDirectFallback(repo:CanonicalWorkspaceRepository,batchId:string,draftId:string,now=new Date().toISOString()){
+export async function replaceDirectFallback(repo:CanonicalWorkspaceRepository,batchId:string,draftId:string,now=new Date().toISOString(),canReplace?:()=>boolean){
  const before=await repo.load()
  if(!before)throw Error('DIRECT_SOURCE_NOT_AVAILABLE')
  const batch=recentDirectBatches(before).find(b=>b.id===batchId&&b.status==='active')
  if(!batch)throw Error('DIRECT_FALLBACK_NOT_ACTIVE')
  const oldRun=before.recognitionRuns.find(r=>r.id===before.extractionDrafts.find(d=>d.id===batch.draftId)?.recognitionRunId),newRun=before.recognitionRuns.find(r=>r.id===before.extractionDrafts.find(d=>d.id===draftId)?.recognitionRunId)
  if(!oldRun||oldRun.sourceVersionId!==newRun?.sourceVersionId||newRun.provider!=='deepseek'||newRun.status!=='succeeded')throw Error('DIRECT_REPLACEMENT_NOT_SUCCESSFUL_AI')
- if(batch.items.some(i=>{const e=[...before.tasks,...before.events].find(e=>e.id===i.id);return !e||e.updatedAt>batch.addedAt||'status'in e&&e.status==='completed'}))throw Error('已修改过这些事项，请保留当前内容，避免覆盖你的修改。')
- if([...before.materials,...before.timePoints].some(e=>(batch.created.materials?.includes(e.id)||batch.created.timePoints?.includes(e.id))&&e.updatedAt>batch.addedAt))throw Error('已修改过这些事项的时间或材料，请保留当前内容，避免覆盖你的修改。')
+ if(batch.items.some(i=>{const e=[...before.tasks,...before.events].find(e=>e.id===i.id);return !e||e.updatedAt>batch.addedAt||'version'in e&&e.version>1||'status'in e&&e.status==='completed'||before.historyRecords.some(h=>h.entityId===e.id&&h.actor==='user'&&h.action!=='created'&&h.changedAt>=batch.addedAt)}))throw Error('已修改过这些事项，请保留当前内容，避免覆盖你的修改。')
+ if([...before.materials,...before.timePoints].some(e=>(batch.created.materials?.includes(e.id)||batch.created.timePoints?.includes(e.id))&&(e.updatedAt>batch.addedAt||'version'in e&&e.version>1||before.historyRecords.some(h=>h.entityId===e.id&&h.actor==='user'&&h.action!=='created'&&h.changedAt>=batch.addedAt))))throw Error('已修改过这些事项的时间或材料，请保留当前内容，避免覆盖你的修改。')
  let prepared=structuredClone(before)
  const memory:Pick<CanonicalWorkspaceRepository,'transaction'>={transaction:async mutate=>{prepared=mutate(prepared);return structuredClone(prepared)}}
  await undoDirectBatch(memory,batchId,now)
@@ -229,7 +242,7 @@ export async function replaceDirectFallback(repo:CanonicalWorkspaceRepository,ba
  const oldIds=new Set(batch.items.map(i=>i.id)),newIds=new Set(receipt.batch.items.map(i=>i.id))
  const comparison=directReplacementDiff(before,prepared,oldIds,newIds)
  if(!comparison.preserved)throw new DirectReplacementConflict(comparison)
- await repo.transaction(current=>{if(workspaceSnapshotHash(current)!==workspaceSnapshotHash(before))throw Error('DIRECT_REPLACEMENT_WORKSPACE_CHANGED');return prepared})
+ await repo.transaction(current=>{if(workspaceSnapshotHash(current)!==workspaceSnapshotHash(before))throw Error('DIRECT_REPLACEMENT_WORKSPACE_CHANGED');if(canReplace&&!canReplace())throw Error('这批事项还有未保存的修改，原来的事项保留。请先保存或取消修改。');return prepared})
  return receipt
 }
 
@@ -255,9 +268,9 @@ export async function deleteDirectItem(repo:CanonicalWorkspaceRepository,id:stri
   })
 }
 
-export interface DirectEdit { title:string; date:string; location?:string; end?:string; description?:string; estimatedMinutes?:number|null; preserveTimes?:boolean; preserveStart?:boolean; preserveEnd?:boolean }
+export interface DirectEdit { title:string; date:string; location?:string; end?:string; description?:string; estimatedMinutes?:number|null; preserveTimes?:boolean; preserveStart?:boolean; preserveEnd?:boolean; preserveTitle?:boolean; expectedDate?:string; expectedEvent?:{title:string;description:string;location:string;start:string;end:string;estimateKnown:boolean;estimate:number|null} }
 export async function editDirectItem(repo:CanonicalWorkspaceRepository,id:string,edit:DirectEdit,now=new Date().toISOString()):Promise<void>{
-  if(!edit.title.trim()||edit.title.length>300)throw Error('请填写事项名称')
+  if(!edit.preserveTitle&&(!edit.title.trim()||edit.title.length>300))throw Error('请填写事项名称')
   if(edit.date&&!isDateOnly(edit.date)&&!parseBusinessDateTime(edit.date))throw Error('日期格式不正确，请填写日期或日期和时间')
   if(edit.end&&!isDateOnly(edit.end)&&!parseBusinessDateTime(edit.end))throw Error('结束日期格式不正确')
   if(edit.estimatedMinutes!==undefined&&edit.estimatedMinutes!==null&&(!Number.isInteger(edit.estimatedMinutes)||edit.estimatedMinutes<=0||edit.estimatedMinutes>1440))throw Error('预计时长应为1至1440分钟')
@@ -266,15 +279,21 @@ export async function editDirectItem(repo:CanonicalWorkspaceRepository,id:string
     if(!batch)throw Error('DIRECT_ITEM_NOT_OWNED')
     const task=w.tasks.find(t=>t.id===id),event=w.events.find(e=>e.id===id),before=task??event
     if(!before)throw Error('DIRECT_ITEM_NOT_FOUND')
+    if(event&&edit.expectedEvent){
+      const expected=edit.expectedEvent,start=w.timePoints.find(p=>p.id===event.startTimePointId)?.normalizedValue??'',end=w.timePoints.find(p=>p.id===event.endTimePointId)?.normalizedValue??''
+      const known=event.legacyData?.eventEstimateKnown===true,estimate=typeof event.legacyData?.eventEstimatedMinutes==='number'?event.legacyData.eventEstimatedMinutes:null
+      if((!edit.preserveTitle&&event.title!==expected.title)||(edit.description!==undefined&&(event.description??'')!==expected.description)||(edit.location!==undefined&&(event.location??'')!==expected.location)||(!edit.preserveTimes&&!edit.preserveStart&&start!==expected.start)||(!edit.preserveTimes&&edit.end!==undefined&&!edit.preserveEnd&&end!==expected.end)||(edit.estimatedMinutes!==undefined&&(known!==expected.estimateKnown||estimate!==expected.estimate)))throw Error('活动已在其他页面修改，请重新读取后再试。')
+    }
     if(event&&edit.preserveTimes){
       const historyId=`history:direct-edit:${workspaceSnapshotHash({id,now,edit})}`
       const nextBatch={...batch,created:{...batch.created,historyRecords:[...(batch.created.historyRecords??[]),historyId]}}
-      return {...w,events:w.events.map(e=>e.id===id?{...e,title:edit.title.trim(),description:edit.description===undefined?e.description:edit.description,location:edit.location===undefined?e.location:edit.location.trim()||null,updatedAt:now,legacyData:{...e.legacyData,...(edit.estimatedMinutes!==undefined?{eventEstimateKnown:true,eventEstimatedMinutes:edit.estimatedMinutes}:{})}}:e),historyRecords:[...w.historyRecords,{id:historyId,entityType:'event' as const,entityId:id,action:'updated',fieldName:'direct-edit',before:json({entity:before}),after:json(edit),actor:'user' as const,reason:'用户修改已添加事项',sourceVersionId:null,changedAt:now}],extractionDrafts:w.extractionDrafts.map(d=>d.id===batch.draftId?{...d,legacyData:{...d.legacyData,directBatch:json(nextBatch)}}:d)}
+      return {...w,events:w.events.map(e=>e.id===id?{...e,title:edit.preserveTitle?e.title:edit.title.trim(),description:edit.description===undefined?e.description:edit.description,location:edit.location===undefined?e.location:edit.location.trim()||null,updatedAt:now,legacyData:{...e.legacyData,...(edit.estimatedMinutes!==undefined?{eventEstimateKnown:true,eventEstimatedMinutes:edit.estimatedMinutes}:{})}}:e),historyRecords:[...w.historyRecords,{id:historyId,entityType:'event' as const,entityId:id,action:'updated',fieldName:'direct-edit',before:json({entity:before}),after:json(edit),actor:'user' as const,reason:'用户修改已添加事项',sourceVersionId:null,changedAt:now}],extractionDrafts:w.extractionDrafts.map(d=>d.id===batch.draftId?{...d,legacyData:{...d.legacyData,directBatch:json(nextBatch)}}:d)}
     }
     const oldEnd=event&&w.timePoints.find(p=>p.id===event.endTimePointId),endValue=edit.end===undefined?oldEnd?.normalizedValue:edit.end
     if(event&&edit.date&&endValue){const start=edit.date,end=endValue;const inverted=isDateOnly(start)||isDateOnly(end)?end.slice(0,10)<start.slice(0,10):parseBusinessDateTime(end)!.getTime()<parseBusinessDateTime(start)!.getTime();if(inverted)throw Error('结束时间不能早于开始时间')}
     const owned=(p:WorkspaceV8['timePoints'][number])=>p.taskId===id||p.relatedTaskIds.includes(id)
     const point=task?w.timePoints.find(p=>owned(p)&&/_deadline$/u.test(p.type))??w.timePoints.find(p=>owned(p)&&p.type==='planned_start'):w.timePoints.find(p=>p.id===event?.startTimePointId)
+    if(edit.expectedDate!==undefined&&(point?.normalizedValue??'')!==edit.expectedDate)throw Error('日期已在其他页面修改，请重新读取后再试。')
     const shared=point&&((task&&point.relatedTaskIds.some(t=>t!==id))||(task&&point.eventId)||(event&&point.relatedTaskIds.length)||point.relatedMaterialIds.length||point.materialId)
     const newPointId=point&&!shared?point.id:`time:${id}:direct-manual`
     const preserveStart=Boolean(event&&edit.preserveStart)
@@ -282,7 +301,7 @@ export async function editDirectItem(repo:CanonicalWorkspaceRepository,id:string
     if(!preserveStart&&edit.date)timePoints.push({id:newPointId,projectId:null,milestoneId:null,taskId:task?id:null,eventId:event?id:null,materialId:null,relatedTaskIds:task?[id]:[],relatedMaterialIds:[],type:point?.type??(task?'planned_start':'event_start'),rawText:point?.rawText??'',normalizedValue:edit.date,timezone:isDateOnly(edit.date)?null:w.settings.defaultTimezone,isAllDay:isDateOnly(edit.date),precision:isDateOnly(edit.date)?'date_only':'exact',needsConfirmation:false,createdAt:point?.createdAt??now,updatedAt:now,legacyData:{...point?.legacyData,directManual:true}})
     else if(!preserveStart&&point&&!shared)timePoints.push({...point,rawText:'',normalizedValue:null,timezone:null,isAllDay:false,precision:'vague',needsConfirmation:true,updatedAt:now,legacyData:{...point.legacyData,directManual:true}})
     const cleanTags=(value:unknown):DirectTag[]=>{const tags:DirectTag[]=Array.isArray(value)?value.filter((t):t is DirectTag=>typeof t==='string'&&t!=='时间待定'):[];return edit.date?tags:[...tags,'时间待定']}
-    const next={...w,timePoints,tasks:w.tasks.map(t=>t.id===id?{...t,title:edit.title.trim(),nextAction:edit.title.trim(),updatedAt:now,version:t.version+1,needsReview:cleanTags(t.legacyData?.directTags).length>0,legacyData:{...t.legacyData,directTags:cleanTags(t.legacyData?.directTags)}}:t),events:w.events.map(e=>e.id===id?{...e,title:edit.title.trim(),description:edit.description===undefined?e.description:edit.description,location:edit.location===undefined?e.location:edit.location.trim()||null,startTimePointId:preserveStart?e.startTimePointId:edit.date?newPointId:null,updatedAt:now,needsReview:preserveStart?e.needsReview:cleanTags(e.legacyData?.directTags).length>0,legacyData:{...e.legacyData,...(!preserveStart?{directTags:cleanTags(e.legacyData?.directTags)}:{}),...(edit.estimatedMinutes!==undefined?{eventEstimateKnown:true,eventEstimatedMinutes:edit.estimatedMinutes}:{})}}:e),
+    const next={...w,timePoints,tasks:w.tasks.map(t=>t.id===id?{...t,...(!edit.preserveTitle?{title:edit.title.trim(),nextAction:edit.title.trim()}:{}),updatedAt:now,version:t.version+1,needsReview:cleanTags(t.legacyData?.directTags).length>0,legacyData:{...t.legacyData,directTags:cleanTags(t.legacyData?.directTags)}}:t),events:w.events.map(e=>e.id===id?{...e,title:edit.preserveTitle?e.title:edit.title.trim(),description:edit.description===undefined?e.description:edit.description,location:edit.location===undefined?e.location:edit.location.trim()||null,startTimePointId:preserveStart?e.startTimePointId:edit.date?newPointId:null,updatedAt:now,needsReview:preserveStart?e.needsReview:cleanTags(e.legacyData?.directTags).length>0,legacyData:{...e.legacyData,...(!preserveStart?{directTags:cleanTags(e.legacyData?.directTags)}:{}),...(edit.estimatedMinutes!==undefined?{eventEstimateKnown:true,eventEstimatedMinutes:edit.estimatedMinutes}:{})}}:e),
       historyRecords:[...w.historyRecords,{id:`history:direct-edit:${workspaceSnapshotHash({id,now,edit})}`,entityType:task?'task' as const:'event' as const,entityId:id,action:'updated',fieldName:'direct-edit',before:json({entity:before,time:point??null,...(event?{end:oldEnd??null}:{})}),after:json(edit),actor:'user' as const,reason:'用户修改已添加事项',sourceVersionId:null,changedAt:now}]}
     let manualEndId:string|undefined
     if(event&&edit.end!==undefined&&!edit.preserveEnd){

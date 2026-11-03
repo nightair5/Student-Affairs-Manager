@@ -69,6 +69,12 @@ export interface TaskDetailPanelProps {
   onClose: () => void
   onComplete: (taskId: string) => void
   onUpdate: (taskId: string, patch: Partial<Task>) => void
+  onSaveTaskPatch?: (taskId: string, patch: Partial<Task>) => Promise<void>
+  editDraft?: { title?: string; description?: string }
+  onEditDraft?: (field: 'title' | 'description', value: string | undefined) => void
+  materialEditDrafts?: Record<string,import('./MaterialEditor').MaterialEditDraft>
+  onEditMaterialDraft?: (id:string,value:import('./MaterialEditor').MaterialEditDraft|undefined,expected?:import('./MaterialEditor').MaterialEditDraft)=>void
+  onSaveMaterial?: (material:import('../domain/v2/types').Material,values:import('../domain/v2/materialCommand').MaterialCommandValues,base:import('../domain/v2/materialCommand').MaterialCommandValues,ownerIds:string[])=>Promise<void>
   notificationPermission: BrowserNotificationPermission
   onRequestNotificationPermission: () => Promise<BrowserNotificationPermission>
 }

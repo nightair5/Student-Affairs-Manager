@@ -22,12 +22,13 @@ export function taskPublicContent(task:Pick<Task,'description'|'history'>&{title
 
 /** Hide only exact repetitions already displayed in the same read-only view.
  * The saved description and editable notes are intentionally left untouched. */
-export function taskPublicSummary(task:Pick<Task,'description'|'history'|'materials'>&{title?:string},options:{dateLabel?:string;channels?:readonly string[]}={}):{location?:string;description:string} {
+export function taskPublicSummary(task:Pick<Task,'description'|'history'|'materials'>&{title?:string},options:{dateLabel?:string;channels?:readonly string[]}={}):{location?:string;description:string;channels:string[]} {
  const content=taskPublicContent(task)
- if(task.history.some(h=>/description|任务说明|备注/u.test(h.field)))return content
+ const channelValues=[...new Set([...(options.channels??[]),...task.materials.flatMap(m=>m.submissionChannel?[m.submissionChannel]:[]),...content.description.split('\n').flatMap(line=>{const match=/^提交渠道[：:]\s*(.+)$/u.exec(line.trim());return match?[match[1].trim()]:[]})])]
+ if(task.history.some(h=>/description|任务说明|备注/u.test(h.field)))return {...content,channels:channelValues}
  const normalize=(value:string)=>value.normalize('NFKC').replace(/\s/gu,'').replace(/[。；;]$/u,'')
  const materialFacts=new Set(task.materials.flatMap(m=>[...(m.requirements??[]),...(m.formatRequirements??[]),...(m.namingRequirements??[])]).map(normalize))
- const channels=new Set((options.channels??[]).map(normalize))
+ const channels=new Set(channelValues.map(normalize))
  const description=content.description.split('\n').filter(line=>{
   const requirement=/^要求[：:]\s*(.+)$/u.exec(line)
   if(requirement&&materialFacts.has(normalize(requirement[1])))return false
@@ -35,5 +36,5 @@ export function taskPublicSummary(task:Pick<Task,'description'|'history'|'materi
   if(channel&&channels.has(normalize(channel[1])))return false
   return !options.dateLabel||normalize(line)!==normalize(options.dateLabel)
  }).join('\n')
- return {...content,description}
+ return {...content,description,channels:channelValues}
 }

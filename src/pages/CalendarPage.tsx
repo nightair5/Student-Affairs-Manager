@@ -15,6 +15,7 @@ import {
 import { findSuggestedWorkSlot } from '../lib/scheduling'
 import { isDateOnly, instantToWallClock } from '../lib/timeSemantics'
 import { formatDuration, getExecutableTasks } from '../lib/taskLogic'
+import {visibleChoiceTasks} from '../lib/sourceChoice'
 import type { CourseBlock, Event, Task } from '../types'
 import type { PlanSegment } from '../domain/v2/personalPlanD27'
 import {FlowEventList,FlowTaskList} from '../components/FlowItemList'
@@ -75,12 +76,13 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
   const [courseWeekday, setCourseWeekday] = useState<CourseBlock['weekday']>(1)
   const [courseStart, setCourseStart] = useState('08:00')
   const [courseEnd, setCourseEnd] = useState('10:00')
+  const visibleTasks=useMemo(()=>visibleChoiceTasks(tasks),[tasks])
   const taskByDate = useMemo(() => {
-    if (!isolatedTimezone) return groupTasksByDate(tasks)
+    if (!isolatedTimezone) return groupTasksByDate(visibleTasks)
     const groups = new Map<string, Task[]>()
-    tasks.filter(t => t.deadline).forEach(t => { const key = t.deadline.slice(0, 10); groups.set(key, [...(groups.get(key) ?? []), t]) })
+    visibleTasks.filter(t => t.deadline).forEach(t => { const key = t.deadline.slice(0, 10); groups.set(key, [...(groups.get(key) ?? []), t]) })
     return groups
-  }, [tasks, isolatedTimezone])
+  }, [visibleTasks, isolatedTimezone])
   const eventByDate = useMemo(() => {
     if (!isolatedTimezone) return groupEventsByDate(events)
     const groups = new Map<string, Event[]>()
@@ -88,10 +90,10 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
     return groups
   }, [events, isolatedTimezone])
   const monthCells = useMemo(() => buildMonthCells(viewDate), [viewDate])
-  const executableTasks = useMemo(() => getExecutableTasks(tasks, today, dateViews)
+  const executableTasks = useMemo(() => getExecutableTasks(visibleTasks, today, dateViews)
     .filter(task => !dateViews || dateViews[task.id]?.kind === 'dated')
     .slice()
-    .sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime()), [tasks, today, dateViews])
+    .sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime()), [visibleTasks, today, dateViews])
   const selectedItems = useMemo<CalendarTimelineItem[]>(() => {
     const selectedTasks = taskByDate.get(selectedDateKey) ?? []
     const selectedEvents = eventByDate.get(selectedDateKey) ?? []
@@ -101,15 +103,15 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
     ].sort((a, b) => new Date(a.at).getTime() - new Date(b.at).getTime())
   }, [eventByDate, selectedDateKey, taskByDate])
   const upcomingItems = useMemo(() => {
-    if (!isolatedTimezone) return buildUpcomingCalendarItems(tasks, events, today)
+    if (!isolatedTimezone) return buildUpcomingCalendarItems(visibleTasks, events, today)
     const day = localDateKey(today)
     return [
-      ...tasks.filter(t => t.status !== '已完成' && t.deadline && t.deadline.slice(0, 10) >= day)
+      ...visibleTasks.filter(t => t.status !== '已完成' && t.deadline && t.deadline.slice(0, 10) >= day)
         .map((task): CalendarTimelineItem => ({ kind: 'task', id: task.id, title: task.title, at: task.deadline, task })),
       ...events.filter(e => e.startAt && e.startAt.slice(0, 10) >= day)
         .map((event): CalendarTimelineItem => ({ kind: 'event', id: event.id, title: event.title, at: event.startAt!, event })),
     ].sort((a,b) => a.at.localeCompare(b.at))
-  }, [events, tasks, today, isolatedTimezone])
+  }, [events, visibleTasks, today, isolatedTimezone])
   const undatedEvents = useMemo(() => getUndatedCalendarEvents(events), [events])
   const agendaItems = agendaMode === 'selected' ? selectedItems : upcomingItems
   const agendaTitle = agendaMode === 'selected'

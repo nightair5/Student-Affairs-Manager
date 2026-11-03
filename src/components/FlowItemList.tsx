@@ -5,10 +5,11 @@ import {useEffect,useState} from 'react'
 import type {Event,Task} from '../types'
 import {flowEventDate,flowTaskDate,planAfterDeadline,taskRelativeTimeHint} from '../lib/flowPresentation'
 import {formatDuration} from '../lib/taskLogic'
-import {displayMaterialRequirement,materialSummary} from '../lib/materialPresentation'
+import {materialSummary} from '../lib/materialPresentation'
 import {suggestedTaskDuration} from '../lib/taskDurationSuggestion'
 import {eventDescriptionSections,eventDurationLabel} from '../lib/eventPresentation'
 import {taskPublicContent} from '../lib/taskContentPresentation'
+import {MaterialFactsList} from './MaterialFactsList'
 
 /** Display a unique explicitly labelled registration site from this task's own
  * description. This is not a new material, channel, or stored source fact. */
@@ -20,7 +21,7 @@ function registrationSite(task:Task):string | undefined {
   return urls.length===1&&labelled.length===1&&urls[0]===labelled[0]?labelled[0]:undefined
 }
 
-export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[],channels={},linkedEvents={},eventTimeHints={},blockedReasons={},onOpenEvent}:{tasks:Task[];onOpen:(t:Task)=>void;onComplete:(id:string)=>void;onSchedule?:(id:string,date:string)=>Promise<void>;highlightIds?:readonly string[];channels?:Readonly<Record<string,string[]>>;linkedEvents?:Readonly<Record<string,Event>>;eventTimeHints?:Readonly<Record<string,string>>;blockedReasons?:Readonly<Record<string,string>>;onOpenEvent?:(event:Event)=>void}){
+export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[],channels={},linkedEvents={},eventTimeHints={},blockedReasons={},completedChoiceGroups=[],onOpenEvent}:{tasks:Task[];onOpen:(t:Task)=>void;onComplete:(id:string)=>void;onSchedule?:(id:string,date:string)=>Promise<void>;highlightIds?:readonly string[];channels?:Readonly<Record<string,string[]>>;linkedEvents?:Readonly<Record<string,Event>>;eventTimeHints?:Readonly<Record<string,string>>;blockedReasons?:Readonly<Record<string,string>>;completedChoiceGroups?:readonly string[];onOpenEvent?:(event:Event)=>void}){
   const key=highlightIds.join('|'),[expired,setExpired]=useState(''),recent=expired===key?'':key
   useEffect(()=>{const timer=setTimeout(()=>setExpired(key),5000);return()=>clearTimeout(timer)},[key])
   return <ul className="flow-item-list">{tasks.map(task=>{
@@ -33,13 +34,14 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
     const relativeHint=taskRelativeTimeHint(task)
     const site=registrationSite(task)
     const location=taskPublicContent(task).location
-    const naming=[...new Set(task.materials.flatMap(m=>m.namingRequirements??[]))]
+    const choiceSatisfied=Boolean(task.sourceChoice&&task.status!=='已完成'&&completedChoiceGroups.includes(task.sourceChoice.id))
     return <li className="flow-task-row" key={task.id} data-task-id={task.id} data-new={recent.split('|').includes(task.id)||undefined}>
       <button className="flow-complete icon-button" type="button" disabled={task.status==='已完成'} onClick={()=>onComplete(task.id)} aria-label={`${task.status==='已完成'?'已完成':'完成'}${task.title}`}>{task.status==='已完成'?<CheckCircle2 size={21}/>:<Circle size={21}/>}</button>
       <div className="flow-item-content">
       <button className="flow-item-main" type="button" onClick={()=>onOpen(task)}>
         <h3 data-task-title title={task.title}>{directCardTitle(task.title)}</h3>
         <span className="flow-item-facts"><span className="flow-item-time"><Clock3 size={14} aria-hidden="true"/>{displayedDate}</span>
+          {task.sourceChoice&&<small>{choiceSatisfied?'其他方式已完成':'任选一项'}</small>}
           {blockedReasons[task.id]&&<small>{blockedReasons[task.id]}</small>}
           {relativeHint&&<small>{relativeHint}</small>}
           {location&&location!==linked?.location&&<small>地点：{location}</small>}
@@ -56,7 +58,7 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
           {tags.map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}
         </span>
       </button>
-      {task.materials.length>0&&<details className="flow-material-details"><summary>材料与要求</summary><ul>{task.materials.map(m=><li key={m.id}><strong>{m.name}</strong>{[...new Set([...(m.formatRequirements??[]),...(m.requirements??[])])].map(requirement=><span key={requirement}>{displayMaterialRequirement(requirement)}</span>)}</li>)}</ul>{naming.length>0&&<div><strong>命名或标注</strong>{naming.map(value=><p key={value}>{value}</p>)}</div>}</details>}
+      {task.materials.length>0&&<details className="flow-material-details"><summary>材料与要求</summary><MaterialFactsList materials={task.materials}/></details>}
       </div>
       <div className="flow-row-actions">
         {linked&&onOpenEvent&&<button className="flow-linked-event" type="button" data-event-id={linked.id} onClick={()=>onOpenEvent(linked)} aria-label={`查看${linked.title}日程`}>日程</button>}

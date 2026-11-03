@@ -36,3 +36,30 @@ export function sourceWindowLastEnd(taskId:string,declaration:JsonValue|undefine
  })
  return ends.sort().at(-1)
 }
+
+/** Only a single fully resolved window can provide an unambiguous opening.
+ * Never bridge gaps between separate windows or infer an opening from its end. */
+export function sourceWindowFirstStart(taskId:string,declaration:JsonValue|undefined,points:TimePoint[],versions:SourceVersion[]):string|undefined {
+ const d=object(declaration)
+ if(!d||!Array.isArray(d.windows)||d.windows.length!==1)return undefined
+ const row=object(d.windows[0])
+ if(row?.state!=='RESOLVED_DISCRETE'||!Array.isArray(row.pointIds)||!sourceWindowDisplayLabel(taskId,declaration,points,versions))return undefined
+ const ids=row.pointIds
+ const owned=points.filter(point=>ids.includes(point.id))
+ if(owned.length!==2||owned.some(point=>point.needsConfirmation||point.isAllDay||point.precision!=='exact'||!point.normalizedValue?.includes('T')))return undefined
+ const start=owned.find(point=>point.type==='event_start'),end=owned.find(point=>point.type==='event_end')
+ const startDate=start?.normalizedValue&&parseBusinessDateTime(start.normalizedValue,start.timezone??'Asia/Shanghai')
+ const endDate=end?.normalizedValue&&parseBusinessDateTime(end.normalizedValue,end.timezone??'Asia/Shanghai')
+ return startDate&&endDate&&startDate.getTime()<=endDate.getTime()?startDate.toISOString():undefined
+}
+
+/** If a combined choice owns one option's window, identify that option rather
+ * than suggesting the same window applies to every alternative. */
+export function sourceWindowChoiceBranch(taskId:string,declaration:JsonValue|undefined,points:TimePoint[],versions:SourceVersion[]):number|undefined {
+ const d=object(declaration)
+ if(!d||!Array.isArray(d.windows)||d.windows.length!==1||!sourceWindowDisplayLabel(taskId,declaration,points,versions))return undefined
+ const row=object(d.windows[0]);if(!row||!Array.isArray(row.pointIds))return undefined
+ const ids=row.pointIds
+ const branches=points.filter(point=>ids.includes(point.id)).map(point=>String(point.legacyData?.recognitionTempId??'').match(/^(?:direct-copy-)?sem-choice-window-(?:start|end)-\d+-branch-([12])$/u)?.[1])
+ return branches.length===2&&branches[0]&&branches.every(branch=>branch===branches[0])?Number(branches[0]):undefined
+}

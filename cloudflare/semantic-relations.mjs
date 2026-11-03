@@ -2,36 +2,99 @@ import {locateSourceQuote} from './source-text-index.mjs'
 
 const compact=value=>typeof value==='string'?value.normalize('NFKC').replace(/\s/gu,''):''
 const alternatives=/(?:任选(?:一项|一种|其一)|二选一|两者择一|只需选择一种)/u
-const connector=/(?:与|或|和|、)/u
+
+/** Expand a model's single combined choice only when both branches, their
+ * independent deadlines and destinations are already unambiguously cited.
+ * Anything more complicated remains the original, partially structured item. */
+export function expandSupportedSingleChoices(input,source){
+ const raw=structuredClone(input),changes=[]
+ if(!Array.isArray(raw.items)||!Array.isArray(raw.materials)||(Array.isArray(raw.sharedRequirements)&&raw.sharedRequirements.length))return {raw,changes}
+ for(const item of [...raw.items]){
+  if(item?.kind!=='task'||item.status==='cancelled'||!item.action||!item.object||item.condition||item.location||item.description||(item.dependsOn!=null&&(!Array.isArray(item.dependsOn)||item.dependsOn.length)))continue
+  if(raw.items.some(other=>other!==item&&Array.isArray(other?.dependsOn)&&other.dependsOn.includes(item.key)))continue
+  const refs=Array.isArray(item.materials)?item.materials:[],times=Array.isArray(item.times)?item.times:[]
+  if(refs.length!==1||times.length!==2||times.some(time=>time?.role!=='deadline'||typeof time.raw!=='string'))continue
+  const material=raw.materials.find(value=>value?.key===refs[0])
+  if(!material||raw.items.some(other=>other!==item&&Array.isArray(other?.materials)&&other.materials.includes(material.key))||(material.owners!=null&&(!Array.isArray(material.owners)||material.owners.some(owner=>owner!==item.key))))continue
+  const forms=Array.isArray(material.formats)?[...new Set(material.formats.filter(value=>typeof value==='string'&&compact(value).length>=2))]:[]
+  if(forms.length!==2||material.quantity!=null||(material.naming!=null&&(!Array.isArray(material.naming)||material.naming.length))||(material.requirements!=null&&(!Array.isArray(material.requirements)||material.requirements.some(value=>typeof value!=='string'||!alternatives.test(value)))))continue
+  const quotes=Array.isArray(item.evidence)?item.evidence.filter(value=>typeof value==='string'):[]
+  const choiceQuotes=quotes.filter(quote=>alternatives.test(quote)&&locateSourceQuote(quote,source))
+  if(choiceQuotes.length!==1)continue
+  const parts=typeof item.channel==='string'?item.channel.split(/[；;]/u).map(value=>value.trim()).filter(Boolean):[]
+  if(parts.length!==2)continue
+  const branches=forms.map(form=>{
+   const matchingQuotes=quotes.filter(quote=>!alternatives.test(quote)&&compact(quote).includes(compact(form+item.object))&&locateSourceQuote(quote,source))
+   if(matchingQuotes.length!==1)return null
+   const quote=matchingQuotes[0],matchedTimes=times.filter(time=>compact(quote).includes(compact(time.raw)))
+   const channels=parts.flatMap(part=>{
+    const label=part.match(/[（(]([^（）()]+)[）)]/u)?.[1]
+    const channel=part.replace(/[（(][^（）()]+[）)]/gu,'').trim()
+    return label&&compact(label)===compact(form)&&channel&&compact(quote).includes(compact(channel))?[channel]:[]
+   })
+   return matchedTimes.length===1&&channels.length===1?{form,quote,time:matchedTimes[0],channel:channels[0]}:null
+  })
+  if(branches.some(branch=>!branch)||branches[0].quote===branches[1].quote||branches[0].time===branches[1].time)continue
+  const spans=branches.map(branch=>locateSourceQuote(branch.quote,source)),choiceSpan=locateSourceQuote(choiceQuotes[0],source)
+  const scope=source.slice(Math.min(...spans.map(span=>span.start)),choiceSpan.end)
+  // Keep the model's combined item when the purported choice is not in the
+  // same source sentence or that sentence explicitly requires all options.
+  if(spans.some(span=>span.end>choiceSpan.start)||/[。；;\n]|均须|均需|都要|都需|同时提交|分别提交|必须全部/u.test(scope))continue
+  if(quotes.some(quote=>!choiceQuotes.includes(quote)&&!branches.some(branch=>branch.quote===quote)))continue
+  const requirements=Array.isArray(item.requirements)?item.requirements:[]
+  if(requirements.some(requirement=>typeof requirement!=='string'||!alternatives.test(requirement)||(!branches.every(branch=>compact(requirement).includes(compact(branch.form))&&compact(requirement).includes(compact(branch.time.raw))&&compact(requirement).includes(compact(branch.channel)))&&!choiceQuotes.some(quote=>compact(quote)===compact(requirement)))))continue
+  const names=new Set(raw.items.map(value=>value?.key)),materialNames=new Set(raw.materials.map(value=>value?.key))
+  const taskKeys=branches.map((_,index)=>`${String(item.key).slice(0,27)}-choice-${index+1}`),materialKeys=branches.map((_,index)=>`${String(material.key).slice(0,27)}-choice-${index+1}`)
+  if(taskKeys.some(key=>names.has(key))||materialKeys.some(key=>materialNames.has(key))||raw.items.length>=20||raw.materials.length>=60)continue
+  const tasks=branches.map((branch,index)=>({...item,key:taskKeys[index],title:`${item.action}${branch.form}${item.object}`,object:branch.form+item.object,deliveryForm:branch.form,channel:branch.channel,materials:[materialKeys[index]],times:[branch.time],requirements:[],evidence:[branch.quote,choiceQuotes[0]]}))
+  const materials=branches.map((branch,index)=>({...material,key:materialKeys[index],formats:[branch.form],channel:branch.channel,owners:[taskKeys[index]],requirements:[],evidence:[branch.quote]}))
+  raw.items.splice(raw.items.indexOf(item),1,...tasks)
+  raw.materials.splice(raw.materials.indexOf(material),1,...materials)
+  changes.push({original:item.key,branches:taskKeys,choiceQuote:choiceQuotes[0]})
+ }
+ return {raw,changes}
+}
 
 /** Model item keys and shared, source-backed references are the authority for
  * relations. A choice is folded only when its two branches can be identified
  * in the same original clause, and their individual facts will be preserved. */
 export function combineSupportedChoices(result,audit){
- const refs=result.evidence.filter(e=>alternatives.test(e.quote)&&connector.test(e.quote))
+ const refs=result.evidence.filter(e=>alternatives.test(e.quote))
  for(const ref of refs){
   const owners=result.standaloneTasks.filter(t=>t.evidenceIds.includes(ref.id))
   if(owners.length!==2)continue
   const [first,second]=owners
   const identified=t=>[t.actionObject,t.actionVerb].filter(x=>typeof x==='string'&&compact(x).length>=2&&compact(ref.quote).includes(compact(x)))
   const a=identified(first),b=identified(second)
-  if(!a.length||!b.length||!a.some(x=>b.every(y=>compact(x)!==compact(y))))continue
-  if(owners.some(t=>t.materialTempIds.length||t.dependencyTempIds.length)||result.standaloneTasks.some(t=>t.dependencyTempIds.some(id=>owners.some(o=>o.tempId===id)))||result.events.some(e=>e.relatedTaskTempIds.some(id=>owners.some(o=>o.tempId===id))))continue
+  const separatelyCited=owners.every((task,index)=>task.actionObject&&task.evidenceIds.some(id=>{
+   const quote=result.evidence.find(e=>e.id===id)?.quote??'',other=owners[1-index].actionObject
+   return compact(quote).includes(compact(task.actionObject))&&(!other||!compact(quote).includes(compact(other)))
+  }))&&compact(first.actionObject)!==compact(second.actionObject)
+  if((!a.length||!b.length||!a.some(x=>b.every(y=>compact(x)!==compact(y))))&&!separatelyCited){
+   audit.losses.push({layer:'RELATION',id:ref.id,reason:'CHOICE_OPTIONS_NOT_UNIQUELY_GROUNDED'});continue
+  }
+  const retainBranches=()=>{
+   if(result.conflicts.some(c=>c.id.startsWith('sem-choice-')&&owners.every(t=>c.entityTempIds.includes(t.tempId))))return
+   result.conflicts.push({id:`sem-choice-${ref.id}`,type:'other',message:ref.quote,entityTempIds:owners.map(t=>t.tempId),evidenceIds:[ref.id],requiresDecision:false})
+   audit.facts.push({role:'choice_branches',sourceEvidenceId:ref.id,owners:owners.map(t=>t.tempId)})
+  }
+  if(owners.some(t=>t.materialTempIds.length||t.dependencyTempIds.length)||result.standaloneTasks.some(t=>t.dependencyTempIds.some(id=>owners.some(o=>o.tempId===id)))||result.events.some(e=>e.relatedTaskTempIds.some(id=>owners.some(o=>o.tempId===id)))){retainBranches();continue}
   const points=result.timePoints.filter(p=>p.relatedTaskTempIds.some(id=>owners.some(o=>o.tempId===id)))
   // A one-branch date must not silently become a date for the whole choice.
-  if(points.some(p=>!/^sem-window-(?:start|end)-/u.test(p.tempId)||p.relatedTaskTempIds.length!==1))continue
+  if(points.some(p=>!/^sem-window-(?:start|end)-/u.test(p.tempId)||p.relatedTaskTempIds.length!==1)){retainBranches();continue}
   const refsMerged=[...new Set([...first.evidenceIds,...second.evidenceIds])]
-  if(refsMerged.length>20)continue
+  if(refsMerged.length>20){retainBranches();continue}
   const branch=t=>t.description.split('\n').filter(line=>line&&!alternatives.test(line)).join('\n')
   const description=[`任选一项：${ref.quote}`,`方式一：${first.title}`,branch(first),`方式二：${second.title}`,branch(second)].filter(Boolean).join('\n')
   const title=`任选一项：${first.title} / ${second.title}`
   // Completion criteria remain branch-scoped; flattening them would imply
   // that a user must meet the requirements of both mutually exclusive paths.
   const criteria=[ref.quote,...first.completionCriteria.filter(c=>!alternatives.test(c)).map(c=>'方式一：'+c),...second.completionCriteria.filter(c=>!alternatives.test(c)).map(c=>'方式二：'+c)]
-  if(description.length>800||title.length>80||criteria.length>12)continue
+  if(description.length>800||title.length>80||criteria.length>12){retainBranches();continue}
   const ids=new Map()
   for(const point of points){
-   const id=point.tempId.replace(/^sem-window-/u,'sem-choice-window-')
+   const branch=point.relatedTaskTempIds.includes(first.tempId)?1:2
+   const id=point.tempId.replace(/^sem-window-/u,'sem-choice-window-')+`-branch-${branch}`
    ids.set(point.tempId,id);point.tempId=id;point.relatedTaskTempIds=[first.tempId]
   }
   first.title=title

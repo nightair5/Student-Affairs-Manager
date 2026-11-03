@@ -32,9 +32,16 @@ export interface RecognitionWorkspaceContext {
 export interface DeepSeekExtractionService {
   status(): Promise<{ configured: boolean; model?: string; multimodalModel?: string }>
   extract(input: IntakeInput): Promise<ParsedSuggestion[]>
-  recognize?(input: RecognitionServiceInput, context?: RecognitionWorkspaceContext): Promise<RecognitionResult>
+  recognize?(input: RecognitionServiceInput, context?: RecognitionWorkspaceContext, options?: RecognitionRequestOptions): Promise<RecognitionResult>
   /** Capture-bound local audit. This accessor never calls the provider. */
   semanticSidecar?(sourceId: string, sourceVersionId: string): unknown
+}
+
+export interface RecognitionRequestOptions {
+  /** One explicit retry gets a new ID; repeated delivery of that attempt joins it. */
+  attemptId?: string
+  /** A transient status failure is not proof that the extraction endpoint is unconfigured. */
+  allowStatusUnknown?: boolean
 }
 
 export interface RecognitionServiceInput extends IntakeInput {
@@ -106,8 +113,8 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
     return value?.ordinaryProviderSupport.sourceVersionId === sourceVersionId ? structuredClone(value) : undefined
   }
 
-  async recognize(input: RecognitionServiceInput, context: RecognitionWorkspaceContext = { projects: [], tasks: [] }): Promise<RecognitionResult> {
-    if (this.statusAttempted && this.configuredState !== true) throw new ObservedRecognitionError(this.configuredState === false ? 'DeepSeek 尚未配置，来源内容未发送。' : 'AI 服务暂时不可用，来源内容未发送。',unobservedDiagnostic(this.configuredState===false?'NOT_CONFIGURED':'STATUS_UNAVAILABLE'))
+  async recognize(input: RecognitionServiceInput, context: RecognitionWorkspaceContext = { projects: [], tasks: [] }, options: RecognitionRequestOptions = {}): Promise<RecognitionResult> {
+    if (this.statusAttempted && (this.configuredState === false || (this.configuredState === null && !options.allowStatusUnknown))) throw new ObservedRecognitionError(this.configuredState === false ? 'DeepSeek 尚未配置，来源内容未发送。' : 'AI 服务暂时不可用，来源内容未发送。',unobservedDiagnostic(this.configuredState===false?'NOT_CONFIGURED':'STATUS_UNAVAILABLE'))
     if (Boolean(input.sourceId) !== Boolean(input.sourceVersionId)) throw new Error('ORDINARY_PROVIDER_CAPTURE_REQUIRED')
     // A failed response must not expose an earlier source version's audit.
     if (input.sourceId) this.sidecars.delete(input.sourceId)
@@ -149,9 +156,9 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
     const promptVersion = input.multimodal ? MULTIMODAL_PROMPT_VERSION : RECOGNITION_PROMPT_VERSION
     // Bind cache identity to the complete request. A short noncryptographic
     // hash alone must never substitute another notice's response.
-    const key = `${promptVersion}:${modelName}:${serialized}`
+    const key = JSON.stringify([promptVersion,modelName,serialized,options.attemptId ?? null])
     const capture = (observation: ProxyRecognitionObservation,reused=false) => {
-      const diagnostic={...observation.diagnostic,responseReuse:reused}
+      const diagnostic={...observation.diagnostic,responseReuse:reused,...(options.attemptId?{attemptId:options.attemptId}: {})}
       const markSourceCoverage=(result:RecognitionResult)=>{
         if(input.content.length>body.content.length){
           result.quality.needsHumanReview=true

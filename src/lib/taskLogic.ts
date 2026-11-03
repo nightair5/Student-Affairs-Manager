@@ -259,9 +259,10 @@ export function getMaterialProgress(task: Task): {
   done: number
   total: number
 } {
+  const required=task.materials.filter(material=>material.required!==false)
   return {
-    done: task.materials.filter((material) => isMaterialSatisfied(material.done, material.status)).length,
-    total: task.materials.length,
+    done: required.filter((material) => isMaterialSatisfied(material.done, material.status)).length,
+    total: required.length,
   }
 }
 
