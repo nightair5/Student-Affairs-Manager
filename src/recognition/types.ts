@@ -76,6 +76,8 @@ export interface MaterialSuggestionV2 {
   required: boolean
   formatRequirements: string[]
   namingRequirements: string[]
+  /** Optional source-backed requirements belonging to this material. */
+  requirements?: string[]
   quantity: number | null
   submissionChannel: string | null
   relatedTaskTempIds: string[]

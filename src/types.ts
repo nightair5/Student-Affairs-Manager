@@ -60,6 +60,7 @@ export interface Material {
   name: string
   done: boolean
   /** Read-only fields projected from the canonical material for task lists. */
+  requirements?: string[]
   formatRequirements?: string[]
   namingRequirements?: string[]
   quantity?: number | null

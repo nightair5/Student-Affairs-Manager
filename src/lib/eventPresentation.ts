@@ -4,7 +4,7 @@ import {formatDuration} from './taskLogic'
 
 /** The persisted description is the authority; labels are only a display projection. */
 export function eventDescriptionSections(description:string):Array<{label:string;content:string}> {
-  const labels=new Set(['主讲人','主持人','活动内容','参加须知','准备要求','嘉宾简介','原文时长','通知补充'])
+  const labels=new Set(['主讲人','主持人','活动内容','参加须知','准备要求','嘉宾简介','原文时长','原文预留','时间说明','通知补充'])
   const sections:Array<{label:string;content:string}>=[]
   for(const line of description.split(/\r?\n/u)){
     const match=/^\s*([^：:]{1,12})[：:]\s*(.*)$/u.exec(line)
@@ -34,8 +34,8 @@ export function eventDurationLabel(event:Event):string|undefined {
     const minutes=start&&end?(end.getTime()-start.getTime())/60000:0
     if(Number.isInteger(minutes)&&minutes>0)actual=`时长 ${formatDuration(minutes)}`
   }
-  const explicit=eventDescriptionSections(event.description).find(s=>s.label==='原文时长')
-  if(!actual&&explicit)actual=`时长 ${explicit.content}`
+  const explicit=eventDescriptionSections(event.description).find(s=>s.label==='原文时长'||s.label==='原文预留')
+  if(!actual&&explicit)actual=explicit.label==='原文预留'?`原文预留 ${explicit.content}`:`时长 ${explicit.content}`
   if(event.estimatedMinutesKnown){
     const personal=event.estimatedMinutes&&event.estimatedMinutes>0?`个人预计 ${formatDuration(event.estimatedMinutes)}`:undefined
     return [actual,personal].filter(Boolean).join(' · ')||undefined

@@ -1,5 +1,5 @@
 // GENERATED from src/recognition/schema.ts; do not edit.
-// source-sha256: d29b0348a24df8c359fdf24bea514c1ac367c5ec52c70f06f106689e0100561d
+// source-sha256: 79f10d3db46f13ae1022d75446163176b2f46d6491a3454166ea300a1b7fdaee
 const categories = new Set(['比赛', '保研', '课程', '老师任务', '其他']);
 const inferenceLevels = new Set(['explicit', 'strong_inference', 'optional_suggestion']);
 const priorities = new Set(['low', 'medium', 'high', 'urgent']);
@@ -75,6 +75,7 @@ function validMaterial(value) {
         && typeof value.required === 'boolean'
         && isStringArray(value.formatRequirements, 20)
         && isStringArray(value.namingRequirements, 20)
+        && (value.requirements === undefined || isStringArray(value.requirements, 20))
         && (value.quantity === null || (typeof value.quantity === 'number' && Number.isFinite(value.quantity)))
         && (value.submissionChannel === null || boundedString(value.submissionChannel, 160))
         && isStringArray(value.relatedTaskTempIds, 30)
@@ -171,7 +172,7 @@ function requiredFieldIssues(value) {
         'tempId', 'name', 'required', 'formatRequirements', 'namingRequirements', 'quantity',
         'submissionChannel', 'relatedTaskTempIds', 'evidenceIds', 'confidence',
     ];
-    requireArrayItems(value.materials, 'materials', materialFields, [...materialFields, 'selected']);
+    requireArrayItems(value.materials, 'materials', materialFields, [...materialFields, 'requirements', 'selected']);
     const timePointFields = [
         'tempId', 'type', 'rawText', 'normalizedValue', 'timezone', 'isAllDay', 'precision',
         'needsConfirmation', 'relatedTaskTempIds', 'relatedMaterialTempIds', 'evidenceIds', 'confidence',

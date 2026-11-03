@@ -16,7 +16,7 @@ export function CompactTaskDetailPanel({task,sources,onClose,onComplete,onUpdate
   const publicNotes=taskPublicDescription(task)
   const id=useId(),ref=useRef<HTMLElement>(null),[title,setTitle]=useState(task.title),[notes,setNotes]=useState(publicNotes),[dateOpen,setDateOpen]=useState(false),[date,setDate]=useState(initialDate.slice(0,10)),[time,setTime]=useState(initialDate.slice(11,16)),[durationOpen,setDurationOpen]=useState(false),[minutes,setMinutes]=useState(task.estimatedMinutesKnown?String(task.estimatedMinutes):''),[busy,setBusy]=useState(false),[error,setError]=useState('')
   useDialogFocusTrap(ref,onClose)
-  const materials=canonicalMaterials??task.materials.map(m=>({id:m.id,name:m.name,requirements:[],formatRequirements:[],namingRequirements:[],submissionChannel:null}))
+  const materials=canonicalMaterials??task.materials.map(m=>({id:m.id,name:m.name,requirements:m.requirements??[],formatRequirements:m.formatRequirements??[],namingRequirements:m.namingRequirements??[],submissionChannel:null}))
   const channels=[...new Set(materials.map(m=>m.submissionChannel).filter(Boolean))]
   const naming=[...new Set(materials.flatMap(m=>m.namingRequirements))]
   const sourceRequirements=[...new Set(task.description.split('\n').map(line=>line.trim()).filter(line=>line.length>0&&line.length<=500&&/(?:须为|必须|不得|不包括|不超过|至少|原创|任选|二选一|或者)/u.test(line)&&linked.some(s=>(s.rawText||s.content||s.contentPreview||'').includes(line))))]

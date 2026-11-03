@@ -637,7 +637,7 @@ function buildDomainCommitPlanInternal(
   }
   const materials: Material[] = materialSuggestions.map((item) => ({
     id: materialIdMap.get(item.tempId)!, projectId, name: item.name, required: item.required, status: 'missing',
-    requirements: [], formatRequirements: item.formatRequirements, namingRequirements: item.namingRequirements,
+    requirements: item.requirements ?? [], formatRequirements: item.formatRequirements, namingRequirements: item.namingRequirements,
     quantity: item.quantity, submissionChannel: item.submissionChannel,
     relatedTaskIds: item.relatedTaskTempIds.map((id) => taskIdMap.get(id)).filter((id): id is string => Boolean(id)),
     deadlineTimePointId: materialDeadline(item).id,

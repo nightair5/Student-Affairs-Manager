@@ -3,7 +3,7 @@ import {buildLocalRecognition} from './pipeline'
 import {improveDirectFallback} from './directFallback'
 import {convertDirectResult} from './directResult'
 import {cleanDirectTopic} from './directRetention'
-import {taskPublicDescription} from '../lib/taskContentPresentation'
+import {taskPublicDescription,taskPublicSummary} from '../lib/taskContentPresentation'
 
 const source='【关于提交课程成果证明的通知】\n各位同学好！\n1️⃣\u00a0提交范围：已完成课程的学习小组。\n2️⃣\u00a0材料要求：请填写《课程成果证明》，名单严格按贡献排序；文件名修改为“课程号+小组名+成果证明”。\n3️⃣ 邮件标注要求：邮件正文注明顺序已经讨论且无异议。\n4️⃣提交方式：请在11月7日23：59分前将Word版及PDF版课程成果证明一同提交至课程邮箱\u00a0proof@example.edu'
 const recognize=(text:string)=>{const r=buildLocalRecognition({content:text,sourceTitle:'手动粘贴消息',sourceType:'text',referenceTime:new Date('2026-11-01T04:00:00Z'),timezone:'Asia/Shanghai',projects:[]});return convertDirectResult(improveDirectFallback(r,text),text).result}
@@ -29,6 +29,13 @@ describe('root repair direct boundary',()=>{
  it('shared product notes keep useful source text and remove only technical boilerplate',()=>{
   expect(taskPublicDescription({history:[],description:'按直达规则保留的阅读待办\n完整通知主题：开放时间调整\n材料要求：Word和PDF均须提交'})).toBe('开放时间调整\n材料要求：Word和PDF均须提交')
   expect(taskPublicDescription({history:[{field:'备注'} as never],description:'我自己的备注'})).toBe('我自己的备注')
+ })
+ it('only removes exact material and channel repetitions from the read-only summary',()=>{
+  const task={history:[],description:'提交渠道：课程平台\n要求：不超过4页\n要求：包含研究方法\n办理时段：11月12日至14日',materials:[{requirements:['不超过4页'],formatRequirements:['PDF']}] } as unknown as Parameters<typeof taskPublicSummary>[0]
+  const display=taskPublicSummary(task,{channels:['课程平台'],dateLabel:'办理时段：11月12日至14日'})
+  expect(display.description).toBe('要求：包含研究方法')
+  const edited={...task,history:[{field:'备注'} as never]}
+  expect(taskPublicSummary(edited,{channels:['课程平台']}).description).toContain('提交渠道：课程平台')
  })
  it('keeps the positions of repeated clauses rather than guessing their first occurrence',()=>{
   const text='11月7日17:00前提交报告。\n11月7日17:00前提交报告。'

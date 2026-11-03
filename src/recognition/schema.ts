@@ -85,6 +85,7 @@ function validMaterial(value: unknown): value is MaterialSuggestionV2 {
     && typeof value.required === 'boolean'
     && isStringArray(value.formatRequirements, 20)
     && isStringArray(value.namingRequirements, 20)
+    && (value.requirements === undefined || isStringArray(value.requirements, 20))
     && (value.quantity === null || (typeof value.quantity === 'number' && Number.isFinite(value.quantity)))
     && (value.submissionChannel === null || boundedString(value.submissionChannel, 160))
     && isStringArray(value.relatedTaskTempIds, 30)
@@ -206,7 +207,7 @@ function requiredFieldIssues(value: unknown): RecognitionValidationIssue[] {
     'tempId', 'name', 'required', 'formatRequirements', 'namingRequirements', 'quantity',
     'submissionChannel', 'relatedTaskTempIds', 'evidenceIds', 'confidence',
   ]
-  requireArrayItems(value.materials, 'materials', materialFields, [...materialFields, 'selected'])
+  requireArrayItems(value.materials, 'materials', materialFields, [...materialFields, 'requirements', 'selected'])
   const timePointFields = [
     'tempId', 'type', 'rawText', 'normalizedValue', 'timezone', 'isAllDay', 'precision',
     'needsConfirmation', 'relatedTaskTempIds', 'relatedMaterialTempIds', 'evidenceIds', 'confidence',

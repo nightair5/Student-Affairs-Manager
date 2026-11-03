@@ -140,6 +140,8 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     // Reuse the existing display declaration; never project a window as a cutoff.
     for(const task of plan.create.tasks){
       const temp=String(task.legacyData?.recognitionTempId)
+      const choicePoints=plan.create.timePoints.filter(p=>p.taskId===task.id&&!p.eventId&&p.relatedTaskIds.includes(task.id)&&/^(?:direct-copy-)?sem-choice-window-(?:start|end)-/u.test(String(p.legacyData?.recognitionTempId)))
+      for(const p of choicePoints)p.legacyData={...p.legacyData,sourceTimeRole:p.type==='event_end'?'choice_window_end':'choice_window_start'}
       const semanticPoints=plan.create.timePoints.filter(p=>p.taskId===task.id&&!p.eventId&&p.relatedTaskIds.includes(task.id)&&/^(?:direct-copy-)?sem-window-(?:start|end)-/u.test(String(p.legacyData?.recognitionTempId)))
       if(semanticPoints.length){
         for(const p of semanticPoints)p.legacyData={...p.legacyData,sourceTimeRole:p.type==='event_end'?'window_end':'window_start'}

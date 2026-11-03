@@ -33,6 +33,9 @@ describe('event details presentation',()=>{
     expect(eventDurationLabel(event({estimatedMinutesKnown:true,estimatedMinutes:45}))).toBe('个人预计 45 分钟')
     expect(eventDurationLabel(event({estimatedMinutesKnown:true,estimatedMinutes:null}))).toBeUndefined()
     expect(eventDurationLabel(event({title:'地点开放',startAt:'2026-10-29',endAt:'2026-10-30'}))).toBeUndefined()
+    const reserved=event({description:'原文预留：15分钟\n时间说明：本周课后'})
+    expect(eventDurationLabel(reserved)).toBe('原文预留 15分钟')
+    expect(reserved.endAt).toBeNull()
   })
   it('shows a short guest identity immediately and groups remaining biography paragraphs',()=>{
     const description='主讲人：王老师\n活动内容：交流学习方法\n嘉宾简介：新闻中心副主任，高级记者\n嘉宾简介：多年教育经历\n嘉宾简介：开设过多场讲座'

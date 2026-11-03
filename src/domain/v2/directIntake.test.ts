@@ -1,7 +1,7 @@
 import {describe,it,expect} from 'vitest'
 import {buildLocalRecognition} from '../../recognition/pipeline'
 import {convertDirectResult} from '../../recognition/directResult'
-import {isRecognitionResult} from '../../recognition/schema'
+import {isRecognitionResult,parseRecognitionResult} from '../../recognition/schema'
 import {createGoldenWorkspaceV8} from './fixtures'
 import {CanonicalWorkspaceRepository,MemoryWorkspaceRecordStore} from './repository'
 import {CapturePersistenceService} from './capture'
@@ -34,6 +34,23 @@ describe('owner-authorized direct mode',()=>{
     expect(pendingDirectDraft((await repo.load())!,text)).toBeUndefined()
   })
   it('accepts a deadline followed by material requirements and keeps unknown times valid for canonical storage',async()=>{for(const text of ['请于10月30日17:00前将课程论文（PDF格式，以学号+姓名命名）提交至学习通。','办理时段为10月30日9:00—11:00，请领取教材。']){const {repo,handle}=await setup(text);await commitDirectDraft(repo,handle.draftId,now);expect(validateWorkspaceV8((await repo.load())!).valid).toBe(true)}})
+  it('retains material-specific requirements through parsing, direct commit, reload and JSON backup',async()=>{
+    const text='请于10月30日17:00前将课程论文PDF提交至教学平台，论文不超过3页。'
+    const {repo,store,handle}=await setup(text)
+    await repo.transaction(w=>({...w,recognitionRuns:w.recognitionRuns.map(run=>run.id===handle.recognitionRunId?{...run,provider:'deepseek'}:run),extractionDrafts:w.extractionDrafts.map(d=>{
+      const result=structuredClone(d.result)!
+      expect(result.materials.length).toBeGreaterThan(0)
+      result.promptVersion='recognition-semantic-notice-3.2.0'
+      result.materials[0].requirements=['不超过3页']
+      return {...d,result:parseRecognitionResult(result)}
+    })}))
+    await commitDirectDraft(repo,handle.draftId,now)
+    const saved=(await new CanonicalWorkspaceRepository(store).load())!
+    expect(saved.materials[0].requirements).toEqual(['不超过3页'])
+    const imported=importWorkspaceV8(exportWorkspaceV8(saved))
+    expect(imported.materials[0].requirements).toEqual(['不超过3页'])
+    expect(workspaceV8ToLegacyView(imported).tasks[0].materials[0].requirements).toEqual(['不超过3页'])
+  })
   it('keeps the original answer unchanged and creates a grounded ordinary task',()=>{const text='请于10月30日17:00前提交课程论文。',r=local(text),before=structuredClone(r),c=convertDirectResult(r,text);expect(r).toEqual(before);expect(c.result.standaloneTasks[0].title).toContain('课程论文');expect(c.result.timePoints.some(p=>p.normalizedValue==='2026-10-30T17:00')).toBe(true);expect(isRecognitionResult(c.result)).toBe(true)})
   it.each(['校历已更新，仅供参考。','11月2日公布考试成绩，无需办理。','原定11月2日的讲座取消，请知悉。'])('creates an explicit read action without reviving cancelled obligations: %s',text=>{const c=convertDirectResult(local(text),text);expect(c.result.standaloneTasks).toHaveLength(1);expect(c.result.standaloneTasks[0].title).toMatch(/^查看：/u);expect(c.result.timePoints.filter(p=>p.relatedTaskTempIds.includes('direct-read-notice')).every(p=>p.type==='planned_start')).toBe(true);expect(c.result.events).toHaveLength(0);expect(isRecognitionResult(c.result)).toBe(true)})
   it('retains unknown eligibility as labelled work without declaring it mandatory',()=>{const text='符合条件的同学请于10月30日17:00前提交奖学金申请表。',c=convertDirectResult(local(text),text);expect(c.result.standaloneTasks[0].title).toMatch(/^如符合条件/u);expect(c.items[0].tags).toContain('待确认');expect(c.result.timePoints.some(p=>p.normalizedValue==='2026-10-30T17:00')).toBe(true)})

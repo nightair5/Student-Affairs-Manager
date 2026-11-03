@@ -134,6 +134,7 @@ function taskMaterials(workspace: WorkspaceV8, taskId: string, sourceId?: string
   return workspace.materials.filter((item) => item.relatedTaskIds.includes(taskId)).map((item) => ({
     id: item.id,
     name: item.name,
+    ...(item.requirements.length ? {requirements:item.requirements} : {}),
     ...(item.formatRequirements.length ? {formatRequirements:item.formatRequirements} : {}),
     ...(item.namingRequirements.length ? {namingRequirements:item.namingRequirements} : {}),
     ...(item.quantity !== null ? {quantity:item.quantity} : {}),

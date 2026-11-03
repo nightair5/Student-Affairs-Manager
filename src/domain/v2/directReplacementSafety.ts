@@ -111,7 +111,7 @@ export function directReplacementDiff(before:WorkspaceV8,after:WorkspaceV8,oldId
     if(matches.length!==1||used.has(matches[0].id)){issue(old.id,'event','missing_or_ambiguous');continue}
     const next=matches[0];used.add(next.id);matched.push({before:old.id,after:next.id})
     if(!sameTimes(old.id,next.id,true)||old.location&&key(old.location)!==key(next.location))issue(old.id,'time','changed_or_missing')
-    const important=(old.description??'').split('\n').filter(line=>/^(?:主讲人|主持人|活动内容|参加须知|嘉宾简介|准备要求|原文时长)[：:]/u.test(line.trim()))
+    const important=(old.description??'').split('\n').filter(line=>/^(?:主讲人|主持人|活动内容|参加须知|嘉宾简介|准备要求|原文时长|原文预留)[：:]/u.test(line.trim()))
     const nextLines=(next.description??'').split('\n')
     if(important.some(line=>!nextLines.some(candidate=>preservesRequirement(line,candidate))))issue(old.id,'event_detail','changed_or_missing')
   }

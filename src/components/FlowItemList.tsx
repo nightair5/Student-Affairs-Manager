@@ -56,7 +56,7 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
           {tags.map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}
         </span>
       </button>
-      {task.materials.length>0&&<details className="flow-material-details"><summary>材料与要求</summary><ul>{task.materials.map(m=><li key={m.id}><strong>{m.name}</strong>{(m.formatRequirements??[]).map(requirement=><span key={requirement}>{displayMaterialRequirement(requirement)}</span>)}</li>)}</ul>{naming.length>0&&<div><strong>命名或标注</strong>{naming.map(value=><p key={value}>{value}</p>)}</div>}</details>}
+      {task.materials.length>0&&<details className="flow-material-details"><summary>材料与要求</summary><ul>{task.materials.map(m=><li key={m.id}><strong>{m.name}</strong>{[...new Set([...(m.formatRequirements??[]),...(m.requirements??[])])].map(requirement=><span key={requirement}>{displayMaterialRequirement(requirement)}</span>)}</li>)}</ul>{naming.length>0&&<div><strong>命名或标注</strong>{naming.map(value=><p key={value}>{value}</p>)}</div>}</details>}
       </div>
       <div className="flow-row-actions">
         {linked&&onOpenEvent&&<button className="flow-linked-event" type="button" data-event-id={linked.id} onClick={()=>onOpenEvent(linked)} aria-label={`查看${linked.title}日程`}>日程</button>}
