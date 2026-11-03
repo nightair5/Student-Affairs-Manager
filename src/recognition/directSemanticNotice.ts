@@ -9,15 +9,27 @@ export function convertSemanticNotice(input:RecognitionResult,source:string):Dir
   result.milestones=[]
   result.standaloneTasks=result.standaloneTasks.map(task=>{
     const condition=/适用条件待确认|资格待确认/u.test(task.description)
+    const personalNeed=/按需办理：/u.test(task.description)
     const tags:DirectTag[]=condition?['如符合条件','待确认']:task.selected===false?['待确认']:[]
+    const statusNote=task.sourceStatus==='uncertain'?'事项状态待确认：原文是否取消尚不明确。':''
     if(!result.timePoints.some(p=>p.relatedTaskTempIds.includes(task.tempId)&&p.normalizedValue&&!p.needsConfirmation))tags.push('时间待定')
     items.push({tempId:task.tempId,kind:'task',tags})
-    return {...task,title:condition&&!task.title.startsWith('如符合条件')?'如符合条件 '+task.title:task.title,selected:true}
+    return {...task,title:condition&&!task.title.startsWith('如符合条件')?'如符合条件 '+task.title:personalNeed&&!task.title.startsWith('按需')?'按需 '+task.title:task.title,description:statusNote?[statusNote,task.description].filter(Boolean).join('\n').slice(0,800):task.description,selected:true}
   })
   result.events=result.events.map(event=>{
     const condition=/适用条件待确认|资格待确认/u.test(event.description)
     const tags:DirectTag[]=condition?['如符合条件','待确认']:event.selected===false?['待确认']:[]
     const start=result.timePoints.find(p=>p.tempId===event.startTimePointTempId)
+    if(event.sourceStatus==='uncertain'||event.sourceStatus==='alternative'){
+      const originalTimes=result.timePoints.filter(p=>[event.startTimePointTempId,event.endTimePointTempId].includes(p.tempId)).map(p=>p.rawText).filter(Boolean)
+      const alternative=event.sourceStatus==='alternative'
+      const note=[alternative?'任选一场，尚未安排。':'事项状态待确认：原文是否取消尚不明确。',originalTimes.length?`${alternative?'候选时间':'原时间（待确认）'}：${[...new Set(originalTimes)].join('；')}`:''].filter(Boolean).join('\n')
+      if(!tags.includes('待确认'))tags.push('待确认')
+      if(!tags.includes('时间待定'))tags.push('时间待定')
+      items.push({tempId:event.tempId,kind:'event',tags})
+      const title=alternative&&!event.title.includes('任选一场')?`${event.title.slice(0,153)}（任选一场）`:event.title
+      return {...event,title,description:[note,event.description].filter(Boolean).join('\n').slice(0,2400),startTimePointTempId:null,endTimePointTempId:null,selected:true}
+    }
     if(!start?.normalizedValue||start.needsConfirmation)tags.push('时间待定')
     items.push({tempId:event.tempId,kind:'event',tags})
     return {...event,selected:true}

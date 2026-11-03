@@ -45,10 +45,68 @@ test('a cancelled event is dropped but its explicitly revised occurrence remains
  assert.deepEqual(result.timePoints.map(time=>time.normalizedValue),['2026-11-06T15:00'])
 })
 
+test('the cancelled original does not cancel a source-backed occurrence rescheduled elsewhere',()=>{
+ const source='原定12月8日14:00在A101的研讨取消，改在12月10日15:00于B202举行。'
+ const items=[{key:'old',kind:'event',status:'cancelled',title:'研讨（原安排）',evidence:['原定12月8日14:00在A101的研讨取消'],times:[{role:'start',raw:'12月8日14:00'}]},
+  {key:'new',kind:'event',status:'active',title:'研讨（改期后）',evidence:['改在12月10日15:00于B202举行'],times:[{role:'start',raw:'12月10日15:00'}],location:'B202'}]
+ const {result}=compile(source,items)
+ assert.deepEqual(result.events.map(event=>event.title),['研讨（改期后）'])
+ assert.deepEqual(result.timePoints.map(point=>point.normalizedValue),['2026-12-10T15:00'])
+})
+
+test('a later explicit cancellation of the revised event is not negated by an earlier revision',()=>{
+ const source='原定12月8日14:00的研讨取消，改在12月10日15:00举行；后来研讨也取消。'
+ const items=[{key:'new',kind:'event',status:'cancelled',title:'研讨（改期后）',evidence:['改在12月10日15:00举行','后来研讨也取消'],times:[{role:'start',raw:'12月10日15:00'}]}]
+ const {result}=compile(source,items)
+ assert.equal(result.events.length,0)
+})
+
+test('a dated revised display suffix cannot hide a subsequent cancellation',()=>{
+ const source='原定12月8日14:00的参观活动取消，改在12月10日15:00举行；后来参观活动再次取消。'
+ const items=[{key:'new',kind:'event',status:'cancelled',title:'参观活动（改至12月10日15:00）',evidence:['改在12月10日15:00举行','后来参观活动再次取消'],times:[{role:'start',raw:'12月10日15:00'}]}]
+ assert.equal(compile(source,items).result.events.length,0)
+})
+
+test('a source-supported cancelled event remains cancelled when the displayed title omits 的',()=>{
+ const source='周日的体验活动因场地维修取消，不再另约。'
+ const {result}=compile(source,[{key:'event',kind:'event',status:'cancelled',title:'周日体验活动',evidence:[source]}])
+ assert.equal(result.events.length,0)
+})
+
+test('a cited explicit all-cancelled conclusion covers the original and revision of one event',()=>{
+ const source='艺术体验课原定12月7日15:00，后改至12月8日14:00；现通知：体验课因场地调整全部取消，不再另约。'
+ const items=[{key:'old',kind:'event',status:'cancelled',title:'艺术体验课（原定12月7日15:00）',evidence:['艺术体验课原定12月7日15:00'],times:[{role:'start',raw:'12月7日15:00'}]},
+  {key:'new',kind:'event',status:'cancelled',title:'艺术体验课（改至12月8日14:00）',evidence:['后改至12月8日14:00','体验课因场地调整全部取消，不再另约'],times:[{role:'start',raw:'12月8日14:00'}]}]
+ const {result}=compileSemanticNotice({topic:'体验课调整',kind:'information',items,materials:[]},{source,referenceTime:'2026-11-03T02:00:00Z',timezone:'Asia/Shanghai'})
+ assert.equal(result.events.length,0)
+})
+
+test('an all-cancelled clause for a different event does not suppress the named event',()=>{
+ const source='艺术体验课原定12月7日15:00；现通知：音乐体验课因场地调整全部取消，不再另约。'
+ const items=[{key:'art',kind:'event',status:'cancelled',title:'艺术体验课（原定12月7日15:00）',evidence:['艺术体验课原定12月7日15:00','音乐体验课因场地调整全部取消，不再另约'],times:[{role:'start',raw:'12月7日15:00'}]}]
+ const {result}=compileSemanticNotice({topic:'安排调整',kind:'information',items,materials:[]},{source,referenceTime:'2026-11-03T02:00:00Z',timezone:'Asia/Shanghai'})
+ assert.equal(result.events.length,1)
+ assert.equal(result.events[0].sourceStatus,'uncertain')
+})
+
 test('a cancelled event stays cancelled when its name and cancellation surround time and location',()=>{
  const source='分享会11月8日14:00在A201举办已取消。'
  const {result}=compile(source,[{key:'event',kind:'event',title:'分享会',evidence:['分享会11月8日14:00在A201举办已取消'],times:[{role:'start',raw:'11月8日14:00'}],location:'A201'}])
  assert.equal(result.events.length,0)
+})
+
+test('a dated prefix or cancelled suffix in a display title does not resurrect its cited old event',()=>{
+ const sources=[
+  {source:'原定12月7日10:00在A楼举办的开放讲座取消，改到12月9日14:00在B楼举办。',title:'原定12月7日开放讲座',oldTime:'12月7日10:00',newTime:'12月9日14:00'},
+  {source:'原定12月7日10:00在A楼举办的开放讲座取消，改到12月9日14:00在B楼举办。',title:'开放讲座（已取消）',oldTime:'12月7日10:00',newTime:'12月9日14:00'},
+ ]
+ for(const {source,title,oldTime,newTime} of sources){
+  const items=[{key:'old',kind:'event',title,status:'cancelled',evidence:[source.split('，')[0]],times:[{role:'start',raw:oldTime}]},
+   {key:'new',kind:'event',title:'开放讲座（改期后）',status:'active',evidence:[source.split('，')[1]],times:[{role:'start',raw:newTime}]}]
+  const {result}=compile(source,items)
+  assert.deepEqual(result.events.map(item=>item.title),['开放讲座（改期后）'])
+  assert.deepEqual(result.timePoints.map(point=>point.normalizedValue),['2026-12-09T14:00'])
+ }
 })
 
 test('a model cancellation without source support remains locally uncertain',()=>{

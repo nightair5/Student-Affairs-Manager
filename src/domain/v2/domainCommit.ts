@@ -617,6 +617,7 @@ function buildDomainCommitPlanInternal(
         prioritySuggestion: override?.priority === '高' ? 'high' : override?.priority === '低' ? 'low' : override?.priority === '中' ? 'medium' : item.prioritySuggestion,
         priority: override?.priority ?? (item.prioritySuggestion === 'urgent' || item.prioritySuggestion === 'high' ? '高' : item.prioritySuggestion === 'low' ? '低' : '中'),
         evidenceIds: item.evidenceIds, sourceId: source.id,
+        ...(item.sourceStatus ? { sourceStatus: item.sourceStatus } : {}),
         category: override?.category ?? result.projectSuggestion?.category.value ?? '其他',
       },
     }
@@ -678,6 +679,7 @@ function buildDomainCommitPlanInternal(
     endTimePointId: item.endTimePointTempId ? timeIdMap.get(item.endTimePointTempId) ?? null : null,
     location: item.location, createdAt: now, updatedAt: now,
     legacyData: { recognitionTempId: item.tempId, evidenceIds: item.evidenceIds, inferenceLevel: item.inferenceLevel,
+      ...(item.sourceStatus ? { sourceStatus: item.sourceStatus } : {}),
       ...(item.relatedTaskTempIds?.length ? { sourceTaskRelations: { version: 'source-event-task-relations-1', draftId, taskTempIds: item.relatedTaskTempIds } } : {}),
     },
   }))

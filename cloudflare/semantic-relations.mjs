@@ -3,6 +3,106 @@ import {locateSourceQuote} from './source-text-index.mjs'
 const compact=value=>typeof value==='string'?value.normalize('NFKC').replace(/\s/gu,''):''
 const alternatives=/(?:任选(?:一项|一种|其一)|二选一|两者择一|只需选择一种)/u
 
+/** Model-linked event options must not all become definite appointments when
+ * the source explicitly asks the reader to attend only one. Require the same
+ * uniquely quoted instruction and independently cited start for each option. */
+export function sourceBackedEventChoices(source,records){
+ const groups=new Map()
+ const exclusive=/(?:只|仅)(?:需|须|能|可)?(?:参加|选择|选)?(?:其中)?一(?:场|次|项)(?:即可|就可以|便可)?|任选(?:其中)?(?:一场|一项|其一)|(?:两场|两项)二选一|(?:从|由)[^。！？；;\n]{1,14}?中(?:选|选择|挑选)(?:一场|一次|一项)(?:参加|出席)?/u
+ for(const record of records.filter(r=>r.kind==='event'&&r.entity.sourceStatus!=='uncertain')){
+  const quotes=Array.isArray(record.item.evidence)?record.item.evidence:[]
+  const instructions=[...quotes,...(Array.isArray(record.item.requirements)?record.item.requirements:[])]
+  const starts=(Array.isArray(record.item.times)?record.item.times:[]).filter(time=>time?.role==='start'&&typeof time.raw==='string'&&time.raw)
+  if(starts.length!==1||!record.entity.startTimePointTempId)continue
+  const own=quotes.map(quote=>typeof quote==='string'&&compact(quote).includes(compact(starts[0].raw))?locateSourceQuote(quote,source):null).find(Boolean)
+  if(!own)continue
+  for(const quote of instructions){
+   if(typeof quote!=='string'||!exclusive.test(quote))continue
+   const marker=quote.match(exclusive)?.[0],start=marker?source.indexOf(marker):-1
+   if(!marker||start<0||source.indexOf(marker,start+marker.length)!==-1)continue
+   const key=`${start}:${marker}`
+   const entry=groups.get(key)??{quote:marker,start,options:[]}
+   if(!entry.options.some(option=>option.record===record))entry.options.push({record,own,time:compact(starts[0].raw)})
+   groups.set(key,entry)
+  }
+ }
+ const possible=[...groups.values()].filter(group=>{
+  if(group.options.length<2||group.options.length>6||new Set(group.options.map(option=>option.time)).size!==group.options.length)return false
+  const starts=group.options.map(option=>option.own.start)
+  if(new Set(starts).size!==starts.length)return false
+  const left=Math.min(group.start,...starts),right=Math.max(group.start+group.quote.length,...group.options.map(option=>option.own.end))
+  const scope=source.slice(Math.max(0,left-60),right)
+  // The separately grounded instruction itself can establish exclusivity:
+  // “只参加其中一场” need not also contain the word “或”.
+  return right-left<=600&&!/(?:两场|两次|两项|所有场次)(?:都|均|必须|需要|须|应)(?:参加|出席)/u.test(scope)
+ })
+ // Ambiguous membership is not resolved by choosing the first group.
+ return possible.filter(group=>group.options.every(option=>possible.filter(other=>other.options.some(candidate=>candidate.record===option.record)).length===1))
+  .map(group=>({quote:group.quote,start:group.start,records:group.options.map(option=>option.record)}))
+}
+
+/** Recover one choice only when the model associates both branches with the
+ * same choice, both cite their own source, and they share the same delivery
+ * object or material. The choice wording itself must also be literal. */
+export function sourceBackedChoicePairs(source,raw,records){
+ const tasks=records.filter(record=>record.kind==='task')
+ const groups=new Map()
+ for(const record of tasks){
+  for(const requirement of Array.isArray(record.item.requirements)?record.item.requirements:[]){
+   if(typeof requirement!=='string'||!alternatives.test(requirement))continue
+   const key=compact(requirement)
+   groups.set(key,[...new Set([...(groups.get(key)??[]),record])])
+  }
+ }
+ const pairs=[],used=new Set(),materials=Array.isArray(raw.materials)?raw.materials:[]
+ for(const group of groups.values()){
+  if(group.length!==2||group.some(record=>used.has(record.item.key)))continue
+  const [a,b]=group
+  // The same document can be named with its delivery form attached (for
+  // example, a scan and a paper copy). The source choice and each branch's
+  // own citation are still required before linking either obligation.
+  const choiceObject=value=>compact(value).replace(/(?:电子版|纸质版|纸质件|纸版|打印版|打印件|扫描件|扫描版|电子件)/gu,'')
+  const firstObject=choiceObject(a.item.object),secondObject=choiceObject(b.item.object)
+  const sharedObject=firstObject.length>=2&&firstObject===secondObject
+  const names=record=>new Set((Array.isArray(record.item.materials)?record.item.materials:[]).flatMap(key=>{
+   const material=materials.find(value=>value?.key===key)
+   return [key,material?.name&&compact(material.name)].filter(Boolean)
+  }))
+  const aNames=names(a),bNames=names(b),sharedMaterial=[...aNames].some(value=>bNames.has(value))
+  if(!sharedObject&&!sharedMaterial)continue
+  const own=record=>(Array.isArray(record.item.evidence)?record.item.evidence:[]).flatMap(quote=>{
+   const span=locateSourceQuote(quote,source);return span?[span]:[]
+  }).sort((x,y)=>x.start-y.start)[0]
+  const first=own(a),second=own(b)
+  if(!first||!second||first.start===second.start&&first.end===second.end)continue
+  const left=Math.min(first.start,second.start),right=Math.max(first.end,second.end)
+  if(right-left>600)continue
+  const sourceChoices=[...source.matchAll(/(?:任选(?:一项|一种|其一)|二选一|两者择一|只需选择一种|(?:只需(?:要)?|仅需|可)?(?:从[^。！？\n]{0,20})?选择(?:其中)?(?:一种|一项))/gu)]
+   .filter(match=>match.index>=Math.max(0,left-180)&&match.index<=right+80)
+  if(!sourceChoices.length)continue
+  const marker=sourceChoices.filter(match=>match.index<=left).at(-1)??sourceChoices[0]
+  const prefix=source.slice(Math.max(0,marker.index-12),marker.index)
+  if(/(?:不(?:能|可|允许|得)|禁止|取消)(?:再|进行)?\s*$/u.test(prefix))continue
+  // Do not connect choices across a separate task whose own citation lies
+  // between the directive and the two branches.
+  const regionStart=Math.min(marker.index,left),regionEnd=Math.max(marker.index+marker[0].length,right)
+  // A choice instruction can precede separately listed branches; an explicit
+  // requirement that both must be delivered anywhere in their common scope
+  // rules out connecting them as alternatives.
+  const region=source.slice(regionStart,regionEnd+80)
+  const mandatory=[...region.matchAll(/(?:均|都|全部|两种都)(?:必须|应当|需要|需|须|要)?(?:提交|上传|办理|交|做)/gu)].some(match=>
+   !/(?:不必|无需|不需要|不要求|不强制|不须|不用)[^，,。；;]{0,8}$/u.test(region.slice(Math.max(0,match.index-12),match.index)))
+  if(mandatory)continue
+  const unrelated=tasks.filter(record=>record!==a&&record!==b).some(record=>{
+   const span=own(record);return span&&span.start>=regionStart&&span.start<regionEnd
+  })
+  if(unrelated)continue
+  pairs.push({records:group,quote:marker[0],start:marker.index})
+  used.add(a.item.key);used.add(b.item.key)
+ }
+ return pairs
+}
+
 /** Expand a model's single combined choice only when both branches, their
  * independent deadlines and destinations are already unambiguously cited.
  * Anything more complicated remains the original, partially structured item. */
@@ -135,10 +235,22 @@ export function sourceCandidateTime(source,raw,taskRecords){
  const summary=compact(raw.summary)
  const clauses=[...source.matchAll(/[^。！？\n]+/gu)].filter(m=>/(?:备选|候选|可选|或者|或)/u.test(m[0]))
  const candidates=clauses.filter(m=>{
-  const dates=[...compact(m[0]).matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}日\d{1,2}[:：]\d{2}/gu)].map(x=>x[0])
+  const dates=[...compact(m[0]).matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}日(?:\d{1,2}[:：]\d{2})?/gu)].map(x=>x[0])
   return dates.length>=2&&dates.every(value=>summary.includes(compact(value)))
  })
- const owners=taskRecords.filter(r=>r.kind==='task'&&[...r.requirements,r.entity.title].some(x=>/(?:两个|两种|各个|所有)(?:备选|候选)?(?:时段|时间)/u.test(x)))
+ let owners=taskRecords.filter(r=>r.kind==='task'&&[...r.requirements,r.entity.title].some(x=>/(?:两个|两种|各个|所有)(?:备选|候选)?(?:时段|时间)/u.test(x)))
+ if(!owners.length&&candidates.length===1){
+  // A single named time survey can own candidate slots even when the model
+  // included those slots only in its summary. Require the survey subject in
+  // the literal source clause; never choose or create an appointment here.
+  const clause=compact(candidates[0][0])
+  owners=taskRecords.filter(r=>{
+   if(r.kind!=='task')return false
+   const object=compact(r.entity.actionObject),title=compact(r.entity.title)
+   const match=(title+' '+object).match(/(?:^|\s)(?:填写|提交|登记)?(.{2,20}?)(?:(?:时段|时间|日期)(?:调查|问卷|征询|投票|登记|意向表)|意向(?:问卷|表))/u)
+   return Boolean(match&&clause.includes(match[1]))
+  })
+ }
  if(candidates.length!==1||owners.length!==1)return null
  const m=candidates[0],literal=m[0].trim(),start=m.index+m[0].indexOf(literal)
  return {record:owners[0],literal,start,end:start+literal.length}

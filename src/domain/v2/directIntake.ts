@@ -148,6 +148,20 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
       owner.legacyData={...owner.legacyData,sourceChoiceGroup:{version:'source-choice-group-1.0.0',id:`${d.id}:${choice.id}`,sourceVersionId:v.id,quotation:choice.message,optionTaskIds:[owner.id,other.id]}}
       other.legacyData={...other.legacyData,sourceChoiceOwnerId:owner.id}
     }
+    // The dates remain source-backed alternatives in the same event records;
+    // they are not installed as confirmed calendar time points.
+    for(const choice of result.conflicts.filter(c=>c.id.startsWith('sem-event-choice-')&&c.type==='other'&&!c.requiresDecision)){
+      if(!v.rawText.includes(choice.message)||choice.entityTempIds.length<2)continue
+      const options=choice.entityTempIds.map(id=>plan.create.events.find(event=>event.legacyData?.recognitionTempId===id))
+      if(options.some(option=>!option))continue
+      const eventIds=options.map(option=>option!.id)
+      for(const event of options){
+        const originalEvent=rawInput.events.find(item=>item.tempId===event!.legacyData?.recognitionTempId)
+        const times=rawInput.timePoints.filter(point=>[originalEvent?.startTimePointTempId,originalEvent?.endTimePointTempId].includes(point.tempId))
+          .map(point=>({type:point.type,rawText:point.rawText,normalizedValue:point.normalizedValue,timezone:point.timezone,precision:point.precision,isAllDay:point.isAllDay,needsConfirmation:point.needsConfirmation}))
+        event!.legacyData={...event!.legacyData,sourceEventChoice:{version:'source-event-choice-1.0.0',id:`${d.id}:${choice.id}`,sourceVersionId:v.id,quotation:choice.message,optionEventIds:eventIds,candidateTimes:times}}
+      }
+    }
     // The local compiler has proved these two endpoints as one delivery window.
     // Reuse the existing display declaration; never project a window as a cutoff.
     for(const task of plan.create.tasks){

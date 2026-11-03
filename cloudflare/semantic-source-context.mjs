@@ -9,15 +9,51 @@ const differentDay=/(?:次日|翌日|第二天|隔日|隔天|次周|翌周|改�
 
 /** Recover only individually source-backed clauses; never use a model's
  * compound paraphrase as a verbatim quote. */
-export function sourceConditionClauses(source,value){
+export function sourceConditionClauses(source,value,refs=[]){
  const fragments=String(value??'').split(/[；;，,。]/u).map(v=>v.trim()).filter(Boolean)
  const supported=[],missing=[]
  for(const fragment of fragments){
-  const span=locateSourceQuote(fragment,source)
+  let span=locateSourceQuote(fragment,source)
+  if(!span){
+   // A short qualifier can recur elsewhere (including inside its negation).
+   // Resolve it only inside one uniquely source-backed citation for this item.
+   const matches=[]
+   for(const ref of refs){
+    const owner=locateSourceQuote(ref,source);if(!owner)continue
+    const owned=locateSourceQuote(fragment,source,{within:{start:owner.start,end:owner.end}})
+    if(!owned)continue
+    const before=source.slice(Math.max(owner.start,owned.start-2),owned.start)
+    if(!/^(?:未|不|非|无)/u.test(fragment)&&/(?:未|不|非|无)$/u.test(before))continue
+    if(!matches.some(value=>value.start===owned.start&&value.end===owned.end))matches.push(owned)
+   }
+   if(matches.length===1)span=matches[0]
+  }
   if(span)supported.push(span)
   else missing.push(fragment)
  }
  return {supported,missing}
+}
+
+/** A closing time belongs to an action only if that action explicitly refers
+ * to this channel closing. An unrelated system window is not a deadline. */
+export function sourceChannelClosingDeadline(source,item,span){
+ const channel=typeof item.channel==='string'?item.channel.trim():''
+ const action=typeof item.action==='string'?item.action.trim():''
+ const object=typeof item.object==='string'?item.object.trim():''
+ if(!channel||!action||!object||!span)return false
+ const before=source.slice(0,span.start),after=source.slice(span.end)
+ const left=Math.max(before.lastIndexOf('。'),before.lastIndexOf('；'),before.lastIndexOf(';'),before.lastIndexOf('\n'),before.lastIndexOf('，'),before.lastIndexOf(','))+1
+ const end=after.search(/[。；;\n，,]/u),suffix=end<0?after:after.slice(0,end),clause=before.slice(left)+span.literal+suffix
+ // The cited instant must be the closing endpoint itself, not merely an
+ // earlier opening time in the same sentence as a later closing time.
+ if(!clause.includes(channel)||!/^\s*(?:(?:准时|正式|自动|即)\s*)?(?:关闭|停止接收|停止报名)/u.test(suffix))return false
+ const refs=Array.isArray(item.evidence)?item.evidence:[]
+ return refs.some(ref=>{
+  const cited=typeof ref==='string'?locateSourceQuote(ref,source):null
+  if(!cited)return false
+  const quote=cited.literal.replace(/\s/gu,'')
+  return /(?:关闭|停止接收|停止报名)(?:之前|以前|前)/u.test(quote)&&quote.includes(action.replace(/\s/gu,''))&&quote.includes(object.replace(/\s/gu,''))&&!/(?:不必|无需|不得|禁止|请勿|不能|不可|不允许|不要)/u.test(quote)
+ })
 }
 
 /** When an item cites its own eligibility clause but paraphrases the condition,
@@ -26,8 +62,13 @@ export function sourceEvidenceCondition(source,refs){
  const found=[]
  for(const ref of refs){
   const quote=locateSourceQuote(ref,source);if(!quote)continue
-  for(const match of quote.literal.matchAll(/(?:仅限|只限|面向|限于|仅|已完成|已经|完成)[^，,。；;\n]{2,60}?(?:同学|学生|人员|成员|团队)(?=可|可以|方可|须|需|请|有意|[，,。；;]|$)/gu)){
-   if(/(?:不符合|不得|禁止|无需|不需|不可)/u.test(match[0]))continue
+  const patterns=[
+   /(?:(?:仅限|只限|面向|限于|仅|已完成|已经|完成)[^，,。；;\n]{2,60}?(?:同学|学生|人员|成员|团队)|(?:需|需要|有需要|有需求)[^，,。；;\n]{1,25}?(?:者|同学|学生|人员|团队))(?=可|可以|方可|须|需|请|于|有意|[，,。；;]|$)/gu,
+   /(?:需要|有需要|有需求)[^，,。；;\n]{1,25}?的[^，,。；;\n]{1,8}?(?=(?:[，,]\s*)?(?:可|可以|方可|须|需|请|于|应))/gu,
+   /(?:入选|获选|入围|获批|中选)(?:的)?(?:同学|学生|人员|团队|者)(?=可|可以|方可|须|需|请|于|[，,。；;]|$)/gu,
+  ]
+  for(const pattern of patterns)for(const match of quote.literal.matchAll(pattern)){
+   if(/(?:不符合|不得|禁止|无需|不需|不可)/u.test(match[0])||/(?:未|不|非|无)$/u.test(quote.literal.slice(Math.max(0,match.index-3),match.index)))continue
    const start=quote.start+match.index,end=start+match[0].length
    if(!found.some(item=>item.start===start&&item.end===end))found.push({start,end,literal:source.slice(start,end)})
   }
@@ -50,6 +91,45 @@ export function modelOwnedSharedDay(source,item){
  return day
 }
 
+/** Disambiguate repeated clock text only within a model-cited, unique agenda
+ * heading owned by the same event. A preceding date-only heading is usable
+ * only when that event also cited it. All returned spans point to the source. */
+export function ownedAgendaTime(source,item,items,rawTime){
+ const compact=value=>typeof value==='string'?fold(value).replace(/\s/gu,''):''
+ const anchors=[]
+ for(const candidate of Array.isArray(items)?items:[]){
+  if(candidate?.kind!=='event')continue
+  const title=compact(candidate.title)
+  const possible=(Array.isArray(candidate.evidence)?candidate.evidence:[]).flatMap(quote=>{
+   if(typeof quote!=='string'||compact(quote).length<2||!title.includes(compact(quote)))return []
+   const span=locateSourceQuote(quote,source);return span?[span]:[]
+  }).sort((a,b)=>(b.end-b.start)-(a.end-a.start))
+  if(possible.length)anchors.push({key:candidate.key,span:possible[0]})
+ }
+ const current=anchors.find(anchor=>anchor.key===item.key)
+ if(!current||anchors.some(anchor=>anchor!==current&&anchor.span.start===current.span.start))return null
+ const next=anchors.filter(anchor=>anchor.span.start>current.span.start).sort((a,b)=>a.span.start-b.span.start)[0]
+ const stop=Math.min(source.length,next?.span.start??source.length,current.span.end+400)
+ const time=locateSourceQuote(rawTime,source,{within:{start:current.span.end,end:stop}})
+ if(!time)return null
+ const left=Math.max(0,current.span.start-300),prefix=source.slice(left,current.span.start),folded=fold(prefix)
+ const lineDate=new RegExp('(?:^|\\n)[ \\t]*('+SOURCE_DAY_PATTERN.source+')[ \\t]*(?=\\r?\\n|$)','gu')
+ const dateMatches=[...folded.matchAll(lineDate)]
+ const last=dateMatches.at(-1)
+ let day=null
+ if(last){
+  const start=left+last.index+last[0].indexOf(last[1]),end=start+last[1].length,literal=source.slice(start,end)
+  const refs=Array.isArray(item.evidence)?item.evidence:[]
+  const between=source.slice(end,current.span.start)
+  const otherDays=[...fold(between).matchAll(new RegExp(SOURCE_DAY_PATTERN.source,'gu'))]
+  const local=source.slice(current.span.end,stop)
+  const unknownDate=/(?:日期|举办日期|具体日期)[^，,。；;\n]{0,20}(?:另行|后续|待定|待通知|尚未|未确定)/u.test(local)
+  const otherDateRole=/(?:报名|申请|提交|缴费|材料)(?:时间|日期)?(?:的)?(?:截止|截至|结束)|(?:截止|截至)(?:报名|申请|提交|缴费)/u.test(between)
+  if(refs.some(ref=>compact(ref)===compact(literal))&&!otherDays.length&&!differentDay.test(between)&&!unknownDate&&!otherDateRole)day={start,end,literal}
+ }
+ return {time,day}
+}
+
 /** A single explicit date in the same sentence can anchor a later clock;
  * a semicolon alone does not split a same-day multi-session announcement. */
 export function contextualEventDay(source,span,item){
@@ -68,7 +148,13 @@ export function contextualEventDay(source,span,item){
   // A date at the start of an agenda heading can govern multiple cited
   // sessions in that same sentence; a preceding deadline cannot act as one.
   const ownClock=(Array.isArray(item.evidence)?item.evidence:[]).some(ref=>typeof ref==='string'&&folded(ref).includes(folded(span.literal)))
-  const dateHeading=!source.slice(boundary,start).trim()&&/^\s*(?:活动|日程|安排|活动安排|日程安排)?\s*[：:]/u.test(between)&&ownClock
+  const headingPrefix=source.slice(boundary,start).trim()
+  const labelledHeading=!headingPrefix||/^(?:【[^】\n]{1,20}】|\[[^\]\n]{1,20}\]|[^。；;：:\n]{1,16}[：:])$/u.test(headingPrefix)
+  // A date followed by a short heading and a colon can introduce a session
+  // list. Exclude deadline/registration headings: their dates cannot become
+  // the day of a later appointment merely because they are nearby.
+  const heading=between.match(/^\s*([^：:\d０-９，,。；;\n]{0,16})\s*[：:]/u)?.[1]
+  const dateHeading=labelledHeading&&heading!==undefined&&!/(?:截止|截至|报名|提交|交付|办理|结束|之前|以后|之前|前后)/u.test(heading)&&ownClock
   if(!differentDay.test(between+span.literal)&&(ownCitation||explicitShared||sameItemLeading||dateHeading))return {start,end,literal}
   return null
  }
@@ -99,7 +185,7 @@ export function sourceEventDuration(source,item){
  for(const ref of refs){
   if(typeof ref!=='string')continue
   const span=locateSourceQuote(ref,source);if(!span)continue
-  const matches=[...span.literal.matchAll(/(预留|留出|留|持续|历时|用时|预计进行|进行)\s*(约)?\s*([0-9０-９一二两三四五六七八九十半]+(?:个)?(?:小时|分钟))/gu)]
+  const matches=[...span.literal.matchAll(/(预留|留出|留|持续|历时|用时|时长|耗时|预计进行|进行)\s*[：:]?\s*(约)?\s*([0-9０-９一二两三四五六七八九十半]+(?:个)?(?:小时|分钟))/gu)]
   for(const match of matches){
    const before=span.literal.slice(Math.max(0,match.index-5),match.index),after=span.literal.slice(match.index+match[0].length)
    if(/提前\s*$/u.test(before)&&/^(?:入场|到场|签到)/u.test(after))continue
@@ -125,4 +211,73 @@ export function combineExplicitWindowEntries(source,item){
  if(object.length<2||!lead.includes(object)||/[。！？；;\n]/u.test(between)||/(?:备选|任选|或者|改期|更正|取消)/u.test(lead+between))return entries
  const index=Math.min(entries.indexOf(starts[0]),entries.indexOf(ends[0]))
  return entries.flatMap((entry,i)=>i===index?[{role:'window',raw:source.slice(start.start,end.end)}]:entry===starts[0]||entry===ends[0]?[]:[entry])
+}
+
+/** A source-backed system availability interval is information, not an
+ * appointment. Preserve its two endpoints as an informational task window;
+ * do not guess that an unrelated task must be submitted through the system. */
+export function systemAvailabilityAsInformation(source,item){
+ if(item?.kind!=='event'||item.status==='cancelled'||item.location||item.speakers?.length)return null
+ const title=typeof item.title==='string'?item.title.trim():''
+ const subject=title.match(/^(.{2,32}(?:系统|平台|网站|网页|通道))(?:开放|开启|启用)$/u)?.[1]
+ if(!subject||!source.includes(subject))return null
+ const times=Array.isArray(item.times)?item.times:[]
+ const starts=times.filter(t=>t?.role==='start'&&typeof t.raw==='string')
+ const ends=times.filter(t=>t?.role==='end'&&typeof t.raw==='string')
+ if(starts.length!==1||ends.length!==1)return null
+ const start=locateSourceQuote(starts[0].raw,source),end=locateSourceQuote(ends[0].raw,source)
+ if(!start||!end||start.end>end.start||end.end-start.start>100)return null
+ const quotes=(Array.isArray(item.evidence)?item.evidence:[]).map(q=>locateSourceQuote(q,source)).filter(Boolean)
+ const own=quotes.filter(q=>q.start<=start.start&&q.end>=end.end&&q.literal.includes(subject))
+ if(own.length!==1||/(?:开放日|启动仪式|参加|参观|出席|现场|讲座|宣讲|说明会|演示|体验活动)/u.test(own[0].literal))return null
+ const middle=source.slice(start.end,end.start),tail=source.slice(end.end,own[0].end)
+ const closing=tail.match(/^\s*(?:关闭|停止|结束)/u)
+ if(!/^\s*(?:开放|开启|开始)\s*[，,；;]\s*$/u.test(middle)||!closing)return null
+ const window=source.slice(start.start,end.end+closing[0].length)
+ return {key:item.key,kind:'task',status:'active',title:'查看'+subject+'开放时间',action:'查看',object:subject+'开放时间',evidence:[own[0].literal],times:[{role:'window',raw:window}],materials:[],requirements:[],dependsOn:[]}
+}
+
+/** If a model labels the end of a source-cited “from now until” period as
+ * a deadline, preserve it as a window end owned by that same action instead. */
+export function sourceOpenEndedWindow(source,item,entry){
+ if(item?.kind!=='task'||entry?.role!=='deadline'||typeof entry.raw!=='string')return null
+ const time=locateSourceQuote(entry.raw,source)
+ if(!time)return null
+ const refs=(Array.isArray(item.evidence)?item.evidence:[]).map(q=>locateSourceQuote(q,source)).filter(Boolean)
+ if(!refs.some(ref=>ref.start<=time.start&&ref.end>=time.end))return null
+ const before=source.slice(Math.max(0,time.start-80),time.start)
+ const prefix=before.match(/(?:即日起|从即日起|自即日起|自发布之日起)\s*(?:至|到)\s*$/u)
+ if(!prefix)return null
+ const left=before.slice(0,prefix.index),boundary=Math.max(left.lastIndexOf('。'),left.lastIndexOf('；'),left.lastIndexOf(';'),left.lastIndexOf('\n'))
+ const label=left.slice(boundary+1).match(/([^，,。；;\n]{1,12}?)(?:时间|时段|期限)\s*$/u)?.[1]?.trim()
+ const action=typeof item.action==='string'?item.action.trim():''
+ if(!label||!action||!(action.includes(label)||label.includes(action)))return null
+ const start=time.start-before.length+prefix.index,raw=source.slice(start,time.end)
+ return {role:'window',raw}
+}
+
+/** Recover a single explicitly open/close system window only when the model
+ * named the same unique channel for this task, cited it (or 'that system'),
+ * and its own summary contains both original endpoints. It remains a window. */
+export function channelOwnedWindow(source,item,records,summary){
+ const channel=typeof item.channel==='string'?item.channel.trim():''
+ if(channel.length<2||!source.includes(channel)||!String(summary??'').includes(channel))return null
+ if((Array.isArray(item.times)?item.times:[]).some(entry=>entry?.role==='window'))return null
+ const owners=records.filter(record=>record.kind==='task'&&record.item.channel===item.channel)
+ if(owners.length!==1)return null
+ const refs=(Array.isArray(item.evidence)?item.evidence:[]).flatMap(quote=>{const span=locateSourceQuote(quote,source);return span?[span]:[]})
+ const expression=/((?:\d{4}年)?\d{1,2}月\d{1,2}[日号]?\s*(?:(?:上午|中午|下午|晚上)\s*)?\d{1,2}[:：]\d{2})\s*(?:开放|开启|开始)[，,；;]\s*((?:\d{4}年)?\d{1,2}月\d{1,2}[日号]?\s*(?:(?:上午|中午|下午|晚上)\s*)?\d{1,2}[:：]\d{2})\s*(?:关闭|停止|结束)/gu
+ const clauses=[...source.matchAll(/[^。！？\n]+/gu)].filter(match=>match[0].includes(channel)&&!/(?:取消|不再|未开放|备选|或者|改期)/u.test(match[0]))
+ const matches=clauses.flatMap(clause=>[...fold(clause[0]).matchAll(expression)].map(match=>({clause,match})))
+ if(matches.length!==1)return null
+ const {clause,match}=matches[0],start=clause.index+match.index,end=start+match[0].length,literal=source.slice(start,end)
+ const normalized=value=>fold(String(value??'')).replace(/\s/gu,'')
+ if(!normalized(summary).includes(normalized(match[1]))||!normalized(summary).includes(normalized(match[2])))return null
+ const hasOwner=refs.some(ref=>{
+  if(ref.start<end)return false
+  if(ref.literal.includes(channel))return true
+  if(!/(?:该|此|上述|同一)系统/u.test(ref.literal))return false
+  return !/(?:另一个|其他|另行|另外的)[^。！？\n]{0,12}系统/u.test(source.slice(end,ref.start))
+ })
+ return hasOwner?{role:'window',raw:literal}:null
 }

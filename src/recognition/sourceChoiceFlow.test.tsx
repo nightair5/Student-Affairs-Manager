@@ -20,6 +20,27 @@ const raw={topic:'申请表提交',kind:'action',items:[
 ],materials:[]}
 
 describe('source-backed independently timed choices',()=>{
+ it('keeps a shared model choice even when each branch cites only its own clause',async()=>{
+  const text='申请表任选一种方式提交：电子版12月3日17:00前上传资料平台；纸质版12月5日12:00前交服务台。'
+  const choice='任选一项：电子版或纸质版'
+  const facts={topic:'申请表',kind:'action',items:[
+   {key:'e',kind:'task',title:'提交电子版申请表',action:'提交',object:'申请表',deliveryForm:'电子版',channel:'资料平台',evidence:['电子版12月3日17:00前上传资料平台'],requirements:[choice],times:[{role:'deadline',raw:'12月3日17:00前'}],materials:['em']},
+   {key:'p',kind:'task',title:'提交纸质版申请表',action:'提交',object:'申请表',deliveryForm:'纸质版',channel:'服务台',evidence:['纸质版12月5日12:00前交服务台'],requirements:[choice],times:[{role:'deadline',raw:'12月5日12:00前'}],materials:['pm']},
+  ],materials:[{key:'em',name:'申请表',owners:['e'],evidence:['电子版12月3日17:00前上传资料平台']},{key:'pm',name:'申请表',owners:['p'],evidence:['纸质版12月5日12:00前交服务台']}]}
+  const output=compileSemanticNotice(facts,{source:text,referenceTime:'2026-11-03T02:00:00Z',timezone:'Asia/Shanghai',promptVersion:'recognition-semantic-notice-3.2.0'})
+  const result=parseRecognitionResult(output.result)
+  expect(result.conflicts.some(conflict=>conflict.id.startsWith('sem-choice-')&&conflict.entityTempIds.length===2)).toBe(true)
+  const w=createGoldenWorkspaceV8()
+  for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','projects','milestones','workPackages','tasks','materials','timePoints','events','evidenceRefs','historyRecords','reminderRecords','changeProposals'] as const)w[key]=[]
+  const repo=new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore());await repo.save(w)
+  const capture=new CapturePersistenceService(repo),h=await capture.beginCapture({operationId:'separate-choice',sourceType:'text',title:'申请表',rawText:text,provider:'deepseek',modelName:'fixture',promptVersion:'recognition-semantic-notice-3.2.0',pipelineVersion:'test',now:'2026-11-03T02:00:00Z'})
+  await capture.recognize(h,async()=>result);await commitDirectDraft(repo,h.draftId,'2026-11-03T02:00:00Z')
+  const view=workspaceV8ToLegacyView(importWorkspaceV8(exportWorkspaceV8((await repo.load())!)))
+  expect(view.tasks).toHaveLength(2)
+  expect(view.tasks[0].sourceChoice?.id).toBeTruthy()
+  expect(view.tasks[0].sourceChoice?.id).toBe(view.tasks[1].sourceChoice?.id)
+  expect(view.tasks.map(task=>task.deadline).sort()).toEqual(['2026-12-03T17:00','2026-12-05T12:00'])
+ })
  it('keeps model-combined forms as one choice with separately saved deadlines and destinations',async()=>{
   const text='电子版申请表11月5日17:00前上传资料平台，纸质版申请表11月7日12:00前交服务台，两种方式任选一种。'
   const facts={topic:'申请表提交',kind:'action',items:[{key:'submission',kind:'task',title:'提交申请表（电子版或纸质版任选一种）',action:'提交',object:'申请表',status:'active',evidence:['电子版申请表11月5日17:00前上传资料平台','纸质版申请表11月7日12:00前交服务台','两种方式任选一种'],times:[{role:'deadline',raw:'11月5日17:00前'},{role:'deadline',raw:'11月7日12:00前'}],channel:'资料平台（电子版）；服务台（纸质版）',materials:['form'],requirements:['任选一项：电子版申请表于11月5日17:00前上传资料平台；或纸质版申请表于11月7日12:00前交服务台'],dependsOn:[]}],materials:[{key:'form',name:'申请表',formats:['电子版','纸质版'],quantity:null,naming:[],requirements:['两种方式任选一种'],owners:['submission'],evidence:['电子版申请表11月5日17:00前上传资料平台','纸质版申请表11月7日12:00前交服务台']}],sharedRequirements:[]}

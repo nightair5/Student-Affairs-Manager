@@ -41,6 +41,7 @@ function optionalBoolean(value: unknown): boolean {
 function validTask(value: unknown): value is TaskSuggestionV2 {
   if (!isRecord(value)) return false
   return boundedString(value.tempId, 100)
+    && (value.sourceStatus === undefined || value.sourceStatus === 'active' || value.sourceStatus === 'uncertain')
     && (value.parentTempId === null || boundedString(value.parentTempId, 100))
     && (value.hierarchyType === 'task' || value.hierarchyType === 'subtask')
     && boundedString(value.title, 80)
@@ -97,6 +98,7 @@ function validMaterial(value: unknown): value is MaterialSuggestionV2 {
 function validEvent(value: unknown): boolean {
   if (!isRecord(value)) return false
   return boundedString(value.tempId, 100)
+    && (value.sourceStatus === undefined || value.sourceStatus === 'active' || value.sourceStatus === 'uncertain' || value.sourceStatus === 'alternative')
     && boundedString(value.title, 160)
     && boundedString(value.description, 2400, true)
     && (value.startTimePointTempId === null || boundedString(value.startTimePointTempId, 100))
@@ -202,7 +204,7 @@ function requiredFieldIssues(value: unknown): RecognitionValidationIssue[] {
     'dependencyTempIds', 'materialTempIds', 'timePointTempIds', 'evidenceIds', 'confidence',
     'inferenceLevel', 'userConfirmationRequired',
   ]
-  requireArrayItems(value.standaloneTasks, 'standaloneTasks', taskFields, [...taskFields, 'selected'])
+  requireArrayItems(value.standaloneTasks, 'standaloneTasks', taskFields, [...taskFields, 'selected', 'sourceStatus'])
   const materialFields = [
     'tempId', 'name', 'required', 'formatRequirements', 'namingRequirements', 'quantity',
     'submissionChannel', 'relatedTaskTempIds', 'evidenceIds', 'confidence',
@@ -217,7 +219,7 @@ function requiredFieldIssues(value: unknown): RecognitionValidationIssue[] {
     'tempId', 'title', 'description', 'startTimePointTempId', 'endTimePointTempId', 'location',
     'evidenceIds', 'confidence', 'inferenceLevel',
   ]
-  requireArrayItems(value.events, 'events', eventFields, [...eventFields, 'selected', 'relatedTaskTempIds'])
+  requireArrayItems(value.events, 'events', eventFields, [...eventFields, 'selected', 'relatedTaskTempIds', 'sourceStatus'])
   if (Array.isArray(value.events)) value.events.forEach((e, i) => {
     if (isRecord(e) && e.relatedTaskTempIds !== undefined && (!isStringArray(e.relatedTaskTempIds) || new Set(e.relatedTaskTempIds).size !== e.relatedTaskTempIds.length)) issues.push({ category: 'schema', code: 'EVENT_TASK_LINK_SHAPE', path: `events[${i}].relatedTaskTempIds` })
   })

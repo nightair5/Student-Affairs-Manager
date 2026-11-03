@@ -1,5 +1,5 @@
 // GENERATED from src/recognition/schema.ts; do not edit.
-// source-sha256: 79f10d3db46f13ae1022d75446163176b2f46d6491a3454166ea300a1b7fdaee
+// source-sha256: 04599a60b521882dcce2b0f2e7af253106822b7e74403757099af6ebf31ab23a
 const categories = new Set(['比赛', '保研', '课程', '老师任务', '其他']);
 const inferenceLevels = new Set(['explicit', 'strong_inference', 'optional_suggestion']);
 const priorities = new Set(['low', 'medium', 'high', 'urgent']);
@@ -31,6 +31,7 @@ function validTask(value) {
     if (!isRecord(value))
         return false;
     return boundedString(value.tempId, 100)
+        && (value.sourceStatus === undefined || value.sourceStatus === 'active' || value.sourceStatus === 'uncertain')
         && (value.parentTempId === null || boundedString(value.parentTempId, 100))
         && (value.hierarchyType === 'task' || value.hierarchyType === 'subtask')
         && boundedString(value.title, 80)
@@ -87,6 +88,7 @@ function validEvent(value) {
     if (!isRecord(value))
         return false;
     return boundedString(value.tempId, 100)
+        && (value.sourceStatus === undefined || value.sourceStatus === 'active' || value.sourceStatus === 'uncertain' || value.sourceStatus === 'alternative')
         && boundedString(value.title, 160)
         && boundedString(value.description, 2400, true)
         && (value.startTimePointTempId === null || boundedString(value.startTimePointTempId, 100))
@@ -167,7 +169,7 @@ function requiredFieldIssues(value) {
         'dependencyTempIds', 'materialTempIds', 'timePointTempIds', 'evidenceIds', 'confidence',
         'inferenceLevel', 'userConfirmationRequired',
     ];
-    requireArrayItems(value.standaloneTasks, 'standaloneTasks', taskFields, [...taskFields, 'selected']);
+    requireArrayItems(value.standaloneTasks, 'standaloneTasks', taskFields, [...taskFields, 'selected', 'sourceStatus']);
     const materialFields = [
         'tempId', 'name', 'required', 'formatRequirements', 'namingRequirements', 'quantity',
         'submissionChannel', 'relatedTaskTempIds', 'evidenceIds', 'confidence',
@@ -182,7 +184,7 @@ function requiredFieldIssues(value) {
         'tempId', 'title', 'description', 'startTimePointTempId', 'endTimePointTempId', 'location',
         'evidenceIds', 'confidence', 'inferenceLevel',
     ];
-    requireArrayItems(value.events, 'events', eventFields, [...eventFields, 'selected', 'relatedTaskTempIds']);
+    requireArrayItems(value.events, 'events', eventFields, [...eventFields, 'selected', 'relatedTaskTempIds', 'sourceStatus']);
     if (Array.isArray(value.events))
         value.events.forEach((e, i) => {
             if (isRecord(e) && e.relatedTaskTempIds !== undefined && (!isStringArray(e.relatedTaskTempIds) || new Set(e.relatedTaskTempIds).size !== e.relatedTaskTempIds.length))

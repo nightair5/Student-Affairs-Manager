@@ -79,6 +79,14 @@ function taskChoice(workspace:WorkspaceV8,task:StoredTask):{quotation:string;opt
   return ids.length===2&&ids.includes(task.id)?{quotation:value.quotation,optionTaskIds:ids}:null
 }
 
+function eventChoice(event:WorkspaceV8['events'][number]):{quotation:string;optionEventIds:string[];candidateTimes:Array<{type:unknown;rawText:unknown;normalizedValue:unknown;timezone:unknown;precision:unknown}>}|null {
+  const value=event.legacyData?.sourceEventChoice
+  if(!value||typeof value!=='object'||Array.isArray(value)||value.version!=='source-event-choice-1.0.0'||typeof value.quotation!=='string'||!Array.isArray(value.optionEventIds)||!Array.isArray(value.candidateTimes))return null
+  const ids=value.optionEventIds.filter((id):id is string=>typeof id==='string')
+  const times=value.candidateTimes.flatMap(time=>time&&typeof time==='object'&&!Array.isArray(time)?[{type:time.type,rawText:time.rawText,normalizedValue:time.normalizedValue,timezone:time.timezone,precision:time.precision}]:[])
+  return ids.length>=2&&ids.includes(event.id)&&times.length===value.candidateTimes.length?{quotation:value.quotation,optionEventIds:ids,candidateTimes:times}:null
+}
+
 /** Only correct a prior machine time when the same source-backed literal,
  * source version, owner and time role independently resolve to the candidate. */
 function sourceBackedTimeCorrection(before:WorkspaceV8,after:WorkspaceV8,oldOwner:OwnedEntity,newOwner:OwnedEntity,previous:StoredTime,next:StoredTime):boolean {
@@ -190,6 +198,13 @@ export function directReplacementDiff(before:WorkspaceV8,after:WorkspaceV8,oldId
     const important=(old.description??'').split('\n').filter(line=>/^(?:主讲人|主持人|活动内容|参加须知|嘉宾简介|准备要求|原文时长|原文预留)[：:]/u.test(line.trim()))
     const nextLines=(next.description??'').split('\n')
     if(important.some(line=>!nextLines.some(candidate=>preservesRequirement(line,candidate))))issue(old.id,'event_detail','changed_or_missing')
+  }
+  for(const old of before.events.filter(event=>oldIds.has(event.id))){
+    const nextId=matched.find(pair=>pair.before===old.id)?.after
+    const next=after.events.find(event=>event.id===nextId)
+    if(!next)continue
+    const previous=eventChoice(old),candidate=eventChoice(next)
+    if(previous&&(!candidate||key(previous.quotation)!==key(candidate.quotation)||previous.optionEventIds.some(id=>!matched.some(pair=>pair.before===id&&candidate.optionEventIds.includes(pair.after)))||previous.candidateTimes.some(time=>!candidate.candidateTimes.some(newTime=>time.type===newTime.type&&key(time.rawText)===key(newTime.rawText)&&time.normalizedValue===newTime.normalizedValue&&time.timezone===newTime.timezone&&time.precision===newTime.precision))))issue(old.id,'choice','changed_or_missing')
   }
   return {preserved:issues.length===0,issues,matched,added:[...newIds].filter(id=>!used.has(id))}
 }

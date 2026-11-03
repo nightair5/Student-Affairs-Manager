@@ -31,6 +31,8 @@ export interface ProjectMatch {
 
 export interface TaskSuggestionV2 {
   tempId: string
+  /** Source validity is separate from whether the user keeps an item. */
+  sourceStatus?: 'active' | 'uncertain'
   parentTempId: string | null
   hierarchyType: 'task' | 'subtask'
   title: string
@@ -111,6 +113,8 @@ export interface TimePointSuggestionV2 {
 
 export interface EventSuggestion {
   tempId: string
+  /** Unverified cancellation and alternatives are not confirmed appointments. */
+  sourceStatus?: 'active' | 'uncertain' | 'alternative'
   /** Local inverse of an explicit source relation; older 2.0 outputs may omit it. */
   relatedTaskTempIds?: string[]
   title: string

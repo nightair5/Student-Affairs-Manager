@@ -3,8 +3,8 @@ import {locateSourceQuote} from './source-text-index.mjs'
 import {parseDirectSourceTime} from './direct-source-time.mjs'
 import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
 import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-2-0.mjs'
-import {SOURCE_DAY_PATTERN,combineExplicitWindowEntries,contextualEventDay,modelOwnedSharedDay,sameBuildingLocation,sourceConditionClauses,sourceEvidenceCondition,sourceEventDuration} from './semantic-source-context.mjs'
-import {combineSupportedChoices,expandSupportedSingleChoices,sharedDocumentScope,sourceCandidateTime,sourceFormContext} from './semantic-relations.mjs'
+import {SOURCE_DAY_PATTERN,channelOwnedWindow,combineExplicitWindowEntries,contextualEventDay,modelOwnedSharedDay,ownedAgendaTime,sameBuildingLocation,sourceChannelClosingDeadline,sourceConditionClauses,sourceEvidenceCondition,sourceEventDuration,sourceOpenEndedWindow,systemAvailabilityAsInformation} from './semantic-source-context.mjs'
+import {combineSupportedChoices,expandSupportedSingleChoices,sharedDocumentScope,sourceBackedChoicePairs,sourceBackedEventChoices,sourceCandidateTime,sourceFormContext} from './semantic-relations.mjs'
 import {itemPolarity} from './semantic-item-polarity.mjs'
 
 const object = value => Boolean(value && typeof value === 'object' && !Array.isArray(value))
@@ -103,10 +103,14 @@ function conditionalMaterialClause(source,name,refs){
   const fragments=value.split(/[，,]/u).map(part=>part.trim()).filter(Boolean),index=fragments.findIndex(part=>compact(part).includes(target))
   if(index<0)return ''
   const current=fragments[index],prefix=compact(current).split(target)[0]
-  const condition=/(?:如果|若|如需|仅当|只有|除非|在.{0,16}情况下)/u,obligation=/(?:须|需|应|请|必须|提供|携带|提交|带)/u
+  const suffix=compact(current).slice(compact(current).indexOf(target)+target.length)
+  // An explicit “if available, optionally attach” qualifier describes this
+  // material rather than making it mandatory for every applicant.
+  if(/^(?:如有|若有)(?:可|可以|可另|可再)(?:附|提供|提交|上传)|^(?:可选|非必需|无需提供)/u.test(suffix))return current
+  const condition=/^(?:如果|若|如(?!何|下)|仅当|只有|除非|在.{0,16}情况下|.{2,24}(?:时|情况下)(?:另|才|方|还|就)?(?:须|需|应|请|必须|提供|携带|提交|带)|本人办理(?:时)?(?:须|需|应|请|必须|提供|携带|提交|带))/u,obligation=/(?:须|需|应|请|必须|提供|携带|提交|带)/u
   if(condition.test(prefix)&&obligation.test(prefix))return current
   const previous=index>0?fragments[index-1]:''
-  if(/^(?:如果|若|如需|仅当|只有|除非).{1,30}$/u.test(compact(previous))&&!/(?:无法|不予|将|不得|取消|不再|不能|无需|请先|须先)/u.test(previous)&&obligation.test(prefix))return previous+'，'+current
+  if(/^(?:如果|若|如(?!何|下)|仅当|只有|除非).{1,30}$/u.test(compact(previous))&&!/(?:无法|不予|将|不得|取消|不再|不能|无需|请先|须先)/u.test(previous)&&obligation.test(prefix))return previous+'，'+current
   return ''
 }
 function numberedUnits(value) {
@@ -174,6 +178,14 @@ function sourceChannel(source,value) {
   if(hasLiteral(source,value))return value
   const comparable=s=>compact(s).replace(/[，,；;：:、（()）\[\]【】]/gu,'').replace(/或者/gu,'或')
   if(comparable(value)&&comparable(source).includes(comparable(value)))return value
+  // A model may omit a purely positional word before a QR code while keeping
+  // both alternative actions. Accept only one uniquely matched, affirmative
+  // source phrase; no QR image, link or access is inferred from this text.
+  if(/二维码/u.test(value)&&/(?:或|或者)/u.test(value)){
+    const deictic=s=>comparable(s).replace(/(?:以下|下方|上述|所附)(?=二维码)/gu,'')
+    const target=deictic(value),original=deictic(source),at=original.indexOf(target)
+    if(target&&at>=0&&original.indexOf(target,at+1)<0&&!/(?:无需|无须|不必|不要|不得|禁止|不能|请勿)(?:再|去|继续)?$/u.test(original.slice(Math.max(0,at-12),at)))return value
+  }
   const addresses=[...value.matchAll(/https?:\/\/[^\s，。；、）)\]】]+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}|(?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,}(?:\/[^\s，。；、）)\]】]*)?/gu)].map(m=>m[0])
   const supported=[...new Set(addresses.filter(address=>source.includes(address)))]
   return supported.length===1?supported[0]:''
@@ -182,13 +194,13 @@ function sourceChannel(source,value) {
 // Reject only a clear contradiction: a field is explicitly scoped to the
 // opposite delivery form in its own source clause. Missing or shared scope is
 // not treated as proof of a mismatch; the rest of the item remains intact.
+function deliveryKind(value,{explicitOnly=false}={}) {
+  const paper=(explicitOnly?/(?:纸质版|纸版|打印版|纸质(?:提交|材料|交付))/u:/(?:纸质|纸版|打印版|打印件)/u).test(value)
+  const electronic=(explicitOnly?/(?:电子版|电子(?:提交|材料|交付|邮件|文件)|(?:线上|网上|在线)(?:提交|交付))/u:/(?:电子|线上|网上|在线)/u).test(value)
+  return paper===electronic?'':paper?'paper':'electronic'
+}
 function conflictingDeliveryScope(source,field,expectedForm,{explicitOnly=false}={}) {
-  const deliveryKind=value=>{
-    const paper=(explicitOnly?/(?:纸质版|纸版|纸质(?:提交|材料|交付))/u:/(?:纸质|纸版)/u).test(value)
-    const electronic=(explicitOnly?/(?:电子版|电子(?:提交|材料|交付)|(?:线上|网上|在线)(?:提交|交付))/u:/(?:电子|线上|网上|在线)/u).test(value)
-    return paper===electronic?'':paper?'paper':'electronic'
-  }
-  const expected=deliveryKind(expectedForm||'')
+  const expected=deliveryKind(expectedForm||'',{explicitOnly})
   if(!expected||!field)return false
   const span=locateSourceQuote(field,source)
   if(!span)return false
@@ -196,8 +208,26 @@ function conflictingDeliveryScope(source,field,expectedForm,{explicitOnly=false}
   const left=Math.max(...['。','；',';','，',',','！','？','\n'].map(mark=>before.lastIndexOf(mark)))+1
   const right=after.search(/[。；;，,！？\n]/u)
   const clause=source.slice(left,span.end)+(right<0?after:after.slice(0,right))
-  const actual=deliveryKind(clause)
+  const actual=deliveryKind(clause,{explicitOnly})
   return Boolean(actual&&actual!==expected)
+}
+
+// Only a source-cited, explicit all-cancelled conclusion can cancel several
+// model-labelled revisions of the same event. Separate event names are never
+// grouped by this helper.
+function allRevisionsCancelled(source,raw) {
+  if(raw.kind!=='information'||!raw.items.length||raw.items.some(item=>item?.kind!=='event'||item.status!=='cancelled'))return new Set()
+  const subject=item=>compact(item.title).replace(/\([^()]*\)$/u,'')
+  const names=[...new Set(raw.items.map(subject))]
+  if(names.length!==1||names[0].length<3||!compact(source).includes(names[0]))return new Set()
+  const clauses=[...source.matchAll(/[^。；;\n]+/gu)].filter(match=>/(?:全部|全都|均)(?:被|已|予以)?取消/u.test(match[0])&&!/(?:取消资格|部分取消|取消报名|取消奖励)/u.test(match[0]))
+  const owned=clauses.filter(match=>{
+    const at=match[0].search(/(?:全部|全都|均)(?:被|已|予以)?取消/u)
+    const lead=compact(match[0].slice(0,at))
+    return Array.from({length:names[0].length-2},(_,i)=>names[0].slice(i)).some(value=>value.length>=3&&new RegExp('(?:^|[:：])'+value.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')+'[^。；;]{0,16}$','u').test(lead))
+      &&raw.items.some(item=>list(item.evidence,12,500).some(quote=>{const span=locateSourceQuote(quote,source);return span&&span.start<=match.index+at&&span.end>match.index+at}))
+  })
+  return owned.length===1?new Set(raw.items.map(item=>item.key)):new Set()
 }
 
 // A source line can explicitly assign rooms to different sessions while using
@@ -226,12 +256,19 @@ function sourceLocation(source,value,title,ownText) {
  * validates source-backed time values without re-parsing the display title. */
 export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',promptVersion='recognition-semantic-notice-3.0.5'}={}) {
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
-    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.10',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
+    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.11',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
   const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:text(raw.topic,160)||'通知',sourceType:'text',notificationType:'uncertain',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,promptVersion,true,timezone)
-  const audit={version:promptVersion,compilerVersion:'semantic-notice-compiler-1.0.10',rootFailure:false,items:[],facts:[],losses:[]}
-  const expanded=expandSupportedSingleChoices(raw,source)
+  const audit={version:promptVersion,compilerVersion:'semantic-notice-compiler-1.0.11',rootFailure:false,items:[],facts:[],losses:[]}
+  const availableWindows=[]
+  const withWindowInformation={...raw,items:raw.items.map(item=>{
+    const converted=systemAvailabilityAsInformation(source,item)
+    if(converted)availableWindows.push(item.key)
+    return converted??item
+  })}
+  const expanded=expandSupportedSingleChoices(withWindowInformation,source)
   raw=expanded.raw
+  for(const item of availableWindows)audit.facts.push({role:'system_window_information',item})
   for(const change of expanded.changes)audit.facts.push({role:'choice_expanded',...change})
   const note=(layer,id,reason)=>audit.losses.push({layer,id,reason})
   const evidence=(quote,field,id,start) => {
@@ -253,8 +290,10 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       // Numerical claims must at least occur in the source; this does not by
       // itself prove that they belong to this item or have the right polarity.
       const numbers=normalizeCountNumbers(value).match(/\d+(?:\.\d+)?/gu)??[]
-      if(numbers.some(number=>!sourceNumbers.has(number))){note('REQUIREMENT',id,'REQUIREMENT_NUMBER_NOT_IN_SOURCE');return false}
-      if(numberedUnits(value).some(unit=>!sourceUnits.has(unit))){note('REQUIREMENT',id,'REQUIREMENT_NUMBER_UNIT_NOT_IN_SOURCE');return false}
+      const choiceTail=compact(value).replace(/^.*?(?:任选|选择|选取)(?:其中)?(?:一|1)(?:项|种|个)[：:]?/u,'')
+      const singleChoice=/(?:任选(?:其一|一种|一项)|二选一|两种方式任选其一)/u.test(normalizedSource)&&/(?:任选|选择|选取)(?:其中)?(?:一|1)(?:项|种|个)/u.test(value)&&choiceTail.length>=6&&normalizedSource.includes(choiceTail)
+      if(numbers.some(number=>!sourceNumbers.has(number)&&!(number==='1'&&singleChoice))){note('REQUIREMENT',id,'REQUIREMENT_NUMBER_NOT_IN_SOURCE');return false}
+      if(numberedUnits(value).some(unit=>!sourceUnits.has(unit)&&!(unit==='1:选择'&&singleChoice))){note('REQUIREMENT',id,'REQUIREMENT_NUMBER_UNIT_NOT_IN_SOURCE');return false}
       if([SEMANTIC_NOTICE_VERSION,'recognition-semantic-notice-3.1.0'].includes(promptVersion)&&!/(?:不得|禁止|不能|不可|不允许|无需|无须|不必|不需要|请勿|不再)/u.test(value)){
         const phrase=compact(value).replace(/^(?:请务必|必须|务必|需要|应当|请|须|需|应|要求)/u,'')
         const positions=[]
@@ -273,7 +312,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     if(description.length>800)note('DESCRIPTION',id,'REQUIREMENTS_TRUNCATED')
     entity.description=description.slice(0,800)
   }
-  const keys=new Map(),pending=[]
+  const keys=new Map(),pending=[],cancelledRevisions=allRevisionsCancelled(source,raw)
   const activeTaskKeys=new Set(raw.items.filter(item=>object(item)&&item.kind==='task'&&item.status!=='cancelled'&&text(item.key,40)).map(item=>item.key))
   for(const [index,item] of raw.items.entries()) {
     if(!object(item)||!['task','event'].includes(item.kind)||!text(item.key,40)||keys.has(item.key)||!text(item.title,item.kind==='task'?80:160)){note('ITEM_STRUCTURE',String(index),'INVALID_OR_DUPLICATE_ITEM');continue}
@@ -296,17 +335,23 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const tail=source.slice(span.textEnd),nextBoundary=tail.search(/[。；;\n！？]/u)
       return source.slice(lastBoundary+1,nextBoundary<0?source.length:span.textEnd+nextBoundary)
     }).filter(Boolean).join('\n')
-    const polarity=itemPolarity(item,context||ownText)
+    const polarity=cancelledRevisions.has(item.key)?'cancelled':itemPolarity(item,context||ownText)
     if(polarity==='cancelled'){note('POLARITY',item.key,'CANCELLED_ITEM');audit.items.push({key:item.key,status:'CANCELLED'});continue}
     if(polarity==='uncertain')note('POLARITY',item.key,'CANCELLATION_SCOPE_UNCERTAIN')
-    const proposedCondition=text(item.condition,160)
-    const conditionParts=proposedCondition?sourceConditionClauses(source,proposedCondition):{supported:[],missing:[]}
+    const sourceBackedConditions=list(item.requirements,20,800).filter(value=>/^(?:仅限|面向|只有|限于|(?:完成|已经|已完成|入选)[^，,。；;]{0,35}(?:学生|同学|小组|队伍|人员|者))/u.test(value)&&locateSourceQuote(value,source))
+    const proposedCondition=text(item.condition,160)||sourceBackedConditions[0]||sourceEvidenceCondition(source,refs)?.literal||''
+    const conditionParts=proposedCondition?sourceConditionClauses(source,proposedCondition,refs):{supported:[],missing:[]}
     if(proposedCondition&&!conditionParts.supported.length){const cited=sourceEvidenceCondition(source,refs);if(cited)conditionParts.supported.push(cited)}
     const groundedCondition=conditionParts.supported.map(span=>span.literal).join('；')
     const hasEligibility=/(?:面向|仅限|符合条件|符合资格|不符合|必须具备|须具备|已完成|完成.{0,12}(?:培训|课程|考核))/u.test(groundedCondition)
-    const voluntary=groundedCondition&&!hasEligibility&&/有意向|感兴趣|自愿|欢迎/u.test(groundedCondition)?groundedCondition:''
-    const prerequisite=groundedCondition&&list(item.dependsOn,20,40).some(key=>activeTaskKeys.has(key))&&/^(?:完成|填写|提交|办理|通过|取得|先).+后$/u.test(groundedCondition)?groundedCondition:''
-    const condition=voluntary||prerequisite?'':groundedCondition
+    const voluntary=groundedCondition&&!hasEligibility&&/有意向|感兴趣|自愿|欢迎|如(?:想|有意)|愿意|希望参加/u.test(groundedCondition)?groundedCondition:''
+    const approvedBefore=conditionParts.supported.length===1&&/^[^，,。；;]{1,24}(?:审核|审批|确认|批复)(?:通过|完成)$/u.test(groundedCondition)&&/^后/u.test(source.slice(conditionParts.supported[0].end))
+    const prerequisite=groundedCondition&&((list(item.dependsOn,20,40).some(key=>activeTaskKeys.has(key))&&/^(?:完成|填写|提交|办理|通过|取得|先).+后$/u.test(groundedCondition))||/^[^，,。；;]{1,24}(?:批复|审批|批准|审核|确认|同意|反馈|公布|发布)后$/u.test(groundedCondition)||approvedBefore)?groundedCondition+(approvedBefore?'后':''):''
+    const firstCondition=groundedCondition.split(/[；;，,]/u)[0]
+    const namedNeed=/^(?:需要|需)[^，,。；;]{1,30}的[^，,。；;]{1,8}$/u.test(firstCondition)&&conditionParts.supported.some(span=>span.literal===firstCondition&&/^(?:[，,]\s*)?(?:可|可以|方可|须|需|请|于|应)/u.test(source.slice(span.end)))
+    const needExpression=/^(?:如需|如有需要|有需要|有需求)/u.test(firstCondition)||/^(?:需要|需)[^，,。；;]{1,30}(?:同学|学生|小组|队伍|人员|者)$/u.test(firstCondition)||namedNeed
+    const personalNeed=groundedCondition&&!hasEligibility&&!voluntary&&!prerequisite&&needExpression?groundedCondition:''
+    const condition=voluntary||prerequisite||personalNeed?'':groundedCondition
     const requirements=supportedRequirements([...(Array.isArray(item.requirements)?item.requirements:[]),...(item.kind==='task'?citedUnknownDeadline(item,ownText):[])],item.key)
     if(conditionParts.missing.length)note('CONDITION',item.key,groundedCondition?'CONDITION_PARTIALLY_SOURCE_GROUNDED':'CONDITION_NOT_SOURCE_GROUNDED')
     for(const span of conditionParts.supported){const id=evidence(span.literal,'description',item.key,span.start);if(id)ids.push(id)}
@@ -322,9 +367,9 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       if(channel&&!supportedChannel)note('CHANNEL',item.key,wrongChannelScope?'CHANNEL_OTHER_DELIVERY_SCOPE':'CHANNEL_NOT_SOURCE_GROUNDED')
       if(deliveryForm&&!supportedForm)note('DELIVERY',item.key,'DELIVERY_FORM_NOT_SOURCE_GROUNDED')
       if(location&&!supportedLocation)note('LOCATION',item.key,'TASK_LOCATION_NOT_OWNER_GROUNDED')
-      baseLines=[inferredAction?'':text(item.description,500),inferredAction?'原文行动：'+ownText:'',supportedForm?'交付形式：'+supportedForm:'',supportedChannel?'提交渠道：'+supportedChannel:'',supportedLocation&&compact(supportedLocation)!==compact(supportedChannel)?'地点：'+supportedLocation:'',condition?'适用条件待确认：'+condition:'',prerequisite?'前置事项：'+prerequisite:'',voluntary?'参加说明：'+voluntary:''].filter(Boolean)
+      baseLines=[inferredAction?'':text(item.description,500),inferredAction?'原文行动：'+ownText:'',supportedForm?'交付形式：'+supportedForm:'',supportedChannel?'提交渠道：'+supportedChannel:'',supportedLocation&&compact(supportedLocation)!==compact(supportedChannel)?'地点：'+supportedLocation:'',condition?'适用条件待确认：'+condition:'',personalNeed?'按需办理：'+personalNeed:'',prerequisite?'前置事项：'+prerequisite:'',voluntary?'参加说明：'+voluntary:''].filter(Boolean)
       const title=inferredAction?'处理'+target:recoveredEvidence?(target.startsWith(action)?target:action+target):text(item.title,80)
-      entity={tempId,parentTempId:null,hierarchyType:'task',title,actionVerb:inferredAction?'处理':action,actionObject:target,description:'',completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[...new Set(ids)],confidence:.8,inferenceLevel:recoveredEvidence?'strong_inference':'explicit',userConfirmationRequired:Boolean(condition)||recoveredEvidence||polarity==='uncertain',selected:!condition&&!recoveredEvidence&&polarity!=='uncertain'}
+      entity={tempId,parentTempId:null,hierarchyType:'task',title,actionVerb:inferredAction?'处理':action,actionObject:target,description:'',completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[...new Set(ids)],confidence:.8,inferenceLevel:recoveredEvidence?'strong_inference':'explicit',userConfirmationRequired:Boolean(condition||personalNeed)||recoveredEvidence||polarity==='uncertain',selected:!condition&&!personalNeed&&!recoveredEvidence&&polarity!=='uncertain'}
       applyTaskRequirements(entity,baseLines,requirements,item.key)
       result.standaloneTasks.push(entity)
     } else {
@@ -337,11 +382,13 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const voluntaryShown=voluntary&&notices.some(n=>compact(n).includes(compact(voluntary))||compact(voluntary).includes(compact(n)))
       const duration=sourceEventDuration(source,item)
       const durationLine=duration?(duration.kind==='reservation'?'原文预留：':'原文时长：')+duration.literal:''
-      const lines=[...speakers,text(item.content,1000)?'活动内容：'+text(item.content,1000):'',...notices.map(n=>'参加须知：'+n),...requirements.map(n=>'准备要求：'+n),durationLine,condition?'适用条件待确认：'+condition:'',voluntary&&!voluntaryShown?'参加须知：'+voluntary:''].filter(Boolean)
+      const distinctNotices=notices.filter(n=>!duration||!new RegExp('^(?:活动)?(?:时长|持续|历时|用时|耗时)[：:]?'+duration.literal.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')+'[。.]?$','u').test(compact(n)))
+      const lines=[...speakers,text(item.content,1000)?'活动内容：'+text(item.content,1000):'',...distinctNotices.map(n=>'参加须知：'+n),...requirements.map(n=>'准备要求：'+n),durationLine,condition?'适用条件待确认：'+condition:'',voluntary&&!voluntaryShown?'参加须知：'+voluntary:''].filter(Boolean)
       if([...new Set(lines)].join('\n').length>2400)note('CAPACITY',item.key,'EVENT_DESCRIPTION_TRUNCATED')
       entity={tempId,title:text(item.title,160),description:[...new Set(lines)].join('\n').slice(0,2400),startTimePointTempId:null,endTimePointTempId:null,location:supportedLocation||null,relatedTaskTempIds:[],evidenceIds:[...new Set(ids)],confidence:.8,inferenceLevel:recoveredEvidence?'strong_inference':'explicit',selected:!condition&&!recoveredEvidence&&polarity!=='uncertain'}
       result.events.push(entity)
     }
+    if(polarity==='uncertain')entity.sourceStatus='uncertain'
     keys.set(item.key,{item,entity,kind:item.kind,condition});pending.push({item,entity,kind:item.kind,recoveredEvidence,ownText,requirements,baseLines})
     audit.items.push({key:item.key,tempId,kind:item.kind,status:'RETAINED'})
   }
@@ -349,13 +396,41 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
   for(const {item,entity,kind,recoveredEvidence,ownText,requirements} of pending) {
     if(kind==='task')entity.dependencyTempIds=list(item.dependsOn,20,40).flatMap(key=>{const dependency=keys.get(key);if(dependency?.kind==='task')return [dependency.entity.tempId];note('RELATION',item.key,'DEPENDENCY_NOT_FOUND');return []})
     const sharedDay=kind==='event'?modelOwnedSharedDay(source,item):null
-    const timeEntries=kind==='task'?combineExplicitWindowEntries(source,item):(Array.isArray(item.times)?item.times.slice(0,20):[])
+    const timeEntries=kind==='task'?combineExplicitWindowEntries(source,item).map(entry=>sourceOpenEndedWindow(source,item,entry)??entry):(Array.isArray(item.times)?item.times.slice(0,20):[])
+    const channelWindow=kind==='task'?channelOwnedWindow(source,item,pending,raw.summary):null
+    if(channelWindow&&timeEntries.length<20&&!timeEntries.some(entry=>entry?.role==='window')){timeEntries.push(channelWindow);audit.facts.push({role:'channel_window_link',item:item.key,raw:channelWindow.raw})}
     for(const entry of timeEntries) {
       if(!object(entry)||!['deadline','start','end','window'].includes(entry.role))continue
-      const rawTime=text(entry.raw,160);const span=rawTime&&locateSourceQuote(rawTime,source)
+      const rawTime=text(entry.raw,160)
+      // A single instant copied into both roles is not evidence of an end.
+      // Preserve a genuine range even when the model cites it for both roles.
+      const copiedStart=kind==='event'&&entry.role==='end'&&rawTime&&timeEntries.some(other=>other?.role==='start'&&compact(other.raw)===compact(rawTime))
+      const explicitRange=/(?:至|到|~|～|—|–|-)\s*(?:次日|翌日)?\s*(?:凌晨|早上|上午|中午|下午|傍晚|晚上|夜间)?\s*(?:\d{4}\s*年\s*)?(?:\d{1,2}\s*月\s*)?\d{1,2}\s*(?:日|号|[:：点时])/u.test(rawTime)
+      if(copiedStart&&!explicitRange){note('TIME',item.key,'EVENT_END_COPIED_FROM_START');continue}
+      const owned=kind==='event'&&rawTime?ownedAgendaTime(source,item,raw.items,rawTime):null
+      const span=rawTime&&(locateSourceQuote(rawTime,source)||owned?.time)
       if(!span){note('TIME',item.key,'TIME_TEXT_NOT_UNIQUELY_LOCATED');continue}
+      // A dependent action must not inherit the predecessor's own deadline
+      // unless its own source quotation also supports that date.
+      const citesTime=owner=>list(owner?.evidence,12,500).some(quote=>{const cited=locateSourceQuote(quote,source);return cited&&cited.start<=span.start&&cited.end>=span.end})
+      const predecessorOnly=kind==='task'&&entry.role==='deadline'&&!citesTime(item)&&list(item.dependsOn,20,40).some(key=>{
+        const predecessor=keys.get(key)
+        if(predecessor?.kind!=='task'||!citesTime(predecessor.item))return false
+        const ownChannel=sourceChannel(source,text(item.channel,160)),parentChannel=sourceChannel(source,text(predecessor.item.channel,160))
+        const attached=list(item.evidence,12,500).some(quote=>locateSourceQuote(quote,source)&&/(?:另|再|还|一并|同时)?(?:需|须|应|请)?(?:另|再)?附(?:上|带)?/u.test(quote)&&compact(quote).includes(compact(item.object))&&!/(?:另行(?:提交|通知)|另有截止|单独截止|另定时间)/u.test(quote))
+        // A source-grounded attachment to the same submission is part of the
+        // parent's delivery; a later independent step is not.
+        return !(attached&&ownChannel&&parentChannel&&compact(ownChannel)===compact(parentChannel))
+      })
+      if(predecessorOnly){note('TIME',item.key,'PREDECESSOR_DEADLINE_NOT_SHARED');continue}
       if(recoveredEvidence&&!ownText.includes(span.literal)){note('TIME',item.key,'RECOVERED_ITEM_TIME_SCOPE_UNCERTAIN');continue}
       if(kind==='task'&&conflictingDeliveryScope(source,span.literal,text(item.deliveryForm,80)||item.title)){note('TIME',item.key,'TIME_OTHER_DELIVERY_SCOPE');continue}
+      if(kind==='event'&&entry.role==='end'&&!sourceDay.test(foldWidth(span.literal))&&!/\d{1,2}\s*[:：点时]/u.test(span.literal)&&/(?:持续|历时|用时|时长|耗时|进行)\s*[：:]?\s*(?:约)?\s*[0-9０-９一二两三四五六七八九十半]+(?:个)?(?:小时|分钟)/u.test(span.literal)){
+        // A duration cited as an end is not itself a calendar date. The
+        // independently sourced duration remains in the event description.
+        audit.facts.push({item:item.key,role:'duration',raw:span.literal,sourceStart:span.start,sourceEnd:span.end})
+        continue
+      }
       if(kind==='event'&&entry.role==='end'&&/(?:(?:结束|散场)(?:时间)?(?:将|暂|会)?(?:另行|后续|待|尚未|未定)|(?:尚未|未|待)[^，。；;]{0,12}(?:结束|散场)(?:时间)?)/u.test(span.literal)){
         const id=evidence(span.literal,'deadline',item.key,span.start)
         if(id)entity.evidenceIds=[...new Set([...entity.evidenceIds,id])].slice(0,20)
@@ -366,15 +441,31 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       // The model may separately cite a shared day and a precise start clock.
       // Keep one precise start rather than treating the date as a competing start.
       if(sharedDay&&entry.role==='start'&&span.start===sharedDay.start&&span.end===sharedDay.end)continue
-      let parseText=span.literal,dateEvidenceId=null
-      if(!sourceDay.test(foldWidth(span.literal))){
+      let parseText=span.literal,dateEvidenceId=null,nextDayStart=null
+      if(kind==='event'&&entry.role==='end'&&/^(?:次日|翌日|第二天|隔日|隔天)/u.test(foldWidth(span.literal))){
+        const start=result.timePoints.find(point=>point.tempId===entity.startTimePointTempId)
+        const startSpan=start&&locateSourceQuote(start.rawText,source)
+        const sameClause=startSpan&&startSpan.end<=span.start&&!/[。；;\n！？]/u.test(source.slice(startSpan.end,span.start))
+        const sameCitation=sameClause&&list(item.evidence,12,500).some(quote=>locateSourceQuote(quote,source)&&compact(quote).includes(compact(start.rawText))&&compact(quote).includes(compact(span.literal)))
+        if(sameCitation&&start.normalizedValue?.includes('T')&&!start.needsConfirmation){
+          const date=new Date(start.normalizedValue.slice(0,10)+'T00:00:00Z')
+          if(!Number.isNaN(date.getTime())){
+            date.setUTCDate(date.getUTCDate()+1)
+            const [year,month,day]=date.toISOString().slice(0,10).split('-')
+            parseText=`${year}年${Number(month)}月${Number(day)}日`+span.literal.replace(/^(?:次日|翌日|第二天|隔日|隔天)/u,'')
+            nextDayStart=start
+            audit.facts.push({item:item.key,role:'event_end_next_day',start:start.rawText,raw:span.literal})
+          }
+        }
+      }
+      if(!sourceDay.test(foldWidth(span.literal))&&!nextDayStart){
         // A bare clock must not silently inherit today's date. Only recover a
         // single explicit day from the same uninterrupted source clause.
         const prefix=source.slice(Math.max(0,span.start-60),span.start),boundary=Math.max(prefix.lastIndexOf('。'),prefix.lastIndexOf('；'),prefix.lastIndexOf(';'),prefix.lastIndexOf('\n'))+1
         const localPrefix=prefix.slice(boundary),foldedPrefix=foldWidth(localPrefix),matches=[...foldedPrefix.matchAll(new RegExp(sourceDay.source,'gu'))]
         const day=matches.length===1?matches[0]:matches.length===2&&/\d/u.test(matches[0][0])
           &&/^[（(]\s*(?:本周|下周|周|星期)[一二三四五六日天]\s*[）)]\s*$/u.test(foldedPrefix.slice(matches[0].index+matches[0][0].length))?matches[0]:null
-        const anchored=kind==='event'?contextualEventDay(source,span,item):day?{start:span.start-localPrefix.length+day.index,end:span.start-localPrefix.length+day.index+day[0].length}:null
+        const anchored=kind==='event'?(contextualEventDay(source,span,item)||owned?.day):day?{start:span.start-localPrefix.length+day.index,end:span.start-localPrefix.length+day.index+day[0].length}:null
         if(!anchored){
           // Preserve an unanchored relative expression without assigning a date.
           if(!/[\d０-９]/u.test(span.literal)&&/(?:前|后|期间|开始时|结束时)/u.test(span.literal)){
@@ -399,7 +490,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
         const decoration=source.slice(dateEnd,span.start).match(/^\s*[（(]\s*(?:周|星期)[一二三四五六日天]\s*[）)]/u)?.[0]??''
         parseText=dateLiteral+decoration+' '+span.literal
       }
-      const eid=evidence(span.literal,'deadline',item.key),role=entry.role==='deadline'?'task_deadline':entry.role==='end'?'event_end':'event_start'
+      const eid=evidence(span.literal,'deadline',item.key,span.start),role=entry.role==='deadline'?'task_deadline':entry.role==='end'?'event_end':'event_start'
       if(!eid)continue
       const before=source.slice(Math.max(0,span.start-80),span.start),after=source.slice(span.end,Math.min(source.length,span.end+80))
       const left=Math.max(before.lastIndexOf('。'),before.lastIndexOf('；'),before.lastIndexOf(';'),before.lastIndexOf('\n'))+1,right=after.search(/[。；;\n]/u),clause=before.slice(left)+span.literal+(right<0?after:after.slice(0,right))
@@ -407,10 +498,12 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const normalizedClause=foldWidth(clause),normalizedTime=foldWidth(span.literal)
       const candidateScope=/(?:备选|候选|可选).{0,12}(?:时段|时间|日期)|(?:时段|时间|日期).{0,12}(?:备选|候选)/u
       const sameClauseWindows=timeEntries.filter(time=>time?.role==='window'&&typeof time.raw==='string'&&compact(normalizedClause).includes(compact(time.raw)))
-      const sourceCandidate=entry.role==='window'&&candidateScope.test(normalizedClause)&&(requirements.some(requirement=>candidateScope.test(requirement)&&compact(requirement).includes(compact(span.literal)))||sameClauseWindows.length>=2)
+      const explicitlyUnchosen=sameClauseWindows.length>=2&&/(?:或者|或|任选|择一)/u.test(normalizedClause)&&/(?:可能|拟于|尚未确定|未确定|未定|待定|候选|备选|任选)/u.test(normalizedClause)
+      const sourceCandidate=entry.role==='window'&&(explicitlyUnchosen||candidateScope.test(normalizedClause)&&(requirements.some(requirement=>candidateScope.test(requirement)&&compact(requirement).includes(compact(span.literal)))||sameClauseWindows.length>=2))
       const alternative=/任选|备选|可选择|或者|或/u.test(normalizedTime)||sourceCandidate
       const explicitCutoff=/(?:截止|截至|最迟|不晚于|之前|以前|(?:日|号|分|时|点|\d)\s*前)/u.test(normalizedClause.replace(/提前/gu,''))
-      const unsafeDeadline=entry.role==='deadline'&&(kind!=='task'||alternative||!explicitCutoff||deadlineRangeRoleIssue(normalizedTime,role,normalizedClause))
+      const closingCutoff=kind==='task'&&entry.role==='deadline'&&sourceChannelClosingDeadline(source,item,span)
+      const unsafeDeadline=entry.role==='deadline'&&(kind!=='task'||alternative||!explicitCutoff&&!closingCutoff||deadlineRangeRoleIssue(normalizedTime,role,normalizedClause))
       let parsed=parseDirectSourceTime(parseText,{type:role,referenceTime,timezone})
       if(entry.role==='window'&&!alternative){
         const parts=/^(.+?)(?:开放|开启|开始)\s*[，,；;]\s*(.+?)(?:关闭|结束|停止)$/u.exec(foldWidth(span.literal).trim())
@@ -424,7 +517,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const candidate=entry.role==='end'?(parsed.rangeEndNormalizedValue??parsed.normalizedValue):parsed.normalizedValue
       const value=previous||alternative||unsafeDeadline||parsed.needsConfirmation?null:candidate
       if(!value)note('TIME',item.key,previous?'OBSOLETE_TIME':alternative?'TIME_ALTERNATIVES_UNRESOLVED':unsafeDeadline?'UNSAFE_DEADLINE_ROLE':'TIME_UNRESOLVED')
-      const point={tempId:'sem-p'+(result.timePoints.length+1),type:role,rawText:span.literal,normalizedValue:value,timezone,isAllDay:value?parsed.isAllDay:false,precision:value?parsed.precision:'vague',needsConfirmation:!value,relatedTaskTempIds:kind==='task'?[entity.tempId]:[],relatedMaterialTempIds:[],evidenceIds:[...new Set([eid,dateEvidenceId].filter(Boolean))],confidence:.8,selected:Boolean(value)}
+      const point={tempId:'sem-p'+(result.timePoints.length+1),type:role,rawText:span.literal,normalizedValue:value,timezone,isAllDay:value?parsed.isAllDay:false,precision:value?parsed.precision:'vague',needsConfirmation:!value,relatedTaskTempIds:kind==='task'?[entity.tempId]:[],relatedMaterialTempIds:[],evidenceIds:[...new Set([eid,dateEvidenceId,...(nextDayStart?.evidenceIds??[])].filter(Boolean))].slice(0,20),confidence:.8,selected:Boolean(value)}
       if(entry.role==='window'&&alternative){
         // A proposed survey slot is not an opening time or an appointment.
         // Keep its literal meaning in the already saved description instead.
@@ -478,7 +571,16 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     const channel=text(material.channel,160),channelInSource=sourceChannel(source,channel)
     // A shared material must not carry one delivery's exclusive channel into
     // a different owner. That owner's own separately grounded channel remains.
-    const wrongChannelScope=Boolean(channelInSource&&pending.some(x=>owners.includes(x.entity)&&conflictingDeliveryScope(source,channelInSource,text(x.item.deliveryForm,80)||x.item.title)))
+    const ownerRecords=pending.filter(record=>owners.includes(record.entity))
+    const kinds=new Set(ownerRecords.map(record=>deliveryKind(text(record.item.deliveryForm,80)||record.item.title)).filter(Boolean))
+    const mixedDelivery=kinds.has('paper')&&kinds.has('electronic')&&ownerRecords.every(record=>deliveryKind(text(record.item.deliveryForm,80)||record.item.title))
+    // Reserve room for each remaining source material. If distinct delivery
+    // variants exceed the wire contract, retain one conservative shared
+    // material and report partial rather than emitting an invalid result.
+    const available=60-result.materials.length-(raw.materials.length-index-1)
+    const splitDelivery=mixedDelivery&&ownerRecords.length<=available
+    if(mixedDelivery&&!splitDelivery)note('MATERIAL',material.key,'SHARED_DELIVERY_CAPACITY')
+    const wrongChannelScope=Boolean(channelInSource&&ownerRecords.some(record=>conflictingDeliveryScope(source,channelInSource,text(record.item.deliveryForm,80)||record.item.title)))
     const supportedChannel=wrongChannelScope?null:channelInSource||null
     const formats=list(material.formats,20,160),naming=list(material.naming,20,160),requirements=supportedRequirements(material.requirements,material.key)
     if(Array.isArray(material.formats)&&material.formats.length>20)note('MATERIAL',material.key,'FORMAT_INPUT_OVERFLOW')
@@ -489,21 +591,53 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     const materialEvidence=refs.join('\n')
     const groundedMaterialRequirements=requirements.filter(requirement=>hasLiteral(materialEvidence,requirement)&&hasLiteral(source,requirement))
     const conditional=conditionalMaterialClause(source,text(material.name,160),refs)
-    const allOwnedRequirements=uniqueRequirements([...(conditional?[conditional]:[]),...groundedMaterialRequirements])
+    const sameTaskCondition=Boolean(conditional)&&ownerRecords.every(record=>{
+      const action=compact(record.item.action),object=compact(record.item.object),name=compact(material.name)
+      return action&&object&&name&&object.includes(name)&&compact(conditional).includes(action)&&compact(conditional).includes(object)
+    })
+    const allOwnedRequirements=uniqueRequirements([...(conditional?[conditional]:[]),...groundedMaterialRequirements.filter(value=>!conditional||!compact(conditional).endsWith(compact(value)))])
     if(allOwnedRequirements.length>20||conditional.length>800)note('MATERIAL',material.key,'MATERIAL_REQUIREMENT_OVERFLOW')
     const ownedRequirements=allOwnedRequirements.slice(0,20)
-    const m={tempId:'sem-m'+(index+1),name:text(material.name,160),required:material.required!==false&&!conditional,formatRequirements:formats,namingRequirements:naming,requirements:ownedRequirements,quantity,submissionChannel:supportedChannel,relatedTaskTempIds:owners.map(t=>t.tempId),evidenceIds:[...new Set(ids)],confidence:.8,selected:true}
     if(conditional)audit.facts.push({role:'conditional_material',material:material.key,sourceText:conditional})
-    result.materials.push(m)
-    for(const owner of owners){
+    const scoped=(value,record,kind)=>{
+      if(!mixedDelivery)return true
+      const form=text(record.item.deliveryForm,80)||record.item.title
+      if(conflictingDeliveryScope(source,value,form))return false
+      const ownerKind=deliveryKind(form),explicitKind=deliveryKind(value,{explicitOnly:true})
+      if(explicitKind&&ownerKind!==explicitKind)return false
+      if(/^(?:这|该|上述|两(?:个|份)|这些|两种)(?:份)?(?:文件|材料|文档)/u.test(value)){
+        const span=locateSourceQuote(value,source)
+        if(span){
+          const before=source.slice(0,span.start),boundary=Math.max(before.lastIndexOf('。'),before.lastIndexOf('\n'))+1
+          const prior=deliveryKind(source.slice(boundary,span.start),{explicitOnly:true})
+          if(prior&&prior!==ownerKind)return false
+        }
+      }
+      // When a format or naming requirement is cited by one delivery only,
+      // do not make it an obligation of a different delivery form.
+      const onlyOwners=ownerRecords.filter(owner=>hasLiteral(owner.ownText,value))
+      const formatFact=kind!=='requirement'||formats.some(format=>compact(value).includes(compact(format)))
+      return !formatFact||!onlyOwners.length||onlyOwners.includes(record)
+    }
+    const materialOwners=splitDelivery?[...ownerRecords].sort((a,b)=>Number(deliveryKind(text(a.item.deliveryForm,80)||a.item.title)!=='paper')-Number(deliveryKind(text(b.item.deliveryForm,80)||b.item.title)!=='paper')):ownerRecords
+    for(const [ownerIndex,record] of materialOwners.entries()){
+      const owner=record.entity,form=text(record.item.deliveryForm,80)||record.item.title
+      const ownerChannel=sourceChannel(source,text(record.item.channel,160))
+      const ownMaterialChannel=splitDelivery?(ownerChannel&&!conflictingDeliveryScope(source,ownerChannel,form)?ownerChannel:channelInSource&&!conflictingDeliveryScope(source,channelInSource,form)?channelInSource:null):supportedChannel
+      const sharedScope=(value,kind)=>mixedDelivery&&!splitDelivery?ownerRecords.every(other=>scoped(value,other,kind)):scoped(value,record,kind)
+      const m={tempId:'sem-m'+(index+1)+(splitDelivery?'-delivery-'+(ownerIndex+1):''),name:text(material.name,160),required:material.required!==false&&(!conditional||sameTaskCondition),formatRequirements:formats.filter(value=>sharedScope(value,'format')),namingRequirements:naming.filter(value=>sharedScope(value,'naming')),requirements:ownedRequirements.filter(value=>sharedScope(value,'requirement')),quantity,submissionChannel:ownMaterialChannel,relatedTaskTempIds:splitDelivery?[owner.tempId]:owners.map(t=>t.tempId),evidenceIds:[...new Set(ids)],confidence:.8,selected:true}
+      if(splitDelivery||ownerIndex===0)result.materials.push(m)
       owner.materialTempIds.push(m.tempId);owner.evidenceIds=[...new Set([...owner.evidenceIds,...ids])].slice(0,20)
       // Merge task-level and material-level requirements once, preserving the
       // stronger full wording and any distinct negation or quantity qualifier.
-      const record=pending.find(value=>value.entity===owner)
       if(record){
         const previousLines=new Set(record.requirements.map(value=>'要求：'+value))
         record.baseLines=owner.description.split('\n').filter(line=>line&&!previousLines.has(line))
-        record.requirements=uniqueRequirements([...record.requirements,...requirements])
+        const ownedMaterialCount=raw.materials.filter(value=>object(value)&&(list(record.item.materials,20,40).includes(value.key)||list(value.owners,20,40).includes(record.item.key))).length
+        // A requirement already attached to one of several materials should
+        // not be repeated as an unqualified requirement for the whole task.
+        const taskRequirements=requirements.filter(value=>scoped(value,record,'requirement')&&!(ownedMaterialCount>1&&m.requirements.some(saved=>compact(saved)===compact(value))))
+        record.requirements=uniqueRequirements([...record.requirements,...taskRequirements])
         applyTaskRequirements(owner,record.baseLines,record.requirements,material.key)
       }
     }
@@ -569,6 +703,21 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       task.title+=`（${context}）`
       audit.facts.push({role:'form_context',owner:task.tempId,context})
     }
+  }
+  for(const pair of sourceBackedChoicePairs(source,raw,pending)){
+    const ids=pair.records.map(record=>record.entity.tempId)
+    const eid=evidence(pair.quote,'description','choice',pair.start)
+    if(!eid||result.conflicts.some(conflict=>conflict.id.startsWith('sem-choice-')&&ids.every(id=>conflict.entityTempIds.includes(id))))continue
+    result.conflicts.push({id:'sem-choice-'+eid,type:'other',message:pair.quote,entityTempIds:ids,evidenceIds:[eid],requiresDecision:false})
+    audit.facts.push({role:'choice_branches',sourceEvidenceId:eid,owners:ids})
+  }
+  for(const choice of sourceBackedEventChoices(source,pending)){
+    const ids=choice.records.map(record=>record.entity.tempId)
+    const eid=evidence(choice.quote,'description','event-choice',choice.start)
+    if(!eid)continue
+    for(const record of choice.records)record.entity.sourceStatus='alternative'
+    result.conflicts.push({id:'sem-event-choice-'+eid,type:'other',message:choice.quote,entityTempIds:ids,evidenceIds:[eid],requiresDecision:false})
+    audit.facts.push({role:'event_choice_alternatives',sourceEvidenceId:eid,owners:ids})
   }
   combineSupportedChoices(result,audit)
   result.sourceSummary.title=text(raw.topic,160)||result.standaloneTasks[0]?.title||result.events[0]?.title||'通知'
