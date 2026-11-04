@@ -1,6 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import {compileSemanticNotice} from './semantic-notice-compiler-v3.mjs'
+import {sourceEvidenceCondition} from './semantic-source-context.mjs'
 import {validateRecognitionResult} from './recognition-contract.generated.mjs'
 
 const options={referenceTime:'2026-11-02T12:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:'recognition-semantic-notice-3.2.0'}
@@ -144,6 +145,25 @@ test('a personal choice before a cited fee stays conditional even alongside a di
  assert.match(result.standaloneTasks[0].description,/按需办理：申请纸质证明的/u)
  assert.doesNotMatch(result.standaloneTasks[0].description,/按需办理：居住地有变更的/u)
  assert.equal(result.standaloneTasks[0].userConfirmationRequired,true)
+})
+
+test('a compound model action still attaches the unique condition in a long citation',()=>{
+ const source='申请电子证明的，需另缴纳工本费。居住地有变更的，须提供住所证明。'
+ const {result}=compile(source,{items:[{key:'a',kind:'task',title:'申请电子证明并缴费',action:'申请并缴纳',object:'电子证明',evidence:[source]}]})
+ assert.match(result.standaloneTasks[0].description,/按需办理：申请电子证明的/u)
+ assert.doesNotMatch(result.standaloneTasks[0].description,/按需办理：居住地有变更的/u)
+})
+
+test('an action paraphrase retains the condition of its uniquely cited object',()=>{
+ const source='申请电子证明的，需另缴纳办理费用。居住地有变更的，须提供住所证明。'
+ const {result}=compile(source,{items:[{key:'a',kind:'task',title:'支付办理费用',action:'支付',object:'办理费用',evidence:[source]}]})
+ assert.match(result.standaloneTasks[0].description,/按需办理：申请电子证明的/u)
+ assert.doesNotMatch(result.standaloneTasks[0].description,/按需办理：居住地有变更的/u)
+})
+
+test('two conditions for the same object are not assigned arbitrarily',()=>{
+ const source='申请电子证明的，需缴纳办理费用。申请纸质证明的，需缴纳办理费用。'
+ assert.equal(sourceEvidenceCondition(source,[source],{action:'支付',object:'办理费用'}),null)
 })
 
 test('a source window with open and close clauses retains both endpoints',()=>{

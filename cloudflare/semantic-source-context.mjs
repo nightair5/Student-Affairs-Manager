@@ -155,12 +155,21 @@ export function sourceEvidenceCondition(source,refs,item){
  }
  if(found.length===1)return found[0]
  if(found.length>1&&item&&typeof item.action==='string'&&typeof item.object==='string'){
-  const action=compactText(item.action),object=compactText(item.object)
-  const relevant=found.filter(span=>{
+  // A model can summarize two source actions as one compound verb (for
+  // example, "申请并缴纳"). Match its grounded components separately; the
+  // whole rewritten string is not required to occur literally in the clause.
+  const actions=item.action.split(/(?:以及|并且|并|且|及|和)/u).map(compactText).filter(action=>action.length>0)
+  const object=compactText(item.object)
+  const objectMatches=found.map(span=>{
    const tail=source.slice(span.end),stop=tail.search(/[。；;\n！？]/u),clause=compactText(source.slice(span.start,stop<0?source.length:span.end+stop))
-   return action.length>0&&object.length>1&&clause.includes(action)&&clause.includes(object)
-  })
+   return {span,clause}
+  }).filter(entry=>object.length>1&&entry.clause.includes(object))
+  const relevant=objectMatches.filter(entry=>actions.some(action=>entry.clause.includes(action))).map(entry=>entry.span)
   if(relevant.length===1)return relevant[0]
+  // Faithful action paraphrases may have no literal verb in common. A unique
+  // cited clause naming the same object can still establish the condition;
+  // multiple matching clauses remain unresolved rather than guessed.
+  if(relevant.length===0&&objectMatches.length===1)return objectMatches[0].span
  }
  return null
 }
