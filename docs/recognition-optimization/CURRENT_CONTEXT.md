@@ -1,4 +1,15 @@
-# 当前进度：beta.27 已上线（2026年11月4日）
+# 当前进度：beta.28 已上线（2026年11月4日）
+
+正式站点运行代码 162cfa2b1aa714c57a6953025d5f7c7b302d4976，生产版本 134a94ce-cacd-4178-8822-bebfc4691885。
+回滚到 beta.27：`node node_modules/wrangler/bin/wrangler.js rollback 6f651bde-ea58-44df-9f0b-3ffccebb956a --env= --yes`。
+同一来源、明确前后依赖的线性任务在首页按步骤展示；每步仍独立保存时间、材料、入口和完成状态，旧数据不自动改写。
+部署提交六项远端 CI、本地完整检查和线上资源、安全头检查通过。组件渲染及隔离内存仓库测试通过；真实手机和桌面浏览器未验收。
+没有明确保存前置关系的事项仍会分开；本轮不改识别链，不将配置正常当作真实 AI 识别通过。依赖审计有 13 项中危提示。
+证据：.data/grouped-steps-smoke-20261104-234413/。
+
+## 以下为 beta.27 当时的历史记录
+
+# 历史进度：beta.27 已上线（2026年11月4日）
 
 正式站点运行代码 9bc98be7884ce8dd4c71a6d6d5db8b1de83e7c6d，生产版本 6f651bde-ea58-44df-9f0b-3ffccebb956a。
 回滚到 beta.25：`node node_modules/wrangler/bin/wrangler.js rollback 28098231-9f78-4635-aad6-b3e03d482ef7 --env= --yes`。
