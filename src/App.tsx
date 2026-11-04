@@ -1,12 +1,13 @@
 import {RecognitionRunDetails} from './components/RecognitionRunDetails'
 import { assertMainlineRuntime, type MainlineRuntime } from './experiments/mainline02/runtime'
-import type { WorkspaceV8 } from './domain/v2/types'
+import type { JsonValue,WorkspaceV8 } from './domain/v2/types'
 import { storedPersonalPlans } from './domain/v2/personalPlanD27'
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { DirectResultList, RecentDirectAdditions } from './components/DirectResultList'
 import { setTaskSchedule } from './domain/v2/taskSchedule'
 import { selectSourceChoice } from './domain/v2/sourceChoice'
+import { commitEventCompletion } from './domain/v2/eventCompletion'
 import {commitTaskCommand,ensureTaskEditsSettled,type TaskCommandValues} from './domain/v2/taskCommand'
 import {commitMaterialCommand,type MaterialCommandValues} from './domain/v2/materialCommand'
 import {readCommandReceipt,readCommittedBatch} from './domain/v2/commandReadback'
@@ -35,6 +36,7 @@ import {
 import { loadWorkspace } from './lib/storage'
 import { updateTaskWithHistory } from './lib/taskUpdates'
 import { canSaveLinkOnly, createIntakeResult, type IntakeInput } from './lib/intake'
+import {noticeLinkMessage,planNoticeLinks,readNoticeLinks} from './lib/noticeLinks'
 import { MULTIMODAL_PROMPT_VERSION } from './lib/multimodal'
 import { ProxyDeepSeekExtractionService, type DeepSeekExtractionService } from './lib/deepseekExtraction'
 import { buildLocalRecognition } from './recognition/pipeline'
@@ -192,6 +194,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const [materialEditDrafts,setMaterialEditDrafts] = useState<Record<string,MaterialEditDraft>>({})
   const [eventDirtyCount,setEventDirtyCount] = useState(0)
   const eventDirtyIds=useRef(new Set<string>())
+  const eventCompletionInFlight=useRef(new Set<string>())
   const taskEditDraftsRef=useRef(taskEditDrafts)
   const materialEditDraftsRef=useRef(materialEditDrafts)
   const updateTaskEditDrafts=(mutate:(current:typeof taskEditDrafts)=>typeof taskEditDrafts)=>{const next=mutate(taskEditDraftsRef.current);taskEditDraftsRef.current=next;setTaskEditDrafts(next)}
@@ -670,6 +673,36 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     }).catch(error=>setNotice({text:taskSaveFailure(error)})).finally(()=>taskCompletionInFlight.current.delete(taskId))
   }
 
+  const handleSetEventCompletion = async (eventId:string,completed:boolean):Promise<void> => {
+    if(runtime)throw Error('当前模式不能修改日程。')
+    const event=events.find(item=>item.id===eventId)
+    if(!event)throw Error('这项日程已不存在，请重新读取。')
+    if(eventDirtyIds.current.has(eventId))throw Error('这项日程还有未保存的修改，请先保存或取消。')
+    if(eventCompletionInFlight.current.has(eventId))throw Error('日程状态正在保存，请稍候。')
+    eventCompletionInFlight.current.add(eventId)
+    const operationId=crypto.randomUUID(),changedAt=new Date().toISOString()
+    taskWritesCount.current++;setTaskWritesPending(taskWritesCount.current);setNotice({text:'正在保存日程状态…'})
+    const work=taskWriteQueue.current.then(async()=>{
+      if(taskReadbackBlocked.current||directReadbackPending)throw Error('已有更改已保存但尚未读回，请先重新读取。')
+      if(eventDirtyIds.current.has(eventId))throw Error('这项日程还有未保存的修改，请先保存或取消。')
+      const receipt=await commitEventCompletion(canonicalWorkspaceRepository,{operationId,eventId,expected:Boolean(event.personalCompleted),expectedRevision:event.personalCompletionRevision??null,completed,changedAt})
+      let readback:WorkspaceV8
+      try{
+        readback=await readCommandReceipt(independentReader,{kind:'event',operationId,entityId:eventId,changed:receipt.changed})
+        const savedEvent=workspaceV8ToLegacyView(readback).events.find(item=>item.id===eventId)
+        if(!savedEvent||Boolean(savedEvent.personalCompleted)!==completed)throw Error('EVENT_READBACK_MISMATCH')
+      }catch(error){taskReadbackBlocked.current=true;setDirectReadbackPending(eventId);throw new Error('日程状态已保存，暂时未能读回。请先重新读取，不会重复提交。',{cause:error})}
+      setEvents(current=>current.map(item=>item.id===eventId?workspaceV8ToLegacyView(readback).events.find(saved=>saved.id===eventId)??item:item))
+      setOrdinaryCanonical(readback)
+      setNotice({text:completed?'日程已标记完成。':'日程已恢复未完成。'})
+    })
+    taskWriteQueue.current=work.catch(()=>undefined)
+    try{await work}catch(error){
+      const message=error instanceof Error&&error.message==='EVENT_COMMAND_FIELD_CONFLICT'?'日程状态已在其他页面更改，请保存其他修改后重新读取。':safeIntakeError(error,'日程状态未能保存，请重试。')
+      setNotice({text:message});throw new Error(message,{cause:error})
+    }finally{eventCompletionInFlight.current.delete(eventId);taskWritesCount.current--;setTaskWritesPending(taskWritesCount.current)}
+  }
+
   const handleStart = (taskId: string) => {
     if (runtime) { rejectExperimentAction(); return }
     const task = tasks.find((candidate) => candidate.id === taskId)
@@ -889,7 +922,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     setHistoricalAdding(false)
     setNotice({text:`已加入 ${batches.length} 条通知${failed?'，其余通知保留，可稍后重试':''}`,direct:true,...(batches.length?{undo:()=>{void(async()=>{for(const id of [...batches].reverse())await undoDirect(id)})().catch(()=>setNotice({text:'未能全部撤销，剩余记录保留，可从最近添加重试。'}))}}:{})})
   }
-  const handleIntakeInput = async (input: IntakeInput) => {
+  const handleIntakeInput = async (input: IntakeInput,options?:{readLinks:boolean}) => {
     if(!runtime){await taskWriteQueue.current;if(taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')}
     if (runtime?.realInput) {
       if (input.sourceType !== 'text' || input.manualSuggestion || input.multimodal || input.url || input.fileName) { rejectExperimentAction(); return }
@@ -904,6 +937,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       })
       return
     }
+    // Reject credential-bearing links before either persistence or model dispatch.
+    const linkPlan=!ordinaryEnvironment&&/https?:\/\//iu.test(input.content)?planNoticeLinks(input.content):null
     // First use may reach this handler before the empty workspace transaction finishes.
     // Join the existing hydration; never let capture race initialization or replace data.
     try {
@@ -922,9 +957,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         return
       }
     }
-    const intakeClock=input.now??new Date()
+    let intakeClock=input.now??new Date()
     const localResult = createIntakeResult({...input,now:intakeClock})
-    const localRecognition = buildLocalRecognition({
+    let localRecognition = buildLocalRecognition({
       sourceType: input.sourceType,
       sourceTitle: input.sourceTitle ?? input.fileName ?? localResult.source.title,
       content: input.content,
@@ -933,7 +968,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       projects,
       tasks,
     })
-    const draftRecognition = input.manualSuggestion
+    let draftRecognition = input.manualSuggestion
       ? recognitionResultFromManualSuggestion(localRecognition, input.manualSuggestion)
       : localRecognition
     // An invalid recording is a source-level rejection, not an unavailable
@@ -992,8 +1027,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       },
       now: intakeClock.toISOString(),
     }
+    let webMessage=''
     try {
-      const handle = await capturePersistenceService.beginCapture(captureRequest)
+      let handle = await capturePersistenceService.beginCapture(captureRequest)
       if (handle.duplicate) {
         const stored = await canonicalWorkspaceRepository.load()
         const existing = stored?.extractionDrafts.find(d => d.id === handle.draftId)
@@ -1005,8 +1041,28 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           openDraftReview(handle.draftId, '已打开这次录入的原草稿；首次建议、修改和确认结果保留，未重复识别。')
           return
         }
+        const run=stored?.recognitionRuns.find(item=>item.id===handle.recognitionRunId)
+        if(options&&linkPlan&&run?.errorCode==='WEB_READ_FAILED'){
+          const original=stored?.sourceVersions.find(item=>item.sourceId===handle.sourceId&&item.versionNo===1)
+          if(original?.createdAt)intakeClock=new Date(original.createdAt)
+          handle=await capturePersistenceService.beginRetry(handle.sourceId,{provider:captureRequest.provider,modelName:captureRequest.modelName,promptVersion:captureRequest.promptVersion,pipelineVersion:captureRequest.pipelineVersion,expectedSourceVersionId:handle.sourceVersionId})
+        }
       }
-      const providerInput={...input,now:intakeClock,sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId}
+      let workingContent=input.content
+      if(options&&linkPlan?.links.length&&!ordinaryEnvironment){
+        const outcome=await readNoticeLinks(input.content,linkPlan,options.readLinks)
+        webMessage=noticeLinkMessage(outcome)
+        if(outcome.unreadCount&&!outcome.failed)webMessage+=' 本次根据已粘贴文字和已读取内容整理。'
+        const webRead=JSON.parse(JSON.stringify({version:'web-read-1',partial:outcome.partial,unreadCount:outcome.unreadCount,recognitionTextLimit:24000,links:outcome.links,segments:outcome.segments.map(segment=>({...segment,recognizedStart:Math.min(segment.start,24000),recognizedEnd:Math.min(segment.end,24000),recognized:segment.start<24000}))})) as JsonValue
+        handle=await capturePersistenceService.attachWebSource(handle,outcome.content,webRead)
+        if(outcome.failed){await capturePersistenceService.failWebBeforeRecognition(handle);throw Error('WEB_SOURCE_UNREAD')}
+        workingContent=outcome.content
+        if(workingContent!==input.content){
+          localRecognition=buildLocalRecognition({sourceType:input.sourceType,sourceTitle:input.sourceTitle??input.fileName??localResult.source.title,content:workingContent,referenceTime:intakeClock,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone||'Asia/Shanghai',projects,tasks})
+          draftRecognition=input.manualSuggestion?recognitionResultFromManualSuggestion(localRecognition,input.manualSuggestion):localRecognition
+        }
+      }
+      const providerInput={...input,content:workingContent,now:intakeClock,sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId}
       const recognitionResult = await capturePersistenceService.recognize(
         handle,
         input.manualSuggestion
@@ -1023,15 +1079,15 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       const semanticSidecar=!input.manualSuggestion && useCloudRecognition
         ? ordinaryEnvironment?.semanticSidecar?.(handle.sourceId) ?? deepSeekExtractionService.semanticSidecar?.(handle.sourceId,handle.sourceVersionId)
         : undefined
-      const inferenceContext=ordinaryEnvironment?.recognitionContext?.(input.content) ?? ordinaryProviderContextFromSidecar(semanticSidecar) ?? {referenceTime:input.now?.toISOString() ?? recognitionResult.createdAt,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai'}
-      const assembled=assembleProductFirstSuggestion(recognitionResult,{sourceText:input.content,...inferenceContext,sourceWindows:sourceWindowsFromSidecar(semanticSidecar),sourceActionTimes:sourceActionTimesFromSidecar(semanticSidecar),workflowMaterialSupport:[...workflowMaterialSupportFromSidecar(semanticSidecar),...ordinaryWorkflowMaterialSupportFromSidecar(semanticSidecar)]})
+      const inferenceContext=ordinaryEnvironment?.recognitionContext?.(workingContent) ?? ordinaryProviderContextFromSidecar(semanticSidecar) ?? {referenceTime:input.now?.toISOString() ?? recognitionResult.createdAt,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai'}
+      const assembled=assembleProductFirstSuggestion(recognitionResult,{sourceText:workingContent,...inferenceContext,sourceWindows:sourceWindowsFromSidecar(semanticSidecar),sourceActionTimes:sourceActionTimesFromSidecar(semanticSidecar),workflowMaterialSupport:[...workflowMaterialSupportFromSidecar(semanticSidecar),...ordinaryWorkflowMaterialSupportFromSidecar(semanticSidecar)]})
       if(taskTimeAuthorityFromSidecar(semanticSidecar)){
-        const grounded=groundTaskTimeWindows(assembled.result,semanticSidecar,{index:await indexImmutableScopesV11(handle.sourceId,handle.sourceVersionId,input.content),...inferenceContext})
+        const grounded=groundTaskTimeWindows(assembled.result,semanticSidecar,{index:await indexImmutableScopesV11(handle.sourceId,handle.sourceVersionId,workingContent),...inferenceContext})
         assembled.result=grounded.result
       }
-      const sourceInformation=projectSourceInformation(assembled.result,{sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId,text:input.content})
+      const sourceInformation=projectSourceInformation(assembled.result,{sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId,text:workingContent})
       await canonicalWorkspaceRepository.transaction(w=>({...w,recognitionRuns:w.recognitionRuns.map(r=>r.id===handle.recognitionRunId?{...r,legacyData:{...r.legacyData,originalRecognitionResult:JSON.parse(JSON.stringify(recognitionResult))}}:r),extractionDrafts:w.extractionDrafts.map(d=>d.id===handle.draftId?{...d,result:assembled.result,legacyData:{...d.legacyData,...(semanticSidecar?{semanticSidecar:JSON.parse(JSON.stringify(semanticSidecar))}:{}),firstSuggestionDisplayed:JSON.parse(JSON.stringify(assembled.result)),firstSourceInformationDisplayed:JSON.parse(JSON.stringify(sourceInformation)),firstSuggestionAssembly:JSON.parse(JSON.stringify(assembled.audit)),materialChannelGrounding:JSON.parse(JSON.stringify(assembled.materialChannelAudit)),sourceWindowGrounding:JSON.parse(JSON.stringify(assembled.sourceWindowGrounding))}}:d)}))
-      if(directMode){await addDirect(handle.draftId);return}
+      if(directMode){await addDirect(handle.draftId);if(webMessage)setNotice(current=>current?{...current,text:`${current.text} · ${webMessage}`}:{text:webMessage,direct:true});return}
       const saved = await workspaceRepository.load()
       if (saved) applyWorkspaceView(saved)
       setOrdinaryCanonical(await canonicalWorkspaceRepository.load())
@@ -1047,6 +1103,10 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             : 'DeepSeek 当前未连接；来源已先保存，并由本地规则生成可编辑建议。',
       )
     } catch (error) {
+      if(error instanceof Error&&error.message==='WEB_SOURCE_UNREAD'){
+        const message=webMessage||'网页正文未能读取，请重试或粘贴正文；输入仍保留。'
+        await refreshOrdinary().catch(()=>undefined);setNotice({text:message});throw new Error(message,{cause:error})
+      }
       const reason = safeIntakeError(error, '整理暂时没有完成')
       if(directMode){
         // Recognition failure can use the preserved text. Storage/commit and
@@ -1054,9 +1114,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         if(!(error instanceof Error&&error.message==='DIRECT_READBACK_PENDING')){
           const w=await canonicalWorkspaceRepository.load().catch(()=>null)
           const source=w?.sources.find(s=>s.legacyData?.captureOperationId===captureRequest.operationId)
-          const failed=w?.recognitionRuns.find(r=>r.sourceVersionId===source?.currentVersionId&&r.status==='failed')
+          const failed=w?.recognitionRuns.filter(r=>r.sourceVersionId===source?.currentVersionId&&r.status==='failed').at(-1)
           const draft=failed&&w?.extractionDrafts.find(d=>d.recognitionRunId===failed.id&&!d.result)
-          if(draft){try{await addDirect(draft.id);setNotice(current=>current?{...current,text:current.text+' · 本次使用本机整理'}:current);return}catch(fallbackError){if(fallbackError instanceof Error&&fallbackError.message==='DIRECT_READBACK_PENDING'){await refreshOrdinary().catch(()=>undefined);throw new Error('内容已添加，暂时未能读回。请使用重新读取，不会重复添加。',{cause:fallbackError})}}}
+          if(draft){try{await addDirect(draft.id);setNotice(current=>current?{...current,text:current.text+' · 本次使用本机整理'+(webMessage?' · '+webMessage:'')}:current);return}catch(fallbackError){if(fallbackError instanceof Error&&fallbackError.message==='DIRECT_READBACK_PENDING'){await refreshOrdinary().catch(()=>undefined);throw new Error('内容已添加，暂时未能读回。请使用重新读取，不会重复添加。',{cause:fallbackError})}}}
         }
         await refreshOrdinary().catch(()=>undefined)
         const message=error instanceof Error&&error.message==='DIRECT_READBACK_PENDING'?'内容已添加，暂时未能读回。请使用重新读取，不会重复添加。':'这次未能完成添加，输入仍保留。请重试；已保存的内容不会重复添加。'
@@ -1255,8 +1315,8 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     }
   }
 
-  const handleQuickCapture = async (content: string, operationId: string) => {
-    await handleIntakeInput({ sourceType: 'text', content, operationId })
+  const handleQuickCapture = async (content: string, operationId: string,options?:{readLinks:boolean}) => {
+    await handleIntakeInput({ sourceType: 'text', content, operationId },options)
   }
 
   const handleUpdateDraft = async (
@@ -1833,6 +1893,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             onOpenIntake={() => setIntakeOpen(true)}
             onOpenTask={(task) => setSelectedTaskId(task.id)}
             onCompleteTask={handleComplete}
+            onSetEventCompletion={!runtime?handleSetEventCompletion:undefined}
             onScheduleTask={scheduleDirectTask}
             onSelectChoice={chooseDirectOption}
             taskChannels={workspaceTaskChannels(ordinaryCanonical)}
@@ -2186,6 +2247,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         <EventDetailPanel
           key={selectedEvent.id}
           onDirtyChange={dirty=>{if(dirty)eventDirtyIds.current.add(selectedEvent.id);else eventDirtyIds.current.delete(selectedEvent.id);setEventDirtyCount(eventDirtyIds.current.size)}}
+          onSetCompletion={!runtime?completed=>handleSetEventCompletion(selectedEvent.id,completed):undefined}
           compact={!runtime}
           onEdit={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedEvent.id))?edit=>persistDirectChange(selectedEvent.id,()=>editDirectItem(canonicalWorkspaceRepository,selectedEvent.id,edit)):undefined}
           onDelete={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedEvent.id))?async()=>{await persistDirectChange(selectedEvent.id,()=>deleteDirectItem(canonicalWorkspaceRepository,selectedEvent.id));setSelectedEventId(null)}:undefined}

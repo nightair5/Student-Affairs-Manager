@@ -7,6 +7,21 @@ import {FlowTaskList} from './FlowItemList'
 import {sortTimeline,timelineDate,timelineGroupLabel} from '../lib/flowTimelineDates'
 
 describe('timeline date semantics',()=>{
+ it('offers personal completion for an independent event and preserves an undated source clock',()=>{
+  const event:Event={id:'e-clock',title:'线上大会',description:'原文时长：15分钟左右\n时间说明：晚上9点15分（日期待定）',startAt:null,endAt:null,evidenceIds:[],needsConfirmation:true,createdAt:'',updatedAt:''}
+  const html=renderToStaticMarkup(<FlowTimeline tasks={[]} events={[event]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onOpenEvent={()=>{}} onComplete={()=>{}} onSetEventCompletion={async()=>{}} />)
+  expect(html).toContain('晚上9点15分（日期待定）')
+  expect(html).toContain('15分钟左右')
+  expect(html).toContain('完成线上大会')
+  expect(html).not.toContain('00:00')
+ })
+ it('keeps completed events available for restoration without displaying them as active',()=>{
+  const event:Event={id:'done',title:'已办日程',description:'',startAt:null,endAt:null,evidenceIds:[],needsConfirmation:false,createdAt:'',updatedAt:'',personalCompleted:true}
+  const html=renderToStaticMarkup(<FlowTimeline tasks={[]} events={[]} completedEvents={[event]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onOpenEvent={()=>{}} onComplete={()=>{}} onSetEventCompletion={async()=>{}} />)
+  expect(html).toContain('已完成日程')
+  expect(html).toContain('恢复未完成')
+  expect(html).not.toContain('data-event-id="done"')
+ })
  it('keeps date-only plans and deadlines grouped on their actual day without a clock time',()=>{
   expect(timelineDate(['2026-11-04T09:00','2026-11-03'])).toBe('2026-11-03')
   expect(timelineGroupLabel('2026-11-03')).toContain('11月3日')

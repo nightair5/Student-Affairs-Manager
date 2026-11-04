@@ -8,6 +8,7 @@ import { mergeLegacyViewIntoWorkspaceV8, workspaceV8ToLegacyView } from './legac
 import { applyPreparedV8Migration, prepareV7ToV8Migration, workspaceSnapshotHash } from './migration'
 import { CanonicalWorkspaceRepository, CURRENT_WORKSPACE_RECORD_KEY, MemoryWorkspaceRecordStore } from './repository'
 import { validateWorkspaceV8 } from './validators/workspaceValidator'
+import {commitDirectDraft,pendingDirectDraft} from './directIntake'
 
 function emptyWorkspace() {
   const workspace = createGoldenWorkspaceV8()
@@ -27,6 +28,43 @@ function result() {
 }
 
 describe('B4 source-before-AI persistence', () => {
+  it('keeps original text immutable and binds the AI run to the enriched web version', async () => {
+    const repository=new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore());await repository.save(emptyWorkspace())
+    const service=new CapturePersistenceService(repository),original='请提交申请表，原文 https://school.example/notice'
+    const input={...request('web-capture'),rawText:original}
+    const first=await service.beginCapture(input)
+    const expanded=original+'\n\n【网页正文 1：通知】\n11月8日17:00前提交申请表。'
+    const next=await service.attachWebSource(first,expanded,{version:'web-read-1',partial:false,segments:[{kind:'input',start:0,end:original.length}]},input.now)
+    const saved=(await repository.load())!
+    expect(saved.sourceVersions.find(v=>v.id===first.sourceVersionId)?.rawText).toBe(original)
+    expect(saved.sourceVersions.find(v=>v.id===next.sourceVersionId)?.rawText).toBe(expanded)
+    expect(saved.sources[0].currentVersionId).toBe(next.sourceVersionId)
+    expect(saved.recognitionRuns.find(r=>r.id===next.recognitionRunId)?.sourceVersionId).toBe(next.sourceVersionId)
+    expect(await service.beginCapture(input)).toMatchObject({duplicate:true,sourceVersionId:next.sourceVersionId,draftId:first.draftId})
+  })
+  it('never converts a failed URL-only read into a reading task',async()=>{
+    const repository=new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore());await repository.save(emptyWorkspace())
+    const service=new CapturePersistenceService(repository),input={...request('web-failed'),rawText:'https://school.example/unavailable'}
+    const handle=await service.beginCapture(input)
+    await service.attachWebSource(handle,input.rawText,{version:'web-read-1',partial:true},input.now)
+    await service.failWebBeforeRecognition(handle,input.now)
+    const saved=(await repository.load())!
+    expect(saved.sources[0].status).toBe('failed')
+    expect(saved.recognitionRuns[0].errorCode).toBe('WEB_READ_FAILED')
+    expect(pendingDirectDraft(saved,input.rawText)).toBeUndefined()
+    await expect(commitDirectDraft(repository,handle.draftId)).rejects.toThrow('DIRECT_SOURCE_NOT_AVAILABLE')
+    expect((await repository.load())!.tasks).toHaveLength(0)
+    const retry=await service.beginRetry(handle.sourceId,{provider:'local-rules',modelName:'local',promptVersion:'local-v1',pipelineVersion:'retry-v1',expectedSourceVersionId:handle.sourceVersionId})
+    const expanded=input.rawText+'\n\n【网页正文 1：通知】\n请提交申请表。'
+    const retried=await service.attachWebSource(retry,expanded,{version:'web-read-1',partial:false},input.now)
+    await service.recognize(retried,async()=>result())
+    const duplicate=await service.beginCapture(input)
+    const after=(await repository.load())!
+    expect(duplicate).toMatchObject({sourceId:handle.sourceId,sourceVersionId:retried.sourceVersionId,draftId:retried.draftId,duplicate:true})
+    expect(after.sources).toHaveLength(1)
+    expect(after.sourceVersions).toHaveLength(2)
+    expect(after.tasks).toHaveLength(0)
+  })
   it('saves a bare link as an uploaded Source without inventing a run or draft', async () => {
     const repository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore())
     await repository.save(emptyWorkspace())

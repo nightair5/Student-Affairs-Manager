@@ -561,6 +561,8 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
 
   const events: LegacyEvent[] = workspace.events.map((item) => ({
     id: item.id,
+    ...(item.legacyData?.personalCompletionV1 === true ? { personalCompleted: true } : {}),
+    ...(typeof item.legacyData?.personalCompletionRevisionV1 === 'string' ? { personalCompletionRevision: item.legacyData.personalCompletionRevisionV1 } : {}),
     ...(item.legacyData?.eventEstimateKnown === true ? { estimatedMinutesKnown: true, estimatedMinutes: typeof item.legacyData.eventEstimatedMinutes === 'number' ? item.legacyData.eventEstimatedMinutes : null } : {}),
     ...(item.legacyData?.directMode==='direct-mode-1'?{directTags:stringArray(item.legacyData.directTags)}:{}),
     projectId: item.projectId ?? undefined,

@@ -1,4 +1,5 @@
 import {boundedNetworkRetry} from './upstream-network-retry.mjs'
+import {decodeWebBytes,extractWebSource,sensitiveWebUrl} from './web-source-parser.mjs'
 import {runTwoStepGeneration} from './two-step-generation.mjs'
 import {runSimpleGeneration} from './simple-generation.mjs'
 import {runSemanticNoticeGeneration} from './semantic-notice-generation-v3.mjs'
@@ -288,12 +289,13 @@ function isIpLiteral(hostname) {
   return /^\d{1,3}(?:\.\d{1,3}){3}$/u.test(hostname) || hostname.includes(':')
 }
 
-function isPrivateIpAddress(address) {
+export function isPrivateIpAddress(address) {
   const normalized = address.toLowerCase()
-  if (normalized.startsWith('::ffff:')) return isPrivateIpAddress(normalized.slice(7))
+  // Reject all mapped/compatible forms, including hexadecimal IPv4 encodings.
+  if (normalized.startsWith('::')) return true
   if (normalized === '::1' || normalized === '::') return true
-  if (normalized.startsWith('fc') || normalized.startsWith('fd')) return true
-  if (/^fe[89ab]/u.test(normalized) || normalized.startsWith('2001:db8:')) return true
+  if (normalized.startsWith('fc') || normalized.startsWith('fd') || normalized.startsWith('ff')) return true
+  if (/^fe[89abcdef]/u.test(normalized) || normalized.startsWith('2001:db8:') || normalized.startsWith('2002:') || normalized.startsWith('2001:0:')) return true
   if (normalized.includes(':')) return false
   const parts = normalized.split('.').map(Number)
   if (parts.length !== 4 || parts.some((part) => !Number.isInteger(part) || part < 0 || part > 255)) return true
@@ -308,7 +310,12 @@ function isPrivateIpAddress(address) {
     || parts[0] >= 224
 }
 
-async function resolvePublicHostname(hostname) {
+function isOwnWebHost(hostname,ownHost='') {
+  const name=hostname.toLowerCase().replace(/\.$/u,'')
+  return Boolean(ownHost&&name===ownHost.toLowerCase().replace(/\.$/u,''))||name==='student-affairs.site'||name.endsWith('.student-affairs.site')
+}
+
+async function resolvePublicHostname(hostname,{ownHost=''}={}) {
   const lookup = async (type) => {
     const endpoint = new URL('https://cloudflare-dns.com/dns-query')
     endpoint.searchParams.set('name', hostname)
@@ -320,6 +327,7 @@ async function resolvePublicHostname(hostname) {
     if (!response.ok) throw new Error('WEB_DNS_FAILED')
     const payload = await response.json()
     if (!payload || typeof payload !== 'object' || !Array.isArray(payload.Answer)) return []
+    if(payload.Answer.some(answer=>answer?.type===5&&typeof answer.data==='string'&&(isPrivateHostname(answer.data.replace(/\.$/u,''))||isOwnWebHost(answer.data,ownHost))))throw Error('WEB_PRIVATE_ADDRESS_FORBIDDEN')
     return payload.Answer
       .filter((answer) => answer && (answer.type === 1 || answer.type === 28) && typeof answer.data === 'string')
       .map((answer) => answer.data)
@@ -330,6 +338,7 @@ async function resolvePublicHostname(hostname) {
 }
 
 function isPrivateHostname(hostname) {
+  hostname=hostname.toLowerCase().replace(/\.+$/u,'')
   const blockedSuffixes = ['.localhost', '.local', '.internal', '.lan', '.home', '.arpa', '.onion']
   return hostname === 'localhost'
     || !hostname.includes('.')
@@ -347,36 +356,13 @@ export function validateWebFetchTarget(value) {
   const hostname = url.hostname.toLowerCase()
   if (url.protocol !== 'https:') return { error: 'WEB_HTTPS_REQUIRED' }
   if (url.username || url.password) return { error: 'WEB_CREDENTIALS_FORBIDDEN' }
+  if (sensitiveWebUrl(url)) return { error: 'WEB_SENSITIVE_URL' }
   if (url.port && url.port !== '443') return { error: 'WEB_PORT_FORBIDDEN' }
   if (isPrivateHostname(hostname)) {
     return { error: 'WEB_PRIVATE_ADDRESS_FORBIDDEN' }
   }
   url.hash = ''
   return { url }
-}
-
-function decodeBasicHtmlEntities(value) {
-  return value
-    .replace(/&nbsp;|&#160;/giu, ' ')
-    .replace(/&amp;/giu, '&')
-    .replace(/&lt;/giu, '<')
-    .replace(/&gt;/giu, '>')
-    .replace(/&quot;/giu, '"')
-    .replace(/&#39;|&apos;/giu, "'")
-}
-
-function inertHtmlToText(value) {
-  return decodeBasicHtmlEntities(value)
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/giu, ' ')
-    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/giu, ' ')
-    .replace(/<noscript\b[^>]*>[\s\S]*?<\/noscript>/giu, ' ')
-    .replace(/<[^>]+>/gu, '\n')
-    .replace(/\r\n?/gu, '\n')
-    .split('\n')
-    .map((line) => line.replace(/\s+/gu, ' ').trim())
-    .filter(Boolean)
-    .join('\n')
-    .slice(0, 80_000)
 }
 
 async function readBoundedBody(response) {
@@ -420,6 +406,14 @@ async function fetchSourceText(request, env, fetcher, resolveHostname, isRateLim
     context.errorType = 'RATE_LIMITED'
     return failure('RATE_LIMITED', '网页读取请求过于频繁，请稍后再试。', 429, context.requestId)
   }
+  if(env.EXTRACTION_EDGE_RATE_REQUIRED==='true'){
+    try{
+      if(typeof env.EXTRACTION_RATE_LIMITER?.limit!=='function')throw Error('MISSING_EDGE_RATE_BINDING')
+      const limited=await env.EXTRACTION_RATE_LIMITER.limit({key:'student-affairs:web:v1:'+anonymousClientId(clientKey(request))})
+      if(limited?.success===false){context.errorType='RATE_LIMITED';return failure('RATE_LIMITED','网页读取请求过于频繁，请稍后再试。',429,context.requestId)}
+      if(limited?.success!==true)throw Error('INVALID_EDGE_RATE_BINDING')
+    }catch{context.errorType='RATE_GUARD_UNAVAILABLE';return failure('RATE_GUARD_UNAVAILABLE','网页读取暂不可用，请粘贴正文。',503,context.requestId)}
+  }
   const rawBody = await request.text()
   context.inputLength = rawBody.length
   if (new TextEncoder().encode(rawBody).byteLength > 4_096) {
@@ -443,6 +437,7 @@ async function fetchSourceText(request, env, fetcher, resolveHostname, isRateLim
     const messages = {
       WEB_HTTPS_REQUIRED: '只允许读取 HTTPS 网页。',
       WEB_CREDENTIALS_FORBIDDEN: '链接不得包含账号或密码。',
+      WEB_SENSITIVE_URL: '链接可能包含访问凭据，请粘贴不含凭据的正文。',
       WEB_PORT_FORBIDDEN: '只允许标准 HTTPS 端口。',
       WEB_PRIVATE_ADDRESS_FORBIDDEN: '不允许读取本机、私网、IP 地址或内部域名。',
       WEB_URL_INVALID: '网页链接无效。',
@@ -454,7 +449,11 @@ async function fetchSourceText(request, env, fetcher, resolveHostname, isRateLim
     let currentUrl = target.url
     let upstream
     for (let redirectCount = 0; redirectCount <= MAX_WEB_REDIRECTS; redirectCount += 1) {
-      await resolveHostname(currentUrl.hostname)
+      // Cloudflare's outbound supervisor permits the Worker's own zone origin
+      // as an exception to public-only egress. Never use that exception here.
+      const host=currentUrl.hostname.toLowerCase(),ownHost=new URL(request.url).hostname.toLowerCase()
+      if(isOwnWebHost(host,ownHost))throw Error('WEB_OWN_ORIGIN_FORBIDDEN')
+      await resolveHostname(currentUrl.hostname,{ownHost})
       upstream = await fetcher(currentUrl, {
         method: 'GET',
         redirect: 'manual',
@@ -483,8 +482,8 @@ async function fetchSourceText(request, env, fetcher, resolveHostname, isRateLim
     }
     if (!upstream) throw new Error('WEB_FETCH_FAILED')
     if (!upstream.ok) {
-      context.errorType = 'WEB_FETCH_FAILED'
-      return failure('WEB_FETCH_FAILED', '目标网页暂时无法读取。', 502, context.requestId)
+      context.errorType = upstream.status===401||upstream.status===403?'WEB_ACCESS_RESTRICTED':upstream.status===429?'WEB_TARGET_RATE_LIMITED':upstream.status===404||upstream.status===410?'WEB_NOT_FOUND':'WEB_FETCH_FAILED'
+      return failure(context.errorType, context.errorType==='WEB_ACCESS_RESTRICTED'?'目标网页需要授权或拒绝访问，请粘贴正文。':context.errorType==='WEB_TARGET_RATE_LIMITED'?'目标网站限制访问，请稍后再试。':context.errorType==='WEB_NOT_FOUND'?'网页不存在或已失效，请检查链接。':'目标网页暂时无法读取。', context.errorType==='WEB_TARGET_RATE_LIMITED'?429:context.errorType==='WEB_ACCESS_RESTRICTED'?403:context.errorType==='WEB_NOT_FOUND'?404:502, context.requestId)
     }
     const contentType = upstream.headers.get('content-type') ?? ''
     if (!/^(?:text\/html|text\/plain)(?:;|$)/iu.test(contentType)) {
@@ -496,35 +495,36 @@ async function fetchSourceText(request, env, fetcher, resolveHostname, isRateLim
       context.errorType = 'WEB_RESPONSE_TOO_LARGE'
       return failure('WEB_RESPONSE_TOO_LARGE', '网页正文超过 512 KB 安全上限。', 413, context.requestId)
     }
-    const html = new TextDecoder('utf-8', { fatal: false }).decode(bodyResult.bytes)
-    const titleMatch = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/iu)
-    const title = safeText(titleMatch ? inertHtmlToText(titleMatch[1]) : currentUrl.hostname, 160)
-    const text = inertHtmlToText(html)
-    if (!text) {
-      context.errorType = 'WEB_TEXT_EMPTY'
-      return failure('WEB_TEXT_EMPTY', '网页没有可读取的正文。', 422, context.requestId)
-    }
+    const decoded=decodeWebBytes(bodyResult.bytes,contentType)
+    const extracted=extractWebSource(decoded.text,{baseUrl:currentUrl.toString(),html:/^text\/html/iu.test(contentType)})
+    const title=safeText(extracted.title||currentUrl.hostname,160),text=extracted.text
     return success({
       finalUrl: currentUrl.toString(),
       title: title || currentUrl.hostname,
       text,
+      partial: decoded.partial||extracted.partial,
       fetchedAt: new Date().toISOString(),
     }, context.requestId)
   } catch (error) {
     const safeError = error instanceof Error ? error.message : ''
     context.errorType = timeoutError(error)
       ? 'WEB_FETCH_TIMEOUT'
-      : ['WEB_DNS_FAILED', 'WEB_PRIVATE_ADDRESS_FORBIDDEN'].includes(safeError) ? safeError : 'WEB_FETCH_FAILED'
+      : ['WEB_DNS_FAILED', 'WEB_PRIVATE_ADDRESS_FORBIDDEN','WEB_OWN_ORIGIN_FORBIDDEN','WEB_ACCESS_RESTRICTED','WEB_TEXT_UNAVAILABLE','WEB_TEXT_EMPTY','WEB_CHARSET_UNSUPPORTED'].includes(safeError) ? safeError : 'WEB_FETCH_FAILED'
     const messages = {
       WEB_FETCH_TIMEOUT: '网页读取超时，请稍后重试。',
       WEB_DNS_FAILED: '无法确认目标网页的公网地址。',
       WEB_PRIVATE_ADDRESS_FORBIDDEN: '目标域名解析到了不允许访问的地址。',
+      WEB_OWN_ORIGIN_FORBIDDEN: '不读取本站或内部服务链接，请粘贴通知正文。',
+      WEB_ACCESS_RESTRICTED: '目标网页需要授权或拒绝访问，请粘贴正文。',
+      WEB_TEXT_UNAVAILABLE: '网页正文未能读取，请粘贴正文。',
+      WEB_TEXT_EMPTY: '网页没有可读取的正文。',
+      WEB_CHARSET_UNSUPPORTED: '网页编码不受支持，请粘贴正文。',
       WEB_FETCH_FAILED: '网页读取失败，请粘贴正文后继续。',
     }
     return failure(
       context.errorType,
       messages[context.errorType],
-      context.errorType === 'WEB_FETCH_TIMEOUT' ? 504 : context.errorType === 'WEB_PRIVATE_ADDRESS_FORBIDDEN' ? 400 : 502,
+      context.errorType === 'WEB_FETCH_TIMEOUT' ? 504 : ['WEB_PRIVATE_ADDRESS_FORBIDDEN','WEB_OWN_ORIGIN_FORBIDDEN'].includes(context.errorType) ? 400 : context.errorType==='WEB_ACCESS_RESTRICTED'?403:['WEB_TEXT_EMPTY','WEB_TEXT_UNAVAILABLE','WEB_CHARSET_UNSUPPORTED'].includes(context.errorType)?422:502,
       context.requestId,
     )
   }

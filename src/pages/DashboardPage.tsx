@@ -28,10 +28,11 @@ interface DashboardPageProps {
   onShowCalendar?: () => void
   projects: Project[]
   pendingReviewCount: number
-  onQuickCapture: (content: string, operationId: string) => Promise<void>
+  onQuickCapture: (content: string, operationId: string, options?:{readLinks:boolean}) => Promise<void>
   onOpenIntake: () => void
   onOpenTask: (task: Task) => void
   onCompleteTask: (taskId: string) => void
+  onSetEventCompletion?: (eventId:string, completed:boolean) => Promise<void>
   onScheduleTask?: (taskId: string, date: string) => Promise<void>
   onSelectChoice?: (taskId: string, expectedSelected: string | null) => Promise<void>
   taskChannels?: Readonly<Record<string,string[]>>
@@ -65,6 +66,7 @@ export function DashboardPage({
   onOpenIntake,
   onOpenTask,
   onCompleteTask,
+  onSetEventCompletion,
   onScheduleTask, onSelectChoice, recentItemIds, taskChannels, canonicalWorkspace,
   onStartTask,
   onSnoozeTask,
@@ -75,6 +77,7 @@ export function DashboardPage({
 }: DashboardPageProps) {
   const [quickText, setQuickText] = useState('')
   const [quickError, setQuickError] = useState('')
+  const [readLinks,setReadLinks]=useState(true)
   const [isParsing, setIsParsing] = useState(false)
   const quickSubmitInFlight = useRef(false)
   const quickAttempt = useRef<{ content: string; operationId: string } | null>(null)
@@ -102,7 +105,7 @@ export function DashboardPage({
     setQuickError('')
     setIsParsing(true)
     try {
-      await onQuickCapture(content, attempt.operationId)
+      await onQuickCapture(content, attempt.operationId,{readLinks:directMode&&!engineeringInput&&!realInput&&!dateViews?readLinks:false})
       quickAttempt.current = null
       // Clear only the successfully submitted original; failed captures retain it.
       setQuickText(current => current === submittedText ? '' : current)
@@ -124,7 +127,7 @@ export function DashboardPage({
           </span>}
         </div>
         <textarea value={quickText} readOnly={isParsing} onChange={(event) => { setQuickText(event.target.value); setQuickError('') }} rows={3} placeholder="粘贴老师消息、群通知或网页正文……" aria-label="快速粘贴通知" aria-describedby={quickError ? 'quick-capture-error' : undefined} />
-        {isParsing && <p role="status">{directMode?'正在整理并添加，完成后会显示事项。':'正在保存和整理这份原文；完成后可继续放入下一份。'}</p>}
+        {isParsing && <p role="status">{directMode?(readLinks&&/https?:\/\//iu.test(quickText)?'正在读取相关公开网页并整理，完成后会显示事项。':'正在整理并添加，完成后会显示事项。'):'正在保存和整理这份原文；完成后可继续放入下一份。'}</p>}
         {quickError && <p id="quick-capture-error" role="alert">{quickError}</p>}
         <div className="quick-capture-actions">
           <button className="text-button" type="button" onClick={onOpenIntake} disabled={isParsing}><Upload size={15} />{realInput ? '打开文字、图片或文件录入' : dateViews ? '打开统一文字录入' : '上传文件或链接'}</button>
@@ -132,12 +135,14 @@ export function DashboardPage({
             {isParsing ? (realInput ? '正在打开输入核对…' : dateViews ? '正在保存工程草稿…' : '正在整理…') : <><Plus size={16} />{realInput ? '先核对输入文字' : dateViews ? '生成工程建议' : directMode ? '整理' : '智能拆分任务'}</>}
           </button>
         </div>
-        <small className="cloud-send-disclosure">{engineeringInput ? '本入口只接受当前列出的输入，回放已有建议，不新增模型请求；编辑、确认和保存使用普通产品路径。' : realInput ? `此按钮只打开输入核对，不立即发送。${realInput.networkDescription} 建议须经用户确认，仅保存到隔离测试库。` : dateViews ? '只接受旧匿名工程通知，在独立本机测试库保存；不发送文字、不调用模型，也不回退本地识别。请核对后确认。' : directMode ? '只发送这次通知；保存在当前浏览器，可修改或撤销。' : '点击整理只发送当前粘贴文字，不附带已有项目或任务；已配置服务调用时验证，结果仅为待确认建议。服务未配置时不发送，使用本地规则。'}</small>
+        {directMode&&!engineeringInput&&!realInput&&!dateViews&&<label className="cloud-send-disclosure"><input type="checkbox" checked={readLinks} disabled={isParsing} onChange={event=>setReadLinks(event.target.checked)}/> 整理时读取本次相关公开网页，并将可读取文字用于整理。</label>}
+        <small className="cloud-send-disclosure">{engineeringInput ? '本入口只接受当前列出的输入，回放已有建议，不新增模型请求；编辑、确认和保存使用普通产品路径。' : realInput ? `此按钮只打开输入核对，不立即发送。${realInput.networkDescription} 建议须经用户确认，仅保存到隔离测试库。` : dateViews ? '只接受旧匿名工程通知，在独立本机测试库保存；不发送文字、不调用模型，也不回退本地识别。请核对后确认。' : directMode ? '只发送本次内容；保存在当前浏览器，可修改或撤销。' : '点击整理只发送当前粘贴文字，不附带已有项目或任务；已配置服务调用时验证，结果仅为待确认建议。服务未配置时不发送，使用本地规则。'}</small>
       </form>
   )
 
   if(directMode){
-    const paired=onOpenEvent?pairFlowEvents(tasks,events,canonicalWorkspace):{linked:{},unpaired:events}
+    const activeEvents=events.filter(event=>!event.personalCompleted),completedEvents=events.filter(event=>event.personalCompleted)
+    const paired=onOpenEvent?pairFlowEvents(tasks,activeEvents,canonicalWorkspace):{linked:{},unpaired:activeEvents}
     const flow=homeFlow(tasks,paired.unpaired,new Date(),paired.linked),active=flow.dated.length+flow.undated.length
     const eventTimeHints=workspaceEventTimeHints(canonicalWorkspace)
     return <main className="page dashboard-page flow-dashboard">
@@ -145,8 +150,8 @@ export function DashboardPage({
       {captureForm}
       {historicalNotice&&historicalNotice.count>0&&<div className="flow-history-notice"><span>发现 {historicalNotice.count} 条以前的通知</span><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onAdd()}>{historicalNotice.busy?'正在添加…':'全部加入'}</button><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onIgnore()}>忽略</button></div>}
       {directNotice}
-      {(active>0||flow.deferred.length>0||flow.todayEvents.length>0||flow.upcomingEvents.length>0||flow.undatedEvents.length>0)&&<FlowTimeline tasks={[...flow.today,...flow.next,...flow.undated]} events={[...flow.todayEvents,...flow.upcomingEvents,...flow.undatedEvents]} deferred={flow.deferred.map(({task,reason})=>({task,reason}))} linked={paired.linked} eventTimeHints={eventTimeHints} channels={taskChannels??{}} highlightIds={recentItemIds??[]} onOpenTask={onOpenTask} onOpenEvent={onOpenEvent} onComplete={onCompleteTask} onSchedule={onScheduleTask} onSelectChoice={onSelectChoice}/>}
-      {!active&&!flow.deferred.length&&!flow.todayEvents.length&&!flow.upcomingEvents.length&&!flow.undatedEvents.length&&<section className="home-empty-state"><strong>{tasks.length?'事情都处理好了':'放入第一条通知，待办和日程就会出现在这里'}</strong><p>粘贴原消息，点一次整理即可。</p></section>}
+      {(active>0||flow.deferred.length>0||flow.todayEvents.length>0||flow.upcomingEvents.length>0||flow.undatedEvents.length>0||completedEvents.length>0)&&<FlowTimeline tasks={[...flow.today,...flow.next,...flow.undated]} events={[...flow.todayEvents,...flow.upcomingEvents,...flow.undatedEvents]} completedEvents={completedEvents} deferred={flow.deferred.map(({task,reason})=>({task,reason}))} linked={paired.linked} eventTimeHints={eventTimeHints} channels={taskChannels??{}} highlightIds={recentItemIds??[]} onOpenTask={onOpenTask} onOpenEvent={onOpenEvent} onComplete={onCompleteTask} onSetEventCompletion={onSetEventCompletion} onSchedule={onScheduleTask} onSelectChoice={onSelectChoice}/>}
+      {!active&&!flow.deferred.length&&!flow.todayEvents.length&&!flow.upcomingEvents.length&&!flow.undatedEvents.length&&!completedEvents.length&&<section className="home-empty-state"><strong>{tasks.length?'事情都处理好了':'放入第一条通知，待办和日程就会出现在这里'}</strong><p>粘贴原消息，点一次整理即可。</p></section>}
       {recentAdditions}
     </main>
   }

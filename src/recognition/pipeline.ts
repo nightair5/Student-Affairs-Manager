@@ -164,6 +164,24 @@ function eventDescription(evidence: string): string {
   return `${prefix}${action}`.trim().slice(0, 180)
 }
 
+/** Preserve only an unambiguous clock and an explicit duration in the cited
+ * event clause. Neither is promoted into a date or an invented end time. */
+function localEventTimeDescription(evidence:string,hasStartDate:boolean):string {
+  const lines=[eventDescription(evidence)]
+  const clauses=evidence.split(/[。；;！？\n]/u).filter(clause=>/(?:大会|会议|讲座|班会|答辩|面试|宣讲|说明会|分享会|座谈会|培训会)/u.test(clause))
+  if(clauses.length!==1)return lines.filter(Boolean).join('\n')
+  const clause=clauses[0]
+  if(!hasStartDate&&!/(?:备选|候选|任选|或者|或|截止|截至|最迟)/u.test(clause)){
+    const clocks=[...clause.matchAll(/(?:(?:凌晨|清晨|早上|上午|中午|下午|傍晚|晚上|夜间|夜里)\s*)?(?:\d{1,2}\s*[:：]\s*\d{2}|[\d一二两三四五六七八九十]{1,3}\s*[点时](?:\s*[\d一二两三四五六七八九十]{1,3}\s*分?|\s*半)?)/gu)]
+    if(clocks.length===1)lines.push(`时间说明：${clocks[0][0]}（日期待定）`)
+  }
+  const durations=[...clause.matchAll(/(?:召开|举行|举办|开|持续|时长|历时|用时)\s*((?:约|大约)?\s*[\d一二两三四五六七八九十半]+(?:个)?(?:小时|分钟)(?:左右)?)/gu)]
+  const trailing=/(?:大会|会议|讲座|培训|说明会|座谈会|分享会)\s*[，,：:]\s*((?:约|大约)?\s*[\d一二两三四五六七八九十半]+(?:个)?(?:小时|分钟)(?:左右)?)/u.exec(clause)
+  if(durations.length===1)lines.push(`原文时长：${durations[0][1].trim()}`)
+  else if(!durations.length&&trailing&&!/^\s*(?:后|之后|再)/u.test(clause.slice(trailing.index+trailing[0].length)))lines.push(`原文时长：${trailing[1].trim()}`)
+  return lines.filter(Boolean).join('\n')
+}
+
 const MAX_TIME_RAW_TEXT_LENGTH = 160
 
 function timePointRawText(evidence: string): string {
@@ -217,7 +235,8 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     const duration = item.evidence.match(/(?:预计|用时|耗时|需时)\s*(\d{1,3})\s*分钟/u)
     task.estimatedMinutes = duration ? Number(duration[1]) : null
     if (localActionNeedsDecision(item.evidence)) task.selected = false
-    const isEvent = Boolean(meeting) || eventPattern.test(task.title) && !/准备|制作|撰写|完成/u.test(task.title)
+    const namedGathering=/(?:大会|报告会|说明会|分享会|座谈会|培训会)/u.test(task.title)&&/(?:召开|举行|举办|开|参加|出席)/u.test(item.evidence)&&!/^(?:报名|申请|预约|填写)/u.test(task.title)
+    const isEvent = Boolean(meeting) || (eventPattern.test(task.title)||namedGathering) && !/准备|制作|撰写|完成/u.test(task.title)
     if (isEvent && localEventLocation(item.evidence) && localAttendanceDirective(item.evidence)) {
       task.inferenceLevel = 'explicit'
       task.selected = true
@@ -266,8 +285,8 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
         })
       }
       const eventLocation = localEventLocation(item.evidence)
-      const namedMeeting = /^(?:参加|出席|开会)$/u.test(task.title) ? localNamedMeeting(item.evidence) : null
-      events.push({ tempId: `event-${index + 1}`, title: meeting?.title ?? eventLocation?.name ?? namedMeeting ?? task.title, description: eventDescription(item.evidence), startTimePointTempId: timePointId, endTimePointTempId: endTimePointId, location: meeting?.location ?? eventLocation?.location ?? null, evidenceIds: [evidenceId], confidence: task.confidence, inferenceLevel: task.inferenceLevel, selected: meeting ? false : task.selected })
+      const namedMeeting = (namedGathering||/^(?:参加|出席|开会)$/u.test(task.title)) ? localNamedMeeting(item.evidence) : null
+      events.push({ tempId: `event-${index + 1}`, title: meeting?.title ?? eventLocation?.name ?? namedMeeting ?? task.title, description: localEventTimeDescription(item.evidence,Boolean(timeAst.normalizedValue)), startTimePointTempId: timePointId, endTimePointTempId: endTimePointId, location: meeting?.location ?? eventLocation?.location ?? null, evidenceIds: [evidenceId], confidence: task.confidence, inferenceLevel: task.inferenceLevel, selected: meeting ? false : task.selected })
       const preparation = preparationAction(item.evidence)
       if (preparation) {
         const preparationIndex = parsed.length + index

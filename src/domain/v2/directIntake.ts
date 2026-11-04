@@ -53,6 +53,7 @@ export function pendingDirectDraft(w: WorkspaceV8, text: string): ExtractionDraf
     // unselected suggestions. A later click starts a new independent capture.
     if(directBatch(d))return false
     const run=w.recognitionRuns.find(r=>r.id===d.recognitionRunId),version=run&&w.sourceVersions.find(v=>v.id===run.sourceVersionId)
+    if(run?.errorCode==='WEB_READ_FAILED')return false
     const source=version&&w.sources.find(s=>s.id===version.sourceId)
     const retryable=d.result||(d.status==='failed'&&run?.status==='failed')
     return Boolean(retryable&&['needs_review','failed','partially_confirmed'].includes(d.status)&&source?.currentVersionId===version?.id&&version?.rawText?.replace(/\r\n?/gu,'\n').trim()===normalized)
@@ -79,7 +80,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
   await repo.transaction(w=>{
     const d=w.extractionDrafts.find(x=>x.id===draftId),run=d&&w.recognitionRuns.find(x=>x.id===d.recognitionRunId)
     const v=run&&w.sourceVersions.find(x=>x.id===run.sourceVersionId),s=v&&w.sources.find(x=>x.id===v.sourceId)
-    if(!d||!v?.rawText||!s||s.currentVersionId!==v.id||run?.status==='running')throw Error('DIRECT_SOURCE_NOT_AVAILABLE')
+    if(!d||!v?.rawText||!s||s.currentVersionId!==v.id||run?.status==='running'||run?.errorCode==='WEB_READ_FAILED')throw Error('DIRECT_SOURCE_NOT_AVAILABLE')
     const recovery=d.legacyData?.storedDraftRecovery
     if(record(recovery)&&recovery.mode==='isolated_historical_result')throw Error('DIRECT_HISTORICAL_ANSWER_ISOLATED')
     // A new capture may intentionally contain the same text. Only the same
@@ -108,7 +109,8 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const requestDiagnostic=record(observed)&&observed.version==='recognition-request-observation-1'?observed as unknown as RecognitionRequestDiagnostic:undefined
     const readingOnly=converted.result.standaloneTasks.every(t=>t.actionVerb==='查看')&&converted.result.events.length===0
     const droppedAction=!localFallback&&readingOnly&&((requestDiagnostic?.modelActionCount??0)>0||rawInput.sourceSummary.requiresAction)
-    const processing=droppedAction||(requestDiagnostic?.compilerLossCount??0)>0||rawInput.quality.reviewReasons.some(reason=>/部分提取|部分内容尚未完整|未完整结束|后半部分可能尚未处理/u.test(reason))?'partial':'complete'
+    const webRead=record(s.legacyData?.webRead)?s.legacyData.webRead:null
+    const processing=droppedAction||webRead?.partial===true||(requestDiagnostic?.compilerLossCount??0)>0||rawInput.quality.reviewReasons.some(reason=>/部分提取|部分内容尚未完整|未完整结束|后半部分可能尚未处理/u.test(reason))?'partial':'complete'
     const result=converted.result
     const newTasks=new Set(result.standaloneTasks.filter(t=>!w.tasks.some(x=>x.id===`task:${d.id}:${t.tempId}`)).map(t=>t.tempId))
     const newEvents=new Set(result.events.filter(e=>!w.events.some(x=>x.id===`event:${d.id}:${e.tempId}`)).map(e=>e.tempId))

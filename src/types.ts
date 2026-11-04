@@ -354,6 +354,9 @@ export interface WorkPackage {
 }
 
 export interface Event {
+  /** Personal handling only; does not mean the organiser cancelled or ended it. */
+  personalCompleted?: boolean
+  personalCompletionRevision?: string
   directTags?: string[]
   estimatedMinutes?: number | null
   estimatedMinutesKnown?: boolean

@@ -3,11 +3,15 @@ export interface LinkExtractionResult {
   title: string
   text: string
   fetchedAt: string
+  partial?: boolean
 }
 
 interface LinkExtractionErrorPayload {
   error?: unknown
   message?: unknown
+}
+export class LinkExtractionError extends Error {
+  constructor(message:string,readonly code:string){super(message);this.name='LinkExtractionError'}
 }
 
 function errorMessage(payload: LinkExtractionErrorPayload | null, status: number): string {
@@ -26,9 +30,14 @@ export async function fetchAuthorizedLinkText(
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     body: JSON.stringify({ url }),
+    signal: AbortSignal.timeout(15_000),
   })
   const data: unknown = await response.json().catch(() => null)
-  if (!response.ok) throw new Error(errorMessage(data as LinkExtractionErrorPayload | null, response.status))
+  if (!response.ok) {
+    const payload=data as LinkExtractionErrorPayload|null
+    const code=typeof payload?.error==='string'&&/^[A-Z_]{1,80}$/u.test(payload.error)?payload.error:'WEB_FETCH_FAILED'
+    throw new LinkExtractionError(errorMessage(payload,response.status),code)
+  }
   if (!data || typeof data !== 'object') throw new Error('网页读取服务返回了无法识别的结果。')
   const result = data as Partial<LinkExtractionResult>
   if (
@@ -45,5 +54,6 @@ export async function fetchAuthorizedLinkText(
     title: result.title,
     text: result.text,
     fetchedAt: result.fetchedAt,
+    partial: result.partial === true,
   }
 }

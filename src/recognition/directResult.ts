@@ -191,7 +191,10 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if (!times.some(p => p.relatedTaskTempIds.includes(t.tempId) && p.normalizedValue)) tagsById.get(t.tempId)!.push('时间待定')
     items.push({tempId:t.tempId,kind:'task',tags:[...new Set(tagsById.get(t.tempId)!)]})
   })
-  const eventIsPrimary=events.length>0&&(eventDetailContract||events.some(e=>e.tempId==='local-labelled-event'||e.tempId==='direct-local-revised-event'||e.tempId.startsWith('direct-session:')))
+  // A retained, source-grounded event is itself an actionable item.  The
+  // user's completion control works for events too; a second reading task
+  // would duplicate the same notice without adding information.
+  const eventIsPrimary=events.length>0
   if (!tasks.length && !eventIsPrimary) {
     // Owner-authored read action, not a claim that the notice demanded it.
     // Even a cancellation has an update to read; its cancelled action is absent.

@@ -296,7 +296,7 @@ export class CapturePersistenceService {
     await this.repository.transaction((workspace) => {
       const existing = workspace.sources.find((item) => item.legacyData?.captureOperationId === request.operationId)
       if (existing) {
-        const version = workspace.sourceVersions.find((item) => item.sourceId === existing.id)
+        const version = workspace.sourceVersions.find((item) => item.id === existing.currentVersionId && item.sourceId === existing.id)
         const run = version && [...workspace.recognitionRuns].reverse().find((item) => item.sourceVersionId === version.id)
         const draft = run && workspace.extractionDrafts.find((item) => item.recognitionRunId === run.id)
         if (!version || !run || !draft) throw new Error('CAPTURE_IDEMPOTENCY_CHAIN_INVALID')
@@ -341,6 +341,45 @@ export class CapturePersistenceService {
     })
     if (!handle) throw new Error('CAPTURE_BEGIN_FAILED')
     return handle
+  }
+
+  /** Save the original input first, then create an immutable enriched source
+   * version before the recognition request is sent. Evidence offsets refer to
+   * this exact enriched version, never to a separately reconstructed string. */
+  async attachWebSource(handle:CaptureHandle,rawText:string,webRead:JsonValue,now=new Date().toISOString()):Promise<CaptureHandle>{
+    let updated:CaptureHandle|null=null
+    await this.repository.transaction(workspace=>{
+      const source=workspace.sources.find(item=>item.id===handle.sourceId)
+      const version=workspace.sourceVersions.find(item=>item.id===handle.sourceVersionId)
+      const run=workspace.recognitionRuns.find(item=>item.id===handle.recognitionRunId)
+      const draft=workspace.extractionDrafts.find(item=>item.id===handle.draftId)
+      if(!source||!version||!run||!draft||source.currentVersionId!==version.id||run.sourceVersionId!==version.id||run.status!=='queued'||draft.status!=='processing'||draft.result)throw Error('WEB_CAPTURE_SOURCE_CHANGED')
+      let sourceVersionId=version.id
+      const sourceVersions=[...workspace.sourceVersions]
+      if(rawText!==version.rawText){
+        const versionNo=workspace.sourceVersions.filter(item=>item.sourceId===source.id).reduce((max,item)=>Math.max(max,item.versionNo),0)+1
+        sourceVersionId=`${source.id}:version:${versionNo}`
+        sourceVersions.push({id:sourceVersionId,sourceId:source.id,versionNo,contentHash:workspaceSnapshotHash(rawText),rawText,rawTextRef:null,createdAt:now,legacyData:{webRead}})
+      }
+      updated={...handle,sourceVersionId,duplicate:false}
+      return {...workspace,sourceVersions,
+        sources:workspace.sources.map(item=>item.id===source.id?{...item,currentVersionId:sourceVersionId,updatedAt:now,legacyData:{...item.legacyData,webRead}}:item),
+        recognitionRuns:workspace.recognitionRuns.map(item=>item.id===run.id?{...item,sourceVersionId,legacyData:{...item.legacyData,webRead}}:item),savedAt:now}
+    })
+    if(!updated)throw Error('WEB_CAPTURE_SOURCE_NOT_SAVED')
+    return updated
+  }
+
+  /** No model request has been sent when a URL-only read cannot proceed. */
+  async failWebBeforeRecognition(handle:CaptureHandle,now=new Date().toISOString()):Promise<void>{
+    await this.repository.transaction(workspace=>{
+      const run=workspace.recognitionRuns.find(item=>item.id===handle.recognitionRunId)
+      if(!run||run.status!=='queued'||!ownsSourceAggregate(workspace,handle))throw Error('WEB_CAPTURE_SOURCE_CHANGED')
+      return {...workspace,
+        recognitionRuns:workspace.recognitionRuns.map(item=>item.id===run.id?{...item,status:'failed' as const,completedAt:now,errorCode:'WEB_READ_FAILED'}:item),
+        extractionDrafts:workspace.extractionDrafts.map(item=>item.id===handle.draftId?{...item,status:'failed' as const,updatedAt:now}:item),
+        sources:workspace.sources.map(item=>item.id===handle.sourceId?{...item,status:'failed' as const,updatedAt:now}:item),savedAt:now}
+    })
   }
 
   async beginRetry(sourceId: string, request: SourceRetryRequest): Promise<CaptureHandle> {

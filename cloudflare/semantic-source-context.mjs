@@ -137,7 +137,7 @@ export function sourceChannelClosingDeadline(source,item,span){
 
 /** When an item cites its own eligibility clause but paraphrases the condition,
  * keep the original, rather than certifying the paraphrase as a literal quote. */
-export function sourceEvidenceCondition(source,refs){
+export function sourceEvidenceCondition(source,refs,item){
  const found=[]
  for(const ref of refs){
   const quote=locateSourceQuote(ref,source);if(!quote)continue
@@ -145,6 +145,7 @@ export function sourceEvidenceCondition(source,refs){
    /(?:(?:仅限|只限|面向|限于|仅|已完成|已经|完成)[^，,。；;\n]{2,60}?(?:同学|学生|人员|成员|团队)|(?:需|需要|有需要|有需求)[^，,。；;\n]{1,25}?(?:者|同学|学生|人员|团队))(?=可|可以|方可|须|需|请|于|有意|[，,。；;]|$)/gu,
    /(?:需要|有需要|有需求)[^，,。；;\n]{1,25}?的[^，,。；;\n]{1,8}?(?=(?:[，,]\s*)?(?:可|可以|方可|须|需|请|于|应))/gu,
    /(?:入选|获选|入围|获批|中选)(?:的)?(?:同学|学生|人员|团队|者)(?=可|可以|方可|须|需|请|于|[，,。；;]|$)/gu,
+   /(?:^|(?<=[。；;\n]))[^，,。；;\n]{2,24}的(?=[，,]\s*(?:才|另|再|还)?(?:须|需|应|请|必须))/gu,
   ]
   for(const pattern of patterns)for(const match of quote.literal.matchAll(pattern)){
    if(/(?:不符合|不得|禁止|无需|不需|不可)/u.test(match[0])||/(?:未|不|非|无)$/u.test(quote.literal.slice(Math.max(0,match.index-3),match.index)))continue
@@ -152,7 +153,16 @@ export function sourceEvidenceCondition(source,refs){
    if(!found.some(item=>item.start===start&&item.end===end))found.push({start,end,literal:source.slice(start,end)})
   }
  }
- return found.length===1?found[0]:null
+ if(found.length===1)return found[0]
+ if(found.length>1&&item&&typeof item.action==='string'&&typeof item.object==='string'){
+  const action=compactText(item.action),object=compactText(item.object)
+  const relevant=found.filter(span=>{
+   const tail=source.slice(span.end),stop=tail.search(/[。；;\n！？]/u),clause=compactText(source.slice(span.start,stop<0?source.length:span.end+stop))
+   return action.length>0&&object.length>1&&clause.includes(action)&&clause.includes(object)
+  })
+  if(relevant.length===1)return relevant[0]
+ }
+ return null
 }
 
 /** An explicit shared-day statement may bind a model-owned date to that same
@@ -268,8 +278,16 @@ export function sourceEventDuration(source,item){
   for(const match of matches){
    const before=span.literal.slice(Math.max(0,match.index-5),match.index),after=span.literal.slice(match.index+match[0].length)
    if(/提前\s*$/u.test(before)&&/^(?:入场|到场|签到)/u.test(after))continue
-   return {kind:/^(?:预留|留出|留)$/u.test(match[1])?'reservation':'duration',literal:match[3],sourceText:span.literal}
+   const approximate=match[2]?'约':''
+   const suffix=/^\s*(?:左右|上下)/u.exec(after)?.[0]?.trim()??''
+   return {kind:/^(?:预留|留出|留)$/u.test(match[1])?'reservation':'duration',literal:approximate+match[3]+suffix,sourceText:span.literal}
   }
+  // "开15分钟左右的大会" is a stated event duration, not an arrival buffer.
+  // Require an actual event noun in the same grounded quote.
+  const meeting=/(?:开|举办)\s*(约)?\s*([0-9０-９一二两三四五六七八九十半]+(?:个)?(?:小时|分钟))\s*(左右|上下)?\s*(?:的)?[^，,。；;\n]{0,12}(?:大会|会议|讲座|培训|说明会|座谈会|交流会|分享会)/u.exec(span.literal)
+  if(meeting&&!/提前\s*$/u.test(span.literal.slice(Math.max(0,meeting.index-5),meeting.index)))return {kind:'duration',literal:(meeting[1]??'')+meeting[2]+(meeting[3]??''),sourceText:span.literal}
+  const trailing=/(?:大会|会议|讲座|培训|说明会|座谈会|交流会|分享会)\s*(?:[，,：:]\s*|时长\s*[：:]?\s*|持续\s*)(约|大约)?\s*([0-9０-９一二两三四五六七八九十半]+(?:个)?(?:小时|分钟))\s*(左右|上下)?/u.exec(span.literal)
+  if(trailing&&!/^\s*(?:后|之后|再)/u.test(span.literal.slice(trailing.index+trailing[0].length)))return {kind:'duration',literal:(trailing[1]??'')+trailing[2]+(trailing[3]??''),sourceText:span.literal}
  }
  return null
 }

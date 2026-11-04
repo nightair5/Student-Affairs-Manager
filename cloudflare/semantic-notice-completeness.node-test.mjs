@@ -12,6 +12,34 @@ function compile(source,raw){
 }
 const time=(r,event,role)=>r.timePoints.find(p=>p.tempId===event[role==='start'?'startTimePointTempId':'endTimePointTempId'])?.normalizedValue??null
 
+test('a clock with no source day remains readable without creating a date or end',()=>{
+ const source='晚上9点15分，我们开15分钟左右的年级线上大会。'
+ const {result}=compile(source,{kind:'event',items:[{key:'a',kind:'event',title:'年级线上大会',evidence:[source],times:[{role:'start',raw:'晚上9点15分'}]}]})
+ assert.equal(result.events[0].startTimePointTempId,null)
+ assert.equal(result.events[0].endTimePointTempId,null)
+ assert.match(result.events[0].description,/时间说明：晚上9点15分（日期待定）/u)
+ assert.match(result.events[0].description,/原文时长：15分钟左右/u)
+})
+
+test('a paraphrased duration-only notice does not repeat the original duration',()=>{
+ const source='今天晚上9点15分召开线上大会，会议时长约15分钟。'
+ const {result}=compile(source,{kind:'event',items:[{key:'a',kind:'event',title:'线上大会',evidence:[source],times:[{role:'start',raw:'今天晚上9点15分'}],notices:['会议时长约15分钟']}]})
+ assert.match(result.events[0].description,/原文时长/u)
+ assert.doesNotMatch(result.events[0].description,/参加须知：会议时长/u)
+})
+test('an approximate duration after the event name is kept without making an end',()=>{
+ const source='晚上9点15分召开会议，约15分钟。'
+ const {result}=compile(source,{kind:'event',items:[{key:'a',kind:'event',title:'会议',evidence:[source],times:[{role:'start',raw:'晚上9点15分'}]}]})
+ assert.match(result.events[0].description,/原文时长：约15分钟/u)
+ assert.equal(result.events[0].endTimePointTempId,null)
+})
+
+test('a delay until the event starts is not the duration',()=>{
+ const source='准备参加会议，约15分钟后开始。'
+ const {result}=compile(source,{kind:'event',items:[{key:'a',kind:'event',title:'会议',evidence:[source]}]})
+ assert.doesNotMatch(result.events[0].description,/原文时长/u)
+})
+
 test('an explicitly unknown event end never inherits the start date',()=>{
  const source='11月13日19:00在报告厅召开答辩说明会，结束时间另行通知。'
  const {result}=compile(source,{kind:'event',items:[{key:'a',kind:'event',title:'答辩说明会',evidence:['11月13日19:00在报告厅召开答辩说明会','结束时间另行通知'],times:[{role:'start',raw:'11月13日19:00'},{role:'end',raw:'结束时间另行通知'}],location:'报告厅',notices:['结束时间另行通知']}]})
@@ -107,6 +135,14 @@ test('a paraphrased qualification keeps its item-cited original wording',()=>{
  const {result}=compile(source,{items:[{key:'a',kind:'task',title:'提交申请表',action:'提交',object:'申请表',evidence:['仅修过实验室安全课的同学可填写申请表'],condition:'已经上过实验室安全课程的学生',times:[{role:'deadline',raw:'11月22日17:00前'}]}]})
  assert.match(result.standaloneTasks[0].description,/仅修过实验室安全课的同学/u)
  assert.doesNotMatch(result.standaloneTasks[0].description,/已经上过实验室安全课程/u)
+ assert.equal(result.standaloneTasks[0].userConfirmationRequired,true)
+})
+
+test('a personal choice before a cited fee stays conditional even alongside a different condition',()=>{
+ const source='申请纸质证明的，需另缴纳制作费用。居住地有变更的，须提供住所证明。'
+ const {result}=compile(source,{items:[{key:'a',kind:'task',title:'缴纳制作费用',action:'缴纳',object:'制作费用',evidence:['申请纸质证明的，需另缴纳制作费用','居住地有变更的，须提供住所证明']}]})
+ assert.match(result.standaloneTasks[0].description,/按需办理：申请纸质证明的/u)
+ assert.doesNotMatch(result.standaloneTasks[0].description,/按需办理：居住地有变更的/u)
  assert.equal(result.standaloneTasks[0].userConfirmationRequired,true)
 })
 

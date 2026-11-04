@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "student-affairs-manager",
-  "main": "./cloudflare/worker.mjs",
+  "main": "./cloudflare/worker-entry.mjs",
   "compatibility_date": "2026-08-02",
   "workers_dev": true,
   "vars": {

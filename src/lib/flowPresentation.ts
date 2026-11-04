@@ -37,7 +37,10 @@ export function planAfterDeadline(plan:string|null|undefined,deadline:string|nul
   } catch { return false }
 }
 export function flowEventDate(event:Event,hint?:string):string {
-  if(!event.startAt)return event.endAt?`开始时间待定 · ${flowDate(event.endAt)}结束`:hint?`${hint} · 时间待定`:'时间待定'
+  if(!event.startAt){
+    const clock=event.description.split(/\r?\n/u).map(line=>/^时间说明：(.+（日期待定）)$/u.exec(line.trim())?.[1]).find(Boolean)
+    return event.endAt?`开始时间待定 · ${flowDate(event.endAt)}结束`:clock??(hint?`${hint} · 时间待定`:'时间待定')
+  }
   const start=flowDate(event.startAt)
   if(!event.endAt)return start
   return `${start} — ${flowDate(event.endAt)}`

@@ -12,6 +12,7 @@ export interface EventDetailPanelProps {
   onEdit?:(edit:DirectEdit)=>Promise<void>
   onDirtyChange?:(dirty:boolean)=>void
   onDelete?:()=>Promise<void>
+  onSetCompletion?:(completed:boolean)=>Promise<void>
   isolatedFacts?: { startLabel: string; endLabel: string; content: ReactNode }
   event: Event
   project?: Project
