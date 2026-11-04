@@ -61,23 +61,28 @@ export function sourceBackedChoicePairs(source,raw,records){
   // The same document can be named with its delivery form attached (for
   // example, a scan and a paper copy). The source choice and each branch's
   // own citation are still required before linking either obligation.
-  const choiceObject=value=>compact(value).replace(/(?:电子版|纸质版|纸质件|纸版|打印版|打印件|扫描件|扫描版|电子件)/gu,'')
+  const choiceObject=value=>compact(value).replace(/(?:电子版|纸质版|纸质件|纸版|打印版|打印件|扫描件|扫描版|电子件)/gu,'').replace(/^(?:纸质|电子)(?=[\p{Script=Han}A-Za-z0-9])/u,'')
   const firstObject=choiceObject(a.item.object),secondObject=choiceObject(b.item.object)
   const sharedObject=firstObject.length>=2&&firstObject===secondObject
   const names=record=>new Set((Array.isArray(record.item.materials)?record.item.materials:[]).flatMap(key=>{
    const material=materials.find(value=>value?.key===key)
-   return [key,material?.name&&compact(material.name)].filter(Boolean)
+   return [key,material?.name&&choiceObject(material.name)].filter(Boolean)
   }))
   const aNames=names(a),bNames=names(b),sharedMaterial=[...aNames].some(value=>bNames.has(value))
   if(!sharedObject&&!sharedMaterial)continue
-  const own=record=>(Array.isArray(record.item.evidence)?record.item.evidence:[]).flatMap(quote=>{
-   const span=locateSourceQuote(quote,source);return span?[span]:[]
-  }).sort((x,y)=>x.start-y.start)[0]
-  const first=own(a),second=own(b)
+  const own=(record,other)=>{
+   const spans=(Array.isArray(record.item.evidence)?record.item.evidence:[]).flatMap(quote=>{
+    const span=locateSourceQuote(quote,source);return span?[span]:[]
+   })
+   const form=compact(record.item.deliveryForm),otherForm=compact(other.item.deliveryForm)
+   const scoped=form?spans.filter(span=>compact(span.literal).includes(form)&&(!otherForm||!compact(span.literal).includes(otherForm))):[]
+   return (scoped.length?scoped:spans).sort((x,y)=>x.start-y.start)[0]
+  }
+  const first=own(a,b),second=own(b,a)
   if(!first||!second||first.start===second.start&&first.end===second.end)continue
   const left=Math.min(first.start,second.start),right=Math.max(first.end,second.end)
   if(right-left>600)continue
-  const sourceChoices=[...source.matchAll(/(?:任选(?:一项|一种|其一)|二选一|两者择一|只需选择一种|(?:只需(?:要)?|仅需|可)?(?:从[^。！？\n]{0,20})?选择(?:其中)?(?:一种|一项))/gu)]
+  const sourceChoices=[...source.matchAll(/(?:任选(?:一项|一种|其一)|二选一|两者择一|只需选择一种|(?:只需(?:要)?|仅需|可)?(?:从[^。！？\n]{0,20})?选择(?:其中)?(?:一种|一项)|(?:只需(?:要)?|仅需|只要)(?:选择|选)(?:其中)?(?:一种|一项|一个)(?:方式|渠道|形式)?|(?:无需|不必|不需要|不用)(?:两种|两份|两者)(?:都|全部)(?:提交|上传|交|办理))/gu)]
    .filter(match=>match.index>=Math.max(0,left-180)&&match.index<=right+80)
   if(!sourceChoices.length)continue
   const marker=sourceChoices.filter(match=>match.index<=left).at(-1)??sourceChoices[0]
@@ -94,7 +99,7 @@ export function sourceBackedChoicePairs(source,raw,records){
    !/(?:不必|无需|不需要|不要求|不强制|不须|不用)[^，,。；;]{0,8}$/u.test(region.slice(Math.max(0,match.index-12),match.index)))
   if(mandatory)continue
   const unrelated=tasks.filter(record=>record!==a&&record!==b).some(record=>{
-   const span=own(record);return span&&span.start>=regionStart&&span.start<regionEnd
+   const span=own(record,{});return span&&span.start>=regionStart&&span.start<regionEnd
   })
   if(unrelated)continue
   pairs.push({records:group,quote:marker[0],start:marker.index})
@@ -109,6 +114,56 @@ export function sourceBackedChoicePairs(source,raw,records){
 export function expandSupportedSingleChoices(input,source){
  const raw=structuredClone(input),changes=[]
  if(!Array.isArray(raw.items)||!Array.isArray(raw.materials)||(Array.isArray(raw.sharedRequirements)&&raw.sharedRequirements.length))return {raw,changes}
+ // A model can put the branch citations and labelled destinations on the
+ // shared material instead of the combined task. Reuse those existing facts
+ // only when both citations, their own deadline and their own labelled channel
+ // are unique and the original explicitly makes them mutually exclusive.
+ for(const item of [...raw.items]){
+  if(item?.kind!=='task'||item.status==='cancelled'||!item.action||!item.object||item.condition||item.location||item.description||(item.dependsOn?.length??0))continue
+  if(raw.items.some(other=>other!==item&&Array.isArray(other?.dependsOn)&&other.dependsOn.includes(item.key)))continue
+  const refs=Array.isArray(item.materials)?item.materials:[],times=Array.isArray(item.times)?item.times:[]
+  if(refs.length!==1||times.length!==2||times.some(value=>value?.role!=='deadline'||typeof value.raw!=='string'))continue
+  const material=raw.materials.find(value=>value?.key===refs[0])
+  if(!material||material.quantity!=null||(material.naming?.length??0)||raw.items.some(other=>other!==item&&Array.isArray(other?.materials)&&other.materials.includes(material.key))||(material.owners??[]).some(owner=>owner!==item.key))continue
+  const forms=[...new Set((Array.isArray(material.formats)?material.formats:[]).filter(value=>typeof value==='string'&&value.trim().length>=2))]
+  if(forms.length!==2)continue
+  const taskQuotes=(Array.isArray(item.evidence)?item.evidence:[]).filter(value=>typeof value==='string'&&locateSourceQuote(value,source))
+  const choiceQuotes=taskQuotes.filter(quote=>alternatives.test(quote))
+  if(choiceQuotes.length!==1)continue
+  const marker=choiceQuotes[0].match(alternatives)?.[0],markerAt=marker?source.indexOf(marker):-1
+  if(!marker||markerAt<0||source.indexOf(marker,markerAt+marker.length)!==-1||/(?:不(?:能|可|允许|得)|禁止)\s*$/u.test(source.slice(Math.max(0,markerAt-12),markerAt)))continue
+  const entries=String(material.channel??'').split(/[；;]/u).map(value=>value.trim()).filter(Boolean)
+  if(entries.length!==2)continue
+  const branchQuotes=(Array.isArray(material.evidence)?material.evidence:[]).filter(value=>typeof value==='string'&&locateSourceQuote(value,source)&&!alternatives.test(value))
+  const branches=forms.map(form=>{
+   const matches=branchQuotes.filter(quote=>compact(quote).includes(compact(form))&&forms.filter(other=>compact(quote).includes(compact(other))).length===1)
+   if(matches.length!==1)return null
+   const quote=matches[0],matchedTimes=times.filter(time=>compact(quote).includes(compact(time.raw)))
+   const channels=entries.flatMap(part=>{
+    const label=part.match(/[（(]([^（）()]+)[）)]/u)?.[1],channel=part.replace(/[（(][^（）()]+[）)]/gu,'').trim()
+    return label&&compact(label)===compact(form)&&channel&&compact(quote).includes(compact(channel))?[channel]:[]
+   })
+   return matchedTimes.length===1&&channels.length===1?{form,quote,time:matchedTimes[0],channel:channels[0]}:null
+  })
+  if(branches.some(branch=>!branch)||branches[0].quote===branches[1].quote||branches[0].time===branches[1].time)continue
+  const spans=branches.map(branch=>locateSourceQuote(branch.quote,source)),left=Math.min(markerAt,...spans.map(span=>span.start)),right=Math.max(markerAt+marker.length,...spans.map(span=>span.end)),scope=source.slice(left,right),tail=source.slice(right).split(/[。；;\n]/u)[0]
+  const combined=scope+tail,mandatory=[...combined.matchAll(/(?:均须|均需|都要|都需|同时提交|分别提交|必须全部)/gu)].some(match=>!/(?:不必|无需|不需要|不用)[^，,。；;]{0,8}$/u.test(combined.slice(Math.max(0,match.index-12),match.index)))
+  if(right-left>600||/[。；;\n]/u.test(scope)||mandatory)continue
+  const requirements=Array.isArray(item.requirements)?item.requirements:[]
+  if(requirements.some(value=>typeof value!=='string'||!alternatives.test(value)&&!/(?:不必|无需|不需要|不用).{0,8}(?:两种|全部|都)/u.test(value)))continue
+  const materialRequirements=Array.isArray(material.requirements)?material.requirements:[]
+  if(materialRequirements.some(value=>typeof value!=='string'||!locateSourceQuote(value,source)||!branches.some(branch=>compact(branch.quote).includes(compact(value)))))continue
+  const taskKeys=branches.map((_,index)=>`${String(item.key).slice(0,27)}-choice-${index+1}`),materialKeys=branches.map((_,index)=>`${String(material.key).slice(0,27)}-choice-${index+1}`)
+  if(raw.items.length>=20||raw.materials.length>=60||taskKeys.some(key=>raw.items.some(value=>value?.key===key))||materialKeys.some(key=>raw.materials.some(value=>value?.key===key)))continue
+  const tasks=branches.map((branch,index)=>({...item,key:taskKeys[index],title:`${item.action}${branch.form}${item.object}`,object:branch.form+item.object,deliveryForm:branch.form,channel:branch.channel,materials:[materialKeys[index]],times:[branch.time],requirements:[marker],evidence:[branch.quote,choiceQuotes[0]]}))
+  const materials=branches.map((branch,index)=>({...material,key:materialKeys[index],formats:[branch.form],channel:branch.channel,owners:[taskKeys[index]],requirements:materialRequirements.filter(value=>compact(branch.quote).includes(compact(value))).filter(value=>{
+   const residual=compact(value).replace(compact(branch.form),'').replace(compact(branch.time.raw),'').replace(compact(branch.channel),'').replace(/[，,。；;：:、\s]/gu,'').replace(/^(?:前|之前|以前)?(?:请)?(?:发|交|发送|提交|上传|至|到|给)+$/u,'')
+   return Boolean(residual)
+  }),evidence:[branch.quote]}))
+  raw.items.splice(raw.items.indexOf(item),1,...tasks)
+  raw.materials.splice(raw.materials.indexOf(material),1,...materials)
+  changes.push({original:item.key,branches:taskKeys,choiceQuote:marker})
+ }
  for(const item of [...raw.items]){
   if(item?.kind!=='task'||item.status==='cancelled'||!item.action||!item.object||item.condition||item.location||item.description||(item.dependsOn!=null&&(!Array.isArray(item.dependsOn)||item.dependsOn.length)))continue
   if(raw.items.some(other=>other!==item&&Array.isArray(other?.dependsOn)&&other.dependsOn.includes(item.key)))continue
@@ -163,6 +218,7 @@ export function combineSupportedChoices(result,audit){
  for(const ref of refs){
   const owners=result.standaloneTasks.filter(t=>t.evidenceIds.includes(ref.id))
   if(owners.length!==2)continue
+  if(result.conflicts.some(conflict=>conflict.id.startsWith('sem-choice-')&&owners.every(owner=>conflict.entityTempIds.includes(owner.tempId))))continue
   const [first,second]=owners
   const identified=t=>[t.actionObject,t.actionVerb].filter(x=>typeof x==='string'&&compact(x).length>=2&&compact(ref.quote).includes(compact(x)))
   const a=identified(first),b=identified(second)

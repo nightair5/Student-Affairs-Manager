@@ -6,6 +6,7 @@ import './semantic-notice-reliability.node-test.mjs'
 import './semantic-notice-completeness.node-test.mjs'
 import './semantic-item-polarity.node-test.mjs'
 import './semantic-choice-single.node-test.mjs'
+import './semantic-coverage.node-test.mjs'
 import {
   classifyDeepSeekUpstreamStatus,
   createWorker,

@@ -76,7 +76,8 @@ function sourceChoiceForTask(workspace:WorkspaceV8,item:WorkspaceV8['tasks'][num
   const version=workspace.sourceVersions.find(value=>value.id===group.sourceVersionId)
   if(!version?.rawText?.includes(group.quotation))return undefined
   if(ids.some(id=>!workspace.tasks.some(task=>task.id===id&&task.legacyData?.sourceId===version.sourceId)))return undefined
-  return {id:group.id,optionTaskIds:ids}
+  const selectedTaskId=typeof group.selectedTaskId==='string'&&ids.includes(group.selectedTaskId)?group.selectedTaskId:undefined
+  return {id:group.id,optionTaskIds:ids,...(selectedTaskId?{selectedTaskId}:{})}
 }
 
 function legacyTaskStatus(status: WorkspaceV8['tasks'][number]['status']): LegacyTask['status'] {

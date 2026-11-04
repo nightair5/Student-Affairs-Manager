@@ -102,7 +102,7 @@ export interface Task {
   directTags?: string[]
   directDate?: string
   /** Source-backed mutually exclusive delivery branches, projected from v8. */
-  sourceChoice?: { id:string; optionTaskIds:string[] }
+  sourceChoice?: { id:string; optionTaskIds:string[]; selectedTaskId?:string }
   id: string
   projectId?: string
   parentTaskId?: string

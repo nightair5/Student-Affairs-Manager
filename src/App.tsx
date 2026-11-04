@@ -6,6 +6,7 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } fro
 import { DraftReviewPanel } from './components/DraftReviewPanel'
 import { DirectResultList, RecentDirectAdditions } from './components/DirectResultList'
 import { setTaskSchedule } from './domain/v2/taskSchedule'
+import { selectSourceChoice } from './domain/v2/sourceChoice'
 import {commitTaskCommand,ensureTaskEditsSettled,type TaskCommandValues} from './domain/v2/taskCommand'
 import {commitMaterialCommand,type MaterialCommandValues} from './domain/v2/materialCommand'
 import {readCommandReceipt,readCommittedBatch} from './domain/v2/commandReadback'
@@ -803,6 +804,23 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     await setTaskSchedule(canonicalWorkspaceRepository, taskId, date)
     try { if(!await independentReader.load())throw Error('READBACK');await refreshOrdinary() }
     catch(error) { taskReadbackBlocked.current=true;setDirectReadbackPending(directBatches.find(batch=>batch.status==='active'&&batch.items.some(item=>item.id===taskId))?.id??taskId);throw new Error('安排已保存，暂时未能读回。请先重新读取，不会重复提交。',{cause:error}) }
+  }
+  const chooseDirectOption = (taskId:string,expectedSelected:string|null):Promise<void> => {
+    taskWritesCount.current++;setTaskWritesPending(taskWritesCount.current);setNotice({text:'正在保存选择…'})
+    const work=taskWriteQueue.current.then(async()=>{
+      if(taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')
+      await selectSourceChoice(canonicalWorkspaceRepository,taskId,expectedSelected)
+      let readback:WorkspaceV8|null
+      try{
+        readback=await independentReader.load()
+        if(!readback||workspaceV8ToLegacyView(readback).tasks.find(task=>task.id===taskId)?.sourceChoice?.selectedTaskId!==taskId)throw Error('CHOICE_READBACK')
+      }catch(error){taskReadbackBlocked.current=true;setDirectReadbackPending(taskId);throw new Error('选择已保存，暂时未能读回。请先重新读取，不会重复提交。',{cause:error})}
+      const projected=workspaceV8ToLegacyView(readback)
+      setTasks(current=>current.map(task=>{const saved=projected.tasks.find(value=>value.id===task.id);return saved?.sourceChoice&&saved.sourceChoice.id===projected.tasks.find(value=>value.id===taskId)?.sourceChoice?.id?{...task,sourceChoice:saved.sourceChoice}:task}))
+      setOrdinaryCanonical(readback);setNotice({text:'提交方式已保存，随时可以改选。'})
+    })
+    taskWriteQueue.current=work.catch(()=>undefined)
+    return work.finally(()=>{taskWritesCount.current--;setTaskWritesPending(taskWritesCount.current)})
   }
   const persistDirectChange=async(id:string,mutation:()=>Promise<void>)=>{
     await taskWriteQueue.current
@@ -1816,6 +1834,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             onOpenTask={(task) => setSelectedTaskId(task.id)}
             onCompleteTask={handleComplete}
             onScheduleTask={scheduleDirectTask}
+            onSelectChoice={chooseDirectOption}
             taskChannels={workspaceTaskChannels(ordinaryCanonical)}
             canonicalWorkspace={ordinaryCanonical}
             recentItemIds={activeDirectBatch?.items.map(item=>item.id)}

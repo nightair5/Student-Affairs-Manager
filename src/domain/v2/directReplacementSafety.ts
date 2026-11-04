@@ -1,5 +1,6 @@
-import type {WorkspaceV8} from './types'
+import type {JsonValue,WorkspaceV8} from './types'
 import {isDateOnly,parseBusinessDateTime,parseChineseTimeAst} from '../../lib/timeSemantics'
+import {sourceWindowDisplayLabel} from './sourceWindowDisplay'
 
 const key=(value:unknown)=>typeof value==='string'?value.replace(/\s/gu,'').replace(/^如符合条件/u,''):''
 // This is an equivalence normalization, not an action whitelist: verbs that
@@ -62,6 +63,15 @@ function sameRefinedObject(oldValue:unknown,nextValue:unknown):boolean {
 type StoredTask=WorkspaceV8['tasks'][number]
 type StoredTime=WorkspaceV8['timePoints'][number]
 type StoredMaterial=WorkspaceV8['materials'][number]
+function sourceWindows(workspace:WorkspaceV8,task:StoredTask):string[] {
+  const value=task.legacyData?.sourceWindowDeclarations
+  if(!value||typeof value!=='object'||Array.isArray(value)||!Array.isArray(value.windows))return []
+  return value.windows.flatMap(window=>{
+    const declaration={...value,windows:[window]} as JsonValue
+    const label=sourceWindowDisplayLabel(task.id,declaration,workspace.timePoints,workspace.sourceVersions)
+    return label?[key(label)]:[]
+  })
+}
 const factValue=(value:string)=>value.replace(/^(?:要求|提交渠道|交付形式|地点|适用条件待确认|适用范围|参加说明|前置事项|时间说明)[：:]\s*/u,'').trim()
 function taskFacts(workspace:WorkspaceV8,task:StoredTask,includeMaterials=false):string[] {
   const criteria=task.legacyData?.completionCriteria
@@ -149,6 +159,8 @@ export function directReplacementDiff(before:WorkspaceV8,after:WorkspaceV8,oldId
     const next=matches[0]
     used.add(next.id);matched.push({before:old.id,after:next.id})
     if(!sameTimes(old,next))issue(old.id,'time','changed_or_missing')
+    const nextWindows=sourceWindows(after,next)
+    if(sourceWindows(before,old).some(window=>!nextWindows.includes(window)))issue(old.id,'time','changed_or_missing')
     const nextFacts=taskFacts(after,next,true)
     const objectName=typeof old.legacyData?.actionObject==='string'?old.legacyData.actionObject:''
     if(taskFacts(before,old).some(fact=>!nextFacts.some(candidate=>preservesRequirement(fact,candidate,objectName))))issue(old.id,'task_detail','changed_or_missing')

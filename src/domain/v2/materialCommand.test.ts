@@ -35,4 +35,16 @@ describe('material edits',()=>{
   expect(result.preserved).toBe(false)
   expect(result.issues.some(issue=>issue.field==='material')).toBe(true)
  })
+ it('records and restores a personal decision not to prepare optional material',async()=>{
+  const {repo,reader}=await setup(),workspace=(await repo.load())!,material=workspace.materials.find(item=>item.relatedTaskIds.length)!
+  await repo.transaction(current=>({...current,materials:current.materials.map(item=>item.id===material.id?{...item,required:false}:item)}))
+  const base={taskId:material.relatedTaskIds[0],materialId:material.id,expectedOwnerIds:material.relatedTaskIds,changedAt:'2026-11-03T03:00:00Z'}
+  await commitMaterialCommand(repo,{...base,operationId:'optional-skip',expected:{status:material.status},changes:{status:'not_required'}})
+  const skipped=(await reader.load())!.materials.find(item=>item.id===material.id)!
+  expect(skipped.required).toBe(false);expect(skipped.status).toBe('not_required')
+  await commitMaterialCommand(repo,{...base,operationId:'optional-prepare',expected:{status:'not_required'},changes:{status:'ready'}})
+  const restored=(await reader.load())!.materials.find(item=>item.id===material.id)!
+  expect(restored.required).toBe(false);expect(restored.status).toBe('ready')
+  expect(repo.importJson(repo.exportJson((await repo.load())!)).materials.find(item=>item.id===material.id)?.status).toBe('ready')
+ })
 })

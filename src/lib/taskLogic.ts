@@ -90,7 +90,7 @@ export function calculateTaskPriority(
   }
 
   const missingCount = task.materials.filter((material) =>
-    materialStatusFromLegacy(material.done, material.status) === 'missing').length
+    material.required !== false && materialStatusFromLegacy(material.done, material.status) === 'missing').length
   if (missingCount > 0) {
     score += Math.min(36, 12 + missingCount * 6)
     risks.add('缺材料')

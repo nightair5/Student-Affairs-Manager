@@ -2,8 +2,8 @@ import {useState} from 'react'
 import type {Material} from '../domain/v2/types'
 import type {MaterialCommandValues} from '../domain/v2/materialCommand'
 
-export interface MaterialEditDraft {name:string;quantity:string;formats:string;naming:string;requirements:string;channel:string;base:MaterialCommandValues;ownerIds:string[]}
-const makeInitial=(material:Material):MaterialEditDraft=>({name:material.name,quantity:material.quantity===null?'':String(material.quantity),formats:material.formatRequirements.join('\n'),naming:material.namingRequirements.join('\n'),requirements:material.requirements.join('\n'),channel:material.submissionChannel??'',base:{name:material.name,quantity:material.quantity,formatRequirements:material.formatRequirements,namingRequirements:material.namingRequirements,requirements:material.requirements,submissionChannel:material.submissionChannel},ownerIds:[...material.relatedTaskIds]})
+export interface MaterialEditDraft {name:string;quantity:string;formats:string;naming:string;requirements:string;channel:string;status:Material['status'];base:MaterialCommandValues;ownerIds:string[]}
+const makeInitial=(material:Material):MaterialEditDraft=>({name:material.name,quantity:material.quantity===null?'':String(material.quantity),formats:material.formatRequirements.join('\n'),naming:material.namingRequirements.join('\n'),requirements:material.requirements.join('\n'),channel:material.submissionChannel??'',status:material.status,base:{name:material.name,quantity:material.quantity,formatRequirements:material.formatRequirements,namingRequirements:material.namingRequirements,requirements:material.requirements,submissionChannel:material.submissionChannel,status:material.status},ownerIds:[...material.relatedTaskIds]})
 export function MaterialEditor({material,draft,onDraft,onSave}:{material:Material;draft?:MaterialEditDraft;onDraft:(value:MaterialEditDraft|undefined,expected?:MaterialEditDraft)=>void;onSave:(material:Material,values:MaterialCommandValues,base:MaterialCommandValues,ownerIds:string[])=>Promise<void>}){
  const initial=makeInitial(material)
  const [open,setOpen]=useState(Boolean(draft)),[values,setValues]=useState(draft??initial),[busy,setBusy]=useState(false),[error,setError]=useState('')
@@ -14,7 +14,7 @@ export function MaterialEditor({material,draft,onDraft,onSave}:{material:Materia
   if(!values.name.trim()){setError('请输入材料名称。');return}
   if(quantity!==null&&(!Number.isSafeInteger(quantity)||quantity<0)){setError('数量请输入非负整数。');return}
   setBusy(true);setError('')
-  const all:MaterialCommandValues={name:values.name.trim(),quantity,formatRequirements:lines(values.formats),namingRequirements:lines(values.naming),requirements:lines(values.requirements),submissionChannel:values.channel.trim()||null}
+  const all:MaterialCommandValues={name:values.name.trim(),quantity,formatRequirements:lines(values.formats),namingRequirements:lines(values.naming),requirements:lines(values.requirements),submissionChannel:values.channel.trim()||null,...(material.required===false?{status:values.status}:{})}
   const changes=Object.fromEntries(Object.entries(all).filter(([field,value])=>JSON.stringify(value)!==JSON.stringify(values.base[field as keyof MaterialCommandValues]))) as MaterialCommandValues
   if(!Object.keys(changes).length){onDraft(undefined,values);setOpen(false);setBusy(false);return}
   try{await onSave(material,changes,values.base,values.ownerIds);onDraft(undefined,values);setOpen(false)}catch(reason){setError(reason instanceof Error?reason.message:'材料要求未能保存，请重试。')}finally{setBusy(false)}
@@ -28,6 +28,7 @@ export function MaterialEditor({material,draft,onDraft,onSave}:{material:Materia
   <label>命名要求（每行一条）<textarea rows={2} value={values.naming} onChange={event=>change('naming',event.target.value)}/></label>
   <label>其他要求（每行一条）<textarea rows={3} value={values.requirements} onChange={event=>change('requirements',event.target.value)}/></label>
   <label>提交渠道<input value={values.channel} onChange={event=>change('channel',event.target.value)}/></label>
+  {material.required===false&&<label>准备情况<select value={values.status} onChange={event=>{const next={...values,status:event.target.value as Material['status']};setValues(next);onDraft(next)}}>{material.status==='unverified'&&<option value="unverified">尚未决定</option>}<option value="missing">待准备</option><option value="preparing">准备中</option><option value="ready">已准备</option><option value="submitted">已提交</option><option value="verified">已核实</option><option value="not_required">不准备（可恢复）</option></select></label>}
   </fieldset>
   {error&&<p role="alert" className="inline-error">{error}</p>}
   <button type="submit" className="primary-button" disabled={busy}>{busy?'正在保存…':'保存材料要求'}</button> <button type="button" className="text-button" disabled={busy} onClick={()=>{setValues(initial);onDraft(undefined);setError('');setOpen(false)}}>取消修改</button>

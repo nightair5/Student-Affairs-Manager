@@ -6,6 +6,85 @@ export const SOURCE_DAY_PATTERN=/(?<!\d)(?:\d{4}[-/.]\d{1,2}[-/.]\d{1,2}(?!\d)|(
 const fold=value=>value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const clock=value=>/(?:\d{1,2}\s*[:：]\s*\d{2}|\d{1,2}\s*[点时](?:\d{1,2}分?)?)/u.test(value)
 const differentDay=/(?:次日|翌日|第二天|隔日|隔天|次周|翌周|改为|改至|改到|改期|延期|调整为|调整至|更正为)/u
+const compactText=value=>String(value??'').normalize('NFKC').replace(/\s/gu,'')
+
+/** A source-backed optional attachment mentioned by the model's summary can
+ * be related only to a single, immediately preceding submission. This never
+ * promotes examples, unrelated actions or a model-only claim to a material. */
+export function sourceSummaryOptionalMaterial(source,raw){
+ const items=Array.isArray(raw.items)?raw.items:[]
+ if(items.length!==1||items[0]?.kind!=='task'||items[0].status==='cancelled'||!Array.isArray(raw.materials))return []
+ const item=items[0],refs=(Array.isArray(item.evidence)?item.evidence:[]).map(q=>typeof q==='string'?locateSourceQuote(q,source):null).filter(Boolean)
+ if(!refs.length||!/(?:提交|上传|递交|发送|交)/u.test(String(item.action??'')))return []
+ const candidates=[]
+ for(const clause of source.matchAll(/[^。；;\n]+/gu)){
+  const fragment=clause[0].trim()
+  const beforeAction=fragment.match(/^(?:若有|如有)?([\p{Script=Han}A-Za-z0-9《》（）()]{2,24}?)(?:若有|如有)?[，,]?\s*(?:可|可以)(?:自愿|另)?(?:附上|附|提供|提交|上传|补充)/u)
+  const afterAction=fragment.match(/(?:可|可以)(?:自愿|另)?(?:附上|附|提供|提交|上传|补充)\s*([\p{Script=Han}A-Za-z0-9《》（）()]{2,24})/u)
+  const action=fragment.match(/(?:可|可以)(?:自愿|另)?(?:附上|附|提供|提交|上传|补充)/u)
+  if(!action||/(?:不|未|禁止|不得|不可|勿)\s*$/u.test(fragment.slice(0,action.index)))continue
+  // “可附” explicitly denotes an attachment. Other permissive verbs require
+  // an additional voluntary/conditional marker to avoid turning optional
+  // examples or ordinary descriptive content into a material.
+  if(!/(?:若有|如有|自愿|非必交)/u.test(fragment)&&!/(?:可|可以)(?:另)?附/u.test(action[0]))continue
+  if(!beforeAction&&!afterAction)continue
+  // In “如有作品，可附作品目录” the condition is not the material.
+  // Prefer the explicit object after the submission verb when it is present.
+  const name=afterAction?.[1]??beforeAction?.[1],s=compactText(raw.summary),at=s.indexOf(compactText(name))
+  if(!name)continue
+  if(at<0||!/(?:可选|自愿|非必交|如有|若有|可(?:以)?(?:自愿|另)?(?:附|提供|提交|上传|补充))/u.test(s.slice(Math.max(0,at-8),at+name.length+14)))continue
+  if(raw.materials.some(material=>compactText(material?.name)===compactText(name)))continue
+  const span=locateSourceQuote(fragment,source),last=Math.max(...refs.map(ref=>ref.end))
+  if(!span||span.start<last||span.start-last>24||/[^\s。；;，,]/u.test(source.slice(last,span.start)))continue
+  candidates.push({name,quote:fragment,owner:item.key})
+ }
+ return candidates.length===1?candidates:[]
+}
+
+/** A topic heading that only declares a window is not a second action. The
+ * model's explicit dependency, matching subject and sole target are required
+ * before its source-cited window can move to that delivery. */
+export function mergeHeadingWindowIntoDelivery(input,source){
+ const raw=structuredClone(input),changes=[]
+ if(!Array.isArray(raw.items)||raw.items.length!==2)return {raw,changes}
+ for(const heading of [...raw.items]){
+  const times=Array.isArray(heading?.times)?heading.times:[],refs=Array.isArray(heading?.evidence)?heading.evidence:[],dependencies=Array.isArray(heading?.dependsOn)?heading.dependsOn:[]
+  if(heading?.kind!=='task'||heading.status==='cancelled'||times.length!==1||times[0]?.role!=='window'||dependencies.length!==1||refs.length!==1||heading.channel||heading.location||heading.description||(heading.materials?.length??0)||(heading.requirements?.length??0))continue
+  const target=raw.items.find(item=>item?.key===dependencies[0]&&item.kind==='task'&&item.status!=='cancelled')
+  if(!target||raw.items.some(item=>item!==heading&&Array.isArray(item?.dependsOn)&&item.dependsOn.includes(heading.key)))continue
+  const quote=typeof refs[0]==='string'?refs[0]:'',span=locateSourceQuote(quote,source),colon=quote.search(/[：:]/u),object=compactText(heading.object),action=compactText(heading.action)
+  if(!span||colon<1||object.length<2||!action||!compactText(quote.slice(0,colon)).includes(object)||!compactText(quote.slice(0,colon)).includes(action)||!compactText(target.object).includes(object))continue
+  if(!/^(?:受理|办理|服务|开放)(?:时段|时间|期限)(?:为|是|[：:])/u.test(quote.slice(colon+1).trim())||!quote.includes(times[0].raw))continue
+  const rest=source.slice(0,span.start)+source.slice(span.end)
+  if(compactText(rest).includes(action+object))continue
+  target.times=[...(Array.isArray(target.times)?target.times:[]),times[0]]
+  target.evidence=[...(Array.isArray(target.evidence)?target.evidence:[]),quote]
+  raw.items=raw.items.filter(item=>item!==heading)
+  changes.push({heading:heading.key,owner:target.key,window:times[0].raw})
+ }
+ return {raw,changes}
+}
+
+/** Bind a document-labelled window to the sole cited delivery only when the
+ * model's topic names its scope and its summary contains the exact endpoints.
+ * With competing owners or a different scope, leave the window unresolved. */
+export function sourceSummaryDeliveryWindow(source,item,records,summary,topic){
+ if(item?.kind!=='task'||records.length!==1||records[0]?.item!==item||(Array.isArray(item.times)&&item.times.some(time=>time?.role==='window')))return null
+ if(!/(?:提交|上传|递交|发送|交)/u.test(String(item.action??'')))return null
+ const date='(?:\\d{4}年)?\\d{1,2}月\\d{1,2}[日号]?(?:\\s*(?:上午|中午|下午|晚上)?\\s*\\d{1,2}[:：]\\d{2})?'
+ const pattern=new RegExp(`([^。；;\\n，,]{1,18}?(?:受理|办理|提交|申报)(?:时间|时段|期限))\\s*[：:]?\\s*(${date}\\s*(?:至|到|[-—–~～])\\s*${date})`,'gu')
+ const candidates=[...source.matchAll(pattern)].filter(match=>{
+  const scope=compactText(match[1].replace(/(?:时间|时段|期限)$/u,'')),subject=scope.replace(/(?:受理|办理|提交|申报)$/u,'')
+  const covered=compactText(summary).includes(compactText(match[2]))
+  const topicScope=scope.length>=2&&compactText(topic).includes(scope)
+  const objectScope=subject.length>=2&&compactText(item.object).includes(subject)
+  const deliveryHasSeparatePlace=Boolean(item.channel||item.location)
+  return covered&&(objectScope||topicScope&&!deliveryHasSeparatePlace)&&!/(?:备选|候选|取消|暂定|另行通知)/u.test(match[0])
+ })
+ if(candidates.length!==1)return null
+ const literal=candidates[0][2],span=locateSourceQuote(literal,source)
+ return span?{role:'window',raw:span.literal,sourceRecovered:true}:null
+}
 
 /** Recover only individually source-backed clauses; never use a model's
  * compound paraphrase as a verbatim quote. */

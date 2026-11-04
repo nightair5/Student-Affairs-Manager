@@ -6,6 +6,10 @@ import { buildLocalRecognition } from '../../recognition/pipeline'
 import { improveDirectFallback } from '../../recognition/directFallback'
 import { commitDirectDraft, editDirectItem, replaceDirectFallback, undoDirectBatch } from './directIntake'
 import { directReplacementDiff } from './directReplacementSafety'
+import { compileSemanticNotice } from '../../../cloudflare/semantic-notice-compiler-v3.mjs'
+import { parseRecognitionResult } from '../../recognition/schema'
+import { workspaceV8ToLegacyView } from './legacyView'
+import { commitMaterialCommand } from './materialCommand'
 
 const source='请于2026年10月30日17:00前提交课程论文。请于2026年11月1日18:00前填写报名表。'
 const now='2026-10-26T10:00:00.000Z'
@@ -38,6 +42,26 @@ async function setup(provider:'local-rules'|'deepseek'='local-rules') {
 }
 
 describe('retrying mixed AI and local completion',()=>{
+  it('atomically adds an omitted optional material and window, then protects the user decision',async()=>{
+    const text='登记表受理时间11月4日至11月20日。请在11月12日17:00前提交登记表。可另附证明材料。'
+    const facts={topic:'登记表受理',summary:'提交登记表',kind:'action',items:[{key:'form',kind:'task',title:'提交登记表',action:'提交',object:'登记表',evidence:['请在11月12日17:00前提交登记表'],times:[{role:'deadline',raw:'11月12日17:00前'}],materials:[]}],materials:[]}
+    const answer=(summary:string)=>parseRecognitionResult(compileSemanticNotice({...facts,summary},{source:text,referenceTime:now,timezone:'Asia/Shanghai',promptVersion:'recognition-semantic-notice-3.2.0'}).result)
+    const workspace=createGoldenWorkspaceV8()
+    for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','projects','milestones','workPackages','tasks','materials','timePoints','events','evidenceRefs','historyRecords','reminderRecords','changeProposals'] as const)workspace[key]=[]
+    const store=new MemoryWorkspaceRecordStore(),repo=new CanonicalWorkspaceRepository(store);await repo.save(workspace)
+    const capture=new CapturePersistenceService(repo),original=await capture.beginCapture({operationId:'missing-facts',sourceType:'text',title:'登记表',rawText:text,provider:'deepseek',modelName:'fixture',promptVersion:'recognition-semantic-notice-3.2.0',pipelineVersion:'test',now})
+    await capture.recognize(original,async()=>answer('提交登记表'))
+    const first=await commitDirectDraft(repo,original.draftId,now)
+    const retry=async()=>{const handle=await capture.beginRetry(original.sourceId,{provider:'deepseek',modelName:'fixture',promptVersion:'recognition-semantic-notice-3.2.0',pipelineVersion:'test',expectedSourceVersionId:original.sourceVersionId,now:'2026-10-26T10:01:00.000Z'});await capture.recognize(handle,async()=>answer('登记表受理时间11月4日至11月20日，可另附证明材料'));return handle}
+    const candidate=await retry(),replaced=await replaceDirectFallback(repo,first.batch!.id,candidate.draftId,'2026-10-26T10:02:00.000Z')
+    const independentlyRead=(await new CanonicalWorkspaceRepository(store).load())!,task=workspaceV8ToLegacyView(independentlyRead).tasks[0],optional=independentlyRead.materials.find(material=>material.name==='证明材料')!
+    expect(task.deadline).toBe('2026-11-12T17:00');expect(task.sourceWindowLabel).toBe('11月4日至11月20日')
+    expect(optional.required).toBe(false);expect(optional.relatedTaskIds).toContain(task.id)
+    await commitMaterialCommand(repo,{operationId:'skip-optional',taskId:task.id,materialId:optional.id,expectedOwnerIds:optional.relatedTaskIds,expected:{status:optional.status},changes:{status:'not_required'},changedAt:'2026-10-26T10:03:00.000Z'})
+    const another=await retry(),before=await repo.load()
+    await expect(replaceDirectFallback(repo,replaced.batch!.id,another.draftId,'2026-10-26T10:04:00.000Z')).rejects.toThrow(/已修改过/u)
+    expect(await repo.load()).toEqual(before)
+  })
   it('allows a grounded hybrid result through the same atomic replacement and undo',async()=>{
     const {repo,receipt,retry}=await setup()
     const original=(await repo.load())!

@@ -20,6 +20,13 @@ describe('operating window visibility',()=>{
   expect(sourceWindowActive(task,new Date('2026-11-06T17:01:00+08:00'))).toBe(false)
   expect(sourceWindowActive({...task,sourceWindowStart:undefined},new Date('2026-11-04T12:00:00+08:00'))).toBe(false)
  })
+ it('handles date-only windows without manufacturing a clock and respects a separate earlier cutoff',()=>{
+  const dateWindow={...task,sourceWindowStart:'2026-11-04',sourceWindowEnd:'2026-11-06',deadline:'2026-11-05T12:00'}
+  expect(sourceWindowActive(dateWindow,new Date('2026-11-04T00:01:00+08:00'))).toBe(true)
+  expect(sourceWindowActive(dateWindow,new Date('2026-11-05T12:01:00+08:00'))).toBe(false)
+  expect(dateWindow.sourceWindowEnd).toBe('2026-11-06')
+  expect(dateWindow.deadline).toBe('2026-11-05T12:00')
+ })
  it('never infers one continuous opening across multiple declared windows',()=>{
   const d={version:'source-window-declarations-1.0.0',ownerTaskId:'window',sourceVersionId:'v',windows:[{state:'RESOLVED_DISCRETE',rawText:'a',pointIds:['a','b']},{state:'RESOLVED_DISCRETE',rawText:'c',pointIds:['c','d']}]}
   expect(sourceWindowFirstStart('window',d,[],[])).toBeUndefined()

@@ -5,7 +5,8 @@ import {parseRecognitionResult} from './schema'
 import {createGoldenWorkspaceV8} from '../domain/v2/fixtures'
 import {CanonicalWorkspaceRepository,MemoryWorkspaceRecordStore} from '../domain/v2/repository'
 import {CapturePersistenceService} from '../domain/v2/capture'
-import {commitDirectDraft,undoDirectBatch} from '../domain/v2/directIntake'
+import {commitDirectDraft,undoDirectBatch,undoDirectBatchPreservingEdits} from '../domain/v2/directIntake'
+import {selectSourceChoice} from '../domain/v2/sourceChoice'
 import {workspaceV8ToLegacyView} from '../domain/v2/legacyView'
 import {exportWorkspaceV8,importWorkspaceV8} from '../domain/v2/serialization'
 import {homeFlow} from '../lib/homeFlow'
@@ -85,6 +86,11 @@ describe('source-backed independently timed choices',()=>{
   const oneDone=roundTrip.tasks.map((task,index)=>index===0?{...task,status:'已完成' as const}:task)
   const flow=homeFlow(oneDone,[],new Date('2026-11-03T02:00:00Z'))
   expect([...flow.today,...flow.next,...flow.undated]).toHaveLength(0)
+  await selectSourceChoice(repo,view.tasks[1].id,null,'2026-11-03T02:01:00Z')
+  const selected=(await repo.load())!
+  expect(workspaceV8ToLegacyView(selected).tasks[0].sourceChoice?.selectedTaskId).toBe(view.tasks[1].id)
+  await expect(undoDirectBatchPreservingEdits(repo,receipt.batch!.id,'2026-11-03T02:02:00Z')).rejects.toThrow('已修改')
+  expect(await repo.load()).toEqual(selected)
   await undoDirectBatch(repo,receipt.batch!.id)
   expect((await repo.load())!.tasks).toHaveLength(0)
  })

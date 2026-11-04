@@ -25,6 +25,19 @@ test('an ambiguous destination does not create or attach a guessed option',()=>{
  assert.ok(result.timePoints.every(point=>point.normalizedValue===null))
 })
 
+test('branch citations on a shared material retain separate channels, deadlines and the choice relation',()=>{
+ const text='提交登记表任选一种：电子件11月8日17:00前发事务邮箱，纸质件11月9日12:00前交事务窗口，不必两种都提交。'
+ const input={topic:'登记表提交',kind:'action',items:[{key:'submission',kind:'task',title:'提交登记表',action:'提交',object:'登记表',evidence:[text],times:[{role:'deadline',raw:'11月8日17:00前'},{role:'deadline',raw:'11月9日12:00前'}],channel:'事务邮箱或事务窗口',materials:['form'],requirements:['任选一项：电子件11月8日17:00前发事务邮箱，或纸质件11月9日12:00前交事务窗口','不必两种都提交'],dependsOn:[]}],materials:[{key:'form',name:'登记表',formats:['电子件','纸质件'],channel:'事务邮箱（电子件）；事务窗口（纸质件）',owners:['submission'],evidence:['电子件11月8日17:00前发事务邮箱','纸质件11月9日12:00前交事务窗口'],requirements:['电子件11月8日17:00前发事务邮箱','纸质件11月9日12:00前交事务窗口']}]}
+ const {result,audit}=compile(input,text)
+ assert.deepEqual(result.standaloneTasks.map(task=>task.title),['提交电子件登记表','提交纸质件登记表'])
+ assert.deepEqual(result.timePoints.map(point=>point.normalizedValue),['2026-11-08T17:00','2026-11-09T12:00'])
+ assert.deepEqual(result.materials.map(material=>material.submissionChannel),['事务邮箱','事务窗口'])
+ assert.equal(result.conflicts.filter(conflict=>conflict.id.startsWith('sem-choice-')).length,1)
+ assert.ok(!audit.losses.some(loss=>loss.reason==='CHOICE_OPTIONS_NOT_UNIQUELY_GROUNDED'))
+ const contradictory=text.replace('不必两种都提交','两种都要提交')
+ assert.ok(!compile(input,contradictory).audit.facts.some(fact=>fact.role==='choice_expanded'))
+})
+
 test('a separately cited choice does not override an explicit all-required statement',()=>{
  const mandatory='电子版申请表11月5日17:00前上传资料平台，纸质版申请表11月7日12:00前交服务台，均须提交，两种方式任选一种。'
  const {audit}=compile(facts(),mandatory)

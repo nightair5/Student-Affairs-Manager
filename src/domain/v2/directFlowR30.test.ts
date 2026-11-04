@@ -46,6 +46,15 @@ describe('direct multi-delivery and event lifecycle',()=>{
   const wrongOwner=structuredClone(w);wrongOwner.timePoints=wrongOwner.timePoints.map(p=>({...p,relatedTaskIds:[w.tasks[0].id]}));expect(directReplacementPreserves(w,wrongOwner,ids,ids)).toBe(false)
   const wrongChannel=structuredClone(w);wrongChannel.materials=wrongChannel.materials.map(m=>({...m,submissionChannel:'另一个平台'}));expect(directReplacementPreserves(w,wrongChannel,ids,ids)).toBe(false)
  })
+ it('does not silently accept a retry that keeps timestamps but loses their window role',async()=>{
+  const {w}=await add('纸质报告请于2026年10月28日9:00至11:00在学院办公室递交。')
+  const ids=new Set(w.tasks.map(task=>task.id)),same=structuredClone(w)
+  expect(workspaceV8ToLegacyView(same).tasks[0].sourceWindowLabel).toBeTruthy()
+  expect(directReplacementPreserves(w,same,ids,ids)).toBe(true)
+  delete same.tasks[0].legacyData!.sourceWindowDeclarations
+  expect(same.timePoints).toEqual(w.timePoints)
+  expect(directReplacementPreserves(w,same,ids,ids)).toBe(false)
+ })
  it('allows a material requirement label without losing the deliverable or its requirements',async()=>{
   const {w}=await add('请于2026年10月28日17:00前将课程论文（PDF格式，以学号+姓名命名）提交至学习通。')
   const ids=new Set(w.tasks.map(t=>t.id)),next=structuredClone(w)

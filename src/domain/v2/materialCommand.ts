@@ -2,11 +2,11 @@ import type {CanonicalWorkspaceRepository} from './repository'
 import type {JsonValue,WorkspaceV8} from './types'
 
 type Material=WorkspaceV8['materials'][number]
-type Field='name'|'quantity'|'formatRequirements'|'namingRequirements'|'requirements'|'submissionChannel'
+type Field='name'|'quantity'|'formatRequirements'|'namingRequirements'|'requirements'|'submissionChannel'|'status'
 export type MaterialCommandValues=Partial<Pick<Material,Field>>
 export interface MaterialCommand {operationId:string;materialId:string;taskId:string;expected:MaterialCommandValues;expectedOwnerIds:string[];changes:MaterialCommandValues;changedAt:string}
-const fields:Field[]=['name','quantity','formatRequirements','namingRequirements','requirements','submissionChannel']
-const labels:Record<Field,string>={name:'材料名称',quantity:'数量',formatRequirements:'格式',namingRequirements:'命名要求',requirements:'材料要求',submissionChannel:'提交渠道'}
+const fields:Field[]=['name','quantity','formatRequirements','namingRequirements','requirements','submissionChannel','status']
+const labels:Record<Field,string>={name:'材料名称',quantity:'数量',formatRequirements:'格式',namingRequirements:'命名要求',requirements:'材料要求',submissionChannel:'提交渠道',status:'准备状态'}
 const equal=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b)
 
 /** A user edits the existing canonical material, including any explicitly

@@ -1,6 +1,10 @@
 import type {JsonValue,TimePoint,SourceVersion} from './types'
-import {parseBusinessDateTime} from '../../lib/timeSemantics'
+import {isDateOnly,parseBusinessDateTime} from '../../lib/timeSemantics'
 const object=(v:unknown):Record<string,unknown>|null=>v&&typeof v==='object'&&!Array.isArray(v)?v as Record<string,unknown>:null
+const validPoint=(point:TimePoint)=>!point.needsConfirmation&&Boolean(point.normalizedValue)&&(
+ point.precision==='date_only'&&point.isAllDay&&isDateOnly(point.normalizedValue!)||
+ point.precision==='exact'&&!point.isAllDay&&Boolean(point.normalizedValue?.includes('T'))&&Boolean(parseBusinessDateTime(point.normalizedValue!,point.timezone??'Asia/Shanghai'))
+)
 
 /** Display only the already-stored declaration and original source quotation.
  * It does not create a deadline, plan, owner, or a new canonical fact. */
@@ -27,9 +31,10 @@ export function sourceWindowLastEnd(taskId:string,declaration:JsonValue|undefine
   const row=object(value)
   if(!row||!sourceWindowDisplayLabel(taskId,{...d,windows:[value]} as JsonValue,points,versions)||!Array.isArray(row.pointIds))return []
   const ids=row.pointIds,owned=points.filter(p=>ids.includes(p.id))
-  if(owned.some(p=>p.needsConfirmation||p.isAllDay||!p.normalizedValue?.includes('T')||p.precision!=='exact'))return []
+  if(owned.some(p=>!validPoint(p)))return []
   return owned.flatMap(p=>{
    if(p.type!=='event_end'||!p.normalizedValue)return []
+   if(isDateOnly(p.normalizedValue))return [p.normalizedValue]
    const date=parseBusinessDateTime(p.normalizedValue,p.timezone??'Asia/Shanghai')
    return date?[date.toISOString()]:[]
   })
@@ -46,8 +51,9 @@ export function sourceWindowFirstStart(taskId:string,declaration:JsonValue|undef
  if(row?.state!=='RESOLVED_DISCRETE'||!Array.isArray(row.pointIds)||!sourceWindowDisplayLabel(taskId,declaration,points,versions))return undefined
  const ids=row.pointIds
  const owned=points.filter(point=>ids.includes(point.id))
- if(owned.length!==2||owned.some(point=>point.needsConfirmation||point.isAllDay||point.precision!=='exact'||!point.normalizedValue?.includes('T')))return undefined
+ if(owned.length!==2||owned.some(point=>!validPoint(point)))return undefined
  const start=owned.find(point=>point.type==='event_start'),end=owned.find(point=>point.type==='event_end')
+ if(start?.normalizedValue&&end?.normalizedValue&&(isDateOnly(start.normalizedValue)||isDateOnly(end.normalizedValue)))return start.normalizedValue.slice(0,10)<=end.normalizedValue.slice(0,10)?start.normalizedValue:undefined
  const startDate=start?.normalizedValue&&parseBusinessDateTime(start.normalizedValue,start.timezone??'Asia/Shanghai')
  const endDate=end?.normalizedValue&&parseBusinessDateTime(end.normalizedValue,end.timezone??'Asia/Shanghai')
  return startDate&&endDate&&startDate.getTime()<=endDate.getTime()?startDate.toISOString():undefined

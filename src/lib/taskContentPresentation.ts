@@ -34,7 +34,7 @@ export function taskPublicSummary(task:Pick<Task,'description'|'history'|'materi
   if(requirement&&materialFacts.has(normalize(requirement[1])))return false
   const channel=/^提交渠道[：:]\s*(.+)$/u.exec(line)
   if(channel&&channels.has(normalize(channel[1])))return false
-  return !options.dateLabel||normalize(line)!==normalize(options.dateLabel)
+  return !options.dateLabel||!options.dateLabel.split(' · ').some(part=>normalize(line)===normalize(part))
  }).join('\n')
  return {...content,description,channels:channelValues}
 }

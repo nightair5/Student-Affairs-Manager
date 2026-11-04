@@ -60,7 +60,7 @@ export function TaskCard({
 }: TaskCardProps) {
   const materials = getMaterialProgress(task)
   const waitingFor = allTasks.filter(t => task.dependencyIds?.includes(t.id) && t.status !== '已完成')
-  const unknownMaterials = task.materials.filter(m => m.status === 'unverified').length
+  const unknownMaterials = task.materials.filter(m => m.required !== false && m.status === 'unverified').length
   const deadline = dateView ? { date: dateView.label, time: '', weekday: dateView.noDeadlineProven ? '不自动排期' : '' } : !task.deadline ? task.directDate?deadlineParts(task.directDate):{date:recognitionOptionDisplay(task.sourceDeadlineLabel||(task.directTags?'时间待定':'原文未说明截止')),time:'',weekday:task.directTags?'':'个人安排另列'} : deadlineParts(task.deadline)
   const priority = calculateTaskPriority(task, allTasks, new Date(), dateView ? { [task.id]: dateView } : undefined)
 

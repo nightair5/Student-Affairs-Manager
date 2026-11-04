@@ -14,9 +14,9 @@ export function flowDate(value:string|null|undefined):string {
 export function flowTaskDate(task:Task):string {
   const plan=task.plannedStart||task.directDate
   const windowLabel=task.sourceWindowLabel?`${task.sourceWindowChoiceBranch?`方式${task.sourceWindowChoiceBranch}的`:'办理'}时段：${task.sourceWindowLabel}`:''
-  if(plan)return `${flowDate(plan)} 计划${task.deadline?` · ${flowDate(task.deadline)} 截止`:windowLabel?` · ${windowLabel}`:task.sourceDeadlineLabel&&/另行通知|另行公布|待通知/u.test(task.sourceDeadlineLabel)?' · 截止时间另行通知':''}`
-  if(task.deadline)return `${flowDate(task.deadline)} 截止`
-  if(windowLabel)return windowLabel
+  const deadline=task.deadline?`${flowDate(task.deadline)} 截止`:task.sourceDeadlineLabel&&/另行通知|另行公布|待通知/u.test(task.sourceDeadlineLabel)?'截止时间另行通知':''
+  const parts=[plan?`${flowDate(plan)} 计划`:'',deadline,windowLabel].filter(Boolean)
+  if(parts.length)return parts.join(' · ')
   if(task.sourceDeadlineLabel&&/另行通知|另行公布|待通知/u.test(task.sourceDeadlineLabel))return '截止时间另行通知'
   return '未设日期'
 }

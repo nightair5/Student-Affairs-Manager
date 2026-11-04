@@ -3,7 +3,7 @@ import {locateSourceQuote} from './source-text-index.mjs'
 import {parseDirectSourceTime} from './direct-source-time.mjs'
 import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
 import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-2-0.mjs'
-import {SOURCE_DAY_PATTERN,channelOwnedWindow,combineExplicitWindowEntries,contextualEventDay,modelOwnedSharedDay,ownedAgendaTime,sameBuildingLocation,sourceChannelClosingDeadline,sourceConditionClauses,sourceEvidenceCondition,sourceEventDuration,sourceOpenEndedWindow,systemAvailabilityAsInformation} from './semantic-source-context.mjs'
+import {SOURCE_DAY_PATTERN,channelOwnedWindow,combineExplicitWindowEntries,contextualEventDay,mergeHeadingWindowIntoDelivery,modelOwnedSharedDay,ownedAgendaTime,sameBuildingLocation,sourceChannelClosingDeadline,sourceConditionClauses,sourceEvidenceCondition,sourceEventDuration,sourceOpenEndedWindow,sourceSummaryDeliveryWindow,sourceSummaryOptionalMaterial,systemAvailabilityAsInformation} from './semantic-source-context.mjs'
 import {combineSupportedChoices,expandSupportedSingleChoices,sharedDocumentScope,sourceBackedChoicePairs,sourceBackedEventChoices,sourceCandidateTime,sourceFormContext} from './semantic-relations.mjs'
 import {itemPolarity} from './semantic-item-polarity.mjs'
 
@@ -112,6 +112,24 @@ function conditionalMaterialClause(source,name,refs){
   const previous=index>0?fragments[index-1]:''
   if(/^(?:如果|若|如(?!何|下)|仅当|只有|除非).{1,30}$/u.test(compact(previous))&&!/(?:无法|不予|将|不得|取消|不再|不能|无需|请先|须先)/u.test(previous)&&obligation.test(prefix))return previous+'，'+current
   return ''
+}
+
+/** A material's obligation can differ across delivery owners. Derive a
+ * branch-specific status only from that owner's unique, literal citation. */
+function materialUseForOwner(source,record,name){
+ const target=compact(name),form=compact(text(record.item.deliveryForm,80))
+ if(target.length<2)return null
+ const clauses=record.ownText.split(/[。；;\n]/u).map(value=>value.trim()).filter(value=>{
+  const normalized=compact(value)
+  const kind=form?deliveryKind(form):''
+  return normalized.includes(target)&&(!form||normalized.includes(form))&&(!kind||deliveryKind(value)===kind)&&Boolean(locateSourceQuote(value,source))
+ })
+ if(clauses.length!==1)return null
+ const clause=clauses[0],normalized=compact(clause)
+ if(/(?:如有|若有|可选|自愿|非必交)/u.test(normalized)&&/(?:可|附|提供|提交|上传)/u.test(normalized))return {required:false,requirement:clause}
+ if(/(?:如果|若|仅当|只有|除非).{0,30}(?:须|必须|需要).{0,16}(?:提交|提供|携带|附|上传)/u.test(normalized))return {required:false,requirement:clause}
+ if(/(?:须|必须|需要|应).{0,16}(?:提交|提供|携带|附|上传)/u.test(normalized)&&!/(?:无需|不必|不需要|不得|禁止)/u.test(normalized))return {required:true,requirement:''}
+ return null
 }
 function numberedUnits(value) {
   const normalized=normalizeCountNumbers(value),units=[]
@@ -256,20 +274,28 @@ function sourceLocation(source,value,title,ownText) {
  * validates source-backed time values without re-parsing the display title. */
 export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',promptVersion='recognition-semantic-notice-3.0.5'}={}) {
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
-    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.11',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
+    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.12',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
   const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:text(raw.topic,160)||'通知',sourceType:'text',notificationType:'uncertain',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,promptVersion,true,timezone)
-  const audit={version:promptVersion,compilerVersion:'semantic-notice-compiler-1.0.11',rootFailure:false,items:[],facts:[],losses:[]}
+  const audit={version:promptVersion,compilerVersion:'semantic-notice-compiler-1.0.12',rootFailure:false,items:[],facts:[],losses:[]}
   const availableWindows=[]
   const withWindowInformation={...raw,items:raw.items.map(item=>{
     const converted=systemAvailabilityAsInformation(source,item)
     if(converted)availableWindows.push(item.key)
     return converted??item
   })}
-  const expanded=expandSupportedSingleChoices(withWindowInformation,source)
+  const headingWindows=mergeHeadingWindowIntoDelivery(withWindowInformation,source)
+  const expanded=expandSupportedSingleChoices(headingWindows.raw,source)
   raw=expanded.raw
   for(const item of availableWindows)audit.facts.push({role:'system_window_information',item})
+  for(const change of headingWindows.changes)audit.facts.push({role:'heading_window_owner',...change})
   for(const change of expanded.changes)audit.facts.push({role:'choice_expanded',...change})
+  for(const [index,material] of sourceSummaryOptionalMaterial(source,raw).entries()){
+    const key=`source-optional-${index+1}`
+    if(raw.materials.some(existing=>existing?.key===key)||raw.materials.length>=60)continue
+    raw.materials.push({key,name:material.name,required:false,formats:[],quantity:null,naming:[],requirements:[material.quote],channel:null,owners:[material.owner],evidence:[material.quote],sourceRecovered:true})
+    audit.facts.push({role:'source_backed_optional_material',material:key,owner:material.owner})
+  }
   const note=(layer,id,reason)=>audit.losses.push({layer,id,reason})
   const evidence=(quote,field,id,start) => {
     const q=text(quote,500);if(!q)return null
@@ -397,8 +423,8 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     if(kind==='task')entity.dependencyTempIds=list(item.dependsOn,20,40).flatMap(key=>{const dependency=keys.get(key);if(dependency?.kind==='task')return [dependency.entity.tempId];note('RELATION',item.key,'DEPENDENCY_NOT_FOUND');return []})
     const sharedDay=kind==='event'?modelOwnedSharedDay(source,item):null
     const timeEntries=kind==='task'?combineExplicitWindowEntries(source,item).map(entry=>sourceOpenEndedWindow(source,item,entry)??entry):(Array.isArray(item.times)?item.times.slice(0,20):[])
-    const channelWindow=kind==='task'?channelOwnedWindow(source,item,pending,raw.summary):null
-    if(channelWindow&&timeEntries.length<20&&!timeEntries.some(entry=>entry?.role==='window')){timeEntries.push(channelWindow);audit.facts.push({role:'channel_window_link',item:item.key,raw:channelWindow.raw})}
+    const channelWindow=kind==='task'?(channelOwnedWindow(source,item,pending,raw.summary)??sourceSummaryDeliveryWindow(source,item,pending,raw.summary,raw.topic)):null
+    if(channelWindow&&timeEntries.length<20&&!timeEntries.some(entry=>entry?.role==='window')){timeEntries.push(channelWindow);audit.facts.push({role:channelWindow.sourceRecovered?'document_window_link':'channel_window_link',item:item.key,raw:channelWindow.raw})}
     for(const entry of timeEntries) {
       if(!object(entry)||!['deadline','start','end','window'].includes(entry.role))continue
       const rawTime=text(entry.raw,160)
@@ -492,6 +518,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       }
       const eid=evidence(span.literal,'deadline',item.key,span.start),role=entry.role==='deadline'?'task_deadline':entry.role==='end'?'event_end':'event_start'
       if(!eid)continue
+      if(entry.sourceRecovered){const ref=result.evidence.find(value=>value.id===eid);if(ref)ref.extractionMethod='parser'}
       const before=source.slice(Math.max(0,span.start-80),span.start),after=source.slice(span.end,Math.min(source.length,span.end+80))
       const left=Math.max(before.lastIndexOf('。'),before.lastIndexOf('；'),before.lastIndexOf(';'),before.lastIndexOf('\n'))+1,right=after.search(/[。；;\n]/u),clause=before.slice(left)+span.literal+(right<0?after:after.slice(0,right))
       const previous=/(?:原定|原截止|原时间)/u.test(before)&&/(?:取消|作废|废止)/u.test(after)&&/(?:改为|改至|调整为|调整至|延期至|更正为)/u.test(after)
@@ -568,6 +595,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     if(!owners.length){note('MATERIAL',material.key,'MATERIAL_OWNER_MISSING');continue}
     const refs=list(material.evidence,12,500),ids=refs.flatMap(q=>{const e=evidence(q,'materials',material.key);return e?[e]:[]})
     if(!ids.length){note('MATERIAL',material.key,'MATERIAL_EVIDENCE_MISSING');continue}
+    if(material.sourceRecovered)for(const id of ids){const ref=result.evidence.find(value=>value.id===id);if(ref)ref.extractionMethod='parser'}
     const channel=text(material.channel,160),channelInSource=sourceChannel(source,channel)
     // A shared material must not carry one delivery's exclusive channel into
     // a different owner. That owner's own separately grounded channel remains.
@@ -578,8 +606,10 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     // variants exceed the wire contract, retain one conservative shared
     // material and report partial rather than emitting an invalid result.
     const available=60-result.materials.length-(raw.materials.length-index-1)
-    const splitDelivery=mixedDelivery&&ownerRecords.length<=available
-    if(mixedDelivery&&!splitDelivery)note('MATERIAL',material.key,'SHARED_DELIVERY_CAPACITY')
+    const ownerUses=ownerRecords.map(record=>materialUseForOwner(source,record,text(material.name,160)))
+    const differentUses=ownerRecords.length>1&&ownerUses.every(Boolean)&&new Set(ownerUses.map(value=>value.required)).size>1
+    const splitDelivery=(mixedDelivery||differentUses)&&ownerRecords.length<=available
+    if((mixedDelivery||differentUses)&&!splitDelivery)note('MATERIAL',material.key,'SHARED_DELIVERY_CAPACITY')
     const wrongChannelScope=Boolean(channelInSource&&ownerRecords.some(record=>conflictingDeliveryScope(source,channelInSource,text(record.item.deliveryForm,80)||record.item.title)))
     const supportedChannel=wrongChannelScope?null:channelInSource||null
     const formats=list(material.formats,20,160),naming=list(material.naming,20,160),requirements=supportedRequirements(material.requirements,material.key)
@@ -625,7 +655,12 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const ownerChannel=sourceChannel(source,text(record.item.channel,160))
       const ownMaterialChannel=splitDelivery?(ownerChannel&&!conflictingDeliveryScope(source,ownerChannel,form)?ownerChannel:channelInSource&&!conflictingDeliveryScope(source,channelInSource,form)?channelInSource:null):supportedChannel
       const sharedScope=(value,kind)=>mixedDelivery&&!splitDelivery?ownerRecords.every(other=>scoped(value,other,kind)):scoped(value,record,kind)
-      const m={tempId:'sem-m'+(index+1)+(splitDelivery?'-delivery-'+(ownerIndex+1):''),name:text(material.name,160),required:material.required!==false&&(!conditional||sameTaskCondition),formatRequirements:formats.filter(value=>sharedScope(value,'format')),namingRequirements:naming.filter(value=>sharedScope(value,'naming')),requirements:ownedRequirements.filter(value=>sharedScope(value,'requirement')),quantity,submissionChannel:ownMaterialChannel,relatedTaskTempIds:splitDelivery?[owner.tempId]:owners.map(t=>t.tempId),evidenceIds:[...new Set(ids)],confidence:.8,selected:true}
+      const ownerUse=ownerUses[ownerRecords.indexOf(record)]
+      const required=splitDelivery&&ownerUse?ownerUse.required:material.required!==false&&(!conditional||sameTaskCondition)
+      const useRequirements=ownerUse?.requirement?[ownerUse.requirement]:[]
+      const scopedRequirements=uniqueRequirements([...ownedRequirements.filter(value=>sharedScope(value,'requirement')),...useRequirements])
+      if(scopedRequirements.length>20)note('MATERIAL',material.key,'MATERIAL_REQUIREMENT_OVERFLOW')
+      const m={tempId:'sem-m'+(index+1)+(splitDelivery?'-delivery-'+(ownerIndex+1):''),name:text(material.name,160),required,formatRequirements:formats.filter(value=>sharedScope(value,'format')),namingRequirements:naming.filter(value=>sharedScope(value,'naming')),requirements:scopedRequirements.slice(0,20),quantity,submissionChannel:ownMaterialChannel,relatedTaskTempIds:splitDelivery?[owner.tempId]:owners.map(t=>t.tempId),evidenceIds:[...new Set(ids)],confidence:.8,selected:true}
       if(splitDelivery||ownerIndex===0)result.materials.push(m)
       owner.materialTempIds.push(m.tempId);owner.evidenceIds=[...new Set([...owner.evidenceIds,...ids])].slice(0,20)
       // Merge task-level and material-level requirements once, preserving the
@@ -709,6 +744,16 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     const eid=evidence(pair.quote,'description','choice',pair.start)
     if(!eid||result.conflicts.some(conflict=>conflict.id.startsWith('sem-choice-')&&ids.every(id=>conflict.entityTempIds.includes(id))))continue
     result.conflicts.push({id:'sem-choice-'+eid,type:'other',message:pair.quote,entityTempIds:ids,evidenceIds:[eid],requiresDecision:false})
+    for(const record of pair.records){
+      const citations=Array.isArray(record.item.evidence)?record.item.evidence:[]
+      const action=typeof record.item.action==='string'?record.item.action.trim():'',object=typeof record.item.object==='string'?record.item.object.trim():''
+      const preferred=Boolean(action&&object)&&citations.some(quote=>typeof quote==='string'&&/^(?:请)?优先/u.test(quote.trim())&&locateSourceQuote(quote,source)&&quote.includes(action)&&quote.includes(object))
+      if(preferred&&!record.entity.completionCriteria.includes('优先使用此方式')){
+        const description=[record.entity.description,'要求：优先使用此方式'].filter(Boolean).join('\n')
+        if(record.entity.completionCriteria.length<12&&description.length<=800){record.entity.completionCriteria.push('优先使用此方式');record.entity.description=description}
+        else note('RELATION',record.item.key,'CHOICE_PREFERENCE_OVERFLOW')
+      }
+    }
     audit.facts.push({role:'choice_branches',sourceEvidenceId:eid,owners:ids})
   }
   for(const choice of sourceBackedEventChoices(source,pending)){
