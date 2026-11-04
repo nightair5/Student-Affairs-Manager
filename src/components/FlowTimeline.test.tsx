@@ -69,5 +69,25 @@ describe('timeline date semantics',()=>{
   expect(timeline).toContain('携带学生证')
   expect(renderToStaticMarkup(<FlowTaskList tasks={[task]} onOpen={()=>{}} onComplete={()=>{}} />)).toContain('地点：实践中心A室')
  })
+ it('presents a registration and its prerequisite-linked delivery together while keeping both channels and deadlines',()=>{
+  const base={...demoTasks[0],status:'待开始' as const,materials:[],dependencies:[],sourceIds:['source'],history:[],plannedStart:undefined,directDate:undefined}
+  const first:Task={...base,id:'register',title:'报名分享会',deadline:'2026-11-07T17:00',dependencyIds:[],description:'提交渠道：https://example.edu/register'}
+  const second:Task={...base,id:'resume',title:'提交个人简历',deadline:'2026-11-08T12:00',dependencyIds:['register'],description:'提交渠道：https://example.edu/resume'}
+  const html=renderToStaticMarkup(<FlowTimeline tasks={[first]} allTasks={[first,second]} events={[]} deferred={[{task:second,reason:'有 1 项前置事项未完成'}]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onComplete={()=>{}} />)
+  expect(html.match(/data-task-id=/gu)).toHaveLength(1)
+  for(const value of ['2 个步骤','第 1 步','第 2 步','报名分享会','提交个人简历','11月7日','11月8日','href="https://example.edu/register"','href="https://example.edu/resume"','等待前一步完成'])expect(html).toContain(value)
+  expect(first.deadline).toBe('2026-11-07T17:00')
+  expect(second.dependencyIds).toEqual(['register'])
+ })
+ it('retains the completed first step while the second step can be completed',()=>{
+  const base={...demoTasks[0],materials:[],dependencies:[],sourceIds:['source'],history:[],description:'',deadline:'',plannedStart:undefined,directDate:undefined}
+  const first:Task={...base,id:'one',title:'报名',status:'已完成',dependencyIds:[]}
+  const second:Task={...base,id:'two',title:'提交材料',status:'待开始',dependencyIds:['one']}
+  const html=renderToStaticMarkup(<FlowTimeline tasks={[second]} allTasks={[first,second]} events={[]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onComplete={()=>{}} />)
+  expect(html).toContain('已完成 1/2')
+  expect(html).toContain('第 1 步')
+  expect(html).toContain('第 2 步')
+  expect(html).toContain('完成当前步骤：提交材料')
+ })
 
 })
