@@ -1,4 +1,16 @@
-# 当前发布：v3.0.0-beta.28（2026-11-04）
+# 当前发布：v3.0.0-beta.29（2026-11-05）
+
+正式站点 student-affairs.site；部署代码 2d6dbe0104ba005eaa440cd3fd9ce15bc9dbb111；生产版本 43e167ae-53da-4c3f-820e-bffed5d4df46。
+回滚到 beta.28：`node node_modules/wrangler/bin/wrangler.js rollback 134a94ce-cacd-4178-8822-bebfc4691885 --env= --yes`，多账户时指定正式账户。
+已完成日程移到日历折叠列表，可恢复；首页没有待处理事项时不再出现空的“0项”时间轴。
+今天及接下来两天的已定日期日程使用红色和文字提示，时间与地点更醒目；主要操作由绿色改为蓝色，不更改已保存的日程时间。
+本地完整检查及部署提交六项远端 CI 通过；线上首页、主要资源、日历资源哈希、安全头和服务状态通过，本轮没有新增模型调用。
+完成、恢复、日期边界与内容展示经组件渲染和隔离内存仓库验证；本轮没有真实手机或桌面浏览器页面验收。
+依赖审计无高危，有 11 项中危提示；旧用户记录未改写。线上核验：`.data/home-event-style-smoke-20261105-101812/`。
+
+## 以下为 beta.28 当时的历史记录
+
+# 历史发布：v3.0.0-beta.28（2026-11-04）
 
 正式站点 student-affairs.site；部署代码 162cfa2b1aa714c57a6953025d5f7c7b302d4976；生产版本 134a94ce-cacd-4178-8822-bebfc4691885。
 回滚到 beta.27：`node node_modules/wrangler/bin/wrangler.js rollback 6f651bde-ea58-44df-9f0b-3ffccebb956a --env= --yes`，多账户时指定正式账户。
