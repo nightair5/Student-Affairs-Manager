@@ -1,4 +1,15 @@
-# 当前进度：beta.30 已上线（2026年11月5日）
+# 当前进度：beta.31 已上线（2026年11月5日）
+
+正式站点运行代码 feab41a6a795d42481a04f9a2f0219a03882d3aa，生产版本 148a530c-8132-4391-9ae7-37d871f61504。
+回滚到 beta.30：`node node_modules/wrangler/bin/wrangler.js rollback 7883fbaa-be01-41b0-b785-3b813c91220c --env= --yes`。
+活动附带入群、提前入场等可归入对应活动须知；独立报名、截止及提交仍保留。旧记录不自动改写。
+直达页面请求语义契约 3.6，兼容客户端保留服务默认 3.0；Workspace v8 不变。
+本地完整检查、部署提交六项远端 CI、线上资源及两条匿名真实 AI 接口通过；保存和撤销由隔离内存仓库验证，真实浏览器未验收。
+关联不明确时可能仍分开；依赖审计有 11 项中危提示。证据：.data/event-incidental-20261105-204123/。
+
+## 以下为 beta.30 当时的历史记录
+
+# 历史进度：beta.30 已上线（2026年11月5日）
 
 正式站点运行代码 b351096800dfacc6e3ca6751fb33965b1c4fecbe，生产版本 7883fbaa-be01-41b0-b785-3b813c91220c。
 回滚到 beta.29：`node node_modules/wrangler/bin/wrangler.js rollback 43e167ae-53da-4c3f-820e-bffed5d4df46 --env= --yes`。

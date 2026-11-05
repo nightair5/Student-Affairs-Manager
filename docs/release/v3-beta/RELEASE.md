@@ -1,4 +1,17 @@
-# 当前发布：v3.0.0-beta.30（2026-11-05）
+# 当前发布：v3.0.0-beta.31（2026-11-05）
+
+正式站点 student-affairs.site；部署代码 feab41a6a795d42481a04f9a2f0219a03882d3aa；生产版本 148a530c-8132-4391-9ae7-37d871f61504。
+回滚到 beta.30：`node node_modules/wrangler/bin/wrangler.js rollback 7883fbaa-be01-41b0-b785-3b813c91220c --env= --yes`，多账户时指定正式账户。
+活动附带的入群、提前入场等提示可放在对应活动须知；独立报名、提交、有截止及材料要求的事项继续保留。已有记录不自动改写。
+直达页面请求语义契约 3.6；兼容客户端的服务默认仍为 3.0，主体模型 Flash、Workspace v8 保持不变。
+本地完整检查和部署提交六项远端 CI 通过；线上资源、安全头及两条匿名真实 AI 接口核验通过。
+真实回答经隔离内存仓库验证保存、独立再加、批次撤销和备份；本轮未进行真实手机与桌面浏览器操作。
+小组对照不能保证所有通知都准确；无法确定的关联可能仍显示为独立待办。依赖审计无高危，仍有 11 项中危提示。
+证据：`.data/event-incidental-20261105-204123/`。
+
+## 以下为 beta.30 当时的历史记录
+
+# 历史发布：v3.0.0-beta.30（2026-11-05）
 
 正式站点 student-affairs.site；部署代码 b351096800dfacc6e3ca6751fb33965b1c4fecbe；生产版本 7883fbaa-be01-41b0-b785-3b813c91220c。
 回滚到 beta.29：`node node_modules/wrangler/bin/wrangler.js rollback 43e167ae-53da-4c3f-820e-bffed5d4df46 --env= --yes`，多账户时指定正式账户。
