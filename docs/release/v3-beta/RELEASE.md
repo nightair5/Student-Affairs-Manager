@@ -1,4 +1,18 @@
-# 当前发布：v3.0.0-beta.29（2026-11-05）
+# 当前发布：v3.0.0-beta.30（2026-11-05）
+
+正式站点 student-affairs.site；部署代码 b351096800dfacc6e3ca6751fb33965b1c4fecbe；生产版本 7883fbaa-be01-41b0-b785-3b813c91220c。
+回滚到 beta.29：`node node_modules/wrangler/bin/wrangler.js rollback 43e167ae-53da-4c3f-820e-bffed5d4df46 --env= --yes`，多账户时指定正式账户。
+个人计划和原文截止分别出现在日历；跨午夜与仅日期日程按工作区时区保留可见；关联步骤在首页显示当前下一步。
+已完成批次不再常驻整理提示；重试前先检查用户修改，替换前再次检查。责任与受理安排由新直达识别契约及原文依据共同处理。
+直达页面显式请求语义契约 3.5；兼容客户端的服务默认仍为 3.0，不改写旧记录。主体模型 Flash、Workspace v8 保持不变。
+本地完整检查及部署提交六项远端 CI 通过；线上资源、安全头和两条匿名真实 AI 接口核验通过。
+线上 AI 回答经隔离内存仓库验证保存、计划、完成恢复、编辑、重复添加、撤销和备份；真实手机与桌面浏览器未验收。
+复杂跨校区安排若执行人不明仍显示待确认；多受理日保留原文，不擅自选日期。依赖审计无高危，有 11 项中危提示。
+证据：`.data/main-flow-calendar-20261105-142628/`。
+
+## 以下为 beta.29 当时的历史记录
+
+# 历史发布：v3.0.0-beta.29（2026-11-05）
 
 正式站点 student-affairs.site；部署代码 2d6dbe0104ba005eaa440cd3fd9ce15bc9dbb111；生产版本 43e167ae-53da-4c3f-820e-bffed5d4df46。
 回滚到 beta.28：`node node_modules/wrangler/bin/wrangler.js rollback 134a94ce-cacd-4178-8822-bebfc4691885 --env= --yes`，多账户时指定正式账户。

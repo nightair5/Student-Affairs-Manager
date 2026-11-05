@@ -1,4 +1,15 @@
-# 当前进度：beta.29 已上线（2026年11月5日）
+# 当前进度：beta.30 已上线（2026年11月5日）
+
+正式站点运行代码 b351096800dfacc6e3ca6751fb33965b1c4fecbe，生产版本 7883fbaa-be01-41b0-b785-3b813c91220c。
+回滚到 beta.29：`node node_modules/wrangler/bin/wrangler.js rollback 43e167ae-53da-4c3f-820e-bffed5d4df46 --env= --yes`。
+日历分别显示计划与截止，跨午夜日程按实际覆盖日期可见；首页多步骤显示下一步，完成批次不常驻重试提示。
+直达页面请求语义契约 3.5；其他兼容客户端保留服务默认 3.0。责任不明确时保留待确认，多个受理日不擅自选定。
+本地完整检查、部署提交六项远端 CI、线上资源及两条真实 AI 接口通过；保存操作经隔离内存仓库独立读回，真实浏览器未验收。
+依赖审计有 11 项中危提示；旧用户记录不自动改写。证据：.data/main-flow-calendar-20261105-142628/。
+
+## 以下为 beta.29 当时的历史记录
+
+# 历史进度：beta.29 已上线（2026年11月5日）
 
 正式站点运行代码 2d6dbe0104ba005eaa440cd3fd9ce15bc9dbb111，生产版本 43e167ae-53da-4c3f-820e-bffed5d4df46。
 回滚到 beta.28：`node node_modules/wrangler/bin/wrangler.js rollback 134a94ce-cacd-4178-8822-bebfc4691885 --env= --yes`。
