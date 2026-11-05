@@ -19,6 +19,7 @@ import {visibleChoiceTasks} from '../lib/sourceChoice'
 import type { CourseBlock, Event, Task } from '../types'
 import type { PlanSegment } from '../domain/v2/personalPlanD27'
 import {FlowEventList,FlowTaskList} from '../components/FlowItemList'
+import {flowEventDate} from '../lib/flowPresentation'
 
 interface CalendarPageProps {
   directMode?:boolean
@@ -37,6 +38,7 @@ interface CalendarPageProps {
   courseBlocks: CourseBlock[]
   onOpenTask: (task: Task) => void
   onOpenEvent?: (event: Event) => void
+  onSetEventCompletion?: (eventId:string,completed:boolean) => Promise<void>
   onAddCourseBlock: (block: CourseBlock) => void
   onRemoveCourseBlock: (blockId: string) => void
 }
@@ -65,7 +67,7 @@ function itemTime(value: string): string {
     .format(new Date(value))
 }
 
-export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChannels, preserveDateOnlyPrecision = false, personalPlans, personalPlanTimezone = 'Asia/Shanghai', pendingDateTaskIds, isolatedTimezone, dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
+export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChannels, preserveDateOnlyPrecision = false, personalPlans, personalPlanTimezone = 'Asia/Shanghai', pendingDateTaskIds, isolatedTimezone, dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onSetEventCompletion, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
   const ScheduleContainer=directMode?'details':'section'
   const [today] = useState(() => isolatedTimezone ? instantToWallClock(new Date(), isolatedTimezone) : new Date())
   const displayTime = (value: string) => isDateOnly(value) ? '仅日期' : isolatedTimezone ? value.slice(11, 16) + '（' + isolatedTimezone + '）' : itemTime(value)
@@ -76,6 +78,14 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
   const [courseWeekday, setCourseWeekday] = useState<CourseBlock['weekday']>(1)
   const [courseStart, setCourseStart] = useState('08:00')
   const [courseEnd, setCourseEnd] = useState('10:00')
+  const [restoreBusy,setRestoreBusy]=useState(''),[restoreError,setRestoreError]=useState('')
+  const activeEvents=useMemo(()=>directMode?events.filter(event=>!event.personalCompleted):events,[directMode,events])
+  const completedEvents=useMemo(()=>directMode?events.filter(event=>event.personalCompleted):[],[directMode,events])
+  const restoreEvent=async(id:string)=>{
+    if(!onSetEventCompletion||restoreBusy)return
+    setRestoreBusy(id);setRestoreError('')
+    try{await onSetEventCompletion(id,false)}catch(error){setRestoreError(error instanceof Error?error.message:'日程状态未保存，请重试。')}finally{setRestoreBusy('')}
+  }
   const visibleTasks=useMemo(()=>visibleChoiceTasks(tasks),[tasks])
   const taskByDate = useMemo(() => {
     if (!isolatedTimezone) return groupTasksByDate(visibleTasks)
@@ -84,11 +94,11 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
     return groups
   }, [visibleTasks, isolatedTimezone])
   const eventByDate = useMemo(() => {
-    if (!isolatedTimezone) return groupEventsByDate(events)
+    if (!isolatedTimezone) return groupEventsByDate(activeEvents)
     const groups = new Map<string, Event[]>()
-    events.filter(e => e.startAt).forEach(e => { const key = e.startAt!.slice(0, 10); groups.set(key, [...(groups.get(key) ?? []), e]) })
+    activeEvents.filter(e => e.startAt).forEach(e => { const key = e.startAt!.slice(0, 10); groups.set(key, [...(groups.get(key) ?? []), e]) })
     return groups
-  }, [events, isolatedTimezone])
+  }, [activeEvents, isolatedTimezone])
   const monthCells = useMemo(() => buildMonthCells(viewDate), [viewDate])
   const executableTasks = useMemo(() => getExecutableTasks(visibleTasks, today, dateViews)
     .filter(task => !dateViews || dateViews[task.id]?.kind === 'dated')
@@ -103,16 +113,16 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
     ].sort((a, b) => new Date(a.at).getTime() - new Date(b.at).getTime())
   }, [eventByDate, selectedDateKey, taskByDate])
   const upcomingItems = useMemo(() => {
-    if (!isolatedTimezone) return buildUpcomingCalendarItems(visibleTasks, events, today)
+    if (!isolatedTimezone) return buildUpcomingCalendarItems(visibleTasks, activeEvents, today)
     const day = localDateKey(today)
     return [
       ...visibleTasks.filter(t => t.status !== '已完成' && t.deadline && t.deadline.slice(0, 10) >= day)
         .map((task): CalendarTimelineItem => ({ kind: 'task', id: task.id, title: task.title, at: task.deadline, task })),
-      ...events.filter(e => e.startAt && e.startAt.slice(0, 10) >= day)
+      ...activeEvents.filter(e => e.startAt && e.startAt.slice(0, 10) >= day)
         .map((event): CalendarTimelineItem => ({ kind: 'event', id: event.id, title: event.title, at: event.startAt!, event })),
     ].sort((a,b) => a.at.localeCompare(b.at))
-  }, [events, visibleTasks, today, isolatedTimezone])
-  const undatedEvents = useMemo(() => getUndatedCalendarEvents(events), [events])
+  }, [activeEvents, visibleTasks, today, isolatedTimezone])
+  const undatedEvents = useMemo(() => getUndatedCalendarEvents(activeEvents), [activeEvents])
   const agendaItems = agendaMode === 'selected' ? selectedItems : upcomingItems
   const agendaTitle = agendaMode === 'selected'
     ? `${dayLabel(selectedDateKey)} · ${selectedItems.length} 项`
@@ -248,6 +258,14 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
                   <span className="agenda-copy"><strong>{event.title}</strong><small><Flag size={13} />事件 · 时间待确认{event.location ? <><MapPin size={12} />{event.location}</> : null}</small></span>
                 </article>)}</div>
           </section>}
+          {completedEvents.length>0&&<details className="calendar-completed-events">
+            <summary>已完成的日程</summary>
+            {restoreError&&<p role="alert">{restoreError}</p>}
+            <ul>{completedEvents.map(event=><li key={event.id}>
+              <div><strong>{event.title}</strong><small>{flowEventDate(event)}</small></div>
+              <div className="calendar-completed-actions">{onOpenEvent&&<button type="button" className="text-button" onClick={()=>onOpenEvent(event)}>查看详情</button>}{onSetEventCompletion&&<button type="button" className="text-button" disabled={Boolean(restoreBusy)} onClick={()=>void restoreEvent(event.id)} aria-label={`恢复${event.title}为未完成`}>{restoreBusy===event.id?'保存中…':'恢复未完成'}</button>}</div>
+            </li>)}</ul>
+          </details>}
           {!directMode&&<div className="agenda-tip"><Lightbulb size={18} /><p>即将到来展示全部未来任务和事件，不截断；月历格仍只显示行动摘要。</p></div>}
         </aside>
       </div>

@@ -1956,6 +1956,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             courseBlocks={courseBlocks}
             onOpenTask={(task) => setSelectedTaskId(task.id)}
             onOpenEvent={(event) => setSelectedEventId(event.id)}
+            onSetEventCompletion={!runtime?handleSetEventCompletion:undefined}
             onAddCourseBlock={(block) => setCourseBlocks((current) => [...current, block])}
             onRemoveCourseBlock={(blockId) => setCourseBlocks((current) => current.filter((block) => block.id !== blockId))}
           />

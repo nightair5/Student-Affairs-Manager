@@ -141,17 +141,18 @@ export function DashboardPage({
   )
 
   if(directMode){
-    const activeEvents=events.filter(event=>!event.personalCompleted),completedEvents=events.filter(event=>event.personalCompleted)
+    const activeEvents=events.filter(event=>!event.personalCompleted)
     const paired=onOpenEvent?pairFlowEvents(tasks,activeEvents,canonicalWorkspace):{linked:{},unpaired:activeEvents}
     const flow=homeFlow(tasks,paired.unpaired,new Date(),paired.linked),active=flow.dated.length+flow.undated.length
     const eventTimeHints=workspaceEventTimeHints(canonicalWorkspace)
+    const allDone=tasks.every(task=>task.status==='已完成')&&events.every(event=>event.personalCompleted)
     return <main className="page dashboard-page flow-dashboard">
       <header className="flow-page-heading"><span className="date-line">{todayLabel()}</span><h1>今天与接下来</h1></header>
       {captureForm}
       {historicalNotice&&historicalNotice.count>0&&<div className="flow-history-notice"><span>发现 {historicalNotice.count} 条以前的通知</span><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onAdd()}>{historicalNotice.busy?'正在添加…':'全部加入'}</button><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onIgnore()}>忽略</button></div>}
       {directNotice}
-      {(active>0||flow.deferred.length>0||flow.todayEvents.length>0||flow.upcomingEvents.length>0||flow.undatedEvents.length>0||completedEvents.length>0)&&<FlowTimeline tasks={[...flow.today,...flow.next,...flow.undated]} allTasks={tasks} events={[...flow.todayEvents,...flow.upcomingEvents,...flow.undatedEvents]} completedEvents={completedEvents} deferred={flow.deferred.map(({task,reason})=>({task,reason}))} linked={paired.linked} eventTimeHints={eventTimeHints} channels={taskChannels??{}} highlightIds={recentItemIds??[]} onOpenTask={onOpenTask} onOpenEvent={onOpenEvent} onComplete={onCompleteTask} onSetEventCompletion={onSetEventCompletion} onSchedule={onScheduleTask} onSelectChoice={onSelectChoice}/>}
-      {!active&&!flow.deferred.length&&!flow.todayEvents.length&&!flow.upcomingEvents.length&&!flow.undatedEvents.length&&!completedEvents.length&&<section className="home-empty-state"><strong>{tasks.length?'事情都处理好了':'放入第一条通知，待办和日程就会出现在这里'}</strong><p>粘贴原消息，点一次整理即可。</p></section>}
+      {(active>0||flow.deferred.length>0||flow.todayEvents.length>0||flow.upcomingEvents.length>0||flow.undatedEvents.length>0)&&<FlowTimeline tasks={[...flow.today,...flow.next,...flow.undated]} allTasks={tasks} events={[...flow.todayEvents,...flow.upcomingEvents,...flow.undatedEvents]} deferred={flow.deferred.map(({task,reason})=>({task,reason}))} linked={paired.linked} eventTimeHints={eventTimeHints} channels={taskChannels??{}} highlightIds={recentItemIds??[]} onOpenTask={onOpenTask} onOpenEvent={onOpenEvent} onComplete={onCompleteTask} onSetEventCompletion={onSetEventCompletion} onSchedule={onScheduleTask} onSelectChoice={onSelectChoice}/>}
+      {!active&&!flow.deferred.length&&!flow.todayEvents.length&&!flow.upcomingEvents.length&&!flow.undatedEvents.length&&<section className="home-empty-state"><strong>{!tasks.length&&!events.length?'放入第一条通知，待办和日程就会出现在这里':allDone?'事情都处理好了':'暂无待办或近期日程'}</strong><p>有新通知时，粘贴后点一次整理即可。</p>{events.some(event=>event.personalCompleted)&&onShowCalendar&&<button type="button" className="text-button" onClick={onShowCalendar}>查看日历</button>}</section>}
       {recentAdditions}
     </main>
   }

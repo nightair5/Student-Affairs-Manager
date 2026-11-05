@@ -1,4 +1,4 @@
-import {describe,expect,it} from 'vitest'
+import {afterEach,describe,expect,it,vi} from 'vitest'
 import {renderToStaticMarkup} from 'react-dom/server'
 import {demoTasks} from '../data/demo'
 import type {Event,Task} from '../types'
@@ -7,6 +7,7 @@ import {FlowTaskList} from './FlowItemList'
 import {sortTimeline,timelineDate,timelineGroupLabel} from '../lib/flowTimelineDates'
 
 describe('timeline date semantics',()=>{
+ afterEach(()=>vi.useRealTimers())
  it('offers personal completion for an independent event and preserves an undated source clock',()=>{
   const event:Event={id:'e-clock',title:'线上大会',description:'原文时长：15分钟左右\n时间说明：晚上9点15分（日期待定）',startAt:null,endAt:null,evidenceIds:[],needsConfirmation:true,createdAt:'',updatedAt:''}
   const html=renderToStaticMarkup(<FlowTimeline tasks={[]} events={[event]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onOpenEvent={()=>{}} onComplete={()=>{}} onSetEventCompletion={async()=>{}} />)
@@ -15,12 +16,24 @@ describe('timeline date semantics',()=>{
   expect(html).toContain('完成线上大会')
   expect(html).not.toContain('00:00')
  })
- it('keeps completed events available for restoration without displaying them as active',()=>{
-  const event:Event={id:'done',title:'已办日程',description:'',startAt:null,endAt:null,evidenceIds:[],needsConfirmation:false,createdAt:'',updatedAt:'',personalCompleted:true}
-  const html=renderToStaticMarkup(<FlowTimeline tasks={[]} events={[]} completedEvents={[event]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onOpenEvent={()=>{}} onComplete={()=>{}} onSetEventCompletion={async()=>{}} />)
-  expect(html).toContain('已完成日程')
-  expect(html).toContain('恢复未完成')
-  expect(html).not.toContain('data-event-id="done"')
+ it('highlights a nearby event with its original time and location',()=>{
+  vi.useFakeTimers();vi.setSystemTime(new Date('2026-11-04T16:30:00Z'))
+  const event:Event={id:'near',title:'课程讲座',description:'',startAt:'2026-11-06T15:00',endAt:'2026-11-06T16:30',location:'教学楼302',evidenceIds:[],needsConfirmation:false,createdAt:'',updatedAt:''}
+  const html=renderToStaticMarkup(<FlowTimeline tasks={[]} events={[event]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onComplete={()=>{}} />)
+  for(const value of ['data-near-event="true"','3天内','15:00','16:30','教学楼302','时间','地点'])expect(html).toContain(value)
+  const distant={...event,startAt:'2026-11-08T15:00',endAt:'2026-11-08T16:30'}
+  expect(renderToStaticMarkup(<FlowTimeline tasks={[]} events={[distant]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onComplete={()=>{}} />)).not.toContain('data-near-event="true"')
+ })
+ it('marks the linked event date without mislabelling a separate task deadline',()=>{
+  vi.useFakeTimers();vi.setSystemTime(new Date('2026-11-04T16:30:00Z'))
+  const task:Task={...demoTasks[0],id:'linked',title:'准备材料',status:'待开始',deadline:'2026-11-10T17:00',plannedStart:undefined,directDate:undefined,materials:[],dependencies:[],sourceIds:[],history:[],description:''}
+  const event:Event={id:'meeting',title:'说明会',description:'',startAt:'2026-11-06T15:00',endAt:null,location:'教学楼302',evidenceIds:[],needsConfirmation:false,createdAt:'',updatedAt:''}
+  const html=renderToStaticMarkup(<FlowTimeline tasks={[task]} events={[]} deferred={[]} linked={{linked:event}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onComplete={()=>{}} />)
+  expect(html).toContain('日程：11月6日')
+  expect(html).toContain('11月10日')
+  expect(html).toContain('截止')
+  expect(html).toContain('日程时间')
+  expect(html).toContain('教学楼302')
  })
  it('keeps date-only plans and deadlines grouped on their actual day without a clock time',()=>{
   expect(timelineDate(['2026-11-04T09:00','2026-11-03'])).toBe('2026-11-03')
