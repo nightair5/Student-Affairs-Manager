@@ -10,16 +10,18 @@ import {
   localDateKey,
   summarizeCalendarDay,
   taskCalendarDate,
+  taskCalendarEntryForDay,
   type CalendarTimelineItem,
 } from '../lib/calendar'
 import { findSuggestedWorkSlot } from '../lib/scheduling'
-import { isDateOnly, instantToWallClock } from '../lib/timeSemantics'
+import { isDateOnly, instantToWallClock,resolveWorkspaceTimeZone } from '../lib/timeSemantics'
 import { formatDuration, getExecutableTasks } from '../lib/taskLogic'
 import {visibleChoiceTasks} from '../lib/sourceChoice'
 import type { CourseBlock, Event, Task } from '../types'
 import type { PlanSegment } from '../domain/v2/personalPlanD27'
 import {FlowEventList,FlowTaskList} from '../components/FlowItemList'
 import {flowEventDate} from '../lib/flowPresentation'
+import {useCurrentTime} from '../lib/useCurrentTime'
 
 interface CalendarPageProps {
   directMode?:boolean
@@ -69,10 +71,12 @@ function itemTime(value: string): string {
 
 export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChannels, preserveDateOnlyPrecision = false, personalPlans, personalPlanTimezone = 'Asia/Shanghai', pendingDateTaskIds, isolatedTimezone, dateViews, tasks, events = [], courseBlocks, onOpenTask, onOpenEvent, onSetEventCompletion, onAddCourseBlock, onRemoveCourseBlock }: CalendarPageProps) {
   const ScheduleContainer=directMode?'details':'section'
-  const [today] = useState(() => isolatedTimezone ? instantToWallClock(new Date(), isolatedTimezone) : new Date())
+  const currentTime=useCurrentTime()
+  const timeZone=resolveWorkspaceTimeZone(isolatedTimezone??personalPlanTimezone)
+  const today = isolatedTimezone&&!directMode ? instantToWallClock(currentTime, isolatedTimezone) : currentTime
   const displayTime = (value: string) => isDateOnly(value) ? '仅日期' : isolatedTimezone ? value.slice(11, 16) + '（' + isolatedTimezone + '）' : itemTime(value)
-  const [viewDate, setViewDate] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1))
-  const [selectedDateKey, setSelectedDateKey] = useState(() => localDateKey(today))
+  const [viewDate, setViewDate] = useState(() => {const [year,month]=localDateKey(today,timeZone).split('-').map(Number);return new Date(year,month-1,1,12)})
+  const [selectedDateKey, setSelectedDateKey] = useState(() => localDateKey(today,timeZone))
   const [agendaMode, setAgendaMode] = useState<'selected' | 'upcoming'>('upcoming')
   const [courseTitle, setCourseTitle] = useState('')
   const [courseWeekday, setCourseWeekday] = useState<CourseBlock['weekday']>(1)
@@ -88,18 +92,18 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
   }
   const visibleTasks=useMemo(()=>visibleChoiceTasks(tasks),[tasks])
   const taskByDate = useMemo(() => {
-    if (!isolatedTimezone) return groupTasksByDate(visibleTasks)
+    if (directMode||!isolatedTimezone) return groupTasksByDate(visibleTasks,timeZone)
     const groups = new Map<string, Task[]>()
     visibleTasks.filter(t => t.deadline).forEach(t => { const key = t.deadline.slice(0, 10); groups.set(key, [...(groups.get(key) ?? []), t]) })
     return groups
-  }, [visibleTasks, isolatedTimezone])
+  }, [visibleTasks, isolatedTimezone,directMode,timeZone])
+  const monthCells = useMemo(() => buildMonthCells(viewDate,today,timeZone), [viewDate,today,timeZone])
   const eventByDate = useMemo(() => {
-    if (!isolatedTimezone) return groupEventsByDate(activeEvents)
+    if (directMode||!isolatedTimezone) return groupEventsByDate(activeEvents,timeZone,{start:monthCells[0].dateKey,end:monthCells[monthCells.length-1].dateKey})
     const groups = new Map<string, Event[]>()
     activeEvents.filter(e => e.startAt).forEach(e => { const key = e.startAt!.slice(0, 10); groups.set(key, [...(groups.get(key) ?? []), e]) })
     return groups
-  }, [activeEvents, isolatedTimezone])
-  const monthCells = useMemo(() => buildMonthCells(viewDate), [viewDate])
+  }, [activeEvents, isolatedTimezone,directMode,timeZone,monthCells])
   const executableTasks = useMemo(() => getExecutableTasks(visibleTasks, today, dateViews)
     .filter(task => !dateViews || dateViews[task.id]?.kind === 'dated')
     .slice()
@@ -108,12 +112,12 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
     const selectedTasks = taskByDate.get(selectedDateKey) ?? []
     const selectedEvents = eventByDate.get(selectedDateKey) ?? []
     return [
-      ...selectedTasks.map((task): CalendarTimelineItem => ({ kind: 'task', id: task.id, title: task.title, at: taskCalendarDate(task), task })),
+      ...selectedTasks.map((task): CalendarTimelineItem => {const date=taskCalendarEntryForDay(task,selectedDateKey,timeZone);return { kind: 'task', id: task.id, title: task.title, at: date?.at??taskCalendarDate(task),timeRole:date?.role, task }}),
       ...selectedEvents.filter((event) => event.startAt).map((event): CalendarTimelineItem => ({ kind: 'event', id: event.id, title: event.title, at: event.startAt!, event })),
     ].sort((a, b) => new Date(a.at).getTime() - new Date(b.at).getTime())
-  }, [eventByDate, selectedDateKey, taskByDate])
+  }, [eventByDate, selectedDateKey, taskByDate,timeZone])
   const upcomingItems = useMemo(() => {
-    if (!isolatedTimezone) return buildUpcomingCalendarItems(visibleTasks, activeEvents, today)
+    if (directMode||!isolatedTimezone) return buildUpcomingCalendarItems(visibleTasks, activeEvents, today,timeZone)
     const day = localDateKey(today)
     return [
       ...visibleTasks.filter(t => t.status !== '已完成' && t.deadline && t.deadline.slice(0, 10) >= day)
@@ -121,7 +125,7 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
       ...activeEvents.filter(e => e.startAt && e.startAt.slice(0, 10) >= day)
         .map((event): CalendarTimelineItem => ({ kind: 'event', id: event.id, title: event.title, at: event.startAt!, event })),
     ].sort((a,b) => a.at.localeCompare(b.at))
-  }, [activeEvents, visibleTasks, today, isolatedTimezone])
+  }, [activeEvents, visibleTasks, today, isolatedTimezone,directMode,timeZone])
   const undatedEvents = useMemo(() => getUndatedCalendarEvents(activeEvents), [activeEvents])
   const agendaItems = agendaMode === 'selected' ? selectedItems : upcomingItems
   const agendaTitle = agendaMode === 'selected'
@@ -137,7 +141,7 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
   const changeMonth = (offset: number) => {
     const next = new Date(viewDate.getFullYear(), viewDate.getMonth() + offset, 1)
     setViewDate(next)
-    setSelectedDateKey(localDateKey(next))
+    setSelectedDateKey(`${next.getFullYear()}-${String(next.getMonth()+1).padStart(2,'0')}-01`)
   }
 
   const addCourse = (event: FormEvent) => {
@@ -181,7 +185,7 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
             {monthCells.map((cell) => {
               const dayTasks = taskByDate.get(cell.dateKey) ?? []
               const dayEvents = eventByDate.get(cell.dateKey) ?? []
-              const summary = summarizeCalendarDay(dayTasks, dayEvents)
+              const summary = summarizeCalendarDay(dayTasks, dayEvents,cell.dateKey,timeZone)
               if (dateViews && summary && dayTasks.some(task => isDateOnly(task.deadline))) {
                 const timed = summarizeCalendarDay(dayTasks.filter(task => !isDateOnly(task.deadline)), dayEvents)
                 summary.timeLabel = timed ? `含仅日期事项；时刻 ${timed.timeLabel}` : '仅日期'
@@ -226,7 +230,7 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
             <button type="button" className={agendaMode === 'upcoming' ? 'active' : ''} aria-pressed={agendaMode === 'upcoming'} onClick={() => setAgendaMode('upcoming')}>即将到来</button>
           </div>
           {agendaItems.length
-            ? directMode&&onCompleteTask?<div className="calendar-agenda-list">{agendaItems.map(item=>item.kind==='task'?<FlowTaskList key={item.id} tasks={[item.task]} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} channels={taskChannels}/>:onOpenEvent?<FlowEventList key={item.id} events={[item.event]} onOpen={onOpenEvent}/>:null)}</div>
+            ? directMode&&onCompleteTask?<div className="calendar-agenda-list">{agendaItems.map(item=>item.kind==='task'?<div key={`${item.id}:${item.timeRole??''}:${item.at}`}><small>{item.timeRole==='both'?'计划与截止':item.timeRole==='plan'?'个人计划':item.timeRole==='deadline'?'原文截止':item.timeRole==='window'?'办理时段':''}</small><FlowTaskList tasks={[item.task]} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} channels={taskChannels} timeZone={timeZone}/></div>:onOpenEvent?<FlowEventList key={item.id} events={[item.event]} onOpen={onOpenEvent} now={today} timeZone={timeZone}/>:null)}</div>
             : <div className="calendar-agenda-list">{agendaItems.map((item) => item.kind === 'task'
                 ? <button className="agenda-item" key={`task:${item.id}`} type="button" onClick={() => onOpenTask(item.task)}>
                     <span className="agenda-time">{isDateOnly(item.at) && !dateViews && !preserveDateOnlyPrecision ? itemTime(item.at) : displayTime(item.at)}</span>
@@ -262,7 +266,7 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
             <summary>已完成的日程</summary>
             {restoreError&&<p role="alert">{restoreError}</p>}
             <ul>{completedEvents.map(event=><li key={event.id}>
-              <div><strong>{event.title}</strong><small>{flowEventDate(event)}</small></div>
+              <div><strong>{event.title}</strong><small>{flowEventDate(event,undefined,timeZone)}</small></div>
               <div className="calendar-completed-actions">{onOpenEvent&&<button type="button" className="text-button" onClick={()=>onOpenEvent(event)}>查看详情</button>}{onSetEventCompletion&&<button type="button" className="text-button" disabled={Boolean(restoreBusy)} onClick={()=>void restoreEvent(event.id)} aria-label={`恢复${event.title}为未完成`}>{restoreBusy===event.id?'保存中…':'恢复未完成'}</button>}</div>
             </li>)}</ul>
           </details>}

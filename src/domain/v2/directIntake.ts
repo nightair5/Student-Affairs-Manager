@@ -176,7 +176,10 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
         const groups=new Map<string,typeof semanticPoints>()
         for(const p of semanticPoints)groups.set(p.rawText,[...(groups.get(p.rawText)??[]),p])
         const windows=[...groups.entries()].flatMap(([rawText,points])=>{
-          if(!rawText||!v.rawText?.includes(rawText)||points.some(p=>p.needsConfirmation||!p.normalizedValue))return []
+          if(!rawText||!v.rawText?.includes(rawText))return []
+          // Keep a cited but unresolved service schedule as wording, never as
+          // a selected date, deadline or continuous interval.
+          if(points.some(p=>p.needsConfirmation||!p.normalizedValue))return points.every(p=>p.legacyData?.sourceTimeRole==='window_start'||p.legacyData?.sourceTimeRole==='window_end')?[{state:'SOURCE_LITERAL_UNRESOLVED',rawText,pointIds:points.map(p=>p.id)}]:[]
           const start=points.find(p=>p.type==='event_start'),end=points.find(p=>p.type==='event_end')
           if(points.length>2||points.length===2&&(!start||!end)||points.length===1&&!start&&!end)return []
           const state=start&&end?'RESOLVED_DISCRETE':end?'RESOLVED_SOURCE_END':'RESOLVED_SOURCE_DATE'
@@ -238,17 +241,37 @@ async function undoDirectBatchTransaction(repo:Pick<CanonicalWorkspaceRepository
   })
 }
 
+/** Run before a paid retry and again before replacement. It does not mutate the workspace. */
+export function assertDirectBatchReplaceable(before:WorkspaceV8,batchId:string,hasUncommittedEdits=false):DirectBatch {
+ const batch=recentDirectBatches(before).find(b=>b.id===batchId&&b.status==='active')
+ if(!batch)throw Error('DIRECT_FALLBACK_NOT_ACTIVE')
+ const source=before.sources.find(item=>item.id===batch.sourceId)
+ const originalRun=before.recognitionRuns.find(run=>run.id===before.extractionDrafts.find(draft=>draft.id===batch.draftId)?.recognitionRunId)
+ const version=before.sourceVersions.find(item=>item.id===source?.currentVersionId)
+ if(!source||!version?.rawText||originalRun?.sourceVersionId!==version.id)throw Error('通知来源已变化或不可读取，原来的事项保留。')
+ if(hasUncommittedEdits)throw Error('这批事项还有未保存的修改，原来的事项保留。请先保存或取消修改。')
+ if(batch.items.some(i=>{const e=[...before.tasks,...before.events].find(e=>e.id===i.id);return !e||e.updatedAt>batch.addedAt||'version'in e&&e.version>1||'status'in e&&e.status==='completed'||before.historyRecords.some(h=>h.entityId===e.id&&h.actor==='user'&&h.action!=='created'&&h.changedAt>=batch.addedAt)}))throw Error('已修改过这些事项，请保留当前内容，避免覆盖你的修改。')
+ if([...before.materials,...before.timePoints].some(e=>(batch.created.materials?.includes(e.id)||batch.created.timePoints?.includes(e.id))&&(e.updatedAt>batch.addedAt||'version'in e&&e.version>1||before.historyRecords.some(h=>h.entityId===e.id&&h.actor==='user'&&h.action!=='created'&&h.changedAt>=batch.addedAt))))throw Error('已修改过这些事项的时间或材料，请保留当前内容，避免覆盖你的修改。')
+ return batch
+}
+
+/** Concurrent clicks for the same batch must never send a second request. */
+export function runExclusiveDirectRetry(inFlight:Map<string,Promise<void>>,batchId:string,work:()=>Promise<void>):Promise<void> {
+ const existing=inFlight.get(batchId)
+ if(existing)return existing
+ const running=Promise.resolve().then(work).finally(()=>{inFlight.delete(batchId)})
+ inFlight.set(batchId,running)
+ return running
+}
+
 /** Prepare in memory, then compare and atomically replace through the same
  * Repository transaction. A failed recognition never enters this function. */
 export async function replaceDirectFallback(repo:CanonicalWorkspaceRepository,batchId:string,draftId:string,now=new Date().toISOString(),canReplace?:()=>boolean){
  const before=await repo.load()
  if(!before)throw Error('DIRECT_SOURCE_NOT_AVAILABLE')
- const batch=recentDirectBatches(before).find(b=>b.id===batchId&&b.status==='active')
- if(!batch)throw Error('DIRECT_FALLBACK_NOT_ACTIVE')
+ const batch=assertDirectBatchReplaceable(before,batchId)
  const oldRun=before.recognitionRuns.find(r=>r.id===before.extractionDrafts.find(d=>d.id===batch.draftId)?.recognitionRunId),newRun=before.recognitionRuns.find(r=>r.id===before.extractionDrafts.find(d=>d.id===draftId)?.recognitionRunId)
  if(!oldRun||oldRun.sourceVersionId!==newRun?.sourceVersionId||newRun.provider!=='deepseek'||newRun.status!=='succeeded')throw Error('DIRECT_REPLACEMENT_NOT_SUCCESSFUL_AI')
- if(batch.items.some(i=>{const e=[...before.tasks,...before.events].find(e=>e.id===i.id);return !e||e.updatedAt>batch.addedAt||'version'in e&&e.version>1||'status'in e&&e.status==='completed'||before.historyRecords.some(h=>h.entityId===e.id&&h.actor==='user'&&h.action!=='created'&&h.changedAt>=batch.addedAt)}))throw Error('已修改过这些事项，请保留当前内容，避免覆盖你的修改。')
- if([...before.materials,...before.timePoints].some(e=>(batch.created.materials?.includes(e.id)||batch.created.timePoints?.includes(e.id))&&(e.updatedAt>batch.addedAt||'version'in e&&e.version>1||before.historyRecords.some(h=>h.entityId===e.id&&h.actor==='user'&&h.action!=='created'&&h.changedAt>=batch.addedAt))))throw Error('已修改过这些事项的时间或材料，请保留当前内容，避免覆盖你的修改。')
  let prepared=structuredClone(before)
  const memory:Pick<CanonicalWorkspaceRepository,'transaction'>={transaction:async mutate=>{prepared=mutate(prepared);return structuredClone(prepared)}}
  await undoDirectBatch(memory,batchId,now)

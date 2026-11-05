@@ -8,6 +8,7 @@ import { CapturePersistenceService } from './capture'
 import { commitDirectDraft, undoDirectBatch } from './directIntake'
 import { homeFlow } from '../../lib/homeFlow'
 import { groupTasksByDate, buildUpcomingCalendarItems } from '../../lib/calendar'
+import { commitTaskCommand } from './taskCommand'
 
 async function setup() {
   const w = createGoldenWorkspaceV8(), repository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore())
@@ -36,6 +37,26 @@ describe('a personal date never edits source facts', () => {
     repository.transaction = async () => { throw Error('INJECTED_WRITE_FAILURE') }
     await expect(setTaskSchedule(repository, id, '2026-10-28')).rejects.toThrow('INJECTED')
     expect(await repository.load()).toEqual(before)
+  })
+  it('independently reads both calendar roles after plan, completion, restoration and clearing the plan', async () => {
+    const w=createGoldenWorkspaceV8()
+    for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','projects','milestones','workPackages','tasks','materials','timePoints','events','evidenceRefs','historyRecords','reminderRecords','changeProposals'] as const)w[key]=[]
+    const store=new MemoryWorkspaceRecordStore(),repository=new CanonicalWorkspaceRepository(store);await repository.save(w)
+    const capture=new CapturePersistenceService(repository),text='请于2026年11月7日17:00前提交申请表。',now='2026-11-05T10:00:00+08:00'
+    const h=await capture.beginCapture({operationId:'roles-capture',sourceType:'text',title:'申请表',rawText:text,provider:'local-rules',modelName:'local',promptVersion:'test',pipelineVersion:'test',now})
+    await capture.recognize(h,async()=>buildLocalRecognition({sourceType:'text',sourceTitle:'申请表',content:text,referenceTime:new Date(now),timezone:'Asia/Shanghai',projects:[],tasks:[]}))
+    const result=await commitDirectDraft(repository,h.draftId,now),id=result.batch!.items[0].id
+    await setTaskSchedule(repository,id,'2026-11-06','2026-11-05T11:00:00+08:00')
+    const reader=new CanonicalWorkspaceRepository(store),afterPlan=(await reader.load())!,projected=workspaceV8ToLegacyView(afterPlan).tasks.find(t=>t.id===id)!
+    expect(projected.deadline).toBe('2026-11-07T17:00');expect([...groupTasksByDate([projected]).keys()].sort()).toEqual(['2026-11-06','2026-11-07'])
+    const canonical=afterPlan.tasks.find(t=>t.id===id)!
+    await commitTaskCommand(repository,{operationId:'roles-complete',taskId:id,expected:{status:canonical.status},changes:{status:'completed'},changedAt:'2026-11-05T11:01:00+08:00'})
+    let restored=workspaceV8ToLegacyView((await reader.load())!).tasks.find(t=>t.id===id)!
+    expect(buildUpcomingCalendarItems([restored],[],new Date('2026-11-06T09:00:00+08:00'))).toHaveLength(0)
+    await commitTaskCommand(repository,{operationId:'roles-restore',taskId:id,expected:{status:'completed'},changes:{status:canonical.status},changedAt:'2026-11-05T11:02:00+08:00'})
+    await setTaskSchedule(repository,id,'','2026-11-05T11:03:00+08:00')
+    restored=workspaceV8ToLegacyView((await reader.load())!).tasks.find(t=>t.id===id)!
+    expect([...groupTasksByDate([restored]).keys()]).toEqual(['2026-11-07']);expect(restored.deadline).toBe('2026-11-07T17:00')
   })
   it('keeps another task attached to a shared plan', async () => {
     const { repository, id } = await setup(), second = (await repository.load())!.tasks[1].id

@@ -1,7 +1,7 @@
 import type {Event,Task} from '../types'
 import {calculateTaskPriority,getBlockedAndWaitingTasks,getExecutableTasks} from './taskLogic'
-import {getUndatedCalendarEvents,localDateKey} from './calendar'
-import {isDateOnly,parseBusinessDateTime} from './timeSemantics'
+import {eventCalendarDays,eventTimingState,getUndatedCalendarEvents,localDateKey} from './calendar'
+import {addDateOnlyDays,isDateOnly,parseBusinessDateTime} from './timeSemantics'
 import {sourceWindowActive} from './sourceWindowActive'
 import {visibleChoiceTasks} from './sourceChoice'
 import type {WorkspaceV8} from '../domain/v2/types'
@@ -97,23 +97,23 @@ export function pairFlowEvents(tasks:Task[],events:Event[],workspace:WorkspaceV8
   return {linked,unpaired:events.filter(e=>!ids.has(e.id))}
 }
 
-export function homeFlow(tasks:Task[],events:Event[],now=new Date(),linked:Readonly<Record<string,Event>>={}){
+export function homeFlow(tasks:Task[],events:Event[],now=new Date(),linked:Readonly<Record<string,Event>>={},timeZone='Asia/Shanghai'){
   const relatedDate=(t:Task)=>t.sourceWindowLabel?t.sourceWindowEnd:linked[t.id]?.startAt
   const visibleTasks=visibleChoiceTasks(tasks)
   const ready=getExecutableTasks(visibleTasks,now),dated=(t:Task)=>Boolean(t.deadline||t.plannedStart||t.directDate||relatedDate(t))
   const priorityDifference=(a:Task,b:Task)=>calculateTaskPriority(b,tasks,now).score-calculateTaskPriority(a,tasks,now).score
   const byPriority=(a:Task,b:Task)=>priorityDifference(a,b)||a.createdAt.localeCompare(b.createdAt)||a.id.localeCompare(b.id)
-  const today=localDateKey(now),next=new Date(now);next.setDate(next.getDate()+7);const end=localDateKey(next)
+  const today=localDateKey(now,timeZone),end=addDateOnlyDays(today,7)
   // A later personal plan must not hide a deadline which falls today.
-  const firstDate=(t:Task)=>[t.plannedStart||t.directDate,t.deadline,relatedDate(t)].filter((value):value is string=>Boolean(value)).map(localDateKey).sort()[0]??''
+  const firstDate=(t:Task)=>[t.plannedStart||t.directDate,t.deadline,relatedDate(t)].filter((value):value is string=>Boolean(value)).map(value=>localDateKey(value,timeZone)).sort()[0]??''
   // For a day with incomplete precision, preserve its existing priority slot.
   // Never interpret an unspecified clock time as midnight. Sort only the
   // clock-bearing slots amongst themselves, avoiding a non-transitive comparator.
   const firstTime=(t:Task):number|null=>{
     const day=firstDate(t)
-    const values=[t.plannedStart||t.directDate,t.deadline,relatedDate(t)].filter((value):value is string=>Boolean(value)&&localDateKey(value!)===day)
+    const values=[t.plannedStart||t.directDate,t.deadline,relatedDate(t)].filter((value):value is string=>Boolean(value)&&localDateKey(value!,timeZone)===day)
     if(!values.length||values.some(isDateOnly))return null
-    const dates=values.map(value=>parseBusinessDateTime(value))
+    const dates=values.map(value=>parseBusinessDateTime(value,timeZone))
     if(dates.some(value=>!value))return null
     return Math.min(...dates.map(value=>value!.getTime()))
   }
@@ -135,15 +135,18 @@ export function homeFlow(tasks:Task[],events:Event[],now=new Date(),linked:Reado
     const plan=t.plannedStart||t.directDate
     // Preserve existing placement for old overdue tasks with a future plan,
     // while ensuring an actual deadline today remains visible today.
-    if(plan)return localDateKey(plan)<=today||Boolean(t.deadline&&localDateKey(t.deadline)===today)
+    if(plan)return localDateKey(plan,timeZone)<=today||Boolean(t.deadline&&localDateKey(t.deadline,timeZone)===today)
     const date=t.deadline||relatedDate(t)
-    return Boolean(date&&localDateKey(date)<=today)
+    return Boolean(date&&localDateKey(date,timeZone)<=today)
   }
-  const upcoming=events.filter(e=>e.startAt&&Number.isFinite(Date.parse(e.startAt))&&localDateKey(e.endAt&&Number.isFinite(Date.parse(e.endAt))?e.endAt:e.startAt)>=today).sort((a,b)=>(a.startAt??'').localeCompare(b.startAt??'')||a.id.localeCompare(b.id))
+  const upcoming=events.filter(e=>{
+    const state=eventTimingState(e,now,timeZone)
+    return state==='upcoming'||state==='ongoing'||(state==='ended'&&eventCalendarDays(e,timeZone,{start:today,end:today}).length>0)
+  }).sort((a,b)=>(a.startAt??'').localeCompare(b.startAt??'')||a.id.localeCompare(b.id))
   return {dated:ready.filter(dated).sort(byPriority),today:ready.filter(t=>dated(t)&&isToday(t)).sort(byPriority),next:sortUpcoming(ready.filter(t=>dated(t)&&!isToday(t))),undated:ready.filter(t=>!dated(t)).sort((a,b)=>priorityDifference(a,b)||b.createdAt.localeCompare(a.createdAt)||a.id.localeCompare(b.id)),deferred:getBlockedAndWaitingTasks(visibleTasks,now),
-    events:upcoming.filter(e=>localDateKey(e.startAt!)<=end),
-    todayEvents:upcoming.filter(e=>localDateKey(e.startAt!)<=today),
-    upcomingEvents:upcoming.filter(e=>localDateKey(e.startAt!)>today),
+    events:upcoming.filter(e=>localDateKey(e.startAt!,timeZone)<=end),
+    todayEvents:upcoming.filter(e=>localDateKey(e.startAt!,timeZone)<=today),
+    upcomingEvents:upcoming.filter(e=>localDateKey(e.startAt!,timeZone)>today),
     undatedEvents:getUndatedCalendarEvents(events)}
 }
 

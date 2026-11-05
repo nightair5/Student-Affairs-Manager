@@ -22,6 +22,21 @@ export function sourceWindowDisplayLabel(taskId:string,declaration:JsonValue|und
  return [...new Set(quotes)].join('；')||undefined
 }
 
+/** An unresolved schedule is still useful as source wording. It is not a
+ * confirmed appointment or a source deadline and cannot drive date ordering. */
+export function sourceWindowUnresolvedLabel(taskId:string,declaration:JsonValue|undefined,points:Pick<TimePoint,'id'|'taskId'|'relatedTaskIds'>[],versions:Pick<SourceVersion,'id'|'rawText'>[]):string|undefined {
+ const d=object(declaration)
+ if(d?.version!=='source-window-declarations-1.0.0'||d.ownerTaskId!==taskId||!Array.isArray(d.windows))return undefined
+ const source=versions.find(v=>v.id===d.sourceVersionId)?.rawText
+ if(!source)return undefined
+ const quotes=d.windows.flatMap(value=>{
+  const row=object(value),ids=row?.pointIds
+  if(row?.state!=='SOURCE_LITERAL_UNRESOLVED'||typeof row.rawText!=='string'||!row.rawText||!source.includes(row.rawText)||!Array.isArray(ids)||!ids.length||ids.some(id=>typeof id!=='string'||!points.some(p=>p.id===id&&p.taskId===taskId&&p.relatedTaskIds.includes(taskId))))return []
+  return [row.rawText]
+ })
+ return quotes.length?`原文：${[...new Set(quotes)].join('；')}（时间未安排）`:undefined
+}
+
 /** Only actual resolved endpoint values supply urgency. The label alone cannot
  * manufacture a cutoff or suppress a pending canonical time. */
 export function sourceWindowLastEnd(taskId:string,declaration:JsonValue|undefined,points:TimePoint[],versions:SourceVersion[]):string|undefined {

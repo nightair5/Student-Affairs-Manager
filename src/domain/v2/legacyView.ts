@@ -24,7 +24,7 @@ import { isDateOnly, parseBusinessDateTime } from '../../lib/timeSemantics'
 import { createIntegrationState } from '../../lib/workspace'
 import { workspaceSnapshotHash } from './migration'
 import type { JsonValue, LegacyData, WorkspaceV8 } from './types'
-import {sourceWindowChoiceBranch,sourceWindowDisplayLabel,sourceWindowFirstStart,sourceWindowLastEnd} from './sourceWindowDisplay'
+import {sourceWindowChoiceBranch,sourceWindowDisplayLabel,sourceWindowFirstStart,sourceWindowLastEnd,sourceWindowUnresolvedLabel} from './sourceWindowDisplay'
 import {canonicalHandlingWindow} from './handlingWindow'
 import {handlingWindowLabel} from '../../recognition/handlingWindowSupport'
 
@@ -308,7 +308,9 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     const sourceIds = sourceIdsForTask(item)
     const deadline = taskDeadline(workspace, item.id)
     const handling=canonicalHandlingWindow(workspace,item)?.row
-    const windowLabel=sourceWindowDisplayLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)??(handling?handlingWindowLabel(handling):undefined)
+    const resolvedWindow=sourceWindowDisplayLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)??(handling?handlingWindowLabel(handling):undefined)
+    const unresolvedWindow=sourceWindowUnresolvedLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)
+    const windowLabel=[resolvedWindow,unresolvedWindow].filter(Boolean).join('；')||undefined
     const windowStart=sourceWindowFirstStart(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)
     const windowEnd=sourceWindowLastEnd(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)??(handling?.kind!=='OPEN_DAYS_UNSTATED'?handling?.end:undefined)
     const sourceChoice=sourceChoiceForTask(workspace,item)

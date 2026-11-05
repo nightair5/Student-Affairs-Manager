@@ -10,6 +10,7 @@ import type { Event, Project, Task } from '../types'
 import {homeFlow,pairFlowEvents,workspaceEventTimeHints} from '../lib/homeFlow'
 import type {WorkspaceV8} from '../domain/v2/types'
 import {FlowTimeline} from '../components/FlowTimeline'
+import {useCurrentTime} from '../lib/useCurrentTime'
 
 interface DashboardPageProps {
   directMode?: boolean
@@ -46,10 +47,10 @@ interface DashboardPageProps {
   smartExtractionStatus: 'checking' | 'connected' | 'unavailable'
 }
 
-function todayLabel(): string {
+function todayLabel(now:Date,timeZone:string): string {
   return new Intl.DateTimeFormat('zh-CN', {
-    month: 'long', day: 'numeric', weekday: 'long',
-  }).format(new Date())
+    month: 'long', day: 'numeric', weekday: 'long',timeZone,
+  }).format(now)
 }
 
 export function DashboardPage({
@@ -75,6 +76,8 @@ export function DashboardPage({
   onShowInbox,
   smartExtractionStatus,
 }: DashboardPageProps) {
+  const now=useCurrentTime()
+  const timeZone=canonicalWorkspace?.settings.defaultTimezone??'Asia/Shanghai'
   const [quickText, setQuickText] = useState('')
   const [quickError, setQuickError] = useState('')
   const [readLinks,setReadLinks]=useState(true)
@@ -143,15 +146,15 @@ export function DashboardPage({
   if(directMode){
     const activeEvents=events.filter(event=>!event.personalCompleted)
     const paired=onOpenEvent?pairFlowEvents(tasks,activeEvents,canonicalWorkspace):{linked:{},unpaired:activeEvents}
-    const flow=homeFlow(tasks,paired.unpaired,new Date(),paired.linked),active=flow.dated.length+flow.undated.length
+    const flow=homeFlow(tasks,paired.unpaired,now,paired.linked,timeZone),active=flow.dated.length+flow.undated.length
     const eventTimeHints=workspaceEventTimeHints(canonicalWorkspace)
     const allDone=tasks.every(task=>task.status==='已完成')&&events.every(event=>event.personalCompleted)
     return <main className="page dashboard-page flow-dashboard">
-      <header className="flow-page-heading"><span className="date-line">{todayLabel()}</span><h1>今天与接下来</h1></header>
+      <header className="flow-page-heading"><span className="date-line">{todayLabel(now,timeZone)}</span><h1>今天与接下来</h1></header>
       {captureForm}
       {historicalNotice&&historicalNotice.count>0&&<div className="flow-history-notice"><span>发现 {historicalNotice.count} 条以前的通知</span><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onAdd()}>{historicalNotice.busy?'正在添加…':'全部加入'}</button><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onIgnore()}>忽略</button></div>}
       {directNotice}
-      {(active>0||flow.deferred.length>0||flow.todayEvents.length>0||flow.upcomingEvents.length>0||flow.undatedEvents.length>0)&&<FlowTimeline tasks={[...flow.today,...flow.next,...flow.undated]} allTasks={tasks} events={[...flow.todayEvents,...flow.upcomingEvents,...flow.undatedEvents]} deferred={flow.deferred.map(({task,reason})=>({task,reason}))} linked={paired.linked} eventTimeHints={eventTimeHints} channels={taskChannels??{}} highlightIds={recentItemIds??[]} onOpenTask={onOpenTask} onOpenEvent={onOpenEvent} onComplete={onCompleteTask} onSetEventCompletion={onSetEventCompletion} onSchedule={onScheduleTask} onSelectChoice={onSelectChoice}/>}
+      {(active>0||flow.deferred.length>0||flow.todayEvents.length>0||flow.upcomingEvents.length>0||flow.undatedEvents.length>0)&&<FlowTimeline tasks={[...flow.today,...flow.next,...flow.undated]} allTasks={tasks} events={[...flow.todayEvents,...flow.upcomingEvents,...flow.undatedEvents]} deferred={flow.deferred.map(({task,reason})=>({task,reason}))} linked={paired.linked} eventTimeHints={eventTimeHints} channels={taskChannels??{}} highlightIds={recentItemIds??[]} timeZone={timeZone} onOpenTask={onOpenTask} onOpenEvent={onOpenEvent} onComplete={onCompleteTask} onSetEventCompletion={onSetEventCompletion} onSchedule={onScheduleTask} onSelectChoice={onSelectChoice}/>}
       {!active&&!flow.deferred.length&&!flow.todayEvents.length&&!flow.upcomingEvents.length&&!flow.undatedEvents.length&&<section className="home-empty-state"><strong>{!tasks.length&&!events.length?'放入第一条通知，待办和日程就会出现在这里':allDone?'事情都处理好了':'暂无待办或近期日程'}</strong><p>有新通知时，粘贴后点一次整理即可。</p>{events.some(event=>event.personalCompleted)&&onShowCalendar&&<button type="button" className="text-button" onClick={onShowCalendar}>查看日历</button>}</section>}
       {recentAdditions}
     </main>
@@ -161,7 +164,7 @@ export function DashboardPage({
     <main className="page dashboard-page">
       <header className="simple-dashboard-header">
         <div>
-          <span className="date-line">{todayLabel()}</span>
+          <span className="date-line">{todayLabel(now,timeZone)}</span>
           <h1>{focusTasks.length ? <>今天先做这 <em>{focusTasks.length}</em> 件事</> : upcomingEvents.length ? '接下来有哪些安排' : '先把新通知变成清楚的下一步'}</h1>
           <p>任务和日程都在这里，按自己的节奏逐件完成。</p>
         </div>

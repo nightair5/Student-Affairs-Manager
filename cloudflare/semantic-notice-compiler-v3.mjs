@@ -6,6 +6,7 @@ import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-2-0.mjs'
 import {SOURCE_DAY_PATTERN,channelOwnedWindow,combineExplicitWindowEntries,contextualEventDay,mergeHeadingWindowIntoDelivery,modelOwnedSharedDay,ownedAgendaTime,sameBuildingLocation,sourceChannelClosingDeadline,sourceConditionClauses,sourceEvidenceCondition,sourceEventDuration,sourceOpenEndedWindow,sourceSummaryDeliveryWindow,sourceSummaryOptionalMaterial,systemAvailabilityAsInformation} from './semantic-source-context.mjs'
 import {combineSupportedChoices,expandSupportedSingleChoices,sharedDocumentScope,sourceBackedChoicePairs,sourceBackedEventChoices,sourceCandidateTime,sourceFormContext} from './semantic-relations.mjs'
 import {itemPolarity} from './semantic-item-polarity.mjs'
+import {applySemanticActorRelations} from './semantic-actor-relations.mjs'
 
 const object = value => Boolean(value && typeof value === 'object' && !Array.isArray(value))
 const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(0,max) : ''
@@ -277,7 +278,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.14',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
   const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:text(raw.topic,160)||'通知',sourceType:'text',notificationType:'uncertain',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,promptVersion,true,timezone)
-  const audit={version:promptVersion,compilerVersion:'semantic-notice-compiler-1.0.14',rootFailure:false,items:[],facts:[],losses:[]}
+  const audit={version:promptVersion,compilerVersion:promptVersion==='recognition-semantic-notice-3.5.0'?'semantic-notice-compiler-1.0.17':promptVersion==='recognition-semantic-notice-3.4.0'?'semantic-notice-compiler-1.0.16':promptVersion==='recognition-semantic-notice-3.3.0'?'semantic-notice-compiler-1.0.15':'semantic-notice-compiler-1.0.14',rootFailure:false,items:[],facts:[],losses:[]}
   const availableWindows=[]
   const withWindowInformation={...raw,items:raw.items.map(item=>{
     const converted=systemAvailabilityAsInformation(source,item)
@@ -320,7 +321,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const singleChoice=/(?:任选(?:其一|一种|一项)|二选一|两种方式任选其一)/u.test(normalizedSource)&&/(?:任选|选择|选取)(?:其中)?(?:一|1)(?:项|种|个)/u.test(value)&&choiceTail.length>=6&&normalizedSource.includes(choiceTail)
       if(numbers.some(number=>!sourceNumbers.has(number)&&!(number==='1'&&singleChoice))){note('REQUIREMENT',id,'REQUIREMENT_NUMBER_NOT_IN_SOURCE');return false}
       if(numberedUnits(value).some(unit=>!sourceUnits.has(unit)&&!(unit==='1:选择'&&singleChoice))){note('REQUIREMENT',id,'REQUIREMENT_NUMBER_UNIT_NOT_IN_SOURCE');return false}
-      if([SEMANTIC_NOTICE_VERSION,'recognition-semantic-notice-3.1.0'].includes(promptVersion)&&!/(?:不得|禁止|不能|不可|不允许|无需|无须|不必|不需要|请勿|不再)/u.test(value)){
+      if([SEMANTIC_NOTICE_VERSION,'recognition-semantic-notice-3.1.0','recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0'].includes(promptVersion)&&!/(?:不得|禁止|不能|不可|不允许|无需|无须|不必|不需要|请勿|不再)/u.test(value)){
         const phrase=compact(value).replace(/^(?:请务必|必须|务必|需要|应当|请|须|需|应|要求)/u,'')
         const positions=[]
         if(phrase.length>=2)for(let at=normalizedSource.indexOf(phrase);at>=0;at=normalizedSource.indexOf(phrase,at+1))positions.push(at)
@@ -779,6 +780,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     audit.facts.push({role:'event_choice_alternatives',sourceEvidenceId:eid,owners:ids})
   }
   combineSupportedChoices(result,audit)
+  if(['recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0'].includes(promptVersion))applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone,includeContextFacts:promptVersion==='recognition-semantic-notice-3.5.0'})
   result.sourceSummary.title=text(raw.topic,160)||result.standaloneTasks[0]?.title||result.events[0]?.title||'通知'
   result.sourceSummary.requiresAction=raw.kind==='action'||raw.kind==='mixed'||result.standaloneTasks.length>0
   result.sourceSummary.notificationType=result.standaloneTasks.length?'teacher_task':result.events.length?'event_notice':raw.kind==='information'?'information_only':'uncertain'

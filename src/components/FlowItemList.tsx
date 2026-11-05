@@ -11,6 +11,8 @@ import {eventDescriptionSections,eventDurationLabel} from '../lib/eventPresentat
 import {taskPublicContent} from '../lib/taskContentPresentation'
 import {MaterialFactsList} from './MaterialFactsList'
 import {isEventInNextThreeDays} from '../lib/upcomingEvent'
+import {eventTimingState} from '../lib/calendar'
+import {isDateOnly} from '../lib/timeSemantics'
 
 /** Display a unique explicitly labelled registration site from this task's own
  * description. This is not a new material, channel, or stored source fact. */
@@ -22,12 +24,12 @@ function registrationSite(task:Task):string | undefined {
   return urls.length===1&&labelled.length===1&&urls[0]===labelled[0]?labelled[0]:undefined
 }
 
-export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[],channels={},linkedEvents={},eventTimeHints={},blockedReasons={},completedChoiceGroups=[],onOpenEvent}:{tasks:Task[];onOpen:(t:Task)=>void;onComplete:(id:string)=>void;onSchedule?:(id:string,date:string)=>Promise<void>;highlightIds?:readonly string[];channels?:Readonly<Record<string,string[]>>;linkedEvents?:Readonly<Record<string,Event>>;eventTimeHints?:Readonly<Record<string,string>>;blockedReasons?:Readonly<Record<string,string>>;completedChoiceGroups?:readonly string[];onOpenEvent?:(event:Event)=>void}){
+export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[],channels={},linkedEvents={},eventTimeHints={},blockedReasons={},completedChoiceGroups=[],onOpenEvent,timeZone='Asia/Shanghai'}:{tasks:Task[];onOpen:(t:Task)=>void;onComplete:(id:string)=>void;onSchedule?:(id:string,date:string)=>Promise<void>;highlightIds?:readonly string[];channels?:Readonly<Record<string,string[]>>;linkedEvents?:Readonly<Record<string,Event>>;eventTimeHints?:Readonly<Record<string,string>>;blockedReasons?:Readonly<Record<string,string>>;completedChoiceGroups?:readonly string[];onOpenEvent?:(event:Event)=>void;timeZone?:string}){
   const key=highlightIds.join('|'),[expired,setExpired]=useState(''),recent=expired===key?'':key
   useEffect(()=>{const timer=setTimeout(()=>setExpired(key),5000);return()=>clearTimeout(timer)},[key])
   return <ul className="flow-item-list">{tasks.map(task=>{
-    const linked=linkedEvents[task.id], taskDate=flowTaskDate(task), hint=linked&&eventTimeHints[linked.id]
-    const eventDate=linked?(flowEventDate(linked,hint)==='时间待定'?'日程时间待定':flowEventDate(linked,hint)):'日程时间待定'
+    const linked=linkedEvents[task.id], taskDate=flowTaskDate(task,timeZone), hint=linked&&eventTimeHints[linked.id]
+    const eventDate=linked?(flowEventDate(linked,hint,timeZone)==='时间待定'?'日程时间待定':flowEventDate(linked,hint,timeZone)):'日程时间待定'
     const displayedDate=linked&&taskDate==='未设日期'?eventDate:taskDate
     const taskChannels=channels[task.id]??[]
     const tags=visibleDirectTags(task.directTags,displayedDate,task.title)
@@ -55,7 +57,7 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
           {durationHint&&<small className="flow-item-duration">建议约 {durationHint}（估计而非原文，可在详情修改，不自动安排）</small>}
           {taskChannels.length>0&&<small className="flow-task-channel" title={taskChannels.join('、')}>提交：{taskChannels.join('、')}</small>}
           {site&&!taskChannels.some(channel=>channel.includes(site))&&<small className="flow-task-channel">报名网址：{site}</small>}
-          {planAfterDeadline(task.plannedStart||task.directDate,task.deadline)&&<small className="flow-deadline-warning">计划晚于截止</small>}
+          {planAfterDeadline(task.plannedStart||task.directDate,task.deadline,timeZone)&&<small className="flow-deadline-warning">计划晚于截止</small>}
           {tags.map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}
         </span>
       </button>
@@ -68,11 +70,12 @@ export function FlowTaskList({tasks,onOpen,onComplete,onSchedule,highlightIds=[]
     </li>
   })}</ul>
 }
-export function FlowEventList({events,onOpen,timeHints={},highlightIds=[]}:{events:Event[];onOpen:(e:Event)=>void;timeHints?:Readonly<Record<string,string>>;highlightIds?:readonly string[]}){
+export function FlowEventList({events,onOpen,timeHints={},highlightIds=[],now=new Date(),timeZone='Asia/Shanghai'}:{events:Event[];onOpen:(e:Event)=>void;timeHints?:Readonly<Record<string,string>>;highlightIds?:readonly string[];now?:Date;timeZone?:string}){
   const key=highlightIds.join('|'),[expired,setExpired]=useState(''),recent=expired===key?'':key
   useEffect(()=>{const timer=setTimeout(()=>setExpired(key),5000);return()=>clearTimeout(timer)},[key])
   return <ul className="flow-item-list">{events.map(event=>{
-    const near=isEventInNextThreeDays(event)
-    return <li className="flow-event-row" key={event.id} data-event-id={event.id} data-new={recent.split('|').includes(event.id)||undefined} data-near-event={near||undefined}><span className="flow-item-icon"><CalendarDays size={20}/></span><button type="button" className="flow-item-main" onClick={()=>onOpen(event)}><h3 title={event.title}>{directCardTitle(event.title)}</h3><span className="flow-item-facts"><span className="flow-event-time"><Clock3 size={15}/>{flowEventDate(event,timeHints[event.id])}</span>{near&&<span className="flow-near-badge">3天内</span>}{eventDurationLabel(event)&&<small>{eventDurationLabel(event)}</small>}{event.location&&<span className="flow-event-place"><MapPin size={15}/>{event.location}</span>}{eventDescriptionSections(event.description).filter(s=>s.label==='主讲人').map((s,i)=><small key={i}>主讲：{s.content}</small>)}</span>{Boolean(event.directTags?.length)&&<span className="direct-inline-tags">{visibleDirectTags(event.directTags,flowEventDate(event,timeHints[event.id]),event.title).map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}</span>}</button><ChevronRight size={17}/></li>
+    const near=isEventInNextThreeDays(event,now,timeZone)
+    const ongoing=Boolean(event.startAt&&!isDateOnly(event.startAt)&&eventTimingState(event,now,timeZone)==='ongoing')
+    return <li className="flow-event-row" key={event.id} data-event-id={event.id} data-new={recent.split('|').includes(event.id)||undefined} data-near-event={near||undefined}><span className="flow-item-icon"><CalendarDays size={20}/></span><button type="button" className="flow-item-main" onClick={()=>onOpen(event)}><h3 title={event.title}>{directCardTitle(event.title)}</h3><span className="flow-item-facts"><span className="flow-event-time"><Clock3 size={15}/>{flowEventDate(event,timeHints[event.id],timeZone)}</span>{near&&<span className="flow-near-badge">{ongoing?'进行中':'3天内'}</span>}{eventDurationLabel(event)&&<small>{eventDurationLabel(event)}</small>}{event.location&&<span className="flow-event-place"><MapPin size={15}/>{event.location}</span>}{eventDescriptionSections(event.description).filter(s=>s.label==='主讲人').map((s,i)=><small key={i}>主讲：{s.content}</small>)}</span>{Boolean(event.directTags?.length)&&<span className="direct-inline-tags">{visibleDirectTags(event.directTags,flowEventDate(event,timeHints[event.id],timeZone),event.title).map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}</span>}</button><ChevronRight size={17}/></li>
   })}</ul>
 }

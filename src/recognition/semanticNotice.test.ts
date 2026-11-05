@@ -11,6 +11,8 @@ import {buildLocalRecognition} from './pipeline'
 import {improveDirectFallback} from './directFallback'
 import {exportWorkspaceV8,importWorkspaceV8} from '../domain/v2/serialization'
 import {sourceWindowDisplayLabel,sourceWindowLastEnd} from '../domain/v2/sourceWindowDisplay'
+import {workspaceV8ToLegacyView} from '../domain/v2/legacyView'
+import {flowTaskDate} from '../lib/flowPresentation'
 import {isSemanticNoticeVersion} from './semanticNoticeVersion'
 
 const referenceTime='2026-11-01T04:12:32.675Z',timezone='Asia/Shanghai'
@@ -114,6 +116,18 @@ describe('semantic notice direct delivery',()=>{
     expect(stored.timePoints.map(p=>[p.type,p.normalizedValue,p.precision])).toEqual([['event_start','2026-11-22','date_only']])
     expect(sourceWindowDisplayLabel(task.id,task.legacyData?.sourceWindowDeclarations,stored.timePoints,stored.sourceVersions)).toBe('11月22日上午')
     expect(sourceWindowLastEnd(task.id,task.legacyData?.sourceWindowDeclarations,stored.timePoints,stored.sourceVersions)).toBeUndefined()
+  })
+  it('displays a cited multi-day service schedule without pretending it is one continuous appointment',async()=>{
+    const text='需要设备借用的同学可在线预约并携学生证办理。服务点在11月10日、11月17日的9:00至11:00受理；管理员将在每次受理后统一登记台账。'
+    // A source-backed engineering replay of the observed model structure.
+    const value={topic:'设备借用',kind:'action',items:[{key:'borrow',kind:'task',title:'携学生证办理设备借用',action:'办理',object:'设备借用',evidence:['需要设备借用的同学可在线预约并携学生证办理','服务点在11月10日、11月17日的9:00至11:00受理'],times:[{role:'window',raw:'11月10日、11月17日的9:00至11:00'}]}],materials:[]}
+    const repo=await emptyRepo();await addNotice(repo,'service-dates',text,value)
+    const stored=(await repo.load())!,task=workspaceV8ToLegacyView(stored).tasks[0]
+    expect(task.sourceWindowLabel).toContain('11月10日、11月17日的9:00至11:00')
+    expect(flowTaskDate(task)).toContain('时间未安排')
+    expect(task.deadline).toBeFalsy();expect(task.sourceWindowStart).toBeUndefined();expect(task.sourceWindowEnd).toBeUndefined()
+    const imported=importWorkspaceV8(exportWorkspaceV8(stored))
+    expect(workspaceV8ToLegacyView(imported).tasks[0].sourceWindowLabel).toBe(task.sourceWindowLabel)
   })
   it('preserves a task location supported by that task and does not borrow another item location',async()=>{
     const text='领取器材：11月13日9:00—10:00在实践中心A室。'

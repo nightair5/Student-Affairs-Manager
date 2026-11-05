@@ -802,8 +802,14 @@ async function extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,c
   try {
     const referenceTime=safeText(body.referenceTime,80),timezone=safeText(body.timezone,80)||'Asia/Shanghai'
     const transport=boundedNetworkRetry(fetcher,{enabled:env.DEEPSEEK_NETWORK_RETRY==='1'})
-    const generated=env.DEEPSEEK_GENERATION_MODE==='semantic-notice-3.0'
-      ?await runSemanticNoticeGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),source:body.content,referenceTime,timezone,userText:extractionUserText(body,body.content,safeText(body.sourceTitle,160),referenceTime,timezone)})
+    // New direct clients explicitly negotiate the role-aware contract. Older
+    // clients keep the frozen default and can still use a rolled-back Worker.
+    const requestedContract=request.headers.get('x-student-affairs-recognition')
+    const actorContracts=['semantic-notice-3.3','semantic-notice-3.4','semantic-notice-3.5']
+    const actorRoles=actorContracts.includes(env.DEEPSEEK_GENERATION_MODE)?env.DEEPSEEK_GENERATION_MODE:env.DEEPSEEK_GENERATION_MODE==='semantic-notice-3.0'&&actorContracts.includes(requestedContract)?requestedContract:false
+    if(actorRoles)context.generationMode=actorRoles
+    const generated=['semantic-notice-3.0',...actorContracts].includes(env.DEEPSEEK_GENERATION_MODE)
+      ?await runSemanticNoticeGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),source:body.content,referenceTime,timezone,actorRoles,userText:extractionUserText(body,body.content,safeText(body.sourceTitle,160),referenceTime,timezone)})
       :env.DEEPSEEK_GENERATION_MODE==='simple-1.0'
       ?await runSimpleGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),body:{...body,referenceTime,timezone}})
       :await runTwoStepGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),source:body.content,referenceTime,timezone,mode:env.DEEPSEEK_GENERATION_MODE,compilerVersion:env.TWO_STEP_COMPILER_VERSION??'2.1.9',userText:extractionUserText(body,body.content,safeText(body.sourceTitle,160),referenceTime,timezone)})
@@ -813,7 +819,7 @@ async function extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,c
     const validation=validateRecognitionResult(generated.result,{sourceContent:body.content})
     if(!validation.valid)return invalidRecognitionResponse(context,validation)
     context.outputTokens=generated.execution.tokenUsage?.output??0
-    const observedModel=env.DEEPSEEK_GENERATION_MODE==='semantic-notice-3.0'?generated.execution.modelFactSamples?.[0]?.actualModel??null:extractionModel(env)
+    const observedModel=['semantic-notice-3.0',...actorContracts].includes(env.DEEPSEEK_GENERATION_MODE)?generated.execution.modelFactSamples?.[0]?.actualModel??null:extractionModel(env)
     return success({model:observedModel,result:generated.result,execution:generated.execution},context.requestId)
   } finally {release()}
 }
@@ -858,7 +864,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     return failure(validationError, '来源正文或参考时间无效。', 400, context.requestId)
   }
 
-  if(['semantic-notice-3.0','simple-1.0','two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2','two-step-2.3','two-step-2.4'].includes(env.DEEPSEEK_GENERATION_MODE)) {
+  if(['semantic-notice-3.0','semantic-notice-3.3','semantic-notice-3.4','semantic-notice-3.5','simple-1.0','two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2','two-step-2.3','two-step-2.4'].includes(env.DEEPSEEK_GENERATION_MODE)) {
     return extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,context,apiKey)
   }
 
@@ -1190,7 +1196,7 @@ export function createWorker({
         inputLength: 0,
         outputTokens: 0,
         errorType: null,
-      generationMode: ['semantic-notice-3.0','simple-1.0','two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2','two-step-2.3','two-step-2.4'].includes(env.DEEPSEEK_GENERATION_MODE) ? env.DEEPSEEK_GENERATION_MODE : 'structured',
+          generationMode: ['semantic-notice-3.0','semantic-notice-3.3','semantic-notice-3.4','semantic-notice-3.5','simple-1.0','two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2','two-step-2.3','two-step-2.4'].includes(env.DEEPSEEK_GENERATION_MODE) ? env.DEEPSEEK_GENERATION_MODE : 'structured',
       }
       let response = await previewAccess(request,env,{isLimited:previewLoginLimited,now:previewNow})
       if (response) {

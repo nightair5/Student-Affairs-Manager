@@ -41,6 +41,20 @@ describe('explicit user recognition attempts',()=>{
     expect(calls.filter(call=>call.endsWith('/extract'))).toHaveLength(1)
   })
 
+  it('negotiates the direct contract without changing the request body or reusing the old contract cache',async()=>{
+    const sent:Array<{body:string;contract:string|null}>=[]
+    vi.stubGlobal('fetch',vi.fn(async(_url:string|URL|Request,options?:RequestInit)=>{
+      sent.push({body:String(options?.body),contract:new Headers(options?.headers).get('x-student-affairs-recognition')})
+      return Response.json({result:ordinaryWorkflowFixture()})
+    }))
+    const service=new ProxyDeepSeekExtractionService()
+    await service.recognize(input,context)
+    await service.recognize(input,context,{semanticContract:'semantic-notice-3.3'})
+    await service.recognize(input,context,{semanticContract:'semantic-notice-3.3'})
+    expect(sent).toHaveLength(2);expect(sent[0].body).toBe(sent[1].body)
+    expect(sent.map(row=>row.contract)).toEqual([null,'semantic-notice-3.3'])
+  })
+
   it('still does not send if the server explicitly reports no configuration',async()=>{
     const fetcher=vi.fn(async()=>Response.json({configured:false}))
     vi.stubGlobal('fetch',fetcher)

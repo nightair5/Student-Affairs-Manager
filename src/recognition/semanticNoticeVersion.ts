@@ -9,6 +9,9 @@ const supportedSemanticNoticeVersions = new Set([
   'recognition-semantic-notice-3.0.5',
   'recognition-semantic-notice-3.1.0',
   'recognition-semantic-notice-3.2.0',
+  'recognition-semantic-notice-3.3.0',
+  'recognition-semantic-notice-3.4.0',
+  'recognition-semantic-notice-3.5.0',
 ])
 
 export function isSemanticNoticeVersion(version: string): boolean {

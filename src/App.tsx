@@ -13,7 +13,7 @@ import {commitMaterialCommand,type MaterialCommandValues} from './domain/v2/mate
 import {readCommandReceipt,readCommittedBatch} from './domain/v2/commandReadback'
 import type {MaterialEditDraft} from './components/MaterialEditor'
 import {workspaceV8ToLegacyView} from './domain/v2/legacyView'
-import { commitDirectDraft, pendingDirectDraft, replaceDirectFallback, deleteDirectItem, editDirectItem, recentDirectBatches, undoDirectBatchPreservingEdits } from './domain/v2/directIntake'
+import { assertDirectBatchReplaceable, commitDirectDraft, pendingDirectDraft, replaceDirectFallback, deleteDirectItem, editDirectItem, recentDirectBatches, runExclusiveDirectRetry, undoDirectBatchPreservingEdits } from './domain/v2/directIntake'
 import {historicalDirectDraftIds,workspaceTaskChannels,pairFlowEvents,workspaceEventTimeHints} from './lib/homeFlow'
 import { EventDetailPanel } from './components/EventDetailPanel'
 import { IntakePanel } from './components/IntakePanel'
@@ -280,7 +280,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const [ordinarySaveError, setOrdinarySaveError] = useState<{draftId:string;text:string}|null>(null)
   const [smartExtractionStatus, setSmartExtractionStatus] = useState<'checking' | 'connected' | 'unavailable'>('checking')
   const initialServiceCheck = useRef<{service:DeepSeekExtractionService;promise:Promise<boolean>}|null>(null)
-  const directRetriesInFlight=useRef(new Set<string>())
+  const directRetriesInFlight=useRef(new Map<string,Promise<void>>())
   const initialServiceReady=useCallback(()=>{
     if(initialServiceCheck.current?.service===deepSeekExtractionService)return initialServiceCheck.current.promise
     const promise=deepSeekExtractionService.status().then(status=>status.configured,()=>false).finally(()=>{
@@ -876,14 +876,13 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const retryDirectFallback=async(batchId:string)=>{
     await taskWriteQueue.current
     if(taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')
-    if(directRetriesInFlight.current.has(batchId))throw Error('正在重新整理，请稍候。')
-    directRetriesInFlight.current.add(batchId)
-    try{return await performDirectRetry(batchId)}finally{directRetriesInFlight.current.delete(batchId)}
+    return runExclusiveDirectRetry(directRetriesInFlight.current,batchId,()=>performDirectRetry(batchId))
   }
   const performDirectRetry=async(batchId:string)=>{
     const w=await canonicalWorkspaceRepository.load(),batch=w&&recentDirectBatches(w).find(b=>b.id===batchId&&b.status==='active')
     const source=batch&&w?.sources.find(s=>s.id===batch.sourceId),version=source&&w?.sourceVersions.find(v=>v.id===source.currentVersionId)
     if(!batch||!source||!version?.rawText)throw Error('未找到可以重新整理的通知')
+    assertDirectBatchReplaceable(w!,batchId,hasUncommittedBatchEdit(w!,batchId))
     let stage:'recognition'|'mapping'|'saving'|'readback'='recognition'
     try{
       if(!ordinaryEnvironment){
@@ -894,7 +893,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       }
       const metadata=ordinaryEnvironment?.recognitionMetadata?.()
       const attemptId=crypto.randomUUID()
-      const retried=await retryExistingSourceRecognition(capturePersistenceService,source.id,{provider:'deepseek',modelName:metadata?.modelName??'deepseek-v4-flash',promptVersion:metadata?.promptVersion??null,pipelineVersion:'direct-ai-retry-v1',expectedSourceVersionId:version.id},async()=>deepSeekExtractionService.recognize!({sourceType:source.type,sourceTitle:source.title,content:version.rawText!,sourceId:source.id,sourceVersionId:version.id,now:new Date(version.createdAt)},{projects,tasks},{attemptId,allowStatusUnknown:true}))
+      const retried=await retryExistingSourceRecognition(capturePersistenceService,source.id,{provider:'deepseek',modelName:metadata?.modelName??'deepseek-v4-flash',promptVersion:metadata?.promptVersion??null,pipelineVersion:'direct-ai-retry-v1',expectedSourceVersionId:version.id},async()=>deepSeekExtractionService.recognize!({sourceType:source.type,sourceTitle:source.title,content:version.rawText!,sourceId:source.id,sourceVersionId:version.id,now:new Date(version.createdAt)},{projects,tasks},{attemptId,allowStatusUnknown:true,...(!ordinaryEnvironment?{semanticContract:'semantic-notice-3.5' as const}:{})}))
       stage='mapping'
       const sidecar=ordinaryEnvironment?.semanticSidecar?.(source.id)??deepSeekExtractionService.semanticSidecar?.(source.id,version.id)
       const context=ordinaryEnvironment?.recognitionContext?.(version.rawText)??ordinaryProviderContextFromSidecar(sidecar)??{referenceTime:retried.result.createdAt,timezone:w!.settings.defaultTimezone}
@@ -1072,7 +1071,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
               // Source and draft are already durable. A quick first click must
               // join the bounded initial check instead of silently choosing local rules.
               if(awaitInitialService)await initialServiceReady()
-              return deepSeekExtractionService.recognize!(providerInput, { projects, tasks }, {allowStatusUnknown:true})
+              return deepSeekExtractionService.recognize!(providerInput, { projects,tasks }, {allowStatusUnknown:true,...(directMode&&!ordinaryEnvironment&&!input.multimodal?{semanticContract:'semantic-notice-3.5' as const}:{})})
             }
             : async () => draftRecognition,
       )

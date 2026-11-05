@@ -42,6 +42,8 @@ export interface RecognitionRequestOptions {
   attemptId?: string
   /** A transient status failure is not proof that the extraction endpoint is unconfigured. */
   allowStatusUnknown?: boolean
+  /** Opt in to a source-backed contract; absent for older or multimodal paths. */
+  semanticContract?: 'semantic-notice-3.3' | 'semantic-notice-3.4' | 'semantic-notice-3.5'
 }
 
 export interface RecognitionServiceInput extends IntakeInput {
@@ -156,7 +158,7 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
     const promptVersion = input.multimodal ? MULTIMODAL_PROMPT_VERSION : RECOGNITION_PROMPT_VERSION
     // Bind cache identity to the complete request. A short noncryptographic
     // hash alone must never substitute another notice's response.
-    const key = JSON.stringify([promptVersion,modelName,serialized,options.attemptId ?? null])
+    const key = JSON.stringify([promptVersion,modelName,serialized,options.attemptId ?? null,options.semanticContract ?? null])
     const capture = (observation: ProxyRecognitionObservation,reused=false) => {
       const diagnostic={...observation.diagnostic,responseReuse:reused,...(options.attemptId?{attemptId:options.attemptId}: {})}
       const markSourceCoverage=(result:RecognitionResult)=>{
@@ -179,7 +181,7 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
     if (cached) return capture(cached,true)
     const running = this.inFlight.get(key)
     if (running) return running.then(value=>capture(value,true))
-    const request = this.requestRecognition(serialized, Boolean(input.multimodal)).then((result) => {
+    const request = this.requestRecognition(serialized, Boolean(input.multimodal),options.semanticContract).then((result) => {
       this.cache.set(key, result)
       if (this.cache.size > 20) this.cache.delete(this.cache.keys().next().value ?? key)
       return result
@@ -188,7 +190,7 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
     return request.then(value=>capture(value))
   }
 
-  private async requestRecognition(body: string, multimodal: boolean): Promise<ProxyRecognitionObservation> {
+  private async requestRecognition(body: string, multimodal: boolean,semanticContract?:RecognitionRequestOptions['semanticContract']): Promise<ProxyRecognitionObservation> {
     const controller = new AbortController()
     const timeout = globalThis.setTimeout(() => controller.abort(), 50_000)
     const started=Date.now()
@@ -196,7 +198,7 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
     try {
       const response = await fetch(`${this.endpoint}/${multimodal ? 'extract-multimodal' : 'extract'}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json',...(!multimodal&&semanticContract?{'X-Student-Affairs-Recognition':semanticContract}:{}) },
         body,
         signal: controller.signal,
       })
