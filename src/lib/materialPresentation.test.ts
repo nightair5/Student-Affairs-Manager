@@ -17,6 +17,7 @@ describe('delivery material summary',()=>{
   expect(materialSummary([{name:'作品目录',required:false} as Material])).toBe('作品目录 可选')
   expect(materialOptionalLabel({required:false,requirements:['若由他人代办，须提供授权书']})).toBe('按条件或需要准备')
   expect(materialOptionalLabel({required:false,requirements:['获奖证明如有可附，不提供不影响申请']})).toBe('可选')
+  expect(materialOptionalLabel({required:false,requirements:['是否必交待确认']})).toBe('必交与否待确认')
   expect(materialOptionalLabel({required:true})).toBeUndefined()
   expect(materialSummary([{name:'作品目录',required:false,status:'not_required'} as Material])).toBe('')
  })

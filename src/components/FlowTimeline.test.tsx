@@ -8,6 +8,22 @@ import {sortTimeline,timelineDate,timelineGroupLabel} from '../lib/flowTimelineD
 
 describe('timeline date semantics',()=>{
  afterEach(()=>vi.useRealTimers())
+ it('groups same-day events in one timeline entry but keeps each event and action independent',()=>{
+  const first:Event={id:'day-a',title:'上午分享',description:'参加须知：提前入场',startAt:'2026-11-26T09:00',endAt:'2026-11-26T10:00',location:'北楼301',evidenceIds:[],needsConfirmation:false,createdAt:'2026-11-01T00:00:00Z',updatedAt:'2026-11-01T00:00:00Z'}
+  const second:Event={...first,id:'day-b',title:'下午咨询',startAt:'2026-11-26T14:00',endAt:'2026-11-26T15:30',location:'北楼302'}
+  const html=renderToStaticMarkup(<FlowTimeline tasks={[]} events={[second,first]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onOpenEvent={()=>{}} onComplete={()=>{}} onSetEventCompletion={async()=>{}} />)
+  expect(html.match(/data-event-day=/gu)).toHaveLength(1)
+  for(const value of ['当天 2 项日程','上午分享','下午咨询','北楼301','北楼302','09:00','14:00','data-grouped-event-id="day-a"','data-grouped-event-id="day-b"'])expect(html).toContain(value)
+  expect(html.match(/class="primary-button"/gu)).toHaveLength(2)
+  expect(html.indexOf('上午分享')).toBeLessThan(html.indexOf('下午咨询'))
+  expect(first.id).toBe('day-a');expect(second.id).toBe('day-b')
+ })
+ it('keeps distinct days and unknown dates separate',()=>{
+  const base:Event={id:'one',title:'讲座',description:'',startAt:'2026-11-26T09:00',endAt:null,location:'',evidenceIds:[],needsConfirmation:false,createdAt:'2026-11-01T00:00:00Z',updatedAt:'2026-11-01T00:00:00Z'}
+  const html=renderToStaticMarkup(<FlowTimeline tasks={[]} events={[base,{...base,id:'two',startAt:'2026-11-27T09:00'},{...base,id:'unknown',startAt:null}]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onComplete={()=>{}} />)
+  expect(html).not.toContain('data-event-day=')
+  expect(html.match(/data-event-id=/gu)).toHaveLength(3)
+ })
  it('offers personal completion for an independent event and preserves an undated source clock',()=>{
   const event:Event={id:'e-clock',title:'线上大会',description:'原文时长：15分钟左右\n时间说明：晚上9点15分（日期待定）',startAt:null,endAt:null,evidenceIds:[],needsConfirmation:true,createdAt:'',updatedAt:''}
   const html=renderToStaticMarkup(<FlowTimeline tasks={[]} events={[event]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onOpenEvent={()=>{}} onComplete={()=>{}} onSetEventCompletion={async()=>{}} />)
