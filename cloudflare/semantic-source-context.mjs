@@ -257,7 +257,26 @@ export function contextualEventDay(source,span,item){
   return null
  }
  const shared=modelOwnedSharedDay(source,item)
- return shared&&shared.end<=span.start?shared:null
+ return shared&&shared.end<=span.start?shared:sharedAgendaDay(source,span,item)
+}
+
+// A document-level date can govern the following agenda across a full stop.
+// Require an explicit plural agenda heading and an item-owned clock, rather
+// than borrowing the sole date anywhere in the notice. Another date, revision,
+// unknown date or a blank paragraph closes that scope.
+function sharedAgendaDay(source,span,item){
+ const refs=Array.isArray(item.evidence)?item.evidence:[]
+ if(!refs.some(ref=>typeof ref==='string'&&compactText(ref).includes(compactText(span.literal))))return null
+ const left=Math.max(0,span.start-800),prefix=source.slice(left,span.start)
+ const matches=[...fold(prefix).matchAll(new RegExp(SOURCE_DAY_PATTERN.source,'gu'))]
+ if(matches.length!==1)return null
+ const match=matches[0],start=left+match.index,end=start+match[0].length
+ const following=source.slice(end,span.start),heading=following.split(/[。！\n]/u)[0]
+ if(!/(?:举办|举行|安排|开展|组织)[^。；;\n]{0,12}(?:两|三|四|五|多|若干|[2-9])(?:项|场|个)(?:活动|讲座|会议|环节|报告)/u.test(heading))return null
+ const before=source.slice(Math.max(left,start-30),start)
+ if(/(?:截止|截至|发布日期|报名|提交|缴费)[^。；;\n]{0,15}$/u.test(before))return null
+ if(differentDay.test(following)||/\n\s*\n/u.test(following)||/(?:日期|举办日期|具体日期)[^，,。；;\n]{0,20}(?:另行|后续|待定|待通知|尚未|未确定)/u.test(following))return null
+ return {start,end,literal:source.slice(start,end)}
 }
 
 /** A literal same-building reference can extend a model-proposed place only

@@ -1,13 +1,14 @@
 import {normalizeRecognitionResult} from './recognition.mjs'
-import {locateSourceQuote} from './source-text-index.mjs'
+import {locateSourceQuote,locateOwnedSourceQuote} from './source-text-index.mjs'
 import {parseDirectSourceTime} from './direct-source-time.mjs'
 import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
 import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-2-0.mjs'
 import {SOURCE_DAY_PATTERN,channelOwnedWindow,combineExplicitWindowEntries,contextualEventDay,mergeHeadingWindowIntoDelivery,modelOwnedSharedDay,ownedAgendaTime,sameBuildingLocation,sourceChannelClosingDeadline,sourceConditionClauses,sourceEvidenceCondition,sourceEventDuration,sourceOpenEndedWindow,sourceSummaryDeliveryWindow,sourceSummaryOptionalMaterial,systemAvailabilityAsInformation} from './semantic-source-context.mjs'
-import {combineSupportedChoices,expandSupportedSingleChoices,sharedDocumentScope,sourceBackedChoicePairs,sourceBackedEventChoices,sourceCandidateTime,sourceFormContext} from './semantic-relations.mjs'
+import {declaredTaskChoices,combineSupportedChoices,expandSupportedSingleChoices,sharedDocumentScope,sourceBackedChoicePairs,sourceBackedEventChoices,sourceCandidateTime,sourceFormContext} from './semantic-relations.mjs'
 import {itemPolarity} from './semantic-item-polarity.mjs'
 import {applySemanticActorRelations} from './semantic-actor-relations.mjs'
 import {applyEventIncidentalNotices} from './semantic-event-notices.mjs'
+import {timeRoleContext,parseWindowWithDailyHours} from './semantic-time-context.mjs'
 
 const object = value => Boolean(value && typeof value === 'object' && !Array.isArray(value))
 const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(0,max) : ''
@@ -279,7 +280,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.14',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
   const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:text(raw.topic,160)||'通知',sourceType:'text',notificationType:'uncertain',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,promptVersion,true,timezone)
-  const audit={version:promptVersion,compilerVersion:promptVersion==='recognition-semantic-notice-3.6.0'?'semantic-notice-compiler-1.0.18':promptVersion==='recognition-semantic-notice-3.5.0'?'semantic-notice-compiler-1.0.17':promptVersion==='recognition-semantic-notice-3.4.0'?'semantic-notice-compiler-1.0.16':promptVersion==='recognition-semantic-notice-3.3.0'?'semantic-notice-compiler-1.0.15':'semantic-notice-compiler-1.0.14',rootFailure:false,items:[],facts:[],losses:[]}
+  const audit={version:promptVersion,compilerVersion:['recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0'].includes(promptVersion)?'semantic-notice-compiler-1.0.19':promptVersion==='recognition-semantic-notice-3.5.0'?'semantic-notice-compiler-1.0.17':promptVersion==='recognition-semantic-notice-3.4.0'?'semantic-notice-compiler-1.0.16':promptVersion==='recognition-semantic-notice-3.3.0'?'semantic-notice-compiler-1.0.15':'semantic-notice-compiler-1.0.14',rootFailure:false,items:[],facts:[],losses:[]}
   const availableWindows=[]
   const withWindowInformation={...raw,items:raw.items.map(item=>{
     const converted=systemAvailabilityAsInformation(source,item)
@@ -322,7 +323,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const singleChoice=/(?:任选(?:其一|一种|一项)|二选一|两种方式任选其一)/u.test(normalizedSource)&&/(?:任选|选择|选取)(?:其中)?(?:一|1)(?:项|种|个)/u.test(value)&&choiceTail.length>=6&&normalizedSource.includes(choiceTail)
       if(numbers.some(number=>!sourceNumbers.has(number)&&!(number==='1'&&singleChoice))){note('REQUIREMENT',id,'REQUIREMENT_NUMBER_NOT_IN_SOURCE');return false}
       if(numberedUnits(value).some(unit=>!sourceUnits.has(unit)&&!(unit==='1:选择'&&singleChoice))){note('REQUIREMENT',id,'REQUIREMENT_NUMBER_UNIT_NOT_IN_SOURCE');return false}
-      if([SEMANTIC_NOTICE_VERSION,'recognition-semantic-notice-3.1.0','recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0'].includes(promptVersion)&&!/(?:不得|禁止|不能|不可|不允许|无需|无须|不必|不需要|请勿|不再)/u.test(value)){
+      if([SEMANTIC_NOTICE_VERSION,'recognition-semantic-notice-3.1.0','recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0'].includes(promptVersion)&&!/(?:不得|禁止|不能|不可|不允许|无需|无须|不必|不需要|请勿|不再)/u.test(value)){
         const phrase=compact(value).replace(/^(?:请务必|必须|务必|需要|应当|请|须|需|应|要求)/u,'')
         const positions=[]
         if(phrase.length>=2)for(let at=normalizedSource.indexOf(phrase);at>=0;at=normalizedSource.indexOf(phrase,at+1))positions.push(at)
@@ -371,7 +372,8 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     const conditionParts=proposedCondition?sourceConditionClauses(source,proposedCondition,refs):{supported:[],missing:[]}
     if(proposedCondition&&!conditionParts.supported.length){const cited=sourceEvidenceCondition(source,refs,item);if(cited)conditionParts.supported.push(cited)}
     const groundedCondition=conditionParts.supported.map(span=>span.literal).join('；')
-    const hasEligibility=/(?:面向|仅限|符合条件|符合资格|不符合|必须具备|须具备|已完成|完成.{0,12}(?:培训|课程|考核))/u.test(groundedCondition)
+    const interestOnly=/^(?:两场|各场|所有活动)?(?:均)?(?:面向|欢迎)?(?:所有)?(?:有意向|感兴趣|自愿|愿意参加)(?:的)?(?:同学|学生|人员|者)?(?:参加|参与)?$/u.test(groundedCondition)
+    const hasEligibility=!interestOnly&&/(?:面向|仅限|符合条件|符合资格|不符合|必须具备|须具备|已完成|完成.{0,12}(?:培训|课程|考核))/u.test(groundedCondition)
     const voluntary=groundedCondition&&!hasEligibility&&/有意向|感兴趣|自愿|欢迎|如(?:想|有意)|愿意|希望参加/u.test(groundedCondition)?groundedCondition:''
     const approvedBefore=conditionParts.supported.length===1&&/^[^，,。；;]{1,24}(?:审核|审批|确认|批复)(?:通过|完成)$/u.test(groundedCondition)&&/^后/u.test(source.slice(conditionParts.supported[0].end))
     const prerequisite=groundedCondition&&((list(item.dependsOn,20,40).some(key=>activeTaskKeys.has(key))&&/^(?:完成|填写|提交|办理|通过|取得|先).+后$/u.test(groundedCondition))||/^[^，,。；;]{1,24}(?:批复|审批|批准|审核|确认|同意|反馈|公布|发布)后$/u.test(groundedCondition)||approvedBefore)?groundedCondition+(approvedBefore?'后':''):''
@@ -442,7 +444,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const explicitRange=/(?:至|到|~|～|—|–|-)\s*(?:次日|翌日)?\s*(?:凌晨|早上|上午|中午|下午|傍晚|晚上|夜间)?\s*(?:\d{4}\s*年\s*)?(?:\d{1,2}\s*月\s*)?\d{1,2}\s*(?:日|号|[:：点时])/u.test(rawTime)
       if(copiedStart&&!explicitRange){note('TIME',item.key,'EVENT_END_COPIED_FROM_START');continue}
       const owned=kind==='event'&&rawTime?ownedAgendaTime(source,item,raw.items,rawTime):null
-      const span=rawTime&&(locateSourceQuote(rawTime,source)||owned?.time)
+      const span=rawTime&&(locateOwnedSourceQuote(rawTime,source,list(item.evidence,12,500))||owned?.time)
       if(!span){note('TIME',item.key,'TIME_TEXT_NOT_UNIQUELY_LOCATED');continue}
       // A dependent action must not inherit the predecessor's own deadline
       // unless its own source quotation also supports that date.
@@ -536,7 +538,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       if(!eid)continue
       if(entry.sourceRecovered){const ref=result.evidence.find(value=>value.id===eid);if(ref)ref.extractionMethod='parser'}
       const before=source.slice(Math.max(0,span.start-80),span.start),after=source.slice(span.end,Math.min(source.length,span.end+80))
-      const left=Math.max(before.lastIndexOf('。'),before.lastIndexOf('；'),before.lastIndexOf(';'),before.lastIndexOf('\n'))+1,right=after.search(/[。；;\n]/u),clause=before.slice(left)+span.literal+(right<0?after:after.slice(0,right))
+      const clause=timeRoleContext(source,span)
       const previous=/(?:原定|原截止|原时间)/u.test(before)&&/(?:取消|作废|废止)/u.test(after)&&/(?:改为|改至|调整为|调整至|延期至|更正为)/u.test(after)
       const normalizedClause=foldWidth(clause),normalizedTime=foldWidth(span.literal)
       const candidateScope=/(?:备选|候选|可选).{0,12}(?:时段|时间|日期)|(?:时段|时间|日期).{0,12}(?:备选|候选)/u
@@ -544,11 +546,14 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const explicitlyUnchosen=sameClauseWindows.length>=2&&/(?:或者|或|任选|择一)/u.test(normalizedClause)&&/(?:可能|拟于|尚未确定|未确定|未定|待定|候选|备选|任选)/u.test(normalizedClause)
       const sourceCandidate=entry.role==='window'&&(explicitlyUnchosen||candidateScope.test(normalizedClause)&&(requirements.some(requirement=>candidateScope.test(requirement)&&compact(requirement).includes(compact(span.literal)))||sameClauseWindows.length>=2))
       const alternative=/任选|备选|可选择|或者|或/u.test(normalizedTime)||sourceCandidate
-      const explicitCutoff=/(?:截止|截至|最迟|不晚于|之前|以前|(?:日|号|分|时|点|\d)\s*前)/u.test(normalizedClause.replace(/提前/gu,''))
+      const cutoffClause=normalizedClause.replace(/提前/gu,'').replace(/[（(](?:周|星期)[一二三四五六日天][）)]/gu,'').replace(/\s/gu,'')
+      const explicitCutoff=/(?:截止|截至|最迟|不晚于|之前|以前|(?:日|号|分|时|点|\d)前)/u.test(cutoffClause)
+        ||/(?:申请|报名|提交|报送)[^。；;]{0,20}(?:时间|期限)/u.test(cutoffClause)&&/逾期(?:将)?(?:不再受理|不予受理|不受理)/u.test(cutoffClause)&&!/办理窗口|开放时间/u.test(cutoffClause)
       const closingCutoff=kind==='task'&&entry.role==='deadline'&&sourceChannelClosingDeadline(source,item,span)
       const unsafeDeadline=entry.role==='deadline'&&(kind!=='task'||alternative||!explicitCutoff&&!closingCutoff||deadlineRangeRoleIssue(normalizedTime,role,normalizedClause))
       let parsed=parseDirectSourceTime(parseText,{type:role,referenceTime,timezone})
       if(entry.role==='window'&&!alternative){
+        parsed=parseWindowWithDailyHours(span.literal,{referenceTime,timezone})??parsed
         const parts=/^(.+?)(?:开放|开启|开始)\s*[，,；;]\s*(.+?)(?:关闭|结束|停止)$/u.exec(foldWidth(span.literal).trim())
         if(parts&&sourceDay.test(parts[1])&&sourceDay.test(parts[2])){
           const start=parseDirectSourceTime(parts[1],{type:'event_start',referenceTime,timezone})
@@ -780,14 +785,23 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     result.conflicts.push({id:'sem-event-choice-'+eid,type:'other',message:choice.quote,entityTempIds:ids,evidenceIds:[eid],requiresDecision:false})
     audit.facts.push({role:'event_choice_alternatives',sourceEvidenceId:eid,owners:ids})
   }
+  if(promptVersion==='recognition-semantic-notice-3.7.0')for(const choice of declaredTaskChoices(source,pending)){
+    const owners=choice.records.map(record=>record.entity.tempId)
+    if(result.conflicts.some(conflict=>conflict.id.startsWith('sem-choice-')&&owners.some(id=>conflict.entityTempIds.includes(id))))continue
+    const eid=evidence(choice.quote,'description','choice',choice.start)
+    if(!eid)continue
+    result.conflicts.push({id:'sem-choice-'+eid,type:'other',message:choice.quote,entityTempIds:owners,evidenceIds:[eid],requiresDecision:false})
+    audit.facts.push({role:'declared_choice_branches',owners,sourceEvidenceId:eid})
+  }
   combineSupportedChoices(result,audit)
-  if(['recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0'].includes(promptVersion))applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone,includeContextFacts:['recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0'].includes(promptVersion)})
-  if(promptVersion==='recognition-semantic-notice-3.6.0')applyEventIncidentalNotices({result,pending,source,evidence,note,audit})
+  if(['recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0'].includes(promptVersion))applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone,includeContextFacts:['recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0'].includes(promptVersion)})
+  if(['recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0'].includes(promptVersion))applyEventIncidentalNotices({result,pending,source,evidence,note,audit})
   result.sourceSummary.title=text(raw.topic,160)||result.standaloneTasks[0]?.title||result.events[0]?.title||'通知'
-  result.sourceSummary.requiresAction=raw.kind==='action'||raw.kind==='mixed'||result.standaloneTasks.length>0
-  result.sourceSummary.notificationType=result.standaloneTasks.length?'teacher_task':result.events.length?'event_notice':raw.kind==='information'?'information_only':'uncertain'
+  const onlyCancellation=audit.items.length>0&&audit.items.every(item=>item.status==='CANCELLED')
+  result.sourceSummary.requiresAction=!onlyCancellation&&(raw.kind==='action'||raw.kind==='mixed'||result.standaloneTasks.length>0)
+  result.sourceSummary.notificationType=result.standaloneTasks.length?'teacher_task':result.events.length?'event_notice':raw.kind==='information'||onlyCancellation?'information_only':'uncertain'
   result.sourceSummary.summary=text(raw.summary,500)||[result.standaloneTasks.length+'项任务',result.events.length+'项活动'].join('，')
-  const partial=raw.partial===true||list(raw.unresolved,10).length>0||audit.losses.length>0||raw.kind!=='information'&&!result.standaloneTasks.length&&!result.events.length
+  const partial=raw.partial===true||list(raw.unresolved,10).length>0||audit.losses.some(loss=>loss.reason!=='CANCELLED_ITEM')||raw.kind!=='information'&&!onlyCancellation&&!result.standaloneTasks.length&&!result.events.length
   if(partial){result.quality.needsHumanReview=true;result.quality.reviewReasons=['部分内容尚未完整整理，请查看原通知。'];result.ambiguities.push({id:'sem-partial',field:'source_reference',message:'部分内容尚未完整整理，原文已保留。',options:['查看原文'],evidenceIds:[]})}
   return {result,audit,rootFailure:false}
 }

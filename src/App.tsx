@@ -893,7 +893,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       }
       const metadata=ordinaryEnvironment?.recognitionMetadata?.()
       const attemptId=crypto.randomUUID()
-      const retried=await retryExistingSourceRecognition(capturePersistenceService,source.id,{provider:'deepseek',modelName:metadata?.modelName??'deepseek-v4-flash',promptVersion:metadata?.promptVersion??null,pipelineVersion:'direct-ai-retry-v1',expectedSourceVersionId:version.id},async()=>deepSeekExtractionService.recognize!({sourceType:source.type,sourceTitle:source.title,content:version.rawText!,sourceId:source.id,sourceVersionId:version.id,now:new Date(version.createdAt)},{projects,tasks},{attemptId,allowStatusUnknown:true,...(!ordinaryEnvironment?{semanticContract:'semantic-notice-3.6' as const}:{})}))
+      const retried=await retryExistingSourceRecognition(capturePersistenceService,source.id,{provider:'deepseek',modelName:metadata?.modelName??'deepseek-v4-flash',promptVersion:metadata?.promptVersion??null,pipelineVersion:'direct-ai-retry-v1',expectedSourceVersionId:version.id},async()=>deepSeekExtractionService.recognize!({sourceType:source.type,sourceTitle:source.title,content:version.rawText!,sourceId:source.id,sourceVersionId:version.id,now:new Date(version.createdAt)},{projects,tasks},{attemptId,allowStatusUnknown:true,...(!ordinaryEnvironment?{semanticContract:'semantic-notice-3.7' as const}:{})}))
       stage='mapping'
       const sidecar=ordinaryEnvironment?.semanticSidecar?.(source.id)??deepSeekExtractionService.semanticSidecar?.(source.id,version.id)
       const context=ordinaryEnvironment?.recognitionContext?.(version.rawText)??ordinaryProviderContextFromSidecar(sidecar)??{referenceTime:retried.result.createdAt,timezone:w!.settings.defaultTimezone}
@@ -1071,7 +1071,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
               // Source and draft are already durable. A quick first click must
               // join the bounded initial check instead of silently choosing local rules.
               if(awaitInitialService)await initialServiceReady()
-              return deepSeekExtractionService.recognize!(providerInput, { projects,tasks }, {allowStatusUnknown:true,...(directMode&&!ordinaryEnvironment&&!input.multimodal?{semanticContract:'semantic-notice-3.6' as const}:{})})
+              return deepSeekExtractionService.recognize!(providerInput, { projects,tasks }, {allowStatusUnknown:true,...(directMode&&!ordinaryEnvironment&&!input.multimodal?{semanticContract:'semantic-notice-3.7' as const}:{})})
             }
             : async () => draftRecognition,
       )

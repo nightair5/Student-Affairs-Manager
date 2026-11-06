@@ -1,10 +1,17 @@
 import {parseTwoStepTime} from './two-step-time.mjs'
-export const DIRECT_SOURCE_TIME_VERSION='direct-source-time-1.0.4'
+export const DIRECT_SOURCE_TIME_VERSION='direct-source-time-1.0.5'
 const weekdays={日:0,天:0,一:1,二:2,三:3,四:4,五:5,六:6}
 const next=v=>{if(!v)return v;const d=new Date(v.slice(0,10)+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10)+v.slice(10)}
 /** Formatting adapter for the opt-in direct path. Evidence remains the exact
  * original span. It neither changes the legacy parser nor resolves ambiguity. */
 export function parseDirectSourceTime(raw,options){
+ // Preserve the date/clock boundary before removing layout. A published
+ // ISO-like timestamp is not a date interval separated by hyphens.
+ const iso=/^(\d{4})-(\d{2})-(\d{2})[ T]+(\d{1,2}):(\d{2})(?::00)?$/u.exec(raw.normalize('NFKC').trim())
+ if(iso){
+  const [,year,month,day,hour,minute]=iso
+  return {...parseDirectSourceTime(year+'年'+month+'月'+day+'日'+hour+':'+minute,options),rawText:raw,formatRule:'EXPLICIT_DATE_CLOCK_SEPARATOR'}
+ }
  const compact=raw.normalize('NFKC').replace(/\s/gu,'').replace(/(?<![\d.])(\d{1,2})\.(\d{1,2})(?=日|号)/gu,'$1月$2').replace(/(\d{1,2})月(\d{1,2})([-—–至到])(\d{1,2})日/gu,'$1月$2日$3$1月$4日'),decorations=[...compact.matchAll(/\((?:周|星期)([一二三四五六日天])\)/gu)],unadorned=compact.replace(/\((?:周|星期)[一二三四五六日天]\)/gu,''),revision=/原定|原截止|旧截止|原时间/u.test(unadorned)&&/调整至|调整为|更正为|更改为|变更为|改至|延期至/u.test(unadorned),clean=revision?unadorned.replace(/调整至|调整为|更正为|更改为|变更为|改至|延期至/gu,'改为'):unadorned
  const closedApplication=/申请|申报|报名/u.test(clean)&&/逾期[^。；]{0,20}(?:不再受理|不予受理|不受理)/u.test(clean)&&!/办理窗口|开放时间/u.test(clean)
  const cutoffInput=closedApplication?clean.replace(/((?:\d{4}年)?(?:\d{1,2}月)?\d{1,2}日(?:\d{1,2}:\d{2})?)(?=[，,。])/u,'$1前'):clean

@@ -11,7 +11,7 @@ export async function selectSourceChoice(repository:Pick<CanonicalWorkspaceRepos
   if(!owner||!group||typeof group!=='object'||Array.isArray(group)||group.version!=='source-choice-group-1.0.0'||!Array.isArray(group.optionTaskIds)||typeof group.sourceVersionId!=='string'||typeof group.quotation!=='string')throw Error('提交方式的关联已变化，请重新读取。')
   const ids=group.optionTaskIds.filter((value):value is string=>typeof value==='string')
   const version=workspace.sourceVersions.find(value=>value.id===group.sourceVersionId)
-  if(ids.length!==2||new Set(ids).size!==2||!ids.includes(taskId)||!ids.includes(ownerId)||!version?.rawText?.includes(group.quotation)||ids.some(id=>!workspace.tasks.some(value=>value.id===id&&value.legacyData?.sourceId===version.sourceId)))throw Error('提交方式的关联已变化，请重新读取。')
+  if(ids.length<2||ids.length>6||new Set(ids).size!==ids.length||!ids.includes(taskId)||!ids.includes(ownerId)||!version?.rawText?.includes(group.quotation)||ids.some(id=>!workspace.tasks.some(value=>value.id===id&&value.legacyData?.sourceId===version.sourceId)))throw Error('提交方式的关联已变化，请重新读取。')
   const previous=typeof group.selectedTaskId==='string'&&ids.includes(group.selectedTaskId)?group.selectedTaskId:null
   if(previous===taskId)return workspace
   if(previous!==expectedSelected)throw Error('提交方式已在其他页面修改，请重新读取。')

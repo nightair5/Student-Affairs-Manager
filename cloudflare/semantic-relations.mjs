@@ -2,6 +2,41 @@ import {locateSourceQuote} from './source-text-index.mjs'
 
 const compact=value=>typeof value==='string'?value.normalize('NFKC').replace(/\s/gu,''):''
 const alternatives=/(?:任选(?:一项|一种|其一)|二选一|两者择一|只需选择一种)/u
+const affirmativeAlternative=(value,pattern=alternatives)=>{
+ for(const marker of value.matchAll(new RegExp(pattern.source,'gu'))){
+  const prefix=value.slice(0,marker.index).split(/[，,。；;！？\n]/u).at(-1).trim()
+  if(!/(?:不(?:可|能|得|允许)?|禁止|请勿|取消)(?:只|仅|再|随意|擅自|仅仅|简单地)*$/u.test(prefix))return true
+ }
+ return false
+}
+
+/** Explicit model membership permits different action objects in one choice.
+ * The common instruction and each branch still need distinct source support. */
+export function declaredTaskChoices(source,records){
+ const groups=new Map()
+ for(const record of records.filter(value=>value.kind==='task')){
+  const choice=record.item.choice
+  if(!choice||typeof choice.key!=='string'||!choice.key||choice.key.length>40||typeof choice.evidence!=='string')continue
+  const instruction=locateSourceQuote(choice.evidence,source)
+  if(!instruction||!affirmativeAlternative(instruction.literal))continue
+  const key=choice.key+':'+instruction.start+':'+instruction.end
+  const entry=groups.get(key)??{quote:instruction.literal,start:instruction.start,records:[]}
+  entry.records.push(record);groups.set(key,entry)
+ }
+ return [...groups.values()].filter(group=>{
+  if(group.records.length<2||group.records.length>6)return false
+  const spans=group.records.map(record=>(record.item.evidence??[]).flatMap(value=>{
+   const span=locateSourceQuote(value,source)
+   return span&&span.literal!==group.quote?[span]:[]
+  }))
+  if(spans.some(values=>!values.length))return false
+  const left=Math.min(group.start,...spans.flat().map(span=>span.start)),right=Math.max(group.start+group.quote.length,...spans.flat().map(span=>span.end))
+  if(right-left>1500)return false
+  // Each branch has at least one own citation, not the same broad paragraph
+  // repeated for every purported option.
+  return spans.every((values,i)=>values.some(span=>spans.every((others,j)=>i===j||!others.some(other=>other.start===span.start&&other.end===span.end))))
+ })
+}
 
 /** Model-linked event options must not all become definite appointments when
  * the source explicitly asks the reader to attend only one. Require the same
@@ -17,7 +52,7 @@ export function sourceBackedEventChoices(source,records){
   const own=quotes.map(quote=>typeof quote==='string'&&compact(quote).includes(compact(starts[0].raw))?locateSourceQuote(quote,source):null).find(Boolean)
   if(!own)continue
   for(const quote of instructions){
-   if(typeof quote!=='string'||!exclusive.test(quote))continue
+   if(typeof quote!=='string'||!affirmativeAlternative(quote,exclusive))continue
    const marker=quote.match(exclusive)?.[0],start=marker?source.indexOf(marker):-1
    if(!marker||start<0||source.indexOf(marker,start+marker.length)!==-1)continue
    const key=`${start}:${marker}`
@@ -49,7 +84,7 @@ export function sourceBackedChoicePairs(source,raw,records){
  const groups=new Map()
  for(const record of tasks){
   for(const requirement of Array.isArray(record.item.requirements)?record.item.requirements:[]){
-   if(typeof requirement!=='string'||!alternatives.test(requirement))continue
+   if(typeof requirement!=='string'||!affirmativeAlternative(requirement))continue
    const key=compact(requirement)
    groups.set(key,[...new Set([...(groups.get(key)??[]),record])])
   }
@@ -214,7 +249,7 @@ export function expandSupportedSingleChoices(input,source){
  * relations. A choice is folded only when its two branches can be identified
  * in the same original clause, and their individual facts will be preserved. */
 export function combineSupportedChoices(result,audit){
- const refs=result.evidence.filter(e=>alternatives.test(e.quote))
+ const refs=result.evidence.filter(e=>affirmativeAlternative(e.quote))
  for(const ref of refs){
   const owners=result.standaloneTasks.filter(t=>t.evidenceIds.includes(ref.id))
   if(owners.length!==2)continue

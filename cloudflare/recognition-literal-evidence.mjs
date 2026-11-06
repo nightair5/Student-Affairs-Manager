@@ -54,11 +54,21 @@ function indexed(text){
 // Reuse the same typography rules for a field inside its own cited span.
 // The caller receives original source bytes, never a rewritten quotation.
 export function resolveLiteralSourceSpan(text,source){
-  if(typeof text!=='string'||!text||typeof source!=='string')return null
-  const needle=indexed(text).value,index=indexed(source);if(!needle)return null
-  const at=index.value.indexOf(needle);if(at<0||index.value.indexOf(needle,at+1)>=0)return null
-  const start=index.positions[at],end=index.ends[at+needle.length-1],literal=source.slice(start,end)
-  return literal.length<=500&&indexed(literal).value===needle?{literal,start,end}:null
+  const spans=resolveLiteralSourceSpans(text,source)
+  return spans.length===1?spans[0]:null
+}
+// Enumerate reversible matches for a caller that already has an owned scope.
+// Returning all matches does not resolve their semantic ownership.
+export function resolveLiteralSourceSpans(text,source){
+  if(typeof text!=='string'||!text||typeof source!=='string')return []
+  const needle=indexed(text).value,index=indexed(source);if(!needle)return []
+  const spans=[]
+  for(let at=index.value.indexOf(needle);at>=0;at=index.value.indexOf(needle,at+1)){
+    const start=index.positions[at],end=index.ends[at+needle.length-1],literal=source.slice(start,end)
+    if(literal.length<=500&&indexed(literal).value===needle)spans.push({literal,start,end})
+    if(spans.length>=100)break
+  }
+  return spans
 }
 export function projectLiteralSourceEvidence(input,source){
   const result=structuredClone(input),audit={version:LITERAL_EVIDENCE_PROJECTION_VERSION,role:'PROGRAM_LITERAL_SPAN_INDEX_NOT_MODEL_OUTPUT',inferredFacts:0,decisions:[]}

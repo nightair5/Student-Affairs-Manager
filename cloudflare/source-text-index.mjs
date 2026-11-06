@@ -1,4 +1,4 @@
-import {resolveLiteralSourceSpan} from './recognition-literal-evidence.mjs'
+import {resolveLiteralSourceSpan,resolveLiteralSourceSpans} from './recognition-literal-evidence.mjs'
 
 /** Parser layout and its reversible UTF-16 source coordinates. */
 export function normalizeSourceWithOffsets(source){
@@ -36,6 +36,16 @@ export function locateSourceQuote(quote,source,{start,end,within}={}){
  // Do not resolve an ambiguous repeated quote from a guessed nearest match.
  void end
  return null
+}
+
+/** Resolve a repeated field within a uniquely cited parent. Never guess the
+ * first occurrence; duplicate copies outside the owner remain unrelated. */
+export function locateOwnedSourceQuote(quote,source,ownerQuotes=[]){
+ const unique=locateSourceQuote(quote,source)
+ if(unique)return unique
+ const scopes=ownerQuotes.flatMap(value=>{const span=locateSourceQuote(value,source);return span?[span]:[]})
+ const matches=resolveLiteralSourceSpans(quote,source).filter(span=>scopes.some(scope=>scope.start<=span.start&&scope.end>=span.end))
+ return matches.length===1?{...matches[0],rule:'UNIQUE_WITHIN_OWNED_CITATION'}:null
 }
 
 /** Rewrite citations, never business facts, to the authoritative source text. */

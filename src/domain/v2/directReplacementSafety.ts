@@ -86,7 +86,7 @@ function taskChoice(workspace:WorkspaceV8,task:StoredTask):{quotation:string;opt
   const value=workspace.tasks.find(item=>item.id===ownerId)?.legacyData?.sourceChoiceGroup
   if(!value||typeof value!=='object'||Array.isArray(value)||value.version!=='source-choice-group-1.0.0'||typeof value.quotation!=='string'||!Array.isArray(value.optionTaskIds))return null
   const ids=value.optionTaskIds.filter((id):id is string=>typeof id==='string')
-  return ids.length===2&&ids.includes(task.id)?{quotation:value.quotation,optionTaskIds:ids}:null
+  return ids.length>=2&&ids.length<=6&&new Set(ids).size===ids.length&&ids.includes(task.id)?{quotation:value.quotation,optionTaskIds:ids}:null
 }
 
 function eventChoice(event:WorkspaceV8['events'][number]):{quotation:string;optionEventIds:string[];candidateTimes:Array<{type:unknown;rawText:unknown;normalizedValue:unknown;timezone:unknown;precision:unknown}>}|null {

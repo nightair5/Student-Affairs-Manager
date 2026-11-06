@@ -23,4 +23,13 @@ describe('visible recognition origin',()=>{
   expect(completed).toContain('最近的添加记录')
   expect(completed).toContain('重新整理')
  })
+ it('keeps completed choices quiet without marking unchosen branches completed',()=>{
+  const workspace=createGoldenWorkspaceV8(),source=workspace.sources[0],version=workspace.sourceVersions.find(v=>v.id===source.currentVersionId)!,template=workspace.tasks[0]
+  version.rawText='请选择一种办理方式';const ids=['a','b','c']
+  workspace.tasks=ids.map((id,index)=>({...template,id,status:index===2?'completed' as const:'todo' as const,legacyData:{sourceId:source.id,sourceChoiceOwnerId:'a',...(index===0?{sourceChoiceGroup:{version:'source-choice-group-1.0.0',id:'choice',sourceVersionId:version.id,quotation:version.rawText,optionTaskIds:ids}}:{})}}))
+  const batch={id:'b',sourceId:source.id,status:'active',items:ids.map(id=>({id,kind:'task'})),origin:'local',processing:'partial'} as unknown as DirectBatch
+  const html=renderToStaticMarkup(<RecentDirectAdditions workspace={workspace} batches={[batch]} onRetry={async()=>{}} onUndo={async()=>{}} onOpen={()=>{}}/>)
+  expect(html.split('<details')[0]).not.toContain('部分内容待补充')
+  expect(workspace.tasks.filter(t=>t.status==='completed')).toHaveLength(1)
+ })
 })

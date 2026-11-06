@@ -67,12 +67,12 @@ function stringArray(value: unknown): string[] {
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : []
 }
 
-function sourceChoiceForTask(workspace:WorkspaceV8,item:WorkspaceV8['tasks'][number]):LegacyTask['sourceChoice'] {
+export function sourceChoiceForTask(workspace:WorkspaceV8,item:WorkspaceV8['tasks'][number]):LegacyTask['sourceChoice'] {
   const ownerId=typeof item.legacyData?.sourceChoiceOwnerId==='string'?item.legacyData.sourceChoiceOwnerId:item.id
   const owner=workspace.tasks.find(task=>task.id===ownerId),group=record(owner?.legacyData?.sourceChoiceGroup)
   if(group?.version!=='source-choice-group-1.0.0'||typeof group.id!=='string'||typeof group.sourceVersionId!=='string'||typeof group.quotation!=='string')return undefined
   const ids=stringArray(group.optionTaskIds)
-  if(ids.length!==2||new Set(ids).size!==2||!ids.includes(item.id)||!ids.includes(ownerId))return undefined
+  if(ids.length<2||ids.length>6||new Set(ids).size!==ids.length||!ids.includes(item.id)||!ids.includes(ownerId))return undefined
   const version=workspace.sourceVersions.find(value=>value.id===group.sourceVersionId)
   if(!version?.rawText?.includes(group.quotation))return undefined
   if(ids.some(id=>!workspace.tasks.some(task=>task.id===id&&task.legacyData?.sourceId===version.sourceId)))return undefined

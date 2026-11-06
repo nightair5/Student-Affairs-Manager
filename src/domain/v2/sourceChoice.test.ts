@@ -15,6 +15,18 @@ async function setup(){
 }
 
 describe('source-backed submission choice',()=>{
+ it('round-trips a three-branch choice while selecting only one personal option',async()=>{
+  const {repo,store,first,second}=await setup()
+  await repo.transaction(w=>{
+   const owner=w.tasks.find(t=>t.id===first)!,other=w.tasks.find(t=>t.id===second)!,group=owner.legacyData!.sourceChoiceGroup as Record<string,unknown>
+   return {...w,tasks:[...w.tasks.map(t=>t.id===first?{...t,legacyData:{...t.legacyData,sourceChoiceGroup:{...group,optionTaskIds:[first,second,'choice-third']}}}:t),{...other,id:'choice-third'}]}
+  })
+  await selectSourceChoice(repo,'choice-third',null)
+  const saved=(await new CanonicalWorkspaceRepository(store).load())!
+  const view=workspaceV8ToLegacyView(importWorkspaceV8(exportWorkspaceV8(saved)))
+  expect(view.tasks.find(t=>t.id===first)?.sourceChoice?.optionTaskIds).toEqual([first,second,'choice-third'])
+  expect(view.tasks.find(t=>t.id===second)?.sourceChoice?.selectedTaskId).toBe('choice-third')
+ })
  it('persists and changes the selected option without changing either source deadline',async()=>{
   const {repo,store,first,second}=await setup(),before=(await repo.load())!
   await selectSourceChoice(repo,first,null,'2026-11-03T12:00:00Z')

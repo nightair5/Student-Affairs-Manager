@@ -143,12 +143,12 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     // Preserve independently timed alternatives as a source-backed relation.
     // Each option keeps its own canonical materials and time points.
     for(const choice of result.conflicts.filter(c=>c.id.startsWith('sem-choice-')&&c.type==='other'&&!c.requiresDecision)){
-      if(!v.rawText.includes(choice.message)||choice.entityTempIds.length!==2)continue
+      if(!v.rawText.includes(choice.message)||choice.entityTempIds.length<2||choice.entityTempIds.length>6||new Set(choice.entityTempIds).size!==choice.entityTempIds.length)continue
       const options=choice.entityTempIds.map(id=>plan.create.tasks.find(task=>task.legacyData?.recognitionTempId===id))
       if(options.some(option=>!option)||options[0]!.id===options[1]!.id)continue
-      const [owner,other]=options as [typeof plan.create.tasks[number],typeof plan.create.tasks[number]]
-      owner.legacyData={...owner.legacyData,sourceChoiceGroup:{version:'source-choice-group-1.0.0',id:`${d.id}:${choice.id}`,sourceVersionId:v.id,quotation:choice.message,optionTaskIds:[owner.id,other.id]}}
-      other.legacyData={...other.legacyData,sourceChoiceOwnerId:owner.id}
+      const [owner,...others]=options as Array<typeof plan.create.tasks[number]>
+      owner.legacyData={...owner.legacyData,sourceChoiceGroup:{version:'source-choice-group-1.0.0',id:`${d.id}:${choice.id}`,sourceVersionId:v.id,quotation:choice.message,optionTaskIds:[owner,...others].map(option=>option.id)}}
+      for(const other of others)other.legacyData={...other.legacyData,sourceChoiceOwnerId:owner.id}
     }
     // The dates remain source-backed alternatives in the same event records;
     // they are not installed as confirmed calendar time points.

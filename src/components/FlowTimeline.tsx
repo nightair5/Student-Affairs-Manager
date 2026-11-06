@@ -43,7 +43,7 @@ export function FlowTimeline({tasks,allTasks,events,deferred,linked,eventTimeHin
      const steps=workflowByTask.get(task.id)
      if(steps){if(!seenWorkflows.has(steps[0].id)){seenWorkflows.add(steps[0].id);taskEntries.push(workflowEntry(steps))}continue}
      const group=task.sourceChoice,options=group?.optionTaskIds.map(id=>tasks.find(value=>value.id===id)).filter((value):value is Task=>Boolean(value))??[]
-     if(group&&options.length===2&&options.every(option=>option.sourceChoice?.id===group.id&&!linked[option.id])){
+     if(group&&options.length>=2&&options.length<=6&&options.length===group.optionTaskIds.length&&options.every(option=>option.sourceChoice?.id===group.id&&!linked[option.id])){
        if(seen.has(group.id))continue
        seen.add(group.id);taskEntries.push({kind:'task',task:options[0],alternatives:options,date:timelineDate(options.map(taskDate),timeZone)})
      }else taskEntries.push({kind:'task',task,linked:linked[task.id],date:taskDate(task)})

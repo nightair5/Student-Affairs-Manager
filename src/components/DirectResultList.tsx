@@ -4,6 +4,7 @@ import { CalendarDays, Check, CheckCircle2, MapPin, PencilLine, RotateCcw, Trash
 import type { DirectBatch, DirectEdit } from '../domain/v2/directIntake'
 import type { WorkspaceV8, TimePoint } from '../domain/v2/types'
 import { parseBusinessDateTime } from '../lib/timeSemantics'
+import { sourceChoiceForTask } from '../domain/v2/legacyView'
 
 function displayTime(point:TimePoint|undefined):string {
   if(!point?.normalizedValue)return '未设日期 · 设置'
@@ -53,7 +54,11 @@ export function RecentDirectAdditions({workspace,batches,onRetry,onUndo,onOpen,o
   if(!batches.length)return null
   const latest=batches.find(b=>b.status==='active'&&(b.processing==='partial'||b.origin==='local'||b.provenance==='hybrid')&&b.items.some(item=>{
     const task=workspace.tasks.find(entity=>entity.id===item.id)
-    if(task)return task.status!=='completed'&&task.status!=='cancelled'
+    if(task){
+      const choice=sourceChoiceForTask(workspace,task)
+      if(choice&&workspace.tasks.some(option=>choice.optionTaskIds.includes(option.id)&&option.status==='completed'))return false
+      return task.status!=='completed'&&task.status!=='cancelled'
+    }
     const event=workspace.events.find(entity=>entity.id===item.id)
     return Boolean(event&&event.legacyData?.personalCompletionV1!==true)
   }))

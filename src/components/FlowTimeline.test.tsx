@@ -69,6 +69,14 @@ describe('timeline date semantics',()=>{
   const html=renderToStaticMarkup(<FlowTimeline tasks={[electronic,paper]} events={[]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{electronic:['邮箱'],paper:['服务台']}} highlightIds={[]} onOpenTask={()=>{}} onComplete={()=>{}} onSelectChoice={async()=>{}} />)
   for(const value of ['以下方式任选一项完成','11月8日','11月9日','邮箱','服务台','已选择此方式','先选择此方式'])expect(html).toContain(value)
  })
+ it('shows three alternatives as one choice while retaining every branch deadline',()=>{
+  const ids=['upload','paper','onsite'],choice={id:'three',optionTaskIds:ids}
+  const tasks=ids.map((id,index):Task=>({...demoTasks[0],id,title:['上传证明','递交纸质表','现场核验'][index],status:'待开始',deadline:`2026-11-${16+index}T17:00`,materials:[],dependencies:[],sourceIds:[],history:[],description:'',sourceChoice:choice}))
+  const html=renderToStaticMarkup(<FlowTimeline tasks={tasks} events={[]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onComplete={()=>{}} onSelectChoice={async()=>{}} />)
+  for(const value of ['以下方式任选一项完成','11月16日','11月17日','11月18日','现场核验'])expect(html).toContain(value)
+  expect((html.match(/class="flow-choice-option"/g)??[]).length).toBe(3)
+  expect((html.match(/class="flow-timeline-choice/g)??[]).length).toBe(1)
+ })
  it('shows linked event facts, material quantity and a plan after the original deadline',()=>{
   const task:Task={...demoTasks[0],id:'t2',title:'参加讲座',status:'待开始',deadline:'2026-11-03T12:00',plannedStart:'2026-11-04T09:00',materials:[{id:'m',name:'报名表',done:false,quantity:2,formatRequirements:['PDF']}],dependencies:[],sourceIds:[],history:[],description:'准备材料'}
   const event:Event={id:'e2',title:'讲座',description:'主讲人：王老师\n活动内容：介绍课程安排\n参加须知：提前入场',startAt:'2026-11-03T09:00',endAt:'2026-11-03T10:00',location:'A101',evidenceIds:[],needsConfirmation:false,createdAt:'2026-10-01T00:00:00Z',updatedAt:'2026-10-01T00:00:00Z'}

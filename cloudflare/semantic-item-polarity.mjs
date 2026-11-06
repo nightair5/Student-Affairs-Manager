@@ -4,10 +4,11 @@ const compact=value=>typeof value==='string'?value.normalize('NFKC').replace(/\s
 const negativePrefix=/(?:禁止|请勿|不得|不再|不要|不可|不能|不允许|不需要|无需|无须|不必|不用|停止|暂停)(?:继续|再次|再|另行|进行)?$/u
 const revision=/改为|改到|改在|改至|改成|调整为|调整至|调整到|调整在|更正为|延期至|顺延至|推迟至|变更为/u
 const cancellation=/(?:取消|作废|废止)/gu
+const subjectText=value=>compact(value).replace(/["“”‘’《》「」『』—–]/gu,'')
 
 export function itemPolarity(item,context){
- const source=typeof context==='string'?context.normalize('NFKC').replace(/[^\S\r\n]+/gu,''):''
- const action=compact(item.action),object=compact(item.object),title=compact(item.title)
+ const source=typeof context==='string'?context.normalize('NFKC').replace(/[^\S\r\n]+/gu,'').replace(/["“”‘’《》「」『』—–]/gu,''):''
+ const action=subjectText(item.action),object=subjectText(item.object),title=subjectText(item.title)
  // Parenthetical display labels like "original arrangement" distinguish two
  // records, but are not part of the event name in the notice itself.
  const titleSubject=title
@@ -19,10 +20,17 @@ export function itemPolarity(item,context){
  // includes the old cancelled sentence. Do not revive the old timed item.
  const revised=source.search(revision)
  const newTime=revised>=0&&Array.isArray(item.times)&&item.times.some(time=>{
-  const raw=compact(time?.raw)
+  const raw=subjectText(time?.raw)
   return raw.length>=2&&source.slice(revised).includes(raw)
  })
  const clauses=[...source.matchAll(/[^，,。；;！？!?\n]+/gu)]
+ // A source-backed old occurrence can be superseded without the word 取消.
+ // Its times must belong exclusively before this item's explicit revision.
+ const oldTimes=Array.isArray(item.times)?item.times.map(time=>subjectText(time?.raw)).filter(value=>value.length>=2):[]
+ if(item.kind==='event'&&item.status==='cancelled'&&revised>=0&&!newTime&&oldTimes.length
+   &&/原定|原先|原本/u.test(source.slice(0,revised))
+   &&subjects.some(subject=>source.slice(0,revised).includes(subject))
+   &&oldTimes.every(value=>source.slice(0,revised).includes(value)))return 'cancelled'
  const obsolete=position=>newTime&&position<revised
  const ownForm=compact(item.deliveryForm).match(/纸质|电子/u)?.[0]??''
  const citedObject=object&&ownForm&&Array.isArray(item.evidence)&&item.evidence.some(value=>compact(value).includes(object)&&compact(value).includes(ownForm))
@@ -43,7 +51,17 @@ export function itemPolarity(item,context){
      const condition=compact(item.condition).replace(/^(?:仅限|仅|只有|面向)/u,'')
      const scope=clause.slice(0,at)
      const opposite=condition.length>=2&&!/^(?:未|不|非|无)/u.test(condition)&&['未','不','非','无'].some(prefix=>scope.includes(prefix+condition))
-     if(!opposite&&!obsolete(offset+at))return 'cancelled'
+     // In an explicit choice, “online signing needs no paper collection”
+     // removes the obligation only for the OTHER selected branch.
+     const choice=/二选一|任选其一|任选一种|任选一项/u.test(source)
+     const branchSubject=scope.replace(negativePrefix,'').replace(/^[^：:]{1,12}[：:]/u,'')
+     const positiveParts=source.split(/[，,。；;\n]/u)
+     const otherBranch=choice&&branchSubject.length>=2
+       &&positiveParts.some(part=>part.includes(branchSubject)&&/(?:可|可以)(?:选择|采用|通过|使用)/u.test(part)&&!part.includes(object))
+       &&positiveParts.some(part=>part.includes(action)&&part.includes(object)
+         &&!negativePrefix.test(part.slice(0,part.indexOf(action))))
+       &&!subjects.some(subject=>branchSubject.includes(subject))
+     if(!opposite&&!otherBranch&&!obsolete(offset+at))return 'cancelled'
     }
    }
   }
@@ -52,6 +70,11 @@ export function itemPolarity(item,context){
    if(obsolete(offset+at))continue
    // A qualification or an unrelated historical outcome is not the event.
    if(/^(?:其|相关|本次)?(?:申请|参评|报名|获奖|评选)?资格/u.test(after))continue
+   if(item.kind==='event'&&item.status==='cancelled'){
+    const deictic=clause.slice(0,at).match(/(?:现|现将|该|本次)(讲座|报告会|活动|会议|培训|比赛)(?:因[^，,。；;]{0,18})?$/u)
+    const preceding=source.slice(0,offset)
+    if(deictic&&subjects.some(subject=>subject.includes(deictic[1])&&preceding.includes(subject)))return 'cancelled'
+   }
    for(const subject of subjects){
     let start=clause.indexOf(subject)
     while(start>=0){

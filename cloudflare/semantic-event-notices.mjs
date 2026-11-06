@@ -36,16 +36,18 @@ export function applyEventIncidentalNotices({result,pending,source,evidence,note
   const visible=actionSpan.textStart>=quote.start&&actionSpan.textEnd<=quote.end?source.slice(actionSpan.textStart,actionSpan.textEnd):quote.literal
   const quoted=compact(visible)
   // A relation must not discard an extra link, requirement, or cited fact.
-  const rawDetails=[task.item.channel,task.item.description,...(Array.isArray(task.item.requirements)?task.item.requirements:[])]
-   .filter(value=>typeof value==='string').map(compact).filter(Boolean)
-  if(details.some(value=>!quoted.includes(value))||rawDetails.some(value=>!quoted.includes(value)))continue
+  // A faithful paraphrase must not force a second top-level item. Carry the
+  // already compiled detail into the parent, rather than dropping its facts
+  // or demanding that the display text be a verbatim substring.
+  if(task.item.channel&&!quoted.includes(compact(task.item.channel)))continue
   if(taskSpans.some(ref=>!quoted.includes(compact(ref.quote))))continue
-  const line='参加须知：'+visible
-  const already=compact(event.entity.description).includes(quoted)
-  if((!already&&event.entity.description.length+line.length+1>2400)||event.entity.evidenceIds.length>=20){note('RELATION',task.item.key,'EVENT_NOTICE_CAPACITY');continue}
+  const extra=[...task.entity.completionCriteria,...task.entity.description.split('\n').map(value=>value.replace(/^[^：:\n]{1,18}[：:]/u,''))]
+   .filter(value=>value&&details.includes(compact(value))&&!quoted.includes(compact(value)))
+  const line=[...new Set([visible,...extra])].filter(value=>!compact(event.entity.description).includes(compact(value))).map(value=>'参加须知：'+value).join('\n')
+  if((line&&event.entity.description.length+line.length+1>2400)||event.entity.evidenceIds.length>=20){note('RELATION',task.item.key,'EVENT_NOTICE_CAPACITY');continue}
   const ref=evidence(quote.literal,'event',task.item.key,quote.start)
   if(!ref)continue
-  if(!already)event.entity.description=[event.entity.description,line].filter(Boolean).join('\n')
+  if(line)event.entity.description=[event.entity.description,line].filter(Boolean).join('\n')
   event.entity.evidenceIds=[...new Set([...event.entity.evidenceIds,ref])]
   result.standaloneTasks=result.standaloneTasks.filter(item=>item.tempId!==id)
   audit.facts.push({role:'event_incidental_notice',event:event.entity.tempId,item:id,sourceEvidenceId:ref})
