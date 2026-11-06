@@ -9,7 +9,7 @@ import {itemPolarity} from './semantic-item-polarity.mjs'
 import {applySemanticActorRelations} from './semantic-actor-relations.mjs'
 import {applyEventIncidentalNotices} from './semantic-event-notices.mjs'
 import {timeRoleContext,parseWindowWithDailyHours,sourceTimeModality} from './semantic-time-context.mjs'
-import {sourceOptionalMaterialClause,sourceParagraphContext} from './semantic-source-context.mjs'
+import {sourceOptionalMaterialClause,sourceParagraphContext,sourceSectionLocation,sourceMaterialInlineFormats} from './semantic-source-context.mjs'
 
 const object = value => Boolean(value && typeof value === 'object' && !Array.isArray(value))
 const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(0,max) : ''
@@ -401,7 +401,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       applyTaskRequirements(entity,baseLines,requirements,item.key)
       result.standaloneTasks.push(entity)
     } else {
-      const location=text(item.location,160),supportedLocation=sourceLocation(source,location,item.title,ownText)
+      const location=text(item.location,160),supportedLocation=sourceLocation(source,location,item.title,ownText)||(promptVersion==='recognition-semantic-notice-3.8.0'?sourceSectionLocation(source,location,ownText):'')
       if(location&&!supportedLocation)note('LOCATION',item.key,'LOCATION_NOT_SOURCE_GROUNDED')
       const speakers=Array.isArray(item.speakers)?item.speakers.filter(object).slice(0,8).flatMap(person=>{const name=text(person.name,80),identity=text(person.identity,120),role=text(person.role,30)||'主讲人';if(!name||!hasLiteral(source,name)){if(name)note('PERSON',item.key,'PERSON_NOT_SOURCE_GROUNDED');return []}return [role+'：'+name+(identity&&hasLiteral(source,identity)?'（'+identity+'）':'')] }):[]
       const notices=list(item.notices,10,300)
@@ -428,7 +428,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
 
   for(const {item,entity,kind,recoveredEvidence,ownText,requirements} of pending) {
     if(kind==='task')entity.dependencyTempIds=list(item.dependsOn,20,40).flatMap(key=>{const dependency=keys.get(key);if(dependency?.kind==='task')return [dependency.entity.tempId];note('RELATION',item.key,'DEPENDENCY_NOT_FOUND');return []})
-    const sharedDay=kind==='event'?modelOwnedSharedDay(source,item):null
+    const sharedDay=kind==='event'?modelOwnedSharedDay(source,item,{allowSectionHeading:promptVersion==='recognition-semantic-notice-3.8.0'}):null
     const timeEntries=kind==='task'?combineExplicitWindowEntries(source,item).map(entry=>sourceOpenEndedWindow(source,item,entry)??entry):(Array.isArray(item.times)?item.times.slice(0,20):[])
     const channelWindow=kind==='task'?(channelOwnedWindow(source,item,pending,raw.summary)??sourceSummaryDeliveryWindow(source,item,pending,raw.summary,raw.topic)):null
     if(channelWindow&&timeEntries.length<20&&!timeEntries.some(entry=>entry?.role==='window')){timeEntries.push(channelWindow);audit.facts.push({role:channelWindow.sourceRecovered?'document_window_link':'channel_window_link',item:item.key,raw:channelWindow.raw})}
@@ -498,7 +498,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
         const localPrefix=prefix.slice(boundary),foldedPrefix=foldWidth(localPrefix),matches=[...foldedPrefix.matchAll(new RegExp(sourceDay.source,'gu'))]
         const day=matches.length===1?matches[0]:matches.length===2&&/\d/u.test(matches[0][0])
           &&/^[（(]\s*(?:本周|下周|周|星期)[一二三四五六日天]\s*[）)]\s*$/u.test(foldedPrefix.slice(matches[0].index+matches[0][0].length))?matches[0]:null
-        const anchored=kind==='event'?(contextualEventDay(source,span,item)||owned?.day):day?{start:span.start-localPrefix.length+day.index,end:span.start-localPrefix.length+day.index+day[0].length}:null
+        const anchored=kind==='event'?(contextualEventDay(source,span,item)||owned?.day||sharedDay):day?{start:span.start-localPrefix.length+day.index,end:span.start-localPrefix.length+day.index+day[0].length}:null
         if(!anchored){
           // Keep a source-backed clock as text when the day is unknown. It is
           // not a calendar timestamp and must never inherit the reference day.
@@ -636,7 +636,9 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     if((mixedDelivery||differentUses)&&!splitDelivery)note('MATERIAL',material.key,'SHARED_DELIVERY_CAPACITY')
     const wrongChannelScope=Boolean(channelInSource&&ownerRecords.some(record=>conflictingDeliveryScope(source,channelInSource,text(record.item.deliveryForm,80)||record.item.title)))
     const supportedChannel=wrongChannelScope?null:channelInSource||null
-    const formats=list(material.formats,20,160),naming=list(material.naming,20,160),requirements=supportedRequirements(material.requirements,material.key)
+    const inlineFormats=promptVersion==='recognition-semantic-notice-3.8.0'?sourceMaterialInlineFormats(source,material.name,refs):[]
+    const formats=[...new Set([...list(material.formats,20,160),...inlineFormats])].slice(0,20),naming=list(material.naming,20,160),requirements=supportedRequirements(material.requirements,material.key)
+    if(inlineFormats.length)audit.facts.push({role:'material_inline_format',material:material.key,formats:inlineFormats})
     if(Array.isArray(material.formats)&&material.formats.length>20)note('MATERIAL',material.key,'FORMAT_INPUT_OVERFLOW')
     if(Array.isArray(material.naming)&&material.naming.length>20)note('MATERIAL',material.key,'NAMING_INPUT_OVERFLOW')
     if([...(Array.isArray(material.formats)?material.formats:[]),...(Array.isArray(material.naming)?material.naming:[])].some(value=>typeof value==='string'&&value.trim().length>160))note('CAPACITY',material.key,'MATERIAL_FIELD_TRUNCATED')

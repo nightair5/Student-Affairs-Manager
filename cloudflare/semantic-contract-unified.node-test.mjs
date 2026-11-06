@@ -55,3 +55,30 @@ test('an unspecified material obligation remains explicitly unresolved only in t
  assert.ok(fresh.audit.losses.some(x=>x.reason==='MATERIAL_REQUIRED_UNRESOLVED'))
  assert.equal(compileSemanticNotice(raw,{...options,promptVersion:'recognition-semantic-notice-3.7.0'}).result.materials[0].required,true)
 })
+
+test('a cited same-day agenda heading anchors each event without taking another date',()=>{
+ const source='2026年12月2日在东楼举办开放日：9:00—10:00分享在201室；14:00—15:00咨询在202室。'
+ const heading='2026年12月2日在东楼举办开放日'
+ const events=[
+  {key:'a',kind:'event',title:'分享',location:'东楼201室',evidence:[heading,'9:00—10:00分享在201室'],times:[{role:'start',raw:'2026年12月2日'},{role:'start',raw:'9:00—10:00'},{role:'end',raw:'9:00—10:00'}]},
+  {key:'b',kind:'event',title:'咨询',location:'东楼202室',evidence:[heading,'14:00—15:00咨询在202室'],times:[{role:'start',raw:'2026年12月2日'},{role:'start',raw:'14:00—15:00'},{role:'end',raw:'14:00—15:00'}]},
+ ]
+ const compile=text=>compileSemanticNotice({topic:'开放日',kind:'event',items:events,materials:[]},{source:text,referenceTime:'2026-11-07T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:SEMANTIC_NOTICE_VERSION})
+ const {result}=compile(source)
+ assert.deepEqual(result.timePoints.map(p=>p.normalizedValue),['2026-12-02T09:00','2026-12-02T10:00','2026-12-02T14:00','2026-12-02T15:00'])
+ assert.deepEqual(result.events.map(e=>e.location),['东楼 · 201室','东楼 · 202室'])
+ const other=source.replace('14:00—15:00咨询','改至12月3日14:00—15:00咨询')
+ const changed=compile(other).result
+ assert.ok(!changed.timePoints.some(p=>p.normalizedValue==='2026-12-02T14:00'))
+})
+
+test('an adjacent file format belongs only to the cited material',()=>{
+ const source='请提交申请表和成绩单PDF。'
+ const raw={topic:'材料',kind:'action',items:[{key:'a',kind:'task',title:'提交材料',action:'提交',object:'材料',evidence:[source],materials:['form','grade']}],materials:[
+  {key:'form',name:'申请表',required:true,owners:['a'],evidence:[source]},
+  {key:'grade',name:'成绩单',required:true,owners:['a'],evidence:[source]},
+ ]}
+ const {result}=compileSemanticNotice(raw,{source,referenceTime:'2026-11-07T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:SEMANTIC_NOTICE_VERSION})
+ assert.deepEqual(result.materials.find(m=>m.name==='申请表').formatRequirements,[])
+ assert.deepEqual(result.materials.find(m=>m.name==='成绩单').formatRequirements,['PDF'])
+})

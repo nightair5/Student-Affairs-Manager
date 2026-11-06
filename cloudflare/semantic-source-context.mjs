@@ -214,7 +214,7 @@ export function sourceEvidenceCondition(source,refs,item){
 
 /** An explicit shared-day statement may bind a model-owned date to that same
  * item's clock. An unqualified earlier date is not a cross-sentence anchor. */
-export function modelOwnedSharedDay(source,item){
+export function modelOwnedSharedDay(source,item,{allowSectionHeading=false}={}){
  const entries=Array.isArray(item.times)?item.times:[]
  const dates=entries.filter(e=>e?.role==='start'&&typeof e.raw==='string'&&SOURCE_DAY_PATTERN.test(fold(e.raw))&&!clock(fold(e.raw)))
  const clocks=entries.filter(e=>e?.role==='start'&&typeof e.raw==='string'&&!SOURCE_DAY_PATTERN.test(fold(e.raw))&&clock(fold(e.raw)))
@@ -226,9 +226,53 @@ export function modelOwnedSharedDay(source,item){
  // layout alone. Requiring a plural shared-day cue here discarded ordinary
  // date/newline/time fields. Semantic text or another date still closes it.
  const adjacentField=/^[\s，,：:]*$/u.test(between)
- if(!adjacentField&&!/(?:均为|均在|均于|皆为|同为|同一天为|同日为)\s*$/u.test(pre)||differentDay.test(between))return null
+ // A source-cited day heading can own several separately cited agenda
+ // entries even if their text is not adjacent. Both spans must belong to
+ // this model item; another date, correction or deadline is not a heading.
+ const heading=allowSectionHeading?between.match(/^([^：:\n。；;]{0,60})[：:]/u):null
+ const evidence=Array.isArray(item.evidence)?item.evidence.flatMap(quote=>typeof quote==='string'?[locateSourceQuote(quote,source)].filter(Boolean):[]):[]
+ const covers=span=>evidence.some(ref=>ref.start<=span.start&&ref.end>=span.end)
+ const sectionHeading=Boolean(heading&&/(?:活动|日程|安排|交流|讲座|会议|培训|举办|举行|开展|分享|工作坊)/u.test(heading[1])
+  &&!/(?:截止|截至|提交|报名|缴费|取消|作废)/u.test(heading[1]+pre.slice(-12))
+  &&covers(day)&&covers(ownClock)&&!/\n\s*\n/u.test(between))
+ if((!adjacentField&&!sectionHeading&&!/(?:均为|均在|均于|皆为|同为|同一天为|同日为)\s*$/u.test(pre))||differentDay.test(between))return null
  if([...fold(between).matchAll(new RegExp(SOURCE_DAY_PATTERN.source,'gu'))].length)return null
  return day
+}
+
+/** A model-proposed building plus room may be composed only from its own
+ * cited agenda heading and a unique room in the same source section. */
+export function sourceSectionLocation(source,value,ownText){
+ const proposed=compactText(value)
+ const heading=/(?:在|地点[：:])([^，,。；;：:\n]{1,22}?(?:楼|馆|中心|校区|大厦))(?=举办|举行|开展|安排|活动|[：:])/gu
+ for(const match of source.matchAll(heading)){
+  const base=compactText(match[1]);if(base.length<2||!proposed.startsWith(base))continue
+  const room=proposed.slice(base.length)
+  if(!/^[A-Za-z]?\d{2,4}(?:室|教室|厅)?$/u.test(room))continue
+  const baseSpan=locateSourceQuote(match[1],source),roomSpan=locateSourceQuote(room,source)
+  if(!baseSpan||!roomSpan||roomSpan.start<=baseSpan.end||roomSpan.start-baseSpan.end>300)continue
+  if(!compactText(ownText).includes(base)||!compactText(ownText).includes(room))continue
+  const between=source.slice(baseSpan.end,roomSpan.start)
+  if(/\n\s*\n|(?:次日|翌日|改期|改为|调整至|取消)/u.test(between))continue
+  const otherBuildings=[...between.matchAll(/(?:在|于)([^，,。；;：:\n]{1,18}?(?:楼|馆|中心|校区|大厦))/gu)]
+  if(otherBuildings.some(other=>compactText(other[1])!==base))continue
+  return base+' · '+room
+ }
+ return ''
+}
+
+/** Keep an explicitly adjacent file format with its own material name. */
+export function sourceMaterialInlineFormats(source,name,refs){
+ const target=compactText(name)
+ if(target.length<2||target.length>100)return []
+ const escaped=target.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')
+ const pattern=new RegExp(escaped+'[（(]?(PDF|DOCX?|WORD|PPTX?|XLSX?)[）)]?(?![A-Za-z])','giu')
+ const found=new Set()
+ for(const quote of refs){
+  const span=locateSourceQuote(quote,source);if(!span)continue
+  for(const match of compactText(span.literal).matchAll(pattern))found.add(match[1].toUpperCase())
+ }
+ return [...found]
 }
 
 /** Disambiguate repeated clock text only within a model-cited, unique agenda
