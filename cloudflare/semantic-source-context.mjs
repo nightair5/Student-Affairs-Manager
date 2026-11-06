@@ -8,6 +8,44 @@ const clock=value=>/(?:\d{1,2}\s*[:：]\s*\d{2}|\d{1,2}\s*[点时](?:\d{1,2}分?
 const differentDay=/(?:次日|翌日|第二天|隔日|隔天|次周|翌周|改为|改至|改到|改期|延期|调整为|调整至|更正为)/u
 const compactText=value=>String(value??'').normalize('NFKC').replace(/\s/gu,'')
 
+/** Build context in source order from the union of original UTF-16 spans.
+ * Overlapping/reordered model citations must not repeat an old occurrence
+ * after its own revision. Merge positions, not slightly different strings. */
+export function sourceParagraphContext(source,evidence){
+ const ranges=evidence.map(span=>{
+  const before=source.slice(0,span.textStart),tail=source.slice(span.textEnd)
+  const left=Math.max(before.lastIndexOf('。'),before.lastIndexOf('；'),before.lastIndexOf(';'),before.lastIndexOf('\n'),before.lastIndexOf('！'),before.lastIndexOf('？'))+1
+  const right=tail.search(/[。；;\n！？]/u)
+  return {start:left,end:right<0?source.length:span.textEnd+right}
+ }).sort((a,b)=>a.start-b.start||a.end-b.end)
+ const merged=[]
+ for(const range of ranges){
+  const last=merged.at(-1)
+  if(last&&range.start<=last.end)last.end=Math.max(last.end,range.end)
+  else merged.push({...range})
+ }
+ return merged.map(range=>source.slice(range.start,range.end)).join('\n')
+}
+
+/** An optional qualifier must govern this material in its own literal
+ * citation. Repeated mentions elsewhere do not turn it into a requirement. */
+export function sourceOptionalMaterialClause(source,name,refs){
+ const target=compactText(String(name??'').replace(/[（(](?:如|例如|比如)[^）)]*[）)]/gu,''))
+ if(target.length<2)return ''
+ for(const quote of refs){
+  const span=locateSourceQuote(quote,source)
+  if(!span)continue
+  const value=compactText(span.literal),at=value.indexOf(target)
+  if(at<0||value.indexOf(target,at+target.length)>=0)continue
+  const before=value.slice(0,at).split(/[，,。；;、(]/u).at(-1),after=value.slice(at+target.length)
+  const ownParenthesis=/^\((?:[^()]{1,8}(?:为|是))?(?:如有|若有|可选|非必(?:须|需|交))\)/u.test(after)
+  const availableFirst=/^(?:若有|如有)$/u.test(before)&&/^(?:可|可以)(?:一并|另|自愿)?(?:提交|提供|上传|附)/u.test(after)
+  const availableLast=/^(?:若有|如有)(?:可|可以)(?:一并|另)?(?:提交|提供|上传|附)/u.test(after)
+  if(ownParenthesis||availableFirst||availableLast)return span.literal
+ }
+ return ''
+}
+
 /** A source-backed optional attachment mentioned by the model's summary can
  * be related only to a single, immediately preceding submission. This never
  * promotes examples, unrelated actions or a model-only claim to a material. */
@@ -184,7 +222,11 @@ export function modelOwnedSharedDay(source,item){
  const day=locateSourceQuote(dates[0].raw,source),ownClock=locateSourceQuote(clocks[0].raw,source)
  if(!day||!ownClock||day.start>=ownClock.start||ownClock.start-day.start>220)return null
  const pre=source.slice(Math.max(0,day.start-24),day.start),between=source.slice(day.end,ownClock.start)
- if(!/(?:均为|均在|均于|皆为|同为|同一天为|同日为)\s*$/u.test(pre)||differentDay.test(between))return null
+ // A date and clock in the same model-owned field can be separated by web
+ // layout alone. Requiring a plural shared-day cue here discarded ordinary
+ // date/newline/time fields. Semantic text or another date still closes it.
+ const adjacentField=/^[\s，,：:]*$/u.test(between)
+ if(!adjacentField&&!/(?:均为|均在|均于|皆为|同为|同一天为|同日为)\s*$/u.test(pre)||differentDay.test(between))return null
  if([...fold(between).matchAll(new RegExp(SOURCE_DAY_PATTERN.source,'gu'))].length)return null
  return day
 }

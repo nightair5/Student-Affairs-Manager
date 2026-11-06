@@ -8,12 +8,14 @@ import {declaredTaskChoices,combineSupportedChoices,expandSupportedSingleChoices
 import {itemPolarity} from './semantic-item-polarity.mjs'
 import {applySemanticActorRelations} from './semantic-actor-relations.mjs'
 import {applyEventIncidentalNotices} from './semantic-event-notices.mjs'
-import {timeRoleContext,parseWindowWithDailyHours} from './semantic-time-context.mjs'
+import {timeRoleContext,parseWindowWithDailyHours,sourceTimeModality} from './semantic-time-context.mjs'
+import {sourceOptionalMaterialClause,sourceParagraphContext} from './semantic-source-context.mjs'
 
 const object = value => Boolean(value && typeof value === 'object' && !Array.isArray(value))
 const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(0,max) : ''
 const list = (value, count=20, max=160) => Array.isArray(value) ? [...new Set(value.map(v=>text(v,max)).filter(Boolean))].slice(0,count) : []
 const compact = value => typeof value==='string'?value.normalize('NFKC').replace(/\s/gu,''):''
+export const SEMANTIC_COMPILER_VERSION='semantic-notice-compiler-1.0.20'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
@@ -277,10 +279,10 @@ function sourceLocation(source,value,title,ownText) {
  * validates source-backed time values without re-parsing the display title. */
 export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',promptVersion='recognition-semantic-notice-3.0.5'}={}) {
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
-    return {result:null,audit:{compilerVersion:'semantic-notice-compiler-1.0.14',rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
+    return {result:null,audit:{compilerVersion:SEMANTIC_COMPILER_VERSION,rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
   const result=normalizeRecognitionResult({schemaVersion:'2.0',sourceSummary:{title:text(raw.topic,160)||'通知',sourceType:'text',notificationType:'uncertain',summary:'',requiresAction:false},projectMatch:{decision:'standalone_task'},standaloneTasks:[],events:[],materials:[],timePoints:[],evidence:[]},source,referenceTime,model,promptVersion,true,timezone)
-  const audit={version:promptVersion,compilerVersion:['recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0'].includes(promptVersion)?'semantic-notice-compiler-1.0.19':promptVersion==='recognition-semantic-notice-3.5.0'?'semantic-notice-compiler-1.0.17':promptVersion==='recognition-semantic-notice-3.4.0'?'semantic-notice-compiler-1.0.16':promptVersion==='recognition-semantic-notice-3.3.0'?'semantic-notice-compiler-1.0.15':'semantic-notice-compiler-1.0.14',rootFailure:false,items:[],facts:[],losses:[]}
+  const audit={version:promptVersion,compilerVersion:SEMANTIC_COMPILER_VERSION,rootFailure:false,items:[],facts:[],losses:[]}
   const availableWindows=[]
   const withWindowInformation={...raw,items:raw.items.map(item=>{
     const converted=systemAvailabilityAsInformation(source,item)
@@ -358,12 +360,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     }
     if(!ids.length){note('ITEM_STRUCTURE',item.key,'ITEM_UNGROUNDED');continue}
     const ownText=ids.map(id=>result.evidence.find(e=>e.id===id)?.quote??'').join('\n')
-    const context=ids.map(id=>{
-      const span=result.evidence.find(e=>e.id===id);if(!span)return false
-      const before=source.slice(0,span.textStart),lastBoundary=Math.max(before.lastIndexOf('。'),before.lastIndexOf('；'),before.lastIndexOf(';'),before.lastIndexOf('\n'),before.lastIndexOf('！'),before.lastIndexOf('？'))
-      const tail=source.slice(span.textEnd),nextBoundary=tail.search(/[。；;\n！？]/u)
-      return source.slice(lastBoundary+1,nextBoundary<0?source.length:span.textEnd+nextBoundary)
-    }).filter(Boolean).join('\n')
+    const context=sourceParagraphContext(source,ids.map(id=>result.evidence.find(e=>e.id===id)).filter(Boolean))
     const polarity=cancelledRevisions.has(item.key)?'cancelled':itemPolarity(item,context||ownText)
     if(polarity==='cancelled'){note('POLARITY',item.key,'CANCELLED_ITEM');audit.items.push({key:item.key,status:'CANCELLED'});continue}
     if(polarity==='uncertain')note('POLARITY',item.key,'CANCELLATION_SCOPE_UNCERTAIN')
@@ -549,6 +546,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const cutoffClause=normalizedClause.replace(/提前/gu,'').replace(/[（(](?:周|星期)[一二三四五六日天][）)]/gu,'').replace(/\s/gu,'')
       const explicitCutoff=/(?:截止|截至|最迟|不晚于|之前|以前|(?:日|号|分|时|点|\d)前)/u.test(cutoffClause)
         ||/(?:申请|报名|提交|报送)[^。；;]{0,20}(?:时间|期限)/u.test(cutoffClause)&&/逾期(?:将)?(?:不再受理|不予受理|不受理)/u.test(cutoffClause)&&!/办理窗口|开放时间/u.test(cutoffClause)
+        ||/^即日起(?:至|到)/u.test(compact(normalizedTime))&&/逾期[^，,。；;]{0,12}(?:不再受理|不予受理|不受理)/u.test(cutoffClause)
       const closingCutoff=kind==='task'&&entry.role==='deadline'&&sourceChannelClosingDeadline(source,item,span)
       const unsafeDeadline=entry.role==='deadline'&&(kind!=='task'||alternative||!explicitCutoff&&!closingCutoff||deadlineRangeRoleIssue(normalizedTime,role,normalizedClause))
       let parsed=parseDirectSourceTime(parseText,{type:role,referenceTime,timezone})
@@ -563,8 +561,13 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
         }
       }
       const candidate=entry.role==='end'?(parsed.rangeEndNormalizedValue??parsed.normalizedValue):parsed.normalizedValue
-      const value=previous||alternative||unsafeDeadline||parsed.needsConfirmation?null:candidate
-      if(!value)note('TIME',item.key,previous?'OBSOLETE_TIME':alternative?'TIME_ALTERNATIVES_UNRESOLVED':unsafeDeadline?'UNSAFE_DEADLINE_ROLE':'TIME_UNRESOLVED')
+      const modality=sourceTimeModality(span.literal,clause)
+      const value=previous||alternative||unsafeDeadline||entity.sourceStatus==='uncertain'||modality!=='confirmed'||parsed.needsConfirmation?null:candidate
+      if(modality!=='confirmed'){
+        const line=(modality==='tentative'?'暂定时间：':'建议完成时间：')+span.literal
+        if(!entity.description.split('\n').includes(line))entity.description+=(entity.description?'\n':'')+line
+      }
+      if(!value)note('TIME',item.key,previous?'OBSOLETE_TIME':alternative?'TIME_ALTERNATIVES_UNRESOLVED':unsafeDeadline?'UNSAFE_DEADLINE_ROLE':modality==='tentative'?'TIME_TENTATIVE_NOT_CONFIRMED':modality==='suggested'?'TIME_SUGGESTION_NOT_DEADLINE':'TIME_UNRESOLVED')
       const point={tempId:'sem-p'+(result.timePoints.length+1),type:role,rawText:span.literal,normalizedValue:value,timezone,isAllDay:value?parsed.isAllDay:false,precision:value?parsed.precision:'vague',needsConfirmation:!value,relatedTaskTempIds:kind==='task'?[entity.tempId]:[],relatedMaterialTempIds:[],evidenceIds:[...new Set([eid,dateEvidenceId,...(nextDayStart?.evidenceIds??[])].filter(Boolean))].slice(0,20),confidence:.8,selected:Boolean(value)}
       if(entry.role==='window'&&alternative){
         // A proposed survey slot is not an opening time or an appointment.
@@ -583,7 +586,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
           if(endOnly)point.type='event_end'
           point.tempId='sem-window-'+(endOnly?'end':'start')+'-'+(result.timePoints.length+1)
           result.timePoints.push(point);entity.timePointTempIds.push(point.tempId)
-          if(parsed.rangeEndNormalizedValue&&!previous&&!alternative&&!parsed.needsConfirmation){
+          if(parsed.rangeEndNormalizedValue&&!previous&&!alternative&&modality==='confirmed'&&entity.sourceStatus!=='uncertain'&&!parsed.needsConfirmation){
             const end={...point,tempId:'sem-window-end-'+(result.timePoints.length+1),type:'event_end',normalizedValue:parsed.rangeEndNormalizedValue}
             result.timePoints.push(end);entity.timePointTempIds.push(end.tempId)
           }
@@ -642,11 +645,12 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     const materialEvidence=refs.join('\n')
     const groundedMaterialRequirements=requirements.filter(requirement=>hasLiteral(materialEvidence,requirement)&&hasLiteral(source,requirement))
     const conditional=conditionalMaterialClause(source,text(material.name,160),refs)
+    const optional=sourceOptionalMaterialClause(source,material.name,refs)
     const sameTaskCondition=Boolean(conditional)&&ownerRecords.every(record=>{
       const action=compact(record.item.action),object=compact(record.item.object),name=compact(material.name)
       return action&&object&&name&&object.includes(name)&&compact(conditional).includes(action)&&compact(conditional).includes(object)
     })
-    const allOwnedRequirements=uniqueRequirements([...(conditional?[conditional]:[]),...groundedMaterialRequirements.filter(value=>!conditional||!compact(conditional).endsWith(compact(value)))])
+    const allOwnedRequirements=uniqueRequirements([...(conditional?[conditional]:[]),...(optional?[optional]:[]),...groundedMaterialRequirements.filter(value=>!conditional||!compact(conditional).endsWith(compact(value)))])
     if(allOwnedRequirements.length>20||conditional.length>800)note('MATERIAL',material.key,'MATERIAL_REQUIREMENT_OVERFLOW')
     const ownedRequirements=allOwnedRequirements.slice(0,20)
     if(conditional)audit.facts.push({role:'conditional_material',material:material.key,sourceText:conditional})
@@ -677,7 +681,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const ownMaterialChannel=splitDelivery?(ownerChannel&&!conflictingDeliveryScope(source,ownerChannel,form)?ownerChannel:channelInSource&&!conflictingDeliveryScope(source,channelInSource,form)?channelInSource:null):supportedChannel
       const sharedScope=(value,kind)=>mixedDelivery&&!splitDelivery?ownerRecords.every(other=>scoped(value,other,kind)):scoped(value,record,kind)
       const ownerUse=ownerUses[ownerRecords.indexOf(record)]
-      const required=splitDelivery&&ownerUse?ownerUse.required:material.required!==false&&(!conditional||sameTaskCondition)
+      const required=splitDelivery&&ownerUse?ownerUse.required:!optional&&material.required!==false&&(!conditional||sameTaskCondition)
       const useRequirements=ownerUse?.requirement?[ownerUse.requirement]:[]
       const scopedRequirements=uniqueRequirements([...ownedRequirements.filter(value=>sharedScope(value,'requirement')),...useRequirements])
       if(scopedRequirements.length>20)note('MATERIAL',material.key,'MATERIAL_REQUIREMENT_OVERFLOW')

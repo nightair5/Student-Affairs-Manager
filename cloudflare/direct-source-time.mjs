@@ -1,10 +1,18 @@
 import {parseTwoStepTime} from './two-step-time.mjs'
-export const DIRECT_SOURCE_TIME_VERSION='direct-source-time-1.0.5'
+export const DIRECT_SOURCE_TIME_VERSION='direct-source-time-1.0.6'
 const weekdays={日:0,天:0,一:1,二:2,三:3,四:4,五:5,六:6}
 const next=v=>{if(!v)return v;const d=new Date(v.slice(0,10)+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10)+v.slice(10)}
 /** Formatting adapter for the opt-in direct path. Evidence remains the exact
  * original span. It neither changes the legacy parser nor resolves ambiguity. */
 export function parseDirectSourceTime(raw,options){
+ // Normalize the grammar of a source time before interpreting its meaning.
+ // This is a parsing view only: evidence and rawText retain original UTF-16
+ // positions. A date separator, layout break or range glyph is not a role.
+ const typography=raw.normalize('NFKC')
+  .replace(/(?<!\d)(\d{4})\s*[-/.]\s*(\d{1,2})\s*[-/.]\s*(\d{1,2})(?!\d)/gu,'$1年$2月$3日')
+  .replace(/(?<=日)T(?=\d)/gu,'')
+  .replace(/(?<=\d)\s*[~～]\s*(?=\d)/gu,'至')
+ if(typography!==raw.normalize('NFKC'))return {...parseDirectSourceTime(typography,options),rawText:raw,formatRule:'SOURCE_TIME_TYPOGRAPHY_NORMALIZED'}
  // Preserve the date/clock boundary before removing layout. A published
  // ISO-like timestamp is not a date interval separated by hyphens.
  const iso=/^(\d{4})-(\d{2})-(\d{2})[ T]+(\d{1,2}):(\d{2})(?::00)?$/u.exec(raw.normalize('NFKC').trim())

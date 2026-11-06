@@ -13,6 +13,7 @@ export function itemPolarity(item,context){
  // records, but are not part of the event name in the notice itself.
  const titleSubject=title
   .replace(/\((?:原定|原安排|原场次|旧安排|旧场次|新安排|新场次|改期|改至|改到|改在|延期|已取消|取消)[^()]*\)$/u,'')
+  .replace(/\((?:原|旧)(?:\d{4}年)?\d{1,2}月\d{1,2}日[^()]*\)$/u,'')
   .replace(/^(?:原定|原先|原本)(?:(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]?(?:\d{1,2}:\d{2})?)?/u,'')
  const undatedTitle=titleSubject.replace(/^(?:(?:本|这|下|上)周|周[一二三四五六日天]|星期[一二三四五六日天]|今天|明天|后天)(?:的)?/u,'')
  const subjects=[...new Set([title,titleSubject,undatedTitle,object,action&&object?action+object:''].filter(value=>value.length>=2))]
@@ -74,6 +75,12 @@ export function itemPolarity(item,context){
     const deictic=clause.slice(0,at).match(/(?:现|现将|该|本次)(讲座|报告会|活动|会议|培训|比赛)(?:因[^，,。；;]{0,18})?$/u)
     const preceding=source.slice(0,offset)
     if(deictic&&subjects.some(subject=>subject.includes(deictic[1])&&preceding.includes(subject)))return 'cancelled'
+    // A cancellation may refer back to the named occurrence as "tonight's
+    // lecture" rather than repeat its display title. Bind only a cancelled
+    // model record with its own earlier title AND time, never a later/new
+    // occurrence or a qualification cancellation.
+    const previousOccurrence=/^(?:本次|该场|此次|今晚|今夜|今天|当日|当天)(?:的)?(?:讲座|报告会|活动|会议|培训|工作坊|研讨会)/u.test(after)
+    if(previousOccurrence&&!newTime&&oldTimes.length&&subjects.some(subject=>preceding.includes(subject))&&oldTimes.every(value=>preceding.includes(value)))return 'cancelled'
    }
    for(const subject of subjects){
     let start=clause.indexOf(subject)

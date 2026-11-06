@@ -12,13 +12,28 @@ export function timeRoleContext(source,span){
  const beforeLines=prefix.split('\n'),afterLines=suffix.split('\n')
  // Keep only layout adjacent to an explicit cutoff label or suffix. Other
  // lines may contain another item's deadline and cannot authorize this one.
- if(beforeLines.length>1&&!/(?:截止(?:时间)?|截至|最迟|不晚于|请于|请在)\s*[：:]?\s*$/u.test(prefix)){
+ const explicitRole=/(?:截止(?:时间)?|截至|最迟|不晚于|请于|请在)\s*(?:为|是)?\s*[：:]?\s*$/u.test(prefix)
+ const explicitQualifier=/(?:暂定|拟定|预计|建议|推荐)(?:时间|日期)?\s*(?:为|是|在|于)?\s*[：:]?\s*$/u.test(prefix)
+ if(beforeLines.length>1&&!explicitRole&&!explicitQualifier){
   prefix=beforeLines.at(-1)
  }
  if(afterLines.length>1&&!/^\s*(?:[（(](?:周|星期)[一二三四五六日天][）)]\s*)?(?:之前|以前|前|为止|截止(?=$|[，,。；;]))/u.test(suffix)){
   suffix=afterLines[0]
  }
  return prefix+span.literal+suffix
+}
+
+/** Certainty qualifies a specific source time, not the entire document.
+ * Only adjacent modifiers in this time's bound clause are considered. */
+export function sourceTimeModality(raw,context){
+ const value=folded(raw),scope=folded(context),at=scope.indexOf(value)
+ const before=at<0?'':scope.slice(0,at).split(/[，,。；;]/u).at(-1)
+ const after=at<0?'':scope.slice(at+value.length)
+ const qualifier=before?.match(/(?:暂定|拟定|预计|建议|推荐)(?:时间|日期)?(?:为|是|在|于)?[：:]?$/u)?.[0]??''
+ const attached=qualifier+value
+ if(/暂定|待定|尚未确定|未确定|拟定|预计/u.test(attached)||/^[（(](?:暂定|待定|拟定)[）)]/u.test(after))return 'tentative'
+ if(/^(?:建议|推荐)/u.test(attached))return 'suggested'
+ return 'confirmed'
 }
 
 /** A date window with daily opening hours has two dimensions. Parse the
