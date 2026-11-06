@@ -15,7 +15,7 @@ const object = value => Boolean(value && typeof value === 'object' && !Array.isA
 const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(0,max) : ''
 const list = (value, count=20, max=160) => Array.isArray(value) ? [...new Set(value.map(v=>text(v,max)).filter(Boolean))].slice(0,count) : []
 const compact = value => typeof value==='string'?value.normalize('NFKC').replace(/\s/gu,''):''
-export const SEMANTIC_COMPILER_VERSION='semantic-notice-compiler-1.0.21'
+export const SEMANTIC_COMPILER_VERSION='semantic-notice-compiler-1.0.22'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
@@ -604,6 +604,21 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       }
       if(kind==='event'&&role==='task_deadline'){note('TIME',item.key,'EVENT_DEADLINE_HAS_NO_TASK');continue}
       const prior=result.timePoints.find(p=>p.type===role&&(kind==='task'?p.relatedTaskTempIds.includes(entity.tempId):[entity.startTimePointTempId,entity.endTimePointTempId].includes(p.tempId)))
+      // A source-cited date and an independently cited clock for the same
+      // event are complementary when they resolve to the very same day. Keep
+      // the more precise fact and both citations; do not relax actual conflicts.
+      const sameDayRefinement=promptVersion==='recognition-semantic-notice-3.8.0'&&kind==='event'&&role==='event_start'&&prior?.selected&&point.selected
+        &&typeof prior.normalizedValue==='string'&&typeof point.normalizedValue==='string'
+        &&prior.normalizedValue.slice(0,10)===point.normalizedValue.slice(0,10)
+        &&((prior.precision==='date_only'&&point.precision==='exact')||(prior.precision==='exact'&&point.precision==='date_only'))
+      if(sameDayRefinement){
+        const evidenceIds=[...new Set([...prior.evidenceIds,...point.evidenceIds])].slice(0,20)
+        if(point.precision==='exact')Object.assign(prior,point,{tempId:prior.tempId,evidenceIds})
+        else prior.evidenceIds=evidenceIds
+        entity.evidenceIds=[...new Set([...entity.evidenceIds,...evidenceIds])].slice(0,20)
+        audit.facts.push({item:item.key,role:'same_day_refinement',raw:span.literal,value:prior.normalizedValue,sourceStart:span.start,sourceEnd:span.end})
+        continue
+      }
       if(prior&&prior.normalizedValue!==point.normalizedValue){prior.normalizedValue=null;prior.precision='vague';prior.needsConfirmation=true;prior.selected=false;point.normalizedValue=null;point.precision='vague';point.needsConfirmation=true;point.selected=false;note('TIME',item.key,'CONFLICTING_TIME_VALUES')}
       result.timePoints.push(point);entity.evidenceIds=[...new Set([...entity.evidenceIds,eid])].slice(0,20)
       if(kind==='task')entity.timePointTempIds.push(point.tempId)
@@ -806,7 +821,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     audit.facts.push({role:'declared_choice_branches',owners,sourceEvidenceId:eid})
   }
   combineSupportedChoices(result,audit)
-  if(['recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0'].includes(promptVersion))applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone,includeContextFacts:['recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0'].includes(promptVersion)})
+  if(['recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0'].includes(promptVersion))applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone,includeContextFacts:['recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0'].includes(promptVersion),documentContext:promptVersion==='recognition-semantic-notice-3.8.0'?raw.contextFacts:[]})
   if(['recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0'].includes(promptVersion))applyEventIncidentalNotices({result,pending,source,evidence,note,audit})
   result.sourceSummary.title=text(raw.topic,160)||result.standaloneTasks[0]?.title||result.events[0]?.title||'通知'
   const onlyCancellation=audit.items.length>0&&audit.items.every(item=>item.status==='CANCELLED')

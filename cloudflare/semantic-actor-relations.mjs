@@ -4,8 +4,37 @@ const compact=value=>typeof value==='string'?value.normalize('NFKC').replace(/\s
 
 /** Apply only source-backed roles emitted by the versioned model contract.
  * Later handlers are contextual facts, never the student's deadline or channel. */
-export function applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone='Asia/Shanghai',includeContextFacts=false}) {
+export function applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone='Asia/Shanghai',includeContextFacts=false,documentContext=[]}) {
   const records=new Map(pending.filter(record=>record.kind==='task').map(record=>[record.item.key,record]))
+  // Models sometimes put a cited document-level explanation at the root.
+  // Keep it only under explicitly named owners or as clearly unassigned
+  // context on the single root of one connected workflow. Never turn it into
+  // a personal deadline or silently attach it to an unrelated task.
+  if(includeContextFacts&&Array.isArray(documentContext)){
+    const active=[...records.values()].filter(record=>result.standaloneTasks.includes(record.entity))
+    const activeKeys=new Set(active.map(record=>record.item.key))
+    const dependencies=record=>Array.isArray(record.item.dependsOn)?record.item.dependsOn:[]
+    const roots=active.filter(record=>!dependencies(record).some(key=>activeKeys.has(key)))
+    const reaches=(record,key,seen=new Set())=>{
+      if(record.item.key===key)return true
+      if(seen.has(record.item.key))return false
+      seen.add(record.item.key)
+      return dependencies(record).some(dep=>activeKeys.has(dep)&&reaches(records.get(dep),key,seen))
+    }
+    const root=roots.length===1&&active.every(record=>reaches(record,roots[0].item.key))?roots[0]:null
+    if(documentContext.length>8)note('ROLE','document','CONTEXT_CAPACITY')
+    for(const fact of documentContext.slice(0,8)){
+      if(!fact||!['receiving_schedule','later_handler'].includes(fact.kind)||typeof fact.quote!=='string')continue
+      const owners=Array.isArray(fact.owners)?fact.owners:[]
+      const targets=owners.length?owners.map(key=>records.get(key)).filter(record=>record&&activeKeys.has(record.item.key)):root?[root]:[]
+      if(!owners.length||targets.length!==owners.length)note('ROLE','document','CONTEXT_OWNER_UNRESOLVED')
+      if(owners.length&&targets.length!==owners.length)continue
+      for(const record of targets){
+        const context=Array.isArray(record.item.contextFacts)?record.item.contextFacts:[]
+        if(!context.some(existing=>compact(existing?.quote)===compact(fact.quote)))record.item.contextFacts=[...context,{...fact,kind:owners.length?fact.kind:'document_context'}]
+      }
+    }
+  }
   const supported=record=>{
     const assignment=record.item.assignment
     if(!assignment||typeof assignment!=='object'||typeof assignment.actor!=='string'||typeof assignment.evidence!=='string')return null
@@ -42,10 +71,10 @@ export function applySemanticActorRelations({result,pending,source,evidence,note
   if(includeContextFacts)for(const record of records.values()){
     if(!result.standaloneTasks.includes(record.entity))continue
     for(const fact of Array.isArray(record.item.contextFacts)?record.item.contextFacts.slice(0,8):[]){
-      if(!fact||!['receiving_schedule','later_handler'].includes(fact.kind)||typeof fact.quote!=='string')continue
+      if(!fact||!['receiving_schedule','later_handler','document_context'].includes(fact.kind)||typeof fact.quote!=='string')continue
       const span=locateSourceQuote(fact.quote,source)
       if(!span||span.literal.length>500){note('ROLE',record.item.key,'CONTEXT_NOT_SOURCE_GROUNDED');continue}
-      const label=fact.kind==='receiving_schedule'?'相关受理安排：':'后续办理说明：'
+      const label=fact.kind==='receiving_schedule'?'相关受理安排：':fact.kind==='document_context'?'通知补充说明（归属待确认）：':'后续办理说明：'
       const line=label+span.literal
       const alreadyPresent=compact(record.entity.description).includes(compact(span.literal))
       if((!alreadyPresent&&record.entity.description.length+line.length+1>800)||record.entity.evidenceIds.length>=20){note('ROLE',record.item.key,'CONTEXT_CAPACITY');continue}

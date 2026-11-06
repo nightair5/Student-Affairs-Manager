@@ -26,7 +26,7 @@ test('one unified request negotiates its own prompt and compiler without extra u
  assert.equal(response.status,200);assert.equal(calls,1)
  assert.equal(body.execution.generationMode,'semantic-notice-3.8')
  assert.equal(body.execution.promptVersion,SEMANTIC_NOTICE_VERSION)
- assert.equal(body.execution.twoStep.compilerVersion,'semantic-notice-compiler-1.0.21')
+ assert.equal(body.execution.twoStep.compilerVersion,'semantic-notice-compiler-1.0.22')
  assert.equal(prompt,semanticNoticeSystemPrompt())
  assert.equal(body.result.standaloneTasks.length,1)
 })
@@ -81,4 +81,48 @@ test('an adjacent file format belongs only to the cited material',()=>{
  const {result}=compileSemanticNotice(raw,{source,referenceTime:'2026-11-07T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:SEMANTIC_NOTICE_VERSION})
  assert.deepEqual(result.materials.find(m=>m.name==='申请表').formatRequirements,[])
  assert.deepEqual(result.materials.find(m=>m.name==='成绩单').formatRequirements,['PDF'])
+})
+
+test('a separately cited common day and its own exact start refine rather than cancel one another',()=>{
+ const day='2027年3月15日', slot='下午14:10—15:20'
+ const source=`${day}安排：上午10:00—11:00在东楼203举行写作交流；${slot}在西楼106举行专题讨论。`
+ const item={key:'discussion',kind:'event',title:'专题讨论',evidence:[`${slot}在西楼106举行专题讨论`],times:[{role:'start',raw:day},{role:'start',raw:slot},{role:'end',raw:slot}],location:'西楼106'}
+ const opts={source,referenceTime:'2027-03-01T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:SEMANTIC_NOTICE_VERSION}
+ const compile=times=>compileSemanticNotice({topic:'交流安排',kind:'event',items:[{...item,times}],materials:[]},opts)
+ for(const times of [item.times,[item.times[1],item.times[0],item.times[2]]]){
+  const {result,audit}=compile(times),event=result.events[0]
+  const start=result.timePoints.find(point=>point.tempId===event.startTimePointTempId)
+  assert.equal(start.normalizedValue,'2027-03-15T14:10')
+  assert.equal(start.precision,'exact')
+  assert.ok(!audit.losses.some(loss=>loss.reason==='CONFLICTING_TIME_VALUES'))
+ }
+})
+
+test('a document-level source context is kept as unassigned context without becoming a personal deadline',()=>{
+ const first='请先登记借用需求',second='再提交确认表',context='服务台每周五上午受理，工作人员核验后通知领取'
+ const source=`${first}，${second}。${context}。`
+ const raw={topic:'借用',kind:'action',items:[
+  {key:'a',kind:'task',title:'登记借用需求',action:'登记',object:'借用需求',evidence:[first]},
+  {key:'b',kind:'task',title:'提交确认表',action:'提交',object:'确认表',evidence:[second],dependsOn:['a']},
+ ],materials:[],contextFacts:[{kind:'receiving_schedule',quote:context}]}
+ const opts={source,referenceTime:'2027-03-01T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:SEMANTIC_NOTICE_VERSION}
+ const {result,audit}=compileSemanticNotice(raw,opts)
+ assert.match(result.standaloneTasks[0].description,/通知补充说明（归属待确认）：服务台每周五上午受理/u)
+ assert.ok(!result.standaloneTasks[1].description.includes(context))
+ assert.ok(!result.timePoints.some(p=>p.type==='task_deadline'))
+ assert.ok(audit.losses.some(loss=>loss.reason==='CONTEXT_OWNER_UNRESOLVED'))
+ const unrelated=structuredClone(raw);unrelated.items[1].dependsOn=[]
+ const other=compileSemanticNotice(unrelated,opts)
+ assert.ok(other.result.standaloneTasks.every(task=>!task.description.includes(context)))
+ assert.ok(other.audit.losses.some(loss=>loss.reason==='CONTEXT_OWNER_UNRESOLVED'))
+})
+
+test('different exact starts remain a conflict rather than being silently combined',()=>{
+ const source='通知写明2027年4月6日09:00开始，但另一处写明2027年4月6日10:00开始。'
+ const raw={topic:'时间冲突',kind:'event',items:[{key:'a',kind:'event',title:'活动',evidence:[source],times:[
+  {role:'start',raw:'2027年4月6日09:00'},{role:'start',raw:'2027年4月6日10:00'},
+ ]}],materials:[]}
+ const {result,audit}=compileSemanticNotice(raw,{source,referenceTime:'2027-03-01T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:SEMANTIC_NOTICE_VERSION})
+ assert.ok(audit.losses.some(loss=>loss.reason==='CONFLICTING_TIME_VALUES'))
+ assert.ok(result.timePoints.every(point=>point.normalizedValue===null))
 })
