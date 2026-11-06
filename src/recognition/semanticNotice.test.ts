@@ -50,6 +50,7 @@ describe('semantic notice direct delivery',()=>{
     expect(isSemanticNoticeVersion('recognition-semantic-notice-3.0.5')).toBe(true)
     expect(isSemanticNoticeVersion('recognition-semantic-notice-3.8.0')).toBe(true)
     expect(isSemanticNoticeVersion('recognition-semantic-notice-3.9.0')).toBe(true)
+    expect(isSemanticNoticeVersion('recognition-semantic-notice-3.10.0')).toBe(true)
     expect(isSemanticNoticeVersion('recognition-semantic-notice-3.0.6')).toBe(false)
     const text='电子版截止11月7日23:59前。纸质版截止时间在交流群中另行通知。请提交纸质版作品并加入交流群。'
     const value={topic:'作品提交',kind:'action',items:[

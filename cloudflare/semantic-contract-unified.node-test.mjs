@@ -2,6 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import {semanticNoticeSystemPrompt,SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-8-0.mjs'
 import {semanticNoticeSystemPrompt as refinedPrompt,SEMANTIC_NOTICE_VERSION as REFINED_VERSION} from './semantic-notice-contract-v3-9-0.mjs'
+import {semanticNoticeSystemPrompt as timedPrompt,SEMANTIC_NOTICE_VERSION as TIMED_VERSION} from './semantic-notice-contract-v3-10-0.mjs'
 import {createWorker} from './worker.mjs'
 import {compileSemanticNotice} from './semantic-notice-compiler-v3.mjs'
 
@@ -16,7 +17,7 @@ test('unified contract is standalone and defines consistent choice, actors and e
 
 test('one unified request negotiates its own prompt and compiler without extra upstream calls',async()=>{
  const source='同学请于11月20日17:00前提交登记表。'
- for(const contract of [{mode:'semantic-notice-3.8',version:SEMANTIC_NOTICE_VERSION,prompt:semanticNoticeSystemPrompt},{mode:'semantic-notice-3.9',version:REFINED_VERSION,prompt:refinedPrompt}]){
+ for(const contract of [{mode:'semantic-notice-3.8',version:SEMANTIC_NOTICE_VERSION,prompt:semanticNoticeSystemPrompt},{mode:'semantic-notice-3.9',version:REFINED_VERSION,prompt:refinedPrompt},{mode:'semantic-notice-3.10',version:TIMED_VERSION,prompt:timedPrompt}]){
  let calls=0,prompt=''
  const worker=createWorker({logger:()=>{},fetcher:async(_url,init)=>{
   calls++;prompt=JSON.parse(init.body).messages[0].content
@@ -28,7 +29,7 @@ test('one unified request negotiates its own prompt and compiler without extra u
  assert.equal(response.status,200);assert.equal(calls,1)
  assert.equal(body.execution.generationMode,contract.mode)
  assert.equal(body.execution.promptVersion,contract.version)
- assert.equal(body.execution.twoStep.compilerVersion,'semantic-notice-compiler-1.0.24')
+ assert.equal(body.execution.twoStep.compilerVersion,'semantic-notice-compiler-1.0.25')
  assert.equal(prompt,contract.prompt())
  assert.equal(body.result.standaloneTasks.length,1)
  }
@@ -143,6 +144,21 @@ test('refined contract distinguishes explicit sequence from parallel actions',()
  assert.deepEqual(result.result.standaloneTasks[1].dependencyTempIds,[])
  assert.ok(result.audit.losses.some(loss=>loss.reason==='DEPENDENCY_NOT_SOURCE_GROUNDED'))
  assert.ok(refinedPrompt().includes('“并、同时”本身不是前置关系'))
+ assert.ok(timedPrompt().includes('不能把上传截止当成预约截止'))
+})
+
+test('a cited sequence survives a faithful action paraphrase without accepting a conjunction',()=>{
+ const first='先在平台填申请表',second='再到窗口交材料',sequence=`${first}，${second}`
+ const source=sequence+'。'
+ const raw={topic:'办理',kind:'action',items:[
+  {key:'a',kind:'task',title:'填写申请表',action:'填写',object:'申请表',evidence:[first]},
+  {key:'b',kind:'task',title:'提交材料',action:'提交',object:'材料',evidence:[second],dependsOn:['a'],dependencyEvidence:[sequence]},
+ ],materials:[]}
+ const options={source,referenceTime:'2027-03-01T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:REFINED_VERSION}
+ const {result}=compileSemanticNotice(raw,options)
+ assert.equal(result.standaloneTasks[1].dependencyTempIds.length,1)
+ const noSequence=structuredClone(raw);noSequence.items[1].dependencyEvidence=['并到窗口交材料']
+ assert.deepEqual(compileSemanticNotice(noSequence,options).result.standaloneTasks[1].dependencyTempIds,[])
 })
 
 test('a cited action object makes its material required without promoting optional examples',()=>{
@@ -219,4 +235,26 @@ test('owner-cited material formats remain scoped even if delivery labels are mis
  assert.equal(result.materials.length,2)
  assert.ok(byOwner('sem-i1').formatRequirements.includes('PDF'))
  assert.ok(!byOwner('sem-i2').formatRequirements.includes('PDF'))
+})
+
+test('a combined item does not turn one action deadline into the other action deadline',()=>{
+ const source='需要场地的同学在2027年3月2日至3月8日预约，并在3月7日16:00前上传申请表。'
+ const raw={topic:'场地',kind:'action',items:[{key:'a',kind:'task',title:'预约场地并上传申请表',action:'预约场地并上传申请表',object:'场地和申请表',evidence:[source],times:[
+  {role:'window',raw:'2027年3月2日至3月8日预约'},{role:'deadline',raw:'3月7日16:00前上传申请表'},
+ ]}],materials:[]}
+ const {result,audit}=compileSemanticNotice(raw,{source,referenceTime:'2027-03-01T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:TIMED_VERSION})
+ assert.equal(result.standaloneTasks.length,1)
+ assert.ok(!result.timePoints.some(point=>point.type==='task_deadline'&&point.normalizedValue))
+ assert.match(result.standaloneTasks[0].description,/3月7日16:00前上传申请表/u)
+ assert.ok(audit.losses.some(loss=>loss.reason==='COMBINED_ACTION_TIME_OWNER_UNRESOLVED'))
+})
+
+test('one action may retain both its own opening window and deadline',()=>{
+ const source='申请表提交时间为2027年3月2日至3月8日，提交申请表须在3月7日16:00前完成。'
+ const raw={topic:'申请',kind:'action',items:[{key:'a',kind:'task',title:'提交申请表',action:'提交',object:'申请表',evidence:[source],times:[
+  {role:'window',raw:'2027年3月2日至3月8日'},{role:'deadline',raw:'3月7日16:00前'},
+ ]}],materials:[]}
+ const {result}=compileSemanticNotice(raw,{source,referenceTime:'2027-03-01T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:TIMED_VERSION})
+ assert.ok(result.timePoints.some(point=>point.type==='task_deadline'&&point.normalizedValue==='2027-03-07T16:00'))
+ assert.ok(result.timePoints.some(point=>point.rawText==='2027年3月2日至3月8日'))
 })

@@ -144,7 +144,7 @@ test('the candidate request negotiates its own version and uses one upstream cal
  assert.equal(response.status,200)
  assert.equal(calls,1)
  assert.equal(body.execution.generationMode,'semantic-notice-3.7')
- assert.equal(body.execution.twoStep.compilerVersion,'semantic-notice-compiler-1.0.24')
+ assert.equal(body.execution.twoStep.compilerVersion,'semantic-notice-compiler-1.0.25')
  assert.match(prompt,/关系完整性复查/u)
  assert.equal(body.result.standaloneTasks.length,1)
 })

@@ -17,6 +17,14 @@ export function sourceSupportedDependency(source,parent,child){
  const actionA=compact(parent?.action),actionB=compact(child?.action)
  if(!actionA||!actionB)return false
  const spans=item=>(Array.isArray(item?.evidence)?item.evidence:[]).slice(0,12).map(q=>typeof q==='string'?locateSourceQuote(q,source):null).filter(Boolean)
+ const citedOrder=(Array.isArray(child?.dependencyEvidence)?child.dependencyEvidence:[child?.dependencyEvidence]).slice(0,8)
+  .map(quote=>typeof quote==='string'?locateSourceQuote(quote,source):null).filter(Boolean)
+ for(const relation of citedOrder)for(const a of spans(parent))for(const b of spans(child)){
+  if(a.start<relation.start||b.end>relation.end||a.end>b.start)continue
+  const passage=compact(source.slice(a.start,b.end))
+  if(/(?:无需|不必|不需要|不用)(?:先|等待)/u.test(passage))continue
+  if(/(?:先|首先).{0,700}(?:再|然后|接着|之后)/u.test(passage))return true
+ }
  for(const a of spans(parent))for(const b of spans(child)){
   const start=Math.min(a.start,b.start),end=Math.max(a.end,b.end)
   if(end-start>800)continue
