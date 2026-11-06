@@ -13,7 +13,8 @@ export function applySemanticActorRelations({result,pending,source,evidence,note
   if(includeContextFacts&&Array.isArray(documentContext)){
     const active=[...records.values()].filter(record=>result.standaloneTasks.includes(record.entity))
     const activeKeys=new Set(active.map(record=>record.item.key))
-    const dependencies=record=>Array.isArray(record.item.dependsOn)?record.item.dependsOn:[]
+    const entityKeys=new Map(active.map(record=>[record.entity.tempId,record.item.key]))
+    const dependencies=record=>(record.entity.dependencyTempIds??[]).map(id=>entityKeys.get(id)).filter(Boolean)
     const roots=active.filter(record=>!dependencies(record).some(key=>activeKeys.has(key)))
     const reaches=(record,key,seen=new Set())=>{
       if(record.item.key===key)return true

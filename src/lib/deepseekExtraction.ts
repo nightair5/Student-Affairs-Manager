@@ -43,7 +43,7 @@ export interface RecognitionRequestOptions {
   /** A transient status failure is not proof that the extraction endpoint is unconfigured. */
   allowStatusUnknown?: boolean
   /** Opt in to a source-backed contract; absent for older or multimodal paths. */
-  semanticContract?: 'semantic-notice-3.3' | 'semantic-notice-3.4' | 'semantic-notice-3.5' | 'semantic-notice-3.6' | 'semantic-notice-3.7' | 'semantic-notice-3.8'
+  semanticContract?: 'semantic-notice-3.3' | 'semantic-notice-3.4' | 'semantic-notice-3.5' | 'semantic-notice-3.6' | 'semantic-notice-3.7' | 'semantic-notice-3.8' | 'semantic-notice-3.9'
 }
 
 export interface RecognitionServiceInput extends IntakeInput {

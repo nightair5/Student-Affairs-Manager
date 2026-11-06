@@ -1,6 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import {semanticNoticeSystemPrompt,SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-8-0.mjs'
+import {semanticNoticeSystemPrompt as refinedPrompt,SEMANTIC_NOTICE_VERSION as REFINED_VERSION} from './semantic-notice-contract-v3-9-0.mjs'
 import {createWorker} from './worker.mjs'
 import {compileSemanticNotice} from './semantic-notice-compiler-v3.mjs'
 
@@ -15,20 +16,22 @@ test('unified contract is standalone and defines consistent choice, actors and e
 
 test('one unified request negotiates its own prompt and compiler without extra upstream calls',async()=>{
  const source='同学请于11月20日17:00前提交登记表。'
+ for(const contract of [{mode:'semantic-notice-3.8',version:SEMANTIC_NOTICE_VERSION,prompt:semanticNoticeSystemPrompt},{mode:'semantic-notice-3.9',version:REFINED_VERSION,prompt:refinedPrompt}]){
  let calls=0,prompt=''
  const worker=createWorker({logger:()=>{},fetcher:async(_url,init)=>{
   calls++;prompt=JSON.parse(init.body).messages[0].content
   return Response.json({model:'fixture-flash',choices:[{finish_reason:'stop',message:{content:JSON.stringify({topic:'登记',kind:'action',items:[{key:'a',kind:'task',title:'提交登记表',action:'提交',object:'登记表',evidence:[source],times:[{role:'deadline',raw:'11月20日17:00前'}],assignment:{scope:'audience',actor:'同学',evidence:source}}],materials:[]})}}],usage:{prompt_tokens:100,completion_tokens:30,total_tokens:130}})
  }})
  const origin='https://student-affairs-manager.example'
- const response=await worker.fetch(new Request(origin+'/api/deepseek/extract',{method:'POST',headers:{origin,'content-type':'application/json','X-Student-Affairs-Recognition':'semantic-notice-3.8'},body:JSON.stringify({content:source,sourceType:'text',referenceTime:'2026-11-07T10:00:00+08:00',timezone:'Asia/Shanghai'})}),{DEEPSEEK_API_KEY:'SYNTHETIC_TEST_PLACEHOLDER',ALLOWED_ORIGINS:origin,DEEPSEEK_GENERATION_MODE:'semantic-notice-3.0',RECOGNITION_LOCAL_ISOLATION_VERSION:'1.0.0',DEEPSEEK_MODEL:'deepseek-v4-flash',DEEPSEEK_EXTRACTION_MAX_TOKENS:'16384',EXTRACTION_RATE_LIMITER:{limit:async()=>({success:true})}})
+ const response=await worker.fetch(new Request(origin+'/api/deepseek/extract',{method:'POST',headers:{origin,'content-type':'application/json','X-Student-Affairs-Recognition':contract.mode},body:JSON.stringify({content:source,sourceType:'text',referenceTime:'2026-11-07T10:00:00+08:00',timezone:'Asia/Shanghai'})}),{DEEPSEEK_API_KEY:'SYNTHETIC_TEST_PLACEHOLDER',ALLOWED_ORIGINS:origin,DEEPSEEK_GENERATION_MODE:'semantic-notice-3.0',RECOGNITION_LOCAL_ISOLATION_VERSION:'1.0.0',DEEPSEEK_MODEL:'deepseek-v4-flash',DEEPSEEK_EXTRACTION_MAX_TOKENS:'16384',EXTRACTION_RATE_LIMITER:{limit:async()=>({success:true})}})
  const body=await response.json()
  assert.equal(response.status,200);assert.equal(calls,1)
- assert.equal(body.execution.generationMode,'semantic-notice-3.8')
- assert.equal(body.execution.promptVersion,SEMANTIC_NOTICE_VERSION)
- assert.equal(body.execution.twoStep.compilerVersion,'semantic-notice-compiler-1.0.22')
- assert.equal(prompt,semanticNoticeSystemPrompt())
+ assert.equal(body.execution.generationMode,contract.mode)
+ assert.equal(body.execution.promptVersion,contract.version)
+ assert.equal(body.execution.twoStep.compilerVersion,'semantic-notice-compiler-1.0.23')
+ assert.equal(prompt,contract.prompt())
  assert.equal(body.result.standaloneTasks.length,1)
+ }
 })
 
 test('shared materials stay attached to explicit choice branches with separate deadlines',()=>{
@@ -125,4 +128,44 @@ test('different exact starts remain a conflict rather than being silently combin
  const {result,audit}=compileSemanticNotice(raw,{source,referenceTime:'2027-03-01T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:SEMANTIC_NOTICE_VERSION})
  assert.ok(audit.losses.some(loss=>loss.reason==='CONFLICTING_TIME_VALUES'))
  assert.ok(result.timePoints.every(point=>point.normalizedValue===null))
+})
+
+test('refined contract distinguishes explicit sequence from parallel actions',()=>{
+ const raw={topic:'办理',kind:'action',items:[
+  {key:'a',kind:'task',title:'填写申请单',action:'填写',object:'申请单',evidence:['请先填写申请单']},
+  {key:'b',kind:'task',title:'提交身份证明',action:'提交',object:'身份证明',evidence:['再提交身份证明'],dependsOn:['a']},
+ ],materials:[]}
+ const options={referenceTime:'2027-03-01T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:REFINED_VERSION}
+ const ordered=compileSemanticNotice(raw,{...options,source:'请先填写申请单，再提交身份证明。'})
+ assert.equal(ordered.result.standaloneTasks[1].dependencyTempIds.length,1)
+ const parallel=structuredClone(raw);parallel.items[0].evidence=['请填写申请单'];parallel.items[1].evidence=['并提交身份证明']
+ const result=compileSemanticNotice(parallel,{...options,source:'请填写申请单，并提交身份证明。'})
+ assert.deepEqual(result.result.standaloneTasks[1].dependencyTempIds,[])
+ assert.ok(result.audit.losses.some(loss=>loss.reason==='DEPENDENCY_NOT_SOURCE_GROUNDED'))
+ assert.ok(refinedPrompt().includes('“并、同时”本身不是前置关系'))
+})
+
+test('a cited action object makes its material required without promoting optional examples',()=>{
+ const source='请提交登记表和成绩单；获奖证明如有可附。'
+ const raw={topic:'材料',kind:'action',items:[{key:'a',kind:'task',title:'提交材料',action:'提交',object:'登记表和成绩单',evidence:['请提交登记表和成绩单'],materials:['form','grade','proof']}],materials:[
+  {key:'form',name:'登记表',owners:['a'],evidence:['请提交登记表和成绩单']},
+  {key:'grade',name:'成绩单',owners:['a'],evidence:['请提交登记表和成绩单']},
+  {key:'proof',name:'获奖证明',owners:['a'],evidence:['获奖证明如有可附']},
+ ]}
+ const {result}=compileSemanticNotice(raw,{source,referenceTime:'2027-03-01T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:REFINED_VERSION})
+ assert.equal(result.materials.find(m=>m.name==='登记表').required,true)
+ assert.equal(result.materials.find(m=>m.name==='成绩单').required,true)
+ assert.equal(result.materials.find(m=>m.name==='获奖证明').required,false)
+})
+
+test('a shared material retains a single required status only when all owners cite its use',()=>{
+ const source='请将签字确认表提交给项目组，并将签字确认表提交给实验室。'
+ const raw={topic:'确认',kind:'action',items:[
+  {key:'a',kind:'task',title:'向项目组提交确认表',action:'提交',object:'签字确认表',evidence:['将签字确认表提交给项目组'],materials:['form']},
+  {key:'b',kind:'task',title:'向实验室提交确认表',action:'提交',object:'签字确认表',evidence:['将签字确认表提交给实验室'],materials:['form']},
+ ],materials:[{key:'form',name:'签字确认表',owners:['a','b'],evidence:['将签字确认表提交给项目组','将签字确认表提交给实验室']}]}
+ const {result}=compileSemanticNotice(raw,{source,referenceTime:'2027-03-01T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:REFINED_VERSION})
+ assert.equal(result.materials.length,1)
+ assert.equal(result.materials[0].required,true)
+ assert.equal(result.materials[0].relatedTaskTempIds.length,2)
 })

@@ -805,7 +805,7 @@ async function extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,c
     // New direct clients explicitly negotiate the role-aware contract. Older
     // clients keep the frozen default and can still use a rolled-back Worker.
     const requestedContract=request.headers.get('x-student-affairs-recognition')
-    const actorContracts=['semantic-notice-3.3','semantic-notice-3.4','semantic-notice-3.5','semantic-notice-3.6','semantic-notice-3.7','semantic-notice-3.8']
+    const actorContracts=['semantic-notice-3.3','semantic-notice-3.4','semantic-notice-3.5','semantic-notice-3.6','semantic-notice-3.7','semantic-notice-3.8','semantic-notice-3.9']
     const actorRoles=actorContracts.includes(env.DEEPSEEK_GENERATION_MODE)?env.DEEPSEEK_GENERATION_MODE:env.DEEPSEEK_GENERATION_MODE==='semantic-notice-3.0'&&actorContracts.includes(requestedContract)?requestedContract:false
     if(actorRoles)context.generationMode=actorRoles
     const generated=['semantic-notice-3.0',...actorContracts].includes(env.DEEPSEEK_GENERATION_MODE)
@@ -864,7 +864,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     return failure(validationError, '来源正文或参考时间无效。', 400, context.requestId)
   }
 
-  if(['semantic-notice-3.0','semantic-notice-3.3','semantic-notice-3.4','semantic-notice-3.5','semantic-notice-3.6','semantic-notice-3.7','semantic-notice-3.8','simple-1.0','two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2','two-step-2.3','two-step-2.4'].includes(env.DEEPSEEK_GENERATION_MODE)) {
+  if(['semantic-notice-3.0','semantic-notice-3.3','semantic-notice-3.4','semantic-notice-3.5','semantic-notice-3.6','semantic-notice-3.7','semantic-notice-3.8','semantic-notice-3.9','simple-1.0','two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2','two-step-2.3','two-step-2.4'].includes(env.DEEPSEEK_GENERATION_MODE)) {
     return extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,context,apiKey)
   }
 
@@ -1196,7 +1196,7 @@ export function createWorker({
         inputLength: 0,
         outputTokens: 0,
         errorType: null,
-          generationMode: ['semantic-notice-3.0','semantic-notice-3.3','semantic-notice-3.4','semantic-notice-3.5','semantic-notice-3.6','semantic-notice-3.7','semantic-notice-3.8','simple-1.0','two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2','two-step-2.3','two-step-2.4'].includes(env.DEEPSEEK_GENERATION_MODE) ? env.DEEPSEEK_GENERATION_MODE : 'structured',
+          generationMode: ['semantic-notice-3.0','semantic-notice-3.3','semantic-notice-3.4','semantic-notice-3.5','semantic-notice-3.6','semantic-notice-3.7','semantic-notice-3.8','semantic-notice-3.9','simple-1.0','two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2','two-step-2.3','two-step-2.4'].includes(env.DEEPSEEK_GENERATION_MODE) ? env.DEEPSEEK_GENERATION_MODE : 'structured',
       }
       let response = await previewAccess(request,env,{isLimited:previewLoginLimited,now:previewNow})
       if (response) {

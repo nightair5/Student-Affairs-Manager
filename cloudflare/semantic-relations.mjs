@@ -10,6 +10,27 @@ const affirmativeAlternative=(value,pattern=alternatives)=>{
  return false
 }
 
+/** A model-declared dependency blocks real work, so require a uniquely cited
+ * source passage that actually orders the two actions. A conjunction alone
+ * does not establish a prerequisite. */
+export function sourceSupportedDependency(source,parent,child){
+ const actionA=compact(parent?.action),actionB=compact(child?.action)
+ if(!actionA||!actionB)return false
+ const spans=item=>(Array.isArray(item?.evidence)?item.evidence:[]).slice(0,12).map(q=>typeof q==='string'?locateSourceQuote(q,source):null).filter(Boolean)
+ for(const a of spans(parent))for(const b of spans(child)){
+  const start=Math.min(a.start,b.start),end=Math.max(a.end,b.end)
+  if(end-start>800)continue
+  const previous=source.slice(0,start),boundary=Math.max(previous.lastIndexOf('。'),previous.lastIndexOf('！'),previous.lastIndexOf('？'),previous.lastIndexOf('\n'))+1
+  const passage=compact(source.slice(Math.max(boundary,start-80),end))
+  const first=passage.indexOf(actionA),second=passage.lastIndexOf(actionB)
+  if(first<0||second<first+actionA.length)continue
+  const before=passage.slice(0,first),between=passage.slice(first+actionA.length,second)
+  if(/(?:无需|不必|不需要|不用)(?:先|等待)/u.test(before+between))continue
+  if((/(?:先|首先)/u.test(before)&&/(?:再|然后|接着|之后)/u.test(between))||/(?:后|之后|以后|方可|才可)/u.test(between))return true
+ }
+ return false
+}
+
 /** Explicit model membership permits different action objects in one choice.
  * The common instruction and each branch still need distinct source support. */
 export function declaredTaskChoices(source,records){
