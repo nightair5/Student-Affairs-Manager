@@ -15,7 +15,7 @@ const object = value => Boolean(value && typeof value === 'object' && !Array.isA
 const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(0,max) : ''
 const list = (value, count=20, max=160) => Array.isArray(value) ? [...new Set(value.map(v=>text(v,max)).filter(Boolean))].slice(0,count) : []
 const compact = value => typeof value==='string'?value.normalize('NFKC').replace(/\s/gu,''):''
-export const SEMANTIC_COMPILER_VERSION='semantic-notice-compiler-1.0.23'
+export const SEMANTIC_COMPILER_VERSION='semantic-notice-compiler-1.0.24'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
@@ -145,6 +145,18 @@ function directlyCitedMaterialUse(source,record,name){
  const citations=list(record.item.evidence,12,500).filter(quote=>compact(quote).includes(object)&&locateSourceQuote(quote,source))
  return citations.length===1?{required:true,requirement:''}:null
 }
+// Assignment evidence may hold the only source citation for a combined
+// action. Both parts of a joined title/action still need literal support in
+// that bounded citation; an unrelated actor citation cannot create a task.
+function citedActionPartsSupported(value,quote){
+ const scope=compact(quote),parts=text(value,160).split(/(?:并且|然后|以及|并|再)/u).map(compact).filter(Boolean)
+ return parts.length>0&&parts.every(part=>{
+  if(scope.includes(part))return true
+  const chars=[...part]
+  for(let i=2;i<=chars.length-2;i++)if(scope.includes(chars.slice(0,i).join(''))&&scope.includes(chars.slice(i).join('')))return true
+  return false
+ })
+}
 function numberedUnits(value) {
   const normalized=normalizeCountNumbers(value),units=[]
   for(const match of normalized.matchAll(/(\d+(?:\.\d+)?)(?:个)?(小时|分钟|元|页|份|人|名|位|天|字|张|门|项|种|个|次|件|套|本)/gu)){
@@ -230,6 +242,12 @@ function deliveryKind(value,{explicitOnly=false}={}) {
   const paper=(explicitOnly?/(?:纸质版|纸版|打印版|纸质(?:提交|材料|交付))/u:/(?:纸质|纸版|打印版|打印件)/u).test(value)
   const electronic=(explicitOnly?/(?:电子版|电子(?:提交|材料|交付|邮件|文件)|(?:线上|网上|在线)(?:提交|交付))/u:/(?:电子|线上|网上|在线)/u).test(value)
   return paper===electronic?'':paper?'paper':'electronic'
+}
+function sourceBackedDeliveryScope(record){
+  const form=text(record.item.deliveryForm,80),title=text(record.item.title,160),formKind=deliveryKind(form),titleKind=deliveryKind(title)
+  const ownKinds=new Set(record.ownText.split('\n').map(value=>deliveryKind(value)).filter(Boolean))
+  if(formKind)return ownKinds.size===1&&!ownKinds.has(formKind)?'':form
+  return titleKind&&ownKinds.size===1&&ownKinds.has(titleKind)?title:form
 }
 function conflictingDeliveryScope(source,field,expectedForm,{explicitOnly=false}={}) {
   const expected=deliveryKind(expectedForm||'',{explicitOnly})
@@ -363,7 +381,15 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     if(Array.isArray(item.evidence)&&(item.evidence.length>12||item.evidence.some(value=>typeof value==='string'&&value.trim().length>500)))note('CAPACITY',item.key,'ITEM_EVIDENCE_TRUNCATED')
     if(Array.isArray(item.times)&&item.times.length>20)note('CAPACITY',item.key,'ITEM_TIMES_TRUNCATED')
     const tempId='sem-i'+(index+1),refs=list(item.evidence,12,500),ids=refs.flatMap(q=>{const e=evidence(q,item.kind==='event'?'event':'description',item.key);return e?[e]:[]})
-    let recoveredEvidence=false,inferredAction=false
+    let recoveredEvidence=false,inferredAction=false,assignmentEvidenceRecovered=false,assignmentRecoveredTarget=''
+    if(!ids.length&&promptVersion==='recognition-semantic-notice-3.9.0'&&item.kind==='task'&&object(item.assignment)){
+      const assignment=item.assignment,quote=text(assignment.evidence,500),actor=text(assignment.actor,120),actorQuote=text(assignment.actorEvidence,500)||quote
+      const span=quote&&actor&&compact(actorQuote).includes(compact(actor))?locateSourceQuote(quote,source):null
+      const actorSpan=span?locateSourceQuote(actorQuote,source):null
+      const ownMaterial=span?raw.materials.find(material=>object(material)&&text(material.name,80)&&compact(span.literal).includes(compact(material.name))&&compact(item.title).includes(compact(material.name))&&(list(item.materials,20,40).includes(material.key)||list(material.owners,20,40).includes(item.key))):null
+      const supported=span&&actorSpan&&citedActionPartsSupported(item.title,span.literal)&&citedActionPartsSupported(item.action,span.literal)&&(citedActionPartsSupported(item.object,span.literal)||ownMaterial)
+      if(supported){const id=evidence(span.literal,'description',item.key,span.start);if(id){ids.push(id);refs.push(span.literal);recoveredEvidence=true;assignmentEvidenceRecovered=true;assignmentRecoveredTarget=citedActionPartsSupported(item.object,span.literal)?'':text(ownMaterial?.name,80);note('ALIGNMENT',item.key,'RECOVERED_FROM_ASSIGNMENT_EVIDENCE')}}
+    }
     if(!ids.length){
       const span=item.kind==='task'?sourceTaskClause(source,item):sourceEventClause(source,item)
       if(span){const id=evidence(span.literal,item.kind==='event'?'event':'description',item.key,span.start);if(id){ids.push(id);recoveredEvidence=true;inferredAction=Boolean(span.inferredAction);note('ALIGNMENT',item.key,inferredAction?'RECOVERED_ORIGINAL_CLAUSE_ACTION_UNVERIFIED':item.kind==='task'?'RECOVERED_FROM_UNIQUE_ACTION_OBJECT_CLAUSE':'RECOVERED_FROM_UNIQUE_EVENT_CLAUSE')}}
@@ -395,7 +421,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     for(const span of conditionParts.supported){const id=evidence(span.literal,'description',item.key,span.start);if(id)ids.push(id)}
     let entity,baseLines=[]
     if(item.kind==='task') {
-      const action=text(item.action,20),target=text(item.object,80)
+      const action=text(item.action,20),target=assignmentRecoveredTarget||text(item.object,80)
       if(!action||!target){note('ITEM_STRUCTURE',item.key,'ACTION_OR_OBJECT_UNAVAILABLE');continue}
       const channel=text(item.channel,160),channelInSource=sourceChannel(source,channel)
       const deliveryForm=text(item.deliveryForm,80),supportedForm=deliveryForm&&hasLiteral(source,deliveryForm)?deliveryForm:''
@@ -406,7 +432,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       if(deliveryForm&&!supportedForm)note('DELIVERY',item.key,'DELIVERY_FORM_NOT_SOURCE_GROUNDED')
       if(location&&!supportedLocation)note('LOCATION',item.key,'TASK_LOCATION_NOT_OWNER_GROUNDED')
       baseLines=[inferredAction?'':text(item.description,500),inferredAction?'原文行动：'+ownText:'',supportedForm?'交付形式：'+supportedForm:'',supportedChannel?'提交渠道：'+supportedChannel:'',supportedLocation&&compact(supportedLocation)!==compact(supportedChannel)?'地点：'+supportedLocation:'',condition?'适用条件待确认：'+condition:'',personalNeed?'按需办理：'+personalNeed:'',prerequisite?'前置事项：'+prerequisite:'',voluntary?'参加说明：'+voluntary:''].filter(Boolean)
-      const title=inferredAction?'处理'+target:recoveredEvidence?(target.startsWith(action)?target:action+target):text(item.title,80)
+      const title=inferredAction?'处理'+target:recoveredEvidence&&!assignmentEvidenceRecovered?(target.startsWith(action)?target:action+target):text(item.title,80)
       entity={tempId,parentTempId:null,hierarchyType:'task',title,actionVerb:inferredAction?'处理':action,actionObject:target,description:'',completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[...new Set(ids)],confidence:.8,inferenceLevel:recoveredEvidence?'strong_inference':'explicit',userConfirmationRequired:Boolean(condition||personalNeed)||recoveredEvidence||polarity==='uncertain',selected:!condition&&!personalNeed&&!recoveredEvidence&&polarity!=='uncertain'}
       applyTaskRequirements(entity,baseLines,requirements,item.key)
       result.standaloneTasks.push(entity)
@@ -649,8 +675,15 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     // A shared material must not carry one delivery's exclusive channel into
     // a different owner. That owner's own separately grounded channel remains.
     const ownerRecords=pending.filter(record=>owners.includes(record.entity))
-    const kinds=new Set(ownerRecords.map(record=>deliveryKind(text(record.item.deliveryForm,80)||record.item.title)).filter(Boolean))
-    const mixedDelivery=kinds.has('paper')&&kinds.has('electronic')&&ownerRecords.every(record=>deliveryKind(text(record.item.deliveryForm,80)||record.item.title))
+    const ownerScope=record=>promptVersion==='recognition-semantic-notice-3.9.0'?sourceBackedDeliveryScope(record):(text(record.item.deliveryForm,80)||record.item.title)
+    const kinds=new Set(ownerRecords.map(record=>deliveryKind(ownerScope(record))).filter(Boolean))
+    const mixedDelivery=kinds.has('paper')&&kinds.has('electronic')&&ownerRecords.every(record=>deliveryKind(ownerScope(record)))
+    const inlineFormats=unifiedContract?sourceMaterialInlineFormats(source,material.name,refs):[]
+    const formats=[...new Set([...list(material.formats,20,160),...inlineFormats])].slice(0,20),naming=list(material.naming,20,160),requirements=supportedRequirements(material.requirements,material.key)
+    const scopedOwnerFacts=promptVersion==='recognition-semantic-notice-3.9.0'&&ownerRecords.length>1&&[...formats,...naming].some(value=>{
+      const supportedOwners=ownerRecords.filter(owner=>hasLiteral(owner.ownText,value))
+      return supportedOwners.length>0&&supportedOwners.length<ownerRecords.length
+    })
     // Reserve room for each remaining source material. If distinct delivery
     // variants exceed the wire contract, retain one conservative shared
     // material and report partial rather than emitting an invalid result.
@@ -659,12 +692,10 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     const optional=sourceOptionalMaterialClause(source,material.name,refs)
     const ownerUses=ownerRecords.map(record=>materialUseForOwner(source,record,text(material.name,160))??(promptVersion==='recognition-semantic-notice-3.9.0'&&typeof material.required!=='boolean'&&!optional&&!conditional?directlyCitedMaterialUse(source,record,text(material.name,160)):null))
     const differentUses=ownerRecords.length>1&&ownerUses.every(Boolean)&&new Set(ownerUses.map(value=>value.required)).size>1
-    const splitDelivery=(mixedDelivery||differentUses)&&ownerRecords.length<=available
-    if((mixedDelivery||differentUses)&&!splitDelivery)note('MATERIAL',material.key,'SHARED_DELIVERY_CAPACITY')
-    const wrongChannelScope=Boolean(channelInSource&&ownerRecords.some(record=>conflictingDeliveryScope(source,channelInSource,text(record.item.deliveryForm,80)||record.item.title)))
+    const splitDelivery=(mixedDelivery||differentUses||scopedOwnerFacts)&&ownerRecords.length<=available
+    if((mixedDelivery||differentUses||scopedOwnerFacts)&&!splitDelivery)note('MATERIAL',material.key,'SHARED_DELIVERY_CAPACITY')
+    const wrongChannelScope=Boolean(channelInSource&&ownerRecords.some(record=>conflictingDeliveryScope(source,channelInSource,ownerScope(record))))
     const supportedChannel=wrongChannelScope?null:channelInSource||null
-    const inlineFormats=unifiedContract?sourceMaterialInlineFormats(source,material.name,refs):[]
-    const formats=[...new Set([...list(material.formats,20,160),...inlineFormats])].slice(0,20),naming=list(material.naming,20,160),requirements=supportedRequirements(material.requirements,material.key)
     if(inlineFormats.length)audit.facts.push({role:'material_inline_format',material:material.key,formats:inlineFormats})
     if(Array.isArray(material.formats)&&material.formats.length>20)note('MATERIAL',material.key,'FORMAT_INPUT_OVERFLOW')
     if(Array.isArray(material.naming)&&material.naming.length>20)note('MATERIAL',material.key,'NAMING_INPUT_OVERFLOW')
@@ -682,12 +713,12 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     const ownedRequirements=allOwnedRequirements.slice(0,20)
     if(conditional)audit.facts.push({role:'conditional_material',material:material.key,sourceText:conditional})
     const scoped=(value,record,kind)=>{
-      if(!mixedDelivery)return true
-      const form=text(record.item.deliveryForm,80)||record.item.title
-      if(conflictingDeliveryScope(source,value,form))return false
+      if(!mixedDelivery&&!scopedOwnerFacts)return true
+      const form=ownerScope(record)
+      if(mixedDelivery&&conflictingDeliveryScope(source,value,form))return false
       const ownerKind=deliveryKind(form),explicitKind=deliveryKind(value,{explicitOnly:true})
-      if(explicitKind&&ownerKind!==explicitKind)return false
-      if(/^(?:这|该|上述|两(?:个|份)|这些|两种)(?:份)?(?:文件|材料|文档)/u.test(value)){
+      if(mixedDelivery&&explicitKind&&ownerKind!==explicitKind)return false
+      if(mixedDelivery&&/^(?:这|该|上述|两(?:个|份)|这些|两种)(?:份)?(?:文件|材料|文档)/u.test(value)){
         const span=locateSourceQuote(value,source)
         if(span){
           const before=source.slice(0,span.start),boundary=Math.max(before.lastIndexOf('。'),before.lastIndexOf('\n'))+1
@@ -701,12 +732,12 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const formatFact=kind!=='requirement'||formats.some(format=>compact(value).includes(compact(format)))
       return !formatFact||!onlyOwners.length||onlyOwners.includes(record)
     }
-    const materialOwners=splitDelivery?[...ownerRecords].sort((a,b)=>Number(deliveryKind(text(a.item.deliveryForm,80)||a.item.title)!=='paper')-Number(deliveryKind(text(b.item.deliveryForm,80)||b.item.title)!=='paper')):ownerRecords
+    const materialOwners=splitDelivery?[...ownerRecords].sort((a,b)=>Number(deliveryKind(ownerScope(a))!=='paper')-Number(deliveryKind(ownerScope(b))!=='paper')):ownerRecords
     for(const [ownerIndex,record] of materialOwners.entries()){
-      const owner=record.entity,form=text(record.item.deliveryForm,80)||record.item.title
+      const owner=record.entity,form=ownerScope(record)
       const ownerChannel=sourceChannel(source,text(record.item.channel,160))
       const ownMaterialChannel=splitDelivery?(ownerChannel&&!conflictingDeliveryScope(source,ownerChannel,form)?ownerChannel:channelInSource&&!conflictingDeliveryScope(source,channelInSource,form)?channelInSource:null):supportedChannel
-      const sharedScope=(value,kind)=>mixedDelivery&&!splitDelivery?ownerRecords.every(other=>scoped(value,other,kind)):scoped(value,record,kind)
+      const sharedScope=(value,kind)=>(mixedDelivery||scopedOwnerFacts)&&!splitDelivery?ownerRecords.every(other=>scoped(value,other,kind)):scoped(value,record,kind)
       const ownerUse=ownerUses[ownerRecords.indexOf(record)]
       // Workspace v8 has a boolean only. For this contract a missing model
       // value cannot silently become a definite obligation: use the non-blocking
@@ -832,7 +863,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     audit.facts.push({role:'declared_choice_branches',owners,sourceEvidenceId:eid})
   }
   combineSupportedChoices(result,audit)
-  if(['recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0'].includes(promptVersion))applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone,includeContextFacts:['recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0'].includes(promptVersion),documentContext:unifiedContract?raw.contextFacts:[]})
+  if(['recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0'].includes(promptVersion))applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone,includeContextFacts:['recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0'].includes(promptVersion),documentContext:unifiedContract?raw.contextFacts:[],respectPersonalNeed:promptVersion==='recognition-semantic-notice-3.9.0'})
   if(['recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0'].includes(promptVersion))applyEventIncidentalNotices({result,pending,source,evidence,note,audit})
   result.sourceSummary.title=text(raw.topic,160)||result.standaloneTasks[0]?.title||result.events[0]?.title||'通知'
   const onlyCancellation=audit.items.length>0&&audit.items.every(item=>item.status==='CANCELLED')

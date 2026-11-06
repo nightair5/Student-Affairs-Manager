@@ -4,7 +4,7 @@ const compact=value=>typeof value==='string'?value.normalize('NFKC').replace(/\s
 
 /** Apply only source-backed roles emitted by the versioned model contract.
  * Later handlers are contextual facts, never the student's deadline or channel. */
-export function applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone='Asia/Shanghai',includeContextFacts=false,documentContext=[]}) {
+export function applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone='Asia/Shanghai',includeContextFacts=false,documentContext=[],respectPersonalNeed=false}) {
   const records=new Map(pending.filter(record=>record.kind==='task').map(record=>[record.item.key,record]))
   // Models sometimes put a cited document-level explanation at the root.
   // Keep it only under explicitly named owners or as clearly unassigned
@@ -116,6 +116,12 @@ export function applySemanticActorRelations({result,pending,source,evidence,note
       continue
     }
     if(!role||role.assignment.scope!=='conditional'||!result.standaloneTasks.includes(record.entity))continue
+    // The compiler already distinguished an individual's need from a role or
+    // eligibility condition. Preserve that meaning instead of relabelling it.
+    if(respectPersonalNeed&&/(?:^|\n)按需办理：/u.test(record.entity.description)){
+      audit.facts.push({role:'personal_need_actor',owner:record.entity.tempId})
+      continue
+    }
     const line='适用条件待确认：'+role.span.literal
     if(!record.entity.description.includes(line)){
       if(record.entity.description.length+line.length+1>800||record.entity.evidenceIds.length>=20){note('ROLE',record.item.key,'CONDITIONAL_ROLE_CAPACITY');continue}

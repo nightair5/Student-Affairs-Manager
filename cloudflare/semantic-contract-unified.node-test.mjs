@@ -28,7 +28,7 @@ test('one unified request negotiates its own prompt and compiler without extra u
  assert.equal(response.status,200);assert.equal(calls,1)
  assert.equal(body.execution.generationMode,contract.mode)
  assert.equal(body.execution.promptVersion,contract.version)
- assert.equal(body.execution.twoStep.compilerVersion,'semantic-notice-compiler-1.0.23')
+ assert.equal(body.execution.twoStep.compilerVersion,'semantic-notice-compiler-1.0.24')
  assert.equal(prompt,contract.prompt())
  assert.equal(body.result.standaloneTasks.length,1)
  }
@@ -168,4 +168,55 @@ test('a shared material retains a single required status only when all owners ci
  assert.equal(result.materials.length,1)
  assert.equal(result.materials[0].required,true)
  assert.equal(result.materials[0].relatedTaskTempIds.length,2)
+})
+
+test('a uniquely cited assignment can retain an item whose ordinary evidence was omitted',()=>{
+ const action='需要场地的同学可于2027年3月2日至3月8日预约；请在3月7日16:00前提交场地表'
+ const source=action+'。工作人员审核后通知领取。'
+ const raw={topic:'场地办理',kind:'action',items:[{key:'a',kind:'task',title:'预约场地并提交场地表',action:'预约场地并提交场地表',object:'场地申请表',condition:'需要场地的同学',
+  assignment:{scope:'conditional',actor:'需要场地的同学',actorEvidence:'需要场地的同学',evidence:action},times:[{role:'window',raw:'2027年3月2日至3月8日'},{role:'deadline',raw:'3月7日16:00前'}],materials:['m']}],
+  materials:[{key:'m',name:'场地表',required:true,owners:['a'],evidence:['请在3月7日16:00前提交场地表']}]}
+ const options={source,referenceTime:'2027-03-01T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:REFINED_VERSION}
+ const {result,audit}=compileSemanticNotice(raw,options)
+ assert.equal(result.standaloneTasks.length,1)
+ assert.equal(result.standaloneTasks[0].title,'预约场地并提交场地表')
+ assert.match(result.standaloneTasks[0].description,/按需办理/u)
+ assert.doesNotMatch(result.standaloneTasks[0].description,/适用条件待确认/u)
+ assert.ok(result.timePoints.some(point=>point.type==='task_deadline'&&point.normalizedValue==='2027-03-07T16:00'))
+ assert.ok(result.materials.some(material=>material.name==='场地表'))
+ assert.ok(audit.losses.some(loss=>loss.reason==='RECOVERED_FROM_ASSIGNMENT_EVIDENCE'))
+ const unsupported=structuredClone(raw);unsupported.items[0].assignment.evidence='不存在的来源';assert.equal(compileSemanticNotice(unsupported,options).result.standaloneTasks.length,0)
+ const invented=structuredClone(raw);invented.items[0].title='上传银行卡';invented.items[0].action='上传银行卡';invented.items[0].object='银行卡';invented.items[0].materials=[]
+ assert.equal(compileSemanticNotice(invented,options).result.standaloneTasks.length,0)
+ const prohibited=structuredClone(invented),prohibitedSource='需要场地的同学请勿上传银行卡。'
+ prohibited.items[0].assignment.evidence='需要场地的同学请勿上传银行卡'
+ assert.equal(compileSemanticNotice(prohibited,{...options,source:prohibitedSource}).result.standaloneTasks.length,0)
+})
+
+test('a shared PDF format never crosses from an online branch into a paper branch',()=>{
+ const first='线上在2027年4月5日18:00前上传确认书PDF',second='线下在4月6日12:00前提交纸质确认书'
+ const source=`材料请选择一种方式：${first}；${second}。`
+ const raw={topic:'确认',kind:'action',items:[
+  {key:'a',kind:'task',title:'线上上传确认书PDF',action:'上传',object:'确认书PDF',deliveryForm:'PDF',evidence:[first],materials:['m']},
+  {key:'b',kind:'task',title:'线下提交纸质确认书',action:'提交',object:'纸质确认书',deliveryForm:'纸质',evidence:[second],materials:['m']},
+ ],materials:[{key:'m',name:'确认书',required:true,owners:['a','b'],formats:['PDF'],evidence:[first,second]}]}
+ const {result}=compileSemanticNotice(raw,{source,referenceTime:'2027-03-01T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:REFINED_VERSION})
+ const byOwner=key=>result.materials.find(material=>material.relatedTaskTempIds.includes(key))
+ assert.equal(result.materials.length,2)
+ assert.ok(byOwner('sem-i1').formatRequirements.includes('PDF'))
+ assert.ok(!byOwner('sem-i2').formatRequirements.includes('PDF'))
+})
+
+test('owner-cited material formats remain scoped even if delivery labels are missing',()=>{
+ const first='4月5日前上传表格PDF到平台',second='4月6日前将表格交到服务台'
+ const source=`请选择一种：${first}；${second}。`
+ const raw={topic:'提交',kind:'action',items:[
+  {key:'a',kind:'task',title:'上传表格PDF',action:'上传',object:'表格PDF',channel:'平台',evidence:[first],materials:['m']},
+  {key:'b',kind:'task',title:'交表格到服务台',action:'交',object:'表格',channel:'服务台',evidence:[second],materials:['m']},
+ ],materials:[{key:'m',name:'表格',required:true,owners:['a','b'],formats:['PDF'],evidence:[first,second]}]}
+ const {result}=compileSemanticNotice(raw,{source,referenceTime:'2027-03-01T10:00:00+08:00',timezone:'Asia/Shanghai',promptVersion:REFINED_VERSION})
+ const byOwner=key=>result.materials.find(material=>material.relatedTaskTempIds.includes(key))
+ assert.equal(result.materials.length,2)
+ assert.ok(byOwner('sem-i1').formatRequirements.includes('PDF'))
+ assert.ok(!byOwner('sem-i2').formatRequirements.includes('PDF'))
 })
