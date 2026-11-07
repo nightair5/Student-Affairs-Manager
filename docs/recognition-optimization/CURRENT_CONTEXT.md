@@ -1,3 +1,14 @@
+# 当前进度：beta.37 已上线（2026-11-07）
+
+部署代码 406f5428c09200a9097ee3dcfaf99322fc029391；Cloudflare 版本 8efad034-891b-420b-a395-10f68e9308d2。
+回滚到 beta.34：`node node_modules/wrangler/bin/wrangler.js rollback b9b0fe4f-8bff-49de-bca1-bb26dfb5c2fe --env= --yes`。
+保留同日活动各自时间地点和同主题任务各自截止状态；保存中刷新触发浏览器保护。Workspace v8 不变，旧用户数据未改。
+两条线上真实 Flash 匿名通知通过关键日期、归属及归组验收；真实回答经隔离页面保存刷新、隔离内存仓库撤销和备份验证。
+部署提交的完整本地检查及六项远端 CI 通过；上线首页、资源与安全头通过。此前上游 500 用户报告未扣费，旧账本仍按不可观测保守保留。
+浏览器可能允许用户忽略离开提示，强制退出不保证待写入操作保存；两条样本不能代表总体准确率。证据 `.data/billing-reconcile-20261107-230218/`。
+
+## 以下为此前记录
+
 # 当前进度：beta.35 回滚，生产 beta.34（2026-11-07）
 
 生产代码 22a565f3986401c3bcde25b9d48b9f8d39a6dbcc；Cloudflare 版本 b9b0fe4f-8bff-49de-bca1-bb26dfb5c2fe。
