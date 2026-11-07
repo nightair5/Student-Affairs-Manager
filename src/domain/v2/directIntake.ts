@@ -31,7 +31,7 @@ const json = (v: unknown) => JSON.parse(JSON.stringify(v)) as JsonValue
 const contentHash = (text: string) => workspaceSnapshotHash(text.replace(/\r\n?/gu,'\n').trim())
 export class DirectReplacementConflict extends Error {
   constructor(readonly comparison:DirectReplacementDiff){
-    const names:Record<DirectReplacementDiff['issues'][number]['field'],string>={task:'行动',task_detail:'渠道、条件或要求',choice:'任选关系',event:'活动',time:'时间或地点',material:'材料',dependency:'前置关系',event_detail:'活动详情'}
+    const names:Record<DirectReplacementDiff['issues'][number]['field'],string>={task:'行动',task_detail:'渠道、条件或要求',choice:'任选关系',event:'活动',time:'时间或地点',material:'材料',dependency:'前置关系',event_detail:'活动详情',relationship:'事项之间的关联'}
     const missing=[...new Set(comparison.issues.map(issue=>names[issue.field]))].join('、')
     super(`新结果缺少或改变了已有的${missing||'关键信息'}，原来的事项保留。`)
     this.name='DirectReplacementConflict'
@@ -149,6 +149,17 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
       const [owner,...others]=options as Array<typeof plan.create.tasks[number]>
       owner.legacyData={...owner.legacyData,sourceChoiceGroup:{version:'source-choice-group-1.0.0',id:`${d.id}:${choice.id}`,sourceVersionId:v.id,quotation:choice.message,optionTaskIds:[owner,...others].map(option=>option.id)}}
       for(const other of others)other.legacyData={...other.legacyData,sourceChoiceOwnerId:owner.id}
+    }
+    // A goal group is only a source-backed display relationship. Its members
+    // retain their own dates, materials, edit history and completion state.
+    for(const goal of result.goalGroups??[]){
+      const quotes=goal.evidenceIds.map(id=>result.evidence.find(ref=>ref.id===id)?.quote)
+      if(goal.taskTempIds.length<2||quotes.some(quote=>!quote||!v.rawText?.includes(quote)))continue
+      const members=goal.taskTempIds.map(id=>plan.create.tasks.find(task=>task.legacyData?.recognitionTempId===id))
+      if(members.some(member=>!member))continue
+      const [owner,...others]=members as Array<typeof plan.create.tasks[number]>
+      owner.legacyData={...owner.legacyData,sourceGoalGroup:{version:'source-goal-group-1.0.0',id:`${d.id}:${goal.id}`,title:goal.title,sourceVersionId:v.id,quotations:quotes.filter((quote):quote is string=>Boolean(quote)),taskIds:[owner,...others].map(task=>task.id)}}
+      for(const other of others)other.legacyData={...other.legacyData,sourceGoalOwnerId:owner.id}
     }
     // The dates remain source-backed alternatives in the same event records;
     // they are not installed as confirmed calendar time points.

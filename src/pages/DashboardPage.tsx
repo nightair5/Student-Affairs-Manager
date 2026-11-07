@@ -7,7 +7,7 @@ import { EventCard } from '../components/EventCard'
 import { localDateKey } from '../lib/calendar'
 import { getBlockedAndWaitingTasks, getFocusTasks } from '../lib/taskLogic'
 import type { Event, Project, Task } from '../types'
-import {homeFlow,pairFlowEvents,workspaceEventTimeHints} from '../lib/homeFlow'
+import {eventActionGroups,homeFlow,pairFlowEvents,pendingGroupedTask,workspaceEventTimeHints} from '../lib/homeFlow'
 import type {WorkspaceV8} from '../domain/v2/types'
 import {FlowTimeline} from '../components/FlowTimeline'
 import {useCurrentTime} from '../lib/useCurrentTime'
@@ -33,7 +33,9 @@ interface DashboardPageProps {
   onOpenIntake: () => void
   onOpenTask: (task: Task) => void
   onCompleteTask: (taskId: string) => void
+  onRestoreTask?: (taskId: string) => void
   onSetEventCompletion?: (eventId:string, completed:boolean) => Promise<void>
+  onSetEventTaskLink?: (eventId:string, taskIds:string[], linked:boolean) => Promise<void>
   onScheduleTask?: (taskId: string, date: string) => Promise<void>
   onSelectChoice?: (taskId: string, expectedSelected: string | null) => Promise<void>
   taskChannels?: Readonly<Record<string,string[]>>
@@ -66,8 +68,8 @@ export function DashboardPage({
   onQuickCapture,
   onOpenIntake,
   onOpenTask,
-  onCompleteTask,
-  onSetEventCompletion,
+  onCompleteTask, onRestoreTask,
+  onSetEventCompletion, onSetEventTaskLink,
   onScheduleTask, onSelectChoice, recentItemIds, taskChannels, canonicalWorkspace,
   onStartTask,
   onSnoozeTask,
@@ -144,9 +146,21 @@ export function DashboardPage({
   )
 
   if(directMode){
-    const activeEvents=events.filter(event=>!event.personalCompleted)
-    const paired=onOpenEvent?pairFlowEvents(tasks,activeEvents,canonicalWorkspace):{linked:{},unpaired:activeEvents}
+    const eventActions=eventActionGroups(tasks,events,canonicalWorkspace)
+    const activeEvents=events.filter(event=>!event.personalCompleted||eventActions[event.id]?.some(task=>pendingGroupedTask(task,eventActions[event.id])))
+    const groupedEvents=activeEvents.filter(event=>eventActions[event.id]?.length)
+    const pairedBase=onOpenEvent?pairFlowEvents(tasks,activeEvents.filter(event=>!eventActions[event.id]?.length),canonicalWorkspace):{linked:{},unpaired:activeEvents.filter(event=>!eventActions[event.id]?.length)}
+    const paired={...pairedBase,unpaired:[...pairedBase.unpaired,...groupedEvents]}
+    const claimed=new Set([...Object.values(eventActions).flat().map(task=>task.id),...Object.keys(paired.linked)])
+    const eventActionCandidates:Record<string,Task[]>={}
+    for(const event of activeEvents){
+      const sourceId=canonicalWorkspace?.events.find(item=>item.id===event.id)?.legacyData?.sourceId
+      if(typeof sourceId==='string')eventActionCandidates[event.id]=tasks.filter(task=>task.sourceIds.includes(sourceId)&&!claimed.has(task.id))
+    }
     const flow=homeFlow(tasks,paired.unpaired,now,paired.linked,timeZone),active=flow.dated.length+flow.undated.length
+    // A completed or past event can still own an unfinished preparation step.
+    const visibleEvents=[...flow.todayEvents,...flow.upcomingEvents,...flow.undatedEvents]
+    for(const event of activeEvents)if(eventActions[event.id]?.some(task=>pendingGroupedTask(task,eventActions[event.id]))&&!visibleEvents.some(item=>item.id===event.id))visibleEvents.push(event)
     const eventTimeHints=workspaceEventTimeHints(canonicalWorkspace)
     const allDone=tasks.every(task=>task.status==='已完成')&&events.every(event=>event.personalCompleted)
     return <main className="page dashboard-page flow-dashboard">
@@ -154,8 +168,8 @@ export function DashboardPage({
       {captureForm}
       {historicalNotice&&historicalNotice.count>0&&<div className="flow-history-notice"><span>发现 {historicalNotice.count} 条以前的通知</span><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onAdd()}>{historicalNotice.busy?'正在添加…':'全部加入'}</button><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onIgnore()}>忽略</button></div>}
       {directNotice}
-      {(active>0||flow.deferred.length>0||flow.todayEvents.length>0||flow.upcomingEvents.length>0||flow.undatedEvents.length>0)&&<FlowTimeline tasks={[...flow.today,...flow.next,...flow.undated]} allTasks={tasks} events={[...flow.todayEvents,...flow.upcomingEvents,...flow.undatedEvents]} deferred={flow.deferred.map(({task,reason})=>({task,reason}))} linked={paired.linked} eventTimeHints={eventTimeHints} channels={taskChannels??{}} highlightIds={recentItemIds??[]} timeZone={timeZone} onOpenTask={onOpenTask} onOpenEvent={onOpenEvent} onComplete={onCompleteTask} onSetEventCompletion={onSetEventCompletion} onSchedule={onScheduleTask} onSelectChoice={onSelectChoice}/>}
-      {!active&&!flow.deferred.length&&!flow.todayEvents.length&&!flow.upcomingEvents.length&&!flow.undatedEvents.length&&<section className="home-empty-state"><strong>{!tasks.length&&!events.length?'放入第一条通知，待办和日程就会出现在这里':allDone?'事情都处理好了':'暂无待办或近期日程'}</strong><p>有新通知时，粘贴后点一次整理即可。</p>{events.some(event=>event.personalCompleted)&&onShowCalendar&&<button type="button" className="text-button" onClick={onShowCalendar}>查看日历</button>}</section>}
+      {(active>0||flow.deferred.length>0||visibleEvents.length>0)&&<FlowTimeline tasks={[...flow.today,...flow.next,...flow.undated]} allTasks={tasks} events={visibleEvents} eventActions={eventActions} eventActionCandidates={eventActionCandidates} deferred={flow.deferred.map(({task,reason})=>({task,reason}))} linked={paired.linked} eventTimeHints={eventTimeHints} channels={taskChannels??{}} highlightIds={recentItemIds??[]} timeZone={timeZone} onOpenTask={onOpenTask} onOpenEvent={onOpenEvent} onComplete={onCompleteTask} onRestoreTask={onRestoreTask} onSetEventCompletion={onSetEventCompletion} onSetEventTaskLink={onSetEventTaskLink} onSchedule={onScheduleTask} onSelectChoice={onSelectChoice}/>}
+      {!active&&!flow.deferred.length&&!visibleEvents.length&&<section className="home-empty-state"><strong>{!tasks.length&&!events.length?'放入第一条通知，待办和日程就会出现在这里':allDone?'事情都处理好了':'暂无待办或近期日程'}</strong><p>有新通知时，粘贴后点一次整理即可。</p>{events.some(event=>event.personalCompleted)&&onShowCalendar&&<button type="button" className="text-button" onClick={onShowCalendar}>查看日历</button>}</section>}
       {recentAdditions}
     </main>
   }

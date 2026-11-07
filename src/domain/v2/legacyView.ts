@@ -80,6 +80,18 @@ export function sourceChoiceForTask(workspace:WorkspaceV8,item:WorkspaceV8['task
   return {id:group.id,optionTaskIds:ids,...(selectedTaskId?{selectedTaskId}:{})}
 }
 
+export function sourceGoalForTask(workspace:WorkspaceV8,item:WorkspaceV8['tasks'][number]):LegacyTask['sourceGoal'] {
+  const ownerId=typeof item.legacyData?.sourceGoalOwnerId==='string'?item.legacyData.sourceGoalOwnerId:item.id
+  const owner=workspace.tasks.find(task=>task.id===ownerId),group=record(owner?.legacyData?.sourceGoalGroup)
+  if(group?.version!=='source-goal-group-1.0.0'||typeof group.id!=='string'||typeof group.title!=='string'||!group.title.trim()||typeof group.sourceVersionId!=='string')return undefined
+  const ids=stringArray(group.taskIds),quotes=stringArray(group.quotations)
+  if(ids.length<2||ids.length>20||new Set(ids).size!==ids.length||!ids.includes(item.id)||!ids.includes(ownerId)||!quotes.length)return undefined
+  const version=workspace.sourceVersions.find(value=>value.id===group.sourceVersionId)
+  if(!version?.rawText||quotes.some(quote=>!version.rawText!.includes(quote)))return undefined
+  if(ids.some(id=>!workspace.tasks.some(task=>task.id===id&&task.legacyData?.sourceId===version.sourceId)))return undefined
+  return {id:group.id,title:group.title,taskIds:ids}
+}
+
 function legacyTaskStatus(status: WorkspaceV8['tasks'][number]['status']): LegacyTask['status'] {
   if (status === 'completed') return '已完成'
   if (status === 'in_progress') return '进行中'
@@ -314,6 +326,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     const windowStart=sourceWindowFirstStart(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)
     const windowEnd=sourceWindowLastEnd(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)??(handling?.kind!=='OPEN_DAYS_UNSTATED'?handling?.end:undefined)
     const sourceChoice=sourceChoiceForTask(workspace,item)
+    const sourceGoal=sourceGoalForTask(workspace,item)
     const hasSeparateDeadline=workspace.timePoints.some(point=>(point.taskId===item.id||point.relatedTaskIds.includes(item.id))&&!['event_start','event_end','planned_start'].includes(point.type))
     const personalPlan = workspace.timePoints.find((point) => point.type === 'planned_start' && point.relatedTaskIds.includes(item.id))
     const personalPlanData = personalPlan?.legacyData?.personalPlanD27
@@ -324,6 +337,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       parentTaskId: item.parentTaskId ?? undefined,
       ...(item.legacyData?.directMode === 'direct-mode-1' ? {directTags:stringArray(item.legacyData.directTags),...(personalPlan?.normalizedValue?{directDate:personalPlan.normalizedValue}:{})} : {}),
       ...(sourceChoice?{sourceChoice}:{}),
+      ...(sourceGoal?{sourceGoal}:{}),
       hierarchyType: item.parentTaskId ? 'subtask' : legacy.hierarchyType ?? 'task',
       milestoneId: item.milestoneId ?? undefined,
       workPackageId: item.workPackageId ?? undefined,

@@ -1,5 +1,5 @@
 // GENERATED from src/recognition/schema.ts; do not edit.
-// source-sha256: 04599a60b521882dcce2b0f2e7af253106822b7e74403757099af6ebf31ab23a
+// source-sha256: da44d60f764413c2305034cc9929ac394abb7fa496b9548f8151a8bfc696def9
 const categories = new Set(['比赛', '保研', '课程', '老师任务', '其他']);
 const inferenceLevels = new Set(['explicit', 'strong_inference', 'optional_suggestion']);
 const priorities = new Set(['low', 'medium', 'high', 'urgent']);
@@ -141,11 +141,12 @@ function requiredFieldIssues(value) {
             }
         });
     };
-    requireFields(value, '', [
+    const rootFields = [
         'schemaVersion', 'promptVersion', 'modelName', 'createdAt', 'sourceSummary', 'projectMatch',
         'projectSuggestion', 'milestones', 'standaloneTasks', 'materials', 'timePoints', 'events',
         'evidence', 'conflicts', 'ambiguities', 'ignoredContent', 'quality',
-    ]);
+    ];
+    requireFields(value, '', rootFields, [...rootFields, 'goalGroups']);
     if (!isRecord(value))
         return issues;
     requireFields(value.sourceSummary, 'sourceSummary', [
@@ -190,6 +191,7 @@ function requiredFieldIssues(value) {
             if (isRecord(e) && e.relatedTaskTempIds !== undefined && (!isStringArray(e.relatedTaskTempIds) || new Set(e.relatedTaskTempIds).size !== e.relatedTaskTempIds.length))
                 issues.push({ category: 'schema', code: 'EVENT_TASK_LINK_SHAPE', path: `events[${i}].relatedTaskTempIds` });
         });
+    requireArrayItems(value.goalGroups, 'goalGroups', ['id', 'title', 'taskTempIds', 'evidenceIds']);
     requireArrayItems(value.evidence, 'evidence', ['id', 'sourceId', 'quote', 'field'], ['id', 'sourceId', 'quote', 'quotedText', 'field', 'page', 'textStart', 'textEnd', 'boundingBox', 'extractionMethod', 'confidence']);
     requireArrayItems(value.conflicts, 'conflicts', [
         'id', 'type', 'message', 'entityTempIds', 'evidenceIds', 'requiresDecision',
@@ -383,6 +385,10 @@ function collectReferenceIssues(result) {
         }
         missing(event.evidenceIds, evidenceIds, 'EVENT_EVIDENCE_MISSING', `events[${eventIndex}].evidenceIds`);
     });
+    result.goalGroups?.forEach((group, index) => {
+        missing(group.taskTempIds, taskIds, 'GOAL_TASK_MISSING', `goalGroups[${index}].taskTempIds`);
+        missing(group.evidenceIds, evidenceIds, 'GOAL_EVIDENCE_MISSING', `goalGroups[${index}].evidenceIds`);
+    });
     result.conflicts.forEach((conflict, conflictIndex) => {
         missing(conflict.entityTempIds, entityIds, 'CONFLICT_ENTITY_MISSING', `conflicts[${conflictIndex}].entityTempIds`);
         missing(conflict.evidenceIds, evidenceIds, 'CONFLICT_EVIDENCE_MISSING', `conflicts[${conflictIndex}].evidenceIds`);
@@ -451,6 +457,11 @@ function hasRecognitionResultShape(value) {
         return false;
     if (!Array.isArray(value.events) || value.events.length > 30 || !value.events.every(validEvent))
         return false;
+    if (value.goalGroups !== undefined && (!Array.isArray(value.goalGroups) || value.goalGroups.length > 20 || !value.goalGroups.every((group) => isRecord(group) && boundedString(group.id, 100) && boundedString(group.title, 80)
+        && isStringArray(group.taskTempIds, 20) && group.taskTempIds.length >= 2
+        && new Set(group.taskTempIds).size === group.taskTempIds.length
+        && isStringArray(group.evidenceIds, 20) && group.evidenceIds.length > 0)))
+        return false;
     if (!Array.isArray(value.evidence) || value.evidence.length > 120 || !value.evidence.every(validEvidence))
         return false;
     if (!Array.isArray(value.conflicts) || !value.conflicts.every((item) => isRecord(item)
@@ -502,6 +513,10 @@ export function validateRecognitionResult(value, options = {}) {
     }
     if (new Set(value.evidence.map((item) => item.id)).size !== value.evidence.length) {
         schemaIssues.push({ category: 'schema', code: 'DUPLICATE_EVIDENCE_ID', path: 'evidence' });
+    }
+    if (value.goalGroups && (new Set(value.goalGroups.map((group) => group.id)).size !== value.goalGroups.length
+        || new Set(value.goalGroups.flatMap((group) => group.taskTempIds)).size !== value.goalGroups.flatMap((group) => group.taskTempIds).length)) {
+        schemaIssues.push({ category: 'schema', code: 'DUPLICATE_GOAL_GROUP_MEMBER', path: 'goalGroups' });
     }
     if (schemaIssues.length)
         return { valid: false, failureCategory: 'schema', issues: schemaIssues };

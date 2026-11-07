@@ -8,6 +8,7 @@ import { DirectResultList, RecentDirectAdditions } from './components/DirectResu
 import { setTaskSchedule } from './domain/v2/taskSchedule'
 import { selectSourceChoice } from './domain/v2/sourceChoice'
 import { commitEventCompletion } from './domain/v2/eventCompletion'
+import { setEventActionLink } from './domain/v2/eventActionLink'
 import {commitTaskCommand,ensureTaskEditsSettled,type TaskCommandValues} from './domain/v2/taskCommand'
 import {commitMaterialCommand,type MaterialCommandValues} from './domain/v2/materialCommand'
 import {readCommandReceipt,readCommittedBatch} from './domain/v2/commandReadback'
@@ -673,6 +674,17 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     }).catch(error=>setNotice({text:taskSaveFailure(error)})).finally(()=>taskCompletionInFlight.current.delete(taskId))
   }
 
+  const handleRestoreTask = (taskId: string) => {
+    if (runtime) { rejectExperimentAction(); return }
+    const task=tasks.find(candidate=>candidate.id===taskId)
+    if(!task||task.status!=='已完成'||taskCompletionInFlight.current.has(taskId))return
+    taskCompletionInFlight.current.add(taskId)
+    void (async()=>{
+      await ensureTaskEditsSettled(taskWriteQueue.current,()=>Boolean(taskEditDraftsRef.current[taskId])||task.materials.some(material=>Boolean(materialEditDraftsRef.current[material.id])))
+      await saveCoreTaskPatch(task,{status:'待开始'})
+    })().then(()=>setNotice({text:'已恢复为待办。'})).catch(error=>setNotice({text:taskSaveFailure(error)})).finally(()=>taskCompletionInFlight.current.delete(taskId))
+  }
+
   const handleSetEventCompletion = async (eventId:string,completed:boolean):Promise<void> => {
     if(runtime)throw Error('当前模式不能修改日程。')
     const event=events.find(item=>item.id===eventId)
@@ -701,6 +713,27 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       const message=error instanceof Error&&error.message==='EVENT_COMMAND_FIELD_CONFLICT'?'日程状态已在其他页面更改，请保存其他修改后重新读取。':safeIntakeError(error,'日程状态未能保存，请重试。')
       setNotice({text:message});throw new Error(message,{cause:error})
     }finally{eventCompletionInFlight.current.delete(eventId);taskWritesCount.current--;setTaskWritesPending(taskWritesCount.current)}
+  }
+
+  const handleSetEventTaskLink = async (eventId:string,taskIds:string[],linked:boolean):Promise<void> => {
+    if(runtime)throw Error('当前模式不能修改事项关联。')
+    if(eventDirtyIds.current.has(eventId)||taskIds.some(id=>Boolean(taskEditDraftsRef.current[id])))throw Error('请先保存或取消这项事项的修改。')
+    const state=ordinaryCanonical?.events.find(event=>event.id===eventId)?.legacyData?.manualActionLinksV1
+    const expectedRevision=state&&typeof state==='object'&&!Array.isArray(state)&&typeof state.revision==='string'?state.revision:null
+    const operationId=crypto.randomUUID(),changedAt=new Date().toISOString()
+    taskWritesCount.current++;setTaskWritesPending(taskWritesCount.current);setNotice({text:'正在保存事项关联…'})
+    const work=taskWriteQueue.current.then(async()=>{
+      if(taskReadbackBlocked.current||directReadbackPending)throw Error('已有更改已保存但尚未读回，请先重新读取。')
+      if(eventDirtyIds.current.has(eventId)||taskIds.some(id=>Boolean(taskEditDraftsRef.current[id])))throw Error('请先保存或取消这项事项的修改。')
+      const receipt=await setEventActionLink(canonicalWorkspaceRepository,{operationId,eventId,taskIds,linked,expectedRevision,changedAt})
+      let readback:WorkspaceV8
+      try{readback=await readCommandReceipt(independentReader,{kind:'event',operationId,entityId:eventId,changed:receipt.changed})}
+      catch(error){taskReadbackBlocked.current=true;setDirectReadbackPending(eventId);throw new Error('关联已保存，暂时未能读回。请先重新读取，不会重复提交。',{cause:error})}
+      setOrdinaryCanonical(readback);setNotice({text:linked?'已关联，原待办和时间保持不变。':'已取消关联，待办仍然保留。'})
+    })
+    taskWriteQueue.current=work.catch(()=>undefined)
+    try{await work}catch(error){const message=safeIntakeError(error,'关联未能保存，请重试。');setNotice({text:message});throw new Error(message,{cause:error})}
+    finally{taskWritesCount.current--;setTaskWritesPending(taskWritesCount.current)}
   }
 
   const handleStart = (taskId: string) => {
@@ -1892,7 +1925,9 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             onOpenIntake={() => setIntakeOpen(true)}
             onOpenTask={(task) => setSelectedTaskId(task.id)}
             onCompleteTask={handleComplete}
+            onRestoreTask={handleRestoreTask}
             onSetEventCompletion={!runtime?handleSetEventCompletion:undefined}
+            onSetEventTaskLink={!runtime?handleSetEventTaskLink:undefined}
             onScheduleTask={scheduleDirectTask}
             onSelectChoice={chooseDirectOption}
             taskChannels={workspaceTaskChannels(ordinaryCanonical)}

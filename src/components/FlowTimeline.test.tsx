@@ -126,5 +126,50 @@ describe('timeline date semantics',()=>{
   expect(html).toContain('第 2 步')
   expect(html).toContain('完成当前步骤：提交材料')
  })
+ it('shows an event once with independently dated preparation actions and their links',()=>{
+  const base={...demoTasks[0],status:'待开始' as const,materials:[],dependencies:[],sourceIds:['source'],history:[],plannedStart:undefined,directDate:undefined}
+  const register:Task={...base,id:'register',title:'填写报名表',deadline:'2026-11-15T12:00',description:'提交渠道：https://example.edu/register'}
+  const resume:Task={...base,id:'resume',title:'提交个人简历',deadline:'2026-11-17T17:00',description:'提交渠道：https://example.edu/resume'}
+  const event:Event={id:'meeting',title:'求职分享会',description:'参加须知：提前入场',startAt:'2026-11-18T14:30',endAt:null,location:'明德楼309',evidenceIds:[],needsConfirmation:false,createdAt:'',updatedAt:''}
+  const html=renderToStaticMarkup(<FlowTimeline tasks={[register,resume]} allTasks={[register,resume]} events={[event]} eventActions={{meeting:[register,resume]}} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onComplete={()=>{}} onSetEventCompletion={async()=>{}} />)
+  expect(html.match(/data-event-id="meeting"/gu)).toHaveLength(1)
+  expect(html).not.toContain('data-task-id="register"');expect(html).not.toContain('data-task-id="resume"')
+  for(const value of ['需要准备 · 2 项','data-related-task-id="register"','data-related-task-id="resume"','11月15日','11月17日','11月18日','明德楼309','href="https://example.edu/register"','href="https://example.edu/resume"','参加须知'])expect(html).toContain(value)
+ })
+ it('retains completed preparation and offers its restoration while other steps remain',()=>{
+  const base={...demoTasks[0],materials:[],dependencies:[],sourceIds:['source'],history:[],plannedStart:undefined,directDate:undefined,deadline:'',description:''}
+  const first:Task={...base,id:'first',title:'报名',status:'已完成'}
+  const second:Task={...base,id:'second',title:'准备简历',status:'待开始'}
+  const event:Event={id:'event',title:'分享会',description:'',startAt:'2026-11-18T14:30',endAt:null,evidenceIds:[],needsConfirmation:false,createdAt:'',updatedAt:''}
+  const html=renderToStaticMarkup(<FlowTimeline tasks={[second]} allTasks={[first,second]} events={[event]} eventActions={{event:[first,second]}} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onComplete={()=>{}} onRestoreTask={()=>{}} />)
+  expect(html).toContain('需要准备 · 1 项');expect(html).toContain('恢复未完成：报名');expect(html).toContain('完成准备简历')
+ })
+ it('shows source-backed goal members together without merging unrelated same-day tasks',()=>{
+  const goal={id:'same-source-goal',title:'提交思想汇报',taskIds:['a','b']}
+  const base={...demoTasks[0],status:'待开始' as const,materials:[],dependencies:[],sourceIds:['source'],history:[],plannedStart:undefined,directDate:undefined,deadline:'2026-11-09',description:''}
+  const a:Task={...base,id:'a',title:'2023级提交第一篇',sourceGoal:goal}
+  const b:Task={...base,id:'b',title:'2024级提交第二篇',sourceGoal:goal}
+  const unrelated:Task={...base,id:'unrelated',title:'缴纳水电费'}
+  const html=renderToStaticMarkup(<FlowTimeline tasks={[a,b,unrelated]} allTasks={[a,b,unrelated]} events={[]} deferred={[]} linked={{}} eventTimeHints={{}} channels={{}} highlightIds={[]} onOpenTask={()=>{}} onComplete={()=>{}} />)
+  expect(html.match(/data-goal-id=/gu)).toHaveLength(1);expect(html).toContain('提交思想汇报')
+  expect(html).toContain('data-task-id="unrelated"');expect(html).not.toContain('data-task-id="a"');expect(html).not.toContain('data-task-id="b"')
+  expect(html).toContain('2023级提交第一篇');expect(html).toContain('2024级提交第二篇')
+ })
+ it('keeps choice branches within the event as one optional preparation',()=>{
+  const choice={id:'choice',optionTaskIds:['mail','paper']},base={...demoTasks[0],status:'待开始' as const,materials:[],dependencies:[],sourceIds:['source'],history:[],description:'',sourceChoice:choice}
+  const mail:Task={...base,id:'mail',title:'提交电子申请',deadline:'2026-11-09T17:00'},paper:Task={...base,id:'paper',title:'提交纸质申请',deadline:'2026-11-10T12:00'}
+  const event:Event={id:'event',title:'活动',description:'',startAt:'2026-11-18T14:30',endAt:null,evidenceIds:[],needsConfirmation:false,createdAt:'',updatedAt:''}
+  const html=renderToStaticMarkup(<FlowTimeline tasks={[mail,paper]} allTasks={[mail,paper]} events={[event]} eventActions={{event:[mail,paper]}} deferred={[]} linked={{}} eventTimeHints={{}} channels={{mail:['邮箱'],paper:['服务台']}} highlightIds={[]} onOpenTask={()=>{}} onComplete={()=>{}} onSelectChoice={async()=>{}} />)
+  for(const value of ['需要准备 · 1 项','以下方式任选一项完成','11月9日','11月10日','邮箱','服务台'])expect(html).toContain(value)
+ })
+ it('offers explicit linking and unlinking without removing task details',()=>{
+  const task:Task={...demoTasks[0],id:'existing',title:'填写报名表',status:'待开始',materials:[],dependencies:[],sourceIds:['source'],history:[],description:'',deadline:'2026-11-10T17:00'}
+  const event:Event={id:'event',title:'分享会',description:'',startAt:'2026-11-18T14:30',endAt:null,evidenceIds:[],needsConfirmation:false,createdAt:'',updatedAt:''}
+  const props={tasks:[task],allTasks:[task],events:[event],deferred:[],linked:{},eventTimeHints:{},channels:{},highlightIds:['event'],onOpenTask:()=>{},onComplete:()=>{},onSetEventTaskLink:async()=>{}}
+  const available=renderToStaticMarkup(<FlowTimeline {...props} eventActionCandidates={{event:[task]}} />)
+  expect(available).toContain('关联同一通知的待办');expect(available).toContain('关联：填写报名表')
+  const linked=renderToStaticMarkup(<FlowTimeline {...props} eventActions={{event:[task]}} />)
+  expect(linked).toContain('取消关联');expect(linked).toContain('11月10日');expect(linked).toContain('完成填写报名表')
+ })
 
 })

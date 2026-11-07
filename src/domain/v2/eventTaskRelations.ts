@@ -5,7 +5,7 @@ export const EVENT_TASK_RELATION_VERSION = 'source-event-task-relations-1'
  * entities from this source/draft; partial confirmation never fabricates tasks. */
 export function readEventTaskRelations(workspace: WorkspaceV8, event: Event) {
   const v = event.legacyData?.sourceTaskRelations
-  if (!v || typeof v !== 'object' || Array.isArray(v) || v.version !== EVENT_TASK_RELATION_VERSION || typeof v.draftId !== 'string' || !Array.isArray(v.taskTempIds)) return []
+  if (!v || typeof v !== 'object' || Array.isArray(v) || ![EVENT_TASK_RELATION_VERSION,'source-event-task-relations-2'].includes(String(v.version)) || typeof v.draftId !== 'string' || !Array.isArray(v.taskTempIds)) return []
   const draft = workspace.extractionDrafts.find(d => d.id === v.draftId)
   if (!draft?.result) return []
   const tasks = [...draft.result.standaloneTasks, ...draft.result.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]

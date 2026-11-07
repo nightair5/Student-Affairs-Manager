@@ -66,7 +66,7 @@ export function pairUndatedEvents(tasks:Task[],events:Event[],workspace:Workspac
     const sourceId=storedEvents.get(event.id)?.legacyData?.sourceId
     if(typeof sourceId!=='string')return []
     const matches=(tasksBySourceAndTitle.get(JSON.stringify([sourceId,event.title]))??[]).filter(task=>
-      (event.directTags??[]).every(tag=>tag==='时间待定'||task.directTags?.includes(tag)))
+      (event.directTags??[]).every(tag=>tag==='时间待定'||task.directTags?.includes(tag))&&!eventActionExcluded(storedEvents.get(event.id),task.id))
     return matches.length===1?[{taskId:matches[0].id,event}]:[]
   })
   const proposalCounts=new Map<string,number>()
@@ -75,6 +75,11 @@ export function pairUndatedEvents(tasks:Task[],events:Event[],workspace:Workspac
   for(const pair of proposals)if(proposalCounts.get(pair.taskId)===1)linked[pair.taskId]=pair.event
   const linkedIds=new Set(Object.values(linked).map(event=>event.id))
   return {linked,unpaired:events.filter(event=>!linkedIds.has(event.id))}
+}
+
+function eventActionExcluded(event:WorkspaceV8['events'][number]|undefined,taskId:string):boolean {
+ const state=event?.legacyData?.manualActionLinksV1
+ return Boolean(state&&typeof state==='object'&&!Array.isArray(state)&&Array.isArray(state.excludedTaskIds)&&state.excludedTaskIds.includes(taskId))
 }
 
 /** Explicit stored attendance relations also pair dated events. Never infer a
@@ -87,7 +92,7 @@ export function pairFlowEvents(tasks:Task[],events:Event[],workspace:WorkspaceV8
     if(!relation||typeof relation!=='object'||Array.isArray(relation)||relation.version!=='source-event-task-relations-1'||typeof relation.draftId!=='string'||!Array.isArray(relation.taskTempIds)||relation.taskTempIds.length!==1)continue
     const formalId=`task:${relation.draftId}:${relation.taskTempIds[0]}`
     const task=tasks.find(t=>t.id===formalId&&t.status!=='已完成')
-    if(!task||typeof stored?.legacyData?.sourceId!=='string'||!task.sourceIds.includes(stored.legacyData.sourceId))continue
+    if(!task||typeof stored?.legacyData?.sourceId!=='string'||!task.sourceIds.includes(stored.legacyData.sourceId)||eventActionExcluded(stored,task.id))continue
     const canonical=workspace?.tasks.find(t=>t.id===task.id)
     if(canonical?.legacyData?.actionVerb!=='参加')continue
     const list=proposed.get(task.id)??[];list.push(event);proposed.set(task.id,list)
@@ -95,6 +100,51 @@ export function pairFlowEvents(tasks:Task[],events:Event[],workspace:WorkspaceV8
   for(const [id,matches] of proposed)if(matches.length===1)linked[id]=matches[0]
   const ids=new Set(Object.values(linked).map(e=>e.id))
   return {linked,unpaired:events.filter(e=>!ids.has(e.id))}
+}
+
+/** Project only verified, same-draft event/action relations. The original
+ * event and tasks remain separate records with separate completion states. */
+export function eventActionGroups(tasks:Task[],events:Event[],workspace:WorkspaceV8|null|undefined):Record<string,Task[]> {
+  if(!workspace)return {}
+  const proposed=new Map<string,Task[]>(),owners=new Map<string,number>()
+  const manualOwners=new Map<string,string[]>()
+  for(const event of events){
+    const stored=workspace.events.find(item=>item.id===event.id),state=stored?.legacyData?.manualActionLinksV1
+    if(!state||typeof state!=='object'||Array.isArray(state)||!Array.isArray(state.taskIds))continue
+    for(const id of state.taskIds)if(typeof id==='string')manualOwners.set(id,[...(manualOwners.get(id)??[]),event.id])
+  }
+  for(const event of events){
+    const stored=workspace.events.find(item=>item.id===event.id),relation=stored?.legacyData?.sourceTaskRelations,state=stored?.legacyData?.manualActionLinksV1
+    const sourceId=stored?.legacyData?.sourceId
+    if(typeof sourceId!=='string')continue
+    const automatic=relation&&typeof relation==='object'&&!Array.isArray(relation)&&relation.version==='source-event-task-relations-2'&&typeof relation.draftId==='string'&&Array.isArray(relation.taskTempIds)?relation.taskTempIds.filter((id):id is string=>typeof id==='string').map(id=>`task:${relation.draftId}:${id}`):[]
+    const manual=state&&typeof state==='object'&&!Array.isArray(state)&&Array.isArray(state.taskIds)?state.taskIds.filter((id):id is string=>typeof id==='string'):[]
+    const excluded=state&&typeof state==='object'&&!Array.isArray(state)&&Array.isArray(state.excludedTaskIds)?state.excludedTaskIds.filter((id):id is string=>typeof id==='string'):[]
+    const ids=[...new Set([...automatic,...manual])].filter(id=>!excluded.includes(id)&&(!manualOwners.has(id)||manualOwners.get(id)?.length===1&&manualOwners.get(id)?.[0]===event.id))
+    const members=ids.flatMap(formalId=>{
+      const task=tasks.find(item=>item.id===formalId),canonical=workspace.tasks.find(item=>item.id===formalId)
+      return task&&canonical?.legacyData?.sourceId===sourceId&&task.sourceIds.includes(sourceId)?[task]:[]
+    })
+    if(!members.length)continue
+    proposed.set(event.id,members)
+    for(const task of members)owners.set(task.id,(owners.get(task.id)??0)+1)
+  }
+  const result:Record<string,Task[]>={}
+  for(const [eventId,members] of proposed){
+    const unambiguous=members.filter(task=>owners.get(task.id)===1)
+    if(unambiguous.length)result[eventId]=unambiguous
+  }
+  return result
+}
+
+/** An unselected alternative is not a second outstanding obligation once a
+ * branch is selected or another branch has been completed. */
+export function pendingGroupedTask(task:Task,members:readonly Task[]):boolean {
+  if(task.status==='已完成')return false
+  const choice=task.sourceChoice
+  if(!choice)return true
+  if(members.some(value=>value.sourceChoice?.id===choice.id&&value.status==='已完成'))return false
+  return !choice.selectedTaskId||choice.selectedTaskId===task.id
 }
 
 export function homeFlow(tasks:Task[],events:Event[],now=new Date(),linked:Readonly<Record<string,Event>>={},timeZone='Asia/Shanghai'){

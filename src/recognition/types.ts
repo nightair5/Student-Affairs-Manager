@@ -137,6 +137,14 @@ export interface RecognitionConflict {
   requiresDecision: boolean
 }
 
+/** A source-backed display grouping; each member remains an independent task. */
+export interface RecognitionGoalGroup {
+  id: string
+  title: string
+  taskTempIds: string[]
+  evidenceIds: string[]
+}
+
 export interface RecognitionAmbiguity {
   id: string
   field: string
@@ -187,6 +195,8 @@ export interface RecognitionResult {
   materials: MaterialSuggestionV2[]
   timePoints: TimePointSuggestionV2[]
   events: EventSuggestion[]
+  /** Optional for older recognition results. Never a new persisted task. */
+  goalGroups?: RecognitionGoalGroup[]
   evidence: EvidenceReference[]
   conflicts: RecognitionConflict[]
   ambiguities: RecognitionAmbiguity[]

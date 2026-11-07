@@ -37,7 +37,7 @@ function preservesRequirement(before:string,after:string,materialName=''):boolea
   return Boolean(beforeFormat&&beforeFormat===afterFormat)
 }
 
-export interface DirectReplacementIssue { entityId:string; field:'task'|'task_detail'|'choice'|'event'|'time'|'material'|'dependency'|'event_detail'; reason:'missing_or_ambiguous'|'changed_or_missing' }
+export interface DirectReplacementIssue { entityId:string; field:'task'|'task_detail'|'choice'|'event'|'time'|'material'|'dependency'|'event_detail'|'relationship'; reason:'missing_or_ambiguous'|'changed_or_missing' }
 export interface DirectReplacementDiff { preserved:boolean; issues:DirectReplacementIssue[]; matched:Array<{before:string;after:string}>; added:string[] }
 
 type OwnedEntity=WorkspaceV8['tasks'][number]|WorkspaceV8['events'][number]
@@ -217,6 +217,21 @@ export function directReplacementDiff(before:WorkspaceV8,after:WorkspaceV8,oldId
     if(!next)continue
     const previous=eventChoice(old),candidate=eventChoice(next)
     if(previous&&(!candidate||key(previous.quotation)!==key(candidate.quotation)||previous.optionEventIds.some(id=>!matched.some(pair=>pair.before===id&&candidate.optionEventIds.includes(pair.after)))||previous.candidateTimes.some(time=>!candidate.candidateTimes.some(newTime=>time.type===newTime.type&&key(time.rawText)===key(newTime.rawText)&&time.normalizedValue===newTime.normalizedValue&&time.timezone===newTime.timezone&&time.precision===newTime.precision))))issue(old.id,'choice','changed_or_missing')
+    const relation=old.legacyData?.sourceTaskRelations,nextRelation=next.legacyData?.sourceTaskRelations
+    if(relation&&typeof relation==='object'&&!Array.isArray(relation)&&relation.version==='source-event-task-relations-2'&&typeof relation.draftId==='string'&&Array.isArray(relation.taskTempIds)){
+      const candidates=nextRelation&&typeof nextRelation==='object'&&!Array.isArray(nextRelation)&&nextRelation.version==='source-event-task-relations-2'&&typeof nextRelation.draftId==='string'&&Array.isArray(nextRelation.taskTempIds)?nextRelation.taskTempIds.filter((id):id is string=>typeof id==='string').map(id=>`task:${nextRelation.draftId}:${id}`):[]
+      const previousIds=relation.taskTempIds.filter((id):id is string=>typeof id==='string').map(id=>`task:${relation.draftId}:${id}`).filter(id=>oldIds.has(id))
+      if(previousIds.some(id=>!matched.some(pair=>pair.before===id&&candidates.includes(pair.after))))issue(old.id,'relationship','changed_or_missing')
+    }
+  }
+  for(const old of oldTasks){
+    const group=old.legacyData?.sourceGoalGroup
+    if(!group||typeof group!=='object'||Array.isArray(group)||!Array.isArray(group.taskIds))continue
+    const nextId=matched.find(pair=>pair.before===old.id)?.after,next=newTasks.find(task=>task.id===nextId)
+    const targetOwner=typeof next?.legacyData?.sourceGoalOwnerId==='string'?newTasks.find(task=>task.id===next.legacyData?.sourceGoalOwnerId):next
+    const target=targetOwner?.legacyData?.sourceGoalGroup
+    const ids=target&&typeof target==='object'&&!Array.isArray(target)&&Array.isArray(target.taskIds)?target.taskIds.filter((id):id is string=>typeof id==='string'):[]
+    if(group.taskIds.filter((id):id is string=>typeof id==='string'&&oldIds.has(id)).some(id=>!matched.some(pair=>pair.before===id&&ids.includes(pair.after))))issue(old.id,'relationship','changed_or_missing')
   }
   return {preserved:issues.length===0,issues,matched,added:[...newIds].filter(id=>!used.has(id))}
 }
