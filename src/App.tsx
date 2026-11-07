@@ -38,6 +38,7 @@ import { loadWorkspace } from './lib/storage'
 import { updateTaskWithHistory } from './lib/taskUpdates'
 import { canSaveLinkOnly, createIntakeResult, type IntakeInput } from './lib/intake'
 import {noticeLinkMessage,planNoticeLinks,readNoticeLinks} from './lib/noticeLinks'
+import {protectPendingNavigation} from './lib/pendingNavigationGuard'
 import { MULTIMODAL_PROMPT_VERSION } from './lib/multimodal'
 import { ProxyDeepSeekExtractionService, type DeepSeekExtractionService } from './lib/deepseekExtraction'
 import { buildLocalRecognition } from './recognition/pipeline'
@@ -190,10 +191,10 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   const [initialWorkspace] = useState(() => runtime ? runtime.view(runtime.initial) : ordinaryEnvironment?.initial ?? loadWorkspace([], []))
   const [ordinaryCanonical, setOrdinaryCanonical] = useState<WorkspaceV8 | null>(null)
   const [ordinaryBusy,setOrdinaryBusy] = useState(false)
-  const [taskWritesPending,setTaskWritesPending] = useState(0)
+  const [,setTaskWritesPending] = useState(0)
   const [taskEditDrafts,setTaskEditDrafts] = useState<Record<string,{title?:string;description?:string}>>({})
   const [materialEditDrafts,setMaterialEditDrafts] = useState<Record<string,MaterialEditDraft>>({})
-  const [eventDirtyCount,setEventDirtyCount] = useState(0)
+  const [,setEventDirtyCount] = useState(0)
   const eventDirtyIds=useRef(new Set<string>())
   const eventCompletionInFlight=useRef(new Set<string>())
   const taskEditDraftsRef=useRef(taskEditDrafts)
@@ -470,11 +471,19 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   }, [storageError, workspace, workspaceReady, workspaceRecovery, runtime, viewConflict, ordinaryBusy, workspaceRepository, canonicalWorkspaceRepository])
 
   useEffect(()=>{
-    if(!taskWritesPending&&!Object.keys(taskEditDrafts).length&&!Object.keys(materialEditDrafts).length&&!eventDirtyCount)return
-    const beforeUnload=(event:BeforeUnloadEvent)=>{event.preventDefault();event.returnValue=''}
+    // Register once, then read the synchronous refs at navigation time. A
+    // state-driven effect can miss a reload between a click and its render.
+    const beforeUnload=(event:BeforeUnloadEvent)=>{protectPendingNavigation(event,{
+      writes:taskWritesCount.current,
+      taskActions:taskCompletionInFlight.current.size,
+      eventActions:eventCompletionInFlight.current.size,
+      taskDrafts:Object.keys(taskEditDraftsRef.current).length,
+      materialDrafts:Object.keys(materialEditDraftsRef.current).length,
+      eventDrafts:eventDirtyIds.current.size,
+    })}
     window.addEventListener('beforeunload',beforeUnload)
     return()=>window.removeEventListener('beforeunload',beforeUnload)
-  },[taskWritesPending,taskEditDrafts,materialEditDrafts,eventDirtyCount])
+  },[])
 
   useEffect(() => {
     const openIntake = (event: KeyboardEvent) => {
