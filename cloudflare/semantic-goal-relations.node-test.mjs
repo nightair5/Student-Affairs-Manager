@@ -100,3 +100,40 @@ test('voluntary participation is not labelled as eligibility, while a real condi
  assert.ok(qualified.description.includes('适用条件待确认'))
  assert.equal(qualified.userConfirmationRequired,true)
 })
+
+test('a unique abbreviated event mention can link an action without borrowing its date',()=>{
+ const source='生涯体验讲座于11月25日15:00在南楼举行。参加体验讲座者请于11月24日12:00前报名，并于11月24日17:00前上传作品。'
+ const quote='参加体验讲座者请于11月24日12:00前报名，并于11月24日17:00前上传作品'
+ const raw={topic:'生涯体验讲座',kind:'mixed',items:[
+  {key:'event',kind:'event',title:'生涯体验讲座',evidence:['生涯体验讲座于11月25日15:00在南楼举行'],times:[{role:'start',raw:'11月25日15:00'}],location:'南楼'},
+  {key:'work',kind:'task',title:'上传作品',action:'上传',object:'作品',evidence:['11月24日17:00前上传作品'],times:[{role:'deadline',raw:'11月24日17:00前'}],eventRelation:{eventKey:'event',eventAnchor:'生涯体验讲座',evidence:quote}}
+ ],materials:[]}
+ const {result}=compileSemanticNotice(raw,options(source))
+ assert.deepEqual(result.events[0].relatedTaskTempIds,[result.standaloneTasks[0].tempId])
+ assert.equal(result.timePoints.find(point=>point.type==='task_deadline')?.normalizedValue,'2026-11-24T17:00')
+ assert.equal(result.timePoints.find(point=>point.type==='event_start')?.normalizedValue,'2026-11-25T15:00')
+})
+
+test('a source heading can group same-topic conditional deliveries without mixing their facts',()=>{
+ const source='课程资料提交：一年级同学于11月26日12:00前交课程笔记给组长；二年级同学于11月27日17:00前交课程报告给老师。'
+ const raw={topic:'课程资料',kind:'action',items:[
+  {key:'a',kind:'task',title:'提交课程笔记',action:'提交',object:'课程笔记',condition:'一年级同学',channel:'组长',evidence:['一年级同学于11月26日12:00前交课程笔记给组长'],times:[{role:'deadline',raw:'11月26日12:00前'}]},
+  {key:'b',kind:'task',title:'提交课程报告',action:'提交',object:'课程报告',condition:'二年级同学',channel:'老师',evidence:['二年级同学于11月27日17:00前交课程报告给老师'],times:[{role:'deadline',raw:'11月27日17:00前'}]}
+ ],materials:[],goals:[{key:'g',title:'提交课程资料',anchor:'课程资料提交',evidence:'课程资料提交',taskKeys:['a','b']}]}
+ const {result}=compileSemanticNotice(raw,options(source))
+ assert.equal(result.goalGroups?.length,1)
+ assert.ok(result.standaloneTasks[0].description.includes('一年级'))
+ assert.ok(result.standaloneTasks[1].description.includes('二年级'))
+ assert.deepEqual(result.timePoints.filter(point=>point.type==='task_deadline').map(point=>point.normalizedValue),['2026-11-26T12:00','2026-11-27T17:00'])
+})
+
+test('an explicit statement that same-day submissions are unrelated prevents grouping',()=>{
+ const source='社团材料提交：请提交社团场地表；请提交社团财务表，两项互不相关。'
+ const raw={topic:'社团材料',kind:'action',items:[
+  {key:'a',kind:'task',title:'提交社团场地表',action:'提交',object:'社团场地表',evidence:['请提交社团场地表']},
+  {key:'b',kind:'task',title:'提交社团财务表',action:'提交',object:'社团财务表',evidence:['请提交社团财务表']}
+ ],materials:[],goals:[{key:'g',title:'提交社团材料',anchor:'社团材料提交',evidence:'社团材料提交',taskKeys:['a','b']}]}
+ const {result}=compileSemanticNotice(raw,options(source))
+ assert.equal(result.standaloneTasks.length,2)
+ assert.equal(result.goalGroups,undefined)
+})

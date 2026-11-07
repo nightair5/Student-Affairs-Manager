@@ -82,6 +82,9 @@ describe('source-backed goal groups in canonical storage',()=>{
   expect((await setEventActionLink(repo,command)).changed).toBe(false)
   const readback=await readCommandReceipt(new CanonicalWorkspaceRepository(store),{kind:'event',operationId:'link',entityId:eventId,changed:true}),view=workspaceV8ToLegacyView(readback)
   expect(eventActionGroups(view.tasks,view.events,readback)[eventId]).toHaveLength(1)
+  const unknown=structuredClone(readback)
+  unknown.events[0].legacyData!.manualActionLinksV1={version:'future-format',taskIds:[taskId],excludedTaskIds:[],revision:'unknown'}
+  expect(eventActionGroups(view.tasks,view.events,unknown)[eventId]).toBeUndefined()
   expect(readback.tasks).toEqual(original.tasks);expect(readback.timePoints).toEqual(original.timePoints)
   await expect(setEventActionLink(repo,{...command,operationId:'stale',linked:false})).rejects.toThrow('关联已在其他页面更改')
   await expect(undoDirectBatchPreservingEdits(repo,receipt.batch!.id,'2026-11-07T12:00:00+08:00')).rejects.toThrow()

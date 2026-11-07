@@ -79,7 +79,7 @@ export function pairUndatedEvents(tasks:Task[],events:Event[],workspace:Workspac
 
 function eventActionExcluded(event:WorkspaceV8['events'][number]|undefined,taskId:string):boolean {
  const state=event?.legacyData?.manualActionLinksV1
- return Boolean(state&&typeof state==='object'&&!Array.isArray(state)&&Array.isArray(state.excludedTaskIds)&&state.excludedTaskIds.includes(taskId))
+ return Boolean(state&&typeof state==='object'&&!Array.isArray(state)&&state.version==='event-action-links-1'&&Array.isArray(state.excludedTaskIds)&&state.excludedTaskIds.includes(taskId))
 }
 
 /** Explicit stored attendance relations also pair dated events. Never infer a
@@ -110,7 +110,7 @@ export function eventActionGroups(tasks:Task[],events:Event[],workspace:Workspac
   const manualOwners=new Map<string,string[]>()
   for(const event of events){
     const stored=workspace.events.find(item=>item.id===event.id),state=stored?.legacyData?.manualActionLinksV1
-    if(!state||typeof state!=='object'||Array.isArray(state)||!Array.isArray(state.taskIds))continue
+    if(!state||typeof state!=='object'||Array.isArray(state)||state.version!=='event-action-links-1'||!Array.isArray(state.taskIds))continue
     for(const id of state.taskIds)if(typeof id==='string')manualOwners.set(id,[...(manualOwners.get(id)??[]),event.id])
   }
   for(const event of events){
@@ -118,8 +118,8 @@ export function eventActionGroups(tasks:Task[],events:Event[],workspace:Workspac
     const sourceId=stored?.legacyData?.sourceId
     if(typeof sourceId!=='string')continue
     const automatic=relation&&typeof relation==='object'&&!Array.isArray(relation)&&relation.version==='source-event-task-relations-2'&&typeof relation.draftId==='string'&&Array.isArray(relation.taskTempIds)?relation.taskTempIds.filter((id):id is string=>typeof id==='string').map(id=>`task:${relation.draftId}:${id}`):[]
-    const manual=state&&typeof state==='object'&&!Array.isArray(state)&&Array.isArray(state.taskIds)?state.taskIds.filter((id):id is string=>typeof id==='string'):[]
-    const excluded=state&&typeof state==='object'&&!Array.isArray(state)&&Array.isArray(state.excludedTaskIds)?state.excludedTaskIds.filter((id):id is string=>typeof id==='string'):[]
+    const manual=state&&typeof state==='object'&&!Array.isArray(state)&&state.version==='event-action-links-1'&&Array.isArray(state.taskIds)?state.taskIds.filter((id):id is string=>typeof id==='string'):[]
+    const excluded=state&&typeof state==='object'&&!Array.isArray(state)&&state.version==='event-action-links-1'&&Array.isArray(state.excludedTaskIds)?state.excludedTaskIds.filter((id):id is string=>typeof id==='string'):[]
     const ids=[...new Set([...automatic,...manual])].filter(id=>!excluded.includes(id)&&(!manualOwners.has(id)||manualOwners.get(id)?.length===1&&manualOwners.get(id)?.[0]===event.id))
     const members=ids.flatMap(formalId=>{
       const task=tasks.find(item=>item.id===formalId),canonical=workspace.tasks.find(item=>item.id===formalId)
