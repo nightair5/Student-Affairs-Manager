@@ -81,3 +81,22 @@ test('same date is not an actionable goal anchor',()=>{
  assert.equal(result.standaloneTasks.length,2)
  assert.equal(result.goalGroups,undefined)
 })
+
+test('voluntary participation is not labelled as eligibility, while a real condition remains visible',()=>{
+ const source='2026年11月19日9:00在教学楼101举办讲座。感兴趣者可扫码加入本次讲座交流群。'
+ const quote='感兴趣者可扫码加入本次讲座交流群'
+ const raw={topic:'讲座',kind:'mixed',items:[
+  {key:'e',kind:'event',title:'讲座',evidence:['2026年11月19日9:00在教学楼101举办讲座'],times:[{role:'start',raw:'2026年11月19日9:00'}],location:'教学楼101'},
+  {key:'join',kind:'task',title:'扫码加入讲座交流群',action:'扫码加入',object:'本次讲座交流群',condition:'感兴趣者',evidence:[quote],assignment:{scope:'conditional',actor:'感兴趣者',evidence:quote,actorEvidence:'感兴趣者'},eventRelation:{eventKey:'e',eventAnchor:'讲座',evidence:quote}}
+ ],materials:[]}
+ const {result}=compileSemanticNotice(raw,options(source)),task=result.standaloneTasks[0]
+ assert.ok(task.description.includes('参加说明：感兴趣者'))
+ assert.ok(!task.description.includes('适用条件待确认'))
+ assert.equal(task.userConfirmationRequired,false)
+ assert.deepEqual(result.events[0].relatedTaskTempIds,[task.tempId])
+ const restricted='仅限完成安全培训的同学报名参观。'
+ const limited={topic:'参观',kind:'action',items:[{key:'register',kind:'task',title:'报名参观',action:'报名',object:'参观',condition:'仅限完成安全培训的同学',evidence:[restricted],assignment:{scope:'conditional',actor:'完成安全培训的同学',evidence:restricted,actorEvidence:'完成安全培训的同学'}}],materials:[]}
+ const qualified=compileSemanticNotice(limited,options(restricted)).result.standaloneTasks[0]
+ assert.ok(qualified.description.includes('适用条件待确认'))
+ assert.equal(qualified.userConfirmationRequired,true)
+})

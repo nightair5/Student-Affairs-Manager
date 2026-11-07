@@ -27,13 +27,13 @@
 }
 
 html {
-  min-width: 320px;
+  min-width: 0;
   background: #f1f3ee;
 }
 
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: 0;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -4746,12 +4746,12 @@ select:focus-visible {
   }
 
   html {
-    min-width: 320px;
+    min-width: 0;
     scroll-padding-top: calc(var(--mobile-topbar-height) + 18px);
   }
 
   body {
-    min-width: 320px;
+    min-width: 0;
     padding: 0;
     background: #f3f4ef;
     -webkit-tap-highlight-color: transparent;

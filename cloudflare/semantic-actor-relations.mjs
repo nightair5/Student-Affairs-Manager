@@ -4,7 +4,7 @@ const compact=value=>typeof value==='string'?value.normalize('NFKC').replace(/\s
 
 /** Apply only source-backed roles emitted by the versioned model contract.
  * Later handlers are contextual facts, never the student's deadline or channel. */
-export function applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone='Asia/Shanghai',includeContextFacts=false,documentContext=[],respectPersonalNeed=false}) {
+export function applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone='Asia/Shanghai',includeContextFacts=false,documentContext=[],respectPersonalNeed=false,respectVoluntary=false}) {
   const records=new Map(pending.filter(record=>record.kind==='task').map(record=>[record.item.key,record]))
   // Models sometimes put a cited document-level explanation at the root.
   // Keep it only under explicitly named owners or as clearly unassigned
@@ -120,6 +120,13 @@ export function applySemanticActorRelations({result,pending,source,evidence,note
     // eligibility condition. Preserve that meaning instead of relabelling it.
     if(respectPersonalNeed&&/(?:^|\n)按需办理：/u.test(record.entity.description)){
       audit.facts.push({role:'personal_need_actor',owner:record.entity.tempId})
+      continue
+    }
+    // A source-backed expression of interest alone is voluntary, not an
+    // eligibility or role requirement. Do not erase actual eligibility that
+    // appears alongside it or infer an identity from the user's preferences.
+    if(respectVoluntary&&record.interestOnly&&compact(role.actor)===compact(record.item.condition)){
+      audit.facts.push({role:'voluntary_actor',owner:record.entity.tempId})
       continue
     }
     const line='适用条件待确认：'+role.span.literal
