@@ -1,4 +1,14 @@
-# 当前进度：beta.33 已上线（2026-11-07）
+# 当前进度：beta.34 已上线（2026-11-07）
+
+部署代码 22a565f3986401c3bcde25b9d48b9f8d39a6dbcc；Cloudflare 版本 b9b0fe4f-8bff-49de-bca1-bb26dfb5c2fe。
+回滚到 beta.33：`node node_modules/wrangler/bin/wrangler.js rollback 763d24a1-eace-4d8d-b88e-af797c69d192 --env= --yes`。
+直达请求 Flash、semantic-notice-3.11；Workspace v8 不变。同一活动的准备事项按来源关联并独立保留截止、入口及完成状态；旧事项可由用户手动关联。
+五条新匿名工程通知真实对照严格完整 1/5→3/5；同日第二场日期及部分共同主题归组仍可能漏掉，样本不代表总体准确率。
+部署代码的本地完整检查和六项远端 CI 通过；线上两条真实 AI 答复、资源及隔离仓库保存与撤销通过。
+本地双尺寸浏览器使用录制回放；生产浏览器页面操作未运行。旧用户数据未读取、迁移或自动改写。
+证据：`.data/event-goal-group-20261107-123334/`；以下为历史记录。
+
+# 历史进度：beta.33 已上线（2026-11-07）
 
 部署代码 587f543dcee15cde811846dd6eb2704876358656；Cloudflare 版本 763d24a1-eace-4d8d-b88e-af797c69d192。
 回滚到 beta.32：`node node_modules/wrangler/bin/wrangler.js rollback 18ce9f80-37b9-47da-88c4-36f602343cfd --env= --yes`。
