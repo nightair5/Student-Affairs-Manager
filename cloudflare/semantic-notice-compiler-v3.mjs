@@ -3,7 +3,7 @@ import {locateSourceQuote,locateOwnedSourceQuote} from './source-text-index.mjs'
 import {parseDirectSourceTime} from './direct-source-time.mjs'
 import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
 import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-2-0.mjs'
-import {SOURCE_DAY_PATTERN,channelOwnedWindow,combineExplicitWindowEntries,contextualEventDay,mergeHeadingWindowIntoDelivery,modelOwnedSharedDay,ownedAgendaTime,sameBuildingLocation,sourceChannelClosingDeadline,sourceConditionClauses,sourceEvidenceCondition,sourceEventDuration,sourceOpenEndedWindow,sourceSummaryDeliveryWindow,sourceSummaryOptionalMaterial,systemAvailabilityAsInformation} from './semantic-source-context.mjs'
+import {SOURCE_DAY_PATTERN,channelOwnedWindow,combineExplicitWindowEntries,contextualEventDay,mergeHeadingWindowIntoDelivery,modelCitedContextYear,modelOwnedSharedDay,modelSummarySharedEventDay,ownedAgendaTime,sameBuildingLocation,sourceChannelClosingDeadline,sourceConditionClauses,sourceEvidenceCondition,sourceEventDuration,sourceModelComposedEventTime,sourceOpenEndedWindow,sourceSummaryDeliveryWindow,sourceSummaryOptionalMaterial,systemAvailabilityAsInformation} from './semantic-source-context.mjs'
 import {declaredTaskChoices,combineSupportedChoices,expandSupportedSingleChoices,sharedDocumentScope,sourceBackedChoicePairs,sourceBackedEventChoices,sourceCandidateTime,sourceFormContext,sourceSupportedDependency} from './semantic-relations.mjs'
 import {itemPolarity} from './semantic-item-polarity.mjs'
 import {applySemanticActorRelations} from './semantic-actor-relations.mjs'
@@ -17,7 +17,7 @@ const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(
 const list = (value, count=20, max=160) => Array.isArray(value) ? [...new Set(value.map(v=>text(v,max)).filter(Boolean))].slice(0,count) : []
 const compact = value => typeof value==='string'?value.normalize('NFKC').replace(/\s/gu,''):''
 export const SEMANTIC_COMPILER_VERSION='semantic-notice-compiler-1.0.25'
-export const SEMANTIC_GOAL_COMPILER_VERSION='semantic-notice-compiler-1.0.26'
+export const SEMANTIC_GOAL_COMPILER_VERSION='semantic-notice-compiler-1.0.27'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
@@ -486,7 +486,8 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const explicitRange=/(?:至|到|~|～|—|–|-)\s*(?:次日|翌日)?\s*(?:凌晨|早上|上午|中午|下午|傍晚|晚上|夜间)?\s*(?:\d{4}\s*年\s*)?(?:\d{1,2}\s*月\s*)?\d{1,2}\s*(?:日|号|[:：点时])/u.test(rawTime)
       if(copiedStart&&!explicitRange){note('TIME',item.key,'EVENT_END_COPIED_FROM_START');continue}
       const owned=kind==='event'&&rawTime?ownedAgendaTime(source,item,raw.items,rawTime):null
-      const span=rawTime&&(locateOwnedSourceQuote(rawTime,source,list(item.evidence,12,500))||owned?.time)
+      const composed=goalContract&&kind==='event'&&rawTime?sourceModelComposedEventTime(source,item,raw.items,rawTime):null
+      const span=rawTime&&(locateOwnedSourceQuote(rawTime,source,list(item.evidence,12,500))||owned?.time||composed?.clock)
       if(!span){note('TIME',item.key,'TIME_TEXT_NOT_UNIQUELY_LOCATED');continue}
       // A dependent action must not inherit the predecessor's own deadline
       // unless its own source quotation also supports that date.
@@ -543,7 +544,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
         const localPrefix=prefix.slice(boundary),foldedPrefix=foldWidth(localPrefix),matches=[...foldedPrefix.matchAll(new RegExp(sourceDay.source,'gu'))]
         const day=matches.length===1?matches[0]:matches.length===2&&/\d/u.test(matches[0][0])
           &&/^[（(]\s*(?:本周|下周|周|星期)[一二三四五六日天]\s*[）)]\s*$/u.test(foldedPrefix.slice(matches[0].index+matches[0][0].length))?matches[0]:null
-        const anchored=kind==='event'?(contextualEventDay(source,span,item)||owned?.day||sharedDay):day?{start:span.start-localPrefix.length+day.index,end:span.start-localPrefix.length+day.index+day[0].length}:null
+        const anchored=kind==='event'?(contextualEventDay(source,span,item)||owned?.day||sharedDay||composed?.day||(goalContract?modelSummarySharedEventDay(source,span,item,raw.items,raw.summary):null)):day?{start:span.start-localPrefix.length+day.index,end:span.start-localPrefix.length+day.index+day[0].length}:null
         if(!anchored){
           // Keep a source-backed clock as text when the day is unknown. It is
           // not a calendar timestamp and must never inherit the reference day.
@@ -575,6 +576,13 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
         // source would allow a previous activity's clock to be parsed here.
         const decoration=source.slice(dateEnd,span.start).match(/^\s*[（(]\s*(?:周|星期)[一二三四五六日天]\s*[）)]/u)?.[0]??''
         parseText=dateLiteral+decoration+' '+span.literal
+      }
+      if(goalContract&&parseText===span.literal&&sourceDay.test(foldWidth(span.literal))){
+        const inherited=modelCitedContextYear(source,span,item,raw.items)
+        if(inherited){
+          dateEvidenceId=evidence(inherited.literal,'deadline',item.key,inherited.start)
+          if(dateEvidenceId){parseText=inherited.literal+span.literal;audit.facts.push({item:item.key,role:'source_context_year',raw:inherited.literal,sourceStart:inherited.start,sourceEnd:inherited.end})}
+        }
       }
       const eid=evidence(span.literal,'deadline',item.key,span.start),role=entry.role==='deadline'?'task_deadline':entry.role==='end'?'event_end':'event_start'
       if(!eid)continue

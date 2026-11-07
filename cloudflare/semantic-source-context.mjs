@@ -1,4 +1,4 @@
-import {locateSourceQuote} from './source-text-index.mjs'
+import {locateOwnedSourceQuote,locateSourceQuote} from './source-text-index.mjs'
 
 // Context may supply a missing part of an already cited fact, but never a
 // different event's time or an unsupported paraphrase as a literal quote.
@@ -238,6 +238,71 @@ export function modelOwnedSharedDay(source,item,{allowSectionHeading=false}={}){
  if((!adjacentField&&!sectionHeading&&!/(?:均为|均在|均于|皆为|同为|同一天为|同日为)\s*$/u.test(pre))||differentDay.test(between))return null
  if([...fold(between).matchAll(new RegExp(SOURCE_DAY_PATTERN.source,'gu'))].length)return null
  return day
+}
+
+/** The model may cite only the second clock while its summary assigns the
+ * same day to two named events. Recover that day only from a single sentence
+ * with an independently cited first event; never treat summary as a quote. */
+export function modelSummarySharedEventDay(source,span,item,items,summary,{declaredDay=''}={}){
+ if(item?.kind!=='event'||!span||typeof summary!=='string'&&!declaredDay)return null
+ const left=source.slice(0,span.start),boundary=Math.max(...['。','！','？','\n'].map(mark=>left.lastIndexOf(mark)))+1
+ const prefix=source.slice(boundary,span.start),matches=[...fold(prefix).matchAll(new RegExp(SOURCE_DAY_PATTERN.source,'gu'))]
+ const dates=matches.filter(match=>!/^(?:本周|下周|周|星期)/u.test(match[0]))
+ if(dates.length!==1||matches.length!==dates.length)return null
+ const date=dates[0],start=boundary+date.index,end=start+date[0].length,literal=source.slice(start,end)
+ const before=source.slice(boundary,start),between=source.slice(end,span.start),own=Array.isArray(item.evidence)?item.evidence:[]
+ const tail=source.slice(span.end).split(/[。；;！？\n]/u)[0]
+ if(/(?:截止|截至|发布|公告时间)/u.test(before)||differentDay.test(between)||/(?:截止|截至|日期待定|日期另行|时间另行|另一天)/u.test(between))return null
+ if(/(?:日期|举办日期|具体日期)[^，,。；;]{0,20}(?:另行|待定|未定|尚未)/u.test(tail))return null
+ const current=own.map(quote=>typeof quote==='string'?locateSourceQuote(quote,source):null).filter(Boolean)
+ if(!current.some(ref=>ref.start<=span.start&&ref.end>=span.end&&compactText(ref.literal).includes(compactText(item.title))))return null
+ if(current.some(ref=>/(?:日期|举办日期|具体日期)[^，,。；;]{0,20}(?:另行|待定|未定|尚未)/u.test(ref.literal)))return null
+ const normalizedSummary=compactText(summary),year=fold(literal).match(/^(\d{4})\s*年/u)?.[1],dateWithoutYear=compactText(literal).replace(/^\d{4}年/u,'')
+ const explicit=declaredDay&&compactText(literal).endsWith(compactText(declaredDay))
+ if(!explicit&&(!normalizedSummary.includes(compactText(item.title))||!normalizedSummary.includes(dateWithoutYear)))return null
+ const years=[...normalizedSummary.matchAll(/(\d{4})年/gu)].map(match=>match[1])
+ if(!explicit&&year&&years.length&&(!years.includes(year)||new Set(years).size>1))return null
+ const previous=(Array.isArray(items)?items:[]).filter(other=>other?.kind==='event'&&other!==item&&other.status!=='cancelled'&&compactText(other.title)&&(explicit||normalizedSummary.includes(compactText(other.title)))).filter(other=>{
+  const refs=(Array.isArray(other.evidence)?other.evidence:[]).map(quote=>typeof quote==='string'?locateSourceQuote(quote,source):null).filter(Boolean)
+  return refs.some(ref=>ref.start>=boundary&&ref.start<=start&&ref.end<=span.start&&compactText(ref.literal).includes(compactText(other.title))&&compactText(ref.literal).includes(compactText(literal)))
+ })
+ return previous.length===1?{start,end,literal}:null
+}
+
+/** A model may compose the shared date and its own clock into one string,
+ * although those fragments are separated in the source. Locate both original
+ * fragments and verify the shared event scope before parsing. */
+export function sourceModelComposedEventTime(source,item,items,rawTime){
+ if(item?.kind!=='event'||typeof rawTime!=='string')return null
+ const value=fold(rawTime).trim(),date=value.match(new RegExp('^('+SOURCE_DAY_PATTERN.source+')','u'))
+ if(!date)return null
+ const clockText=value.slice(date[0].length).trim()
+ if(!/^(?:(?:凌晨|早上|上午|中午|下午|傍晚|晚上|夜间)\s*)?\d{1,2}\s*[:：]\s*\d{2}(?:\s*(?:至|到|[-—–~～])\s*(?:(?:凌晨|早上|上午|中午|下午|傍晚|晚上|夜间)\s*)?\d{1,2}\s*[:：]\s*\d{2})?$/u.test(clockText))return null
+ const refs=Array.isArray(item.evidence)?item.evidence:[],clockSpan=locateOwnedSourceQuote(clockText,source,refs)
+ if(!clockSpan)return null
+ const day=modelSummarySharedEventDay(source,clockSpan,item,items,'',{declaredDay:date[0]})
+ return day?{day,clock:clockSpan}:null
+}
+
+/** Resolve a missing year only when another source-cited item supplies one
+ * explicit year for the same month in the same sentence. */
+export function modelCitedContextYear(source,span,item,items){
+ if(!span||/\d{4}\s*(?:年|[-/.])/u.test(fold(span.literal)))return null
+ const target=fold(span.literal).match(/(?:^|[^\d])(\d{1,2})\s*月\s*\d{1,2}\s*[日号]?/u)
+ if(!target)return null
+ const left=source.slice(0,span.start),boundary=Math.max(...['。','！','？','\n'].map(mark=>left.lastIndexOf(mark)))+1
+ const prefix=source.slice(boundary,span.start),matches=[...fold(prefix).matchAll(/(?<!\d)(\d{4})\s*年\s*(\d{1,2})\s*月\s*\d{1,2}\s*[日号]/gu)]
+ if(matches.length!==1||Number(matches[0][2])!==Number(target[1])||/(?:次年|翌年|来年|明年|去年|上年|隔年)/u.test(prefix+span.literal))return null
+ const match=matches[0],start=boundary+match.index,end=start+match[0].length
+ const previous=(Array.isArray(items)?items:[]).filter(other=>other!==item&&other?.status!=='cancelled').some(other=>{
+  const refs=(Array.isArray(other.evidence)?other.evidence:[]).map(quote=>typeof quote==='string'?locateSourceQuote(quote,source):null).filter(Boolean)
+  const times=Array.isArray(other.times)?other.times:[]
+  return refs.some(ref=>ref.start<=start&&ref.end>=end)&&times.some(time=>typeof time?.raw==='string'&&compactText(time.raw).includes(compactText(source.slice(start,end))))
+ })
+ const own=(Array.isArray(item?.evidence)?item.evidence:[]).some(quote=>{const ref=typeof quote==='string'?locateSourceQuote(quote,source):null;return ref&&ref.start<=span.start&&ref.end>=span.end})
+ if(!previous||!own)return null
+ const year=fold(match[0]).match(/^\d{4}\s*年/u)?.[0]
+ return year?{start,end:start+year.length,literal:source.slice(start,start+year.length)}:null
 }
 
 /** A model-proposed building plus room may be composed only from its own

@@ -57,7 +57,9 @@ export function applySemanticGoalRelations({raw,result,pending,source,evidence,n
   const title=text(goal.title,80),anchor=compact(text(goal.anchor,80)),quote=text(goal.evidence,500)
   const keys=Array.isArray(goal.taskKeys)?goal.taskKeys.filter(value=>typeof value==='string'&&value.trim()):[]
   const span=locateSourceQuote(quote,source),members=keys.map(key=>tasks.find(task=>task.item.key===key))
-  const memberTexts=members.map(row=>row?[row.item.object,row.item.title,row.ownText].join(' '):'')
+  // Do not let a broad surrounding paragraph make an anchor appear to belong
+  // to every task. Use each task's own identity instead.
+  const memberTexts=members.map(row=>row?[row.item.object,row.item.title].join(' '):'')
   const literalAnchor=anchor.length>=2&&!genericAnchors.has(anchor)&&!/^[\d年月日时分:：\-/]+$/u.test(anchor)
    &&compact(title).includes(anchor)&&compact(span?.literal).includes(anchor)&&memberTexts.every(value=>compact(value).includes(anchor))
   // A heading may summarize several document names instead of appearing
@@ -65,10 +67,40 @@ export function applySemanticGoalRelations({raw,result,pending,source,evidence,n
   // and a literal heading before making this optional display group.
   const actions=members.map(row=>compact(row?.item.action)),shared=sharedAnchor([title,span?.literal,...memberTexts])
   const lastMemberEnd=Math.max(span?.end??0,...members.flatMap(row=>row?row.entity.evidenceIds.map(id=>result.evidence.find(ref=>ref.id===id)?.textEnd??0):[]))
-  const scopedText=span?source.slice(span.start,Math.min(source.length,lastMemberEnd+50)).split(/[。！？\n]/u)[0]:''
-  const heading=Boolean(span&&anchor.length>=2&&compact(span.literal).includes(anchor)&&/^\s*[:：]/u.test(source.slice(span.end))&&!/(?:互不相关|彼此独立|各不相关)/u.test(scopedText))
+  const scopedText=span?source.slice(span.start,Math.min(source.length,lastMemberEnd+50)):''
+  const unrelated=/(?:互不相关|彼此独立|各不相关|两件独立|分别独立)/u.test(scopedText)
+  const heading=Boolean(span&&anchor.length>=2&&!genericAnchors.has(anchor)&&compact(span.literal).includes(anchor)&&/^\s*[:：]/u.test(source.slice(span.end))&&!unrelated)
   const equivalentHeading=heading&&Boolean(shared)&&actions.every(action=>action&&action===actions[0])&&compact(title).includes(actions[0])
-  const supported=(literalAnchor||equivalentHeading)&&keys.length>=2&&keys.length<=20&&new Set(keys).size===keys.length
+  // The heading can name a shared delivery while each branch names a
+  // different document (for example a reflection and a summary). Require a
+  // model-proposed goal, a specific cited heading/action, nearby owned task
+  // citations, and a common object topic; never infer a group from a date.
+  const memberRefs=members.map(row=>row?(Array.isArray(row.item.evidence)?row.item.evidence:[]).map(q=>typeof q==='string'?locateSourceQuote(q,source):null).filter(Boolean):[])
+  const memberRoot=sharedAnchor(members.map(row=>row?.item.object??''))
+  const genericRoot=/^(?:报名|报名表|申请|申请表|登记|登记表|材料|文件|表格|问卷|任务|事项)$/u.test(memberRoot)
+  const otherEventKeys=new Set(members.map(row=>row?.item.eventRelation?.eventKey).filter(value=>typeof value==='string'&&value))
+  const eventName=value=>value.match(/^(.+?)(工作坊|分享会|交流会|宣讲会|研讨会|讲座|培训|比赛|会议|课程|活动)/u)
+  const namedEvents=members.map(row=>{
+   const object=compact(row?.item.object),title=compact(row?.item.title),action=compact(row?.item.action)
+   const actionAt=action?title.lastIndexOf(action):-1
+   return eventName(object)??eventName(actionAt>=0?title.slice(actionAt+action.length):title)
+  })
+  const differentNamedEvents=namedEvents.length>1&&namedEvents.every(Boolean)&&new Set(namedEvents.map(match=>match[2])).size===1&&new Set(namedEvents.map(match=>match[1])).size>1
+  const citedEventKeys=new Set(members.flatMap(row=>{
+   const own=(Array.isArray(row?.item.evidence)?row.item.evidence:[]).map(q=>typeof q==='string'?locateSourceQuote(q,source):null).filter(Boolean)
+   return events.filter(event=>{
+    const name=compact(event.entity.title)
+    const eventCited=event.entity.evidenceIds.some(id=>compact(result.evidence.find(ref=>ref.id===id)?.quote).includes(name))
+    return name.length>=2&&eventCited&&own.some(ref=>compact(ref.literal).includes(name))
+   }).map(event=>event.item.key)
+  }))
+  const section=span?source.slice(span.end,lastMemberEnd):''
+  const commonScope=heading&&compact(title).includes(anchor)&&actions.every(action=>action&&action===actions[0])&&compact(title).includes(actions[0])
+   &&otherEventKeys.size<=1&&!/\n\s*\n/u.test(section)&&memberRefs.every(refs=>refs.some(ref=>ref.start>=span.end&&ref.end<=span.end+600))
+  const scopedHeading=commonScope&&compact(span.literal).includes(actions[0])&&Boolean(memberRoot)&&!genericRoot
+  const documentSubject=anchor.match(/^(.{2,})(?:材料|资料|文件|证明|报告|表单|作品|总结|汇报|作业)$/u)?.[1]??''
+  const specificDocumentHeading=commonScope&&Boolean(documentSubject)&&!/^(?:今日|明日|本周|近期|本次|相关|有关|其他|各种|各类|全部|所有|多个|通知|事项)$/u.test(documentSubject)
+  const supported=(literalAnchor||equivalentHeading||scopedHeading||specificDocumentHeading)&&!unrelated&&!differentNamedEvents&&otherEventKeys.size<=1&&citedEventKeys.size<=1&&keys.length>=2&&keys.length<=20&&new Set(keys).size===keys.length
    &&members.every(row=>row&&row.entity.evidenceIds.length<20&&!eventOwners.has(row.entity.tempId)&&!assigned.has(row.entity.tempId))
   if(!supported){note('RELATION',text(goal.key,40)||String(index),'GOAL_RELATION_UNCONFIRMED');continue}
   const ref=evidence(span.literal,'description','goal-'+index,span.start)

@@ -22,7 +22,7 @@ test('worker negotiates the new version in one request',async()=>{
  assert.equal(response.status,200);assert.equal(calls,1)
  assert.equal(body.execution.generationMode,'semantic-notice-3.11')
  assert.equal(body.execution.promptVersion,SEMANTIC_NOTICE_VERSION)
- assert.equal(body.execution.twoStep.compilerVersion,'semantic-notice-compiler-1.0.26')
+ assert.equal(body.execution.twoStep.compilerVersion,'semantic-notice-compiler-1.0.27')
 })
 
 test('event preparation remains separately saved with its own evidence and deadline',()=>{
@@ -38,7 +38,7 @@ test('event preparation remains separately saved with its own evidence and deadl
  assert.deepEqual(result.events[0].relatedTaskTempIds,result.standaloneTasks.map(t=>t.tempId))
  assert.equal(result.timePoints.find(p=>p.type==='task_deadline')?.normalizedValue,'2026-11-17T17:00')
  assert.equal(result.events[0].location,'明德楼309')
- assert.equal(audit.compilerVersion,'semantic-notice-compiler-1.0.26')
+ assert.equal(audit.compilerVersion,'semantic-notice-compiler-1.0.27')
  assert.equal(validateRecognitionResult(result,{sourceContent:source}).valid,true)
 })
 
