@@ -1,5 +1,7 @@
 # 当前进度：beta.37 已上线（2026-11-07）
 
+2026-11-08 本地开发：简单整理新增跨句截止归属保护；50 条工程样例的标题/截止对比中仅 N49 错挂被移除，材料上传漏项未解决，不代表 AI 正确率。第 6 次线上测试用户确认未扣费，但发送状态不可观测；原封停和账本保留，后续真实 AI 测试及部署未完成。证据 `.data/followup-beta37-20261108/`。
+
 部署代码 406f5428c09200a9097ee3dcfaf99322fc029391；Cloudflare 版本 8efad034-891b-420b-a395-10f68e9308d2。
 回滚到 beta.34：`node node_modules/wrangler/bin/wrangler.js rollback b9b0fe4f-8bff-49de-bca1-bb26dfb5c2fe --env= --yes`。
 保留同日活动各自时间地点和同主题任务各自截止状态；保存中刷新触发浏览器保护。Workspace v8 不变，旧用户数据未改。

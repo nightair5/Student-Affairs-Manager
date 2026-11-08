@@ -149,7 +149,14 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
   const t:TaskSuggestionV2={tempId:id,parentTempId:null,hierarchyType:'task',title:cleanDirectTopic(taskTitle),actionVerb:verb,actionObject:object,description:q+(isConditional?'\n适用条件待确认：'+(spans.find(s=>/符合|面向|对象|申请条件|自愿|仅限|申请者/u.test(s.text))?.text??q):''),completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:eids,confidence:1,inferenceLevel:'strong_inference',userConfirmationRequired:true,selected:!isConditional}
   const own=cutoff(q),formCutoffs=allCutoffs.filter(s=>/纸质|电子/u.test(object!)&&s.at>span.at&&s.at-span.at<200&&/纸质|电子/u.test(s.text))
   const uniqueCutoff=allCutoffs.length===1?allCutoffs[0]:null
-  const separated=uniqueCutoff&&/[；;]/u.test(source.slice(Math.min(uniqueCutoff.at,span.at),Math.max(uniqueCutoff.at,span.at)))
+  const between=uniqueCutoff?source.slice(Math.min(uniqueCutoff.at,span.at),Math.max(uniqueCutoff.at,span.at)):''
+  // A different, explicitly addressed delivery in a separate sentence does
+  // not supply this item's deadline. Preserve references to the same object.
+  const cutoffText=uniqueCutoff?.text??''
+  const objectAt=cutoffText.indexOf(object)
+  const repeatedObject=object.length>=2&&objectAt>=0&&objectAt===cutoffText.lastIndexOf(object)&&/^(?:\s|[，,:：]|须|需|必须|应|于|在|截止)/u.test(cutoffText.slice(objectAt+object.length))
+  const sameObject=taskTitle.length>=4&&cutoffText.includes(taskTitle)||repeatedObject
+  const separated=uniqueCutoff&&(/[；;]/u.test(between)||/[。！？\r\n]/u.test(between)&&!sameObject&&/(?:提交|递交|上传|报送|发送|填写|登记|领取|缴费)/u.test(cutoffText))
   const unknownOwnTime=/(?:时间|截止|日期).{0,10}(?:另行通知|待通知|待定)|(?:之后|随后|另行).{0,8}(?:提交|办理|递交)/u.test(q)
   let chosen=own?{...span,p:own}:formCutoffs.length===1?formCutoffs[0]:uniqueCutoff&&!separated&&!unknownOwnTime?uniqueCutoff:null
   if(chosen&&/纸质|电子/u.test(object)){
