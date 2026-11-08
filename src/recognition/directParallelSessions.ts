@@ -11,23 +11,54 @@ const squash=(s:string)=>s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu,'')
 const roleKey=(s:string)=>squash(s).replace(/(?:活动|环节|阶段|专场|会)$/u,'')
 const cleanHeading=(s:string)=>s.replace(/\[[^\]\n]{1,8}\]/gu,'').replace(/^【|】$/gu,'').trim()
 
+const rowsHeader=(source:string)=>source.split(/\r?\n/u).map(s=>s.trim()).find(s=>{const c=s.split(/[|｜]/u).map(x=>x.trim());return c.length===3&&c[0]==='时间'&&/^(?:项目|活动|日程)$/u.test(c[1])&&/^(?:地点|场地)$/u.test(c[2])})??''
+
+/** Parse a dated event schedule as rows, preserving literal source offsets. */
+function eventScheduleTable(source:string):{heading:string;date:string;sessions:{line:LabelledLine;role:string}[];places:Map<string,string>}|null {
+ const rows=[...source.matchAll(/[^\r\n]+/gu)].map(m=>({text:m[0].trim(),start:m.index!+m[0].indexOf(m[0].trim())}))
+ const cells=(s:string)=>s.split(/[|｜]/u).map(x=>x.trim())
+ const headerIndexes=rows.flatMap((row,index)=>{const c=cells(row.text);return c.length===3&&c[0]==='时间'&&/^(?:项目|活动|日程)$/u.test(c[1])&&/^(?:地点|场地)$/u.test(c[2])?[index]:[]})
+ if(headerIndexes.length!==1)return null
+ const index=headerIndexes[0],heading=rows[index-1]
+ if(!heading||!/活动|日程|讲座|培训|工作坊/u.test(heading.text))return null
+ const dates=[...heading.text.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]
+ if(dates.length!==1||source.indexOf(heading.text)!==source.lastIndexOf(heading.text)||/取消|改期|待定|备选|或/u.test(heading.text))return null
+ const sessions:{line:LabelledLine;role:string}[]=[],places=new Map<string,string>()
+ for(const row of rows.slice(index+1)){
+  const c=cells(row.text)
+  // A malformed row must not silently turn a partial schedule into a complete one.
+  if(c.length!==3){if(/[|｜]/u.test(row.text))return null;break}
+  const [time,role,place]=c
+  const hours=/^(\d{1,2}):([0-5]\d)\s*[-—–至到]\s*(\d{1,2}):([0-5]\d)$/u.exec(time)
+  // An action row is a user obligation, not evidence of a scheduled event.
+  // Ambiguous or overnight ranges are left for the ordinary parser; inferring
+  // the following day from a compact table would manufacture a date.
+  if(!hours||Number(hours[1])>23||Number(hours[3])>23||Number(hours[1])*60+Number(hours[2])>=Number(hours[3])*60+Number(hours[4])||!role||/^(?:请|须|需|填写|填报|提交|递交|上传|报送|登记|申请|缴费|领取)/u.test(role)||role.length>40||!place||place.length>80||/取消|改期|待定|备选|或/u.test(row.text)||places.has(role)||source.indexOf(row.text)!==source.lastIndexOf(row.text))return null
+  places.set(role,place);sessions.push({role,line:{label:role+'时间',value:time,start:row.start+row.text.indexOf(time),whole:row.text,wholeStart:row.start}})
+ }
+ return sessions.length>=2&&sessions.length<=8?{heading:heading.text,date:dates[0][0],sessions,places}:null
+}
+
 /** Preserve independently labelled sessions from one announcement. Labels
  * and parenthetical venue qualifiers are joined by the same source role,
  * never by their order. Source offsets stay attached to each fact. */
 export function completeParallelSessions(input:RecognitionResult,source:string):RecognitionResult {
  const parsedLines=lines(source)
  const timeLines=parsedLines.filter(l=>/^.{1,12}时间$/u.test(l.label)&&l.label!=='活动时间'&&l.label!=='会议时间'&&l.value&&l.value.length<=160&&l.whole.length<=500)
- const sessions=timeLines.map(l=>({line:l,role:l.label.slice(0,-2).trim()})).filter(s=>s.role&&!/(?:报名|申请|提交|登记|上传|缴费|领取|报送|截止)$/u.test(s.role))
+ const table=input.events.length===0?eventScheduleTable(source):null
+ const sessions=table?.sessions??timeLines.map(l=>({line:l,role:l.label.slice(0,-2).trim()})).filter(s=>s.role&&!/(?:报名|申请|提交|登记|上传|缴费|领取|报送|截止)$/u.test(s.role))
  if(sessions.length<2||sessions.length>8||new Set(sessions.map(s=>s.role)).size!==sessions.length)return input
+ if(table&&sessions.some(s=>{const p=parseDirectSourceTime(table.date+' '+s.line.value,{type:'event_start',referenceTime:input.createdAt,timezone:'Asia/Shanghai'});return !p.normalizedValue||!p.rangeEndNormalizedValue||p.needsConfirmation}))return input
  // A revision or cancellation needs its own existing interpretation; do not
  // reintroduce the old schedule from a list of labelled times.
  if(/取消|作废|不再(?:举办|举行)|原定|改期|延期|调整为|更正为|变更为/u.test(source))return input
- const header=source.split(/\r?\n/u).find(line=>line.trim())?.trim()??'',topic=cleanHeading(header)
+ const header=table?.heading??source.split(/\r?\n/u).find(line=>line.trim())?.trim()??'',topic=cleanHeading(header)
  if(!topic||topic.length>100)return input
  const roleLine=parsedLines.find(l=>/^(?:活动|会议|举办|具体)?地点$/u.test(l.label)&&l.value&&l.whole.length<=500)
  const choices=roleLine?[...roleLine.value.matchAll(/(?:^|[、，,；;])\s*([^、，,；;（）()]+?)\s*[（(]([^（）()]+)[）)]/gu)].map(m=>({place:m[1].trim(),role:m[2].trim()})):[]
  const base=choices[0]?.place.match(/^(.{2,30}?(?:中心|大楼|大厦|校区|园区|图书馆|体育馆|教学楼))(?=.)/u)?.[1]
  const locationFor=(role:string)=>{
+  if(table)return table.places.get(role)??null
   const matching=choices.filter(c=>roleKey(c.role)===roleKey(role))
   if(matching.length!==1){
    // One unqualified venue is shared; alternatives remain unassigned.
@@ -46,6 +77,16 @@ export function completeParallelSessions(input:RecognitionResult,source:string):
  }
  const aggregate=input.events.filter(e=>!sessions.some(s=>e.title.endsWith(' · '+s.role))&&(sessions.every(s=>e.title.includes(s.role))||squash(cleanHeading(e.title))===squash(topic)))
  const r=structuredClone(input),removed=new Set(aggregate.map(e=>e.tempId))
+ if(table){
+  // The old local parser may have turned table rows into generic "核对"
+  // tasks. Remove only placeholders whose evidence is the table itself;
+  // separate real actions retain their own identities and dates.
+  const tableQuotes=new Set([table.heading+'\n'+rowsHeader(source),...table.sessions.map(s=>s.line.whole)])
+  const artifactIds=new Set([...r.standaloneTasks,...r.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])].filter(t=>t.actionVerb==='核对'&&t.evidenceIds.some(id=>tableQuotes.has(r.evidence.find(e=>e.id===id)?.quote??''))).map(t=>t.tempId))
+  const kept=(tasks:typeof r.standaloneTasks)=>tasks.filter(t=>!artifactIds.has(t.tempId)).map(t=>({...t,dependencyTempIds:t.dependencyTempIds.filter(id=>!artifactIds.has(id))}))
+  r.standaloneTasks=kept(r.standaloneTasks)
+  r.milestones=r.milestones.map(m=>({...m,tasks:kept(m.tasks),workPackages:m.workPackages.map(w=>({...w,tasks:kept(w.tasks)}))}))
+ }
  const previousPoints=new Set(aggregate.flatMap(e=>[e.startTimePointTempId,e.endTimePointTempId]).filter((id):id is string=>Boolean(id)))
  r.events=r.events.filter(e=>!removed.has(e.tempId))
  r.timePoints=r.timePoints.filter(p=>!previousPoints.has(p.tempId)||p.relatedTaskTempIds.length>0||p.relatedMaterialTempIds.length>0||r.events.some(e=>e.startTimePointTempId===p.tempId||e.endTimePointTempId===p.tempId))
@@ -68,9 +109,9 @@ export function completeParallelSessions(input:RecognitionResult,source:string):
  const linkedInfo=parsedLines.find(l=>/(?:信息|介绍|详情|说明)$/u.test(l.label)&&/^https?:\/\//u.test(l.value)&&l.whole.length<=500)
  for(const {line,role} of sessions){
   const current=r.events.find(e=>matchesRole(e,role)),id=current?.tempId??`direct-session:${line.wholeStart}`,timeId=id+':start',endId=id+':end',headingId=id+':heading',lineId=id+':time',placeId=id+':location'
-  const parsed=parseDirectSourceTime(line.value,{type:'event_start',referenceTime:r.createdAt,timezone:'Asia/Shanghai'})
+  const parsed=parseDirectSourceTime(table?table.date+' '+line.value:line.value,{type:'event_start',referenceTime:r.createdAt,timezone:'Asia/Shanghai'})
   const selectedTime=parsed.normalizedValue&&!parsed.needsConfirmation?parsed.normalizedValue:null
-  const point=(tempId:string,type:'event_start'|'event_end',value:string):TimePointSuggestionV2=>({tempId,type,rawText:line.value,normalizedValue:value,timezone:parsed.timezone,isAllDay:parsed.isAllDay,precision:parsed.precision,needsConfirmation:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:[lineId],confidence:1,selected:true})
+  const point=(tempId:string,type:'event_start'|'event_end',value:string):TimePointSuggestionV2=>({tempId,type,rawText:line.value,normalizedValue:value,timezone:parsed.timezone,isAllDay:parsed.isAllDay,precision:parsed.precision,needsConfirmation:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:table?[headingId,lineId]:[lineId],confidence:1,selected:true})
   r.evidence=r.evidence.filter(e=>![headingId,lineId,placeId,id+':linked-info'].includes(e.id)&&!e.id.startsWith(id+':overview:'))
   r.evidence.push(evidence(headingId,header,headingStart,'event'),evidence(lineId,line.whole,line.wholeStart,'event'))
   if(roleLine)r.evidence.push(evidence(placeId,roleLine.whole,roleLine.wholeStart,'event'))
@@ -88,7 +129,7 @@ export function completeParallelSessions(input:RecognitionResult,source:string):
    description+=(description?'\n':'')+'通知补充：'+text;r.evidence.push(evidence(item.id,item.quote,item.start,'description'));supplementalIds.push(item.id)
   }
   const requiredRefs=[headingId,lineId,...(roleLine?[placeId]:[]),...supplementalIds]
-  const title=current&&squash(source).includes(squash(current.title))?current.title:`${topic} · ${role}`
+  const title=table?role:current&&squash(source).includes(squash(current.title))?current.title:`${topic} · ${role}`
   const event:EventSuggestion={tempId:id,title,description,location:locationFor(role)??current?.location??null,startTimePointTempId:selectedTime?timeId:current?.startTimePointTempId??null,endTimePointTempId:end?endId:selectedTime?null:current?.endTimePointTempId??null,evidenceIds:[...new Set([...(current?.evidenceIds??aggregate[0]?.evidenceIds??[]).slice(0,Math.max(0,20-requiredRefs.length)),...requiredRefs])],confidence:current?.confidence??1,inferenceLevel:current?.inferenceLevel??'explicit',selected:true,relatedTaskTempIds:current?.relatedTaskTempIds??[]}
   r.events=r.events.filter(e=>e.tempId!==id);r.events.push(event)
  }
