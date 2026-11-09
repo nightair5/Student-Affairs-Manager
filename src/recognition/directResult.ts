@@ -131,6 +131,17 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if(parsed.needsConfirmation||parsed.dateKind==='none'||parsed.normalizedValue!==start.normalizedValue)return undefined
     return start.normalizedValue.slice(0,10)
   }
+  // A local parallel-session point may cite a shared date and a separate
+  // clause. Validate those two literal pieces, rather than reparsing the
+  // whole sentence and accidentally assigning the first session's clock.
+  const inlineSessionTime=(p:TimePointSuggestionV2)=>{
+    if(!p.tempId.startsWith('direct-inline-time:')||!['event_start','event_end'].includes(p.type))return null
+    const owners=events.filter(e=>e.startTimePointTempId===p.tempId||e.endTimePointTempId===p.tempId)
+    const refs=p.evidenceIds.flatMap(id=>{const e=result.evidence.find(x=>x.id===id),found=located.get(id);return e?.extractionMethod==='parser'&&found?[found.quote]:[]})
+    const dates=[...sourceText.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]
+    if(owners.length!==1||refs.length<2||dates.length!==1||!refs.some(q=>q.includes(dates[0][0]))||!refs.some(q=>q.includes(p.rawText)&&q.includes(owners[0].title))||sourceText.split(p.rawText).length!==2)return null
+    return parseDirectSourceTime(dates[0][0]+' '+p.rawText,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
+  }
   const times: TimePointSuggestionV2[] = result.timePoints.filter(p => p.relatedTaskTempIds.some(id => taskIds.has(id)) || eventIds.has(p.tempId)).map(p => {
     const point = {...p, relatedTaskTempIds:p.relatedTaskTempIds.filter(id => taskIds.has(id)),selected:true}
     const unknown = ():TimePointSuggestionV2 => ({...point,normalizedValue:null,precision:'vague',isAllDay:false,needsConfirmation:true})
@@ -152,7 +163,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
       let parsed=parseDirectSourceTime(raw,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone,inheritedDate:nextDayAnchor})
       const correction=/(?:改为|调整为|更正为|延期至|现为)([^。；;\n]*)/u.exec(text)
       if(correction)parsed=parseDirectSourceTime(correction[1],{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
-      else if(parsed.dateKind==='none')parsed=(inferredWeekday?sameWeekdayTime(weekdayRaw,result.createdAt,p.timezone):null)??parseDirectSourceTime(text,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
+      else if(parsed.dateKind==='none')parsed=inlineSessionTime(p)??(inferredWeekday?sameWeekdayTime(weekdayRaw,result.createdAt,p.timezone):null)??parseDirectSourceTime(text,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
       const expected=p.type==='event_end'&&parsed.rangeEndNormalizedValue?parsed.rangeEndNormalizedValue:parsed.normalizedValue
       const same=expected&&(/T/u.test(expected)?parseBusinessDateTime(expected,p.timezone)?.getTime()===parseBusinessDateTime(p.normalizedValue,p.timezone)?.getTime():expected===p.normalizedValue)
       if(!same||parsed.needsConfirmation||parsed.dateKind==='none')return unknown()

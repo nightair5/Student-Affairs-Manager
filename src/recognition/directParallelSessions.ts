@@ -39,16 +39,38 @@ function eventScheduleTable(source:string):{heading:string;date:string;sessions:
  return sessions.length>=2&&sessions.length<=8?{heading:heading.text,date:dates[0][0],sessions,places}:null
 }
 
+/** Conservative local fallback for explicit date + parallel event clauses.
+ * Both the event verb and venue must be stated in each clause. */
+function inlineEventSessions(source:string):{heading:string;date:string;sessions:{line:LabelledLine;role:string}[];places:Map<string,string>}|null {
+ if(/[\r\n]/u.test(source))return null
+ const dates=[...source.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]
+ if(dates.length!==1)return null
+ const parts=[...source.matchAll(/[^，,；;。！？]+/gu)].map(m=>({text:m[0].trim(),start:m.index!+m[0].indexOf(m[0].trim())}))
+ if(parts.length<2||parts.length>3)return null
+ const sessions:{line:LabelledLine;role:string}[]=[],places=new Map<string,string>()
+ for(const [index,part] of parts.entries()){
+  const re=index===0?/^(?:【[^】\n]+】)?(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]\s*(\d{1,2}:[0-5]\d(?:\s*[-—–至到]\s*\d{1,2}:[0-5]\d)?)在([^，,；;。]{1,40}?)(?:举行|举办)([^，,；;。]{2,40})$/u:/^(?:当天|同日|当日)?\s*(\d{1,2}:[0-5]\d(?:\s*[-—–至到]\s*\d{1,2}:[0-5]\d)?)在([^，,；;。]{1,40}?)(?:举行|举办)([^，,；;。]{2,40})$/u
+  const m=re.exec(part.text)
+  if(!m||/取消|作废|改期|延期|备选|调整|更正|通知|报名|提交|上传|填写/u.test(part.text)||places.has(m[3])||source.indexOf(part.text)!==source.lastIndexOf(part.text))return null
+  const clocks=[...m[1].matchAll(/(\d{1,2}):([0-5]\d)/gu)].map(x=>Number(x[1])*60+Number(x[2]))
+  if(clocks.some(x=>x>=24*60)||clocks.length===2&&clocks[1]<=clocks[0])return null
+  places.set(m[3],m[2]);sessions.push({role:m[3],line:{label:m[3]+'时间',value:m[1],start:part.start+part.text.indexOf(m[1]),whole:part.text,wholeStart:part.start}})
+ }
+ return {heading:parts[0].text,date:dates[0][0],sessions,places}
+}
+
 /** Preserve independently labelled sessions from one announcement. Labels
  * and parenthetical venue qualifiers are joined by the same source role,
  * never by their order. Source offsets stay attached to each fact. */
-export function completeParallelSessions(input:RecognitionResult,source:string):RecognitionResult {
+export function completeParallelSessions(input:RecognitionResult,source:string,localInline=false):RecognitionResult {
  const parsedLines=lines(source)
  const timeLines=parsedLines.filter(l=>/^.{1,12}时间$/u.test(l.label)&&l.label!=='活动时间'&&l.label!=='会议时间'&&l.value&&l.value.length<=160&&l.whole.length<=500)
- const table=input.events.length===0?eventScheduleTable(source):null
+ const scheduleTable=input.events.length===0?eventScheduleTable(source):null
+ const inlineSessions=localInline&&!scheduleTable?inlineEventSessions(source):null
+ const table=scheduleTable??inlineSessions
  const sessions=table?.sessions??timeLines.map(l=>({line:l,role:l.label.slice(0,-2).trim()})).filter(s=>s.role&&!/(?:报名|申请|提交|登记|上传|缴费|领取|报送|截止)$/u.test(s.role))
  if(sessions.length<2||sessions.length>8||new Set(sessions.map(s=>s.role)).size!==sessions.length)return input
- if(table&&sessions.some(s=>{const p=parseDirectSourceTime(table.date+' '+s.line.value,{type:'event_start',referenceTime:input.createdAt,timezone:'Asia/Shanghai'});return !p.normalizedValue||!p.rangeEndNormalizedValue||p.needsConfirmation}))return input
+ if(table&&sessions.some(s=>{const p=parseDirectSourceTime(table.date+' '+s.line.value,{type:'event_start',referenceTime:input.createdAt,timezone:'Asia/Shanghai'});return !p.normalizedValue||Boolean(scheduleTable&&!p.rangeEndNormalizedValue)||p.needsConfirmation}))return input
  // A revision or cancellation needs its own existing interpretation; do not
  // reintroduce the old schedule from a list of labelled times.
  if(/取消|作废|不再(?:举办|举行)|原定|改期|延期|调整为|更正为|变更为/u.test(source))return input
@@ -108,7 +130,7 @@ export function completeParallelSessions(input:RecognitionResult,source:string):
  const overviews=[...source.matchAll(/[^\r\n]+/gu)].map(m=>({quote:m[0].trim(),start:m.index!+m[0].indexOf(m[0].trim())})).filter(p=>p.start>afterHeader&&p.quote.length>=25&&p.quote.length<=350&&!/^【|^(?:请|须|需|截止|报名)/u.test(p.quote)&&!/(?:请|须|需).{0,60}(?:填写|提交|报名|登记|上传)/u.test(p.quote)).slice(0,4)
  const linkedInfo=parsedLines.find(l=>/(?:信息|介绍|详情|说明)$/u.test(l.label)&&/^https?:\/\//u.test(l.value)&&l.whole.length<=500)
  for(const {line,role} of sessions){
-  const current=r.events.find(e=>matchesRole(e,role)),id=current?.tempId??`direct-session:${line.wholeStart}`,timeId=id+':start',endId=id+':end',headingId=id+':heading',lineId=id+':time',placeId=id+':location'
+  const current=r.events.find(e=>matchesRole(e,role)),id=current?.tempId??`direct-session:${line.wholeStart}`,timeId=inlineSessions?`direct-inline-time:${line.wholeStart}:start`:id+':start',endId=inlineSessions?`direct-inline-time:${line.wholeStart}:end`:id+':end',headingId=id+':heading',lineId=id+':time',placeId=id+':location'
   const parsed=parseDirectSourceTime(table?table.date+' '+line.value:line.value,{type:'event_start',referenceTime:r.createdAt,timezone:'Asia/Shanghai'})
   const selectedTime=parsed.normalizedValue&&!parsed.needsConfirmation?parsed.normalizedValue:null
   const point=(tempId:string,type:'event_start'|'event_end',value:string):TimePointSuggestionV2=>({tempId,type,rawText:line.value,normalizedValue:value,timezone:parsed.timezone,isAllDay:parsed.isAllDay,precision:parsed.precision,needsConfirmation:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:table?[headingId,lineId]:[lineId],confidence:1,selected:true})

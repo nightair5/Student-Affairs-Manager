@@ -14,7 +14,25 @@ import {projectLocalDeliveryRoles} from './deliveryRoleProjection'
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
  const improved=retainLocalEventDetails(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(projectLocalDeliveryRoles(improveLocalActions(input,source),source),source),source),source),source)
- return linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(improved),source),source)
+ return attachExplicitSharedGoal(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(improved),source,true),source),source)
+}
+
+/** Keep source-declared related actions together without merging their data. */
+function attachExplicitSharedGoal(input:RecognitionResult,source:string):RecognitionResult {
+ if(input.events.length||input.goalGroups?.length||/互不相关|彼此无关|不属于同/u.test(source))return input
+ const claims=[...source.matchAll(/(?:上述两项|以上两项|两项|两件事)(?:均|都)?(?:属于|是)同一(?:次|个|项)?([^，,。；;！？\n]{2,20})/gu)]
+ const tasks=[...input.standaloneTasks,...input.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])].filter(t=>t.selected)
+ if(claims.length!==1||tasks.length!==2||tasks.some(t=>!t.actionObject||['查看','核对'].includes(t.actionVerb)))return input
+ const claim=claims[0],quote=claim[0],start=claim.index!,title=claim[1].trim()
+ if(source.indexOf(quote)!==source.lastIndexOf(quote)||tasks.some(t=>!t.evidenceIds.some(id=>{const e=input.evidence.find(x=>x.id===id);return e&&typeof e.textStart==='number'&&e.textStart<start})))return input
+ // The two explicit actions must be the two clauses immediately preceding
+ // the shared-goal statement; an omitted intervening action is ambiguous.
+ const preceding=source.slice(0,start).split(/[。；;\n]/u).map(s=>s.trim()).filter(Boolean).slice(-2)
+ if(preceding.length!==2||tasks.some(t=>!preceding.some(s=>s.includes(t.actionVerb)&&s.includes(t.actionObject))))return input
+ const result=structuredClone(input),evidenceId=`local-shared-goal:${start}:evidence`
+ result.evidence.push({id:evidenceId,sourceId:input.evidence[0]?.sourceId??'source',quote,quotedText:quote,textStart:start,textEnd:start+quote.length,field:'description',extractionMethod:'parser',confidence:1})
+ result.goalGroups=[{id:`local-shared-goal:${start}`,title,taskTempIds:tasks.map(t=>t.tempId),evidenceIds:[evidenceId]}]
+ return result
 }
 
 const localSectionHeading=/^\s*(?:参加|参与|报名|活动)(?:须知|说明|要求|事项|方式|条件|时间|地点|流程|规则|注意事项)(?:\s*[：:]\s*|\s*$)/u
