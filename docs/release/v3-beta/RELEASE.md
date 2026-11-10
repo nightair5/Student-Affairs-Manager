@@ -1,3 +1,17 @@
+# 当前发布：v3.0.0-beta.38（2026-11-10）
+
+正式站点：https://student-affairs.site/；部署代码 `5ceb325efc3ccbb1d1aae12d07bea44abe7a8ba0`。
+Cloudflare 版本 `0fe105c0-8e98-4e85-b786-98e685c2ee44`。回滚到 beta.37：
+`$env:CLOUDFLARE_ACCOUNT_ID='b290abdbb9d1b0d1f5289abfdecbab0c'; node node_modules/wrangler/bin/wrangler.js rollback 8efad034-891b-420b-a395-10f68e9308d2 --env= --yes`。
+补齐有原文依据的活动准备事项归组，并在同句日期唯一时保留“同日”截止；各项时间和完成状态仍然独立。
+部署后两次线上真实 Flash 识别通过：活动与准备事项保留各自截止；同日两场活动各有正确时地。
+两份线上回答经隔离内存仓库验证保存、独立完成、重新读回、重复添加、撤销及备份；按用户要求未做浏览器页面验收。
+部署提交的本地检查及六项远端 CI 通过；线上首页、静态资源哈希和安全头通过。两份冒烟样例不代表整体准确率。
+既有不明请求、账本与用户数据均保留；办理窗口与后续截止分属已归组步骤时，页面呈现仍需进一步核验。
+证据：`.data/deploy-5ceb325e-20261110-233940/`。
+
+## 以下为此前记录
+
 # 当前发布：v3.0.0-beta.37（2026-11-07）
 
 正式站点：https://student-affairs.site/；部署代码 406f5428c09200a9097ee3dcfaf99322fc029391。
