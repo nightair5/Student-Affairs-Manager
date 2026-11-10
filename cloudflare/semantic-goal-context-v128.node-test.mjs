@@ -90,3 +90,58 @@ test('a genuinely restricted audience remains a qualification condition',()=>{
  const {result}=compileSemanticNotice(raw,options(changed))
  assert.ok(result.standaloneTasks.every(task=>task.userConfirmationRequired===true))
 })
+
+test('v1.0.29 locates the cited full participant clause when a relation quote is abbreviated',()=>{
+ const raw=facts()
+ const last=raw.items[2]
+ last.eventRelation.evidence='【研究展示】……并于7月12日12:00前提交作品摘要'
+ last.assignment={scope:'conditional',actor:'有意参加者',evidence:actionQuote,actorEvidence:'有意参加者'}
+ const {result,audit}=compileSemanticNotice(raw,{...options(source),goalContextVersion:'1.0.29'})
+ assert.equal(audit.compilerVersion,'semantic-notice-compiler-1.0.29')
+ assert.deepEqual(result.events[0].relatedTaskTempIds,result.standaloneTasks.map(task=>task.tempId))
+ assert.deepEqual(result.timePoints.filter(p=>p.type==='task_deadline').map(p=>p.normalizedValue),['2027-07-10T17:00','2027-07-12T12:00'])
+ assert.ok(result.evidence.every(ref=>source.slice(ref.textStart,ref.textEnd)===ref.quote))
+})
+
+test('v1.0.29 does not use an abbreviated quote to attach an intervening unrelated action',()=>{
+ const changed=source.replace('举办展示会。请','举办展示会。另有住宿事项需咨询老师。请')
+ const raw=facts(),last=raw.items[2]
+ last.eventRelation.evidence='【研究展示】……并于7月12日12:00前提交作品摘要'
+ last.assignment={scope:'conditional',actor:'有意参加者',evidence:actionQuote,actorEvidence:'有意参加者'}
+ const {result}=compileSemanticNotice(raw,{...options(changed),goalContextVersion:'1.0.29'})
+ assert.deepEqual(result.events[0].relatedTaskTempIds,[])
+ assert.equal(result.standaloneTasks.length,2)
+})
+
+test('v1.0.29 resolves a cited 同日 clock using a unique preceding calendar date',()=>{
+ const notice='请于2027年7月8日12:00前提交课程报告；另请于同日20:00前缴纳住宿费，两项互不相关。'
+ const raw={topic:'课程与住宿',kind:'action',materials:[],items:[
+  {key:'a',kind:'task',title:'提交课程报告',action:'提交',object:'课程报告',evidence:['请于2027年7月8日12:00前提交课程报告'],times:[{role:'deadline',raw:'2027年7月8日12:00前'}]},
+  {key:'b',kind:'task',title:'缴纳住宿费',action:'缴纳',object:'住宿费',evidence:['另请于同日20:00前缴纳住宿费'],times:[{role:'deadline',raw:'同日20:00前'}]},
+ ]}
+ const {result}=compileSemanticNotice(raw,{...options(notice),goalContextVersion:'1.0.29'})
+ assert.deepEqual(result.timePoints.filter(p=>p.type==='task_deadline').map(p=>p.normalizedValue),['2027-07-08T12:00','2027-07-08T20:00'])
+ assert.equal(result.standaloneTasks.length,2)
+})
+
+test('v1.0.29 leaves 同日 unresolved when the prior dates are ambiguous',()=>{
+ const notice='7月8日或7月9日安排检查；请于同日20:00前提交记录。'
+ const raw={topic:'检查记录',kind:'action',materials:[],items:[{key:'a',kind:'task',title:'提交记录',action:'提交',object:'记录',evidence:['请于同日20:00前提交记录'],times:[{role:'deadline',raw:'同日20:00前'}]}]}
+ const {result}=compileSemanticNotice(raw,{...options(notice),goalContextVersion:'1.0.29'})
+ assert.ok(result.timePoints.every(p=>!p.normalizedValue))
+ assert.equal(result.standaloneTasks.length,1)
+})
+
+test('v1.0.29 does not choose between a relative and a calendar day',()=>{
+ const notice='7月8日或明天安排检查；请于同日20:00前提交记录。'
+ const raw={topic:'检查记录',kind:'action',materials:[],items:[{key:'a',kind:'task',title:'提交记录',action:'提交',object:'记录',evidence:['请于同日20:00前提交记录'],times:[{role:'deadline',raw:'同日20:00前'}]}]}
+ const {result}=compileSemanticNotice(raw,{...options(notice),goalContextVersion:'1.0.29'})
+ assert.ok(result.timePoints.every(p=>!p.normalizedValue))
+})
+
+test('v1.0.29 does not inherit a date across unrelated sentences',()=>{
+ const notice='通知于7月8日发布。请于同日20:00前提交记录。'
+ const raw={topic:'提交记录',kind:'action',materials:[],items:[{key:'a',kind:'task',title:'提交记录',action:'提交',object:'记录',evidence:['请于同日20:00前提交记录'],times:[{role:'deadline',raw:'同日20:00前'}]}]}
+ const {result}=compileSemanticNotice(raw,{...options(notice),goalContextVersion:'1.0.29'})
+ assert.ok(result.timePoints.every(p=>!p.normalizedValue))
+})

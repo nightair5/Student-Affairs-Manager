@@ -17,7 +17,7 @@ const sharedAnchor=values=>{
 
 /** Preserve a cited relation as a view grouping. Never delete or merge the
  * actionable task: its independent deadline, materials and status remain. */
-export function applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference=false}){
+export function applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference=false,allowAssignmentEvidenceFallback=false}){
  const events=pending.filter(row=>row.kind==='event'&&result.events.includes(row.entity)&&!row.entity.sourceStatus)
  const tasks=pending.filter(row=>row.kind==='task'&&result.standaloneTasks.includes(row.entity))
  const eventOwners=new Set()
@@ -26,16 +26,21 @@ export function applySemanticGoalRelations({raw,result,pending,source,evidence,n
   if(!relation||typeof relation!=='object'||Array.isArray(relation))continue
   const target=events.find(row=>row.item.key===relation.eventKey)
   const quote=text(relation.evidence,500),anchor=compact(text(relation.eventAnchor,100))
-  const span=locateSourceQuote(quote,source)
+  // A model may abbreviate its relation quote with an ellipsis while separately
+  // citing the complete participant clause. Use that actual source span only
+  // for the guarded adjacent-participant rule below; never invent a quote.
+  const directSpan=locateSourceQuote(quote,source)
+  const fallbackQuote=text(task.item.assignment?.evidence,500)
+  const span=directSpan??(allowAssignmentEvidenceFallback?locateSourceQuote(fallbackQuote,source):null)
   const ownRefs=task.entity.evidenceIds.map(id=>result.evidence.find(ref=>ref.id===id)).filter(Boolean)
   const anchoredEvents=anchor?events.filter(row=>compact(row.entity.title).includes(anchor)||row.entity.evidenceIds.some(id=>compact(result.evidence.find(ref=>ref.id===id)?.quote).includes(anchor))):[]
-  const named=anchor.length>=2&&target&&anchoredEvents.length===1&&anchoredEvents[0]===target&&compact(span?.literal).includes(anchor)
+  const named=Boolean(directSpan)&&anchor.length>=2&&target&&anchoredEvents.length===1&&anchoredEvents[0]===target&&compact(span?.literal).includes(anchor)
   // A source can use a shortened name later in the same notice. Accept only
   // a literal shared mention that identifies one extracted event uniquely.
   const shortMention=target&&span?sharedAnchor([target.entity.title,anchor,span.literal]):''
   const shortOwners=shortMention?events.filter(row=>compact(row.entity.title).includes(shortMention)):[]
-  const shortened=Boolean(shortMention&&shortOwners.length===1&&shortOwners[0]===target&&!/(?:另一|其他|另有|互不相关|彼此独立)/u.test(span?.literal??'')&&target.entity.evidenceIds.some(id=>compact(result.evidence.find(ref=>ref.id===id)?.quote).includes(shortMention)))
-  const contextual=events.length===1&&target===events[0]&&/(?:本次|本场|该)(?:活动|讲座|会议|培训|分享会|工作坊|招聘会)/u.test(span?.literal??'')
+  const shortened=Boolean(directSpan&&shortMention&&shortOwners.length===1&&shortOwners[0]===target&&!/(?:另一|其他|另有|互不相关|彼此独立)/u.test(span?.literal??'')&&target.entity.evidenceIds.some(id=>compact(result.evidence.find(ref=>ref.id===id)?.quote).includes(shortMention)))
+  const contextual=Boolean(directSpan)&&events.length===1&&target===events[0]&&/(?:本次|本场|该)(?:活动|讲座|会议|培训|分享会|工作坊|招聘会)/u.test(span?.literal??'')
   // A following sentence may refer to the sole event as its participants
   // instead of repeating its name. Require the model's relation, a unique
   // source-backed event anchor and immediately adjacent source evidence.

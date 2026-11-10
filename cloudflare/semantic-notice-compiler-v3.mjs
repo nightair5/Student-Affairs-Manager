@@ -19,10 +19,26 @@ const compact = value => typeof value==='string'?value.normalize('NFKC').replace
 export const SEMANTIC_COMPILER_VERSION='semantic-notice-compiler-1.0.25'
 export const SEMANTIC_GOAL_COMPILER_VERSION='semantic-notice-compiler-1.0.27'
 export const SEMANTIC_GOAL_CONTEXT_COMPILER_VERSION='semantic-notice-compiler-1.0.28'
+export const SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION='semantic-notice-compiler-1.0.29'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
 const sourceDay = SOURCE_DAY_PATTERN
+
+// Resolve an explicit 同日 only within the same source sentence, and only when
+// that sentence contains one unambiguous preceding calendar date. Preserve the
+// date's original UTF-16 range for evidence rather than assigning today's date.
+function explicitSameDayAnchor(source,span){
+  if(!/^同(?:日|一天)/u.test(foldWidth(span.literal).trim()))return null
+  const before=source.slice(0,span.start)
+  const boundary=Math.max(before.lastIndexOf('。'),before.lastIndexOf('！'),before.lastIndexOf('？'),before.lastIndexOf('\n'))+1
+  const prefix=before.slice(Math.max(boundary,span.start-240))
+  if(/(?:次日|翌日|隔日|改期|延期|改至|更正|另一天)/u.test(prefix))return null
+  const matches=[...foldWidth(prefix).matchAll(new RegExp(sourceDay.source,'gu'))]
+  if(matches.length!==1||!/^\s*(?:\d{4}\s*年\s*)?\d{1,2}\s*月\s*\d{1,2}\s*[日号]\s*$/u.test(matches[0][0]))return null
+  const match=matches[0],start=span.start-prefix.length+match.index
+  return {start,end:start+match[0].length}
+}
 
 // Compare only to recover an original clause, never to certify a paraphrase
 // as a literal quote or to assert its (possibly changed) action as a fact.
@@ -309,8 +325,9 @@ function sourceLocation(source,value,title,ownText) {
  * validates source-backed time values without re-parsing the display title. */
 export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',promptVersion='recognition-semantic-notice-3.0.5',goalContextVersion=''}={}) {
   const goalContract=promptVersion==='recognition-semantic-notice-3.11.0'
-  const goalContextEnabled=goalContract&&goalContextVersion==='1.0.28'
-  const compilerVersion=goalContextEnabled?SEMANTIC_GOAL_CONTEXT_COMPILER_VERSION:goalContract?SEMANTIC_GOAL_COMPILER_VERSION:SEMANTIC_COMPILER_VERSION
+  const goalContextV129=goalContract&&goalContextVersion==='1.0.29'
+  const goalContextEnabled=goalContract&&(goalContextVersion==='1.0.28'||goalContextV129)
+  const compilerVersion=goalContextV129?SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION:goalContextEnabled?SEMANTIC_GOAL_CONTEXT_COMPILER_VERSION:goalContract?SEMANTIC_GOAL_COMPILER_VERSION:SEMANTIC_COMPILER_VERSION
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
     return {result:null,audit:{compilerVersion,rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
@@ -547,7 +564,8 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
         const localPrefix=prefix.slice(boundary),foldedPrefix=foldWidth(localPrefix),matches=[...foldedPrefix.matchAll(new RegExp(sourceDay.source,'gu'))]
         const day=matches.length===1?matches[0]:matches.length===2&&/\d/u.test(matches[0][0])
           &&/^[（(]\s*(?:本周|下周|周|星期)[一二三四五六日天]\s*[）)]\s*$/u.test(foldedPrefix.slice(matches[0].index+matches[0][0].length))?matches[0]:null
-        const anchored=kind==='event'?(contextualEventDay(source,span,item)||owned?.day||sharedDay||composed?.day||(goalContract?modelSummarySharedEventDay(source,span,item,raw.items,raw.summary):null)):day?{start:span.start-localPrefix.length+day.index,end:span.start-localPrefix.length+day.index+day[0].length}:null
+        const sameDayAnchor=goalContextV129&&kind==='task'&&entry.role==='deadline'?explicitSameDayAnchor(source,span):null
+        const anchored=kind==='event'?(contextualEventDay(source,span,item)||owned?.day||sharedDay||composed?.day||(goalContract?modelSummarySharedEventDay(source,span,item,raw.items,raw.summary):null)):sameDayAnchor||(day?{start:span.start-localPrefix.length+day.index,end:span.start-localPrefix.length+day.index+day[0].length}:null)
         if(!anchored){
           // Keep a source-backed clock as text when the day is unknown. It is
           // not a calendar timestamp and must never inherit the reference day.
@@ -578,7 +596,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
         // Compose only the two bound fragments. Including the intervening
         // source would allow a previous activity's clock to be parsed here.
         const decoration=source.slice(dateEnd,span.start).match(/^\s*[（(]\s*(?:周|星期)[一二三四五六日天]\s*[）)]/u)?.[0]??''
-        parseText=dateLiteral+decoration+' '+span.literal
+        parseText=dateLiteral+decoration+' '+(sameDayAnchor?span.literal.replace(/^同(?:日|一天)\s*/u,''):span.literal)
       }
       if(goalContract&&parseText===span.literal&&sourceDay.test(foldWidth(span.literal))){
         const inherited=modelCitedContextYear(source,span,item,raw.items)
@@ -892,7 +910,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
   }
   combineSupportedChoices(result,audit)
   if(['recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0','recognition-semantic-notice-3.11.0'].includes(promptVersion))applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone,includeContextFacts:['recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0','recognition-semantic-notice-3.11.0'].includes(promptVersion),documentContext:unifiedContract?raw.contextFacts:[],respectPersonalNeed:refinedContract,respectVoluntary:goalContract})
-  if(goalContract)applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference:goalContextEnabled})
+  if(goalContract)applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference:goalContextEnabled,allowAssignmentEvidenceFallback:goalContextV129})
   if(['recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0'].includes(promptVersion))applyEventIncidentalNotices({result,pending,source,evidence,note,audit})
   result.sourceSummary.title=text(raw.topic,160)||result.standaloneTasks[0]?.title||result.events[0]?.title||'通知'
   const onlyCancellation=audit.items.length>0&&audit.items.every(item=>item.status==='CANCELLED')
