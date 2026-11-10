@@ -141,9 +141,25 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   const inlineSessionTime=(p:TimePointSuggestionV2)=>{
     if(!p.tempId.startsWith('direct-inline-time:')||!['event_start','event_end'].includes(p.type))return null
     const owners=events.filter(e=>e.startTimePointTempId===p.tempId||e.endTimePointTempId===p.tempId)
-    const refs=p.evidenceIds.flatMap(id=>{const e=result.evidence.find(x=>x.id===id),found=located.get(id);return e?.extractionMethod==='parser'&&found?[found.quote]:[]})
+    const refs=p.evidenceIds.flatMap(id=>{const e=result.evidence.find(x=>x.id===id),found=located.get(id);return e?.extractionMethod==='parser'&&found?[found]:[]})
     const dates=[...sourceText.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]
-    if(owners.length!==1||refs.length<2||dates.length!==1||!refs.some(q=>q.includes(dates[0][0]))||!refs.some(q=>q.includes(p.rawText)&&q.includes(owners[0].title))||sourceText.split(p.rawText).length!==2)return null
+    if(owners.length!==1)return null
+    const position=/^direct-inline-time:(\d+):(?:start|end)$/u.exec(p.tempId)
+    const own=position&&refs.find(ref=>ref.at===Number(position[1])&&ref.quote.includes(p.rawText)&&ref.quote.includes(owners[0].title))
+    const ownDates=own?[...own.quote.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]:[]
+    if(result.modelName==='local-rules'&&own&&ownDates.length===1){
+      let date=ownDates[0][0]
+      const years=new Set(dates.flatMap(d=>{const match=/^(\d{4})年/u.exec(d[0]);return match?[match[1]]:[]}))
+      if(!/^\d{4}年/u.test(date)&&years.size){
+        const anchor=refs.find(ref=>ref.at<own.at&&/\d{4}年\d{1,2}月\d{1,2}[日号]/u.test(ref.quote))
+        const earlier=anchor&&/(\d{4})年(\d{1,2})月(\d{1,2})[日号]/u.exec(anchor.quote)
+        const current=/(\d{1,2})月(\d{1,2})[日号]/u.exec(date)
+        if(years.size!==1||!earlier||!current||Number(current[1])*100+Number(current[2])<Number(earlier[2])*100+Number(earlier[3]))return null
+        date=earlier[1]+'年'+date
+      }
+      return parseDirectSourceTime(date+' '+p.rawText,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
+    }
+    if(refs.length<2||dates.length!==1||!refs.some(q=>q.quote.includes(dates[0][0]))||!refs.some(q=>q.quote.includes(p.rawText)&&q.quote.includes(owners[0].title))||sourceText.split(p.rawText).length!==2)return null
     return parseDirectSourceTime(dates[0][0]+' '+p.rawText,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
   }
   const times: TimePointSuggestionV2[] = result.timePoints.filter(p => p.relatedTaskTempIds.some(id => taskIds.has(id)) || eventIds.has(p.tempId)).map(p => {

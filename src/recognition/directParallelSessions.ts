@@ -4,6 +4,8 @@ import type {EventSuggestion, RecognitionResult, TimePointSuggestionV2} from './
 import {localEventLocation} from './localNoticeFacts'
 
 type LabelledLine={label:string;value:string;start:number;whole:string;wholeStart:number}
+type Session={line:LabelledLine;role:string;date?:string;yearFromHeading?:boolean}
+type SessionSchedule={heading:string;date:string;sessions:Session[];places:Map<string,string>}
 const lines=(source:string):LabelledLine[]=>[...source.matchAll(/(?:^|\n)[ \t]*(?:【([^】\n]+)】|([^：:\n]{1,20})[：:])[ \t]*[：:]?[ \t]*([^\r\n]*)/gu)].map(m=>{
  const value=m[3].trim(),whole=m[0].replace(/^\n/u,'').trim(),wholeStart=m.index!+m[0].indexOf(whole)
  return {label:(m[1]??m[2]).trim(),value,start:wholeStart+whole.indexOf(value),whole,wholeStart}
@@ -27,13 +29,13 @@ function eventScheduleTable(source:string,extended=false):{heading:string;date:s
  const index=numbered?1:headerIndexes[0]+1,heading=numbered?rows[0]:rows[index-2]
  const headingTopic=heading?.text.replace(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu,'')??''
  const explicitEvent=/(?:活动|日程|讲座|培训|工作坊)/u.test(headingTopic)
- const datedEventLabel=extended&&/[\p{Script=Han}](?:日|周|节|季)(?:[】\]：:]|$)/u.test(headingTopic)
+ const datedEventLabel=extended&&(/[\p{Script=Han}](?:日|周|节|季)(?:[】\]：:]|$)/u.test(headingTopic)||/[\p{Script=Han}](?:日|周|节|季|月)(?:的)?安排/u.test(headingTopic))
  if(!heading||!explicitEvent&&!datedEventLabel||/报名|申请|提交|上传|缴费|截止/u.test(headingTopic))return null
  const dates=[...heading.text.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]
  if(dates.length!==1||source.indexOf(heading.text)!==source.lastIndexOf(heading.text)||/取消|改期|待定|备选|或/u.test(heading.text))return null
  const sessions:{line:LabelledLine;role:string}[]=[],places=new Map<string,string>()
  for(const row of rows.slice(index)){
-  const numberedRow=numbered?/^(?:[①②③④⑤⑥⑦⑧⑨⑩]|\d{1,2}[.、)])\s*(.+)$/u.exec(row.text)?.[1]:null
+  const numberedRow=numbered?/^(?:[①②③④⑤⑥⑦⑧⑨⑩]|\d{1,2}[.、)]|【[^】\n]{1,16}】)\s*(.+)$/u.exec(row.text)?.[1]:null
   const c=numbered?(numberedRow?.replace(/[。；;]$/u,'').split(/[，,]/u).map(x=>x.trim())??[]):cells(row.text)
   // A malformed row must not silently turn a partial schedule into a complete one.
   if(c.length!==3){if(numbered&&numberedRow||!numbered&&/[|｜]/u.test(row.text))return null;break}
@@ -52,8 +54,9 @@ function eventScheduleTable(source:string,extended=false):{heading:string;date:s
  * Every retained session has its own clock, venue and named event; a shared
  * date is inherited only from a unique source date and an explicit same-day
  * reference, or the existing compact one-line schedule. */
-function inlineEventSessions(source:string):{heading:string;date:string;sessions:{line:LabelledLine;role:string}[];places:Map<string,string>}|null {
+function inlineEventSessions(source:string):SessionSchedule|null {
  const dates=[...source.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]
+ if(dates.length>1)return explicitlyDatedEventSessions(source,dates)
  if(dates.length!==1)return null
  const parts=[...source.matchAll(/[^，,；;。！？\r\n]+/gu)].map(m=>({text:m[0].trim(),start:m.index!+m[0].indexOf(m[0].trim())}))
  const compactSchedule=!/[\r\n]/u.test(source)&&parts.length>=2&&parts.length<=3
@@ -78,6 +81,38 @@ function inlineEventSessions(source:string):{heading:string;date:string;sessions
  return dateHeading&&sessions.length>=2&&sessions.length<=8&&(!usesUnmarkedDate||sessions.length===parts.length)?{heading:dateHeading,date:dates[0][0],sessions,places}:null
 }
 
+/** Distinct explicitly dated clauses own their own date and clock. An omitted
+ * year may use one preceding explicit year only when the dates progress within
+ * that year; ambiguous rollover is left to the ordinary recognition path. */
+function explicitlyDatedEventSessions(source:string,dates:RegExpMatchArray[]):SessionSchedule|null {
+ if(dates.length<2||dates.length>8)return null
+ const parts=[...source.matchAll(/[^，,；;。！？\r\n]+/gu)].map(m=>({text:m[0].trim(),start:m.index!+m[0].indexOf(m[0].trim())}))
+ const sessions:Session[]=[],places=new Map<string,string>(),matchedDates=new Set<number>()
+ const datePattern=/^(?:(\d{4})年)?(\d{1,2})月(\d{1,2})[日号]/u
+ const explicitYears=new Set(dates.flatMap(d=>{const m=/^(\d{4})年/u.exec(d[0]);return m?[m[1]]:[]}))
+ const firstDate=datePattern.exec(dates[0][0]),anchorYear=firstDate?.[1]??null
+ if(!firstDate||!anchorYear||explicitYears.size>1&&dates.some(d=>!/^\d{4}年/u.test(d[0])))return null
+ const anchorMonthDay=Number(firstDate[2])*100+Number(firstDate[3])
+ for(const part of parts){
+  const m=/^((?:\d{4}年)?\d{1,2}月\d{1,2}[日号])\s*((?:(?:上午|中午|下午|傍晚|晚上)\s*)?\d{1,2}[:：][0-5]\d(?:\s*[-—–至到]\s*(?:(?:上午|中午|下午|傍晚|晚上)\s*)?\d{1,2}[:：][0-5]\d)?)\s*在/u.exec(part.text)
+  if(!m)continue
+  const location=localEventLocation(part.text),dateInfo=datePattern.exec(m[1])
+  if(!location||!dateInfo||places.has(location.name)||source.indexOf(part.text)!==source.lastIndexOf(part.text)||/取消|作废|改期|延期|备选|调整|更正|报名|提交|上传|填写/u.test(part.text))return null
+  const clocks=[...m[2].matchAll(/(\d{1,2})[:：]([0-5]\d)/gu)].map(x=>Number(x[1])*60+Number(x[2]))
+  if(clocks.some(x=>x>=24*60)||clocks.length===2&&clocks[1]<=clocks[0])return null
+  const yearFromHeading=Boolean(!dateInfo[1]&&anchorYear)
+  if(!dateInfo[1]&&Number(dateInfo[2])*100+Number(dateInfo[3])<anchorMonthDay)return null
+  const date=yearFromHeading?anchorYear+'年'+m[1]:m[1]
+  matchedDates.add(part.start)
+  places.set(location.name,location.location)
+  sessions.push({role:location.name,date,yearFromHeading,line:{label:location.name+'时间',value:m[2],start:part.start+part.text.indexOf(m[2]),whole:part.text,wholeStart:part.start}})
+ }
+ // Each date must belong to one complete event clause: a deadline, background
+ // year or unanchored date is not a shared event date.
+ if(sessions.length!==dates.length||dates.some(d=>!matchedDates.has(d.index!)))return null
+ return {heading:sessions[0].line.whole,date:sessions[0].date!,sessions,places}
+}
+
 /** Preserve independently labelled sessions from one announcement. Labels
  * and parenthetical venue qualifiers are joined by the same source role,
  * never by their order. Source offsets stay attached to each fact. */
@@ -87,9 +122,9 @@ export function completeParallelSessions(input:RecognitionResult,source:string,l
  const scheduleTable=input.events.length===0?eventScheduleTable(source,localInline):null
  const inlineSessions=localInline&&!scheduleTable?inlineEventSessions(source):null
  const table=scheduleTable??inlineSessions
- const sessions=table?.sessions??timeLines.map(l=>({line:l,role:l.label.slice(0,-2).trim()})).filter(s=>s.role&&!/(?:报名|申请|提交|登记|上传|缴费|领取|报送|截止)$/u.test(s.role))
+ const sessions:Session[]=table?.sessions??timeLines.map(l=>({line:l,role:l.label.slice(0,-2).trim()})).filter(s=>s.role&&!/(?:报名|申请|提交|登记|上传|缴费|领取|报送|截止)$/u.test(s.role))
  if(sessions.length<2||sessions.length>8||new Set(sessions.map(s=>s.role)).size!==sessions.length)return input
- if(table&&sessions.some(s=>{const p=parseDirectSourceTime(table.date+' '+s.line.value,{type:'event_start',referenceTime:input.createdAt,timezone:'Asia/Shanghai'});return !p.normalizedValue||Boolean(scheduleTable&&!p.rangeEndNormalizedValue)||p.needsConfirmation}))return input
+ if(table&&sessions.some(s=>{const p=parseDirectSourceTime((s.date??table.date)+' '+s.line.value,{type:'event_start',referenceTime:input.createdAt,timezone:'Asia/Shanghai'});return !p.normalizedValue||Boolean(scheduleTable&&!p.rangeEndNormalizedValue)||p.needsConfirmation}))return input
  // A revision or cancellation needs its own existing interpretation; do not
  // reintroduce the old schedule from a list of labelled times.
  if(/取消|作废|不再(?:举办|举行)|原定|改期|延期|调整为|更正为|变更为/u.test(source))return input
@@ -147,13 +182,17 @@ export function completeParallelSessions(input:RecognitionResult,source:string,l
  // Preserve a short shared overview and labelled information link as notice
  // context. These are source excerpts, not facts assigned to one session.
  const afterHeader=Math.max(...sessions.map(s=>s.line.wholeStart),roleLine?.wholeStart??0)
- const overviews=[...source.matchAll(/[^\r\n]+/gu)].map(m=>({quote:m[0].trim(),start:m.index!+m[0].indexOf(m[0].trim())})).filter(p=>p.start>afterHeader&&p.quote.length>=25&&p.quote.length<=350&&!/^【|^(?:请|须|需|截止|报名)/u.test(p.quote)&&!/(?:请|须|需).{0,60}(?:填写|提交|报名|登记|上传)/u.test(p.quote)&&!/(?:\d{1,2}[:：]\d{2}|\d{1,2}月\d{1,2}[日号])/u.test(p.quote)).slice(0,4)
+ const overviewLines=[...source.matchAll(/[^\r\n]+/gu)].map(m=>({quote:m[0].trim(),start:m.index!+m[0].indexOf(m[0].trim())})).filter(p=>p.start>afterHeader&&p.quote.length>=25&&p.quote.length<=350&&!/^【|^(?:请|须|需|截止|报名)/u.test(p.quote)&&!/(?:请|须|需).{0,60}(?:填写|提交|报名|登记|上传)/u.test(p.quote)&&!/(?:\d{1,2}[:：]\d{2}|\d{1,2}月\d{1,2}[日号])/u.test(p.quote))
+ // Keep short, explicitly notice-wide preparation as context, not as another
+ // task. A named or ordinal session instruction is not shared with others.
+ const sharedNotes=localInline&&/(?:两场|多场|各场|每场|所有场次)/u.test(source)?[...source.matchAll(/[^。！？\r\n]+[。！？]?/gu)].map(m=>({quote:m[0].trim(),start:m.index!+m[0].indexOf(m[0].trim())})).filter(p=>p.start>afterHeader&&p.quote.length>=4&&p.quote.length<=160&&/^(?:请|建议|注意|参与者)/u.test(p.quote)&&!/(?:第一场|第二场|上午场|下午场|本场|该场)/u.test(p.quote)&&!sessions.some(s=>p.quote.includes(s.role))&&!/(?:报名|填写|提交|上传|缴费|登记|申请|预约|领取|截止|取消|改期|变更|\d{1,2}[:：]\d{2}|\d{1,2}月\d{1,2}[日号])/u.test(p.quote)):[]
+ const overviews=[...overviewLines,...sharedNotes].filter((item,index,items)=>items.findIndex(other=>other.start===item.start&&other.quote===item.quote)===index).slice(0,4)
  const linkedInfo=parsedLines.find(l=>/(?:信息|介绍|详情|说明)$/u.test(l.label)&&/^https?:\/\//u.test(l.value)&&l.whole.length<=500)
- for(const {line,role} of sessions){
+ for(const {line,role,date,yearFromHeading} of sessions){
   const current=r.events.find(e=>matchesRole(e,role)),id=current?.tempId??`direct-session:${line.wholeStart}`,timeId=table&&localInline?`direct-inline-time:${line.wholeStart}:start`:id+':start',endId=table&&localInline?`direct-inline-time:${line.wholeStart}:end`:id+':end',headingId=id+':heading',lineId=id+':time',placeId=id+':location'
-  const parsed=parseDirectSourceTime(table?table.date+' '+line.value:line.value,{type:'event_start',referenceTime:r.createdAt,timezone:'Asia/Shanghai'})
+  const parsed=parseDirectSourceTime(table?(date??table.date)+' '+line.value:line.value,{type:'event_start',referenceTime:r.createdAt,timezone:'Asia/Shanghai'})
   const selectedTime=parsed.normalizedValue&&!parsed.needsConfirmation?parsed.normalizedValue:null
-  const point=(tempId:string,type:'event_start'|'event_end',value:string):TimePointSuggestionV2=>({tempId,type,rawText:line.value,normalizedValue:value,timezone:parsed.timezone,isAllDay:parsed.isAllDay,precision:parsed.precision,needsConfirmation:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:table?[headingId,lineId]:[lineId],confidence:1,selected:true})
+  const point=(tempId:string,type:'event_start'|'event_end',value:string):TimePointSuggestionV2=>({tempId,type,rawText:line.value,normalizedValue:value,timezone:parsed.timezone,isAllDay:parsed.isAllDay,precision:parsed.precision,needsConfirmation:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:table&&(!date||yearFromHeading)?[headingId,lineId]:[lineId],confidence:1,selected:true})
   r.evidence=r.evidence.filter(e=>![headingId,lineId,placeId,id+':linked-info'].includes(e.id)&&!e.id.startsWith(id+':overview:'))
   r.evidence.push(evidence(headingId,header,headingStart,'event'),evidence(lineId,line.whole,line.wholeStart,'event'))
   if(roleLine)r.evidence.push(evidence(placeId,roleLine.whole,roleLine.wholeStart,'event'))

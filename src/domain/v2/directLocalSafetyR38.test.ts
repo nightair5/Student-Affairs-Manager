@@ -25,6 +25,28 @@ async function setup(){
 }
 
 describe('local facts in the canonical repository',()=>{
+ it('preserves different event dates and independent completion through readback and backup',async()=>{
+  const {repo,store,add}=await setup(),source='2027年8月23日9:00—10:00在研修楼101举行语言讲座；8月24日14:00—15:00在研修楼102开展写作工作坊。'
+  await add(source,'different-dates-first')
+  const saved=(await new CanonicalWorkspaceRepository(store).load())!,[first,second]=saved.events
+  expect(saved.events).toHaveLength(2)
+  await commitEventCompletion(repo,{operationId:'different-dates-done',eventId:first.id,expected:false,completed:true,changedAt:now})
+  let readback=(await new CanonicalWorkspaceRepository(store).load())!
+  let view=workspaceV8ToLegacyView(readback)
+  expect(view.events.find(e=>e.id===first.id)?.personalCompleted).toBe(true)
+  expect(view.events.find(e=>e.id===second.id)?.personalCompleted).not.toBe(true)
+  expect(view.events.map(e=>[e.startAt,e.endAt,e.location])).toEqual(expect.arrayContaining([
+   ['2027-08-23T09:00','2027-08-23T10:00','研修楼101'],['2027-08-24T14:00','2027-08-24T15:00','研修楼102'],
+  ]))
+  await commitEventCompletion(repo,{operationId:'different-dates-restore',eventId:first.id,expected:true,expectedRevision:'different-dates-done',completed:false,changedAt:now})
+  const beforeRepeat=(await repo.load())!,batch=await add(source,'different-dates-second')
+  expect((await repo.load())!.events).toHaveLength(4)
+  await undoDirectBatchPreservingEdits(repo,batch.receipt.batch!.id,now)
+  readback=(await new CanonicalWorkspaceRepository(store).load())!
+  expect(readback.events).toEqual(beforeRepeat.events)
+  view=workspaceV8ToLegacyView(importWorkspaceV8(exportWorkspaceV8(readback)))
+  expect(view.events.map(e=>e.startAt).sort()).toEqual(['2027-08-23T09:00','2027-08-24T14:00'])
+ })
  it('keeps two real sessions independent across completion, restore, repeat, undo and JSON backup',async()=>{
   const {repo,store,add}=await setup(),source='2027年5月6日9:00—10:00在青楼101举行摄影讲座；当天14:00—15:30在青楼201开展摄影实操。'
   await add(source,'events-first')

@@ -142,6 +142,18 @@ describe('source-backed separate events and explicit shared goal',()=>{
   expect(first.description).toContain('常见树木与叶片');expect(first.description).not.toContain('现场收音')
   expect(second.description).toContain('现场收音与记录');expect(second.description).not.toContain('常见树木')
  })
+ it('keeps short notice-wide preparation with both explicitly independent sessions',()=>{
+  const source='活动分成两场，参与者可以只参加其中一场。\n2027年7月6日9:00—10:30在东门花园开展植物观察，讲解常见树木。\n同日14:00—15:30在南楼402开展声音工作坊，内容包括现场收音。\n请自行携带饮水。两处地点不同，无需提交作品。'
+  const r=run(source)
+  expect(r.events).toHaveLength(2)
+  expect(r.events.every(e=>e.description.includes('请自行携带饮水'))).toBe(true)
+  expect(r.standaloneTasks.some(t=>/携带饮水|提交作品/u.test(t.title))).toBe(false)
+ })
+ it('does not assign one session-specific instruction to the other session',()=>{
+  const source='活动分成两场。\n2027年7月6日9:00—10:30在东门花园开展植物观察。\n同日14:00—15:30在南楼402开展声音工作坊。\n声音工作坊请自带耳机。'
+  const r=run(source),first=r.events.find(e=>e.title==='植物观察')!
+  expect(first).toBeTruthy();expect(first.description).not.toContain('自带耳机')
+ })
  it('keeps numbered same-day sessions separate and carries each time and venue',()=>{
   const r=run('2027年5月8日手工体验日：\n①9:00—10:00，木工工坊，工艺楼101。\n②11:00—12:00，编织工坊，工艺楼102。\n③15:00—16:00，陶艺体验，工艺楼103。')
   expect(r.events).toHaveLength(3)
@@ -167,5 +179,64 @@ describe('source-backed separate events and explicit shared goal',()=>{
  it('does not group same-day unrelated tasks',()=>{
   const r=run('6月2日17:00前交社团服装；同一天20:00前提交统计课作业，两项彼此无关。')
   expect(r.goalGroups??[]).toHaveLength(0)
+ })
+})
+
+describe('local explicit date ownership for separate activities',()=>{
+ it('retains separate labelled sessions under an explicitly dated schedule',()=>{
+  const r=run('国际文化周安排在5月10日。\n【上午场】10:00—11:00，外语角，东楼301。\n【下午场】15:00—16:00，配音体验，东楼302。')
+  expect(r.events.map(e=>[e.title,point(r,e.startTimePointTempId),e.location])).toEqual(expect.arrayContaining([
+   ['外语角','2027-05-10T10:00','东楼301'],['配音体验','2027-05-10T15:00','东楼302'],
+  ]))
+ })
+ it('does not interpret dated delivery instructions as a schedule of activities',()=>{
+  const r=run('申请材料安排在5月10日。\n【第一项】10:00—11:00，提交证明，东楼301。\n【第二项】15:00—16:00，上传表格，东楼302。')
+  expect(r.events.some(e=>/提交证明|上传表格/u.test(e.title))).toBe(false)
+ })
+ it('does not treat a generic work schedule as proof of separate events',()=>{
+  const r=run('项目安排在5月10日。\n【第一项】10:00—11:00，材料整理，东楼301。\n【第二项】15:00—16:00，表格核对，东楼302。')
+  expect(r.events.some(e=>/材料整理|表格核对/u.test(e.title))).toBe(false)
+ })
+ it('retains independently dated activities in the same notice without sharing dates',()=>{
+  const r=run('2027年8月23日9:00—10:00在研修楼101举行语言讲座；8月24日14:00—15:00在研修楼102开展写作工作坊。')
+  expect(r.events).toHaveLength(2)
+  expect(r.events.map(e=>[e.title,point(r,e.startTimePointTempId),point(r,e.endTimePointTempId),e.location])).toEqual(expect.arrayContaining([
+   ['语言讲座','2027-08-23T09:00','2027-08-23T10:00','研修楼101'],
+   ['写作工作坊','2027-08-24T14:00','2027-08-24T15:00','研修楼102'],
+  ]))
+ })
+ it('retains distinct explicit years across a year boundary',()=>{
+  const r=run('2027年12月31日20:00—21:00在北楼101举行迎新讲座；2028年1月1日10:00—11:00在北楼102开展新年工作坊。')
+  expect(r.events).toHaveLength(2)
+  expect(r.events.map(e=>[point(r,e.startTimePointTempId),e.location])).toEqual(expect.arrayContaining([
+   ['2027-12-31T20:00','北楼101'],['2028-01-01T10:00','北楼102'],
+  ]))
+ })
+ it('uses the owning dated clause even when both activities share the same clock',()=>{
+  const r=run('2027年8月23日9:00—10:00在研修楼101举行语言讲座；2027年8月24日9:00—10:00在研修楼102开展写作工作坊。')
+  expect(r.events.map(e=>[point(r,e.startTimePointTempId),e.location])).toEqual(expect.arrayContaining([
+   ['2027-08-23T09:00','研修楼101'],['2027-08-24T09:00','研修楼102'],
+  ]))
+ })
+ it('does not silently infer a new year from an ambiguous yearless date',()=>{
+  const r=run('2027年12月31日20:00—21:00在北楼101举行迎新讲座；1月1日10:00—11:00在北楼102开展新年工作坊。')
+  const second=r.events.find(e=>e.title.includes('新年工作坊'))
+  if(second)expect(point(r,second.startTimePointTempId)).not.toMatch(/^2027-01-01/u)
+ })
+ it('rejects a time altered to a different activity date',()=>{
+  const source='2027年8月23日9:00—10:00在研修楼101举行语言讲座；8月24日14:00—15:00在研修楼102开展写作工作坊。'
+  const raw=buildLocalRecognition({sourceType:'text',sourceTitle:'匿名通知',content:source,referenceTime,timezone:'Asia/Shanghai',projects:[],tasks:[]})
+  const prepared=improveDirectFallback(raw,source),second=prepared.events.find(e=>e.title==='写作工作坊')!
+  prepared.timePoints.find(p=>p.tempId===second.startTimePointTempId)!.normalizedValue='2027-08-23T14:00'
+  const r=convertDirectResult(prepared,source).result
+  expect(point(r,r.events.find(e=>e.title==='写作工作坊')!.startTimePointTempId)).toBeNull()
+ })
+ it('never assigns a date to an unrelated activity with an unspecified date',()=>{
+  const r=run('2027年8月23日9:00—10:00在研修楼101举行语言讲座。另一个活动日期未定。14:00—15:00在研修楼102开展写作工作坊。')
+  expect(r.events.filter(e=>e.title.includes('写作工作坊')).every(e=>point(r,e.startTimePointTempId)!=='2027-08-23T14:00')).toBe(true)
+ })
+ it('does not convert an independently dated deadline into an activity',()=>{
+  const r=run('2027年8月23日9:00—10:00在研修楼101举行语言讲座；8月24日14:00前提交实验报告。')
+  expect(r.events.filter(e=>point(r,e.startTimePointTempId)==='2027-08-24T14:00')).toHaveLength(0)
  })
 })
