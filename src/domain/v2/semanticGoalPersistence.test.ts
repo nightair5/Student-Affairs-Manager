@@ -11,6 +11,7 @@ import {eventActionGroups} from '../../lib/homeFlow'
 import {directReplacementDiff} from './directReplacementSafety'
 import {setEventActionLink} from './eventActionLink'
 import {readCommandReceipt} from './commandReadback'
+import {commitTaskCommand} from './taskCommand'
 
 const now='2026-11-07T10:00:00+08:00',version='recognition-semantic-notice-3.11.0'
 async function repository(){
@@ -21,6 +22,36 @@ async function repository(){
 }
 
 describe('source-backed goal groups in canonical storage',()=>{
+ it('keeps adjacent event preparation grouped with independent dates and completion',async()=>{
+  const source='【研究展示】2027年7月15日14:00—16:00在实验楼301举办展示会。请有意参加者在7月10日17:00前填写报名表，并于7月12日12:00前提交作品摘要。'
+  const relation='请有意参加者在7月10日17:00前填写报名表，并于7月12日12:00前提交作品摘要'
+  const facts={topic:'研究展示',kind:'mixed',items:[
+   {key:'event',kind:'event',title:'研究展示',location:'实验楼301',evidence:['2027年7月15日14:00—16:00在实验楼301举办展示会'],times:[{role:'start',raw:'2027年7月15日14:00—16:00'},{role:'end',raw:'2027年7月15日14:00—16:00'}]},
+   {key:'register',kind:'task',title:'填写报名表',action:'填写',object:'报名表',condition:'有意参加者',evidence:['请有意参加者在7月10日17:00前填写报名表'],times:[{role:'deadline',raw:'7月10日17:00前'}],eventRelation:{eventKey:'event',eventAnchor:'研究展示',evidence:relation}},
+   {key:'abstract',kind:'task',title:'提交作品摘要',action:'提交',object:'作品摘要',condition:'有意参加者',evidence:['并于7月12日12:00前提交作品摘要'],times:[{role:'deadline',raw:'7月12日12:00前'}],eventRelation:{eventKey:'event',eventAnchor:'研究展示',evidence:relation}},
+  ],materials:[]}
+  const time='2027-03-01T09:00:00+08:00'
+  const result=parseRecognitionResult(compileSemanticNotice(facts,{source,referenceTime:time,timezone:'Asia/Shanghai',promptVersion:version,goalContextVersion:'1.0.28'}).result)
+  const {repo,store,capture}=await repository()
+  const add=async(operationId:string)=>{const h=await capture.beginCapture({operationId,sourceType:'text',title:'匿名通知',rawText:source,provider:'deepseek',modelName:'fixture',promptVersion:version,pipelineVersion:'test',now:time});await capture.recognize(h,async()=>structuredClone(result));return commitDirectDraft(repo,h.draftId,time)}
+  await add('context-first')
+  const first=(await new CanonicalWorkspaceRepository(store).load())!,[initialTask,otherTask]=first.tasks
+  let view=workspaceV8ToLegacyView(first)
+  expect(eventActionGroups(view.tasks,view.events,first)[view.events[0].id]).toHaveLength(2)
+  expect(view.tasks.map(task=>task.deadline).sort()).toEqual(['2027-07-10T17:00','2027-07-12T12:00'])
+  await commitTaskCommand(repo,{operationId:'context-done',taskId:initialTask.id,expected:{status:initialTask.status},changes:{status:'completed'},changedAt:time})
+  const done=(await new CanonicalWorkspaceRepository(store).load())!
+  expect(done.tasks.find(task=>task.id===otherTask.id)?.status).toBe(otherTask.status)
+  expect(done.events).toEqual(first.events)
+  await commitTaskCommand(repo,{operationId:'context-restore',taskId:initialTask.id,expected:{status:'completed'},changes:{status:initialTask.status},changedAt:time})
+  const beforeRepeat=(await repo.load())!,second=await add('context-second')
+  await undoDirectBatchPreservingEdits(repo,second.batch!.id,time)
+  const after=(await new CanonicalWorkspaceRepository(store).load())!
+  expect(after.tasks).toEqual(beforeRepeat.tasks);expect(after.events).toEqual(beforeRepeat.events)
+  const restored=importWorkspaceV8(exportWorkspaceV8(after));view=workspaceV8ToLegacyView(restored)
+  expect(eventActionGroups(view.tasks,view.events,restored)[view.events[0].id]).toHaveLength(2)
+  expect(view.tasks.map(task=>task.deadline).sort()).toEqual(['2027-07-10T17:00','2027-07-12T12:00'])
+ })
  it('preserves an event with separate actions, independent deadlines and a second reversible batch',async()=>{
   const source='求职分享会于2026年11月18日14:30在明德楼309举行。参加分享会请先填写报名表，再于11月17日17:00前提交个人简历。'
   const relation='参加分享会请先填写报名表，再于11月17日17:00前提交个人简历'

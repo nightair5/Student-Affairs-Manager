@@ -13,7 +13,7 @@ import {SEMANTIC_NOTICE_VERSION as TIMED_ACTION_VERSION,semanticNoticeRequest as
 import {SEMANTIC_NOTICE_VERSION as GOAL_VERSION,semanticNoticeRequest as goalNoticeRequest} from './semantic-notice-contract-v3-11-0.mjs'
 
 /** One full-notice request. No hidden retry or second semantic rewrite. */
-export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userText,source,referenceTime,timezone,actorRoles=false}) {
+export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userText,source,referenceTime,timezone,actorRoles=false,goalContextVersion=''}) {
   const started=Date.now()
   const actorContext=actorRoles==='semantic-notice-3.4'
   const serviceContext=actorRoles==='semantic-notice-3.5'
@@ -32,7 +32,7 @@ export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userTe
   }
   const decoded=decodeRecognitionOutput(payload?.choices?.[0]?.message?.content,{finishReason:payload?.choices?.[0]?.finish_reason})
   const actualModel=typeof payload?.model==='string'&&payload.model.trim()?payload.model.trim().slice(0,80):null
-  const compiled=compileSemanticNotice(decoded.value,{source,referenceTime,timezone,model:actualModel??'上游未提供',promptVersion})
+  const compiled=compileSemanticNotice(decoded.value,{source,referenceTime,timezone,model:actualModel??'上游未提供',promptVersion,goalContextVersion})
   if(!compiled.result)return {ok:false,status:502,error:'INVALID_AI_RESPONSE',samples:[{status:200,elapsedMs:Date.now()-started}]}
   const truncated=decoded.audit.partial||payload?.choices?.[0]?.finish_reason==='length'
   if(truncated){compiled.result.quality.needsHumanReview=true;compiled.result.quality.reviewReasons.push('本次回答未完整结束，部分内容可能尚未整理。');compiled.result.ambiguities.push({id:'sem-truncated',field:'source_reference',message:'本次回答未完整结束，原文已保留。',options:['查看原文'],evidenceIds:[]})}

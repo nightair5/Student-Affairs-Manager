@@ -809,7 +809,7 @@ async function extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,c
     const actorRoles=actorContracts.includes(env.DEEPSEEK_GENERATION_MODE)?env.DEEPSEEK_GENERATION_MODE:env.DEEPSEEK_GENERATION_MODE==='semantic-notice-3.0'&&actorContracts.includes(requestedContract)?requestedContract:false
     if(actorRoles)context.generationMode=actorRoles
     const generated=['semantic-notice-3.0',...actorContracts].includes(env.DEEPSEEK_GENERATION_MODE)
-      ?await runSemanticNoticeGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),source:body.content,referenceTime,timezone,actorRoles,userText:extractionUserText(body,body.content,safeText(body.sourceTitle,160),referenceTime,timezone)})
+      ?await runSemanticNoticeGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),source:body.content,referenceTime,timezone,actorRoles,goalContextVersion:env.SEMANTIC_GOAL_CONTEXT_VERSION,userText:extractionUserText(body,body.content,safeText(body.sourceTitle,160),referenceTime,timezone)})
       :env.DEEPSEEK_GENERATION_MODE==='simple-1.0'
       ?await runSimpleGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),body:{...body,referenceTime,timezone}})
       :await runTwoStepGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),source:body.content,referenceTime,timezone,mode:env.DEEPSEEK_GENERATION_MODE,compilerVersion:env.TWO_STEP_COMPILER_VERSION??'2.1.9',userText:extractionUserText(body,body.content,safeText(body.sourceTitle,160),referenceTime,timezone)})

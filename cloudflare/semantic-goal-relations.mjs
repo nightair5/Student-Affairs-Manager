@@ -17,7 +17,7 @@ const sharedAnchor=values=>{
 
 /** Preserve a cited relation as a view grouping. Never delete or merge the
  * actionable task: its independent deadline, materials and status remain. */
-export function applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit}){
+export function applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference=false}){
  const events=pending.filter(row=>row.kind==='event'&&result.events.includes(row.entity)&&!row.entity.sourceStatus)
  const tasks=pending.filter(row=>row.kind==='task'&&result.standaloneTasks.includes(row.entity))
  const eventOwners=new Set()
@@ -36,7 +36,19 @@ export function applySemanticGoalRelations({raw,result,pending,source,evidence,n
   const shortOwners=shortMention?events.filter(row=>compact(row.entity.title).includes(shortMention)):[]
   const shortened=Boolean(shortMention&&shortOwners.length===1&&shortOwners[0]===target&&!/(?:另一|其他|另有|互不相关|彼此独立)/u.test(span?.literal??'')&&target.entity.evidenceIds.some(id=>compact(result.evidence.find(ref=>ref.id===id)?.quote).includes(shortMention)))
   const contextual=events.length===1&&target===events[0]&&/(?:本次|本场|该)(?:活动|讲座|会议|培训|分享会|工作坊|招聘会)/u.test(span?.literal??'')
-  if(!target||!span||(!named&&!shortened&&!contextual)||!ownRefs.some(ref=>overlaps(span,ref))){
+  // A following sentence may refer to the sole event as its participants
+  // instead of repeating its name. Require the model's relation, a unique
+  // source-backed event anchor and immediately adjacent source evidence.
+  const previousRefs=target&&span?target.entity.evidenceIds.map(id=>result.evidence.find(ref=>ref.id===id)).filter(ref=>ref&&ref.textEnd<=span.start).sort((a,b)=>b.textEnd-a.textEnd):[]
+  const previous=previousRefs[0],rawAnchor=text(relation.eventAnchor,100),anchorAt=rawAnchor?source.indexOf(rawAnchor):-1
+  const sourceAnchor=Boolean(previous&&anchorAt>=0&&source.lastIndexOf(rawAnchor)===anchorAt&&(
+   compact(previous.quote).includes(anchor)||anchorAt<previous.textStart&&/^[\s】\]）):：]*$/u.test(source.slice(anchorAt+rawAnchor.length,previous.textStart))&&(anchorAt===0||/[\s【\[(（:：]/u.test(source[anchorAt-1]))))
+  const participant=/^(?:请)?(?:有意|有意向|希望|拟|计划|愿意)(?:参加|参与)(?:者|的?(?:同学|学生|人员))/u.test(span?.literal??'')
+  const adjacent=Boolean(allowAdjacentParticipantReference&&events.length===1&&target===events[0]&&anchoredEvents.length===1&&anchoredEvents[0]===target
+   &&Array.isArray(raw.items)&&raw.items.filter(item=>item?.kind==='event'&&item.status!=='cancelled').length===1&&span&&previous&&sourceAnchor&&participant
+   &&!/(?:另有|另请|另外|此外|互不相关|彼此独立|与.{0,12}无关)/u.test(span.literal)
+   &&/^[\s。！？；;，,]*$/u.test(source.slice(previous.textEnd,span.start)))
+  if(!target||!span||(!named&&!shortened&&!contextual&&!adjacent)||!ownRefs.some(ref=>overlaps(span,ref))){
    note('RELATION',task.item.key,'EVENT_GOAL_RELATION_UNCONFIRMED');continue
   }
   if(target.entity.evidenceIds.length>=20){note('RELATION',task.item.key,'EVENT_GOAL_EVIDENCE_OVERFLOW');continue}
