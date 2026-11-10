@@ -15,7 +15,19 @@ export function directEventRevision(text:string,name?:string){
   const matches=sentences.flatMap((span,index)=>{
     const sentence=span[0]
     const cue=revisionCue.exec(sentence)
-    if(!cue)return []
+    if(!cue){
+      // An explicit replacement can also say “the original X is cancelled;
+      // at the new time/place it will be held again”. Both references must
+      // occur in the same clause, and the replacement must not name another
+      // event. This does not infer a replacement from cancellation alone.
+      const replacement=/(?:^|[，,；;])\s*原(?:定)?[^，,；;]{0,45}?的([^，,；;]{1,35}?)取消[，,；;]\s*([^，,；;]{1,80}?(?:重新|再次)(?:举行|举办|召开|进行))\s*(?=[；;]|$)/u.exec(sentence)
+      if(!replacement)return []
+      const title=replacement[1].trim(),after=replacement[2].trim()
+      if(name&&eventName(name)!==eventName(title))return []
+      if(!/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/u.test(after))return []
+      const location=/在\s*([^，,；;]{1,40}?)\s*(?:重新|再次)(?:举行|举办|召开|进行)/u.exec(after)?.[1]??null
+      return [{sentence:replacement[0],title,after,location}]
+    }
     const before=sentence.slice(0,cue.index),after=sentence.slice(cue.index+cue[0].length)
     if(!/原定|原安排/u.test(before))return []
     const named=[...before.matchAll(/(?:举行|举办|召开)的?([^，,；;]{2,45}?)(?:取消|作废|[，,；;]|$)/gu)]
@@ -61,7 +73,17 @@ export function completeDirectLocalFacts(input:RecognitionResult,source:string):
     const eid=evidence(quote,'deadline');if(!eid||!value)return null
     const p=parseDirectSourceTime(quote,{type,referenceTime:r.createdAt,timezone:'Asia/Shanghai'})
     if(p.needsConfirmation)return null
-    const point:TimePointSuggestionV2={tempId:id,type,rawText:quote,normalizedValue:value,timezone:'Asia/Shanghai',precision:value.includes('T')?'exact':'date_only',isAllDay:!value.includes('T'),needsConfirmation:false,relatedTaskTempIds:owner?[owner]:[],relatedMaterialTempIds:[],evidenceIds:[eid],confidence:1,selected:true}
+    // Keep the full quote as evidence but use a uniquely parseable, literal
+    // time clause for the bounded time field. Never insert an ellipsis into a
+    // supposed verbatim source span or discard the rest of the notice.
+    let rawText=quote
+    if(rawText.length>160){
+      const clauses=[...quote.matchAll(/[^。！？；;\n]+/gu)].map(m=>m[0].trim()).filter(s=>s.length>0&&s.length<=160)
+      const matches=clauses.filter(s=>{const parsed=parseDirectSourceTime(s,{type,referenceTime:r.createdAt,timezone:'Asia/Shanghai'});return !parsed.needsConfirmation&&(type==='event_end'?parsed.rangeEndNormalizedValue:parsed.normalizedValue)===value})
+      if(matches.length!==1)return null
+      rawText=matches[0]
+    }
+    const point:TimePointSuggestionV2={tempId:id,type,rawText,normalizedValue:value,timezone:'Asia/Shanghai',precision:value.includes('T')?'exact':'date_only',isAllDay:!value.includes('T'),needsConfirmation:false,relatedTaskTempIds:owner?[owner]:[],relatedMaterialTempIds:[],evidenceIds:[eid],confidence:1,selected:true}
     r.timePoints=r.timePoints.filter(p=>p.tempId!==id);r.timePoints.push(point);return id
   }
   const revision=directEventRevision(source)
@@ -85,9 +107,30 @@ export function completeDirectLocalFacts(input:RecognitionResult,source:string):
       const oldPoints=new Set(oldEvents.flatMap(e=>[e.startTimePointTempId,e.endTimePointTempId]))
       r.events=r.events.filter(e=>!oldEvents.includes(e));r.timePoints=r.timePoints.filter(p=>!oldPoints.has(p.tempId)||p.relatedTaskTempIds.length>0)
       const id='direct-local-revised-event',start=addTime(id+':start','event_start',revision.after,parsed.normalizedValue,null),end=addTime(id+':end','event_end',revision.after,parsed.rangeEndNormalizedValue,null)
-      r.events.push({tempId:id,title:revision.title,description:'',location:revision.location,startTimePointTempId:start,endTimePointTempId:end,evidenceIds:[eid],confidence:1,inferenceLevel:'explicit',selected:true,relatedTaskTempIds:[]})
+      const following=source.slice(source.indexOf(revision.sentence)+revision.sentence.length).match(/^[；;，,]\s*((?:无需|无须|不必|不需要)(?:再|重新|另行)?(?:报名|登记|预约|提交|缴费)[^。；;！？\n]{0,60})/u)?.[1]
+      const noticeId=following?evidence(following,'description'):null
+      r.events.push({tempId:id,title:revision.title,description:noticeId?`参加须知：${following}`:'',location:revision.location,startTimePointTempId:start,endTimePointTempId:end,evidenceIds:noticeId?[eid,noticeId]:[eid],confidence:1,inferenceLevel:'explicit',selected:true,relatedTaskTempIds:[]})
       r.standaloneTasks=r.standaloneTasks.filter(t=>!(t.actionVerb==='核对'&&t.evidenceIds.some(id=>{const q=r.evidence.find(e=>e.id===id)?.quote;return q&&revision.sentence.includes(q)})))
     }
+  }
+  // A cited pickup/handling interval belongs to that action as a window, not
+  // as a cutoff. Promote its two literal endpoints only when the parser had
+  // mistakenly assigned the interval's start as this same task's deadline.
+  const allTasks=[...r.standaloneTasks,...r.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
+  for(const task of allTasks){
+    if(!/^(?:领取|办理|取件|取回)$/u.test(task.actionVerb))continue
+    const candidates=r.evidence.filter(e=>task.evidenceIds.includes(e.id)).map(e=>e.quotedText||e.quote).filter((q):q is string=>Boolean(q&&q.length<=160&&source.includes(q)&&q.includes(task.actionVerb)&&/(?:可|可以|窗口|办理时段|开放时间|受理)/u.test(q)&&!/(?:截止|截至|最迟|之前|以前|(?:日|号|分|\d)\s*前)/u.test(q)))
+    if(candidates.length!==1)continue
+    const q=candidates[0],parsed=parseDirectSourceTime(q,{type:'event_start',referenceTime:r.createdAt,timezone:'Asia/Shanghai'})
+    if(!parsed.normalizedValue||!parsed.rangeEndNormalizedValue||parsed.needsConfirmation)continue
+    const bad=r.timePoints.filter(p=>p.type.endsWith('_deadline')&&p.relatedTaskTempIds.includes(task.tempId)&&p.normalizedValue===parsed.normalizedValue&&q.includes(p.rawText)&&/^\s*(?:至|到|[—–~～-])/u.test(q.slice(q.indexOf(p.rawText)+p.rawText.length)))
+    if(bad.length!==1)continue
+    const start=addTime(`local-window:${task.tempId}:start`,'event_start',q,parsed.normalizedValue,task.tempId)
+    const end=addTime(`local-window:${task.tempId}:end`,'event_end',q,parsed.rangeEndNormalizedValue,task.tempId)
+    if(!start||!end)continue
+    task.timePointTempIds=[...task.timePointTempIds.filter(id=>id!==bad[0].tempId),start,end]
+    bad[0].relatedTaskTempIds=bad[0].relatedTaskTempIds.filter(id=>id!==task.tempId)
+    if(!bad[0].relatedTaskTempIds.length&&!bad[0].relatedMaterialTempIds.length&&!r.events.some(e=>e.startTimePointTempId===bad[0].tempId||e.endTimePointTempId===bad[0].tempId))r.timePoints=r.timePoints.filter(p=>p.tempId!==bad[0].tempId)
   }
   // Fill an explicitly stated event end without guessing duration.
   for(const event of r.events){

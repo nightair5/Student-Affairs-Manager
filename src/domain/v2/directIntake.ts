@@ -198,9 +198,12 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
         })
         if(windows.length)task.legacyData={...task.legacyData,sourceWindowDeclarations:{version:'source-window-declarations-1.0.0',ownerTaskId:task.id,sourceVersionId:v.id,windows}}
       }
-      if(!/(?:^|:)local-direct-delivery-/u.test(temp))continue
       const points=plan.create.timePoints.filter(p=>p.taskId===task.id&&!p.eventId&&p.relatedTaskIds.includes(task.id)&&['event_start','event_end'].includes(p.type)&&p.normalizedValue&&!p.needsConfirmation)
       if(points.length!==2||new Set(points.map(p=>p.type)).size!==2||points[0].rawText!==points[1].rawText||!v.rawText.includes(points[0].rawText))continue
+      const localDelivery=/(?:^|:)local-direct-delivery-/u.test(temp)
+      const recoveredWindow=points.every(p=>/^(?:direct-copy-)?local-window:/u.test(String(p.legacyData?.recognitionTempId)))
+      if(!localDelivery&&!recoveredWindow)continue
+      for(const p of points)p.legacyData={...p.legacyData,sourceTimeRole:p.type==='event_end'?'window_end':'window_start'}
       task.legacyData={...task.legacyData,sourceWindowDeclarations:{version:'source-window-declarations-1.0.0',ownerTaskId:task.id,sourceVersionId:v.id,windows:[{state:'RESOLVED_DISCRETE',rawText:points[0].rawText,pointIds:points.map(p=>p.id)}]}}
     }
     const created=Object.fromEntries(Object.entries(plan.create).map(([key,value])=>[key,value.map(e=>e.id)]))

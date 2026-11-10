@@ -10,25 +10,51 @@ import {retainLocalEventDetails} from './localEventDetails'
 import {recoverLabeledLocalEvent} from './directLabeledEvent'
 import {completeParallelSessions,linkFollowingFormChannel} from './directParallelSessions'
 import {projectLocalDeliveryRoles} from './deliveryRoleProjection'
+import {localActionExplicitlyNegated} from './localActionPolarity'
+import {localMaterialOwnership} from './localMaterialOwnership'
+import {localSubmissionChoices} from './localSubmissionChoices'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
- const improved=retainLocalEventDetails(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(projectLocalDeliveryRoles(improveLocalActions(input,source),source),source),source),source),source)
- return attachExplicitSharedGoal(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(improved),source,true),source),source)
+ const actions=removeDuplicatedActionEvents(improveLocalActions(input,source))
+ const improved=retainLocalEventDetails(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(projectLocalDeliveryRoles(actions,source),source),source),source),source)
+ return attachExplicitSharedGoal(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source),source)),source,true),source),source)
+}
+
+/** The local parser may classify a form action as an event merely because the
+ * form names a lecture. Remove only a duplicate of an already retained form
+ * action; genuine attendance events are independent and stay untouched. */
+function removeDuplicatedActionEvents(input:RecognitionResult):RecognitionResult {
+ const tasks=[...input.standaloneTasks,...input.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
+ const key=(s:string)=>s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu,'').replace(/^如符合条件/u,'')
+ const removed=new Set(input.events.filter(e=>tasks.some(t=>/^(?:填写|填报|提交|递交|上传|报名|申请|申报|登记|缴费|领取)$/u.test(t.actionVerb)&&key(e.title)===key(t.actionVerb+t.actionObject))).map(e=>e.tempId))
+ if(!removed.size)return input
+ const r=structuredClone(input),points=new Set(r.events.filter(e=>removed.has(e.tempId)).flatMap(e=>[e.startTimePointTempId,e.endTimePointTempId]).filter((id):id is string=>Boolean(id)))
+ r.events=r.events.filter(e=>!removed.has(e.tempId))
+ r.timePoints=r.timePoints.filter(p=>!points.has(p.tempId)||p.relatedTaskTempIds.length>0||p.relatedMaterialTempIds.length>0||r.events.some(e=>e.startTimePointTempId===p.tempId||e.endTimePointTempId===p.tempId))
+ return r
 }
 
 /** Keep source-declared related actions together without merging their data. */
 function attachExplicitSharedGoal(input:RecognitionResult,source:string):RecognitionResult {
  if(input.events.length||input.goalGroups?.length||/互不相关|彼此无关|不属于同/u.test(source))return input
- const claims=[...source.matchAll(/(?:上述两项|以上两项|两项|两件事)(?:均|都)?(?:属于|是)同一(?:次|个|项)?([^，,。；;！？\n]{2,20})/gu)]
+ const claims=[...source.matchAll(/(?:上述|以上|这)?([二两三四五六])(?:项|件事)(?:均|都)?(?:属于|是)同一(?:次|个|项)?([^，,。；;！？\n]{2,20})|(?:二者|两者)(?:均|都)为([^，,。；;！？\n]{2,20})/gu)]
  const tasks=[...input.standaloneTasks,...input.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])].filter(t=>t.selected)
- if(claims.length!==1||tasks.length!==2||tasks.some(t=>!t.actionObject||['查看','核对'].includes(t.actionVerb)))return input
- const claim=claims[0],quote=claim[0],start=claim.index!,title=claim[1].trim()
+ if(claims.length!==1||tasks.some(t=>!t.actionObject||['查看','核对'].includes(t.actionVerb)))return input
+ const claim=claims[0],quote=claim[0],start=claim.index!,declaredTitle=(claim[2]??claim[3]).trim(),count=claim[3]?2:({'二':2,'两':2,'三':3,'四':4,'五':5,'六':6} as Record<string,number>)[claim[1]]
+ const heading=source.slice(0,start).split(/[：:\n]/u)[0].trim(),title=heading.length<=40&&heading.endsWith(declaredTitle)&&heading.length>declaredTitle.length?heading:declaredTitle
+ if(tasks.length!==count)return input
  if(source.indexOf(quote)!==source.lastIndexOf(quote)||tasks.some(t=>!t.evidenceIds.some(id=>{const e=input.evidence.find(x=>x.id===id);return e&&typeof e.textStart==='number'&&e.textStart<start})))return input
- // The two explicit actions must be the two clauses immediately preceding
+ // The explicitly counted actions must be the clauses immediately preceding
  // the shared-goal statement; an omitted intervening action is ambiguous.
- const preceding=source.slice(0,start).split(/[。；;\n]/u).map(s=>s.trim()).filter(Boolean).slice(-2)
- if(preceding.length!==2||tasks.some(t=>!preceding.some(s=>s.includes(t.actionVerb)&&s.includes(t.actionObject))))return input
+ const prefix=source.slice(0,start)
+ const sequences=[/[。；;\n]/u,/[。；;，,\n]/u].map(separators=>prefix.split(separators).map(s=>s.trim()).filter(Boolean).slice(-count))
+ const preceding=sequences.find(parts=>{
+  if(parts.length!==count)return false
+  const matched=tasks.map(t=>parts.flatMap((s,i)=>s.includes(t.actionVerb)&&s.includes(t.actionObject)?[i]:[]))
+  return matched.every(indices=>indices.length===1)&&new Set(matched.map(indices=>indices[0])).size===count
+ })
+ if(!preceding)return input
  const result=structuredClone(input),evidenceId=`local-shared-goal:${start}:evidence`
  result.evidence.push({id:evidenceId,sourceId:input.evidence[0]?.sourceId??'source',quote,quotedText:quote,textStart:start,textEnd:start+quote.length,field:'description',extractionMethod:'parser',confidence:1})
  result.goalGroups=[{id:`local-shared-goal:${start}`,title,taskTempIds:tasks.map(t=>t.tempId),evidenceIds:[evidenceId]}]
@@ -42,7 +68,14 @@ function isLocalSectionHeading(task:TaskSuggestionV2):boolean {
 }
 function removeLocalSectionHeadings(input:RecognitionResult):RecognitionResult {
  const all=[...input.standaloneTasks,...input.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
- const removed=new Set(all.filter(isLocalSectionHeading).map(t=>t.tempId))
+ // A parser-created “check” placeholder for the event's own descriptive
+ // sentence is redundant once that event has been recovered. Preserve an
+ // actual instruction to check, register, prepare or submit something.
+ const isEventPlaceholder=(t:TaskSuggestionV2)=>t.actionVerb==='核对'&&input.events.some(event=>{
+  if(!event.title||!t.actionObject.includes(event.title))return false
+  return t.evidenceIds.some(id=>{const quote=input.evidence.find(ref=>ref.id===id)?.quote??'';return quote.includes(t.actionObject)&&quote.includes(event.title)&&!/(?:请|须|需|应|务必)[^。；]{0,25}(?:核对|检查|确认|查看|报名|提交|准备)/u.test(quote)&&event.evidenceIds.some(eventId=>{const cited=input.evidence.find(ref=>ref.id===eventId)?.quote??'';return cited===quote})})
+ })
+ const removed=new Set(all.filter(t=>isLocalSectionHeading(t)||isEventPlaceholder(t)).map(t=>t.tempId))
  if(!removed.size)return input
  const r=structuredClone(input)
  const keptTasks=(tasks:TaskSuggestionV2[])=>tasks.filter(t=>!removed.has(t.tempId)).map(t=>({...t,dependencyTempIds:t.dependencyTempIds.filter(id=>!removed.has(id))}))
@@ -118,9 +151,16 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
    const legacy=[...section[0].matchAll(/(?:^|(?<=[，,])(?=并(?:将|把)))[^，]*(?:[，,](?!并(?:将|把))[^，]*)*/gu)]
    const pieces=legacy.length>1?legacy:[{0:section[0],index:0}]
    return pieces.flatMap(piece=>{
-    const connectors=[...piece[0].matchAll(/(?:并|以及|同时)(?=(?:提交|递交|报送|上传|发送|填写|登记|领取|缴费|申请|报名)(?!至|到|给|向|于|在|通过)[^，,；;。！？\n]{2})/gu)]
-    const positions=[0,...connectors.map(c=>c.index!),piece[0].length]
-    return positions.slice(0,-1).map((start,index)=>({text:piece[0].slice(start,positions[index+1]),at:m.index!+section.index!+piece.index!+start})).filter(part=>part.text.trim())
+    // A contrast may negate the first object while explicitly requiring a
+    // different one. Give each clause its own polarity and source offsets.
+    const contrasts=[...piece[0].matchAll(/[，,](?=(?:但|不过|然而|而)(?:仍|也|请|应|须|需|要|可))/gu)]
+    const sectionsAt=[0,...contrasts.map(c=>c.index!+1),piece[0].length]
+    return sectionsAt.slice(0,-1).flatMap((sectionStart,index)=>{
+     const sectionText=piece[0].slice(sectionStart,sectionsAt[index+1])
+     const connectors=[...sectionText.matchAll(/(?:并|以及|同时)(?=(?:提交|递交|报送|上传|发送|填写|登记|领取|缴费|申请|报名)(?!至|到|给|向|于|在|通过)[^，,；;。！？\n]{2})/gu)]
+     const positions=[0,...connectors.map(c=>c.index!),sectionText.length]
+     return positions.slice(0,-1).map((start,i)=>({text:sectionText.slice(start,positions[i+1]),at:m.index!+section.index!+piece.index!+sectionStart+start})).filter(part=>part.text.trim())
+    })
    })
   })
  })
@@ -152,6 +192,7 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
   if(/申请者须|^申请截止|^材料截止|^三、申请截止/u.test(q))continue
   if(!verb&&subject&&/申请|申报|报名/u.test(q)&&/系统|平台|截止|提交|填写|自愿/u.test(q)){verb=/申报/u.test(q)?'申报':'申请';object=subject}
   if(!verb||!object)continue
+  if(localActionExplicitlyNegated(q,verb,object))continue
   const actionClause=q.split(/[，,；;]/u).find(c=>c.includes(verb!))??q
   if(/取消|作废|禁止|不得|无需|无须|不必|不再|请勿/u.test(actionClause.replace(/取消[^，。；]{0,10}资格|不得兼得/gu,'')))continue
   if(!registration&&/^(?:至|到|在|于|所需|相关|以下|的材料|申请$|材料$|表$)|系统|[（(]/u.test(object)&&subject){object=subject}

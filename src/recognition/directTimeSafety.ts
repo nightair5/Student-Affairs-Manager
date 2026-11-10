@@ -17,6 +17,18 @@ export function timeSourceContext(source:string,raw:string):{text:string;start:n
   return {text:source.slice(start,at+raw.length+(stop<0?after.length:stop)),start,at}
 }
 
+/** Check the immediate role of a locally extracted literal rather than using
+ * another clause's deadline cue. A repeated literal is deliberately left for
+ * the caller's existing ambiguity policy. */
+export function localTimeRoleConflict(point:TimePointSuggestionV2,source:string):string|null {
+ const raw=point.rawText,scope=timeSourceContext(source,raw)
+ if(!scope)return null
+ const at=scope.at-scope.start,before=scope.text.slice(0,at),after=scope.text.slice(at+raw.length)
+ if(point.type==='event_start'&&(/^(?:\s*[（(][^）)]{0,12}[）)])?\s*(?:前|之前|以前)/u.test(after)||/(?:截止|截至|最迟)\s*[：:]?\s*$/u.test(before)))return 'DEADLINE_IS_NOT_EVENT_START'
+ if(/_deadline$/u.test(point.type)&&/^\s*(?:至|到|[—–~～-])\s*(?:(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]?|\d{1,2}[日号]|\d{1,2}[:：点时])/u.test(after))return 'WINDOW_START_IS_NOT_DEADLINE'
+ return null
+}
+
 /** Scopes revision language to the dated sentence. A different event changing
  * later in the notice never invalidates an earlier, unrelated date. */
 export function inactiveSourceTime(source:string,raw:string):boolean {

@@ -12,6 +12,8 @@ import {sourceSupportsObjectParts} from '../../cloudflare/two-step-contextual-it
 import {alignRecognitionEvidence} from '../../cloudflare/source-text-index.mjs'
 import {convertSemanticNotice} from './directSemanticNotice'
 import {isSemanticNoticeVersion} from './semanticNoticeVersion'
+import {localActionExplicitlyNegated,localBackgroundNotUserAction,localHistoricalEventOnly} from './localActionPolarity'
+import {localTimeRoleConflict} from './directTimeSafety'
 
 export const DIRECT_MODE_VERSION = 'direct-mode-1'
 export type DirectTag = '时间待定' | '如符合条件' | '待确认'
@@ -88,7 +90,8 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if (!text || !object || !compact(text).includes(object)&&!compositeObject || !t.actionVerb.trim() || /待核对|待确认事项/u.test(t.title)) {
       omitted.push({ id: t.tempId, reason: 'OBJECT_OR_ACTION_NOT_GROUNDED' }); return []
     }
-    if (isCancelled(text, t.actionObject)) { omitted.push({id:t.tempId,reason:'CANCELLED_OR_PROHIBITED'}); return [] }
+    if (isCancelled(text, t.actionObject) || result.modelName==='local-rules'&&localActionExplicitlyNegated(text,t.actionVerb,t.actionObject)) { omitted.push({id:t.tempId,reason:'CANCELLED_OR_PROHIBITED'}); return [] }
+    if (result.modelName==='local-rules'&&localBackgroundNotUserAction(text,t.actionVerb,t.actionObject)) { omitted.push({id:t.tempId,reason:'BACKGROUND_NOT_USER_ACTION'}); return [] }
     const citedConditions=[...t.description.matchAll(/(?:适用条件待确认|资格待确认|适用条件)[:：]([^\n]+)/gu)]
       .some(m=>compact(m[1]).length>1&&compact(text).includes(compact(m[1])))
     const conditions = conditional.test(clauseFor(text, t.actionObject))||citedConditions
@@ -104,6 +107,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   const events = result.events.flatMap(e => {
     const text = context(e.evidenceIds), name = compact(e.title)
     const cores=(e.title.includes(' · ')?e.title.split(' · '):e.title.replace(/(?:参加|关于|召开|举行|出席)/gu,'').split(/和|与|及|暨/u)).map(compact).filter(Boolean)
+    if(result.modelName==='local-rules'&&localHistoricalEventOnly(text,e.title)){omitted.push({id:e.tempId,reason:'HISTORICAL_BACKGROUND_NOT_EVENT'});return []}
     if (!text || !name || !cores.length || !cores.every(word=>compact(text).includes(word)) || cores.some(core=>isCancelled(text,core,eventDetailContract))) { omitted.push({id:e.tempId,reason:'EVENT_UNGROUNDED_OR_CANCELLED'}); return [] }
     // A submission call is not itself a scheduled event. Keep an explicitly
     // held activity even when its date is unknown; only isolate a title that
@@ -156,7 +160,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const clause=prefix.slice(Math.max(...['。','；',';','，',',','！','!','？','?'].map(mark=>prefix.lastIndexOf(mark)))+1)
     const eventTimeLabel=/^\s*(?:活动|会议|讲座|培训)?时间[：:]\s*周/u.test(raw)||/(?:^|\s)(?:活动|会议|讲座|培训)?时间[：:]\s*$/u.test(clause)
     const inferredWeekday=p.type==='event_start'&&(p.tempId==='local-direct-optional-event:start'||eventDetailContract&&eventIds.has(p.tempId)&&eventTimeLabel&&!/(?:报名|申请|提交|缴费|预约|截止|截至)/u.test(clause)&&Boolean(sameWeekdayTime(weekdayRaw,result.createdAt,p.timezone)))
-    if (unsupported || risky || deadlineConflicts.has(p.tempId)||p.relatedTaskTempIds.some(id=>deadlineConflicts.has(id))||!p.normalizedValue || p.needsConfirmation && p.precision !== 'date_only'&&!inferredWeekday) return unknown()
+    if (unsupported || risky || result.modelName==='local-rules'&&localTimeRoleConflict(p,sourceText) || deadlineConflicts.has(p.tempId)||p.relatedTaskTempIds.some(id=>deadlineConflicts.has(id))||!p.normalizedValue || p.needsConfirmation && p.precision !== 'date_only'&&!inferredWeekday) return unknown()
     const nextDayAnchor=anchoredNextDay(p)
     if(p.type==='event_end'&&/(?:次日|翌日)/u.test(raw)&&!nextDayAnchor)return unknown()
     if(p.normalizedValue){
