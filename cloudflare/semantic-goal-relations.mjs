@@ -15,9 +15,32 @@ const sharedAnchor=values=>{
  return ''
 }
 
+// A specific, uniquely cited heading establishes a bounded source section.
+// It does not establish membership by itself: the model must propose a goal,
+// each member must cite its own action in that section, and contradictions
+// and separately named events are checked below. A date or generic heading is
+// never sufficient. A subsequent heading closes the section rather than letting
+// evidence from another matter leak into it.
+function citedMatterSection(source,span,anchor){
+ if(!span||anchor.length<2||genericAnchors.has(anchor)||/^[\d年月日时分:：\-/]+$/u.test(anchor))return null
+ if(/^(?:(?:今日|明日|本周|近期|本次|有关|相关|其他|各项|学生|学校))?(?:通知|公告|事项|安排|提醒|任务|活动|材料|办理|提交|报名)$/u.test(anchor))return null
+ const start=source.lastIndexOf('\n',span.start-1)+1
+ const next=source.indexOf('\n',span.end),lineEnd=next<0?source.length:next
+ const line=source.slice(start,lineEnd).trim()
+ const heading=/^(?:【[^】]{2,80}】|\[[^\]]{2,80}\]|[^。！？；;\n]{2,80}[:：])\s*$/u.test(line)
+ if(!heading||!compact(line).includes(anchor)||!compact(span.literal).includes(anchor))return null
+ let end=source.length,at=lineEnd+1
+ while(at<source.length){
+  const n=source.indexOf('\n',at),to=n<0?source.length:n,following=source.slice(at,to).trim()
+  if(/^(?:【[^】]{2,80}】|\[[^\]]{2,80}\]|[^。！？；;\n]{2,80}[:：])\s*$/u.test(following)){end=at;break}
+  at=to+1
+ }
+ return {start:lineEnd,end}
+}
+
 /** Preserve a cited relation as a view grouping. Never delete or merge the
  * actionable task: its independent deadline, materials and status remain. */
-export function applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference=false,allowAssignmentEvidenceFallback=false}){
+export function applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference=false,allowAssignmentEvidenceFallback=false,allowScopedMatter=false}){
  const events=pending.filter(row=>row.kind==='event'&&result.events.includes(row.entity)&&!row.entity.sourceStatus)
  const tasks=pending.filter(row=>row.kind==='task'&&result.standaloneTasks.includes(row.entity))
  const eventOwners=new Set()
@@ -119,14 +142,25 @@ export function applySemanticGoalRelations({raw,result,pending,source,evidence,n
   const specificDocumentHeading=commonScope&&Boolean(documentSubject)&&!/^(?:今日|明日|本周|近期|本次|相关|有关|其他|各种|各类|全部|所有|多个|通知|事项)$/u.test(documentSubject)
   const supported=(literalAnchor||equivalentHeading||scopedHeading||specificDocumentHeading)&&!unrelated&&!differentNamedEvents&&otherEventKeys.size<=1&&citedEventKeys.size<=1&&keys.length>=2&&keys.length<=20&&new Set(keys).size===keys.length
    &&members.every(row=>row&&row.entity.evidenceIds.length<20&&!eventOwners.has(row.entity.tempId)&&!assigned.has(row.entity.tempId))
-  if(!supported){note('RELATION',text(goal.key,40)||String(index),'GOAL_RELATION_UNCONFIRMED');continue}
+  const bounds=allowScopedMatter?citedMatterSection(source,span,anchor):null
+  const eligible=bounds?members.filter((row,i)=>row&&row.entity.evidenceIds.length<20&&!eventOwners.has(row.entity.tempId)&&!assigned.has(row.entity.tempId)
+   &&memberRefs[i].some(ref=>ref.start>=bounds.start&&ref.end<=bounds.end)):[]
+  const scoped=Boolean(bounds&&title&&keys.length>=2&&keys.length<=20&&new Set(keys).size===keys.length
+   &&eligible.length>=2&&!unrelated&&!differentNamedEvents&&otherEventKeys.size<=1&&citedEventKeys.size<=1)
+  if(!supported&&!scoped){note('RELATION',text(goal.key,40)||String(index),'GOAL_RELATION_UNCONFIRMED');continue}
+  const accepted=supported?members:eligible
+  if(scoped&&!supported&&accepted.length!==members.length)note('RELATION',text(goal.key,40)||String(index),'GOAL_MEMBER_UNRESOLVED')
   const ref=evidence(span.literal,'description','goal-'+index,span.start)
   if(!ref)continue
-  const taskTempIds=members.map(row=>row.entity.tempId)
-  for(const row of members)row.entity.evidenceIds=[...new Set([...row.entity.evidenceIds,ref])]
+  const taskTempIds=accepted.map(row=>row.entity.tempId)
+  for(const row of accepted)row.entity.evidenceIds=[...new Set([...row.entity.evidenceIds,ref])]
   taskTempIds.forEach(id=>assigned.add(id))
   groups.push({id:'sem-goal-'+ref,title,taskTempIds,evidenceIds:[ref]})
   audit.facts.push({role:'source_goal_group',tasks:taskTempIds,sourceEvidenceId:ref})
+ }
+ if(allowScopedMatter&&tasks.length>1)for(const task of tasks){
+  if(assigned.has(task.entity.tempId)||eventOwners.has(task.entity.tempId))continue
+  if(task.item.matterScope!=='independent')note('RELATION',task.item.key,'MATTER_ASSIGNMENT_UNRESOLVED')
  }
  if(groups.length)result.goalGroups=groups
 }

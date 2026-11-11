@@ -104,7 +104,7 @@ export interface Task {
   /** Source-backed mutually exclusive delivery branches, projected from v8. */
   sourceChoice?: { id:string; optionTaskIds:string[]; selectedTaskId?:string }
   /** Source-backed display group. Members are independent canonical tasks. */
-  sourceGoal?: { id:string; title:string; taskIds:string[] }
+  sourceGoal?: { id:string; title:string; taskIds:string[]; userOrganized?:boolean }
   id: string
   projectId?: string
   parentTaskId?: string

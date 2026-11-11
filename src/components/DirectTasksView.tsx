@@ -3,17 +3,19 @@ import {Search} from 'lucide-react'
 import type {Task,Event} from '../types'
 import type {WorkspaceV8} from '../domain/v2/types'
 import {pairFlowEvents,workspaceEventTimeHints,workspaceTaskChannels} from '../lib/homeFlow'
-import {FlowTaskList} from './FlowItemList'
+import {MatterTaskList} from './MatterTaskList'
 import {visibleChoiceTasks} from '../lib/sourceChoice'
+import {projectMatterGroups} from '../lib/matterProjection'
 
 export function DirectTasksView({tasks,events=[],workspace,onOpen,onComplete,onSchedule,onOpenEvent}:{tasks:Task[];events?:Event[];workspace?:WorkspaceV8|null;onOpen:(task:Task)=>void;onComplete:(id:string)=>void;onSchedule?:(id:string,date:string)=>Promise<void>;onOpenEvent?:(event:Event)=>void}){
  const [filter,setFilter]=useState('未完成'),[query,setQuery]=useState('')
  const active=visibleChoiceTasks(tasks).filter(task=>task.status!=='已完成')
  const completedChoiceGroups=[...new Set(tasks.filter(task=>task.status==='已完成'&&task.sourceChoice).map(task=>task.sourceChoice!.id))]
- const shown=(filter==='未完成'?active:tasks.filter(t=>filter==='全部'||t.status==='已完成')).filter(t=>`${t.title} ${t.description}`.toLowerCase().includes(query.trim().toLowerCase()))
+ const shown=(filter==='未完成'?active:tasks.filter(t=>filter==='全部'||t.status==='已完成')).filter(t=>`${t.title} ${t.description} ${t.sourceGoal?.title??''}`.toLowerCase().includes(query.trim().toLowerCase()))
  const paired=pairFlowEvents(tasks,events,workspace)
- return <main className="page flow-tasks-page"><header className="flow-page-heading"><h1>所有任务</h1><p>{new Set(active.map(task=>task.sourceChoice?.id??task.id)).size} 项未完成</p></header>
+ const goals=projectMatterGroups(tasks,new Set(Object.keys(paired.linked)))
+ return <main className="page flow-tasks-page"><header className="flow-page-heading"><h1>所有任务</h1><p>{new Set(active.map(task=>task.sourceGoal&&goals.has(task.sourceGoal.id)?`goal:${task.sourceGoal.id}`:task.sourceChoice?`choice:${task.sourceChoice.id}`:`task:${task.id}`)).size} 项未完成</p></header>
   <div className="toolbar"><label className="search-field"><Search size={17}/><span className="sr-only">搜索任务</span><input placeholder="搜索任务" value={query} onChange={e=>setQuery(e.target.value)}/></label><div className="filter-group" aria-label="任务状态">{['未完成','已完成','全部'].map(item=><button type="button" key={item} className={filter===item?'active':''} aria-pressed={filter===item} onClick={()=>setFilter(item)}>{item}</button>)}</div></div>
-  {shown.length?<FlowTaskList tasks={shown} onOpen={onOpen} onComplete={onComplete} onSchedule={onSchedule} channels={workspaceTaskChannels(workspace)} linkedEvents={paired.linked} eventTimeHints={workspaceEventTimeHints(workspace)} completedChoiceGroups={completedChoiceGroups} onOpenEvent={onOpenEvent}/>:<div className="home-empty-state"><strong>{query?'没有找到相关任务':filter==='已完成'?'还没有已完成的任务':'这里暂时没有任务'}</strong></div>}
+  {shown.length?<MatterTaskList tasks={shown} allTasks={tasks} onOpen={onOpen} onComplete={onComplete} onSchedule={onSchedule} channels={workspaceTaskChannels(workspace)} linkedEvents={paired.linked} eventTimeHints={workspaceEventTimeHints(workspace)} completedChoiceGroups={completedChoiceGroups} onOpenEvent={onOpenEvent}/>:<div className="home-empty-state"><strong>{query?'没有找到相关任务':filter==='已完成'?'还没有已完成的任务':'这里暂时没有任务'}</strong></div>}
  </main>
 }

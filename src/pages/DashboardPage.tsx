@@ -36,6 +36,7 @@ interface DashboardPageProps {
   onRestoreTask?: (taskId: string) => void
   onSetEventCompletion?: (eventId:string, completed:boolean) => Promise<void>
   onSetEventTaskLink?: (eventId:string, taskIds:string[], linked:boolean) => Promise<void>
+  onSetMatterGroup?: (taskIds:string[], title:string, removeGroupId?:string) => Promise<void>
   onScheduleTask?: (taskId: string, date: string) => Promise<void>
   onSelectChoice?: (taskId: string, expectedSelected: string | null) => Promise<void>
   taskChannels?: Readonly<Record<string,string[]>>
@@ -69,7 +70,7 @@ export function DashboardPage({
   onOpenIntake,
   onOpenTask,
   onCompleteTask, onRestoreTask,
-  onSetEventCompletion, onSetEventTaskLink,
+  onSetEventCompletion, onSetEventTaskLink, onSetMatterGroup,
   onScheduleTask, onSelectChoice, recentItemIds, taskChannels, canonicalWorkspace,
   onStartTask,
   onSnoozeTask,
@@ -168,7 +169,7 @@ export function DashboardPage({
       {captureForm}
       {historicalNotice&&historicalNotice.count>0&&<div className="flow-history-notice"><span>发现 {historicalNotice.count} 条以前的通知</span><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onAdd()}>{historicalNotice.busy?'正在添加…':'全部加入'}</button><button type="button" className="text-button" disabled={historicalNotice.busy} onClick={()=>void historicalNotice.onIgnore()}>忽略</button></div>}
       {directNotice}
-      {(active>0||flow.deferred.length>0||visibleEvents.length>0)&&<FlowTimeline tasks={[...flow.today,...flow.next,...flow.undated]} allTasks={tasks} events={visibleEvents} eventActions={eventActions} eventActionCandidates={eventActionCandidates} deferred={flow.deferred.map(({task,reason})=>({task,reason}))} linked={paired.linked} eventTimeHints={eventTimeHints} channels={taskChannels??{}} highlightIds={recentItemIds??[]} timeZone={timeZone} onOpenTask={onOpenTask} onOpenEvent={onOpenEvent} onComplete={onCompleteTask} onRestoreTask={onRestoreTask} onSetEventCompletion={onSetEventCompletion} onSetEventTaskLink={onSetEventTaskLink} onSchedule={onScheduleTask} onSelectChoice={onSelectChoice}/>}
+      {(active>0||flow.deferred.length>0||visibleEvents.length>0)&&<FlowTimeline tasks={[...flow.today,...flow.next,...flow.undated]} allTasks={tasks} events={visibleEvents} eventActions={eventActions} eventActionCandidates={eventActionCandidates} deferred={flow.deferred.map(({task,reason})=>({task,reason}))} linked={paired.linked} eventTimeHints={eventTimeHints} channels={taskChannels??{}} highlightIds={recentItemIds??[]} timeZone={timeZone} onOpenTask={onOpenTask} onOpenEvent={onOpenEvent} onComplete={onCompleteTask} onRestoreTask={onRestoreTask} onSetEventCompletion={onSetEventCompletion} onSetEventTaskLink={onSetEventTaskLink} onSetMatterGroup={onSetMatterGroup} onSchedule={onScheduleTask} onSelectChoice={onSelectChoice}/>}
       {!active&&!flow.deferred.length&&!visibleEvents.length&&<section className="home-empty-state"><strong>{!tasks.length&&!events.length?'放入第一条通知，待办和日程就会出现在这里':allDone?'事情都处理好了':'暂无待办或近期日程'}</strong><p>有新通知时，粘贴后点一次整理即可。</p>{events.some(event=>event.personalCompleted)&&onShowCalendar&&<button type="button" className="text-button" onClick={onShowCalendar}>查看日历</button>}</section>}
       {recentAdditions}
     </main>

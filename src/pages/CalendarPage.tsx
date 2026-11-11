@@ -22,6 +22,8 @@ import type { PlanSegment } from '../domain/v2/personalPlanD27'
 import {FlowEventList,FlowTaskList} from '../components/FlowItemList'
 import {flowEventDate} from '../lib/flowPresentation'
 import {useCurrentTime} from '../lib/useCurrentTime'
+import {groupMatterAgenda,matterDaySummaryTasks} from '../lib/matterProjection'
+import '../components/MatterTaskList.css'
 
 interface CalendarPageProps {
   directMode?:boolean
@@ -62,6 +64,10 @@ function monthLabel(value: Date): string {
 function dayLabel(dateKey: string): string {
   return new Intl.DateTimeFormat('zh-CN', { month: 'long', day: 'numeric', weekday: 'short' })
     .format(new Date(`${dateKey}T12:00`))
+}
+
+function agendaRole(role: string | undefined): string {
+  return role==='both'?'计划与截止':role==='plan'?'个人计划':role==='deadline'?'原文截止':role==='window'?'办理时段':'时间'
 }
 
 function itemTime(value: string): string {
@@ -128,9 +134,10 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
   }, [activeEvents, visibleTasks, today, isolatedTimezone,directMode,timeZone])
   const undatedEvents = useMemo(() => getUndatedCalendarEvents(activeEvents), [activeEvents])
   const agendaItems = agendaMode === 'selected' ? selectedItems : upcomingItems
+  const matterAgenda=directMode?groupMatterAgenda(agendaItems,tasks,timeZone):[]
   const agendaTitle = agendaMode === 'selected'
-    ? `${dayLabel(selectedDateKey)} · ${selectedItems.length} 项`
-    : `全部即将到来 · ${upcomingItems.length} 项`
+    ? `${dayLabel(selectedDateKey)} · ${directMode?matterAgenda.length:selectedItems.length} 项`
+    : `全部即将到来 · ${directMode?matterAgenda.length:upcomingItems.length} 项`
   const suggestions = useMemo(() => personalPlans ? [] : executableTasks
     // Showing a labelled item never declares its personal conditions met.
     .filter(task=>!task.directTags?.length)
@@ -185,7 +192,7 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
             {monthCells.map((cell) => {
               const dayTasks = taskByDate.get(cell.dateKey) ?? []
               const dayEvents = eventByDate.get(cell.dateKey) ?? []
-              const summary = summarizeCalendarDay(dayTasks, dayEvents,cell.dateKey,timeZone)
+              const summary = summarizeCalendarDay(directMode?matterDaySummaryTasks(dayTasks,tasks):dayTasks, dayEvents,cell.dateKey,timeZone)
               if (dateViews && summary && dayTasks.some(task => isDateOnly(task.deadline))) {
                 const timed = summarizeCalendarDay(dayTasks.filter(task => !isDateOnly(task.deadline)), dayEvents)
                 summary.timeLabel = timed ? `含仅日期事项；时刻 ${timed.timeLabel}` : '仅日期'
@@ -230,7 +237,7 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
             <button type="button" className={agendaMode === 'upcoming' ? 'active' : ''} aria-pressed={agendaMode === 'upcoming'} onClick={() => setAgendaMode('upcoming')}>即将到来</button>
           </div>
           {agendaItems.length
-            ? directMode&&onCompleteTask?<div className="calendar-agenda-list">{agendaItems.map(item=>item.kind==='task'?<div key={`${item.id}:${item.timeRole??''}:${item.at}`}><small>{item.timeRole==='both'?'计划与截止':item.timeRole==='plan'?'个人计划':item.timeRole==='deadline'?'原文截止':item.timeRole==='window'?'办理时段':''}</small><FlowTaskList tasks={[item.task]} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} channels={taskChannels} timeZone={timeZone}/></div>:onOpenEvent?<FlowEventList key={item.id} events={[item.event]} onOpen={onOpenEvent} now={today} timeZone={timeZone}/>:null)}</div>
+            ? directMode&&onCompleteTask?<div className="calendar-agenda-list">{matterAgenda.map(item=>item.kind==='matter'?<details className="matter-task-group" key={`${item.id}:${item.day}`} data-goal-id={item.id}><summary><strong>{item.title}</strong><span>{item.day} {displayTime(item.items[0].at)} · {agendaRole(item.items[0].timeRole)}：{item.items[0].task.title} · {item.items.length} 项行动</span></summary>{item.items.map(step=><div key={`${step.id}:${step.timeRole??''}:${step.at}`}><small>{agendaRole(step.timeRole)}</small><FlowTaskList tasks={[step.task]} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} channels={taskChannels} timeZone={timeZone}/></div>)}</details>:item.kind==='task'?<div key={`${item.id}:${item.timeRole??''}:${item.at}`}><small>{agendaRole(item.timeRole)}</small><FlowTaskList tasks={[item.task]} onOpen={onOpenTask} onComplete={onCompleteTask} onSchedule={onScheduleTask} channels={taskChannels} timeZone={timeZone}/></div>:onOpenEvent?<FlowEventList key={item.id} events={[item.event]} onOpen={onOpenEvent} now={today} timeZone={timeZone}/>:null)}</div>
             : <div className="calendar-agenda-list">{agendaItems.map((item) => item.kind === 'task'
                 ? <button className="agenda-item" key={`task:${item.id}`} type="button" onClick={() => onOpenTask(item.task)}>
                     <span className="agenda-time">{isDateOnly(item.at) && !dateViews && !preserveDateOnlyPrecision ? itemTime(item.at) : displayTime(item.at)}</span>

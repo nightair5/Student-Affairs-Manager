@@ -152,14 +152,23 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     }
     // A goal group is only a source-backed display relationship. Its members
     // retain their own dates, materials, edit history and completion state.
+    const directGoalGroups:Array<{version:string;id:string;title:string;sourceVersionId:string;quotations:string[];taskIds:string[]}> = []
     for(const goal of result.goalGroups??[]){
       const quotes=goal.evidenceIds.map(id=>result.evidence.find(ref=>ref.id===id)?.quote)
       if(goal.taskTempIds.length<2||quotes.some(quote=>!quote||!v.rawText?.includes(quote)))continue
       const members=goal.taskTempIds.map(id=>plan.create.tasks.find(task=>task.legacyData?.recognitionTempId===id))
       if(members.some(member=>!member))continue
       const [owner,...others]=members as Array<typeof plan.create.tasks[number]>
-      owner.legacyData={...owner.legacyData,sourceGoalGroup:{version:'source-goal-group-1.0.0',id:`${d.id}:${goal.id}`,title:goal.title,sourceVersionId:v.id,quotations:quotes.filter((quote):quote is string=>Boolean(quote)),taskIds:[owner,...others].map(task=>task.id)}}
-      for(const other of others)other.legacyData={...other.legacyData,sourceGoalOwnerId:owner.id}
+      const group={version:'source-goal-group-1.0.0',id:`${d.id}:${goal.id}`,title:goal.title,sourceVersionId:v.id,quotations:quotes.filter((quote):quote is string=>Boolean(quote)),taskIds:[owner,...others].map(task=>task.id)}
+      if(result.promptVersion==='recognition-semantic-notice-3.12.0'){
+        // The capture's draft outlives its members. One authoritative relation
+        // avoids losing the entire matter when its first task is deleted.
+        directGoalGroups.push(group)
+      }else{
+        // Preserve the exact historical representation for older contracts.
+        owner.legacyData={...owner.legacyData,sourceGoalGroup:group}
+        for(const other of others)other.legacyData={...other.legacyData,sourceGoalOwnerId:owner.id}
+      }
     }
     // The dates remain source-backed alternatives in the same event records;
     // they are not installed as confirmed calendar time points.
@@ -213,7 +222,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const next=applyDomainCommitPlan(prepared,plan,now)
     next.sources=next.sources.map(x=>x.id===s.id?{...x,legacyData:{...x.legacyData,directUndoneAt:null,...(intentionalRepeat?{duplicateReviewStatus:'保留为独立来源'}:{})}}:x)
     if(s.title==='手动粘贴消息'&&!d.acceptedEntityTempIds.length)next.sources=next.sources.map(x=>x.id===s.id?{...x,title:result.standaloneTasks[0]?.title??result.events[0]?.title??x.title}:x)
-    next.extractionDrafts=next.extractionDrafts.map(x=>x.id===d.id?{...x,legacyData:{...x.legacyData,directBatch:json(batch),directConversion:json({version:DIRECT_MODE_VERSION,...(retention?{retentionVersion:DIRECT_RETENTION_VERSION}:{}),inputProvider:d.result?'stored-answer':'local-rules-from-preserved-source',omitted:converted.omitted,...(actionRecovery?{actionProjectionVersion:DIRECT_ACTION_PROJECTION_VERSION,sourceDerivedTaskIds:result.standaloneTasks.filter(t=>t.tempId.startsWith('direct-action-')).map(t=>t.tempId)}:{})})}}:x)
+    next.extractionDrafts=next.extractionDrafts.map(x=>x.id===d.id?{...x,legacyData:{...x.legacyData,directBatch:json(batch),...(result.promptVersion==='recognition-semantic-notice-3.12.0'?{directGoalGroups:json(directGoalGroups)}:{}),directConversion:json({version:DIRECT_MODE_VERSION,...(retention?{retentionVersion:DIRECT_RETENTION_VERSION}:{}),inputProvider:d.result?'stored-answer':'local-rules-from-preserved-source',omitted:converted.omitted,...(actionRecovery?{actionProjectionVersion:DIRECT_ACTION_PROJECTION_VERSION,sourceDerivedTaskIds:result.standaloneTasks.filter(t=>t.tempId.startsWith('direct-action-')).map(t=>t.tempId)}:{})})}}:x)
     receipt={batch,duplicate:false};return next
   })
   return receipt

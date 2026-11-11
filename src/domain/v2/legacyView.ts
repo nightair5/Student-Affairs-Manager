@@ -80,16 +80,59 @@ export function sourceChoiceForTask(workspace:WorkspaceV8,item:WorkspaceV8['task
   return {id:group.id,optionTaskIds:ids,...(selectedTaskId?{selectedTaskId}:{})}
 }
 
-export function sourceGoalForTask(workspace:WorkspaceV8,item:WorkspaceV8['tasks'][number]):LegacyTask['sourceGoal'] {
-  const ownerId=typeof item.legacyData?.sourceGoalOwnerId==='string'?item.legacyData.sourceGoalOwnerId:item.id
-  const owner=workspace.tasks.find(task=>task.id===ownerId),group=record(owner?.legacyData?.sourceGoalGroup)
+function projectSourceGoal(workspace:WorkspaceV8,item:WorkspaceV8['tasks'][number],group:Record<string,unknown>|null,allowedIds?:ReadonlySet<string>):LegacyTask['sourceGoal'] {
   if(group?.version!=='source-goal-group-1.0.0'||typeof group.id!=='string'||typeof group.title!=='string'||!group.title.trim()||typeof group.sourceVersionId!=='string')return undefined
   const ids=stringArray(group.taskIds),quotes=stringArray(group.quotations)
-  if(ids.length<2||ids.length>20||new Set(ids).size!==ids.length||!ids.includes(item.id)||!ids.includes(ownerId)||!quotes.length)return undefined
+  if(ids.length<2||ids.length>20||new Set(ids).size!==ids.length||!ids.includes(item.id)||!quotes.length)return undefined
   const version=workspace.sourceVersions.find(value=>value.id===group.sourceVersionId)
   if(!version?.rawText||quotes.some(quote=>!version.rawText!.includes(quote)))return undefined
-  if(ids.some(id=>!workspace.tasks.some(task=>task.id===id&&task.legacyData?.sourceId===version.sourceId)))return undefined
-  return {id:group.id,title:group.title,taskIds:ids}
+  const live=ids.flatMap(id=>{const task=workspace.tasks.find(candidate=>candidate.id===id);return task?[task]:[]})
+  if(live.length<2||live.some(task=>task.legacyData?.sourceId!==version.sourceId||allowedIds&&!allowedIds.has(task.id)))return undefined
+  return {id:group.id,title:group.title,taskIds:live.map(task=>task.id),...(group.createdBy==='user'?{userOrganized:true}:{})}
+}
+
+export function sourceGoalForTask(workspace:WorkspaceV8,item:WorkspaceV8['tasks'][number]):LegacyTask['sourceGoal'] {
+  // New captures store one authoritative relation on the capture draft, not
+  // on a task that the user may delete. Only members of that active batch and
+  // source version can be projected into it.
+  const modern:NonNullable<LegacyTask['sourceGoal']>[]=[]
+  for(const draft of workspace.extractionDrafts){
+    const batch=record(draft.legacyData?.directBatch),groups=draft.legacyData?.directGoalGroups
+    if(batch?.status!=='active'||!Array.isArray(groups))continue
+    const run=workspace.recognitionRuns.find(value=>value.id===draft.recognitionRunId)
+    const ids=new Set(Array.isArray(batch.items)?batch.items.flatMap(value=>value&&typeof value==='object'&&!Array.isArray(value)&&typeof value.id==='string'?[value.id]:[]):[])
+    for(const value of groups){
+      const group=record(value)
+      if(!group||group.sourceVersionId!==run?.sourceVersionId)continue
+      const projected=projectSourceGoal(workspace,item,group,ids)
+      if(projected)modern.push(projected)
+    }
+  }
+  if(modern.length)return modern.length===1?modern[0]:undefined
+
+  const ownerId=typeof item.legacyData?.sourceGoalOwnerId==='string'?item.legacyData.sourceGoalOwnerId:item.id
+  const owner=workspace.tasks.find(task=>task.id===ownerId)
+  const legacyRecord=record(owner?.legacyData?.sourceGoalGroup)
+  const legacy=legacyRecord&&stringArray(legacyRecord.taskIds).includes(ownerId)?projectSourceGoal(workspace,item,legacyRecord):undefined
+  if(legacy)return legacy
+  // Older groups were stored on their first task. If that task was deleted,
+  // recover the same relation read-only from the active draft's original
+  // result; this does not rewrite or re-recognize existing user content.
+  if(owner||ownerId===item.id)return undefined
+  const recovered:NonNullable<LegacyTask['sourceGoal']>[]=[]
+  for(const draft of workspace.extractionDrafts){
+    const batch=record(draft.legacyData?.directBatch)
+    if(batch?.status!=='active'||!draft.result?.goalGroups?.length)continue
+    const run=workspace.recognitionRuns.find(value=>value.id===draft.recognitionRunId)
+    for(const goal of draft.result.goalGroups){
+      if(ownerId!==`task:${draft.id}:${goal.taskTempIds[0]}`)continue
+      const quotes=goal.evidenceIds.map(id=>draft.result!.evidence.find(ref=>ref.id===id)?.quote).filter((quote):quote is string=>Boolean(quote))
+      const group={version:'source-goal-group-1.0.0',id:`${draft.id}:${goal.id}`,title:goal.title,sourceVersionId:run?.sourceVersionId,quotations:quotes,taskIds:goal.taskTempIds.map(id=>`task:${draft.id}:${id}`)}
+      const projected=projectSourceGoal(workspace,item,group)
+      if(projected)recovered.push(projected)
+    }
+  }
+  return recovered.length===1?recovered[0]:undefined
 }
 
 function legacyTaskStatus(status: WorkspaceV8['tasks'][number]['status']): LegacyTask['status'] {

@@ -1,6 +1,7 @@
 import type {JsonValue,WorkspaceV8} from './types'
 import {isDateOnly,parseBusinessDateTime,parseChineseTimeAst} from '../../lib/timeSemantics'
 import {sourceWindowDisplayLabel} from './sourceWindowDisplay'
+import {sourceGoalForTask} from './legacyView'
 
 const key=(value:unknown)=>typeof value==='string'?value.replace(/\s/gu,'').replace(/^如符合条件/u,''):''
 // This is an equivalence normalization, not an action whitelist: verbs that
@@ -224,14 +225,18 @@ export function directReplacementDiff(before:WorkspaceV8,after:WorkspaceV8,oldId
       if(previousIds.some(id=>!matched.some(pair=>pair.before===id&&candidates.includes(pair.after))))issue(old.id,'relationship','changed_or_missing')
     }
   }
+  // Compare the actual projected relation, regardless of whether an older
+  // capture stored it on a member or a newer capture stored it on the draft.
+  // Otherwise a retry could silently flatten an intact matter on replacement.
+  const checkedGoals=new Set<string>()
   for(const old of oldTasks){
-    const group=old.legacyData?.sourceGoalGroup
-    if(!group||typeof group!=='object'||Array.isArray(group)||!Array.isArray(group.taskIds))continue
-    const nextId=matched.find(pair=>pair.before===old.id)?.after,next=newTasks.find(task=>task.id===nextId)
-    const targetOwner=typeof next?.legacyData?.sourceGoalOwnerId==='string'?newTasks.find(task=>task.id===next.legacyData?.sourceGoalOwnerId):next
-    const target=targetOwner?.legacyData?.sourceGoalGroup
-    const ids=target&&typeof target==='object'&&!Array.isArray(target)&&Array.isArray(target.taskIds)?target.taskIds.filter((id):id is string=>typeof id==='string'):[]
-    if(group.taskIds.filter((id):id is string=>typeof id==='string'&&oldIds.has(id)).some(id=>!matched.some(pair=>pair.before===id&&ids.includes(pair.after))))issue(old.id,'relationship','changed_or_missing')
+    const goal=sourceGoalForTask(before,old)
+    if(!goal||checkedGoals.has(goal.id))continue
+    checkedGoals.add(goal.id)
+    const members=goal.taskIds.filter(id=>oldIds.has(id))
+    const candidates=members.map(id=>matched.find(pair=>pair.before===id)?.after)
+    const projected=candidates.map(id=>{const task=newTasks.find(value=>value.id===id);return task?sourceGoalForTask(after,task):undefined})
+    if(candidates.some(id=>!id)||projected.some(value=>!value)||projected.some(value=>value?.id!==projected[0]?.id)||candidates.some(id=>id&&!projected[0]?.taskIds.includes(id)))issue(old.id,'relationship','changed_or_missing')
   }
   return {preserved:issues.length===0,issues,matched,added:[...newIds].filter(id=>!used.has(id))}
 }

@@ -9,6 +9,7 @@ import { setTaskSchedule } from './domain/v2/taskSchedule'
 import { selectSourceChoice } from './domain/v2/sourceChoice'
 import { commitEventCompletion } from './domain/v2/eventCompletion'
 import { setEventActionLink } from './domain/v2/eventActionLink'
+import {matterTaskRevision,setSourceMatterGroup} from './domain/v2/sourceMatterGroup'
 import {commitTaskCommand,ensureTaskEditsSettled,type TaskCommandValues} from './domain/v2/taskCommand'
 import {commitMaterialCommand,type MaterialCommandValues} from './domain/v2/materialCommand'
 import {readCommandReceipt,readCommittedBatch} from './domain/v2/commandReadback'
@@ -742,6 +743,34 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     })
     taskWriteQueue.current=work.catch(()=>undefined)
     try{await work}catch(error){const message=safeIntakeError(error,'关联未能保存，请重试。');setNotice({text:message});throw new Error(message,{cause:error})}
+    finally{taskWritesCount.current--;setTaskWritesPending(taskWritesCount.current)}
+  }
+
+  const handleSetMatterGroup = async (taskIds:string[],title:string,removeGroupId?:string):Promise<void> => {
+    if(runtime||!ordinaryCanonical)throw Error('当前模式不能修改事项组织。')
+    if(taskIds.some(id=>Boolean(taskEditDraftsRef.current[id])))throw Error('请先保存或取消这项事项的修改。')
+    const batch=recentDirectBatches(ordinaryCanonical).find(value=>value.status==='active'&&taskIds.every(id=>value.items.some(item=>item.id===id)))
+    const draft=batch&&ordinaryCanonical.extractionDrafts.find(value=>value.id===batch.draftId)
+    const run=draft&&ordinaryCanonical.recognitionRuns.find(value=>value.id===draft.recognitionRunId)
+    const selected=taskIds.map(id=>ordinaryCanonical.tasks.find(task=>task.id===id))
+    if(!draft||!run||selected.some(task=>!task))throw Error('通知或待办已变化，请重新读取。')
+    const expectedRevision=typeof draft.legacyData?.directGoalRevision==='string'?draft.legacyData.directGoalRevision:null
+    const expectedTasks=Object.fromEntries(selected.map(task=>[task!.id,matterTaskRevision(task!)]))
+    const operationId=crypto.randomUUID(),changedAt=new Date().toISOString()
+    taskWritesCount.current++;setTaskWritesPending(taskWritesCount.current);setNotice({text:'正在保存事项组织…'})
+    const work=taskWriteQueue.current.then(async()=>{
+      if(taskReadbackBlocked.current||directReadbackPending)throw Error('已有更改已保存但尚未读回，请先重新读取。')
+      if(taskIds.some(id=>Boolean(taskEditDraftsRef.current[id])))throw Error('请先保存或取消这项事项的修改。')
+      const receipt=await setSourceMatterGroup(canonicalWorkspaceRepository,{operationId,draftId:draft.id,sourceVersionId:run.sourceVersionId,taskIds,title,expectedRevision,expectedTasks,changedAt,removeGroupId})
+      let readback:WorkspaceV8
+      try{readback=await readCommandReceipt(independentReader,{kind:'task',operationId,entityId:receipt.entityId,changed:receipt.changed})}
+      catch(error){taskReadbackBlocked.current=true;setDirectReadbackPending(receipt.entityId);throw new Error('组织已保存，暂时未能读回。请先重新读取，不会重复提交。',{cause:error})}
+      const projected=workspaceV8ToLegacyView(readback)
+      setOrdinaryCanonical(readback);setTasks(current=>current.map(task=>({...task,sourceGoal:projected.tasks.find(saved=>saved.id===task.id)?.sourceGoal})))
+      setNotice({text:removeGroupId?'已撤销组织，原待办保持不变。':'已组织为一件事，原待办和时间保持不变。'})
+    })
+    taskWriteQueue.current=work.catch(()=>undefined)
+    try{await work}catch(error){const message=safeIntakeError(error,'事项未能组织，请重试。');setNotice({text:message});throw new Error(message,{cause:error})}
     finally{taskWritesCount.current--;setTaskWritesPending(taskWritesCount.current)}
   }
 
@@ -1937,6 +1966,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
             onRestoreTask={handleRestoreTask}
             onSetEventCompletion={!runtime?handleSetEventCompletion:undefined}
             onSetEventTaskLink={!runtime?handleSetEventTaskLink:undefined}
+            onSetMatterGroup={!runtime?handleSetMatterGroup:undefined}
             onScheduleTask={scheduleDirectTask}
             onSelectChoice={chooseDirectOption}
             taskChannels={workspaceTaskChannels(ordinaryCanonical)}
