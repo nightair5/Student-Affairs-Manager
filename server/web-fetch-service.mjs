@@ -32,9 +32,17 @@ function isGloballyReachableIetfAssignment(parts) {
   return false
 }
 
+function wellKnownNat64Address(parts) {
+  const prefix = [0x0064, 0xff9b, 0, 0, 0, 0]
+  if (!prefix.every((part, index) => parts[index] === part)) return null
+  return `${parts[6] >> 8}.${parts[6] & 0xff}.${parts[7] >> 8}.${parts[7] & 0xff}`
+}
+
 function isNonGlobalIpv6(address) {
   const parts = ipv6Hextets(address)
   if (!parts || parts.length !== 8 || parts.some((part) => !Number.isInteger(part) || part < 0 || part > 0xffff)) return true
+  const nat64 = wellKnownNat64Address(parts)
+  if (nat64) return isPrivateIp(nat64)
   const [first, second] = parts
   if (first < 0x2000 || first > 0x3fff) return true
   // 3fff::/20 and 2001:db8::/32 are documentation. 2002::/16 is 6to4 and is not marked globally reachable.

@@ -135,9 +135,20 @@ async function serveStatic(response, pathname, staticDir, method) {
   response.end('Static build is missing. Run npm run build.')
 }
 
-async function readBody(request) {
+function maxApiBodyBytes(pathname) {
+  if (pathname === '/api/source/fetch') return 4_096
+  if (pathname === '/api/deepseek' || pathname === '/api/deepseek/extract') return 100_000
+  return 4_096
+}
+
+async function readBody(request, maxBytes) {
   const chunks = []
-  for await (const chunk of request) chunks.push(chunk)
+  let received = 0
+  for await (const chunk of request) {
+    received += chunk.length
+    if (received > maxBytes) throw Object.assign(new Error('PAYLOAD_TOO_LARGE'), { code: 'PAYLOAD_TOO_LARGE' })
+    chunks.push(chunk)
+  }
   return Buffer.concat(chunks)
 }
 
@@ -214,7 +225,7 @@ async function toWebRequest(nodeRequest, url) {
   headers.set('cf-connecting-ip', trustedClientAddress(nodeRequest))
   const method = nodeRequest.method || 'GET'
   const init = { method, headers }
-  if (method !== 'GET' && method !== 'HEAD') init.body = await readBody(nodeRequest)
+  if (method !== 'GET' && method !== 'HEAD') init.body = await readBody(nodeRequest, maxApiBodyBytes(url.pathname))
   return new Request(url, init)
 }
 
@@ -258,6 +269,14 @@ export function createPublicServer(config, worker = createPinnedWorker()) {
       }
       await serveStatic(nodeResponse, url.pathname, config.staticDir, nodeRequest.method || 'GET')
     } catch (error) {
+      if (error?.code === 'PAYLOAD_TOO_LARGE') {
+        if (!nodeResponse.headersSent) {
+          nodeResponse.writeHead(413, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' })
+        }
+        nodeResponse.end(JSON.stringify({ error: 'PAYLOAD_TOO_LARGE' }))
+        nodeRequest.destroy()
+        return
+      }
       console.error(JSON.stringify({
         error: 'PUBLIC_SERVER_ERROR',
         name: error instanceof Error ? error.name : 'Error',

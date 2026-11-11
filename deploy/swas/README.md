@@ -62,6 +62,6 @@ curl -I http://127.0.0.1/
 
 ## 域名
 
-确认 IP 访问正常后，再把 `student-affairs.site` 的 A 记录指到 `118.178.194.96`，并停止 Cloudflare 代理。Nginx 已同时接受这个域名和上述 IP。DNS 生效前，用 IP 访问即可。
+用 `http://118.178.194.96/` 检查安装即可。现在的生产域名已经在 Cloudflare 上通过 HTTPS 发布，并且响应包含一天的 HSTS。在这台服务器的 443 端口证书实际可用之前，不要把 `student-affairs.site` 指到该 IP，也不要关闭 Cloudflare 代理。已经访问过站点的浏览器会直接走 HTTPS，证书未就绪时页面会打不开。
 
-HTTPS 不在本次范围内。之后可以在 Nginx 上配置证书；启用后再把 `SAM_HTTPS=true` 并重启 API，避免浏览器在证书就绪前被强制跳到 HTTPS。
+证书配置放在 `/etc/nginx/snippets/student-affairs-extra/`。确认 `https://student-affairs.site` 从这台服务器打开后，再切换 DNS，然后把 `SAM_HTTPS=true` 并重启 API。

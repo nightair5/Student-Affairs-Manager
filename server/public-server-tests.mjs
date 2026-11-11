@@ -266,13 +266,13 @@ test('web fetch pins the validated address and refuses a private lookup', async 
     }, async () => [{ address: '10.0.0.8', family: 4 }, { address: '93.184.216.34', family: 4 }])
   })
   assert.deepEqual(publicAddresses, [{ address: '93.184.216.34', family: 4 }])
-  for (const address of ['fec0::1', '2001:2::1', '2001:10::1', '2001:db8::1', '3fff::1', '192.88.99.2', '198.51.100.10']) {
+  for (const address of ['fec0::1', '2001:2::1', '2001:10::1', '2001:db8::1', '3fff::1', '192.88.99.2', '198.51.100.10', '64:ff9b::7f00:1', '64:ff9b:1::808:808']) {
     await assert.rejects(
       () => resolvePublicNodeHostname('example.com', async () => [{ address, family: 6 }]),
       (error) => error.code === 'WEB_PRIVATE_ADDRESS_FORBIDDEN',
     )
   }
-  for (const address of ['2001:4860:4860::8888', '2001:3::1', '2001:20::1', '192.0.0.9', '8.8.8.8']) {
+  for (const address of ['2001:4860:4860::8888', '2001:3::1', '2001:20::1', '192.0.0.9', '8.8.8.8', '64:ff9b::808:808']) {
     await resolvePublicNodeHostname('example.com', async () => [{ address, family: 6 }])
   }
   const fetcher = createPinnedHttpsFetch({ lookupImpl })
@@ -362,6 +362,24 @@ test('pinned fetch stops an oversized or aborted upstream body', async () => {
     },
   })
   await assert.rejects(() => upgraded('https://example.com/switch'), (error) => error.code === 'WEB_FETCH_FAILED')
+})
+
+test('oversized API bodies are rejected before they are fully buffered', async () => {
+  const directory = await mkdtemp(path.join(os.tmpdir(), 'student-affairs-public-body-'))
+  const config = { ...loadPublicConfig({ DEEPSEEK_API_KEY: '' }, directory), staticDir: directory }
+  try {
+    await withServer(config, async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/source/fetch`, {
+        method: 'POST',
+        headers: { origin: baseUrl, 'content-type': 'application/json' },
+        body: JSON.stringify({ url: `https://example.com/${'a'.repeat(5_000)}` }),
+      })
+      assert.equal(response.status, 413)
+      assert.equal((await response.json()).error, 'PAYLOAD_TOO_LARGE')
+    })
+  } finally {
+    await rm(directory, { recursive: true, force: true })
+  }
 })
 
 test('does not expose filesystem paths outside the static directory', async () => {
