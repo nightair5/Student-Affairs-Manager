@@ -1,10 +1,14 @@
 import {parseTwoStepTime} from './two-step-time.mjs'
-export const DIRECT_SOURCE_TIME_VERSION='direct-source-time-1.0.6'
+import {sourceTimeKind} from './source-time-kind.mjs'
+export const DIRECT_SOURCE_TIME_VERSION='direct-source-time-1.0.7'
 const weekdays={日:0,天:0,一:1,二:2,三:3,四:4,五:5,六:6}
 const next=v=>{if(!v)return v;const d=new Date(v.slice(0,10)+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10)+v.slice(10)}
 /** Formatting adapter for the opt-in direct path. Evidence remains the exact
  * original span. It neither changes the legacy parser nor resolves ambiguity. */
 export function parseDirectSourceTime(raw,options){
+ const typed=sourceTimeKind(raw)
+ if(typed.calendarText===null)return {rawText:raw,normalizedValue:null,rangeEndNormalizedValue:null,precision:'vague',isAllDay:false,needsConfirmation:true,issues:[typed.kind==='recurrence'?'recurring_schedule_requires_anchor':'non_calendar_range'],formatRule:'SOURCE_TIME_KIND_PRESERVED'}
+ if(typed.calendarText!==raw)return {...parseDirectSourceTime(typed.calendarText,options),rawText:raw,formatRule:'NON_CALENDAR_QUANTITIES_EXCLUDED'}
  // Normalize the grammar of a source time before interpreting its meaning.
  // This is a parsing view only: evidence and rawText retain original UTF-16
  // positions. A date separator, layout break or range glyph is not a role.

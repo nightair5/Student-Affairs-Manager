@@ -198,8 +198,11 @@ function userEditedDraftDeadline(item: LegacyDraft['items'][number] | undefined)
   }))
 }
 
-function taskMaterials(workspace: WorkspaceV8, taskId: string, sourceId?: string): LegacyTaskMaterial[] {
-  return workspace.materials.filter((item) => item.relatedTaskIds.includes(taskId)).map((item) => ({
+function taskMaterials(workspace: WorkspaceV8, taskId: string, sourceId?: string, unassigned=false): LegacyTaskMaterial[] {
+  const runId=unassigned?workspace.tasks.find(task=>task.id===taskId)?.legacyData?.recognitionRunId:undefined
+  return workspace.materials.filter((item) => unassigned
+    ? Boolean(sourceId && typeof runId==='string' && item.legacyData?.recognitionRunId===runId && item.legacyData?.sourceId===sourceId && item.legacyData?.assignment==='unresolved' && !item.relatedTaskIds.length)
+    : item.relatedTaskIds.includes(taskId)).map((item) => ({
     id: item.id,
     name: item.name,
     required: item.required,
@@ -405,6 +408,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       priority: legacyPriority(item.legacyData?.priority ?? item.legacyData?.prioritySuggestion ?? legacy.priority),
       riskFlags: legacy.riskFlags ?? (deadline || windowEnd&&!hasSeparateDeadline&&!item.needsReview ? [] : ['待确认']),
       materials: taskMaterials(workspace, item.id, sourceIds[0]),
+      sourceUnassignedMaterials: taskMaterials(workspace, item.id, sourceIds[0], true),
       dependencies: legacy.dependencies ?? [],
       dependencyIds: item.dependencyIds,
       reminders: taskReminders(workspace, item.id),

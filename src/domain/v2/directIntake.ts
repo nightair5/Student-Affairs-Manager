@@ -1,4 +1,5 @@
 import {improveDirectFallback,recoverMissingDirectActions} from '../../recognition/directFallback'
+import {boundLocalResult} from '../../recognition/localResultCapacity'
 import { convertDirectResult, DIRECT_MODE_VERSION, type DirectItem, type DirectTag } from '../../recognition/directResult'
 import {DIRECT_ACTION_PROJECTION_VERSION} from '../../recognition/directActionProjection'
 import {DIRECT_RETENTION_VERSION,DIRECT_RETENTION_DEFAULT} from '../../recognition/directRetention'
@@ -91,13 +92,18 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const intentionalRepeat=w.sourceVersions.some(previous=>previous.sourceId!==s.id&&previous.rawText?.replace(/\r\n?/gu,'\n').trim()===text)
     const original=run?.legacyData?.originalRecognitionResult
     const localFallback=!d.result||run?.provider==='local-rules'
-    const rawInput=d.result??buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(run?.startedAt??d.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]})
+    // Execution starts can move when a request is retried. The source version's
+    // received time is the stable anchor for this notice, including on failure.
+    const rawInput=d.result??buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(v.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]})
     const semanticNotice=!localFallback&&isSemanticNoticeVersion(rawInput.promptVersion)
     const input=localFallback?improveDirectFallback(rawInput,v.rawText):semanticNotice?rawInput:linkFollowingFormChannel(completeParallelSessions(rawInput,v.rawText),v.rawText)
     const actionRecovery=(import.meta as ImportMeta&{env?:{VITE_DIRECT_ACTION_RECOVERY?:string}}).env?.VITE_DIRECT_ACTION_RECOVERY==='1'
     const retention=DIRECT_RETENTION_DEFAULT||(import.meta as ImportMeta&{env?:{VITE_DIRECT_RETENTION?:string}}).env?.VITE_DIRECT_RETENTION==='1'
     const initial=convertDirectResult(input,v.rawText,record(original)?original as unknown as RecognitionResult:undefined,{actionRecovery,retention})
-    const converted=localFallback||semanticNotice?initial:recoverMissingDirectActions(initial,buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(rawInput.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]}),v.rawText)
+    const candidate=localFallback||semanticNotice?initial:recoverMissingDirectActions(initial,buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(rawInput.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]}),v.rawText)
+    const bounded=localFallback?boundLocalResult(candidate.result,'direct'):candidate.result
+    const retainedIds=new Set([...bounded.standaloneTasks,...bounded.events].map(item=>item.tempId))
+    const converted=localFallback?{...candidate,result:bounded,items:candidate.items.filter(item=>retainedIds.has(item.tempId)),omitted:[...candidate.omitted,...candidate.items.filter(item=>!retainedIds.has(item.tempId)).map(item=>({id:item.tempId,reason:'LOCAL_CAPACITY_DEFERRED'}))]}:candidate
     const semanticFallback=converted!==initial||!localFallback&&input!==rawInput
     // A generated reading fallback does not count as an AI-supported action.
     // Keep provenance separate from the legacy origin, which older readers use
@@ -110,7 +116,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const readingOnly=converted.result.standaloneTasks.every(t=>t.actionVerb==='查看')&&converted.result.events.length===0
     const droppedAction=!localFallback&&readingOnly&&((requestDiagnostic?.modelActionCount??0)>0||rawInput.sourceSummary.requiresAction)
     const webRead=record(s.legacyData?.webRead)?s.legacyData.webRead:null
-    const processing=droppedAction||webRead?.partial===true||(requestDiagnostic?.compilerLossCount??0)>0||rawInput.quality.reviewReasons.some(reason=>/部分提取|部分内容尚未完整|未完整结束|后半部分可能尚未处理/u.test(reason))?'partial':'complete'
+    const processing=droppedAction||webRead?.partial===true||(requestDiagnostic?.compilerLossCount??0)>0||[...rawInput.quality.reviewReasons,...converted.result.quality.reviewReasons].some(reason=>/部分提取|部分内容尚未完整|未完整结束|后半部分可能尚未处理/u.test(reason))?'partial':'complete'
     const result=converted.result
     const newTasks=new Set(result.standaloneTasks.filter(t=>!w.tasks.some(x=>x.id===`task:${d.id}:${t.tempId}`)).map(t=>t.tempId))
     const newEvents=new Set(result.events.filter(e=>!w.events.some(x=>x.id===`event:${d.id}:${e.tempId}`)).map(e=>e.tempId))
@@ -132,7 +138,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const prepared={...w,extractionDrafts:w.extractionDrafts.map(x=>x.id===d.id?{...x,result}:x)}
     const plan=buildDomainCommitPlan(prepared,d.id,{
       taskTempIds:[...newTasks],eventTempIds:[...newEvents],
-      materialTempIds:result.materials.filter(m=>!w.materials.some(x=>x.id===`material:${d.id}:${m.tempId}`)&&m.relatedTaskTempIds.some(id=>newTasks.has(id))).map(m=>m.tempId),
+      materialTempIds:result.materials.filter(m=>!w.materials.some(x=>x.id===`material:${d.id}:${m.tempId}`)&&(m.relatedTaskTempIds.some(id=>newTasks.has(id))||isSemanticNoticeVersion(result.promptVersion)&&!m.relatedTaskTempIds.length&&m.requirements?.includes('适用事项待关联'))).map(m=>m.tempId),
       timePointTempIds:result.timePoints.filter(p=>!w.timePoints.some(x=>x.id===`time:${d.id}:${p.tempId}`)&&(p.relatedTaskTempIds.some(id=>newTasks.has(id))||result.events.some(e=>newEvents.has(e.tempId)&&(e.startTimePointTempId===p.tempId||e.endTimePointTempId===p.tempId)))).map(p=>p.tempId),
     },now)
     plan.operationId += ':direct:'+workspaceSnapshotHash(now)

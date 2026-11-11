@@ -38,9 +38,30 @@ function citedMatterSection(source,span,anchor){
  return {start:lineEnd,end}
 }
 
+// Prose introductions can declare the document's goal just as headings do.
+// Require a model-proposed, source-cited scope declaration and a specific
+// shared subject; neither an identical action verb nor repeated child titles
+// is required. Multiple declared goals keep their own bounded sections.
+function citedGoalIntroduction(source,span,goal,raw) {
+ if(!span||span.start>500||!Array.isArray(raw.goals)||raw.goals.length!==1)return null
+ const before=source.lastIndexOf('\n',span.start-1)+1
+ const lineEnd=source.indexOf('\n',span.end)
+ const line=source.slice(before,lineEnd<0?source.length:lineEnd)
+ if(!/(?:现将|现就|为(?:了)?|关于).{0,120}(?:有关工作|有关事项|办理流程|申请流程|事宜|通知如下|安排如下)/u.test(line))return null
+ const subject=sharedAnchor([goal.title,raw.topic,span.literal])
+ if(subject.length<4||/^(?:今日|明日|本周|近期|相关|有关|学生|学校|各项|各类|全部|工作|通知|事项|材料|申请|办理)+$/u.test(subject))return null
+ let end=source.length
+ const tail=source.slice(span.end)
+ // A new independently named notice/goal closes a prose scope. Ordinary
+ // role headings (conditions, materials, process) remain inside the goal.
+ const next=/\n\s*(?:【[^】]+】|\[[^\]]+\]|(?:另外|另有|此外)[^\n。]{0,100}(?:通知|申请|报名|办理))/u.exec(tail)
+ if(next)end=span.end+next.index
+ return {start:span.end,end}
+}
+
 /** Preserve a cited relation as a view grouping. Never delete or merge the
  * actionable task: its independent deadline, materials and status remain. */
-export function applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference=false,allowAssignmentEvidenceFallback=false,allowScopedMatter=false}){
+export function applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference=false,allowAssignmentEvidenceFallback=false,allowScopedMatter=false,allowProseScope=false}){
  const events=pending.filter(row=>row.kind==='event'&&result.events.includes(row.entity)&&!row.entity.sourceStatus)
  const tasks=pending.filter(row=>row.kind==='task'&&result.standaloneTasks.includes(row.entity))
  const eventOwners=new Set()
@@ -142,7 +163,7 @@ export function applySemanticGoalRelations({raw,result,pending,source,evidence,n
   const specificDocumentHeading=commonScope&&Boolean(documentSubject)&&!/^(?:今日|明日|本周|近期|本次|相关|有关|其他|各种|各类|全部|所有|多个|通知|事项)$/u.test(documentSubject)
   const supported=(literalAnchor||equivalentHeading||scopedHeading||specificDocumentHeading)&&!unrelated&&!differentNamedEvents&&otherEventKeys.size<=1&&citedEventKeys.size<=1&&keys.length>=2&&keys.length<=20&&new Set(keys).size===keys.length
    &&members.every(row=>row&&row.entity.evidenceIds.length<20&&!eventOwners.has(row.entity.tempId)&&!assigned.has(row.entity.tempId))
-  const bounds=allowScopedMatter?citedMatterSection(source,span,anchor):null
+  const bounds=(allowScopedMatter?citedMatterSection(source,span,anchor):null)??(allowProseScope?citedGoalIntroduction(source,span,goal,raw):null)
   const eligible=bounds?members.filter((row,i)=>row&&row.entity.evidenceIds.length<20&&!eventOwners.has(row.entity.tempId)&&!assigned.has(row.entity.tempId)
    &&memberRefs[i].some(ref=>ref.start>=bounds.start&&ref.end<=bounds.end)):[]
   const scoped=Boolean(bounds&&title&&keys.length>=2&&keys.length<=20&&new Set(keys).size===keys.length

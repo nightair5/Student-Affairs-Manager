@@ -21,6 +21,7 @@ export const SEMANTIC_GOAL_COMPILER_VERSION='semantic-notice-compiler-1.0.27'
 export const SEMANTIC_GOAL_CONTEXT_COMPILER_VERSION='semantic-notice-compiler-1.0.28'
 export const SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION='semantic-notice-compiler-1.0.29'
 export const SEMANTIC_MATTER_COMPILER_VERSION='semantic-notice-compiler-1.0.30'
+export const SEMANTIC_PRESERVATION_COMPILER_VERSION='semantic-notice-compiler-1.0.31'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
@@ -327,11 +328,12 @@ function sourceLocation(source,value,title,ownText) {
 export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',promptVersion='recognition-semantic-notice-3.0.5',goalContextVersion=''}={}) {
   const matterContract=promptVersion==='recognition-semantic-notice-3.12.0'
   const goalContract=promptVersion==='recognition-semantic-notice-3.11.0'||matterContract
-  const matterEnabled=matterContract&&goalContextVersion==='1.0.30'
+  const preservationEnabled=goalContract&&goalContextVersion==='1.0.31'
+  const matterEnabled=matterContract&&(goalContextVersion==='1.0.30'||preservationEnabled)
   // Upgrading the opt-in environment must not disable v1.0.29 for old clients.
-  const goalContextV129=goalContract&&(goalContextVersion==='1.0.29'||goalContextVersion==='1.0.30')
+  const goalContextV129=goalContract&&(goalContextVersion==='1.0.29'||goalContextVersion==='1.0.30'||preservationEnabled)
   const goalContextEnabled=goalContract&&(goalContextVersion==='1.0.28'||goalContextV129)
-  const compilerVersion=matterEnabled?SEMANTIC_MATTER_COMPILER_VERSION:goalContextV129?SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION:goalContextEnabled?SEMANTIC_GOAL_CONTEXT_COMPILER_VERSION:goalContract?SEMANTIC_GOAL_COMPILER_VERSION:SEMANTIC_COMPILER_VERSION
+  const compilerVersion=preservationEnabled?SEMANTIC_PRESERVATION_COMPILER_VERSION:matterEnabled?SEMANTIC_MATTER_COMPILER_VERSION:goalContextV129?SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION:goalContextEnabled?SEMANTIC_GOAL_CONTEXT_COMPILER_VERSION:goalContract?SEMANTIC_GOAL_COMPILER_VERSION:SEMANTIC_COMPILER_VERSION
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
     return {result:null,audit:{compilerVersion,rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
@@ -717,7 +719,25 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
   for(const [index,material] of raw.materials.entries()) {
     if(!object(material)||!text(material.key,40)||!text(material.name,160)){note('MATERIAL',String(index),'INVALID_MATERIAL');continue}
     const owners=[...new Set([...list(material.owners,20,40),...pending.filter(x=>list(x.item.materials,20,40).includes(material.key)).map(x=>x.item.key)])].flatMap(key=>keys.get(key)?.kind==='task'?[keys.get(key).entity]:[])
-    if(!owners.length){note('MATERIAL',material.key,'MATERIAL_OWNER_MISSING');continue}
+    if(!owners.length){
+      note('MATERIAL',material.key,'MATERIAL_OWNER_MISSING')
+      if(!preservationEnabled)continue
+      const quotes=list(material.evidence,12,500),ids=quotes.flatMap(q=>{const id=evidence(q,'materials',material.key);return id?[id]:[]})
+      // Retain an aligned source fact without claiming that any task owns it.
+      // The direct transaction persists it as source-level material, and the
+      // shared projection labels it separately from a task's obligations.
+      if(!ids.length)continue
+      const requirements=supportedRequirements(material.requirements,material.key)
+      const conditional=conditionalMaterialClause(source,text(material.name,160),quotes)
+      const sourceNotes=ids.map(id=>result.evidence.find(ref=>ref.id===id)?.quote).filter(Boolean)
+      result.materials.push({tempId:'sem-m'+(index+1),name:text(material.name,160),required:false,
+        formatRequirements:list(material.formats,20,160),namingRequirements:list(material.naming,20,160),
+        requirements:uniqueRequirements(['适用事项待关联',...(conditional?[conditional]:[]),...sourceNotes,...requirements]).slice(0,20),
+        quantity:Number.isFinite(material.quantity)&&material.quantity>0?material.quantity:null,
+        submissionChannel:sourceChannel(source,text(material.channel,160))||null,relatedTaskTempIds:[],evidenceIds:ids,confidence:.8,selected:true})
+      audit.facts.push({role:'unassigned_source_material',material:material.key})
+      continue
+    }
     const refs=list(material.evidence,12,500),ids=refs.flatMap(q=>{const e=evidence(q,'materials',material.key);return e?[e]:[]})
     if(!ids.length){note('MATERIAL',material.key,'MATERIAL_EVIDENCE_MISSING');continue}
     if(material.sourceRecovered)for(const id of ids){const ref=result.evidence.find(value=>value.id===id);if(ref)ref.extractionMethod='parser'}
@@ -917,7 +937,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
   }
   combineSupportedChoices(result,audit)
   if(['recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0','recognition-semantic-notice-3.11.0','recognition-semantic-notice-3.12.0'].includes(promptVersion))applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone,includeContextFacts:['recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0','recognition-semantic-notice-3.11.0','recognition-semantic-notice-3.12.0'].includes(promptVersion),documentContext:unifiedContract?raw.contextFacts:[],respectPersonalNeed:refinedContract,respectVoluntary:goalContract})
-  if(goalContract)applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference:goalContextEnabled,allowAssignmentEvidenceFallback:goalContextV129,allowScopedMatter:matterEnabled})
+  if(goalContract)applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference:goalContextEnabled,allowAssignmentEvidenceFallback:goalContextV129,allowScopedMatter:matterEnabled||preservationEnabled,allowProseScope:preservationEnabled})
   if(['recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0'].includes(promptVersion))applyEventIncidentalNotices({result,pending,source,evidence,note,audit})
   result.sourceSummary.title=text(raw.topic,160)||result.standaloneTasks[0]?.title||result.events[0]?.title||'通知'
   const onlyCancellation=audit.items.length>0&&audit.items.every(item=>item.status==='CANCELLED')

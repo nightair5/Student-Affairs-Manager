@@ -13,12 +13,13 @@ import {projectLocalDeliveryRoles} from './deliveryRoleProjection'
 import {localActionExplicitlyNegated} from './localActionPolarity'
 import {localMaterialOwnership} from './localMaterialOwnership'
 import {localSubmissionChoices} from './localSubmissionChoices'
+import {boundLocalResult} from './localResultCapacity'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
  const actions=removeDuplicatedActionEvents(improveLocalActions(input,source))
  const improved=retainLocalEventDetails(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(projectLocalDeliveryRoles(actions,source),source),source),source),source)
- return attachExplicitSharedGoal(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source),source)),source,true),source),source)
+ return boundLocalResult(attachExplicitSharedGoal(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source),source)),source,true),source),source))
 }
 
 /** The local parser may classify a form action as an event merely because the

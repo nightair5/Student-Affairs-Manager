@@ -1,5 +1,5 @@
 // GENERATED from src/recognition/schema.ts; do not edit.
-// source-sha256: da44d60f764413c2305034cc9929ac394abb7fa496b9548f8151a8bfc696def9
+// source-sha256: 7a911e1cf79805ca94762ffec000c0a9f29160e061e8c0d3b17f0b09986d37eb
 const categories = new Set(['比赛', '保研', '课程', '老师任务', '其他']);
 const inferenceLevels = new Set(['explicit', 'strong_inference', 'optional_suggestion']);
 const priorities = new Set(['low', 'medium', 'high', 'urgent']);
@@ -117,6 +117,42 @@ function validEvidence(value) {
 function uniqueNonEmptyIds(values) {
     const ids = values.map((item) => isRecord(item) ? item.tempId : null);
     return ids.every((id) => boundedString(id, 100)) && new Set(ids).size === ids.length;
+}
+/** Diagnose capacity without copying user text into errors or relaxing shape validation. */
+function capacityIssues(value) {
+    if (!isRecord(value))
+        return [];
+    const issues = [];
+    const check = (input, path, limit) => {
+        if ((typeof input === 'string' || Array.isArray(input)) && input.length > limit) {
+            issues.push({ category: 'schema', code: typeof input === 'string' ? 'FIELD_LENGTH_EXCEEDED' : 'COLLECTION_CAPACITY_EXCEEDED', path, actual: input.length, limit });
+        }
+    };
+    const tasks = (input, path) => {
+        check(input, path, 20);
+        if (Array.isArray(input))
+            input.forEach((task, index) => {
+                if (isRecord(task))
+                    check(task.description, `${path}[${index}].description`, 800);
+            });
+    };
+    tasks(value.standaloneTasks, 'standaloneTasks');
+    check(value.milestones, 'milestones', 10);
+    if (Array.isArray(value.milestones))
+        value.milestones.forEach((milestone, index) => {
+            if (!isRecord(milestone))
+                return;
+            tasks(milestone.tasks, `milestones[${index}].tasks`);
+            check(milestone.workPackages, `milestones[${index}].workPackages`, 8);
+            if (Array.isArray(milestone.workPackages))
+                milestone.workPackages.forEach((workPackage, nestedIndex) => {
+                    if (isRecord(workPackage))
+                        tasks(workPackage.tasks, `milestones[${index}].workPackages[${nestedIndex}].tasks`);
+                });
+        });
+    for (const [field, limit] of [['materials', 60], ['timePoints', 60], ['events', 30], ['evidence', 120]])
+        check(value[field], field, limit);
+    return issues;
 }
 export const RECOGNITION_REPAIR_CONTRACT = Object.freeze({
     maxAttempts: 1,
@@ -492,10 +528,11 @@ export function validateRecognitionResult(value, options = {}) {
     if (missingFields.length)
         return { valid: false, failureCategory: 'schema', issues: missingFields };
     if (!hasRecognitionResultShape(value)) {
+        const capacity = capacityIssues(value);
         return {
             valid: false,
             failureCategory: 'schema',
-            issues: [{ category: 'schema', code: 'SCHEMA_INVALID', path: '$' }],
+            issues: capacity.length ? capacity : [{ category: 'schema', code: 'SCHEMA_INVALID', path: '$' }],
         };
     }
     const allTempEntities = [

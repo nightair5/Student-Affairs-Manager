@@ -1,5 +1,7 @@
 # 当前发布：v3.0.0-beta.38（2026-11-10）
 
+2026-11-11 开发候选尚未部署：编译器 1.0.31 修复学期周次误算日期，保留待关联材料及有来源范围依据的共同目标；同时修复本机长结果保存和失败重试的日期基准。默认生成提示仍为 3.11，3.12 未启用。证据：`.data/semantic-preservation-repair-20261111-163421/`。新真实 AI 对照与线上冒烟未完成，以下仍是实际生产版本。
+
 正式站点：https://student-affairs.site/；部署代码 `5ceb325efc3ccbb1d1aae12d07bea44abe7a8ba0`。
 Cloudflare 版本 `0fe105c0-8e98-4e85-b786-98e685c2ee44`。回滚到 beta.37：
 `$env:CLOUDFLARE_ACCOUNT_ID='b290abdbb9d1b0d1f5289abfdecbab0c'; node node_modules/wrangler/bin/wrangler.js rollback 8efad034-891b-420b-a395-10f68e9308d2 --env= --yes`。

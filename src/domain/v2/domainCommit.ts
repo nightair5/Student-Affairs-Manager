@@ -524,7 +524,8 @@ function buildDomainCommitPlanInternal(
         && (selection.taskOverrides?.[taskTempId]?.materials === undefined
           || selection.taskOverrides[taskTempId].materials?.some((name) => normalizedMaterialName(name) === normalizedMaterialName(item.name)))),
     }))
-    .filter((item) => item.relatedTaskTempIds.length > 0)
+    .filter((item) => item.relatedTaskTempIds.length > 0
+      || result.materials.some(original => original.tempId === item.tempId && original.relatedTaskTempIds.length === 0))
   const addedMaterials = new Map<string, typeof recognizedMaterialSuggestions[number]>()
   selectedTasks.forEach((task) => {
     selection.taskOverrides?.[task.tempId]?.materials?.forEach((name) => {
@@ -616,7 +617,7 @@ function buildDomainCommitPlanInternal(
         completionCriteria: item.completionCriteria, inferenceLevel: item.inferenceLevel,
         prioritySuggestion: override?.priority === '高' ? 'high' : override?.priority === '低' ? 'low' : override?.priority === '中' ? 'medium' : item.prioritySuggestion,
         priority: override?.priority ?? (item.prioritySuggestion === 'urgent' || item.prioritySuggestion === 'high' ? '高' : item.prioritySuggestion === 'low' ? '低' : '中'),
-        evidenceIds: item.evidenceIds, sourceId: source.id,
+        evidenceIds: item.evidenceIds, sourceId: source.id, recognitionRunId: run.id,
         ...(item.sourceStatus ? { sourceStatus: item.sourceStatus } : {}),
         category: override?.category ?? result.projectSuggestion?.category.value ?? '其他',
       },
@@ -644,6 +645,7 @@ function buildDomainCommitPlanInternal(
     deadlineTimePointId: materialDeadline(item).id,
     createdAt: now, updatedAt: now, version: 1,
     legacyData: { recognitionTempId: item.tempId, evidenceIds: item.evidenceIds,
+      ...(!item.relatedTaskTempIds.length ? {sourceId:source.id,sourceVersionId:sourceVersion.id,recognitionRunId:run.id,assignment:'unresolved'} : {}),
       ...(materialDeadline(item).audit ? { deadlineProjection: materialDeadline(item).audit! } : {}) },
   }))
   const eventIdMap = new Map(eventSuggestions.map((item) => [item.tempId, entityId('event', draftId, item.tempId)]))

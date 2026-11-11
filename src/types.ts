@@ -136,6 +136,8 @@ export interface Task {
   priority: Priority
   riskFlags: RiskFlag[]
   materials: Material[]
+  /** Source facts whose action owner is unresolved; never counted as this task's obligations. */
+  sourceUnassignedMaterials?: Material[]
   dependencies: string[]
   dependencyIds?: string[]
   reminders: Reminder[]

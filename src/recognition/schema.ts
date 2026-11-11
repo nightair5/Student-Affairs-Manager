@@ -137,6 +137,37 @@ export interface RecognitionValidationIssue {
   code: string
   path: string
   referenceId?: string
+  actual?: number
+  limit?: number
+}
+
+/** Diagnose capacity without copying user text into errors or relaxing shape validation. */
+function capacityIssues(value: unknown): RecognitionValidationIssue[] {
+  if (!isRecord(value)) return []
+  const issues: RecognitionValidationIssue[] = []
+  const check = (input: unknown, path: string, limit: number) => {
+    if ((typeof input === 'string' || Array.isArray(input)) && input.length > limit) {
+      issues.push({ category: 'schema', code: typeof input === 'string' ? 'FIELD_LENGTH_EXCEEDED' : 'COLLECTION_CAPACITY_EXCEEDED', path, actual: input.length, limit })
+    }
+  }
+  const tasks = (input: unknown, path: string) => {
+    check(input, path, 20)
+    if (Array.isArray(input)) input.forEach((task, index) => {
+      if (isRecord(task)) check(task.description, `${path}[${index}].description`, 800)
+    })
+  }
+  tasks(value.standaloneTasks, 'standaloneTasks')
+  check(value.milestones, 'milestones', 10)
+  if (Array.isArray(value.milestones)) value.milestones.forEach((milestone, index) => {
+    if (!isRecord(milestone)) return
+    tasks(milestone.tasks, `milestones[${index}].tasks`)
+    check(milestone.workPackages, `milestones[${index}].workPackages`, 8)
+    if (Array.isArray(milestone.workPackages)) milestone.workPackages.forEach((workPackage, nestedIndex) => {
+      if (isRecord(workPackage)) tasks(workPackage.tasks, `milestones[${index}].workPackages[${nestedIndex}].tasks`)
+    })
+  })
+  for (const [field, limit] of [['materials', 60], ['timePoints', 60], ['events', 30], ['evidence', 120]] as const) check(value[field], field, limit)
+  return issues
 }
 
 export interface RecognitionValidationReport {
@@ -499,10 +530,11 @@ export function validateRecognitionResult(value: unknown, options: RecognitionVa
   const missingFields = requiredFieldIssues(value)
   if (missingFields.length) return { valid: false, failureCategory: 'schema', issues: missingFields }
   if (!hasRecognitionResultShape(value)) {
+    const capacity = capacityIssues(value)
     return {
       valid: false,
       failureCategory: 'schema',
-      issues: [{ category: 'schema', code: 'SCHEMA_INVALID', path: '$' }],
+      issues: capacity.length ? capacity : [{ category: 'schema', code: 'SCHEMA_INVALID', path: '$' }],
     }
   }
   const allTempEntities = [

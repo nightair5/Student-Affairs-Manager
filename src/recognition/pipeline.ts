@@ -5,6 +5,7 @@ import { taskActionText } from '../lib/taskActionText'
 import { parseChineseTimeAst } from '../lib/timeSemantics'
 import { localMeetingBlock, localNamedMeeting } from './localMeetingBlock'
 import {normalizeSourceWithOffsets,alignRecognitionEvidence} from '../../cloudflare/source-text-index.mjs'
+import {boundLocalResult} from './localResultCapacity'
 import { RECOGNITION_MODEL_NAME, RECOGNITION_PROMPT_VERSION } from './prompt'
 import type {
   EventSuggestion,
@@ -404,7 +405,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     projectMatch.decision = 'standalone_task'
     projectMatch.matchedProjectId = null
   }
-  return postProcessRecognition({
+  return boundLocalResult(postProcessRecognition({
     schemaVersion: '2.0',
     promptVersion: RECOGNITION_PROMPT_VERSION,
     modelName: 'local-rules',
@@ -427,7 +428,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     ambiguities: timePoints.filter((point) => point.needsConfirmation).map((point, index) => ({ id: `ambiguity-${index + 1}`, field: 'timePoint', message: `“${point.rawText}”的日期或时刻需要确认`, options: [], evidenceIds: point.evidenceIds })),
     ignoredContent: actionRequired ? [] : [{ text: preprocessed.normalizedText.slice(0, 240), reason: 'background' }],
     quality: { overallConfidence: actionRequired ? 0.72 : 0.55, hierarchyConfidence: complexity.level === 'simple' ? 0.8 : 0.62, dateConfidence: timePoints.every((point) => !point.needsConfirmation) ? 0.9 : 0.5, evidenceCoverage: parsed.length ? 0.9 : 0, duplicateRisk: Math.min(1, duplicateCount / Math.max(1, tasks.length)), overFragmentationRisk: tasks.length > 20 ? 1 : tasks.length > 12 ? 0.6 : 0.1, missingActionRisk: tasks.some((task) => !task.actionVerb) ? 0.8 : 0.1, needsHumanReview: timePoints.some((point) => point.needsConfirmation) || projectMatch.decision === 'uncertain', reviewReasons: [...(projectMatch.decision === 'uncertain' ? ['项目归属不确定'] : []), ...(timePoints.some((point) => point.needsConfirmation) ? ['存在模糊日期或时间'] : [])] },
-  }, input.content, input.tasks ?? [])
+  }, input.content, input.tasks ?? []))
 }
 
 function allTasks(result: RecognitionResult): TaskSuggestionV2[] {
