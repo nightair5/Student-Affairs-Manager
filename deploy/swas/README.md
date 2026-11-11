@@ -34,6 +34,8 @@ sudo bash deploy/swas/install.sh
 
 脚本会执行 `npm ci`、`npm run build`，安装 systemd 服务 `student-affairs-api`，并写入 Nginx 站点配置。再次运行会重启 API 进程，使新的后端代码生效。首次运行会从 `deploy/swas/student-affairs.env.example` 生成 `/etc/student-affairs.env`；如果该文件已存在，脚本不会覆盖。
 
+Nginx 为静态页面加上与 Cloudflare 相同的框架和内容类型防护，并把 `.mjs` 标成 JavaScript，PDF 文本提取才能加载 worker。本机证书启用前不发送 HSTS。
+
 写入密钥后重启 API：
 
 ```bash

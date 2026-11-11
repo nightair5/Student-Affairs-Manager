@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
@@ -192,6 +192,18 @@ test('HTTPS browser origins match when the proxy or server terminates TLS', asyn
   } finally {
     await rm(directory, { recursive: true, force: true })
   }
+})
+
+test('nginx static site types mjs as javascript and keeps framing protections', async () => {
+  const nginx = await readFile(new URL('../deploy/swas/nginx.conf', import.meta.url), 'utf8')
+  const headers = await readFile(new URL('../deploy/swas/security-headers.conf', import.meta.url), 'utf8')
+  assert.match(nginx, /\\.mjs\$/)
+  assert.match(nginx, /default_type text\/javascript/)
+  assert.match(nginx, /security-headers\.conf/)
+  assert.match(headers, /X-Content-Type-Options nosniff/)
+  assert.match(headers, /X-Frame-Options DENY/)
+  assert.match(headers, /Cross-Origin-Opener-Policy same-origin/)
+  assert.doesNotMatch(headers, /add_header Strict-Transport-Security/)
 })
 
 test('does not expose filesystem paths outside the static directory', async () => {
