@@ -21,6 +21,7 @@ import { IntakePanel } from './components/IntakePanel'
 import { OnboardingGuide } from './components/OnboardingGuide'
 import { PageLoadBoundary } from './components/PageLoadBoundary'
 import { Sidebar } from './components/Sidebar'
+import { SiteRecordFooter } from './components/SiteRecordFooter'
 import { SourceSupplementPanel } from './components/SourceSupplementPanel'
 import { TaskDetailPanel } from './components/TaskDetailPanel'
 import { WorkspaceRecoveryPanel } from './components/WorkspaceRecoveryPanel'
@@ -2165,6 +2166,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           </Suspense>
         </PageLoadBoundary>
       </div>
+      <SiteRecordFooter />
 
       {!workspaceReady && <div className="workspace-status" role="status">正在恢复本机工作区…</div>}
       {notice&&!notice.direct && <div className="app-toast" role="status"><span>{notice.text}</span>{notice.undo && <button type="button" onClick={() => { notice.undo?.(); setNotice(null) }}>撤销</button>}<button type="button" onClick={() => setNotice(null)} aria-label="关闭提示">×</button></div>}
