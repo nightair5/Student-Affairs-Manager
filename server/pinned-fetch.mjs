@@ -1,5 +1,6 @@
 import { lookup } from 'node:dns/promises'
 import https from 'node:https'
+import { brotliDecompressSync, gunzipSync, inflateSync } from 'node:zlib'
 import { isPrivateIp } from './web-fetch-service.mjs'
 
 const MAX_WEB_RESPONSE_BYTES = 512 * 1024
@@ -43,6 +44,21 @@ export function callPinnedLookup(hostname, options, callback, lookupImpl = looku
   }).catch((error) => callback(error))
 }
 
+function decodeBody(body, encoding, maxBytes) {
+  const value = encoding.trim().toLowerCase()
+  if (!value || value === 'identity') return body
+  const options = { maxOutputLength: maxBytes }
+  try {
+    if (value === 'gzip' || value === 'x-gzip') return gunzipSync(body, options)
+    if (value === 'deflate') return inflateSync(body, options)
+    if (value === 'br') return brotliDecompressSync(body, options)
+  } catch (error) {
+    if (error?.code === 'ERR_BUFFER_TOO_LARGE') throw codedError('WEB_RESPONSE_TOO_LARGE')
+    throw codedError('WEB_FETCH_FAILED')
+  }
+  throw codedError('WEB_FETCH_FAILED')
+}
+
 export function createPinnedHttpsFetch({
   lookupImpl = lookup,
   requestImpl = https.request,
@@ -65,11 +81,16 @@ export function createPinnedHttpsFetch({
       fail(codedError('WEB_HTTPS_REQUIRED'))
       return
     }
+    if (init.signal?.aborted) {
+      fail(Object.assign(codedError('WEB_FETCH_TIMEOUT'), { name: 'TimeoutError' }))
+      return
+    }
     const headers = {}
     const source = new Headers(init.headers || {})
     source.forEach((value, key) => {
       headers[key] = value
     })
+    if (!source.has('accept-encoding')) headers['accept-encoding'] = 'identity'
     const request = requestImpl({
       hostname: target.hostname,
       servername: target.hostname,
@@ -102,7 +123,16 @@ export function createPinnedHttpsFetch({
         const responseHeaders = new Headers()
         const raw = response.rawHeaders || []
         for (let index = 0; index < raw.length; index += 2) responseHeaders.append(raw[index], raw[index + 1])
-        succeed(new Response(Buffer.concat(chunks), { status: response.statusCode, headers: responseHeaders }))
+        let body
+        try {
+          body = decodeBody(Buffer.concat(chunks), responseHeaders.get('content-encoding') || '', maxBytes)
+        } catch (error) {
+          fail(error?.code ? error : codedError('WEB_FETCH_FAILED'))
+          return
+        }
+        responseHeaders.delete('content-encoding')
+        responseHeaders.delete('content-length')
+        succeed(new Response(body, { status: response.statusCode, headers: responseHeaders }))
       })
     })
     const abort = () => request.destroy(Object.assign(codedError('WEB_FETCH_TIMEOUT'), { name: 'TimeoutError' }))

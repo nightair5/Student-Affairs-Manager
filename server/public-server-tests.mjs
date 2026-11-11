@@ -6,6 +6,7 @@ import path from 'node:path'
 import test from 'node:test'
 import { createWorker } from '../cloudflare/worker.mjs'
 import { EventEmitter } from 'node:events'
+import { gzipSync } from 'node:zlib'
 import { callPinnedLookup, createPinnedHttpsFetch, resolvePublicNodeHostname } from './pinned-fetch.mjs'
 import { createPublicServer, loadPublicConfig } from './public-server.mjs'
 
@@ -267,14 +268,14 @@ test('web fetch pins the validated address and refuses a private lookup', async 
 
 test('pinned fetch stops an oversized or aborted upstream body', async () => {
   const lookupImpl = async () => [{ address: '93.184.216.34', family: 4 }]
-  const scripted = (chunks, { fail } = {}) => (_options, callback) => {
+  const scripted = (chunks, { fail, rawHeaders = ['content-type', 'text/plain'] } = {}) => (_options, callback) => {
     const request = new EventEmitter()
     request.destroy = () => {}
     request.write = () => {}
     request.end = () => {
       const response = new EventEmitter()
       response.statusCode = 200
-      response.rawHeaders = ['content-type', 'text/plain']
+      response.rawHeaders = rawHeaders
       response.destroy = () => response.emit('close')
       callback(response)
       for (const chunk of chunks) response.emit('data', chunk)
@@ -301,6 +302,29 @@ test('pinned fetch stops an oversized or aborted upstream body', async () => {
   const page = await fromUrl(new URL('https://example.com/notice'))
   assert.equal(page.status, 200)
   assert.equal(await page.text(), 'ok')
+  const encoded = gzipSync(Buffer.from('明文'))
+  const gzipped = createPinnedHttpsFetch({
+    lookupImpl,
+    requestImpl: scripted([encoded], { rawHeaders: ['content-type', 'text/html', 'content-encoding', 'gzip'] }),
+  })
+  const decoded = await gzipped('https://example.com/gzip')
+  assert.equal(await decoded.text(), '明文')
+  assert.equal(decoded.headers.get('content-encoding'), null)
+  const controller = new AbortController()
+  controller.abort()
+  let started = false
+  const expired = createPinnedHttpsFetch({
+    lookupImpl,
+    requestImpl: () => {
+      started = true
+      throw new Error('started')
+    },
+  })
+  await assert.rejects(
+    () => expired('https://example.com/late', { signal: controller.signal }),
+    (error) => error.code === 'WEB_FETCH_TIMEOUT',
+  )
+  assert.equal(started, false)
 })
 
 test('does not expose filesystem paths outside the static directory', async () => {
