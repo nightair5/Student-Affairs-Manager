@@ -1,13 +1,16 @@
-# 当前正式环境：beta.38 + ICP / SWAS 托管（2026-11-11 负责人交接）
+# 当前正式环境：v3.0.0-beta.39 / 阿里云 SWAS（2026-11-12）
 
-网站「个人事务整理工具」的 `student-affairs.site` 已由负责人迁至阿里云杭州 SWAS `118.178.194.96`。后续正式更新使用现有 Linux 安装流程，不再部署到 Workers。
-负责人报告的实际部署代码 `253953163701a43a43a327684dcfe712256a09e6`（PR #15，base `release/v3-beta-38`）；产品基准 `5ceb325e` 不能独立覆盖部署。本轮核实了 PR 文件与 SHA，未登录服务器验收。
-保留 `桂ICP备2026027233号-1` 页脚、env 权限 600、HTTPS 片段、ACME 和 IP 直达；上传精简源码包时保留构建依赖 JSON fixtures。完整约束、验证及备份恢复流程见 [SWAS 生产交接](../../deployment/SWAS_PRODUCTION.md)。
-2026-11-11 部署候选已整合今天的产品修复、PR #15 的 ICP/SWAS 托管，以及选择性移植的请求大小、DNS/SSRF、限流和路径校验修复；没有合并 PR 或覆盖旧产品分支。
-候选本地 lint、typecheck、完整 test、build、security:scan、audit(high) 和 cloudflare:check（仅 dry-run）通过；11 项既有中危依赖提示保留。17 项 Node 接口测试和 100 份隔离仓库回放通过，不代表新 AI 准确率或生产浏览器验收。
-目前未上传、未安装、未修改正式服务：负责人正在为本机授权 SSH 公钥。拟部署提交的远端 CI、精简包构建及实际上线结果以本轮证据 `.data/deploy-swas-20261111-221827/` 为准。线上 SHA 仍是负责人交接值，未通过 SSH 复核；本轮没有新付费模型调用。
+网站「个人事务整理工具」已更新至 `1109072304af684d9fc76ff9126ee185bf620d56`，运行于 `118.178.194.96` 的 `/opt/student-affairs`。实际版本可查看 [deployment.json](https://student-affairs.site/deployment.json)；未部署 Cloudflare 生产环境。
+本版包含今天的事项组织、选择分支、时间/材料保真及本机长结果保存修复；同时保留 PR #15 的 ICP/SWAS 托管，并选择性移植请求大小、DNS/SSRF、限流和路径校验修复。前端直达提示仍为 `semantic-notice-3.11`，编译器 `1.0.31`，未启用 3.12。
+本地完整检查、Node 20.19.5 干净包构建及部署提交的六项 [远端 CI](https://github.com/nightair5/Student-Affairs-Manager/actions/runs/43040947474) 全部通过。服务器重新 npm ci/build 成功，188 个产物哈希与验证包一致，17 项 Node 接口测试及隔离模拟上游识别通过。
+服务器本机实测：首页与备案号、API configured、域名 HTTP→HTTPS、IP HTTP 200、未知/空 Host 拒绝、HTTP→HTTPS 的 ACME 挑战、API 超过 1 MiB 传输和正文上限、安全头均通过。HTTPS 配置仅补齐 ACME 与 Host 校验，证书路径和原有 TLS 设置保留；env 内容未变且权限保持 600。
+发布中先后两次自动恢复原站：第一次为验收脚本误判 HTTP/2 的 curl 92；第二次为精简包漏带 wrangler.jsonc，版本比对读到旧配置。保留记录，明确 HTTP/1.1 并补齐同一提交文件后，未启用候选目录和最终生产均通过；最终线上是 beta.39。
+备份和回滚脚本：`/root/sa-backups/20261112-001910-11090723-attempt3/`。服务器执行 `bash /root/sa-backups/20261112-001910-11090723-attempt3/rollback.sh` 可恢复本轮部署前代码及配置；不是 Wrangler rollback。
+复用本候选 100 份本机结果和 3 份历史真实 AI 回答的隔离仓库保存、读回、独立状态、重复添加、撤销和备份验证。没有访问用户浏览器或迁移数据。
+本次新付费模型调用 0；既有封停和账本保留。configured 及模拟上游测试不代表真实模型识别通过。本次生产浏览器操作 NOT_RUN，未宣称新 AI 正确率。
+证据：`.data/deploy-swas-execute-20261111-235702/`；构建与原检查：`.data/deploy-swas-20261111-221827/`。11 项既有中危依赖提示、部分开发依赖 Node 22 engine 提示保留，未升级依赖。
 
-以下为迁移前历史发布记录；其中 Workers 版本与回滚命令不再适用于正式 apex 站点。
+以下为迁移与历史发布记录，不代表当前线上版本。
 
 # 历史发布：v3.0.0-beta.38 / Workers（2026-11-10）
 
