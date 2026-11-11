@@ -236,6 +236,7 @@ test('nginx static site types mjs as javascript and keeps framing protections', 
   assert.match(nginx, /\\.mjs\$/)
   assert.match(nginx, /default_type text\/javascript/)
   assert.match(nginx, /security-headers\.conf/)
+  assert.match(nginx, /location \/api\/ \{[^}]*client_max_body_size 14m;/s)
   assert.match(nginx, /default_server/)
   assert.match(nginx, /return 444/)
   assert.match(nginx, /Cache-Control "no-cache"/)
