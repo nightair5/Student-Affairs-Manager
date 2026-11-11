@@ -4,6 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
+User=student-affairs
+Group=student-affairs
 WorkingDirectory=/opt/student-affairs
 EnvironmentFile=/etc/student-affairs.env
 ExecStart=/usr/bin/node /opt/student-affairs/server/public-server.mjs

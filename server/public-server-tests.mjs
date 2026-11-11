@@ -1,10 +1,29 @@
 import assert from 'node:assert/strict'
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import http from 'node:http'
 import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
 import { createWorker } from '../cloudflare/worker.mjs'
+import { createPinnedHttpsFetch, resolvePublicNodeHostname } from './pinned-fetch.mjs'
 import { createPublicServer, loadPublicConfig } from './public-server.mjs'
+
+function statusWithHost(baseUrl, host) {
+  const url = new URL(baseUrl)
+  return new Promise((resolve, reject) => {
+    const request = http.request({
+      hostname: url.hostname,
+      port: url.port,
+      path: '/api/deepseek/status',
+      headers: { host },
+    }, (response) => {
+      response.resume()
+      response.on('end', () => resolve(response.statusCode))
+    })
+    request.on('error', reject)
+    request.end()
+  })
+}
 
 async function withServer(config, run, worker) {
   const server = createPublicServer(config, worker)
@@ -200,10 +219,42 @@ test('nginx static site types mjs as javascript and keeps framing protections', 
   assert.match(nginx, /\\.mjs\$/)
   assert.match(nginx, /default_type text\/javascript/)
   assert.match(nginx, /security-headers\.conf/)
+  assert.match(nginx, /default_server/)
+  assert.match(nginx, /return 444/)
+  assert.match(nginx, /Cache-Control "no-cache"/)
+  assert.match(nginx, /student-affairs-extra/)
   assert.match(headers, /X-Content-Type-Options nosniff/)
   assert.match(headers, /X-Frame-Options DENY/)
   assert.match(headers, /Cross-Origin-Opener-Policy same-origin/)
   assert.doesNotMatch(headers, /add_header Strict-Transport-Security/)
+})
+
+test('rejects an unrecognized Host before it can match Origin', async () => {
+  const directory = await mkdtemp(path.join(os.tmpdir(), 'student-affairs-public-host-'))
+  const config = { ...loadPublicConfig({ DEEPSEEK_API_KEY: '' }, directory), staticDir: directory }
+  try {
+    await withServer(config, async (baseUrl) => {
+      assert.equal(await statusWithHost(baseUrl, 'evil.example'), 421)
+      assert.equal(await statusWithHost(baseUrl, 'student-affairs.site'), 200)
+      assert.equal(await statusWithHost(baseUrl, new URL(baseUrl).host), 200)
+    })
+  } finally {
+    await rm(directory, { recursive: true, force: true })
+  }
+})
+
+test('web fetch pins the validated address and refuses a private lookup', async () => {
+  const lookupImpl = async () => [{ address: '10.1.1.1', family: 4 }]
+  await assert.rejects(
+    () => resolvePublicNodeHostname('example.com', lookupImpl),
+    (error) => error.code === 'WEB_PRIVATE_ADDRESS_FORBIDDEN',
+  )
+  await resolvePublicNodeHostname('example.com', async () => [{ address: '93.184.216.34', family: 4 }])
+  const fetcher = createPinnedHttpsFetch({ lookupImpl })
+  await assert.rejects(
+    () => fetcher('https://example.com/page'),
+    (error) => error.code === 'WEB_PRIVATE_ADDRESS_FORBIDDEN' || error.message === 'WEB_PRIVATE_ADDRESS_FORBIDDEN',
+  )
 })
 
 test('does not expose filesystem paths outside the static directory', async () => {

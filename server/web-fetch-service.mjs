@@ -10,7 +10,7 @@ function webError(code) {
   return error
 }
 
-function isPrivateIp(address) {
+export function isPrivateIp(address) {
   const normalized = address.toLowerCase()
   if (normalized.startsWith('::ffff:')) return isPrivateIp(normalized.slice(7))
   if (normalized === '::1' || normalized === '::') return true

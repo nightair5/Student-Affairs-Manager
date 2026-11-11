@@ -4,6 +4,7 @@ import { createServer } from 'node:http'
 import { extname, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createWorker } from '../cloudflare/worker.mjs'
+import { createPinnedHttpsFetch, resolvePublicNodeHostname } from './pinned-fetch.mjs'
 
 const MIME_TYPES = new Map([
   ['.css', 'text/css; charset=utf-8'],
@@ -37,6 +38,10 @@ export function loadPublicConfig(env = process.env, cwd = process.cwd()) {
     port: numberFromEnv(env.SAM_PUBLIC_PORT, 8788),
     staticDir: resolve(cwd, env.SAM_STATIC_DIR?.trim() || 'dist'),
     httpsEnabled: env.SAM_HTTPS === 'true',
+    allowedHosts: (env.SAM_ALLOWED_HOSTS || 'student-affairs.site,118.178.194.96')
+      .split(',')
+      .map((host) => host.trim().toLowerCase())
+      .filter(Boolean),
     workerEnv: {
       DEEPSEEK_API_KEY: apiKey,
       ALLOWED_ORIGINS: allowedOrigins,
@@ -173,6 +178,20 @@ function trustedClientAddress(nodeRequest) {
   return peer || 'unknown'
 }
 
+function hostnameFromHostHeader(value) {
+  const host = value.split(',')[0].trim().toLowerCase()
+  if (host.startsWith('[')) {
+    const end = host.indexOf(']')
+    return end === -1 ? host : host.slice(1, end)
+  }
+  return host.replace(/:\d+$/u, '')
+}
+
+function isAllowedHost(hostHeader, config) {
+  const name = hostnameFromHostHeader(hostHeader)
+  return name === 'localhost' || name === '127.0.0.1' || name === '::1' || config.allowedHosts.includes(name)
+}
+
 function externalRequestUrl(nodeRequest, config) {
   const hostHeader = nodeRequest.headers.host || `${config.host}:${config.port}`
   const peer = normalizeIp(nodeRequest.socket?.remoteAddress || '')
@@ -207,9 +226,21 @@ function publicHeaders(response, httpsEnabled) {
   return headers
 }
 
-export function createPublicServer(config, worker = createWorker()) {
+function createPinnedWorker() {
+  return createWorker({
+    fetcher: createPinnedHttpsFetch(),
+    resolveHostname: resolvePublicNodeHostname,
+  })
+}
+
+export function createPublicServer(config, worker = createPinnedWorker()) {
   return createServer(async (nodeRequest, nodeResponse) => {
     try {
+      if (!isAllowedHost(nodeRequest.headers.host || '', config)) {
+        nodeResponse.writeHead(421, { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' })
+        nodeResponse.end('Misdirected Request')
+        return
+      }
       const url = externalRequestUrl(nodeRequest, config)
       if (url.pathname === '/api' || url.pathname.startsWith('/api/')) {
         const response = await worker.fetch(await toWebRequest(nodeRequest, url), config.workerEnv)

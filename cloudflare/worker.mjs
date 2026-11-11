@@ -395,10 +395,18 @@ function isTrustedOrigin(request, allowedOrigins = '') {
   return allowedOrigins.split(',').map((item) => item.trim()).filter(Boolean).includes(origin)
 }
 
-export function createRateLimiter({ windowMs = 60_000, maxRequests = 8, now = Date.now } = {}) {
+export function createRateLimiter({ windowMs = 60_000, maxRequests = 8, maxClients = 10_000, now = Date.now } = {}) {
   const clients = new Map()
-  return (key) => {
+  const limit = (key) => {
     const timestamp = now()
+    for (const [entryKey, entry] of clients) {
+      if (entry.resetAt <= timestamp) clients.delete(entryKey)
+    }
+    while (clients.size >= maxClients) {
+      const oldest = clients.keys().next().value
+      if (oldest === undefined) break
+      clients.delete(oldest)
+    }
     const current = clients.get(key)
     if (!current || current.resetAt <= timestamp) {
       clients.set(key, { count: 1, resetAt: timestamp + windowMs })
@@ -407,6 +415,8 @@ export function createRateLimiter({ windowMs = 60_000, maxRequests = 8, now = Da
     current.count += 1
     return current.count > maxRequests
   }
+  limit.clientCount = () => clients.size
+  return limit
 }
 
 export function createConcurrencyLimiter({ maxConcurrent = 2 } = {}) {

@@ -37,6 +37,11 @@ else
   echo "Kept existing /etc/student-affairs.env."
 fi
 
+if ! id -u student-affairs >/dev/null 2>&1; then
+  useradd --system --no-create-home --shell /usr/sbin/nologin --user-group student-affairs
+fi
+chmod -R a+rX "${ROOT}/dist" "${ROOT}/server" "${ROOT}/cloudflare" "${ROOT}/node_modules" "${ROOT}/package.json"
+
 node_bin="$(command -v node)"
 sed -e "s#/opt/student-affairs#${ROOT}#g" -e "s#/usr/bin/node#${node_bin}#g" \
   deploy/swas/student-affairs-api.service > /etc/systemd/system/student-affairs-api.service
@@ -54,6 +59,7 @@ if [[ -d /etc/nginx/sites-available ]]; then
   nginx_site="/etc/nginx/sites-available/student-affairs.conf"
 fi
 sed "s#/opt/student-affairs#${ROOT}#g" deploy/swas/nginx.conf > "$nginx_site"
+mkdir -p /etc/nginx/snippets/student-affairs-extra
 if [[ -d /etc/nginx/sites-enabled ]]; then
   ln -sfn "$nginx_site" /etc/nginx/sites-enabled/student-affairs.conf
   rm -f /etc/nginx/sites-enabled/default
@@ -61,5 +67,5 @@ fi
 
 nginx -t
 systemctl enable nginx
-systemctl reload nginx
+systemctl reload-or-restart nginx
 echo "Student Affairs is configured for HTTP on port 80. API listens on 127.0.0.1:8788."
