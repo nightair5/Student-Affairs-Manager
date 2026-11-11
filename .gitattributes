@@ -92,3 +92,6 @@ src/recognition/fixtures/product-dev-v1/notifications.json text eol=crlf
 
 # The active tool lock is generated text; use the same checked-out bytes in CI.
 package-lock.json text eol=lf
+
+# SWAS release archives must keep Linux scripts and service/config files in LF.
+deploy/swas/* text eol=lf
