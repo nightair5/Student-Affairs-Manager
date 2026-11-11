@@ -294,6 +294,13 @@ test('pinned fetch stops an oversized or aborted upstream body', async () => {
     requestImpl: scripted([Buffer.from('partial')], { fail: 'aborted' }),
   })
   await assert.rejects(() => aborted('https://example.com/reset'), (error) => error.code === 'WEB_FETCH_FAILED')
+  const fromUrl = createPinnedHttpsFetch({
+    lookupImpl,
+    requestImpl: scripted([Buffer.from('ok')]),
+  })
+  const page = await fromUrl(new URL('https://example.com/notice'))
+  assert.equal(page.status, 200)
+  assert.equal(await page.text(), 'ok')
 })
 
 test('does not expose filesystem paths outside the static directory', async () => {

@@ -60,7 +60,7 @@ export function createPinnedHttpsFetch({
       settled = true
       resolve(value)
     }
-    const target = new URL(typeof input === 'string' ? input : input.url)
+    const target = new URL(input instanceof URL ? input.href : typeof input === 'string' ? input : input.url)
     if (target.protocol !== 'https:') {
       fail(codedError('WEB_HTTPS_REQUIRED'))
       return
