@@ -1,3 +1,4 @@
+import { createOperationId } from '../lib/randomId'
 import { CalendarDays, Clock3, MapPin, PencilLine } from 'lucide-react'
 import { reviewEventTime } from './reviewEventSummary'
 import { sourceEventProblem } from '../domain/v2/sourceReviewD26'
@@ -93,7 +94,7 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
         const action=(buffer.action??'').trim(),object=(buffer.object??'').trim()
         const clause=text.split(/[。；\n]/u).find(line=>line.includes(action)&&line.includes(object))
         if(!action||!object||!clause||/无需|不必|不要|已取消/u.test(clause))throw Error('动作与对象需要同一原文依据；否定或已取消的要求不能补为当前待办。')
-        const tempId=`user-task:${crypto.randomUUID()}`,evidenceId=`user-evidence:${tempId}`
+        const tempId=`user-task:${createOperationId()}`,evidenceId=`user-evidence:${tempId}`
         const task={tempId,parentTempId:null,hierarchyType:'task' as const,title:action+object,actionVerb:action,actionObject:object,description:'',completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo' as const,prioritySuggestion:'medium' as const,dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[evidenceId],confidence:1,inferenceLevel:'explicit' as const,userConfirmationRequired:true,selected:true}
         const next={...result,sourceSummary:{...result.sourceSummary,requiresAction:true,notificationType:'uncertain' as const},projectMatch:{...result.projectMatch,decision:'standalone_task' as const},standaloneTasks:[...result.standaloneTasks,task],evidence:[...result.evidence,{id:evidenceId,sourceId:draft.sourceId,field:'title' as const,quote:clause,extractionMethod:'manual' as const}]}
         await session.withFreshField(workspace,draft.id,key,writer,current.revision,buffer,()=>onSave(next))
@@ -101,7 +102,7 @@ export function OrdinarySourceFacts({draft,source,workspace,session,onDirty,onSa
         setBuffer(null);setField(null);setStatus('遗漏任务已补到同一来源草稿；原首次回答不变，等待正式确认。');return
       }
       if(!text.includes(buffer.title.trim())||[buffer.location,buffer.start,buffer.end].some(raw=>raw&&!text.includes(raw)))throw Error('事件名称、地点和时间原文必须有当前通知依据；不会替你猜日期。')
-      const eventId=buffer.eventId||`user-event:${crypto.randomUUID()}`
+      const eventId=buffer.eventId||`user-event:${createOperationId()}`
       const evidenceId=`user-evidence:${eventId}`
       const old=result.events.find(e=>e.tempId===eventId)
       const event={...old,tempId:eventId,title:buffer.title.trim(),description:old?.description??'',location:buffer.location.trim()||null,startTimePointTempId:null as string|null,endTimePointTempId:null as string|null,evidenceIds:[...new Set([...(old?.evidenceIds??[]),evidenceId])],confidence:1,inferenceLevel:'explicit' as const,selected:old?.selected??true}

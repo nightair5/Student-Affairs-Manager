@@ -1,3 +1,4 @@
+import { createOperationId } from '../../lib/randomId'
 import type {WorkspaceRecordStore} from './repository'
 import type {WorkspaceV8} from './types'
 import type {D13Trace} from '../../experiments/candidate16/measurement'
@@ -14,14 +15,14 @@ const key='ordinary-source-measurement-d26-1'
 export function createOrdinaryMeasurement(store:WorkspaceRecordStore,now=Date.now){
   let queue=Promise.resolve(),active:string|undefined
   const append=(draftId:string,kind:D13Trace['kind'],extra:Partial<D13Trace>={})=>{
-    const row:D13Trace={id:crypto.randomUUID(),draftId,atMs:now(),kind,...extra}
+    const row:D13Trace={id:createOperationId(),draftId,atMs:now(),kind,...extra}
     const work=queue.then(()=>store.transaction(key,raw=>[...(Array.isArray(raw)?raw:[]),row]))
     queue=work.then(()=>undefined,()=>undefined);return work.then(()=>undefined)
   }
   const events=async(draftId?:string)=>{await queue;const raw=await store.read(key);return (Array.isArray(raw)?raw as D13Trace[]:[]).filter(e=>!draftId||e.draftId===draftId)}
   return {append,events,
     begin:async(draftId:string)=>{active=draftId;const rows=await events(draftId);if(!rows.length)await append(draftId,'begin');else if(rows.at(-1)?.kind!=='end')await append(draftId,'restore');await append(draftId,'read')},
-    changed:async(draftId:string,fieldKey:string)=>{const editId=crypto.randomUUID();await append(draftId,'edit',{fieldKey,editId});return editId},
+    changed:async(draftId:string,fieldKey:string)=>{const editId=createOperationId();await append(draftId,'edit',{fieldKey,editId});return editId},
     activity:(draftId:string,fieldKey:string,editId:string)=>append(draftId,'edit_activity',{fieldKey,editId}),
     visibility:(hidden:boolean)=>active?append(active,hidden?'hidden':'visible'):Promise.resolve(),
     blur:()=>active?append(active,'blur'):Promise.resolve(),

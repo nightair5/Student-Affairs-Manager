@@ -2,7 +2,7 @@
 
 ## 运行边界
 
-浏览器负责界面、本机文件文字提取、规则解析、确认、任务管理和 IndexedDB 持久化。Cloudflare Worker 同时提供静态资源和同源 `/api/deepseek*` 代理；只有 Worker Secret 已配置且真实请求成功时，页面才可显示 DeepSeek 已连接。
+浏览器负责界面、本机文件文字提取、规则解析、确认、任务管理和 IndexedDB 持久化。静态页面和同源 `/api` 可以由 Cloudflare Worker 提供，也可以在普通 Linux 上由 Nginx 提供 `dist`、由本机 Node 进程复用同一套 API 处理。只有服务端密钥已配置且真实请求成功时，页面才可显示 DeepSeek 已连接。
 
 ```mermaid
 flowchart LR

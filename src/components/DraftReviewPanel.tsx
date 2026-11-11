@@ -1,3 +1,4 @@
+import { createOperationId } from '../lib/randomId'
 import {taskMaterialSummaries} from '../recognition/taskMaterialSummaries'
 import './SuggestionCard.css'
 import {taskCardChannels} from '../recognition/taskCardChannels'
@@ -108,7 +109,7 @@ export function DraftReviewPanel({ ordinarySourceReview, sessionFrame, onRestore
   const [checkpointStatus,setCheckpointStatus]=useState<'loading'|'ready'|'saving'|'saved'|'failed'|'conflict'>(reviewSession?'loading':'ready')
   const [checkpointError,setCheckpointError]=useState('')
   const [staleChoice,setStaleChoice]=useState<{key:string;itemId:string;field:'title'|'deadline';base:unknown;latest:unknown;mine:string;revision:string}|null>(null)
-  const [writer]=useState(()=>reviewSession?.writer ?? crypto.randomUUID())
+  const [writer]=useState(()=>reviewSession?.writer ?? createOperationId())
   const checkpointQueue=useRef(Promise.resolve())
   const clearingFields=useRef(new Set<string>())
   const initialSessionLoaded=useRef(false)

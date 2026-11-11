@@ -1,3 +1,4 @@
+import { createOperationId } from '../lib/randomId'
 import { FilePenLine, LoaderCircle, ShieldCheck, X } from 'lucide-react'
 import { useId, useRef, useState, type FormEvent } from 'react'
 import { useDialogFocusTrap } from '../lib/useDialogFocusTrap'
@@ -13,7 +14,7 @@ export function SourceSupplementPanel({ source, onClose, onSubmit }: SourceSuppl
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   const textRef = useRef<HTMLTextAreaElement>(null)
-  const operationIdRef = useRef(crypto.randomUUID())
+  const operationIdRef = useRef(createOperationId())
   const originalContent = source.rawText ?? source.content ?? source.contentPreview
   const [content, setContent] = useState(originalContent)
   const [submitting, setSubmitting] = useState(false)
@@ -53,7 +54,7 @@ export function SourceSupplementPanel({ source, onClose, onSubmit }: SourceSuppl
             setContent(event.target.value)
             if (error) {
               setError(null)
-              operationIdRef.current = crypto.randomUUID()
+              operationIdRef.current = createOperationId()
             }
           }} rows={14} maxLength={50_000} required />
           <small>{content.length.toLocaleString('zh-CN')} / 50,000 字；请保留关键日期、材料与原文措辞。</small>

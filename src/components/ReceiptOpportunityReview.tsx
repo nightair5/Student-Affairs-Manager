@@ -1,3 +1,4 @@
+import { createOperationId } from '../lib/randomId'
 import {useEffect,useState} from 'react'
 import type {WorkspaceV8} from '../domain/v2/types'
 import {receiptOpportunityViews,type ReceiptOpportunityInput} from '../domain/v2/receiptOpportunity'
@@ -37,7 +38,7 @@ export function ReceiptOpportunityReview({workspace,draftId,session,disabled,onD
     {views.map(view=><article className="recognition-entity-row" key={view.goal.taskId}><div>
       {view.goal.opportunities.map(opportunity=><div key={opportunity.id}><strong>{opportunity.id==='normal'?'正常办理':'错过后的补领机会'}{view.choice===opportunity.id?'（当前选择）':''}</strong><p>{handlingWindowLabel(opportunity.window)}</p>
         <details><summary>查看本机会的原文条件、地点和依据</summary>{opportunity.window.evidenceIds.map(id=><blockquote key={id}>{workspace.extractionDrafts.find(d=>d.id===draftId)?.result?.evidence.find(e=>e.id===id)?.quote}</blockquote>)}</details>
-        {!view.confirmed&&!view.goal.completedInSource&&<button type="button" disabled={disabled||busy||Boolean(pending)||view.choice===opportunity.id} onClick={()=>void apply({key:`task:receipt-opportunity-${view.goal.taskId}:facts`,field:null,input:{taskId:view.goal.taskId,choice:opportunity.id,expectedChoice:view.choice,expectedResult:workspaceSnapshotHash(workspace.extractionDrafts.find(d=>d.id===draftId)!.result),operationId:crypto.randomUUID()}})}>{opportunity.id==='normal'?'使用正常窗口':'我已错过正常窗口且尚未领取，使用补领机会'}</button>}
+        {!view.confirmed&&!view.goal.completedInSource&&<button type="button" disabled={disabled||busy||Boolean(pending)||view.choice===opportunity.id} onClick={()=>void apply({key:`task:receipt-opportunity-${view.goal.taskId}:facts`,field:null,input:{taskId:view.goal.taskId,choice:opportunity.id,expectedChoice:view.choice,expectedResult:workspaceSnapshotHash(workspace.extractionDrafts.find(d=>d.id===draftId)!.result),operationId:createOperationId()}})}>{opportunity.id==='normal'?'使用正常窗口':'我已错过正常窗口且尚未领取，使用补领机会'}</button>}
       </div>)}
       {view.confirmed&&<p>领取事项已确认；完成后不会再创建补领待办。请在任务中心处理这同一事项。</p>}
       {view.goal.completedInSource&&<p>原文已明确本次领取完成；保留两个机会的说明，不再次创建领取或补领待办。</p>}

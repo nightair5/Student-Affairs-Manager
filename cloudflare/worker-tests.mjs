@@ -12,6 +12,7 @@ import './semantic-coverage.node-test.mjs'
 import './web-source-parser.node-test.mjs'
 import {
   classifyDeepSeekUpstreamStatus,
+  createRateLimiter,
   createWorker,
   validateDeepSeekRequest,
   validateExtractionRequest,
@@ -777,4 +778,20 @@ test('observability distinguishes successful extraction and leaves its response 
     assert.equal(response.status, 200); assert.equal((await response.json()).result.sourceSummary.requiresAction, false)
     assert.equal(logs.at(-1).recognitionCount, 1); assert.equal(logs.at(-1).recognitionSuccess, 1); assert.equal(logs.at(-1).recognitionFailure, 0)
   } finally { console.log = original; console.info = originalInfo }
+})
+
+test('rate limiter drops expired clients and stays bounded', () => {
+  let now = 0
+  const limit = createRateLimiter({ windowMs: 10, maxRequests: 2, maxClients: 2, now: () => now })
+  assert.equal(limit('a'), false)
+  now = 11
+  assert.equal(limit('b'), false)
+  assert.equal(limit.clientCount(), 1)
+  assert.equal(limit('c'), false)
+  assert.equal(limit('d'), false)
+  assert.ok(limit.clientCount() <= 2)
+  const full = createRateLimiter({ windowMs: 60_000, maxRequests: 1, maxClients: 2, now: () => 0 })
+  assert.equal(full('a'), false)
+  assert.equal(full('b'), false)
+  assert.equal(full('a'), true)
 })

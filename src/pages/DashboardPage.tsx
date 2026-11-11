@@ -1,4 +1,5 @@
 import type { TaskDateViews } from '../experiments/mainline02/taskDateView'
+import { createOperationId } from '../lib/randomId'
 import { safeIntakeError } from '../lib/workspaceRecoveryUi'
 import { ArrowRight, ClipboardPaste, Inbox, Link2, Plus, Upload } from 'lucide-react'
 import { useRef, useState, type FormEvent, type ReactNode } from 'react'
@@ -104,7 +105,7 @@ export function DashboardPage({
     const content = realInput ? submittedText : submittedText.trim()
     const attempt = quickAttempt.current?.content === content
       ? quickAttempt.current
-      : { content, operationId: crypto.randomUUID() }
+      : { content, operationId: createOperationId() }
     quickAttempt.current = attempt
     quickSubmitInFlight.current = true
     setQuickError('')

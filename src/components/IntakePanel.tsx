@@ -1,3 +1,4 @@
+import { createOperationId } from '../lib/randomId'
 import { safeIntakeError } from '../lib/workspaceRecoveryUi'
 import {
   Camera,
@@ -86,7 +87,7 @@ export function IntakePanel({ directMode, engineeringInput, realInputPanel, text
   const [manualPriority, setManualPriority] = useState<Priority>('中')
   const [manualMaterials, setManualMaterials] = useState('')
   const titleId = useId()
-  const operationIdRef = useRef(crypto.randomUUID())
+  const operationIdRef = useRef(createOperationId())
   const fileGenerationRef = useRef(0)
   const firstControlRef = useRef<HTMLTextAreaElement>(null)
   const panelRef = useRef<HTMLElement>(null)
