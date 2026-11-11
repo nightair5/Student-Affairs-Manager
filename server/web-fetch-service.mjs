@@ -21,15 +21,28 @@ function ipv6Hextets(address) {
   return [...left, ...Array(missing).fill('0'), ...right].map((part) => Number.parseInt(part || '0', 16))
 }
 
+function isGloballyReachableIetfAssignment(parts) {
+  const second = parts[1]
+  const rest = parts.slice(2)
+  if (second === 0x0001 && rest.slice(0, 5).every((part) => part === 0) && rest[5] >= 1 && rest[5] <= 3) return true
+  if (second === 0x0003) return true
+  if (second === 0x0004 && parts[2] === 0x0112) return true
+  if (second >= 0x0020 && second <= 0x002f) return true
+  if (second >= 0x0030 && second <= 0x003f) return true
+  return false
+}
+
 function isNonGlobalIpv6(address) {
   const parts = ipv6Hextets(address)
   if (!parts || parts.length !== 8 || parts.some((part) => !Number.isInteger(part) || part < 0 || part > 0xffff)) return true
   const [first, second] = parts
   if (first < 0x2000 || first > 0x3fff) return true
-  // 2001::/23 is reserved for IETF protocol assignments, including benchmarking,
-  // Teredo, and both ORCHID ranges. 2001:db8::/32 and 2002::/16 are documentation and 6to4.
-  if (first === 0x2001 && (second <= 0x01ff || second === 0x0db8)) return true
+  // 3fff::/20 and 2001:db8::/32 are documentation. 2002::/16 is 6to4 and is not marked globally reachable.
+  if (first === 0x3fff && second <= 0x0fff) return true
+  if (first === 0x2001 && second === 0x0db8) return true
   if (first === 0x2002) return true
+  // 2001::/23 is not globally reachable except the IANA exceptions nested inside it.
+  if (first === 0x2001 && second <= 0x01ff) return !isGloballyReachableIetfAssignment(parts)
   return false
 }
 
