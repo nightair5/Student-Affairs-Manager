@@ -189,6 +189,13 @@ test('HTTPS browser origins match when the proxy or server terminates TLS', asyn
       })
       assert.equal(response.status, 503)
       assert.equal((await response.json()).error, 'DEEPSEEK_NOT_CONFIGURED')
+      const httpOrigin = `http://127.0.0.1:${new URL(baseUrl).port}`
+      const throughHttpProxy = await fetch(`${baseUrl}/api/deepseek/extract`, {
+        method: 'POST',
+        headers: { origin: httpOrigin, 'content-type': 'application/json', 'x-forwarded-proto': 'http' },
+        body,
+      })
+      assert.equal(throughHttpProxy.status, 503)
     })
 
     const proxyConfig = {
@@ -337,6 +344,20 @@ test('pinned fetch stops an oversized or aborted upstream body', async () => {
   const noContent = await empty('https://example.com/empty')
   assert.equal(noContent.status, 204)
   assert.equal(await noContent.text(), '')
+  const upgraded = createPinnedHttpsFetch({
+    lookupImpl,
+    requestImpl: (_options, _callback) => {
+      const request = new EventEmitter()
+      request.destroy = () => {}
+      request.write = () => {}
+      request.end = () => {
+        const socket = { destroy() {} }
+        request.emit('upgrade', { statusCode: 101 }, socket, Buffer.alloc(0))
+      }
+      return request
+    },
+  })
+  await assert.rejects(() => upgraded('https://example.com/switch'), (error) => error.code === 'WEB_FETCH_FAILED')
 })
 
 test('does not expose filesystem paths outside the static directory', async () => {

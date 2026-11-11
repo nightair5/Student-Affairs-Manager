@@ -42,7 +42,18 @@ if ! id -u student-affairs >/dev/null 2>&1; then
 fi
 chmod -R a+rX "${ROOT}/dist" "${ROOT}/server" "${ROOT}/cloudflare" "${ROOT}/node_modules" "${ROOT}/package.json"
 
-node_bin="$(command -v node)"
+node_bin=""
+for candidate in ${SAM_NODE_BIN:-} /usr/local/bin/node /usr/bin/node "$(command -v node || true)"; do
+  [[ -n "$candidate" && -x "$candidate" ]] || continue
+  if su -s /bin/sh student-affairs -c "$(printf '%q' "$candidate") -e 'process.exit(0)'" >/dev/null 2>&1; then
+    node_bin="$candidate"
+    break
+  fi
+done
+if [[ -z "$node_bin" ]]; then
+  echo "The student-affairs service user cannot execute Node. Install Node in /usr/local/bin or /usr/bin, or set SAM_NODE_BIN to a path that account can run." >&2
+  exit 1
+fi
 sed -e "s#/opt/student-affairs#${ROOT}#g" -e "s#/usr/bin/node#${node_bin}#g" \
   deploy/swas/student-affairs-api.service > /etc/systemd/system/student-affairs-api.service
 systemctl daemon-reload

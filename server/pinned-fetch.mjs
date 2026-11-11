@@ -142,6 +142,11 @@ export function createPinnedHttpsFetch({
     })
     const abort = () => request.destroy(Object.assign(codedError('WEB_FETCH_TIMEOUT'), { name: 'TimeoutError' }))
     init.signal?.addEventListener('abort', abort, { once: true })
+    request.on('upgrade', (_response, socket) => {
+      socket?.destroy()
+      request.destroy()
+      fail(codedError('WEB_FETCH_FAILED'))
+    })
     request.on('error', (error) => fail(error?.code ? error : codedError('WEB_FETCH_FAILED')))
     request.on('close', () => init.signal?.removeEventListener('abort', abort))
     if (init.body) request.write(typeof init.body === 'string' || Buffer.isBuffer(init.body) ? init.body : Buffer.from(init.body))

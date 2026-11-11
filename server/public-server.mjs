@@ -198,7 +198,9 @@ function externalRequestUrl(nodeRequest, config) {
   const forwardedProto = isLoopback(peer)
     ? headerValue(nodeRequest, 'x-forwarded-proto').split(',')[0].trim().toLowerCase()
     : ''
-  const protocol = config.httpsEnabled || forwardedProto === 'https' ? 'https' : 'http'
+  const protocol = forwardedProto === 'https' || forwardedProto === 'http'
+    ? forwardedProto
+    : config.httpsEnabled ? 'https' : 'http'
   return new URL(nodeRequest.url || '/', `${protocol}://${hostHeader}`)
 }
 
