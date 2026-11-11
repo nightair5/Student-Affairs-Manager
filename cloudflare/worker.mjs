@@ -403,18 +403,23 @@ export function createRateLimiter({ windowMs = 60_000, maxRequests = 8, maxClien
   const clients = new Map()
   const limit = (key) => {
     const timestamp = now()
-    for (const [entryKey, entry] of clients) {
-      if (entry.resetAt <= timestamp) clients.delete(entryKey)
-    }
     const current = clients.get(key)
     if (current && current.resetAt > timestamp) {
       current.count += 1
       return current.count > maxRequests
     }
-    while (clients.size >= maxClients) {
+    if (current) clients.delete(key)
+    // Insertion order matches expiry order. Stop at the first live entry, and
+    // never scan more than a small prefix on one request.
+    let checked = 0
+    for (const [entryKey, entry] of clients) {
+      if (checked >= 32 || entry.resetAt > timestamp) break
+      checked += 1
+      clients.delete(entryKey)
+    }
+    if (clients.size >= maxClients) {
       const oldest = clients.keys().next().value
-      if (oldest === undefined) break
-      clients.delete(oldest)
+      if (oldest !== undefined) clients.delete(oldest)
     }
     clients.set(key, { count: 1, resetAt: timestamp + windowMs })
     return false

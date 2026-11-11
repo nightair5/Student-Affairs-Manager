@@ -87,6 +87,12 @@ test('rate limiter drops expired clients and stays bounded', () => {
   assert.equal(full('a'), false)
   assert.equal(full('b'), false)
   assert.equal(full('a'), true)
+  const expired = createRateLimiter({ windowMs: 5, maxRequests: 1, maxClients: 5, now: () => now })
+  now = 0
+  for (const name of ['a', 'b', 'c', 'd', 'e']) expired(name)
+  now = 10
+  expired('f')
+  assert.equal(expired.clientCount(), 1)
 })
 
 test('validation requires one to four complete citations', () => {
