@@ -259,6 +259,12 @@ test('web fetch pins the validated address and refuses a private lookup', async 
     (error) => error.code === 'WEB_PRIVATE_ADDRESS_FORBIDDEN',
   )
   await resolvePublicNodeHostname('example.com', async () => [{ address: '93.184.216.34', family: 4 }])
+  const started = Date.now()
+  await assert.rejects(
+    () => resolvePublicNodeHostname('example.com', () => new Promise(() => {}), undefined, 30),
+    (error) => error.name === 'TimeoutError',
+  )
+  assert.ok(Date.now() - started < 500)
   const publicAddresses = await new Promise((resolve, reject) => {
     callPinnedLookup('example.com', { all: true }, (error, addresses) => {
       if (error) reject(error)

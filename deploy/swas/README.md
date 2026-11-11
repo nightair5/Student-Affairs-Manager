@@ -54,9 +54,11 @@ npm run serve:public
 ## 验收
 
 ```bash
-curl -fsS http://127.0.0.1/api/deepseek/status
-curl -I http://127.0.0.1/
+curl -fsS -H 'Host: student-affairs.site' http://127.0.0.1/api/deepseek/status
+curl -I -H 'Host: student-affairs.site' http://127.0.0.1/
 ```
+
+本机检查必须带上站点允许的 Host。直接用 `127.0.0.1` 作为 Host 会被未知主机规则拒绝。
 
 浏览器打开 `http://118.178.194.96/`。每个页面底部居中显示 `桂ICP备2026027233号-1`，点击后打开 `https://beian.miit.gov.cn`。未填写密钥时，状态接口里的 `configured` 为 `false`。
 

@@ -293,7 +293,7 @@ async function fetchSourceText(request, env, fetcher, resolveHostname, isRateLim
     let currentUrl = target.url
     let upstream
     for (let redirectCount = 0; redirectCount <= MAX_WEB_REDIRECTS; redirectCount += 1) {
-      await resolveHostname(currentUrl.hostname)
+      await resolveHostname(currentUrl.hostname, signal)
       upstream = await fetcher(currentUrl, {
         method: 'GET',
         redirect: 'manual',

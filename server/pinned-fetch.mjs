@@ -15,11 +15,39 @@ function privateAddressError() {
   return codedError('WEB_PRIVATE_ADDRESS_FORBIDDEN')
 }
 
-export async function resolvePublicNodeHostname(hostname, lookupImpl = lookup) {
+function deadlineError() {
+  return Object.assign(codedError('WEB_FETCH_TIMEOUT'), { name: 'TimeoutError' })
+}
+
+export function lookupWithDeadline(lookupImpl, hostname, options, signal, timeoutMs = 10_000) {
+  if (signal?.aborted) return Promise.reject(deadlineError())
+  let timer
+  let onAbort
+  const timeout = new Promise((_, reject) => {
+    timer = setTimeout(() => reject(deadlineError()), timeoutMs)
+  })
+  const racers = [
+    Promise.resolve().then(() => lookupImpl(hostname, options)),
+    timeout,
+  ]
+  if (signal) {
+    racers.push(new Promise((_, reject) => {
+      onAbort = () => reject(deadlineError())
+      signal.addEventListener('abort', onAbort, { once: true })
+    }))
+  }
+  return Promise.race(racers).finally(() => {
+    clearTimeout(timer)
+    if (signal && onAbort) signal.removeEventListener('abort', onAbort)
+  })
+}
+
+export async function resolvePublicNodeHostname(hostname, lookupImpl = lookup, signal, timeoutMs = 10_000) {
   let addresses
   try {
-    addresses = await lookupImpl(hostname, { all: true, verbatim: true })
-  } catch {
+    addresses = await lookupWithDeadline(lookupImpl, hostname, { all: true, verbatim: true }, signal, timeoutMs)
+  } catch (error) {
+    if (error?.name === 'TimeoutError' || error?.name === 'AbortError' || error?.code === 'WEB_FETCH_TIMEOUT') throw error
     throw Object.assign(new Error('WEB_DNS_FAILED'), { code: 'WEB_DNS_FAILED' })
   }
   if (!addresses.length || addresses.some((entry) => isPrivateIp(entry.address))) {
@@ -27,8 +55,8 @@ export async function resolvePublicNodeHostname(hostname, lookupImpl = lookup) {
   }
 }
 
-export function callPinnedLookup(hostname, options, callback, lookupImpl = lookup) {
-  lookupImpl(hostname, { all: true, verbatim: true }).then((addresses) => {
+export function callPinnedLookup(hostname, options, callback, lookupImpl = lookup, timeoutMs = 10_000) {
+  lookupWithDeadline(lookupImpl, hostname, { all: true, verbatim: true }, undefined, timeoutMs).then((addresses) => {
     const safe = addresses
       .filter((entry) => entry && !isPrivateIp(entry.address))
       .map((entry) => ({ address: entry.address, family: entry.family }))

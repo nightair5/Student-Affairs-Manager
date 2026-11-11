@@ -1,3 +1,4 @@
+import { lookup } from 'node:dns/promises'
 import { createReadStream, existsSync, readFileSync } from 'node:fs'
 import { stat } from 'node:fs/promises'
 import { createServer } from 'node:http'
@@ -242,7 +243,7 @@ function publicHeaders(response, httpsEnabled) {
 function createPinnedWorker() {
   return createWorker({
     fetcher: createPinnedHttpsFetch(),
-    resolveHostname: resolvePublicNodeHostname,
+    resolveHostname: (hostname, signal) => resolvePublicNodeHostname(hostname, lookup, signal),
   })
 }
 
