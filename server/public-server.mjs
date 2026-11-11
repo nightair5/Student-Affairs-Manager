@@ -272,10 +272,15 @@ export function createPublicServer(config, worker = createPinnedWorker()) {
     } catch (error) {
       if (error?.code === 'PAYLOAD_TOO_LARGE') {
         if (!nodeResponse.headersSent) {
-          nodeResponse.writeHead(413, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' })
+          nodeResponse.writeHead(413, {
+            'content-type': 'application/json; charset=utf-8',
+            'cache-control': 'no-store',
+            connection: 'close',
+          })
         }
         nodeResponse.end(JSON.stringify({ error: 'PAYLOAD_TOO_LARGE' }))
-        nodeRequest.destroy()
+        nodeRequest.removeAllListeners('data')
+        nodeRequest.resume()
         return
       }
       console.error(JSON.stringify({
