@@ -24,14 +24,12 @@ function ipv6Hextets(address) {
 function isNonGlobalIpv6(address) {
   const parts = ipv6Hextets(address)
   if (!parts || parts.length !== 8 || parts.some((part) => !Number.isInteger(part) || part < 0 || part > 0xffff)) return true
-  const [first, second, third] = parts
+  const [first, second] = parts
   if (first < 0x2000 || first > 0x3fff) return true
-  if (first === 0x2001 && second === 0x0db8) return true
-  if (first === 0x2001 && second === 0) return true
-  if (first === 0x2002) {
-    const embedded = `${second >> 8}.${second & 0xff}.${third >> 8}.${third & 0xff}`
-    return isPrivateIp(embedded)
-  }
+  // 2001::/23 is reserved for IETF protocol assignments, including benchmarking,
+  // Teredo, and both ORCHID ranges. 2001:db8::/32 and 2002::/16 are documentation and 6to4.
+  if (first === 0x2001 && (second <= 0x01ff || second === 0x0db8)) return true
+  if (first === 0x2002) return true
   return false
 }
 

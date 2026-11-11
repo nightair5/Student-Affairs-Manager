@@ -266,10 +266,12 @@ test('web fetch pins the validated address and refuses a private lookup', async 
     }, async () => [{ address: '10.0.0.8', family: 4 }, { address: '93.184.216.34', family: 4 }])
   })
   assert.deepEqual(publicAddresses, [{ address: '93.184.216.34', family: 4 }])
-  await assert.rejects(
-    () => resolvePublicNodeHostname('example.com', async () => [{ address: 'fec0::1', family: 6 }]),
-    (error) => error.code === 'WEB_PRIVATE_ADDRESS_FORBIDDEN',
-  )
+  for (const address of ['fec0::1', '2001:2::1', '2001:10::1', '2001:20::1']) {
+    await assert.rejects(
+      () => resolvePublicNodeHostname('example.com', async () => [{ address, family: 6 }]),
+      (error) => error.code === 'WEB_PRIVATE_ADDRESS_FORBIDDEN',
+    )
+  }
   await resolvePublicNodeHostname('example.com', async () => [{ address: '2001:4860:4860::8888', family: 6 }])
   const fetcher = createPinnedHttpsFetch({ lookupImpl })
   await assert.rejects(
