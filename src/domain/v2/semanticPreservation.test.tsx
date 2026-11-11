@@ -87,4 +87,20 @@ it('oversize local notes retain complete editable requirements and deferred acti
  // After semantic filtering, eighteen remaining actions fit the flat contract.
  const direct={...captured,milestones:[],standaloneTasks:captured.milestones.flatMap(m=>m.tasks).slice(7)}
  expect(boundLocalResult(direct,'direct').standaloneTasks).toHaveLength(18)
+ const linked=structuredClone(r)
+ linked.standaloneTasks[0].title='提交核验后的材料'
+ linked.standaloneTasks[0].dependencyTempIds=['t20']
+ linked.standaloneTasks[1].title='领取完成回执'
+ linked.standaloneTasks[1].dependencyTempIds=['t0']
+ linked.standaloneTasks[2].title='电子递交方案'
+ linked.conflicts=[{id:'sem-choice-capacity',type:'other',message:'电子或纸质任选一种',entityTempIds:['t2','t21'],evidenceIds:[],requiresDecision:false}]
+ const related=boundLocalResult(linked,'direct')
+ expect(related.standaloneTasks.map(t=>t.tempId)).not.toContain('t0')
+ expect(related.standaloneTasks.map(t=>t.tempId)).not.toContain('t1')
+ expect(related.standaloneTasks.map(t=>t.tempId)).not.toContain('t2')
+ expect(related.standaloneTasks).toHaveLength(17)
+ const deferredText=related.ignoredContent.map(c=>c.text).join('\n')
+ for(const title of ['提交核验后的材料','领取完成回执','电子递交方案'])expect(deferredText).toContain(title)
+ expect(related.quality.reviewReasons.join()).toContain('关联步骤尚未完整保留')
+ expect(()=>parseRecognitionResult(related)).not.toThrow()
 })

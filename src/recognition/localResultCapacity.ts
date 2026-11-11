@@ -15,7 +15,21 @@ export function boundLocalResult(input:RecognitionResult,capacity:'container'|'d
  // conversion would let discarded placeholders crowd out later valid actions.
  for(const list of collections){deferred.push(...list.splice(capacity==='direct'?available:20));available-=capacity==='direct'?list.length:0}
  const removed=new Set(deferred.map(task=>task.tempId))
- const reason=deferred.length?`部分内容尚未完整整理：有${deferred.length}项超出本次简单整理容量，完整内容保留在原通知中。`:''
+ // Capacity is not permission to erase a prerequisite or turn the surviving
+ // half of an either/or group into a mandatory action. Defer that dependent
+ // unit as well; its complete source stays available for a later attempt.
+ let changed=true
+ while(changed){
+  changed=false
+  const incompleteChoices=new Set(r.conflicts.filter(c=>c.id.startsWith('sem-choice-')&&c.type==='other'&&!c.requiresDecision&&c.entityTempIds.some(id=>removed.has(id))).flatMap(c=>c.entityTempIds))
+  for(const list of collections)for(let index=list.length-1;index>=0;index--){
+   const task=list[index]
+   if(task.dependencyTempIds.some(id=>removed.has(id))||task.parentTempId&&removed.has(task.parentTempId)||incompleteChoices.has(task.tempId)){
+    deferred.push(...list.splice(index,1));removed.add(task.tempId);changed=true
+   }
+  }
+ }
+ const reason=deferred.length?`部分内容尚未完整整理：有${deferred.length}项超出本次简单整理容量或关联步骤尚未完整保留，完整内容保留在原通知中。`:''
  for(const task of collections.flat()){
   task.dependencyTempIds=task.dependencyTempIds.filter(id=>!removed.has(id))
   if(task.description.length>800){
