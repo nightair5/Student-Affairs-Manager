@@ -10,14 +10,36 @@ function webError(code) {
   return error
 }
 
+function ipv6Hextets(address) {
+  const [leftRaw, rightRaw = ''] = address.toLowerCase().split('%')[0].split('::')
+  if (address.toLowerCase().split('::').length > 2) return null
+  const left = leftRaw ? leftRaw.split(':') : []
+  const right = address.includes('::') && rightRaw ? rightRaw.split(':') : []
+  if ([...left, ...right].some((part) => part.includes('.'))) return null
+  const missing = 8 - left.length - right.length
+  if (missing < 0) return null
+  return [...left, ...Array(missing).fill('0'), ...right].map((part) => Number.parseInt(part || '0', 16))
+}
+
+function isNonGlobalIpv6(address) {
+  const parts = ipv6Hextets(address)
+  if (!parts || parts.length !== 8 || parts.some((part) => !Number.isInteger(part) || part < 0 || part > 0xffff)) return true
+  const [first, second, third] = parts
+  if (first < 0x2000 || first > 0x3fff) return true
+  if (first === 0x2001 && second === 0x0db8) return true
+  if (first === 0x2001 && second === 0) return true
+  if (first === 0x2002) {
+    const embedded = `${second >> 8}.${second & 0xff}.${third >> 8}.${third & 0xff}`
+    return isPrivateIp(embedded)
+  }
+  return false
+}
+
 export function isPrivateIp(address) {
   const normalized = address.toLowerCase()
   if (normalized.startsWith('::ffff:')) return isPrivateIp(normalized.slice(7))
-  if (normalized === '::1' || normalized === '::') return true
-  if (normalized.startsWith('fc') || normalized.startsWith('fd') || normalized.startsWith('fe8') || normalized.startsWith('fe9') || normalized.startsWith('fea') || normalized.startsWith('feb')) return true
-  if (normalized.startsWith('2001:db8:')) return true
   if (!isIP(address)) return true
-  if (address.includes(':')) return false
+  if (address.includes(':')) return isNonGlobalIpv6(address)
   const parts = address.split('.').map(Number)
   return parts[0] === 0 || parts[0] === 10 || parts[0] === 127 ||
     (parts[0] === 100 && parts[1] >= 64 && parts[1] <= 127) ||

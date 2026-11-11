@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "server": "node --env-file-if-exists=.env server/index.mjs",
-    "serve:public": "node --env-file-if-exists=.env server/public-server.mjs",
+    "serve:public": "node server/public-server.mjs",
     "server:check": "node --check server/index.mjs && node --check server/app.mjs && node --check server/web-fetch-service.mjs && node --check server/deepseek-service.mjs && node --check server/public-server.mjs && npm --prefix functions run check",
     "build": "tsc -b && vite build",
     "build:firebase": "tsc -b && vite build --mode firebase",

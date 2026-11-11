@@ -1,4 +1,4 @@
-import { createReadStream, existsSync } from 'node:fs'
+import { createReadStream, existsSync, readFileSync } from 'node:fs'
 import { stat } from 'node:fs/promises'
 import { createServer } from 'node:http'
 import { extname, resolve, sep } from 'node:path'
@@ -268,8 +268,26 @@ export function createPublicServer(config, worker = createPinnedWorker()) {
   })
 }
 
+function loadOptionalEnvFile(filePath) {
+  if (!existsSync(filePath)) return
+  for (const line of readFileSync(filePath, 'utf8').split(/\r?\n/u)) {
+    const trimmed = line.trim()
+    if (!trimmed || trimmed.startsWith('#')) continue
+    const separator = trimmed.indexOf('=')
+    if (separator <= 0) continue
+    const key = trimmed.slice(0, separator).trim()
+    if (!/^[A-Za-z_][A-Za-z0-9_]*$/u.test(key) || process.env[key] !== undefined) continue
+    let value = trimmed.slice(separator + 1).trim()
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+      value = value.slice(1, -1)
+    }
+    process.env[key] = value
+  }
+}
+
 const entryPath = process.argv[1] ? resolve(process.argv[1]) : ''
 if (entryPath === fileURLToPath(import.meta.url)) {
+  loadOptionalEnvFile(resolve(process.cwd(), '.env'))
   const config = loadPublicConfig()
   const server = createPublicServer(config)
   server.listen(config.port, config.host, () => {

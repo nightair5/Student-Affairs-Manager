@@ -259,6 +259,11 @@ test('web fetch pins the validated address and refuses a private lookup', async 
     }, async () => [{ address: '10.0.0.8', family: 4 }, { address: '93.184.216.34', family: 4 }])
   })
   assert.deepEqual(publicAddresses, [{ address: '93.184.216.34', family: 4 }])
+  await assert.rejects(
+    () => resolvePublicNodeHostname('example.com', async () => [{ address: 'fec0::1', family: 6 }]),
+    (error) => error.code === 'WEB_PRIVATE_ADDRESS_FORBIDDEN',
+  )
+  await resolvePublicNodeHostname('example.com', async () => [{ address: '2001:4860:4860::8888', family: 6 }])
   const fetcher = createPinnedHttpsFetch({ lookupImpl })
   await assert.rejects(
     () => fetcher('https://example.com/page'),
@@ -268,13 +273,13 @@ test('web fetch pins the validated address and refuses a private lookup', async 
 
 test('pinned fetch stops an oversized or aborted upstream body', async () => {
   const lookupImpl = async () => [{ address: '93.184.216.34', family: 4 }]
-  const scripted = (chunks, { fail, rawHeaders = ['content-type', 'text/plain'] } = {}) => (_options, callback) => {
+  const scripted = (chunks, { fail, rawHeaders = ['content-type', 'text/plain'], statusCode = 200 } = {}) => (_options, callback) => {
     const request = new EventEmitter()
     request.destroy = () => {}
     request.write = () => {}
     request.end = () => {
       const response = new EventEmitter()
-      response.statusCode = 200
+      response.statusCode = statusCode
       response.rawHeaders = rawHeaders
       response.destroy = () => response.emit('close')
       callback(response)
@@ -325,6 +330,13 @@ test('pinned fetch stops an oversized or aborted upstream body', async () => {
     (error) => error.code === 'WEB_FETCH_TIMEOUT',
   )
   assert.equal(started, false)
+  const empty = createPinnedHttpsFetch({
+    lookupImpl,
+    requestImpl: scripted([], { statusCode: 204 }),
+  })
+  const noContent = await empty('https://example.com/empty')
+  assert.equal(noContent.status, 204)
+  assert.equal(await noContent.text(), '')
 })
 
 test('does not expose filesystem paths outside the static directory', async () => {

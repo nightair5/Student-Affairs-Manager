@@ -132,7 +132,12 @@ export function createPinnedHttpsFetch({
         }
         responseHeaders.delete('content-encoding')
         responseHeaders.delete('content-length')
-        succeed(new Response(body, { status: response.statusCode, headers: responseHeaders }))
+        const nullBody = response.statusCode === 204 || response.statusCode === 205 || response.statusCode === 304
+        try {
+          succeed(new Response(nullBody ? null : body, { status: response.statusCode, headers: responseHeaders }))
+        } catch (error) {
+          fail(error?.code ? error : codedError('WEB_FETCH_FAILED'))
+        }
       })
     })
     const abort = () => request.destroy(Object.assign(codedError('WEB_FETCH_TIMEOUT'), { name: 'TimeoutError' }))
