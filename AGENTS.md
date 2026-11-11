@@ -7,6 +7,7 @@
 
 ## 1. 目标、适用范围与阅读顺序
 
+- 2026-11-11 负责人更新生产目标：`student-affairs.site` 仅部署到阿里云杭州 SWAS `118.178.194.96`；Cloudflare 仅 DNS，Workers 仅预览/历史。任何正式发布前必须读 [SWAS 生产交接](docs/deployment/SWAS_PRODUCTION.md)，保留 ICP 页脚、现有 env/TLS/托管能力；不得按旧 Workers 部署或回滚说明操作 apex。
 - 以 [PRD](PRD.md) 定义的四项主指标为目标：首次整份建议正确率、正确处置率、低修改正确处置率、主动修改时间；F1、测试数量和审计轮数只提供辅助证据。
 - 主线产出是“信息放入后，第一次给出准确事实和可执行安排”。每项工程须说明减少哪类首次错误或哪一步用户工作；恢复/审计是底座，不反复成为唯一交付。事实提取、个人状态与计划估计分别保存，不用计划合理掩盖原文识别错误。
 - 开始任务先读本文件、PRD 相关部分和 [CURRENT_CONTEXT](docs/recognition-optimization/CURRENT_CONTEXT.md)，核对实际工作区、分支、HEAD、工作区改动。然后按需要读取当前工作包和涉及的契约，不重复加载全部历史。

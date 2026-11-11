@@ -58,6 +58,7 @@
 
 ## 部署与能力声明
 
+- 2026-11-11 负责人交接覆盖旧生产路由：`student-affairs.site` 正式环境为阿里云杭州 SWAS；执行 [SWAS 生产交接](../deployment/SWAS_PRODUCTION.md)。现有 env、TLS、备案页脚及用户数据保留。下述 Cloudflare/Firebase 说明只适用于对应历史或另行授权的预览环境，不能据此发布 apex。
 - Firebase Hosting 仅发布 dist 和 SPA 回退，不等于部署了模型代理；Functions 使用 Secret Manager，后端和真实调用验证前不能标已接通。
 - Cloudflare 使用 Workers Static Assets，同源 /api/deepseek，只有 /api/* 优先进入 Worker；其余静态资源正常交付。Secret 由 wrangler secret put 或等价机制管理，不经浏览器或 Git。
 - Worker 无 Secret 返回 configured:false / DEEPSEEK_NOT_CONFIGURED；真实连接状态需相应状态与上游调用证据，探测本身也不得绕过模型费用授权。
