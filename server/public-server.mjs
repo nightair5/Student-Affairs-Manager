@@ -204,7 +204,16 @@ function isAllowedHost(hostHeader, config) {
   return name === 'localhost' || name === '127.0.0.1' || name === '::1' || config.allowedHosts.includes(name)
 }
 
+function originFormPath(raw) {
+  const value = raw || '/'
+  if (!value.startsWith('/') || value.startsWith('//') || value.startsWith('/\\')) return null
+  if (/^[a-z][a-z0-9+.-]*:/iu.test(value)) return null
+  return value
+}
+
 function externalRequestUrl(nodeRequest, config) {
+  const path = originFormPath(nodeRequest.url)
+  if (!path) return null
   const hostHeader = nodeRequest.headers.host || `${config.host}:${config.port}`
   const peer = normalizeIp(nodeRequest.socket?.remoteAddress || '')
   const forwardedProto = isLoopback(peer)
@@ -213,7 +222,7 @@ function externalRequestUrl(nodeRequest, config) {
   const protocol = forwardedProto === 'https' || forwardedProto === 'http'
     ? forwardedProto
     : config.httpsEnabled ? 'https' : 'http'
-  return new URL(nodeRequest.url || '/', `${protocol}://${hostHeader}`)
+  return new URL(path, `${protocol}://${hostHeader}`)
 }
 
 async function toWebRequest(nodeRequest, url) {
@@ -256,6 +265,11 @@ export function createPublicServer(config, worker = createPinnedWorker()) {
         return
       }
       const url = externalRequestUrl(nodeRequest, config)
+      if (!url) {
+        nodeResponse.writeHead(400, { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' })
+        nodeResponse.end('Bad Request')
+        return
+      }
       if (url.pathname === '/api' || url.pathname.startsWith('/api/')) {
         const response = await worker.fetch(await toWebRequest(nodeRequest, url), config.workerEnv)
         const body = Buffer.from(await response.arrayBuffer())

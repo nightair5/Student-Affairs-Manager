@@ -10,6 +10,29 @@ import { gzipSync } from 'node:zlib'
 import { callPinnedLookup, createPinnedHttpsFetch, resolvePublicNodeHostname } from './pinned-fetch.mjs'
 import { createPublicServer, loadPublicConfig } from './public-server.mjs'
 
+function statusWithPath(baseUrl, path, headers = {}) {
+  const url = new URL(baseUrl)
+  return new Promise((resolve, reject) => {
+    const request = http.request({
+      hostname: url.hostname,
+      port: url.port,
+      method: 'POST',
+      path,
+      headers: {
+        host: 'student-affairs.site',
+        origin: 'http://evil.com',
+        'content-type': 'application/json',
+        ...headers,
+      },
+    }, (response) => {
+      response.resume()
+      response.on('end', () => resolve(response.statusCode))
+    })
+    request.on('error', reject)
+    request.end('{}')
+  })
+}
+
 function statusWithHost(baseUrl, host) {
   const url = new URL(baseUrl)
   return new Promise((resolve, reject) => {
@@ -246,6 +269,8 @@ test('rejects an unrecognized Host before it can match Origin', async () => {
       assert.equal(await statusWithHost(baseUrl, 'evil.example'), 421)
       assert.equal(await statusWithHost(baseUrl, 'student-affairs.site'), 200)
       assert.equal(await statusWithHost(baseUrl, new URL(baseUrl).host), 200)
+      assert.equal(await statusWithPath(baseUrl, '//evil.com/api/deepseek'), 400)
+      assert.equal(await statusWithPath(baseUrl, 'http://evil.com/api/deepseek'), 400)
     })
   } finally {
     await rm(directory, { recursive: true, force: true })

@@ -417,10 +417,7 @@ export function createRateLimiter({ windowMs = 60_000, maxRequests = 8, maxClien
       checked += 1
       clients.delete(entryKey)
     }
-    if (clients.size >= maxClients) {
-      const oldest = clients.keys().next().value
-      if (oldest !== undefined) clients.delete(oldest)
-    }
+    if (clients.size >= maxClients) return true
     clients.set(key, { count: 1, resetAt: timestamp + windowMs })
     return false
   }
