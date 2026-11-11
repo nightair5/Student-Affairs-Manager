@@ -351,21 +351,25 @@ async function fetchSourceText(request, env, fetcher, resolveHostname, isRateLim
     }, context.requestId)
   } catch (error) {
     const safeError = error instanceof Error ? error.message : ''
+    const safeErrors = new Set(['WEB_DNS_FAILED', 'WEB_PRIVATE_ADDRESS_FORBIDDEN', 'WEB_RESPONSE_TOO_LARGE'])
     context.errorType = timeoutError(error)
       ? 'WEB_FETCH_TIMEOUT'
-      : ['WEB_DNS_FAILED', 'WEB_PRIVATE_ADDRESS_FORBIDDEN'].includes(safeError) ? safeError : 'WEB_FETCH_FAILED'
+      : safeErrors.has(safeError) ? safeError : 'WEB_FETCH_FAILED'
     const messages = {
       WEB_FETCH_TIMEOUT: '网页读取超时，请稍后重试。',
       WEB_DNS_FAILED: '无法确认目标网页的公网地址。',
       WEB_PRIVATE_ADDRESS_FORBIDDEN: '目标域名解析到了不允许访问的地址。',
+      WEB_RESPONSE_TOO_LARGE: '网页正文超过 512 KB 安全上限。',
       WEB_FETCH_FAILED: '网页读取失败，请粘贴正文后继续。',
     }
-    return failure(
-      context.errorType,
-      messages[context.errorType],
-      context.errorType === 'WEB_FETCH_TIMEOUT' ? 504 : context.errorType === 'WEB_PRIVATE_ADDRESS_FORBIDDEN' ? 400 : 502,
-      context.requestId,
-    )
+    const status = context.errorType === 'WEB_FETCH_TIMEOUT'
+      ? 504
+      : context.errorType === 'WEB_RESPONSE_TOO_LARGE'
+        ? 413
+        : context.errorType === 'WEB_PRIVATE_ADDRESS_FORBIDDEN'
+          ? 400
+          : 502
+    return failure(context.errorType, messages[context.errorType], status, context.requestId)
   }
 }
 

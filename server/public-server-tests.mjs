@@ -5,7 +5,8 @@ import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
 import { createWorker } from '../cloudflare/worker.mjs'
-import { createPinnedHttpsFetch, resolvePublicNodeHostname } from './pinned-fetch.mjs'
+import { EventEmitter } from 'node:events'
+import { callPinnedLookup, createPinnedHttpsFetch, resolvePublicNodeHostname } from './pinned-fetch.mjs'
 import { createPublicServer, loadPublicConfig } from './public-server.mjs'
 
 function statusWithHost(baseUrl, host) {
@@ -250,11 +251,49 @@ test('web fetch pins the validated address and refuses a private lookup', async 
     (error) => error.code === 'WEB_PRIVATE_ADDRESS_FORBIDDEN',
   )
   await resolvePublicNodeHostname('example.com', async () => [{ address: '93.184.216.34', family: 4 }])
+  const publicAddresses = await new Promise((resolve, reject) => {
+    callPinnedLookup('example.com', { all: true }, (error, addresses) => {
+      if (error) reject(error)
+      else resolve(addresses)
+    }, async () => [{ address: '10.0.0.8', family: 4 }, { address: '93.184.216.34', family: 4 }])
+  })
+  assert.deepEqual(publicAddresses, [{ address: '93.184.216.34', family: 4 }])
   const fetcher = createPinnedHttpsFetch({ lookupImpl })
   await assert.rejects(
     () => fetcher('https://example.com/page'),
     (error) => error.code === 'WEB_PRIVATE_ADDRESS_FORBIDDEN' || error.message === 'WEB_PRIVATE_ADDRESS_FORBIDDEN',
   )
+})
+
+test('pinned fetch stops an oversized or aborted upstream body', async () => {
+  const lookupImpl = async () => [{ address: '93.184.216.34', family: 4 }]
+  const scripted = (chunks, { fail } = {}) => (_options, callback) => {
+    const request = new EventEmitter()
+    request.destroy = () => {}
+    request.write = () => {}
+    request.end = () => {
+      const response = new EventEmitter()
+      response.statusCode = 200
+      response.rawHeaders = ['content-type', 'text/plain']
+      response.destroy = () => response.emit('close')
+      callback(response)
+      for (const chunk of chunks) response.emit('data', chunk)
+      if (fail) response.emit(fail)
+      else response.emit('end')
+    }
+    return request
+  }
+  const oversized = createPinnedHttpsFetch({
+    lookupImpl,
+    maxBytes: 4,
+    requestImpl: scripted([Buffer.from('too-large')]),
+  })
+  await assert.rejects(() => oversized('https://example.com/big'), (error) => error.code === 'WEB_RESPONSE_TOO_LARGE')
+  const aborted = createPinnedHttpsFetch({
+    lookupImpl,
+    requestImpl: scripted([Buffer.from('partial')], { fail: 'aborted' }),
+  })
+  await assert.rejects(() => aborted('https://example.com/reset'), (error) => error.code === 'WEB_FETCH_FAILED')
 })
 
 test('does not expose filesystem paths outside the static directory', async () => {
