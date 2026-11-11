@@ -15,6 +15,7 @@ const MIME_TYPES = new Map([
   ['.js', 'text/javascript; charset=utf-8'],
   ['.json', 'application/json; charset=utf-8'],
   ['.map', 'application/json; charset=utf-8'],
+  ['.mjs', 'text/javascript; charset=utf-8'],
   ['.png', 'image/png'],
   ['.svg', 'image/svg+xml'],
   ['.txt', 'text/plain; charset=utf-8'],
@@ -136,6 +137,7 @@ async function readBody(request) {
 }
 
 const FORWARDED_HEADER_BLOCKLIST = new Set([
+  'cf-connecting-ip',
   'connection',
   'content-length',
   'expect',
@@ -147,6 +149,40 @@ const FORWARDED_HEADER_BLOCKLIST = new Set([
   'upgrade',
 ])
 
+function headerValue(nodeRequest, name) {
+  const value = nodeRequest.headers[name]
+  if (Array.isArray(value)) return value[0]?.trim() ?? ''
+  return typeof value === 'string' ? value.trim() : ''
+}
+
+function normalizeIp(value) {
+  const text = value.trim().toLowerCase()
+  return text.startsWith('::ffff:') ? text.slice(7) : text
+}
+
+function isLoopback(address) {
+  return address === '127.0.0.1' || address === '::1'
+}
+
+function trustedClientAddress(nodeRequest) {
+  const peer = normalizeIp(nodeRequest.socket?.remoteAddress || '')
+  if (isLoopback(peer)) {
+    const realIp = headerValue(nodeRequest, 'x-real-ip').slice(0, 80)
+    if (realIp) return realIp
+  }
+  return peer || 'unknown'
+}
+
+function externalRequestUrl(nodeRequest, config) {
+  const hostHeader = nodeRequest.headers.host || `${config.host}:${config.port}`
+  const peer = normalizeIp(nodeRequest.socket?.remoteAddress || '')
+  const forwardedProto = isLoopback(peer)
+    ? headerValue(nodeRequest, 'x-forwarded-proto').split(',')[0].trim().toLowerCase()
+    : ''
+  const protocol = config.httpsEnabled || forwardedProto === 'https' ? 'https' : 'http'
+  return new URL(nodeRequest.url || '/', `${protocol}://${hostHeader}`)
+}
+
 async function toWebRequest(nodeRequest, url) {
   const headers = new Headers()
   for (const [key, value] of Object.entries(nodeRequest.headers)) {
@@ -154,10 +190,7 @@ async function toWebRequest(nodeRequest, url) {
     if (Array.isArray(value)) value.forEach((item) => headers.append(key, item))
     else headers.set(key, value)
   }
-  if (!headers.has('cf-connecting-ip')) {
-    const realIp = headers.get('x-real-ip') || headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-    if (realIp) headers.set('cf-connecting-ip', realIp)
-  }
+  headers.set('cf-connecting-ip', trustedClientAddress(nodeRequest))
   const method = nodeRequest.method || 'GET'
   const init = { method, headers }
   if (method !== 'GET' && method !== 'HEAD') init.body = await readBody(nodeRequest)
@@ -177,8 +210,7 @@ function publicHeaders(response, httpsEnabled) {
 export function createPublicServer(config, worker = createWorker()) {
   return createServer(async (nodeRequest, nodeResponse) => {
     try {
-      const hostHeader = nodeRequest.headers.host || `${config.host}:${config.port}`
-      const url = new URL(nodeRequest.url || '/', `http://${hostHeader}`)
+      const url = externalRequestUrl(nodeRequest, config)
       if (url.pathname === '/api' || url.pathname.startsWith('/api/')) {
         const response = await worker.fetch(await toWebRequest(nodeRequest, url), config.workerEnv)
         const body = Buffer.from(await response.arrayBuffer())

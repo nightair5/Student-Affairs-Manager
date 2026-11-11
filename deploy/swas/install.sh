@@ -41,7 +41,8 @@ node_bin="$(command -v node)"
 sed -e "s#/opt/student-affairs#${ROOT}#g" -e "s#/usr/bin/node#${node_bin}#g" \
   deploy/swas/student-affairs-api.service > /etc/systemd/system/student-affairs-api.service
 systemctl daemon-reload
-systemctl enable --now student-affairs-api.service
+systemctl enable student-affairs-api.service
+systemctl restart student-affairs-api.service
 
 if ! command -v nginx >/dev/null 2>&1; then
   echo "nginx is not installed. Install it, then re-run this script. Ubuntu: apt-get install -y nginx" >&2
