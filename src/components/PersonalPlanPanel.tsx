@@ -1,3 +1,4 @@
+import { createOperationId } from '../lib/randomId'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { CalendarClock, LockKeyhole } from 'lucide-react'
 import type { CanonicalWorkspaceRepository, WorkspaceRecordStore } from '../domain/v2/repository'
@@ -67,7 +68,7 @@ export function PersonalPlanPanel({ workspace, repository, reader, store, onRelo
   const change = (next: PlanOptions, field: string) => {
     next = { ...next, now: new Date().toISOString() }
     setOptions(next); setUnsaved(true)
-    edits.current[field] ??= crypto.randomUUID()
+    edits.current[field] ??= createOperationId()
     void begin().then(() => measurement.append('edit', { field, editId: edits.current[field] })).then(() => measurement.checkpoint(next, baseline, { ...edits.current }, original.current)).then(() => setUnsaved(false)).catch(() => setUnsaved(true))
     if (idle.current) clearTimeout(idle.current)
     idle.current = setTimeout(() => track('idle'), 5000)

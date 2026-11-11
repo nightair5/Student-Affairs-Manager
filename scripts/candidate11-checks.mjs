@@ -67,7 +67,7 @@ async function product() {
   run('time-contract',['scripts/generate-time-ast.mjs','--check'])
   vitest('vitest-product',testFileGroups(process.cwd()).product)
   nodeTests([['semantic-preservation','cloudflare/semantic-preservation.node-test.mjs']])
-    nodeTests([['server','server/server-tests.mjs'],['worker','cloudflare/worker-tests.mjs'],['worker-d26','cloudflare/worker-d26-tests.mjs'],['worker-owned-range','cloudflare/recognition-owner-time.node-test.mjs'],['worker-local-annotation','cloudflare/recognition-annotation-projection.node-test.mjs'],['worker-same-day-context','cloudflare/recognition-same-day.node-test.mjs'],['worker-matter-relations','cloudflare/semantic-matter-relations.node-test.mjs'],['functions','functions/functions-tests.mjs'],['time-parity','scripts/time-ast-parity.node-test.mjs']])
+    nodeTests([['server','server/server-tests.mjs'],['public-server','server/public-server-tests.mjs'],['worker','cloudflare/worker-tests.mjs'],['worker-d26','cloudflare/worker-d26-tests.mjs'],['worker-owned-range','cloudflare/recognition-owner-time.node-test.mjs'],['worker-local-annotation','cloudflare/recognition-annotation-projection.node-test.mjs'],['worker-same-day-context','cloudflare/recognition-same-day.node-test.mjs'],['worker-matter-relations','cloudflare/semantic-matter-relations.node-test.mjs'],['functions','functions/functions-tests.mjs'],['time-parity','scripts/time-ast-parity.node-test.mjs']])
 }
 async function safety() {
   layer='current-safety'

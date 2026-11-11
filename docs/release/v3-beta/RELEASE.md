@@ -3,7 +3,9 @@
 网站「个人事务整理工具」的 `student-affairs.site` 已由负责人迁至阿里云杭州 SWAS `118.178.194.96`。后续正式更新使用现有 Linux 安装流程，不再部署到 Workers。
 负责人报告的实际部署代码 `253953163701a43a43a327684dcfe712256a09e6`（PR #15，base `release/v3-beta-38`）；产品基准 `5ceb325e` 不能独立覆盖部署。本轮核实了 PR 文件与 SHA，未登录服务器验收。
 保留 `桂ICP备2026027233号-1` 页脚、env 权限 600、HTTPS 片段、ACME 和 IP 直达；上传精简源码包时保留构建依赖 JSON fixtures。完整约束、验证及备份恢复流程见 [SWAS 生产交接](../../deployment/SWAS_PRODUCTION.md)。
-integration 候选 `a052aeb7` 已通过本地及六项远端检查，尚未整合 SWAS 托管、尚未部署。PR #14 后续安全修复也不能当作已上线。
+2026-11-11 部署候选已整合今天的产品修复、PR #15 的 ICP/SWAS 托管，以及选择性移植的请求大小、DNS/SSRF、限流和路径校验修复；没有合并 PR 或覆盖旧产品分支。
+候选本地 lint、typecheck、完整 test、build、security:scan、audit(high) 和 cloudflare:check（仅 dry-run）通过；11 项既有中危依赖提示保留。17 项 Node 接口测试和 100 份隔离仓库回放通过，不代表新 AI 准确率或生产浏览器验收。
+目前未上传、未安装、未修改正式服务：负责人正在为本机授权 SSH 公钥。拟部署提交的远端 CI、精简包构建及实际上线结果以本轮证据 `.data/deploy-swas-20261111-221827/` 为准。线上 SHA 仍是负责人交接值，未通过 SSH 复核；本轮没有新付费模型调用。
 
 以下为迁移前历史发布记录；其中 Workers 版本与回滚命令不再适用于正式 apex 站点。
 

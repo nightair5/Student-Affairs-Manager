@@ -453,7 +453,7 @@ async function fetchSourceText(request, env, fetcher, resolveHostname, isRateLim
       // as an exception to public-only egress. Never use that exception here.
       const host=currentUrl.hostname.toLowerCase(),ownHost=new URL(request.url).hostname.toLowerCase()
       if(isOwnWebHost(host,ownHost))throw Error('WEB_OWN_ORIGIN_FORBIDDEN')
-      await resolveHostname(currentUrl.hostname,{ownHost})
+      await resolveHostname(currentUrl.hostname,{ownHost,signal})
       upstream = await fetcher(currentUrl, {
         method: 'GET',
         redirect: 'manual',
@@ -509,11 +509,12 @@ async function fetchSourceText(request, env, fetcher, resolveHostname, isRateLim
     const safeError = error instanceof Error ? error.message : ''
     context.errorType = timeoutError(error)
       ? 'WEB_FETCH_TIMEOUT'
-      : ['WEB_DNS_FAILED', 'WEB_PRIVATE_ADDRESS_FORBIDDEN','WEB_OWN_ORIGIN_FORBIDDEN','WEB_ACCESS_RESTRICTED','WEB_TEXT_UNAVAILABLE','WEB_TEXT_EMPTY','WEB_CHARSET_UNSUPPORTED'].includes(safeError) ? safeError : 'WEB_FETCH_FAILED'
+      : ['WEB_DNS_FAILED', 'WEB_PRIVATE_ADDRESS_FORBIDDEN', 'WEB_RESPONSE_TOO_LARGE', 'WEB_OWN_ORIGIN_FORBIDDEN','WEB_ACCESS_RESTRICTED','WEB_TEXT_UNAVAILABLE','WEB_TEXT_EMPTY','WEB_CHARSET_UNSUPPORTED'].includes(safeError) ? safeError : 'WEB_FETCH_FAILED'
     const messages = {
       WEB_FETCH_TIMEOUT: '网页读取超时，请稍后重试。',
       WEB_DNS_FAILED: '无法确认目标网页的公网地址。',
       WEB_PRIVATE_ADDRESS_FORBIDDEN: '目标域名解析到了不允许访问的地址。',
+      WEB_RESPONSE_TOO_LARGE: '网页正文超过 512 KB 安全上限。',
       WEB_OWN_ORIGIN_FORBIDDEN: '不读取本站或内部服务链接，请粘贴通知正文。',
       WEB_ACCESS_RESTRICTED: '目标网页需要授权或拒绝访问，请粘贴正文。',
       WEB_TEXT_UNAVAILABLE: '网页正文未能读取，请粘贴正文。',
@@ -524,7 +525,7 @@ async function fetchSourceText(request, env, fetcher, resolveHostname, isRateLim
     return failure(
       context.errorType,
       messages[context.errorType],
-      context.errorType === 'WEB_FETCH_TIMEOUT' ? 504 : ['WEB_PRIVATE_ADDRESS_FORBIDDEN','WEB_OWN_ORIGIN_FORBIDDEN'].includes(context.errorType) ? 400 : context.errorType==='WEB_ACCESS_RESTRICTED'?403:['WEB_TEXT_EMPTY','WEB_TEXT_UNAVAILABLE','WEB_CHARSET_UNSUPPORTED'].includes(context.errorType)?422:502,
+      context.errorType === 'WEB_FETCH_TIMEOUT' ? 504 : context.errorType === 'WEB_RESPONSE_TOO_LARGE' ? 413 : ['WEB_PRIVATE_ADDRESS_FORBIDDEN','WEB_OWN_ORIGIN_FORBIDDEN'].includes(context.errorType) ? 400 : context.errorType==='WEB_ACCESS_RESTRICTED'?403:['WEB_TEXT_EMPTY','WEB_TEXT_UNAVAILABLE','WEB_CHARSET_UNSUPPORTED'].includes(context.errorType)?422:502,
       context.requestId,
     )
   }
@@ -590,18 +591,30 @@ function isTrustedOrigin(request, allowedOrigins = '') {
   return allowedOrigins.split(',').map((item) => item.trim()).filter(Boolean).includes(origin)
 }
 
-export function createRateLimiter({ windowMs = 60_000, maxRequests = 8, now = Date.now } = {}) {
+export function createRateLimiter({ windowMs = 60_000, maxRequests = 8, maxClients = 10_000, now = Date.now } = {}) {
   const clients = new Map()
-  return (key) => {
+  const limit = (key) => {
     const timestamp = now()
     const current = clients.get(key)
-    if (!current || current.resetAt <= timestamp) {
-      clients.set(key, { count: 1, resetAt: timestamp + windowMs })
-      return false
+    if (current && current.resetAt > timestamp) {
+      current.count += 1
+      return current.count > maxRequests
     }
-    current.count += 1
-    return current.count > maxRequests
+    if (current) clients.delete(key)
+    // Insertion order matches expiry order. Stop at the first live entry, and
+    // never scan more than a small prefix on one request.
+    let checked = 0
+    for (const [entryKey, entry] of clients) {
+      if (checked >= 32 || entry.resetAt > timestamp) break
+      checked += 1
+      clients.delete(entryKey)
+    }
+    if (clients.size >= maxClients) return true
+    clients.set(key, { count: 1, resetAt: timestamp + windowMs })
+    return false
   }
+  limit.clientCount = () => clients.size
+  return limit
 }
 
 // Shared edge counter supplements the isolate-local limiter. Cloudflare's API

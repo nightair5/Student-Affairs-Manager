@@ -1,3 +1,4 @@
+import { createOperationId } from '../../lib/randomId'
 import type { WorkspaceRecordStore } from './repository'
 import type { PlanOptions, PlanReceipt } from './personalPlanD27'
 export const PLAN_MEASUREMENT = 'personal-plan-measurement-d27-1'
@@ -31,7 +32,7 @@ export function createPlanMeasurement(store: WorkspaceRecordStore, now = Date.no
   let beginning: Promise<void> | null = null
   const traceKey = PLAN_MEASUREMENT, checkpointKey = PLAN_MEASUREMENT + ':checkpoint'
   const append = (kind: PlanTrace['kind'], extra: Partial<PlanTrace> = {}) => {
-    const row: PlanTrace = { id: crypto.randomUUID(), at: now(), kind, ...extra }
+    const row: PlanTrace = { id: createOperationId(), at: now(), kind, ...extra }
     const work = queue.then(() => store.transaction(traceKey, raw => [...(Array.isArray(raw) ? raw : []), row]))
     queue = work.then(() => undefined, () => undefined)
     return work.then(() => undefined)
