@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+# Build the site and, when run as root, install the loopback API service and Nginx site.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+cd "$ROOT"
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "Node.js 20 or newer is required." >&2
+  exit 1
+fi
+
+major="$(node -p 'Number(process.versions.node.split(".")[0])')"
+if [[ "$major" -lt 20 ]]; then
+  echo "Node.js 20 or newer is required. Current: $(node -v)" >&2
+  exit 1
+fi
+
+npm ci
+npm run build
+
+if [[ "$(id -u)" -ne 0 ]]; then
+  cat <<EOF
+Build finished: ${ROOT}/dist
+
+Run as root on the server to install Nginx and systemd:
+  sudo bash deploy/swas/install.sh
+EOF
+  exit 0
+fi
+
+if [[ ! -f /etc/student-affairs.env ]]; then
+  sed "s#/opt/student-affairs#${ROOT}#g" deploy/swas/student-affairs.env.example > /etc/student-affairs.env
+  chmod 600 /etc/student-affairs.env
+  echo "Created /etc/student-affairs.env. Set DEEPSEEK_API_KEY on the server before expecting DeepSeek to connect."
+else
+  echo "Kept existing /etc/student-affairs.env."
+fi
+
+node_bin="$(command -v node)"
+sed -e "s#/opt/student-affairs#${ROOT}#g" -e "s#/usr/bin/node#${node_bin}#g" \
+  deploy/swas/student-affairs-api.service > /etc/systemd/system/student-affairs-api.service
+systemctl daemon-reload
+systemctl enable --now student-affairs-api.service
+
+if ! command -v nginx >/dev/null 2>&1; then
+  echo "nginx is not installed. Install it, then re-run this script. Ubuntu: apt-get install -y nginx" >&2
+  exit 1
+fi
+
+nginx_site="/etc/nginx/conf.d/student-affairs.conf"
+if [[ -d /etc/nginx/sites-available ]]; then
+  nginx_site="/etc/nginx/sites-available/student-affairs.conf"
+fi
+sed "s#/opt/student-affairs#${ROOT}#g" deploy/swas/nginx.conf > "$nginx_site"
+if [[ -d /etc/nginx/sites-enabled ]]; then
+  ln -sfn "$nginx_site" /etc/nginx/sites-enabled/student-affairs.conf
+  rm -f /etc/nginx/sites-enabled/default
+fi
+
+nginx -t
+systemctl enable nginx
+systemctl reload nginx
+echo "Student Affairs is configured for HTTP on port 80. API listens on 127.0.0.1:8788."

@@ -1,0 +1,15 @@
+[Unit]
+Description=Student Affairs public API and static server
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/student-affairs
+EnvironmentFile=/etc/student-affairs.env
+ExecStart=/usr/bin/node /opt/student-affairs/server/public-server.mjs
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
