@@ -4,6 +4,7 @@ import { IntakePanel } from './components/IntakePanel'
 import { OnboardingGuide } from './components/OnboardingGuide'
 import { PageLoadBoundary } from './components/PageLoadBoundary'
 import { Sidebar } from './components/Sidebar'
+import { SiteRecordFooter } from './components/SiteRecordFooter'
 import { TaskDetailPanel } from './components/TaskDetailPanel'
 import { demoSources, demoTasks } from './data/demo'
 import { InboxPage } from './pages/InboxPage'
@@ -822,6 +823,7 @@ function App() {
           </Suspense>
         </PageLoadBoundary>
       </div>
+      <SiteRecordFooter />
 
       {!workspaceReady && <div className="workspace-status" role="status">正在恢复本机工作区…</div>}
       {storageError && <div className="workspace-status error" role="alert">本机数据库暂不可用；本次更改可能无法在刷新后保留。</div>}

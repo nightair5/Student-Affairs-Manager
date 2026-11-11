@@ -128,6 +128,15 @@ Worker 会为 API 响应生成 `requestId`，严格校验方法、JSON Content-T
 
 Firebase Hosting 配置仍保留用于回滚，但已不再是主部署目标。旧站点不会自动获得 Cloudflare Worker Secret，也不应再被描述为 DeepSeek 已连接。
 
+## 阿里云轻量应用服务器
+
+备案后的国内访问可以不经过 Cloudflare：在杭州轻量服务器上用 Nginx 提供 Vite 构建出的 `dist`，并把同源 `/api` 反代到本机 Node 进程。该进程复用 Cloudflare Worker 的 DeepSeek 与网页读取逻辑，因此智能整理、知识问答和授权网页读取的接口保持不变。密钥只放在服务器的 `/etc/student-affairs.env`。部署步骤见 [deploy/swas/README.md](./deploy/swas/README.md)。
+
+```bash
+npm run build
+npm run serve:public
+```
+
 ## P0：可信确认闭环
 
 - 录入会先保存 `Source` 与 `ExtractionDraft`；关闭审核面板不会丢失草稿。

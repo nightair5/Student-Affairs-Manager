@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "server": "node --env-file-if-exists=.env server/index.mjs",
-    "server:check": "node --check server/index.mjs && node --check server/app.mjs && node --check server/web-fetch-service.mjs && node --check server/deepseek-service.mjs && npm --prefix functions run check",
+    "serve:public": "node server/public-server.mjs",
+    "server:check": "node --check server/index.mjs && node --check server/app.mjs && node --check server/web-fetch-service.mjs && node --check server/deepseek-service.mjs && node --check server/public-server.mjs && npm --prefix functions run check",
     "build": "tsc -b && vite build",
     "build:firebase": "tsc -b && vite build --mode firebase",
     "firebase:serve": "npm run build:firebase && npx --yes firebase-tools emulators:start --only hosting",
@@ -17,7 +18,7 @@
     "deploy:cloudflare:preview": "npm run build && npm run cloudflare:check && wrangler deploy --env preview",
     "deploy:cloudflare": "npm run build && npm run cloudflare:check && wrangler deploy",
     "lint": "eslint .",
-    "test": "vitest run && node --test server/server-tests.mjs && node --test cloudflare/worker-tests.mjs && npm --prefix functions test",
+    "test": "TZ=Asia/Shanghai vitest run && node --test server/server-tests.mjs && node --test server/public-server-tests.mjs && node --test cloudflare/worker-tests.mjs && npm --prefix functions test",
     "eval:recognition": "vitest run src/recognition/evaluation.test.ts"
   },
   "dependencies": {

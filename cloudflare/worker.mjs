@@ -293,7 +293,7 @@ async function fetchSourceText(request, env, fetcher, resolveHostname, isRateLim
     let currentUrl = target.url
     let upstream
     for (let redirectCount = 0; redirectCount <= MAX_WEB_REDIRECTS; redirectCount += 1) {
-      await resolveHostname(currentUrl.hostname)
+      await resolveHostname(currentUrl.hostname, signal)
       upstream = await fetcher(currentUrl, {
         method: 'GET',
         redirect: 'manual',
@@ -351,21 +351,25 @@ async function fetchSourceText(request, env, fetcher, resolveHostname, isRateLim
     }, context.requestId)
   } catch (error) {
     const safeError = error instanceof Error ? error.message : ''
+    const safeErrors = new Set(['WEB_DNS_FAILED', 'WEB_PRIVATE_ADDRESS_FORBIDDEN', 'WEB_RESPONSE_TOO_LARGE'])
     context.errorType = timeoutError(error)
       ? 'WEB_FETCH_TIMEOUT'
-      : ['WEB_DNS_FAILED', 'WEB_PRIVATE_ADDRESS_FORBIDDEN'].includes(safeError) ? safeError : 'WEB_FETCH_FAILED'
+      : safeErrors.has(safeError) ? safeError : 'WEB_FETCH_FAILED'
     const messages = {
       WEB_FETCH_TIMEOUT: '网页读取超时，请稍后重试。',
       WEB_DNS_FAILED: '无法确认目标网页的公网地址。',
       WEB_PRIVATE_ADDRESS_FORBIDDEN: '目标域名解析到了不允许访问的地址。',
+      WEB_RESPONSE_TOO_LARGE: '网页正文超过 512 KB 安全上限。',
       WEB_FETCH_FAILED: '网页读取失败，请粘贴正文后继续。',
     }
-    return failure(
-      context.errorType,
-      messages[context.errorType],
-      context.errorType === 'WEB_FETCH_TIMEOUT' ? 504 : context.errorType === 'WEB_PRIVATE_ADDRESS_FORBIDDEN' ? 400 : 502,
-      context.requestId,
-    )
+    const status = context.errorType === 'WEB_FETCH_TIMEOUT'
+      ? 504
+      : context.errorType === 'WEB_RESPONSE_TOO_LARGE'
+        ? 413
+        : context.errorType === 'WEB_PRIVATE_ADDRESS_FORBIDDEN'
+          ? 400
+          : 502
+    return failure(context.errorType, messages[context.errorType], status, context.requestId)
   }
 }
 
@@ -395,18 +399,30 @@ function isTrustedOrigin(request, allowedOrigins = '') {
   return allowedOrigins.split(',').map((item) => item.trim()).filter(Boolean).includes(origin)
 }
 
-export function createRateLimiter({ windowMs = 60_000, maxRequests = 8, now = Date.now } = {}) {
+export function createRateLimiter({ windowMs = 60_000, maxRequests = 8, maxClients = 10_000, now = Date.now } = {}) {
   const clients = new Map()
-  return (key) => {
+  const limit = (key) => {
     const timestamp = now()
     const current = clients.get(key)
-    if (!current || current.resetAt <= timestamp) {
-      clients.set(key, { count: 1, resetAt: timestamp + windowMs })
-      return false
+    if (current && current.resetAt > timestamp) {
+      current.count += 1
+      return current.count > maxRequests
     }
-    current.count += 1
-    return current.count > maxRequests
+    if (current) clients.delete(key)
+    // Insertion order matches expiry order. Stop at the first live entry, and
+    // never scan more than a small prefix on one request.
+    let checked = 0
+    for (const [entryKey, entry] of clients) {
+      if (checked >= 32 || entry.resetAt > timestamp) break
+      checked += 1
+      clients.delete(entryKey)
+    }
+    if (clients.size >= maxClients) return true
+    clients.set(key, { count: 1, resetAt: timestamp + windowMs })
+    return false
   }
+  limit.clientCount = () => clients.size
+  return limit
 }
 
 export function createConcurrencyLimiter({ maxConcurrent = 2 } = {}) {

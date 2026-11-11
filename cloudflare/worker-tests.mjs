@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { createWorker, validateDeepSeekRequest, validateExtractionRequest, validateWebFetchTarget } from './worker.mjs'
+import { createRateLimiter, createWorker, validateDeepSeekRequest, validateExtractionRequest, validateWebFetchTarget } from './worker.mjs'
 
 const baseContext = [{ kind: '任务', title: '报名材料', excerpt: '今天 18:00 截止' }]
 
@@ -71,6 +71,30 @@ test('non-API routes fall through to static assets', async () => {
   const worker = createWorker()
   const response = await worker.fetch(new Request('https://student-affairs-manager.example/calendar'), environment())
   assert.equal(await response.text(), 'asset')
+})
+
+test('rate limiter drops expired clients and stays bounded', () => {
+  let now = 0
+  const limit = createRateLimiter({ windowMs: 10, maxRequests: 2, maxClients: 2, now: () => now })
+  assert.equal(limit('a'), false)
+  now = 11
+  assert.equal(limit('b'), false)
+  assert.equal(limit.clientCount(), 1)
+  assert.equal(limit('c'), false)
+  assert.equal(limit('d'), true)
+  assert.ok(limit.clientCount() <= 2)
+  const full = createRateLimiter({ windowMs: 60_000, maxRequests: 1, maxClients: 2, now: () => 0 })
+  assert.equal(full('a'), false)
+  assert.equal(full('b'), false)
+  assert.equal(full('a'), true)
+  assert.equal(full('c'), true)
+  assert.equal(full('a'), true)
+  const expired = createRateLimiter({ windowMs: 5, maxRequests: 1, maxClients: 5, now: () => now })
+  now = 0
+  for (const name of ['a', 'b', 'c', 'd', 'e']) expired(name)
+  now = 10
+  expired('f')
+  assert.equal(expired.clientCount(), 1)
 })
 
 test('validation requires one to four complete citations', () => {
