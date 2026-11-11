@@ -46,21 +46,42 @@ function isNonGlobalIpv6(address) {
   return false
 }
 
+function ipv4Matches(parts, base, prefix) {
+  const shift = 32 - prefix
+  const ip = (((parts[0] << 24) | (parts[1] << 16) | (parts[2] << 8) | parts[3]) >>> 0)
+  const network = (((base[0] << 24) | (base[1] << 16) | (base[2] << 8) | base[3]) >>> 0)
+  return (ip >>> shift) === (network >>> shift)
+}
+
+function isNonGlobalIpv4(parts) {
+  if (parts.length !== 4 || parts.some((part) => !Number.isInteger(part) || part < 0 || part > 255)) return true
+  // These two anycast addresses are the globally reachable exceptions inside 192.0.0.0/24.
+  if (parts[0] === 192 && parts[1] === 0 && parts[2] === 0 && (parts[3] === 9 || parts[3] === 10)) return false
+  const blocked = [
+    [[0, 0, 0, 0], 8],
+    [[10, 0, 0, 0], 8],
+    [[100, 64, 0, 0], 10],
+    [[127, 0, 0, 0], 8],
+    [[169, 254, 0, 0], 16],
+    [[172, 16, 0, 0], 12],
+    [[192, 0, 0, 0], 24],
+    [[192, 0, 2, 0], 24],
+    [[192, 88, 99, 0], 24],
+    [[192, 168, 0, 0], 16],
+    [[198, 18, 0, 0], 15],
+    [[198, 51, 100, 0], 24],
+    [[203, 0, 113, 0], 24],
+    [[224, 0, 0, 0], 3],
+  ]
+  return blocked.some(([base, prefix]) => ipv4Matches(parts, base, prefix))
+}
+
 export function isPrivateIp(address) {
   const normalized = address.toLowerCase()
   if (normalized.startsWith('::ffff:')) return isPrivateIp(normalized.slice(7))
   if (!isIP(address)) return true
   if (address.includes(':')) return isNonGlobalIpv6(address)
-  const parts = address.split('.').map(Number)
-  return parts[0] === 0 || parts[0] === 10 || parts[0] === 127 ||
-    (parts[0] === 100 && parts[1] >= 64 && parts[1] <= 127) ||
-    (parts[0] === 169 && parts[1] === 254) ||
-    (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31) ||
-    (parts[0] === 192 && parts[1] === 0 && (parts[2] === 0 || parts[2] === 2)) ||
-    (parts[0] === 192 && parts[1] === 168) ||
-    (parts[0] === 198 && (parts[1] === 18 || parts[1] === 19 || parts[1] === 51)) ||
-    (parts[0] === 203 && parts[1] === 0 && parts[2] === 113) ||
-    parts[0] >= 224
+  return isNonGlobalIpv4(address.split('.').map(Number))
 }
 
 function isPrivateHostname(hostname) {
