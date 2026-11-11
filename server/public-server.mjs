@@ -30,6 +30,20 @@ function numberFromEnv(value, fallback) {
   return Number.isInteger(parsed) && parsed > 0 && parsed <= 65535 ? parsed : fallback
 }
 
+// Production recognition settings from wrangler.jsonc. They are not read from
+// /etc/student-affairs.env, so an older env file cannot drop semantic-notice mode
+// or the 16,384 extraction token budget. The Cloudflare edge rate-limit binding
+// is intentionally omitted; requiring it here would reject every Linux request.
+const PRODUCTION_RECOGNITION_ENV = Object.freeze({
+  RECOGNITION_LOCAL_ISOLATION_VERSION: '1.0.0',
+  DEEPSEEK_GENERATION_MODE: 'semantic-notice-3.0',
+  SEMANTIC_GOAL_CONTEXT_VERSION: '1.0.29',
+  TWO_STEP_COMPILER_VERSION: '2.1.16',
+  DEEPSEEK_NETWORK_RETRY: '0',
+  DEEPSEEK_MODEL: 'deepseek-v4-flash',
+  DEEPSEEK_EXTRACTION_MAX_TOKENS: '16384',
+})
+
 export function loadPublicConfig(env = process.env, cwd = process.cwd()) {
   const apiKey = env.DEEPSEEK_API_KEY ?? ''
   const allowedOrigins = env.ALLOWED_ORIGINS ?? ''
@@ -43,6 +57,7 @@ export function loadPublicConfig(env = process.env, cwd = process.cwd()) {
       .map((host) => host.trim().toLowerCase())
       .filter(Boolean),
     workerEnv: {
+      ...PRODUCTION_RECOGNITION_ENV,
       DEEPSEEK_API_KEY: apiKey,
       ALLOWED_ORIGINS: allowedOrigins,
       ASSETS: {

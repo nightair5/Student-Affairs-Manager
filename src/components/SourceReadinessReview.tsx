@@ -1,3 +1,4 @@
+import { createOperationId } from '../lib/randomId'
 import {useEffect,useState} from 'react'
 import type {WorkspaceV8} from '../domain/v2/types'
 import {sourceReadinessGroups,type ReadinessInput,type ReadinessGroup, SOURCE_READINESS_VERSION} from '../domain/v2/sourceReadiness'
@@ -35,8 +36,8 @@ export function SourceReadinessReview({workspace,draftId,session,disabled,onDirt
    {group.ruleQuotes.length?<><p>{group.resolved?'原文适用条件（已记录你的判断）：':'原文适用条件；尚未判断你是否符合：'}</p>{group.ruleQuotes.map(q=><blockquote key={q}>{q}</blockquote>)}</>:<p>原答没有给出适用条件依据，不能据此认定你资格不足，也不能自动认定没有条件。</p>}
    {group.resolved&&<p>{group.value==='false'?'你已说明当前不适用，保留说明，不加入可执行待办。':'本组已按你的明确判断处理，不重复核对。'}</p>}
    {group.hasConfirmedTask?<p>事项已确认。如实际情况变化，请到任务中心处理事项状态；不会重复创建。</p>:group.unresolvedEvidence?<p>{group.blockedReason??'条件引用不完整，保留待核对；不会替你猜资格。'}</p>:<>
-    <button type="button" disabled={disabled||busy||Boolean(pending)} onClick={()=>void apply({key:keyFor(group.id),field:null,input:{groupId:group.id,choice:group.ruleQuotes.length?'meets_stated_condition':'no_extra_condition',expectedResult:workspaceSnapshotHash(workspace.extractionDrafts.find(d=>d.id===draftId)!.result),operationId:crypto.randomUUID()}})}>{group.alternativeTaskIds?.length?'我已错过正常窗口，且尚未领取':group.ruleQuotes.length?'我符合上述适用条件':'我已核对：本通知没有额外适用条件'}</button>
-    {group.ruleQuotes.length>0&&<button type="button" disabled={disabled||busy||Boolean(pending)} onClick={()=>void apply({key:keyFor(group.id),field:null,input:{groupId:group.id,choice:'does_not_meet_condition',expectedResult:workspaceSnapshotHash(workspace.extractionDrafts.find(d=>d.id===draftId)!.result),operationId:crypto.randomUUID()}})}>本项目前不适用</button>}
+    <button type="button" disabled={disabled||busy||Boolean(pending)} onClick={()=>void apply({key:keyFor(group.id),field:null,input:{groupId:group.id,choice:group.ruleQuotes.length?'meets_stated_condition':'no_extra_condition',expectedResult:workspaceSnapshotHash(workspace.extractionDrafts.find(d=>d.id===draftId)!.result),operationId:createOperationId()}})}>{group.alternativeTaskIds?.length?'我已错过正常窗口，且尚未领取':group.ruleQuotes.length?'我符合上述适用条件':'我已核对：本通知没有额外适用条件'}</button>
+    {group.ruleQuotes.length>0&&<button type="button" disabled={disabled||busy||Boolean(pending)} onClick={()=>void apply({key:keyFor(group.id),field:null,input:{groupId:group.id,choice:'does_not_meet_condition',expectedResult:workspaceSnapshotHash(workspace.extractionDrafts.find(d=>d.id===draftId)!.result),operationId:createOperationId()}})}>本项目前不适用</button>}
    </>}
   </div></article>)}
   {pending&&<div role="alert"><p>{pending.field?'未完成的适用判断检查点已保留。':'判断仍在本页，检查点未保存；请手动重试。'}</p>

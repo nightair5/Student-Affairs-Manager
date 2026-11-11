@@ -4,6 +4,7 @@ import http from 'node:http'
 import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
+import { extractionProfile } from '../cloudflare/extraction-profile.mjs'
 import { createWorker } from '../cloudflare/worker.mjs'
 import { EventEmitter } from 'node:events'
 import { gzipSync } from 'node:zlib'
@@ -45,6 +46,12 @@ test('public server defaults stay on loopback without enabling HSTS', () => {
   assert.equal(config.port, 8788)
   assert.equal(config.httpsEnabled, false)
   assert.equal(config.staticDir, path.resolve('/tmp/student-affairs', 'dist'))
+  assert.equal(config.workerEnv.DEEPSEEK_GENERATION_MODE, 'semantic-notice-3.0')
+  assert.equal(config.workerEnv.SEMANTIC_GOAL_CONTEXT_VERSION, '1.0.29')
+  assert.equal(config.workerEnv.TWO_STEP_COMPILER_VERSION, '2.1.16')
+  assert.equal(config.workerEnv.DEEPSEEK_EXTRACTION_MAX_TOKENS, '16384')
+  assert.equal(config.workerEnv.EXTRACTION_EDGE_RATE_REQUIRED, undefined)
+  assert.equal(extractionProfile(config.workerEnv).maxTokens, 16384)
 })
 
 test('serves the built SPA and falls back for client routes', async () => {
@@ -241,7 +248,8 @@ test('nginx static site types mjs as javascript and keeps framing protections', 
   assert.match(headers, /Cross-Origin-Opener-Policy same-origin/)
   assert.doesNotMatch(headers, /add_header Strict-Transport-Security/)
   assert.match(install, /Kept existing \/etc\/student-affairs\.env/)
-  assert.match(install, /cannot execute Node/)
+  assert.match(install, /cannot execute Node\.js 20 or newer/)
+  assert.match(install, /process\.versions\.node\.split/)
   assert.match(install, /mkdir -p \/etc\/nginx\/snippets\/student-affairs-extra/)
   assert.doesNotMatch(install, />\s*["']?\/etc\/nginx\/snippets\/student-affairs-extra/)
 })
@@ -312,7 +320,10 @@ test('pinned fetch stops an oversized or aborted upstream body', async () => {
       const response = new EventEmitter()
       response.statusCode = statusCode
       response.rawHeaders = rawHeaders
-      response.destroy = () => response.emit('close')
+      response.destroy = () => {
+        response.emit('aborted')
+        response.emit('close')
+      }
       callback(response)
       for (const chunk of chunks) response.emit('data', chunk)
       if (fail) response.emit(fail)

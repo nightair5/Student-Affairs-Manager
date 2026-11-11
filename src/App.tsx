@@ -1,4 +1,5 @@
 import {RecognitionRunDetails} from './components/RecognitionRunDetails'
+import { createOperationId } from './lib/randomId'
 import { assertMainlineRuntime, type MainlineRuntime } from './experiments/mainline02/runtime'
 import type { JsonValue,WorkspaceV8 } from './domain/v2/types'
 import { storedPersonalPlans } from './domain/v2/personalPlanD27'
@@ -595,7 +596,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     const semantic = runtime.semantic
     void performExperiment(async () => {
       await semantic.dispose({ draftId, kind, taskTempIds: item ? [item.suggestion.id] : [],
-        revision: experimentalReview.revision, operationId: crypto.randomUUID() })
+        revision: experimentalReview.revision, operationId: createOperationId() })
       if (item) setIsolatedChoices(previous => {
         const choices = { ...previous[draftId] }; delete choices[item.id]
         return { ...previous, [draftId]: choices }
@@ -618,7 +619,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     if(patch.description!==undefined){changes.description=patch.description||null;expected.description=task.description||null}
     if(patch.status!==undefined){changes.status=canonicalStatus(patch.status);expected.status=canonicalStatus(task.status)}
     if(patch.estimatedMinutes!==undefined||patch.estimatedMinutesKnown!==undefined){changes.estimatedMinutes=patch.estimatedMinutesKnown===false?null:patch.estimatedMinutes??task.estimatedMinutes;expected.estimatedMinutes=task.estimatedMinutesKnown?task.estimatedMinutes:null}
-    const operationId=crypto.randomUUID(),changedAt=new Date().toISOString()
+    const operationId=createOperationId(),changedAt=new Date().toISOString()
     taskWritesCount.current++;setTaskWritesPending(taskWritesCount.current);setNotice({text:'正在保存更改…'})
     const work=taskWriteQueue.current.then(async()=>{
       if(directReadbackPending||taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')
@@ -650,7 +651,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
   }
 
   const saveMaterialPatch=(taskId:string,material:WorkspaceV8['materials'][number],changes:MaterialCommandValues,expected:MaterialCommandValues,expectedOwnerIds:string[]):Promise<void>=>{
-    const operationId=crypto.randomUUID(),changedAt=new Date().toISOString()
+    const operationId=createOperationId(),changedAt=new Date().toISOString()
     taskWritesCount.current++;setTaskWritesPending(taskWritesCount.current);setNotice({text:'正在保存材料要求…'})
     const work=taskWriteQueue.current.then(async()=>{
       if(directReadbackPending||taskReadbackBlocked.current)throw Error('已有更改已保存但尚未读回，请先重新读取。')
@@ -702,7 +703,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     if(eventDirtyIds.current.has(eventId))throw Error('这项日程还有未保存的修改，请先保存或取消。')
     if(eventCompletionInFlight.current.has(eventId))throw Error('日程状态正在保存，请稍候。')
     eventCompletionInFlight.current.add(eventId)
-    const operationId=crypto.randomUUID(),changedAt=new Date().toISOString()
+    const operationId=createOperationId(),changedAt=new Date().toISOString()
     taskWritesCount.current++;setTaskWritesPending(taskWritesCount.current);setNotice({text:'正在保存日程状态…'})
     const work=taskWriteQueue.current.then(async()=>{
       if(taskReadbackBlocked.current||directReadbackPending)throw Error('已有更改已保存但尚未读回，请先重新读取。')
@@ -730,7 +731,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     if(eventDirtyIds.current.has(eventId)||taskIds.some(id=>Boolean(taskEditDraftsRef.current[id])))throw Error('请先保存或取消这项事项的修改。')
     const state=ordinaryCanonical?.events.find(event=>event.id===eventId)?.legacyData?.manualActionLinksV1
     const expectedRevision=state&&typeof state==='object'&&!Array.isArray(state)&&typeof state.revision==='string'?state.revision:null
-    const operationId=crypto.randomUUID(),changedAt=new Date().toISOString()
+    const operationId=createOperationId(),changedAt=new Date().toISOString()
     taskWritesCount.current++;setTaskWritesPending(taskWritesCount.current);setNotice({text:'正在保存事项关联…'})
     const work=taskWriteQueue.current.then(async()=>{
       if(taskReadbackBlocked.current||directReadbackPending)throw Error('已有更改已保存但尚未读回，请先重新读取。')
@@ -935,7 +936,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         // failed status check) and prevents an unavailable request itself.
       }
       const metadata=ordinaryEnvironment?.recognitionMetadata?.()
-      const attemptId=crypto.randomUUID()
+      const attemptId=createOperationId()
       const retried=await retryExistingSourceRecognition(capturePersistenceService,source.id,{provider:'deepseek',modelName:metadata?.modelName??'deepseek-v4-flash',promptVersion:metadata?.promptVersion??null,pipelineVersion:'direct-ai-retry-v1',expectedSourceVersionId:version.id},async()=>deepSeekExtractionService.recognize!({sourceType:source.type,sourceTitle:source.title,content:version.rawText!,sourceId:source.id,sourceVersionId:version.id,now:new Date(version.createdAt)},{projects,tasks},{attemptId,allowStatusUnknown:true,...(!ordinaryEnvironment?{semanticContract:'semantic-notice-3.11' as const}:{})}))
       stage='mapping'
       const sidecar=ordinaryEnvironment?.semanticSidecar?.(source.id)??deepSeekExtractionService.semanticSidecar?.(source.id,version.id)
@@ -1029,7 +1030,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     const metadata = input.manualSuggestion ? undefined : ordinaryEnvironment?.recognitionMetadata?.()
     const sourceClock = ordinaryEnvironment?.recognitionContext?.(input.content)
     const captureRequest = {
-      operationId: input.operationId ?? crypto.randomUUID(),
+      operationId: input.operationId ?? createOperationId(),
       sourceType: input.sourceType,
       title: input.sourceTitle ?? input.fileName ?? localResult.source.title,
       rawText: input.content,
@@ -1199,7 +1200,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     }
     try {
       await capturePersistenceService.saveSource({
-        operationId: input.operationId ?? crypto.randomUUID(),
+        operationId: input.operationId ?? createOperationId(),
         sourceType: 'link',
         title,
         rawText: '',
@@ -1375,7 +1376,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       const [field, value] = entries[0]
       return performExperiment(async () => {
         await runtime.edit({ draftId, taskTempId: item.suggestion.id, revision: experimentalReview.revision,
-          operationId: crypto.randomUUID(), field: field as 'title' | 'deadline', value: value as string })
+          operationId: createOperationId(), field: field as 'title' | 'deadline', value: value as string })
         setNotice({ text: '修改已明确保存；尚未创建任务。' })
       })
     }
@@ -1692,7 +1693,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
 
   const handleOrdinaryFacts = async (draftId:string,result:NonNullable<ExtractionDraft['recognitionResult']>,decision?:{eventId:string;before:EventDisposition;after:EventDisposition}) => {
     const nextDrafts=drafts.map(d=>d.id===draftId?{...d,recognitionResult:result,updatedAt:new Date().toISOString()}:d)
-    const history=decision?[...workspace.historyRecords,{id:crypto.randomUUID(),entityType:'draft' as const,entityId:draftId,action:'updated',field:eventDispositionField(decision.eventId),before:decision.before,after:decision.after,actor:'user' as const,changedAt:new Date().toISOString()}]:workspace.historyRecords
+    const history=decision?[...workspace.historyRecords,{id:createOperationId(),entityType:'draft' as const,entityId:draftId,action:'updated',field:eventDispositionField(decision.eventId),before:decision.before,after:decision.after,actor:'user' as const,changedAt:new Date().toISOString()}]:workspace.historyRecords
     await workspaceRepository.save({...workspace,drafts:nextDrafts,historyRecords:history})
     await refreshOrdinary()
     setNotice({text:'草稿纠正已保存；原始首次回答不变，尚未正式确认。'})

@@ -106,10 +106,13 @@ export function createPinnedHttpsFetch({
     }, (response) => {
       const chunks = []
       let received = 0
+      let failing = false
       const failResponse = (error) => {
+        if (failing) return
+        failing = true
+        fail(error)
         response.destroy()
         request.destroy()
-        fail(error)
       }
       response.on('data', (chunk) => {
         received += chunk.length

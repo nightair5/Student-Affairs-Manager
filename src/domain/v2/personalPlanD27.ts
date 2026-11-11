@@ -1,3 +1,4 @@
+import { createOperationId } from '../../lib/randomId'
 import type { CanonicalWorkspaceRepository } from './repository'
 import type { HistoryRecord, JsonValue, Task, TimePoint, WorkspaceV8 } from './types'
 import { addDateOnlyDays, instantToWallClock, isDateOnly, parseBusinessDateTime, wallClockToInstant } from '../../lib/timeSemantics'
@@ -312,7 +313,7 @@ function sourceWindowBounds(w:WorkspaceV8,t:Task,zone:string):SourceBounds {
   if(starts.length!==1||ends.length!==1||starts[0]===undefined||ends[0]===undefined||ends[0]<=starts[0])return invalid
   return {start:starts[0],end:ends[0],intervals:[{start:starts[0],end:ends[0]}],invalid:false,present:true}
 }
-export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: string = crypto.randomUUID()): PlanProposal {
+export function buildPersonalPlan(w: WorkspaceV8, options: PlanOptions, id: string = createOperationId()): PlanProposal {
   validatePersonalPlanMetadata(w); validatePlanOptions(options)
   if (w.tasks.length > 200) throw Error('PERSONAL_PLAN_TASK_LIMIT_200')
   const o = structuredClone(options), zone = w.settings.defaultTimezone, now = Date.parse(o.now)

@@ -6,7 +6,7 @@
 
 ## 服务器准备
 
-- 系统需要 Node.js 20 或更新版本，以及 Nginx。Node 必须装在 `student-affairs` 用户能够执行的路径，例如 `/usr/local/bin/node`；安装脚本会实际用该用户试运行。`npm run serve:public` 会自行读取可选的 `.env`，不依赖较新的 Node 命令行参数。
+- 系统需要 Node.js 20 或更新版本，以及 Nginx。Node 必须装在 `student-affairs` 用户能够执行的路径，例如 `/usr/local/bin/node`。安装脚本会用该用户试运行每个候选程序，并拒绝主版本低于 20 的二进制。`npm run serve:public` 会自行读取可选的 `.env`，不依赖较新的 Node 命令行参数。
 - 阿里云安全组放行 TCP 80 和 443。服务器本机防火墙也要放行这两个端口。
 - Node 进程只监听 `127.0.0.1:8788`。公网只访问 Nginx。
 
