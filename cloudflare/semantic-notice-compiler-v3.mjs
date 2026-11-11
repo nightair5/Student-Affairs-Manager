@@ -904,13 +904,16 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     result.conflicts.push({id:'sem-event-choice-'+eid,type:'other',message:choice.quote,entityTempIds:ids,evidenceIds:[eid],requiresDecision:false})
     audit.facts.push({role:'event_choice_alternatives',sourceEvidenceId:eid,owners:ids})
   }
-  if(['recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0','recognition-semantic-notice-3.11.0','recognition-semantic-notice-3.12.0'].includes(promptVersion))for(const choice of declaredTaskChoices(source,pending)){
+  if(['recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0','recognition-semantic-notice-3.11.0','recognition-semantic-notice-3.12.0'].includes(promptVersion))for(const choice of declaredTaskChoices(source,pending,{allowNamedAlternatives:matterEnabled})){
     const owners=choice.records.map(record=>record.entity.tempId)
     if(result.conflicts.some(conflict=>conflict.id.startsWith('sem-choice-')&&owners.some(id=>conflict.entityTempIds.includes(id))))continue
     const eid=evidence(choice.quote,'description','choice',choice.start)
     if(!eid)continue
     result.conflicts.push({id:'sem-choice-'+eid,type:'other',message:choice.quote,entityTempIds:owners,evidenceIds:[eid],requiresDecision:false})
     audit.facts.push({role:'declared_choice_branches',owners,sourceEvidenceId:eid})
+  }
+  if(matterEnabled)for(const record of pending.filter(value=>value.kind==='task'&&value.item.choice)){
+    if(!result.conflicts.some(conflict=>conflict.id.startsWith('sem-choice-')&&conflict.entityTempIds.includes(record.entity.tempId)))note('RELATION',record.item.key,'CHOICE_RELATION_UNCONFIRMED')
   }
   combineSupportedChoices(result,audit)
   if(['recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0','recognition-semantic-notice-3.11.0','recognition-semantic-notice-3.12.0'].includes(promptVersion))applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone,includeContextFacts:['recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0','recognition-semantic-notice-3.11.0','recognition-semantic-notice-3.12.0'].includes(promptVersion),documentContext:unifiedContract?raw.contextFacts:[],respectPersonalNeed:refinedContract,respectVoluntary:goalContract})

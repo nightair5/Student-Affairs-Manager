@@ -2,10 +2,26 @@ import {locateSourceQuote} from './source-text-index.mjs'
 
 const compact=value=>typeof value==='string'?value.normalize('NFKC').replace(/\s/gu,''):''
 const alternatives=/(?:任选(?:一项|一种|其一)|二选一|两者择一|只需选择一种)/u
+// The new matter contract can cite the alternatives themselves, rather than
+// the word “一种”: e.g. “任选 A 或 B”. A model-declared shared choice and
+// distinct citations for every branch are still required below.
+const namedAlternatives=/(?:任选(?:一项|一种|其一)|二选一|两者择一|只需选择一种|任选[^，,。；;！!？?\n]{1,40}(?:或者|或|\/|／)[^，,。；;！!？?\n]{1,40})/u
 const affirmativeAlternative=(value,pattern=alternatives)=>{
  for(const marker of value.matchAll(new RegExp(pattern.source,'gu'))){
   const prefix=value.slice(0,marker.index).split(/[，,。；;！？\n]/u).at(-1).trim()
   if(!/(?:不(?:可|能|得|允许)?|禁止|请勿|取消)(?:只|仅|再|随意|擅自|仅仅|简单地)*$/u.test(prefix))return true
+ }
+ return false
+}
+// A later, explicit statement that both branches must be completed conflicts
+// with an earlier alternative. Requiring punctuation after the verb avoids
+// confusing a shared requirement (both routes require a signature) with a
+// requirement to use both routes.
+const explicitlyRequiresAll=value=>{
+ const pattern=/(?:两种|两者|二者)(?:都|均|全部)(?:必须|需要|须|要|应)?(?:提交|上交|上传|办理|完成)(?=[。；;，,！!？?\n]|$)/gu
+ for(const match of value.matchAll(pattern)){
+  const prefix=value.slice(0,match.index).split(/[，,。；;！？\n]/u).at(-1).trim()
+  if(!/(?:不必|无需|不需要|不用|不要求|不强制)$/u.test(prefix))return true
  }
  return false
 }
@@ -41,13 +57,13 @@ export function sourceSupportedDependency(source,parent,child){
 
 /** Explicit model membership permits different action objects in one choice.
  * The common instruction and each branch still need distinct source support. */
-export function declaredTaskChoices(source,records){
+export function declaredTaskChoices(source,records,{allowNamedAlternatives=false}={}){
  const groups=new Map()
  for(const record of records.filter(value=>value.kind==='task')){
   const choice=record.item.choice
   if(!choice||typeof choice.key!=='string'||!choice.key||choice.key.length>40||typeof choice.evidence!=='string')continue
   const instruction=locateSourceQuote(choice.evidence,source)
-  if(!instruction||!affirmativeAlternative(instruction.literal))continue
+  if(!instruction||!affirmativeAlternative(instruction.literal,allowNamedAlternatives?namedAlternatives:alternatives))continue
   const key=choice.key+':'+instruction.start+':'+instruction.end
   const entry=groups.get(key)??{quote:instruction.literal,start:instruction.start,records:[]}
   entry.records.push(record);groups.set(key,entry)
@@ -61,6 +77,7 @@ export function declaredTaskChoices(source,records){
   if(spans.some(values=>!values.length))return false
   const left=Math.min(group.start,...spans.flat().map(span=>span.start)),right=Math.max(group.start+group.quote.length,...spans.flat().map(span=>span.end))
   if(right-left>1500)return false
+  if(allowNamedAlternatives&&explicitlyRequiresAll(source.slice(left,Math.min(source.length,right+80))))return false
   // Each branch has at least one own citation, not the same broad paragraph
   // repeated for every purported option.
   return spans.every((values,i)=>values.some(span=>spans.every((others,j)=>i===j||!others.some(other=>other.start===span.start&&other.end===span.end))))

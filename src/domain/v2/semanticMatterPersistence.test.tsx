@@ -12,6 +12,7 @@ import {commitTaskCommand} from './taskCommand'
 import {setTaskSchedule} from './taskSchedule'
 import {exportWorkspaceV8,importWorkspaceV8} from './serialization'
 import {directReplacementDiff} from './directReplacementSafety'
+import {selectSourceChoice} from './sourceChoice'
 
 const now='2026-11-11T09:00:00+08:00',version='recognition-semantic-notice-3.12.0'
 const heading='实践学分认定'
@@ -47,6 +48,7 @@ describe('matter relation through compile, direct commit and projection',()=>{
   const read=()=>new CanonicalWorkspaceRepository(store).load()
   const initial=(await read())!,view=workspaceV8ToLegacyView(initial)
   expect(view.tasks).toHaveLength(3)
+  expect(initial.tasks.every(task=>task.dependencyIds.length===0)).toBe(true)
   expect(new Set(view.tasks.map(task=>task.sourceGoal?.id)).size).toBe(1)
   expect(view.tasks.every(task=>task.sourceGoal?.title===heading)).toBe(true)
   expect(view.tasks.map(task=>task.deadline).sort()).toEqual(['2026-11-13T17:00','2026-11-13T18:00','2026-11-14T12:00'])
@@ -90,6 +92,36 @@ describe('matter relation through compile, direct commit and projection',()=>{
   const draft=after.extractionDrafts.find(value=>Array.isArray(value.legacyData?.directGoalGroups))!
   draft.legacyData={...draft.legacyData,directGoalGroups:[]}
   expect(directReplacementDiff(before,after,ids,ids).issues).toContainEqual(expect.objectContaining({field:'relationship'}))
+ })
+ it('retains independently timed choice branches inside one matter',async()=>{
+  const workspace=createGoldenWorkspaceV8()
+  for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','projects','milestones','workPackages','tasks','materials','timePoints','events','evidenceRefs','historyRecords','reminderRecords','changeProposals'] as const)workspace[key]=[]
+  const store=new MemoryWorkspaceRecordStore(),repo=new CanonicalWorkspaceRepository(store),capture=new CapturePersistenceService(repo);await repo.save(workspace)
+  const choice='作品任选电子版或纸质版提交',online='电子版于2026年11月16日17:00前上传平台',paper='纸质版于2026年11月17日12:00前交到服务台'
+  const text=`【课程作品递交】\n${choice}。\n${online}。\n${paper}。`
+  const answer={topic:'课程作品递交',kind:'action',items:[
+   {key:'online',kind:'task',title:'上传电子版作品',action:'上传',object:'电子版作品',channel:'平台',evidence:[online],times:[{role:'deadline',raw:'2026年11月16日17:00前'}],choice:{key:'delivery',evidence:choice}},
+   {key:'paper',kind:'task',title:'递交纸质版作品',action:'递交',object:'纸质版作品',channel:'服务台',evidence:[paper],times:[{role:'deadline',raw:'2026年11月17日12:00前'}],choice:{key:'delivery',evidence:choice}},
+  ],materials:[],goals:[{key:'goal',title:'课程作品递交',anchor:'课程作品递交',evidence:'课程作品递交',taskKeys:['online','paper']}]}
+  const result=parseRecognitionResult(compileSemanticNotice(answer,{source:text,referenceTime:now,timezone:'Asia/Shanghai',promptVersion:version,goalContextVersion:'1.0.30'}).result)
+  const h=await capture.beginCapture({operationId:'matter-choice',sourceType:'text',title:'匿名通知',rawText:text,provider:'deepseek',modelName:'fixture',promptVersion:version,pipelineVersion:'test',now})
+  await capture.recognize(h,async()=>result);await commitDirectDraft(repo,h.draftId,now)
+  let view=workspaceV8ToLegacyView((await repo.load())!)
+  expect(view.tasks).toHaveLength(2)
+  expect(view.tasks[0].sourceGoal?.id).toBeTruthy()
+  expect(view.tasks[0].sourceGoal?.id).toBe(view.tasks[1].sourceGoal?.id)
+  expect(view.tasks[0].sourceChoice?.id).toBeTruthy()
+  expect(view.tasks[0].sourceChoice?.id).toBe(view.tasks[1].sourceChoice?.id)
+  expect(view.tasks.map(task=>task.deadline).sort()).toEqual(['2026-11-16T17:00','2026-11-17T12:00'])
+  expect(htmlFor(view.tasks)).toContain('以下方式任选一项完成')
+  await selectSourceChoice(repo,view.tasks[0].id,null,now)
+  const stored=(await repo.load())!,first=stored.tasks.find(task=>task.id===view.tasks[0].id)!
+  await commitTaskCommand(repo,{operationId:'matter-choice-done',taskId:first.id,expected:{status:first.status},changes:{status:'completed'},changedAt:now})
+  view=workspaceV8ToLegacyView(importWorkspaceV8(exportWorkspaceV8((await new CanonicalWorkspaceRepository(store).load())!)))
+  expect(view.tasks.filter(task=>task.status==='已完成')).toHaveLength(1)
+  expect(view.tasks.map(task=>task.deadline).sort()).toEqual(['2026-11-16T17:00','2026-11-17T12:00'])
+  expect(view.tasks[0].sourceChoice?.selectedTaskId).toBe(first.id)
+  expect(htmlFor(view.tasks)).toContain('另一方式已完成')
  })
  it('recovers an old owner-backed group from its original capture after owner deletion',async()=>{
   const workspace=createGoldenWorkspaceV8()

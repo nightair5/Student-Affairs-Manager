@@ -62,6 +62,30 @@ test('missing membership is visible as partial; explicit independent actions are
  assert.equal(separate.result.goalGroups,undefined)
  assert.ok(!separate.audit.losses.some(loss=>loss.reason==='MATTER_ASSIGNMENT_UNRESOLVED'))
 })
+test('the opt-in contract preserves a cited A-or-B choice without treating a prohibition as a choice',()=>{
+ const first='电子版于11月16日17:00前上传平台',second='纸质版于11月17日12:00前交到服务台'
+ const make=instruction=>{
+  const source=`【课程作品递交】\n${instruction}。\n${first}。\n${second}。`
+  const items=[['a','上传','电子版作品',first,'11月16日17:00前'],['b','递交','纸质版作品',second,'11月17日12:00前']].map(([key,action,object,quote,time])=>({key,kind:'task',title:action+object,action,object,evidence:[quote],times:[{role:'deadline',raw:time}],choice:{key:'delivery',evidence:instruction}}))
+  return {source,raw:{topic:'课程作品递交',kind:'action',items,materials:[],goals:[{key:'g',title:'课程作品递交',anchor:'课程作品递交',evidence:'课程作品递交',taskKeys:['a','b']}]}}
+ }
+ const valid=make('作品任选电子版或纸质版提交')
+ const next=compileSemanticNotice(valid.raw,opts(valid.source))
+ assert.equal(next.result.conflicts.filter(c=>c.id.startsWith('sem-choice-')).length,1)
+ assert.equal(next.result.goalGroups?.length,1)
+ assert.deepEqual(next.result.timePoints.filter(p=>p.type==='task_deadline').map(p=>p.normalizedValue),['2026-11-16T17:00','2026-11-17T12:00'])
+ const old=compileSemanticNotice(valid.raw,{...opts(valid.source),promptVersion:'recognition-semantic-notice-3.11.0',goalContextVersion:'1.0.29'})
+ assert.equal(old.result.conflicts.filter(c=>c.id.startsWith('sem-choice-')).length,0)
+ const forbidden=make('作品不可任选电子版或纸质版提交')
+ const denied=compileSemanticNotice(forbidden.raw,opts(forbidden.source))
+ assert.equal(denied.result.conflicts.filter(c=>c.id.startsWith('sem-choice-')).length,0)
+ assert.equal(denied.result.standaloneTasks.length,2)
+ assert.ok(denied.audit.losses.some(loss=>loss.reason==='CHOICE_RELATION_UNCONFIRMED'))
+ assert.equal(denied.result.quality.needsHumanReview,true)
+ const contradiction=compileSemanticNotice(valid.raw,opts(valid.source+'\n两种都必须提交。'))
+ assert.equal(contradiction.result.conflicts.filter(c=>c.id.startsWith('sem-choice-')).length,0)
+ assert.ok(contradiction.audit.losses.some(loss=>loss.reason==='CHOICE_RELATION_UNCONFIRMED'))
+})
 test('candidate contract is explicitly negotiated while old clients retain their contract',async()=>{
  const origin='https://student-affairs-manager.example',worker=createWorker({logger:()=>{},fetcher:async()=>Response.json({model:'fixture-flash',choices:[{finish_reason:'stop',message:{content:JSON.stringify(raw())}}],usage:{prompt_tokens:20,completion_tokens:20}})})
  const request=version=>new Request(origin+'/api/deepseek/extract',{method:'POST',headers:{origin,'content-type':'application/json','X-Student-Affairs-Recognition':version},body:JSON.stringify({content:source,sourceType:'text',referenceTime:'2026-11-11T09:00:00+08:00',timezone:'Asia/Shanghai'})})
