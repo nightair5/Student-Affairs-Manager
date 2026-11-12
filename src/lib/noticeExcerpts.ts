@@ -17,6 +17,7 @@ export function extractSourceNoticeContext(source:string,kind:'task'|'event',kno
   const lines=primary.replace(/\r\n?/gu,'\n').split('\n')
   const isGroup=(line:string)=>/^[^：:\n]{0,32}(?:组|小队|岗位|职位|分工)(?:[·•/／][^：:\n]{1,20})?(?:[（(][^（）()]{1,20}[）)])?[：:]\s*.*$/u.test(stripDecoration(line))
   const isOtherHeading=(line:string)=>/^(?:【[^】]{1,28}】|[^：:\n]{1,24}[：:])\s*$/u.test(stripDecoration(line))
+  const isInlineDatedHeader=(line:string)=>/^【[^】]*[0-9０-９][^】]*】\s*$/u.test(stripDecoration(line))
   const selected:Array<{kind:'roles'|'notice'|'overview'|'time';text:string}>=[]
   const groupLines=new Set<number>()
   for(let i=0;i<lines.length;i++){
@@ -36,12 +37,19 @@ export function extractSourceNoticeContext(source:string,kind:'task'|'event',kno
   // promise that an award has been obtained or a new action to perform.
   for(let i=0;i<lines.length;i++){
     const heading=stripDecoration(lines[i]).trim()
-    if(!/^[^：:\n]{0,16}(?:福利|待遇|报名方式|参加须知|准备事项|岗位要求)[：:]/u.test(heading))continue
+    if(!/^[^：:\n]{0,16}(?:福利|待遇|报名方式|参加须知|准备事项|岗位要求|小提示|温馨提示|注意事项)[：:]/u.test(heading))continue
     const block=[lines[i]]
-    while(i+1<lines.length&&lines[i+1].trim()&&!isGroup(lines[i+1])&&!isOtherHeading(lines[i+1]))block.push(lines[++i])
+    while(i+1<lines.length&&lines[i+1].trim()&&!isGroup(lines[i+1])&&(!isOtherHeading(lines[i+1])||isInlineDatedHeader(lines[i+1])))block.push(lines[++i])
     if(block.length>1||/[：:]\s*\S/u.test(heading))selected.push({kind:'notice',text:block.join('\n').trim()})
   }
   if(kind==='event'){
+    for(let i=0;i<lines.length;i++){
+      const heading=stripDecoration(lines[i]).trim()
+      if(!/^(?:【(?:活动内容|活动介绍|活动简介|内容简介|讲座内容|报告内容)】|(?:活动内容|活动介绍|活动简介|内容简介|讲座内容|报告内容)[：:])/u.test(heading))continue
+      const block=[lines[i]]
+      while(i+1<lines.length&&lines[i+1].trim()&&!isGroup(lines[i+1])&&!isOtherHeading(lines[i+1]))block.push(lines[++i])
+      if(block.length>1||/[：:]\s*\S/u.test(heading))selected.push({kind:'overview',text:block.join('\n').trim()})
+    }
     // A source-wide paragraph is explicitly labelled as such in the UI. It
     // does not become an event fact and is never used to assign a date.
     let paragraph:string[]=[],indices:number[]=[]
