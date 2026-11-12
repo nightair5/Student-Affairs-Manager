@@ -65,6 +65,8 @@ describe('parallel event sessions and source-specific dates',()=>{
   expect(linkReferencedEventActions(missingHeading,text).events[0].relatedTaskTempIds??[]).not.toContain(task.tempId)
   const noDeadlineEvidence=structuredClone(noRelation);noDeadlineEvidence.standaloneTasks[0].evidenceIds=noDeadlineEvidence.standaloneTasks[0].evidenceIds.filter(id=>!id.includes('description:'))
   expect(linkReferencedEventActions(noDeadlineEvidence,text).events[0].relatedTaskTempIds??[]).not.toContain(task.tempId)
+  const negated=text.replace('填写报名问卷','不需要填写报名问卷')
+  expect(linkReferencedEventActions(noRelation,negated).events[0].relatedTaskTempIds??[]).not.toContain(task.tempId)
  })
  it('retains separately named same-day agenda rows with their own venue and time',()=>{
   const text='【校园交流开放日】\n上午场：11月3日09:00-10:00，地点：东校区一号厅。\n下午场：同日14:00-15:00，地点：西校区二号厅。'

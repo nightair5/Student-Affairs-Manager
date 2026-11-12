@@ -294,7 +294,12 @@ function sharedHeadingRegistrationOwner(input:RecognitionResult,task:Recognition
  if(input.events.length!==1||!/^(?:报名|登记|申请|申报)$/u.test(task.actionVerb))return null
  const match=/^\s*([^\r\n]{1,120})/u.exec(source),heading=match?.[1]
  if(!heading||!/(?:报名|招募|申请|登记)/u.test(heading)||source.indexOf(heading)!==source.lastIndexOf(heading))return null
- if(!/(?:填写|填报|提交|完成)[^。；;\n]{0,24}(?:报名|登记|申请)[^。；;\n]{0,12}(?:表|问卷|表单)/u.test(source))return null
+ const forms=[...source.matchAll(/(?:填写|填报|提交|完成)[^。；;\n]{0,24}(?:报名|登记|申请)[^。；;\n]{0,12}(?:表|问卷|表单)/gu)]
+ const positiveForm=forms.some(form=>{
+  const before=source.slice(Math.max(0,form.index-20),form.index)
+  return !/(?:无需|无须|不必|不用|不需要|不要求|请勿|禁止|不得|取消)[^。；;\n]{0,8}$/u.test(before)
+ })
+ if(!positiveForm)return null
  const event=input.events[0],eventName=squash(event.title),object=squash(task.actionObject),headingKey=squash(heading)
  if(object.length<4||!eventName.includes(object)||!headingKey.includes(eventName))return null
  const start=source.indexOf(heading)
