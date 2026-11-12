@@ -1,4 +1,12 @@
-# 当前正式环境：v3.0.0-beta.42 / 阿里云 SWAS（2026-11-12）
+# 当前正式环境：v3.0.0-beta.43 / 阿里云 SWAS（2026-11-13）
+
+部署代码 `2b8c134fb7a7616464b8d430bba2c83aa91db0ad`，实际版本见 [deployment.json](https://student-affairs.site/deployment.json)。有共同来源标题、报名截止和明确报名方式的本机回退结果，可将报名行动关联到唯一活动；二者仍独立保存和完成。明确否定的报名要求不作为关联依据。模型结果无效时保留可观察到的脱敏用量和失败阶段，不返回通知或模型正文。
+本轮志愿者通知的真实生产请求返回 `INVALID_AI_RESPONSE`（502），未返回用量和模型原答，具体字段缺口未知；本批暂停，盐城通知没有发送。该诊断修复不能证明模型失败已解决。真实浏览器 `NOT_RUN`；隔离内存仓库用该次错误响应及另一个模拟失败，核对了两份通知的本机回退、读回、备份与第二批撤销。此前 100 条本机和 3 条历史回答的已比较字段无变化，4 条既有结构错误仍在。
+本地完整检查、该提交[六项远端 CI](https://github.com/nightair5/Student-Affairs-Manager/actions/runs/43260102004)、服务器 22 项站点检查、27 项相关测试和模拟上游接口通过。保留 HTTPS、ACME、备案、env/600 和非特权服务；未接触用户浏览器数据库。回滚到 beta.42：`bash /root/sa-backups/20261113-0038-2b8c134f/rollback.sh`。证据 `.data/live-notice-verification-20261112-235915/`。
+
+以下为历史记录。
+
+# 历史正式环境：v3.0.0-beta.42 / 阿里云 SWAS（2026-11-12）
 
 部署代码 `3eb4c2171b597ac22e10aad6d07446a7cc881c04`；实际版本见 [deployment.json](https://student-affairs.site/deployment.json)。在 beta.41 的岗位、职责、活动简介和明确结束时刻保留基础上，补充提取带标题的活动简介及小提示，包括名额有限和先到先得等原文须知。
 本地检查及该提交[六项远端 CI](https://github.com/nightair5/Student-Affairs-Manager/actions/runs/43249566335)通过；服务器构建、备案、HTTPS、ACME、安全头、静态资源、env 权限、22 项部署核验和 12 项来源内容/保存投影测试通过。服务器接口使用模拟上游；新真实 AI 与浏览器 `NOT_RUN`，本轮新增业务模型请求 0。
