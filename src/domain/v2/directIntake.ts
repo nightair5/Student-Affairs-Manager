@@ -14,6 +14,8 @@ import {completeParallelSessions,linkFollowingFormChannel,linkReferencedEventAct
 import {directReplacementDiff, type DirectReplacementDiff} from './directReplacementSafety'
 import type {RecognitionRequestDiagnostic} from '../../recognition/requestDiagnostic'
 import {isSemanticNoticeVersion} from '../../recognition/semanticNoticeVersion'
+import {completeSourceEventRange} from '../../recognition/completeSourceEventRange'
+import {retainSourceEventContext} from '../../recognition/retainSourceEventContext'
 
 export interface DirectBatch {
   version: typeof DIRECT_MODE_VERSION; id: string; draftId: string; sourceId: string; addedAt: string
@@ -96,7 +98,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     // received time is the stable anchor for this notice, including on failure.
     const rawInput=d.result??buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(v.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]})
     const semanticNotice=!localFallback&&isSemanticNoticeVersion(rawInput.promptVersion)
-    const input=localFallback?improveDirectFallback(rawInput,v.rawText):linkReferencedEventActions(semanticNotice?rawInput:linkFollowingFormChannel(completeParallelSessions(rawInput,v.rawText),v.rawText),v.rawText)
+    const input=localFallback?improveDirectFallback(rawInput,v.rawText):retainSourceEventContext(completeSourceEventRange(linkReferencedEventActions(semanticNotice?rawInput:linkFollowingFormChannel(completeParallelSessions(rawInput,v.rawText),v.rawText),v.rawText),v.rawText,v.createdAt,w.settings.defaultTimezone),v.rawText)
     const actionRecovery=(import.meta as ImportMeta&{env?:{VITE_DIRECT_ACTION_RECOVERY?:string}}).env?.VITE_DIRECT_ACTION_RECOVERY==='1'
     const retention=DIRECT_RETENTION_DEFAULT||(import.meta as ImportMeta&{env?:{VITE_DIRECT_RETENTION?:string}}).env?.VITE_DIRECT_RETENTION==='1'
     const initial=convertDirectResult(input,v.rawText,record(original)?original as unknown as RecognitionResult:undefined,{actionRecovery,retention})

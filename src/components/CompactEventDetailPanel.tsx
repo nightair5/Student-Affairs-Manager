@@ -5,8 +5,9 @@ import {flowEditValue,flowEventDate} from '../lib/flowPresentation'
 import {eventDescriptionSections,eventDurationLabel} from '../lib/eventPresentation'
 import type {EventDetailPanelProps} from './EventDetailPanel'
 import {TextWithLinks} from './TextWithLinks'
+import {SourceNoticeContext} from './SourceNoticeContext'
 
-export function CompactEventDetailPanel({event,evidenceQuotes,sourceTitles,sourceSupplement=[],onClose,onEdit,onDelete,onDirtyChange,onSetCompletion}:EventDetailPanelProps){
+export function CompactEventDetailPanel({event,evidenceQuotes,sourceTitles,sourceSupplement=[],sourceContext,onClose,onEdit,onDelete,onDirtyChange,onSetCompletion}:EventDetailPanelProps){
   const id=useId(),ref=useRef<HTMLElement>(null),[title,setTitle]=useState(event.title),[location,setLocation]=useState(event.location??''),[open,setOpen]=useState(false),[start,setStart]=useState(flowEditValue(event.startAt)),[end,setEnd]=useState(flowEditValue(event.endAt)),[startEdited,setStartEdited]=useState(false),[endEdited,setEndEdited]=useState(false),[description,setDescription]=useState(event.description),[minutes,setMinutes]=useState(event.estimatedMinutesKnown&&event.estimatedMinutes?String(event.estimatedMinutes):''),[durationEdited,setDurationEdited]=useState(false),[error,setError]=useState(''),[busy,setBusy]=useState(false)
   const baseline=useRef(event),[dirty,setDirty]=useState(false)
   const sections=eventDescriptionSections(event.description).filter(section=>(section.label!=='活动说明'||section.content.trim()!==event.title.trim())&&!(section.label==='时间说明'&&section.content===flowEventDate(event))),duration=eventDurationLabel(event)
@@ -44,9 +45,10 @@ export function CompactEventDetailPanel({event,evidenceQuotes,sourceTitles,sourc
       {speakers.map((section,index)=><section className="detail-primary-section" aria-label={section.label} key={`${section.label}-${index}`}><h3>{section.label}</h3><p>{section.content}</p></section>)}
       {preview&&<section className="detail-primary-section" aria-label="嘉宾简介"><h3>嘉宾简介</h3><p>{preview}</p></section>}
       {contentSections.map((section,index)=><section className="detail-primary-section" aria-label={section.label} key={`${section.label}-${index}`}><h3>{section.label}</h3><p><TextWithLinks text={section.content}/></p></section>)}
+      <SourceNoticeContext context={sourceContext}/>
       {sourceSupplement.length>0&&<section className="detail-primary-section" aria-label="这条通知还提到"><h3>这条通知还提到（所属事项待确认）</h3>{sourceSupplement.map((text,index)=><p key={`${index}-${text}`}>{text}</p>)}</section>}
       {remainingBiographies.length>0&&<details className="detail-more"><summary>更多嘉宾简介</summary>{remainingBiographies.map((section,index)=><p key={index}>{section.content}</p>)}</details>}
-      <details className="detail-more"><summary>更多</summary><section><h3>查看原文</h3>{evidenceQuotes.map(q=><p key={q}>{q}</p>)}{sourceTitles.length>0&&<small>{sourceTitles.join('、')}</small>}</section></details>
+      <details className="detail-more"><summary>更多</summary><section><h3>查看原文</h3>{sourceContext?.sourceText?<p><TextWithLinks text={sourceContext.sourceText}/></p>:evidenceQuotes.map(q=><p key={q}>{q}</p>)}{sourceTitles.length>0&&<small>{sourceTitles.join('、')}</small>}</section></details>
     </div><footer className="detail-footer">{onDelete&&<button className="text-button danger-text" type="button" disabled={busy||dirty} onClick={()=>{void onDelete().catch(caught=>setError(caught instanceof Error&&/已保存|尚未读回/u.test(caught.message)?caught.message:'没有删除成功，请重试。'))}}><Trash2 size={16}/>删除</button>}{onSetCompletion&&<button type="button" className="primary-button" disabled={busy||dirty} onClick={()=>void setCompletion()}>{busy?'保存中…':event.personalCompleted?'恢复未完成':'完成日程'}</button>}<button type="button" className="secondary-button" onClick={requestClose}>关闭</button></footer>
   </aside></div>
 }

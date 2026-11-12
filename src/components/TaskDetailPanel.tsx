@@ -51,6 +51,7 @@ const materialStatusOptions: Array<{ value: MaterialStatus; label: string }> = [
 ]
 
 export interface TaskDetailPanelProps {
+  sourceContext?:import('../lib/sourceNoticeContext').SourceNoticeContext|null
   linkedEvent?:import('../types').Event
   eventTimeHint?:string
   onScheduleTask?:(id:string,date:string)=>Promise<void>

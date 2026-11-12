@@ -79,6 +79,7 @@ import { groundTaskTimeWindows, taskTimeAuthorityFromSidecar } from './recogniti
 import { indexImmutableScopesV11 } from './recognition/scopeIndexV11'
 import { projectSourceInformation } from './recognition/sourceInformationPreview'
 import { eventEvidenceDraftId, eventSourceSupplement } from './recognition/eventSourceSupplement'
+import {sourceNoticeContextForEntity} from './lib/sourceNoticeContext'
 import {createOrdinaryMeasurement,type OrdinaryMeasurement} from './domain/v2/ordinaryMeasurementD26'
 import {
   mergeRecognitionTasks,
@@ -2293,6 +2294,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       )}
       {!workspaceRecovery && selectedTask && (
         <TaskDetailPanel
+          sourceContext={!runtime?sourceNoticeContextForEntity(ordinaryCanonical,'task',selectedTask.id,selectedTask.description):null}
           linkedEvent={!runtime?pairFlowEvents(tasks,events,ordinaryCanonical).linked[selectedTask.id]:undefined}
           eventTimeHint={!runtime?workspaceEventTimeHints(ordinaryCanonical)[pairFlowEvents(tasks,events,ordinaryCanonical).linked[selectedTask.id]?.id]:undefined}
           onScheduleTask={!runtime?scheduleDirectTask:undefined}
@@ -2322,6 +2324,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       )}
       {!workspaceRecovery && selectedEvent && (
         <EventDetailPanel
+          sourceContext={!runtime?sourceNoticeContextForEntity(ordinaryCanonical,'event',selectedEvent.id,selectedEvent.description,!selectedEvent.endAt):null}
           key={selectedEvent.id}
           onDirtyChange={dirty=>{if(dirty)eventDirtyIds.current.add(selectedEvent.id);else eventDirtyIds.current.delete(selectedEvent.id);setEventDirtyCount(eventDirtyIds.current.size)}}
           onSetCompletion={!runtime?completed=>handleSetEventCompletion(selectedEvent.id,completed):undefined}

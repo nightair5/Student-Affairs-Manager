@@ -11,8 +11,9 @@ import {TextWithLinks} from './TextWithLinks'
 import {taskPublicDescription,taskPublicSummary} from '../lib/taskContentPresentation'
 import {MaterialFactsList} from './MaterialFactsList'
 import {MaterialEditor} from './MaterialEditor'
+import {SourceNoticeContext} from './SourceNoticeContext'
 
-export function CompactTaskDetailPanel({task,sources,onClose,onComplete,onUpdate,onSaveTaskPatch,editDraft,onEditDraft,materialEditDrafts,onEditMaterialDraft,onSaveMaterial,onDelete,onDirectEdit,onScheduleTask,canonicalMaterials,semanticContent,onAdvanced,linkedEvent,eventTimeHint}:TaskDetailPanelProps&{onAdvanced:()=>void}){
+export function CompactTaskDetailPanel({task,sources,sourceContext,onClose,onComplete,onUpdate,onSaveTaskPatch,editDraft,onEditDraft,materialEditDrafts,onEditMaterialDraft,onSaveMaterial,onDelete,onDirectEdit,onScheduleTask,canonicalMaterials,semanticContent,onAdvanced,linkedEvent,eventTimeHint}:TaskDetailPanelProps&{onAdvanced:()=>void}){
   const initialDate=flowEditValue(task.deadline||task.directDate)
   const linked=sources.filter(s=>task.sourceIds.includes(s.id))
   const publicNotes=taskPublicDescription(task)
@@ -41,6 +42,7 @@ export function CompactTaskDetailPanel({task,sources,onClose,onComplete,onUpdate
         {Boolean(task.directTags?.length)&&<div className="direct-inline-tags">{task.directTags!.map(tag=><span className="direct-tag" key={tag}>{tag}</span>)}</div>}
       </section>
       {materials.length>0&&<section className="detail-primary-section" aria-label="材料和要求"><h3>要准备的材料和要求</h3><MaterialFactsList materials={materials}/>{onSaveMaterial&&onEditMaterialDraft&&canonicalMaterials?.map(material=><MaterialEditor key={material.id} material={material} draft={materialEditDrafts?.[material.id]} onDraft={(value,expected)=>onEditMaterialDraft(material.id,value,expected)} onSave={onSaveMaterial}/>)}{sourceRequirements.length>0&&<div className="compact-material-notes"><strong>其他要求</strong>{sourceRequirements.map(value=><p key={value}>{value}</p>)}</div>}</section>}
+      <SourceNoticeContext context={sourceContext}/>
       <UnassignedSourceMaterials task={task}/>
       <section className="detail-primary-section" aria-label="备注"><label className="compact-notes-label">备注<textarea aria-label="备注" placeholder="添加备注" value={notes} rows={notes?3:2} onChange={e=>{setNotes(e.target.value);onEditDraft?.('description',e.target.value===publicNotes?undefined:e.target.value)}} onBlur={()=>{if(notes!==publicNotes)void savePatch({description:notes})}}/></label></section>
       <details className="detail-more"><summary>更多 <ChevronDown size={15}/></summary><button type="button" className="text-button" onClick={onAdvanced}>提醒与导出到手机日历</button>{semanticContent}<section className="compact-source"><h3>查看原文</h3>{linked.map(s=><div key={s.id}><strong>{s.title}</strong><p>{s.rawText||s.content||s.contentPreview}</p></div>)}</section>{task.history.length>0&&<details><summary>修改记录</summary><ul>{task.history.slice(-8).map(h=><li key={h.id}>{h.field}：{h.after}</li>)}</ul></details>}</details>

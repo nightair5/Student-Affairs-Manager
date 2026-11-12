@@ -8,6 +8,7 @@ import {CompactEventDetailPanel} from './CompactEventDetailPanel'
 import type {DirectEdit} from '../domain/v2/directIntake'
 
 export interface EventDetailPanelProps {
+  sourceContext?:import('../lib/sourceNoticeContext').SourceNoticeContext|null
   compact?:boolean
   onEdit?:(edit:DirectEdit)=>Promise<void>
   onDirtyChange?:(dirty:boolean)=>void

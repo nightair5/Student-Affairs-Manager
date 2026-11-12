@@ -7,6 +7,7 @@ import {completeDirectLocalFacts,directEventRevision} from './directLocalFacts'
 import {structuredOptionalEvent} from './directStructuredEvent'
 import {completeNumberedActions} from './directNumberedActions'
 import {retainLocalEventDetails} from './localEventDetails'
+import {retainSourceEventContext} from './retainSourceEventContext'
 import {recoverLabeledLocalEvent} from './directLabeledEvent'
 import {completeParallelSessions,linkFollowingFormChannel,linkReferencedEventActions} from './directParallelSessions'
 import {projectLocalDeliveryRoles} from './deliveryRoleProjection'
@@ -18,14 +19,36 @@ import {boundLocalResult} from './localResultCapacity'
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
  const actions=removeDuplicatedActionEvents(improveLocalActions(input,source))
- const improved=retainLocalEventDetails(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(projectLocalDeliveryRoles(actions,source),source),source),source),source)
- const result=boundLocalResult(attachExplicitSharedGoal(linkReferencedEventActions(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source),source)),source,true),source),source),source))
+ const improved=retainLocalEventDetails(retainSourceEventContext(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(projectLocalDeliveryRoles(actions,source),source),source),source),source),source)
+ const result=boundLocalResult(clearUndatedSingleEventRevision(attachExplicitSharedGoal(linkReferencedEventActions(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source),source)),source,true),source),source),source),source))
  const rows=source.split(/\r?\n/u).map(line=>line.trim()).filter(line=>/^[\p{Script=Han}\d]{1,12}场[：:]/u.test(line)&&!/^(?:报名|申请|提交|缴费)/u.test(line))
  if(rows.length>1&&result.events.length<rows.length){
   const reason='部分内容尚未完整整理（活动场次），请核对原文'
   if(!result.quality.reviewReasons.includes(reason))result.quality.reviewReasons.push(reason)
   result.quality.needsHumanReview=true
  }
+ return result
+}
+
+/** When a single named event is explicitly rescheduled to an unknown time,
+ * the previous labelled range must not survive as the current schedule. */
+function clearUndatedSingleEventRevision(input:RecognitionResult,source:string):RecognitionResult {
+ if(input.events.length!==1||/(?:第一场|第二场|第三场|一场|另一场|分别举行)/u.test(source))return input
+ const event=input.events[0],heading=/^\s*[\p{Extended_Pictographic}\uFE0F\u200D\s]*【([^】\n]{3,100})】/u.exec(source)
+ const normalize=(s:string)=>s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu,'')
+ const title=normalize(event.title),head=normalize(heading?.[1]??'')
+ if(title.length<3||!head.includes(title))return input
+ const revision=/(?:本次|该|此次)?(?:活动|会议|讲座|培训|宣讲|报告|赛事|比赛)[^。；;\n]{0,8}(?:改期|延期)[，,；;\s]*(?:具体|新的|后续)?(?:时间|日期)[^。；;\n]{0,8}(?:另行通知|待定|待通知)/u.exec(source)
+ if(!revision||/[0-9０-９一二三四五六七八九十]{1,4}[年月日号]|\d{1,2}[:：]\d{2}/u.test(source.slice(revision.index+revision[0].length)))return input
+ const oldPoints=new Set([event.startTimePointTempId,event.endTimePointTempId].filter((id):id is string=>Boolean(id)))
+ if(!oldPoints.size)return input
+ const result=structuredClone(input),owner=result.events[0]
+ owner.startTimePointTempId=null;owner.endTimePointTempId=null
+ owner.description=(owner.description?'原通知（已改期，不以旧时间为准）：\n'+owner.description+'\n':'')+'时间说明：'+revision[0]
+ result.timePoints=result.timePoints.filter(point=>!oldPoints.has(point.tempId)||point.relatedTaskTempIds.length>0||point.relatedMaterialTempIds.length>0)
+ const reason='活动已改期，具体时间待通知'
+ if(!result.quality.reviewReasons.includes(reason))result.quality.reviewReasons.push(reason)
+ result.quality.needsHumanReview=true
  return result
 }
 

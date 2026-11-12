@@ -59,8 +59,8 @@ export function retainLocalEventDetails(result:RecognitionResult,source:string):
  for(const [i,d] of [...details].sort((a,b)=>priority[a.label]-priority[b.label]||a.start-b.start).entries()){
   const prefix=d.label==='主讲人'?'(?:主讲(?:嘉宾|人|教师)?|报告人|讲师|演讲嘉宾)':d.label==='主持人'?'(?:主持人|主持嘉宾|学术主持)':d.label==='活动内容'?'(?:活动内容(?:简介)?|讲座内容|报告内容|内容简介)':d.label==='嘉宾简介'?'(?:个人简介|嘉宾简介|主讲人简介|讲者简介|讲师简介)':d.label==='参加须知'?'(?:参加须知|参与须知|报名须知|活动须知|注意事项)':d.label
   const content=d.quote.replace(new RegExp('^'+prefix+'(?:[：:]|为|是)\\s*','u'),'').trim(),line=d.label+'：'+content
-  if(!content||event.description.split('\n').includes(line))continue
-  if(event.description.length+line.length+1>800){
+  if(!content||event.description.includes(d.quote)||event.description.split('\n').includes(line))continue
+  if(event.description.length+line.length+1>800||event.evidenceIds.length>=20||result.evidence.length>=120||d.quote.length>500){
    const reason='部分内容尚未完整整理，可在原文查看'
    if(!result.quality.reviewReasons.includes(reason))result.quality.reviewReasons.push(reason)
    result.quality.needsHumanReview=true

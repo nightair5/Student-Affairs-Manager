@@ -30,13 +30,14 @@ function recoverDatedEvent(input:RecognitionResult,source:string):RecognitionRes
  * with the separate-session/revision paths rather than being merged here. */
 export function recoverLabeledLocalEvent(input:RecognitionResult,source:string):RecognitionResult {
  if(/(?:活动|会议|讲座|培训|宣讲会)[^。；\n]{0,15}(?:取消|不再举办)|(?:原定|改期|延期|更正为)/u.test(source))return input
- const heading=/^\s*(?:【([^】\n]{3,60})】|(?:(?:活动|讲座|报告|会议|分享|培训)?(?:主题|名称))[：:]\s*([^\r\n]{3,80}))/u.exec(source)
+ const heading=/^\s*[\p{Extended_Pictographic}\uFE0F\u200D\s]*(?:【([^】\n]{3,60})】|(?:(?:活动|讲座|报告|会议|分享|培训)?(?:主题|名称))[：:]\s*([^\r\n]{3,80}))/u.exec(source)
  const headingText=heading?.[1]??heading?.[2]??''
- const fields=[...source.matchAll(/(?:^|\n)[ \t]*(?:【([^】\n]{1,20})】|([^：:\n]{1,20})[：:])[ \t]*[：:]?[ \t]*([^\r\n]*)/gu)].map(m=>({label:(m[1]??m[2]).trim(),value:m[3].trim(),whole:m[0].trim(),at:m.index!+m[0].indexOf(m[0].trim())}))
+ const fields=[...source.matchAll(/(?:^|\n)[ \t]*(?:【([^】\n]{1,20})】|([^：:\n]{1,20})[：:])[ \t]*[：:]?[ \t]*([^\r\n]*)/gu)].map(m=>({label:(m[1]??m[2]).replace(/^[\s\p{Extended_Pictographic}\uFE0F\u200D]+/gu,'').trim(),value:m[3].trim(),whole:m[0].trim(),at:m.index!+m[0].indexOf(m[0].trim())}))
  const eventField=/^(?:(?:活动|会议|宣讲|分享|讲座|培训|报告|参会|参观|举办|举行))?时间$/u
  const placeField=/^(?:(?:活动|会议|宣讲|分享|讲座|培训|报告|参会|参观|举办|举行))?地点$/u
  const times=fields.filter(f=>eventField.test(f.label)&&f.value),places=fields.filter(f=>placeField.test(f.label)&&f.value)
- if(!heading||times.length!==1||places.length>1||!/(?:讲座|培训|实训|报告|论坛|研讨|交流|会议|分享|沙龙|宣讲|活动|开放日|招聘会|会$)/u.test(headingText))return input.events.length?input:recoverDatedEvent(input,source)
+ const explicitActivity=times.length===1&&times[0].label==='活动时间'&&places.length===1&&places[0].label==='活动地点'
+ if(!heading||times.length!==1||places.length>1||!explicitActivity&&!/(?:讲座|培训|实训|报告|论坛|研讨|交流|会议|分享|沙龙|宣讲|活动|开放日|招聘会|会$)/u.test(headingText))return input.events.length?input:recoverDatedEvent(input,source)
  const title=headingText.replace(/^\s*(?:(?:\d{4}年)?\d{1,2}月\d{1,2}[日号])\s*[|｜]\s*/u,'').trim(),time=times[0].value,location=places[0]?.value??null
  const parsed=parseDirectSourceTime(time,{type:'event_start',referenceTime:input.createdAt,timezone:'Asia/Shanghai'})
  if(!title||location&&location.length>160)return input
