@@ -286,6 +286,25 @@ export function linkFollowingFormChannel(input:RecognitionResult,source:string):
  return r
 }
 
+/** A local fallback may summarize a registration as "申请 + heading" and cite
+ * the heading and deadline separately. Link it only when the one event cites
+ * that exact heading too, and the notice states a concrete registration form.
+ * This preserves both entities and their independent completion states. */
+function sharedHeadingRegistrationOwner(input:RecognitionResult,task:RecognitionResult['standaloneTasks'][number],source:string):EventSuggestion|null {
+ if(input.events.length!==1||!/^(?:报名|登记|申请|申报)$/u.test(task.actionVerb))return null
+ const match=/^\s*([^\r\n]{1,120})/u.exec(source),heading=match?.[1]
+ if(!heading||!/(?:报名|招募|申请|登记)/u.test(heading)||source.indexOf(heading)!==source.lastIndexOf(heading))return null
+ if(!/(?:填写|填报|提交|完成)[^。；;\n]{0,24}(?:报名|登记|申请)[^。；;\n]{0,12}(?:表|问卷|表单)/u.test(source))return null
+ const event=input.events[0],eventName=squash(event.title),object=squash(task.actionObject),headingKey=squash(heading)
+ if(object.length<4||!eventName.includes(object)||!headingKey.includes(eventName))return null
+ const start=source.indexOf(heading)
+ const refs=(ids:string[])=>input.evidence.filter(e=>ids.includes(e.id)&&typeof e.textStart==='number'&&typeof e.textEnd==='number'&&source.slice(e.textStart,e.textEnd)===(e.quotedText||e.quote||''))
+ const taskRefs=refs(task.evidenceIds),eventRefs=refs(event.evidenceIds)
+ const citesHeading=(e:EvidenceReference)=>e.textStart===start&&e.textEnd===start+heading.length&&(e.quotedText||e.quote)===heading
+ if(!taskRefs.some(citesHeading)||!eventRefs.some(citesHeading)||!taskRefs.some(e=>/(?:报名|申请|登记)[^\n]{0,16}(?:截止|截至)/u.test(e.quotedText||e.quote||'')))return null
+ return event
+}
+
 /** Link a preparation action only when its own source sentence names the
  * activity it prepares for and that name has exactly one event owner. Dates,
  * a shared source or a superficially similar task title are not relations. */
@@ -301,8 +320,9 @@ export function linkReferencedEventActions(input:RecognitionResult,source:string
   const actionClauses=citations.flatMap(quote=>quote.split(/[。！？；;\n]/u)).filter(clause=>clause.includes(task.actionVerb)&&squash(clause).includes(squash(task.actionObject)))
   const subjects=actionClauses.flatMap(clause=>[...clause.matchAll(/(?:参加|参与|报名参加)([^，,。；;\n]{1,24}?)(?:的同学|的学生|的人员|者)/gu)].map(m=>m[1].trim()))
   const genericAttendees=subjects.length===0&&actionClauses.some(clause=>/(?:参加者|参与者|参会者)/u.test(clause))&&input.events.length===1&&!/其他活动|另一场|各场|分别/u.test(source)
-  if(subjects.length!==1&&!genericAttendees||/取消|无需|无须|不必|请勿|不得/u.test(citations.join('')))continue
-  const subject=genericAttendees?'本次活动':squash(subjects[0]),eventMatches=input.events.filter(event=>{
+  const headingOwner=subjects.length===0&&!genericAttendees?sharedHeadingRegistrationOwner(input,task,source):null
+  if(subjects.length!==1&&!genericAttendees&&!headingOwner||/取消|无需|无须|不必|请勿|不得/u.test(citations.join('')))continue
+  const subject=headingOwner?'':genericAttendees?'本次活动':squash(subjects[0]),eventMatches=headingOwner?[headingOwner]:input.events.filter(event=>{
    if(/^(?:参加|参与).{1,60}(?:的同学|的学生|的人员)$/u.test(event.title.trim()))return false
    const name=squash(event.title),unqualified=name.replace(/宣讲(?=会)/gu,'')
    return subject.length>=2&&(name.includes(subject)||unqualified.includes(subject)||/^(?:本次活动|此次活动|该活动)$/u.test(subject)&&input.events.length===1)

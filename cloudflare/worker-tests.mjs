@@ -59,6 +59,32 @@ test('opt-in semantic generation uses one upstream call and reports the observed
   assert.equal(body.result.timePoints[0].normalizedValue,'2026-11-08T18:00')
 })
 
+test('invalid semantic output preserves observed usage and a safe failure stage without returning source or model content', async () => {
+  const source='匿名正文：请提交独特内容。'
+  const malformed={topic:'敏感模型文本',kind:'action',items:[]}
+  let calls=0
+  const worker=createWorker({fetcher:async()=>{calls++;return Response.json({model:'observed-flash',choices:[{finish_reason:'stop',message:{content:JSON.stringify(malformed)}}],usage:{prompt_tokens:101,completion_tokens:22,total_tokens:123,prompt_tokens_details:{cached_tokens:30,private:'不得返回'},extra:'不得返回'}})}})
+  const response=await worker.fetch(request('/api/deepseek/extract',{headers:{origin:'https://student-affairs-manager.example','content-type':'application/json','X-Student-Affairs-Recognition':'semantic-notice-3.11'},body:JSON.stringify({sourceType:'text',content:source,referenceTime:'2026-11-01T04:12:32.675Z',timezone:'Asia/Shanghai'})}),environment({DEEPSEEK_API_KEY:'server-only-test-key-with-length',DEEPSEEK_GENERATION_MODE:'semantic-notice-3.0'}))
+  const body=await response.json()
+  assert.equal(calls,1);assert.equal(response.status,502);assert.equal(body.error,'INVALID_AI_RESPONSE')
+  assert.equal(body.failureCategory,'semantic_root');assert.equal(body.failureReason,'INVALID_SEMANTIC_ROOT')
+  assert.equal(body.execution.generationMode,'semantic-notice-3.11')
+  assert.deepEqual(body.execution.modelFactSamples[0].usage,{prompt_tokens:101,completion_tokens:22,total_tokens:123,prompt_tokens_details:{cached_tokens:30}})
+  assert.deepEqual(body.execution.tokenUsage,{input:101,output:22,total:123})
+  assert.doesNotMatch(JSON.stringify(body),/独特内容|敏感模型文本|不得返回|server-only-test-key/u)
+  assert.equal(body.result,undefined)
+})
+
+test('invalid model output without usable usage leaves usage unknown and identifies decoding failure', async () => {
+  const worker=createWorker({fetcher:async()=>Response.json({model:'observed-flash',choices:[{message:{content:'not-json-secret'}}]})})
+  const response=await worker.fetch(request('/api/deepseek/extract',{body:JSON.stringify({sourceType:'text',content:'匿名通知正文',referenceTime:'2026-11-01T04:12:32.675Z',timezone:'Asia/Shanghai'})}),environment({DEEPSEEK_API_KEY:'server-only-test-key-with-length',DEEPSEEK_GENERATION_MODE:'semantic-notice-3.0'}))
+  const body=await response.json()
+  assert.equal(response.status,502);assert.equal(body.failureCategory,'model_output_decode')
+  assert.equal(body.failureReason,'MODEL_OUTPUT_UNRECOVERABLE_ROOT')
+  assert.equal(body.execution.modelFactSamples[0].usage,null);assert.equal(body.execution.tokenUsage,null)
+  assert.doesNotMatch(JSON.stringify(body),/not-json-secret|匿名通知正文/u)
+})
+
 function request(path = '/api/deepseek', options = {}) {
   return new Request(`https://student-affairs-manager.example${path}`, {
     method: 'POST',

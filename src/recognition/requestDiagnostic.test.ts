@@ -34,6 +34,12 @@ describe('capture-bound AI observations',()=>{
   const unknown=await new ProxyDeepSeekExtractionService().recognize(input).catch(e=>e)
   expect(failureDiagnostic(unknown)).toMatchObject({state:'uncertain',reason:'TIMEOUT_OR_NETWORK',actualModels:[]})
  })
+ it('retains observed usage on an invalid model response without claiming zero actions',async()=>{
+  const body={error:'INVALID_AI_RESPONSE',message:'识别未完成',failureCategory:'semantic_root',failureReason:'INVALID_SEMANTIC_ROOT',execution:{generationMode:'semantic-notice-3.11',tokenUsage:{input:101,output:22},twoStep:{compilerVersion:'compiler-test'},modelFactSamples:[{actualModel:'observed-flash',usage:{prompt_tokens:101,completion_tokens:22}}]}}
+  vi.stubGlobal('fetch',vi.fn().mockResolvedValue(new Response(JSON.stringify(body),{status:502})))
+  const error=await new ProxyDeepSeekExtractionService().recognize(input).catch(e=>e)
+  expect(failureDiagnostic(error)).toMatchObject({state:'response',reason:'HTTP_ERROR',httpStatus:502,actualModels:['observed-flash'],inputTokens:101,outputTokens:22,failureCategory:'semantic_root',failureReason:'INVALID_SEMANTIC_ROOT',modelActionCount:null})
+ })
  it('persists a failed status observation on the source run while retaining its full input',async()=>{
   const workspace=createGoldenWorkspaceV8(),repo=new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore());await repo.save(workspace)
   const service=new CapturePersistenceService(repo),handle=await service.beginCapture({operationId:'root-status-failure',sourceType:'text',title:input.sourceTitle,rawText:input.content,provider:'deepseek',modelName:null,promptVersion:null,pipelineVersion:'root-repair'})

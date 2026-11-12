@@ -826,7 +826,7 @@ async function extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,c
       :env.DEEPSEEK_GENERATION_MODE==='simple-1.0'
       ?await runSimpleGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),body:{...body,referenceTime,timezone}})
       :await runTwoStepGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),source:body.content,referenceTime,timezone,mode:env.DEEPSEEK_GENERATION_MODE,compilerVersion:env.TWO_STEP_COMPILER_VERSION??'2.1.9',userText:extractionUserText(body,body.content,safeText(body.sourceTitle,160),referenceTime,timezone)})
-    if(!generated.ok){context.errorType=generated.error;if(generated.status&&generated.status!==502)return safeUpstreamFailure(generated.status,context.requestId,false);return failure(generated.error,'本次识别未完成，原文已保留，请稍后重试。',generated.error==='UPSTREAM_TIMEOUT'?504:502,context.requestId)}
+    if(!generated.ok){context.errorType=generated.error;if(generated.status&&generated.status!==502)return safeUpstreamFailure(generated.status,context.requestId,false);const details=generated.execution?{failureCategory:generated.failureCategory,failureReason:generated.failureReason,execution:generated.execution}:null;return failure(generated.error,'本次识别未完成，原文已保留，请稍后重试。',generated.error==='UPSTREAM_TIMEOUT'?504:502,context.requestId,details)}
     generated.execution.networkAttempts=transport.attempts
     if(transport.attempts.some(a=>a.status===null)){generated.execution.tokenUsage=null;generated.execution.upstreamUsageComplete=false;generated.execution.unmeteredAttemptCount=transport.attempts.filter(a=>a.status===null).length}
     const validation=validateRecognitionResult(generated.result,{sourceContent:body.content})

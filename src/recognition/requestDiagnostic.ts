@@ -10,6 +10,8 @@ export interface RecognitionRequestDiagnostic {
  compilerVersion:string|null
  inputTokens:number|null
  outputTokens:number|null
+ failureCategory?:'model_output_decode'|'semantic_root'|null
+ failureReason?:string|null
  modelActionCount:number|null
  compilerLossCount:number|null
  elapsedMs:number|null
@@ -18,7 +20,7 @@ export interface RecognitionRequestDiagnostic {
  attemptId?:string
 }
 const observations=new WeakMap<RecognitionResult,RecognitionRequestDiagnostic>()
-export const unobservedDiagnostic=(reason:RecognitionRequestDiagnostic['reason']='UNOBSERVED'):RecognitionRequestDiagnostic=>({version:'recognition-request-observation-1',state:reason==='UNOBSERVED'?'unobserved':'not_sent',reason,httpStatus:null,actualModels:[],generationMode:null,compilerVersion:null,inputTokens:null,outputTokens:null,modelActionCount:null,compilerLossCount:null,elapsedMs:null,responseReuse:false})
+export const unobservedDiagnostic=(reason:RecognitionRequestDiagnostic['reason']='UNOBSERVED'):RecognitionRequestDiagnostic=>({version:'recognition-request-observation-1',state:reason==='UNOBSERVED'?'unobserved':'not_sent',reason,httpStatus:null,actualModels:[],generationMode:null,compilerVersion:null,inputTokens:null,outputTokens:null,failureCategory:null,failureReason:null,modelActionCount:null,compilerLossCount:null,elapsedMs:null,responseReuse:false})
 export class ObservedRecognitionError extends Error {
  constructor(message:string,readonly requestDiagnostic:RecognitionRequestDiagnostic,options?:ErrorOptions){super(message,options);this.name='ObservedRecognitionError'}
 }
@@ -27,13 +29,16 @@ const count=(v:unknown)=>typeof v==='number'&&Number.isSafeInteger(v)&&v>=0?v:nu
 export function responseDiagnostic(body:unknown,status:number,elapsedMs:number):RecognitionRequestDiagnostic {
  const result={...unobservedDiagnostic('AI_RESPONSE'),state:'response' as const,httpStatus:status,elapsedMs}
  if(!record(body)||!record(body.execution))return result
+ if(body.failureCategory==='model_output_decode'||body.failureCategory==='semantic_root')result.failureCategory=body.failureCategory
+ if(typeof body.failureReason==='string'&&/^[A-Z_]{1,80}$/u.test(body.failureReason))result.failureReason=body.failureReason
  const execution=body.execution,samples=Array.isArray(execution.modelFactSamples)?execution.modelFactSamples.filter(record):[]
  result.actualModels=[...new Set(samples.flatMap(s=>typeof s.actualModel==='string'?[s.actualModel.slice(0,80)]:[]))]
  result.generationMode=typeof execution.generationMode==='string'?execution.generationMode.slice(0,80):null
  result.compilerVersion=record(execution.twoStep)&&typeof execution.twoStep.compilerVersion==='string'?execution.twoStep.compilerVersion.slice(0,80):null
  result.compilerLossCount=record(execution.twoStep)&&Array.isArray(execution.twoStep.losses)?execution.twoStep.losses.length:null
  if(record(execution.tokenUsage)){result.inputTokens=count(execution.tokenUsage.input);result.outputTokens=count(execution.tokenUsage.output)}
- result.modelActionCount=samples.length?samples.reduce((total,s)=>total+(record(s.facts)&&Array.isArray(s.facts.items)?s.facts.items.filter(i=>record(i)&&['任务','活动','task','event'].includes(String(i.kind))).length:0),0):null
+ const observedFacts=samples.flatMap(s=>record(s.facts)&&Array.isArray(s.facts.items)?[s.facts.items]:[])
+ result.modelActionCount=observedFacts.length?observedFacts.reduce((total,items)=>total+items.filter(i=>record(i)&&['任务','活动','task','event'].includes(String(i.kind))).length,0):null
  return result
 }
 export function registerRecognitionDiagnostic(result:RecognitionResult,diagnostic:RecognitionRequestDiagnostic):RecognitionResult {

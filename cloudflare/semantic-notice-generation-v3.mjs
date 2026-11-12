@@ -13,6 +13,21 @@ import {SEMANTIC_NOTICE_VERSION as TIMED_ACTION_VERSION,semanticNoticeRequest as
 import {SEMANTIC_NOTICE_VERSION as GOAL_VERSION,semanticNoticeRequest as goalNoticeRequest} from './semantic-notice-contract-v3-11-0.mjs'
 import {SEMANTIC_NOTICE_VERSION as MATTER_VERSION,semanticNoticeRequest as matterNoticeRequest} from './semantic-notice-contract-v3-12-0.mjs'
 
+// On an invalid model result, expose only observed, bounded execution metadata.
+// Never put source text, model content or arbitrary provider fields in an error.
+function safeUsage(raw) {
+  const count = value => Number.isSafeInteger(value) && value >= 0 ? value : null
+  const prompt = count(raw?.prompt_tokens), completion = count(raw?.completion_tokens)
+  if (prompt === null || completion === null) return null
+  const result = {prompt_tokens:prompt, completion_tokens:completion}
+  for (const key of ['total_tokens','prompt_cache_hit_tokens','prompt_cache_miss_tokens']) {
+    const value=count(raw?.[key]); if(value!==null)result[key]=value
+  }
+  const cached=count(raw?.prompt_tokens_details?.cached_tokens)
+  if(cached!==null)result.prompt_tokens_details={cached_tokens:cached}
+  return result
+}
+
 /** One full-notice request. No hidden retry or second semantic rewrite. */
 export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userText,source,referenceTime,timezone,actorRoles=false,goalContextVersion=''}) {
   const started=Date.now()
@@ -34,7 +49,13 @@ export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userTe
   const decoded=decodeRecognitionOutput(payload?.choices?.[0]?.message?.content,{finishReason:payload?.choices?.[0]?.finish_reason})
   const actualModel=typeof payload?.model==='string'&&payload.model.trim()?payload.model.trim().slice(0,80):null
   const compiled=compileSemanticNotice(decoded.value,{source,referenceTime,timezone,model:actualModel??'上游未提供',promptVersion,goalContextVersion})
-  if(!compiled.result)return {ok:false,status:502,error:'INVALID_AI_RESPONSE',samples:[{status:200,elapsedMs:Date.now()-started}]}
+  if(!compiled.result){
+    const usage=safeUsage(payload?.usage),elapsedMs=Date.now()-started
+    const safeModel=actualModel&&/^[a-zA-Z0-9._:/-]+$/u.test(actualModel)?actualModel:null
+    const reason=decoded.error??'INVALID_SEMANTIC_ROOT'
+    const generationMode=matter?'semantic-notice-3.12':goal?'semantic-notice-3.11':timedAction?'semantic-notice-3.10':refined?'semantic-notice-3.9':unified?'semantic-notice-3.8':integrity?'semantic-notice-3.7':eventNotice?'semantic-notice-3.6':serviceContext?'semantic-notice-3.5':actorContext?'semantic-notice-3.4':actorRoles?'semantic-notice-3.3':SEMANTIC_NOTICE_MODE
+    return {ok:false,status:502,error:'INVALID_AI_RESPONSE',failureCategory:decoded.error?'model_output_decode':'semantic_root',failureReason:reason,execution:{generationMode,promptVersion,twoStep:{compilerVersion:compiled.audit.compilerVersion},modelFactSamples:[{index:0,status:response.status,actualModel:safeModel,usage,elapsedMs}],tokenUsage:usage?{input:usage.prompt_tokens,output:usage.completion_tokens,...(usage.total_tokens!==undefined?{total:usage.total_tokens}:{})}:null}}
+  }
   const truncated=decoded.audit.partial||payload?.choices?.[0]?.finish_reason==='length'
   if(truncated){compiled.result.quality.needsHumanReview=true;compiled.result.quality.reviewReasons.push('本次回答未完整结束，部分内容可能尚未整理。');compiled.result.ambiguities.push({id:'sem-truncated',field:'source_reference',message:'本次回答未完整结束，原文已保留。',options:['查看原文'],evidenceIds:[]})}
   const usage=payload.usage??null,elapsedMs=Date.now()-started

@@ -51,6 +51,21 @@ describe('parallel event sessions and source-specific dates',()=>{
   placeholder.events=placeholder.events.filter(value=>value.title.includes('交流')).map(value=>({...value,title:'参加交流的同学',relatedTaskTempIds:[]}))
   expect(linkReferencedEventActions(placeholder,notice).events[0].relatedTaskTempIds).toEqual([])
  })
+ it('links a locally summarized registration to the uniquely cited event heading',()=>{
+  const text='【2026校园讲解志愿者招募】\n活动时间：11月8日\n活动地点：展览楼101\n报名截止日期：11月5日12:00\n报名方式：填写报名问卷，报名后加入志愿者群。'
+  const r=run(text),event=r.events[0],task=r.standaloneTasks[0]
+  expect(r.events).toHaveLength(1);expect(r.standaloneTasks).toHaveLength(1)
+  expect(event.relatedTaskTempIds).toContain(task.tempId)
+  expect(r.timePoints.find(point=>point.relatedTaskTempIds.includes(task.tempId)&&point.type==='task_deadline')?.normalizedValue).toBe('2026-11-05T12:00')
+  expect(time(r,event.startTimePointTempId)).toBe('2026-11-08')
+  const noRelation=structuredClone(r);noRelation.events[0].relatedTaskTempIds=[]
+  const multipleEvents=structuredClone(noRelation);multipleEvents.events.push({...structuredClone(event),tempId:'other-event',relatedTaskTempIds:[]})
+  expect(linkReferencedEventActions(multipleEvents,text).events.every(value=>!value.relatedTaskTempIds?.includes(task.tempId))).toBe(true)
+  const missingHeading=structuredClone(noRelation);missingHeading.events[0].evidenceIds=[]
+  expect(linkReferencedEventActions(missingHeading,text).events[0].relatedTaskTempIds??[]).not.toContain(task.tempId)
+  const noDeadlineEvidence=structuredClone(noRelation);noDeadlineEvidence.standaloneTasks[0].evidenceIds=noDeadlineEvidence.standaloneTasks[0].evidenceIds.filter(id=>!id.includes('description:'))
+  expect(linkReferencedEventActions(noDeadlineEvidence,text).events[0].relatedTaskTempIds??[]).not.toContain(task.tempId)
+ })
  it('retains separately named same-day agenda rows with their own venue and time',()=>{
   const text='【校园交流开放日】\n上午场：11月3日09:00-10:00，地点：东校区一号厅。\n下午场：同日14:00-15:00，地点：西校区二号厅。'
   const r=run(text),morning=r.events.find(event=>event.title.includes('上午场'))!,afternoon=r.events.find(event=>event.title.includes('下午场'))!

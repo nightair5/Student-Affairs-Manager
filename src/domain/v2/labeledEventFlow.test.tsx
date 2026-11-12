@@ -81,6 +81,19 @@ describe('labelled activity and its independent preparation',()=>{
    ['摄影讲座','2026-11-14T09:00','图书馆102'],['篮球赛','2026-11-14T15:00','体育馆'],
   ])
  })
+ it('keeps a shared-heading registration inside its event without coupling their completion states',async()=>{
+  const {repo,add}=await setup(),text='【2026校园讲解志愿者招募】\n活动时间：11月18日\n活动地点：展览楼101\n报名截止日期：11月15日12:00\n报名方式：填写报名问卷，报名后加入志愿者群。'
+  await add('volunteer-registration',text)
+  const saved=(await repo.load())!,view=workspaceV8ToLegacyView(saved),event=view.events[0],task=view.tasks[0]
+  expect(view.events).toHaveLength(1);expect(view.tasks).toHaveLength(1)
+  expect(eventActionGroups(view.tasks,view.events,saved)[event.id]?.map(item=>item.id)).toEqual([task.id])
+  expect(event.startAt).toBe('2026-11-18');expect(task.deadline).toBe('2026-11-15T12:00')
+  await commitTaskCommand(repo,{operationId:'finish-volunteer-form',taskId:task.id,expected:{status:saved.tasks[0].status},changes:{status:'completed'},changedAt:'2026-11-12T02:01:00Z'})
+  const after=(await repo.load())!
+  expect(after.events[0].legacyData?.personalCompletionV1).not.toBe(true)
+  const restored=workspaceV8ToLegacyView(importWorkspaceV8(exportWorkspaceV8(after)))
+  expect(restored.events[0].startAt).toBe('2026-11-18');expect(restored.tasks[0].deadline).toBe('2026-11-15T12:00')
+ })
  it('marks unread source links partial while keeping the pasted facts and source',async()=>{
   const {repo,add}=await setup(),result=await add('partial',source,true),saved=(await repo.load())!
   expect(result.receipt.batch?.processing).toBe('partial')
