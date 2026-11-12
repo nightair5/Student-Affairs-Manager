@@ -4,8 +4,8 @@ import type {EventSuggestion, RecognitionResult, TimePointSuggestionV2} from './
 import {localEventLocation} from './localNoticeFacts'
 
 type LabelledLine={label:string;value:string;start:number;whole:string;wholeStart:number}
-type Session={line:LabelledLine;role:string;date?:string;yearFromHeading?:boolean}
-type SessionSchedule={heading:string;date:string;sessions:Session[];places:Map<string,string>}
+type Session={line:LabelledLine;role:string;date?:string;yearFromHeading?:boolean;displayTitle?:string}
+type SessionSchedule={heading:string;date:string;sessions:Session[];places:Map<string,string>;dateAnchor?:{quote:string;start:number}}
 const lines=(source:string):LabelledLine[]=>[...source.matchAll(/(?:^|\n)[ \t]*(?:【([^】\n]+)】|([^：:\n]{1,20})[：:])[ \t]*[：:]?[ \t]*([^\r\n]*)/gu)].map(m=>{
  const value=m[3].trim(),whole=m[0].replace(/^\n/u,'').trim(),wholeStart=m.index!+m[0].indexOf(whole)
  return {label:(m[1]??m[2]).trim(),value,start:wholeStart+whole.indexOf(value),whole,wholeStart}
@@ -17,7 +17,7 @@ const cleanHeading=(s:string)=>s.replace(/\[[^\]\n]{1,8}\]/gu,'').replace(/^【|
 const rowsHeader=(source:string)=>source.split(/\r?\n/u).map(s=>s.trim()).find(s=>{const c=s.split(/[|｜]/u).map(x=>x.trim());return c.length===3&&c[0]==='时间'&&/^(?:项目|活动|日程)$/u.test(c[1])&&/^(?:地点|场地)$/u.test(c[2])})??''
 
 /** Parse a dated event schedule as rows, preserving literal source offsets. */
-function eventScheduleTable(source:string,extended=false):{heading:string;date:string;sessions:{line:LabelledLine;role:string}[];places:Map<string,string>}|null {
+function eventScheduleTable(source:string,extended=false):SessionSchedule|null {
  const rows=[...source.matchAll(/[^\r\n]+/gu)].map(m=>({text:m[0].trim(),start:m.index!+m[0].indexOf(m[0].trim())}))
  const cells=(s:string)=>s.split(/[|｜]/u).map(x=>x.trim())
  const headerIndexes=rows.flatMap((row,index)=>{const c=cells(row.text);return c.length===3&&c[0]==='时间'&&/^(?:项目|活动|日程)$/u.test(c[1])&&/^(?:地点|场地)$/u.test(c[2])?[index]:[]})
@@ -48,6 +48,32 @@ function eventScheduleTable(source:string,extended=false):{heading:string;date:s
   places.set(role,place);sessions.push({role,line:{label:role+'时间',value:time,start:row.start+row.text.indexOf(time),whole:row.text,wholeStart:row.start}})
  }
  return sessions.length>=2&&sessions.length<=8?{heading:heading.text,date:dates[0][0],sessions,places}:null
+}
+
+/** A labelled agenda can state a date on its first row and explicitly say
+ * "同日" on later rows. Each row retains its own clock and venue. */
+function labelledSessionRows(source:string):SessionSchedule|null {
+ const rows=[...source.matchAll(/[^\r\n]+/gu)].map(m=>({text:m[0].trim(),start:m.index!+m[0].indexOf(m[0].trim())}))
+ const header=rows[0],heading=header?.text??'',topic=cleanHeading(heading)
+ if(!header||!/(?:活动|日程|讲座|培训|交流|开放日|工作坊)/u.test(topic)||/取消|改期|延期|备选|任选/u.test(source))return null
+ const pattern=/^(?<role>[\p{Script=Han}\d]{1,12}场)[：:]\s*(?<day>(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]|同日|当日|当天)\s*(?<clock>\d{1,2}[:：][0-5]\d\s*[-－—–至到]\s*\d{1,2}[:：][0-5]\d)\s*[，,]\s*(?:地点|场地)[：:]\s*(?<place>[^。；;，,\n]{1,80})[。；;]?$/u
+ const candidates=rows.slice(1).filter(row=>/^[\p{Script=Han}\d]{1,12}场[：:]/u.test(row.text))
+ const parsed=candidates.map(row=>({row,match:pattern.exec(row.text)})).filter(item=>item.match)
+ if(parsed.length!==candidates.length)return null
+ if(parsed.length<2||parsed.length>8)return null
+ const lastRow=rows.indexOf(parsed[parsed.length-1].row)
+ if(rows.slice(1,lastRow).some(row=>!candidates.includes(row)&&/^(?:【[^】]+】|(?:另一|另有|其他|第二个).{0,12}(?:活动|讲座|会议|培训))/u.test(row.text)))return null
+ const first=parsed[0],date=first.match!.groups!.day
+ if(/^(?:同日|当日|当天)$/u.test(date)||source.indexOf(first.row.text)!==source.lastIndexOf(first.row.text))return null
+ const places=new Map<string,string>(),sessions:Session[]=[]
+ for(const {row,match} of parsed){
+  const {role,day,clock,place}=match!.groups!
+  if(/报名|申请|提交|上传|缴费|领取|报送/u.test(role)||places.has(role)||source.indexOf(row.text)!==source.lastIndexOf(row.text))return null
+  if(!/^(?:同日|当日|当天)$/u.test(day)&&day!==date)return null
+  places.set(role,place.trim())
+  sessions.push({role,displayTitle:`${topic} · ${role}`,line:{label:role+'时间',value:clock,start:row.start+row.text.indexOf(clock),whole:row.text,wholeStart:row.start}})
+ }
+ return {heading,date,sessions,places,dateAnchor:{quote:first.row.text,start:first.row.start}}
 }
 
 /** Resolve parallel event clauses through the same local event/venue extractor.
@@ -120,8 +146,9 @@ export function completeParallelSessions(input:RecognitionResult,source:string,l
  const parsedLines=lines(source)
  const timeLines=parsedLines.filter(l=>/^.{1,12}时间$/u.test(l.label)&&l.label!=='活动时间'&&l.label!=='会议时间'&&l.value&&l.value.length<=160&&l.whole.length<=500)
  const scheduleTable=input.events.length===0?eventScheduleTable(source,localInline):null
- const inlineSessions=localInline&&!scheduleTable?inlineEventSessions(source):null
- const table=scheduleTable??inlineSessions
+ const labelledSessions=localInline&&!scheduleTable?labelledSessionRows(source):null
+ const inlineSessions=localInline&&!scheduleTable&&!labelledSessions?inlineEventSessions(source):null
+ const table=scheduleTable??labelledSessions??inlineSessions
  const sessions:Session[]=table?.sessions??timeLines.map(l=>({line:l,role:l.label.slice(0,-2).trim()})).filter(s=>s.role&&!/(?:报名|申请|提交|登记|上传|缴费|领取|报送|截止)$/u.test(s.role))
  if(sessions.length<2||sessions.length>8||new Set(sessions.map(s=>s.role)).size!==sessions.length)return input
  if(table&&sessions.some(s=>{const p=parseDirectSourceTime((s.date??table.date)+' '+s.line.value,{type:'event_start',referenceTime:input.createdAt,timezone:'Asia/Shanghai'});return !p.normalizedValue||Boolean(scheduleTable&&!p.rangeEndNormalizedValue)||p.needsConfirmation}))return input
@@ -188,13 +215,14 @@ export function completeParallelSessions(input:RecognitionResult,source:string,l
  const sharedNotes=localInline&&/(?:两场|多场|各场|每场|所有场次)/u.test(source)?[...source.matchAll(/[^。！？\r\n]+[。！？]?/gu)].map(m=>({quote:m[0].trim(),start:m.index!+m[0].indexOf(m[0].trim())})).filter(p=>p.start>afterHeader&&p.quote.length>=4&&p.quote.length<=160&&/^(?:请|建议|注意|参与者)/u.test(p.quote)&&!/(?:第一场|第二场|上午场|下午场|本场|该场)/u.test(p.quote)&&!sessions.some(s=>p.quote.includes(s.role))&&!/(?:报名|填写|提交|上传|缴费|登记|申请|预约|领取|截止|取消|改期|变更|\d{1,2}[:：]\d{2}|\d{1,2}月\d{1,2}[日号])/u.test(p.quote)):[]
  const overviews=[...overviewLines,...sharedNotes].filter((item,index,items)=>items.findIndex(other=>other.start===item.start&&other.quote===item.quote)===index).slice(0,4)
  const linkedInfo=parsedLines.find(l=>/(?:信息|介绍|详情|说明)$/u.test(l.label)&&/^https?:\/\//u.test(l.value)&&l.whole.length<=500)
- for(const {line,role,date,yearFromHeading} of sessions){
-  const current=r.events.find(e=>matchesRole(e,role)),id=current?.tempId??`direct-session:${line.wholeStart}`,timeId=table&&localInline?`direct-inline-time:${line.wholeStart}:start`:id+':start',endId=table&&localInline?`direct-inline-time:${line.wholeStart}:end`:id+':end',headingId=id+':heading',lineId=id+':time',placeId=id+':location'
+ for(const {line,role,date,yearFromHeading,displayTitle} of sessions){
+  const current=r.events.find(e=>matchesRole(e,role)),id=current?.tempId??`direct-session:${line.wholeStart}`,timeId=table&&localInline?`direct-inline-time:${line.wholeStart}:start`:id+':start',endId=table&&localInline?`direct-inline-time:${line.wholeStart}:end`:id+':end',headingId=id+':heading',lineId=id+':time',placeId=id+':location',anchorId=id+':date-anchor'
   const parsed=parseDirectSourceTime(table?(date??table.date)+' '+line.value:line.value,{type:'event_start',referenceTime:r.createdAt,timezone:'Asia/Shanghai'})
   const selectedTime=parsed.normalizedValue&&!parsed.needsConfirmation?parsed.normalizedValue:null
-  const point=(tempId:string,type:'event_start'|'event_end',value:string):TimePointSuggestionV2=>({tempId,type,rawText:line.value,normalizedValue:value,timezone:parsed.timezone,isAllDay:parsed.isAllDay,precision:parsed.precision,needsConfirmation:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:table&&(!date||yearFromHeading)?[headingId,lineId]:[lineId],confidence:1,selected:true})
-  r.evidence=r.evidence.filter(e=>![headingId,lineId,placeId,id+':linked-info'].includes(e.id)&&!e.id.startsWith(id+':overview:'))
+  const point=(tempId:string,type:'event_start'|'event_end',value:string):TimePointSuggestionV2=>({tempId,type,rawText:line.value,normalizedValue:value,timezone:parsed.timezone,isAllDay:parsed.isAllDay,precision:parsed.precision,needsConfirmation:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:table&&(!date||yearFromHeading)?[headingId,lineId,...(table.dateAnchor?[anchorId]:[])]:[lineId],confidence:1,selected:true})
+  r.evidence=r.evidence.filter(e=>![headingId,lineId,placeId,anchorId,id+':linked-info'].includes(e.id)&&!e.id.startsWith(id+':overview:'))
   r.evidence.push(evidence(headingId,header,headingStart,'event'),evidence(lineId,line.whole,line.wholeStart,'event'))
+  if(table?.dateAnchor)r.evidence.push(evidence(anchorId,table.dateAnchor.quote,table.dateAnchor.start,'event'))
   if(roleLine)r.evidence.push(evidence(placeId,roleLine.whole,roleLine.wholeStart,'event'))
   const oldPoints=[current?.startTimePointTempId,current?.endTimePointTempId]
   if(selectedTime)r.timePoints=r.timePoints.filter(p=>!oldPoints.includes(p.tempId)||p.relatedTaskTempIds.length>0||p.relatedMaterialTempIds.length>0||r.events.some(e=>e.tempId!==id&&(e.startTimePointTempId===p.tempId||e.endTimePointTempId===p.tempId)))
@@ -220,7 +248,7 @@ export function completeParallelSessions(input:RecognitionResult,source:string,l
    description+=(description?'\n':'')+'通知补充：'+text;r.evidence.push(evidence(item.id,item.quote,item.start,'description'));supplementalIds.push(item.id)
   }
   const requiredRefs=[headingId,lineId,...(roleLine?[placeId]:[]),...supplementalIds]
-  const title=table?role:current&&squash(source).includes(squash(current.title))?current.title:`${topic} · ${role}`
+  const title=table?displayTitle??role:current&&squash(source).includes(squash(current.title))?current.title:`${topic} · ${role}`
   const event:EventSuggestion={tempId:id,title,description,location:locationFor(role)??current?.location??null,startTimePointTempId:selectedTime?timeId:current?.startTimePointTempId??null,endTimePointTempId:end?endId:selectedTime?null:current?.endTimePointTempId??null,evidenceIds:[...new Set([...(current?.evidenceIds??aggregate[0]?.evidenceIds??[]).slice(0,Math.max(0,20-requiredRefs.length)),...requiredRefs])],confidence:current?.confidence??1,inferenceLevel:current?.inferenceLevel??'explicit',selected:true,relatedTaskTempIds:current?.relatedTaskTempIds??[]}
   r.events=r.events.filter(e=>e.tempId!==id);r.events.push(event)
  }
@@ -256,4 +284,38 @@ export function linkFollowingFormChannel(input:RecognitionResult,source:string):
   else {const mid=id+':material';r.materials.push({tempId:mid,name:task.actionObject,required:true,formatRequirements:[],namingRequirements:[],quantity:null,submissionChannel:url,relatedTaskTempIds:[task.tempId],evidenceIds:[...task.evidenceIds,id],confidence:1,selected:true});target.materialTempIds.push(mid)}
  }
  return r
+}
+
+/** Link a preparation action only when its own source sentence names the
+ * activity it prepares for and that name has exactly one event owner. Dates,
+ * a shared source or a superficially similar task title are not relations. */
+export function linkReferencedEventActions(input:RecognitionResult,source:string):RecognitionResult {
+ let result=input
+ const tasks=[...input.standaloneTasks,...input.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
+ for(const task of tasks){
+  if(!/^(?:填写|填报|报名|登记|提交|上传|预约|申请)$/u.test(task.actionVerb))continue
+  const citations=input.evidence.filter(e=>task.evidenceIds.includes(e.id)).flatMap(e=>{
+   const quote=e.quotedText||e.quote||'',at=e.textStart
+   return quote&&typeof at==='number'&&source.slice(at,at+quote.length)===quote?[quote]:[]
+  })
+  const actionClauses=citations.flatMap(quote=>quote.split(/[。！？；;\n]/u)).filter(clause=>clause.includes(task.actionVerb)&&squash(clause).includes(squash(task.actionObject)))
+  const subjects=actionClauses.flatMap(clause=>[...clause.matchAll(/(?:参加|参与|报名参加)([^，,。；;\n]{1,24}?)(?:的同学|的学生|的人员|者)/gu)].map(m=>m[1].trim()))
+  const genericAttendees=subjects.length===0&&actionClauses.some(clause=>/(?:参加者|参与者|参会者)/u.test(clause))&&input.events.length===1&&!/其他活动|另一场|各场|分别/u.test(source)
+  if(subjects.length!==1&&!genericAttendees||/取消|无需|无须|不必|请勿|不得/u.test(citations.join('')))continue
+  const subject=genericAttendees?'本次活动':squash(subjects[0]),eventMatches=input.events.filter(event=>{
+   if(/^(?:参加|参与).{1,60}(?:的同学|的学生|的人员)$/u.test(event.title.trim()))return false
+   const name=squash(event.title),unqualified=name.replace(/宣讲(?=会)/gu,'')
+   return subject.length>=2&&(name.includes(subject)||unqualified.includes(subject)||/^(?:本次活动|此次活动|该活动)$/u.test(subject)&&input.events.length===1)
+  })
+  if(eventMatches.length!==1)continue
+  const event=eventMatches[0]
+  // Attendance relations use a different projection; do not change their
+  // existing pairing semantics while adding preparation actions.
+  if((event.relatedTaskTempIds??[]).some(id=>tasks.some(t=>t.tempId===id&&t.actionVerb==='参加')))continue
+  if(event.relatedTaskTempIds?.includes(task.tempId))continue
+  if(result===input)result=structuredClone(input)
+  const target=result.events.find(e=>e.tempId===event.tempId)!
+  target.relatedTaskTempIds=[...new Set([...(target.relatedTaskTempIds??[]),task.tempId])]
+ }
+ return result
 }

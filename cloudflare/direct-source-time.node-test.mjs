@@ -3,3 +3,11 @@ test('weekday typography and explicit24:00 retain exact civil-day semantics',()=
 test('invalid24:01 and unspecified office clock remain unresolved',()=>{assert.equal(parse('2026年10月25日24:01',options).normalizedValue,null);assert(parse('10月25日下午下班前',options).needsConfirmation)})
 test('a whole explicit revision is not a continuous interval beginning at the obsolete time',()=>{for(const cue of ['调整至','更正为','延期至']){const q=`原定10月21日14:00举行的说明会${cue}10月23日15:00。`,p=parse(q,{...options,type:'event_start'});assert.equal(p.normalizedValue,'2026-10-23T15:00');assert.equal(p.rangeEndNormalizedValue,null);assert.equal(p.rawText,q);assert.equal(p.formatRule,'EXPLICIT_REVISION_CUE_CANONICALIZED')}assert.equal(parse('10月21日14:00至16:00说明会',{...options,type:'event_start'}).rangeEndNormalizedValue,'2026-10-21T16:00')})
 test('evening24:00 is next midnight, never next noon or a double range rollover',()=>{assert.equal(parse('申请截止时间10月25日晚上24:00',options).normalizedValue,'2026-10-26T00:00');const p=parse('10月25日20:00至24:00',{...options,type:'event_end'});assert.equal(p.normalizedValue,'2026-10-25T20:00');assert.equal(p.rangeEndNormalizedValue,'2026-10-26T00:00')})
+test('compact clocks require a period and cutoff, and invalid values stay unresolved',()=>{
+ const o={...options,referenceTime:'2026-11-12T02:00:00Z'}
+ for(const [raw,value] of [['11.12日晚上700前','2026-11-12T19:00'],['11月12日晚上730前','2026-11-12T19:30'],['11月12日晚上1900前','2026-11-12T19:00']]){
+  const point=parse(raw,o);assert.equal(point.normalizedValue,value);assert.equal(point.rawText,raw)
+ }
+ const invalid=parse('11月12日晚上760前',o);assert.equal(invalid.normalizedValue,null);assert.equal(invalid.needsConfirmation,true)
+ assert.equal(parse('11月12日晚上700人报名',o).normalizedValue,'2026-11-12')
+})

@@ -24,7 +24,7 @@ export function localDelivery(text: string): {verb: string; sourceVerb: string; 
   return unique.length === 1 && unique[0].object && unique[0].channel ? unique[0] : null
 }
 export function localEventLocation(text: string): {name: string; location: string} | null {
-  const matches = [...text.matchAll(/在\s*([^，,；;。！？\n]{1,35}?)\s*(?:召开|举行|举办|参加|开展|开)([^，,；;。！？\n]{1,60})/gu)]
+  const matches = [...text.matchAll(/在\s*([^，,；;。！？\n]{1,35}?)\s*(?:召开|举行|举办|参加|开展|观看|开)([^，,；;。！？\n]{1,60})/gu)]
   if (matches.length !== 1) return null
   const [, location, name] = matches[0]
   return {name: name.trim(), location: location.trim()}

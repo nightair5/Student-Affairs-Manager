@@ -145,7 +145,9 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const dates=[...sourceText.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]
     if(owners.length!==1)return null
     const position=/^direct-inline-time:(\d+):(?:start|end)$/u.exec(p.tempId)
-    const own=position&&refs.find(ref=>ref.at===Number(position[1])&&ref.quote.includes(p.rawText)&&ref.quote.includes(owners[0].title))
+    const titleParts=owners[0].title.split(' · ')
+    const titleSupported=(quote:string)=>quote.includes(owners[0].title)||titleParts.length===2&&quote.includes(titleParts[1])&&refs.some(ref=>ref.quote.includes(titleParts[0]))
+    const own=position&&refs.find(ref=>ref.at===Number(position[1])&&ref.quote.includes(p.rawText)&&titleSupported(ref.quote))
     const ownDates=own?[...own.quote.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]:[]
     if(result.modelName==='local-rules'&&own&&ownDates.length===1){
       let date=ownDates[0][0]
@@ -159,7 +161,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
       }
       return parseDirectSourceTime(date+' '+p.rawText,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
     }
-    if(refs.length<2||dates.length!==1||!refs.some(q=>q.quote.includes(dates[0][0]))||!refs.some(q=>q.quote.includes(p.rawText)&&q.quote.includes(owners[0].title))||sourceText.split(p.rawText).length!==2)return null
+    if(refs.length<2||dates.length!==1||!refs.some(q=>q.quote.includes(dates[0][0]))||!refs.some(q=>q.quote.includes(p.rawText)&&titleSupported(q.quote))||sourceText.split(p.rawText).length!==2)return null
     return parseDirectSourceTime(dates[0][0]+' '+p.rawText,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
   }
   const times: TimePointSuggestionV2[] = result.timePoints.filter(p => p.relatedTaskTempIds.some(id => taskIds.has(id)) || eventIds.has(p.tempId)).map(p => {

@@ -682,7 +682,7 @@ function buildDomainCommitPlanInternal(
     location: item.location, createdAt: now, updatedAt: now,
     legacyData: { recognitionTempId: item.tempId, evidenceIds: item.evidenceIds, inferenceLevel: item.inferenceLevel,
       ...(item.sourceStatus ? { sourceStatus: item.sourceStatus } : {}),
-      ...(item.relatedTaskTempIds?.length ? { sourceTaskRelations: { version: ['recognition-semantic-notice-3.11.0','recognition-semantic-notice-3.12.0'].includes(result.promptVersion)?'source-event-task-relations-2':'source-event-task-relations-1', draftId, taskTempIds: item.relatedTaskTempIds } } : {}),
+      ...(item.relatedTaskTempIds?.length ? { sourceTaskRelations: { version: ['recognition-semantic-notice-3.11.0','recognition-semantic-notice-3.12.0'].includes(result.promptVersion)||result.modelName==='local-rules'&&item.relatedTaskTempIds.every(id=>recognizedTasks.find(task=>task.tempId===id)?.actionVerb!=='参加')?'source-event-task-relations-2':'source-event-task-relations-1', draftId, taskTempIds: item.relatedTaskTempIds } } : {}),
     },
   }))
 

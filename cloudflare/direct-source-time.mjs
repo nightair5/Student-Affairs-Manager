@@ -1,11 +1,21 @@
 import {parseTwoStepTime} from './two-step-time.mjs'
 import {sourceTimeKind} from './source-time-kind.mjs'
-export const DIRECT_SOURCE_TIME_VERSION='direct-source-time-1.0.7'
+export const DIRECT_SOURCE_TIME_VERSION='direct-source-time-1.0.8'
 const weekdays={日:0,天:0,一:1,二:2,三:3,四:4,五:5,六:6}
 const next=v=>{if(!v)return v;const d=new Date(v.slice(0,10)+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10)+v.slice(10)}
 /** Formatting adapter for the opt-in direct path. Evidence remains the exact
  * original span. It neither changes the legacy parser nor resolves ambiguity. */
 export function parseDirectSourceTime(raw,options){
+ // Compact clocks are accepted only with an explicit day period and cutoff
+ // marker. Ordinary quantities such as “700人” are never clock candidates.
+ let invalidCompactClock=false
+ const compactClock=raw.normalize('NFKC').replace(/(凌晨|早上|上午|中午|下午|傍晚|晚上|夜间|夜里|晚)([0-9]{3,4})(?=(?:之前|以前|前|截止|为止)(?:[^\d]|$))/gu,(match,period,digits)=>{
+  const hour=Number(digits.slice(0,-2)),minute=Number(digits.slice(-2))
+  if(hour<1||hour>23||minute>=60){invalidCompactClock=true;return match}
+  return `${period}${hour}:${String(minute).padStart(2,'0')}`
+ })
+ if(invalidCompactClock)return {rawText:raw,normalizedValue:null,rangeEndNormalizedValue:null,timezone:options.timezone,precision:'vague',isAllDay:false,needsConfirmation:true,issues:['invalid_compact_clock'],formatRule:'INVALID_COMPACT_CLOCK_NOT_RESOLVED'}
+ if(compactClock!==raw.normalize('NFKC'))return {...parseDirectSourceTime(compactClock,options),rawText:raw,formatRule:'EXPLICIT_PERIOD_COMPACT_CLOCK'}
  const typed=sourceTimeKind(raw)
  if(typed.calendarText===null)return {rawText:raw,normalizedValue:null,rangeEndNormalizedValue:null,precision:'vague',isAllDay:false,needsConfirmation:true,issues:[typed.kind==='recurrence'?'recurring_schedule_requires_anchor':'non_calendar_range'],formatRule:'SOURCE_TIME_KIND_PRESERVED'}
  if(typed.calendarText!==raw)return {...parseDirectSourceTime(typed.calendarText,options),rawText:raw,formatRule:'NON_CALENDAR_QUANTITIES_EXCLUDED'}

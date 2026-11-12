@@ -86,26 +86,32 @@ export async function readNoticeLinks(input:string,plan:NoticeLinkPlan,enabled:b
 
 /** Safe, user-facing explanations never interpolate an arbitrary URL or error. */
 export function noticeLinkMessage(outcome:NoticeLinkOutcome):string {
- const reasons=outcome.links.flatMap(link=>link.reason?[link.reason]:[])
- if(outcome.failed&&outcome.links.every(link=>link.role==='meeting'||link.role==='action'))return '这是会议或操作入口，请粘贴包含具体事项的通知正文。'
+ if(outcome.failed&&outcome.links.every(link=>link.role==='meeting'))return '这是会议入口，请粘贴包含具体事项的通知正文。'
  const unread=outcome.links.flatMap((link,index)=>['failed','limit','disabled'].includes(link.status)?[index+1]:[])
  const prefix=unread.length?`第 ${unread.join('、')} 个链接未读取。`:''
- const limit=outcome.links.some(link=>link.status==='limit')?'每次最多读取 3 个网页，可单独粘贴未读取的链接继续。':''
- let reason=''
- if(reasons.includes('WEB_ACCESS_RESTRICTED'))reason='目标网页需要登录或拒绝访问，请粘贴正文。'
- else if(reasons.some(value=>value==='RATE_LIMITED'||value==='WEB_TARGET_RATE_LIMITED'))reason='网页访问受到频率限制，请稍后重试或粘贴正文。'
- else if(reasons.includes('WEB_FETCH_TIMEOUT'))reason='网页读取超时，请稍后重试或粘贴正文。'
- else if(reasons.includes('WEB_NOT_FOUND'))reason='网页不存在或已失效，请检查链接或粘贴正文。'
- else if(reasons.includes('WEB_HTTPS_REQUIRED'))reason='只支持读取公开 HTTPS 网页，请粘贴正文。'
- else if(reasons.some(value=>['WEB_PRIVATE_ADDRESS_FORBIDDEN','WEB_OWN_ORIGIN_FORBIDDEN','WEB_PORT_FORBIDDEN','WEB_SENSITIVE_URL','WEB_CREDENTIALS_FORBIDDEN'].includes(value)))reason='该链接不符合安全读取条件，请粘贴正文。'
- else if(reasons.includes('WEB_CONTENT_TYPE_UNSUPPORTED'))reason='暂只读取网页和纯文本；PDF 可上传文件或粘贴正文。'
- else if(reasons.some(value=>['WEB_TEXT_UNAVAILABLE','WEB_TEXT_EMPTY'].includes(value)))reason='网页没有返回可读取正文，请粘贴正文或上传文件。'
- else if(reasons.includes('WEB_DNS_FAILED'))reason='网页地址暂时无法解析，请稍后重试或粘贴正文。'
- else if(reasons.includes('WEB_CHARSET_UNSUPPORTED'))reason='网页编码暂不受支持，请粘贴正文。'
- else if(reasons.includes('WEB_RESPONSE_TOO_LARGE'))reason='网页内容超过读取上限，请粘贴相关正文。'
- else if(outcome.links.some(link=>link.status==='disabled'))reason='本次未开启网页读取。'
- else if(unread.length&&!limit)reason='请重试或粘贴正文。'
- if(unread.length)return `${prefix}${reason}${limit}`
+ const explain=(link:NoticeLinkOutcome['links'][number]):string=>{
+  const reason=link.reason
+  if(link.status==='limit')return '每次最多读取 3 个网页，可单独粘贴未读取的链接继续。'
+  if(link.status==='disabled')return '本次未开启网页读取。'
+  if(reason==='WEB_ACCESS_RESTRICTED')return '目标网页需要登录或拒绝访问，请粘贴正文。'
+  if(reason==='RATE_LIMITED'||reason==='WEB_TARGET_RATE_LIMITED')return '网页访问受到频率限制，请稍后重试或粘贴正文。'
+  if(reason==='WEB_FETCH_TIMEOUT')return '网页读取超时，请稍后重试或粘贴正文。'
+  if(reason==='WEB_NOT_FOUND')return '网页不存在或已失效，请检查链接或粘贴正文。'
+  if(reason==='WEB_HTTPS_REQUIRED')return '只支持读取公开 HTTPS 网页，请粘贴正文。'
+  if(['WEB_PRIVATE_ADDRESS_FORBIDDEN','WEB_OWN_ORIGIN_FORBIDDEN','WEB_PORT_FORBIDDEN','WEB_SENSITIVE_URL','WEB_CREDENTIALS_FORBIDDEN'].includes(reason??''))return '该链接不符合安全读取条件，请粘贴正文。'
+  if(reason==='WEB_CONTENT_TYPE_UNSUPPORTED')return '暂只读取网页和纯文本；PDF 可上传文件或粘贴正文。'
+  if(reason==='WEB_TEXT_UNAVAILABLE'||reason==='WEB_TEXT_EMPTY')return '网页没有返回可读取正文，请粘贴正文或上传文件。'
+  if(reason==='WEB_DNS_FAILED')return '网页地址暂时无法解析，请稍后重试或粘贴正文。'
+  if(reason==='WEB_CHARSET_UNSUPPORTED')return '网页编码暂不受支持，请粘贴正文。'
+  if(reason==='WEB_RESPONSE_TOO_LARGE')return '网页内容超过读取上限，请粘贴相关正文。'
+  return '请重试或粘贴正文。'
+ }
+ if(unread.length){
+  const groups=new Map<string,number[]>()
+  for(const index of unread){const message=explain(outcome.links[index-1]);groups.set(message,[...(groups.get(message)??[]),index])}
+  const details=[...groups].map(([message,indexes])=>groups.size===1?message:`第 ${indexes.join('、')} 个链接：${message}`).join('')
+  return prefix+details
+ }
  if(outcome.content.length>24_000)return '网页文字较长，部分内容未进入整理，请打开原文补充。'
  if(outcome.partial)return '网页有部分内容未能处理，请打开原文补充。'
  return ''

@@ -1,5 +1,6 @@
 import {describe,expect,it,vi} from 'vitest'
 import {noticeLinkMessage,planNoticeLinks,readNoticeLinks} from './noticeLinks'
+import {LinkExtractionError} from './linkExtraction'
 
 const page=(text:string)=>({finalUrl:'https://school.example/notice',title:'公开通知',text,fetchedAt:'2026-11-04T01:00:00Z',partial:false})
 describe('one-click notice link reading',()=>{
@@ -52,5 +53,16 @@ describe('one-click notice link reading',()=>{
   const out=await readNoticeLinks(input,planNoticeLinks(input),true,async()=>page('通知内容'.repeat(7000)))
   expect(out.partial).toBe(true)
   expect(noticeLinkMessage(out)).toContain('部分内容未进入整理')
+ })
+ it('explains different failed links separately without exposing their URLs',async()=>{
+  const input='请参加活动。详情 https://school.example/notice\n问卷 https://forms.example/form/1'
+  const out=await readNoticeLinks(input,planNoticeLinks(input),true,async url=>{
+   throw new LinkExtractionError('fixture',url.includes('/form/')?'WEB_TEXT_EMPTY':'WEB_RESPONSE_TOO_LARGE')
+  })
+  const message=noticeLinkMessage(out)
+  expect(out.content).toBe(input);expect(out.partial).toBe(true)
+  expect(message).toContain('第 1 个链接：网页内容超过读取上限')
+  expect(message).toContain('第 2 个链接：网页没有返回可读取正文')
+  expect(message).not.toContain('school.example');expect(message).not.toContain('forms.example')
  })
 })

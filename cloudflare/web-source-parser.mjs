@@ -89,5 +89,11 @@ export function extractWebSource(value,{baseUrl,html=true,maxChars=80_000}={}){
  if((password&&!hasArticle)||all.length<800&&/(?:请先登录|登录后(?:查看|阅读)|请完成(?:安全)?验证|访问受限|验证码验证)/u.test(all))throw Error('WEB_ACCESS_RESTRICTED')
  if(all.length<200&&/(?:请启用\s*(?:javascript|脚本)|页面加载中|正在加载|loading\.\.\.)/iu.test(all))throw Error('WEB_TEXT_UNAVAILABLE')
  if(!all.trim())throw Error('WEB_TEXT_EMPTY')
- return {title:title.slice(0,160),text:all.slice(0,maxChars),partial:incomplete||all.length>maxChars}
+ // A very large script shell with almost no visible text cannot demonstrate
+ // that its actual document was read. Never execute scripts or claim success
+ // from a login/navigation shell; short legitimate text remains available but
+ // is marked partial when its surrounding page is overwhelmingly script.
+ const scriptShell=html&&!hasArticle&&value.length>=50_000&&all.length<300&&all.length*100<value.length&&/<script\b/iu.test(value)
+ if(scriptShell&&/(?:登录|验证码|授权)/u.test(all))throw Error('WEB_TEXT_UNAVAILABLE')
+ return {title:title.slice(0,160),text:all.slice(0,maxChars),partial:incomplete||all.length>maxChars||scriptShell}
 }

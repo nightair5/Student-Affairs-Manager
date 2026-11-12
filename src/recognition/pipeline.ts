@@ -237,7 +237,9 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     task.estimatedMinutes = duration ? Number(duration[1]) : null
     if (localActionNeedsDecision(item.evidence)) task.selected = false
     const namedGathering=/(?:大会|报告会|说明会|分享会|座谈会|培训会)/u.test(task.title)&&/(?:召开|举行|举办|开|参加|出席)/u.test(item.evidence)&&!/^(?:报名|申请|预约|填写)/u.test(task.title)
-    const isEvent = Boolean(meeting) || (eventPattern.test(task.title)||namedGathering) && !/准备|制作|撰写|完成/u.test(task.title)
+    const watchedGathering=localEventLocation(item.evidence)
+    const isWatchedEvent=Boolean(watchedGathering&&/观看/u.test(item.evidence)&&/(?:讲座|报告|比赛|球赛|演出|展览|赛事)$/u.test(watchedGathering.name))
+    const isEvent = Boolean(meeting)||isWatchedEvent||(eventPattern.test(task.title)||namedGathering) && !/准备|制作|撰写|完成/u.test(task.title)
     if (isEvent && localEventLocation(item.evidence) && localAttendanceDirective(item.evidence)) {
       task.inferenceLevel = 'explicit'
       task.selected = true

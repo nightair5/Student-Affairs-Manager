@@ -3,7 +3,7 @@ import {parseDirectSourceTime} from '../../cloudflare/direct-source-time.mjs'
 import {buildLocalRecognition} from './pipeline'
 import {improveDirectFallback} from './directFallback'
 import {convertDirectResult} from './directResult'
-import {completeParallelSessions} from './directParallelSessions'
+import {completeParallelSessions,linkReferencedEventActions} from './directParallelSessions'
 import {isRecognitionResult} from './schema'
 
 // Anonymous engineering examples, not model responses or private student data.
@@ -33,6 +33,36 @@ describe('parallel event sessions and source-specific dates',()=>{
   expect(form!.title).toBe('填写交流问卷')
   expect(r.timePoints.find(p=>p.relatedTaskTempIds.includes(form!.tempId)&&p.type==='task_deadline')?.normalizedValue).toBe('2026-11-01T18:00')
   expect(r.materials.find(m=>m.relatedTaskTempIds.includes(form!.tempId))?.submissionChannel).toBe('https://example.edu/form')
+  expect(b!.relatedTaskTempIds).toContain(form!.tempId)
+  expect(a!.relatedTaskTempIds??[]).not.toContain(form!.tempId)
+ })
+ it('does not link an action to an ambiguous owner or an unrelated sentence',()=>{
+  const first=improveDirectFallback(local(notice),notice),form=first.standaloneTasks.find(task=>task.actionObject.includes('问卷'))!
+  const ambiguous=structuredClone(first),event=ambiguous.events.find(value=>value.title.includes('交流'))!
+  ambiguous.events.forEach(value=>value.relatedTaskTempIds=[])
+  ambiguous.events.push({...structuredClone(event),tempId:'other-event',title:'另一交流'})
+  expect(linkReferencedEventActions(ambiguous,notice).events.every(value=>!value.relatedTaskTempIds?.includes(form.tempId))).toBe(true)
+  const separate='参加交流的同学请入场。另请填写报名问卷。',unrelated=structuredClone(first)
+  unrelated.events.forEach(value=>value.relatedTaskTempIds=[])
+  unrelated.evidence=[{id:'other',sourceId:'pending-source',quote:separate,quotedText:separate,textStart:0,textEnd:separate.length,field:'description'}]
+  unrelated.standaloneTasks.find(task=>task.tempId===form.tempId)!.evidenceIds=['other']
+  expect(linkReferencedEventActions(unrelated,separate).events.every(value=>!value.relatedTaskTempIds?.includes(form.tempId))).toBe(true)
+  const placeholder=structuredClone(first)
+  placeholder.events=placeholder.events.filter(value=>value.title.includes('交流')).map(value=>({...value,title:'参加交流的同学',relatedTaskTempIds:[]}))
+  expect(linkReferencedEventActions(placeholder,notice).events[0].relatedTaskTempIds).toEqual([])
+ })
+ it('retains separately named same-day agenda rows with their own venue and time',()=>{
+  const text='【校园交流开放日】\n上午场：11月3日09:00-10:00，地点：东校区一号厅。\n下午场：同日14:00-15:00，地点：西校区二号厅。'
+  const r=run(text),morning=r.events.find(event=>event.title.includes('上午场'))!,afternoon=r.events.find(event=>event.title.includes('下午场'))!
+  expect(r.events).toHaveLength(2)
+  expect([time(r,morning.startTimePointTempId),time(r,morning.endTimePointTempId),morning.location]).toEqual(['2026-11-03T09:00','2026-11-03T10:00','东校区一号厅'])
+  expect([time(r,afternoon.startTimePointTempId),time(r,afternoon.endTimePointTempId),afternoon.location]).toEqual(['2026-11-03T14:00','2026-11-03T15:00','西校区二号厅'])
+ })
+ it('does not assign an unanchored or conflicting day to agenda rows',()=>{
+  const unanchored='【校园交流开放日】\n上午场：同日09:00-10:00，地点：一号厅。\n下午场：同日14:00-15:00，地点：二号厅。'
+  const conflicting='【校园交流开放日】\n上午场：11月3日09:00-10:00，地点：一号厅。\n下午场：11月4日14:00-15:00，地点：二号厅。'
+  const separate='【校园交流开放日】\n上午场：11月3日09:00-10:00，地点：一号厅。\n【另一项独立活动】\n下午场：同日14:00-15:00，地点：二号厅。'
+  for(const text of [unanchored,conflicting,separate])expect(improveDirectFallback(local(text),text).events.some(event=>event.tempId.startsWith('direct-session:'))).toBe(false)
  })
  it('keeps AI session titles that combine the topic and role without inventing a literal quote',()=>{
   const parsed=completeParallelSessions(local(notice),notice)

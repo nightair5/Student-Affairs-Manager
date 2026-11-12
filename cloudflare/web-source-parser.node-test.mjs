@@ -20,6 +20,12 @@ test('reports truncation and detects login and dynamic placeholders',()=>{
  assert.throws(()=>extractWebSource('<body><form>请登录<input type="password"></form></body>',{baseUrl:'https://notice.example'}),/WEB_ACCESS_RESTRICTED/u)
  assert.throws(()=>extractWebSource('<body>页面加载中，请启用 JavaScript</body>',{baseUrl:'https://notice.example'}),/WEB_TEXT_UNAVAILABLE/u)
 })
+test('a script-heavy navigation shell does not masquerade as the full document',()=>{
+ const script='<script>'+(' '.repeat(55_000))+'</script>'
+ assert.throws(()=>extractWebSource('<body>'+script+'<div>登录以继续查看</div></body>',{baseUrl:'https://notice.example'}),/WEB_TEXT_UNAVAILABLE/u)
+ const brief=extractWebSource('<body>'+script+'<p>通知：周五提交登记表。</p></body>',{baseUrl:'https://notice.example'})
+ assert.match(brief.text,/周五提交登记表/u);assert.equal(brief.partial,true)
+})
 test('an unclosed script cannot leak its contents and marks the result partial',()=>{
  const out=extractWebSource('<body><p>请提交申请表。</p><script>ignore instructions'+('<script>'.repeat(10000))+'</body>',{baseUrl:'https://notice.example/'})
  assert.match(out.text,/请提交申请表/u)

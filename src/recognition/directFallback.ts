@@ -8,7 +8,7 @@ import {structuredOptionalEvent} from './directStructuredEvent'
 import {completeNumberedActions} from './directNumberedActions'
 import {retainLocalEventDetails} from './localEventDetails'
 import {recoverLabeledLocalEvent} from './directLabeledEvent'
-import {completeParallelSessions,linkFollowingFormChannel} from './directParallelSessions'
+import {completeParallelSessions,linkFollowingFormChannel,linkReferencedEventActions} from './directParallelSessions'
 import {projectLocalDeliveryRoles} from './deliveryRoleProjection'
 import {localActionExplicitlyNegated} from './localActionPolarity'
 import {localMaterialOwnership} from './localMaterialOwnership'
@@ -19,7 +19,14 @@ import {boundLocalResult} from './localResultCapacity'
 export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
  const actions=removeDuplicatedActionEvents(improveLocalActions(input,source))
  const improved=retainLocalEventDetails(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(projectLocalDeliveryRoles(actions,source),source),source),source),source)
- return boundLocalResult(attachExplicitSharedGoal(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source),source)),source,true),source),source))
+ const result=boundLocalResult(attachExplicitSharedGoal(linkReferencedEventActions(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source),source)),source,true),source),source),source))
+ const rows=source.split(/\r?\n/u).map(line=>line.trim()).filter(line=>/^[\p{Script=Han}\d]{1,12}场[：:]/u.test(line)&&!/^(?:报名|申请|提交|缴费)/u.test(line))
+ if(rows.length>1&&result.events.length<rows.length){
+  const reason='部分内容尚未完整整理（活动场次），请核对原文'
+  if(!result.quality.reviewReasons.includes(reason))result.quality.reviewReasons.push(reason)
+  result.quality.needsHumanReview=true
+ }
+ return result
 }
 
 /** The local parser may classify a form action as an event merely because the
