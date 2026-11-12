@@ -2,7 +2,7 @@ import {boundedNetworkRetry} from './upstream-network-retry.mjs'
 import {decodeWebBytes,extractWebSource,sensitiveWebUrl} from './web-source-parser.mjs'
 import {runTwoStepGeneration} from './two-step-generation.mjs'
 import {runSimpleGeneration} from './simple-generation.mjs'
-import {runSemanticNoticeGeneration} from './semantic-notice-generation-v3.mjs'
+import {runSemanticNoticeGeneration,safeSemanticExecution} from './semantic-notice-generation-v3.mjs'
 import {
   MULTIMODAL_RECOGNITION_MODEL_NAME,
   MULTIMODAL_RECOGNITION_PROMPT_VERSION,
@@ -570,8 +570,10 @@ function safeRecognitionValidation(report) {
   }
 }
 
-function invalidRecognitionResponse(context, report, multimodal = false) {
+function invalidRecognitionResponse(context, report, multimodal = false, execution = null) {
   context.errorType = 'INVALID_AI_RESPONSE'
+  const details=safeRecognitionValidation(report),observed=safeSemanticExecution(execution)
+  if(observed)details.execution=observed
   return failure(
     'INVALID_AI_RESPONSE',
     multimodal
@@ -579,7 +581,7 @@ function invalidRecognitionResponse(context, report, multimodal = false) {
       : 'DeepSeek 返回的 RecognitionResult 2.0 未通过严格契约。',
     502,
     context.requestId,
-    safeRecognitionValidation(report),
+    details,
   )
 }
 
@@ -780,7 +782,7 @@ async function askDeepSeek(request, env, fetcher, isRateLimited, acquireConcurre
     const payload = await upstream.json()
     context.outputTokens = Number.isFinite(payload?.usage?.completion_tokens)
       ? payload.usage.completion_tokens
-      : 0
+      : null
     const answer = safeText(payload?.choices?.[0]?.message?.content, 8_000)
     if (!answer) {
       context.errorType = 'INVALID_AI_RESPONSE'
@@ -826,12 +828,23 @@ async function extractTwoStepTasks(request,body,env,fetcher,acquireConcurrency,c
       :env.DEEPSEEK_GENERATION_MODE==='simple-1.0'
       ?await runSimpleGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),body:{...body,referenceTime,timezone}})
       :await runTwoStepGeneration({fetcher:transport.fetcher,apiKey,profile:extractionProfile(env),source:body.content,referenceTime,timezone,mode:env.DEEPSEEK_GENERATION_MODE,compilerVersion:env.TWO_STEP_COMPILER_VERSION??'2.1.9',userText:extractionUserText(body,body.content,safeText(body.sourceTitle,160),referenceTime,timezone)})
-    if(!generated.ok){context.errorType=generated.error;if(generated.status&&generated.status!==502)return safeUpstreamFailure(generated.status,context.requestId,false);const details=generated.execution?{failureCategory:generated.failureCategory,failureReason:generated.failureReason,execution:generated.execution}:null;return failure(generated.error,'本次识别未完成，原文已保留，请稍后重试。',generated.error==='UPSTREAM_TIMEOUT'?504:502,context.requestId,details)}
+    if(!generated.ok){
+      context.errorType=generated.error
+      if(generated.status&&generated.status!==502)return safeUpstreamFailure(generated.status,context.requestId,false)
+      const uncertain=transport.attempts.some(attempt=>attempt.status===null)
+      const execution=uncertain&&generated.execution?safeSemanticExecution({...generated.execution,networkAttempts:transport.attempts,upstreamUsageComplete:false}):generated.execution
+      context.outputTokens=execution?.tokenUsage?.output??null
+      const details=execution?{failureCategory:generated.failureCategory,failureReason:generated.failureReason,execution}:null
+      return failure(generated.error,'本次识别未完成，原文已保留，请稍后重试。',generated.error==='UPSTREAM_TIMEOUT'?504:502,context.requestId,details)
+    }
     generated.execution.networkAttempts=transport.attempts
-    if(transport.attempts.some(a=>a.status===null)){generated.execution.tokenUsage=null;generated.execution.upstreamUsageComplete=false;generated.execution.unmeteredAttemptCount=transport.attempts.filter(a=>a.status===null).length}
+    if(transport.attempts.some(a=>a.status===null)){
+      generated.execution.tokenUsage=null;generated.execution.upstreamUsageComplete=false;generated.execution.unmeteredAttemptCount=transport.attempts.filter(a=>a.status===null).length
+      if(Array.isArray(generated.execution.modelFactSamples))generated.execution.modelFactSamples=generated.execution.modelFactSamples.map(sample=>({...sample,observedUsageForLastResponse:sample.usage??null,usage:null}))
+    }
+    context.outputTokens=generated.execution.tokenUsage?.output??null
     const validation=validateRecognitionResult(generated.result,{sourceContent:body.content})
-    if(!validation.valid)return invalidRecognitionResponse(context,validation)
-    context.outputTokens=generated.execution.tokenUsage?.output??0
+    if(!validation.valid)return invalidRecognitionResponse(context,validation,false,generated.execution)
     const observedModel=['semantic-notice-3.0',...actorContracts].includes(env.DEEPSEEK_GENERATION_MODE)?generated.execution.modelFactSamples?.[0]?.actualModel??null:extractionModel(env)
     return success({model:observedModel,result:generated.result,execution:generated.execution},context.requestId)
   } finally {release()}
@@ -931,7 +944,7 @@ async function extractTasks(request, env, fetcher, isRateLimited, acquireConcurr
     const payload = await upstream.json()
     context.outputTokens = Number.isFinite(payload?.usage?.completion_tokens)
       ? payload.usage.completion_tokens
-      : 0
+      : null
     const content = payload?.choices?.[0]?.message?.content
     const decoded=decodeRecognitionOutput(content,{finishReason:payload?.choices?.[0]?.finish_reason})
     const parsed=decoded.value
@@ -1119,7 +1132,7 @@ async function extractMultimodalTasks(request, env, fetcher, isRateLimited, acqu
     const payload = await upstream.json()
     context.outputTokens = Number.isFinite(payload?.usage?.completion_tokens)
       ? payload.usage.completion_tokens
-      : 0
+      : null
     const modelOutput = safeText(payload?.choices?.[0]?.message?.content, 30_000)
     let parsed
     try {
@@ -1207,7 +1220,7 @@ export function createWorker({
         method: request.method,
         startedAt: Date.now(),
         inputLength: 0,
-        outputTokens: 0,
+        outputTokens: null,
         errorType: null,
           generationMode: ['semantic-notice-3.0','semantic-notice-3.3','semantic-notice-3.4','semantic-notice-3.5','semantic-notice-3.6','semantic-notice-3.7','semantic-notice-3.8','semantic-notice-3.9','semantic-notice-3.10','semantic-notice-3.11','semantic-notice-3.12','simple-1.0','two-step-2.0','two-step-2.0x2','two-step-2.1','two-step-2.1x2','two-step-2.2','two-step-2.3','two-step-2.4'].includes(env.DEEPSEEK_GENERATION_MODE) ? env.DEEPSEEK_GENERATION_MODE : 'structured',
       }

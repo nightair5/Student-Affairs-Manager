@@ -1,5 +1,5 @@
 import {parseRecognitionJson} from './recognition-json.mjs'
-export const OUTPUT_RECOVERY_VERSION='recognition-closed-prefix-recovery-1.0.0'
+export const OUTPUT_RECOVERY_VERSION='recognition-closed-prefix-recovery-1.1.0'
 export const MAX_EXTRACTION_RESPONSE_CHARACTERS=160_000
 const record=v=>v&&typeof v==='object'&&!Array.isArray(v)
 // Read only complete JSON values. Never close an unfinished string/object,
@@ -23,7 +23,9 @@ function rootPrefix(text){
 }
 export function decodeRecognitionOutput(content,{finishReason}={}){
  const audit={version:OUTPUT_RECOVERY_VERSION,finishReason:finishReason??null,partial:false,recoveredFields:[],missingFields:[],inferredFacts:0}
- if(typeof content!=='string'||content.length>MAX_EXTRACTION_RESPONSE_CHARACTERS)return {value:null,audit,error:'MODEL_OUTPUT_TOO_LARGE'}
+ if(typeof content!=='string')return {value:null,audit,error:'MODEL_OUTPUT_MISSING'}
+ if(content.length>MAX_EXTRACTION_RESPONSE_CHARACTERS)return {value:null,audit,error:'MODEL_OUTPUT_TOO_LARGE'}
+ if(!content.trim())return {value:null,audit,error:'MODEL_OUTPUT_EMPTY'}
  try{const value=parseRecognitionJson(content);if(finishReason!=='length')return {value,audit,error:null};audit.partial=true;return {value:markPartial(value,audit),audit,error:null}}catch{/* strict decoding first */}
  const text=content.trim().replace(/^```(?:json)?\s*\n/u,''),value=rootPrefix(text)
  if(!record(value)||value.schemaVersion!=='2.0'||!record(value.sourceSummary)||!record(value.projectMatch)||!Array.isArray(value.evidence))return {value:null,audit,error:'MODEL_OUTPUT_UNRECOVERABLE_ROOT'}
@@ -34,6 +36,31 @@ export function decodeRecognitionOutput(content,{finishReason}={}){
  if(!record(value.quality)){audit.missingFields.push('quality');value.quality={overallConfidence:0,hierarchyConfidence:0,dateConfidence:0,evidenceCoverage:0,duplicateRisk:0,overFragmentationRisk:0,missingActionRisk:1,needsHumanReview:true,reviewReasons:[]}}
  return {value:markPartial(value,audit),audit,error:null}
 }
+
+// The semantic-notice contract is a different root from RecognitionResult 2.0.
+// A length-truncated answer may still contain closed, independently valid items;
+// retain those items for source validation rather than discarding the batch.
+// Never use this path for malformed non-truncated responses or incomplete roots.
+export function decodeSemanticNoticeOutput(content,{finishReason}={}){
+ const decoded=decodeRecognitionOutput(content,{finishReason})
+ const usable=value=>record(value)&&typeof value.topic==='string'&&Boolean(value.topic.trim())&&['action','event','mixed'].includes(value.kind)&&Array.isArray(value.items)&&value.items.length>0&&value.items.length<=20&&value.items.some(item=>record(item)&&['task','event'].includes(item.kind)&&typeof item.key==='string'&&item.key.trim()&&typeof item.title==='string'&&item.title.trim())
+ // Some otherwise valid JSON omits the whole top-level material container.
+ // Preserve evidenced items, but explicitly mark material coverage unknown.
+ if(decoded.value!==null){
+  if(!usable(decoded.value)||'materials' in decoded.value)return decoded
+  return {value:{...decoded.value,materials:[],partial:true},audit:{...decoded.audit,partial:true,reason:'MATERIALS_FIELD_MISSING',recoveredFields:Object.keys(decoded.value),missingFields:['materials'],inferredFacts:0},error:null}
+ }
+ if(finishReason!=='length'||typeof content!=='string'||content.length>MAX_EXTRACTION_RESPONSE_CHARACTERS)return decoded
+ const text=content.trim().replace(/^```(?:json)?\s*\n/u,''),value=rootPrefix(text)
+ if(!usable(value))return decoded
+ if('materials' in value&&!Array.isArray(value.materials))return decoded
+ if(Array.isArray(value.materials)&&value.materials.length>60)return decoded
+ const missingFields=[]
+ if(!('materials' in value)){value.materials=[];missingFields.push('materials')}
+ value.partial=true
+ return {value,audit:{...decoded.audit,partial:true,reason:'LENGTH_TRUNCATED',recoveredFields:Object.keys(value).filter(key=>!missingFields.includes(key)),missingFields,inferredFacts:0},error:null}
+}
+
 function markPartial(input,audit){
  const value=structuredClone(input);if(!Array.isArray(value.ambiguities))value.ambiguities=[]
  value.ambiguities.push({id:'local-isolation:truncated-output',field:'source_coverage',message:'通知较长，后半部分未处理，请核对原文。这里只保留已完整返回且通过依据校验的部分。',options:['核对尚未处理的原文'],evidenceIds:[]})

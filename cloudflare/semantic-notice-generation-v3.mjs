@@ -1,5 +1,5 @@
 import {extractionRequestOptions} from './extraction-profile.mjs'
-import {decodeRecognitionOutput} from './recognition-output-recovery.mjs'
+import {decodeSemanticNoticeOutput} from './recognition-output-recovery.mjs'
 import {compileSemanticNotice} from './semantic-notice-compiler-v3.mjs'
 import {SEMANTIC_NOTICE_MODE,SEMANTIC_NOTICE_VERSION,semanticNoticeRequest} from './semantic-notice-contract-v3-2-0.mjs'
 import {SEMANTIC_NOTICE_VERSION as ACTOR_VERSION,semanticNoticeRequest as actorNoticeRequest} from './semantic-notice-contract-v3-3-0.mjs'
@@ -28,6 +28,24 @@ function safeUsage(raw) {
   return result
 }
 
+// Keep billing and routing observation on a rejected compiled result, without
+// returning source text, model facts or arbitrary provider fields. Unknown or
+// multiple upstream attempts cannot be represented as one observed charge.
+export function safeSemanticExecution(execution) {
+  if(!execution||typeof execution!=='object'||!Array.isArray(execution.modelFactSamples)||execution.modelFactSamples.length!==1)return null
+  const sample=execution.modelFactSamples[0]
+  if(!sample||typeof sample!=='object')return null
+  const safeName=value=>typeof value==='string'&&/^[a-zA-Z0-9._:/-]{1,80}$/u.test(value)?value:null
+  const attempts=Array.isArray(execution.networkAttempts)?execution.networkAttempts:[]
+  const observable=execution.upstreamUsageComplete!==false&&attempts.length<=1&&attempts.every(attempt=>Number.isInteger(attempt?.status))
+  const usage=observable?safeUsage(sample.usage):null
+  const elapsedMs=Number.isSafeInteger(sample.elapsedMs)&&sample.elapsedMs>=0?sample.elapsedMs:null
+  return {generationMode:safeName(execution.generationMode),promptVersion:safeName(execution.promptVersion),
+    twoStep:{compilerVersion:safeName(execution.twoStep?.compilerVersion)},
+    modelFactSamples:[{index:0,status:Number.isInteger(sample.status)?sample.status:null,actualModel:safeName(sample.actualModel),usage,elapsedMs}],
+    tokenUsage:usage?{input:usage.prompt_tokens,output:usage.completion_tokens,...(usage.total_tokens!==undefined?{total:usage.total_tokens}:{})}:null}
+}
+
 /** One full-notice request. No hidden retry or second semantic rewrite. */
 export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userText,source,referenceTime,timezone,actorRoles=false,goalContextVersion=''}) {
   const started=Date.now()
@@ -46,7 +64,7 @@ export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userTe
   } catch(error) {
     return {ok:false,status:502,error:error?.name==='TimeoutError'||error?.name==='AbortError'?'UPSTREAM_TIMEOUT':'UPSTREAM_UNAVAILABLE',samples:[{status:null,elapsedMs:Date.now()-started}]}
   }
-  const decoded=decodeRecognitionOutput(payload?.choices?.[0]?.message?.content,{finishReason:payload?.choices?.[0]?.finish_reason})
+  const decoded=decodeSemanticNoticeOutput(payload?.choices?.[0]?.message?.content,{finishReason:payload?.choices?.[0]?.finish_reason})
   const actualModel=typeof payload?.model==='string'&&payload.model.trim()?payload.model.trim().slice(0,80):null
   const compiled=compileSemanticNotice(decoded.value,{source,referenceTime,timezone,model:actualModel??'上游未提供',promptVersion,goalContextVersion})
   if(!compiled.result){
@@ -56,8 +74,8 @@ export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userTe
     const generationMode=matter?'semantic-notice-3.12':goal?'semantic-notice-3.11':timedAction?'semantic-notice-3.10':refined?'semantic-notice-3.9':unified?'semantic-notice-3.8':integrity?'semantic-notice-3.7':eventNotice?'semantic-notice-3.6':serviceContext?'semantic-notice-3.5':actorContext?'semantic-notice-3.4':actorRoles?'semantic-notice-3.3':SEMANTIC_NOTICE_MODE
     return {ok:false,status:502,error:'INVALID_AI_RESPONSE',failureCategory:decoded.error?'model_output_decode':'semantic_root',failureReason:reason,execution:{generationMode,promptVersion,twoStep:{compilerVersion:compiled.audit.compilerVersion},modelFactSamples:[{index:0,status:response.status,actualModel:safeModel,usage,elapsedMs}],tokenUsage:usage?{input:usage.prompt_tokens,output:usage.completion_tokens,...(usage.total_tokens!==undefined?{total:usage.total_tokens}:{})}:null}}
   }
-  const truncated=decoded.audit.partial||payload?.choices?.[0]?.finish_reason==='length'
+  const truncated=payload?.choices?.[0]?.finish_reason==='length'
   if(truncated){compiled.result.quality.needsHumanReview=true;compiled.result.quality.reviewReasons.push('本次回答未完整结束，部分内容可能尚未整理。');compiled.result.ambiguities.push({id:'sem-truncated',field:'source_reference',message:'本次回答未完整结束，原文已保留。',options:['查看原文'],evidenceIds:[]})}
   const usage=payload.usage??null,elapsedMs=Date.now()-started
-  return {ok:true,result:compiled.result,execution:{generationMode:matter?'semantic-notice-3.12':goal?'semantic-notice-3.11':timedAction?'semantic-notice-3.10':refined?'semantic-notice-3.9':unified?'semantic-notice-3.8':integrity?'semantic-notice-3.7':eventNotice?'semantic-notice-3.6':serviceContext?'semantic-notice-3.5':actorContext?'semantic-notice-3.4':actorRoles?'semantic-notice-3.3':SEMANTIC_NOTICE_MODE,promptVersion,twoStep:{...compiled.audit,callCount:1,plannedCalls:1,omittedCalls:0,successfulSamples:1,elapsedMs,semanticBoundary:'Model semantic graph, source-backed time and deterministic storage mapping'},modelFactSamples:[{index:0,status:200,actualModel,finishReason:payload?.choices?.[0]?.finish_reason??null,facts:decoded.value,usage,elapsedMs,truncated}],tokenUsage:Number.isFinite(usage?.prompt_tokens)&&Number.isFinite(usage?.completion_tokens)?{input:usage.prompt_tokens,output:usage.completion_tokens,total:usage.total_tokens??usage.prompt_tokens+usage.completion_tokens}:null}}
+  return {ok:true,result:compiled.result,execution:{generationMode:matter?'semantic-notice-3.12':goal?'semantic-notice-3.11':timedAction?'semantic-notice-3.10':refined?'semantic-notice-3.9':unified?'semantic-notice-3.8':integrity?'semantic-notice-3.7':eventNotice?'semantic-notice-3.6':serviceContext?'semantic-notice-3.5':actorContext?'semantic-notice-3.4':actorRoles?'semantic-notice-3.3':SEMANTIC_NOTICE_MODE,promptVersion,twoStep:{...compiled.audit,callCount:1,plannedCalls:1,omittedCalls:0,successfulSamples:1,elapsedMs,semanticBoundary:'Model semantic graph, source-backed time and deterministic storage mapping'},modelFactSamples:[{index:0,status:200,actualModel,finishReason:payload?.choices?.[0]?.finish_reason??null,facts:decoded.value,outputRecovery:decoded.audit.partial?decoded.audit:null,usage,elapsedMs,truncated}],tokenUsage:Number.isFinite(usage?.prompt_tokens)&&Number.isFinite(usage?.completion_tokens)?{input:usage.prompt_tokens,output:usage.completion_tokens,total:usage.total_tokens??usage.prompt_tokens+usage.completion_tokens}:null}}
 }
