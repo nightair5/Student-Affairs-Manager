@@ -92,13 +92,23 @@ test('missing material container is reported as partial without claiming truncat
 
 test('an empty JSON-mode response fails transparently but still reports observed usage',async()=>{
   let count=0
-  const worker=createWorker({fetcher:async()=>{count++;return Response.json({model:'observed-flash',choices:[{finish_reason:'stop',message:{content:'   '}}],usage:{prompt_tokens:100,completion_tokens:20}})}})
+  const worker=createWorker({fetcher:async()=>{count++;return Response.json({id:'123e4567-e89b-12d3-a456-426614174000',model:'observed-flash',choices:[{finish_reason:'stop',message:{content:'   '}}],usage:{prompt_tokens:100,completion_tokens:20}})}})
   const response=await worker.fetch(new Request('https://local.test/api/deepseek/extract',{method:'POST',headers:{origin:'https://local.test','content-type':'application/json','x-student-affairs-recognition':'semantic-notice-3.11'},body:JSON.stringify({sourceType:'text',content:source,referenceTime:'2026-11-01T09:00:00+08:00',timezone:'Asia/Shanghai'})}),{DEEPSEEK_API_KEY:'SYNTHETIC_TEST_PLACEHOLDER',ALLOWED_ORIGINS:'https://local.test',DEEPSEEK_GENERATION_MODE:'semantic-notice-3.0'})
   const body=await response.json()
   assert.equal(count,1);assert.equal(response.status,502)
   assert.equal(body.failureReason,'MODEL_OUTPUT_EMPTY')
   assert.equal(body.execution.modelFactSamples[0].usage.completion_tokens,20)
+  assert.equal(body.execution.modelFactSamples[0].finishReason,'stop')
+  assert.equal(body.execution.modelFactSamples[0].upstreamResponseId,'123e4567-e89b-12d3-a456-426614174000')
   assert.equal(body.result,undefined)
+})
+
+test('arbitrary provider text cannot be exposed as a response identifier or finish reason',()=>{
+  const execution={modelFactSamples:[{upstreamResponseId:'sk-not-an-identifier',finishReason:'private source text',usage:{prompt_tokens:1,completion_tokens:2}}]}
+  const observed=safeSemanticExecution(execution)
+  assert.equal(observed.modelFactSamples[0].upstreamResponseId,null)
+  assert.equal(observed.modelFactSamples[0].finishReason,null)
+  assert.doesNotMatch(JSON.stringify(observed),/sk-not|private source/u)
 })
 
 test('an earlier uncertain send cannot be misreported as fully metered when the later response fails decoding',async()=>{

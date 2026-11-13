@@ -5,6 +5,7 @@ import { taskActionText } from '../lib/taskActionText'
 import { parseChineseTimeAst } from '../lib/timeSemantics'
 import { localMeetingBlock, localNamedMeeting } from './localMeetingBlock'
 import {normalizeSourceWithOffsets,alignRecognitionEvidence} from '../../cloudflare/source-text-index.mjs'
+import {itemPolarity} from '../../cloudflare/semantic-item-polarity.mjs'
 import {boundLocalResult} from './localResultCapacity'
 import { RECOGNITION_MODEL_NAME, RECOGNITION_PROMPT_VERSION } from './prompt'
 import type {
@@ -398,7 +399,15 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     confidence: item.confidence === '高' ? 0.9 : item.confidence === '中' ? 0.7 : 0.4,
     ...span,
   }})
-  const actionRequired = tasks.length + events.length > 0 && !/仅供参考|请知悉|自行查看/u.test(preprocessed.normalizedText)
+  // An informational phrase elsewhere in a notice does not negate an
+  // independently stated action. Check the candidate's own source clause;
+  // a cancelled or prohibited candidate still cannot establish an action.
+  const informationalMarker = /仅供参考|请知悉|自行查看/u.test(preprocessed.normalizedText)
+  const ownQuote = (ids: string[]) => parsedEvidence.find(entry => ids.includes(entry.id))?.quote ?? ''
+  const hasExplicitAction = parsed.length <= 20 && (tasks.some(task => task.inferenceLevel === 'explicit' && itemPolarity({kind:'task',action:task.actionVerb,object:task.actionObject,title:task.title},ownQuote(task.evidenceIds)) === 'active')
+    || events.some(event => event.inferenceLevel === 'explicit' && itemPolarity({kind:'event',title:event.title},ownQuote(event.evidenceIds)) === 'active')
+  )
+  const actionRequired = tasks.length + events.length > 0 && (!informationalMarker || hasExplicitAction)
   // Local parsing may create a placeholder time for a sentence with no action.
   // Keep the original information, rather than dangling references to discarded tasks.
   if (!actionRequired && events.length === 0) {

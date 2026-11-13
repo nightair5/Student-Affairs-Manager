@@ -447,7 +447,29 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     const needExpression=/^(?:如需|如有需要|有需要|有需求)/u.test(firstCondition)||/^(?:需要|需)[^，,。；;]{1,30}(?:同学|学生|小组|队伍|人员|者)$/u.test(firstCondition)||namedNeed||citedChoice
     const personalNeed=groundedCondition&&!hasEligibility&&!voluntary&&!prerequisite&&needExpression?groundedCondition:''
     const condition=voluntary||prerequisite||personalNeed?'':groundedCondition
-    const requirements=supportedRequirements([...(Array.isArray(item.requirements)?item.requirements:[]),...(item.kind==='task'?citedUnknownDeadline(item,ownText):[])],item.key)
+    // The model may put an explicit naming/marking instruction directly on
+    // a task. Retain it only when it can be uniquely located and its owner is
+    // unambiguous; never copy a paper-only rule onto an electronic delivery.
+    const taskNaming=[]
+    if(item.kind==='task'&&Array.isArray(item.naming)&&(item.naming.length>20||item.naming.some(value=>typeof value==='string'&&value.trim().length>800)))note('CAPACITY',item.key,'TASK_NAMING_INPUT_OVERFLOW')
+    if(item.kind==='task')for(const value of list(item.naming,20,800)){
+      const span=locateSourceQuote(value,source)
+      if(!span){note('REQUIREMENT',item.key,'TASK_NAMING_NOT_SOURCE_GROUNDED');continue}
+      if(conflictingDeliveryScope(source,span.literal,text(item.deliveryForm,80)||item.title,{explicitOnly:true})){note('REQUIREMENT',item.key,'TASK_NAMING_OTHER_DELIVERY_SCOPE');continue}
+      const cited=refs.some(quote=>{const owner=locateSourceQuote(quote,source);return owner&&owner.start<=span.start&&owner.end>=span.end})
+      // A single task does not make every instruction in the notice its own:
+      // allow uncited cross-section recovery only when the task object itself
+      // (or a meaningful suffix of it) is named in the original instruction.
+      const target=compact(text(item.object,80)),original=compact(span.literal)
+      let namedTarget=false
+      for(let length=Math.min(target.length,12);length>=2;length--){if(original.includes(target.slice(-length))){namedTarget=true;break}}
+      if(!cited&&(activeTaskKeys.size!==1||!namedTarget)){note('REQUIREMENT',item.key,'TASK_NAMING_OWNER_UNRESOLVED');continue}
+      const prior=result.evidence.find(entry=>entry.textStart===span.start&&entry.textEnd===span.end&&entry.field==='description')
+      if(new Set(ids).size>=20&&(!prior||!ids.includes(prior.id))){note('CAPACITY',item.key,'TASK_NAMING_EVIDENCE_OVERFLOW');continue}
+      const id=evidence(span.literal,'description',item.key,span.start)
+      if(id){ids.push(id);taskNaming.push(span.literal)}
+    }
+    const requirements=supportedRequirements([...(Array.isArray(item.requirements)?item.requirements:[]),...taskNaming,...(item.kind==='task'?citedUnknownDeadline(item,ownText):[])],item.key)
     if(conditionParts.missing.length)note('CONDITION',item.key,groundedCondition?'CONDITION_PARTIALLY_SOURCE_GROUNDED':'CONDITION_NOT_SOURCE_GROUNDED')
     for(const span of conditionParts.supported){const id=evidence(span.literal,'description',item.key,span.start);if(id)ids.push(id)}
     let entity,baseLines=[]

@@ -42,6 +42,18 @@ export function applySemanticActorRelations({result,pending,source,evidence,note
     const actor=assignment.actor.trim(),quote=assignment.evidence.trim(),actorQuote=typeof assignment.actorEvidence==='string'?assignment.actorEvidence.trim():quote
     const span=actor&&quote?locateSourceQuote(quote,source):null
     let actorSpan=actor&&actorQuote&&compact(actorQuote).includes(compact(actor))?locateSourceQuote(actorQuote,source):null
+    // A common role word can repeat throughout a notice. Resolve it only
+    // inside the uniquely cited action, never by picking a global occurrence.
+    // A possessive/object mention or an explicit other agent is not a subject.
+    if(!actorSpan&&span&&compact(actorQuote)===compact(actor)){
+      const within=locateSourceQuote(actor,source,{within:{start:span.start,end:span.end}})
+      if(within){
+        const prefix=compact(source.slice(span.start,within.start)),suffix=compact(source.slice(within.end,span.end))
+        const leading=!prefix||/^(?:请|各|所有|相关)$/u.test(prefix)
+        const notSubject=/^(?:的|之|证|卡|号|名单|材料|资料|信息|档案|由|被)/u.test(suffix)||/^.{0,16}(?:由|被)[^，,。；;]{1,20}/u.test(suffix)
+        if(leading&&!notSubject)actorSpan=within
+      }
+    }
     // In a continued clause, the actor may be stated earlier in the same
     // paragraph. Resolve only one literal occurrence before the action.
     if(!actorSpan&&span&&actor&&actorQuote===quote){

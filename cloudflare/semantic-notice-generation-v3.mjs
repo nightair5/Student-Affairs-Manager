@@ -27,6 +27,9 @@ function safeUsage(raw) {
   if(cached!==null)result.prompt_tokens_details={cached_tokens:cached}
   return result
 }
+const safeFinishReason=value=>['stop','length','content_filter','tool_calls','insufficient_system_resource','aborted'].includes(value)?value:null
+// Only retain known identifier shapes, never arbitrary provider text.
+const safeUpstreamResponseId=value=>typeof value==='string'&&/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|chatcmpl-[a-zA-Z0-9_-]{1,96})$/iu.test(value)?value:null
 
 // Keep billing and routing observation on a rejected compiled result, without
 // returning source text, model facts or arbitrary provider fields. Unknown or
@@ -42,7 +45,7 @@ export function safeSemanticExecution(execution) {
   const elapsedMs=Number.isSafeInteger(sample.elapsedMs)&&sample.elapsedMs>=0?sample.elapsedMs:null
   return {generationMode:safeName(execution.generationMode),promptVersion:safeName(execution.promptVersion),
     twoStep:{compilerVersion:safeName(execution.twoStep?.compilerVersion)},
-    modelFactSamples:[{index:0,status:Number.isInteger(sample.status)?sample.status:null,actualModel:safeName(sample.actualModel),usage,elapsedMs}],
+    modelFactSamples:[{index:0,status:Number.isInteger(sample.status)?sample.status:null,actualModel:safeName(sample.actualModel),finishReason:safeFinishReason(sample.finishReason),upstreamResponseId:safeUpstreamResponseId(sample.upstreamResponseId),usage,elapsedMs}],
     tokenUsage:usage?{input:usage.prompt_tokens,output:usage.completion_tokens,...(usage.total_tokens!==undefined?{total:usage.total_tokens}:{})}:null}
 }
 
@@ -66,16 +69,17 @@ export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userTe
   }
   const decoded=decodeSemanticNoticeOutput(payload?.choices?.[0]?.message?.content,{finishReason:payload?.choices?.[0]?.finish_reason})
   const actualModel=typeof payload?.model==='string'&&payload.model.trim()?payload.model.trim().slice(0,80):null
+  const finishReason=safeFinishReason(payload?.choices?.[0]?.finish_reason),upstreamResponseId=safeUpstreamResponseId(payload?.id)
   const compiled=compileSemanticNotice(decoded.value,{source,referenceTime,timezone,model:actualModel??'上游未提供',promptVersion,goalContextVersion})
   if(!compiled.result){
     const usage=safeUsage(payload?.usage),elapsedMs=Date.now()-started
     const safeModel=actualModel&&/^[a-zA-Z0-9._:/-]+$/u.test(actualModel)?actualModel:null
     const reason=decoded.error??'INVALID_SEMANTIC_ROOT'
     const generationMode=matter?'semantic-notice-3.12':goal?'semantic-notice-3.11':timedAction?'semantic-notice-3.10':refined?'semantic-notice-3.9':unified?'semantic-notice-3.8':integrity?'semantic-notice-3.7':eventNotice?'semantic-notice-3.6':serviceContext?'semantic-notice-3.5':actorContext?'semantic-notice-3.4':actorRoles?'semantic-notice-3.3':SEMANTIC_NOTICE_MODE
-    return {ok:false,status:502,error:'INVALID_AI_RESPONSE',failureCategory:decoded.error?'model_output_decode':'semantic_root',failureReason:reason,execution:{generationMode,promptVersion,twoStep:{compilerVersion:compiled.audit.compilerVersion},modelFactSamples:[{index:0,status:response.status,actualModel:safeModel,usage,elapsedMs}],tokenUsage:usage?{input:usage.prompt_tokens,output:usage.completion_tokens,...(usage.total_tokens!==undefined?{total:usage.total_tokens}:{})}:null}}
+    return {ok:false,status:502,error:'INVALID_AI_RESPONSE',failureCategory:decoded.error?'model_output_decode':'semantic_root',failureReason:reason,execution:{generationMode,promptVersion,twoStep:{compilerVersion:compiled.audit.compilerVersion},modelFactSamples:[{index:0,status:response.status,actualModel:safeModel,finishReason,upstreamResponseId,usage,elapsedMs}],tokenUsage:usage?{input:usage.prompt_tokens,output:usage.completion_tokens,...(usage.total_tokens!==undefined?{total:usage.total_tokens}:{})}:null}}
   }
   const truncated=payload?.choices?.[0]?.finish_reason==='length'
   if(truncated){compiled.result.quality.needsHumanReview=true;compiled.result.quality.reviewReasons.push('本次回答未完整结束，部分内容可能尚未整理。');compiled.result.ambiguities.push({id:'sem-truncated',field:'source_reference',message:'本次回答未完整结束，原文已保留。',options:['查看原文'],evidenceIds:[]})}
   const usage=payload.usage??null,elapsedMs=Date.now()-started
-  return {ok:true,result:compiled.result,execution:{generationMode:matter?'semantic-notice-3.12':goal?'semantic-notice-3.11':timedAction?'semantic-notice-3.10':refined?'semantic-notice-3.9':unified?'semantic-notice-3.8':integrity?'semantic-notice-3.7':eventNotice?'semantic-notice-3.6':serviceContext?'semantic-notice-3.5':actorContext?'semantic-notice-3.4':actorRoles?'semantic-notice-3.3':SEMANTIC_NOTICE_MODE,promptVersion,twoStep:{...compiled.audit,callCount:1,plannedCalls:1,omittedCalls:0,successfulSamples:1,elapsedMs,semanticBoundary:'Model semantic graph, source-backed time and deterministic storage mapping'},modelFactSamples:[{index:0,status:200,actualModel,finishReason:payload?.choices?.[0]?.finish_reason??null,facts:decoded.value,outputRecovery:decoded.audit.partial?decoded.audit:null,usage,elapsedMs,truncated}],tokenUsage:Number.isFinite(usage?.prompt_tokens)&&Number.isFinite(usage?.completion_tokens)?{input:usage.prompt_tokens,output:usage.completion_tokens,total:usage.total_tokens??usage.prompt_tokens+usage.completion_tokens}:null}}
+  return {ok:true,result:compiled.result,execution:{generationMode:matter?'semantic-notice-3.12':goal?'semantic-notice-3.11':timedAction?'semantic-notice-3.10':refined?'semantic-notice-3.9':unified?'semantic-notice-3.8':integrity?'semantic-notice-3.7':eventNotice?'semantic-notice-3.6':serviceContext?'semantic-notice-3.5':actorContext?'semantic-notice-3.4':actorRoles?'semantic-notice-3.3':SEMANTIC_NOTICE_MODE,promptVersion,twoStep:{...compiled.audit,callCount:1,plannedCalls:1,omittedCalls:0,successfulSamples:1,elapsedMs,semanticBoundary:'Model semantic graph, source-backed time and deterministic storage mapping'},modelFactSamples:[{index:0,status:200,actualModel,finishReason,upstreamResponseId,facts:decoded.value,outputRecovery:decoded.audit.partial?decoded.audit:null,usage,elapsedMs,truncated}],tokenUsage:Number.isFinite(usage?.prompt_tokens)&&Number.isFinite(usage?.completion_tokens)?{input:usage.prompt_tokens,output:usage.completion_tokens,total:usage.total_tokens??usage.prompt_tokens+usage.completion_tokens}:null}}
 }

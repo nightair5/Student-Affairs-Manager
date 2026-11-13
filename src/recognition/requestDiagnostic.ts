@@ -12,6 +12,9 @@ export interface RecognitionRequestDiagnostic {
  outputTokens:number|null
  failureCategory?:'model_output_decode'|'semantic_root'|null
  failureReason?:string|null
+ /** Supplier response identifier, when present in a recognized safe format. */
+ upstreamResponseId?:string
+ finishReason?:'stop'|'length'|'content_filter'|'tool_calls'|'insufficient_system_resource'|'aborted'
  modelActionCount:number|null
  compilerLossCount:number|null
  elapsedMs:number|null
@@ -32,6 +35,9 @@ export function responseDiagnostic(body:unknown,status:number,elapsedMs:number):
  if(body.failureCategory==='model_output_decode'||body.failureCategory==='semantic_root')result.failureCategory=body.failureCategory
  if(typeof body.failureReason==='string'&&/^[A-Z_]{1,80}$/u.test(body.failureReason))result.failureReason=body.failureReason
  const execution=body.execution,samples=Array.isArray(execution.modelFactSamples)?execution.modelFactSamples.filter(record):[]
+ const sample=samples[0]
+ if(typeof sample?.upstreamResponseId==='string'&&/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|chatcmpl-[a-zA-Z0-9_-]{1,96})$/iu.test(sample.upstreamResponseId))result.upstreamResponseId=sample.upstreamResponseId
+ if(sample?.finishReason==='stop'||sample?.finishReason==='length'||sample?.finishReason==='content_filter'||sample?.finishReason==='tool_calls'||sample?.finishReason==='insufficient_system_resource'||sample?.finishReason==='aborted')result.finishReason=sample.finishReason
  result.actualModels=[...new Set(samples.flatMap(s=>typeof s.actualModel==='string'?[s.actualModel.slice(0,80)]:[]))]
  result.generationMode=typeof execution.generationMode==='string'?execution.generationMode.slice(0,80):null
  result.compilerVersion=record(execution.twoStep)&&typeof execution.twoStep.compilerVersion==='string'?execution.twoStep.compilerVersion.slice(0,80):null

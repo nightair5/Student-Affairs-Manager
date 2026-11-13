@@ -26,6 +26,26 @@ const explicitlyRequiresAll=value=>{
  return false
 }
 
+// Return a unique verb phrase, allowing source wording to insert an explicit
+// qualifier (e.g. "加盖单位公章" for "加盖公章"). No fuzzy matching may
+// cross punctuation or choose one of several possible action positions.
+function uniqueActionOffset(passage,action){
+ const hits=new Set(),addExact=needle=>{for(let p=passage.indexOf(needle);p>=0;p=passage.indexOf(needle,p+1))hits.add(p)}
+ addExact(action)
+ if(hits.size===1)return [...hits][0]
+ if(hits.size>1||action.length<4)return null
+ for(let split=2;split<=action.length-2;split++){
+  const left=action.slice(0,split),right=action.slice(split)
+  for(let at=passage.indexOf(left);at>=0;at=passage.indexOf(left,at+1)){
+   const from=at+left.length,end=passage.indexOf(right,from)
+   if(end<from||end-from>12||/[，,。；;！？]|(?:或|取消|无需|无须|不必|不得|不能|不可|不再|不要|禁止|请勿)/u.test(passage.slice(from,end)))continue
+   hits.add(at)
+  }
+ }
+ return hits.size===1?[...hits][0]:null
+}
+const negatedActionPrefix=value=>/(?:无需|无须|不必|不用|不需要|不要求|不允许|不得|禁止|请勿|不要|不能|不可|不再|取消)(?:再|重新|另行|去|进行|继续|主动)*$/u.test(value)
+
 /** A model-declared dependency blocks real work, so require a uniquely cited
  * source passage that actually orders the two actions. A conjunction alone
  * does not establish a prerequisite. */
@@ -36,9 +56,19 @@ export function sourceSupportedDependency(source,parent,child){
  const citedOrder=(Array.isArray(child?.dependencyEvidence)?child.dependencyEvidence:[child?.dependencyEvidence]).slice(0,8)
   .map(quote=>typeof quote==='string'?locateSourceQuote(quote,source):null).filter(Boolean)
  for(const relation of citedOrder)for(const a of spans(parent))for(const b of spans(child)){
+  if(a.start===b.start&&a.end===b.end&&relation.start<=a.start&&relation.end>=a.end){
+   const passage=compact(source.slice(a.start,a.end)),first=uniqueActionOffset(passage,actionA),second=uniqueActionOffset(passage,actionB)
+   if(first!==null&&second!==null&&second>=first+actionA.length){
+    const before=passage.slice(0,first),between=passage.slice(first+actionA.length,second)
+    if(!/(?:无需|不必|不需要|不用|无须)(?:先|等待|在)/u.test(before+between)&&!negatedActionPrefix(between)&&/(?:后|之后|以后|方可|才可)/u.test(between))return true
+   }
+   continue
+  }
   if(a.start<relation.start||b.end>relation.end||a.end>b.start)continue
   const passage=compact(source.slice(a.start,b.end))
   if(/(?:无需|不必|不需要|不用)(?:先|等待)/u.test(passage))continue
+  const childOffset=uniqueActionOffset(passage,actionB)
+  if(childOffset!==null&&negatedActionPrefix(passage.slice(0,childOffset)))continue
   if(/(?:先|首先).{0,700}(?:再|然后|接着|之后)/u.test(passage))return true
  }
  for(const a of spans(parent))for(const b of spans(child)){
@@ -50,6 +80,7 @@ export function sourceSupportedDependency(source,parent,child){
   if(first<0||second<first+actionA.length)continue
   const before=passage.slice(0,first),between=passage.slice(first+actionA.length,second)
   if(/(?:无需|不必|不需要|不用)(?:先|等待)/u.test(before+between))continue
+  if(negatedActionPrefix(between))continue
   if((/(?:先|首先)/u.test(before)&&/(?:再|然后|接着|之后)/u.test(between))||/(?:后|之后|以后|方可|才可)/u.test(between))return true
  }
  return false

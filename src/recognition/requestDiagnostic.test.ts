@@ -1,7 +1,7 @@
 import {afterEach,describe,it,expect,vi} from 'vitest'
 import {ProxyDeepSeekExtractionService} from '../lib/deepseekExtraction'
 import {buildLocalRecognition} from './pipeline'
-import {recognitionDiagnostic,failureDiagnostic,ObservedRecognitionError} from './requestDiagnostic'
+import {recognitionDiagnostic,failureDiagnostic,ObservedRecognitionError,responseDiagnostic} from './requestDiagnostic'
 import {CapturePersistenceService} from '../domain/v2/capture'
 import {CanonicalWorkspaceRepository,MemoryWorkspaceRecordStore} from '../domain/v2/repository'
 import {createGoldenWorkspaceV8} from '../domain/v2/fixtures'
@@ -39,6 +39,24 @@ describe('capture-bound AI observations',()=>{
   vi.stubGlobal('fetch',vi.fn().mockResolvedValue(new Response(JSON.stringify(body),{status:502})))
   const error=await new ProxyDeepSeekExtractionService().recognize(input).catch(e=>e)
   expect(failureDiagnostic(error)).toMatchObject({state:'response',reason:'HTTP_ERROR',httpStatus:502,actualModels:['observed-flash'],inputTokens:101,outputTokens:22,failureCategory:'semantic_root',failureReason:'INVALID_SEMANTIC_ROOT',modelActionCount:null})
+ })
+ it('records a safe supplier response ID and finish reason for later reconciliation',()=>{
+  const sample={upstreamResponseId:'123e4567-e89b-12d3-a456-426614174000',finishReason:'stop'}
+  const observed=responseDiagnostic({execution:{modelFactSamples:[sample]}},502,2)
+  expect(observed).toMatchObject({upstreamResponseId:sample.upstreamResponseId,finishReason:'stop'})
+  const unsafe=responseDiagnostic({execution:{modelFactSamples:[{upstreamResponseId:'sk-not-an-identifier',finishReason:'private source text'}]}},502,2)
+  expect(unsafe.upstreamResponseId).toBeUndefined();expect(unsafe.finishReason).toBeUndefined()
+ })
+ it('persists a failed response identifier and usage without changing the original notice',async()=>{
+  const sample={upstreamResponseId:'123e4567-e89b-12d3-a456-426614174000',finishReason:'stop',actualModel:'observed-flash'}
+  vi.stubGlobal('fetch',vi.fn().mockResolvedValue(new Response(JSON.stringify({error:'INVALID_AI_RESPONSE',message:'识别未完成',failureReason:'MODEL_OUTPUT_EMPTY',execution:{modelFactSamples:[sample],tokenUsage:{input:101,output:22}}}),{status:502})))
+  const workspace=createGoldenWorkspaceV8(),store=new MemoryWorkspaceRecordStore(),repo=new CanonicalWorkspaceRepository(store);await repo.save(workspace)
+  const capture=new CapturePersistenceService(repo),handle=await capture.beginCapture({operationId:'observed-provider-error',sourceType:'text',title:input.sourceTitle,rawText:input.content,provider:'deepseek',modelName:null,promptVersion:null,pipelineVersion:'root-repair'})
+  const service=new ProxyDeepSeekExtractionService()
+  await expect(capture.recognize(handle,()=>service.recognize({...input,sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId}))).rejects.toThrow()
+  const saved=(await new CanonicalWorkspaceRepository(store).load())!,run=saved.recognitionRuns.find(r=>r.id===handle.recognitionRunId)!
+  expect(run.legacyData?.requestDiagnostic).toMatchObject({upstreamResponseId:sample.upstreamResponseId,finishReason:'stop',inputTokens:101,outputTokens:22})
+  expect(saved.sourceVersions.find(v=>v.id===handle.sourceVersionId)?.rawText).toBe(input.content)
  })
  it('persists a failed status observation on the source run while retaining its full input',async()=>{
   const workspace=createGoldenWorkspaceV8(),repo=new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore());await repo.save(workspace)

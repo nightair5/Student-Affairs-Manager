@@ -52,6 +52,17 @@ describe('owner-authorized direct mode',()=>{
     expect(workspaceV8ToLegacyView(imported).tasks[0].materials[0].requirements).toEqual(['不超过3页'])
   })
   it('keeps the original answer unchanged and creates a grounded ordinary task',()=>{const text='请于10月30日17:00前提交课程论文。',r=local(text),before=structuredClone(r),c=convertDirectResult(r,text);expect(r).toEqual(before);expect(c.result.standaloneTasks[0].title).toContain('课程论文');expect(c.result.timePoints.some(p=>p.normalizedValue==='2026-10-30T17:00')).toBe(true);expect(isRecognitionResult(c.result)).toBe(true)})
+  it('keeps an explicit action when a separate clause says the details are for reference',async()=>{
+    const text='请于10月30日17:00前提交申请表。补充说明仅供参考。'
+    const {repo,store,handle}=await setup(text)
+    const receipt=await commitDirectDraft(repo,handle.draftId,now)
+    const reloaded=(await new CanonicalWorkspaceRepository(store).load())!
+    expect(reloaded.tasks.some(task=>task.title.includes('提交')&&task.title.includes('申请表'))).toBe(true)
+    expect(reloaded.timePoints.some(point=>point.normalizedValue==='2026-10-30T17:00')).toBe(true)
+    expect(importWorkspaceV8(exportWorkspaceV8(reloaded)).tasks).toEqual(reloaded.tasks)
+    await undoDirectBatchPreservingEdits(repo,receipt.batch!.id)
+    expect((await repo.load())!.tasks).toHaveLength(0)
+  })
   it.each(['校历已更新，仅供参考。','11月2日公布考试成绩，无需办理。','原定11月2日的讲座取消，请知悉。'])('creates an explicit read action without reviving cancelled obligations: %s',text=>{const c=convertDirectResult(local(text),text);expect(c.result.standaloneTasks).toHaveLength(1);expect(c.result.standaloneTasks[0].title).toMatch(/^查看：/u);expect(c.result.timePoints.filter(p=>p.relatedTaskTempIds.includes('direct-read-notice')).every(p=>p.type==='planned_start')).toBe(true);expect(c.result.events).toHaveLength(0);expect(isRecognitionResult(c.result)).toBe(true)})
   it('retains unknown eligibility as labelled work without declaring it mandatory',()=>{const text='符合条件的同学请于10月30日17:00前提交奖学金申请表。',c=convertDirectResult(local(text),text);expect(c.result.standaloneTasks[0].title).toMatch(/^如符合条件/u);expect(c.items[0].tags).toContain('待确认');expect(c.result.timePoints.some(p=>p.normalizedValue==='2026-10-30T17:00')).toBe(true)})
   it('retains a separately cited condition instead of losing it at a paragraph boundary',()=>{const text='已缴费并放弃修读的同学可申请退费。\n请于10月30日17:00前提交退费申请表。',r=local(text),task=[...r.standaloneTasks,...r.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(wp=>wp.tasks)])].find(t=>t.actionObject.includes('退费申请表'))!;expect(task).toBeTruthy();task.description+='\n适用条件待确认：已缴费并放弃修读';r.evidence.push({id:'condition',sourceId:'source',quote:'已缴费并放弃修读',field:'requirement'});task.evidenceIds.push('condition');const c=convertDirectResult(r,text),item=c.result.standaloneTasks.find(t=>t.tempId===task.tempId)!;expect(item.title).toMatch(/^如符合条件/u);expect(c.items.find(i=>i.tempId===item.tempId)!.tags).toContain('待确认')})
