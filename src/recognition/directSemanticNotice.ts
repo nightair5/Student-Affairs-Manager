@@ -2,10 +2,57 @@ import type {RecognitionResult,TaskSuggestionV2} from './types'
 import type {DirectConversion,DirectItem,DirectTag} from './directResult'
 import {cleanDirectTopic} from './directRetention'
 
-/** The semantic adapter already assigned and checked source-backed facts.
- * Direct mode changes only selection/presentation, never re-extracts them. */
+/** A model can explicitly identify both ways to submit the same document but
+ * omit its material rows. Recover only that already-declared object when the
+ * same literal choice, each format, and its branch are all source-backed. The
+ * material is required within its chosen branch, not across both branches. */
+function retainChoiceDeliverables(result:RecognitionResult,source:string):void {
+  const literal=(id:string)=>{
+    const ref=result.evidence.find(e=>e.id===id),quote=ref?.quotedText||ref?.quote||''
+    if(!quote)return ''
+    const at=ref?.textStart
+    return typeof at==='number'&&source.slice(at,at+quote.length)===quote||source.indexOf(quote)>=0&&source.indexOf(quote)===source.lastIndexOf(quote)?quote:''
+  }
+  for(const choice of result.conflicts){
+    if(!choice.id.startsWith('sem-choice-')||choice.requiresDecision||choice.entityTempIds.length!==2
+      ||!choice.evidenceIds.some(id=>/(?:任选|二选一|择一)/u.test(literal(id))))continue
+    const pair=choice.entityTempIds.map(id=>result.standaloneTasks.find(t=>t.tempId===id))
+    if(pair.some(t=>!t))continue
+    const [a,b]=pair as [TaskSuggestionV2,TaskSuggestionV2]
+    if(!a.actionObject||a.actionObject!==b.actionObject||a.actionObject.length>60||a.sourceStatus==='uncertain'||b.sourceStatus==='uncertain'
+      ||![a,b].every(t=>/^(?:提交|上传|递交|报送|发送|交|邮寄)$/u.test(t.actionVerb)))continue
+    const shared=a.evidenceIds.find(id=>b.evidenceIds.includes(id)&&literal(id).includes(a.actionObject)
+      &&/(?:任选|二选一|择一)/u.test(literal(id)))
+    if(!shared)continue
+    const branches=[a,b].map(task=>{
+      const label=/^交付形式[：:]\s*([^\n]{1,20})/mu.exec(task.description)?.[1].trim()??''
+      const branch=task.evidenceIds.find(id=>id!==shared&&literal(id).includes(label))
+      const supported=label&&/(?:版|文件|资料|材料|扫描件|纸质|电子|PDF|Word|DOCX?)/iu.test(label)&&branch
+      const channel=/^提交渠道[：:]\s*([^\n]{1,100})/mu.exec(task.description)?.[1].trim()??''
+      return {task,label,branch,supported,channel:branch&&channel&&literal(branch).includes(channel)?channel:null}
+    })
+    if(branches.some(branch=>!branch.supported)||branches[0].label===branches[1].label
+      ||!branches.every(branch=>literal(shared).includes(branch.label)))continue
+    for(const {task,label,branch,channel} of branches){
+      if(result.materials.some(m=>m.relatedTaskTempIds.includes(task.tempId)))continue
+      const id=`direct-choice-material:${task.tempId}`
+      if(result.materials.some(m=>m.tempId===id))continue
+      if(id.length>100||task.materialTempIds.length>=20||result.materials.length>=60){
+        result.quality.needsHumanReview=true
+        result.quality.reviewReasons=[...new Set([...result.quality.reviewReasons,'部分材料尚未整理，请查看原通知。'])].slice(-20)
+        continue
+      }
+      result.materials.push({tempId:id,name:task.actionObject,required:true,formatRequirements:[label],namingRequirements:[],requirements:[],quantity:null,submissionChannel:channel,relatedTaskTempIds:[task.tempId],evidenceIds:[shared,branch!],confidence:task.confidence,selected:true})
+      task.materialTempIds=[...task.materialTempIds,id]
+    }
+  }
+}
+
+/** Direct mode changes selection/presentation, with a narrowly scoped repair
+ * for a choice's explicitly cited deliverable omitted by the model. */
 export function convertSemanticNotice(input:RecognitionResult,source:string):DirectConversion {
   const result=structuredClone(input),items:DirectItem[]=[],omitted:DirectConversion['omitted']=[]
+  retainChoiceDeliverables(result,source)
   result.milestones=[]
   result.standaloneTasks=result.standaloneTasks.map(task=>{
     const condition=/适用条件待确认|资格待确认/u.test(task.description)
