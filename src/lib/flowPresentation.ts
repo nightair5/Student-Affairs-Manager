@@ -14,7 +14,7 @@ export function flowDate(value:string|null|undefined,timeZone='Asia/Shanghai'):s
 export function flowTaskDate(task:Task,timeZone='Asia/Shanghai'):string {
   const plan=task.plannedStart||task.directDate
   const windowLabel=task.sourceWindowLabel?`${task.sourceWindowChoiceBranch?`方式${task.sourceWindowChoiceBranch}的`:'办理'}时段：${task.sourceWindowLabel}`:''
-  const deadline=task.deadline?`${flowDate(task.deadline,timeZone)} 截止`:task.sourceDeadlineLabel&&/另行通知|另行公布|待通知/u.test(task.sourceDeadlineLabel)?'截止时间另行通知':''
+  const deadline=task.deadline?`${flowDate(task.deadline,timeZone)} 截止${task.sourceWeekdayInferred?'（按整理日期推算）':''}`:task.sourceDeadlineLabel&&/另行通知|另行公布|待通知/u.test(task.sourceDeadlineLabel)?'截止时间另行通知':''
   const parts=[plan?`${flowDate(plan,timeZone)} 计划`:'',deadline,windowLabel].filter(Boolean)
   if(parts.length)return parts.join(' · ')
   if(task.sourceDeadlineLabel&&/另行通知|另行公布|待通知/u.test(task.sourceDeadlineLabel))return '截止时间另行通知'
@@ -42,8 +42,8 @@ export function flowEventDate(event:Event,hint?:string,timeZone='Asia/Shanghai')
     return event.endAt?`开始时间待定 · ${flowDate(event.endAt,timeZone)}结束`:clock??(hint?`${hint} · 时间待定`:'时间待定')
   }
   const start=flowDate(event.startAt,timeZone)
-  if(!event.endAt)return start
-  return `${start} — ${flowDate(event.endAt,timeZone)}`
+  const date=event.endAt?`${start} — ${flowDate(event.endAt,timeZone)}`:start
+  return `${date}${event.sourceWeekdayInferred?'（按整理日期推算）':''}`
 }
 
 export function flowEditValue(value:string|null|undefined):string {

@@ -125,6 +125,8 @@ export interface Task {
   estimatedMinutes: number
   estimatedMinutesKnown?: boolean
   sourceDeadlineLabel?: string
+  /** The source gives a weekday but no calendar date. */
+  sourceWeekdayInferred?: boolean
   /** Read-only display of an existing, source-verified operating window. */
   sourceWindowLabel?: string
   /** Read-only start of one source-verified operating window; not a personal plan. */
@@ -364,6 +366,8 @@ export interface Event {
   personalCompleted?: boolean
   personalCompletionRevision?: string
   directTags?: string[]
+  /** The source gives a weekday but no calendar date. */
+  sourceWeekdayInferred?: boolean
   estimatedMinutes?: number | null
   estimatedMinutesKnown?: boolean
   id: string

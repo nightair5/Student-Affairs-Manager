@@ -2,7 +2,7 @@ import {locateOwnedSourceQuote,locateSourceQuote} from './source-text-index.mjs'
 
 // Context may supply a missing part of an already cited fact, but never a
 // different event's time or an unsupported paraphrase as a literal quote.
-export const SOURCE_DAY_PATTERN=/(?<!\d)(?:\d{4}[-/.]\d{1,2}[-/.]\d{1,2}(?!\d)|(?:\d{4}\s*年\s*)?\d{1,2}\s*月\s*\d{1,2}(?:\s*[日号]|(?![\d:]))|\d{1,2}[/.]\d{1,2}(?:\s*[日号])?(?![\d:]))|(?:本周|下周|周|星期)[一二三四五六日天]|今天|明天|后天|今日|明日/u
+export const SOURCE_DAY_PATTERN=/(?<!\d)(?:\d{4}[-/.]\d{1,2}[-/.]\d{1,2}(?!\d)|(?:\d{4}\s*年\s*)?\d{1,2}\s*月\s*\d{1,2}(?:\s*[日号]|(?![\d:]))|\d{1,2}[/.]\d{1,2}(?:\s*[日号])?(?![\d:]))|(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]|今天|明天|后天|今日|明日/u
 const fold=value=>value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const clock=value=>/(?:\d{1,2}\s*[:：]\s*\d{2}|\d{1,2}\s*[点时](?:\d{1,2}分?)?)/u.test(value)
 const differentDay=/(?:次日|翌日|第二天|隔日|隔天|次周|翌周|改为|改至|改到|改期|延期|调整为|调整至|更正为)/u

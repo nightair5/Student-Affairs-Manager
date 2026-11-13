@@ -187,6 +187,14 @@ function sourceDeadlineLabel(workspace: WorkspaceV8, taskId: string): string | u
     ? point.rawText || undefined : undefined
 }
 
+/** A projection of the saved source time, never a newly calculated date. */
+function sourceWeekdayInferred(point: WorkspaceV8['timePoints'][number] | undefined): boolean {
+  if (!point?.normalizedValue || point.needsConfirmation || point.legacyData?.directManual === true) return false
+  const raw = point.rawText.normalize('NFKC')
+  return /(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]/u.test(raw)
+    && !/(?:\d{4}\s*年\s*)?\d{1,2}\s*月\s*\d{1,2}|\d{4}[-/.]\d{1,2}[-/.]\d{1,2}|(?<!\d)\d{1,2}[/.]\d{1,2}(?!\d)/u.test(raw)
+}
+
 function userEditedDraftDeadline(item: LegacyDraft['items'][number] | undefined): boolean {
   return Boolean(item?.history?.some((entry) => {
     if (entry.actor !== 'user') return false
@@ -408,6 +416,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       estimatedMinutes: item.estimatedMinutes ?? 60,
       estimatedMinutesKnown: item.estimatedMinutes !== null,
       sourceDeadlineLabel: sourceDeadlineLabel(workspace, item.id),
+      ...(sourceWeekdayInferred(preferredTaskDeadlinePoint(workspace, item.id)) ? { sourceWeekdayInferred: true } : {}),
       sourceWindowLabel: windowLabel,
       sourceWindowStart: windowStart,
       sourceWindowChoiceBranch: sourceWindowChoiceBranch(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions),
@@ -642,6 +651,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     title: item.title,
     description: item.description ?? '',
     startAt: item.startTimePointId ? workspace.timePoints.find((point) => point.id === item.startTimePointId)?.normalizedValue ?? null : null,
+    ...(sourceWeekdayInferred(workspace.timePoints.find((point) => point.id === item.startTimePointId)) ? { sourceWeekdayInferred: true } : {}),
     endAt: item.endTimePointId ? workspace.timePoints.find((point) => point.id === item.endTimePointId)?.normalizedValue ?? null : null,
     location: item.location ?? undefined,
     evidenceIds: stringArray(item.legacyData?.evidenceIds),

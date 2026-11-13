@@ -1,5 +1,5 @@
 // GENERATED from src/lib/timeSemantics.ts; do not edit.
-// source-sha256: c2607cc9e18f06fbb1d60ea9f46664d71c48bd0c746f4228cc242233af2643a8
+// source-sha256: bc4c507e2e15409f54750b8828b0dea244d7180243f5f9ac7c3f2f14c3bdb4f1
 export const DEFAULT_WORKSPACE_TIMEZONE = 'Asia/Shanghai';
 const DATE_ONLY_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/u;
 const LOCAL_DATE_TIME_PATTERN = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.\d{1,3})?)?$/u;
@@ -218,11 +218,25 @@ function absoluteDateCandidates(text, reference) {
     }
     return results;
 }
-function relativeDateCandidates(text, reference) {
+function relativeDateCandidates(text, reference, resolveBareWeekday = false) {
     const results = [];
-    const pattern = /今天|今日|明天|后天|(?:本周|这周|下周)[一二三四五六日天]/gu;
+    const pattern = resolveBareWeekday
+        ? /今天|今日|明天|后天|(?:本|这|下|上)(?:个)?(?:周|星期|礼拜)[一二三四五六日天]|(?:周|星期|礼拜)[一二三四五六日天]/gu
+        : /今天|今日|明天|后天|(?:本周|这周|下周)[一二三四五六日天]/gu;
     for (const match of text.matchAll(pattern)) {
         const value = match[0];
+        const index = match.index ?? 0;
+        const qualified = /^(?:本|这|下|上)/u.test(value);
+        // A recurring schedule is not a single occurrence. The direct adapter
+        // also checks the whole source span, but callers can use this AST alone.
+        if (resolveBareWeekday && /(?:每(?:个|一)?|逢)\s*$/u.test(text.slice(0, index)))
+            continue;
+        // A weekday in parentheses after a calendar date is a label for that
+        // date, not a second date anchored to the notification's receipt week.
+        if (resolveBareWeekday && !qualified && /(?:\d{1,2}\s*[日号]|\d{4}[-/.]\d{1,2}[-/.]\d{1,2})\s*[（(]\s*$/u.test(text.slice(0, index)))
+            continue;
+        if (resolveBareWeekday && !qualified && /^\s*[（(]\s*(?:\d{4}\s*年\s*)?\d{1,2}\s*月\s*\d{1,2}(?:\s*[日号])?\s*[）)]/u.test(text.slice(index + value.length)))
+            continue;
         let target = reference;
         if (value === '明天')
             target = addCalendarDays(reference, 1);
@@ -232,8 +246,11 @@ function relativeDateCandidates(text, reference) {
             const weekdays = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 日: 7, 天: 7 };
             const desired = weekdays[value.at(-1) ?? ''];
             const current = new Date(Date.UTC(reference.year, reference.month - 1, reference.day)).getUTCDay() || 7;
-            const weekOffset = value.startsWith('下周') ? 7 : 0;
-            target = addCalendarDays(reference, desired - current + weekOffset);
+            const weekOffset = value.startsWith('下') ? 7 : value.startsWith('上') ? -7 : 0;
+            const offset = resolveBareWeekday && !qualified
+                ? (desired - current + 7) % 7
+                : desired - current + weekOffset;
+            target = addCalendarDays(reference, offset);
         }
         results.push({ ...target, index: match.index ?? 0, end: (match.index ?? 0) + match[0].length, kind: 'relative' });
     }
@@ -307,7 +324,7 @@ export function parseChineseTimeAst(rawText, options) {
     const correctionOffset = correction ? (correction.index ?? 0) + correction[0].length : 0;
     const parseText = correction ? normalizedText.slice(correctionOffset) : normalizedText;
     const absoluteDates = absoluteDateCandidates(parseText, reference);
-    const relativeDates = relativeDateCandidates(parseText, reference);
+    const relativeDates = relativeDateCandidates(parseText, reference, options.resolveBareWeekday);
     const orderedDates = [...absoluteDates, ...relativeDates].sort((left, right) => left.index - right.index);
     // A matching parenthesized weekday/date is one date expressed twice, not a
     // second event. A disagreement or a separate clause must remain a conflict.
@@ -333,6 +350,10 @@ export function parseChineseTimeAst(rawText, options) {
         return vagueTimeAst(rawText, options.type, timezone, ['conflicting_dates']);
     if (dates[1] && isDateRange && !validCalendarDate(dates[1]))
         return vagueTimeAst(rawText, options.type, timezone, ['invalid_range_end_date']);
+    if (options.resolveBareWeekday && dates[1] && isDateRange
+        && formatCalendarDate(dates[1]) < formatCalendarDate(firstDate)) {
+        return vagueTimeAst(rawText, options.type, timezone, ['ambiguous_weekday_range']);
+    }
     if (/deadline$/u.test(options.type) && /预计[^，。]{0,20}(?:公布|发布|公示)/u.test(parseText)) {
         return vagueTimeAst(rawText, options.type, timezone, ['non_deadline_time_context']);
     }

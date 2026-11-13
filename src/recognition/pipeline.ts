@@ -214,7 +214,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
   const candidates=createSuggestions(preprocessed.normalizedText, input.sourceType, input.sourceTitle, input.referenceTime, input.timezone,{sourceOffsets:true})
   const parsed = candidates.filter(item=>!isDescriptiveLocalCandidate(item,preprocessed.normalizedText,sections)).map(item => {
     const meeting = localMeetingBlock(preprocessed.normalizedText, item.evidence)
-    return meeting ? { ...item, title: meeting.title, evidence: meeting.quote,evidenceRefs:undefined, timePoint: parseChineseTimeAst(meeting.timeText, { referenceTime: input.referenceTime, timezone: input.timezone, type: 'event_start' }) } : item
+    return meeting ? { ...item, title: meeting.title, evidence: meeting.quote,evidenceRefs:undefined, timePoint: parseChineseTimeAst(meeting.timeText, { referenceTime: input.referenceTime, timezone: input.timezone, type: 'event_start', resolveBareWeekday: true }) } : item
   })
   // Local parsing cannot yet guarantee a complete role/eligibility list. Do
   // not describe such a result as complete merely because a heading and one
@@ -269,6 +269,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
       referenceTime: input.referenceTime,
       timezone: input.timezone,
       type: timePointType,
+      resolveBareWeekday: true,
     })
     const timeSelected = task.inferenceLevel === 'explicit'
       && timeAst.normalizedValue !== null

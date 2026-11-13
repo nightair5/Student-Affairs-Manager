@@ -4,8 +4,8 @@ import { parseDirectSourceTime } from '../../cloudflare/direct-source-time.mjs'
 
 const change = /调整至|调整为|更改为|改为|改至|延期至|延\s*期至|更正为|现为|旧截止取消了，改/gu
 const obsolete = /原定|原截止|旧截止|之前说|原时间/u
-const alternatives = /任选|备选|可选择|任一|(?:日|号|\d)\s*或.{0,20}(?:日|号)/u
-const deadline = /截止|截至|最迟|不晚于|不得晚于|之前|以前|[日号点分\d]\s*前/u
+const alternatives = /任选|备选|可选择|任一|(?:日|号|\d)\s*或.{0,20}(?:日|号)|(?:周|星期|礼拜)[一二三四五六日天].{0,16}或.{0,16}(?:周|星期|礼拜)[一二三四五六日天]/u
+const deadline = /截止|截至|最迟|不晚于|不得晚于|之前|以前|[日号点分\d]\s*前|(?:周|星期|礼拜)[一二三四五六日天]\s*前/u
 const withoutQualificationCancellation = (s:string) => s.replace(/取消(?:其)?(?:申请|参评|获奖|评选)?资格|逾期[^，。；]{0,14}(?:不再受理|不予受理)|不得(?:缺席|迟到|早退)/gu,'')
 
 export function timeSourceContext(source:string,raw:string):{text:string;start:number;at:number}|null {

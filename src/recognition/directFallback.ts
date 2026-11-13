@@ -248,11 +248,12 @@ function improveLocalActions(input:RecognitionResult,source:string,options:{scop
    })
   })
  })
+ const cutoffTimezone=r.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
  const cutoff=(q:string)=>{
   const c=q.normalize('NFKC').replace(/\s/gu,'')
   const applicationEnd=/申请|申报|报名/u.test(q)&&/逾期[^。；]{0,20}(?:不再受理|不予受理|不受理)/u.test(source)
-  if(/任选|备选|可选择|\d日或/u.test(c)||(!/截止|截至|之前|以前|[日号点分\d]前/u.test(c)&&!applicationEnd))return null
-  const parsed=parseDirectSourceTime(applicationEnd?q+'。逾期不再受理':q,{type:'task_deadline',referenceTime:r.createdAt,timezone:'Asia/Shanghai'})
+  if(/任选|备选|可选择|\d日或/u.test(c)||(!/截止|截至|之前|以前|[日号点分\d]前|(?:周|星期|礼拜)[一二三四五六日天](?:(?:上午|中午|下午|晚上))?前/u.test(c)&&!applicationEnd))return null
+  const parsed=parseDirectSourceTime(applicationEnd?q+'。逾期不再受理':q,{type:'task_deadline',referenceTime:r.createdAt,timezone:cutoffTimezone})
   return parsed.normalizedValue&&!parsed.needsConfirmation?parsed:null
  }
  const allCutoffs=spans.flatMap(s=>{const p=cutoff(s.text);return p?[{...s,p}]:[]})

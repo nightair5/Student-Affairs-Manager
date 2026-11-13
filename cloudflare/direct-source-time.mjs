@@ -1,11 +1,12 @@
 import {parseTwoStepTime} from './two-step-time.mjs'
 import {sourceTimeKind} from './source-time-kind.mjs'
-export const DIRECT_SOURCE_TIME_VERSION='direct-source-time-1.0.8'
+export const DIRECT_SOURCE_TIME_VERSION='direct-source-time-1.0.9'
 const weekdays={日:0,天:0,一:1,二:2,三:3,四:4,五:5,六:6}
 const next=v=>{if(!v)return v;const d=new Date(v.slice(0,10)+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10)+v.slice(10)}
 /** Formatting adapter for the opt-in direct path. Evidence remains the exact
  * original span. It neither changes the legacy parser nor resolves ambiguity. */
 export function parseDirectSourceTime(raw,options){
+ options={...options,resolveBareWeekday:true}
  // Compact clocks are accepted only with an explicit day period and cutoff
  // marker. Ordinary quantities such as “700人” are never clock candidates.
  let invalidCompactClock=false
@@ -49,6 +50,8 @@ export function parseDirectSourceTime(raw,options){
   }
  }
  if(decorations.length&&parsed.normalizedValue){const date=rule==='EXPLICIT_24H_CIVIL_DAY_ROLLOVER'&&!parsed.rangeEndNormalizedValue?new Date(parsed.normalizedValue.slice(0,10)+'T00:00:00Z'):null;if(date)date.setUTCDate(date.getUTCDate()-1);const day=(date??new Date(parsed.normalizedValue.slice(0,10)+'T00:00:00Z')).getUTCDay();if(decorations.length===1&&weekdays[decorations[0][1]]!==day)return{...parsed,rawText:raw,normalizedValue:null,rangeEndNormalizedValue:null,precision:'vague',isAllDay:false,needsConfirmation:true,issues:[...parsed.issues,'weekday_date_conflict'],formatRule:'SOURCE_WEEKDAY_CONFLICT_NOT_RESOLVED'}}
+ const weekdayBeforeDate=[...compact.matchAll(/(?:周|星期|礼拜)([一二三四五六日天])\((?=(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]?\))/gu)]
+ if(weekdayBeforeDate.length===1&&parsed.normalizedValue&&weekdays[weekdayBeforeDate[0][1]]!==new Date(parsed.normalizedValue.slice(0,10)+'T00:00:00Z').getUTCDay())return{...parsed,rawText:raw,normalizedValue:null,rangeEndNormalizedValue:null,precision:'vague',isAllDay:false,needsConfirmation:true,issues:[...parsed.issues,'weekday_date_conflict'],formatRule:'SOURCE_WEEKDAY_CONFLICT_NOT_RESOLVED'}
  if(/下班前|午休前|上班前/u.test(clean)&&!/[0-2]?[0-9]:[0-5][0-9]/u.test(clean))return{...parsed,rawText:raw,normalizedValue:null,rangeEndNormalizedValue:null,precision:'vague',isAllDay:false,needsConfirmation:true,issues:[...parsed.issues,'office_clock_not_stated'],formatRule:'UNSTATED_OFFICE_CLOCK_NOT_RESOLVED'}
  // For an explicitly qualified cutoff range, parse the endpoint on its own.
  // The generic parser may attach the last clock to the first date. Never let

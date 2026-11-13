@@ -26,11 +26,39 @@ export const SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION='semantic-notice-compil
 export const SEMANTIC_MATTER_COMPILER_VERSION='semantic-notice-compiler-1.0.30'
 export const SEMANTIC_PRESERVATION_COMPILER_VERSION='semantic-notice-compiler-1.0.31'
 export const SEMANTIC_ROLE_SCOPE_COMPILER_VERSION='semantic-notice-compiler-1.0.32'
-export const SEMANTIC_PARTICIPATION_COMPILER_VERSION='semantic-notice-compiler-1.0.33'
+export const SEMANTIC_PARTICIPATION_COMPILER_VERSION='semantic-notice-compiler-1.0.34'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
 const sourceDay = SOURCE_DAY_PATTERN
+
+/** Recover only a single weekday whose role and owner are explicit in one
+ * source-backed clause. Never borrow a weekday from a neighbouring item. */
+function citedWeekdayTime(source,item,kind){
+  const action=compact(text(item.action,20)),target=compact(text(item.object,80)),title=compact(text(item.title,160)),found=[]
+  for(const quote of list(item.evidence,12,160)){
+    const citation=locateSourceQuote(quote,source)
+    if(!citation)continue
+    for(const match of citation.literal.matchAll(/[^，,。；;！？\n]{1,160}/gu)){
+      const clause=match[0].trim(),normalized=compact(clause)
+      if(!clause||/(?:每(?:个|一)?|逢)(?:周|星期|礼拜)|任选|备选|或者|或|暂定|可能|原定|取消|另行/u.test(normalized))continue
+      if(/\d{1,2}月\d{1,2}|\d{4}[-/.]\d{1,2}[-/.]\d{1,2}/u.test(normalized))continue
+      const days=[...normalized.matchAll(/(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]/gu)]
+      if(days.length!==1)continue
+      if(kind==='task'){
+        const actionAt=normalized.indexOf(action)
+        if(!action||!target||actionAt<0||!normalized.includes(target)||days[0].index>=actionAt)continue
+        if(!/(?:前|截止|截至|最迟)/u.test(normalized.slice(days[0].index,actionAt)))continue
+        if(/(?:无需|无须|不必|不要|不得|禁止|请勿)/u.test(normalized))continue
+        found.push({role:'deadline',raw:clause,sourceRecovered:true})
+      }else if(title&&normalized.includes(title)&&/(?:举行|举办|召开|开展|进行)/u.test(normalized)&&!/截止|报名|提交|缴费/u.test(normalized)){
+        found.push({role:'start',raw:clause,sourceRecovered:true})
+      }
+    }
+  }
+  const unique=[...new Map(found.map(entry=>[entry.role+'\0'+entry.raw,entry])).values()]
+  return unique.length===1?unique[0]:null
+}
 
 // Resolve an explicit 同日 only within the same source sentence, and only when
 // that sentence contains one unambiguous preceding calendar date. Preserve the
@@ -538,6 +566,10 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     if(kind==='task')entity.dependencyTempIds=list(item.dependsOn,20,40).flatMap(key=>{const dependency=keys.get(key);if(dependency?.kind!=='task'){note('RELATION',item.key,'DEPENDENCY_NOT_FOUND');return []}if(refinedContract&&!sourceSupportedDependency(source,dependency.item,item)){note('RELATION',item.key,'DEPENDENCY_NOT_SOURCE_GROUNDED');return []}return [dependency.entity.tempId]})
     const sharedDay=kind==='event'?modelOwnedSharedDay(source,item,{allowSectionHeading:unifiedContract}):null
     const timeEntries=kind==='task'?combineExplicitWindowEntries(source,item).map(entry=>sourceOpenEndedWindow(source,item,entry)??entry):(Array.isArray(item.times)?item.times.slice(0,20):[])
+    if(participationEnabled&&!timeEntries.some(entry=>entry?.role===(kind==='task'?'deadline':'start'))){
+      const recovered=citedWeekdayTime(source,item,kind)
+      if(recovered&&timeEntries.length<20){timeEntries.push(recovered);audit.facts.push({role:'source_cited_weekday',item:item.key,raw:recovered.raw})}
+    }
     const channelWindow=kind==='task'?(channelOwnedWindow(source,item,pending,raw.summary)??sourceSummaryDeliveryWindow(source,item,pending,raw.summary,raw.topic)):null
     if(channelWindow&&timeEntries.length<20&&!timeEntries.some(entry=>entry?.role==='window')){timeEntries.push(channelWindow);audit.facts.push({role:channelWindow.sourceRecovered?'document_window_link':'channel_window_link',item:item.key,raw:channelWindow.raw})}
     const actionParts=(goalContract||promptVersion==='recognition-semantic-notice-3.10.0')&&kind==='task'?text(item.action,80).split(/(?:并且|然后|以及|并|再)/u).map(value=>compact(value)).filter(Boolean):[]
@@ -671,9 +703,11 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const sameClauseWindows=timeEntries.filter(time=>time?.role==='window'&&typeof time.raw==='string'&&compact(normalizedClause).includes(compact(time.raw)))
       const explicitlyUnchosen=sameClauseWindows.length>=2&&/(?:或者|或|任选|择一)/u.test(normalizedClause)&&/(?:可能|拟于|尚未确定|未确定|未定|待定|候选|备选|任选)/u.test(normalizedClause)
       const sourceCandidate=entry.role==='window'&&(explicitlyUnchosen||candidateScope.test(normalizedClause)&&(requirements.some(requirement=>candidateScope.test(requirement)&&compact(requirement).includes(compact(span.literal)))||sameClauseWindows.length>=2))
-      const alternative=/任选|备选|可选择|或者|或/u.test(normalizedTime)||sourceCandidate
+      const weekdayChoice=/(?:周|星期|礼拜)[一二三四五六日天][^。；;\n]{0,16}(?:或|任选|择一)[^。；;\n]{0,16}(?:周|星期|礼拜)[一二三四五六日天]/u.test(normalizedClause)
+      const alternative=/任选|备选|可选择|或者|或/u.test(normalizedTime)||sourceCandidate||weekdayChoice
       const cutoffClause=normalizedClause.replace(/提前/gu,'').replace(/[（(](?:周|星期)[一二三四五六日天][）)]/gu,'').replace(/\s/gu,'')
-      const explicitCutoff=/(?:截止|截至|最迟|不晚于|之前|以前|(?:日|号|分|时|点|\d)前)/u.test(cutoffClause)
+      const recurringWeekday=/(?:每(?:个|一)?|逢)((?:周|星期|礼拜)[一二三四五六日天](?:(?:[、,，和或及]|或者)(?:(?:每(?:个|一)?|逢)?(?:周|星期|礼拜))?[一二三四五六日天])*)/u.exec(cutoffClause)
+      const explicitCutoff=/(?:截止|截至|最迟|不晚于|之前|以前|(?:日|号|分|时|点|\d)前|(?:周|星期|礼拜)[一二三四五六日天]前)/u.test(cutoffClause)
         ||/(?:申请|报名|提交|报送)[^。；;]{0,20}(?:时间|期限)/u.test(cutoffClause)&&/逾期(?:将)?(?:不再受理|不予受理|不受理)/u.test(cutoffClause)&&!/办理窗口|开放时间/u.test(cutoffClause)
         ||/^即日起(?:至|到)/u.test(compact(normalizedTime))&&/逾期[^，,。；;]{0,12}(?:不再受理|不予受理|不受理)/u.test(cutoffClause)
       const closingCutoff=kind==='task'&&entry.role==='deadline'&&sourceChannelClosingDeadline(source,item,span)
@@ -691,7 +725,9 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       }
       const candidate=entry.role==='end'?(parsed.rangeEndNormalizedValue??parsed.normalizedValue):parsed.normalizedValue
       const modality=sourceTimeModality(span.literal,clause)
-      const value=previous||alternative||unsafeDeadline||entity.sourceStatus==='uncertain'||modality!=='confirmed'||parsed.needsConfirmation?null:candidate
+      const parsedWeekday=/(?:周|星期|礼拜)[一二三四五六日天]/u.exec(compact(parseText))?.[0]
+      const recurring=Boolean(recurringWeekday&&parsedWeekday&&recurringWeekday[1].includes(parsedWeekday))
+      const value=previous||alternative||recurring||unsafeDeadline||entity.sourceStatus==='uncertain'||modality!=='confirmed'||parsed.needsConfirmation?null:candidate
       if(modality!=='confirmed'){
         const line=(modality==='tentative'?'暂定时间：':'建议完成时间：')+span.literal
         if(!entity.description.split('\n').includes(line))entity.description+=(entity.description?'\n':'')+line

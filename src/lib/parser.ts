@@ -41,7 +41,7 @@ const hourSource = `(?:\\d{1,2}|${chineseNumberSource})`
 const minuteSource = `(?:\\d{1,2}|${chineseNumberSource})`
 const clockSource = `(?:(?:${periodSource})\\s*${hourSource}\\s*(?:(?:[:：]${minuteSource})|(?:点|时)(?:(?:${minuteSource}分?)|半)?)?|\\d{1,2}\\s*(?:(?:[:：]\\d{1,2})|(?:点|时)(?:(?:\\d{1,2}分?)|半)?))`
 const absoluteDateSource = '(?:(?:20\\d{2})\\s*[年/-]\\s*)?\\d{1,2}\\s*[月/-]\\s*\\d{1,2}\\s*(?:日|号)?'
-const relativeDateSource = '(?:今天|今日|明天|后天|(?:本周|这周|下周)[一二三四五六日天])'
+const relativeDateSource = '(?:今天|今日|明天|后天|(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天])'
 const temporalSource = `(?:(?:${absoluteDateSource}|${relativeDateSource})(?:\\s*${clockSource})?|${clockSource})`
 const headerOnlyPattern = /^(?:(?:安排|事项|时间|日程|要求|节点)(?:如下|如下所示)?|请注意)$/u
 const bulletMarker = '§'
@@ -73,6 +73,7 @@ function parseAnchor(
     timezone,
     type: 'task_deadline',
     inheritedDate: previousContext?.dateOnly,
+    resolveBareWeekday: true,
   })
   const normalizedDate = ast.normalizedValue?.slice(0, 10)
   const context = normalizedDate && isDateOnly(normalizedDate)
@@ -89,6 +90,9 @@ function isRangeContinuation(content: string, index: number): boolean {
 function findTemporalAnchors(content: string): TemporalAnchor[] {
   return [...content.matchAll(createTemporalMatcher())]
     .filter((match) => !isRangeContinuation(content, match.index ?? 0))
+    .filter((match) => !/(?:每(?:个|一)?|逢)\s*$/u.test(content.slice(0, match.index ?? 0)))
+    .filter((match) => !/(?:每(?:个|一)?|逢)(?:周|星期|礼拜)[一二三四五六日天](?:(?:[、,，和或及]|或者)(?:(?:每(?:个|一)?|逢)?(?:周|星期|礼拜))?[一二三四五六日天])*(?:[、,，和或及]|或者)\s*$/u.test(content.slice(0, match.index ?? 0)))
+    .filter((match) => !/(?:\d{1,2}\s*[日号]|\d{4}[-/.]\d{1,2}[-/.]\d{1,2})\s*[（(]\s*$/u.test(content.slice(0, match.index ?? 0)))
     .map((match) => ({ index: match.index ?? 0, text: match[0] }))
 }
 
@@ -98,7 +102,9 @@ function parseTemporal(
   now: Date,
   timezone: string,
 ): TemporalMatch | null {
-  const anchor = findTemporalAnchors(content)[0]
+  const anchors = findTemporalAnchors(content)
+  if (anchors.slice(1).some((anchor, index) => /或|任选|备选|择一/u.test(content.slice(anchors[index].index + anchors[index].text.length, anchor.index)))) return null
+  const anchor = anchors[0]
   return anchor ? parseAnchor(anchor.text, previousContext, now, timezone) : null
 }
 
