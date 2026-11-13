@@ -44,7 +44,7 @@ async function product() {
   layer='current-product'
   nodeTests([['source-text-index','cloudflare/source-text-index.node-test.mjs'],['notice-delivery-roles','cloudflare/notice-delivery-roles.node-test.mjs'],['declared-task-support','cloudflare/declared-task-support.node-test.mjs']])
   nodeTests([['semantic-actor-relations','cloudflare/semantic-actor-relations.node-test.mjs'],['semantic-goal-relations','cloudflare/semantic-goal-relations.node-test.mjs'],['semantic-goal-context-v128','cloudflare/semantic-goal-context-v128.node-test.mjs'],['semantic-date-goal-repair','cloudflare/semantic-date-goal-repair.node-test.mjs'],['semantic-role-negotiation','cloudflare/semantic-role-negotiation.node-test.mjs'],['semantic-event-notices','cloudflare/semantic-event-notices.node-test.mjs']])
-  nodeTests([['semantic-integrity','cloudflare/semantic-integrity.node-test.mjs']])
+  nodeTests([['semantic-integrity','cloudflare/semantic-integrity.node-test.mjs'],['semantic-process-scope','cloudflare/semantic-process-scope.node-test.mjs']])
   nodeTests([['r27-time-location-network','cloudflare/r27-time-location.node-test.mjs'],['relay-pre-post-tls','scripts/reliable-relay-transport.node-test.mjs']])
   nodeTests([['direct-source-compiler','cloudflare/two-step-direct.node-test.mjs'],['direct-source-time','cloudflare/direct-source-time.node-test.mjs'],['simple-direct-generation','cloudflare/simple-generation.node-test.mjs']])
   nodeTests([['extraction-model-profiles','cloudflare/extraction-profile.node-test.mjs']])

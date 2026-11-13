@@ -91,7 +91,8 @@ export function convertRetainedDirectResult(input:RecognitionResult,source:strin
     return {...p,type,normalizedValue:value,relatedTaskTempIds:ownerIds,selected:!!value,needsConfirmation:p.needsConfirmation||!value,precision:value?p.precision:'vague' as const,isAllDay:value?p.isAllDay:false}
   })
   const taskIds=new Set(tasks.map(t=>t.tempId))
-  result.materials=result.materials.filter(m=>m.relatedTaskTempIds.some(id=>taskIds.has(id))).map(m=>({...m,selected:true,relatedTaskTempIds:m.relatedTaskTempIds.filter(id=>taskIds.has(id))}))
+  result.materials=result.materials.filter(m=>m.relatedTaskTempIds.some(id=>taskIds.has(id))||Boolean(m.goalScope?.taskTempIds.some(id=>taskIds.has(id))&&norm(literal(m.evidenceIds)).includes(norm(m.goalScope.condition))&&norm(literal(m.evidenceIds)).includes(norm(m.name))))
+    .map(m=>{const goals=m.goalScope?.taskTempIds.filter(id=>taskIds.has(id))??[];return {...m,selected:true,relatedTaskTempIds:m.relatedTaskTempIds.filter(id=>taskIds.has(id)),goalScope:m.goalScope&&goals.length?{...m.goalScope,taskTempIds:goals}:undefined}})
   const materialIds=new Set(result.materials.map(m=>m.tempId))
   for(const p of points)p.relatedMaterialTempIds=p.relatedMaterialTempIds.filter(id=>materialIds.has(id))
   for(const e of events)e.relatedTaskTempIds=(e.relatedTaskTempIds??[]).filter(id=>taskIds.has(id))

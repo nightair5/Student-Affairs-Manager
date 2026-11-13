@@ -54,7 +54,10 @@ export function boundLocalResult(input:RecognitionResult,capacity:'container'|'d
   }
  }
  if(removed.size){
-  r.materials=r.materials.filter(m=>!m.relatedTaskTempIds.length||m.relatedTaskTempIds.some(id=>!removed.has(id))).map(m=>({...m,relatedTaskTempIds:m.relatedTaskTempIds.filter(id=>!removed.has(id))}))
+  r.materials=r.materials.filter(m=>!m.relatedTaskTempIds.length||m.relatedTaskTempIds.some(id=>!removed.has(id))).map(m=>{
+   const goalScope=m.goalScope?{...m.goalScope,taskTempIds:m.goalScope.taskTempIds.filter(id=>!removed.has(id))}:undefined
+   return {...m,relatedTaskTempIds:m.relatedTaskTempIds.filter(id=>!removed.has(id)),...(goalScope?.taskTempIds.length?{goalScope}:goalScope?{goalScope:undefined,requirements:[...new Set(['适用事项待关联',...(m.requirements??[])])].slice(0,20)}:{})}
+  })
   const materialIds=new Set(r.materials.map(m=>m.tempId))
   const eventTimes=new Set(r.events.flatMap(e=>[e.startTimePointTempId,e.endTimePointTempId]).filter(Boolean))
   r.timePoints=r.timePoints.filter(p=>eventTimes.has(p.tempId)||!p.relatedTaskTempIds.length||p.relatedTaskTempIds.some(id=>!removed.has(id))).map(p=>({...p,relatedTaskTempIds:p.relatedTaskTempIds.filter(id=>!removed.has(id)),relatedMaterialTempIds:p.relatedMaterialTempIds.filter(id=>materialIds.has(id))}))
@@ -71,6 +74,19 @@ export function boundLocalResult(input:RecognitionResult,capacity:'container'|'d
    for(let offset=0;offset<full.length;offset+=1000)parts.push({text:full.slice(offset,offset+1000),reason:'other' as const})
    return parts
   }))
+ }
+ // A source may yield more candidate quotations than can fit in the wire
+ // contract even after dependent actions are deferred. Discard only evidence
+ // which no retained entity references; the complete source is still saved.
+ if(r.evidence.length>120){
+  const used=new Set<string>()
+  const add=(ids:readonly string[])=>ids.forEach(id=>used.add(id))
+  for(const task of collections.flat())add(task.evidenceIds)
+  for(const stage of r.milestones){add(stage.evidenceIds);for(const group of stage.workPackages)add(group.evidenceIds)}
+  for(const item of [...r.materials,...r.timePoints,...r.events,...r.conflicts,...r.ambiguities])add(item.evidenceIds)
+  for(const group of r.goalGroups??[])add(group.evidenceIds)
+  if(r.projectSuggestion)for(const field of Object.values(r.projectSuggestion))add(field.evidenceIds)
+  r.evidence=r.evidence.filter(ref=>used.has(ref.id))
  }
  return r
 }

@@ -13,6 +13,7 @@ import { setEventActionLink } from './domain/v2/eventActionLink'
 import {matterTaskRevision,setSourceMatterGroup} from './domain/v2/sourceMatterGroup'
 import {commitTaskCommand,ensureTaskEditsSettled,type TaskCommandValues} from './domain/v2/taskCommand'
 import {commitMaterialCommand,type MaterialCommandValues} from './domain/v2/materialCommand'
+import {goalMaterialBelongsToTask,materialOwnerIds} from './domain/v2/materialScope'
 import {readCommandReceipt,readCommittedBatch} from './domain/v2/commandReadback'
 import type {MaterialEditDraft} from './components/MaterialEditor'
 import {workspaceV8ToLegacyView} from './domain/v2/legacyView'
@@ -613,7 +614,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     const batch=recentDirectBatches(workspace).find(item=>item.id===batchId)
     if(!batch)return false
     const taskIds=new Set(batch.items.filter(item=>item.kind==='task').map(item=>item.id))
-    return [...taskIds].some(id=>Boolean(taskEditDraftsRef.current[id]))||batch.items.some(item=>item.kind==='event'&&eventDirtyIds.current.has(item.id))||workspace.materials.some(material=>material.relatedTaskIds.some(id=>taskIds.has(id))&&Boolean(materialEditDraftsRef.current[material.id]))
+    return [...taskIds].some(id=>Boolean(taskEditDraftsRef.current[id]))||batch.items.some(item=>item.kind==='event'&&eventDirtyIds.current.has(item.id))||workspace.materials.some(material=>materialOwnerIds(material).some(id=>taskIds.has(id))&&Boolean(materialEditDraftsRef.current[material.id]))
   }
   const saveCoreTaskPatch=(task:Task,patch:Partial<Task>):Promise<void>=>{
     const changes:TaskCommandValues={},expected:TaskCommandValues={}
@@ -663,7 +664,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       catch(error){taskReadbackBlocked.current=true;setDirectReadbackPending(taskId);throw new Error('更改已保存，暂时未能读回。请先重新读取，不会重复提交。',{cause:error})}
       const projected=workspaceV8ToLegacyView(readback)
       const related=new Set(expectedOwnerIds)
-      setTasks(current=>current.map(item=>{const saved=projected.tasks.find(candidate=>candidate.id===item.id);return related.has(item.id)&&saved?{...item,materials:saved.materials}:item}))
+      setTasks(current=>current.map(item=>{const saved=projected.tasks.find(candidate=>candidate.id===item.id);return related.has(item.id)&&saved?{...item,materials:saved.materials,sourceUnassignedMaterials:saved.sourceUnassignedMaterials}:item}))
       setMaterialItems(current=>current.map(item=>item.id===material.id?projected.materialItems.find(saved=>saved.id===item.id)??item:item))
       setOrdinaryCanonical(readback)
     })
@@ -679,7 +680,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     void (async()=>{
       // A blur may already have queued an edit. Never close the detail and
       // announce completion while that edit is still unsaved or has failed.
-      await ensureTaskEditsSettled(taskWriteQueue.current,()=>Boolean(taskEditDraftsRef.current[taskId])||task.materials.some(material=>Boolean(materialEditDraftsRef.current[material.id])))
+      await ensureTaskEditsSettled(taskWriteQueue.current,()=>Boolean(taskEditDraftsRef.current[taskId])||[...task.materials,...(task.sourceUnassignedMaterials??[])].some(material=>Boolean(materialEditDraftsRef.current[material.id])))
       await saveCoreTaskPatch(task,{status:'已完成'})
     })().then(()=>{
       setSelectedTaskId(null)
@@ -693,7 +694,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
     if(!task||task.status!=='已完成'||taskCompletionInFlight.current.has(taskId))return
     taskCompletionInFlight.current.add(taskId)
     void (async()=>{
-      await ensureTaskEditsSettled(taskWriteQueue.current,()=>Boolean(taskEditDraftsRef.current[taskId])||task.materials.some(material=>Boolean(materialEditDraftsRef.current[material.id])))
+      await ensureTaskEditsSettled(taskWriteQueue.current,()=>Boolean(taskEditDraftsRef.current[taskId])||[...task.materials,...(task.sourceUnassignedMaterials??[])].some(material=>Boolean(materialEditDraftsRef.current[material.id])))
       await saveCoreTaskPatch(task,{status:'待开始'})
     })().then(()=>setNotice({text:'已恢复为待办。'})).catch(error=>setNotice({text:taskSaveFailure(error)})).finally(()=>taskCompletionInFlight.current.delete(taskId))
   }
@@ -2300,6 +2301,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           onScheduleTask={!runtime?scheduleDirectTask:undefined}
           compact={!runtime}
           canonicalMaterials={ordinaryCanonical?.materials.filter(m=>m.relatedTaskIds.includes(selectedTask.id))}
+          canonicalGoalMaterials={ordinaryCanonical?.materials.filter(m=>goalMaterialBelongsToTask(m,ordinaryCanonical.tasks.find(task=>task.id===selectedTask.id)))}
           onDirectEdit={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedTask.id))?edit=>persistDirectChange(selectedTask.id,()=>editDirectItem(canonicalWorkspaceRepository,selectedTask.id,edit)):undefined}
           onDelete={directBatches.some(b=>b.status==='active'&&b.items.some(i=>i.id===selectedTask.id))?async()=>{await persistDirectChange(selectedTask.id,()=>deleteDirectItem(canonicalWorkspaceRepository,selectedTask.id));setSelectedTaskId(null)}:undefined}
           pendingSave={Boolean(viewConflict)}

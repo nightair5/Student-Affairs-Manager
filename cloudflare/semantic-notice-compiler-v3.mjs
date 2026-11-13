@@ -7,6 +7,8 @@ import {SOURCE_DAY_PATTERN,channelOwnedWindow,combineExplicitWindowEntries,conte
 import {declaredTaskChoices,combineSupportedChoices,expandSupportedSingleChoices,sharedDocumentScope,sourceBackedChoicePairs,sourceBackedEventChoices,sourceCandidateTime,sourceFormContext,sourceSupportedDependency} from './semantic-relations.mjs'
 import {itemPolarity} from './semantic-item-polarity.mjs'
 import {applySemanticActorRelations} from './semantic-actor-relations.mjs'
+import {applyProcessScope} from './semantic-process-scope.mjs'
+import {conditionalGoalMaterial} from './semantic-conditional-material.mjs'
 import {applyEventIncidentalNotices} from './semantic-event-notices.mjs'
 import {applySemanticGoalRelations} from './semantic-goal-relations.mjs'
 import {timeRoleContext,parseWindowWithDailyHours,sourceTimeModality} from './semantic-time-context.mjs'
@@ -22,6 +24,7 @@ export const SEMANTIC_GOAL_CONTEXT_COMPILER_VERSION='semantic-notice-compiler-1.
 export const SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION='semantic-notice-compiler-1.0.29'
 export const SEMANTIC_MATTER_COMPILER_VERSION='semantic-notice-compiler-1.0.30'
 export const SEMANTIC_PRESERVATION_COMPILER_VERSION='semantic-notice-compiler-1.0.31'
+export const SEMANTIC_ROLE_SCOPE_COMPILER_VERSION='semantic-notice-compiler-1.0.32'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
@@ -325,7 +328,7 @@ function sourceLocation(source,value,title,ownText) {
 
 /** The model owns action/object and relations. This adapter creates ids and
  * validates source-backed time values without re-parsing the display title. */
-export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',promptVersion='recognition-semantic-notice-3.0.5',goalContextVersion=''}={}) {
+export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',promptVersion='recognition-semantic-notice-3.0.5',goalContextVersion='',roleResolutionVersion=''}={}) {
   const matterContract=promptVersion==='recognition-semantic-notice-3.12.0'
   const goalContract=promptVersion==='recognition-semantic-notice-3.11.0'||matterContract
   const preservationEnabled=goalContract&&goalContextVersion==='1.0.31'
@@ -333,7 +336,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
   // Upgrading the opt-in environment must not disable v1.0.29 for old clients.
   const goalContextV129=goalContract&&(goalContextVersion==='1.0.29'||goalContextVersion==='1.0.30'||preservationEnabled)
   const goalContextEnabled=goalContract&&(goalContextVersion==='1.0.28'||goalContextV129)
-  const compilerVersion=preservationEnabled?SEMANTIC_PRESERVATION_COMPILER_VERSION:matterEnabled?SEMANTIC_MATTER_COMPILER_VERSION:goalContextV129?SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION:goalContextEnabled?SEMANTIC_GOAL_CONTEXT_COMPILER_VERSION:goalContract?SEMANTIC_GOAL_COMPILER_VERSION:SEMANTIC_COMPILER_VERSION
+  const compilerVersion=preservationEnabled&&roleResolutionVersion==='1.0.0'?SEMANTIC_ROLE_SCOPE_COMPILER_VERSION:preservationEnabled?SEMANTIC_PRESERVATION_COMPILER_VERSION:matterEnabled?SEMANTIC_MATTER_COMPILER_VERSION:goalContextV129?SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION:goalContextEnabled?SEMANTIC_GOAL_CONTEXT_COMPILER_VERSION:goalContract?SEMANTIC_GOAL_COMPILER_VERSION:SEMANTIC_COMPILER_VERSION
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
     return {result:null,audit:{compilerVersion,rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
@@ -742,7 +745,8 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     if(!object(material)||!text(material.key,40)||!text(material.name,160)){note('MATERIAL',String(index),'INVALID_MATERIAL');continue}
     const owners=[...new Set([...list(material.owners,20,40),...pending.filter(x=>list(x.item.materials,20,40).includes(material.key)).map(x=>x.item.key)])].flatMap(key=>keys.get(key)?.kind==='task'?[keys.get(key).entity]:[])
     if(!owners.length){
-      note('MATERIAL',material.key,'MATERIAL_OWNER_MISSING')
+      const goalScope=preservationEnabled&&roleResolutionVersion==='1.0.0'?conditionalGoalMaterial({material,source,pending}):null
+      if(!goalScope)note('MATERIAL',material.key,'MATERIAL_OWNER_MISSING')
       if(!preservationEnabled)continue
       const quotes=list(material.evidence,12,500),ids=quotes.flatMap(q=>{const id=evidence(q,'materials',material.key);return id?[id]:[]})
       // Retain an aligned source fact without claiming that any task owns it.
@@ -754,10 +758,11 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const sourceNotes=ids.map(id=>result.evidence.find(ref=>ref.id===id)?.quote).filter(Boolean)
       result.materials.push({tempId:'sem-m'+(index+1),name:text(material.name,160),required:false,
         formatRequirements:list(material.formats,20,160),namingRequirements:list(material.naming,20,160),
-        requirements:uniqueRequirements(['适用事项待关联',...(conditional?[conditional]:[]),...sourceNotes,...requirements]).slice(0,20),
+        requirements:uniqueRequirements([...(goalScope?[]:['适用事项待关联']),...(conditional?[conditional]:[]),...sourceNotes,...requirements]).slice(0,20),
+        ...(goalScope?{goalScope}:{}),
         quantity:Number.isFinite(material.quantity)&&material.quantity>0?material.quantity:null,
         submissionChannel:sourceChannel(source,text(material.channel,160))||null,relatedTaskTempIds:[],evidenceIds:ids,confidence:.8,selected:true})
-      audit.facts.push({role:'unassigned_source_material',material:material.key})
+      audit.facts.push({role:goalScope?'conditional_goal_material':'unassigned_source_material',material:material.key})
       continue
     }
     const refs=list(material.evidence,12,500),ids=refs.flatMap(q=>{const e=evidence(q,'materials',material.key);return e?[e]:[]})
@@ -960,6 +965,15 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
   combineSupportedChoices(result,audit)
   if(['recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0','recognition-semantic-notice-3.11.0','recognition-semantic-notice-3.12.0'].includes(promptVersion))applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone,includeContextFacts:['recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0','recognition-semantic-notice-3.11.0','recognition-semantic-notice-3.12.0'].includes(promptVersion),documentContext:unifiedContract?raw.contextFacts:[],respectPersonalNeed:refinedContract,respectVoluntary:goalContract})
   if(goalContract)applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference:goalContextEnabled,allowAssignmentEvidenceFallback:goalContextV129,allowScopedMatter:matterEnabled||preservationEnabled,allowProseScope:preservationEnabled})
+  if(preservationEnabled&&roleResolutionVersion==='1.0.0')applyProcessScope({source,result,pending,evidence,note,audit})
+  if(preservationEnabled&&roleResolutionVersion==='1.0.0')for(const material of result.materials){
+    if(!material.goalScope)continue
+    const live=new Set(result.standaloneTasks.map(task=>task.tempId))
+    const retained=material.goalScope.taskTempIds.filter(id=>live.has(id))
+    if(retained.length!==material.goalScope.taskTempIds.length)note('MATERIAL',material.tempId,'GOAL_SCOPE_PARTIALLY_UNRESOLVED')
+    if(retained.length)material.goalScope.taskTempIds=retained
+    else {delete material.goalScope;material.requirements=[...new Set(['适用事项待关联',...(material.requirements??[])])].slice(0,20)}
+  }
   if(['recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0'].includes(promptVersion))applyEventIncidentalNotices({result,pending,source,evidence,note,audit})
   result.sourceSummary.title=text(raw.topic,160)||result.standaloneTasks[0]?.title||result.events[0]?.title||'通知'
   const onlyCancellation=audit.items.length>0&&audit.items.every(item=>item.status==='CANCELLED')

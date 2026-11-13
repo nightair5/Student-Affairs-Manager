@@ -7,6 +7,8 @@ export function SourceNoticeContext({context}:{context:Context|null|undefined}){
   const groups=[
     {kind:'time',label:'原通知时间'},
     {kind:'overview',label:'通知中的活动介绍（原文）'},
+    {kind:'context',label:'通知中的条件与岗位说明（原文）'},
+    {kind:'process',label:'通知中的组织方流程（原文）'},
     {kind:'roles',label:'通知中的岗位与分工（原文）'},
     {kind:'notice',label:'通知中的参加说明（原文）'},
   ] as const

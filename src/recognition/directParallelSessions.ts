@@ -117,10 +117,17 @@ function explicitlyDatedEventSessions(source:string,dates:RegExpMatchArray[]):Se
  const datePattern=/^(?:(\d{4})年)?(\d{1,2})月(\d{1,2})[日号]/u
  const explicitYears=new Set(dates.flatMap(d=>{const m=/^(\d{4})年/u.exec(d[0]);return m?[m[1]]:[]}))
  const firstDate=datePattern.exec(dates[0][0]),anchorYear=firstDate?.[1]??null
- if(!firstDate||!anchorYear||explicitYears.size>1&&dates.some(d=>!/^\d{4}年/u.test(d[0])))return null
+ // If all clauses omit the year, parse each one against the same fixed source
+ // reference time only when the repeated calendar day itself is identical.
+ // A later explicit year cannot anchor an earlier clause.
+ if(!firstDate||!anchorYear&&explicitYears.size>0||explicitYears.size>1&&dates.some(d=>!/^\d{4}年/u.test(d[0])))return null
+ if(!anchorYear&&new Set(dates.map(date=>date[0])).size!==1)return null
  const anchorMonthDay=Number(firstDate[2])*100+Number(firstDate[3])
  for(const part of parts){
-  const m=/^((?:\d{4}年)?\d{1,2}月\d{1,2}[日号])\s*((?:(?:上午|中午|下午|傍晚|晚上)\s*)?\d{1,2}[:：][0-5]\d(?:\s*[-—–至到]\s*(?:(?:上午|中午|下午|傍晚|晚上)\s*)?\d{1,2}[:：][0-5]\d)?)\s*在/u.exec(part.text)
+  const heading=part===parts[0]?/^([^：:]{2,40}[：:])(?=(?:\d{4}年)?\d{1,2}月\d{1,2}[日号])/u.exec(part.text)?.[1]:undefined
+  if(heading&&(!/(?:活动|日程|讲座|培训|交流|开放日|工作坊)/u.test(heading)||/报名|申请|提交|缴费|截止/u.test(heading)))return null
+  const body=heading?part.text.slice(heading.length):part.text
+  const m=/^((?:\d{4}年)?\d{1,2}月\d{1,2}[日号])\s*((?:(?:上午|中午|下午|傍晚|晚上)\s*)?\d{1,2}[:：][0-5]\d(?:\s*[-—–至到]\s*(?:(?:上午|中午|下午|傍晚|晚上)\s*)?\d{1,2}[:：][0-5]\d)?)\s*在/u.exec(body)
   if(!m)continue
   const location=localEventLocation(part.text),dateInfo=datePattern.exec(m[1])
   if(!location||!dateInfo||places.has(location.name)||source.indexOf(part.text)!==source.lastIndexOf(part.text)||/取消|作废|改期|延期|备选|调整|更正|报名|提交|上传|填写/u.test(part.text))return null
@@ -129,7 +136,7 @@ function explicitlyDatedEventSessions(source:string,dates:RegExpMatchArray[]):Se
   const yearFromHeading=Boolean(!dateInfo[1]&&anchorYear)
   if(!dateInfo[1]&&Number(dateInfo[2])*100+Number(dateInfo[3])<anchorMonthDay)return null
   const date=yearFromHeading?anchorYear+'年'+m[1]:m[1]
-  matchedDates.add(part.start)
+  matchedDates.add(part.start+(heading?.length??0))
   places.set(location.name,location.location)
   sessions.push({role:location.name,date,yearFromHeading,line:{label:location.name+'时间',value:m[2],start:part.start+part.text.indexOf(m[2]),whole:part.text,wholeStart:part.start}})
  }
@@ -186,10 +193,32 @@ export function completeParallelSessions(input:RecognitionResult,source:string,l
   // separate real actions retain their own identities and dates.
   const headingQuote=rowsHeader(source)?table.heading+'\n'+rowsHeader(source):table.heading
   const tableQuotes=new Set([headingQuote,...table.sessions.map(s=>s.line.whole)].map(squash))
-  const artifactIds=new Set([...r.standaloneTasks,...r.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])].filter(t=>t.evidenceIds.some(id=>{const quote=r.evidence.find(e=>e.id===id)?.quote??'';return tableQuotes.has(squash(quote))&&(t.actionVerb==='核对'||squash(quote)===squash(headingQuote)&&!/(?:请|须|需|应|提交|上传|填写|报名)/u.test(quote))})).map(t=>t.tempId))
+  const allTasks=[...r.standaloneTasks,...r.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
+  const artifactIds=new Set(allTasks.filter(t=>t.evidenceIds.some(id=>{
+   const quote=r.evidence.find(e=>e.id===id)?.quote??''
+   const exact=tableQuotes.has(squash(quote))&&(t.actionVerb==='核对'||squash(quote)===squash(headingQuote)&&!/(?:请|须|需|应|提交|上传|填写|报名)/u.test(quote))
+   // A parser placeholder can cite a session and the following welcome in a
+   // single quote. It is not an independent delivery, but only remove it when
+   // its named session and citation both agree and no relation depends on it.
+   const inline=t.actionVerb==='核对'&&!t.materialTempIds.length&&!t.dependencyTempIds.length
+    &&!allTasks.some(other=>other.tempId!==t.tempId&&(other.parentTempId===t.tempId||other.dependencyTempIds.includes(t.tempId)))
+    &&!r.materials.some(material=>material.relatedTaskTempIds.includes(t.tempId)||material.goalScope?.taskTempIds.includes(t.tempId))
+    &&!r.events.some(event=>event.relatedTaskTempIds?.includes(t.tempId))
+    &&!r.goalGroups?.some(group=>group.taskTempIds.includes(t.tempId))
+    &&!r.conflicts.some(conflict=>conflict.entityTempIds.includes(t.tempId))
+    &&table.sessions.some(session=>quote.includes(session.line.whole)&&(t.title.includes(session.role)||t.actionObject.includes(session.role)))
+    &&!/(?:请|须|需|应|务必)[^。；;\n]{0,24}(?:提交|上传|填写|报名|缴费|领取)/u.test(quote)
+   return exact||inline
+  })).map(t=>t.tempId))
   const kept=(tasks:typeof r.standaloneTasks)=>tasks.filter(t=>!artifactIds.has(t.tempId)).map(t=>({...t,dependencyTempIds:t.dependencyTempIds.filter(id=>!artifactIds.has(id))}))
   r.standaloneTasks=kept(r.standaloneTasks)
   r.milestones=r.milestones.map(m=>({...m,tasks:kept(m.tasks),workPackages:m.workPackages.map(w=>({...w,tasks:kept(w.tasks)}))}))
+  const retainedEventTimes=new Set(r.events.flatMap(event=>[event.startTimePointTempId,event.endTimePointTempId]))
+  r.timePoints=r.timePoints.flatMap(point=>{
+   if(!point.relatedTaskTempIds.some(id=>artifactIds.has(id)))return [point]
+   const owners=point.relatedTaskTempIds.filter(id=>!artifactIds.has(id))
+   return owners.length||point.relatedMaterialTempIds.length||retainedEventTimes.has(point.tempId)?[{...point,relatedTaskTempIds:owners}]:[]
+  })
  }
  const previousPoints=new Set(aggregate.flatMap(e=>[e.startTimePointTempId,e.endTimePointTempId]).filter((id):id is string=>Boolean(id)))
  r.events=r.events.filter(e=>!removed.has(e.tempId))

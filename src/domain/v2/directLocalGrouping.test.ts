@@ -40,3 +40,22 @@ it('saves inline sessions independently and undoes only a second addition',async
  expect(v.events.find(e=>e.id===a.id)?.personalCompleted).toBe(true);expect(v.events.find(e=>e.id===b.id)?.personalCompleted).not.toBe(true)
  const backup=importWorkspaceV8(exportWorkspaceV8(after));expect(backup.events).toEqual(after.events);expect(backup.timePoints).toEqual(after.timePoints)
 })
+
+it('keeps repeated same-day sessions separate across save, completion, restore and backup',async()=>{
+ const text='活动讲座：2月6日9:00在文汇楼101举行第一场交流，2月6日14:00在文汇楼201举行第二场交流。欢迎同学参加。',now='2027-02-01T09:00:00+08:00'
+ const w=createGoldenWorkspaceV8();for(const key of ['sources','sourceVersions','recognitionRuns','extractionDrafts','projects','milestones','workPackages','tasks','materials','timePoints','events','evidenceRefs','historyRecords','reminderRecords','changeProposals'] as const)w[key]=[]
+ const store=new MemoryWorkspaceRecordStore(),repo=new CanonicalWorkspaceRepository(store),capture=new CapturePersistenceService(repo);await repo.save(w)
+ async function add(operationId:string){const local=buildLocalRecognition({sourceType:'text',sourceTitle:'匿名通知',content:text,referenceTime:new Date(now),timezone:'Asia/Shanghai',projects:[],tasks:[]});const h=await capture.beginCapture({operationId,sourceType:'text',title:'匿名通知',rawText:text,provider:'local-rules',modelName:'local-rules',promptVersion:local.promptVersion,pipelineVersion:'local-session-test',now});await capture.recognize(h,async()=>local);return commitDirectDraft(repo,h.draftId,now)}
+ await add('repeated-session-first');const first=(await new CanonicalWorkspaceRepository(store).load())!,view=workspaceV8ToLegacyView(first)
+ expect(view.events.map(e=>[e.startAt,e.location])).toEqual([['2027-02-06T09:00','文汇楼101'],['2027-02-06T14:00','文汇楼201']])
+ expect(view.tasks).toHaveLength(0)
+ const second=await add('repeated-session-second');await undoDirectBatchPreservingEdits(repo,second.batch!.id,now)
+ const [a,b]=first.events
+ await commitEventCompletion(repo,{operationId:'repeated-complete',eventId:a.id,expected:false,completed:true,changedAt:now})
+ let v=workspaceV8ToLegacyView((await new CanonicalWorkspaceRepository(store).load())!)
+ expect(v.events.find(e=>e.id===a.id)?.personalCompleted).toBe(true);expect(v.events.find(e=>e.id===b.id)?.personalCompleted).not.toBe(true)
+ await commitEventCompletion(repo,{operationId:'repeated-restore',eventId:a.id,expected:true,expectedRevision:'repeated-complete',completed:false,changedAt:now})
+ const after=(await new CanonicalWorkspaceRepository(store).load())!,backup=importWorkspaceV8(exportWorkspaceV8(after))
+ v=workspaceV8ToLegacyView(backup);expect(v.events).toHaveLength(2);expect(v.events.every(e=>!e.personalCompleted)).toBe(true)
+ expect(backup.timePoints).toEqual(after.timePoints)
+})

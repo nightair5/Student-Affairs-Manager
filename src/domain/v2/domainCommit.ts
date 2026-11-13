@@ -637,7 +637,10 @@ function buildDomainCommitPlanInternal(
       ...(changed ? { audit: { version: 'material-deadline-scope-1.0.0', linkedPoints: linked.map(point => ({id: point.tempId, type: point.type, owners: point.relatedTaskTempIds})),
         retainedPointId: retained?.tempId ?? null, reason: 'ONLY_UNIQUE_WHOLE_MATERIAL_DEADLINE' } } : {}) }
   }
-  const materials: Material[] = materialSuggestions.map((item) => ({
+  const materials: Material[] = materialSuggestions.map((item) => {
+    const goalTaskIds=item.goalScope?.taskTempIds.map(id=>taskIdMap.get(id)).filter((id):id is string=>Boolean(id))??[]
+    const goalScope=item.goalScope&&goalTaskIds.length?{taskIds:goalTaskIds,condition:item.goalScope.condition,requirement:item.goalScope.requirement}:undefined
+    return {
     id: materialIdMap.get(item.tempId)!, projectId, name: item.name, required: item.required, status: 'missing',
     requirements: item.requirements ?? [], formatRequirements: item.formatRequirements, namingRequirements: item.namingRequirements,
     quantity: item.quantity, submissionChannel: item.submissionChannel,
@@ -645,9 +648,12 @@ function buildDomainCommitPlanInternal(
     deadlineTimePointId: materialDeadline(item).id,
     createdAt: now, updatedAt: now, version: 1,
     legacyData: { recognitionTempId: item.tempId, evidenceIds: item.evidenceIds,
-      ...(!item.relatedTaskTempIds.length ? {sourceId:source.id,sourceVersionId:sourceVersion.id,recognitionRunId:run.id,assignment:'unresolved'} : {}),
+      ...(!item.relatedTaskTempIds.length ? {sourceId:source.id,sourceVersionId:sourceVersion.id,recognitionRunId:run.id,assignment:goalScope?'goal':'unresolved'} : {}),
+      ...(goalScope ? {goalMaterialScope:goalScope} : {}),
+      ...(item.goalScope&&!goalScope ? {scopeResolution:'NO_SELECTED_GOAL_MEMBERS'} : {}),
       ...(materialDeadline(item).audit ? { deadlineProjection: materialDeadline(item).audit! } : {}) },
-  }))
+    }
+  })
   const eventIdMap = new Map(eventSuggestions.map((item) => [item.tempId, entityId('event', draftId, item.tempId)]))
   const timePoints: TimePoint[] = timeSuggestions.map((item) => {
     const relatedTasks = item.relatedTaskTempIds.map((id) => taskIdMap.get(id)).filter((id): id is string => Boolean(id))

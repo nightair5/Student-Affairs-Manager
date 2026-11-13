@@ -57,6 +57,7 @@ export interface TaskDetailPanelProps {
   onScheduleTask?:(id:string,date:string)=>Promise<void>
   compact?:boolean
   canonicalMaterials?:CanonicalMaterial[]
+  canonicalGoalMaterials?:CanonicalMaterial[]
   onDirectEdit?:(edit:DirectEdit)=>Promise<void>
   hideUnavailable?:boolean
   onBackToCompact?:()=>void

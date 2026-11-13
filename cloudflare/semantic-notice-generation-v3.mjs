@@ -50,7 +50,7 @@ export function safeSemanticExecution(execution) {
 }
 
 /** One full-notice request. No hidden retry or second semantic rewrite. */
-export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userText,source,referenceTime,timezone,actorRoles=false,goalContextVersion=''}) {
+export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userText,source,referenceTime,timezone,actorRoles=false,goalContextVersion='',roleResolutionVersion=''}) {
   const started=Date.now()
   const actorContext=actorRoles==='semantic-notice-3.4'
   const serviceContext=actorRoles==='semantic-notice-3.5'
@@ -70,7 +70,7 @@ export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userTe
   const decoded=decodeSemanticNoticeOutput(payload?.choices?.[0]?.message?.content,{finishReason:payload?.choices?.[0]?.finish_reason})
   const actualModel=typeof payload?.model==='string'&&payload.model.trim()?payload.model.trim().slice(0,80):null
   const finishReason=safeFinishReason(payload?.choices?.[0]?.finish_reason),upstreamResponseId=safeUpstreamResponseId(payload?.id)
-  const compiled=compileSemanticNotice(decoded.value,{source,referenceTime,timezone,model:actualModel??'上游未提供',promptVersion,goalContextVersion})
+  const compiled=compileSemanticNotice(decoded.value,{source,referenceTime,timezone,model:actualModel??'上游未提供',promptVersion,goalContextVersion,roleResolutionVersion})
   if(!compiled.result){
     const usage=safeUsage(payload?.usage),elapsedMs=Date.now()-started
     const safeModel=actualModel&&/^[a-zA-Z0-9._:/-]+$/u.test(actualModel)?actualModel:null

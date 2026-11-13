@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { buildLocalRecognition } from '../../recognition/pipeline'
+import {registerRecognitionDiagnostic,unobservedDiagnostic} from '../../recognition/requestDiagnostic'
 import { demoSources, demoTasks } from '../../data/demo'
 import { createWorkspaceData } from '../../lib/workspace'
 import { CapturePersistenceService } from './capture'
@@ -28,6 +29,35 @@ function result() {
 }
 
 describe('B4 source-before-AI persistence', () => {
+  it('reports an invalid local result as local, preserving the source without formal tasks', async () => {
+    const repository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore())
+    await repository.save(emptyWorkspace())
+    const service = new CapturePersistenceService(repository)
+    const handle = await service.beginCapture(request('invalid-local-result'))
+    const invalid = result()
+    invalid.milestones = [{ tempId: 'too-many-references', title: '办理', objective: '办理事项', order: 1,
+      evidenceIds: Array.from({length:21}, (_, i) => `e-${i}`), workPackages: [], tasks: [] }]
+    await expect(service.recognize(handle, async () => invalid)).rejects.toThrow('INVALID_RECOGNITION_RESULT')
+    const saved = (await repository.load())!
+    expect(saved.recognitionRuns[0].errorCode).toBe('INVALID_LOCAL_RESULT')
+    expect(saved.recognitionRuns[0].legacyData?.requestDiagnostic).toMatchObject({state:'not_sent',reason:'LOCAL_MODE'})
+    expect(saved.sourceVersions[0].rawText).toBe(request().rawText)
+    expect(saved.tasks).toHaveLength(0)
+  })
+  it('keeps an observed AI response diagnostic even when a later local result is invalid', async () => {
+    const repository = new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore())
+    await repository.save(emptyWorkspace())
+    const service = new CapturePersistenceService(repository)
+    const handle = await service.beginCapture({...request('invalid-local-after-ai'),provider:'deepseek'})
+    const invalid = result()
+    invalid.milestones = [{ tempId: 'too-many-references', title: '办理', objective: '办理事项', order: 1,
+      evidenceIds: Array.from({length:21}, (_, i) => `e-${i}`), workPackages: [], tasks: [] }]
+    registerRecognitionDiagnostic(invalid,{...unobservedDiagnostic('AI_RESPONSE'),state:'response',httpStatus:200})
+    await expect(service.recognize(handle, async () => invalid)).rejects.toThrow('INVALID_RECOGNITION_RESULT')
+    const run = (await repository.load())!.recognitionRuns[0]
+    expect(run.errorCode).toBe('INVALID_LOCAL_RESULT')
+    expect(run.legacyData?.requestDiagnostic).toMatchObject({state:'response',reason:'AI_RESPONSE',httpStatus:200})
+  })
   it('keeps original text immutable and binds the AI run to the enriched web version', async () => {
     const repository=new CanonicalWorkspaceRepository(new MemoryWorkspaceRecordStore());await repository.save(emptyWorkspace())
     const service=new CapturePersistenceService(repository),original='请提交申请表，原文 https://school.example/notice'

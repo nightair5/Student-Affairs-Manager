@@ -7,6 +7,9 @@ import { localMeetingBlock, localNamedMeeting } from './localMeetingBlock'
 import {normalizeSourceWithOffsets,alignRecognitionEvidence} from '../../cloudflare/source-text-index.mjs'
 import {itemPolarity} from '../../cloudflare/semantic-item-polarity.mjs'
 import {boundLocalResult} from './localResultCapacity'
+import {indexLocalSections,isDescriptiveLocalCandidate} from './localSectionScope'
+import {scopeLocalOtherPartyActions} from './localResponsibilityScope'
+import {retainLocalConditionalMaterials} from './localConditionalMaterials'
 import { RECOGNITION_MODEL_NAME, RECOGNITION_PROMPT_VERSION } from './prompt'
 import type {
   EventSuggestion,
@@ -206,10 +209,16 @@ function preparationAction(evidence: string): { quote: string; object: string; m
 export function buildLocalRecognition(input: RecognitionInput): RecognitionResult {
   const preprocessed = preprocessSource(input.content)
   const sourceIndex=normalizeSourceWithOffsets(input.content)
-  const parsed = createSuggestions(preprocessed.normalizedText, input.sourceType, input.sourceTitle, input.referenceTime, input.timezone,{sourceOffsets:true}).map(item => {
+  const sections=indexLocalSections(preprocessed.normalizedText)
+  const candidates=createSuggestions(preprocessed.normalizedText, input.sourceType, input.sourceTitle, input.referenceTime, input.timezone,{sourceOffsets:true})
+  const parsed = candidates.filter(item=>!isDescriptiveLocalCandidate(item,preprocessed.normalizedText,sections)).map(item => {
     const meeting = localMeetingBlock(preprocessed.normalizedText, item.evidence)
     return meeting ? { ...item, title: meeting.title, evidence: meeting.quote,evidenceRefs:undefined, timePoint: parseChineseTimeAst(meeting.timeText, { referenceTime: input.referenceTime, timezone: input.timezone, type: 'event_start' }) } : item
   })
+  // Local parsing cannot yet guarantee a complete role/eligibility list. Do
+  // not describe such a result as complete merely because a heading and one
+  // registration action survived.
+  const contextualCandidates=candidates.length>parsed.length||candidates.some(item=>/(?:岗位|资格|能力|职责|分工)(?:条件|要求|说明|职责|安排)?[：:]/u.test(item.evidence))
   const category = projectCategory(parsed)
   const title = projectTitle(input, parsed)
   const projectMatch = matchProject(input, title, category)
@@ -347,19 +356,30 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     } else {
       tasks.push(task)
     }
-    materialNames.forEach((name, materialIndex) => materials.push({
+    materialNames.forEach((name, materialIndex) => {
+      // Do not apply the format of a neighbouring sentence (for example an
+      // activity PPT) to a differently named material in the next sentence.
+      const clauses=item.evidence.split(/[。！？;；\n]/u).map(value=>value.trim()).filter(value=>value.includes(name))
+      const scoped=localMaterialRequirements(clauses.length?clauses.join('。'):item.evidence)
+      const materialRequirements=clauses.filter(value=>{
+        const after=value.slice(value.indexOf(name)+name.length)
+        return /^(?:须|需|需要|必须|应|要求)[^。！？]{1,180}$/u.test(after)
+      })
+      materials.push({
       tempId: `material-${index + 1}-${materialIndex + 1}`,
       name,
       required: true,
-      formatRequirements: requirements.formats,
-      namingRequirements: requirements.naming,
+      formatRequirements: scoped.formats,
+      namingRequirements: scoped.naming,
+      ...(materialRequirements.length?{requirements:materialRequirements}:{}),
       quantity: null,
       submissionChannel: delivery?.channel ?? localSubmissionChannel(item.evidence),
       relatedTaskTempIds: isEvent ? [] : [task.tempId],
       evidenceIds: [evidenceId],
       confidence: task.confidence,
       selected: task.inferenceLevel === 'explicit',
-    }))
+      })
+    })
   })
   const stageMap = new Map<string, TaskSuggestionV2[]>()
   tasks.forEach((task) => stageMap.set(stageFor(task.title), [...(stageMap.get(stageFor(task.title)) ?? []), task]))
@@ -368,7 +388,9 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     title: stage,
     objective: `完成${stage}阶段的明确行动`,
     order: index + 1,
-    evidenceIds: [...new Set(stageTasks.flatMap((task) => task.evidenceIds))],
+    // This is a locally inferred category, not an aggregate quotation of all
+    // child facts. Each child keeps its own complete evidence references.
+    evidenceIds: stageTasks[0]?.evidenceIds.slice(0,1) ?? [],
     workPackages: [],
     tasks: stageTasks,
   }))
@@ -378,7 +400,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
       title: '答辩或展示',
       objective: '按通知参加安排并完成必要准备',
       order: milestones.length + 1,
-      evidenceIds: [...new Set(events.flatMap((event) => event.evidenceIds))],
+      evidenceIds: events[0]?.evidenceIds.slice(0,1) ?? [],
       workPackages: [],
       tasks: [],
     })
@@ -404,10 +426,17 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
   // a cancelled or prohibited candidate still cannot establish an action.
   const informationalMarker = /仅供参考|请知悉|自行查看/u.test(preprocessed.normalizedText)
   const ownQuote = (ids: string[]) => parsedEvidence.find(entry => ids.includes(entry.id))?.quote ?? ''
-  const hasExplicitAction = parsed.length <= 20 && (tasks.some(task => task.inferenceLevel === 'explicit' && itemPolarity({kind:'task',action:task.actionVerb,object:task.actionObject,title:task.title},ownQuote(task.evidenceIds)) === 'active')
+  const hasExplicitAction = (tasks.some(task => task.inferenceLevel === 'explicit' && itemPolarity({kind:'task',action:task.actionVerb,object:task.actionObject,title:task.title},ownQuote(task.evidenceIds)) === 'active')
     || events.some(event => event.inferenceLevel === 'explicit' && itemPolarity({kind:'event',title:event.title},ownQuote(event.evidenceIds)) === 'active')
   )
   const actionRequired = tasks.length + events.length > 0 && (!informationalMarker || hasExplicitAction)
+  // A shared requirement is not proof that every named document was mapped
+  // to the right owner. Preserve the full source and report the local gap.
+  const unresolvedSharedMaterials=[...preprocessed.normalizedText.matchAll(/(?:^|[，,。；;\n])\s*([^，,。；;\n]{3,100}?)(?:均|都)(?:须|需|必须|应当)(?:签名|签字|盖章|提交|提供|上传)/gu)].some(match=>{
+    const names=match[1].split(/以及|和|与|、/u).map(value=>value.trim()).filter(Boolean)
+    return names.length>=2&&names.every(name=>/(?:表|报告|证明|书|证件|材料|文件|作品)$/u.test(name))
+      &&names.some(name=>!materials.some(material=>material.name===name))
+  })
   // Local parsing may create a placeholder time for a sentence with no action.
   // Keep the original information, rather than dangling references to discarded tasks.
   if (!actionRequired && events.length === 0) {
@@ -416,7 +445,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     projectMatch.decision = 'standalone_task'
     projectMatch.matchedProjectId = null
   }
-  return boundLocalResult(postProcessRecognition({
+  return boundLocalResult(retainLocalConditionalMaterials(scopeLocalOtherPartyActions(postProcessRecognition({
     schemaVersion: '2.0',
     promptVersion: RECOGNITION_PROMPT_VERSION,
     modelName: 'local-rules',
@@ -438,8 +467,8 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     conflicts: [],
     ambiguities: timePoints.filter((point) => point.needsConfirmation).map((point, index) => ({ id: `ambiguity-${index + 1}`, field: 'timePoint', message: `“${point.rawText}”的日期或时刻需要确认`, options: [], evidenceIds: point.evidenceIds })),
     ignoredContent: actionRequired ? [] : [{ text: preprocessed.normalizedText.slice(0, 240), reason: 'background' }],
-    quality: { overallConfidence: actionRequired ? 0.72 : 0.55, hierarchyConfidence: complexity.level === 'simple' ? 0.8 : 0.62, dateConfidence: timePoints.every((point) => !point.needsConfirmation) ? 0.9 : 0.5, evidenceCoverage: parsed.length ? 0.9 : 0, duplicateRisk: Math.min(1, duplicateCount / Math.max(1, tasks.length)), overFragmentationRisk: tasks.length > 20 ? 1 : tasks.length > 12 ? 0.6 : 0.1, missingActionRisk: tasks.some((task) => !task.actionVerb) ? 0.8 : 0.1, needsHumanReview: timePoints.some((point) => point.needsConfirmation) || projectMatch.decision === 'uncertain', reviewReasons: [...(projectMatch.decision === 'uncertain' ? ['项目归属不确定'] : []), ...(timePoints.some((point) => point.needsConfirmation) ? ['存在模糊日期或时间'] : [])] },
-  }, input.content, input.tasks ?? []))
+    quality: { overallConfidence: actionRequired ? 0.72 : 0.55, hierarchyConfidence: complexity.level === 'simple' ? 0.8 : 0.62, dateConfidence: timePoints.every((point) => !point.needsConfirmation) ? 0.9 : 0.5, evidenceCoverage: parsed.length ? 0.9 : 0, duplicateRisk: Math.min(1, duplicateCount / Math.max(1, tasks.length)), overFragmentationRisk: tasks.length > 20 ? 1 : tasks.length > 12 ? 0.6 : 0.1, missingActionRisk: tasks.some((task) => !task.actionVerb) ? 0.8 : 0.1, needsHumanReview: contextualCandidates || unresolvedSharedMaterials || timePoints.some((point) => point.needsConfirmation) || projectMatch.decision === 'uncertain', reviewReasons: [...(contextualCandidates?['部分内容尚未完整整理，通知中的条件、岗位和流程请结合原文查看。']:[]), ...(unresolvedSharedMaterials?['部分内容尚未完整整理，共同材料与要求请查看原通知。']:[]), ...(projectMatch.decision === 'uncertain' ? ['项目归属不确定'] : []), ...(timePoints.some((point) => point.needsConfirmation) ? ['存在模糊日期或时间'] : [])] },
+  }, input.content, input.tasks ?? []),input.content),input.content))
 }
 
 function allTasks(result: RecognitionResult): TaskSuggestionV2[] {
@@ -447,13 +476,32 @@ function allTasks(result: RecognitionResult): TaskSuggestionV2[] {
 }
 
 export function postProcessRecognition(result: RecognitionResult, sourceText: string, existingTasks: Task[] = []): RecognitionResult {
-  const canonicalMaterials = new Map<string, MaterialSuggestionV2>()
+  const canonicalMaterials = new Map<string, MaterialSuggestionV2[]>()
   const materialReplacements = new Map<string, string>()
   for (const material of result.materials) {
-    const key = material.name.toLowerCase().replace(/[\s\u3000]+/gu, '').replace(/[（(].*?[）)]/gu, '')
-    const existing = canonicalMaterials.get(key)
+    const key = material.name.normalize('NFKC').toLowerCase().replace(/[\s\u3000]+/gu, '')
+    const group=canonicalMaterials.get(key)??[]
+    // Same name alone does not prove the same delivery. Keep differently
+    // scoped channels/requirements separate and never overflow one material's
+    // bounded evidence or owner list by merging many independent references.
+    const same=(a:string[],b:string[])=>JSON.stringify([...a].sort())===JSON.stringify([...b].sort())
+    const owners=result.materials.filter(value=>value.name.normalize('NFKC').toLowerCase().replace(/[\s\u3000]+/gu,'')===key&&value.relatedTaskTempIds.length>0)
+    const supplement=(value:MaterialSuggestionV2)=>value.relatedTaskTempIds.length===0&&Boolean(value.requirements?.length)
+    const existing=group.find(value=>{
+      const explicitSupplement=owners.length===1&&(supplement(value)!==supplement(material))&&(supplement(value)||supplement(material))
+      return value.required===material.required&&value.submissionChannel===material.submissionChannel
+      &&value.quantity===material.quantity&&JSON.stringify(value.goalScope??null)===JSON.stringify(material.goalScope??null)
+      &&same(value.formatRequirements,material.formatRequirements)&&same(value.namingRequirements,material.namingRequirements)
+      &&(same(value.requirements??[],material.requirements??[])||explicitSupplement)
+      // A name shared by different tasks does not establish a shared delivery.
+      &&(value.relatedTaskTempIds.some(id=>material.relatedTaskTempIds.includes(id))
+        ||value.evidenceIds.some(id=>material.evidenceIds.includes(id))||explicitSupplement)
+      &&new Set([...value.evidenceIds,...material.evidenceIds]).size<=20
+      &&new Set([...value.relatedTaskTempIds,...material.relatedTaskTempIds]).size<=30
+      &&new Set([...(value.requirements??[]),...(material.requirements??[])]).size<=20
+    })
     if (!existing) {
-      canonicalMaterials.set(key, { ...material })
+      group.push({ ...material });canonicalMaterials.set(key,group)
       continue
     }
     materialReplacements.set(material.tempId, existing.tempId)
@@ -461,10 +509,11 @@ export function postProcessRecognition(result: RecognitionResult, sourceText: st
     existing.evidenceIds = [...new Set([...existing.evidenceIds, ...material.evidenceIds])]
     existing.formatRequirements = [...new Set([...existing.formatRequirements, ...material.formatRequirements])]
     existing.namingRequirements = [...new Set([...existing.namingRequirements, ...material.namingRequirements])]
+    if(existing.requirements||material.requirements)existing.requirements=[...new Set([...(existing.requirements??[]),...(material.requirements??[])])]
     existing.selected = existing.selected !== false || material.selected !== false
     existing.confidence = Math.max(existing.confidence, material.confidence)
   }
-  result.materials = [...canonicalMaterials.values()]
+  result.materials = [...canonicalMaterials.values()].flat()
   if (materialReplacements.size) {
     for (const task of allTasks(result)) {
       task.materialTempIds = [...new Set(task.materialTempIds.map((id) => materialReplacements.get(id) ?? id))]

@@ -25,6 +25,14 @@ describe('explicit parallel events in a single sentence',()=>{
    ['旧地图导览','2027-02-06T10:00',null,'展馆大厅'],['选课咨询会','2027-02-06T15:30',null,'行政楼302']
   ]))
  })
+ it('uses the fixed reference year for repeated explicitly dated sessions with a heading',()=>{
+  const r=run('活动讲座：2月6日9:00在文汇楼101举行第一场交流，2月6日14:00在文汇楼201举行第二场交流。欢迎同学参加。')
+  expect(r.events).toHaveLength(2)
+  expect(r.events.map(e=>[e.title,value(r,e.startTimePointTempId),e.location])).toEqual(expect.arrayContaining([
+   ['第一场交流','2027-02-06T09:00','文汇楼101'],['第二场交流','2027-02-06T14:00','文汇楼201']
+  ]))
+  expect(r.standaloneTasks.filter(task=>task.title.includes('第二场交流'))).toHaveLength(0)
+ })
  it('does not interpret cancelled or alternative events as certain sessions',()=>{
   const r=run('2027年2月5日9:00在东楼101举行摄影讲座；当天14:00在西楼202举行声音工作坊，后者取消。')
   expect(r.events.some(e=>e.title==='声音工作坊'&&value(r,e.startTimePointTempId)==='2027-02-05T14:00')).toBe(false)

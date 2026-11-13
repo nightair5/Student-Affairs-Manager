@@ -15,15 +15,24 @@ import {localActionExplicitlyNegated} from './localActionPolarity'
 import {localMaterialOwnership} from './localMaterialOwnership'
 import {localSubmissionChoices} from './localSubmissionChoices'
 import {boundLocalResult} from './localResultCapacity'
+import {scopeLocalOtherPartyActions} from './localResponsibilityScope'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
  const actions=removeDuplicatedActionEvents(improveLocalActions(input,source))
  const improved=retainLocalEventDetails(retainSourceEventContext(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(projectLocalDeliveryRoles(actions,source),source),source),source),source),source)
- const result=boundLocalResult(clearUndatedSingleEventRevision(attachExplicitSharedGoal(linkReferencedEventActions(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source),source)),source,true),source),source),source),source))
+ const result=boundLocalResult(scopeLocalOtherPartyActions(clearUndatedSingleEventRevision(attachExplicitSharedGoal(linkReferencedEventActions(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source),source)),source,true),source),source),source),source),source))
  const rows=source.split(/\r?\n/u).map(line=>line.trim()).filter(line=>/^[\p{Script=Han}\d]{1,12}场[：:]/u.test(line)&&!/^(?:报名|申请|提交|缴费)/u.test(line))
  if(rows.length>1&&result.events.length<rows.length){
   const reason='部分内容尚未完整整理（活动场次），请核对原文'
+  if(!result.quality.reviewReasons.includes(reason))result.quality.reviewReasons.push(reason)
+  result.quality.needsHumanReview=true
+ }
+ // When local rules cannot retain both branches as an explicit relation,
+ // disclose the limitation instead of calling the surviving branch complete.
+ const choiceTasks=new Set([...result.standaloneTasks,...result.milestones.flatMap(stage=>[...stage.tasks,...stage.workPackages.flatMap(group=>group.tasks)])].map(task=>task.tempId))
+ if(/二选一|任选(?:一种|其一)|择一/u.test(source)&&!result.conflicts.some(conflict=>conflict.id.startsWith('sem-choice-')&&conflict.entityTempIds.filter(id=>choiceTasks.has(id)).length>=2)){
+  const reason='部分内容尚未完整整理：选择方式及各自时间请查看原通知。'
   if(!result.quality.reviewReasons.includes(reason))result.quality.reviewReasons.push(reason)
   result.quality.needsHumanReview=true
  }
@@ -162,6 +171,17 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
  if(/仅供知悉|仅供参考|请知悉|无需操作|无需办理/u.test(source)&&!positiveDirective){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/^\s*(?:各位同学|同学们)/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
  if(/无需办理|无需操作|仅供知悉/u.test(source)&&!/提交|报名|申请|申报|缴费|领取|上传/u.test(source.replace(/(?:无需|不必|不要|无须)(?:办理|操作|提交|报名|申请|申报|缴费|领取|上传)/gu,''))){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/仅供知悉|无需|无须|不必/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
  const existing=[...input.standaloneTasks,...input.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
+ if(existing.some(task=>task.description.split('\n').some(line=>{
+  const prefix='后续办理（原文）：',quote=line.startsWith(prefix)?line.slice(prefix.length):''
+  return Boolean(quote&&source.includes(quote)&&task.evidenceIds.some(id=>input.evidence.find(ref=>ref.id===id)?.quote===quote))
+ })))return structuredClone(input)
+ // A source-backed workflow material refers to stable task IDs. Replacing the
+ // entire task list with heuristic candidates would orphan those facts and may
+ // turn a material name (such as “申请人…”) into a spurious action.
+ const taskIds=new Set(existing.map(task=>task.tempId))
+ if(input.materials.some(material=>material.goalScope?.taskTempIds.length
+   &&material.goalScope.taskTempIds.every(id=>taskIds.has(id))
+   &&material.evidenceIds.some(id=>{const quote=input.evidence.find(ref=>ref.id===id)?.quote??'';return quote.includes(material.goalScope!.condition)&&quote.includes(material.name)&&source.includes(quote)})))return structuredClone(input)
  const grounded=existing.filter(t=>/^(?:提交|报送|上传|发送|填写|申请|申报|报名|领取|缴费|参加|完成|撰写)$/u.test(t.actionVerb)&&t.actionObject&&source.includes(t.actionObject)&&!/^的|^至|^到|https?:|\.edu\.|以下|期间|[（(]/u.test(t.actionObject)&&t.title.includes(t.actionVerb)&&!/^查看|^无需|^无须|^不必|待核对/u.test(t.title))
  // Preserve independently grounded multi-action notices and their owner IDs.
  if(grounded.length>1)return structuredClone(input)

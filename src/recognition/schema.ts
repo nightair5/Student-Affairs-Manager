@@ -87,6 +87,11 @@ function validMaterial(value: unknown): value is MaterialSuggestionV2 {
     && isStringArray(value.formatRequirements, 20)
     && isStringArray(value.namingRequirements, 20)
     && (value.requirements === undefined || isStringArray(value.requirements, 20))
+    && (value.goalScope === undefined || isRecord(value.goalScope)
+      && isStringArray(value.goalScope.taskTempIds, 20) && value.goalScope.taskTempIds.length > 0
+      && new Set(value.goalScope.taskTempIds).size === value.goalScope.taskTempIds.length
+      && boundedString(value.goalScope.condition, 300)
+      && (value.goalScope.requirement === 'required' || value.goalScope.requirement === 'optional'))
     && (value.quantity === null || (typeof value.quantity === 'number' && Number.isFinite(value.quantity)))
     && (value.submissionChannel === null || boundedString(value.submissionChannel, 160))
     && isStringArray(value.relatedTaskTempIds, 30)
@@ -153,20 +158,36 @@ function capacityIssues(value: unknown): RecognitionValidationIssue[] {
   const tasks = (input: unknown, path: string) => {
     check(input, path, 20)
     if (Array.isArray(input)) input.forEach((task, index) => {
-      if (isRecord(task)) check(task.description, `${path}[${index}].description`, 800)
+      if (isRecord(task)) {
+        check(task.description, `${path}[${index}].description`, 800)
+        for(const field of ['dependencyTempIds','materialTempIds','timePointTempIds','evidenceIds'])check(task[field],`${path}[${index}].${field}`,20)
+      }
     })
   }
   tasks(value.standaloneTasks, 'standaloneTasks')
   check(value.milestones, 'milestones', 10)
   if (Array.isArray(value.milestones)) value.milestones.forEach((milestone, index) => {
     if (!isRecord(milestone)) return
+    check(milestone.evidenceIds, `milestones[${index}].evidenceIds`, 20)
     tasks(milestone.tasks, `milestones[${index}].tasks`)
     check(milestone.workPackages, `milestones[${index}].workPackages`, 8)
     if (Array.isArray(milestone.workPackages)) milestone.workPackages.forEach((workPackage, nestedIndex) => {
-      if (isRecord(workPackage)) tasks(workPackage.tasks, `milestones[${index}].workPackages[${nestedIndex}].tasks`)
+      if (isRecord(workPackage)) {
+        check(workPackage.evidenceIds, `milestones[${index}].workPackages[${nestedIndex}].evidenceIds`, 20)
+        tasks(workPackage.tasks, `milestones[${index}].workPackages[${nestedIndex}].tasks`)
+      }
     })
   })
-  for (const [field, limit] of [['materials', 60], ['timePoints', 60], ['events', 30], ['evidence', 120]] as const) check(value[field], field, limit)
+  for (const [field, limit] of [['materials', 60], ['timePoints', 60], ['events', 30], ['evidence', 120]] as const) {
+    check(value[field], field, limit)
+    const items=value[field]
+    if(Array.isArray(items)&&field!=='evidence')items.forEach((item,index)=>{
+      if(!isRecord(item))return
+      check(item.evidenceIds,`${field}[${index}].evidenceIds`,20)
+      if(field==='materials'||field==='timePoints')check(item.relatedTaskTempIds,`${field}[${index}].relatedTaskTempIds`,30)
+      if(field==='timePoints')check(item.relatedMaterialTempIds,`${field}[${index}].relatedMaterialTempIds`,30)
+    })
+  }
   return issues
 }
 
@@ -241,7 +262,10 @@ function requiredFieldIssues(value: unknown): RecognitionValidationIssue[] {
     'tempId', 'name', 'required', 'formatRequirements', 'namingRequirements', 'quantity',
     'submissionChannel', 'relatedTaskTempIds', 'evidenceIds', 'confidence',
   ]
-  requireArrayItems(value.materials, 'materials', materialFields, [...materialFields, 'requirements', 'selected'])
+  requireArrayItems(value.materials, 'materials', materialFields, [...materialFields, 'requirements', 'goalScope', 'selected'])
+  if(Array.isArray(value.materials))value.materials.forEach((material,index)=>{
+    if(isRecord(material)&&material.goalScope!==undefined)requireFields(material.goalScope,`materials[${index}].goalScope`,['taskTempIds','condition','requirement'])
+  })
   const timePointFields = [
     'tempId', 'type', 'rawText', 'normalizedValue', 'timezone', 'isAllDay', 'precision',
     'needsConfirmation', 'relatedTaskTempIds', 'relatedMaterialTempIds', 'evidenceIds', 'confidence',
@@ -320,6 +344,15 @@ function collectSemanticIssues(value: RecognitionResult, options: RecognitionVal
     value.evidence.forEach((evidence, index) => {
       if (!options.sourceContent?.includes(evidence.quote)) {
         issues.push({ category: 'semantic', code: 'EVIDENCE_QUOTE_NOT_IN_SOURCE', path: `evidence[${index}].quote`, referenceId: evidence.id })
+      }
+    })
+    const compact = (text: string) => text.normalize('NFKC').replace(/\s/gu, '')
+    value.materials.forEach((material, index) => {
+      if (!material.goalScope) return
+      const condition = compact(material.goalScope.condition)
+      const cited = value.evidence.filter((evidence) => material.evidenceIds.includes(evidence.id))
+      if (!cited.some((evidence) => compact(evidence.quote).includes(condition))) {
+        issues.push({ category: 'semantic', code: 'MATERIAL_CONDITION_NOT_IN_EVIDENCE', path: `materials[${index}].goalScope.condition` })
       }
     })
   }
@@ -424,6 +457,7 @@ function collectReferenceIssues(result: RecognitionResult): RecognitionValidatio
   })
   result.materials.forEach((material, materialIndex) => {
     missing(material.relatedTaskTempIds, taskIds, 'MATERIAL_TASK_MISSING', `materials[${materialIndex}].relatedTaskTempIds`)
+    missing(material.goalScope?.taskTempIds ?? [], taskIds, 'MATERIAL_GOAL_TASK_MISSING', `materials[${materialIndex}].goalScope.taskTempIds`)
     missing(material.evidenceIds, evidenceIds, 'MATERIAL_EVIDENCE_MISSING', `materials[${materialIndex}].evidenceIds`)
   })
   result.timePoints.forEach((point, pointIndex) => {

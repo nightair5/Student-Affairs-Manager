@@ -200,12 +200,20 @@ function userEditedDraftDeadline(item: LegacyDraft['items'][number] | undefined)
 
 function taskMaterials(workspace: WorkspaceV8, taskId: string, sourceId?: string, unassigned=false): LegacyTaskMaterial[] {
   const runId=unassigned?workspace.tasks.find(task=>task.id===taskId)?.legacyData?.recognitionRunId:undefined
+  const goalScope=(item:WorkspaceV8['materials'][number])=>{
+    const value=item.legacyData?.goalMaterialScope
+    if(!value||typeof value!=='object'||Array.isArray(value))return null
+    const {taskIds,condition,requirement}=value
+    if(!Array.isArray(taskIds)||!taskIds.includes(taskId)||typeof condition!=='string'||(requirement!=='required'&&requirement!=='optional'))return null
+    return {condition,requirement} as const
+  }
   return workspace.materials.filter((item) => unassigned
-    ? Boolean(sourceId && typeof runId==='string' && item.legacyData?.recognitionRunId===runId && item.legacyData?.sourceId===sourceId && item.legacyData?.assignment==='unresolved' && !item.relatedTaskIds.length)
+    ? Boolean(sourceId && typeof runId==='string' && item.legacyData?.recognitionRunId===runId && item.legacyData?.sourceId===sourceId && (item.legacyData?.assignment==='unresolved'||item.legacyData?.assignment==='goal'&&goalScope(item)) && !item.relatedTaskIds.length)
     : item.relatedTaskIds.includes(taskId)).map((item) => ({
     id: item.id,
     name: item.name,
     required: item.required,
+    ...(goalScope(item)?{goalScope:goalScope(item)!}:{}),
     ...(item.requirements.length ? {requirements:item.requirements} : {}),
     ...(item.formatRequirements.length ? {formatRequirements:item.formatRequirements} : {}),
     ...(item.namingRequirements.length ? {namingRequirements:item.namingRequirements} : {}),
@@ -234,6 +242,7 @@ function taskReminders(workspace: WorkspaceV8, taskId: string): Reminder[] {
 function safeRecognitionFailureMessage(errorCode: string | null): string {
   if (errorCode === 'AI_TIMEOUT') return '智能整理超时，来源已保留，可重试或手动补充。'
   if (errorCode === 'INVALID_AI_RESPONSE') return '智能整理结果无效，来源已保留，可重试或手动补充。'
+  if (errorCode === 'INVALID_LOCAL_RESULT') return '简单整理结果未能保存，来源已保留，可重试或手动补充。'
   if (errorCode === 'RECOGNITION_FAILED') return '识别失败，来源已保留，可重试或手动补充。'
   return '识别未完成，来源已保留，请重试或手动补充。'
 }

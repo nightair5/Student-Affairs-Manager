@@ -1,6 +1,6 @@
 export interface SourceNoticeContext {
   /** These are verbatim excerpts from one source, not newly inferred tasks. */
-  sections: Array<{kind:'roles'|'notice'|'overview'|'time'; text:string}>
+  sections: Array<{kind:'roles'|'notice'|'overview'|'time'|'context'|'process'; text:string}>
   omitted:boolean
   sourceText:string
 }
@@ -18,8 +18,28 @@ export function extractSourceNoticeContext(source:string,kind:'task'|'event',kno
   const isGroup=(line:string)=>/^[^：:\n]{0,32}(?:组|小队|岗位|职位|分工)(?:[·•/／][^：:\n]{1,20})?(?:[（(][^（）()]{1,20}[）)])?[：:]\s*.*$/u.test(stripDecoration(line))
   const isOtherHeading=(line:string)=>/^(?:【[^】]{1,28}】|[^：:\n]{1,24}[：:])\s*$/u.test(stripDecoration(line))
   const isInlineDatedHeader=(line:string)=>/^【[^】]*[0-9０-９][^】]*】\s*$/u.test(stripDecoration(line))
-  const selected:Array<{kind:'roles'|'notice'|'overview'|'time';text:string}>=[]
+  const selected:SourceNoticeContext['sections']=[]
   const groupLines=new Set<number>()
+  // Preserve a source-wide, labelled conditions section as context. Its
+  // contents are not interpreted as additional actions or assumed to apply to
+  // the current reader. Keep the original formatting, count and wording.
+  for(let i=0;i<lines.length;i++){
+    const heading=stripDecoration(lines[i]).trim()
+    const numbered=/^[一二三四五六七八九十]+[、.．]\s*([^。；;！？]{1,36})$/u.exec(heading)
+    if(!numbered||!/(?:条件|资格|岗位|职责|分工|类别|类型|要求)/u.test(numbered[1]))continue
+    const block=[lines[i]]
+    while(i+1<lines.length&&!/^[一二三四五六七八九十]+[、.．]/u.test(stripDecoration(lines[i+1]).trim()))block.push(lines[++i])
+    const value=block.join('\n').trim()
+    if(value.length>heading.length)selected.push({kind:'context',text:value})
+  }
+  // Source-wide, explicitly attributed processing is useful context. It is
+  // labelled as a quotation and never becomes a personal calendar event.
+  const processStatement=/(?:由[^，,。；;]{1,24}(?:审核|评审|复核|核对|汇总|报送|发证|公布结果)|^[^，,。；;]{1,18}(?:部门|单位|中心|学院|委员会|负责人|学校|平台|系统)[^，,。；;]{0,30}(?:审核|评审|复核|核对|汇总|报送|发证|公布结果))/u
+  for(const match of primary.matchAll(/[^。；;！？\n]{6,240}/gu)){
+    const text=match[0].trim()
+    if(processStatement.test(text)
+      &&!/(?:请|须|需|应)[^，,。；;]{0,24}(?:参加|出席|担任)/u.test(text))selected.push({kind:'process',text})
+  }
   for(let i=0;i<lines.length;i++){
     if(!isGroup(lines[i]))continue
     const start=i,block=[lines[i]]

@@ -80,6 +80,8 @@ export interface MaterialSuggestionV2 {
   namingRequirements: string[]
   /** Optional source-backed requirements belonging to this material. */
   requirements?: string[]
+  /** Conditional material belongs to the cited workflow, not a guessed step. */
+  goalScope?: {taskTempIds:string[];condition:string;requirement:'required'|'optional'}
   quantity: number | null
   submissionChannel: string | null
   relatedTaskTempIds: string[]

@@ -13,7 +13,7 @@ import {alignRecognitionEvidence} from '../../cloudflare/source-text-index.mjs'
 import {convertSemanticNotice} from './directSemanticNotice'
 import {isSemanticNoticeVersion} from './semanticNoticeVersion'
 import {localActionExplicitlyNegated,localBackgroundNotUserAction,localHistoricalEventOnly} from './localActionPolarity'
-import {localTimeRoleConflict} from './directTimeSafety'
+import {localTimeRoleConflict,timeSourceContext} from './directTimeSafety'
 
 export const DIRECT_MODE_VERSION = 'direct-mode-1'
 export type DirectTag = '时间待定' | '如符合条件' | '待确认'
@@ -22,7 +22,7 @@ export interface DirectConversion { result: RecognitionResult; items: DirectItem
 const flatTasks = (r: RecognitionResult) => [...r.standaloneTasks, ...r.milestones.flatMap(m => [...m.tasks, ...m.workPackages.flatMap(w => w.tasks)])]
 const compact = (s: string) => s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu, '')
 const cancelled = /取消|作废|废止|不再(?:举办|举行|提交|报名|申请|参加|出席)|禁止|(?:不得|不要|请勿|不能|不可)(?:提交|报名|申请|参加|出席|领取)|(?:无需|无须|不必|不用|不需要)(?:再|另行)?(?:提交|报名|申请|参加|出席|领取|填写|上传)/u
-const conditional = /(?:若|如果|如已|如需|符合.{0,18}条件|有意|自愿|入选后|录取后|已缴费|放弃修读|仅限|限.{0,10}学生)/u
+const conditional = /(?:若|如果|如已|如需|符合.{0,18}条件|有意|自愿|入选后|录取后|(?:取得|获得)(?:相关|参赛|录取)?资格后|已缴费|放弃修读|仅限|限.{0,10}学生)/u
 const deadline = /截止|最迟|不晚于|不得(?:晚于|迟于)|之前|以前|前(?:[，,。；;\s]|将|把|须|需|请|提交|交到|交至|送至|送到|递交|发送|寄送|上交|完成|报送|报名|申请|办理|领取|上传|填写|登记|预约|$)|(?:\d{1,2}(?:日|号|点|时|分)|\d{1,2}:\d{2})\s*前(?:通过|在线)|于.{0,32}(?:提交|交至|交到|报送|发送|寄送|上交)/u
 const alternatives = /任选|备选|可选择|任一|(?:日|号|\d)\s*(?:或|、).{0,18}(?:日|号)/u
 const recordTasks = (r: RecognitionResult) => new Map(flatTasks(r).map(t => [t.tempId, t]))
@@ -168,11 +168,23 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const point = {...p, relatedTaskTempIds:p.relatedTaskTempIds.filter(id => taskIds.has(id)),selected:true}
     const unknown = ():TimePointSuggestionV2 => ({...point,normalizedValue:null,precision:'vague',isAllDay:false,needsConfirmation:true})
     const text = context(p.evidenceIds), raw = p.rawText
+    // Local evidence may span several sentences. A later choice of material
+    // must not make an earlier, uniquely located deadline an alternative date.
+    const scopedOptionalMaterial=result.modelName==='local-rules'&&result.materials.some(material=>material.goalScope?.requirement==='optional'
+      &&material.goalScope.taskTempIds.some(id=>p.relatedTaskTempIds.includes(id))
+      &&quotes(material.evidenceIds).some(quote=>quote.length<text.length&&text.includes(quote)
+        &&compact(quote).includes(compact(material.goalScope!.condition))&&compact(quote).includes(compact(material.name))
+        &&!alternatives.test(text.replace(quote,''))))
+    const roleText=scopedOptionalMaterial?(timeSourceContext(sourceText,raw)?.text??text):text
     // A previously isolated/ambiguous value stays unknown. The policy changes
     // whether the item is saved, not whether a missing time becomes known.
     const unsupported = !quotes(p.evidenceIds).length || !raw || !compact(text).includes(compact(raw))
     const applicationCutoff=/申请|申报|报名/u.test(text)&&/逾期[^。；]{0,20}(?:不再受理|不予受理|不受理)/u.test(text)&&/至|到|—/u.test(raw)
-    const risky = alternatives.test(text) || (/_deadline$/u.test(p.type) && (!deadline.test(text)&&!applicationCutoff || /办理时段|开放时间|领取时段/u.test(text) && !/截止|最迟/u.test(text)))
+    // “日期前交某材料给某人” proves a deadline only for the cited task's
+    // own action and object; a later handler's date remains a separate fact.
+    const handoffCutoff=/_deadline$/u.test(p.type)&&tasks.some(task=>p.relatedTaskTempIds.includes(task.tempId)&&task.actionVerb==='交'&&task.actionObject
+      &&quotes(p.evidenceIds).some(quote=>['给','到','至'].some(destination=>compact(quote).includes(`${compact(raw)}前交${compact(task.actionObject)}${destination}`))))
+    const risky = alternatives.test(roleText) || (/_deadline$/u.test(p.type) && (!deadline.test(roleText)&&!applicationCutoff&&!handoffCutoff || /办理时段|开放时间|领取时段/u.test(roleText) && !/截止|最迟/u.test(roleText)))
     const weekdayRaw=raw.replace(/^\s*(?:活动|会议|讲座|培训)?时间[：:]\s*/u,'')
     const prefix=text.slice(0,Math.max(0,text.indexOf(raw)))
     const clause=prefix.slice(Math.max(...['。','；',';','，',',','！','!','？','?'].map(mark=>prefix.lastIndexOf(mark)))+1)
@@ -199,8 +211,15 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if (!start?.normalizedValue) tagsById.get(e.tempId)!.push('时间待定')
     items.push({tempId:e.tempId,kind:'event',tags:[...new Set(tagsById.get(e.tempId)!)]})
   }
-  result.materials = result.materials.filter(m => m.relatedTaskTempIds.some(id => taskIds.has(id)) && quotes(m.evidenceIds).length && compact(context(m.evidenceIds)).includes(compact(m.name)))
-    .map(m => ({...m,selected:true,relatedTaskTempIds:m.relatedTaskTempIds.filter(id => taskIds.has(id))}))
+  result.materials = result.materials.filter(m => {
+    const citations=quotes(m.evidenceIds),goal=m.goalScope
+    const scoped=goal?.taskTempIds.some(id=>taskIds.has(id))&&citations.some(text=>compact(text).includes(compact(goal.condition)))
+    return (m.relatedTaskTempIds.some(id=>taskIds.has(id))||scoped)&&citations.length&&compact(context(m.evidenceIds)).includes(compact(m.name))
+  }).map(m => {
+    const goals=m.goalScope?.taskTempIds.filter(id=>taskIds.has(id))??[]
+    return {...m,selected:true,relatedTaskTempIds:m.relatedTaskTempIds.filter(id => taskIds.has(id)),
+      goalScope:m.goalScope&&goals.length?{...m.goalScope,taskTempIds:goals}:undefined}
+  })
   const materialIds = new Set(result.materials.map(m => m.tempId))
   for (const p of times) p.relatedMaterialTempIds = p.relatedMaterialTempIds.filter(id => materialIds.has(id))
   // A named event is already an actionable result. Represent participation and

@@ -71,6 +71,8 @@ export interface Material {
   taskId?: string
   projectId?: string
   sourceId?: string
+  /** Source-backed applicability for a material belonging to a whole workflow. */
+  goalScope?: {condition:string;requirement:'required'|'optional'}
 }
 
 export interface Reminder {

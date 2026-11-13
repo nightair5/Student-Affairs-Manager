@@ -136,9 +136,9 @@ function ownsSourceAggregate(workspace: WorkspaceV8, handle: CaptureHandle): boo
     && latestRunForVersion(workspace, handle.sourceVersionId)?.id === handle.recognitionRunId
 }
 
-function errorCode(error: unknown): string {
+function errorCode(error: unknown, invalidLocalResult=false): string {
   if (error instanceof Error && /timeout|超时/u.test(error.message)) return 'AI_TIMEOUT'
-  if (error instanceof Error && error.message === 'INVALID_RECOGNITION_RESULT') return 'INVALID_AI_RESPONSE'
+  if (error instanceof Error && error.message === 'INVALID_RECOGNITION_RESULT') return invalidLocalResult?'INVALID_LOCAL_RESULT':'INVALID_AI_RESPONSE'
   return 'RECOGNITION_FAILED'
 }
 
@@ -452,9 +452,15 @@ export class CapturePersistenceService {
       recognitionRuns: workspace.recognitionRuns.map((item) => item.id === handle.recognitionRunId ? { ...item, status: 'running', startedAt } : item),
       savedAt: startedAt,
     }))
+    let invalidLocalResult=false
+    let invalidResultDiagnostic:ReturnType<typeof recognitionDiagnostic>=null
     try {
       const value = await executor()
-      if (!isRecognitionResult(value)) throw new Error('INVALID_RECOGNITION_RESULT')
+      if (!isRecognitionResult(value)) {
+        invalidLocalResult=Boolean(value&&typeof value==='object'&&'modelName' in value&&value.modelName==='local-rules')
+        if(value&&typeof value==='object')invalidResultDiagnostic=recognitionDiagnostic(value as RecognitionResult)
+        throw new Error('INVALID_RECOGNITION_RESULT')
+      }
       const completedAt = new Date().toISOString()
       await this.repository.transaction((workspace) => {
         const updateAggregate = ownsSourceAggregate(workspace, handle)
@@ -475,12 +481,12 @@ export class CapturePersistenceService {
       return value
     } catch (error) {
       const failedAt = new Date().toISOString()
-      const code = errorCode(error)
+      const code = errorCode(error,invalidLocalResult)
       await this.repository.transaction((workspace) => {
         const updateAggregate = ownsSourceAggregate(workspace, handle)
         return {
           ...workspace,
-          recognitionRuns: workspace.recognitionRuns.map((item) => item.id === handle.recognitionRunId ? { ...item, status: 'failed', completedAt: failedAt, errorCode: code,legacyData:{...item.legacyData,requestDiagnostic:JSON.parse(JSON.stringify(failureDiagnostic(error)))} } : item),
+          recognitionRuns: workspace.recognitionRuns.map((item) => item.id === handle.recognitionRunId ? { ...item, status: 'failed', completedAt: failedAt, errorCode: code,legacyData:{...item.legacyData,requestDiagnostic:JSON.parse(JSON.stringify(invalidResultDiagnostic??(invalidLocalResult&&item.provider==='local-rules'?unobservedDiagnostic('LOCAL_MODE'):failureDiagnostic(error))))} } : item),
           extractionDrafts: workspace.extractionDrafts.map((item) => item.id === handle.draftId ? { ...item, status: 'failed', updatedAt: failedAt } : item),
           sources: updateAggregate
             ? workspace.sources.map((item) => item.id === handle.sourceId ? { ...item, status: 'failed', updatedAt: failedAt } : item)

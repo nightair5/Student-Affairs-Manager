@@ -16,6 +16,7 @@ import type {RecognitionRequestDiagnostic} from '../../recognition/requestDiagno
 import {isSemanticNoticeVersion} from '../../recognition/semanticNoticeVersion'
 import {completeSourceEventRange} from '../../recognition/completeSourceEventRange'
 import {retainSourceEventContext} from '../../recognition/retainSourceEventContext'
+import {goalMaterialScope} from './materialScope'
 
 export interface DirectBatch {
   version: typeof DIRECT_MODE_VERSION; id: string; draftId: string; sourceId: string; addedAt: string
@@ -140,7 +141,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const prepared={...w,extractionDrafts:w.extractionDrafts.map(x=>x.id===d.id?{...x,result}:x)}
     const plan=buildDomainCommitPlan(prepared,d.id,{
       taskTempIds:[...newTasks],eventTempIds:[...newEvents],
-      materialTempIds:result.materials.filter(m=>!w.materials.some(x=>x.id===`material:${d.id}:${m.tempId}`)&&(m.relatedTaskTempIds.some(id=>newTasks.has(id))||isSemanticNoticeVersion(result.promptVersion)&&!m.relatedTaskTempIds.length&&m.requirements?.includes('适用事项待关联'))).map(m=>m.tempId),
+      materialTempIds:result.materials.filter(m=>!w.materials.some(x=>x.id===`material:${d.id}:${m.tempId}`)&&(m.relatedTaskTempIds.some(id=>newTasks.has(id))||m.goalScope?.taskTempIds.some(id=>newTasks.has(id))||isSemanticNoticeVersion(result.promptVersion)&&!m.relatedTaskTempIds.length&&m.requirements?.includes('适用事项待关联'))).map(m=>m.tempId),
       timePointTempIds:result.timePoints.filter(p=>!w.timePoints.some(x=>x.id===`time:${d.id}:${p.tempId}`)&&(p.relatedTaskTempIds.some(id=>newTasks.has(id))||result.events.some(e=>newEvents.has(e.tempId)&&(e.startTimePointTempId===p.tempId||e.endTimePointTempId===p.tempId)))).map(p=>p.tempId),
     },now)
     plan.operationId += ':direct:'+workspaceSnapshotHash(now)
@@ -327,7 +328,21 @@ export async function deleteDirectItem(repo:CanonicalWorkspaceRepository,id:stri
     const tasks=w.tasks.filter(t=>t.id!==id).map(t=>detached.some(x=>x.id===t.id)?{...t,dependencyIds:t.dependencyIds.filter(v=>v!==id),needsReview:true,legacyData:{...t.legacyData,directTags:json([...new Set([...(Array.isArray(t.legacyData?.directTags)?t.legacyData.directTags:[]),'待确认'])])}}:t),events=w.events.filter(e=>e.id!==id)
     // Existing dependencies are never silently rewired. The Repository validator
     // rejects external references atomically instead of deleting older facts.
-    const materials=w.materials.filter(m=>!(batch.created.materials??[]).includes(m.id)||m.relatedTaskIds.some(t=>t!==id)).map(m=>(batch.created.materials??[]).includes(m.id)?{...m,relatedTaskIds:m.relatedTaskIds.filter(t=>t!==id)}:m)
+    const materials=w.materials.flatMap(m=>{
+      if(!(batch.created.materials??[]).includes(m.id))return [m]
+      const goal=goalMaterialScope(m)
+      if(goal){
+        if(!goal.taskIds.includes(id))return [m]
+        const taskIds=goal.taskIds.filter(taskId=>taskId!==id)
+        if(taskIds.length)return [{...m,legacyData:{...m.legacyData,goalMaterialScope:{...goal,taskIds}}}]
+        // Removing the final associated task must not erase conditional facts
+        // or a later material edit. Keep them in the source as unresolved.
+        const scopeText=`${goal.condition}${goal.condition.endsWith('时')?'':'时'}${goal.requirement==='required'?'必需':'可选'}`
+        return [{...m,requirements:[...new Set([...m.requirements,scopeText])],legacyData:{...m.legacyData,assignment:'unresolved',goalMaterialScope:{...goal,taskIds:[]}}}]
+      }
+      if(!m.relatedTaskIds.length&&m.legacyData?.assignment==='unresolved')return [m]
+      return m.relatedTaskIds.some(taskId=>taskId!==id)?[{...m,relatedTaskIds:m.relatedTaskIds.filter(taskId=>taskId!==id)}]:[]
+    })
     const materialIds=new Set(materials.map(m=>m.id))
     const timePoints=w.timePoints.filter(p=>!((batch.created.timePoints??[]).includes(p.id)&&(p.taskId===id||p.eventId===id)&&!p.relatedTaskIds.some(t=>t!==id)&&!(p.eventId&&p.eventId!==id)&&!p.relatedMaterialIds.some(m=>materialIds.has(m))&&!(p.materialId&&materialIds.has(p.materialId))))
       .map(p=>(batch.created.timePoints??[]).includes(p.id)?{...p,taskId:p.taskId===id?null:p.taskId,eventId:p.eventId===id?null:p.eventId,materialId:p.materialId&&!materialIds.has(p.materialId)?null:p.materialId,relatedTaskIds:p.relatedTaskIds.filter(t=>t!==id),relatedMaterialIds:p.relatedMaterialIds.filter(v=>materialIds.has(v))}:p)

@@ -3,6 +3,7 @@ import {displayMaterialRequirement,materialOptionalLabel} from '../lib/materialP
 export interface DisplayMaterial {
  id:string; name:string; quantity?:number|null; submissionChannel?:string|null; required?:boolean; status?:string
  requirements?:readonly string[]; formatRequirements?:readonly string[]; namingRequirements?:readonly string[]
+ goalScope?:{condition:string;requirement:'required'|'optional'}
 }
 
 /** One presentation for the same canonical materials in timeline and details. */

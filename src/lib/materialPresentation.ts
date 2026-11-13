@@ -6,8 +6,9 @@ export const displayMaterialRequirement=(value:string):string=>value.replace(/\b
 /** A non-required material can be genuinely optional or required only under
  * the source's condition. Keep that distinction visible without changing the
  * canonical material or treating either as an unconditional obligation. */
-export function materialOptionalLabel(material:{required?:boolean;requirements?:readonly string[]}):string|undefined {
+export function materialOptionalLabel(material:{required?:boolean;requirements?:readonly string[];goalScope?:{condition:string;requirement:'required'|'optional'}}):string|undefined {
   if(material.required!==false)return undefined
+  if(material.goalScope)return `${material.goalScope.condition}${material.goalScope.condition.endsWith('时')?'':'时'}${material.goalScope.requirement==='required'?'必需':'可选'}`
   if((material.requirements??[]).includes('适用事项待关联'))return '适用事项待关联'
   if((material.requirements??[]).includes('是否必交待确认'))return '必交与否待确认'
   const conditional=(material.requirements??[]).some(value=>/(?:若|如果|仅当|只有|除非).{0,36}(?:须|必须|需要)/u.test(value))
