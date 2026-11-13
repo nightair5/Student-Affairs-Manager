@@ -1,6 +1,6 @@
 import type { ParsedSuggestion, Project, SourceType, Task, TaskCategory } from '../types'
 import { createSuggestions } from '../lib/parser'
-import { localDelivery, localEventLocation, localMaterialRequirements, localActionNeedsDecision, localSubmissionChannel, localAttendanceDirective } from './localNoticeFacts'
+import { localDelivery, localEventLocation, localCitedEventLocation, localMaterialRequirements, localActionNeedsDecision, localSubmissionChannel, localAttendanceDirective } from './localNoticeFacts'
 import { taskActionText } from '../lib/taskActionText'
 import { parseChineseTimeAst } from '../lib/timeSemantics'
 import { localMeetingBlock, localNamedMeeting } from './localMeetingBlock'
@@ -299,7 +299,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
       }
       const eventLocation = localEventLocation(item.evidence)
       const namedMeeting = (namedGathering||/^(?:参加|出席|开会)$/u.test(task.title)) ? localNamedMeeting(item.evidence) : null
-      events.push({ tempId: `event-${index + 1}`, title: meeting?.title ?? eventLocation?.name ?? namedMeeting ?? task.title, description: localEventTimeDescription(item.evidence,Boolean(timeAst.normalizedValue)), startTimePointTempId: timePointId, endTimePointTempId: endTimePointId, location: meeting?.location ?? eventLocation?.location ?? null, evidenceIds: [evidenceId], confidence: task.confidence, inferenceLevel: task.inferenceLevel, selected: meeting ? false : task.selected })
+      events.push({ tempId: `event-${index + 1}`, title: meeting?.title ?? eventLocation?.name ?? namedMeeting ?? task.title, description: localEventTimeDescription(item.evidence,Boolean(timeAst.normalizedValue)), startTimePointTempId: timePointId, endTimePointTempId: endTimePointId, location: meeting?.location ?? eventLocation?.location ?? localCitedEventLocation(item.evidence), evidenceIds: [evidenceId], confidence: task.confidence, inferenceLevel: task.inferenceLevel, selected: meeting ? false : task.selected })
       const preparation = preparationAction(item.evidence)
       if (preparation) {
         const preparationIndex = parsed.length + index

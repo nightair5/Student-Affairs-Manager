@@ -16,12 +16,13 @@ import {localMaterialOwnership} from './localMaterialOwnership'
 import {localSubmissionChoices} from './localSubmissionChoices'
 import {boundLocalResult} from './localResultCapacity'
 import {scopeLocalOtherPartyActions} from './localResponsibilityScope'
+import {retainLocalConditionalMaterials} from './localConditionalMaterials'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
  const actions=removeDuplicatedActionEvents(improveLocalActions(input,source))
  const improved=retainLocalEventDetails(retainSourceEventContext(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(projectLocalDeliveryRoles(actions,source),source),source),source),source),source)
- const result=boundLocalResult(scopeLocalOtherPartyActions(clearUndatedSingleEventRevision(attachExplicitSharedGoal(linkReferencedEventActions(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source),source)),source,true),source),source),source),source),source))
+ const result=boundLocalResult(retainLocalConditionalMaterials(scopeLocalOtherPartyActions(clearUndatedSingleEventRevision(attachExplicitSharedGoal(linkReferencedEventActions(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source),source)),source,true),source),source),source),source),source),source))
  const rows=source.split(/\r?\n/u).map(line=>line.trim()).filter(line=>/^[\p{Script=Han}\d]{1,12}场[：:]/u.test(line)&&!/^(?:报名|申请|提交|缴费)/u.test(line))
  if(rows.length>1&&result.events.length<rows.length){
   const reason='部分内容尚未完整整理（活动场次），请核对原文'
@@ -167,7 +168,7 @@ function clarifyOwnedFormAction(base:DirectConversion,source:string):DirectConve
  return {...base,result}
 }
 function improveLocalActions(input:RecognitionResult,source:string):RecognitionResult {
- const positiveDirective=source.split(/[。！？；;，,\n]/u).some(clause=>/(?:请|须|需|应|务必)[^。；]{0,30}(?:提交|填写|申请|申报|报名|领取|缴费|参加|上传|登记|预约)/u.test(clause)&&!/(?:无需|无须|不用|不必|不得|禁止|请勿|不要|不再)/u.test(clause))
+ const positiveDirective=source.split(/[。！？；;，,\n]/u).some(clause=>/(?:请|须|需|应|务必)[^。；]{0,30}(?:提交|递交|填写|申请|申报|报名|领取|缴费|参加|上传|登记|预约)/u.test(clause)&&!/(?:无需|无须|不用|不必|不得|禁止|请勿|不要|不再)/u.test(clause))
  if(/仅供知悉|仅供参考|请知悉|无需操作|无需办理/u.test(source)&&!positiveDirective){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/^\s*(?:各位同学|同学们)/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
  if(/无需办理|无需操作|仅供知悉/u.test(source)&&!/提交|报名|申请|申报|缴费|领取|上传/u.test(source.replace(/(?:无需|不必|不要|无须)(?:办理|操作|提交|报名|申请|申报|缴费|领取|上传)/gu,''))){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/仅供知悉|无需|无须|不必/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
  const existing=[...input.standaloneTasks,...input.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
@@ -237,7 +238,7 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
   if(!verb&&registration){verb=registration[2];object=registration[1].replace(/^(?:报名|登记|申请)/u,'')||registration[1]}
   const routed=/(?:平台|系统)(提交|上传|填写)([^，,；;]{2,45})/u.exec(plain)
   if(routed&&(!verb||/申请|报名/u.test(verb))){verb=routed[1];object=routed[2].trim()}
-  if(!verb){const m=/(?:请|须|需|应|可|有意|自愿|学生|同学)[^。；]{0,40}?(申请|申报|报名|提交|报送|上传|填写|登记|预约|缴费|领取)\s*([^，,；;：:]{1,55})/u.exec(plain);if(m){verb=m[1];object=m[2].replace(/[（(][^）)]*[）)]/gu,'').replace(/^(?:本次|此次|该项)/u,'').split(/至|到|并|后|前|进行|即可/u)[0].trim()}}
+  if(!verb){const m=/(?:请|须|需|应|可|有意|自愿|学生|同学)[^。；]{0,40}?(申请|申报|报名|提交|递交|报送|上传|填写|登记|预约|缴费|领取)\s*([^，,；;：:]{1,55})/u.exec(plain);if(m){verb=m[1];object=m[2].replace(/[（(][^）)]*[）)]/gu,'').replace(/^(?:本次|此次|该项)/u,'').split(/至|到|并|后|前|进行|即可/u)[0].trim()}}
   if(!verb){const m=/^\s*(?:并|以及|同时)(?:请)?(提交|递交|报送|上传|发送|填写|登记|领取|缴费|申请|报名)\s*([^，,；;：:。！？\n]{2,55})/u.exec(plain);if(m){verb=m[1];object=m[2].split(/至|到|给|并|后|前|进行|即可/u)[0].trim()}}
   if(!verb){const m=/(?:^|[，,]|后|分钟)(?:请(?:大家|同学们)?(?:准时)?|需要|须|应|需)?参加([^。；，,]{2,40})/u.exec(plain);if(m&&!/^(?:者|人员|资格|条件|对象)|的同学|的学生/u.test(m[1])){verb='参加';object=m[1].trim()}}
   if(/申请者须|^申请截止|^材料截止|^三、申请截止/u.test(q))continue

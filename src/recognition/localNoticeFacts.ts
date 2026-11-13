@@ -1,5 +1,5 @@
 /** Local fallback only. Never used to rewrite a cloud/recorded RecognitionResult. */
-export const LOCAL_NOTICE_FACTS_VERSION = 'local-notice-facts-1.2.0'
+export const LOCAL_NOTICE_FACTS_VERSION = 'local-notice-facts-1.3.0'
 import {documentFormats} from '../../cloudflare/notice-delivery-roles.mjs'
 export function localDelivery(text: string): {verb: string; sourceVerb: string; object: string; channel: string} | null {
   const source = text.replace(/[（(][^（）()]*[）)]/gu, '')
@@ -10,7 +10,9 @@ export function localDelivery(text: string): {verb: string; sourceVerb: string; 
   // “推荐表请于……前递交至……” puts the object before its action.
   // Only a directive with a named object and destination is eligible.
   const subjectFirst = /^\s*([^，,；;。！？\n]{2,35}?)(?:请|须|需|应)(?:于)?[^，,；;。！？\n]{0,32}?(提交|递交|报送|上传|发送)(?:至|到|给)\s*([^，,；;。！？\n]{1,60})/u.exec(source)
-  if(subjectFirst&&!/^(?:电子|纸质)(?:版)?(?:材料|文件|资料)?$/u.test(subjectFirst[1].trim())&&!/(?:取消|禁止|无需|不再|不得|请勿)/u.test(subjectFirst[0]))candidates.push({verb:subjectFirst[2],sourceVerb:subjectFirst[2],object:subjectFirst[1].trim(),channel:subjectFirst[3].trim()})
+  // When a complete 把/将 object is already present, the words before 请
+  // can be a notice heading, not a second submitted document.
+  if(subjectFirst&&!candidates.length&&!/^(?:电子|纸质)(?:版)?(?:材料|文件|资料)?$/u.test(subjectFirst[1].trim())&&!/(?:取消|禁止|无需|不再|不得|请勿)/u.test(subjectFirst[0]))candidates.push({verb:subjectFirst[2],sourceVerb:subjectFirst[2],object:subjectFirst[1].trim(),channel:subjectFirst[3].trim()})
   // A separate destination clause may follow only format/naming annotations.
   // A different object, action, condition or second destination cannot be bridged.
   const annotated = /(?:提交|上传|发送)([^，,；;。！？\n]{1,60})[，,]((?:[^，,；;。！？\n]+[，,])+)(?:交到|交至|提交至|上传至|发送至)\s*([^，,；;。！？\n]{1,60})[。]?$/u.exec(source)
@@ -28,6 +30,13 @@ export function localEventLocation(text: string): {name: string; location: strin
   if (matches.length !== 1) return null
   const [, location, name] = matches[0]
   return {name: name.trim(), location: location.trim()}
+}
+/** A place explicitly labelled inside this event's own quotation. Never use a
+ * document-wide location or turn a pending announcement into a real place. */
+export function localCitedEventLocation(text:string):string|null {
+  const locations=[...text.matchAll(/(?:^|[，,；;\n])[ \t\u00a0\u3000]*(?:活动|会议|讲座|报告|培训|面试|答辩|汇报)?(?:地点|场地)(?:[：:]|为|是|在)?[ \t\u00a0\u3000]*(?![：:])([^，,；;。！？\r\n]{1,80})/gu)].map(match=>match[1].trim())
+  if(locations.some(value=>!value||/(?:另行|待定|待通知|未知|不详|未定|尚未|暂定|以.*为准|不变|取消)/u.test(value)))return null
+  return new Set(locations).size===1?locations[0]:null
 }
 export function localSubmissionChannel(text: string): string | null {
   const matches = [...text.matchAll(/(?:交到|交至|发到|发至|提交到|提交至|递交到|递交至|报送到|报送至|上传到|上传至|发送到|发送至)\s*([^，,；;。！？（）()\n]{1,60})/gu)].map(m => m[1].trim())

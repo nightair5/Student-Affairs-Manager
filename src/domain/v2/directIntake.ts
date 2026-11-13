@@ -119,7 +119,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const readingOnly=converted.result.standaloneTasks.every(t=>t.actionVerb==='查看')&&converted.result.events.length===0
     const droppedAction=!localFallback&&readingOnly&&((requestDiagnostic?.modelActionCount??0)>0||rawInput.sourceSummary.requiresAction)
     const webRead=record(s.legacyData?.webRead)?s.legacyData.webRead:null
-    const processing=droppedAction||webRead?.partial===true||(requestDiagnostic?.compilerLossCount??0)>0||[...rawInput.quality.reviewReasons,...converted.result.quality.reviewReasons].some(reason=>/部分提取|部分内容尚未完整|未完整结束|后半部分可能尚未处理/u.test(reason))?'partial':'complete'
+    const processing=droppedAction||webRead?.partial===true||(requestDiagnostic?.compilerLossCount??0)>0||[...rawInput.quality.reviewReasons,...converted.result.quality.reviewReasons].some(reason=>/部分提取|部分.{0,30}(?:尚未|未能|未)(?:完整|可靠|正确)?(?:整理|提取|关联|识别|转换)|部分内容尚未完整|未完整结束|后半部分可能尚未处理/u.test(reason))?'partial':'complete'
     const result=converted.result
     const newTasks=new Set(result.standaloneTasks.filter(t=>!w.tasks.some(x=>x.id===`task:${d.id}:${t.tempId}`)).map(t=>t.tempId))
     const newEvents=new Set(result.events.filter(e=>!w.events.some(x=>x.id===`event:${d.id}:${e.tempId}`)).map(e=>e.tempId))

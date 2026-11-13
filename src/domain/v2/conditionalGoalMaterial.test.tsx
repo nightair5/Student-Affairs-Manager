@@ -150,6 +150,24 @@ it('saves an explicit local conditional material list with the workflow through 
  expect(markup).toContain('委托他人办理时必需')
 })
 
+it('recovers a locally missed submission and does not call uncertain material association complete',async()=>{
+ const text='办理证书：请于12月21日前递交证书申请。本人办理可以选择提供照片；委托他人办理时必须提供委托书和受托人证件。'
+ const local=buildLocalRecognition({sourceType:'text',sourceTitle:'证书办理',content:text,referenceTime:new Date(now),timezone:'Asia/Shanghai',projects:[],tasks:[]})
+ const w=createGoldenWorkspaceV8()
+ for(const k of ['sources','sourceVersions','recognitionRuns','extractionDrafts','projects','milestones','workPackages','tasks','materials','timePoints','events','evidenceRefs','historyRecords','reminderRecords','changeProposals'] as const)w[k]=[]
+ const store=new MemoryWorkspaceRecordStore(),repo=new CanonicalWorkspaceRepository(store),capture=new CapturePersistenceService(repo)
+ await repo.save(w)
+ const h=await capture.beginCapture({operationId:'recover-conditional-delivery',sourceType:'text',title:'证书办理',rawText:text,provider:'local-rules',modelName:'local-rules',promptVersion:local.promptVersion,pipelineVersion:'local-fixture',now})
+ await capture.recognize(h,async()=>local)
+ const receipt=await commitDirectDraft(repo,h.draftId,now),saved=(await new CanonicalWorkspaceRepository(store).load())!,task=workspaceV8ToLegacyView(saved).tasks[0]
+ expect(receipt.batch?.processing).toBe('partial')
+ expect(task.title).toContain('递交证书申请')
+ expect(task.deadline).toBe('2026-12-21')
+ expect(task.sourceUnassignedMaterials?.find(material=>material.name==='照片')?.goalScope?.requirement).toBe('optional')
+ expect(task.sourceUnassignedMaterials?.filter(material=>material.goalScope?.requirement==='required').map(material=>material.name)).toEqual(['委托书','受托人证件'])
+ expect(importWorkspaceV8(exportWorkspaceV8(saved)).materials).toEqual(saved.materials)
+})
+
 it('does not turn an alternative or optional material into a conditional requirement',()=>{
  for(const text of ['办理证明：请提交申请表。委托他人办理时须提供身份证或委托书。','办理证明：请提交申请表。委托他人办理时可提供身份证和委托书。']){
   const local=buildLocalRecognition({sourceType:'text',sourceTitle:'办理证明',content:text,referenceTime:new Date(now),timezone:'Asia/Shanghai',projects:[],tasks:[]})

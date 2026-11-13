@@ -248,6 +248,11 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   // would duplicate the same notice without adding information.
   const eventIsPrimary=events.length>0
   if (!tasks.length && !eventIsPrimary) {
+    const actionCouldNotMap=result.sourceSummary.requiresAction&&omitted.some(item=>item.reason==='OBJECT_OR_ACTION_NOT_GROUNDED')
+    if(actionCouldNotMap){
+      result.quality.needsHumanReview=true
+      result.quality.reviewReasons=[...new Set([...result.quality.reviewReasons,'部分内容尚未完整整理：原文行动未能可靠转换，请查看原通知。'])].slice(-20)
+    }
     // Owner-authored read action, not a claim that the notice demanded it.
     // Even a cancellation has an update to read; its cancelled action is absent.
     const proposed=result.sourceSummary.title.trim(),core=compact(proposed.replace(/关于|通知|公告|安排/gu,''))
@@ -265,7 +270,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
       const short=parseChineseTimeAst(m[0],{type:'planned_start',referenceTime:result.createdAt,timezone:date.timezone})
       return short.normalizedValue===date.normalizedValue&&!short.needsConfirmation
     })
-    const dateIsForReading=!/取消|作废|废止|原定|改期|改为|调整为|发布日期|发布于|发布时间/u.test(sourceText)
+    const dateIsForReading=!actionCouldNotMap&&!/取消|作废|废止|原定|改期|改为|调整为|发布日期|发布于|发布时间/u.test(sourceText)
     if (dateIsForReading && datedSpan && date.normalizedValue && !date.needsConfirmation && !alternatives.test(sourceText) && !date.rangeEndNormalizedValue) {
       const dateEvidence='direct-reading-date-evidence'
       result.evidence.push({id:dateEvidence,sourceId,textStart:datedSpan.index,textEnd:datedSpan.index!+datedSpan[0].length,quote:datedSpan[0],field:'deadline',extractionMethod:'parser',confidence:1})

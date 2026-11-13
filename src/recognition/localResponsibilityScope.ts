@@ -34,8 +34,12 @@ export function scopeLocalOtherPartyActions(input:RecognitionResult,source:strin
   // A prior administrative sentence is scoped only when it names the same
   // applicant as the direct action, rather than by proximity alone.
   const scopedPrior=at<parentAt&&datedSubject&&audience&&parentQuote.includes(audience)?datedSubject:null
+  // A dated later-party review that explicitly reports to the applicant can
+  // describe the next step of the only cited personal submission. Keep it as
+  // source-backed context; never infer the same link from a date alone.
+  const scopedLater=at>parentAt&&datedSubject&&audience&&/(?:告知|通知|联系|反馈)[^，,。；;\n]{0,12}(?:申请人|申请者|报名者|报名人|学生|同学)/u.test(text)?datedSubject:null
   if(at<=parentAt&&!scopedPrior)continue
-  const actor=by?.[1]??(at>parentAt&&recipient&&text.trim().startsWith(recipient)?recipient:scopedPrior)
+  const actor=by?.[1]??(at>parentAt&&recipient&&text.trim().startsWith(recipient)?recipient:scopedPrior??scopedLater)
   if(!actor||mightBeReader.test(actor))continue
   // A recipient match or a grammatical "by X" plus a single prior direct
   // action supports ownership; the mere existence of an institutional name

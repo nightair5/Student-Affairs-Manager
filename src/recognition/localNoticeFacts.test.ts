@@ -1,6 +1,6 @@
 import {describe,it,expect} from 'vitest'
 import {buildLocalRecognition,postProcessRecognition} from './pipeline'
-import {localDelivery,localEventLocation,localSubmissionChannel} from './localNoticeFacts'
+import {localCitedEventLocation,localDelivery,localEventLocation,localSubmissionChannel} from './localNoticeFacts'
 import {isRecognitionResult} from './schema'
 const recognize=(content:string)=>buildLocalRecognition({sourceType:'text',sourceTitle:'快速粘贴',content,referenceTime:new Date('2026-10-23T10:00:00+08:00'),timezone:'Asia/Shanghai',projects:[],tasks:[]})
 const tasks=(r:ReturnType<typeof recognize>)=>[...r.standaloneTasks,...r.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
@@ -14,6 +14,7 @@ describe('local fallback source facts, independent from cloud generation',()=>{
   it('does not erase a separately requested generic report',()=>{const r=recognize('10月30日17:00前提交实验报告和报告。');expect(r.materials.map(m=>m.name)).toEqual(expect.arrayContaining(['实验报告','报告']))})
   it('does not choose between two incompatible delivery interpretations',()=>{expect(localDelivery('将报名表交到服务台，将申请表交到办公室')).toBeNull();expect(localDelivery('把报名表交到服务台，或交到办公室')).toBeNull();expect(localSubmissionChannel('交到服务台，或交到办公室')).toBeNull()})
   it('does not guess a room from an unrelated title',()=>{expect(localEventLocation('A101维修公告：11月2日召开说明会，地点另行通知')).toBeNull();expect(recognize('11月2日下午2点召开说明会，地点另行通知。').events[0].location).toBeNull()})
+  it('retains only a unique explicit place from the event quotation',()=>{expect(localCitedEventLocation('请参加交流会，地点文理楼301')).toBe('文理楼301');expect(localCitedEventLocation('请参加交流会，地点另行通知')).toBeNull();expect(localCitedEventLocation('请参加交流会，地点文理楼301，场地待定')).toBeNull();expect(localCitedEventLocation('请参加交流会，地点文理楼301，场地理工楼102')).toBeNull();expect(localCitedEventLocation('时间\n地点\n题目\n内容')).toBeNull();expect(localCitedEventLocation('时间\n讲座地点\n：某楼')).toBeNull()})
   it('keeps known mandatory attendance selected, with an event time rather than a cutoff',()=>{const r=recognize('请全体同学于11月2日下午2点在A101参加答辩说明会。');expect(tasks(r)).toHaveLength(0);expect(r.events[0]).toMatchObject({title:'答辩说明会',location:'A101',selected:true});expect(r.timePoints[0]).toMatchObject({type:'event_start',normalizedValue:'2026-11-02T14:00'})})
   it.each(['如已被录取，请于10月30日17:00前提交报名表至学院邮箱。','请自愿参加的同学于10月30日17:00前提交报名表至学院邮箱。','取消10月30日17:00前提交报名表的安排。','禁止10月30日17:00前提交报名表。'])('never changes an unknown condition or cancellation into a selected obligation: %s',text=>{expect(tasks(recognize(text)).every(t=>t.selected===false)).toBe(true)})
   it.each(['请如期于10月30日17:00前提交课程论文。','10月30日17:00前提交课程论文，格式例如PDF。'])('does not mistake descriptive ru for an applicability condition: %s',text=>expect(tasks(recognize(text))[0].selected).toBe(true))

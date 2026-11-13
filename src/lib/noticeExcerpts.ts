@@ -26,11 +26,13 @@ export function extractSourceNoticeContext(source:string,kind:'task'|'event',kno
   for(let i=0;i<lines.length;i++){
     const heading=stripDecoration(lines[i]).trim()
     const numbered=/^[一二三四五六七八九十]+[、.．]\s*([^。；;！？]{1,36})$/u.exec(heading)
-    if(!numbered||!/(?:条件|资格|岗位|职责|分工|类别|类型|要求)/u.test(numbered[1]))continue
+    const bracketed=/^【([^】]{1,36})】/u.exec(heading)
+    const label=numbered?.[1]??bracketed?.[1]??''
+    if(!/(?:条件|资格|岗位|职责|分工|类别|类型|要求)/u.test(label))continue
     const block=[lines[i]]
-    while(i+1<lines.length&&!/^[一二三四五六七八九十]+[、.．]/u.test(stripDecoration(lines[i+1]).trim()))block.push(lines[++i])
+    while(i+1<lines.length&&!/^(?:[一二三四五六七八九十]+[、.．]|【[^】]{1,36}】)/u.test(stripDecoration(lines[i+1]).trim()))block.push(lines[++i])
     const value=block.join('\n').trim()
-    if(value.length>heading.length)selected.push({kind:'context',text:value})
+    if(value.length>heading.length||Boolean(bracketed&&heading.slice(bracketed[0].length).trim()))selected.push({kind:'context',text:value})
   }
   // Source-wide, explicitly attributed processing is useful context. It is
   // labelled as a quotation and never becomes a personal calendar event.

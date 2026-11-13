@@ -19,6 +19,12 @@ describe('local semantic sections',()=>{
   expect(visible.sections.map(s=>s.text).join('\n')).toContain('工作细致认真')
   expect(visible.sections.map(s=>s.text).join('\n')).toContain('技术组')
  })
+ it('shows bracket-labelled role details as context without treating them as personal tasks',()=>{
+  const source='【岗位说明】服务岗位包括资料核验、现场指引和设备协助。具备沟通能力并有耐心者优先。\n【报名办法】有意参加的同学请在12月22日中午12:00前填写志愿报名表。'
+  const context=extractSourceNoticeContext(source,'task')
+  expect(context.sections.some(section=>section.kind==='context'&&section.text.includes('资料核验')&&section.text.includes('沟通能力'))).toBe(true)
+  expect(context.sections.filter(section=>section.kind==='context').every(section=>!section.text.includes('报名办法'))).toBe(true)
+ })
  it('does not treat a numbered list of actionable deliveries as a qualifications list',()=>{
   const source='一、提交安排\n1.请于11月15日前提交报名表。\n2.请于11月16日前上传照片。'
   const result=recognize(source)
@@ -113,5 +119,37 @@ describe('local semantic sections',()=>{
   expect(direct.events).toHaveLength(0)
   expect(direct.timePoints.some(point=>point.normalizedValue==='2026-11-28'&&point.type==='task_deadline')).toBe(true)
   expect(validateRecognitionResult(direct,{sourceContent:source}).valid).toBe(true)
+ })
+ it('preserves an object-before-delivery task, a later review and a separate personal event',()=>{
+  const source='【课程交流安排】请于12月11日17:00前将小组提案提交到教学平台。教务老师12月13日审核并告知申请人结果。12月15日14:00请申请人参加成果汇报，地点文理楼301。'
+  const direct=convertDirectResult(improveDirectFallback(recognize(source),source),source).result
+  expect(validateRecognitionResult(direct,{sourceContent:source}).valid).toBe(true)
+  expect(tasks(direct)).toHaveLength(1)
+  expect(tasks(direct)[0].title).toContain('提交小组提案')
+  expect(tasks(direct)[0].description).toContain('教务老师12月13日审核')
+  expect(direct.timePoints.some(point=>point.type==='task_deadline'&&point.normalizedValue==='2026-12-11T17:00')).toBe(true)
+  expect(direct.events).toHaveLength(1)
+  expect(direct.events[0].title).toContain('成果汇报')
+  expect(direct.events[0].location).toBe('文理楼301')
+  expect(direct.timePoints.some(point=>point.type==='event_start'&&point.normalizedValue==='2026-12-15T14:00')).toBe(true)
+ })
+ it('keeps an explicit application delivery and its conditional materials without inventing a reading task',()=>{
+  const source='办理证书：请于12月21日前递交证书申请。本人办理可以选择提供照片；委托他人办理时必须提供委托书和受托人证件。'
+  const direct=convertDirectResult(improveDirectFallback(recognize(source),source),source).result
+  expect(tasks(direct)).toHaveLength(1)
+  expect(tasks(direct)[0].title).toContain('递交证书申请')
+  expect(tasks(direct)[0].actionVerb).toBe('递交')
+  expect(direct.timePoints.some(point=>point.type==='task_deadline'&&point.normalizedValue==='2026-12-21')).toBe(true)
+  expect(direct.materials.filter(material=>material.goalScope?.requirement==='required').map(material=>material.name)).toEqual(['委托书','受托人证件'])
+  expect(direct.materials.find(material=>material.name==='照片')?.goalScope?.requirement).toBe('optional')
+  expect(validateRecognitionResult(direct,{sourceContent:source}).valid).toBe(true)
+ })
+ it('marks unresolved action conversion partial without turning its deadline into a reading plan',()=>{
+  const source='办理证书：请于12月21日前递交证书申请。本人办理可以选择提供照片；委托他人办理时必须提供委托书和受托人证件。'
+  // Test the lower-level conversion independently of the fallback recovery.
+  const direct=convertDirectResult(recognize(source),source).result
+  expect(tasks(direct)[0].actionVerb).toBe('查看')
+  expect(direct.quality.reviewReasons.join('\n')).toContain('行动未能可靠转换')
+  expect(direct.timePoints.some(point=>point.type==='planned_start'&&point.normalizedValue)).toBe(false)
  })
 })
