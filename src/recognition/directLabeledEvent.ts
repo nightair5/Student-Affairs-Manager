@@ -8,7 +8,14 @@ import {localOrganizerOnlyEvent} from './localActionPolarity'
  * ordinary parser, which must not guess which fact belongs to which event. */
 function recoverDatedEvent(input:RecognitionResult,source:string):RecognitionResult {
  const candidates=[...source.matchAll(/[^。！？\n]+/gu)].flatMap(m=>{
-  const quote=m[0].trim(),location=localEventLocation(quote),dates=[...quote.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]
+  const quote=m[0].trim(),dates=[...quote.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]
+  // A unique notice heading can name an explicitly described event when the
+  // sentence says “活动将于…在…举行” without repeating its name.  This
+  // does not infer an event from a recruitment heading alone.
+  const heading=/^\s*【([^】\n]{2,60})】/u.exec(source)?.[1]?.trim()??''
+  const eventName=heading.replace(/(?:志愿者|工作人员)?(?:招募|招聘|报名|征集)(?:通知)?$/u,'').trim()
+  const implicit=/(?:本次|此次|该)?活动[^。！？\n]{0,60}?在\s*([^，,；;。！？\n]{1,35}?)\s*(?:召开|举行|举办|开展)(?:活动)?\s*$/u.exec(quote)
+  const location=localEventLocation(quote)??(implicit&&eventName&&eventName!==heading?{name:eventName,location:implicit[1].trim()}:null)
   if(!location||localOrganizerOnlyEvent(quote,location.name)||dates.length!==1||/取消|改期|延期|备选|任选|截止|报名|提交|上传|曾于|曾在|曾经|往年|历届|此前|去年|历史上/u.test(quote)||quote.length>160||source.indexOf(quote)!==source.lastIndexOf(quote))return []
   const parsed=parseDirectSourceTime(quote,{type:'event_start',referenceTime:input.createdAt,timezone:'Asia/Shanghai'})
   return parsed.normalizedValue&&!parsed.needsConfirmation?[{quote,location,parsed}]:[]
@@ -22,7 +29,8 @@ function recoverDatedEvent(input:RecognitionResult,source:string):RecognitionRes
  const point=(tempId:string,type:'event_start'|'event_end',normalizedValue:string):TimePointSuggestionV2=>({tempId,type,rawText:quote,normalizedValue,timezone:parsed.timezone,isAllDay:parsed.isAllDay,precision:parsed.precision,needsConfirmation:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:[eid],confidence:1,selected:true})
  r.timePoints.push(point(start,'event_start',parsed.normalizedValue!))
  if(end&&parsed.rangeEndNormalizedValue)r.timePoints.push(point(end,'event_end',parsed.rangeEndNormalizedValue))
- r.events.push({tempId:id,title:useHeading?headingTitle!:location.name,description:quote,location:location.location,startTimePointTempId:start,endTimePointTempId:end,evidenceIds:useHeading?[headingId,eid]:[eid],confidence:1,inferenceLevel:'explicit',selected:true,relatedTaskTempIds:[]})
+ const title=useHeading?(headingTitle!.replace(/(?:志愿者|工作人员)?(?:招募|招聘|报名|征集)(?:通知)?$/u,'').trim()||headingTitle!):location.name
+ r.events.push({tempId:id,title,description:quote,location:location.location,startTimePointTempId:start,endTimePointTempId:end,evidenceIds:useHeading?[headingId,eid]:[eid],confidence:1,inferenceLevel:'explicit',selected:true,relatedTaskTempIds:[]})
  return r
 }
 

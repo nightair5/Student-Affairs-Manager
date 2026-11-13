@@ -7,9 +7,14 @@ export function localDelivery(text: string): {verb: string; sourceVerb: string; 
   const direct = [...source.matchAll(/(提交|递交|报送|上传|发送)\s*([^，,；;。！？\n]{1,60}?)\s*(?:至|到|给)\s*([^，,；;。！？\n]{1,60})/gu)]
   const candidates = matches.map(m => ({verb: /^交/u.test(m[2]) ? '提交' : /^发/u.test(m[2]) ? '发送' : m[2], sourceVerb: m[2].replace(/[到至]$/u,''), object: m[1].trim(), channel: m[3].replace(/^(?:到|至|给)\s*/u, '').trim()}))
     .concat(direct.map(m => ({verb: m[1], sourceVerb: m[1], object: m[2].trim(), channel: m[3].trim()})))
+  // A coordinated instruction may name the document before the final verb:
+  // “填写登记表并提交到平台”.  Keep the original object, rather than
+  // treating the chapter name or the platform as a submitted document.
+  const coordinated=/(?:填写|填报|完成)\s*([^，,；;。！？：:\n]{1,40}?)\s*(?:并|后)(提交|递交|报送|上传|发送)(?:至|到|给)\s*([^，,；;。！？\n]{1,60})/u.exec(source)
+  if(coordinated&&!candidates.length&&!/(?:取消|禁止|无需|不再|不得|请勿)/u.test(coordinated[0]))candidates.push({verb:coordinated[2],sourceVerb:coordinated[2],object:coordinated[1].trim(),channel:coordinated[3].trim()})
   // “推荐表请于……前递交至……” puts the object before its action.
   // Only a directive with a named object and destination is eligible.
-  const subjectFirst = /^\s*([^，,；;。！？\n]{2,35}?)(?:请|须|需|应)(?:于)?[^，,；;。！？\n]{0,32}?(提交|递交|报送|上传|发送)(?:至|到|给)\s*([^，,；;。！？\n]{1,60})/u.exec(source)
+  const subjectFirst = /^\s*([^，,；;。！？：:\n]{2,35}?)(?:(?<![申邀])请|须|需|应)(?:于)?[^，,；;。！？\n]{0,32}?(提交|递交|报送|上传|发送)(?:至|到|给)\s*([^，,；;。！？\n]{1,60})/u.exec(source)
   // When a complete 把/将 object is already present, the words before 请
   // can be a notice heading, not a second submitted document.
   if(subjectFirst&&!candidates.length&&!/^(?:电子|纸质)(?:版)?(?:材料|文件|资料)?$/u.test(subjectFirst[1].trim())&&!/(?:取消|禁止|无需|不再|不得|请勿)/u.test(subjectFirst[0]))candidates.push({verb:subjectFirst[2],sourceVerb:subjectFirst[2],object:subjectFirst[1].trim(),channel:subjectFirst[3].trim()})

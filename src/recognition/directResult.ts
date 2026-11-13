@@ -29,16 +29,16 @@ const recordTasks = (r: RecognitionResult) => new Map(flatTasks(r).map(t => [t.t
 
 /** A new presentation policy, never a modification to a recorded/model result.
  * Uncertainty becomes an explicit label; it never authorizes invented facts. */
-export function convertDirectResult(input: RecognitionResult, sourceText: string, original?: RecognitionResult, options:{actionRecovery?:boolean;retention?:boolean}={}): DirectConversion {
+export function convertDirectResult(input: RecognitionResult, sourceText: string, original?: RecognitionResult, options:{actionRecovery?:boolean;retention?:boolean;scopeAware?:boolean}={}): DirectConversion {
   if(isSemanticNoticeVersion(input.promptVersion))return convertSemanticNotice(input,sourceText)
   if(options.retention)return convertRetainedDirectResult(input,sourceText,original)
   if(options.actionRecovery){
-    const baseline=convertDirectResult(input,sourceText,original)
+    const baseline=convertDirectResult(input,sourceText,original,{scopeAware:options.scopeAware})
     const prepared=structuredClone(baseline.result)
     for(const t of flatTasks(prepared))if(baseline.items.find(i=>i.tempId===t.tempId)?.tags.includes('待确认'))t.selected=false
     const projected=projectDirectActions(prepared,sourceText)
     if(JSON.stringify(projected)===JSON.stringify(prepared))return baseline
-    const next=convertDirectResult(projected,sourceText)
+    const next=convertDirectResult(projected,sourceText,undefined,{scopeAware:options.scopeAware})
     return {...next,omitted:[...baseline.omitted,...next.omitted]}
   }
   const result = alignRecognitionEvidence(composeSharedSubmissions(input,sourceText),sourceText).result, omitted: DirectConversion['omitted'] = [], items: DirectItem[] = []
@@ -72,8 +72,9 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if(!qualification.test(clause)||!isEventEligibility(clause)||/取消(?:报名|预约|注册|资格)/u.test(clause))return false
     const otherEvents=result.events.filter(candidate=>candidate.title!==eventTitle).some(candidate=>compact(candidate.title)&&compact(clause).includes(compact(candidate.title)))
     if(otherEvents)return false
-    const scopedToEvent=compact(clause).includes(compact(eventTitle))||/(?:参加|出席|参会|听讲|入场)/u.test(clause)
-    return scopedToEvent||result.events.length===1&&/(?:仅(?:对|供|面向|限)|符合.{0,18}(?:条件|资格)|入选后|录取后)/u.test(clause)
+    const scopedToEvent=compact(clause).includes(compact(eventTitle))||/(?:参加|出席|参会|听讲|入场|进入现场)/u.test(clause)
+    const narrowerPlace=options.scopeAware&&/(?:进入|参观|使用)(?!现场)[^，,。；;]{0,20}(?:区域|专区|展区|实验区|设备|设施)/u.test(clause)
+    return scopedToEvent||!narrowerPlace&&result.events.length===1&&/(?:仅(?:对|供|面向|限)|符合.{0,18}(?:条件|资格)|入选后|录取后)/u.test(clause)
   })
   const tasks = flatTasks(result).flatMap(task => {
     let t = task
@@ -92,9 +93,11 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     }
     if (isCancelled(text, t.actionObject) || result.modelName==='local-rules'&&localActionExplicitlyNegated(text,t.actionVerb,t.actionObject)) { omitted.push({id:t.tempId,reason:'CANCELLED_OR_PROHIBITED'}); return [] }
     if (result.modelName==='local-rules'&&localBackgroundNotUserAction(text,t.actionVerb,t.actionObject)) { omitted.push({id:t.tempId,reason:'BACKGROUND_NOT_USER_ACTION'}); return [] }
+    const voluntaryOnly=(s:string)=>options.scopeAware&&/(?:有意愿|有意向|有意|感兴趣|自愿|愿意|欢迎|希望参加)/u.test(s)&&!isEventEligibility(s)
     const citedConditions=[...t.description.matchAll(/(?:适用条件待确认|资格待确认|适用条件)[:：]([^\n]+)/gu)]
-      .some(m=>compact(m[1]).length>1&&compact(text).includes(compact(m[1])))
-    const conditions = conditional.test(clauseFor(text, t.actionObject))||citedConditions
+      .some(m=>compact(m[1]).length>1&&compact(text).includes(compact(m[1]))&&!voluntaryOnly(m[1]))
+    const actionContext=clauseFor(text,t.actionObject)
+    const conditions = conditional.test(actionContext)&&!voluntaryOnly(actionContext)||citedConditions
     const tags: DirectTag[] = conditions ? ['如符合条件', '待确认'] : t.selected === false||conflicts.has(t.tempId) ? ['待确认'] : []
     tagsById.set(t.tempId, tags)
     const title=conditions ? `如符合条件 ${t.title.replace(/^如符合条件\s*/u,'')}` : t.title
@@ -122,7 +125,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if (!hasEventTime&&!e.location&&/(?:征集|征稿|报名|申报|投稿)/u.test(text)&&!/(?:举办|举行|召开|开设|上课|讲座|培训会|说明会|展览|演出)/u.test(text)) {omitted.push({id:e.tempId,reason:'COLLECTION_TITLE_NOT_SCHEDULED_EVENT'});return []}
     const eventCondition=eventDetailContract
       ? result.evidence.some(ref=>e.evidenceIds.includes(ref.id)&&ref.field==='requirement'&&located.has(ref.id)&&isEventEligibility(located.get(ref.id)!.quote))
-      : e.tempId==='local-direct-optional-event'||e.tempId==='local-labelled-event'
+      : options.scopeAware&&result.modelName==='local-rules'||e.tempId==='local-direct-optional-event'||e.tempId==='local-labelled-event'
         ? localEventCondition(text,e.title)
         : conditional.test(text)
     const tags: DirectTag[] = eventCondition ? ['如符合条件','待确认'] : e.selected === false||conflicts.has(e.tempId) ? ['待确认'] : []

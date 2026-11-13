@@ -13,6 +13,7 @@ import {applyEventIncidentalNotices} from './semantic-event-notices.mjs'
 import {applySemanticGoalRelations} from './semantic-goal-relations.mjs'
 import {timeRoleContext,parseWindowWithDailyHours,sourceTimeModality} from './semantic-time-context.mjs'
 import {sourceOptionalMaterialClause,sourceParagraphContext,sourceSectionLocation,sourceMaterialInlineFormats} from './semantic-source-context.mjs'
+import {isEventEligibility} from './event-eligibility.mjs'
 
 const object = value => Boolean(value && typeof value === 'object' && !Array.isArray(value))
 const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(0,max) : ''
@@ -25,6 +26,7 @@ export const SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION='semantic-notice-compil
 export const SEMANTIC_MATTER_COMPILER_VERSION='semantic-notice-compiler-1.0.30'
 export const SEMANTIC_PRESERVATION_COMPILER_VERSION='semantic-notice-compiler-1.0.31'
 export const SEMANTIC_ROLE_SCOPE_COMPILER_VERSION='semantic-notice-compiler-1.0.32'
+export const SEMANTIC_PARTICIPATION_COMPILER_VERSION='semantic-notice-compiler-1.0.33'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
@@ -328,7 +330,7 @@ function sourceLocation(source,value,title,ownText) {
 
 /** The model owns action/object and relations. This adapter creates ids and
  * validates source-backed time values without re-parsing the display title. */
-export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',promptVersion='recognition-semantic-notice-3.0.5',goalContextVersion='',roleResolutionVersion=''}={}) {
+export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/Shanghai',model='deepseek-v4-flash',promptVersion='recognition-semantic-notice-3.0.5',goalContextVersion='',roleResolutionVersion='',participationScopeVersion=''}={}) {
   const matterContract=promptVersion==='recognition-semantic-notice-3.12.0'
   const goalContract=promptVersion==='recognition-semantic-notice-3.11.0'||matterContract
   const preservationEnabled=goalContract&&goalContextVersion==='1.0.31'
@@ -336,7 +338,8 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
   // Upgrading the opt-in environment must not disable v1.0.29 for old clients.
   const goalContextV129=goalContract&&(goalContextVersion==='1.0.29'||goalContextVersion==='1.0.30'||preservationEnabled)
   const goalContextEnabled=goalContract&&(goalContextVersion==='1.0.28'||goalContextV129)
-  const compilerVersion=preservationEnabled&&roleResolutionVersion==='1.0.0'?SEMANTIC_ROLE_SCOPE_COMPILER_VERSION:preservationEnabled?SEMANTIC_PRESERVATION_COMPILER_VERSION:matterEnabled?SEMANTIC_MATTER_COMPILER_VERSION:goalContextV129?SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION:goalContextEnabled?SEMANTIC_GOAL_CONTEXT_COMPILER_VERSION:goalContract?SEMANTIC_GOAL_COMPILER_VERSION:SEMANTIC_COMPILER_VERSION
+  const participationEnabled=preservationEnabled&&participationScopeVersion==='1.0.0'
+  const compilerVersion=participationEnabled?SEMANTIC_PARTICIPATION_COMPILER_VERSION:preservationEnabled&&roleResolutionVersion==='1.0.0'?SEMANTIC_ROLE_SCOPE_COMPILER_VERSION:preservationEnabled?SEMANTIC_PRESERVATION_COMPILER_VERSION:matterEnabled?SEMANTIC_MATTER_COMPILER_VERSION:goalContextV129?SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION:goalContextEnabled?SEMANTIC_GOAL_CONTEXT_COMPILER_VERSION:goalContract?SEMANTIC_GOAL_COMPILER_VERSION:SEMANTIC_COMPILER_VERSION
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
     return {result:null,audit:{compilerVersion,rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
@@ -439,9 +442,14 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     if(proposedCondition&&!conditionParts.supported.length){const cited=sourceEvidenceCondition(source,refs,item);if(cited)conditionParts.supported.push(cited)}
     const groundedCondition=conditionParts.supported.map(span=>span.literal).join('；')
     const participantInterest=goalContextEnabled&&/^(?:有意|有意向|希望|拟|计划|愿意)(?:参加|参与)(?:者|的?(?:同学|学生|人员))$/u.test(groundedCondition)
-    const interestOnly=participantInterest||/^(?:两场|各场|所有活动)?(?:均)?(?:面向|欢迎)?(?:所有)?(?:有意向|感兴趣|自愿|愿意参加)(?:的)?(?:同学|学生|人员|者)?(?:参加|参与)?$/u.test(groundedCondition)
-    const hasEligibility=!interestOnly&&/(?:面向|仅限|符合条件|符合资格|不符合|必须具备|须具备|已完成|完成.{0,12}(?:培训|课程|考核))/u.test(groundedCondition)
-    const voluntary=groundedCondition&&!hasEligibility&&(participantInterest||/有意向|感兴趣|自愿|欢迎|如(?:想|有意)|愿意|希望参加/u.test(groundedCondition))?groundedCondition:''
+    // Interest in participating is not itself a qualification.  Inspect the
+    // whole grounded condition so an explicit restriction in the same clause
+    // remains a condition, rather than disappearing with the invitation.
+    const interestSignal=participationEnabled&&/(?:有意愿|有意向|有意|感兴趣|自愿|愿意|欢迎|希望参加)/u.test(groundedCondition)
+    const scopedInterestOnly=interestSignal&&!isEventEligibility(groundedCondition)
+    const interestOnly=participantInterest||scopedInterestOnly||/^(?:两场|各场|所有活动)?(?:均)?(?:面向|欢迎)?(?:所有)?(?:有意向|感兴趣|自愿|愿意参加)(?:的)?(?:同学|学生|人员|者)?(?:参加|参与)?$/u.test(groundedCondition)
+    const hasEligibility=!interestOnly&&(/(?:面向|仅限|符合条件|符合资格|不符合|必须具备|须具备|已完成|完成.{0,12}(?:培训|课程|考核))/u.test(groundedCondition)||interestSignal&&isEventEligibility(groundedCondition))
+    const voluntary=groundedCondition&&!hasEligibility&&(participantInterest||scopedInterestOnly||/有意向|感兴趣|自愿|欢迎|如(?:想|有意)|愿意|希望参加/u.test(groundedCondition))?groundedCondition:''
     const approvedBefore=conditionParts.supported.length===1&&/^[^，,。；;]{1,24}(?:审核|审批|确认|批复)(?:通过|完成)$/u.test(groundedCondition)&&/^后/u.test(source.slice(conditionParts.supported[0].end))
     const prerequisite=groundedCondition&&((list(item.dependsOn,20,40).some(key=>activeTaskKeys.has(key))&&/^(?:完成|填写|提交|办理|通过|取得|先).+后$/u.test(groundedCondition))||/^[^，,。；;]{1,24}(?:批复|审批|批准|审核|确认|同意|反馈|公布|发布)后$/u.test(groundedCondition)||approvedBefore)?groundedCondition+(approvedBefore?'后':''):''
     const firstCondition=groundedCondition.split(/[；;，,]/u)[0]
@@ -508,7 +516,15 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
         const only=compact(n).match(/^(?:(?:本次)?(?:会议|活动|讲座|培训|分享|课程))?(?:时长|持续|历时|用时|耗时)[：:]?(?:大约|约)?([0-9０-９一二两三四五六七八九十半]+)(?:个)?(小时|分钟)(?:左右)?[。.]?$/u)
         return !only||only[1]!==durationAmount[1]||only[2]!==durationAmount[2]
       })
-      const lines=[...speakers,text(item.content,1000)?'活动内容：'+text(item.content,1000):'',...distinctNotices.map(n=>'参加须知：'+n),...requirements.map(n=>'准备要求：'+n),durationLine,condition?'适用条件待确认：'+condition:'',voluntary&&!voluntaryShown?'参加须知：'+voluntary:''].filter(Boolean)
+      // Some model answers express event contents as a list.  Keep each
+      // source-backed item instead of silently discarding the whole list.
+      // A list element without a reliable source match is reported as a
+      // local loss; it does not invalidate the event or its other facts.
+      if(participationEnabled&&Array.isArray(item.content)&&(item.content.length>20||item.content.some(value=>typeof value==='string'&&value.trim().length>1000)))note('CAPACITY',item.key,'EVENT_CONTENT_INPUT_OVERFLOW')
+      const eventContent=participationEnabled&&Array.isArray(item.content)
+        ?list(item.content,20,1000).filter(value=>{if(locateSourceQuote(value,source))return true;note('EVENT_CONTENT',item.key,'CONTENT_NOT_SOURCE_GROUNDED');return false}).join('；')
+        :text(item.content,1000)
+      const lines=[...speakers,eventContent?'活动内容：'+eventContent:'',...distinctNotices.map(n=>'参加须知：'+n),...requirements.map(n=>'准备要求：'+n),durationLine,condition?'适用条件待确认：'+condition:'',voluntary&&!voluntaryShown?'参加须知：'+voluntary:''].filter(Boolean)
       if([...new Set(lines)].join('\n').length>2400)note('CAPACITY',item.key,'EVENT_DESCRIPTION_TRUNCATED')
       entity={tempId,title:text(item.title,160),description:[...new Set(lines)].join('\n').slice(0,2400),startTimePointTempId:null,endTimePointTempId:null,location:supportedLocation||null,relatedTaskTempIds:[],evidenceIds:[...new Set(ids)],confidence:.8,inferenceLevel:recoveredEvidence?'strong_inference':'explicit',selected:!condition&&!recoveredEvidence&&polarity!=='uncertain'}
       result.events.push(entity)

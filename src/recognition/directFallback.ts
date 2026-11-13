@@ -17,12 +17,14 @@ import {localSubmissionChoices} from './localSubmissionChoices'
 import {boundLocalResult} from './localResultCapacity'
 import {scopeLocalOtherPartyActions} from './localResponsibilityScope'
 import {retainLocalConditionalMaterials} from './localConditionalMaterials'
+import {indexLocalSections} from './localSectionScope'
+import {isEventEligibility} from '../../cloudflare/event-eligibility.mjs'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
-export function improveDirectFallback(input:RecognitionResult,source:string):RecognitionResult {
- const actions=removeDuplicatedActionEvents(improveLocalActions(input,source))
+export function improveDirectFallback(input:RecognitionResult,source:string,options:{scopeAware?:boolean}={}):RecognitionResult {
+ const actions=removeDuplicatedActionEvents(improveLocalActions(input,source,options))
  const improved=retainLocalEventDetails(retainSourceEventContext(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(projectLocalDeliveryRoles(actions,source),source),source),source),source),source)
- const result=boundLocalResult(retainLocalConditionalMaterials(scopeLocalOtherPartyActions(clearUndatedSingleEventRevision(attachExplicitSharedGoal(linkReferencedEventActions(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source),source)),source,true),source),source),source),source),source),source))
+ const result=boundLocalResult(retainLocalConditionalMaterials(scopeLocalOtherPartyActions(clearUndatedSingleEventRevision(attachExplicitSharedGoal(linkReferencedEventActions(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source,{inlineSharedObject:options.scopeAware}),source)),source,true),source),source),source),source),source),source))
  const rows=source.split(/\r?\n/u).map(line=>line.trim()).filter(line=>/^[\p{Script=Han}\d]{1,12}场[：:]/u.test(line)&&!/^(?:报名|申请|提交|缴费)/u.test(line))
  if(rows.length>1&&result.events.length<rows.length){
   const reason='部分内容尚未完整整理（活动场次），请核对原文'
@@ -193,7 +195,7 @@ function recoverCoordinatedDelivery(input:RecognitionResult,source:string):Recog
  return r
 }
 
-function improveLocalActions(input:RecognitionResult,source:string):RecognitionResult {
+function improveLocalActions(input:RecognitionResult,source:string,options:{scopeAware?:boolean}={}):RecognitionResult {
  const positiveDirective=source.split(/[。！？；;，,\n]/u).some(clause=>/(?:请|须|需|应|务必)[^。；]{0,30}(?:提交|递交|填写|申请|申报|报名|领取|缴费|参加|上传|登记|预约)/u.test(clause)&&!/(?:无需|无须|不用|不必|不得|禁止|请勿|不要|不再)/u.test(clause))
  if(/仅供知悉|仅供参考|请知悉|无需操作|无需办理/u.test(source)&&!positiveDirective){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/^\s*(?:各位同学|同学们)/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
  if(/无需办理|无需操作|仅供知悉/u.test(source)&&!/提交|报名|申请|申报|缴费|领取|上传/u.test(source.replace(/(?:无需|不必|不要|无须)(?:办理|操作|提交|报名|申请|申报|缴费|领取|上传)/gu,''))){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/仅供知悉|无需|无须|不必/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
@@ -255,11 +257,18 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
  }
  const allCutoffs=spans.flatMap(s=>{const p=cutoff(s.text);return p?[{...s,p}]:[]})
  const evidence=(text:string,at:number,field:'description'|'deadline')=>{const id=`local-direct:${field}:${at}`;if(!r.evidence.some(e=>e.id===id))r.evidence.push({id,sourceId,quote:text,quotedText:text,textStart:at,textEnd:at+text.length,field,extractionMethod:'parser',confidence:1});return id}
+ const sourceSections=options.scopeAware?indexLocalSections(source):[]
+ const eligibilitySpans=options.scopeAware?spans.filter(s=>/(?:仅限|仅面向|符合.{0,18}(?:条件|资格)|申请条件|报名条件|资格限制|已(?:报名|登记|通过|录取)|本(?:院|校|专业|班)学生)/u.test(s.text)&&isEventEligibility(s.text)):[]
+ const addressedDeliveries=options.scopeAware?spans.filter(s=>/(?:请|须|需|应|务必)[^。；;\n]{0,55}(?:提交|填写|报名|上传|递交|申报|登记|预约|领取)/u.test(s.text)):[]
  for(const span of spans){
   // Interpret section headings as labels, not as an object before “须”.
   // Keep q and its original offsets for evidence, deadlines and channel.
   const q=span.text,plain=q.replace(/[（(][^）)]*[）)]/gu,'').replace(localSectionHeading,'')
   if(/仅供知悉|无需办理|无需操作/u.test(q))continue
+  // In a descriptive chapter, a role, example or optional form field is not
+  // itself a personal action. Explicitly addressed instructions remain valid.
+  const section=sourceSections.find(part=>part.start<=span.at&&span.at<part.end)
+  if(section?.kind==='context'&&!/(?:请(?:各位|同学|学生|申请人|报名者|大家)?|(?:申请人|报名者|入选者|同学|学生)(?:须|需|应|请)|入选后(?:须|需|请))[^。；;\n]{0,40}(?:提交|填写|报名|参加|上传|递交|申请|登记|预约|领取|准备)/u.test(q))continue
   const delivery=localDelivery(plain)
   let verb=delivery?.verb,object=delivery?.object?.replace(/交$/u,'')
   const choice=/(?:^|[，,])(?:请|须|需)?(提交|递交|报送|上传|发送)([^，,；;。！？\n]{2,30}?)(?=可任选|可选择|可以选择|任选)/u.exec(plain)
@@ -284,10 +293,18 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
   if(tasks.some(t=>(t.actionVerb===verb||/申请|申报/u.test(t.actionVerb)&&/申请|申报/u.test(verb!))&&t.actionObject===object))continue
   const id=`local-direct-${span.at}`,eids=[evidence(q,span.at,'description')]
   if(!q.includes(object)&&heading.includes(object))eids.push(evidence(heading,0,'description'))
-  const isConditional=/符合|参评|面向|对象|申请条件|自愿|有意|仅限|推荐名额|申请者|本科生|研究生|获得[^，。]{0,20}同学/u.test(source)
-  const eligibility=spans.find(s=>/符合|面向|对象|申请条件|自愿|仅限|申请者/u.test(s.text));if(isConditional&&eligibility)eids.push(evidence(eligibility.text,eligibility.at,'description'))
+  // A restriction for one of several deliveries must not be copied to all
+  // of them. Outside the action's own span, attach a document-level condition
+  // only when there is exactly one explicitly addressed delivery.
+  const addressedAudience=/(?:请|由)([^，,。；;\n]{1,18}?(?:学生|同学|人员|成员|班长|负责人))(?=[^。；;\n]{0,35}(?:提交|填写|报名|上传|递交|申报|登记|预约|领取))/u.exec(q)?.[1]??''
+  const restrictedAudience=addressedAudience&&!/(?:所有|全体|各位|大家|有意|感兴趣|自愿|愿意|欢迎)/u.test(addressedAudience)
+  const realEligibility=eligibilitySpans.find(s=>s.at===span.at)
+    ??(restrictedAudience?span:undefined)
+    ??(addressedDeliveries.length===1&&addressedDeliveries[0].at===span.at&&eligibilitySpans.length===1?eligibilitySpans[0]:undefined)
+  const isConditional=options.scopeAware?Boolean(realEligibility):/符合|参评|面向|对象|申请条件|自愿|有意|仅限|推荐名额|申请者|本科生|研究生|获得[^，。]{0,20}同学/u.test(source)
+  const eligibility=options.scopeAware?realEligibility:spans.find(s=>/符合|面向|对象|申请条件|自愿|仅限|申请者/u.test(s.text));if(isConditional&&eligibility)eids.push(evidence(eligibility.text,eligibility.at,'description'))
   const taskTitle=registration&&!delivery&&verb===registration[2]?`完成${object}${verb}`:verb+object+(/提交|报送|上传/u.test(verb)&&/奖学金$|助学金$/u.test(object)?'申请材料':'')
-  const t:TaskSuggestionV2={tempId:id,parentTempId:null,hierarchyType:'task',title:cleanDirectTopic(taskTitle),actionVerb:verb,actionObject:object,description:q+(isConditional?'\n适用条件待确认：'+(spans.find(s=>/符合|面向|对象|申请条件|自愿|仅限|申请者/u.test(s.text))?.text??q):''),completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:eids,confidence:1,inferenceLevel:'strong_inference',userConfirmationRequired:true,selected:!isConditional}
+  const t:TaskSuggestionV2={tempId:id,parentTempId:null,hierarchyType:'task',title:cleanDirectTopic(taskTitle),actionVerb:verb,actionObject:object,description:q+(isConditional?'\n适用条件待确认：'+(eligibility?.text??q):''),completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:eids,confidence:1,inferenceLevel:'strong_inference',userConfirmationRequired:true,selected:!isConditional}
   const own=cutoff(q),formCutoffs=allCutoffs.filter(s=>/纸质|电子/u.test(object!)&&s.at>span.at&&s.at-span.at<200&&/纸质|电子/u.test(s.text))
   const uniqueCutoff=allCutoffs.length===1?allCutoffs[0]:null
   const between=uniqueCutoff?source.slice(Math.min(uniqueCutoff.at,span.at),Math.max(uniqueCutoff.at,span.at)):''

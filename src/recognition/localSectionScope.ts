@@ -13,16 +13,17 @@ export function indexLocalSections(source:string):LocalSection[] {
   const plain=line.trim().replace(/^[\p{Extended_Pictographic}\uFE0F\u200D\s]+/gu,'')
   // Chinese section numbers or an independently labelled heading. Numeric
   // list items and prose sentences are not chapter boundaries.
+  const inlineNumbered=/^(?:[一二三四五六七八九十]+[、.．]|[（(][一二三四五六七八九十]+[）)])\s*([^：:。；;！？]{1,30})[：:]\s*\S/u.exec(plain)
   const numbered=/^(?:[一二三四五六七八九十]+[、.．]|[（(][一二三四五六七八九十]+[）)])\s*([^。；;！？]{1,60})$/u.exec(plain)
   const labelled=/^(?:【([^】]{1,30})】|([^：:。；;！？]{1,30})[：:])\s*$/u.exec(plain)
-  const name=(numbered?.[1]??labelled?.[1]??labelled?.[2]??'').trim()
+  const name=(inlineNumbered?.[1]??numbered?.[1]??labelled?.[1]??labelled?.[2]??'').trim()
   if(name){
-   const context=/(?:条件|资格|岗位|职责|分工|人员要求|类别|分类|(?:申请|报名|适用|招募|参与)范围|类型|背景|简介|介绍|奖项|薪资|待遇|费用|作品要求|作品内容)/u.test(name)
+   const context=/(?:条件|资格|岗位|职责|分工|人员要求|类别|分类|(?:申请|报名|适用|招募|参与)范围|类型|背景|简介|介绍|其他说明|奖项|薪资|待遇|费用|作品要求|作品内容)/u.test(name)
    const action=/(?:报名|申请|办理|提交|参加|工作|受理|操作)(?:方式|流程|安排|时间|须知|步骤|事项|网址|链接|入口)?$/u.test(name)
    if(/^[一二三四五六七八九十]+[、.．]/u.test(plain))mixedChapter=context&&action
    // A subheading such as "项目甲：" does not terminate its enclosing
    // conditions section. Only a new numbered chapter or a known scope does.
-   if(numbered||context||action)headings.push({start:offset,kind:context&&action||mixedChapter&&!action?'other':context?'context':action?'action':'other'})
+   if(numbered||inlineNumbered||context||action)headings.push({start:offset,kind:context&&action||mixedChapter&&!action?'other':context?'context':action?'action':'other'})
   }
   offset+=line.length+1
  }
@@ -56,7 +57,11 @@ export function isDescriptiveLocalCandidate(item:ParsedSuggestion,source:string,
   &&!/(?:请|须|必须|务必|应当)[^，,。；;]{0,24}$/u.test(titledClause.slice(0,titledClause.indexOf(title))))return true
  const ref=item.evidenceRefs?.find(value=>typeof value.textStart==='number'&&typeof value.textEnd==='number'&&source.slice(value.textStart,value.textEnd)===quote)
  const first=source.indexOf(quote),last=source.lastIndexOf(quote)
- const at=ref?.textStart??(first===last?first:-1)
+ const quoteAt=ref?.textStart??(first===last?first:-1)
+ // A parser quotation can include several paragraphs. Resolve a uniquely
+ // located candidate inside it before consulting the enclosing section.
+ const titleAt=quote.indexOf(title)
+ const at=quoteAt>=0&&titleAt>=0&&titleAt===quote.lastIndexOf(title)?quoteAt+titleAt:quoteAt
  if(at<0)return false
  const scope=sections.find(section=>section.start<=at&&at<section.end)
  if(scope?.kind!=='context')return false
