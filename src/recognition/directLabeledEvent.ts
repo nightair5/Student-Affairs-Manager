@@ -1,6 +1,7 @@
 import {parseDirectSourceTime} from '../../cloudflare/direct-source-time.mjs'
 import type {RecognitionResult,TimePointSuggestionV2} from './types'
 import {localEventLocation} from './localNoticeFacts'
+import {localOrganizerOnlyEvent} from './localActionPolarity'
 
 /** A dated sentence with one explicit venue and held event can stand on its
  * own. Multiple candidates or deadline/cancellation language remain with the
@@ -8,7 +9,7 @@ import {localEventLocation} from './localNoticeFacts'
 function recoverDatedEvent(input:RecognitionResult,source:string):RecognitionResult {
  const candidates=[...source.matchAll(/[^。！？\n]+/gu)].flatMap(m=>{
   const quote=m[0].trim(),location=localEventLocation(quote),dates=[...quote.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]
-  if(!location||dates.length!==1||/取消|改期|延期|备选|任选|截止|报名|提交|上传|曾于|曾在|曾经|往年|历届|此前|去年|历史上/u.test(quote)||quote.length>160||source.indexOf(quote)!==source.lastIndexOf(quote))return []
+  if(!location||localOrganizerOnlyEvent(quote,location.name)||dates.length!==1||/取消|改期|延期|备选|任选|截止|报名|提交|上传|曾于|曾在|曾经|往年|历届|此前|去年|历史上/u.test(quote)||quote.length>160||source.indexOf(quote)!==source.lastIndexOf(quote))return []
   const parsed=parseDirectSourceTime(quote,{type:'event_start',referenceTime:input.createdAt,timezone:'Asia/Shanghai'})
   return parsed.normalizedValue&&!parsed.needsConfirmation?[{quote,location,parsed}]:[]
  })

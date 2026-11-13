@@ -23,6 +23,26 @@ export function localMaterialOwnership(input:RecognitionResult,source:string):Re
   return requirement&&task.evidenceIds.some(eid=>{const quote=r.evidence.find(e=>e.id===eid)?.quote??'';return quote.includes(action)&&quote.includes(requirement)})?requirement:null
  }
 
+ // A conjoined document in the same instruction is a requirement of that
+ // action, not a new independent top-level task. Only attach it when the
+ // literal quotation has one owner and no separate time, choice or condition.
+ for(const task of tasks){
+  for(const eid of task.evidenceIds){
+   const quote=r.evidence.find(ref=>ref.id===eid)?.quote??''
+   if(!quote||!source.includes(quote)||tasks.some(other=>other!==task&&other.evidenceIds.includes(eid)))continue
+   for(const match of quote.matchAll(/(?:同时|并)(?:请)?(?:提交|递交|提供|上传)([^，,。；;！？\n]{2,50})/gu)){
+    const name=match[1].trim(),before=quote.slice(0,match.index),actionAt=before.lastIndexOf(task.actionVerb)
+    if(actionAt<0||!before.slice(actionAt).includes(task.actionObject)||/^(?:至|到|给|向|所有|上述)/u.test(name)||/(?:发送至|上传至|提交至|递交至|https?:|@)/u.test(name)
+     ||/(?:任选|二选一|或者|或|如果|如需|若|委托|可选|无需|不必|不得)/u.test(before.slice(Math.max(0,before.lastIndexOf('。')+1)))
+     ||/(?:\d{1,2}月\d{1,2}[日号]|截止|截至|另行通知)/u.test(name)
+     ||r.materials.some(m=>m.relatedTaskTempIds.includes(task.tempId)&&fold(m.name)===fold(name)))continue
+    const id=`local-conjoined:${task.tempId}:${match.index}`
+    r.materials.push({tempId:id,name,required:true,formatRequirements:[],namingRequirements:[],requirements:[match[0]],quantity:null,submissionChannel:null,relatedTaskTempIds:[task.tempId],evidenceIds:[eid],confidence:task.confidence,selected:true})
+    task.materialTempIds.push(id)
+   }
+  }
+ }
+
  // The document being collected is the result of the action, not something
  // the user must already possess. Preserve a separately stated prerequisite.
  for(const task of tasks){

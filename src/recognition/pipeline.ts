@@ -4,6 +4,7 @@ import { localDelivery, localEventLocation, localCitedEventLocation, localMateri
 import { taskActionText } from '../lib/taskActionText'
 import { parseChineseTimeAst } from '../lib/timeSemantics'
 import { localMeetingBlock, localNamedMeeting } from './localMeetingBlock'
+import {localOrganizerOnlyEvent} from './localActionPolarity'
 import {normalizeSourceWithOffsets,alignRecognitionEvidence} from '../../cloudflare/source-text-index.mjs'
 import {itemPolarity} from '../../cloudflare/semantic-item-polarity.mjs'
 import {boundLocalResult} from './localResultCapacity'
@@ -249,7 +250,16 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     const namedGathering=/(?:大会|报告会|说明会|分享会|座谈会|培训会)/u.test(task.title)&&/(?:召开|举行|举办|开|参加|出席)/u.test(item.evidence)&&!/^(?:报名|申请|预约|填写)/u.test(task.title)
     const watchedGathering=localEventLocation(item.evidence)
     const isWatchedEvent=Boolean(watchedGathering&&/观看/u.test(item.evidence)&&/(?:讲座|报告|比赛|球赛|演出|展览|赛事)$/u.test(watchedGathering.name))
-    const isEvent = Boolean(meeting)||isWatchedEvent||(eventPattern.test(task.title)||namedGathering) && !/准备|制作|撰写|完成/u.test(task.title)
+    // A literal venue + “举行/举办/召开” also supports a named gathering
+    // whose title is not in the legacy event-name list. An explicitly
+    // organiser-only review is not a personal event unless the reader is
+    // invited to participate.
+    const invitation=localAttendanceDirective(item.evidence)||/(?:欢迎|邀请|建议)[^。；;\n]{0,24}(?:参加|出席|到场)/u.test(item.evidence)
+    const organiserOnly=Boolean(watchedGathering&&localOrganizerOnlyEvent(item.evidence,watchedGathering.name))
+    const heldGathering=Boolean(watchedGathering&&/(?:举行|举办|召开)/u.test(item.evidence)
+      &&(invitation||!organiserOnly&&!/^(?:评审|审核|审查|复核|汇总|报送|公布|公示)/u.test(watchedGathering.name)))
+    const eventCandidate=Boolean(meeting)||isWatchedEvent||heldGathering||(eventPattern.test(task.title)||namedGathering) && !/准备|制作|撰写|完成/u.test(task.title)
+    const isEvent=eventCandidate&&(!organiserOnly||invitation)
     if (isEvent && localEventLocation(item.evidence) && localAttendanceDirective(item.evidence)) {
       task.inferenceLevel = 'explicit'
       task.selected = true

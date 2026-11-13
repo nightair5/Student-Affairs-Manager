@@ -32,7 +32,7 @@ export function improveDirectFallback(input:RecognitionResult,source:string):Rec
  // When local rules cannot retain both branches as an explicit relation,
  // disclose the limitation instead of calling the surviving branch complete.
  const choiceTasks=new Set([...result.standaloneTasks,...result.milestones.flatMap(stage=>[...stage.tasks,...stage.workPackages.flatMap(group=>group.tasks)])].map(task=>task.tempId))
- if(/二选一|任选(?:一种|其一)|择一/u.test(source)&&!result.conflicts.some(conflict=>conflict.id.startsWith('sem-choice-')&&conflict.entityTempIds.filter(id=>choiceTasks.has(id)).length>=2)){
+ if(/二选一|任选(?:一种|其一)|任选[^。；;\n]{1,30}(?:或|或者)|择一/u.test(source)&&!result.conflicts.some(conflict=>conflict.id.startsWith('sem-choice-')&&conflict.entityTempIds.filter(id=>choiceTasks.has(id)).length>=2)){
   const reason='部分内容尚未完整整理：选择方式及各自时间请查看原通知。'
   if(!result.quality.reviewReasons.includes(reason))result.quality.reviewReasons.push(reason)
   result.quality.needsHumanReview=true
@@ -167,6 +167,32 @@ function clarifyOwnedFormAction(base:DirectConversion,source:string):DirectConve
  }
  return {...base,result}
 }
+/** Preserve a concrete delivery embedded in a coordinated procedure, such as
+ * “登记、上传材料等须登录平台”. The procedure does not make every noun
+ * a task. Use its own source span and leave other steps explicitly partial. */
+function recoverCoordinatedDelivery(input:RecognitionResult,source:string):RecognitionResult {
+ const candidates=[...source.matchAll(/(上传|提交|递交|报送)([\p{Script=Han}\p{Number}]{2,24}?)(?=(?:等|均)?(?:需|须|应|要)(?:先)?(?:登录|登陆|进入|访问))/gu)]
+ if(candidates.length!==1)return input
+ const match=candidates[0],verb=match[1],object=match[2],at=match.index!
+ const existing=[...input.standaloneTasks,...input.milestones.flatMap(m=>[...m.tasks,...m.workPackages.flatMap(w=>w.tasks)])]
+ if(existing.some(t=>t.actionVerb===verb&&t.actionObject===object))return input
+ const before=source.slice(0,at),start=Math.max(before.lastIndexOf('。'),before.lastIndexOf('；'),before.lastIndexOf(';'),before.lastIndexOf('\n'))+1
+ const after=source.slice(at),stop=after.search(/[。；;！？\n]/u),end=stop<0?source.length:at+stop
+ const quote=source.slice(start,end).trim(),quoteAt=source.indexOf(quote,start)
+ if(!quote||quote.length>500||source.lastIndexOf(quote)!==quoteAt||localActionExplicitlyNegated(quote,verb,object))return input
+ const prefix=source.slice(start,at)
+ if(/(?:讲解|介绍|演示|示范|课程内容|培训内容|例如)[^，,。；;\n]{0,35}$/u.test(prefix)
+  ||/(?:^|[，,：:])\s*(?:由)?(?:主办方|组织方|工作人员|负责部门|学院|教师|老师)[^，,。；;\n]{0,20}$/u.test(prefix))return input
+ const r=structuredClone(input),id=`local-coordinated:${at}`,eid=id+':evidence',mid=id+':material'
+ r.evidence.push({id:eid,sourceId:r.evidence[0]?.sourceId??'source',quote,quotedText:quote,textStart:quoteAt,textEnd:quoteAt+quote.length,field:'description',extractionMethod:'parser',confidence:1})
+ r.standaloneTasks.push({tempId:id,parentTempId:null,hierarchyType:'task',title:verb+object,actionVerb:verb,actionObject:object,description:quote,completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[mid],timePointTempIds:[],evidenceIds:[eid],confidence:1,inferenceLevel:'explicit',userConfirmationRequired:true,selected:true})
+ r.materials.push({tempId:mid,name:object,required:true,formatRequirements:[],namingRequirements:[],requirements:[],quantity:null,submissionChannel:null,relatedTaskTempIds:[id],evidenceIds:[eid],confidence:1,selected:true})
+ r.sourceSummary.requiresAction=true
+ const reason='部分内容尚未完整整理：其他步骤及适用条件请查看原通知。'
+ r.quality.needsHumanReview=true;r.quality.reviewReasons=[...new Set([...r.quality.reviewReasons,reason])].slice(-20)
+ return r
+}
+
 function improveLocalActions(input:RecognitionResult,source:string):RecognitionResult {
  const positiveDirective=source.split(/[。！？；;，,\n]/u).some(clause=>/(?:请|须|需|应|务必)[^。；]{0,30}(?:提交|递交|填写|申请|申报|报名|领取|缴费|参加|上传|登记|预约)/u.test(clause)&&!/(?:无需|无须|不用|不必|不得|禁止|请勿|不要|不再)/u.test(clause))
  if(/仅供知悉|仅供参考|请知悉|无需操作|无需办理/u.test(source)&&!positiveDirective){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/^\s*(?:各位同学|同学们)/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
@@ -185,7 +211,7 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
    &&material.evidenceIds.some(id=>{const quote=input.evidence.find(ref=>ref.id===id)?.quote??'';return quote.includes(material.goalScope!.condition)&&quote.includes(material.name)&&source.includes(quote)})))return structuredClone(input)
  const grounded=existing.filter(t=>/^(?:提交|报送|上传|发送|填写|申请|申报|报名|领取|缴费|参加|完成|撰写)$/u.test(t.actionVerb)&&t.actionObject&&source.includes(t.actionObject)&&!/^的|^至|^到|https?:|\.edu\.|以下|期间|[（(]/u.test(t.actionObject)&&t.title.includes(t.actionVerb)&&!/^查看|^无需|^无须|^不必|待核对/u.test(t.title))
  // Preserve independently grounded multi-action notices and their owner IDs.
- if(grounded.length>1)return structuredClone(input)
+ if(grounded.length>1)return recoverCoordinatedDelivery(structuredClone(input),source)
  const r=structuredClone(input),heading=source.split(/[\n。]/u)[0],tasks:TaskSuggestionV2[]=[],sourceId=r.evidence[0]?.sourceId??'source'
  const award=/[“《]([^”》]{2,35}(?:奖学金|助学金)[^”》]{0,12})[”》]/u.exec(source)?.[1]
  const subject=(award&&heading.includes(award)?award:null)??(/《([^》]{2,50})》/u.exec(heading)?.[1]??/([^\s，。；：:]{2,45}(?:奖学金|助学金|项目|招募|报名|申请))/u.exec(heading)?.[1]??'').replace(/^(?:关于开展|关于|各位同学[：:]?)/u,'').replace(/(?:评审工作|评选工作|评定|申请|申报|招募|报名|通知)$/u,'').replace(/系统$/u,'')
@@ -194,7 +220,11 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
   // split alternative eligibility cases into separate obligations.
   const clauses=[...m[0].matchAll(/[^；;]+/gu)]
   const deliveries=clauses.filter(c=>localDelivery(c[0])).length
-  const sections=deliveries>1?clauses:[{0:m[0],index:0}]
+  // An event time and a separately directed submission after a semicolon
+  // are also independent; parsing both clocks as one deadline loses scope.
+  const eventAndAction=clauses.some(c=>/(?:举行|举办|召开|开设)[^；;]{1,40}/u.test(c[0]))
+   &&clauses.some(c=>/(?:请|须|需|应|务必)[^；;]{0,50}(?:提交|递交|上传|填写|报名|申请|预约)/u.test(c[0]))
+  const sections=deliveries>1||eventAndAction?clauses:[{0:m[0],index:0}]
   // Split only a connector followed by another explicit verb and object.
   // “并提交至平台” continues the preceding delivery and is not a new object.
   return sections.flatMap(section=>{
@@ -282,7 +312,7 @@ function improveLocalActions(input:RecognitionResult,source:string):RecognitionR
  }
  if(tasks.length){r.standaloneTasks=tasks.filter(t=>!subject||!tasks.some(other=>other!==t&&/申请|申报/u.test(other.actionVerb)&&other.actionObject===subject&&t.actionVerb==='填写'&&!/表|报告|论文/u.test(t.actionObject))).filter(t=>!tasks.some(other=>other!==t&&/提交|报送|上传/u.test(other.actionVerb)&&/申请|申报/u.test(t.actionVerb)&&t.actionObject===other.actionObject&&JSON.stringify(t.timePointTempIds.map(id=>r.timePoints.find(p=>p.tempId===id)?.normalizedValue))===JSON.stringify(other.timePointTempIds.map(id=>r.timePoints.find(p=>p.tempId===id)?.normalizedValue))));r.milestones=[];const ids=new Set(r.standaloneTasks.map(t=>t.tempId));r.materials=r.materials.filter(m=>m.relatedTaskTempIds.some(id=>ids.has(id)));const eventTimes=new Set(r.events.flatMap(e=>[e.startTimePointTempId,e.endTimePointTempId]));r.timePoints=r.timePoints.filter(p=>eventTimes.has(p.tempId)||p.relatedTaskTempIds.some(id=>ids.has(id)));r.sourceSummary.title=tasks[0].title}
  r.standaloneTasks=r.standaloneTasks.filter(t=>!/^无需|^无须|^不必|^不要/u.test(t.title));r.milestones=r.milestones.map(m=>({...m,tasks:m.tasks.filter(t=>!/^无需|^无须|^不必/u.test(t.title))}))
- return r
+ return recoverCoordinatedDelivery(r,source)
 }
 
 /** Fill independently evidenced missing actions without replacing retained

@@ -35,13 +35,31 @@ export function indexLocalSections(source:string):LocalSection[] {
 export function isDescriptiveLocalCandidate(item:ParsedSuggestion,source:string,sections:LocalSection[]):boolean {
  const quote=item.evidence.trim()
  if(!quote)return false
+ const title=item.title.trim().replace(/^(?:[一二三四五六七八九十]+[、.．]|\d+[、.．]|[（(][一二三四五六七八九十\d]+[）)])\s*/u,'')
+ // Numbers, punctuation and a contact heading can be artefacts of splitting a
+ // table or phone number. They are not actions merely because a nearby clause
+ // contains a date. Explicit requests to check information remain actionable.
+ const titleClauses=quote.split(/[。；;！？\n]/u).filter(clause=>clause.includes(title))
+ const explicitCheck=titleClauses.some(clause=>/(?:请|须|需|应|务必)[^。；;\n]{0,18}(?:核对|核实|检查|确认|查看|联系)/u.test(clause))
+ if(!explicitCheck&&(/^[\d\s\p{P}\p{S}]+$/u.test(title)||/^(?:校内|校外|内方|外方)?联系方式(?:及[^。；;]{1,20})?$/u.test(title)))return true
+ const lines=quote.split('\n').map(line=>line.trim()),navigation=lines.findIndex(line=>/^(?:图片新闻|最新更新|热点关注|网站导航|相关链接|更多[>＞]?)$/u.test(line))
+ const titleLine=lines.findIndex(line=>line===title)
+ // Common page navigation is a list of links, not a list of obligations.
+ // Do not apply this when a directive is present in the candidate itself.
+ if(!explicitCheck&&navigation>=0&&titleLine>navigation&&lines.slice(navigation).filter(line=>line.length>0&&line.length<=24).length>=4)return true
+ // A predicate introduced by “...者，可...” describes who qualifies for a
+ // later benefit. Do not turn that condition into a separate instruction.
+ // A request to complete the same activity remains an action.
+ const titledClause=quote.split(/[。；;！？\n]/u).find(clause=>clause.includes(title))
+ if(title.endsWith('者')&&titledClause&&titledClause.includes(title)
+  &&/^(?:[，,]\s*)?(?:可|可以|能够|方可|有机会|将)/u.test(titledClause.slice(titledClause.indexOf(title)+title.length))
+  &&!/(?:请|须|必须|务必|应当)[^，,。；;]{0,24}$/u.test(titledClause.slice(0,titledClause.indexOf(title))))return true
  const ref=item.evidenceRefs?.find(value=>typeof value.textStart==='number'&&typeof value.textEnd==='number'&&source.slice(value.textStart,value.textEnd)===quote)
  const first=source.indexOf(quote),last=source.lastIndexOf(quote)
  const at=ref?.textStart??(first===last?first:-1)
  if(at<0)return false
  const scope=sections.find(section=>section.start<=at&&at<section.end)
  if(scope?.kind!=='context')return false
- const title=item.title.trim()
  // A direct instruction to the reader or a conditionally applicable action
  // can occur even in a requirements section; leave it for the normal path.
  const directive=/(?:请(?:各位|同学|学生|申请人|报名者|入选者|大家)?|(?:申请人|报名者|入选者|同学|学生)(?:须|需|应|请)|入选后(?:须|需|请)|报名后(?:须|需|请))[^。；;\n]{0,36}(?:提交|填写|报名|参加|上传|递交|申请|登记|预约|领取|缴费|准备|联系)/u

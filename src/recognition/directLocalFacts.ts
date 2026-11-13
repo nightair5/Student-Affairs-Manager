@@ -145,7 +145,9 @@ export function completeDirectLocalFacts(input:RecognitionResult,source:string):
   // Subject-first delivery: “纸质报告请于…在办公室递交”. A window has
   // start/end facts, never a synthetic submission deadline.
   for(const match of source.matchAll(/[^。！？\n]+/gu)){
-    const q=match[0],m=/^\s*([^，,；;]{2,30}?)(?:请|须|需|应)(?:于|在)([^。！？]*?)(?:递交|提交|交到|送交|报送)(?:[，,；;]|$)/u.exec(q)
+    // The action must occur in the same clause as its subject. Crossing a
+    // comma can attach the second delivery's verb to the first document.
+    const q=match[0],m=/^\s*([^，,；;]{2,30}?)(?:请|须|需|应)(?:于|在)([^，,；;。！？]*?)(?:递交|提交|交到|送交|报送)(?:[，,；;]|$)/u.exec(q)
     if(!m||!/报告|论文|材料|表|申请书|作品|证明/u.test(m[1])||localActionNeedsDecision(q)||/任选|备选|可选择/u.test(q))continue
     const object=m[1].trim(),verb=/(递交|提交|交到|送交|报送)(?:[，,；;]|$)/u.exec(q)![1]
     if(r.standaloneTasks.some(t=>compact(t.actionObject)===compact(object)&&t.actionVerb!=='核对'))continue

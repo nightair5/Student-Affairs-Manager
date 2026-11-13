@@ -32,6 +32,55 @@ describe('local semantic sections',()=>{
   expect(tasks(result).some(t=>/上传.*照片/u.test(t.title))).toBe(true)
   expect(validateRecognitionResult(result,{sourceContent:source}).valid).toBe(true)
  })
+ it('treats eligibility predicates, contact headings and numeric table fragments as context',()=>{
+  const source='【志愿服务】按照要求完成志愿服务并按期返校者，可申请服务证明。\n一、联系方式\n校内联系方式：咨询老师 020-12345678。\n二、报名安排\n请于11月15日12:00前填写报名表。'
+  const result=convertDirectResult(improveDirectFallback(recognize(source),source),source).result
+  expect(tasks(result).some(t=>/填写.*报名表/u.test(t.title))).toBe(true)
+  expect(tasks(result).some(t=>/完成志愿服务并按期返校者|^联系方式$|^\d+$/u.test(t.title))).toBe(false)
+  expect(extractSourceNoticeContext(source,'task').sourceText).toBe(source)
+ })
+ it('does not promote a scraped page navigation list into personal tasks',()=>{
+  const source='【课程通知】请于11月15日12:00前填写申请表。\n图片新闻\n更多>\n最新更新\n期末考试安排\n课程查询\n成绩查询\n教室查询。'
+  const result=convertDirectResult(improveDirectFallback(recognize(source),source),source).result
+  expect(tasks(result).some(t=>t.title.includes('申请表'))).toBe(true)
+  expect(tasks(result).some(t=>/期末考试安排|课程查询|教室查询/u.test(t.title))).toBe(false)
+ })
+ it('retains an explicit instruction even if a matching condition appears elsewhere',()=>{
+  const source='请完成志愿服务并提交记录表。完成志愿服务并按期返校者，可申请服务证明。'
+  const result=recognize(source)
+  expect(tasks(result).some(t=>/完成志愿服务|提交记录表/u.test(t.title))).toBe(true)
+ })
+ it('recovers an explicit delivery embedded in a multi-step procedure',()=>{
+  const source='【作品报送】报名、注册、上传作品等需先登录作品服务平台。报名成功后由工作人员审核。'
+  const result=convertDirectResult(improveDirectFallback(recognize(source),source),source).result
+  expect(tasks(result).some(t=>t.actionVerb==='上传'&&t.actionObject==='作品')).toBe(true)
+  expect(result.materials.some(m=>m.name==='作品'&&m.relatedTaskTempIds.some(id=>tasks(result).some(t=>t.tempId===id)))).toBe(true)
+  expect(result.quality.reviewReasons.join('\n')).toContain('尚未完整整理')
+ })
+ it('does not turn an explained or organiser-owned procedure into a personal delivery',()=>{
+  for(const source of ['培训内容包括上传作品等需登录平台的操作流程。','由工作人员上传材料等需登录服务平台。']){
+   const result=convertDirectResult(improveDirectFallback(recognize(source),source),source).result
+   expect(tasks(result).some(t=>t.tempId.startsWith('local-coordinated:'))).toBe(false)
+  }
+ })
+ it('retains a reader obligation even if the subject contains the word registration',()=>{
+  const source='【报名流程】意向报名学生须与家长充分沟通，并填写申请表。'
+  const result=convertDirectResult(improveDirectFallback(recognize(source),source),source).result
+  expect(tasks(result).some(t=>t.title.includes('沟通')||t.title.includes('申请表')||t.description.includes('沟通'))).toBe(true)
+ })
+ it('keeps a conjoined document on its source action without splitting a new task',()=>{
+  const source='【器材借用】请于11月18日17:00前填写借用登记表，同时提交本人学生证复印件。11月19日开始领取器材。'
+  const result=convertDirectResult(improveDirectFallback(recognize(source),source),source).result
+  const parent=tasks(result).find(t=>t.actionObject.includes('登记表'))!
+  expect(parent).toBeTruthy()
+  expect(result.materials.some(m=>m.name==='本人学生证复印件'&&m.required&&m.relatedTaskTempIds.includes(parent.tempId))).toBe(true)
+  expect(tasks(result).filter(t=>t.actionObject.includes('学生证复印件'))).toHaveLength(0)
+ })
+ it('does not make an explicitly conditional or optional additional document unconditional',()=>{
+  const source='请填写登记表，如需委托办理同时提交授权书。'
+  const result=convertDirectResult(improveDirectFallback(recognize(source),source),source).result
+  expect(result.materials.some(m=>m.name==='授权书'&&m.required&&!m.goalScope)).toBe(false)
+ })
  it('does not change action semantics when a notice has more than twenty candidates',()=>{
   const source=Array.from({length:25},(_,i)=>`${i+1}.请于11月${String(i+1).padStart(2,'0')}日前提交第${i+1}份材料。`).join('\n')+'\n附表仅供参考，请知悉。'
   const result=recognize(source)

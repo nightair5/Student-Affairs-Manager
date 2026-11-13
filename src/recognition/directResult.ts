@@ -103,6 +103,12 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
       materialTempIds: [...t.materialTempIds], timePointTempIds: [...t.timePointTempIds]}]
   })
   const taskIds = new Set(tasks.map(t => t.tempId))
+  if(result.modelName==='local-rules'&&tasks.some(t=>/^(?:提交|递交|上传|发送|报送)$/u.test(t.actionVerb)
+    &&/^[\p{Script=Han}]{0,12}(?:平台|系统|网站|窗口|服务台|邮箱)$/u.test(t.actionObject))){
+    const reason='部分内容尚未完整整理：提交对象和渠道可能需要补充，请查看原通知。'
+    result.quality.needsHumanReview=true
+    result.quality.reviewReasons=[...new Set([...result.quality.reviewReasons,reason])].slice(-20)
+  }
   tasks.forEach(t => { const retained=t.dependencyTempIds.filter(id=>taskIds.has(id));if(retained.length!==t.dependencyTempIds.length){tagsById.get(t.tempId)!.push('待确认');omitted.push({id:t.tempId,reason:'UNRESOLVED_RELATION_NOT_EXECUTABLE'})}t.dependencyTempIds=retained })
   const events = result.events.flatMap(e => {
     const text = context(e.evidenceIds), name = compact(e.title)
@@ -166,7 +172,14 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   }
   const times: TimePointSuggestionV2[] = result.timePoints.filter(p => p.relatedTaskTempIds.some(id => taskIds.has(id)) || eventIds.has(p.tempId)).map(p => {
     const point = {...p, relatedTaskTempIds:p.relatedTaskTempIds.filter(id => taskIds.has(id)),selected:true}
-    const unknown = ():TimePointSuggestionV2 => ({...point,normalizedValue:null,precision:'vague',isAllDay:false,needsConfirmation:true})
+    const unknown = ():TimePointSuggestionV2 => {
+      if(result.modelName==='local-rules'&&p.normalizedValue){
+        const reason='部分内容尚未完整整理：原文中的时间或其归属尚未可靠保存，请查看原通知。'
+        result.quality.needsHumanReview=true
+        result.quality.reviewReasons=[...new Set([...result.quality.reviewReasons,reason])].slice(-20)
+      }
+      return {...point,normalizedValue:null,precision:'vague',isAllDay:false,needsConfirmation:true}
+    }
     const text = context(p.evidenceIds), raw = p.rawText
     // Local evidence may span several sentences. A later choice of material
     // must not make an earlier, uniquely located deadline an alternative date.
@@ -175,7 +188,13 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
       &&quotes(material.evidenceIds).some(quote=>quote.length<text.length&&text.includes(quote)
         &&compact(quote).includes(compact(material.goalScope!.condition))&&compact(quote).includes(compact(material.name))
         &&!alternatives.test(text.replace(quote,''))))
-    const roleText=scopedOptionalMaterial?(timeSourceContext(sourceText,raw)?.text??text):text
+    // A delivery-choice marker scopes the alternatives, not the deadline
+    // within each branch. Trust only the literal, uniquely cited branch that
+    // owns this point; an alternative *date* remains unresolved.
+    const localChoice=result.modelName==='local-rules'&&p.relatedTaskTempIds.length===1
+      &&result.conflicts.some(c=>c.id.startsWith('sem-choice-local:')&&c.entityTempIds.includes(p.relatedTaskTempIds[0])&&c.entityTempIds.length===2&&!c.requiresDecision)
+    const branchQuote=localChoice?quotes(p.evidenceIds).find(quote=>quote.includes(raw)&&!alternatives.test(quote)):undefined
+    const roleText=branchQuote??(scopedOptionalMaterial?(timeSourceContext(sourceText,raw)?.text??text):text)
     // A previously isolated/ambiguous value stays unknown. The policy changes
     // whether the item is saved, not whether a missing time becomes known.
     const unsupported = !quotes(p.evidenceIds).length || !raw || !compact(text).includes(compact(raw))

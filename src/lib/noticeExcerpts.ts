@@ -36,7 +36,7 @@ export function extractSourceNoticeContext(source:string,kind:'task'|'event',kno
   }
   // Source-wide, explicitly attributed processing is useful context. It is
   // labelled as a quotation and never becomes a personal calendar event.
-  const processStatement=/(?:由[^，,。；;]{1,24}(?:审核|评审|复核|核对|汇总|报送|发证|公布结果)|^[^，,。；;]{1,18}(?:部门|单位|中心|学院|委员会|负责人|学校|平台|系统)[^，,。；;]{0,30}(?:审核|评审|复核|核对|汇总|报送|发证|公布结果))/u
+  const processStatement=/(?:由[^，,。；;]{1,24}(?:审核|评审|复核|核对|汇总|报送|发证|公布结果)|^(?:主办方|组织方|组委会|[^，,。；;]{1,18}(?:部门|单位|中心|学院|委员会|负责人|学校|平台|系统))[^，,。；;]{0,40}(?:审核|评审|复核|核对|汇总|报送|发证|公布结果))/u
   for(const match of primary.matchAll(/[^。；;！？\n]{6,240}/gu)){
     const text=match[0].trim()
     if(processStatement.test(text)
